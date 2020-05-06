@@ -44,12 +44,14 @@
     </nav>
   </header>
   <div class="banner" >
-    <div class="container">
-      <h1 class="font-weight-semibold">Search engine optimisation &<br>Marketing.</h1>
-      <h6 class="font-weight-normal text-muted pb-3">Simple is a simple template with a creative design that solves all your marketing and SEO queries.</h6>
+    <div class="container"> <br>
+      <h3 class="font-weight-semibold">Organicemos tu equipo de trabajo en 10 minutos: Controla, mide y gestiona.</h3>
+
       <div>
-        <button class="btn btn-opacity-light mr-1">Get started</button>
-        <button class="btn btn-opacity-success ml-1">Learn more</button>
+        <div class="col-md-12"> <br><br>
+        <button class="btn btn-opacity-primary mr-1">COMIENZA AHORA</button>
+        </div>
+
       </div>
       <img src="{{asset('landing/images/Group171.svg')}}" alt="" class="img-fluid">
     </div>
