@@ -16,15 +16,33 @@
         .navbar{
             background-color: #335b7b;
         }
+        .blanco{
+            color: #fff;
+        }
     </style>
   <header id="header-section">
     <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
     <div class="container">
-      <div class="navbar-brand-wrapper d-flex w-100">
-        <img src="{{asset('landing/images/Group2.svg')}}" alt="">
-       
-      </div>
+        <div class="col-md-5">
+            <div class="navbar-brand-wrapper d-flex w-100">
+                <img src="{{asset('landing/images/Group2.svg')}}" alt="">
+              </div>
+        </div>
+        <div class="col-md-7">
+            <div class="row">
+                <div class="col-md-5 form-group">
+                  <label class="blanco" >Correo electrónico o teléfono	</label>
+                  <input  class="form-control" >
 
+                </div>
+                <div class="col-md-4 form-group">
+                  <label  class="blanco">Contraseña</label>
+                  <input type="password" class="form-control" >
+                </div>
+
+            </div>
+
+        </div>
     </div>
     </nav>
   </header>
