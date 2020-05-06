@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Simple landing page</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="{{asset('landing/vendors/owl-carousel/css/owl.carousel.min.css')}}">
+  <link rel="stylesheet" href="{{asset('landing/vendors/owl-carousel/css/owl.theme.default.css')}}">
+  <link rel="stylesheet" href="{{asset('landing/vendors/mdi/css/materialdesignicons.min.css')}}">
+  <link rel="stylesheet" href="{{asset('landing/vendors/aos/css/aos.css')}}">
+  <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
+</head>
+<body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
+
+  <header id="header-section">
+    <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
+    <div class="container">
+        <div class="col-md-3">
+            <div class="navbar-brand-wrapper d-flex w-100">
+                <img src="{{asset('landing/images/rgh.png')}}" alt="">
+              </div>
+        </div>
+        <div class="col-md-9 text-left">
+        <h5 style="color: #ffffff">Ahora registra tu organización: Empresarial, Gobierno, Ong…</h5>
+        <label for="" class="blanco">Tienes 2 minutos</label>
+
+        </div>
+    </div>
+    </nav>
+  </header>
+
+  <div class="content-wrapper">
+    <div class="container">
+      <section class="features-overview" id="features-section" >
+        <form action="">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="row">
+
+                    <div class="col-md-4">
+                     <input  class="form-control " placeholder="RUC o ID" >
+                    </div>
+                    <div class="col-md-5">
+                     <input  class="form-control" placeholder="Razón social " required>
+                    </div> <br><br>
+                    <div class="col-md-9">
+                         <input  class="form-control " placeholder="Direccion legal " required >
+                    </div><br><br>
+                 </div>
+                 <div class="row">
+
+                    <div class="col-md-3">
+                     <select  class="form-control" placeholder="Departamento " >
+                         <option value="">ss</option>
+                     </select>
+                    </div>
+                    <div class="col-md-3">
+                     <select  class="form-control " placeholder="Departamento " >
+                         <option value="">ss</option>
+                     </select>
+                    </div>
+                    <div class="col-md-3">
+                     <select  class="form-control " placeholder="Departamento " >
+                         <option value="">ss</option>
+                     </select>
+                    </div>
+                 </div><br>
+                 <div class="row">
+                     <div class="col-md-4">
+                         <input  class="form-control" type="number" placeholder="Num de empleados" required >
+                    </div>
+                 </div><br>
+                 <div class="row">
+                    <div class="col-md-9">
+                     <input  class="form-control " placeholder="Página web o dominio(opcional)" >
+                </div>
+                 </div><br>
+                 <div class="row">
+                     <div class="col-md-12">
+                         <label class="normal" for="">Tipo de organización</label>
+                     </div>
+                     <div class="col-md-2">
+                         <div class="control">
+                             <label class="radio normal">
+                               <input type="radio" name="answer">
+                               Empresa
+                             </label>
+                       </div>
+                     </div>
+                     <div class="col-md-2">
+                         <div class="control">
+                             <label class="radio normal">
+                               <input type="radio" name="answer">
+                               Gobierno
+                             </label>
+                       </div>
+                     </div>
+                     <div class="col-md-2">
+                         <div class="control">
+                             <label class="radio normal">
+                               <input type="radio" name="answer">
+                               ONG
+                             </label>
+                       </div>
+                     </div>
+                     <div class="col-md-2">
+                         <div class="control">
+                             <label class="radio normal">
+                               <input type="radio" name="answer">
+                               Asociación
+                             </label>
+                       </div>
+                     </div>
+                     <div class="col-md-2">
+                         <div class="control">
+                             <label class="radio normal">
+                               <input type="radio" name="answer">
+                               Otros
+                             </label>
+                       </div>
+                     </div>
+
+                     <br><br>
+
+                 </div>
+                 <br><br>
+
+            </div>
+            <div class="container col-md-3">
+                <img src="{{asset('landing/images/regisE.svg')}}" alt="" class="img-fluid"><br><br><br><br>
+                <div class="col-md-12 text-right">
+                    <button class="btn btn-opacity-primary mr-1" type="submit">Registrar empresa </button>
+                    </div> <br><br>
+            </div>
+        </div>
+       </form>
+      </section>
+
+
+
+      <footer class="border-top">
+        <p class="text-center text-muted pt-4">© <?php echo date("Y"); ?> - RH Solution | Todos los derechos reservados.</p>
+      </footer>
+
+    </div>
+  </div>
+  <script src="{{asset('landing/vendors/jquery/jquery.min.js')}}"></script>
+  <script src="{{asset('landing/vendors/bootstrap/bootstrap.min.js')}}"></script>
+  <script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>
+  <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
+  <script src="{{asset('landing/js/landingpage.js')}}"></script>
+
+</body>
+</html>

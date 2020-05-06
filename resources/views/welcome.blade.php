@@ -49,7 +49,7 @@
 
       <div>
         <div class="col-md-12"> <br><br>
-        <button class="btn btn-opacity-primary mr-1">COMIENZA AHORA</button>
+         <a href="{{route('registroPersona')}}"><button class="btn btn-opacity-primary mr-1" >COMIENZA AHORA</button></a>
         </div>
 
       </div>
@@ -368,7 +368,7 @@
         </div>
       </section>
       <footer class="border-top">
-        <p class="text-center text-muted pt-4">Copyright © 2019<a href="https://www.bootstrapdash.com/" class="px-1">Bootstrapdash.</a>All rights reserved.</p>
+        <p class="text-center text-muted pt-4">© <?php echo date("Y"); ?> - RH Solution | Todos los derechos reservados.</p>
       </footer>
       <!-- Modal for Contact - us Button -->
       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -407,5 +407,6 @@
   <script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>
   <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
   <script src="{{asset('landing/js/landingpage.js')}}"></script>
+
 </body>
 </html>
