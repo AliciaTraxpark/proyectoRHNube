@@ -21,25 +21,38 @@
                 <img src="{{asset('landing/images/rgh.png')}}" alt="">
               </div>
         </div>
-        
+
         <div class="col-md-7">
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
             <div class="row">
+
                 <div class="col-md-5 form-group">
                   <label class="blanco" >Correo electrónico o teléfono	</label>
-                  <input  class="form-control form-control-sm" >
-
+                  <input id="email" type="email" class="form-control form-control-sm @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus   >
+                  @error('email')
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+              @enderror
                 </div>
                 <div class="col-md-4 form-group">
                   <label  class="blanco">Contraseña</label>
-                  <input type="password" class="form-control form-control-sm" >
+                  <input tid="password" type="password" class="form-control form-control-sm @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" >
+                  @error('password')
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+              @enderror
                 </div>
                 <div class="col-md-3 form-group" style="display: flex; align-items: center; top: 15px;">
 
-                    <button class="boton">Iniciar sesión</button>
+                    <button   type="submit"class="boton">Iniciar sesión</button>
+                    
                 </div>
 
             </div>
-
+        </form>
         </div>
     </div>
     </nav>
