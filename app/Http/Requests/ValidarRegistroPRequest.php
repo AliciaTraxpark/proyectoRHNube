@@ -25,13 +25,21 @@ class ValidarRegistroPRequest extends FormRequest
     {
         return [
             'nombres'        => 'required|min:1|max:45',
+            'apellidos'      => 'required|min:1|max:45',
+            'usuario'        => 'required',
+            'password'       => 'required',
+            'fecha'          => 'required'
         ];
     }
 
     public function messages()
     {
         return[
-            'nombres.required'   => 'El :attribute es obligatorio.',
+            'nombres.required'   => '*El :attribute es obligatorio.',
+            'apellidos.required'   => '*El :attribute es obligatorio.',
+            'usuario.required'   => '*El :attribute es obligatorio.',
+            'password.required'   => '*El :attribute es obligatorio.',
+            'fecha.required'   => '*La :attribute es obligatoria.',
         ];
     }
 }

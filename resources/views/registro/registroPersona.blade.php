@@ -46,13 +46,13 @@
                      <input  class="form-control " placeholder="Nombres" name="nombres" id="nombres">
                     </div>
                     <div class="col-md-5">
-                     <input  class="form-control" placeholder="Apellidos">
+                     <input  class="form-control" placeholder="Apellidos" name="apellidos" id="apellidos">
                     </div> <br><br>
                     <div class="col-md-9">
-                         <input  class="form-control " placeholder="Número de celular o correo electrónico ">
+                         <input  class="form-control " placeholder="Número de celular o correo electrónico" name="usuario" id="usuario">
                     </div><br><br>
                     <div class="col-md-9">
-                        <input  class="form-control" type="password" placeholder="Contraseña nueva">
+                        <input  class="form-control" type="password" placeholder="Contraseña nueva" name="password" id="password">
                    </div><br><br>
                  </div>
                  <div class="row">
@@ -61,7 +61,7 @@
                     </div>
                     <div class="col-md-3">
                         <div class="datepicker date input-group p-0 shadow-sm">
-                            <input type="text" placeholder="elegir fecha" class="form-control" id="reservationDate">
+                            <input type="text" placeholder="elegir fecha" class="form-control" id="reservationDate" name="fecha">
                             <div class="input-group-append"><span class="input-group-text"><i class="fa fa-calendar"></i></span></div>
                         </div>
                     </div><!-- DEnd ate Picker Input -->
@@ -126,6 +126,7 @@
   <script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>
   <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
   <script src="{{asset('landing/js/landingpage.js')}}"></script>
+  <script src="{{asset('landing/js/ValidarRegistrarPersona.js')}}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
@@ -147,37 +148,5 @@ $('#reservationDate').on('change', function () {
 });
 });
 </script>
-<script>
-  const registrar = document.getElementById("botonRegistrar");
-  registrar.addEventListener('click',function(e){
-   e.preventDefault(); 
-	
-$.ajax({
-  headers: {
-          'X-CSRF-TOKEN': document.getElementsByName("_token")[0].value
-          },
-    url:"/persona",
-    data:{
-        'nombres': document.getElementById("nombres").value 
-        //lista de campos que quieres enviar
-    },
-    type:"post",
-    success: function (datos) {
-    
-    },
-    error:function (error) {
-        //valido que llegue errors
-        const mensaje = document.getElementById("mensaje");
-            //valido que tenga el error nombre
-            if(error.responseJSON.errors.nombres){
-                mensaje.innerHTML = error.responseJSON.errors.nombres
-            }
-    }
-});
-
-}, false);
-
-</script>
-
 </body>
 </html>
