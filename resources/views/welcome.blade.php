@@ -16,12 +16,13 @@
   <header id="header-section">
     <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
     <div class="container">
-        <div class="col-md-6">
+        <div class="col-md-5">
             <div class="navbar-brand-wrapper d-flex w-100">
                 <img src="{{asset('landing/images/rgh.png')}}" alt="">
               </div>
         </div>
-        <div class="col-md-6">
+        
+        <div class="col-md-7">
             <div class="row">
                 <div class="col-md-5 form-group">
                   <label class="blanco" >Correo electrónico o teléfono	</label>
@@ -44,8 +45,8 @@
     </nav>
   </header>
   <div class="banner" >
-    <div class="container"> <br>
-      <h3 class="font-weight-semibold">Organicemos tu equipo de trabajo en 10 minutos: Controla, mide y gestiona.</h3>
+    <div class="container" style="padding-top: 60px"> <br>
+      <h4 class="font-weight-semibold">Organicemos tu equipo de trabajo en 10 minutos: Controla, mide y gestiona.</h4>
 
       <div>
         <div class="col-md-12"> <br><br>
@@ -53,7 +54,7 @@
         </div>
 
       </div>
-      <img src="{{asset('landing/images/Group171.svg')}}" alt="" class="img-fluid">
+      <img src="{{asset('landing/images/i')}}" alt="" class="img-fluid">
     </div>
   </div>
   <div class="content-wrapper">

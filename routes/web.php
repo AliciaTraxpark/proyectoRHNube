@@ -22,3 +22,7 @@ Route::get('/registro/persona', function () {
 Route::get('/registro/empresa', function () {
     return view('registro.registroEmpresa');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

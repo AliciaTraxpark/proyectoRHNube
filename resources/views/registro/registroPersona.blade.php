@@ -84,7 +84,7 @@
                             </label>
                       </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <div class="control">
                             <label class="radio normal">
                               <input type="radio" name="answer">
