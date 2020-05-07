@@ -8,34 +8,32 @@ $.ajax({
           },
     url:"/persona",
     data:{
-        'nombres': document.getElementById("nombres").value, 
-        'apellidos': document.getElementById("apellidos").value, 
-        'usuario': document.getElementById("usuario").value, 
+        'name': document.getElementById("name").value, 
+        //'apellidos': document.getElementById("apellidos").value, 
+        'email': document.getElementById("email").value, 
         'password': document.getElementById("password").value, 
-        'fecha': document.getElementById("reservationDate").value 
+        //'fecha': document.getElementById("reservationDate").value 
+        'rol_id': 1
     },
     type:"post",
     success: function (datos) {
-    
+        const mensajeRegistro = document.getElementById("mensaje");{
+            mensaje.innerHTML = "Registro con Exito"
+        }
+        document.forms.formularioPersona.reset();
     },
     error:function (error) {
         //valido que llegue errors
         const mensaje = document.getElementById("mensaje");
             //valido que tenga el error nombre
-            if(error.responseJSON.errors.nombres){
-                mensaje.innerHTML = error.responseJSON.errors.nombres
+            if(error.responseJSON.errors.name){
+                mensaje.innerHTML = error.responseJSON.errors.name
             }
-            if(error.responseJSON.errors.apellidos){
-                mensaje.innerHTML = error.responseJSON.errors.apellidos
-            }
-            if(error.responseJSON.errors.usuarios){
-                mensaje.innerHTML = error.responseJSON.errors.usuarios
+            if(error.responseJSON.errors.email){
+                mensaje.innerHTML = error.responseJSON.errors.email
             }
             if(error.responseJSON.errors.password){
                 mensaje.innerHTML = error.responseJSON.errors.password
-            }
-            if(error.responseJSON.errors.fecha){
-                mensaje.innerHTML = error.responseJSON.errors.fecha
             }
     }
 });

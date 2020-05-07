@@ -42,20 +42,20 @@
             <div class="col-md-9">
                 <div class="row">
 
-                    <div class="col-md-4">
-                     <input  class="form-control " placeholder="Nombres" name="nombres" id="nombres">
+                   <div class="col-md-4">
+                     <input  class="form-control " placeholder="Nombres" name="name" id="name">
                     </div>
-                    <div class="col-md-5">
+                    <!-- <div class="col-md-5">
                      <input  class="form-control" placeholder="Apellidos" name="apellidos" id="apellidos">
-                    </div> <br><br>
+                    </div>--> <br><br> 
                     <div class="col-md-9">
-                         <input  class="form-control " placeholder="Número de celular o correo electrónico" name="usuario" id="usuario">
+                         <input  class="form-control " placeholder="Número de celular o correo electrónico" name="email" id="email">
                     </div><br><br>
                     <div class="col-md-9">
                         <input  class="form-control" type="password" placeholder="Contraseña nueva" name="password" id="password">
                    </div><br><br>
                  </div>
-                 <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-3 mt-2">
                         <label class="normal" for="">Fecha de nacimiento:</label>
                     </div>
@@ -64,8 +64,8 @@
                             <input type="text" placeholder="elegir fecha" class="form-control" id="reservationDate" name="fecha">
                             <div class="input-group-append"><span class="input-group-text"><i class="fa fa-calendar"></i></span></div>
                         </div>
-                    </div><!-- DEnd ate Picker Input -->
-                    <div class="col-md-12">
+                    </div> --> <!-- DEnd ate Picker Input -->
+                    <!--<div class="col-md-12">
                         <label class="normal" for="">Sexo:</label>
                     </div>
                     <div class="col-md-2">
@@ -98,7 +98,7 @@
 
                  <br><br>
 
-            </div>
+            </div> -->
             <div class="container col-md-3">
                 <img src="{{asset('landing/images/regisP.svg')}}" alt="" class="img-fluid"><br><br><br><br>
                 <div class="col-md-12 text-right">
@@ -110,6 +110,7 @@
         <div class="form-text text-danger" id="mensaje">
 
         </div>
+        <div class="" id="mensajeRegistro"></div>
       </section>
 
 

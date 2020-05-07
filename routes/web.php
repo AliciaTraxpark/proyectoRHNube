@@ -23,5 +23,5 @@ Route::get('/registro/empresa', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/persona', 'registroPController@index')->name('registroPersona');;
+Route::get('/persona', 'registroPController@index')->name('registroPersona');
 Route::post('/persona','registroPController@registrarDatos')->name('persona');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\ValidarRegistroPRequest;
+use App\user;
 
 class registroPController extends Controller
 {
@@ -12,6 +13,6 @@ class registroPController extends Controller
     }
 
     public function registrarDatos(ValidarRegistroPRequest $request){
-       
+        user::insert($request->except(["_token"]));
     }
 }
