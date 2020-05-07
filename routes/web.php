@@ -27,9 +27,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/persona/store','registroPController@registrarDatos')->name('persona');
 Route::POST('persona/create', 'RegistroPController@create')->name('registerPersona');
 
-//organizacion
 
-Route::get('/persona', 'registroPController@index')->name('registroPersona');
+
+
 
 
 
