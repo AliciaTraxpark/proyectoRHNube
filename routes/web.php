@@ -28,13 +28,13 @@ Route::post('/persona/store','registroPController@registrarDatos')->name('person
 Route::POST('persona/create', 'RegistroPController@create')->name('registerPersona');
 
 //organizacion
-Route::get('registro/organizacion', 'registroPController@index')->name('registroOrgani');
+
 Route::get('/persona', 'registroPController@index')->name('registroPersona');
-Route::post('/persona/store','registroPController@registrarDatos')->name('persona');
-Route::POST('persona/create', 'RegistroPController@create')->name('registerPersona');
+
+
 
 //ORGANIZACION
 
-Route::get('/organizacion', 'registroEmpresa@index')->name('registroorganizacion');
+Route::get('registro/organizacion', 'registroEmpresa@index')->name('registroorganizacion');
 Route::post('/organizacion/store','registroEmpresa@registrarDatos')->name('organizacion');
 Route::POST('organizacion/create', 'registroEmpresa@create')->name('registerOrganizacion');
