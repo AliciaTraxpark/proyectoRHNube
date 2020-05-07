@@ -61,12 +61,18 @@
                     </div>
                     <div class="col-md-3">
                      <select  class="form-control " placeholder="Provincia " name="provincia" id="provincia">
-                         <option value="">ss</option>
+                         <option value="">SELECCIONAR</option>
+                         @foreach ($provincia as $provincias)
+                           <option class="" value="{{$provincias->id}}">{{$provincias->name}}</option>
+                           @endforeach
                      </select>
                     </div>
                     <div class="col-md-3">
                      <select  class="form-control " placeholder="Distrito " name="distrito" id="distrito">
-                         <option value="">ss</option>
+                         <option value="">SELECCIONAR</option>
+                         @foreach ($distrito as $distritos)
+                           <option class="" value="{{$distritos->id}}">{{$distritos->name}}</option>
+                           @endforeach
                      </select>
                     </div>
                  </div><br>
