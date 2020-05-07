@@ -37,22 +37,22 @@
   <div class="content-wrapper">
     <div class="container">
       <section class="features-overview" id="features-section" >
-        <form action="">
+        <form id="formularioPersona" method="post">
         <div class="row">
             <div class="col-md-9">
                 <div class="row">
 
                     <div class="col-md-4">
-                     <input  class="form-control " placeholder="Nombres" required>
+                     <input  class="form-control " placeholder="Nombres" name="nombres" id="nombres">
                     </div>
                     <div class="col-md-5">
-                     <input  class="form-control" placeholder="Apellidos" required>
+                     <input  class="form-control" placeholder="Apellidos">
                     </div> <br><br>
                     <div class="col-md-9">
-                         <input  class="form-control " placeholder="Número de celular o correo electrónico " required >
+                         <input  class="form-control " placeholder="Número de celular o correo electrónico ">
                     </div><br><br>
                     <div class="col-md-9">
-                        <input  class="form-control" type="password" placeholder="Contraseña nueva" required >
+                        <input  class="form-control" type="password" placeholder="Contraseña nueva">
                    </div><br><br>
                  </div>
                  <div class="row">
@@ -93,13 +93,7 @@
                       </div>
                     </div>
                  </div>
-
-
-
-
-
-
-                     <br><br>
+                    <br><br>
 
 
                  <br><br>
@@ -108,11 +102,14 @@
             <div class="container col-md-3">
                 <img src="{{asset('landing/images/regisP.svg')}}" alt="" class="img-fluid"><br><br><br><br>
                 <div class="col-md-12 text-right">
-                    <button class="btn btn-opacity-primary mr-1" type="submit">Registrarme</button>
+                    <button class="btn btn-opacity-primary mr-1" id="botonRegistrar">Registrarme</button>
                     </div> <br><br>
             </div>
         </div>
        </form>
+        <div class="form-text text-danger" id="mensaje">
+
+        </div>
       </section>
 
 
@@ -123,13 +120,14 @@
 
     </div>
   </div>
+  {{csrf_field()}}
   <script src="{{asset('landing/vendors/jquery/jquery.min.js')}}"></script>
   <script src="{{asset('landing/vendors/bootstrap/bootstrap.min.js')}}"></script>
   <script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>
   <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
   <script src="{{asset('landing/js/landingpage.js')}}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script>
     $(function () {
@@ -148,6 +146,37 @@ $('#reservationDate').on('change', function () {
     $('#pickedDate').html(pickedDate);
 });
 });
+</script>
+<script>
+  const registrar = document.getElementById("botonRegistrar");
+  registrar.addEventListener('click',function(e){
+   e.preventDefault(); 
+	
+$.ajax({
+  headers: {
+          'X-CSRF-TOKEN': document.getElementsByName("_token")[0].value
+          },
+    url:"/persona",
+    data:{
+        'nombres': document.getElementById("nombres").value 
+        //lista de campos que quieres enviar
+    },
+    type:"post",
+    success: function (datos) {
+    
+    },
+    error:function (error) {
+        //valido que llegue errors
+        const mensaje = document.getElementById("mensaje");
+            //valido que tenga el error nombre
+            if(error.responseJSON.errors.nombres){
+                mensaje.innerHTML = error.responseJSON.errors.nombres
+            }
+    }
+});
+
+}, false);
+
 </script>
 
 </body>

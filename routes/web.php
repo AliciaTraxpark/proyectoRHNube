@@ -16,9 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/registro/persona', function () {
-    return view('registro.registroPersona');
-})->name('registroPersona');
 Route::get('/registro/empresa', function () {
     return view('registro.registroEmpresa');
 });
+Route::get('/persona', 'registroPController@index')->name('registroPersona');;
+Route::post('/persona','registroPController@registrarDatos')->name('persona');
