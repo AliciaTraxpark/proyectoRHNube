@@ -53,7 +53,13 @@
 
                     <div class="col-md-3">
                      <select  class="form-control" placeholder="Departamento " name="departamento" id="departamento" >
-                         <option value="">ss</option>
+                         <option value="0">SELECCIONAR</option>
+                         <?php
+                            $query = $mysqli -> query ("SELECT * FROM ubigeo_peru_departments");
+                            while ($valores = mysqli_fetch_array($query)) {
+                              echo '<option value="'.$valores[id].'">'.$valores[paises].'</option>';
+                            }
+                          ?>
                      </select>
                     </div>
                     <div class="col-md-3">
