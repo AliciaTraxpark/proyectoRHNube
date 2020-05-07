@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\organizacion;
+use App\ubigeo_peru_departments;
 
 class registroEmpresaController extends Controller
 {
     public function index(){
-        return view('registro.registroEmpresa');
+        $departamento=ubigeo_peru_departments::all();
+        return view('registro.registroEmpresa',['departamento'=>$departamento]);
     }
 
     public function registrarDatos(Request $request){
