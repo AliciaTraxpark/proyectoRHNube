@@ -28,11 +28,6 @@ Route::post('/persona/store','registroPController@registrarDatos')->name('person
 Route::POST('persona/create', 'RegistroPController@create')->name('registerPersona');
 
 
-
-
-
-
-
 //ORGANIZACION
 
 Route::get('registro/organizacion', 'registroEmpresa@index')->name('registroorganizacion');
