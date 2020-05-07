@@ -56,13 +56,13 @@
                         <input  class="form-control" type="password" placeholder="Contraseña nueva" name="password" id="password" required>
                    </div><br><br>
                  </div>
-         {{--        <div class="row">
+          <div class="row">
                     <div class="col-md-3 mt-2">
                         <label class="normal" for="">Fecha de nacimiento:</label>
                     </div>
                     <div class="col-md-3">
                         <div class="datepicker date input-group p-0 shadow-sm">
-                            <input type="text" placeholder="elegir fecha" class="form-control" id="fecha" name="fecha">
+                            <input type="text" placeholder="elegir fecha" class="form-control" id="fecha" name="fecha" required>
                             <div class="input-group-append"><span class="input-group-text"><i class="fa fa-calendar"></i></span></div>
                         </div>
                     </div><!-- DEnd ate Picker Input -->
@@ -72,7 +72,7 @@
                     <div class="col-md-2">
                         <div class="control">
                             <label class="radio normal">
-                              <input type="radio" name="sexo">
+                              <input type="radio" name="sexo" value="Mujer" required>
                               Mujer
                             </label>
                       </div>
@@ -80,7 +80,7 @@
                     <div class="col-md-2">
                         <div class="control">
                             <label class="radio normal">
-                              <input type="radio" name="sexo">
+                              <input type="radio" name="sexo" value="Hombre" required>
                              Hombre
                             </label>
                       </div>
@@ -88,12 +88,12 @@
                     <div class="col-md-3">
                         <div class="control">
                             <label class="radio normal">
-                              <input type="radio" name="sexo">
+                              <input type="radio" name="sexo" value="Personalizado" required>
                              Personalizado
                             </label>
                       </div>
                     </div>
-                 </div> --}}
+                 </div>
                     <br><br>
 
 

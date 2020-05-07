@@ -22,12 +22,14 @@ Auth::routes();
 //PERSONA
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/persona', 'registroPController@index')->name('registroPersona');
+//persona
+ Route::get('registro/persona', 'registroPController@index')->name('registroPersona');
 Route::post('/persona/store','registroPController@registrarDatos')->name('persona');
 Route::POST('persona/create', 'RegistroPController@create')->name('registerPersona');
 
+
 //ORGANIZACION
 
-Route::get('/organizacion', 'registroEmpresaController@index')->name('registroorganizacion');
-Route::post('/organizacion/store','registroEmpresaController@registrarDatos')->name('organizacion');
-Route::POST('organizacion/create', 'registroEmpresaController@create')->name('registerOrganizacion');
+Route::get('registro/organizacion', 'registroEmpresa@index')->name('registroorganizacion');
+Route::post('organizacion/store','registroEmpresa@registrarDatos')->name('organizacion');
+Route::POST('organizacion/create', 'registroEmpresa@create')->name('registerOrganizacion');
