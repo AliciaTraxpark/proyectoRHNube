@@ -36,7 +36,7 @@ class registroPController extends Controller
     $User->perso_id= $user_persona;
     $User->password= Hash::make($request->get('password'));
     $User->save();
-    return view('categoria._categoriaNueva',['categoria_producto'=>$categoria_producto,'id_ultimo'=>$id_ultimo ]);
+    
 
 }
 }
