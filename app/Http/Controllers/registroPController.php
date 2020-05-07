@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\ValidarRegistroPRequest;
 use App\user;
 use App\persona;
 use Illuminate\Support\Facades\Hash;

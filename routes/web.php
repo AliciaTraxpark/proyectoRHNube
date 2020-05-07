@@ -16,13 +16,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/registro/empresa', function () {
-    return view('registro.registroEmpresa');
-});
 
 Auth::routes();
 
+//PERSONA
+
 Route::get('/home', 'HomeController@index')->name('home');
- Route::get('/persona', 'registroPController@index')->name('registroPersona');
+Route::get('/persona', 'registroPController@index')->name('registroPersona');
 Route::post('/persona/store','registroPController@registrarDatos')->name('persona');
 Route::POST('persona/create', 'RegistroPController@create')->name('registerPersona');
+
+//ORGANIZACION
+
+Route::get('/organizacion', 'registroPController@index')->name('registroorganizacion');
+Route::post('/organizacion/store','registroPController@registrarDatos')->name('organizacion');
+Route::POST('organizacion/create', 'RegistroPController@create')->name('registerOrganizacion');

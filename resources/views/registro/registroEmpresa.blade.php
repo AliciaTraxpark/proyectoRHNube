@@ -33,47 +33,47 @@
   <div class="content-wrapper">
     <div class="container">
       <section class="features-overview" id="features-section" >
-        <form action="">
+        <form method="POST" action="{{route('registerOrganizacion')}}">
         <div class="row">
             <div class="col-md-9">
                 <div class="row">
 
                     <div class="col-md-4">
-                     <input  class="form-control " placeholder="RUC o ID" >
+                     <input  class="form-control " placeholder="RUC o ID" name="ruc" id="ruc">
                     </div>
                     <div class="col-md-5">
-                     <input  class="form-control" placeholder="Razón social " required>
+                     <input  class="form-control" placeholder="Razón social " name="razonSocial" id="razonSocial" required>
                     </div> <br><br>
                     <div class="col-md-9">
-                         <input  class="form-control " placeholder="Direccion legal " required >
+                         <input  class="form-control " placeholder="Direccion legal " name="direccion" id="direccion" required >
                     </div><br><br>
                  </div>
                  <div class="row">
 
                     <div class="col-md-3">
-                     <select  class="form-control" placeholder="Departamento " >
+                     <select  class="form-control" placeholder="Departamento " name="departamento" id="departamento" >
                          <option value="">ss</option>
                      </select>
                     </div>
                     <div class="col-md-3">
-                     <select  class="form-control " placeholder="Departamento " >
+                     <select  class="form-control " placeholder="Provincia " name="provincia" id="provincia">
                          <option value="">ss</option>
                      </select>
                     </div>
                     <div class="col-md-3">
-                     <select  class="form-control " placeholder="Departamento " >
+                     <select  class="form-control " placeholder="Distrito " name="distrito" id="distrito">
                          <option value="">ss</option>
                      </select>
                     </div>
                  </div><br>
                  <div class="row">
                      <div class="col-md-4">
-                         <input  class="form-control" type="number" placeholder="Num de empleados" required >
+                         <input  class="form-control" type="number" placeholder="Num de empleados" name="nempleados" id="nempleados" required >
                     </div>
                  </div><br>
                  <div class="row">
                     <div class="col-md-9">
-                     <input  class="form-control " placeholder="Página web o dominio(opcional)" >
+                     <input  class="form-control " placeholder="Página web o dominio(opcional)" name="pagWeb" id="pagWeb">
                 </div>
                  </div><br>
                  <div class="row">
@@ -83,7 +83,7 @@
                      <div class="col-md-2">
                          <div class="control">
                              <label class="radio normal">
-                               <input type="radio" name="answer">
+                               <input type="radio" name="tipo" id="tipo">
                                Empresa
                              </label>
                        </div>
@@ -91,7 +91,7 @@
                      <div class="col-md-2">
                          <div class="control">
                              <label class="radio normal">
-                               <input type="radio" name="answer">
+                               <input type="radio" name="tipo" id="tipo">
                                Gobierno
                              </label>
                        </div>
@@ -99,7 +99,7 @@
                      <div class="col-md-2">
                          <div class="control">
                              <label class="radio normal">
-                               <input type="radio" name="answer">
+                               <input type="radio" name="tipo" id="tipo">
                                ONG
                              </label>
                        </div>
@@ -107,7 +107,7 @@
                      <div class="col-md-2">
                          <div class="control">
                              <label class="radio normal">
-                               <input type="radio" name="answer">
+                               <input type="radio" name="tipo" id="tipo">
                                Asociación
                              </label>
                        </div>
@@ -115,7 +115,7 @@
                      <div class="col-md-2">
                          <div class="control">
                              <label class="radio normal">
-                               <input type="radio" name="answer">
+                               <input type="radio" name="tipor" id="tipo">
                                Otros
                              </label>
                        </div>
