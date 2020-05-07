@@ -36,5 +36,5 @@ Route::get('/persona', 'registroPController@index')->name('registroPersona');
 //ORGANIZACION
 
 Route::get('registro/organizacion', 'registroEmpresa@index')->name('registroorganizacion');
-Route::post('/organizacion/store','registroEmpresa@registrarDatos')->name('organizacion');
+Route::post('organizacion/store','registroEmpresa@registrarDatos')->name('organizacion');
 Route::POST('organizacion/create', 'registroEmpresa@create')->name('registerOrganizacion');
