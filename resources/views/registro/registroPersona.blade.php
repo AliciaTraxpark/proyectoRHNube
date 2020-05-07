@@ -37,22 +37,22 @@
   <div class="content-wrapper">
     <div class="container">
       <section class="features-overview" id="features-section" >
-        <form action="">
+        <form id="formularioPersona" method="post">
         <div class="row">
             <div class="col-md-9">
                 <div class="row">
 
                     <div class="col-md-4">
-                     <input  class="form-control " placeholder="Nombres" required>
+                     <input  class="form-control " placeholder="Nombres" name="nombres" id="nombres">
                     </div>
                     <div class="col-md-5">
-                     <input  class="form-control" placeholder="Apellidos" required>
+                     <input  class="form-control" placeholder="Apellidos" name="apellidos" id="apellidos">
                     </div> <br><br>
                     <div class="col-md-9">
-                         <input  class="form-control " placeholder="Número de celular o correo electrónico " required >
+                         <input  class="form-control " placeholder="Número de celular o correo electrónico" name="usuario" id="usuario">
                     </div><br><br>
                     <div class="col-md-9">
-                        <input  class="form-control" type="password" placeholder="Contraseña nueva" required >
+                        <input  class="form-control" type="password" placeholder="Contraseña nueva" name="password" id="password">
                    </div><br><br>
                  </div>
                  <div class="row">
@@ -61,7 +61,7 @@
                     </div>
                     <div class="col-md-3">
                         <div class="datepicker date input-group p-0 shadow-sm">
-                            <input type="text" placeholder="elegir fecha" class="form-control" id="reservationDate">
+                            <input type="text" placeholder="elegir fecha" class="form-control" id="reservationDate" name="fecha">
                             <div class="input-group-append"><span class="input-group-text"><i class="fa fa-calendar"></i></span></div>
                         </div>
                     </div><!-- DEnd ate Picker Input -->
@@ -93,13 +93,7 @@
                       </div>
                     </div>
                  </div>
-
-
-
-
-
-
-                     <br><br>
+                    <br><br>
 
 
                  <br><br>
@@ -108,11 +102,14 @@
             <div class="container col-md-3">
                 <img src="{{asset('landing/images/regisP.svg')}}" alt="" class="img-fluid"><br><br><br><br>
                 <div class="col-md-12 text-right">
-                    <button class="btn btn-opacity-primary mr-1" type="submit">Registrarme</button>
+                    <button class="btn btn-opacity-primary mr-1" id="botonRegistrar">Registrarme</button>
                     </div> <br><br>
             </div>
         </div>
        </form>
+        <div class="form-text text-danger" id="mensaje">
+
+        </div>
       </section>
 
 
@@ -123,13 +120,15 @@
 
     </div>
   </div>
+  {{csrf_field()}}
   <script src="{{asset('landing/vendors/jquery/jquery.min.js')}}"></script>
   <script src="{{asset('landing/vendors/bootstrap/bootstrap.min.js')}}"></script>
   <script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>
   <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
   <script src="{{asset('landing/js/landingpage.js')}}"></script>
+  <script src="{{asset('landing/js/ValidarRegistrarPersona.js')}}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script>
     $(function () {
@@ -149,6 +148,5 @@ $('#reservationDate').on('change', function () {
 });
 });
 </script>
-
 </body>
 </html>
