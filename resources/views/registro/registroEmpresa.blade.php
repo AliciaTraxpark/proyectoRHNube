@@ -34,6 +34,7 @@
     <div class="container">
       <section class="features-overview" id="features-section" >
         <form method="POST" action="{{route('registerOrganizacion')}}">
+          @csrf
         <div class="row">
             <div class="col-md-9">
                 <div class="row">

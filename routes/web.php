@@ -28,6 +28,6 @@ Route::POST('persona/create', 'RegistroPController@create')->name('registerPerso
 
 //ORGANIZACION
 
-Route::get('/organizacion', 'registroPController@index')->name('registroorganizacion');
-Route::post('/organizacion/store','registroPController@registrarDatos')->name('organizacion');
-Route::POST('organizacion/create', 'RegistroPController@create')->name('registerOrganizacion');
+Route::get('/organizacion', 'registroEmpresa@index')->name('registroorganizacion');
+Route::post('/organizacion/store','registroEmpresa@registrarDatos')->name('organizacion');
+Route::POST('organizacion/create', 'registroEmpresa@create')->name('registerOrganizacion');
