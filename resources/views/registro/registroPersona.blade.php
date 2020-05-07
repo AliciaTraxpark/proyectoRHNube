@@ -44,16 +44,16 @@
                 <div class="row">
 
                    <div class="col-md-4">
-                     <input  class="form-control " placeholder="Nombres" name="nombres" id="nombres">
+                     <input  class="form-control " placeholder="Nombres" name="nombres" id="nombres" required>
                     </div>
                     <div class="col-md-5">
-                     <input  class="form-control" placeholder="Apellidos" name="apellidos" id="apellidos">
+                     <input  class="form-control" placeholder="Apellidos" name="apellidos" id="apellidos" required>
                     </div> <br><br>
                     <div class="col-md-9">
-                         <input  class="form-control " placeholder="Número de celular o correo electrónico" name="email" id="email">
+                         <input  class="form-control " placeholder="Número de celular o correo electrónico" name="email" id="email" required>
                     </div><br><br>
                     <div class="col-md-9">
-                        <input  class="form-control" type="password" placeholder="Contraseña nueva" name="password" id="password">
+                        <input  class="form-control" type="password" placeholder="Contraseña nueva" name="password" id="password" required>
                    </div><br><br>
                  </div>
          {{--        <div class="row">
