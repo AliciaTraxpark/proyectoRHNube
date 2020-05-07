@@ -23,6 +23,10 @@ Route::get('/registro/empresa', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
- Route::get('/persona', 'registroPController@index')->name('registroPersona');
+//persona
+ Route::get('registro/persona', 'registroPController@index')->name('registroPersona');
 Route::post('/persona/store','registroPController@registrarDatos')->name('persona');
 Route::POST('persona/create', 'RegistroPController@create')->name('registerPersona');
+
+//organizacion
+Route::get('registro/organizacion', 'registroPController@index')->name('registroOrgani');
