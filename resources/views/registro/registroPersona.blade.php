@@ -37,17 +37,18 @@
   <div class="content-wrapper">
     <div class="container">
       <section class="features-overview" id="features-section" >
-        <form id="formularioPersona" method="post">
-        <div class="row">
+        <form method="POST" action="{{ route('registerPersona') }}">
+            @csrf
+            <div class="row">
             <div class="col-md-9">
                 <div class="row">
 
                    <div class="col-md-4">
-                     <input  class="form-control " placeholder="Nombres" name="name" id="name">
+                     <input  class="form-control " placeholder="Nombres" name="nombres" id="nombres">
                     </div>
-                    <!-- <div class="col-md-5">
+                    <div class="col-md-5">
                      <input  class="form-control" placeholder="Apellidos" name="apellidos" id="apellidos">
-                    </div>--> <br><br> 
+                    </div> <br><br>
                     <div class="col-md-9">
                          <input  class="form-control " placeholder="Número de celular o correo electrónico" name="email" id="email">
                     </div><br><br>
@@ -55,23 +56,23 @@
                         <input  class="form-control" type="password" placeholder="Contraseña nueva" name="password" id="password">
                    </div><br><br>
                  </div>
-                <!-- <div class="row">
+         {{--        <div class="row">
                     <div class="col-md-3 mt-2">
                         <label class="normal" for="">Fecha de nacimiento:</label>
                     </div>
                     <div class="col-md-3">
                         <div class="datepicker date input-group p-0 shadow-sm">
-                            <input type="text" placeholder="elegir fecha" class="form-control" id="reservationDate" name="fecha">
+                            <input type="text" placeholder="elegir fecha" class="form-control" id="fecha" name="fecha">
                             <div class="input-group-append"><span class="input-group-text"><i class="fa fa-calendar"></i></span></div>
                         </div>
-                    </div> --> <!-- DEnd ate Picker Input -->
-                    <!--<div class="col-md-12">
+                    </div><!-- DEnd ate Picker Input -->
+                    <div class="col-md-12">
                         <label class="normal" for="">Sexo:</label>
                     </div>
                     <div class="col-md-2">
                         <div class="control">
                             <label class="radio normal">
-                              <input type="radio" name="answer">
+                              <input type="radio" name="sexo">
                               Mujer
                             </label>
                       </div>
@@ -79,7 +80,7 @@
                     <div class="col-md-2">
                         <div class="control">
                             <label class="radio normal">
-                              <input type="radio" name="answer">
+                              <input type="radio" name="sexo">
                              Hombre
                             </label>
                       </div>
@@ -87,18 +88,18 @@
                     <div class="col-md-3">
                         <div class="control">
                             <label class="radio normal">
-                              <input type="radio" name="answer">
+                              <input type="radio" name="sexo">
                              Personalizado
                             </label>
                       </div>
                     </div>
-                 </div>
+                 </div> --}}
                     <br><br>
 
 
                  <br><br>
 
-            </div> -->
+            </div>
             <div class="container col-md-3">
                 <img src="{{asset('landing/images/regisP.svg')}}" alt="" class="img-fluid"><br><br><br><br>
                 <div class="col-md-12 text-right">
@@ -121,13 +122,13 @@
 
     </div>
   </div>
-  {{csrf_field()}}
+
   <script src="{{asset('landing/vendors/jquery/jquery.min.js')}}"></script>
   <script src="{{asset('landing/vendors/bootstrap/bootstrap.min.js')}}"></script>
   <script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>
   <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
   <script src="{{asset('landing/js/landingpage.js')}}"></script>
-  <script src="{{asset('landing/js/ValidarRegistrarPersona.js')}}"></script>
+  {{-- <script src="{{asset('landing/js/ValidarRegistrarPersona.js')}}"></script> --}}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
@@ -143,7 +144,7 @@ $('.datepicker').datepicker({
 
 
 // FOR DEMO PURPOSE
-$('#reservationDate').on('change', function () {
+$('#fecha').on('change', function () {
     var pickedDate = $('input').val();
     $('#pickedDate').html(pickedDate);
 });
