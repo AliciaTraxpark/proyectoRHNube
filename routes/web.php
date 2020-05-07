@@ -16,11 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/registro/empresa', function () {
-    return view('registro.registroEmpresa');
-});
 
 Auth::routes();
+
+//PERSONA
 
 Route::get('/home', 'HomeController@index')->name('home');
 //persona
@@ -30,3 +29,12 @@ Route::POST('persona/create', 'RegistroPController@create')->name('registerPerso
 
 //organizacion
 Route::get('registro/organizacion', 'registroPController@index')->name('registroOrgani');
+Route::get('/persona', 'registroPController@index')->name('registroPersona');
+Route::post('/persona/store','registroPController@registrarDatos')->name('persona');
+Route::POST('persona/create', 'RegistroPController@create')->name('registerPersona');
+
+//ORGANIZACION
+
+Route::get('/organizacion', 'registroEmpresa@index')->name('registroorganizacion');
+Route::post('/organizacion/store','registroEmpresa@registrarDatos')->name('organizacion');
+Route::POST('organizacion/create', 'registroEmpresa@create')->name('registerOrganizacion');

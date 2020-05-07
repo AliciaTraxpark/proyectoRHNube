@@ -108,10 +108,6 @@
             </div>
         </div>
        </form>
-        <div class="form-text text-danger" id="mensaje">
-
-        </div>
-        <div class="" id="mensajeRegistro"></div>
       </section>
 
 

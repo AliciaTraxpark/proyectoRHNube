@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\ValidarRegistroPRequest;
 use App\user;
 use App\persona;
 use Illuminate\Support\Facades\Hash;
@@ -13,7 +12,7 @@ class registroPController extends Controller
         return view('registro.registroPersona');
     }
 
-    public function registrarDatos(ValidarRegistroPRequest $request){
+    public function registrarDatos(Request $request){
         user::insert($request->except(["_token"]));
     }
     public function create(Request $request)
