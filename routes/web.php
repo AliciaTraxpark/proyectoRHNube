@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('/sistema', function () {
+    return view('Dashboard');
+});
 Auth::routes();
 
 //PERSONA
