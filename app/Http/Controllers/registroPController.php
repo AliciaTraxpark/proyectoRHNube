@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use App\user;
 use App\persona;
@@ -31,13 +31,16 @@ class registroPController extends Controller
     $user_persona= $persona->perso_id ;
 
     $User=new User();
+
     $User->email= $request->get('email');
     $User->rol_id= 1;
     $User->perso_id= $user_persona;
     $User->password= Hash::make($request->get('password'));
     $User->save();
-    return redirect('/registro/organizacion');
+    $user1= $User->id;
 
+
+    return Redirect::to('registro/organizacion/'.$user1);
 
 }
 }

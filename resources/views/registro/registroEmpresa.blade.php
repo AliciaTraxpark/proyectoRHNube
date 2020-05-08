@@ -18,7 +18,7 @@
     <div class="container">
         <div class="col-md-3">
             <div class="navbar-brand-wrapper d-flex w-100">
-                <img src="{{asset('landing/images/rgh.png')}}" alt="">
+                <img src="{{asset('landing/images/logo.png')}}" height="100" >
               </div>
         </div>
         <div class="col-md-9 text-left">
@@ -38,7 +38,7 @@
         <div class="row">
             <div class="col-md-9">
                 <div class="row">
-
+                <input type="hidden" name="iduser" id="iduser" value="{{$userid}}">
                     <div class="col-md-4">
                      <input  class="form-control " placeholder="RUC o ID" name="ruc" id="ruc">
                     </div>

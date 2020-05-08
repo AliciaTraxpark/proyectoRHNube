@@ -22,7 +22,7 @@
     <div class="container">
         <div class="col-md-3">
             <div class="navbar-brand-wrapper d-flex w-100">
-                <img src="{{asset('landing/images/rgh.png')}}" alt="">
+                <img src="{{asset('landing/images/logo.png')}}" height="100" >
               </div>
         </div>
         <div class="col-md-9 text-left">
