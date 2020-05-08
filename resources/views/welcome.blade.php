@@ -29,7 +29,7 @@
 
                 <div class="col-md-5 form-group">
                   <label class="blanco" >Correo electrónico o teléfono	</label>
-                  <input id="email" type="email" class="form-control form-control-sm @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus   >
+                  <input id="email"  class="form-control form-control-sm @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus   >
                   @error('email')
                   <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
@@ -48,7 +48,7 @@
                 <div class="col-md-3 form-group" style="display: flex; align-items: center; top: 15px;">
 
                     <button   type="submit"class="boton">Iniciar sesión</button>
-                    
+
                 </div>
 
             </div>

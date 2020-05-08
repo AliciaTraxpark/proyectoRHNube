@@ -39,5 +39,6 @@ class registroEmpresaController extends Controller
         $organizacion->organi_pagWeb= $request->get('pagweb');
         $organizacion->organi_tipo= $request->get('tipo');
         $organizacion->save();
+       
     }
 }
