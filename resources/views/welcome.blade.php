@@ -18,7 +18,7 @@
     <div class="container">
         <div class="col-md-5">
             <div class="navbar-brand-wrapper d-flex w-100">
-                <img src="{{asset('landing/images/rgh.png')}}" alt="">
+                <img src="{{asset('landing/images/logo.png')}}" height="120" >
               </div>
         </div>
 
