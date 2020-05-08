@@ -10,6 +10,9 @@ use App\ubigeo_peru_districts;
 
 class registroEmpresaController extends Controller
 {
+    public function provincias($id){
+       return ubigeo_peru_provinces::where('department_id',$id)->get();
+    }
     public function index(){
         $departamento=ubigeo_peru_departments::all();
         $provincia=ubigeo_peru_provinces::all();

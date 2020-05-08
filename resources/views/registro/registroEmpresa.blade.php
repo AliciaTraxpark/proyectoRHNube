@@ -62,9 +62,7 @@
                     <div class="col-md-3">
                      <select  class="form-control " placeholder="Provincia " name="provincia" id="provincia">
                          <option value="">SELECCIONAR</option>
-                         @foreach ($provincia as $provincias)
-                           <option class="" value="{{$provincias->id}}">{{$provincias->name}}</option>
-                           @endforeach
+                         
                      </select>
                     </div>
                     <div class="col-md-3">
@@ -161,5 +159,24 @@
   <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
   <script src="{{asset('landing/js/landingpage.js')}}"></script>
 
+  <script>
+    $(function(){
+      $('#departamento').on('change', onSelectDepartamento);
+    });
+
+    function onSelectDepartamento(){
+      var depar_id = $(this).val();
+
+      if(! depar_id)
+        $('#html_select')
+      
+      $.get('/api/departamento/0'+depar_id+'/niveles', function(data){
+        var html_select = '<option value="">SELECCIONAR</option>';
+        for(var i=0; i<data.length; i++)
+            html_select += '<option value="'+ data[i].id +'">'+ data[i].name +'</option>';
+            $('#provincia').html(html_select);
+      });
+    }
+  </script>
 </body>
 </html>
