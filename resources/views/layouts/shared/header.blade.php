@@ -2,13 +2,13 @@
 <div class="navbar navbar-expand flex-column flex-md-row navbar-custom">
     <div class="container-fluid">
         <!-- LOGO -->
-        <a href="/" class="navbar-brand mr-0 mr-md-2 logo">
-            <span class="logo-lg">
-                <img src="{{ URL::asset('admin/assets/images/logo.png') }}" alt="" height="24" />
-                <span class="d-inline h5 ml-1 text-logo">Shreyu</span>
+        <a href="/" class="navbar-brand mr-0 mr-md-2 logo" style="margin-left: 4%">
+            <span class="logo-lg text-center">
+                <img src="{{asset('landing/images/logo.png')}}" alt="" height="60" />
+
             </span>
             <span class="logo-sm">
-                <img src="{{ URL::asset('admin/assets/images/logo.png') }}" alt="" height="24">
+                <img src="{{asset('landing/images/logo.png')}}" alt="" height="24">
             </span>
         </a>
 
@@ -22,16 +22,7 @@
         </ul>
 
         <ul class="navbar-nav flex-row ml-auto d-flex list-unstyled topnav-menu float-right mb-0">
-            <li class="d-none d-sm-block">
-                <div class="app-search">
-                    <form>
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search...">
-                            <span data-feather="search"></span>
-                        </div>
-                    </form>
-                </div>
-            </li>
+
 
             <li class="dropdown d-none d-lg-block" data-toggle="tooltip" data-placement="left" title="Change language">
                 <a class="nav-link dropdown-toggle mr-0" data-toggle="dropdown" href="#" role="button"
