@@ -8,9 +8,11 @@ $(function(){
     
     $.get('/api/departamento/'+depar_id+'/niveles', function(data){
       var html_select = '<option value="">PROVINCIA</option>';
+      var html_dist = '<option value="">DISTRITO</option>';
       for(var i=0; i<data.length; i++)
           html_select += '<option value="'+ data[i].id +'">'+ data[i].name +'</option>';
           $('#provincia').html(html_select);
+          $('#distrito').html(html_dist);
     });
   }
   function onSelectProvincia(){
