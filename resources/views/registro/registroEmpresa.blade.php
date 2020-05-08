@@ -170,7 +170,7 @@
       if(! depar_id)
         $('#html_select')
       
-      $.get('/api/departamento/0'+depar_id+'/niveles', function(data){
+      $.get('/api/departamento/'+depar_id+'/niveles', function(data){
         var html_select = '<option value="">SELECCIONAR</option>';
         for(var i=0; i<data.length; i++)
             html_select += '<option value="'+ data[i].id +'">'+ data[i].name +'</option>';
