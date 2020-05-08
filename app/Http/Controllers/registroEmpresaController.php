@@ -36,9 +36,9 @@ class registroEmpresaController extends Controller
         $organizacion->organi_provincia= $request->get('provincia');
         $organizacion->organi_distrito= $request->get('distrito');
         $organizacion->organi_nempleados= $request->get('nempleados');
-        $organizacion->organi_pagWeb= $request->get('pagweb');
+        $organizacion->organi_pagWeb= $request->get('pagWeb');
         $organizacion->organi_tipo= $request->get('tipo');
         $organizacion->save();
-       
+
     }
 }

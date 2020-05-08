@@ -52,22 +52,22 @@
                  <div class="row">
 
                     <div class="col-md-3">
-                     <select  class="form-control" placeholder="Departamento " name="departamento" id="departamento" >
-                         <option value="">SELECCIONAR</option>
+                     <select  class="form-control" placeholder="Departamento " name="departamento" id="departamento" required>
+                         <option value="">DEPARTAMENTO</option>
                          @foreach ($departamento as $departamentos)
                            <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
                            @endforeach
                      </select>
                     </div>
                     <div class="col-md-3">
-                     <select  class="form-control " placeholder="Provincia " name="provincia" id="provincia">
-                         <option value="">SELECCIONAR</option>
-                         
+                     <select  class="form-control " placeholder="Provincia " name="provincia" id="provincia" required>
+                         <option value="">PROVINCIA</option>
+
                      </select>
                     </div>
                     <div class="col-md-3">
-                     <select  class="form-control " placeholder="Distrito " name="distrito" id="distrito">
-                         <option value="">SELECCIONAR</option>
+                     <select  class="form-control " placeholder="Distrito " name="distrito" id="distrito" required>
+                         <option value="">DISTRITO</option>
                      </select>
                     </div>
                  </div><br>
@@ -88,7 +88,7 @@
                      <div class="col-md-2">
                          <div class="control">
                              <label class="radio normal">
-                               <input type="radio" name="tipo" id="tipo">
+                               <input type="radio" name="tipo" id="tipo" value="Empresa" required>
                                Empresa
                              </label>
                        </div>
@@ -96,7 +96,7 @@
                      <div class="col-md-2">
                          <div class="control">
                              <label class="radio normal">
-                               <input type="radio" name="tipo" id="tipo">
+                               <input type="radio" name="tipo" id="tipo" value="Gobierno" required>
                                Gobierno
                              </label>
                        </div>
@@ -104,7 +104,7 @@
                      <div class="col-md-2">
                          <div class="control">
                              <label class="radio normal">
-                               <input type="radio" name="tipo" id="tipo">
+                               <input type="radio" name="tipo" id="tipo" value="ONG" required>
                                ONG
                              </label>
                        </div>
@@ -112,7 +112,7 @@
                      <div class="col-md-2">
                          <div class="control">
                              <label class="radio normal">
-                               <input type="radio" name="tipo" id="tipo">
+                               <input type="radio" name="tipo" id="tipo" value="Asociación" required>
                                Asociación
                              </label>
                        </div>
@@ -120,7 +120,7 @@
                      <div class="col-md-2">
                          <div class="control">
                              <label class="radio normal">
-                               <input type="radio" name="tipor" id="tipo">
+                               <input type="radio" name="tipor" id="tipo" value="Otros" required>
                                Otros
                              </label>
                        </div>
