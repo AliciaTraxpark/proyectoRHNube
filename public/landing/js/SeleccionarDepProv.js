@@ -7,7 +7,7 @@ $(function(){
     var depar_id = $(this).val();
     
     $.get('/api/departamento/'+depar_id+'/niveles', function(data){
-      var html_select = '<option value="">SELECCIONAR</option>';
+      var html_select = '<option value="">PROVINCIA</option>';
       for(var i=0; i<data.length; i++)
           html_select += '<option value="'+ data[i].id +'">'+ data[i].name +'</option>';
           $('#provincia').html(html_select);
@@ -17,7 +17,7 @@ $(function(){
     var prov_id = $(this).val();
 
     $.get('/api/provincia/'+prov_id+'/niveles', function(data){
-      var html_select = '<option value="">SELECCIONAR</option>';
+      var html_select = '<option value="">DISTRITO</option>';
       for(var i=0; i<data.length; i++)
           html_select += '<option value="'+ data[i].id +'">'+ data[i].name +'</option>';
           $('#distrito').html(html_select);
