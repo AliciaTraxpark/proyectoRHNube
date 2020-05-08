@@ -36,8 +36,3 @@ Route::get('registro/organizacion/{user1}', 'registroEmpresaController@index')->
 Route::post('organizacion/store','registroEmpresaController@registrarDatos')->name('organizacion');
 Route::POST('organizacion/create', 'registroEmpresaController@create')->name('registerOrganizacion');
 
-//BIENVENIDA
-
-Route::get('/bienvenida',function(){
-    return view('Bienvenida/bienvenida');
-});
