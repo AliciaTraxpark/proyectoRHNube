@@ -23,7 +23,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 //persona
- Route::get('registro/persona', 'registroPController@index')->name('registroPersona');
+Route::get('registro/persona', 'registroPController@index')->name('registroPersona');
 Route::post('/persona/store','registroPController@registrarDatos')->name('persona');
 Route::POST('persona/create', 'RegistroPController@create')->name('registerPersona');
 

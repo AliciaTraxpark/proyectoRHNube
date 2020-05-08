@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\ubigeo_peru_departments;
 
 class organizacion extends Model
 {
