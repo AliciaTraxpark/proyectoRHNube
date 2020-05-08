@@ -120,7 +120,7 @@
                      <div class="col-md-2">
                          <div class="control">
                              <label class="radio normal">
-                               <input type="radio" name="tipor" id="tipo" value="Otros" required>
+                               <input type="radio" name="tipo" id="tipo" value="Otros" required>
                                Otros
                              </label>
                        </div>
