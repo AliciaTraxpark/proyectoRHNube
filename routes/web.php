@@ -16,11 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/sistema', function () {
-    return view('Dashboard');
-});
-Auth::routes();
 
+Auth::routes();
+Route::name('Dashboard')->get('dashboard','HomeController@index');
 //PERSONA
 
 Route::get('/home', 'HomeController@index')->name('home');
