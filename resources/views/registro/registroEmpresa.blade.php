@@ -68,9 +68,6 @@
                     <div class="col-md-3">
                      <select  class="form-control " placeholder="Distrito " name="distrito" id="distrito">
                          <option value="">SELECCIONAR</option>
-                         @foreach ($distrito as $distritos)
-                           <option class="" value="{{$distritos->id}}">{{$distritos->name}}</option>
-                           @endforeach
                      </select>
                     </div>
                  </div><br>
@@ -158,25 +155,7 @@
   <script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>
   <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
   <script src="{{asset('landing/js/landingpage.js')}}"></script>
+  <script src="{{asset('landing/js/seleccionarDepProv.js')}}"></script>
 
-  <script>
-    $(function(){
-      $('#departamento').on('change', onSelectDepartamento);
-    });
-
-    function onSelectDepartamento(){
-      var depar_id = $(this).val();
-
-      if(! depar_id)
-        $('#html_select')
-      
-      $.get('/api/departamento/'+depar_id+'/niveles', function(data){
-        var html_select = '<option value="">SELECCIONAR</option>';
-        for(var i=0; i<data.length; i++)
-            html_select += '<option value="'+ data[i].id +'">'+ data[i].name +'</option>';
-            $('#provincia').html(html_select);
-      });
-    }
-  </script>
 </body>
 </html>

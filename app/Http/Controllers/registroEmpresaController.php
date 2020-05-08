@@ -13,6 +13,9 @@ class registroEmpresaController extends Controller
     public function provincias($id){
        return ubigeo_peru_provinces::where('departamento_id',$id)->get();
     }
+    public function distritos($id){
+        return ubigeo_peru_districts::where('province_id',$id)->get();
+    }
     public function index(){
         $departamento=ubigeo_peru_departments::all();
         $provincia=ubigeo_peru_provinces::all();

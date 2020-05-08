@@ -19,3 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/departamento/{id}/niveles','registroEmpresaController@provincias');
+Route::get('/provincia/{id}/niveles','registroEmpresaController@distritos');

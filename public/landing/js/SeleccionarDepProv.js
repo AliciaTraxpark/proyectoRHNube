@@ -1,0 +1,25 @@
+$(function(){
+    $('#departamento').on('change', onSelectDepartamento);
+    $('#provincia').on('change', onSelectProvincia);
+  });
+
+  function onSelectDepartamento(){
+    var depar_id = $(this).val();
+    
+    $.get('/api/departamento/'+depar_id+'/niveles', function(data){
+      var html_select = '<option value="">SELECCIONAR</option>';
+      for(var i=0; i<data.length; i++)
+          html_select += '<option value="'+ data[i].id +'">'+ data[i].name +'</option>';
+          $('#provincia').html(html_select);
+    });
+  }
+  function onSelectProvincia(){
+    var prov_id = $(this).val();
+
+    $.get('/api/provincia/'+prov_id+'/niveles', function(data){
+      var html_select = '<option value="">SELECCIONAR</option>';
+      for(var i=0; i<data.length; i++)
+          html_select += '<option value="'+ data[i].id +'">'+ data[i].name +'</option>';
+          $('#distrito').html(html_select);
+    });
+  }
