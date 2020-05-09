@@ -10,6 +10,19 @@
   <link rel="stylesheet" href="{{asset('landing/vendors/mdi/css/materialdesignicons.min.css')}}">
   <link rel="stylesheet" href="{{asset('landing/vendors/aos/css/aos.css')}}">
   <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
+  <!-- App favicon -->
+  <link rel="shortcut icon" href="{{asset('admin/assets/images/favicon.ico')}}">
+  
+  <!-- Plugin css -->
+  <link href="{{asset('admin/assets/libs/fullcalendar-core/fullcalendar-core.min.css')}}" rel="stylesheet" type="text/css" />
+  <link href="{{asset('admin/assets/libs/fullcalendar-daygrid/fullcalendar-daygrid.min.css')}}" rel="stylesheet" type="text/css" />
+  <link href="{{asset('admin/assets/libs/fullcalendar-bootstrap/fullcalendar-bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+  <link href="{{asset('admin/assets/libs/fullcalendar-timegrid/fullcalendar-timegrid.min.css')}}" rel="stylesheet" type="text/css" />
+  <link href="{{asset('admin/assets/libs/fullcalendar-list/fullcalendar-list.min.css')}}" rel="stylesheet" type="text/css" />
+  <!-- App css -->
+  <link href="{{asset('admin/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+  <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+  <link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
 </head>
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
 
@@ -37,10 +50,10 @@
     </nav>
   </header>
 
-    <div class="content-wrapper">
-        <div class="container">
+    <div class="content-page">
+        <div class="content">
           <div class="row">
-            <div class="col-12">
+            <div class="col-10">
                 <div class="card">
                     <div class="card-body">
                         <div id="calendar"></div>
@@ -61,14 +74,49 @@
   <script src="{{asset('landing/js/landingpage.js')}}"></script>
   <script src="{{asset('landing/js/seleccionarDepProv.js')}}"></script>
 
+  <!-- Vendor js -->
+  <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script>
+
   <!-- plugin js -->
   <script src="{{asset('admin/assets/libs/moment/moment.min.js')}}"></script>
   <script src="{{asset('admin/assets/libs/fullcalendar-core/fullcalendar-core.min.js')}}"></script>
-  <script src="{{asset('admin/assets/libs/fullcalendar-bootstrap/fullcalendar-bootstrap.min.js')}}"></script>
   <script src="{{asset('admin/assets/libs/fullcalendar-daygrid/fullcalendar-daygrid.min.js')}}"></script>
+  <script src="{{asset('admin/assets/libs/fullcalendar-bootstrap/fullcalendar-bootstrap.min.js')}}"></script>
   <script src="{{asset('admin/assets/libs/fullcalendar-timegrid/fullcalendar-timegrid.min.js')}}"></script>
   <script src="{{asset('admin/assets/libs/fullcalendar-list/fullcalendar-list.min.js')}}"></script>
   <script src="{{asset('admin/assets/libs/fullcalendar-interaction/fullcalendar-interaction.min.js')}}"></script>
 
+  <script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        plugins: [ 'dayGrid','interaction','timeGrid','list'],
+        header:{
+          left:'prev,next today',
+          center:'title',
+          right:'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        footer:{
+          left:'Descanso',
+          right:'NoLaborales'
+        },
+        customButtons:{
+          Descanso:{
+            text:"Asignar días de Descanso"
+          },
+          NoLaborales:{
+            text:"Asignar días no Laborales"
+          }
+        }
+
+      });
+      calendar.setOption('locale',"Es");
+
+      calendar.render();
+    });
+
+  </script>
 </body>
 </html>
