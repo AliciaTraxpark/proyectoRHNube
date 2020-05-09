@@ -48,7 +48,7 @@ class registroEmpresaController extends Controller
         $usuario_organizacion->organi_id= $idorgani;
         $usuario_organizacion->save();
 
-        return Redirect::to('/');
+        return Redirect::to('/')->with('mensaje',"Registro Exitoso. Verificar en su correo");
 
 
 

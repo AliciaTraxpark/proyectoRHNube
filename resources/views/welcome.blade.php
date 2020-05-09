@@ -421,6 +421,30 @@
   <script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>
   <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
   <script src="{{asset('landing/js/landingpage.js')}}"></script>
-
+  @if (session('mensaje'))
+  <div class="modal " id="modal"  role="dialog"  style="display: block;">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">CONFIRMACION</h5>
+          <button type="button" class="close" data-dismiss="modal" onclick="cerrarModal()" aria-label="Close">
+            <span aria-hidden="true">&times;</span> 
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>{{ session('mensaje') }}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick="cerrarModal()">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function cerrarModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+  </script>
+  @endif
 </body>
 </html>
