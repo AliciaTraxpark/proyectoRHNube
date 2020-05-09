@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo ='/dashboard';
 
     /**
      * Create a new controller instance.
@@ -38,9 +38,12 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-    public function showLoginForm(){
-        $organizacion=organizacion::all();
-        return view ('Welcome',['organizacion'=>$organizacion]);
+   public function showLoginForm(){
+    if (Auth::check()) {
+        return redirect(route('dashboard'));
+    }
+       else{ return view ('Welcome');}
+
     }
     public function login(){
         $credentials=$this->validate(request(),[
@@ -51,8 +54,7 @@ class LoginController extends Controller
         if(Auth::attempt($credentials)){
             return redirect(route('dashboard'));
         }
-            return back()
-            ->withInput(request(['email']));
+            
     }
 
     public function logout(){

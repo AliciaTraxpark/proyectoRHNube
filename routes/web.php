@@ -18,10 +18,13 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::name('Dashboard')->get('dashboard','HomeController@index');
+
+Route::get('logout', 'Auth\LoginController@logout')->name('logout');
+
+Route::name('dashboard')->get('dashboard','HomeController@index');
 //PERSONA
 
-Route::get('/home', 'HomeController@index')->name('home');
+
 //persona
 Route::get('registro/persona', 'registroPController@index')->name('registroPersona');
 Route::post('/persona/store','registroPController@registrarDatos')->name('persona');
