@@ -54,12 +54,22 @@ class LoginController extends Controller
         if(Auth::attempt($credentials)){
             return redirect(route('dashboard'));
         }
-            
+
     }
 
     public function logout(){
        Auth::logout();
-       return redirect('/');
+       return view ('welcome');
     }
 
+    public function principal(){
+
+        if (Auth::check()) {
+            return redirect('/dashboard');
+        }
+        else{
+            return view ('welcome');
+        }
+
+        }
 }
