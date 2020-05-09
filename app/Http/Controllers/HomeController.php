@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use App\eventos;
 class HomeController extends Controller
 {
     /**
@@ -25,7 +26,20 @@ class HomeController extends Controller
     public function index()
     {
 
-        return view('dashboard');
-    }
+        $eventos=eventos::all();
+        //$idevento=$eventos->id;
+        if ($eventos->first()) {
+            $variable=1;
+         }
 
+
+         else{
+            $variable=0;
+        }
+       
+        return view('dashboard',['variable'=>$variable]);
+
+
+
+}
 }
