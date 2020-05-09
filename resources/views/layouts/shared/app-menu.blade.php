@@ -2,7 +2,7 @@
     <li class="menu-title">Navigation</li>
 
     <li>
-        <a href="/sistema">
+        <a href="/dashboard">
             <i data-feather="home"></i>
             <span class="badge badge-success float-right">1</span>
             <span> Dashboard </span>
@@ -10,9 +10,9 @@
     </li>
     <li class="menu-title">Apps</li>
     <li>
-        <a href="/apps/calendar">
+        <a href="/calendario">
             <i data-feather="calendar"></i>
-            <span> Calendar </span>
+            <span> Calendarios </span>
         </a>
     </li>
     <li>

@@ -59,7 +59,8 @@ class LoginController extends Controller
 
     public function logout(){
        Auth::logout();
-       return view ('welcome');
+       /* return view ('welcome'); */
+       return redirect(route('principal'));
     }
 
     public function principal(){

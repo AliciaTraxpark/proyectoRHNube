@@ -22,8 +22,9 @@ Auth::routes();
 
 /* Route::get('/', 'HomeController@principal')->name('principal'); */
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
-
+//MENU
 Route::name('dashboard')->get('dashboard','HomeController@index');
+Route::name('calendario')->get('calendario','calendarioController@index');
 //PERSONA
 
 
