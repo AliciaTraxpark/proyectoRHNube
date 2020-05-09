@@ -63,12 +63,12 @@
 
   <!-- plugin js -->
   <script src="{{asset('admin/assets/libs/moment/moment.min.js')}}"></script>
-  <script src="{{asset('admin/assets/libs/fullcalendar-core/main.min.js')}}"></script>
-  <script src="{{asset('admin/assets/libs/fullcalendar-bootstrap/main.min.js')}}"></script>
-  <script src="{{asset('admin/assets/libs/fullcalendar-daygrid/main.min.js')}}"></script>
-  <script src="{{asset('admin/assets/libs/fullcalendar-timegrid/main.min.js')}}"></script>
-  <script src="{{asset('admin/assets/libs/fullcalendar-list/main.min.js')}}"></script>
-  <script src="{{asset('admin/assets/libs/fullcalendar-interaction/main.min.js')}}"></script>
+  <script src="{{asset('admin/assets/libs/fullcalendar-core/fullcalendar-core.min.js')}}"></script>
+  <script src="{{asset('admin/assets/libs/fullcalendar-bootstrap/fullcalendar-bootstrap.min.js')}}"></script>
+  <script src="{{asset('admin/assets/libs/fullcalendar-daygrid/fullcalendar-daygrid.min.js')}}"></script>
+  <script src="{{asset('admin/assets/libs/fullcalendar-timegrid/fullcalendar-timegrid.min.js')}}"></script>
+  <script src="{{asset('admin/assets/libs/fullcalendar-list/fullcalendar-list.min.js')}}"></script>
+  <script src="{{asset('admin/assets/libs/fullcalendar-interaction/fullcalendar-interaction.min.js')}}"></script>
 
 </body>
 </html>
