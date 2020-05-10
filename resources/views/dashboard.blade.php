@@ -11,14 +11,14 @@
     <div class="col-sm-4 col-xl-6">
         <h4 class="mb-1 mt-0">Dashboard</h4>
     </div>
-  
+
 </div>
 @endsection
     @if ($variable==0)
     @section('content')
     <div class="row">
         <div class="col-md-12  text-center">
-            <a href="{{route('calendario')}}"><button class="btn btn-primary mr-1" >COMIENZA AHORA</button></a>
+            <a href="{{route('calendario')}}"><button class="boton btn btn-default mr-1" >COMIENZA AHORA</button></a>
         </div>
 
 

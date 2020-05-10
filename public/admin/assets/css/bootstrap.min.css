@@ -11962,3 +11962,9 @@ p {
   padding-bottom: 1px;
 }
 
+.boton{
+    font-size: 14px;
+    color: white;
+    background-color:#163552;
+    padding: 8px;
+}

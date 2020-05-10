@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
   <!-- App favicon -->
   <link rel="shortcut icon" href="{{asset('admin/assets/images/favicon.ico')}}">
-  
+
   <!-- Plugin css -->
   <link href="{{asset('admin/assets/libs/fullcalendar-core/fullcalendar-core.min.css')}}" rel="stylesheet" type="text/css" />
   <link href="{{asset('admin/assets/libs/fullcalendar-daygrid/fullcalendar-daygrid.min.css')}}" rel="stylesheet" type="text/css" />
@@ -53,7 +53,7 @@
     <div class="content-page">
         <div class="content">
           <div class="row">
-            <div class="col-10">
+            <div class="col-md-8">
                 <div class="card">
                     <div class="card-body">
                         <div id="calendar"></div>
@@ -85,6 +85,7 @@
   <script src="{{asset('admin/assets/libs/fullcalendar-timegrid/fullcalendar-timegrid.min.js')}}"></script>
   <script src="{{asset('admin/assets/libs/fullcalendar-list/fullcalendar-list.min.js')}}"></script>
   <script src="{{asset('admin/assets/libs/fullcalendar-interaction/fullcalendar-interaction.min.js')}}"></script>
+  <script src="{{asset('admin/assets/libs/fullcalendar-bootstrap/locales/es.js')}}"></script>
 
   <script>
 
@@ -92,6 +93,7 @@
       var calendarEl = document.getElementById('calendar');
 
       var calendar = new FullCalendar.Calendar(calendarEl, {
+        locale: 'es',
         plugins: [ 'dayGrid','interaction','timeGrid','list','interaction'],
         header:{
           left:'prev,next today',
