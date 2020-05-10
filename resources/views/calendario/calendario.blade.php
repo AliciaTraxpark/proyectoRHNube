@@ -92,7 +92,7 @@
       var calendarEl = document.getElementById('calendar');
 
       var calendar = new FullCalendar.Calendar(calendarEl, {
-        plugins: [ 'dayGrid','interaction','timeGrid','list'],
+        plugins: [ 'dayGrid','interaction','timeGrid','list','interaction'],
         header:{
           left:'prev,next today',
           center:'title',
@@ -109,6 +109,9 @@
           NoLaborales:{
             text:"Asignar días no Laborales"
           }
+        },
+        dateClick:function(info){
+          console.log(info);
         }
 
       });
