@@ -22,24 +22,34 @@
     @else
         @section('content')
         <!-- products -->
-        <div class="row">
-            <div class="col-xl-4">
-                <div id="chart" class="apex-charts mb-0 mt-4"></div>
-            </div> <!-- end col-->
-            <div class="col-xl-4">
-                <div id="chart2" class="apex-charts mb-0 mt-4"></div>
-            </div> <!-- end col-->
+        <div class="card">
+            <div class="row">
+                <div class="card-body">
+                    <div class="col-xl-6">
+                        <div id="chart" class="apex-charts mb-0 mt-4"></div>
+                    </div> <!-- end col-->
+                </div>
+                <div class="card-body">
+                    <div class="col-xl-8">
+                        <div id="chart2" class="apex-charts mb-0 mt-4"></div>
+                    </div> <!-- end col-->
+                </div>
+            </div>
+            <!-- end row -->
+            <div class="row">
+                <div class="card-body">
+                    <div class="col-xl-6">
+                        <div id="chart3" class="apex-charts mb-0 mt-4"></div>
+                    </div> <!-- end col-->
+                </div>
+                <div class="card-body">
+                    <div class="col-xl-8">
+                        <div id="chart4" class="apex-charts mb-0 mt-4"></div>
+                    </div> <!-- end col-->
+                </div>
+            </div>
+            <!-- end row -->
         </div>
-        <!-- end row -->
-        <div class="row">
-            <div class="col-xl-4">
-                <div id="chart3" class="apex-charts mb-0 mt-4"></div>
-            </div> <!-- end col-->
-            <div class="col-xl-4">
-                <div id="chart4" class="apex-charts mb-0 mt-4"></div>
-            </div> <!-- end col-->
-        </div>
-        <!-- end row -->
         @endsection
     @endif
 @section('script')
