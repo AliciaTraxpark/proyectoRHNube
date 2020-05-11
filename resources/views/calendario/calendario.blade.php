@@ -52,21 +52,19 @@
 
     <div class="content-page" style="margin-top: 40px; margin-left: 55px; margin-right: 55px;">
         <div class="content">
-          <div class="row">
-            <div class="col-md-6 text-center">
-                <div class="card">
-                    <div class="card-body">
-                        <div id="calendar"></div>
-                    </div> <!-- end card body-->
-                </div> <!-- end card -->
-            </div>
-            <div class="col-md-6 text-center">
-                <div class="card">
-                    <div class="card-body">
-                        <div id="calendar1"></div>
-                    </div> <!-- end card body-->
-                </div> <!-- end card -->
-            </div>
+          <div class="row " >
+              <div class="col-md-12 text-center">
+                <div class="col-md-8" style="left: 17.5%">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="calendar"></div>
+                        </div> <!-- end card body-->
+                    </div> <!-- end card -->
+                </div>
+
+              </div>
+
+
             <!-- end col-12 -->
         </div> <!-- end row -->
         <footer class="border-top">
@@ -132,43 +130,6 @@
     });
 
   </script>
-   <script>
 
-    document.addEventListener('DOMContentLoaded', function() {
-      var calendarEl1 = document.getElementById('calendar1');
-      var fecha = new Date();
-      var ano = fecha. getFullYear();
-      var calendar = new FullCalendar.Calendar(calendarEl1, {
-        locale: 'es',
-        defaultDate: ano+'-02-01',
-        plugins: [ 'dayGrid','interaction','timeGrid','list','interaction'],
-        header:{
-          left:'prev,next today',
-          center:'title',
-          right:'dayGridMonth'
-        },
-        footer:{
-          left:'Descanso',
-          right:'NoLaborales'
-        },
-        customButtons:{
-          Descanso:{
-            text:"Asignar días de Descanso"
-          },
-          NoLaborales:{
-            text:"Asignar días no Laborales"
-          }
-        },
-        dateClick:function(info){
-          console.log(info);
-        }
-
-      });
-      calendar.setOption('locale',"Es");
-
-      calendar.render();
-    });
-
-  </script>
 </body>
 </html>
