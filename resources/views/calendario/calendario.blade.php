@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="{{asset('landing/vendors/mdi/css/materialdesignicons.min.css')}}">
   <link rel="stylesheet" href="{{asset('landing/vendors/aos/css/aos.css')}}">
   <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
+
   <!-- App favicon -->
   <link rel="shortcut icon" href="{{asset('admin/assets/images/favicon.ico')}}">
 
@@ -50,21 +51,66 @@
 
     <div class="content-page" style="margin-top: 40px; margin-left: 55px; margin-right: 55px;">
         <div class="content">
-          <div class="row " >
-              <div class="col-md-12 text-center">
-                <div class="col-md-8" style="left: 17.5%">
-                    <div class="card">
-                        <div class="card-body">
-                            <div id="calendar"></div>
-                        </div> <!-- end card body-->
-                    </div> <!-- end card -->
+            <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="myModalLabel">Modal Heading</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <h6>Text in a modal</h6>
+                            <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+                            <hr>
+                            <div class="form-group">
+                                <label for="start" class="col-sm-2 control-label">Fecha Inicial</label>
+                                <div class="col-sm-10">
+                                  <input type="text" name="start" class="form-control" id="start" readonly>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="end" class="col-sm-2 control-label">Fecha Final</label>
+                                <div class="col-sm-10">
+                                  <input type="text" name="end" class="form-control" id="end" readonly>
+                                </div>
+                              </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <div class="row " >
+                <div class="col-md-12 text-center">
+                  <div class="col-md-8" style="left: 17.5%">
+                      <div class="card">
+                          <div class="card-body">
+                              <div id="calendar"></div>
+                          </div> <!-- end card body-->
+                          <div class="card-footer">
+                            <div class="row">
+                              <div class="col-md-4 text-center">
+                                <div id='external-events'>
+                                  <div class='fc-event'>Asignar Días de Descanso</div>
+                                </div>
+                              </div>
+                              <div class="col-md-4 text-center">
+                                <div id='external-events'>
+                                  <div class='fc-event'>Asignar Días no Laborales</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                      </div> <!-- end card -->
+                  </div>
+
                 </div>
-
-              </div>
-
-
-            <!-- end col-12 -->
-        </div> <!-- end row -->
+            </div>
         <footer class="border-top">
             <p class="text-center text-muted pt-4">© <?php echo date("Y"); ?> - RH Solution | Todos los derechos reservados.</p>
         </footer>
@@ -82,12 +128,75 @@
 
   <!-- plugin js -->
   <script src="{{asset('admin/assets/libs/moment/moment.min.js')}}"></script>
-  <script src="{{asset('admin/packages/core/main.js"></script>
-  <script src="{{asset('admin/packages/interaction/main.js"></script>
-  <script src="{{asset('admin/packages/daygrid/main.js"></script>
-  <script src="{{asset('admin/packages/timegrid/main.js"></script>
+  <script src="{{asset('admin/packages/core/main.js')}}"></script>
+  <script src="{{asset('admin/packages/core/locales/es.js')}}"></script>
 
+  <script src="{{asset('admin/packages/daygrid/main.js')}}"></script>
+  <script src="{{asset('admin/packages/timegrid/main.js')}}"></script>
+  <script src="{{asset('admin/packages/interaction/main.js')}}"></script>
+  <script>
 
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+      var fecha = new Date();
+      var ano = fecha. getFullYear();
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        locale: 'es',
+        defaultDate: ano+'-01-01',
 
+        plugins: [ 'dayGrid','interaction','timeGrid'],
+        navLinks: true, // can click day/week names to navigate views
+        selectable: true,
+        selectMirror: true,
+
+        select: function(arg) {
+            calendar.addEvent({
+
+            start: arg.start,
+            end: arg.endStr,
+
+          })
+                $('#myModal #start').val(moment(start));
+
+				$('#end').val(arg.endStr -1);
+                $('#myModal').modal('show');
+                console.log(arg);
+			},
+       
+      editable: true,
+      eventLimit: true,
+        header:{
+          left:'prev,next today',
+          center:'title',
+          right:'dayGridMonth'
+        },
+        footer:{
+          left:'Descanso',
+          right:'NoLaborales'
+        },
+        customButtons:{
+          Descanso:{
+            text:"Asignar días de Descanso",
+            click:function(){
+                $('#myModal').modal('toggle');
+
+            }
+          },
+          NoLaborales:{
+            text:"Asignar días no Laborales"
+          }
+        },
+        dateClick:function(info){
+            $('#myModal').modal('toggle');
+          console.log(info);
+        }
+
+      });
+      calendar.setOption('locale',"Es");
+
+      calendar.render();
+    });
+
+  </script>
 </body>
 </html>
