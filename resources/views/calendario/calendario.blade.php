@@ -50,24 +50,30 @@
     </nav>
   </header>
 
-    <div class="content-page" style="margin-top: 40px; margin-left: 55px; margin-right: 55px;">
+    <div class="content-page">
         <div class="content">
           <div class="row">
-            <div class="col-md-6 text-center">
+            <div class="col-md-10 text-center">
                 <div class="card">
                     <div class="card-body">
                         <div id="calendar"></div>
                     </div> <!-- end card body-->
+                    <div class="card-footer">
+                      <div class="row">
+                        <div class="col-md-4 text-center">
+                          <div id='external-events'>
+                            <div class='fc-event'>Asignar Días de Descanso</div>
+                          </div>
+                        </div>
+                        <div class="col-md-4 text-center">
+                          <div id='external-events'>
+                            <div class='fc-event'>Asignar Días no Laborales</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                 </div> <!-- end card -->
             </div>
-            <div class="col-md-6 text-center">
-                <div class="card">
-                    <div class="card-body">
-                        <div id="calendar1"></div>
-                    </div> <!-- end card body-->
-                </div> <!-- end card -->
-            </div>
-            <!-- end col-12 -->
         </div> <!-- end row -->
         <footer class="border-top">
             <p class="text-center text-muted pt-4">© <?php echo date("Y"); ?> - RH Solution | Todos los derechos reservados.</p>
@@ -98,8 +104,24 @@
 
     document.addEventListener('DOMContentLoaded', function() {
       var calendarEl = document.getElementById('calendar');
+
+      var Draggable = FullCalendarInteraction.Draggable;
+      var containerEl = document.getElementById('external-events');
       var fecha = new Date();
       var ano = fecha. getFullYear();
+
+      // initialize the external events
+      // -----------------------------------------------------------------
+
+      new Draggable(containerEl, {
+        itemSelector: '.fc-event',
+        eventData: function(eventEl) {
+          return {
+            title: eventEl.innerText
+          };
+        }
+      });
+
       var calendar = new FullCalendar.Calendar(calendarEl, {
         locale: 'es',
         defaultDate: ano+'-01-01',
@@ -112,52 +134,6 @@
         footer:{
           left:'Descanso',
           right:'NoLaborales'
-        },
-        customButtons:{
-          Descanso:{
-            text:"Asignar días de Descanso"
-          },
-          NoLaborales:{
-            text:"Asignar días no Laborales"
-          }
-        },
-        dateClick:function(info){
-          console.log(info);
-        }
-
-      });
-      calendar.setOption('locale',"Es");
-
-      calendar.render();
-    });
-
-  </script>
-   <script>
-
-    document.addEventListener('DOMContentLoaded', function() {
-      var calendarEl1 = document.getElementById('calendar1');
-      var fecha = new Date();
-      var ano = fecha. getFullYear();
-      var calendar = new FullCalendar.Calendar(calendarEl1, {
-        locale: 'es',
-        defaultDate: ano+'-02-01',
-        plugins: [ 'dayGrid','interaction','timeGrid','list','interaction'],
-        header:{
-          left:'prev,next today',
-          center:'title',
-          right:'dayGridMonth'
-        },
-        footer:{
-          left:'Descanso',
-          right:'NoLaborales'
-        },
-        customButtons:{
-          Descanso:{
-            text:"Asignar días de Descanso"
-          },
-          NoLaborales:{
-            text:"Asignar días no Laborales"
-          }
         },
         dateClick:function(info){
           console.log(info);
