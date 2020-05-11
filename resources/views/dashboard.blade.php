@@ -14,7 +14,8 @@
         @section('content')
         <div class="row">
             <div class="col-md-12  text-center">
-                <a href="{{route('calendario')}}"><button class="boton btn btn-default mr-1" >COMIENZA AHORA</button></a>
+                <a href="{{route('calendario')}}"><button class="boton btn btn-default mr-1" ><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                    COMIENZA AHORA</button></a>
             </div>
         </div>
         <!-- end row -->
