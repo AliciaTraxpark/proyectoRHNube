@@ -13,12 +13,10 @@
   <!-- App favicon -->
   <link rel="shortcut icon" href="{{asset('admin/assets/images/favicon.ico')}}">
 
-  <!-- Plugin css -->
-  <link href="{{asset('admin/assets/libs/fullcalendar-core/fullcalendar-core.min.css')}}" rel="stylesheet" type="text/css" />
-  <link href="{{asset('admin/assets/libs/fullcalendar-daygrid/fullcalendar-daygrid.min.css')}}" rel="stylesheet" type="text/css" />
-  <link href="{{asset('admin/assets/libs/fullcalendar-bootstrap/fullcalendar-bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
-  <link href="{{asset('admin/assets/libs/fullcalendar-timegrid/fullcalendar-timegrid.min.css')}}" rel="stylesheet" type="text/css" />
-  <link href="{{asset('admin/assets/libs/fullcalendar-list/fullcalendar-list.min.css')}}" rel="stylesheet" type="text/css" />
+  <!-- Plugin css  CALENDAR-->
+  <link href="{{asset('admin/packages/core/main.css')}}" rel="stylesheet" />
+<link href="{{asset('admin/packages/daygrid/main.css')}}" rel="stylesheet" />
+<link href="{{asset('admin/packages/timegrid/main.css')}}" rel="stylesheet" />
   <!-- App css -->
   <link href="{{asset('admin/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
   <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
@@ -84,52 +82,12 @@
 
   <!-- plugin js -->
   <script src="{{asset('admin/assets/libs/moment/moment.min.js')}}"></script>
-  <script src="{{asset('admin/assets/libs/fullcalendar-core/fullcalendar-core.min.js')}}"></script>
-  <script src="{{asset('admin/assets/libs/fullcalendar-daygrid/fullcalendar-daygrid.min.js')}}"></script>
-  <script src="{{asset('admin/assets/libs/fullcalendar-bootstrap/fullcalendar-bootstrap.min.js')}}"></script>
-  <script src="{{asset('admin/assets/libs/fullcalendar-timegrid/fullcalendar-timegrid.min.js')}}"></script>
-  <script src="{{asset('admin/assets/libs/fullcalendar-list/fullcalendar-list.min.js')}}"></script>
-  <script src="{{asset('admin/assets/libs/fullcalendar-interaction/fullcalendar-interaction.min.js')}}"></script>
-  <script src="{{asset('admin/assets/libs/fullcalendar-bootstrap/locales/es.js')}}"></script>
+  <script src="{{asset('admin/packages/core/main.js"></script>
+  <script src="{{asset('admin/packages/interaction/main.js"></script>
+  <script src="{{asset('admin/packages/daygrid/main.js"></script>
+  <script src="{{asset('admin/packages/timegrid/main.js"></script>
 
-  <script>
 
-    document.addEventListener('DOMContentLoaded', function() {
-      var calendarEl = document.getElementById('calendar');
-      var fecha = new Date();
-      var ano = fecha. getFullYear();
-      var calendar = new FullCalendar.Calendar(calendarEl, {
-        locale: 'es',
-        defaultDate: ano+'-01-01',
-        plugins: [ 'dayGrid','interaction','timeGrid','list','interaction'],
-        header:{
-          left:'prev,next today',
-          center:'title',
-          right:'dayGridMonth'
-        },
-        footer:{
-          left:'Descanso',
-          right:'NoLaborales'
-        },
-        customButtons:{
-          Descanso:{
-            text:"Asignar días de Descanso"
-          },
-          NoLaborales:{
-            text:"Asignar días no Laborales"
-          }
-        },
-        dateClick:function(info){
-          console.log(info);
-        }
-
-      });
-      calendar.setOption('locale',"Es");
-
-      calendar.render();
-    });
-
-  </script>
 
 </body>
 </html>
