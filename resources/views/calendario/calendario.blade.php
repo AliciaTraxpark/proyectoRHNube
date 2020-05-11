@@ -108,7 +108,8 @@
                           </div>
                       </div> <!-- end card -->
                   </div>
-
+                   <input type="text" id="pruebaStar">
+                   <input type="text" id="pruebaEnd">
                 </div>
             </div>
         <footer class="border-top">
@@ -148,21 +149,21 @@
         navLinks: true, // can click day/week names to navigate views
         selectable: true,
         selectMirror: true,
-
         select: function(arg) {
-            calendar.addEvent({
+           
 
+         /*  calendar.addEvent({
+            title: 'title',
             start: arg.start,
-            end: arg.endStr,
+            end: arg.end,
+            allDay: arg.allDay
+          }) */
+          $('#pruebaEnd').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
+          $('#pruebaStar').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
+        console.log(arg);
 
-          })
-                $('#myModal #start').val(moment(start));
+      },
 
-				$('#end').val(arg.endStr -1);
-                $('#myModal').modal('show');
-                console.log(arg);
-			},
-       
       editable: true,
       eventLimit: true,
         header:{
@@ -178,6 +179,10 @@
           Descanso:{
             text:"Asignar días de Descanso",
             click:function(){
+                var start=  $('#pruebaStar').val();
+                var end=  $('#pruebaEnd').val();
+                $('#start').val(start);
+                $('#end').val(end);
                 $('#myModal').modal('toggle');
 
             }
@@ -186,10 +191,7 @@
             text:"Asignar días no Laborales"
           }
         },
-        dateClick:function(info){
-            $('#myModal').modal('toggle');
-          console.log(info);
-        }
+
 
       });
       calendar.setOption('locale',"Es");
