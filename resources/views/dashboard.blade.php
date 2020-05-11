@@ -23,22 +23,20 @@
         @section('content')
         <!-- products -->
         <div class="row">
-            <div class="col-xl-5">
-                <div class="card">
-                    <div class="card-body">
-                        <div id="chart" class="apex-charts mb-0 mt-4"></div>
-                    </div> <!-- end card-body-->
-                </div> <!-- end card-->
+            <div class="col-xl-4">
+                <div id="chart" class="apex-charts mb-0 mt-4"></div>
+            </div> <!-- end col-->
+            <div class="col-xl-4">
+                <div id="chart2" class="apex-charts mb-0 mt-4"></div>
             </div> <!-- end col-->
         </div>
         <!-- end row -->
         <div class="row">
-            <div class="col-xl-5">
-                <div class="card">
-                    <div class="card-body">
-                        <div id="chart2" class="apex-charts mb-0 mt-4"></div>
-                    </div> <!-- end card-body-->
-                </div> <!-- end card-->
+            <div class="col-xl-4">
+                <div id="chart3" class="apex-charts mb-0 mt-4"></div>
+            </div> <!-- end col-->
+            <div class="col-xl-4">
+                <div id="chart4" class="apex-charts mb-0 mt-4"></div>
             </div> <!-- end col-->
         </div>
         <!-- end row -->
