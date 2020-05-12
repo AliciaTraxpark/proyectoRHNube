@@ -42,8 +42,13 @@
           <label for="" class="blanco">Calendario de Perú, puedes crear calendarios regionales o personalizados</label>
         </div>
         <div class="col-md-2 text-left">
-          <select  class="form-control" placeholder="Departamento " name="departamento" id="departamento" required>
+          <select  class="form-control" placeholder="pais" name="pais" id="pais" required>
             <option value="">PAIS</option>
+          </select>
+        </div>
+        <div class="col-md-2 text-left">
+          <select  class="form-control" placeholder="Departamento " name="departamento" id="departamento" required>
+            <option value="">DEPARTAMENTO</option>
           </select>
         </div>
         <div class=" col-md-2">
