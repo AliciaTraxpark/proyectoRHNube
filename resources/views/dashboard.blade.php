@@ -27,15 +27,12 @@
         <div class="card">
             <div class="row">
                 <div class="col-xl-4">
-                    <h5 class="card-title mt-0 mb-0">Sales By Category</h5>
-                    <div id="chart" class="apex-charts mb-0 mt-4"></div>
+                    <div id="donut-chart-7" class="apex-charts mb-0 mt-4"></div>
                 </div> <!-- end col-->
                 <div class="col-xl-4">
-                    <h5 class="card-title mt-0 mb-0">Sales By Category</h5>
                     <div id="chart2" class="apex-charts mb-0 mt-4"></div>
                 </div> <!-- end col-->
                 <div class="col-xl-4">
-                    <h5 class="card-title mt-0 mb-0">Sales By Category</h5>
                     <div id="chart3" class="apex-charts mb-0 mt-4"></div>
                 </div> <!-- end col-->
             </div>
