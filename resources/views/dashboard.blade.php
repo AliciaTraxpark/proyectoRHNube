@@ -3,6 +3,8 @@
 
 @section('css')
 <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+	<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
 @endsection
 
 @section('breadcrumb')
@@ -27,31 +29,24 @@
         <div class="card">
             <div class="row">
                 <div class="col-xl-4">
-                    <div id="donut-chart-7" class="apex-charts mb-0 mt-4"></div>
+                    <h5 class="card-title mt-0 mb-0">Sales By Category</h5>
+                    <div id="chart" class="apex-charts mb-0 mt-4"></div>
                 </div> <!-- end col-->
                 <div class="col-xl-4">
-                    <div class="apex-charts mb-0 mt-4"></div>
+                    <h5 class="card-title mt-0 mb-0">Sales By Category</h5>
+                    <div id="chart2" class="apex-charts mb-0 mt-4"></div>
                 </div> <!-- end col-->
                 <div class="col-xl-4">
-                    <div class="apex-charts mb-0 mt-4"></div>
+                    <h5 class="card-title mt-0 mb-0">Sales By Category</h5>
+                    <div id="chart3" class="apex-charts mb-0 mt-4"></div>
                 </div> <!-- end col-->
             </div>
             <!-- end row -->
-            <div class="row">
-                <div class="col-xl-4">
-                    <h5 class="card-title mt-0 mb-0">Sales By Category</h5>
-                    <div class="apex-charts mb-0 mt-4"></div>
-                </div> <!-- end col-->
-                <div class="col-xl-4">
-                    <h5 class="card-title mt-0 mb-0">Sales By Category</h5>
-                    <div class="apex-charts mb-0 mt-4"></div>
-                </div> <!-- end col-->
-                <div class="col-xl-4">
-                    <h5 class="card-title mt-0 mb-0">Sales By Category</h5>
-                    <div class="apex-charts mb-0 mt-4"></div>
-                </div> <!-- end col-->
-            </div>
+
             <!-- end row -->
+        </div>
+        <div class="col-md-4">
+            <div id="chart-container">FusionCharts XT will load here!</div>
         </div>
         @endsection
     @endif
@@ -65,4 +60,46 @@
 @section('script-bottom')
 <!-- init js -->
 <script src="{{ URL::asset('admin/assets/js/pages/dashboard.init.js') }}"></script>
+<script type="text/javascript">
+    FusionCharts.ready(function(){
+        var chartObj = new FusionCharts({
+type: 'doughnut2d',
+renderAt: 'chart-container',
+width: '500',
+height: '400',
+dataFormat: 'json',
+dataSource: {
+    "chart": {
+        "caption": "Split of Revenue by Product Categories",
+        "subCaption": "Last year",
+        "numberPrefix": "$",
+        "bgColor": "#ffffff",
+        "startingAngle": "310",
+        "showLegend": "1",
+        "defaultCenterLabel": " $64.08K",
+        "centerLabel": "Revenue from $label: $value",
+        "centerLabelBold": "1",
+        "showTooltip": "0",
+        "decimals": "0",
+        "theme": "fusion"
+    },
+    "data": [{
+        "label": "Food",
+        "value": "28504"
+    }, {
+        "label": "Apparels",
+        "value": "14633"
+    }, {
+        "label": "Electronics",
+        "value": "10507"
+    }, {
+        "label": "Household",
+        "value": "4910"
+    }]
+}
+}
+);
+        chartObj.render();
+    });
+</script>
 @endsection
