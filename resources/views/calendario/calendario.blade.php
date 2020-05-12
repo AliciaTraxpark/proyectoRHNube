@@ -200,7 +200,7 @@
           left:'Descanso',
           right:'NoLaborales'
         },
-        events:"{{('calendarioShow')}}",
+        events:"{{route('calendarioShow')}}",
         customButtons:{
           Descanso:{
             text:"Asignar días de Descanso",
