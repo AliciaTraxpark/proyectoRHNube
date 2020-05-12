@@ -28,7 +28,13 @@ class calendarioController extends Controller
     public function store(Request $request){
       $datosEvento=request()->except(['_method']);
       eventos::insert($datosEvento);
-      print_r($datosEvento);
+
+
+    }
+    public function show(){
+        $data['eventos1']=eventos::all();
+        return response()->json($data['eventos1']);
+        
 
     }
 }

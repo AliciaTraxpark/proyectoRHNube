@@ -27,6 +27,7 @@ Route::name('dashboard')->get('dashboard','HomeController@index');
 //CALENDARIO
 Route::name('calendario')->get('calendario','calendarioController@index');
 Route::post('/calendario/store','calendarioController@store');
+Route::get('calendario/show', 'calendarioController@show')->name('calendarioShow');
 //PERSONA
 
 

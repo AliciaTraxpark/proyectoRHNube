@@ -216,9 +216,10 @@
             text:"Asignar días no Laborales"
           }
         },
-
+       events:"{{'calendarioShow'}}"
 
       });
+
       calendar.setOption('locale',"Es");
 
       calendar.render();
