@@ -4,7 +4,7 @@
 @section('css')
 <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
-	<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
 @endsection
 
 @section('breadcrumb')
@@ -26,9 +26,7 @@
         @section('content')
 
         <!-- products -->
-        <div class="col-md-4">
-            <div id="chart-container">FusionCharts XT will load here!</div>
-        </div>
+        <div id="chart-container"></div>
         @endsection
     @endif
 @section('script')
@@ -41,46 +39,55 @@
 @section('script-bottom')
 <!-- init js -->
 <script src="{{ URL::asset('admin/assets/js/pages/dashboard.init.js') }}"></script>
-<script type="text/javascript">
-    FusionCharts.ready(function(){
-        var chartObj = new FusionCharts({
-type: 'doughnut2d',
-renderAt: 'chart-container',
-width: '500',
-height: '400',
-dataFormat: 'json',
-dataSource: {
-    "chart": {
-        "caption": "Split of Revenue by Product Categories",
-        "subCaption": "Last year",
-        "numberPrefix": "$",
-        "bgColor": "#ffffff",
-        "startingAngle": "310",
-        "showLegend": "1",
-        "defaultCenterLabel": " $64.08K",
-        "centerLabel": "Revenue from $label: $value",
-        "centerLabelBold": "1",
-        "showTooltip": "0",
-        "decimals": "0",
-        "theme": "fusion"
+<script>
+    const dataSource = {
+    chart: {
+    showpercentvalues: "1",
+    defaultcenterlabel: "Por área:",
+    pieRadius: "90",
+    doughnutRadius: "80",
+    aligncaptionwithcanvas: "0",
+    captionpadding: "0",
+    decimals: "1",
+    plottooltext:
+      "<b>$percentValue</b><b>$label</b>",
+    centerlabel: "Por área: $value",
+    theme: "fusion"
+  },
+  data: [
+    {
+      label: "Contabilidad",
+      value: "10"
     },
-    "data": [{
-        "label": "Food",
-        "value": "28504"
-    }, {
-        "label": "Apparels",
-        "value": "14633"
-    }, {
-        "label": "Electronics",
-        "value": "10507"
-    }, {
-        "label": "Household",
-        "value": "4910"
-    }]
-}
-}
-);
-        chartObj.render();
-    });
+    {
+      label: "Logística",
+      value: "53"
+    },
+    {
+      label: "Administración",
+      value: "105"
+    },
+    {
+      label: "Producción",
+      value: "189"
+    },
+    {
+      label: "Comerciales",
+      value: "179"
+    }
+  ]
+};
+
+FusionCharts.ready(function() {
+  var myChart = new FusionCharts({
+    type: "doughnut2d",
+    renderAt: "chart-container",
+    width: "50%",
+    height: "50%",
+    dataFormat: "json",
+    dataSource
+  }).render();
+});
+
 </script>
 @endsection
