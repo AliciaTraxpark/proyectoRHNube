@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="{{asset('landing/vendors/mdi/css/materialdesignicons.min.css')}}">
   <link rel="stylesheet" href="{{asset('landing/vendors/aos/css/aos.css')}}">
   <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
-
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- App favicon -->
   <link rel="shortcut icon" href="{{asset('admin/assets/images/favicon.ico')}}">
 
@@ -78,6 +78,7 @@
                                                 <input type="text" name="end" class="form-control" id="end" readonly>
                                             </div>
                                         </div>
+                                        <input type="hidden" name="title" id="title" value="Dias de descanso">
 
                                     </form>
                                 </div>
@@ -97,7 +98,7 @@
                                         <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
                                     </div>
                                     <div class="col-md-5 text-right" style="padding-right: 38px;  ">
-                                        <button type="button" class="btn btn-secondary">Guardar</button>
+                                        <button type="button" id="guardarDescanso" name="guardarDescanso" class="btn btn-secondary">Guardar</button>
                                     </div>
                                 </div>
 
@@ -221,9 +222,37 @@
       calendar.setOption('locale',"Es");
 
       calendar.render();
+      $('#guardarDescanso').click(function(){
+        objEvento=datos("POST");
+        EnviarDescanso('',objEvento);
+      });
       function datos(method){
-          
+          nuevoEvento={
+            title: $('#title').val(),
+            color:'#ffffff',
+            fondoColor:'#3a3a8d',
+            start_date: $('#start').val(),
+            end_date: $('#end').val(),
+            status: 1,
 
+            '_method':method
+          }
+          return(nuevoEvento);
+
+      }
+      function EnviarDescanso(accion,objEvento){
+          $.ajax(
+              {
+              type: "POST",
+              url:"{{url('/calendario/store')}}" +accion,
+              data:objEvento,
+              headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+              success:function(msg){console.log(msg); },
+              error:function(){ alert("Hay un error");}
+              }
+          );
       }
     });
 

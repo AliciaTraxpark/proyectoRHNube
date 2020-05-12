@@ -26,6 +26,7 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::name('dashboard')->get('dashboard','HomeController@index');
 //CALENDARIO
 Route::name('calendario')->get('calendario','calendarioController@index');
+Route::post('/calendario/store','calendarioController@store');
 //PERSONA
 
 
