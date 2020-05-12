@@ -25,8 +25,15 @@
     @else
         @section('content')
         <div class="row">
-            <div class="col-md-6"  id="chart-container"></div>
-        <div class="col-md-6"  id="chart-container1"></div>
+            <div class="col-md-4"  id="chart-container"></div>
+            <div class="col-md-4"  id="chart-container1"></div>
+            <div class="col-md-4"  id="chart-container2"></div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4"  id="chart-container3"></div>
+            <div class="col-md-4"  id="chart-container4"></div>
+            <div class="col-md-4"  id="chart-container5"></div>
         </div>
         <!-- products -->
 
@@ -43,39 +50,42 @@
   var revenueChart = new FusionCharts({
     type: 'doughnut2d',
     renderAt: 'chart-container',
-    width: '550',
-    height: '450',
+    width: '350',
+    height: '350',
     dataFormat: 'json',
     dataSource: {
       "chart": {
-        "caption": "Split of Revenue by Product Categories",
-        "subCaption": "Last year",
-        "numberPrefix": "$",
+        "pieRadius": "50",
+        "doughnutRadius": "40",
         "bgColor": "#ffffff",
         "startingAngle": "310",
         "showLegend": "1",
-        "defaultCenterLabel": "Total revenue: $64.08K",
-        "centerLabel": "Revenue from $label: $value",
+        "defaultCenterLabel": "350 Por área",
+        "centerLabel": "$label: $value",
         "centerLabelBold": "1",
         "showTooltip": "0",
         "decimals": "0",
         "theme": "fusion"
       },
       "data": [{
-          "label": "Food",
-          "value": "28504"
+          "label": "Contabilidad",
+          "value": "285"
         },
         {
-          "label": "Apparels",
-          "value": "14633"
+          "label": "Logística",
+          "value": "146"
         },
         {
-          "label": "Electronics",
-          "value": "10507"
+          "label": "Administración",
+          "value": "105"
         },
         {
-          "label": "Household",
-          "value": "4910"
+          "label": "Producción",
+          "value": "491"
+        },
+        {
+          "label": "Comerciales",
+          "value": "49"
         }
       ]
     }
@@ -83,39 +93,186 @@
     var revenueChart = new FusionCharts({
     type: 'doughnut2d',
     renderAt: 'chart-container1',
-    width: '550',
-    height: '450',
+    width: '350',
+    height: '350',
     dataFormat: 'json',
     dataSource: {
       "chart": {
-        "caption": "Split of Revenue by Product Categories",
-        "subCaption": "Last year",
-        "numberPrefix": "$",
+        "pieRadius": "50",
+        "doughnutRadius": "40",
         "bgColor": "#ffffff",
         "startingAngle": "310",
         "showLegend": "1",
-        "defaultCenterLabel": "Total revenue: $64.08K",
-        "centerLabel": "Revenue from $label: $value",
+        "defaultCenterLabel": "350 Por nivel",
+        "centerLabel": "$label: $value",
         "centerLabelBold": "1",
         "showTooltip": "0",
         "decimals": "0",
         "theme": "fusion"
       },
       "data": [{
-          "label": "Food",
-          "value": "28504"
+          "label": "Operarios de Prod.",
+          "value": "285"
         },
         {
-          "label": "Apparels",
-          "value": "14633"
+          "label": "Jefaturas",
+          "value": "146"
         },
         {
-          "label": "Electronics",
-          "value": "10507"
+          "label": "Ejecutivos I",
+          "value": "105"
         },
         {
-          "label": "Household",
-          "value": "4910"
+          "label": "Ejecutivos II",
+          "value": "491"
+        }
+      ]
+    }
+  }).render();
+  var revenueChart = new FusionCharts({
+    type: 'doughnut2d',
+    renderAt: 'chart-container2',
+    width: '350',
+    height: '350',
+    dataFormat: 'json',
+    dataSource: {
+      "chart": {
+        "pieRadius": "50",
+        "doughnutRadius": "40",
+        "bgColor": "#ffffff",
+        "startingAngle": "310",
+        "showLegend": "1",
+        "defaultCenterLabel": "350 Por contrato",
+        "centerLabel": "$label: $value",
+        "centerLabelBold": "1",
+        "showTooltip": "0",
+        "decimals": "0",
+        "theme": "fusion"
+      },
+      "data": [{
+          "label": "Por servicio",
+          "value": "285"
+        },
+        {
+          "label": "Planilla",
+          "value": "146"
+        }
+      ]
+    }
+  }).render();
+  var revenueChart = new FusionCharts({
+    type: 'doughnut2d',
+    renderAt: 'chart-container3',
+    width: '350',
+    height: '350',
+    dataFormat: 'json',
+    dataSource: {
+      "chart": {
+        "pieRadius": "50",
+        "doughnutRadius": "40",
+        "bgColor": "#ffffff",
+        "startingAngle": "310",
+        "showLegend": "1",
+        "defaultCenterLabel": "350 Por Centro Costo",
+        "centerLabel": "$label: $value",
+        "centerLabelBold": "1",
+        "showTooltip": "0",
+        "decimals": "0",
+        "theme": "fusion"
+      },
+      "data": [{
+          "label": "CCosto FIN",
+          "value": "285"
+        },
+        {
+          "label": "CCosto I + D",
+          "value": "146"
+        },
+        {
+          "label": "CCosto COM",
+          "value": "146"
+        },
+        {
+          "label": "CCosto ADM",
+          "value": "146"
+        },
+        {
+          "label": "CCosto PDR",
+          "value": "146"
+        }
+      ]
+    }
+  }).render();
+  var revenueChart = new FusionCharts({
+    type: 'doughnut2d',
+    renderAt: 'chart-container4',
+    width: '350',
+    height: '350',
+    dataFormat: 'json',
+    dataSource: {
+      "chart": {
+        "pieRadius": "50",
+        "doughnutRadius": "40",
+        "bgColor": "#ffffff",
+        "startingAngle": "310",
+        "showLegend": "1",
+        "defaultCenterLabel": "350 Por Local",
+        "centerLabel": "$label: $value",
+        "centerLabelBold": "1",
+        "showTooltip": "0",
+        "decimals": "0",
+        "theme": "fusion"
+      },
+      "data": [{
+          "label": "Local Lima",
+          "value": "285"
+        },
+        {
+          "label": "Planta",
+          "value": "146"
+        }
+      ]
+    }
+  }).render();
+  var revenueChart = new FusionCharts({
+    type: 'doughnut2d',
+    renderAt: 'chart-container5',
+    width: '350',
+    height: '350',
+    dataFormat: 'json',
+    dataSource: {
+      "chart": {
+        "pieRadius": "50",
+        "doughnutRadius": "40",
+        "bgColor": "#ffffff",
+        "startingAngle": "310",
+        "showLegend": "1",
+        "defaultCenterLabel": "350 Por rango de edad",
+        "centerLabel": "$label: $value",
+        "centerLabelBold": "1",
+        "showTooltip": "0",
+        "decimals": "0",
+        "theme": "fusion"
+      },
+      "data": [{
+          "label": "19 a 24",
+          "value": "285"
+        },
+        {
+          "label": "24 a 30",
+          "value": "146"
+        },
+        {
+          "label": "30 a 40",
+          "value": "146"
+        },
+        {
+          "label": "40 a 50",
+          "value": "146"
+        },
+        {
+          "label": "50 a 70",
+          "value": "146"
         }
       ]
     }
@@ -127,56 +284,4 @@
 @section('script-bottom')
 <!-- init js -->
 <script src="{{ URL::asset('admin/assets/js/pages/dashboard.init.js') }}"></script>
-{{-- <script>
-    const dataSource = {
-    chart: {
-    showpercentvalues: "1",
-    defaultcenterlabel: "Por área:",
-    pieRadius: "90",
-    doughnutRadius: "80",
-    aligncaptionwithcanvas: "0",
-    captionpadding: "0",
-    decimals: "1",
-    plottooltext:
-      "<b>$percentValue</b><b>$label</b>",
-    centerlabel: "Por área: $value",
-    theme: "fusion"
-  },
-  data: [
-    {
-      label: "Contabilidad",
-      value: "10"
-    },
-    {
-      label: "Logística",
-      value: "53"
-    },
-    {
-      label: "Administración",
-      value: "105"
-    },
-    {
-      label: "Producción",
-      value: "189"
-    },
-    {
-      label: "Comerciales",
-      value: "179"
-    }
-  ]
-};
-
-FusionCharts.ready(function() {
-  var myChart = new FusionCharts({
-    type: "doughnut2d",
-    renderAt: "chart-container",
-    width: "50%",
-    height: "50%",
-    dataFormat: "json",
-    dataSource
-  }).render();
-});
-
-</script> --}}
-
 @endsection
