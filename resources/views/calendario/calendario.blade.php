@@ -52,7 +52,6 @@
     </div>
     </nav>
   </header>
-
     <div class="content-page" style="margin-top: 40px; margin-left: 55px; margin-right: 55px;">
         <div class="content">
             <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -86,14 +85,7 @@
 
                                     </form>
                                 </div>
-
-
-
-
                             </div>
-
-
-
                         </div>
                         <div class="modal-footer">
                             <div class="col-md-12">
@@ -105,26 +97,20 @@
                                         <button type="button" id="guardarDescanso" name="guardarDescanso" class="btn btn-secondary">Guardar</button>
                                     </div>
                                 </div>
-
-
-
                             </div>
-
                         </div>
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
             <div class="row " >
                 <div class="col-md-12 text-center">
-                  <div class="col-md-8" style="left: 17.5%">
+                  <div class="col-md-6" style="left: 20%">
                       <div class="card">
                           <div class="card-body">
                               <div id="calendar"></div>
                           </div> <!-- end card body-->
                           <div class="card-footer">
                             <div class="row">
-
-
                             </div>
                           </div>
                       </div> <!-- end card -->
