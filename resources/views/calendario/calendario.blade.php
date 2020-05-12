@@ -24,7 +24,11 @@
   <link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
 </head>
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
-
+<style>
+    .fc-time{
+        display: none;
+    }
+</style>
   <header id="header-section">
     <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
     <div class="container">
@@ -78,7 +82,7 @@
                                                 <input type="text" name="end" class="form-control" id="end" readonly>
                                             </div>
                                         </div>
-                                        <input type="hidden" name="title" id="title" value="Dias de descanso">
+                                        <input type="hidden" name="title" id="title" value="Descanso">
 
                                     </form>
                                 </div>
@@ -166,6 +170,7 @@
       var calendarEl = document.getElementById('calendar');
       var fecha = new Date();
       var ano = fecha. getFullYear();
+
       var calendar = new FullCalendar.Calendar(calendarEl, {
         locale: 'es',
         defaultDate: ano+'-01-01',
@@ -200,6 +205,7 @@
           left:'Descanso',
           right:'NoLaborales'
         },
+
         events:"{{route('calendarioShow')}}",
         customButtons:{
           Descanso:{
@@ -231,8 +237,8 @@
       function datos(method){
           nuevoEvento={
             title: $('#title').val(),
-            color:'#ffffff',
-            fondoColor:'#3a3a8d',
+            color:'#4673a0',
+            textColor:' #ffffff ',
             start: $('#start').val(),
             end: $('#end').val(),
             status: 1,
