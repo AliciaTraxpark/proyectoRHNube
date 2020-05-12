@@ -209,7 +209,7 @@
         defaultDate: ano+'-01-01',
 
         plugins: [ 'dayGrid','interaction','timeGrid'],
-        navLinks: true, // can click day/week names to navigate views
+       
         selectable: true,
         selectMirror: true,
         select: function(arg) {
@@ -227,7 +227,7 @@
 
       },
 
-      editable: true,
+      editable: false,
       eventLimit: true,
         header:{
           left:'prev,next today',
