@@ -107,6 +107,56 @@
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
+
+            <div id="myModalFestivo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color: #163552;">
+                            <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Días no laborales</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <br>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form class="form-horizontal">
+                                        <div class="form-group row mb-3">
+                                            <label for="start" class="col-sm-4 col-form-label">Fecha Inicial:</label>
+                                            <div class="col-8">
+                                                <input type="text" name="startF" class="form-control" id="startF" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mb-3">
+                                            <label for="start" class="col-sm-4 col-form-label">Fecha Final:</label>
+                                            <div class="col-8">
+                                                <input type="text" name="endF" class="form-control" id="endF" readonly>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="titleN" id="titleN" value="No laborable">
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-7 text-right">
+                                        <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                                    </div>
+                                    <div class="col-md-5 text-right" style="padding-right: 38px;  ">
+                                        <button type="button" id="guardarNoLab" name="guardarNoLab" class="btn btn-secondary">Confirmar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
             <div class="row " >
                 <div class="col-md-12 text-center">
                   <div class="col-md-7" style="left: 21%">
@@ -203,7 +253,15 @@
             }
           },
           NoLaborales:{
-            text:"Asignar días no Laborales"
+            text:"Asignar días no Laborales",
+            click:function(){
+                var start=  $('#pruebaStar').val();
+                var end=  $('#pruebaEnd').val();
+                $('#startF').val(start);
+                $('#endF').val(end);
+                $('#myModalFestivo').modal('toggle');
+
+            }
           }
         },
 
@@ -212,7 +270,7 @@
 
       calendar.setOption('locale',"Es");
 
-
+       //DESCANSO
       $('#guardarDescanso').click(function(){
         objEvento=datos("POST");
         EnviarDescanso('',objEvento);
@@ -224,7 +282,7 @@
             textColor:' #ffffff ',
             start: $('#start').val(),
             end: $('#end').val(),
-            status: 1,
+            tipo: 1,
 
             '_method':method
           }
@@ -247,7 +305,46 @@
               error:function(){ alert("Hay un error");}
               }
           );
+      } ///
+
+      //NO LABORABLE
+      $('#guardarNoLab').click(function(){
+        objEvento1=datos1("POST");
+        EnviarNoL('',objEvento1);
+      });
+      function datos1(method){
+          nuevoEvento1={
+            title: $('#titleN').val(),
+            color:'#a34141',
+            textColor:' #ffffff ',
+            start: $('#startF').val(),
+            end: $('#endF').val(),
+            tipo: 0,
+
+            '_method':method
+          }
+          return(nuevoEvento1);
+
       }
+      function EnviarNoL(accion,objEvento1){
+          $.ajax(
+              {
+              type: "POST",
+              url:"{{url('/calendario/store')}}" +accion,
+              data:objEvento1,
+              headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+              success:function(msg){
+                $('#myModalFestivo').modal('toggle');
+                calendar.addEvent(nuevoEvento1);
+                console.log(msg); },
+              error:function(){ alert("Hay un error");}
+              }
+          );
+      }
+      ////
+
       calendar.render();
     });
 
