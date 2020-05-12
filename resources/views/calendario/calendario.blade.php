@@ -104,7 +104,7 @@
             </div><!-- /.modal -->
             <div class="row " >
                 <div class="col-md-12 text-center">
-                  <div class="col-md-6" style="left: 20%">
+                  <div class="col-md-6" style="left: 25%">
                       <div class="card">
                           <div class="card-body">
                               <div id="calendar"></div>
