@@ -200,6 +200,7 @@
           left:'Descanso',
           right:'NoLaborales'
         },
+        events:"{{('calendarioShow')}}",
         customButtons:{
           Descanso:{
             text:"Asignar días de Descanso",
@@ -216,7 +217,7 @@
             text:"Asignar días no Laborales"
           }
         },
-       events:"{{'calendarioShow'}}"
+
 
       });
 
@@ -232,8 +233,8 @@
             title: $('#title').val(),
             color:'#ffffff',
             fondoColor:'#3a3a8d',
-            start_date: $('#start').val(),
-            end_date: $('#end').val(),
+            start: $('#start').val(),
+            end: $('#end').val(),
             status: 1,
 
             '_method':method
