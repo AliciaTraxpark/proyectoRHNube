@@ -123,22 +123,14 @@
                           </div> <!-- end card body-->
                           <div class="card-footer">
                             <div class="row">
-                              <div class="col-md-4 text-center">
-                                <div id='external-events'>
-                                  <div class='fc-event'>Asignar Días de Descanso</div>
-                                </div>
-                              </div>
-                              <div class="col-md-4 text-center">
-                                <div id='external-events'>
-                                  <div class='fc-event'>Asignar Días no Laborales</div>
-                                </div>
-                              </div>
+
+
                             </div>
                           </div>
                       </div> <!-- end card -->
                   </div>
-                   <input type="text" id="pruebaStar">
-                   <input type="text" id="pruebaEnd">
+                   <input type="hidden" id="pruebaStar">
+                   <input type="hidden" id="pruebaEnd">
                 </div>
             </div>
         <footer class="border-top">
@@ -229,7 +221,7 @@
 
       calendar.setOption('locale',"Es");
 
-      calendar.render();
+
       $('#guardarDescanso').click(function(){
         objEvento=datos("POST");
         EnviarDescanso('',objEvento);
@@ -257,11 +249,15 @@
               headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-              success:function(msg){console.log(msg); },
+              success:function(msg){
+                $('#myModal').modal('toggle');
+                calendar.addEvent(nuevoEvento);
+                console.log(msg); },
               error:function(){ alert("Hay un error");}
               }
           );
       }
+      calendar.render();
     });
 
   </script>
