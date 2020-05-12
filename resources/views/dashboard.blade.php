@@ -20,6 +20,17 @@
                     COMIENZA AHORA</button></a>
             </div>
         </div>
+        <div class="row" style="opacity: 0.2;">
+          <div class="col-md-4"  id="chart-container"></div>
+          <div class="col-md-4"  id="chart-container1"></div>
+          <div class="col-md-4"  id="chart-container2"></div>
+      </div>
+      <br>
+      <div class="row" style="opacity: 0.2;">
+          <div class="col-md-4"  id="chart-container3"></div>
+          <div class="col-md-4"  id="chart-container4"></div>
+          <div class="col-md-4"  id="chart-container5"></div>
+      </div>
         <!-- end row -->
         @endsection
     @else
