@@ -94,7 +94,7 @@
                                         <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
                                     </div>
                                     <div class="col-md-5 text-right" style="padding-right: 38px;  ">
-                                        <button type="button" id="guardarDescanso" name="guardarDescanso" class="btn btn-secondary">Guardar</button>
+                                        <button type="button" id="guardarDescanso" name="guardarDescanso" class="btn btn-secondary">Confirmar</button>
                                     </div>
                                 </div>
                             </div>
@@ -104,7 +104,7 @@
             </div><!-- /.modal -->
             <div class="row " >
                 <div class="col-md-12 text-center">
-                  <div class="col-md-6" style="left: 25%">
+                  <div class="col-md-7" style="left: 21%">
                       <div class="card">
                           <div class="card-body">
                               <div id="calendar"></div>
