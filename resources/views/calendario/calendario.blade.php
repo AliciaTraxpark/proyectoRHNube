@@ -54,33 +54,57 @@
             <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="myModalLabel">Modal Heading</h5>
+                        <div class="modal-header" style="background-color: #163552;">
+                            <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Días de descanso</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <h6>Text in a modal</h6>
-                            <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
-                            <hr>
-                            <div class="form-group">
-                                <label for="start" class="col-sm-2 control-label">Fecha Inicial</label>
-                                <div class="col-sm-10">
-                                  <input type="text" name="start" class="form-control" id="start" readonly>
+                            <br>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form class="form-horizontal">
+                                        <div class="form-group row mb-3">
+                                            <label for="start" class="col-sm-4 col-form-label">Fecha Inicial:</label>
+                                            <div class="col-8">
+                                                <input type="text" name="start" class="form-control" id="start" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mb-3">
+                                            <label for="start" class="col-sm-4 col-form-label">Fecha Final:</label>
+                                            <div class="col-8">
+                                                <input type="text" name="end" class="form-control" id="end" readonly>
+                                            </div>
+                                        </div>
+
+                                    </form>
                                 </div>
-                              </div>
-                              <div class="form-group">
-                                <label for="end" class="col-sm-2 control-label">Fecha Final</label>
-                                <div class="col-sm-10">
-                                  <input type="text" name="end" class="form-control" id="end" readonly>
-                                </div>
-                              </div>
+
+
+
+
+                            </div>
+
+
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-7 text-right">
+                                        <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                                    </div>
+                                    <div class="col-md-5 text-right" style="padding-right: 38px;  ">
+                                        <button type="button" class="btn btn-secondary">Guardar</button>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+
                         </div>
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
@@ -150,7 +174,7 @@
         selectable: true,
         selectMirror: true,
         select: function(arg) {
-           
+
 
          /*  calendar.addEvent({
             title: 'title',
@@ -197,6 +221,10 @@
       calendar.setOption('locale',"Es");
 
       calendar.render();
+      function datos(method){
+          
+
+      }
     });
 
   </script>
