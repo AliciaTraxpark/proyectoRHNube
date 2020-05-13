@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+function calendario() {
     var calendarEl = document.getElementById('calendar');
     var fecha = new Date();
     var ano = fecha. getFullYear();
@@ -162,4 +162,5 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     ////
     calendar.render();
-  });
+  }
+document.addEventListener('DOMContentLoaded',calendario);
