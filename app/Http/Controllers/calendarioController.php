@@ -65,4 +65,10 @@ class calendarioController extends Controller
                 ->get();
         return response()->json($eventos_usuario);
     }
+
+    public function destroy($id){
+        $eventos=eventos::findOrFail($id);
+        eventos::destroy($id);
+        return response()->json($id);
+    }
 }
