@@ -4,68 +4,69 @@ function calendario() {
     var ano = fecha. getFullYear();
     var id;
 
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      locale: 'es',
-      defaultDate: ano+'-01-01',
-
-      plugins: [ 'dayGrid','interaction','timeGrid'],
-     
-      selectable: true,
-      selectMirror: true,
-      select: function(arg) {
-
-
-       /*  calendar.addEvent({
-          title: 'title',
-          start: arg.start,
-          end: arg.end,
-          allDay: arg.allDay
-        }) */
-        $('#pruebaEnd').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
-        $('#pruebaStar').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
-      console.log(arg);
-    },
-    eventClick:function(info){
-      id = info.event.id;
-      $('#myModalEliminar').modal();
-    },
-    editable: false,
-    eventLimit: true,
-      header:{
-        left:'prev,next today',
-        center:'title',
-        right:'dayGridMonth'
+    var configuracionCalendario = {
+        locale: 'es',
+        defaultDate: ano+'-01-01',
+    
+        plugins: [ 'dayGrid','interaction','timeGrid'],
+       
+        selectable: true,
+        selectMirror: true,
+        select: function(arg) {
+    
+    
+         /*  calendar.addEvent({
+            title: 'title',
+            start: arg.start,
+            end: arg.end,
+            allDay: arg.allDay
+          }) */
+          $('#pruebaEnd').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
+          $('#pruebaStar').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
+        console.log(arg);
       },
-      footer:{
-        left:'Descanso',
-        right:'NoLaborales'
+      eventClick:function(info){
+        id = info.event.id;
+        $('#myModalEliminar').modal();
       },
-
-      events:"calendario/show",
-      customButtons:{
-        Descanso:{
-          text:"Asignar días de Descanso",
-          click:function(){
-              var start=  $('#pruebaStar').val();
-              var end=  $('#pruebaEnd').val();
-              $('#start').val(start);
-              $('#end').val(end);
-              $('#myModal').modal('toggle');
+      editable: false,
+      eventLimit: true,
+        header:{
+          left:'prev,next today',
+          center:'title',
+          right:'dayGridMonth'
+        },
+        footer:{
+          left:'Descanso',
+          right:'NoLaborales'
+        },
+    
+        events:"calendario/show",
+        customButtons:{
+          Descanso:{
+            text:"Asignar días de Descanso",
+            click:function(){
+                var start=  $('#pruebaStar').val();
+                var end=  $('#pruebaEnd').val();
+                $('#start').val(start);
+                $('#end').val(end);
+                $('#myModal').modal('toggle');
+            }
+          },
+          NoLaborales:{
+            text:"Asignar días no Laborales",
+            click:function(){
+                var start=  $('#pruebaStar').val();
+                var end=  $('#pruebaEnd').val();
+                $('#startF').val(start);
+                $('#endF').val(end);
+                $('#myModalFestivo').modal('toggle');
+    
+            }
           }
         },
-        NoLaborales:{
-          text:"Asignar días no Laborales",
-          click:function(){
-              var start=  $('#pruebaStar').val();
-              var end=  $('#pruebaEnd').val();
-              $('#startF').val(start);
-              $('#endF').val(end);
-              $('#myModalFestivo').modal('toggle');
-
-          }
-        }
-      },
-    });
+      }
+    var calendar = new FullCalendar.Calendar(calendarEl,configuracionCalendario);
     calendar.setOption('locale',"Es");
      //DESCANSO
     $('#guardarDescanso').click(function(){
@@ -162,5 +163,5 @@ function calendario() {
     }
     ////
     calendar.render();
-  }
+}
 document.addEventListener('DOMContentLoaded',calendario);
