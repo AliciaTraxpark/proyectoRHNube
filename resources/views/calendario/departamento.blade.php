@@ -29,10 +29,47 @@
         display: none;
     }
 </style>
-
+  <header id="header-section">
+    <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
+    <div class="container">
+        <div class="col-md-2">
+            <div class="navbar-brand-wrapper d-flex w-100">
+                <img src="{{asset('landing/images/logo.png')}}" height="100" >
+              </div>
+        </div>
+        <div class="col-md-6 text-left">
+          <h5 style="color: #ffffff">Gestión de Calendarios</h5>
+          <label for="" class="blanco">Calendario de Perú, puedes crear calendarios regionales o personalizados</label>
+        </div>
+        <div class="col-md-2 text-left">
+          <select  class="form-control" placeholder="pais" name="pais" id="pais">
+            <option value="">PAIS</option>
+            @foreach ($pais as $paises)
+              @if($paises->id==173)
+                <option class="" selected="true" value="{{$paises->id}}" disabled="disabled">{{$paises->nombre}}</option>
+              @else
+                <option class="" value="{{$paises->id}}">{{$paises->nombre}}</option>
+              @endif
+            @endforeach
+          </select>
+        </div>
+        <div class="col-md-2 text-left">
+          <select  class="form-control" placeholder="Departamento " name="departamento" id="departamento" style="display: flex;">
+            <option value="">DEPARTAMENTO</option>
+            @foreach ($departamento as $departamentos)
+              <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
+            @endforeach
+          </select>
+        </div>
+        <div class=" col-md-2">
+          <button  id="nuevoCalendario" type="submit"class="boton" >Nuevo</button>
+        </div>
+    </div>
+    </nav>
+  </header>
     <div class="content-page" style="margin-top: 40px; margin-left: 55px; margin-right: 55px;">
         <div class="content">
-
+         
 
 
             <div class="row " >
@@ -41,7 +78,7 @@
                       <div class="card">
                           <div class="card-body">
                               <div id="calendar"></div>
-                             
+                              <div id="departamento"></div>
                           </div> <!-- end card body-->
                           <div class="card-footer">
                             <div class="row">

@@ -242,5 +242,6 @@
   <script src="{{asset('admin/packages/timegrid/main.js')}}"></script>
   <script src="{{asset('admin/packages/interaction/main.js')}}"></script>
   <script src="{{asset('landing/js/calendario.js')}}"></script>
+  <script></script>
 </body>
 </html>
