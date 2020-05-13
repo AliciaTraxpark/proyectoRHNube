@@ -42,13 +42,23 @@
           <label for="" class="blanco">Calendario de Perú, puedes crear calendarios regionales o personalizados</label>
         </div>
         <div class="col-md-2 text-left">
-          <select  class="form-control" placeholder="pais" name="pais" id="pais" required>
+          <select  class="form-control" placeholder="pais" name="pais" id="pais">
             <option value="">PAIS</option>
+            @foreach ($pais as $paises)
+              @if($paises->id==173)
+                <option class="" selected="true" value="{{$paises->id}}" disabled="disabled">{{$paises->nombre}}</option>
+              @else 
+                <option class="" value="{{$paises->id}}">{{$paises->nombre}}</option>
+              @endif
+            @endforeach
           </select>
         </div>
         <div class="col-md-2 text-left">
-          <select  class="form-control" placeholder="Departamento " name="departamento" id="departamento" required>
+          <select  class="form-control" placeholder="Departamento " name="departamento" id="departamento" style="display: flex;">
             <option value="">DEPARTAMENTO</option>
+            @foreach ($departamento as $departamentos)
+              <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
+            @endforeach
           </select>
         </div>
         <div class=" col-md-2">
@@ -184,7 +194,7 @@
   <script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>
   <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
   <script src="{{asset('landing/js/landingpage.js')}}"></script>
-  <script src="{{asset('landing/js/seleccionarDepProv.js')}}"></script>
+  <script src="{{asset('landing/js/SeleccionarPais.js')}}"></script>
 
   <!-- Vendor js -->
   <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script>
