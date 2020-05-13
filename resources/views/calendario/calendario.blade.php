@@ -47,7 +47,7 @@
             @foreach ($pais as $paises)
               @if($paises->id==173)
                 <option class="" selected="true" value="{{$paises->id}}" disabled="disabled">{{$paises->nombre}}</option>
-              @else 
+              @else
                 <option class="" value="{{$paises->id}}">{{$paises->nombre}}</option>
               @endif
             @endforeach
@@ -62,7 +62,7 @@
           </select>
         </div>
         <div class=" col-md-2">
-          <button   type="submit"class="boton">Nuevo</button>
+          <button  id="nuevoCalendario" type="submit"class="boton" >Nuevo</button>
         </div>
     </div>
     </nav>
@@ -202,7 +202,7 @@
           </div><!-- /.modal -->
             <div class="row " >
                 <div class="col-md-12 text-center">
-                  <div class="col-md-7" style="left: 21%">
+                  <div class="col-md-7" style="left: 19%;max-width: 65%;">
                       <div class="card">
                           <div class="card-body">
                               <div id="calendar"></div>
