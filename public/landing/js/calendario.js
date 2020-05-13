@@ -1,5 +1,6 @@
 function calendario() {
     var calendarEl = document.getElementById('calendar');
+    calendarEl.innerHTML="";
     var fecha = new Date();
     var ano = fecha. getFullYear();
     var id;
@@ -27,6 +28,7 @@ function calendario() {
       },
       eventClick:function(info){
         id = info.event.id;
+        console.log(info);
         $('#myModalEliminar').modal();
       },
       editable: false,
@@ -100,7 +102,7 @@ function calendario() {
       },
             success:function(msg){
               $('#myModal').modal('toggle');
-              //calendar.addEvent(nuevoEvento);
+              calendar.refetchEvents();
               console.log(msg); },
             error:function(){ alert("Hay un error");}
             }
@@ -117,9 +119,8 @@ function calendario() {
       },
             success:function(msg){
               $('#myModalEliminar').modal('toggle');
-              calendar.addEvent(nuevoEvento);
+              calendar.refetchEvents();
               console.log(msg); 
-              location.reload();
               },
             error:function(){ alert("Hay un error");}
             }
