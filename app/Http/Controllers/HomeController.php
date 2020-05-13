@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use App\eventos;
+use App\calendario;
 class HomeController extends Controller
 {
     /**
@@ -26,9 +27,10 @@ class HomeController extends Controller
     public function index()
     {
 
-        $eventos=eventos::all();
-        //$idevento=$eventos->id;
-        if ($eventos->first()) {
+        //$calendario=calendario::all();
+        $calendario=calendario::where('users_id','=',Auth::user()->id)->get();
+        //dd($calendario);
+        if ($calendario->first()) {
             $variable=1;
          }
 
@@ -36,7 +38,7 @@ class HomeController extends Controller
          else{
             $variable=0;
         }
-       
+
         return view('dashboard',['variable'=>$variable]);
 
 

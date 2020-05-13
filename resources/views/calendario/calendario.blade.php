@@ -47,7 +47,7 @@
             @foreach ($pais as $paises)
               @if($paises->id==173)
                 <option class="" selected="true" value="{{$paises->id}}" disabled="disabled">{{$paises->nombre}}</option>
-              @else 
+              @else
                 <option class="" value="{{$paises->id}}">{{$paises->nombre}}</option>
               @endif
             @endforeach
@@ -169,7 +169,7 @@
 
             <div class="row " >
                 <div class="col-md-12 text-center">
-                  <div class="col-md-7" style="left: 21%">
+                  <div class="col-md-7" style="left: 19%;max-width: 65%;">
                       <div class="card">
                           <div class="card-body">
                               <div id="calendar"></div>
@@ -219,7 +219,7 @@
         defaultDate: ano+'-01-01',
 
         plugins: [ 'dayGrid','interaction','timeGrid'],
-       
+
         selectable: true,
         selectMirror: true,
         select: function(arg) {
@@ -303,7 +303,7 @@
           $.ajax(
               {
               type: "POST",
-              url:"{{url('/calendario/store')}}" +accion,
+              url:"{{url('/eventos_usuario/store')}}" +accion,
               data:objEvento,
               headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -340,7 +340,7 @@
           $.ajax(
               {
               type: "POST",
-              url:"{{url('/calendario/store')}}" +accion,
+              url:"{{url('/eventos_usuario/store')}}" +accion,
               data:objEvento1,
               headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
