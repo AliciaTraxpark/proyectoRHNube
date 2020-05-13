@@ -62,7 +62,7 @@
           </select>
         </div>
         <div class=" col-md-2">
-          <button   type="submit"class="boton">Nuevo</button>
+          <button  id="nuevoCalendario" type="submit"class="boton" >Nuevo</button>
         </div>
     </div>
     </nav>
@@ -358,6 +358,25 @@
       calendar.render();
     });
 
+  </script>
+  <script>
+        $('#nuevoCalendario').click(function(){
+            var departamento= $('#departamento').val();
+            $.ajax(
+              {
+              type: "POST",
+              url:"{{url('/calendario/store')}}",
+              data:'departamento='+departamento,
+              headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+              success:function(msg){
+                
+                console.log(msg); },
+              error:function(){ alert("Hay un error");}
+              }
+          );
+      });
   </script>
 </body>
 </html>

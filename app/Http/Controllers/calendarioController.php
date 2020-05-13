@@ -15,16 +15,19 @@ class calendarioController extends Controller
         if (Auth::check()) {
             $paises=paises::all();
             $departamento=ubigeo_peru_departments::all();
+            $calendario=calendario::where('users_id','=',Auth::user()->id)->get();
+            if($calendario->first() )  {}
+            else{
             //copiar tabla
             $evento=eventos::all();
-            $calendario=calendario::all();
+
 
             foreach($evento as $eventos)
             {   $calendarioR=new calendario();
                 $calendarioR->users_id=Auth::user()->id;
                 $calendarioR->eventos_id=$eventos->id;
                 $calendarioR->save();
-            }
+            }}
             //FUNCIONA OK
 
 
@@ -36,8 +39,21 @@ class calendarioController extends Controller
     }
     public function store(Request $request){
         //para insertar a calendario general
-      $datosEvento=request()->except(['_method']);
-      eventos::insert($datosEvento);
+    /*   $datosEvento=request()->except(['_method']);
+      eventos::insert($datosEvento); */
+      $evento=eventos::all();
+      $calendario=calendario::all();
+
+      foreach($evento as $eventos)
+      {   $calendarioR=new calendario();
+          $calendarioR->users_id=Auth::user()->id;
+          $calendarioR->eventos_id=$eventos->id;
+          $calendarioR->calen_departamento=$request->get('departamento');
+         
+          $calendarioR->save();
+      }
+
+
     }
     public function show(){
         $eventos=DB::table('eventos')->select([ 'title' ,'color', 'textColor', 'start','end','tipo']);
