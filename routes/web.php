@@ -28,6 +28,7 @@ Route::name('dashboard')->get('dashboard','HomeController@index');
 Route::name('calendario')->get('calendario','calendarioController@index');
 Route::post('/calendario/store','calendarioController@store');
 Route::get('calendario/show', 'calendarioController@show')->name('calendarioShow');
+Route::delete('calendario/{id}','calendarioController@destroy');
 //PERSONA
 
 

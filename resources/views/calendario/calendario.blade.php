@@ -166,7 +166,40 @@
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
-
+            <div id="myModalEliminar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header" style="background-color: #163552;">
+                          <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Días de descanso</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">
+                          <br>
+                          <div class="row">
+                              <div class="col-md-12">
+                                  <form class="form-horizontal">
+                                    <h5 class="modal-title" id="myModalLabel">¿Desea eliminar días descanso?</h5>
+                                  </form>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                          <div class="col-md-12">
+                              <div class="row">
+                                  <div class="col-md-7 text-right">
+                                      <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                                  </div>
+                                  <div class="col-md-5 text-right" style="padding-right: 38px;  ">
+                                      <button type="button" id="eliminarDescanso" name="eliminarDescanso" class="btn btn-danger">Eliminar</button>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+          </div><!-- /.modal -->
             <div class="row " >
                 <div class="col-md-12 text-center">
                   <div class="col-md-7" style="left: 21%">
@@ -213,6 +246,7 @@
       var calendarEl = document.getElementById('calendar');
       var fecha = new Date();
       var ano = fecha. getFullYear();
+      var id;
 
       var calendar = new FullCalendar.Calendar(calendarEl, {
         locale: 'es',
@@ -234,9 +268,11 @@
           $('#pruebaEnd').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
           $('#pruebaStar').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
         console.log(arg);
-
       },
-
+      eventClick:function(info){
+        id = info.event.id;
+        $('#myModalEliminar').modal();
+      },
       editable: false,
       eventLimit: true,
         header:{
@@ -259,7 +295,6 @@
                 $('#start').val(start);
                 $('#end').val(end);
                 $('#myModal').modal('toggle');
-
             }
           },
           NoLaborales:{
@@ -274,16 +309,16 @@
             }
           }
         },
-
-
       });
-
       calendar.setOption('locale',"Es");
-
        //DESCANSO
       $('#guardarDescanso').click(function(){
         objEvento=datos("POST");
         EnviarDescanso('',objEvento);
+      });
+      $('#eliminarDescanso').click(function(){
+        objEvento=datos("DELETE");
+        EnviarDescansoE('/'+id,objEvento);
       });
       function datos(method){
           nuevoEvento={
@@ -293,11 +328,9 @@
             start: $('#start').val(),
             end: $('#end').val(),
             tipo: 1,
-
             '_method':method
           }
           return(nuevoEvento);
-
       }
       function EnviarDescanso(accion,objEvento){
           $.ajax(
@@ -315,8 +348,25 @@
               error:function(){ alert("Hay un error");}
               }
           );
-      } ///
-
+      } 
+      function EnviarDescansoE(accion,objEvento){
+          $.ajax(
+              {
+              type: "DELETE",
+              url:"{{url('/calendario')}}" +accion,
+              data:objEvento,
+              headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+              success:function(msg){
+                $('#myModalEliminar').modal('toggle');
+                calendar.addEvent(nuevoEvento);
+                console.log(msg); },
+              error:function(){ alert("Hay un error");}
+              }
+          );
+      }
+      ///
       //NO LABORABLE
       $('#guardarNoLab').click(function(){
         objEvento1=datos1("POST");
@@ -334,7 +384,6 @@
             '_method':method
           }
           return(nuevoEvento1);
-
       }
       function EnviarNoL(accion,objEvento1){
           $.ajax(
@@ -354,7 +403,6 @@
           );
       }
       ////
-
       calendar.render();
     });
 

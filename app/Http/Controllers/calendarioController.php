@@ -28,4 +28,10 @@ class calendarioController extends Controller
         $data['eventos1']=eventos::all();
         return response()->json($data['eventos1']);
     }
+
+    public function destroy($id){
+        $eventos=eventos::findOrFail($id);
+        eventos::destroy($id);
+        return response()->json($id);
+    }
 }
