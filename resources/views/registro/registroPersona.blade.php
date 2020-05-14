@@ -101,8 +101,8 @@
 
             </div>
             <div class="container col-md-3">
-                <img src="{{asset('landing/images/regisP.svg')}}" alt="" class="img-fluid"><br><br><br><br>
-                <div class="col-md-12 text-right">
+                <img src="{{asset('landing/images/career.gif')}}" alt="" class="img-fluid"><br><br><br><br>
+                <div class="col-md-12 text-center">
                     <button class="btn btn-opacity-primary mr-1" id="botonRegistrar">Registrarme</button>
                     </div> <br><br>
             </div>
