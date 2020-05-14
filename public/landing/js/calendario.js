@@ -124,7 +124,7 @@ function calendario() {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
             success:function(msg){
-              $('#myModalEliminar').modal('toggle');
+              $('#myModalEliminarD').modal('toggle');
               calendar.refetchEvents();
               console.log(msg);
               },
