@@ -32,7 +32,9 @@ function calendario() {
         console.log(info.event.id);
         console.log(info.event.title);
         if(info.event.title == 'Descanso'){
-          $('#myModalEliminar').modal();
+          $('#myModalEliminarD').modal();
+        }else{
+          $('#myModalEliminarN').modal();
         }
       },
       editable: false,
@@ -136,6 +138,10 @@ function calendario() {
       objEvento1=datos1("POST");
       EnviarNoL('',objEvento1);
     });
+    $('#eliminarNLaboral').click(function(){
+      objEvento1=datos1("DELETE");
+      EnviarNoLE('/'+id,objEvento1);
+    });
     function datos1(method){
         nuevoEvento1={
           title: $('#titleN').val(),
@@ -166,6 +172,23 @@ function calendario() {
             }
         );
     }
+    function EnviarNoLE(accion,objEvento1){
+      $.ajax(
+          {
+          type: "DELETE",
+          url:"/calendario" +accion,
+          data:objEvento1,
+          headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+          success:function(msg){
+            $('#myModalEliminarN').modal('toggle');
+            calendar.refetchEvents();
+            console.log(msg); },
+          error:function(){ alert("Hay un error");}
+          }
+      );
+  }
     ////
     calendar.render();
 }
