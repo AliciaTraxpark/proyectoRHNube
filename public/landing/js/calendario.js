@@ -109,6 +109,7 @@ function calendario() {
         );
     }
     function EnviarDescansoE(accion,objEvento){
+
         $.ajax(
             {
             type: "DELETE",
