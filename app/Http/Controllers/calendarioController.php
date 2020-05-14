@@ -56,10 +56,10 @@ class calendarioController extends Controller
 
     }
     public function show(){
-        $eventos=DB::table('eventos')->select([ 'title' ,'color', 'textColor', 'start','end','tipo']);
+        $eventos=DB::table('eventos')->select(['id','title' ,'color', 'textColor', 'start','end','tipo']);
 
         $eventos_usuario = DB::table('eventos_usuario')
-        ->select([ 'title' ,'color', 'textColor', 'start','end','tipo'])
+        ->select(['id','title' ,'color', 'textColor', 'start','end','tipo'])
              ->where('Users_id','=',Auth::user()->id)
                 ->union($eventos)
                 ->get();
@@ -67,6 +67,7 @@ class calendarioController extends Controller
     }
 
     public function destroy($id){
+        calendario::where('eventos_id',$id)->delete();
         $eventos=eventos::findOrFail($id);
         eventos::destroy($id);
         return response()->json($id);

@@ -133,7 +133,7 @@
 
             </div>
             <div class="container col-md-3">
-                <img src="{{asset('landing/images/regisE.svg')}}" alt="" class="img-fluid"><br><br><br><br>
+                <img src="{{asset('landing/images/webdevelopment10.gif')}}" alt="" class="img-fluid"><br><br><br><br>
                 <div class="col-md-12 text-right">
                     <button class="btn btn-opacity-primary mr-1" type="submit">Registrar empresa </button>
                     </div> <br><br>
