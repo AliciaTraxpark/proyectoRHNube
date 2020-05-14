@@ -67,6 +67,7 @@ class calendarioController extends Controller
     }
 
     public function destroy($id){
+        calendario::where('eventos_id',$id)->delete();
         $eventos=eventos::findOrFail($id);
         eventos::destroy($id);
         return response()->json($id);
