@@ -10,6 +10,10 @@ use App\calendario;
 use Illuminate\Support\Facades\DB;
 class calendarioController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     //
     public function index(){
         if (Auth::check()) {
