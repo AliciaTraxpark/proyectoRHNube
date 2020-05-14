@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\ubigeo_peru_departments;
 use App\paises;
 use App\calendario;
+use App\eventos_usuario;
 use Illuminate\Support\Facades\DB;
 class calendarioController extends Controller
 {
@@ -71,9 +72,9 @@ class calendarioController extends Controller
     }
 
     public function destroy($id){
-        calendario::where('eventos_id',$id)->delete();
-        $eventos=eventos::findOrFail($id);
-        eventos::destroy($id);
+        //calendario::where('eventos_id',$id)->delete();
+        $eventos_usuario=eventos_usuario::findOrFail($id);
+        eventos_usuario::destroy($id);
         return response()->json($id);
     }
 }

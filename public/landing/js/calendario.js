@@ -15,13 +15,13 @@ function calendario() {
         selectMirror: true,
         select: function(arg) {
 
-
          /*  calendar.addEvent({
             title: 'title',
             start: arg.start,
             end: arg.end,
             allDay: arg.allDay
           }) */
+
           $('#pruebaEnd').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
           $('#pruebaStar').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
         console.log(arg);
@@ -30,7 +30,10 @@ function calendario() {
         id = info.event.id;
         console.log(info);
         console.log(info.event.id);
-        $('#myModalEliminar').modal();
+        console.log(info.event.title);
+        if(info.event.title == 'Descanso'){
+          $('#myModalEliminar').modal();
+        }
       },
       editable: false,
       eventLimit: true,
@@ -157,7 +160,7 @@ function calendario() {
       },
             success:function(msg){
               $('#myModalFestivo').modal('toggle');
-              calendar.addEvent(nuevoEvento1);
+              calendar.refetchEvents();
               console.log(msg); },
             error:function(){ alert("Hay un error");}
             }
