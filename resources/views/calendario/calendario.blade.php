@@ -46,7 +46,7 @@
             <option value="">PAIS</option>
             @foreach ($pais as $paises)
               @if($paises->id==173)
-                <option class="" selected="true" value="{{$paises->id}}" disabled="disabled">{{$paises->nombre}}</option>
+                <option class="" selected="true" value="{{$paises->id}}" >{{$paises->nombre}}</option>
               @else
                 <option class="" value="{{$paises->id}}">{{$paises->nombre}}</option>
               @endif
@@ -298,6 +298,7 @@ $( document ).ready(function() {
 });
 $('#nuevoCalendario').click(function(){
     var departamento= $('#departamento').val();
+    var pais= $('#pais').val();
     $.ajax(
       {
 
@@ -316,7 +317,7 @@ $('#nuevoCalendario').click(function(){
 
             //url:"/calendario/store",
             url:"/calendario/showDep/confirmar",
-            data:'departamento='+departamento,
+            data:{departamento:departamento,pais:pais},
             headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },

@@ -93,12 +93,15 @@ function calendario() {
           start: $('#start').val(),
           end: $('#end').val(),
           tipo: 1,
+          departamento:$('#pais').val(),
           departamento:$('#departamento').val(),
           '_method':method
         }
         return(nuevoEvento);
     }
     function EnviarDescanso(accion,objEvento){
+        var departamento =$('#departamento').val();
+        var pais =$('#pais').val();
         $.ajax(
             {
             type: "POST",
@@ -108,9 +111,27 @@ function calendario() {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
             success:function(msg){
+
               $('#myModal').modal('toggle');
               calendar.refetchEvents();
-              $('#calendar1').fullCalendar( 'refetchEvents' );
+              $.ajax(
+                {
+
+                //url:"/calendario/store",
+                url:"/calendario/showDep/",
+                data:'departamento='+departamento,
+                headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+                success:function(data){
+
+
+                  calendario1(data);
+
+                  },
+                error:function(){ alert("Hay un error");}
+                }
+            );
               console.log(msg); },
             error:function(){ alert("Hay un error");}
             }
@@ -153,12 +174,16 @@ function calendario() {
           start: $('#startF').val(),
           end: $('#endF').val(),
           tipo: 0,
+          pais:$('#pais').val(),
+          departamento:$('#departamento').val(),
 
           '_method':method
         }
         return(nuevoEvento1);
     }
     function EnviarNoL(accion,objEvento1){
+        var departamento =$('#departamento').val();
+        var departamento =$('#pais').val();
         $.ajax(
             {
             type: "POST",
@@ -170,6 +195,24 @@ function calendario() {
             success:function(msg){
               $('#myModalFestivo').modal('toggle');
               calendar.refetchEvents();
+              $.ajax(
+                {
+
+                //url:"/calendario/store",
+                url:"/calendario/showDep/",
+                data:'departamento='+departamento,
+                headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+                success:function(data){
+
+
+                  calendario1(data);
+
+                  },
+                error:function(){ alert("Hay un error");}
+                }
+            );
               console.log(msg); },
             error:function(){ alert("Hay un error");}
             }

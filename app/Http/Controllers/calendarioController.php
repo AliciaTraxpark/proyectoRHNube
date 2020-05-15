@@ -31,6 +31,7 @@ class calendarioController extends Controller
             {   $calendarioR=new calendario();
                 $calendarioR->users_id=Auth::user()->id;
                 $calendarioR->eventos_id=$eventos->id;
+                $calendarioR->calen_pais=173;
                 $calendarioR->save();
             }}
             //FUNCIONA OK
@@ -87,7 +88,7 @@ class calendarioController extends Controller
                     return response()->json($eventos_usuario1);
     }
     public function showDepconfirmar(Request $request){
-
+        $pais=$request->get('pais');
         $depa=$request->get('departamento');
         $existencia = DB::table('calendario')
         ->select('users_id','calen_departamento')
@@ -101,6 +102,7 @@ class calendarioController extends Controller
                     $calendario=new calendario();
                     $calendario->users_id=Auth::user()->id;
                     $calendario->calen_departamento=$depa;
+                    $calendario->calen_pais=$pais;
                     $calendario->save();
                 }
     }

@@ -17,7 +17,7 @@ class EventosUsuarioController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
         //
@@ -51,6 +51,7 @@ class EventosUsuarioController extends Controller
         $eventos_usuario->tipo= $request->get('tipo');
 
         $eventos_usuario->evento_departamento= $request->get('departamento');
+        $eventos_usuario->evento_pais= $request->get('pais');
 
         $eventos_usuario->users_id=Auth::user()->id;
 
