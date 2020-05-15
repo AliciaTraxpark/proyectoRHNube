@@ -85,7 +85,9 @@ class calendarioController extends Controller
         ->select(['id','title' ,'color', 'textColor', 'start','end','tipo'])
              ->where('Users_id','=',Auth::user()->id)
              ->where('evento_departamento','=',$depa)
+             ->where('evento_pais','=',173)
                 ->union($eventos)
+
                 ->get();
                     return response()->json($eventos_usuario1);}
 
