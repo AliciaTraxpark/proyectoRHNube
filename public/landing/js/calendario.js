@@ -84,6 +84,7 @@ function calendario() {
     $('#eliminarDescanso').click(function(){
       objEvento=datos("DELETE");
       EnviarDescansoE('/'+id,objEvento);
+      EnviarDescansoE('/'+id1,objEvento);
     });
     function datos(method){
         nuevoEvento={

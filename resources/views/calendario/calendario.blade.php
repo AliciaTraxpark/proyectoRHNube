@@ -344,7 +344,7 @@ function calendario1(data) {
     calendarEl1.innerHTML="";
     var fecha = new Date();
     var ano = fecha. getFullYear();
-    var id;
+    var id1;
     var data=data;
 
     var configuracionCalendario1 = {
@@ -369,9 +369,15 @@ function calendario1(data) {
         console.log(arg);
       },
       eventClick:function(info){
-        id = info.event.id;
+        id1 = info.event.id;
         console.log(info);
-        $('#myModalEliminar').modal();
+        console.log(info.event.id);
+        console.log(info.event.title);
+        if(info.event.title == 'Descanso'){
+          $('#myModalEliminarD').modal();
+        }else{
+          $('#myModalEliminarN').modal();
+        }
       },
       editable: false,
       eventLimit: true,
