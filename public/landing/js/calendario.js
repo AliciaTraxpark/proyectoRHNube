@@ -87,6 +87,7 @@ function calendario() {
           start: $('#start').val(),
           end: $('#end').val(),
           tipo: 1,
+          departamento:$('#departamento').val(),
           '_method':method
         }
         return(nuevoEvento);
@@ -103,6 +104,7 @@ function calendario() {
             success:function(msg){
               $('#myModal').modal('toggle');
               calendar.refetchEvents();
+              $('#calendar1').fullCalendar( 'refetchEvents' );
               console.log(msg); },
             error:function(){ alert("Hay un error");}
             }
@@ -168,21 +170,8 @@ function calendario() {
 }
 document.addEventListener('DOMContentLoaded',calendario);
 
-$('#nuevoCalendario').click(function(){
-    var departamento= $('#departamento').val();
-    $.ajax(
-      {
-      type: "POST",
-      url:"/calendario/store",
-      data:'departamento='+departamento,
-      headers: {
-    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-},
-      success:function(data){
-        $('#calendar').load(location.href+" #calendar>*");
-        calendar.render();
-        },
-      error:function(){ alert("Hay un error");}
-      }
-  );
-});
+//////////////////
+//////////////////////
+//DEPARTAMENTO
+//////////////////////
+

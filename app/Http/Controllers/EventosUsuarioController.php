@@ -43,7 +43,11 @@ class EventosUsuarioController extends Controller
         $eventos_usuario->start= $request->get('start');
         $eventos_usuario->end= $request->get('end');
         $eventos_usuario->tipo= $request->get('tipo');
+
+        $eventos_usuario->evento_departamento= $request->get('departamento');
+
         $eventos_usuario->users_id=Auth::user()->id;
+
         $eventos_usuario->save();
     }
 

@@ -49,7 +49,7 @@ class calendarioController extends Controller
           $calendarioR->users_id=Auth::user()->id;
           $calendarioR->eventos_id=$eventos->id;
           $calendarioR->calen_departamento=$request->get('departamento');
-         
+
           $calendarioR->save();
       }
 
@@ -61,9 +61,43 @@ class calendarioController extends Controller
         $eventos_usuario = DB::table('eventos_usuario')
         ->select(['id','title' ,'color', 'textColor', 'start','end','tipo'])
              ->where('Users_id','=',Auth::user()->id)
+             ->where('evento_departamento','=',null)
                 ->union($eventos)
                 ->get();
         return response()->json($eventos_usuario);
+    }
+     public function showDep(Request $request){
+
+        $depa=$request->get('departamento');
+
+
+        $eventos=DB::table('eventos')->select(['id','title' ,'color', 'textColor', 'start','end','tipo']);
+
+        $eventos_usuario1 = DB::table('eventos_usuario')
+        ->select(['id','title' ,'color', 'textColor', 'start','end','tipo'])
+             ->where('Users_id','=',Auth::user()->id)
+             ->where('evento_departamento','=',$depa)
+                ->union($eventos)
+                ->get();
+                    return response()->json($eventos_usuario1);
+    }
+    public function showDepconfirmar(Request $request){
+
+        $depa=$request->get('departamento');
+        $existencia = DB::table('calendario')
+        ->select('users_id','calen_departamento')
+        ->where('users_id', '=',Auth::user()->id)
+        ->where('calen_departamento','=',$depa)
+        ->get();
+                if(count($existencia) >= 1) {
+
+                    return (1);
+                } else{
+                    $calendario=new calendario();
+                    $calendario->users_id=Auth::user()->id;
+                    $calendario->calen_departamento=$depa;
+                    $calendario->save();
+                }
     }
 
     public function destroy($id){

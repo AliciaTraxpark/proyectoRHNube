@@ -28,6 +28,8 @@ Route::name('dashboard')->get('dashboard','HomeController@index');
 Route::name('calendario')->get('calendario','calendarioController@index');
 Route::post('/calendario/store','calendarioController@store');
 Route::get('calendario/show', 'calendarioController@show')->name('calendarioShow');
+Route::get('calendario/showDep', 'calendarioController@showDep')->name('calendarioShowDep');
+Route::get('calendario/showDep/confirmar', 'calendarioController@showDepconfirmar')->name('calendarioShowDepc');
 Route::delete('calendario/{id}','calendarioController@destroy');
 //PERSONA
 
@@ -48,3 +50,6 @@ Route::POST('organizacion/create', 'registroEmpresaController@create')->name('re
 Route::post('/eventos_usuario/store','EventosUsuarioController@store');
 
 
+Route::get('/departamento', function () {
+    return view('calendario.departamento');
+})->name('depas');
