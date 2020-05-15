@@ -68,15 +68,17 @@ class calendarioController extends Controller
         ->select(['id','title' ,'color', 'textColor', 'start','end','tipo'])
              ->where('Users_id','=',Auth::user()->id)
              ->where('evento_departamento','=',null)
+             ->where('evento_pais','=',173)
                 ->union($eventos)
                 ->get();
         return response()->json($eventos_usuario);
     }
      public function showDep(Request $request){
 
+        $pais=$request->get('pais');
         $depa=$request->get('departamento');
 
-
+        if($pais==173){
         $eventos=DB::table('eventos')->select(['id','title' ,'color', 'textColor', 'start','end','tipo']);
 
         $eventos_usuario1 = DB::table('eventos_usuario')
@@ -85,7 +87,19 @@ class calendarioController extends Controller
              ->where('evento_departamento','=',$depa)
                 ->union($eventos)
                 ->get();
-                    return response()->json($eventos_usuario1);
+                    return response()->json($eventos_usuario1);}
+
+
+        else {
+            $eventos_usuario1 = DB::table('eventos_usuario')
+            ->select(['id','title' ,'color', 'textColor', 'start','end','tipo'])
+                 ->where('Users_id','=',Auth::user()->id)
+                 ->where('evento_pais','=',$pais)
+
+                    ->get();
+                        return response()->json($eventos_usuario1);
+
+        }
     }
     public function showDepconfirmar(Request $request){
         $pais=$request->get('pais');
@@ -94,6 +108,8 @@ class calendarioController extends Controller
         ->select('users_id','calen_departamento')
         ->where('users_id', '=',Auth::user()->id)
         ->where('calen_departamento','=',$depa)
+        ->where('calen_pais','=',$pais)
+
         ->get();
                 if(count($existencia) >= 1) {
 

@@ -304,7 +304,7 @@ $('#nuevoCalendario').click(function(){
 
       //url:"/calendario/store",
       url:"/calendario/showDep/",
-      data:'departamento='+departamento,
+      data:{departamento:departamento,pais:pais},
       headers: {
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 },
@@ -324,7 +324,7 @@ $('#nuevoCalendario').click(function(){
             success:function(dataA){
                if (dataA==1)
                {
-                   alert('Departamento ya creado');
+                   alert('ya esta creado');
                }
 
                 },
