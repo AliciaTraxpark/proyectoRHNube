@@ -29,6 +29,7 @@ function calendario() {
       eventClick:function(info){
         id = info.event.id;
         console.log(info);
+        console.log(info.event.id);
         $('#myModalEliminar').modal();
       },
       editable: false,

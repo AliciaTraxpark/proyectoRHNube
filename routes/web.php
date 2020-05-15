@@ -23,7 +23,7 @@ Auth::routes();
 /* Route::get('/', 'HomeController@principal')->name('principal'); */
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 //MENU
-Route::name('dashboard')->get('dashboard','HomeController@index');
+Route::name('dashboard')->get('dashboard','HomeController@index')->middleware('auth');
 //CALENDARIO
 Route::name('calendario')->get('calendario','calendarioController@index');
 Route::post('/calendario/store','calendarioController@store');
@@ -53,3 +53,4 @@ Route::post('/eventos_usuario/store','EventosUsuarioController@store');
 Route::get('/departamento', function () {
     return view('calendario.departamento');
 })->name('depas');
+Route::get('/eventos_usuario/store','EventosUsuarioController@store');

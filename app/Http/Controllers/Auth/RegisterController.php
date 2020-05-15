@@ -67,11 +67,11 @@ class RegisterController extends Controller
     public function create(array $data)
     {
 
-  $persona=new persona();
-$persona->perso_nombre= $data['nombres'];
-$persona->perso_nombre= $data['apellidos'];
+        $persona=new persona();
+        $persona->perso_nombre= $data['nombres'];
+        $persona->perso_nombre= $data['apellidos'];
         $persona->save();
-            $user_persona= $persona->perso_id ;
+        $user_persona= $persona->perso_id ;
 
         return User::create([
 
