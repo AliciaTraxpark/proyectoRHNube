@@ -93,7 +93,7 @@ function calendario() {
           start: $('#start').val(),
           end: $('#end').val(),
           tipo: 1,
-          departamento:$('#pais').val(),
+         pais:$('#pais').val(),
           departamento:$('#departamento').val(),
           '_method':method
         }
@@ -119,7 +119,7 @@ function calendario() {
 
                 //url:"/calendario/store",
                 url:"/calendario/showDep/",
-                data:'departamento='+departamento,
+                data:{departamento:departamento,pais:pais},
                 headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -183,7 +183,7 @@ function calendario() {
     }
     function EnviarNoL(accion,objEvento1){
         var departamento =$('#departamento').val();
-        var departamento =$('#pais').val();
+        var pais =$('#pais').val();
         $.ajax(
             {
             type: "POST",
@@ -200,7 +200,7 @@ function calendario() {
 
                 //url:"/calendario/store",
                 url:"/calendario/showDep/",
-                data:'departamento='+departamento,
+                data:{departamento:departamento,pais:pais},
                 headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
