@@ -55,7 +55,8 @@ class LoginController extends Controller
             return redirect(route('dashboard'));
         }
         else{
-            return view('Welcome');
+            //return view('Welcome');
+            return redirect(route('login'));
         }
 
     }
