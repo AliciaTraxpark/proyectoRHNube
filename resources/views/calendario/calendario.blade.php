@@ -54,6 +54,9 @@
           </select>
         </div>
         <div class="col-md-2 text-left">
+            @if(!empty($eventos_usuario))
+            <h1>sdfg</h1>
+            @endif
           <select  class="form-control" placeholder="Departamento " name="departamento" id="departamento" style="display: flex;">
             <option value="">DEPARTAMENTO</option>
             @foreach ($departamento as $departamentos)
@@ -236,11 +239,11 @@
         </div><!-- /.modal -->
             <div class="row " >
                 <div class="col-md-12 text-center">
-                  <div class="col-md-7" style="left: 19%;max-width: 65%;">
+                  <div class="col-md-7" style="left: 19%;max-width: 65%; " id="Datoscalendar">
                       <div class="card">
                           <div class="card-body">
                               <div id="calendar"></div>
-                              <div id="departamento"></div>
+
                           </div> <!-- end card body-->
                           <div class="card-footer">
                             <div class="row">
@@ -248,9 +251,22 @@
                           </div>
                       </div> <!-- end card -->
                   </div>
+                  <div class="col-md-7" id="Datoscalendar1" style="left: 19%;max-width: 65%;">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="calendar1"></div>
+
+                        </div> <!-- end card body-->
+                        <div class="card-footer">
+                          <div class="row">
+                          </div>
+                        </div>
+                    </div> <!-- end card -->
+                </div>
                    <input type="hidden" id="pruebaStar">
                    <input type="hidden" id="pruebaEnd">
                 </div>
+
             </div>
         <footer class="border-top">
             <p class="text-center text-muted pt-4">© <?php echo date("Y"); ?> - RH Solution | Todos los derechos reservados.</p>
@@ -276,6 +292,155 @@
   <script src="{{asset('admin/packages/timegrid/main.js')}}"></script>
   <script src="{{asset('admin/packages/interaction/main.js')}}"></script>
   <script src="{{asset('landing/js/calendario.js')}}"></script>
-  <script></script>
+  <script>
+$( document ).ready(function() {
+   $('#Datoscalendar1').hide();
+});
+$('#nuevoCalendario').click(function(){
+    var departamento= $('#departamento').val();
+    $.ajax(
+      {
+
+      //url:"/calendario/store",
+      url:"/calendario/showDep/",
+      data:'departamento='+departamento,
+      headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+},
+      success:function(data){
+        $('#Datoscalendar').hide();
+        $('#Datoscalendar1').show();
+
+        $.ajax(
+            {
+
+            //url:"/calendario/store",
+            url:"/calendario/showDep/confirmar",
+            data:'departamento='+departamento,
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+            success:function(dataA){
+               if (dataA==1)
+               {
+                   alert('Departamento ya creado');
+               }
+
+                },
+            error:function(){ alert("Hay un error");}
+            }
+        );
+        calendario1(data);
+
+        },
+      error:function(){ alert("Hay un error");}
+      }
+  );
+});
+
+function calendario1(data) {
+    var calendarEl1 = document.getElementById('calendar1');
+    calendarEl1.innerHTML="";
+    var fecha = new Date();
+    var ano = fecha. getFullYear();
+    var id;
+    var data=data;
+
+    var configuracionCalendario1 = {
+        locale: 'es',
+        defaultDate: ano+'-01-01',
+
+        plugins: [ 'dayGrid','interaction','timeGrid'],
+
+        selectable: true,
+        selectMirror: true,
+        select: function(arg) {
+
+
+         /*  calendar.addEvent({
+            title: 'title',
+            start: arg.start,
+            end: arg.end,
+            allDay: arg.allDay
+          }) */
+          $('#pruebaEnd').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
+          $('#pruebaStar').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
+        console.log(arg);
+      },
+      eventClick:function(info){
+        id = info.event.id;
+        console.log(info);
+        $('#myModalEliminar').modal();
+      },
+      editable: false,
+      eventLimit: true,
+        header:{
+          left:'prev,next today',
+          center:'title',
+          right:'dayGridMonth'
+        },
+        footer:{
+          left:'Descanso',
+          right:'NoLaborales'
+        },
+
+
+        events:data,
+
+
+
+        customButtons:{
+          Descanso:{
+            text:"Asignar días de Descanso",
+            click:function(){
+                var start=  $('#pruebaStar').val();
+                var end=  $('#pruebaEnd').val();
+
+                $('#start').val(start);
+                $('#end').val(end);
+                $('#myModal').modal('toggle');
+            }
+          },
+          NoLaborales:{
+            text:"Asignar días no Laborales",
+            click:function(){
+                var start=  $('#pruebaStar').val();
+                var end=  $('#pruebaEnd').val();
+                $('#startF').val(start);
+                $('#endF').val(end);
+                $('#myModalFestivo').modal('toggle');
+
+            }
+          }
+        },
+      }
+    var calendar1 = new FullCalendar.Calendar(calendarEl1,configuracionCalendario1);
+    calendar1.setOption('locale',"Es");
+     //DESCANSO
+
+
+
+
+    ///
+    //NO LABORABLE
+
+
+
+
+    ////
+    calendar1.render();
+}
+document.addEventListener('DOMContentLoaded',calendario1);
+
+
+  </script>
+   <script>
+    var msg = '{{Session::get('alert')}}';
+    var exist = '{{Session::has('alert')}}';
+    if(exist){
+      alert(msg);
+    }
+  </script>
+
 </body>
 </html>
