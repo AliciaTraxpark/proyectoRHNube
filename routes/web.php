@@ -31,6 +31,8 @@ Route::get('calendario/show', 'calendarioController@show')->name('calendarioShow
 Route::get('calendario/showDep', 'calendarioController@showDep')->name('calendarioShowDep');
 Route::get('calendario/showDep/confirmar', 'calendarioController@showDepconfirmar')->name('calendarioShowDepc');
 Route::delete('calendario/{id}','calendarioController@destroy');
+Route::get('eliminarE/{id}','EventosUsuarioController@destroy');
+
 //PERSONA
 
 

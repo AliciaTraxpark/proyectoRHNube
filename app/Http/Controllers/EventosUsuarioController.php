@@ -98,8 +98,10 @@ class EventosUsuarioController extends Controller
      * @param  \App\eventos_usuario  $eventos_usuario
      * @return \Illuminate\Http\Response
      */
-    public function destroy(eventos_usuario $eventos_usuario)
+    public function destroy($id)
     {
-        //
+        $eventos_usuario=eventos_usuario::findOrFail($id);
+        eventos_usuario::destroy($id);
+        return response()->json($id);
     }
 }

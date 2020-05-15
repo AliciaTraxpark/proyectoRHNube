@@ -85,24 +85,25 @@
                             <br>
 
                             <div class="row">
-                                <div class="col-md-12">
-                                    <form class="form-horizontal">
+
+                                   <h5>¿Asignar dias de descanso?</h5>
+
                                         <div class="form-group row mb-3">
-                                            <label for="start" class="col-sm-4 col-form-label">Fecha Inicial:</label>
+                                            {{-- <label for="start" class="col-sm-4 col-form-label">Fecha Inicial:</label> --}}
                                             <div class="col-8">
-                                                <input type="text" name="start" class="form-control" id="start" readonly>
+                                                <input type="hidden" name="start" class="form-control" id="start" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group row mb-3">
-                                            <label for="start" class="col-sm-4 col-form-label">Fecha Final:</label>
+                                            {{-- <label for="start" class="col-sm-4 col-form-label">Fecha Final:</label> --}}
                                             <div class="col-8">
-                                                <input type="text" name="end" class="form-control" id="end" readonly>
+                                                <input type="hidden" name="end" class="form-control" id="end" readonly>
                                             </div>
                                         </div>
                                         <input type="hidden" name="title" id="title" value="Descanso">
 
-                                    </form>
-                                </div>
+
+
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -134,24 +135,25 @@
                             <br>
 
                             <div class="row">
-                                <div class="col-md-12">
-                                    <form class="form-horizontal">
+
+                                    <h5>¿Asignar dias no laborales?</h5>
+
                                         <div class="form-group row mb-3">
-                                            <label for="start" class="col-sm-4 col-form-label">Fecha Inicial:</label>
+                                            {{-- <label for="start" class="col-sm-4 col-form-label">Fecha Inicial:</label> --}}
                                             <div class="col-8">
-                                                <input type="text" name="startF" class="form-control" id="startF" readonly>
+                                                <input type="hidden" name="startF" class="form-control" id="startF" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group row mb-3">
-                                            <label for="start" class="col-sm-4 col-form-label">Fecha Final:</label>
+                                            {{-- <label for="start" class="col-sm-4 col-form-label">Fecha Final:</label> --}}
                                             <div class="col-8">
-                                                <input type="text" name="endF" class="form-control" id="endF" readonly>
+                                                <input type="hidden" name="endF" class="form-control" id="endF" readonly>
                                             </div>
                                         </div>
                                         <input type="hidden" name="titleN" id="titleN" value="No laborable">
 
-                                    </form>
-                                </div>
+
+
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -172,7 +174,7 @@
             <div id="myModalEliminarD" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                   <div class="modal-content">
-                      <div class="modal-header" style="background-color: #163552;">
+                      <div class="modal-header" style="background-color:#163552;">
                           <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Días de descanso</h5>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
@@ -195,7 +197,7 @@
                                       <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
                                   </div>
                                   <div class="col-md-5 text-right" style="padding-right: 38px;  ">
-                                      <button type="button" id="eliminarDescanso" name="eliminarDescanso" class="btn btn-danger">Eliminar</button>
+                                      <button type="button" id="eliminarDescanso" name="eliminarDescanso" style="background-color: #163552;" class="btn btn-danger">Eliminar</button>
                                   </div>
                               </div>
                           </div>
@@ -206,7 +208,7 @@
           <div id="myModalEliminarN" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header" style="background-color: #a34141;">
+                    <div class="modal-header" style="background-color: #163552;">
                         <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Días no Laborales</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -229,7 +231,7 @@
                                     <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
                                 </div>
                                 <div class="col-md-5 text-right" style="padding-right: 38px;  ">
-                                    <button type="button" id="eliminarNLaboral" name="eliminarNLaboral" class="btn btn-danger">Eliminar</button>
+                                    <button type="button" id="eliminarNLaboral" name="eliminarNLaboral" style="background-color: #163552;" class="btn btn-danger">Eliminar</button>
                                 </div>
                             </div>
                         </div>
@@ -237,6 +239,74 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
+        <div id="myModalEliminarDdep" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #163552;">
+                        <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Días de descanso</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <br>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form class="form-horizontal">
+                                  <h5 class="modal-title" id="myModalLabel">¿Desea eliminar días descanso?</h5>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-7 text-right">
+                                    <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                                </div>
+                                <div class="col-md-5 text-right" style="padding-right: 38px;  ">
+                                    <button type="button"  style="background-color: #163552;" id="eliminarDescansodep" name="eliminarDescansodep" class="btn btn-danger">Eliminar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <div id="myModalEliminarNdep" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header" style="background-color: #163552;">
+                      <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Días no Laborales</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <br>
+                      <div class="row">
+                          <div class="col-md-12">
+                              <form class="form-horizontal">
+                                <h5 class="modal-title" id="myModalLabel">¿Desea eliminar días no Laborales?</h5>
+                              </form>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <div class="col-md-12">
+                          <div class="row">
+                              <div class="col-md-7 text-right">
+                                  <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                              </div>
+                              <div class="col-md-5 text-right" style="padding-right: 38px;  ">
+                                  <button type="button" id="eliminarNLaboraldep" name="eliminarNLaboraldep" style="background-color: #163552;" class="btn btn-danger">Eliminar</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
             <div class="row " >
                 <div class="col-md-12 text-center">
                   <div class="col-md-7" style="left: 19%;max-width: 65%; " id="Datoscalendar">
@@ -291,7 +361,7 @@
   <script src="{{asset('admin/packages/daygrid/main.js')}}"></script>
   <script src="{{asset('admin/packages/timegrid/main.js')}}"></script>
   <script src="{{asset('admin/packages/interaction/main.js')}}"></script>
-  <script src="{{asset('landing/js/calendario.js')}}"></script>
+   <script src="{{asset('landing/js/calendario.js')}}"></script>
   <script>
 $( document ).ready(function() {
    $('#Datoscalendar1').hide();
@@ -299,6 +369,8 @@ $( document ).ready(function() {
 $('#nuevoCalendario').click(function(){
     var departamento= $('#departamento').val();
     var pais= $('#pais').val();
+
+
     $.ajax(
       {
 
@@ -374,9 +446,9 @@ function calendario1(data) {
         console.log(info.event.id);
         console.log(info.event.title);
         if(info.event.title == 'Descanso'){
-          $('#myModalEliminarD').modal();
+          $('#myModalEliminarDdep').modal();
         }else{
-          $('#myModalEliminarN').modal();
+          $('#myModalEliminarNdep').modal();
         }
       },
       editable: false,
@@ -425,13 +497,77 @@ function calendario1(data) {
     calendar1.setOption('locale',"Es");
      //DESCANSO
 
+     $('#eliminarDescansodep').click(function(){
+      objEvento1=datos1("DELETE");
+      EliminarDescansoE('/'+id1,objEvento1);
+    });
+    function datos1(method){
+        nuevoEvento1={
+          title: $('#title').val(),
+          color:'#4673a0',
+          textColor:' #ffffff ',
+          start: $('#start').val(),
+          end: $('#end').val(),
+          tipo: 1,
+         pais:$('#pais').val(),
+          departamento:$('#departamento').val(),
+          '_method':method
+        }
+        return(nuevoEvento1);
+    }
+    function EliminarDescansoE(accion1,objEvento1){
+
+        $.ajax(
+            {
+            type: "DELETE",
+            url:"/calendario" +accion1,
+            data:objEvento1,
+            headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+            success:function(msg){
+            $('#myModalEliminarDdep').modal('toggle');
+
+           var event = calendar1.getEventById(id1);
+           event.remove();
 
 
+            },
+
+            }
+        );
+     }
 
     ///
     //NO LABORABLE
 
+    $('#eliminarNLaboraldep').click(function(){
+      objEvento2=datos1("DELETE");
+      EliminarNola('/'+id1,objEvento2);
+    });
 
+    function EliminarNola(accion2,objEvento2){
+
+        $.ajax(
+            {
+            type: "DELETE",
+            url:"/calendario" +accion2,
+            data:objEvento2,
+            headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+            success:function(msg){
+            $('#myModalEliminarNdep').modal('toggle');
+
+           var event = calendar1.getEventById(id1);
+           event.remove();
+
+
+            },
+
+            }
+        );
+     }
 
 
     ////
