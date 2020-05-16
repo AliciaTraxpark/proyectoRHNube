@@ -25,6 +25,12 @@
     background-color:#163552;
     padding: 8px;
 }
+.botonN{
+    font-size: 14px;
+    color: white;
+    background-color:#2d68a0;
+    padding: 8px;
+}
 .header-small .navbar{
     background-color: #163552;
 
