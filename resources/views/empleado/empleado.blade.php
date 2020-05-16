@@ -136,59 +136,8 @@
                 </div>
                 <div class="col-xl-7">
                     <div class="card">
-                        <div class="card-body" style="padding-top: 20px; padding-left: 10px; padding-right: 10px;">
+                        <div class="card-body" style="padding-top: 20px; ">
 
-
-                            <ul class="nav nav-pills navtab-bg nav-justified">
-                                <li class="nav-item">
-                                    <a href="#home1" data-toggle="tab" aria-expanded="false"
-                                        class="nav-link">
-                                        <span class="d-block d-sm-none"><i class="uil-home-alt"></i></span>
-                                        <span class="d-none d-sm-block">Home</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#profile1" data-toggle="tab" aria-expanded="true"
-                                        class="nav-link active">
-                                        <span class="d-block d-sm-none"><i class="uil-user"></i></span>
-                                        <span class="d-none d-sm-block">Profile</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#messages1" data-toggle="tab" aria-expanded="false"
-                                        class="nav-link">
-                                        <span class="d-block d-sm-none"><i class="uil-envelope"></i></span>
-                                        <span class="d-none d-sm-block">Messages</span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <div class="tab-content text-muted">
-                                <div class="tab-pane" id="home1">
-                                    <p>Vakal text here dolor sit amet, consectetuer adipiscing elit. Aenean
-                                        commodo ligula eget dolor. Aenean massa. Cum sociis natoque
-                                        penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                                        Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
-                                        Nulla consequat massa quis enim.</p>
-
-                                </div>
-                                <div class="tab-pane show active" id="profile1">
-                                    <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
-                                        In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
-                                        Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras
-                                        dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend
-                                        tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend
-                                        ac, enim.</p>
-
-                                </div>
-                                <div class="tab-pane" id="messages1">
-                                    <p>Vakal text here dolor sit amet, consectetuer adipiscing elit. Aenean
-                                        commodo ligula eget dolor. Aenean massa. Cum sociis natoque
-                                        penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                                        Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
-                                        Nulla consequat massa quis enim.</p>
-
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
