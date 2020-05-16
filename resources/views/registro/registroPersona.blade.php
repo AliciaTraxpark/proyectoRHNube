@@ -44,17 +44,21 @@
                 <div class="row">
 
                    <div class="col-md-4">
-                     <input  class="form-control " placeholder="Nombres" name="nombres" id="nombres" required>
+                     <input  class="form-control " placeholder="Nombres" name="nombres" id="nombres" value="{{old ('nombres')}}" required>
+                     {{$errors->first('nombres')}}
                     </div>
                     <div class="col-md-5">
-                     <input  class="form-control" placeholder="Apellidos" name="apellidos" id="apellidos" required>
+                     <input  class="form-control" placeholder="Apellidos" name="apellidos" id="apellidos" value="{{old ('apellidos')}}" required>
+                     {{$errors->first('apellidos')}}
                     </div> <br><br>
                     <div class="col-md-9">
-                         <input  class="form-control " placeholder="Número de celular o correo electrónico" name="email" id="email" required>
-                    </div><br><br>
+                         <input  class="form-control " placeholder="Número de celular o correo electrónico" name="email" id="email" value="{{old ('email')}}" required>
+                         {{$errors->first('email')}}
+                        </div><br><br>
                     <div class="col-md-9">
-                        <input  class="form-control" type="password" placeholder="Contraseña nueva" name="password" id="password" required>
-                   </div><br><br>
+                        <input  class="form-control" type="password" placeholder="Contraseña nueva" name="password" id="password" value="{{old ('password')}}" required>
+                        {{$errors->first('password')}}
+                    </div><br><br>
                  </div>
           <div class="row">
                     <div class="col-md-3 mt-2">
@@ -62,7 +66,8 @@
                     </div>
                     <div class="col-md-3">
                         <div class="datepicker date input-group p-0 shadow-sm">
-                            <input type="text" placeholder="elegir fecha" class="form-control" id="fecha" name="fecha" required>
+                            <input type="text" placeholder="elegir fecha" class="form-control" id="fecha" name="fecha" value="{{old ('fecha')}}" required>
+                            {{$errors->first('fecha')}}
                             <div class="input-group-append"><span class="input-group-text"><i class="fa fa-calendar"></i></span></div>
                         </div>
                     </div><!-- DEnd ate Picker Input -->

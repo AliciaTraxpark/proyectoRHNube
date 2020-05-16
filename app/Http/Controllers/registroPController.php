@@ -43,4 +43,16 @@ class registroPController extends Controller
     return Redirect::to('registro/organizacion/'.$user1);
 
 }
+public function mensajes(Request $request){
+    $this->validate($request,[
+        'nombres' => 'required',
+        'apellidos' => 'required',
+        'fecha' => 'required|date',
+        'email' => 'required',
+        'password' => 'required',
+        'sexo' => 'required'
+    ]);
+
+    return $request->all(); 
+}
 }
