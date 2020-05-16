@@ -56,3 +56,8 @@ Route::get('/departamento', function () {
     return view('calendario.departamento');
 })->name('depas');
 Route::get('/eventos_usuario/store','EventosUsuarioController@store');
+
+//EMPLEADOS
+Route::get('/empleado', function () {
+    return view('empleado.empleado');
+});
