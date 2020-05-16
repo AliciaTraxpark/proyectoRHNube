@@ -31,43 +31,43 @@
 </style>
   <header id="header-section">
     <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
-    <div class="container">
-        <div class="col-md-2">
-            <div class="navbar-brand-wrapper d-flex w-100">
-                <img src="{{asset('landing/images/logo.png')}}" height="100" >
-              </div>
+        <div class="container">
+            <div class="col-md-2">
+                <div class="navbar-brand-wrapper d-flex w-100">
+                    <img src="{{asset('landing/images/logo.png')}}" height="100" >
+                </div>
+            </div>
+            <div class="col-md-6 text-left">
+            <h5 style="color: #ffffff">Gestión de Calendarios</h5>
+            <label for="" class="blanco">Calendario de Perú, puedes crear calendarios regionales o personalizados</label>
+            </div>
+            <div class="col-md-2 text-left">
+            <select  class="form-control" placeholder="pais" name="pais" id="pais">
+                <option value="">PAIS</option>
+                    @foreach ($pais as $paises)
+                        @if($paises->id==173)
+                            <option class="" selected="true" value="{{$paises->id}}" >{{$paises->nombre}}</option>
+                        @else
+                            <option class="" value="{{$paises->id}}">{{$paises->nombre}}</option>
+                        @endif
+                    @endforeach
+            </select>
+            </div>
+            <div class="col-md-2 text-left">
+                @if(!empty($eventos_usuario))
+                    <h1>sdfg</h1>
+                @endif
+                <select  ect  class="form-control" placeholder="Departamento " name="departamento" id="departamento" style="display: flex;">
+                <option value="">DEPARTAMENTO</option>
+                @foreach ($departamento as $departamentos)
+                    <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
+                @endforeach
+            </select>
+            </div>
+            <div class=" col-md-2">
+            <button  id="nuevoCalendario" type="submit"class="boton" >Nuevo</button>
+            </div>
         </div>
-        <div class="col-md-6 text-left">
-          <h5 style="color: #ffffff">Gestión de Calendarios</h5>
-          <label for="" class="blanco">Calendario de Perú, puedes crear calendarios regionales o personalizados</label>
-        </div>
-        <div class="col-md-2 text-left">
-          <select  class="form-control" placeholder="pais" name="pais" id="pais">
-            <option value="">PAIS</option>
-            @foreach ($pais as $paises)
-              @if($paises->id==173)
-                <option class="" selected="true" value="{{$paises->id}}" >{{$paises->nombre}}</option>
-              @else
-                <option class="" value="{{$paises->id}}">{{$paises->nombre}}</option>
-              @endif
-            @endforeach
-          </select>
-        </div>
-        <div class="col-md-2 text-left">
-            @if(!empty($eventos_usuario))
-            <h1>sdfg</h1>
-            @endif
-          <select  class="form-control" placeholder="Departamento " name="departamento" id="departamento" style="display: flex;">
-            <option value="">DEPARTAMENTO</option>
-            @foreach ($departamento as $departamentos)
-              <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
-            @endforeach
-          </select>
-        </div>
-        <div class=" col-md-2">
-          <button  id="nuevoCalendario" type="submit"class="boton" >Nuevo</button>
-        </div>
-    </div>
     </nav>
   </header>
     <div class="content-page" style="margin-top: 40px; margin-left: 55px; margin-right: 55px;">
@@ -83,27 +83,21 @@
                         </div>
                         <div class="modal-body">
                             <br>
-
                             <div class="row">
-
-                                   <h5>¿Asignar dias de descanso?</h5>
-
-                                        <div class="form-group row mb-3">
-                                            {{-- <label for="start" class="col-sm-4 col-form-label">Fecha Inicial:</label> --}}
+                                <h5>¿Asignar dias de descanso?</h5>
+                                    <div class="form-group row mb-3">
+                                        {{-- <label for="start" class="col-sm-4 col-form-label">Fecha Inicial:</label> --}}
                                             <div class="col-8">
                                                 <input type="hidden" name="start" class="form-control" id="start" readonly>
                                             </div>
+                                    </div>
+                                    <div class="form-group row mb-3">
+                                        {{-- <label for="start" class="col-sm-4 col-form-label">Fecha Final:</label> --}}
+                                        <div class="col-8">
+                                            <input type="hidden" name="end" class="form-control" id="end" readonly>
                                         </div>
-                                        <div class="form-group row mb-3">
-                                            {{-- <label for="start" class="col-sm-4 col-form-label">Fecha Final:</label> --}}
-                                            <div class="col-8">
-                                                <input type="hidden" name="end" class="form-control" id="end" readonly>
-                                            </div>
-                                        </div>
-                                        <input type="hidden" name="title" id="title" value="Descanso">
-
-
-
+                                    </div>
+                                    <input type="hidden" name="title" id="title" value="Descanso">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -121,7 +115,6 @@
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
-
             <div id="myModalFestivo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -133,27 +126,21 @@
                         </div>
                         <div class="modal-body">
                             <br>
-
                             <div class="row">
-
-                                    <h5>¿Asignar dias no laborales?</h5>
-
-                                        <div class="form-group row mb-3">
-                                            {{-- <label for="start" class="col-sm-4 col-form-label">Fecha Inicial:</label> --}}
-                                            <div class="col-8">
-                                                <input type="hidden" name="startF" class="form-control" id="startF" readonly>
-                                            </div>
+                                <h5>¿Asignar dias no laborales?</h5>
+                                    <div class="form-group row mb-3">
+                                        {{-- <label for="start" class="col-sm-4 col-form-label">Fecha Inicial:</label> --}}
+                                        <div class="col-8">
+                                            <input type="hidden" name="startF" class="form-control" id="startF" readonly>
                                         </div>
-                                        <div class="form-group row mb-3">
-                                            {{-- <label for="start" class="col-sm-4 col-form-label">Fecha Final:</label> --}}
-                                            <div class="col-8">
-                                                <input type="hidden" name="endF" class="form-control" id="endF" readonly>
-                                            </div>
+                                    </div>
+                                    <div class="form-group row mb-3">
+                                        {{-- <label for="start" class="col-sm-4 col-form-label">Fecha Final:</label> --}}
+                                        <div class="col-8">
+                                            <input type="hidden" name="endF" class="form-control" id="endF" readonly>
                                         </div>
-                                        <input type="hidden" name="titleN" id="titleN" value="No laborable">
-
-
-
+                                    </div>
+                                <input type="hidden" name="titleN" id="titleN" value="No laborable">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -204,8 +191,8 @@
                       </div>
                   </div><!-- /.modal-content -->
               </div><!-- /.modal-dialog -->
-          </div><!-- /.modal -->
-          <div id="myModalEliminarN" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            </div><!-- /.modal -->
+            <div id="myModalEliminarN" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color: #163552;">
@@ -238,8 +225,8 @@
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-        <div id="myModalEliminarDdep" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            </div><!-- /.modal -->
+            <div id="myModalEliminarDdep" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color: #163552;">
@@ -272,8 +259,8 @@
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-        <div id="myModalEliminarNdep" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            </div><!-- /.modal -->
+            <div id="myModalEliminarNdep" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog">
               <div class="modal-content">
                   <div class="modal-header" style="background-color: #163552;">
@@ -306,7 +293,7 @@
                   </div>
               </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
+            </div><!-- /.modal -->
             <div class="row " >
                 <div class="col-md-12 text-center">
                   <div class="col-md-7" style="left: 19%;max-width: 65%; " id="Datoscalendar">
@@ -338,10 +325,15 @@
                 </div>
 
             </div>
+            <div class="row">
+                <div class="col-md-12  text-right">
+                    <a href="{{('/empleado')}}"><button class="boton btn btn-default mr-1" >CONTINUAR</button></a>
+                </div>
+            </div>
         <footer class="border-top">
             <p class="text-center text-muted pt-4">© <?php echo date("Y"); ?> - RH Solution | Todos los derechos reservados.</p>
         </footer>
-      </div>
+        </div>
     </div>
   <script src="{{asset('landing/vendors/jquery/jquery.min.js')}}"></script>
   <script src="{{asset('landing/vendors/bootstrap/bootstrap.min.js')}}"></script>
