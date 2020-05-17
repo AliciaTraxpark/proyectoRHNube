@@ -154,7 +154,7 @@ function calendario() {
               calendar.refetchEvents();
               console.log(msg);
               },
-            error:function(){ alert("Hay un error");}
+            error:function(){ alert("Accion no permitida");}
             }
         );
     }
@@ -233,7 +233,7 @@ function calendario() {
             $('#myModalEliminarN').modal('toggle');
             calendar.refetchEvents();
             console.log(msg); },
-          error:function(){ alert("Hay un error");}
+          error:function(){ alert("Accion no permitida");}
           }
       );
   }
