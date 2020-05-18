@@ -9,7 +9,8 @@ function calendario() {
     var configuracionCalendario = {
         locale: 'es',
         defaultDate: ano+'-01-01',
-
+         height: 450,
+         fixedWeekCount:false,
         plugins: [ 'dayGrid','interaction','timeGrid'],
 
         selectable: true,
@@ -307,7 +308,8 @@ $( document ).ready(function() {
          defaultDate: ano+'-01-01',
 
          plugins: [ 'dayGrid','interaction','timeGrid'],
-
+         height: 450,
+         fixedWeekCount:false,
          selectable: true,
          selectMirror: true,
          select: function(arg) {

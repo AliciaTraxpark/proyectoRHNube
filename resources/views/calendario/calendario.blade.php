@@ -184,7 +184,7 @@
                                       <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
                                   </div>
                                   <div class="col-md-5 text-right" style="padding-right: 38px;  ">
-                                      <button type="button" id="eliminarDescanso" name="eliminarDescanso" style="background-color: #163552;" class="btn btn-danger">Eliminar</button>
+                                      <button type="button" id="eliminarDescanso" name="eliminarDescanso" style="background-color: #163552;" class="btn ">Eliminar</button>
                                   </div>
                               </div>
                           </div>
@@ -218,7 +218,7 @@
                                     <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
                                 </div>
                                 <div class="col-md-5 text-right" style="padding-right: 38px;  ">
-                                    <button type="button" id="eliminarNLaboral" name="eliminarNLaboral" style="background-color: #163552;" class="btn btn-danger">Eliminar</button>
+                                    <button type="button" id="eliminarNLaboral" name="eliminarNLaboral" style="background-color: #163552;" class="btn ">Eliminar</button>
                                 </div>
                             </div>
                         </div>
@@ -252,7 +252,7 @@
                                     <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
                                 </div>
                                 <div class="col-md-5 text-right" style="padding-right: 38px;  ">
-                                    <button type="button"  style="background-color: #163552;" id="eliminarDescansodep" name="eliminarDescansodep" class="btn btn-danger">Eliminar</button>
+                                    <button type="button"  style="background-color: #163552;" id="eliminarDescansodep" name="eliminarDescansodep" class="btn ">Eliminar</button>
                                 </div>
                             </div>
                         </div>
@@ -286,7 +286,7 @@
                                   <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
                               </div>
                               <div class="col-md-5 text-right" style="padding-right: 38px;  ">
-                                  <button type="button" id="eliminarNLaboraldep" name="eliminarNLaboraldep" style="background-color: #163552;" class="btn btn-danger">Eliminar</button>
+                                  <button type="button" id="eliminarNLaboraldep" name="eliminarNLaboraldep" style="background-color: #163552;" class="btn ">Eliminar</button>
                               </div>
                           </div>
                       </div>
@@ -296,7 +296,7 @@
             </div><!-- /.modal -->
             <div class="row " >
                 <div class="col-md-12 text-center">
-                  <div class="col-md-7" style="left: 19%;max-width: 65%; " id="Datoscalendar">
+                  <div class="col-md-7" style="left: 10%;max-width: 80%; " id="Datoscalendar">
                       <div class="card">
                           <div class="card-body">
                               <div id="calendar"></div>
@@ -308,7 +308,7 @@
                           </div>
                       </div> <!-- end card -->
                   </div>
-                  <div class="col-md-7" id="Datoscalendar1" style="left: 19%;max-width: 65%;">
+                  <div class="col-md-7" id="Datoscalendar1" style="left: 10%;max-width: 80%;">
                     <div class="card">
                         <div class="card-body">
                             <div id="calendar1"></div>
