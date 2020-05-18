@@ -135,8 +135,8 @@
                 <div class="col-xl-6">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="header-title mt-0 mb-1">Datos</h4>
-                            <div id="smartwizard-default">
+                            <h4 class="header-title mt-0 mb-1"><i data-feather="bookmark" class="mr-1"></i>Datos</h4>
+                            <div id="smartwizard">
                                 <ul>
                                     <li><a href="#sw-default-step-1">Personales</a></li>
                                     <li><a href="#sw-default-step-2">Empresarial</a></li>
@@ -284,12 +284,11 @@
 
                                                         <div class="dz-message needsclick">
                                                             <i class="h1 text-muted  uil-cloud-upload"></i>
-                                                            <h3>Drop files here or click to upload.</h3>
-                                                            <span class="text-muted font-13">(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</span>
+                                                            <h3>Suelte imagen aquí o haga clic para cargar.</h3>
                                                         </div>
                                                     </form>
                                                     <div class="clearfix text-center mt-3">
-                                                        <button type="button" class="btn btn-danger"> <i class="uil uil-arrow-right mr-1"></i>Guardar</button>
+                                                        <button type="button" class="btn btn-success"><i class="uil uil-arrow-right mr-1"></i>Guardar</button>
                                                     </div>
                                                 </div>
                                             </div> <!-- end col -->
@@ -328,7 +327,7 @@
     <script src="{{asset('admin/assets/js/pages/form-wizard.init.js') }}"></script>
     <script src="{{asset('admin/assets/libs/dropzone/dropzone.min.js') }}"></script>
     <script src="{{asset('landing/js/tabla.js')}}"></script>
-
+    <script src="{{asset('landing/js/smartwizard.js')}}"></script>
 
 </body>
 </html>

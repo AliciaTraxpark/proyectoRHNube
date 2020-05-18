@@ -2,6 +2,7 @@ $(document).ready(function() {
     $('#tablaEmpleado').DataTable({
         "language" :{
             "search" : "Buscar",
+            "info" : "_TOTAL_ empleados",
             "paginate" : {
                 "next" : "Siguiente",
                 "previous" : "Anterior"
