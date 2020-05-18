@@ -16,7 +16,12 @@ class EmpleadoController extends Controller
     public function index()
     {
 
-        
+        return view('empleado.empleado');
+    }
+    public function cargarDatos()
+    {
+
+        return view('empleado.cargarEmpleado');
     }
 
     /**

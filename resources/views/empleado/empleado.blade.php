@@ -33,7 +33,7 @@
         display: none;
     }
     .v-divider{
-    border-right:5px solid #A0C6F6;
+    border-right:5px solid #ebebeb;
     }
 </style>
   <header id="header-section">
@@ -50,7 +50,7 @@
         </div>
 
         <div class=" col-md-2">
-            <button  class="btn btn-sm" style="background: #A0C6F6;"><i data-feather="users" class="mr-1"></i>Carga masiva</button>
+            <a href="{{('/empleado/cargar')}}"> <button style="background-color: #2f5597;border-color:#2f5597 "  class="btn btn-sm btn-rounded btn-primary "><i data-feather="users" class="mr-1"></i>Carga masiva</button></a>
 
           </div>
         <div class=" col-md-3">
@@ -64,10 +64,10 @@
             <div class="row row-divided">
                 <div class="col-xl-6 v-divider">
                     <div class="card">
-                        <div class="card-body" style="padding-top: 20px;">
+                        <div class="card-body" style="padding-top: 20px; background: #f8f8f8;">
                             <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
-                            <table id="tablaEmpleado" class="table nowrap">
-                                <thead>
+                            <table id="tablaEmpleado" class="table nowrap" style="font-size: 13px">
+                                <thead style="background: #4C5D73;color: white;">
                                     <tr>
                                         <th>Nombres</th>
                                         <th>Apellidos</th>
@@ -79,7 +79,7 @@
                                 </thead>
 
 
-                                <tbody>
+                                <tbody style="background: #f3f4f7;color: #2c2c2c;">
 
                                     <tr>
                                         <td>Hermione Butler</td>
@@ -137,7 +137,7 @@
                 </div>
                 <div class="col-xl-6">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body" style="background: #fbfbfb">
                             <h4 class="header-title mt-0 mb-1"><i data-feather="bookmark" class="mr-1"></i>Datos</h4>
                             <div id="smartwizard">
                                 <ul>

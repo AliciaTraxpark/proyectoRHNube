@@ -58,6 +58,5 @@ Route::get('/departamento', function () {
 Route::get('/eventos_usuario/store','EventosUsuarioController@store');
 
 //EMPLEADOS
-Route::get('/empleado', function () {
-    return view('empleado.empleado');
-});
+Route::get('/empleado','EmpleadoController@index' );
+Route::get('/empleado/cargar','EmpleadoController@cargarDatos' );
