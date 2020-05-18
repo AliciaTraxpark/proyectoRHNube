@@ -33,7 +33,7 @@
         display: none;
     }
     .v-divider{
-    border-right:5px solid #ebebeb;
+    border-right:5px solid #4C5D73;
     }
 </style>
   <header id="header-section">
@@ -50,11 +50,11 @@
         </div>
 
         <div class=" col-md-2">
-            <a href="{{('/empleado/cargar')}}"> <button style="background-color: #2f5597;border-color:#2f5597 "  class="btn btn-sm btn-rounded btn-primary "><i data-feather="users" class="mr-1"></i>Carga masiva</button></a>
+            <a href="{{('/empleado/cargar')}}"> <button class="btn btn-sm btn-info"><i data-feather="users" class="mr-1"></i>Carga masiva</button></a>
 
           </div>
         <div class=" col-md-3">
-            <button  class="btn btn-sm" style="background: #8186d5;"><i data-feather="camera" class="mr-1"></i>Carga masiva fotos</button>
+            <button  class="btn btn-sm btn-info"><i data-feather="camera" class="mr-1"></i>Carga masiva fotos</button>
         </div>
     </div>
     </nav>
@@ -77,8 +77,6 @@
 
                                     </tr>
                                 </thead>
-
-
                                 <tbody style="background: #f3f4f7;color: #2c2c2c;">
 
                                     <tr>
@@ -137,7 +135,7 @@
                 </div>
                 <div class="col-xl-6">
                     <div class="card">
-                        <div class="card-body" style="background: #fbfbfb">
+                        <div class="card-body">
                             <h4 class="header-title mt-0 mb-1"><i data-feather="bookmark" class="mr-1"></i>Datos</h4>
                             <div id="smartwizard">
                                 <ul>
