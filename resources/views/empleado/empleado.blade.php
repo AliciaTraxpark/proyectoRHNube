@@ -47,11 +47,11 @@
         </div>
 
         <div class=" col-md-2">
-            <button style="background-color: #2f5597"  class="btn btn-sm btn-rounded "><i data-feather="users" class="mr-1"></i>Carga masiva</button>
+            <button style="background-color: #2f5597;border-color:#2f5597 "  class="btn btn-sm btn-rounded btn-primary "><i data-feather="users" class="mr-1"></i>Carga masiva</button>
 
           </div>
         <div class=" col-md-3">
-            <button style="background-color: #2f5597"   class="btn btn-sm btn-rounded "><i data-feather="camera" class="mr-1"></i>Carga masiva fotos</button>
+            <button style="background-color: #2f5597;border-color:#2f5597 "   class="btn btn-sm btn-rounded btn-primary "><i data-feather="camera" class="mr-1"></i>Carga masiva fotos</button>
         </div>
     </div>
     </nav>
