@@ -155,7 +155,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default">Ap. Paterno</label>
+                                                    <label for="sw-default">Apellido Paterno</label>
                                                     <input type="text" class="form-control">
                                                 </div>
                                                 <div class="form-group">
@@ -183,7 +183,7 @@
                                                     <input type="text" class="form-control">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default">Ap. Materno</label>
+                                                    <label for="sw-default">Apellido Materno</label>
                                                     <input type="text" class="form-control">
                                                 </div>
                                                 <div class="form-group">
@@ -205,7 +205,7 @@
                                                     <input class="form-control" id="example-date" type="date" name="date">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default">Nombre</label>
+                                                    <label for="sw-default">Nombres</label>
                                                     <input type="text" class="form-control">
                                                 </div>
                                                 <div class="form-group">
@@ -315,7 +315,7 @@
                                                         </div>
                                                     </form>
                                                     <div class="clearfix text-center mt-3">
-                                                        <button type="button" class="btn btn-success"><i class="uil uil-arrow-right mr-1"></i>Guardar</button>
+                                                        <button type="button" class="btn btn-success"><i class="uil uil-arrow-right mr-1" id="finalizar"></i>Finalizar</button>
                                                     </div>
                                                 </div>
                                             </div> <!-- end col -->
