@@ -33,7 +33,7 @@
         display: none;
     }
     .v-divider{
-    border-right:5px solid #8186d5;
+    border-right:5px solid #A0C6F6;
     }
 </style>
   <header id="header-section">
@@ -50,11 +50,11 @@
         </div>
 
         <div class=" col-md-2">
-            <button  class="btn btn-sm" style="background: #8186d5;"><i data-feather="users" class="mr-1"></i>Carga masiva</button>
+            <button  class="btn btn-sm" style="background: #A0C6F6;"><i data-feather="users" class="mr-1"></i>Carga masiva</button>
 
           </div>
         <div class=" col-md-3">
-            <button  class="btn btn-sm" style="background: #8186d5;"><i data-feather="camera" class="mr-1"></i>Carga masiva fotos</button>
+            <button  class="btn btn-sm" style="background: #A0C6F6;"><i data-feather="camera" class="mr-1"></i>Carga masiva fotos</button>
         </div>
     </div>
     </nav>
