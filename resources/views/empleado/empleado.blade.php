@@ -32,6 +32,9 @@
     .fc-time{
         display: none;
     }
+    .v-divider{
+    border-right:5px solid #8186d5;
+    }
 </style>
   <header id="header-section">
     <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
@@ -51,15 +54,15 @@
 
           </div>
         <div class=" col-md-3">
-            <button style="background-color: #2f5597;border-color:#2f5597 "   class="btn btn-sm btn-rounded btn-primary "><i data-feather="camera" class="mr-1"></i>Carga masiva fotos</button>
+            <button  class="btn btn-sm" style="background: #8186d5;"><i data-feather="camera" class="mr-1"></i>Carga masiva fotos</button>
         </div>
     </div>
     </nav>
   </header>
     <div class="content-page" style="margin-top: 20px;margin-left: 0px">
         <div class="content">
-            <div class="row " >
-                <div class="col-xl-6">
+            <div class="row row-divided">
+                <div class="col-xl-6 v-divider">
                     <div class="card">
                         <div class="card-body" style="padding-top: 20px;">
                             <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
@@ -183,14 +186,14 @@
                                                     <input type="text" class="form-control">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default-password">Lugar Nacimiento</label>
+                                                    <label for="sw-default-password"><br></label>
                                                     <select  class="form-control" placeholder="Tipo Documento " name="documento" id="documento" required>
                                                         <option value="">Provincia</option>
                                                           <option class="" value=""></option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default-password">Dirección Domiciliara</label>
+                                                    <label for="sw-default-password"><br></label>
                                                     <select  class="form-control" placeholder="Tipo Documento " name="documento" id="documento" required>
                                                         <option value="">Provincia</option>
                                                           <option class="" value=""></option>
@@ -207,14 +210,14 @@
                                                     <input type="text" class="form-control">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default-password">Lugar Nacimiento</label>
+                                                    <label for="sw-default-password"><br></label>
                                                     <select  class="form-control" placeholder="Tipo Documento " name="documento" id="documento" required>
                                                         <option value="">Distrito</option>
                                                           <option class="" value=""></option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default-password">Dirección Domiciliara</label>
+                                                    <label for="sw-default-password"><br></label>
                                                     <select  class="form-control" placeholder="Tipo Documento " name="documento" id="documento" required>
                                                         <option value="">Distrito</option>
                                                           <option class="" value=""></option>
@@ -225,6 +228,33 @@
                                                 <div class="form-group">
                                                     <label for="sw-default-password">Dirección</label>
                                                     <input type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label class="normal" for="">Genero</label>
+                                                    <label class="custom-control custom-radio">
+                                                        <input type="radio" name="tipo" id="tipo" value="Genero" required>
+                                                        Femenino
+                                                      </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label class="normal" for=""><br></label>
+                                                    <label class="custom-control custom-radio">
+                                                        <input type="radio" name="tipo" id="tipo" value="Genero" required>
+                                                        Masculino
+                                                      </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label class="normal" for=""><br></label>
+                                                    <label class="custom-control custom-radio">
+                                                        <input type="radio" name="tipo" id="tipo" value="Genero" required>
+                                                        Personalizado
+                                                      </label>
                                                 </div>
                                             </div>
                                         </div> <!-- end row -->
