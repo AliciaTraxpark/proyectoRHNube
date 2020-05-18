@@ -35,6 +35,14 @@
     .v-divider{
     border-right:5px solid #4C5D73;
     }
+
+
+.sw-theme-default > ul.step-anchor > li.active > a{
+    color: #ffffff !important;
+}
+.sw-theme-default > ul.step-anchor > li.done > a, .sw-theme-default > ul.step-anchor > li > a {
+    color: #d2d2d2!important;
+}
 </style>
   <header id="header-section">
     <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
@@ -50,11 +58,11 @@
         </div>
 
         <div class=" col-md-2">
-            <a href="{{('/empleado/cargar')}}"> <button class="btn btn-sm btn-info"><i data-feather="users" class="mr-1"></i>Carga masiva</button></a>
+            <a href="{{('/empleado/cargar')}}"> <button class="btn btn-sm btn-primary" style="background-color: #2f5597;border-color:#2f5597 "><i data-feather="users" class="mr-1"></i>Carga masiva</button></a>
 
           </div>
         <div class=" col-md-3">
-            <button  class="btn btn-sm btn-info"><i data-feather="camera" class="mr-1"></i>Carga masiva fotos</button>
+            <button  class="btn btn-sm btn-primary" style="background-color: #2f5597;border-color:#2f5597 "><i data-feather="camera" class="mr-1"></i>Carga masiva fotos</button>
         </div>
     </div>
     </nav>
@@ -62,22 +70,22 @@
     <div class="content-page" style="margin-top: 20px;margin-left: 0px">
         <div class="content">
             <div class="row row-divided">
-                <div class="col-xl-6 v-divider">
+                <div class="col-xl-6 ">
                     <div class="card">
                         <div class="card-body" style="padding-top: 20px; background: #f8f8f8;">
                             <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
-                            <table id="tablaEmpleado" class="table nowrap" style="font-size: 13px">
-                                <thead style="background: #4C5D73;color: white;">
+                            <table id="tablaEmpleado" class="table nowrap" style="font-size: 12.5px">
+                                <thead style="background: #566879;color: white;">
                                     <tr>
                                         <th>Nombres</th>
                                         <th>Apellidos</th>
                                         <th>Cargo</th>
                                         <th>Área</th>
-                                        <th>Centro Costo</th>
+                                        <th>Centro de Costo</th>
 
                                     </tr>
                                 </thead>
-                                <tbody style="background: #f3f4f7;color: #2c2c2c;">
+                                <tbody style="background:#f8f8f8;color: #2c2c2c;">
 
                                     <tr>
                                         <td>Hermione Butler</td>
@@ -133,12 +141,12 @@
                         </div> <!-- end card body-->
                     </div> <!-- end card -->
                 </div>
-                <div class="col-xl-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="header-title mt-0 mb-1"><i data-feather="bookmark" class="mr-1"></i>Datos</h4>
-                            <div id="smartwizard">
-                                <ul>
+                <div class="col-xl-6" style="font-size: 13px">
+
+
+                            <h4 class="header-title mt-0 "></i>Datos de empleado</h4>
+                            <div id="smartwizard" style="background: #f8f8f8; color:#3d3d3d;">
+                                <ul style="background: #566879!important;" >
                                     <li><a href="#sw-default-step-1">Personales</a></li>
                                     <li><a href="#sw-default-step-2">Empresarial</a></li>
                                     <li><a href="#sw-default-step-3">Foto</a></li>
@@ -150,7 +158,7 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default-password">Tipo Documento</label>
-                                                    <select  class="form-control" placeholder="Tipo Documento " name="documento" id="documento" required>
+                                                    <select  class="form-control " placeholder="Tipo Documento " name="documento" id="documento" required>
                                                         <option value="">Seleccionar</option>
                                                           <option class="" value=""></option>
                                                     </select>
@@ -324,8 +332,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+
                 </div>
 
             </div>
