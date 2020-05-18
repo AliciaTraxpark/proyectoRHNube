@@ -42,7 +42,8 @@
           <label for="" class="blanco">Validaremos los datos antes de cargarlos  :)</label>
         </div>
         <div class="col-md-3 ">
-            <button type="button"  style="background-color: #155E5B;border-color: #155E5B" class="btn  width-md  btn-success btn-sm"><i class="uil uil-file-download" style="zoom: 120%"></i>  Descargar plantilla</button>
+
+            <a href=""> <button style="background-color: #155E5B;border-color: #155E5B"  class="btn btn-sm  btn-primary "><i data-feather="file" class="mr-1"></i>Descargar plantilla</button></a>
         </div>
 
 
