@@ -57,7 +57,7 @@
                 @if(!empty($eventos_usuario))
                     <h1>sdfg</h1>
                 @endif
-                <select  ect  class="form-control" placeholder="Departamento " name="departamento" id="departamento" style="display: flex;">
+                <select  class="form-control" placeholder="Departamento " name="departamento" id="departamento" style="display: flex;">
                 <option value="">DEPARTAMENTO</option>
                 @foreach ($departamento as $departamentos)
                     <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
