@@ -151,88 +151,87 @@
                                     <li><a href="#sw-default-step-2">Empresarial</a></li>
                                     <li><a href="#sw-default-step-3">Foto</a></li>
                                 </ul>
-
                                 <div class="p-3">
                                     <div id="sw-default-step-1">
                                         <div class="row">
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="sw-default-password">Tipo Documento</label>
-                                                    <select  class="form-control " placeholder="Tipo Documento " name="documento" id="documento" required>
+                                                    <label for="sw-default">Tipo Documento</label>
+                                                    <select  class="form-control" placeholder="Tipo Documento " name="documento" id="documento" required>
                                                         <option value="">Seleccionar</option>
                                                           <option class="" value=""></option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default-password">Ap. Paterno</label>
+                                                    <label for="sw-default">Apellido Paterno</label>
                                                     <input type="text" class="form-control">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default-password">Lugar Nacimiento</label>
-                                                    <select  class="form-control" placeholder="Tipo Documento " name="documento" id="documento" required>
-                                                        <option value="">Departamento</option>
-                                                          <option class="" value=""></option>
+                                                    <label for="sw-default">Lugar Nacimiento</label>
+                                                    <select  class="form-control" placeholder="Departamento" name="departamento" id="departamento" required>
+                                                        <option value="">DEPARTAMENTO</option>
+                                                        @foreach ($departamento as $departamentos)
+                                                          <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
+                                                          @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default-password">Dirección Domiciliara</label>
-                                                    <select  class="form-control" placeholder="Tipo Documento " name="documento" id="documento" required>
-                                                        <option value="">Departamento</option>
-                                                          <option class="" value=""></option>
+                                                    <label for="sw-default">Dirección Domiciliara</label>
+                                                    <select  class="form-control" placeholder="Departamento" name="departamento" id="dep" required>
+                                                        <option value="">DEPARTAMENTO</option>
+                                                        @foreach ($departamento as $departamentos)
+                                                          <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
+                                                          @endforeach
                                                     </select>
                                                 </div>
                                             </div> <!-- end col -->
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="sw-default-password">Num. Documento</label>
+                                                    <label for="sw-default">Num. Documento</label>
                                                     <input type="text" class="form-control">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default-password">Ap. Materno</label>
+                                                    <label for="sw-default">Apellido Materno</label>
                                                     <input type="text" class="form-control">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default-password"><br></label>
-                                                    <select  class="form-control" placeholder="Tipo Documento " name="documento" id="documento" required>
-                                                        <option value="">Provincia</option>
-                                                          <option class="" value=""></option>
+                                                    <label for="sw-default"><br></label>
+                                                    <select  class="form-control " placeholder="Provincia " name="provincia" id="provincia" required>
+                                                        <option value="">PROVINCIA</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default-password"><br></label>
-                                                    <select  class="form-control" placeholder="Tipo Documento " name="documento" id="documento" required>
-                                                        <option value="">Provincia</option>
-                                                          <option class="" value=""></option>
+                                                    <label for="sw-default"><br></label>
+                                                    <select  class="form-control " placeholder="Provincia " name="provincia" id="prov" required>
+                                                        <option value="">PROVINCIA</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="sw-default-password">Fecha Nacimiento</label>
+                                                    <label for="sw-default">Fecha Nacimiento</label>
                                                     <input class="form-control" id="example-date" type="date" name="date">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default-password">Nombre</label>
+                                                    <label for="sw-default">Nombres</label>
                                                     <input type="text" class="form-control">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default-password"><br></label>
-                                                    <select  class="form-control" placeholder="Tipo Documento " name="documento" id="documento" required>
-                                                        <option value="">Distrito</option>
-                                                          <option class="" value=""></option>
+                                                    <label for="sw-default"><br></label>
+                                                    <select  class="form-control " placeholder="Distrito " name="distrito" id="distrito" required>
+                                                        <option value="">DISTRITO</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default-password"><br></label>
-                                                    <select  class="form-control" placeholder="Tipo Documento " name="documento" id="documento" required>
-                                                        <option value="">Distrito</option>
-                                                          <option class="" value=""></option>
+                                                    <label for="sw-default"><br></label>
+                                                    <select  class="form-control " placeholder="Distrito " name="distrito" id="dist" required>
+                                                        <option value="">DISTRITO</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-group">
-                                                    <label for="sw-default-password">Dirección</label>
+                                                    <label for="sw-default">Dirección</label>
                                                     <input type="text" class="form-control">
                                                 </div>
                                             </div>
@@ -269,11 +268,11 @@
                                         <div class="row">
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="sw-default-first-name">Cargo</label>
-                                                    <input type="text" id="sw-default-first-name" class="form-control">
+                                                    <label for="sw-default">Cargo</label>
+                                                    <input type="text" id="sw-default" class="form-control">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default-password">Contrato</label>
+                                                    <label for="sw-default">Contrato</label>
                                                     <select  class="form-control" placeholder="Tipo Documento " name="documento" id="documento" required>
                                                         <option value="">Seleccionar</option>
                                                           <option class="" value=""></option>
@@ -282,11 +281,11 @@
                                             </div> <!-- end col -->
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="sw-default-first-name">Área</label>
-                                                    <input type="text" id="sw-default-first-name" class="form-control">
+                                                    <label for="sw-default">Área</label>
+                                                    <input type="text" id="sw-default" class="form-control">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default-password">Nivel</label>
+                                                    <label for="sw-default">Nivel</label>
                                                     <select  class="form-control" placeholder="Tipo Documento " name="documento" id="documento" required>
                                                         <option value="">Seleccionar</option>
                                                           <option class="" value=""></option>
@@ -295,11 +294,11 @@
                                             </div> <!-- end col -->
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="sw-default-first-name">Centro Costo</label>
-                                                    <input type="text" id="sw-default-first-name" class="form-control">
+                                                    <label for="sw-default">Centro Costo</label>
+                                                    <input type="text" id="sw-default" class="form-control">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default-password">Local</label>
+                                                    <label for="sw-default">Local</label>
                                                     <select  class="form-control" placeholder="Tipo Documento " name="documento" id="documento" required>
                                                         <option value="">Seleccionar</option>
                                                           <option class="" value=""></option>
@@ -324,7 +323,7 @@
                                                         </div>
                                                     </form>
                                                     <div class="clearfix text-center mt-3">
-                                                        <button type="button" class="btn btn-success"><i class="uil uil-arrow-right mr-1"></i>Guardar</button>
+                                                        <button type="button" class="btn btn-success"><i class="uil uil-arrow-right mr-1" id="finalizar"></i>Finalizar</button>
                                                     </div>
                                                 </div>
                                             </div> <!-- end col -->
@@ -363,6 +362,6 @@
     <script src="{{asset('admin/assets/libs/dropzone/dropzone.min.js') }}"></script>
     <script src="{{asset('landing/js/tabla.js')}}"></script>
     <script src="{{asset('landing/js/smartwizard.js')}}"></script>
-
+    <script src="{{asset('landing/js/seleccionarDepProv.js')}}"></script>
 </body>
 </html>

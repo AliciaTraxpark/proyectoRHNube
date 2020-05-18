@@ -20,3 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/departamento/{id}/niveles','registroEmpresaController@provincias');
 Route::get('/provincia/{id}/niveles','registroEmpresaController@distritos');
+
+Route::get('/departamento/{id}/niveles','EmpleadoController@provincias');
+Route::get('/provincia/{id}/niveles','EmpleadoController@distritos');

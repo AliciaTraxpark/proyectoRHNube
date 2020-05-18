@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\empleado;
 use App\area;
 use Illuminate\Http\Request;
+use App\ubigeo_peru_departments;
+use App\ubigeo_peru_provinces;
+use App\ubigeo_peru_districts;
+use App\usuario_organizacion;
 
 class EmpleadoController extends Controller
 {
@@ -13,10 +17,19 @@ class EmpleadoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function provincias($id){
+        return ubigeo_peru_provinces::where('departamento_id',$id)->get();
+    }
+     public function distritos($id){
+         return ubigeo_peru_districts::where('province_id',$id)->get();
+    }
     public function index()
     {
 
-        return view('empleado.empleado');
+        $departamento=ubigeo_peru_departments::all();
+        $provincia=ubigeo_peru_provinces::all();
+        $distrito=ubigeo_peru_districts::all();
+        return view('empleado.empleado',['departamento'=>$departamento,'provincia'=>$provincia,'distrito'=>$distrito]);
     }
     public function cargarDatos()
     {
