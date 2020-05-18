@@ -145,7 +145,7 @@
                                     <li><a href="#sw-default-step-2">Empresarial</a></li>
                                     <li><a href="#sw-default-step-3">Foto</a></li>
                                 </ul>
-                                
+
                                 <div class="p-3">
                                     <div id="sw-default-step-1">
                                         <div class="row">
@@ -301,7 +301,7 @@
                                                 </div>
                                             </div> <!-- end col -->
                                         </div> <!-- end row -->
-                                        
+
                                     </div>
                                     <div id="sw-default-step-3">
                                         <div class="row">
@@ -311,7 +311,7 @@
                                                         <div class="fallback">
                                                             <input name="file" type="file" multiple />
                                                         </div>
-                        
+
                                                         <div class="dz-message needsclick">
                                                             <i class="h1 text-muted  uil-cloud-upload"></i>
                                                             <h3>Suelte imagen aquí o haga clic para cargar.</h3>
