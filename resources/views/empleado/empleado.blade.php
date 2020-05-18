@@ -47,7 +47,7 @@
         </div>
 
         <div class=" col-md-2">
-            <button style="background-color: #2f5597;border-color:#2f5597 "  class="btn btn-sm btn-rounded btn-primary "><i data-feather="users" class="mr-1"></i>Carga masiva</button>
+            <a href="{{('/empleado/cargar')}}"> <button style="background-color: #2f5597;border-color:#2f5597 "  class="btn btn-sm btn-rounded btn-primary "><i data-feather="users" class="mr-1"></i>Carga masiva</button></a>
 
           </div>
         <div class=" col-md-3">
