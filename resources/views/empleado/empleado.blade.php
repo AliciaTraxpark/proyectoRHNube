@@ -47,11 +47,11 @@
         </div>
 
         <div class=" col-md-2">
-            <button  class="btn btn-sm btn-success"><i data-feather="users" class="mr-1"></i>Carga masiva</button>
+            <button style="background-color: #2f5597"  class="btn btn-sm btn-rounded "><i data-feather="users" class="mr-1"></i>Carga masiva</button>
 
           </div>
         <div class=" col-md-3">
-            <button  class="btn btn-sm btn-success"><i data-feather="camera" class="mr-1"></i>Carga masiva fotos</button>
+            <button style="background-color: #2f5597"   class="btn btn-sm btn-rounded "><i data-feather="camera" class="mr-1"></i>Carga masiva fotos</button>
         </div>
     </div>
     </nav>
@@ -142,7 +142,7 @@
                                     <li><a href="#sw-default-step-2">Empresarial</a></li>
                                     <li><a href="#sw-default-step-3">Foto</a></li>
                                 </ul>
-                                
+
                                 <div class="p-3">
                                     <div id="sw-default-step-1">
                                         <div class="row">
@@ -271,7 +271,7 @@
                                                 </div>
                                             </div> <!-- end col -->
                                         </div> <!-- end row -->
-                                        
+
                                     </div>
                                     <div id="sw-default-step-3">
                                         <div class="row">
@@ -281,7 +281,7 @@
                                                         <div class="fallback">
                                                             <input name="file" type="file" multiple />
                                                         </div>
-                        
+
                                                         <div class="dz-message needsclick">
                                                             <i class="h1 text-muted  uil-cloud-upload"></i>
                                                             <h3>Drop files here or click to upload.</h3>
