@@ -141,6 +141,32 @@
                         </div> <!-- end card body-->
                     </div> <!-- end card -->
                 </div>
+                <div id="areamodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="myModalLabel">Agregar área</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="">
+                                <div class="col-md-12">
+                                  <label for="">Área</label>
+                                  <input type="text" class="form-control" required>
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </form>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
                 <div class="col-xl-6" style="font-size: 13px">
 
 
@@ -281,7 +307,7 @@
                                             </div> <!-- end col -->
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="sw-default">Área</label>
+                                                    <label for="sw-default">Área  <a  href="#areamodal" data-toggle="modal" data-target="#areamodal">(+)</a></label>
                                                     <input type="text" id="sw-default" class="form-control">
                                                 </div>
                                                 <div class="form-group">
