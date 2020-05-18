@@ -168,8 +168,7 @@
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
                 <div class="col-xl-6" style="font-size: 13px">
-
-
+                            <br>
                             <h4 class="header-title mt-0 "></i>Datos de empleado</h4>
                             <div id="smartwizard" style="background: #f8f8f8; color:#3d3d3d;">
                                 <ul style="background: #566879!important;" >
