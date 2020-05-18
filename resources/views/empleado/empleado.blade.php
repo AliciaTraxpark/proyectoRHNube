@@ -169,7 +169,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Dirección Domiciliara</label>
-                                                    <select  class="form-control" placeholder="Departamento" name="departamento" id="departamento" required>
+                                                    <select  class="form-control" placeholder="Departamento" name="departamento" id="dep" required>
                                                         <option value="">DEPARTAMENTO</option>
                                                         @foreach ($departamento as $departamentos)
                                                           <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
@@ -194,7 +194,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
-                                                    <select  class="form-control " placeholder="Provincia " name="provincia" id="provincia" required>
+                                                    <select  class="form-control " placeholder="Provincia " name="provincia" id="prov" required>
                                                         <option value="">PROVINCIA</option>
                                                     </select>
                                                 </div>
@@ -216,7 +216,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
-                                                    <select  class="form-control " placeholder="Distrito " name="distrito" id="distrito" required>
+                                                    <select  class="form-control " placeholder="Distrito " name="distrito" id="dist" required>
                                                         <option value="">DISTRITO</option>
                                                     </select>
                                                 </div>
@@ -356,6 +356,5 @@
     <script src="{{asset('landing/js/tabla.js')}}"></script>
     <script src="{{asset('landing/js/smartwizard.js')}}"></script>
     <script src="{{asset('landing/js/seleccionarDepProv.js')}}"></script>
-
 </body>
 </html>
