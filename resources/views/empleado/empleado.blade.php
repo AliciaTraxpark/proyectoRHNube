@@ -137,7 +137,7 @@
                 </div>
                 <div class="col-xl-6">
                     <div class="card">
-                        <div class="card-body" style="background: #fbfbfb>
+                        <div class="card-body" style="background: #fbfbfb">
                             <h4 class="header-title mt-0 mb-1"><i data-feather="bookmark" class="mr-1"></i>Datos</h4>
                             <div id="smartwizard">
                                 <ul>
