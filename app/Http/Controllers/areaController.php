@@ -37,9 +37,8 @@ class areaController extends Controller
     {
         //
         $area=new area();
-        $area->area_descripcion=$request->get('textarea');
+        $area->area_descripcion=$request->get('area_descripcion');
         $area->save();
-        return redirect()->back();
     }
 
     /**

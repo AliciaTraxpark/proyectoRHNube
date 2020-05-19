@@ -62,4 +62,4 @@ Route::get('/empleado','EmpleadoController@index' );
 Route::get('/empleado/cargar','EmpleadoController@cargarDatos' );
 
 //AREA
-Route::post('registrar/area','areaController@store');
+Route::post('/registrar/area','areaController@store');

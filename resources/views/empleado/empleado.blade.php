@@ -153,20 +153,16 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                            <form method="POST" action="{{'registrar/area'}}" >
                                 {{ csrf_field() }}
                                 <div class="col-md-12">
                                   <label for="">Área</label>
-                                  <input type="text" class="form-control" name="textarea" id="textarea" required>
+                                  <input type="text" class="form-control" name="textArea" id="textArea" required>
                                 </div>
-
-
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" id="guadararea" class="btn btn-primary">Guardar</button>
+                                <button type="button" id="guardarArea" class="btn btn-primary">Guardar</button>
                             </div>
-                        </form>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
@@ -452,11 +448,6 @@
     <script src="{{asset('landing/js/tabla.js')}}"></script>
     <script src="{{asset('landing/js/smartwizard.js')}}"></script>
     <script src="{{asset('landing/js/seleccionarDepProv.js')}}"></script>
-    <script>
-    $(document).ready(function()
-    {
-
-    });
-    </script>
+    <script src="{{asset('landing/js/empleado.js')}}"></script>
 </body>
 </html>
