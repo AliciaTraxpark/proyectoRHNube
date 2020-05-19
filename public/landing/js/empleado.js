@@ -12,7 +12,6 @@ function datos(method){
 }
 
 function enviarArea(accion,objArea){
-    console.log(objArea);
     $.ajax({
         type:"POST",
         url:"/registrar/area"+accion,
@@ -53,5 +52,34 @@ function enviarCargo(accion,objCargo){
             $('#cargomodal').modal('toggle');
         },
         error:function(){ alert("Hay un error");}
-    })
+    });
+}
+
+//centro costo
+$('#guardarCentro').click(function(){
+    objCentroC=datosCentro("POST");
+    enviarCentro('',objCentroC);
+});
+
+function datosCentro(method){
+    nuevoCentro={
+        centroC_descripcion:$('#textCentro').val(),
+        '_method':method
+    }
+    return(nuevoCentro);
+}
+
+function enviarCentro(accion,objCentroC){
+    $.ajax({
+        type:"POST",
+        url:"/registrar/centro"+accion,
+        data:objCentroC,
+        headers:{
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success:function(msg){
+            $('#centrocmodal').modal('toggle');
+        },
+        error:function(){ alert("Hay un error");}
+    });
 }

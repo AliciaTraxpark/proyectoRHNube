@@ -66,3 +66,6 @@ Route::post('/registrar/area','areaController@store');
 
 //CARGO
 Route::post('/registrar/cargo','cargoController@store');
+
+//CENTRO
+Route::post('/registrar/centro','centrocostoController@store');
