@@ -58,11 +58,11 @@
         </div>
 
         <div class=" col-md-2">
-            <a href="{{('/empleado/cargar')}}"> <button class="btn btn-sm btn-primary" style="background-color: #2f5597;border-color:#2f5597 "><i data-feather="users" class="mr-1"></i>Carga masiva</button></a>
+            <a href="{{('/empleado/cargar')}}"> <button class="btn btn-sm" style="background: #7acef5"><i data-feather="users" class="mr-1"></i>Carga masiva</button></a>
 
           </div>
         <div class=" col-md-3">
-            <button  class="btn btn-sm btn-primary" style="background-color: #2f5597;border-color:#2f5597 "><i data-feather="camera" class="mr-1"></i>Carga masiva fotos</button>
+            <button  class="btn btn-sm" style="background:#7acef5"><i data-feather="camera" class="mr-1"></i>Carga masiva fotos</button>
         </div>
     </div>
     </nav>
@@ -82,18 +82,15 @@
                                         <th>Cargo</th>
                                         <th>Área</th>
                                         <th>Centro de Costo</th>
-
                                     </tr>
                                 </thead>
                                 <tbody style="background:#f8f8f8;color: #2c2c2c;">
-
                                     <tr>
                                         <td>Hermione Butler</td>
                                         <td>Regional Director</td>
                                         <td>London</td>
                                         <td>47</td>
                                         <td>2011/03/21</td>
-
                                     </tr>
                                     <tr>
                                         <td>Lael Greer</td>
@@ -101,7 +98,6 @@
                                         <td>London</td>
                                         <td>21</td>
                                         <td>2009/02/27</td>
-
                                     </tr>
                                     <tr>
                                         <td>Jonas Alexander</td>
@@ -109,7 +105,6 @@
                                         <td>San Francisco</td>
                                         <td>30</td>
                                         <td>2010/07/14</td>
-
                                     </tr>
                                     <tr>
                                         <td>Shad Decker</td>
@@ -117,7 +112,6 @@
                                         <td>Edinburgh</td>
                                         <td>51</td>
                                         <td>2008/11/13</td>
-
                                     </tr>
                                     <tr>
                                         <td>Michael Bruce</td>
@@ -125,7 +119,6 @@
                                         <td>Singapore</td>
                                         <td>29</td>
                                         <td>2011/06/27</td>
-
                                     </tr>
                                     <tr>
                                         <td>Donna Snider</td>
@@ -133,7 +126,6 @@
                                         <td>New York</td>
                                         <td>27</td>
                                         <td>2011/01/25</td>
-
                                     </tr>
                                 </tbody>
                             </table>
@@ -163,7 +155,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Apellido Paterno</label>
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control" name="apPaterno" id="apPaterno" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Lugar Nacimiento</label>
@@ -187,11 +179,11 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Num. Documento</label>
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control" name="numDocumento" id="numDocumento" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Apellido Materno</label>
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control" name="apMaterno" id="apMaterno" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
@@ -209,11 +201,11 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Fecha Nacimiento</label>
-                                                    <input class="form-control" id="example-date" type="date" name="date">
+                                                    <input class="form-control" id="fechaN" type="date" name="fechaN" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Nombres</label>
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control" name="nombres" id="nombres" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
@@ -231,7 +223,7 @@
                                             <div class="col-12">
                                                 <div class="form-group">
                                                     <label for="sw-default">Dirección</label>
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control" name="direccion" id="direccion" required>
                                                 </div>
                                             </div>
                                             <div class="col-4">
@@ -268,11 +260,11 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Cargo</label>
-                                                    <input type="text" id="sw-default" class="form-control">
+                                                    <input type="text" class="form-control" name="cargo" id="cargo">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Contrato</label>
-                                                    <select  class="form-control" placeholder="Tipo Documento " name="documento" id="documento" required>
+                                                    <select  class="form-control" name="contrato" id="contrato" required>
                                                         <option value="">Seleccionar</option>
                                                           <option class="" value=""></option>
                                                     </select>
@@ -281,11 +273,11 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Área</label>
-                                                    <input type="text" id="sw-default" class="form-control">
+                                                    <input type="text" class="form-control" name="area" id="area">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Nivel</label>
-                                                    <select  class="form-control" placeholder="Tipo Documento " name="documento" id="documento" required>
+                                                    <select  class="form-control" name="nivel" id="nivel" required>
                                                         <option value="">Seleccionar</option>
                                                           <option class="" value=""></option>
                                                     </select>
@@ -294,11 +286,11 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Centro Costo</label>
-                                                    <input type="text" id="sw-default" class="form-control">
+                                                    <input type="text" class="form-control" name="cc" id="cc">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Local</label>
-                                                    <select  class="form-control" placeholder="Tipo Documento " name="documento" id="documento" required>
+                                                    <select  class="form-control" name="local" id="local" required>
                                                         <option value="">Seleccionar</option>
                                                           <option class="" value=""></option>
                                                     </select>
