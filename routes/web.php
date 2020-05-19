@@ -60,3 +60,6 @@ Route::get('/eventos_usuario/store','EventosUsuarioController@store');
 //EMPLEADOS
 Route::get('/empleado','EmpleadoController@index' );
 Route::get('/empleado/cargar','EmpleadoController@cargarDatos' );
+
+//AREA
+Route::post('registrar/area','areaController@store');

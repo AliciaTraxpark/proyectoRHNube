@@ -153,17 +153,18 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="">
+                            <form method="POST" action="{{'registrar/area'}}" >
+                                {{ csrf_field() }}
                                 <div class="col-md-12">
                                   <label for="">Área</label>
-                                  <input type="text" class="form-control" required>
+                                  <input type="text" class="form-control" name="textarea" id="textarea" required>
                                 </div>
 
 
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="submit" id="guadararea" class="btn btn-primary">Guardar</button>
                             </div>
                         </form>
                         </div><!-- /.modal-content -->
@@ -234,7 +235,9 @@
                                                     <label for="sw-default">Tipo Documento</label>
                                                     <select  class="form-control" placeholder="Tipo Documento " name="documento" id="documento" required>
                                                         <option value="">Seleccionar</option>
-                                                          <option class="" value=""></option>
+                                                        @foreach ($tipo_doc as $tipo_docs)
+                                                        <option class="" value="{{$tipo_docs->tipoDoc_id}}">{{$tipo_docs->tipoDoc_descripcion}}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
@@ -362,7 +365,9 @@
                                                     <label for="sw-default">Área<a href="#areamodal" data-toggle="modal" data-target="#areamodal">(+)</a></label>
                                                     <select  class="form-control" name="area" id="area" required>
                                                         <option value="">Seleccionar</option>
-                                                          <option class="" value=""></option>
+                                                        @foreach ($area as $areas)
+                                                        <option class="" value="{{$areas->area_id}}">{{$areas->area_descripcion}}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
@@ -447,5 +452,11 @@
     <script src="{{asset('landing/js/tabla.js')}}"></script>
     <script src="{{asset('landing/js/smartwizard.js')}}"></script>
     <script src="{{asset('landing/js/seleccionarDepProv.js')}}"></script>
+    <script>
+    $(document).ready(function()
+    {
+
+    });
+    </script>
 </body>
 </html>
