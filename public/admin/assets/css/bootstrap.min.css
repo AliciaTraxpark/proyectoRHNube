@@ -1976,8 +1976,8 @@ pre code {
 .form-control {
   display: block;
   width: 100%;
-  height: calc(1.5em + 1rem + 2px);
-  padding: 0.5rem 0.75rem;
+  height: calc(1.5em + 0.6rem + 2px);
+  padding: 0.2rem 0.45rem;
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.5;
@@ -5001,8 +5001,8 @@ input[type=button].btn-block {
 .page-item.active .page-link {
   z-index: 1;
   color: #fff;
-  background-color: #5369f8;
-  border-color: #5369f8;
+  background-color: #5A7D9E;
+  border-color: #5A7D9E;
 }
 
 .page-item.disabled .page-link {
@@ -5985,7 +5985,7 @@ a.close.disabled {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 1rem 1rem;
+  padding: 0.5rem 1rem;
   border-bottom: 1px solid #f6f6f7;
   border-top-left-radius: 0.3rem;
   border-top-right-radius: 0.3rem;

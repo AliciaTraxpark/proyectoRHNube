@@ -31,7 +31,7 @@
 </style>
   <header id="header-section">
     <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
-    <div class="container">
+    <div class="container" style="margin-left: 20px; margin-right: 40px;">
         <div class="col-md-2">
             <div class="navbar-brand-wrapper d-flex w-100">
                 <img src="{{asset('landing/images/logo.png')}}" height="100" >
@@ -41,9 +41,9 @@
           <h5 style="color: #ffffff">Gestión de empleados</h5>
           <label for="" class="blanco">Validaremos los datos antes de cargarlos  :)</label>
         </div>
-        <div class="col-md-3 ">
+        <div class="col-md-3 " style="margin-left: 23%;">
 
-            <a href=""> <button style="background-color: #155E5B;border-color: #155E5B"  class="btn btn-sm  btn-primary "><i data-feather="file" class="mr-1"></i>Descargar plantilla</button></a>
+            <a href=""> <button style="background-color: #155E5B;border-color: #155E5B"  class="btn btn-sm  btn-primary "> <img src="{{asset('admin/images/excel.svg')}}" height="25" ></i>  Descargar plantilla</button></a>
         </div>
 
 
