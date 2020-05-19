@@ -67,11 +67,11 @@
         </div>
 
         <div class=" col-md-2">
-            <a href="{{('/empleado/cargar')}}"> <button class="btn btn-sm" style="background: #87e0ff"><i data-feather="users" class="mr-1"></i>Carga masiva</button></a>
+            <a href="{{('/empleado/cargar')}}"> <button class="btn btn-sm btn-primary" style="background-color: #2f5597;border-color:#2f5597 "><i data-feather="users" class="mr-1"></i>Carga masiva</button></a>
 
           </div>
         <div class=" col-md-3">
-            <button  class="btn btn-sm" style="background:#87e0ff"><i data-feather="camera" class="mr-1"></i>Carga masiva fotos</button>
+            <button  class="btn btn-sm btn-primary" style="background-color: #2f5597;border-color:#2f5597 "><i data-feather="camera" class="mr-1"></i>Carga masiva fotos</button>
         </div>
     </div>
     </nav>
@@ -81,7 +81,8 @@
             <div class="row row-divided">
                 <div class="col-xl-6 ">
                     <div class="card">
-                        <div class="card-body" style="padding-top: 20px; background: #f8f8f8;">
+                        <div class="card-body" style="padding-top: 20px; background: #f8f8f8; font-size: 12.8px;
+                        color: #222222;">
                             <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                             <table id="tablaEmpleado" class="table nowrap" style="font-size: 12.5px">
                                 <thead style="background: #566879;color: white;">
@@ -168,7 +169,7 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-                <div class="col-xl-6" style="font-size: 13px">
+                <div class="col-xl-6" style="font-size: 12.8px">
                             <br>
                             <h4 class="header-title mt-0 "></i>Datos de empleado</h4>
                             <div id="smartwizard" style="background: #f8f8f8; color:#3d3d3d;">
