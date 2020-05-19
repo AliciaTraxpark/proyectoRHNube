@@ -67,11 +67,11 @@
         </div>
 
         <div class=" col-md-2">
-            <a href="{{('/empleado/cargar')}}"> <button class="btn btn-sm" style="background: #87e0ff"><i data-feather="users" class="mr-1"></i>Carga masiva</button></a>
+            <a href="{{('/empleado/cargar')}}"> <button class="btn btn-sm btn-primary" style="background-color: #2f5597;border-color:#2f5597 "><i data-feather="users" class="mr-1"></i>Carga masiva</button></a>
 
           </div>
         <div class=" col-md-3">
-            <button  class="btn btn-sm" style="background:#87e0ff"><i data-feather="camera" class="mr-1"></i>Carga masiva fotos</button>
+            <button  class="btn btn-sm btn-primary" style="background-color: #2f5597;border-color:#2f5597 "><i data-feather="camera" class="mr-1"></i>Carga masiva fotos</button>
         </div>
     </div>
     </nav>
@@ -81,7 +81,8 @@
             <div class="row row-divided">
                 <div class="col-xl-6 ">
                     <div class="card">
-                        <div class="card-body" style="padding-top: 20px; background: #f8f8f8;">
+                        <div class="card-body" style="padding-top: 20px; background: #f8f8f8; font-size: 12.8px;
+                        color: #222222;">
                             <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                             <table id="tablaEmpleado" class="table nowrap" style="font-size: 12.5px">
                                 <thead style="background: #566879;color: white;">
@@ -146,23 +147,24 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Agregar área</h5>
+                                <h5 class="" id="myModalLabel">Agregar área</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="">
+                            <form method="POST" action="{{'registrar/area'}}" >
+                                {{ csrf_field() }}
                                 <div class="col-md-12">
                                   <label for="">Área</label>
-                                  <input type="text" class="form-control" required>
+                                  <input type="text" class="form-control" name="textarea" id="textarea" required>
                                 </div>
 
 
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="submit" id="guadararea" class="btn btn-primary">Guardar</button>
                             </div>
                         </form>
                         </div><!-- /.modal-content -->
@@ -233,7 +235,9 @@
                                                     <label for="sw-default">Tipo Documento</label>
                                                     <select  class="form-control" placeholder="Tipo Documento " name="documento" id="documento" required>
                                                         <option value="">Seleccionar</option>
-                                                          <option class="" value=""></option>
+                                                        @foreach ($tipo_doc as $tipo_docs)
+                                                        <option class="" value="{{$tipo_docs->tipoDoc_id}}">{{$tipo_docs->tipoDoc_descripcion}}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
@@ -361,7 +365,9 @@
                                                     <label for="sw-default">Área<a href="#areamodal" data-toggle="modal" data-target="#areamodal">(+)</a></label>
                                                     <select  class="form-control" name="area" id="area" required>
                                                         <option value="">Seleccionar</option>
-                                                          <option class="" value=""></option>
+                                                        @foreach ($area as $areas)
+                                                        <option class="" value="{{$areas->area_id}}">{{$areas->area_descripcion}}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
@@ -446,5 +452,11 @@
     <script src="{{asset('landing/js/tabla.js')}}"></script>
     <script src="{{asset('landing/js/smartwizard.js')}}"></script>
     <script src="{{asset('landing/js/seleccionarDepProv.js')}}"></script>
+    <script>
+    $(document).ready(function()
+    {
+
+    });
+    </script>
 </body>
 </html>
