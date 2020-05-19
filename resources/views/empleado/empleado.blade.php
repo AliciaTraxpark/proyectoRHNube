@@ -67,11 +67,11 @@
         </div>
 
         <div class=" col-md-2">
-            <a href="{{('/empleado/cargar')}}"> <button class="btn btn-sm btn-primary" style="background-color: #2f5597;border-color:#2f5597 "><i data-feather="users" class="mr-1"></i>Carga masiva</button></a>
+            <a href="{{('/empleado/cargar')}}"> <button class="btn btn-sm btn-primary" style="background-color: #16436d;border-color:#16436d "><i data-feather="users" class="mr-1"></i>Carga masiva</button></a>
 
           </div>
         <div class=" col-md-3">
-            <button  class="btn btn-sm btn-primary" style="background-color: #2f5597;border-color:#2f5597 "><i data-feather="camera" class="mr-1"></i>Carga masiva fotos</button>
+            <button  class="btn btn-sm btn-primary" style="background-color: #16436d;border-color:#16436d"><i data-feather="camera" class="mr-1"></i>Carga masiva fotos</button>
         </div>
     </div>
     </nav>
@@ -147,7 +147,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="" id="myModalLabel">Agregar área</h5>
+                                <h5 class="modal-title" id="myModalLabel">Agregar área</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -406,7 +406,7 @@
                                                         </div>
                                                     </form>
                                                     <div class="clearfix text-center mt-3">
-                                                        <button type="button" class="btn btn-success"><i class="uil uil-arrow-right mr-1" id="finalizar"></i>Finalizar</button>
+                                                        <button type="button" class="btn btn-primary"><i class="uil uil-arrow-right mr-1" id="finalizar"></i>Finalizar</button>
                                                     </div>
                                                 </div>
                                             </div> <!-- end col -->
