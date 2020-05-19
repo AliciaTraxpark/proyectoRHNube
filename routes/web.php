@@ -63,3 +63,6 @@ Route::get('/empleado/cargar','EmpleadoController@cargarDatos' );
 
 //AREA
 Route::post('/registrar/area','areaController@store');
+
+//CARGO
+Route::post('/registrar/cargo','cargoController@store');

@@ -176,15 +176,14 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="">
                                 <div class="col-md-12">
                                   <label for="">Cargo</label>
-                                  <input type="text" class="form-control" required>
+                                  <input type="text" class="form-control" id="textCargo" required>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="submit" class="btn btn-primary" id="guardarCargo">Guardar</button>
                             </div>
                         </form>
                         </div><!-- /.modal-content -->
@@ -203,12 +202,12 @@
                                 <form action="">
                                 <div class="col-md-12">
                                   <label for="">Centro Costo</label>
-                                  <input type="text" class="form-control" required>
+                                  <input type="text" class="form-control" id="textCentro" required>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="submit" class="btn btn-primary" id="guardarCentro">Guardar</button>
                             </div>
                         </form>
                         </div><!-- /.modal-content -->
