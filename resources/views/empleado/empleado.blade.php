@@ -169,7 +169,55 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-                <div class="col-xl-6" style="font-size: 12.8px">
+                <div id="cargomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="myModalLabel">Agregar Cargo</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="">
+                                <div class="col-md-12">
+                                  <label for="">Cargo</label>
+                                  <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </form>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+                <div id="centrocmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="myModalLabel">Agregar Centro Costo</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="">
+                                <div class="col-md-12">
+                                  <label for="">Centro Costo</label>
+                                  <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </form>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+                <div class="col-xl-6" style="font-size: 13px">
                             <br>
                             <h4 class="header-title mt-0 "></i>Datos de empleado</h4>
                             <div id="smartwizard" style="background: #f8f8f8; color:#3d3d3d;">
@@ -295,8 +343,11 @@
                                         <div class="row">
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="sw-default">Cargo</label>
-                                                    <input type="text" class="form-control" name="cargo" id="cargo">
+                                                    <label for="sw-default">Cargo<a  href="#cargomodal" data-toggle="modal" data-target="#cargomodal">(+)</a></label>
+                                                    <select  class="form-control" name="cargo" id="cargo" required>
+                                                        <option value="">Seleccionar</option>
+                                                          <option class="" value=""></option>
+                                                    </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Contrato</label>
@@ -308,8 +359,11 @@
                                             </div> <!-- end col -->
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="sw-default">Área  <a  href="#areamodal" data-toggle="modal" data-target="#areamodal">(+)</a></label>
-                                                    <input type="text" id="sw-default" class="form-control"name="area" id="area">
+                                                    <label for="sw-default">Área<a href="#areamodal" data-toggle="modal" data-target="#areamodal">(+)</a></label>
+                                                    <select  class="form-control" name="area" id="area" required>
+                                                        <option value="">Seleccionar</option>
+                                                          <option class="" value=""></option>
+                                                    </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Nivel</label>
@@ -321,8 +375,11 @@
                                             </div> <!-- end col -->
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="sw-default">Centro Costo</label>
-                                                    <input type="text" class="form-control" name="cc" id="cc">
+                                                    <label for="sw-default">Centro Costo<a  href="#centrocmodal" data-toggle="modal" data-target="#centrocmodal">(+)</a></label>
+                                                    <select  class="form-control" name="centroc" id="centroc" required>
+                                                        <option value="">Seleccionar</option>
+                                                          <option class="" value=""></option>
+                                                    </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Local</label>
