@@ -343,7 +343,10 @@
                                                     <label for="sw-default">Cargo<a  href="#cargomodal" data-toggle="modal" data-target="#cargomodal">(+)</a></label>
                                                     <select  class="form-control" name="cargo" id="cargo" required>
                                                         <option value="">Seleccionar</option>
-                                                          <option class="" value=""></option>
+
+                                                          @foreach ($cargo as $cargos)
+                                                          <option class="" value="{{$cargos->cargo_id}}">{{$cargos->cargo_descripcion}}</option>
+                                                          @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
@@ -377,7 +380,9 @@
                                                     <label for="sw-default">Centro Costo<a  href="#centrocmodal" data-toggle="modal" data-target="#centrocmodal">(+)</a></label>
                                                     <select  class="form-control" name="centroc" id="centroc" required>
                                                         <option value="">Seleccionar</option>
-                                                          <option class="" value=""></option>
+                                                        @foreach ($centro_costo as $centro_costos)
+                                                        <option class="" value="{{$centro_costos->centroC_id}}">{{$centro_costos->centroC_descripcion}}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
