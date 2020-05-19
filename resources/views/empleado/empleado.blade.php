@@ -44,6 +44,15 @@
     color: #d2d2d2!important;
 }
 </style>
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="circle1"></div>
+            <div class="circle2"></div>
+            <div class="circle3"></div>
+        </div>
+    </div>
+</div>
   <header id="header-section">
     <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
     <div class="container">
@@ -133,6 +142,32 @@
                         </div> <!-- end card body-->
                     </div> <!-- end card -->
                 </div>
+                <div id="areamodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="myModalLabel">Agregar área</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="">
+                                <div class="col-md-12">
+                                  <label for="">Área</label>
+                                  <input type="text" class="form-control" required>
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </form>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
                 <div class="col-xl-6" style="font-size: 13px">
                             <br>
                             <h4 class="header-title mt-0 "></i>Datos de empleado</h4>
@@ -160,7 +195,7 @@
                                                 <div class="form-group">
                                                     <label for="sw-default">Lugar Nacimiento</label>
                                                     <select  class="form-control" placeholder="Departamento" name="departamento" id="departamento" required>
-                                                        <option value="">DEPARTAMENTO</option>
+                                                        <option value="">Departamento</option>
                                                         @foreach ($departamento as $departamentos)
                                                           <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
                                                           @endforeach
@@ -169,7 +204,7 @@
                                                 <div class="form-group">
                                                     <label for="sw-default">Dirección Domiciliara</label>
                                                     <select  class="form-control" placeholder="Departamento" name="departamento" id="dep" required>
-                                                        <option value="">DEPARTAMENTO</option>
+                                                        <option value="">Departamento</option>
                                                         @foreach ($departamento as $departamentos)
                                                           <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
                                                           @endforeach
@@ -188,13 +223,13 @@
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
                                                     <select  class="form-control " placeholder="Provincia " name="provincia" id="provincia" required>
-                                                        <option value="">PROVINCIA</option>
+                                                        <option value="">Provincia</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
                                                     <select  class="form-control " placeholder="Provincia " name="provincia" id="prov" required>
-                                                        <option value="">PROVINCIA</option>
+                                                        <option value="">Provincia</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -210,13 +245,13 @@
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
                                                     <select  class="form-control " placeholder="Distrito " name="distrito" id="distrito" required>
-                                                        <option value="">DISTRITO</option>
+                                                        <option value="">Distrito</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
                                                     <select  class="form-control " placeholder="Distrito " name="distrito" id="dist" required>
-                                                        <option value="">DISTRITO</option>
+                                                        <option value="">Distrito</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -272,8 +307,8 @@
                                             </div> <!-- end col -->
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="sw-default">Área</label>
-                                                    <input type="text" class="form-control" name="area" id="area">
+                                                    <label for="sw-default">Área  <a  href="#areamodal" data-toggle="modal" data-target="#areamodal">(+)</a></label>
+                                                    <input type="text" id="sw-default" class="form-control"name="area" id="area">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Nivel</label>
