@@ -44,6 +44,15 @@
     color: #d2d2d2!important;
 }
 </style>
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="circle1"></div>
+            <div class="circle2"></div>
+            <div class="circle3"></div>
+        </div>
+    </div>
+</div>
   <header id="header-section">
     <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
     <div class="container">
@@ -194,7 +203,7 @@
                                                 <div class="form-group">
                                                     <label for="sw-default">Lugar Nacimiento</label>
                                                     <select  class="form-control" placeholder="Departamento" name="departamento" id="departamento" required>
-                                                        <option value="">DEPARTAMENTO</option>
+                                                        <option value="">Departamento</option>
                                                         @foreach ($departamento as $departamentos)
                                                           <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
                                                           @endforeach
@@ -203,7 +212,7 @@
                                                 <div class="form-group">
                                                     <label for="sw-default">Dirección Domiciliara</label>
                                                     <select  class="form-control" placeholder="Departamento" name="departamento" id="dep" required>
-                                                        <option value="">DEPARTAMENTO</option>
+                                                        <option value="">Departamento</option>
                                                         @foreach ($departamento as $departamentos)
                                                           <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
                                                           @endforeach
@@ -222,13 +231,13 @@
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
                                                     <select  class="form-control " placeholder="Provincia " name="provincia" id="provincia" required>
-                                                        <option value="">PROVINCIA</option>
+                                                        <option value="">Provincia</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
                                                     <select  class="form-control " placeholder="Provincia " name="provincia" id="prov" required>
-                                                        <option value="">PROVINCIA</option>
+                                                        <option value="">Provincia</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -244,13 +253,13 @@
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
                                                     <select  class="form-control " placeholder="Distrito " name="distrito" id="distrito" required>
-                                                        <option value="">DISTRITO</option>
+                                                        <option value="">Distrito</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
                                                     <select  class="form-control " placeholder="Distrito " name="distrito" id="dist" required>
-                                                        <option value="">DISTRITO</option>
+                                                        <option value="">Distrito</option>
                                                     </select>
                                                 </div>
                                             </div>
