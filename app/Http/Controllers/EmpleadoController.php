@@ -11,6 +11,7 @@ use App\ubigeo_peru_departments;
 use App\ubigeo_peru_provinces;
 use App\ubigeo_peru_districts;
 use App\tipo_documento;
+use App\persona;
 
 class EmpleadoController extends Controller
 {
@@ -51,7 +52,7 @@ class EmpleadoController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -62,7 +63,31 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $persona=new persona();
+        $persona->perso_nombre=$request->get('nombres');
+        $persona->perso_apellidos=$request->get('apellidos');
+        $f1 = explode("/",$request->get('fecha'));
+        $fechaN = $f1[2]."-".$f1[1]."-".$f1[0];
+        $persona->perso_fechaNacimiento=$fechaN;
+        $persona->perso_sexo=$request->get('sexo');
+        $persona->save();
+        $emple_persona=$persona->perso_id;
+
+
+        $empleado= new empleado();
+        $empleado->emple_tipoDoc=$request->get('');
+        $empleado->emple_nDoc=$request->get('');
+        $empleado->emple_persona=$emple_persona;
+        $empleado->emple_departamento=$request->get('');
+        $empleado->emple_provincia=$request->get('');
+        $empleado->emple_distrito=$request->get('');
+        $empleado->emple_cargo=$request->get('');
+        $empleado->emple_area=$request->get('');
+        $empleado->emple_centCosto=$request->get('');
+        $empleado->emple_departamentoN=$request->get('');
+        $empleado->emple_provinciaN=$request->get('');
+        $empleado->emple_distritoN=$request->get('');
     }
 
     /**

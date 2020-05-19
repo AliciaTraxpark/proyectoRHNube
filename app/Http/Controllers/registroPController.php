@@ -20,7 +20,8 @@ class registroPController extends Controller
 
   $persona=new persona();
     $persona->perso_nombre= $request->get('nombres');
-    $persona->perso_apellidos= $request->get('apellidos');
+    $persona->perso_apPaterno= $request->get('apPaterno');
+    $persona->perso_apMaterno= $request->get('apMaterno');
     $f1 = explode("/", $request->get('fecha'));
     $fechaN = $f1[2]."-".$f1[1]."-".$f1[0];
     $persona->perso_fechaNacimiento=$fechaN;
