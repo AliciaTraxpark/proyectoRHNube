@@ -225,7 +225,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                {{ csrf_field() }}
+
                                 <div class="col-md-12">
                                   <label for="">Local</label>
                                   <input type="text" class="form-control" name="textLocal" id="textLocal" required>
@@ -248,7 +248,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                {{ csrf_field() }}
+                              
                                 <div class="col-md-12">
                                   <label for="">Nivel</label>
                                   <input type="text" class="form-control" name="textNivel" id="textNivel" required>

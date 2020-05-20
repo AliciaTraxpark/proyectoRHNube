@@ -11,6 +11,6 @@ class localController extends Controller
         $local = new local();
         $local->local_descripcion=$request->get('local_descripcion');
         $local->save();
-        return 1;
+        return $local;
     }
 }

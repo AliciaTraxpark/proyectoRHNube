@@ -54,7 +54,7 @@ function enviarCargo(accion,objCargo){
         },
         success:function(data){
             $('#cargo').load(location.href+" #cargo>*");//actualiza
-            $('#cargo').val(data.area_id).trigger("change"); //lo selecciona
+            $('#cargo').val(data.cargo_id).trigger("change"); //lo selecciona
             $('#cargomodal').modal('toggle');
             $.notify("Cargo registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
         },
@@ -86,7 +86,7 @@ function enviarCentro(accion,objCentroC){
         },
         success:function(data){
             $('#centroc').load(location.href+" #centroc>*");//actualiza
-            $('#centroc').val(data.area_id).trigger("change"); //lo selecciona
+            $('#centroc').val(data.centroC_id).trigger("change"); //lo selecciona
             $('#centrocmodal').modal('toggle');
             $.notify("Centro de costo registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
         },
@@ -115,9 +115,13 @@ function enviarLocal(accion,objLocal){
         headers:{
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        success:function(msg){
-            console.log(objLocal);
+        success:function(data){
+            $('#local').load(location.href+" #local>*");//actualiza
+            $('#local').val(data.local_id).trigger("change"); //lo selecciona
+
             $('#localmodal').modal('toggle');
+            $.notify("local registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
+
         },
         error:function(){alert("Hay un error");}
     });
@@ -144,8 +148,13 @@ function enviarNivel(accion,objNivel){
         headers:{
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        success:function(msg){
+        success:function(data){
+            $('#nivel').load(location.href+" #nivel>*");//actualiza
+            $('#nivel').val(data.nivel_id).trigger("change"); //lo selecciona
+
             $('#nivelmodal').modal('toggle');
+            $.notify("nivel registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
+
         },
         error:function(){alert("Hay un error");}
     });
