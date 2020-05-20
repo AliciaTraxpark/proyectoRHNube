@@ -455,16 +455,18 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="text-center">
-                                                    <form action="/" method="post" class="dropzone" id="myAwesomeDropzone">
+                                                    <div class="dropzone" id="Dropzone">
+                                                        {{ csrf_field() }}
                                                         <div class="fallback">
-                                                            <input name="file" type="file" multiple />
+                                                            <input name="file" type="file" id="file" multiple />
+                                                            {{ csrf_field() }}
                                                         </div>
 
                                                         <div class="dz-message needsclick">
                                                             <i class="h1 text-muted  uil-cloud-upload"></i>
                                                             <h3>Suelte imagen aquí o haga clic para cargar.</h3>
                                                         </div>
-                                                    </form>
+                                                    </div>
                                                 </div>
                                             </div> <!-- end col -->
                                         </div> <!-- end row -->
@@ -513,6 +515,7 @@
     <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
     <script src="{{asset('landing/js/seleccionarDepProv.js')}}"></script>
+    <script src="{{asset('landing/js/Dropzone.js')}}"></script>
     <script src="{{asset('landing/js/empleado.js')}}"></script>
 </body>
 </html>

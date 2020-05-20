@@ -61,6 +61,7 @@ Route::get('/eventos_usuario/store','EventosUsuarioController@store');
 Route::post('/empleado/store','EmpleadoController@store');
 Route::get('/empleado','EmpleadoController@index' );
 Route::get('/empleado/cargar','EmpleadoController@cargarDatos' );
+Route::post('/empleado/file','EmpleadoController@upload');
 
 //AREA
 Route::post('/registrar/area','areaController@store');
