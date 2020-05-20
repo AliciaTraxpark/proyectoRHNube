@@ -22,6 +22,7 @@ function enviarArea(accion,objArea){
         success:function(data){
             $('#area').load(location.href+" #area>*");//actualiza
              $('#area').val(data.area_id).trigger("change"); //lo selecciona
+             $('#textArea').val('');
             $('#areamodal').modal('toggle');
             $.notify("Área registrada", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
 
@@ -55,6 +56,7 @@ function enviarCargo(accion,objCargo){
         success:function(data){
             $('#cargo').load(location.href+" #cargo>*");//actualiza
             $('#cargo').val(data.cargo_id).trigger("change"); //lo selecciona
+            $('#textCargo').val('');
             $('#cargomodal').modal('toggle');
             $.notify("Cargo registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
         },
@@ -87,6 +89,7 @@ function enviarCentro(accion,objCentroC){
         success:function(data){
             $('#centroc').load(location.href+" #centroc>*");//actualiza
             $('#centroc').val(data.centroC_id).trigger("change"); //lo selecciona
+            $('#textCentro').val('');
             $('#centrocmodal').modal('toggle');
             $.notify("Centro de costo registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
         },
@@ -118,7 +121,7 @@ function enviarLocal(accion,objLocal){
         success:function(data){
             $('#local').load(location.href+" #local>*");//actualiza
             $('#local').val(data.local_id).trigger("change"); //lo selecciona
-
+            $('#textLocal').val('');
             $('#localmodal').modal('toggle');
             $.notify("local registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
 
@@ -151,7 +154,7 @@ function enviarNivel(accion,objNivel){
         success:function(data){
             $('#nivel').load(location.href+" #nivel>*");//actualiza
             $('#nivel').val(data.nivel_id).trigger("change"); //lo selecciona
-
+            $('#textNivel').val('');
             $('#nivelmodal').modal('toggle');
             $.notify("nivel registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
 
