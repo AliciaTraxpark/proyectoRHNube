@@ -15,6 +15,8 @@ use App\tipo_contrato;
 use App\nivel;
 use App\local;
 use App\persona;
+use Illuminate\Support\Facades\DB;
+
 
 class EmpleadoController extends Controller
 {
@@ -42,8 +44,19 @@ class EmpleadoController extends Controller
         $centro_costo=centro_costo::all();
         $nivel=nivel::all();
         $local=local::all();
+        $empleado=empleado::all();
+        $tabla_empleado = DB::table('empleado as e')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->join('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+            ->join('area as a', 'e.emple_area', '=', 'a.area_id')
+            ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+            ->select('p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','c.cargo_descripcion',
+            'a.area_descripcion','cc.centroC_descripcion')
+            ->get();
+            //dd($tabla_empleado);
         return view('empleado.empleado',['departamento'=>$departamento,'provincia'=>$provincia,'distrito'=>$distrito,
-        'tipo_doc'=>$tipo_doc,'tipo_cont'=>$tipo_cont,'area'=>$area,'cargo'=>$cargo,'centro_costo'=>$centro_costo,'nivel'=>$nivel,'local'=>$local]);
+        'tipo_doc'=>$tipo_doc,'tipo_cont'=>$tipo_cont,'area'=>$area,'cargo'=>$cargo,'centro_costo'=>$centro_costo,
+        'nivel'=>$nivel,'local'=>$local,'empleado'=>$empleado,'tabla_empleado'=> $tabla_empleado]);
     }
     public function cargarDatos()
     {
@@ -58,7 +71,7 @@ class EmpleadoController extends Controller
      */
     public function create()
     {
-        
+
     }
 
     /**
@@ -110,6 +123,7 @@ class EmpleadoController extends Controller
     public function show(empleado $empleado)
     {
         //
+
     }
 
     /**

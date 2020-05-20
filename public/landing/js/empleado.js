@@ -22,6 +22,7 @@ function enviarArea(accion,objArea){
         success:function(data){
             $('#area').load(location.href+" #area>*");//actualiza
              $('#area').val(data.area_id).trigger("change"); //lo selecciona
+             $('#textArea').val('');
             $('#areamodal').modal('toggle');
             $.notify("Área registrada", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
 
@@ -54,7 +55,8 @@ function enviarCargo(accion,objCargo){
         },
         success:function(data){
             $('#cargo').load(location.href+" #cargo>*");//actualiza
-            $('#cargo').val(data.area_id).trigger("change"); //lo selecciona
+            $('#cargo').val(data.cargo_id).trigger("change"); //lo selecciona
+            $('#textCargo').val('');
             $('#cargomodal').modal('toggle');
             $.notify("Cargo registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
         },
@@ -86,7 +88,8 @@ function enviarCentro(accion,objCentroC){
         },
         success:function(data){
             $('#centroc').load(location.href+" #centroc>*");//actualiza
-            $('#centroc').val(data.area_id).trigger("change"); //lo selecciona
+            $('#centroc').val(data.centroC_id).trigger("change"); //lo selecciona
+            $('#textCentro').val('');
             $('#centrocmodal').modal('toggle');
             $.notify("Centro de costo registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
         },
@@ -115,9 +118,13 @@ function enviarLocal(accion,objLocal){
         headers:{
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        success:function(msg){
-            console.log(objLocal);
+        success:function(data){
+            $('#local').load(location.href+" #local>*");//actualiza
+            $('#local').val(data.local_id).trigger("change"); //lo selecciona
+            $('#textLocal').val('');
             $('#localmodal').modal('toggle');
+            $.notify("local registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
+
         },
         error:function(){alert("Hay un error");}
     });
@@ -144,8 +151,13 @@ function enviarNivel(accion,objNivel){
         headers:{
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        success:function(msg){
+        success:function(data){
+            $('#nivel').load(location.href+" #nivel>*");//actualiza
+            $('#nivel').val(data.nivel_id).trigger("change"); //lo selecciona
+            $('#textNivel').val('');
             $('#nivelmodal').modal('toggle');
+            $.notify("nivel registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
+
         },
         error:function(){alert("Hay un error");}
     });
@@ -193,11 +205,24 @@ function enviarEmpleado(accion,objEmpleado){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success:function(msg){
+
             $('#smartwizard').smartWizard("reset");
             $('input[type="text"]').val("");
             $('input[type="radio"]').val("");
-            $('select').val("");
+           
+             $('select').val("");
         },
         error:function(){ alert("Hay un error");console.log(objEmpleado);}
     })
 }
+$("#tablaEmpleado tr").click(function(){
+    $(this).addClass('selected').siblings().removeClass('selected');
+    var value=$(this).find('td:first').html();
+    alert(value);
+ });
+
+ $('.ok').on('click', function(e){
+     alert($("#tablaEmpleado tr.selected td:first").html());
+ });
+
+
