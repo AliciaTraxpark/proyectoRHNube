@@ -356,7 +356,9 @@
                                                     <label for="sw-default">Contrato</label>
                                                     <select  class="form-control" name="contrato" id="contrato" required>
                                                         <option value="">Seleccionar</option>
-                                                          <option class="" value=""></option>
+                                                        @foreach ($tipo_cont as $tipo_conts)
+                                                        <option class="" value="{{$tipo_conts->contrato_id}}">{{$tipo_conts->contrato_descripcion}}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div> <!-- end col -->
@@ -372,7 +374,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Nivel</label>
-                                                    <select  class="form-control" name="nivel" id="nivel" required>
+                                                    <select  class="form-control" name="nivel" id="nivel">
                                                         <option value="">Seleccionar</option>
                                                           <option class="" value=""></option>
                                                     </select>
@@ -390,7 +392,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Local</label>
-                                                    <select  class="form-control" name="local" id="local" required>
+                                                    <select  class="form-control" name="local" id="local">
                                                         <option value="">Seleccionar</option>
                                                           <option class="" value=""></option>
                                                     </select>
@@ -413,12 +415,16 @@
                                                             <h3>Suelte imagen aquí o haga clic para cargar.</h3>
                                                         </div>
                                                     </form>
-                                                    <div class="clearfix text-center mt-3">
-                                                        <button type="button" class="btn btn-primary"><i class="uil uil-arrow-right mr-1" id="finalizar"></i>Finalizar</button>
-                                                    </div>
                                                 </div>
                                             </div> <!-- end col -->
                                         </div> <!-- end row -->
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-12  text-center">
+                                                <button type="button" id="guardarEmpleado" class="btn btn-primary">Guardar</button>
+                                            </div>
+                                        </div>
+                                        <br>
                                     </div>
                                 </div>
                             </div>

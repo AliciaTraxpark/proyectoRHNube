@@ -58,6 +58,7 @@ Route::get('/departamento', function () {
 Route::get('/eventos_usuario/store','EventosUsuarioController@store');
 
 //EMPLEADOS
+Route::post('/empleado/store','EmpleadoController@store');
 Route::get('/empleado','EmpleadoController@index' );
 Route::get('/empleado/cargar','EmpleadoController@cargarDatos' );
 
