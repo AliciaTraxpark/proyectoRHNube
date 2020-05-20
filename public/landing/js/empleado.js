@@ -19,8 +19,13 @@ function enviarArea(accion,objArea){
         headers:{
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        success:function(msg){
+        success:function(data){
+            if(data==1){
             $('#areamodal').modal('toggle');
+            $.notify("Área registrada", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
+        }
+
+
         },
         error:function(){ alert("Hay un error");}
     });
