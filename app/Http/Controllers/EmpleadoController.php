@@ -110,6 +110,7 @@ class EmpleadoController extends Controller
         $empleado->emple_tipoContrato=$request->get('contrato');
         $empleado->emple_local=$request->get('local');
         $empleado->emple_nivel=$request->get('nivel');
+
         $empleado->save();
     }
 
@@ -158,4 +159,13 @@ class EmpleadoController extends Controller
     {
         //
     }
+
+    public function upload(Request $request){
+
+        $file = $request->file('file');
+        $path = public_path() . '/fotosEmpleado';
+        $fileName = uniqid().$file->getClientOriginalName();
+        $file->move($path,$fileName);
+    }
+
 }

@@ -190,6 +190,7 @@ function datosPersona(method){
         direccion:$('#direccion').val(),
         nivel:$('#nivel').val(),
         local:$('#local').val(),
+        file:$('·file').val(),
         '_method':method
     }
     return(nuevoEmpleado);
@@ -198,7 +199,7 @@ function datosPersona(method){
 function enviarEmpleado(accion,objEmpleado){
     $.ajax({
         type:"POST",
-        url:"/empleado/store"+accion,
+        url:"/empleado/file"+accion,
         data:objEmpleado,
         headers:{
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
