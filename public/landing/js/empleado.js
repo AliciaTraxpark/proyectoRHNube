@@ -204,11 +204,24 @@ function enviarEmpleado(accion,objEmpleado){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success:function(msg){
+
             $('#smartwizard').smartWizard("reset");
             $('input[type="text"]').val("");
             $('input[type="radio"]').val("");
-            $('select').val("");
+           
+             $('select').val("");
         },
         error:function(){ alert("Hay un error");console.log(objEmpleado);}
     })
 }
+$("#tablaEmpleado tr").click(function(){
+    $(this).addClass('selected').siblings().removeClass('selected');
+    var value=$(this).find('td:first').html();
+    alert(value);
+ });
+
+ $('.ok').on('click', function(e){
+     alert($("#tablaEmpleado tr.selected td:first").html());
+ });
+
+

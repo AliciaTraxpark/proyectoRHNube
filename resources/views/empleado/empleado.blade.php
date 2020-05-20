@@ -37,7 +37,12 @@
     .v-divider{
     border-right:5px solid #4C5D73;
     }
+    .table th, .table td{
+        padding: 0.55rem;
 
+    border-top: 1px solid #c9c9c9;
+
+    }
 
 .sw-theme-default > ul.step-anchor > li.active > a{
     color: #ffffff !important;
@@ -90,6 +95,7 @@
                             <table id="tablaEmpleado" class="table nowrap" style="font-size: 12.5px">
                                 <thead style="background: #566879;color: white;">
                                     <tr>
+                                        <th>#</th>
                                         <th>Nombres</th>
                                         <th>Apellidos</th>
                                         <th>Cargo</th>
@@ -98,48 +104,20 @@
                                     </tr>
                                 </thead>
                                 <tbody style="background:#f8f8f8;color: #2c2c2c;">
-                                    <tr>
-                                        <td>Hermione Butler</td>
-                                        <td>Regional Director</td>
-                                        <td>London</td>
-                                        <td>47</td>
-                                        <td>2011/03/21</td>
+                                    @foreach ($tabla_empleado as  $tabla_empleados)
+
+                                <tr  id="{{}}">
+                                        <td >{{$loop->index+1}}</td>
+                                        <td>{{$tabla_empleados->perso_nombre}}</td>
+                                        <td>{{$tabla_empleados->perso_apPaterno}} {{$tabla_empleados->perso_apMaterno}}</td>
+                                        <td>{{$tabla_empleados->cargo_descripcion}}</td>
+                                        <td>{{$tabla_empleados->area_descripcion}}</td>
+                                        <td>{{$tabla_empleados->centroC_descripcion}}</td>
+
                                     </tr>
-                                    <tr>
-                                        <td>Lael Greer</td>
-                                        <td>Systems Administrator</td>
-                                        <td>London</td>
-                                        <td>21</td>
-                                        <td>2009/02/27</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jonas Alexander</td>
-                                        <td>Developer</td>
-                                        <td>San Francisco</td>
-                                        <td>30</td>
-                                        <td>2010/07/14</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Shad Decker</td>
-                                        <td>Regional Director</td>
-                                        <td>Edinburgh</td>
-                                        <td>51</td>
-                                        <td>2008/11/13</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Michael Bruce</td>
-                                        <td>Javascript Developer</td>
-                                        <td>Singapore</td>
-                                        <td>29</td>
-                                        <td>2011/06/27</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Donna Snider</td>
-                                        <td>Customer Support</td>
-                                        <td>New York</td>
-                                        <td>27</td>
-                                        <td>2011/01/25</td>
-                                    </tr>
+
+                                    @endforeach
+
                                 </tbody>
                             </table>
 
@@ -248,7 +226,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                              
+
                                 <div class="col-md-12">
                                   <label for="">Nivel</label>
                                   <input type="text" class="form-control" name="textNivel" id="textNivel" required>
@@ -360,7 +338,7 @@
                                                 <div class="form-group">
                                                     <label class="normal" for="">Genero</label>
                                                     <label class="custom-control custom-radio">
-                                                        <input type="radio" name="tipo" id="tipo" value="Genero" required>
+                                                        <input type="radio" name="tipo" id="tipo" value="Femenino" required>
                                                         Femenino
                                                       </label>
                                                 </div>
@@ -369,7 +347,7 @@
                                                 <div class="form-group">
                                                     <label class="normal" for=""><br></label>
                                                     <label class="custom-control custom-radio">
-                                                        <input type="radio" name="tipo" id="tipo" value="Genero" required>
+                                                        <input type="radio" name="tipo" id="tipo" value="Masculino" required>
                                                         Masculino
                                                       </label>
                                                 </div>
@@ -378,7 +356,7 @@
                                                 <div class="form-group">
                                                     <label class="normal" for=""><br></label>
                                                     <label class="custom-control custom-radio">
-                                                        <input type="radio" name="tipo" id="tipo" value="Genero" required>
+                                                        <input type="radio" name="tipo" id="tipo" value="Personalizado" required>
                                                         Personalizado
                                                       </label>
                                                 </div>
