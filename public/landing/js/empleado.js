@@ -88,3 +88,51 @@ function enviarCentro(accion,objCentroC){
         error:function(){ alert("Hay un error");}
     });
 }
+//EMPLEADO
+$('#guardarEmpleado').click(function(){
+    objEmpleado=datosPersona("POST");
+    enviarEmpleado('',objEmpleado);
+});
+
+function datosPersona(method){
+    nuevoEmpleado={
+        nombres:$('#nombres').val(),
+        apPaterno:$('#apPaterno').val(),
+        apMaterno:$('#apMaterno').val(),
+        fechaN:$('#fechaN').val(),
+        tipo:$('#tipo').val(),
+        documento:$('#documento').val(),
+        numDocumento:$('#numDocumento').val(),
+        departamento:$('#departamento').val(),
+        provincia:$('#provincia').val(),
+        distrito:$('#distrito').val(),
+        cargo:$('#cargo').val(),
+        area:$('#area').val(),
+        centroc:$('#centroc').val(),
+        dep:$('#dep').val(),
+        prov:$('#prov').val(),
+        dist:$('#dist').val(),
+        contrato:$('#contrato').val(),
+        direccion:$('#direccion').val(),
+        '_method':method
+    }
+    return(nuevoEmpleado);
+}
+
+function enviarEmpleado(accion,objEmpleado){
+    $.ajax({
+        type:"POST",
+        url:"/empleado/store"+accion,
+        data:objEmpleado,
+        headers:{
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success:function(msg){
+            $('#smartwizard').smartWizard("reset"); 
+            $('input[type="text"]').val("");
+            $('input[type="radio"]').val("");
+            $('select').val("");
+        },
+        error:function(){ alert("Hay un error");console.log(objEmpleado);}
+    })
+}

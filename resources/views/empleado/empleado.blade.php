@@ -414,12 +414,16 @@
                                                             <h3>Suelte imagen aquí o haga clic para cargar.</h3>
                                                         </div>
                                                     </form>
-                                                    <div class="clearfix text-center mt-3">
-                                                        <button type="button" class="btn btn-primary"><i class="uil uil-arrow-right mr-1" id="finalizar"></i>Finalizar</button>
-                                                    </div>
                                                 </div>
                                             </div> <!-- end col -->
                                         </div> <!-- end row -->
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-12  text-center">
+                                                <button type="button" id="guardarEmpleado" class="btn btn-primary">Guardar</button>
+                                            </div>
+                                        </div>
+                                        <br>
                                     </div>
                                 </div>
                             </div>

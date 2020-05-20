@@ -50,9 +50,13 @@
                       <input  class="form-control" placeholder="Apellido Materno" name="apMaterno" id="apMaterno" value="{{old ('apellidos')}}" required>
                       {{$errors->first('apellidos')}}
                      </div> <br><br>
-                     <div class="col-md-9">
+                     <div class="col-md-5">
                       <input  class="form-control " placeholder="Nombres" name="nombres" id="nombres" value="{{old ('nombres')}}" required>
                       {{$errors->first('nombres')}}
+                     </div>
+                     <div class="col-md-4">
+                      <input  class="form-control " placeholder="Direccion" name="direccion" id="direccion" value="{{old ('direccion')}}" required>
+                      {{$errors->first('direccion')}}
                      </div><br><br>
                     <div class="col-md-9">
                          <input  class="form-control " placeholder="Número de celular o correo electrónico" name="email" id="email" value="{{old ('email')}}" required>

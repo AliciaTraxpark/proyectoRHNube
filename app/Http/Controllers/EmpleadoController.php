@@ -70,9 +70,8 @@ class EmpleadoController extends Controller
         $persona->perso_nombre=$request->get('nombres');
         $persona->perso_apPaterno=$request->get('apPaterno');
         $persona->perso_apMaterno=$request->get('apMaterno');
-        $f1 = explode("/",$request->get('fechaN'));
-        $fechaN = $f1[2]."-".$f1[1]."-".$f1[0];
-        $persona->perso_fechaNacimiento=$fechaN;
+        $persona->perso_direccion=$request->get('direccion');
+        $persona->perso_fechaNacimiento=$request->get('fechaN');
         $persona->perso_sexo=$request->get('tipo');
         $persona->save();
         $emple_persona=$persona->perso_id;
@@ -91,6 +90,8 @@ class EmpleadoController extends Controller
         $empleado->emple_departamentoN=$request->get('dep');
         $empleado->emple_provinciaN=$request->get('prov');
         $empleado->emple_distritoN=$request->get('dist');
+        $empleado->emple_tipoContrato=$request->get('contrato');
+        $empleado->save();
     }
 
     /**

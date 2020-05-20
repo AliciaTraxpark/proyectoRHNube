@@ -22,6 +22,7 @@ class registroPController extends Controller
     $persona->perso_nombre= $request->get('nombres');
     $persona->perso_apPaterno= $request->get('apPaterno');
     $persona->perso_apMaterno= $request->get('apMaterno');
+    $persona->perso_direccion=$request->get('direccion');
     $f1 = explode("/", $request->get('fecha'));
     $fechaN = $f1[2]."-".$f1[1]."-".$f1[0];
     $persona->perso_fechaNacimiento=$fechaN;
@@ -47,7 +48,9 @@ class registroPController extends Controller
 public function mensajes(Request $request){
     $this->validate($request,[
         'nombres' => 'required',
-        'apellidos' => 'required',
+        'apPaterno' => 'required',
+        'apMaterno' => 'required',
+        'direccion' => 'required',
         'fecha' => 'required|date',
         'email' => 'required',
         'password' => 'required',
