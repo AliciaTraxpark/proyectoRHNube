@@ -20,11 +20,10 @@ function enviarArea(accion,objArea){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success:function(data){
-            if(data==1){
+            $('#area').load(location.href+" #area>*");//actualiza
+             $('#area').val(data.area_id).trigger("change"); //lo selecciona
             $('#areamodal').modal('toggle');
             $.notify("Área registrada", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
-        }
-
 
         },
         error:function(){ alert("Hay un error");}
@@ -53,8 +52,11 @@ function enviarCargo(accion,objCargo){
         headers:{
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        success:function(msg){
+        success:function(data){
+            $('#cargo').load(location.href+" #cargo>*");//actualiza
+            $('#cargo').val(data.area_id).trigger("change"); //lo selecciona
             $('#cargomodal').modal('toggle');
+            $.notify("Cargo registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
         },
         error:function(){ alert("Hay un error");}
     });
@@ -82,8 +84,11 @@ function enviarCentro(accion,objCentroC){
         headers:{
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        success:function(msg){
+        success:function(data){
+            $('#centroc').load(location.href+" #centroc>*");//actualiza
+            $('#centroc').val(data.area_id).trigger("change"); //lo selecciona
             $('#centrocmodal').modal('toggle');
+            $.notify("Centro de costo registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
         },
         error:function(){ alert("Hay un error");}
     });
@@ -128,7 +133,7 @@ function enviarEmpleado(accion,objEmpleado){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success:function(msg){
-            $('#smartwizard').smartWizard("reset"); 
+            $('#smartwizard').smartWizard("reset");
             $('input[type="text"]').val("");
             $('input[type="radio"]').val("");
             $('select').val("");

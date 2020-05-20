@@ -17,5 +17,6 @@ class centrocostoController extends Controller
         $centro_costo=new centro_costo();
         $centro_costo->centroC_descripcion=$request->get('centroC_descripcion');
         $centro_costo->save();
+        return $centro_costo;
     }
 }
