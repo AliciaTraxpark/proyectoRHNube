@@ -95,6 +95,8 @@ class EmpleadoController extends Controller
         $empleado->emple_provinciaN=$request->get('prov');
         $empleado->emple_distritoN=$request->get('dist');
         $empleado->emple_tipoContrato=$request->get('contrato');
+        $empleado->emple_local=$request->get('local');
+        $empleado->emple_nivel=$request->get('nivel');
         $empleado->save();
     }
 

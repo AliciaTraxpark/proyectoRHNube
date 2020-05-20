@@ -171,6 +171,8 @@ function datosPersona(method){
         dist:$('#dist').val(),
         contrato:$('#contrato').val(),
         direccion:$('#direccion').val(),
+        nivel:$('#nivel').val(),
+        local:$('#local').val(),
         '_method':method
     }
     return(nuevoEmpleado);
