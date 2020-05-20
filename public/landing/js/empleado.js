@@ -88,6 +88,63 @@ function enviarCentro(accion,objCentroC){
         error:function(){ alert("Hay un error");}
     });
 }
+//LOCAL
+$('#guardarLocal').click(function(){
+    objLocal=datosLocal("POST");
+    enviarLocal('',objLocal);
+});
+
+function datosLocal(method){
+    nuevoLocal={
+        local_descripcion:$('#textLocal').val(),
+        '_method':method
+    }
+    return(nuevoLocal);
+}
+
+function enviarLocal(accion,objLocal){
+    $.ajax({
+        type:"POST",
+        url:"/registrar/local"+accion,
+        data:objLocal,
+        headers:{
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success:function(msg){
+            console.log(objLocal);
+            $('#localmodal').modal('toggle');
+        },
+        error:function(){alert("Hay un error");}
+    });
+}
+//NIVEL
+$('#guardarNivel').click(function(){
+    objNivel=datosNivel("POST");
+    enviarNivel('',objNivel);
+});
+
+function datosNivel(method){
+    nuevoNivel={
+        nivel_descripcion:$('#textNivel').val(),
+        '_method':method
+    }
+    return(nuevoNivel);
+}
+
+function enviarNivel(accion,objNivel){
+    $.ajax({
+        type:"POST",
+        url:"/registrar/nivel"+accion,
+        data:objNivel,
+        headers:{
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success:function(msg){
+            $('#nivelmodal').modal('toggle');
+        },
+        error:function(){alert("Hay un error");}
+    });
+}
 //EMPLEADO
 $('#guardarEmpleado').click(function(){
     objEmpleado=datosPersona("POST");

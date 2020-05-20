@@ -12,6 +12,8 @@ use App\ubigeo_peru_provinces;
 use App\ubigeo_peru_districts;
 use App\tipo_documento;
 use App\tipo_contrato;
+use App\nivel;
+use App\local;
 use App\persona;
 
 class EmpleadoController extends Controller
@@ -38,8 +40,10 @@ class EmpleadoController extends Controller
         $area=area::all();
         $cargo=cargo::all();
         $centro_costo=centro_costo::all();
+        $nivel=nivel::all();
+        $local=local::all();
         return view('empleado.empleado',['departamento'=>$departamento,'provincia'=>$provincia,'distrito'=>$distrito,
-        'tipo_doc'=>$tipo_doc,'tipo_cont'=>$tipo_cont,'area'=>$area,'cargo'=>$cargo,'centro_costo'=>$centro_costo]);
+        'tipo_doc'=>$tipo_doc,'tipo_cont'=>$tipo_cont,'area'=>$area,'cargo'=>$cargo,'centro_costo'=>$centro_costo,'nivel'=>$nivel,'local'=>$local]);
     }
     public function cargarDatos()
     {

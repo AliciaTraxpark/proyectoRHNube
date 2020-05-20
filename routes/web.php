@@ -70,3 +70,9 @@ Route::post('/registrar/cargo','cargoController@store');
 
 //CENTRO
 Route::post('/registrar/centro','centrocostoController@store');
+
+//LOCAL
+Route::post('/registrar/local','localController@store');
+
+//NIVEL
+Route::post('/registrar/nivel','nivelController@store');

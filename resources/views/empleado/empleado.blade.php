@@ -214,6 +214,52 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
+                <div id="localmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="localmodal" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="myModalLabel">Agregar Local</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                {{ csrf_field() }}
+                                <div class="col-md-12">
+                                  <label for="">Local</label>
+                                  <input type="text" class="form-control" name="textLocal" id="textLocal" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="button" id="guardarLocal" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+                <div id="nivelmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="nivelmodal" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="myModalLabel">Agregar Nivel</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                {{ csrf_field() }}
+                                <div class="col-md-12">
+                                  <label for="">Nivel</label>
+                                  <input type="text" class="form-control" name="textNivel" id="textNivel" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="button" id="guardarNivel" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
                 <div class="col-xl-6" style="font-size: 13px">
                             <br>
                             <h4 class="header-title mt-0 "></i>Datos de empleado</h4>
@@ -372,10 +418,12 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default">Nivel</label>
+                                                    <label for="sw-default">Nivel<a  href="#nivelmodal" data-toggle="modal" data-target="#nivelmodal">(+)</a></label>
                                                     <select  class="form-control" name="nivel" id="nivel">
                                                         <option value="">Seleccionar</option>
-                                                          <option class="" value=""></option>
+                                                        @foreach ($nivel as $niveles)
+                                                        <option class="" value="{{$niveles->nivel_id}}">{{$niveles->nivel_descripcion}}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div> <!-- end col -->
@@ -390,10 +438,12 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default">Local</label>
+                                                    <label for="sw-default">Local<a  href="#localmodal" data-toggle="modal" data-target="#localmodal">(+)</a></label>
                                                     <select  class="form-control" name="local" id="local">
                                                         <option value="">Seleccionar</option>
-                                                          <option class="" value=""></option>
+                                                        @foreach ($local as $locales)
+                                                        <option class="" value="{{$locales->local_id}}">{{$locales->local_descripcion}}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div> <!-- end col -->
