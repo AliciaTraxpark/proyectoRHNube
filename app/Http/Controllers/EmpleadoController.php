@@ -11,6 +11,7 @@ use App\ubigeo_peru_departments;
 use App\ubigeo_peru_provinces;
 use App\ubigeo_peru_districts;
 use App\tipo_documento;
+use App\tipo_contrato;
 use App\persona;
 
 class EmpleadoController extends Controller
@@ -33,11 +34,12 @@ class EmpleadoController extends Controller
         $provincia=ubigeo_peru_provinces::all();
         $distrito=ubigeo_peru_districts::all();
         $tipo_doc=tipo_documento::all();
+        $tipo_cont=tipo_contrato::all();
         $area=area::all();
         $cargo=cargo::all();
         $centro_costo=centro_costo::all();
         return view('empleado.empleado',['departamento'=>$departamento,'provincia'=>$provincia,'distrito'=>$distrito,
-        'tipo_doc'=>$tipo_doc,'area'=>$area,'cargo'=>$cargo,'centro_costo'=>$centro_costo]);
+        'tipo_doc'=>$tipo_doc,'tipo_cont'=>$tipo_cont,'area'=>$area,'cargo'=>$cargo,'centro_costo'=>$centro_costo]);
     }
     public function cargarDatos()
     {
@@ -66,28 +68,29 @@ class EmpleadoController extends Controller
 
         $persona=new persona();
         $persona->perso_nombre=$request->get('nombres');
-        $persona->perso_apellidos=$request->get('apellidos');
-        $f1 = explode("/",$request->get('fecha'));
+        $persona->perso_apPaterno=$request->get('apPaterno');
+        $persona->perso_apMaterno=$request->get('apMaterno');
+        $f1 = explode("/",$request->get('fechaN'));
         $fechaN = $f1[2]."-".$f1[1]."-".$f1[0];
         $persona->perso_fechaNacimiento=$fechaN;
-        $persona->perso_sexo=$request->get('sexo');
+        $persona->perso_sexo=$request->get('tipo');
         $persona->save();
         $emple_persona=$persona->perso_id;
 
 
         $empleado= new empleado();
-        $empleado->emple_tipoDoc=$request->get('');
-        $empleado->emple_nDoc=$request->get('');
+        $empleado->emple_tipoDoc=$request->get('documento');
+        $empleado->emple_nDoc=$request->get('numDocumento');
         $empleado->emple_persona=$emple_persona;
-        $empleado->emple_departamento=$request->get('');
-        $empleado->emple_provincia=$request->get('');
-        $empleado->emple_distrito=$request->get('');
-        $empleado->emple_cargo=$request->get('');
-        $empleado->emple_area=$request->get('');
-        $empleado->emple_centCosto=$request->get('');
-        $empleado->emple_departamentoN=$request->get('');
-        $empleado->emple_provinciaN=$request->get('');
-        $empleado->emple_distritoN=$request->get('');
+        $empleado->emple_departamento=$request->get('departamento');
+        $empleado->emple_provincia=$request->get('provincia');
+        $empleado->emple_distrito=$request->get('distrito');
+        $empleado->emple_cargo=$request->get('cargo');
+        $empleado->emple_area=$request->get('area');
+        $empleado->emple_centCosto=$request->get('centroc');
+        $empleado->emple_departamentoN=$request->get('dep');
+        $empleado->emple_provinciaN=$request->get('prov');
+        $empleado->emple_distritoN=$request->get('dist');
     }
 
     /**

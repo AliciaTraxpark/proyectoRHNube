@@ -353,7 +353,9 @@
                                                     <label for="sw-default">Contrato</label>
                                                     <select  class="form-control" name="contrato" id="contrato" required>
                                                         <option value="">Seleccionar</option>
-                                                          <option class="" value=""></option>
+                                                        @foreach ($tipo_cont as $tipo_conts)
+                                                        <option class="" value="{{$tipo_conts->contrato_id}}">{{$tipo_conts->contrato_descripcion}}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div> <!-- end col -->
