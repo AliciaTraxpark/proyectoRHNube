@@ -373,7 +373,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Nivel</label>
-                                                    <select  class="form-control" name="nivel" id="nivel" required>
+                                                    <select  class="form-control" name="nivel" id="nivel">
                                                         <option value="">Seleccionar</option>
                                                           <option class="" value=""></option>
                                                     </select>
@@ -391,7 +391,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Local</label>
-                                                    <select  class="form-control" name="local" id="local" required>
+                                                    <select  class="form-control" name="local" id="local">
                                                         <option value="">Seleccionar</option>
                                                           <option class="" value=""></option>
                                                     </select>
