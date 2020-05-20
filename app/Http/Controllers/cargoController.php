@@ -17,5 +17,7 @@ class cargoController extends Controller
         $cargo=new cargo();
         $cargo->cargo_descripcion=$request->get('cargo_descripcion');
         $cargo->save();
+        return $cargo;
+
     }
 }
