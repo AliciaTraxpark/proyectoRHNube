@@ -25,7 +25,6 @@
     <link href="{{asset('admin/assets/libs/smartwizard/smart_wizard_theme_arrows.min.css')}}" type="text/css" />
     <link href="{{asset('admin/assets/libs/smartwizard/smart_wizard_theme_circles.min.css')}}" type="text/css" />
     <link href="{{asset('admin/assets/libs/smartwizard/smart_wizard_theme_dots.min.css')}}" type="text/css" />
-    <link href="{{asset('admin/assets/libs/dropzone/dropzone.min.css')}}" type="text/css" />
     <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
 </head>
@@ -669,14 +668,12 @@
     <script src="{{asset('admin/assets/libs/smartwizard/jquery.smartWizard.min.js') }}"></script>
 
     <script src="{{asset('admin/assets/js/pages/form-wizard.init.js') }}"></script>
-    <script src="{{asset('admin/assets/libs/dropzone/dropzone.min.js') }}"></script>
     <script src="{{asset('landing/js/tabla.js')}}"></script>
     <script src="{{asset('landing/js/smartwizard.js')}}"></script>
     <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
     <script src="{{asset('landing/js/seleccionarDepProv.js')}}"></script>
-    <script src="{{asset('landing/js/Dropzone.js')}}"></script>
     <script src="{{asset('landing/js/empleado.js')}}"></script>
 </body>
 </html>
