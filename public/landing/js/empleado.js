@@ -266,6 +266,7 @@ function enviarEmpleado(accion,objEmpleado){
             $('#smartwizard').smartWizard("reset");
             $('input[type="text"]').val("");
             $('input[type="radio"]').val("");
+            $('input[type="file"]').val("");
             $('select').val("");
 
 
