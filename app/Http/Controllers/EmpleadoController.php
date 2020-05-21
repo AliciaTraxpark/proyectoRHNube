@@ -97,20 +97,27 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
+        $objEmpleado = json_decode($request->get('objEmpleado'),true);
 
         $persona=new persona();
-        $persona->perso_nombre=$request->get('nombres');
+        /*$persona->perso_nombre=$request->get('nombres');
         $persona->perso_apPaterno=$request->get('apPaterno');
         $persona->perso_apMaterno=$request->get('apMaterno');
         $persona->perso_direccion=$request->get('direccion');
         $persona->perso_fechaNacimiento=$request->get('fechaN');
-        $persona->perso_sexo=$request->get('tipo');
+        $persona->perso_sexo=$request->get('tipo');*/
+        $persona->perso_nombre=$objEmpleado['nombres'];
+        $persona->perso_apPaterno=$objEmpleado['apPaterno'];
+        $persona->perso_apMaterno=$objEmpleado['apMaterno'];
+        $persona->perso_direccion=$objEmpleado['direccion'];
+        $persona->perso_fechaNacimiento=$objEmpleado['fechaN'];
+        $persona->perso_sexo=$objEmpleado['tipo'];
         $persona->save();
         $emple_persona=$persona->perso_id;
 
 
         $empleado= new empleado();
-        $empleado->emple_tipoDoc=$request->get('documento');
+        /*$empleado->emple_tipoDoc=$request->get('documento');
         $empleado->emple_nDoc=$request->get('numDocumento');
         $empleado->emple_persona=$emple_persona;
         $empleado->emple_departamento=$request->get('departamento');
@@ -124,16 +131,35 @@ class EmpleadoController extends Controller
         $empleado->emple_distritoN=$request->get('dist');
         $empleado->emple_tipoContrato=$request->get('contrato');
         $empleado->emple_local=$request->get('local');
-        $empleado->emple_nivel=$request->get('nivel');
+        $empleado->emple_nivel=$request->get('nivel');*/
 
-        $file = $request->file('file');
-        $path = public_path() . '/fotosEmpleado';
-        $fileName = uniqid().$file->getClientOriginalName();
-        $file->move($path,$fileName);
+        $empleado->emple_tipoDoc=$objEmpleado['documento'];
+        $empleado->emple_nDoc=$objEmpleado['numDocumento'];
+        $empleado->emple_persona=$emple_persona;
+        $empleado->emple_departamento=$objEmpleado['departamento'];
+        $empleado->emple_provincia=$objEmpleado['provincia'];
+        $empleado->emple_distrito=$objEmpleado['distrito'];
+        $empleado->emple_cargo=$objEmpleado['cargo'];
+        $empleado->emple_area=$objEmpleado['area'];
+        $empleado->emple_centCosto=$objEmpleado['centroc'];
+        $empleado->emple_departamentoN=$objEmpleado['dep'];
+        $empleado->emple_provinciaN=$objEmpleado['prov'];
+        $empleado->emple_distritoN=$objEmpleado['dist'];
+        $empleado->emple_tipoContrato=$objEmpleado['contrato'];
+        $empleado->emple_local=$objEmpleado['local'];
+        $empleado->emple_nivel=$objEmpleado['nivel'];
 
-        $empleado->emple_foto=$fileName;
+        if($request->hasFile('file')){
+            $file = $request->file('file');
+            $path = public_path() . '/fotosEmpleado';
+            $fileName = uniqid().$file->getClientOriginalName();
+            $file->move($path,$fileName);
+            $empleado->emple_foto=$fileName;
+        }
 
         $empleado->save();
+
+        return json_encode(array('status'=>true));
     }
 
     /**
