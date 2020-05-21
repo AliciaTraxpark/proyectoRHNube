@@ -209,14 +209,8 @@ function enviarNivel(accion,objNivel){
 }
 //EMPLEADO
 $('#guardarEmpleado').click(function(){
-    //objEmpleado=datosPersona("POST");
-    //enviarEmpleado('',objEmpleado);
-    $('#Dropzone').get(0).dropzone.processQueue();
-    $('#smartwizard').smartWizard("reset");
-            $('input[type="text"]').val("");
-            $('input[type="radio"]').val("");
-
-            $('select').val("");
+    objEmpleado=datosPersona("POST");
+    enviarEmpleado('',objEmpleado);
 });
 
 function datosPersona(method){
@@ -248,11 +242,17 @@ function datosPersona(method){
 
 function enviarEmpleado(accion,objEmpleado){
 
+    var formData = new FormData();
+    formData.append('file',$('#file').prop('files')[0]);
+    formData.append('objEmpleado',JSON.stringify(objEmpleado));
     $.ajax({
 
         type:"POST",
         url:"/empleado/store"+accion,
-        data:objEmpleado,
+        data:formData,
+        contentType:false,
+        processData:false,
+        dataType:"json",
         headers:{
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -265,8 +265,11 @@ function enviarEmpleado(accion,objEmpleado){
 
 
         },
-        error:function(){ alert("Hay un error");console.log(objEmpleado);}
-    })
+        error:function(data,errorThrown){ 
+            alert("Hay un error");
+            alert('request failed:'+errorThrown);
+        }
+    });
 }
 $("#tablaEmpleado tr").click(function(){
     $(this).addClass('selected').siblings().removeClass('selected');

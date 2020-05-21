@@ -408,19 +408,9 @@
                                     <div id="sw-default-step-3">
                                         <div class="row">
                                             <div class="col-12">
-                                                <div class="text-center">
-                                                    <div class="dropzone" id="Dropzone">
-                                                        {{ csrf_field() }}
-                                                        <div class="fallback">
-                                                            <input name="file" type="file" id="file" multiple />
-                                                            {{ csrf_field() }}
-                                                        </div>
-
-                                                        <div class="dz-message needsclick">
-                                                            <i class="h1 text-muted  uil-cloud-upload"></i>
-                                                            <h3>Suelte imagen aquí o haga clic para cargar.</h3>
-                                                        </div>
-                                                    </div>
+                                                <div class="form-group">
+                                                    <label for="sw-default">Imagen</label>
+                                                    <input type="file" name="file" id="file">
                                                 </div>
                                             </div> <!-- end col -->
                                         </div> <!-- end row -->
