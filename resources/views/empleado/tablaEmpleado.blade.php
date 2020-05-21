@@ -11,8 +11,9 @@
     </thead>
     <tbody style="background:#f8f8f8;color: #2c2c2c;">
         @foreach ($tabla_empleado as  $tabla_empleados)
-    <tr >
-            <td >{{$loop->index+1}}</td>
+    <tr id="{{$tabla_empleados->emple_id}}" value= "{{$tabla_empleados->emple_id}}">
+
+            <td   > <input type="hidden" value="{{$tabla_empleados->emple_id}}">   {{$loop->index+1}}</td>
             <td>{{$tabla_empleados->perso_nombre}}</td>
             <td>{{$tabla_empleados->perso_apPaterno}} {{$tabla_empleados->perso_apMaterno}}</td>
             <td>{{$tabla_empleados->cargo_descripcion}}</td>
@@ -25,3 +26,33 @@
 
     </tbody>
 </table>
+<script>
+  /*  $("#tablaEmpleado tr").click(function(){
+
+        $(this).addClass("selected");
+    //id.addClass('selected').siblings().removeClass('selected');
+    var value=$(this).find('tr:first').html();
+    alert(value);
+ });*/
+
+ $("#tablaEmpleado tr").click(function(){
+    $(this).addClass('selected').siblings().removeClass('selected');
+    var value=$(this).find('input[type=hidden]').val();
+    $('#form-registrar').hide();
+    $('#form-ver').show();
+    $.ajax({
+        type:"get",
+        url:"empleado/show",
+        data:{value:value},
+        headers:{
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success:function(data){
+
+
+        },
+        error:function(){ alert("Hay un error");}
+    });
+ });
+
+</script>

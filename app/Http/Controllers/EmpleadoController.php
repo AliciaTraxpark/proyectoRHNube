@@ -26,7 +26,7 @@ class EmpleadoController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    
+
     public function provincias($id){
         return ubigeo_peru_provinces::where('departamento_id',$id)->get();
     }
@@ -79,7 +79,7 @@ class EmpleadoController extends Controller
             ->join('area as a', 'e.emple_area', '=', 'a.area_id')
             ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
             ->select('p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','c.cargo_descripcion',
-            'a.area_descripcion','cc.centroC_descripcion')
+            'a.area_descripcion','cc.centroC_descripcion','e.emple_id')
             ->get();
             //dd($tabla_empleado);
         return view('empleado.tablaEmpleado',['tabla_empleado'=> $tabla_empleado1]);
@@ -168,8 +168,10 @@ class EmpleadoController extends Controller
      * @param  \App\empleado  $empleado
      * @return \Illuminate\Http\Response
      */
-    public function show(empleado $empleado)
+    public function show(Request $request)
     {
+        $idempleado=$request->get('value');
+        dd($idempleado);
         //
 
     }
