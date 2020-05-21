@@ -1,23 +1,7 @@
 $(document).ready(function() {
     $('#tablaEmpleado').DataTable({
-        "language" :{
-            "search" : "Buscar",
-            "info" : "_TOTAL_ empleados",
-            "infoEmpty": "Mostrando 0.",
-            "infoFiltered": "(filtrados de un total de _MAX_ empleados)",
-            "zeroRecords": "No se han encontrado coincidencias.",
-            "paginate" : {
-                "next" : "Siguiente",
-                "previous" : "Anterior"
-            },
-            "lengthMenu" :'Mostrar <select class="form-control">'+
-                        '<option value="10">10</option>'+
-                        '<option value="15">15</option>'+
-                        '<option value="-1">Todos</option>'+
-                        '</select> Empleados',
-            "select": {
-            "rows": ""
-        }
+        language: {
+            "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
         },
         "scrollX" : true ,
         "select" : true,
