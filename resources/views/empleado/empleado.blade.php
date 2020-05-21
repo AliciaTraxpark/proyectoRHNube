@@ -106,7 +106,7 @@
                                 <tbody style="background:#f8f8f8;color: #2c2c2c;">
                                     @foreach ($tabla_empleado as  $tabla_empleados)
 
-                                <tr  id="{{}}">
+                                <tr>
                                         <td >{{$loop->index+1}}</td>
                                         <td>{{$tabla_empleados->perso_nombre}}</td>
                                         <td>{{$tabla_empleados->perso_apPaterno}} {{$tabla_empleados->perso_apMaterno}}</td>
