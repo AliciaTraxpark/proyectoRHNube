@@ -65,6 +65,7 @@ Route::get('/empleado','EmpleadoController@index' );
 Route::get('/empleado/cargar','EmpleadoController@cargarDatos' );
 Route::post('/empleado/file','EmpleadoController@upload');
 Route::get('tablaempleado/ver','EmpleadoController@tabla' );
+Route::get('empleado/show', 'EmpleadoController@show');
 
 //AREA
 Route::post('/registrar/area','areaController@store');

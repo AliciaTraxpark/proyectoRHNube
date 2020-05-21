@@ -215,7 +215,7 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-                <div class="col-md-6 col-xl-6" style="font-size: 13px">
+                <div class="col-md-6 col-xl-6" style="font-size: 13px" id="form-registrar">
                             <br>
                             <h4 class="header-title mt-0 "></i>Datos de empleado</h4>
                             <div id="smartwizard" style="background: #f8f8f8; color:#3d3d3d;">
@@ -224,7 +224,7 @@
                                     <li><a href="#sw-default-step-2">Empresarial</a></li>
                                     <li><a href="#sw-default-step-3">Foto</a></li>
                                 </ul>
-                                <div class="p-3">
+                                <div class="p-3" id="form-registrar">
                                     <div id="sw-default-step-1">
                                         <div class="row">
                                             <div class="col-4">
@@ -433,10 +433,227 @@
                                         <br>
                                     </div>
                                 </div>
+
                             </div>
 
                 </div>
+                <div class="col-md-6 col-xl-6" id="form-ver" style="font-size: 13px">
+                    <br>
+                    <h4 class="header-title mt-0 "></i>Datos de empleado</h4>
+                    <div id="smartwizard1" style="background: #f8f8f8; color:#3d3d3d;">
+                        <ul style="background: #566879!important;" >
+                            <li><a href="#persona-step-1">Personales</a></li>
+                            <li><a href="#sw-default-step-2">Empresarial</a></li>
+                            <li><a href="#sw-default-step-3">Foto</a></li>
+                        </ul>
+                        <div class="p-3" id="form-registrar">
+                            <div id="persona-step-1">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Tipo Documento</label>
+                                            <input type="text" class="form-control" name="tipoDoc" id="tipoDoc" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Apellido Paterno</label>
+                                            <input type="text" class="form-control" name="apPaterno" id="apPaterno" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Lugar Nacimiento</label>
+                                            <select  class="form-control" placeholder="Departamento" name="departamento" id="departamento" required>
+                                                <option value="">Departamento</option>
+                                                @foreach ($departamento as $departamentos)
+                                                  <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
+                                                  @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Dirección Domiciliara</label>
+                                            <select  class="form-control" placeholder="Departamento" name="departamento" id="dep" required>
+                                                <option value="">Departamento</option>
+                                                @foreach ($departamento as $departamentos)
+                                                  <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
+                                                  @endforeach
+                                            </select>
+                                        </div>
+                                    </div> <!-- end col -->
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Num. Documento</label>
+                                            <input type="text" class="form-control" name="numDocumento" id="numDocumento" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Apellido Materno</label>
+                                            <input type="text" class="form-control" name="apMaterno" id="apMaterno" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default"><br></label>
+                                            <select  class="form-control " placeholder="Provincia " name="provincia" id="provincia" required>
+                                                <option value="">Provincia</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default"><br></label>
+                                            <select  class="form-control " placeholder="Provincia " name="provincia" id="prov" required>
+                                                <option value="">Provincia</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Fecha Nacimiento</label>
+                                            <input class="form-control" id="fechaN" type="date" name="fechaN" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Nombres</label>
+                                            <input type="text" class="form-control" name="nombres" id="nombres" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default"><br></label>
+                                            <select  class="form-control " placeholder="Distrito " name="distrito" id="distrito" required>
+                                                <option value="">Distrito</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default"><br></label>
+                                            <select  class="form-control " placeholder="Distrito " name="distrito" id="dist" required>
+                                                <option value="">Distrito</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="sw-default">Dirección</label>
+                                            <input type="text" class="form-control" name="direccion" id="direccion" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label class="normal" for="">Genero</label>
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" name="tipo" id="tipo" value="Femenino" required>
+                                                Femenino
+                                              </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label class="normal" for=""><br></label>
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" name="tipo" id="tipo" value="Masculino" required>
+                                                Masculino
+                                              </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label class="normal" for=""><br></label>
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" name="tipo" id="tipo" value="Personalizado" required>
+                                                Personalizado
+                                              </label>
+                                        </div>
+                                    </div>
+                                </div> <!-- end row -->
+                            </div>
+                            <div id="sw-default-step-2">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Cargo<a  href="#cargomodal" data-toggle="modal" data-target="#cargomodal">(+)</a></label>
+                                            <select  class="form-control" name="cargo" id="cargo" required>
+                                                <option value="">Seleccionar</option>
 
+                                                  @foreach ($cargo as $cargos)
+                                                  <option class="" value="{{$cargos->cargo_id}}">{{$cargos->cargo_descripcion}}</option>
+                                                  @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Contrato</label>
+                                            <select  class="form-control" name="contrato" id="contrato" required>
+                                                <option value="">Seleccionar</option>
+                                                @foreach ($tipo_cont as $tipo_conts)
+                                                <option class="" value="{{$tipo_conts->contrato_id}}">{{$tipo_conts->contrato_descripcion}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div> <!-- end col -->
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Área<a href="#areamodal" data-toggle="modal" data-target="#areamodal">(+)</a></label>
+                                            <select  class="form-control" name="area" id="area" required>
+                                                <option value="">Seleccionar</option>
+                                                @foreach ($area as $areas)
+                                                <option class="" value="{{$areas->area_id}}">{{$areas->area_descripcion}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Nivel<a  href="#nivelmodal" data-toggle="modal" data-target="#nivelmodal">(+)</a></label>
+                                            <select  class="form-control" name="nivel" id="nivel">
+                                                <option value="">Seleccionar</option>
+                                                @foreach ($nivel as $niveles)
+                                                <option class="" value="{{$niveles->nivel_id}}">{{$niveles->nivel_descripcion}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div> <!-- end col -->
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Centro Costo<a  href="#centrocmodal" data-toggle="modal" data-target="#centrocmodal">(+)</a></label>
+                                            <select  class="form-control" name="centroc" id="centroc" required>
+                                                <option value="">Seleccionar</option>
+                                                @foreach ($centro_costo as $centro_costos)
+                                                <option class="" value="{{$centro_costos->centroC_id}}">{{$centro_costos->centroC_descripcion}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Local<a  href="#localmodal" data-toggle="modal" data-target="#localmodal">(+)</a></label>
+                                            <select  class="form-control" name="local" id="local">
+                                                <option value="">Seleccionar</option>
+                                                @foreach ($local as $locales)
+                                                <option class="" value="{{$locales->local_id}}">{{$locales->local_descripcion}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div> <!-- end col -->
+                                </div> <!-- end row -->
+
+                            </div>
+                            <div id="sw-default-step-3">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="text-center">
+                                            <div class="dropzone" id="Dropzone">
+                                                {{ csrf_field() }}
+                                                <div class="fallback">
+                                                    <input name="file" type="file" id="file" multiple />
+                                                    {{ csrf_field() }}
+                                                </div>
+
+                                                <div class="dz-message needsclick">
+                                                    <i class="h1 text-muted  uil-cloud-upload"></i>
+                                                    <h3>Suelte imagen aquí o haga clic para cargar.</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> <!-- end col -->
+                                </div> <!-- end row -->
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-12  text-center">
+                                        <button type="button" id="guardarEmpleado" class="btn btn-primary">Guardar</button>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+
+                    </div>
+
+        </div>
             </div>
         <footer class="border-top">
             <p class="text-center text-muted pt-4">© <?php echo date("Y"); ?> - RH Solution | Todos los derechos reservados.</p>

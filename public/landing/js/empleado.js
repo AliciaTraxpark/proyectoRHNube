@@ -1,6 +1,10 @@
 $(document).ready(function() {
 
+
+
+     $('#form-ver').hide();
     leertabla();
+   
 });
 function leertabla() {
     $.get("tablaempleado/ver", {}, function (data, status) {
@@ -8,7 +12,8 @@ function leertabla() {
 
 
     $("#tablaEmpleado").DataTable(
-        {    "language" :    {
+        {    responsive: true,
+              "language" :    {
             "sProcessing":     "Procesando...",
             "sLengthMenu":     "Mostrar _MENU_ registros",
             "sZeroRecords":    "No se encontraron resultados",
@@ -24,8 +29,8 @@ function leertabla() {
             "oPaginate": {
                 "sFirst":    "Primero",
                 "sLast":     "Último",
-                "sNext":     "Siguiente",
-                "sPrevious": "Anterior"
+                "sNext":     ">",
+                "sPrevious": "<"
             },
             "oAria": {
                 "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
