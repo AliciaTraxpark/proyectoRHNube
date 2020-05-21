@@ -31,6 +31,22 @@ $("div#Dropzone").dropzone({
         formData.append("nivel",$('#nivel').val());
         formData.append("local",$('#local').val());
     },
+    success:function(msg){
+        leertabla();
+
+
+
+    },
     acceptedFiles: ".jpeg,.jpg,.png"
 });
 Dropzone.options.Dropzone = false;
+function leertabla() {
+    $.get("tablaempleado/ver", {}, function (data, status) {
+        $('#tabladiv').html(data);
+
+
+    $("#tablaEmpleado").DataTable();
+
+
+    });;
+}

@@ -226,12 +226,13 @@ function enviarEmpleado(accion,objEmpleado){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success:function(msg){
-
+            leertabla();
             $('#smartwizard').smartWizard("reset");
             $('input[type="text"]').val("");
             $('input[type="radio"]').val("");
-            leertabla();
-             $('select').val("");
+            $('select').val("");
+
+
         },
         error:function(){ alert("Hay un error");console.log(objEmpleado);}
     })
