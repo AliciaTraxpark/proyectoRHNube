@@ -93,7 +93,7 @@
                             <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                             <h4 class="header-title mt-0 "></i>Búsquedad de empleado</h4>
                             <div id="tabladiv">
-                     
+
                             </div>
 
 

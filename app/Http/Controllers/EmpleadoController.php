@@ -25,6 +25,8 @@ class EmpleadoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    
     public function provincias($id){
         return ubigeo_peru_provinces::where('departamento_id',$id)->get();
     }
@@ -124,6 +126,13 @@ class EmpleadoController extends Controller
         $empleado->emple_local=$request->get('local');
         $empleado->emple_nivel=$request->get('nivel');
 
+        $file = $request->file('file');
+        $path = public_path() . '/fotosEmpleado';
+        $fileName = uniqid().$file->getClientOriginalName();
+        $file->move($path,$fileName);
+
+        $empleado->emple_foto=$fileName;
+
         $empleado->save();
     }
 
@@ -173,12 +182,12 @@ class EmpleadoController extends Controller
         //
     }
 
-    public function upload(Request $request){
+    /*public function upload(Request $request){
 
         $file = $request->file('file');
         $path = public_path() . '/fotosEmpleado';
         $fileName = uniqid().$file->getClientOriginalName();
         $file->move($path,$fileName);
-    }
+    }*/
 
 }

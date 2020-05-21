@@ -178,8 +178,14 @@ function enviarNivel(accion,objNivel){
 }
 //EMPLEADO
 $('#guardarEmpleado').click(function(){
-    objEmpleado=datosPersona("POST");
-    enviarEmpleado('',objEmpleado);
+    //objEmpleado=datosPersona("POST");
+    //enviarEmpleado('',objEmpleado);
+    $('#Dropzone').get(0).dropzone.processQueue();
+    $('#smartwizard').smartWizard("reset");
+            $('input[type="text"]').val("");
+            $('input[type="radio"]').val("");
+
+            $('select').val("");
 });
 
 function datosPersona(method){
@@ -204,7 +210,6 @@ function datosPersona(method){
         direccion:$('#direccion').val(),
         nivel:$('#nivel').val(),
         local:$('#local').val(),
-        file:$('·file').val(),
         '_method':method
     }
     return(nuevoEmpleado);
@@ -226,8 +231,6 @@ function enviarEmpleado(accion,objEmpleado){
             $('input[type="text"]').val("");
             $('input[type="radio"]').val("");
             leertabla();
-
-
              $('select').val("");
         },
         error:function(){ alert("Hay un error");console.log(objEmpleado);}
