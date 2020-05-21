@@ -1,3 +1,17 @@
+$(document).ready(function() {
+
+    leertabla();
+});
+function leertabla() {
+    $.get("tablaempleado/ver", {}, function (data, status) {
+        $('#tabladiv').html(data);
+
+
+    $("#tablaEmpleado").DataTable();
+
+
+    });;
+}
 $('#guardarArea').click(function(){
     objArea=datos("POST");
     enviarArea('',objArea);
@@ -197,9 +211,11 @@ function datosPersona(method){
 }
 
 function enviarEmpleado(accion,objEmpleado){
+
     $.ajax({
+
         type:"POST",
-        url:"/empleado/file"+accion,
+        url:"/empleado/store"+accion,
         data:objEmpleado,
         headers:{
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -209,7 +225,9 @@ function enviarEmpleado(accion,objEmpleado){
             $('#smartwizard').smartWizard("reset");
             $('input[type="text"]').val("");
             $('input[type="radio"]').val("");
-           
+            leertabla();
+
+
              $('select').val("");
         },
         error:function(){ alert("Hay un error");console.log(objEmpleado);}

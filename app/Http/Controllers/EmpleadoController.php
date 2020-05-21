@@ -64,11 +64,24 @@ class EmpleadoController extends Controller
         return view('empleado.cargarEmpleado');
     }
 
+
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public function tabla(){
+        $tabla_empleado1 = DB::table('empleado as e')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->join('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+            ->join('area as a', 'e.emple_area', '=', 'a.area_id')
+            ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+            ->select('p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','c.cargo_descripcion',
+            'a.area_descripcion','cc.centroC_descripcion')
+            ->get();
+            //dd($tabla_empleado);
+        return view('empleado.tablaEmpleado',['tabla_empleado'=> $tabla_empleado1]);
+    }
     public function create()
     {
 

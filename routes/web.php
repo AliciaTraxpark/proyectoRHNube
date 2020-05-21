@@ -55,6 +55,8 @@ Route::post('/eventos_usuario/store','EventosUsuarioController@store');
 Route::get('/departamento', function () {
     return view('calendario.departamento');
 })->name('depas');
+
+
 Route::get('/eventos_usuario/store','EventosUsuarioController@store');
 
 //EMPLEADOS
@@ -62,6 +64,7 @@ Route::post('/empleado/store','EmpleadoController@store');
 Route::get('/empleado','EmpleadoController@index' );
 Route::get('/empleado/cargar','EmpleadoController@cargarDatos' );
 Route::post('/empleado/file','EmpleadoController@upload');
+Route::get('tablaempleado/ver','EmpleadoController@tabla' );
 
 //AREA
 Route::post('/registrar/area','areaController@store');
