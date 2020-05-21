@@ -185,8 +185,8 @@ class EmpleadoController extends Controller
             ->join('area as a', 'e.emple_area', '=', 'a.area_id')
             ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
             ->select('p.perso_nombre','tipoD.tipoDoc_descripcion','e.emple_nDoc','p.perso_apPaterno','p.perso_apMaterno',
-            'depar.name','c.cargo_descripcion',
-            'a.area_descripcion','cc.centroC_descripcion','para.name','e.emple_id')
+            'depar.name as depar','c.cargo_descripcion',
+            'a.area_descripcion','cc.centroC_descripcion','para.name as para','e.emple_id')
             ->where('emple_id','=',$idempleado)
             ->get();
         return $empleado;
