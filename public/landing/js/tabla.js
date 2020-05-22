@@ -70,3 +70,5 @@ $("#tablaEmpleado tr").click(function(){
  $('.ok').on('click', function(e){
      alert($("#tablaEmpleado tr.selected td:first").html());
  });
+
+ 
