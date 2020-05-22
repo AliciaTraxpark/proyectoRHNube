@@ -35,7 +35,29 @@ function leertabla() {
                     "copy": "Copiar",
                     "colvis": "Visibilidad"
                 }
-            }
+            },
+            initComplete: function() {
+                this.api().columns().every(function() {
+                    var column = this;
+                    var input = $('<input type="radio" id="1">')
+                        .appendTo($(column.header()))
+                        .on('change', function() {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+                                column
+                                .search(this.value)
+                                .draw();
+                        });
+                        //Este codigo sirve para que no se active el ordenamiento junto con el filtro
+                    $(input).click(function(e) {
+                        e.stopPropagation();
+                    });
+                });
+            },
+            "aoColumnDefs": [
+             { "bSearchable": false, "aTargets": [ 1 ] }
+           ] 
         });
     });
 }
