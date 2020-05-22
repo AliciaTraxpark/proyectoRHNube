@@ -224,7 +224,6 @@
                                     <li><a href="#sw-default-step-1">Personales</a></li>
                                     <li><a href="#sw-default-step-2">Empresarial</a></li>
                                     <li><a href="#sw-default-step-3">Foto</a></li>
-                                    <li><a href=""><button class="btn btn-danger btn-sm">Eliminar</button></a></li>
                                 </ul>
                                 <div class="p-3" id="form-registrar">
                                     <div id="sw-default-step-1">
@@ -445,6 +444,7 @@
                             <li><a href="#persona-step-1">Personales</a></li>
                             <li><a href="#sw-default-step-2">Empresarial</a></li>
                             <li><a href="#sw-default-step-3">Foto</a></li>
+                            <li><a href=""><button class="btn btn-danger btn-sm">Eliminar</button></a></li>
                         </ul>
                         <div class="p-3" id="form-registrar">
                             <div id="persona-step-1">
