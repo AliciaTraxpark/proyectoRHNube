@@ -75,11 +75,11 @@
         </div>
 
         <div class=" col-md-2">
-            <a href="{{('/empleado/cargar')}}"> <button class="btn btn-sm btn-primary" style="background-color: #155E5B;border-color:#155E5B"><img src="{{asset('admin/images/avatar.svg')}}" height="25" class="mr-1" >Carga masiva</button></a>
+            <a href="{{('/empleado/cargar')}}"> <button class="btn btn-sm btn-primary" style="background-color: #174f7d;border-color:#174f7d"><img src="{{asset('admin/images/avatar.svg')}}" height="25" class="mr-1" >Carga masiva</button></a>
 
           </div>
         <div class=" col-md-3">
-            <button  class="btn btn-sm btn-primary" style="background-color: #155E5B;border-color:#155E5B"><img src="{{asset('admin/images/photo.svg')}}" height="25" class="mr-1" >Carga masiva fotos</button>
+            <button  class="btn btn-sm btn-primary" style="background-color: #174f7d;border-color:#174f7d"><img src="{{asset('admin/images/photo.svg')}}" height="25" class="mr-1" >Carga masiva fotos</button>
         </div>
     </div>
     </nav>
@@ -443,15 +443,15 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="sw-default">Tipo Documento</label>
-                                            <input type="text" class="form-control" name="tipoDoc" id="tipoDoc" required>
+                                            <input type="text" class="form-control" name="v_tipoDoc" id="v_tipoDoc" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Apellido Paterno</label>
-                                            <input type="text" class="form-control" name="apPaterno" id="apPaterno" required>
+                                            <input type="text" class="form-control" name="v_apPaterno" id="v_apPaterno" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Lugar Nacimiento</label>
-                                            <select  class="form-control" placeholder="Departamento" name="departamento" id="departamento" required>
+                                            <select  class="form-control" placeholder="Departamento" name="v_departamento" id="v_departamento" disabled>
                                                 <option value="">Departamento</option>
                                                 @foreach ($departamento as $departamentos)
                                                   <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
@@ -471,21 +471,24 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="sw-default">Num. Documento</label>
-                                            <input type="text" class="form-control" name="numDocumento" id="numDocumento" required>
+                                            <input type="text" class="form-control" name="v_numDocumento" id="v_numDocumento" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Apellido Materno</label>
-                                            <input type="text" class="form-control" name="apMaterno" id="apMaterno" required>
+                                            <input type="text" class="form-control" name="v_apMaterno" id="v_apMaterno" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default"><br></label>
-                                            <select  class="form-control " placeholder="Provincia " name="provincia" id="provincia" required>
+                                            <select  class="form-control " placeholder="Provincia " name="v_provincia" id="v_provincia"  disabled>
                                                 <option value="">Provincia</option>
+                                                @foreach ($provincia as $provincias)
+                                                <option class="" value="{{$provincias->id}}">{{$provincias->name}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default"><br></label>
-                                            <select  class="form-control " placeholder="Provincia " name="provincia" id="prov" required>
+                                            <select  class="form-control " placeholder="Provincia " name="prov" id="prov" required>
                                                 <option value="">Provincia</option>
                                             </select>
                                         </div>
@@ -493,21 +496,24 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="sw-default">Fecha Nacimiento</label>
-                                            <input class="form-control" id="fechaN" type="date" name="fechaN" required>
+                                            <input class="form-control" id="v_fechaN" name="v_fechaN" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Nombres</label>
-                                            <input type="text" class="form-control" name="nombres" id="nombres" required>
+                                            <input type="text" class="form-control" name="v_nombres" id="v_nombres" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default"><br></label>
-                                            <select  class="form-control " placeholder="Distrito " name="distrito" id="distrito" required>
+                                            <select  class="form-control " placeholder="Distrito " name="v_distrito" id="v_distrito" disabled>
                                                 <option value="">Distrito</option>
+                                                @foreach ($distrito as $distritos)
+                                                <option class="" value="{{$distritos->id}}">{{$distritos->name}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default"><br></label>
-                                            <select  class="form-control " placeholder="Distrito " name="distrito" id="dist" required>
+                                            <select  class="form-control " placeholder="Distrito " name="dist" id="dist" required>
                                                 <option value="">Distrito</option>
                                             </select>
                                         </div>
@@ -515,7 +521,7 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for="sw-default">Dirección</label>
-                                            <input type="text" class="form-control" name="direccion" id="direccion" required>
+                                            <input type="text" class="form-control" name="v_direccion" id="v_direccion" required>
                                         </div>
                                     </div>
                                     <div class="col-4">

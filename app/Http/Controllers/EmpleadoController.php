@@ -114,15 +114,15 @@ class EmpleadoController extends Controller
         $empleado->emple_tipoDoc=$objEmpleado['documento'];
         $empleado->emple_nDoc=$objEmpleado['numDocumento'];
         $empleado->emple_persona=$emple_persona;
-        $empleado->emple_departamento=$objEmpleado['departamento'];
-        $empleado->emple_provincia=$objEmpleado['provincia'];
-        $empleado->emple_distrito=$objEmpleado['distrito'];
+        $empleado->emple_departamentoN=$objEmpleado['departamento'];
+        $empleado->emple_provinciaN=$objEmpleado['provincia'];
+        $empleado->emple_distritoN=$objEmpleado['distrito'];
         $empleado->emple_cargo=$objEmpleado['cargo'];
         $empleado->emple_area=$objEmpleado['area'];
         $empleado->emple_centCosto=$objEmpleado['centroc'];
-        $empleado->emple_departamentoN=$objEmpleado['dep'];
-        $empleado->emple_provinciaN=$objEmpleado['prov'];
-        $empleado->emple_distritoN=$objEmpleado['dist'];
+        $empleado->emple_departamento=$objEmpleado['dep'];
+        $empleado->emple_provincia=$objEmpleado['prov'];
+        $empleado->emple_distrito=$objEmpleado['dist'];
         $empleado->emple_tipoContrato=$objEmpleado['contrato'];
         $empleado->emple_local=$objEmpleado['local'];
         $empleado->emple_nivel=$objEmpleado['nivel'];
@@ -159,12 +159,13 @@ class EmpleadoController extends Controller
 
             ->join('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
             ->join('ubigeo_peru_departments as para', 'e.emple_departamentoN', '=', 'para.id')
-
+            ->join('ubigeo_peru_provinces as proviN', 'e.emple_provinciaN', '=', 'proviN.id')
+            ->join('ubigeo_peru_districts as distN', 'e.emple_distritoN', '=', 'distN.id')
             ->join('area as a', 'e.emple_area', '=', 'a.area_id')
             ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
             ->select('p.perso_nombre','tipoD.tipoDoc_descripcion','e.emple_nDoc','p.perso_apPaterno','p.perso_apMaterno',
-            'depar.name as depar','c.cargo_descripcion',
-            'a.area_descripcion','cc.centroC_descripcion','para.name as para','e.emple_id')
+           'p.perso_fechaNacimiento' ,'p.perso_direccion','depar.name as depar','c.cargo_descripcion',
+            'a.area_descripcion','cc.centroC_descripcion','para.id as iddepaN','para.name as depaN','proviN.id as idproviN','proviN.name as proviN','distN.id as iddistN','distN.name as distN','e.emple_id')
             ->where('emple_id','=',$idempleado)
             ->get();
         return $empleado;
