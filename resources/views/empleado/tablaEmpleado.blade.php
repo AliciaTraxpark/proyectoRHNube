@@ -35,7 +35,7 @@
     alert(value);
  });*/
 
- $("#tablaEmpleado tr").click(function(){
+ $("#tablaEmpleado tbody tr").click(function(){
     $(this).addClass('selected').siblings().removeClass('selected');
     var value=$(this).find('input[type=hidden]').val();
     $('#form-registrar').hide();
