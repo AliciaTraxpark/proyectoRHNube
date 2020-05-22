@@ -1,3 +1,13 @@
+$(document).ready(function() {
+    $("#file").fileinput({
+        allowedFileExtensions: ['jpg', 'png', 'gif'],
+        uploadAsync: false,
+        overwriteInitial: false,
+        maxFileCount: 1,
+        initialPreviewAsData: true ,// identify if you are sending preview data only and not the markup
+        language: 'es'
+    });
+});
 $('#guardarArea').click(function(){
     objArea=datos("POST");
     enviarArea('',objArea);

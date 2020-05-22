@@ -19,6 +19,8 @@
     <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
 
+    <link href="{{asset('admin/assets/libs/bootstrap-fileinput/fileinput.min.css')}}" rel="stylesheet" type="text/css" />
+
     <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 
     <link href="{{asset('admin/assets/libs/smartwizard/smart_wizard.min.css')}}" type="text/css" />
@@ -656,6 +658,13 @@
     <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <script src="{{asset('admin/assets/libs/smartwizard/jquery.smartWizard.min.js') }}"></script>
+
+    <script src="{{asset('admin/assets/libs/bootstrap-fileinput/piexif.min.js')}}" ></script>
+    <script src="{{asset('admin/assets/libs/bootstrap-fileinput/sortable.min.js')}}" ></script>
+    <script src="{{asset('admin/assets/libs/bootstrap-fileinput/purify.min.js')}}"></script>
+    <script src="{{asset('admin/assets/libs/bootstrap-fileinput/fileinput.min.js')}}" ></script>
+    <script src="{{asset('admin/assets/libs/bootstrap-fileinput/theme.js')}}" ></script>
+    <script src="{{asset('admin/assets/libs/bootstrap-fileinput/es.js')}}" ></script>
 
     <script src="{{asset('admin/assets/js/pages/form-wizard.init.js') }}"></script>
     <script src="{{asset('landing/js/tabla.js')}}"></script>
