@@ -410,7 +410,6 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="form-group">
-                                                    <label for="sw-default">Imagen</label>
                                                     <input type="file" name="file" id="file">
                                                 </div>
                                             </div> <!-- end col -->
@@ -637,15 +636,14 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <label for="sw-default">Imagen</label>
-                                            <input type="file" name="file" id="file">
+                                            <input type="file" name="file" id="file2">
                                         </div>
                                     </div> <!-- end col -->
                                 </div> <!-- end row -->
                                 <br>
                                 <div class="row">
                                     <div class="col-md-12  text-center">
-                                        <button type="button" id="guardarEmpleado" class="btn btn-primary">Guardar</button>
+                                        <button type="button" id="guardarEmpleado" class="btn btn-success">Actualizar</button>
                                     </div>
                                 </div>
                                 <br>

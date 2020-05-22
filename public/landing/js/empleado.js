@@ -201,13 +201,17 @@ $('#guardarEmpleado').click(function(){
     enviarEmpleado('',objEmpleado);
 });
 
+
 function datosPersona(method){
+    if($('#tipo').val()=="Femenino"){
+    
+    }
     nuevoEmpleado={
         nombres:$('#nombres').val(),
         apPaterno:$('#apPaterno').val(),
         apMaterno:$('#apMaterno').val(),
         fechaN:$('#fechaN').val(),
-        tipo:$('#tipo').val(),
+        tipo:$('input:radio[name=tipo]:checked').val(),
         documento:$('#documento').val(),
         numDocumento:$('#numDocumento').val(),
         departamento:$('#departamento').val(),
@@ -248,11 +252,9 @@ function enviarEmpleado(accion,objEmpleado){
             leertabla();
             $('#smartwizard').smartWizard("reset");
             $('input[type="text"]').val("");
-            $('input[type="radio"]').val("");
+            $('input[type="radio"]').val("-1");
             $('input[type="file"]').val("");
             $('select').val("");
-
-
         },
         error:function(data,errorThrown){
             alert("Hay un error");
@@ -260,6 +262,3 @@ function enviarEmpleado(accion,objEmpleado){
         }
     });
 }
-
-
-

@@ -27,6 +27,19 @@
     </tbody>
 </table>
 <script>
+    $(document).ready(function() {
+        $("#file2").fileinput({
+            allowedFileExtensions: ['jpg', 'png', 'gif'],
+            uploadAsync: false,
+            overwriteInitial: false,
+            minFileCount:0,
+            maxFileCount: 1,
+            initialPreviewAsData: true ,// identify if you are sending preview data only and not the markup
+            language: 'es',
+            showBrowse: false,
+            browseOnZoneClick: true
+        });
+});
 
  $("#tablaEmpleado tbody tr").click(function(){
     $('#smartwizard1').smartWizard("reset");
@@ -75,5 +88,4 @@
         error:function(){ alert("Hay un error");}
     });
  });
-
 </script>
