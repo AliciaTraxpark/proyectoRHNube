@@ -468,7 +468,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Dirección Domiciliara</label>
-                                            <select  class="form-control" placeholder="Departamento" name="departamento" id="dep" required>
+                                            <select  class="form-control" placeholder="Departamento" name="v_dep" id="v_dep" required>
                                                 <option value="">Departamento</option>
                                                 @foreach ($departamento as $departamentos)
                                                   <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
@@ -496,7 +496,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default"><br></label>
-                                            <select  class="form-control " placeholder="Provincia " name="prov" id="prov" required>
+                                            <select  class="form-control " placeholder="Provincia " name="v_prov" id="v_prov" required>
                                                 <option value="">Provincia</option>
                                             </select>
                                         </div>
@@ -512,7 +512,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default"><br></label>
-                                            <select  class="form-control " placeholder="Distrito " name="v_distrito" id="v_distrito" disabled>
+                                            <select  class="form-control " placeholder="Distrito " name="v_distrito" id="v_distrito" required>
                                                 <option value="">Distrito</option>
                                                 @foreach ($distrito as $distritos)
                                                 <option class="" value="{{$distritos->id}}">{{$distritos->name}}</option>
@@ -521,7 +521,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default"><br></label>
-                                            <select  class="form-control " placeholder="Distrito " name="dist" id="dist" required>
+                                            <select  class="form-control " placeholder="Distrito " name="v_dist" id="v_dist" required>
                                                 <option value="">Distrito</option>
                                             </select>
                                         </div>
@@ -536,7 +536,7 @@
                                         <div class="form-group">
                                             <label class="normal" for="">Genero</label>
                                             <label class="custom-control custom-radio">
-                                                <input type="radio" name="tipo" id="tipo" value="Femenino" required>
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Femenino" required>
                                                 Femenino
                                               </label>
                                         </div>
@@ -545,7 +545,7 @@
                                         <div class="form-group">
                                             <label class="normal" for=""><br></label>
                                             <label class="custom-control custom-radio">
-                                                <input type="radio" name="tipo" id="tipo" value="Masculino" required>
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Masculino" required>
                                                 Masculino
                                               </label>
                                         </div>
@@ -554,7 +554,7 @@
                                         <div class="form-group">
                                             <label class="normal" for=""><br></label>
                                             <label class="custom-control custom-radio">
-                                                <input type="radio" name="tipo" id="tipo" value="Personalizado" required>
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Personalizado" required>
                                                 Personalizado
                                               </label>
                                         </div>
@@ -566,7 +566,7 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="sw-default">Cargo<a  href="#cargomodal" data-toggle="modal" data-target="#cargomodal">(+)</a></label>
-                                            <select  class="form-control" name="cargo" id="cargo" required>
+                                            <select  class="form-control" name="v_cargo" id="v_cargo" required>
                                                 <option value="">Seleccionar</option>
 
                                                   @foreach ($cargo as $cargos)
@@ -576,7 +576,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Contrato</label>
-                                            <select  class="form-control" name="contrato" id="contrato" required>
+                                            <select  class="form-control" name="v_contrato" id="v_contrato" required>
                                                 <option value="">Seleccionar</option>
                                                 @foreach ($tipo_cont as $tipo_conts)
                                                 <option class="" value="{{$tipo_conts->contrato_id}}">{{$tipo_conts->contrato_descripcion}}</option>
@@ -587,7 +587,7 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="sw-default">Área<a href="#areamodal" data-toggle="modal" data-target="#areamodal">(+)</a></label>
-                                            <select  class="form-control" name="area" id="area" required>
+                                            <select  class="form-control" name="v_area" id="v_area" required>
                                                 <option value="">Seleccionar</option>
                                                 @foreach ($area as $areas)
                                                 <option class="" value="{{$areas->area_id}}">{{$areas->area_descripcion}}</option>
@@ -596,7 +596,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Nivel<a  href="#nivelmodal" data-toggle="modal" data-target="#nivelmodal">(+)</a></label>
-                                            <select  class="form-control" name="nivel" id="nivel">
+                                            <select  class="form-control" name="v_nivel" id="v_nivel">
                                                 <option value="">Seleccionar</option>
                                                 @foreach ($nivel as $niveles)
                                                 <option class="" value="{{$niveles->nivel_id}}">{{$niveles->nivel_descripcion}}</option>
@@ -607,7 +607,7 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="sw-default">Centro Costo<a  href="#centrocmodal" data-toggle="modal" data-target="#centrocmodal">(+)</a></label>
-                                            <select  class="form-control" name="centroc" id="centroc" required>
+                                            <select  class="form-control" name="v_centroc" id="v_centroc" required>
                                                 <option value="">Seleccionar</option>
                                                 @foreach ($centro_costo as $centro_costos)
                                                 <option class="" value="{{$centro_costos->centroC_id}}">{{$centro_costos->centroC_descripcion}}</option>
@@ -616,7 +616,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Local<a  href="#localmodal" data-toggle="modal" data-target="#localmodal">(+)</a></label>
-                                            <select  class="form-control" name="local" id="local">
+                                            <select  class="form-control" name="v_local" id="v_local">
                                                 <option value="">Seleccionar</option>
                                                 @foreach ($local as $locales)
                                                 <option class="" value="{{$locales->local_id}}">{{$locales->local_descripcion}}</option>
