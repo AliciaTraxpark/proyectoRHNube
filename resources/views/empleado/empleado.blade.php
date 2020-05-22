@@ -630,10 +630,8 @@
                             <div id="sw-default-step-3">
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="file-loading">
-                                            <div class="form-group">
-                                                <input type="file" name="file" id="file">
-                                            </div>
+                                        <div class="form-group">
+                                            <input type="file" name="file" id="file">
                                         </div>
                                     </div> <!-- end col -->
                                 </div> <!-- end row -->
