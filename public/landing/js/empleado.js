@@ -5,7 +5,9 @@ $(document).ready(function() {
         overwriteInitial: false,
         maxFileCount: 1,
         initialPreviewAsData: true ,// identify if you are sending preview data only and not the markup
-        language: 'es'
+        language: 'es',
+        showBrowse: false,
+        browseOnZoneClick: true
     });
 });
 $('#guardarArea').click(function(){
