@@ -49,6 +49,19 @@
         },
         success:function(data){
 
+        $('#v_tipoDoc').val(data[0].tipoDoc_descripcion);
+        $('#v_apPaterno').val(data[0].perso_apPaterno);
+
+        $('#v_numDocumento').val(data[0].emple_nDoc);
+        $('#v_apMaterno').val(data[0].perso_apMaterno);
+
+        $('#v_fechaN').val(data[0].perso_fechaNacimiento);
+        $('#v_nombres').val(data[0].perso_nombre);
+        $('#v_direccion').val(data[0].perso_direccion);
+
+
+
+
 
         },
         error:function(){ alert("Hay un error");}
