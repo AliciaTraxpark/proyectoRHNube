@@ -29,6 +29,7 @@
 <script>
 
  $("#tablaEmpleado tbody tr").click(function(){
+    $('#smartwizard1').smartWizard("reset");
     $(this).addClass('selected').siblings().removeClass('selected');
     var value=$(this).find('input[type=hidden]').val();
     $('#form-registrar').hide();
@@ -41,16 +42,17 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success:function(data){
+            console.log(data);
 
         $('#v_tipoDoc').val(data[0].tipoDoc_descripcion);
         $('#v_apPaterno').val(data[0].perso_apPaterno);
-        $('#v_departamento').val(data[0].iddepaN);
+        $('#v_departamento').val(data[0].depaN);
         $('#v_provincia').val(data[0].idproviN);
         $('#v_distrito').val(data[0].iddistN);
 
-        $('#v_dep').val(data[0].emple_departamento);
-        $('#v_prov').val(data[0].emple_provincia);
-        $('#v_dist').val(data[0].emple_dist);
+        $('#v_dep').val(data[0].deparNo);
+        $('#v_prov').val(data[0].proviId);
+        $('#v_dist').val(data[0].distId);
 
 
         $('#v_numDocumento').val(data[0].emple_nDoc);

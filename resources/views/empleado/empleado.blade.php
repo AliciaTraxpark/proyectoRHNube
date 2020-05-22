@@ -499,6 +499,9 @@
                                             <label for="sw-default"><br></label>
                                             <select  class="form-control " placeholder="Provincia " name="v_prov" id="v_prov" required>
                                                 <option value="">Provincia</option>
+                                                @foreach ($provincia as $provincias)
+                                                <option class="" value="{{$provincias->id}}">{{$provincias->name}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -524,6 +527,9 @@
                                             <label for="sw-default"><br></label>
                                             <select  class="form-control " placeholder="Distrito " name="v_dist" id="v_dist" required>
                                                 <option value="">Distrito</option>
+                                                @foreach ($distrito as $distritos)
+                                                <option class="" value="{{$distritos->id}}">{{$distritos->name}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -626,12 +632,12 @@
                                         </div>
                                     </div> <!-- end col -->
                                 </div> <!-- end row -->
-
                             </div>
                             <div id="sw-default-step-3">
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
+                                            <label for="sw-default">Imagen</label>
                                             <input type="file" name="file" id="file">
                                         </div>
                                     </div> <!-- end col -->

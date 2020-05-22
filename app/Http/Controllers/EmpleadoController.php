@@ -155,6 +155,8 @@ class EmpleadoController extends Controller
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->join('tipo_documento as tipoD', 'e.emple_tipoDoc', '=', 'tipoD.tipoDoc_id')
             ->join('ubigeo_peru_departments as depar', 'e.emple_departamento', '=', 'depar.id')
+            ->join('ubigeo_peru_provinces as provi', 'e.emple_provincia', '=', 'provi.id')
+            ->join('ubigeo_peru_districts as dist', 'e.emple_distrito', '=', 'dist.id')
 
             ->join('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
             ->join('ubigeo_peru_departments as para', 'e.emple_departamentoN', '=', 'para.id')
@@ -165,9 +167,10 @@ class EmpleadoController extends Controller
 
 
             ->select('p.perso_nombre','tipoD.tipoDoc_descripcion','e.emple_nDoc','p.perso_apPaterno',
-            'p.perso_apMaterno', 'p.perso_fechaNacimiento' ,'p.perso_direccion','p.perso_sexo','depar.name as depar',
+            'p.perso_apMaterno', 'p.perso_fechaNacimiento' ,'p.perso_direccion','p.perso_sexo',
+            'depar.id as depar','depar.id as deparNo','provi.id as proviId','provi.name as provi','dist.id as distId','dist.name as distNo',
             'c.cargo_descripcion', 'a.area_descripcion','cc.centroC_descripcion','para.id as iddepaN',
-            'para.name as depaN','proviN.id as idproviN','proviN.name as proviN','distN.id as iddistN',
+            'para.id as depaN','proviN.id as idproviN','proviN.name as proviN','distN.id as iddistN',
             'distN.name as distN','e.emple_id','c.cargo_id','a.area_id', 'cc.centroC_id','e.emple_tipoContrato',
             'e.emple_local','e.emple_nivel','e.emple_departamento','e.emple_provincia','e.emple_distrito')
             ->where('emple_id','=',$idempleado)

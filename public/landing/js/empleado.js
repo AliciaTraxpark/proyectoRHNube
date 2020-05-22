@@ -3,6 +3,7 @@ $(document).ready(function() {
         allowedFileExtensions: ['jpg', 'png', 'gif'],
         uploadAsync: false,
         overwriteInitial: false,
+        minFileCount:0,
         maxFileCount: 1,
         initialPreviewAsData: true ,// identify if you are sending preview data only and not the markup
         language: 'es',
