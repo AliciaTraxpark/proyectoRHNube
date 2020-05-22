@@ -159,12 +159,13 @@ class EmpleadoController extends Controller
 
             ->join('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
             ->join('ubigeo_peru_departments as para', 'e.emple_departamentoN', '=', 'para.id')
-
+            ->join('ubigeo_peru_provinces as proviN', 'e.emple_provinciaN', '=', 'proviN.id')
+            ->join('ubigeo_peru_districts as distN', 'e.emple_distritoN', '=', 'distN.id')
             ->join('area as a', 'e.emple_area', '=', 'a.area_id')
             ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
             ->select('p.perso_nombre','tipoD.tipoDoc_descripcion','e.emple_nDoc','p.perso_apPaterno','p.perso_apMaterno',
            'p.perso_fechaNacimiento' ,'p.perso_direccion','depar.name as depar','c.cargo_descripcion',
-            'a.area_descripcion','cc.centroC_descripcion','para.name as depaN','e.emple_id')
+            'a.area_descripcion','cc.centroC_descripcion','para.id as iddepaN','para.name as depaN','proviN.id as idproviN','proviN.name as proviN','distN.id as iddistN','distN.name as distN','e.emple_id')
             ->where('emple_id','=',$idempleado)
             ->get();
         return $empleado;

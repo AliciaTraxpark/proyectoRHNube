@@ -449,7 +449,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Lugar Nacimiento</label>
-                                            <select  class="form-control" placeholder="Departamento" name="departamento" id="departamento" required>
+                                            <select  class="form-control" placeholder="Departamento" name="v_departamento" id="v_departamento" disabled>
                                                 <option value="">Departamento</option>
                                                 @foreach ($departamento as $departamentos)
                                                   <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
@@ -477,13 +477,16 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default"><br></label>
-                                            <select  class="form-control " placeholder="Provincia " name="provincia" id="provincia" required>
+                                            <select  class="form-control " placeholder="Provincia " name="v_provincia" id="v_provincia"  disabled>
                                                 <option value="">Provincia</option>
+                                                @foreach ($provincia as $provincias)
+                                                <option class="" value="{{$provincias->id}}">{{$provincias->name}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default"><br></label>
-                                            <select  class="form-control " placeholder="Provincia " name="provincia" id="prov" required>
+                                            <select  class="form-control " placeholder="Provincia " name="prov" id="prov" required>
                                                 <option value="">Provincia</option>
                                             </select>
                                         </div>
@@ -499,13 +502,16 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default"><br></label>
-                                            <select  class="form-control " placeholder="Distrito " name="distrito" id="distrito" required>
+                                            <select  class="form-control " placeholder="Distrito " name="v_distrito" id="v_distrito" disabled>
                                                 <option value="">Distrito</option>
+                                                @foreach ($distrito as $distritos)
+                                                <option class="" value="{{$distritos->id}}">{{$distritos->name}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default"><br></label>
-                                            <select  class="form-control " placeholder="Distrito " name="distrito" id="dist" required>
+                                            <select  class="form-control " placeholder="Distrito " name="dist" id="dist" required>
                                                 <option value="">Distrito</option>
                                             </select>
                                         </div>

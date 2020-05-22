@@ -51,7 +51,9 @@
 
         $('#v_tipoDoc').val(data[0].tipoDoc_descripcion);
         $('#v_apPaterno').val(data[0].perso_apPaterno);
-
+        $('#v_departamento').val(data[0].iddepaN);
+        $('#v_provincia').val(data[0].idproviN);
+        $('#v_distrito').val(data[0].iddistN);
         $('#v_numDocumento').val(data[0].emple_nDoc);
         $('#v_apMaterno').val(data[0].perso_apMaterno);
 
