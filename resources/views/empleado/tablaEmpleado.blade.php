@@ -27,13 +27,6 @@
     </tbody>
 </table>
 <script>
-  /*  $("#tablaEmpleado tr").click(function(){
-
-        $(this).addClass("selected");
-    //id.addClass('selected').siblings().removeClass('selected');
-    var value=$(this).find('tr:first').html();
-    alert(value);
- });*/
 
  $("#tablaEmpleado tbody tr").click(function(){
     $(this).addClass('selected').siblings().removeClass('selected');
