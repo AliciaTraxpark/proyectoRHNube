@@ -35,7 +35,7 @@
     alert(value);
  });*/
 
- $("#tablaEmpleado tr").click(function(){
+ $("#tablaEmpleado tbody tr").click(function(){
     $(this).addClass('selected').siblings().removeClass('selected');
     var value=$(this).find('input[type=hidden]').val();
     $('#form-registrar').hide();
@@ -54,6 +54,12 @@
         $('#v_departamento').val(data[0].iddepaN);
         $('#v_provincia').val(data[0].idproviN);
         $('#v_distrito').val(data[0].iddistN);
+
+        $('#v_dep').val(data[0].emple_departamento);
+        $('#v_prov').val(data[0].emple_provincia);
+        $('#v_dist').val(data[0].emple_dist);
+
+
         $('#v_numDocumento').val(data[0].emple_nDoc);
         $('#v_apMaterno').val(data[0].perso_apMaterno);
 
@@ -61,9 +67,14 @@
         $('#v_nombres').val(data[0].perso_nombre);
         $('#v_direccion').val(data[0].perso_direccion);
 
+        $("[name=v_tipo]").val([data[0].perso_sexo]);
+        $('#v_cargo').val(data[0].cargo_id);
+        $('#v_area').val(data[0].area_id);
+        $('#v_centroc').val(data[0].centroC_id);
 
-
-
+        $('#v_contrato').val(data[0].emple_tipoContrato);
+        $('#v_nivel').val(data[0].emple_nivel);
+        $('#v_local').val(data[0].emple_local);
 
         },
         error:function(){ alert("Hay un error");}

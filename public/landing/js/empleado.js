@@ -32,7 +32,11 @@ function enviarArea(accion,objArea){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success:function(data){
-            $('#area').load(location.href+" #area>*");//actualiza
+            $('#area').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                value: data.area_id,
+                text: data.area_descripcion,
+                selected: true
+               }));
              $('#area').val(data.area_id).trigger("change"); //lo selecciona
              $('#textArea').val('');
             $('#areamodal').modal('toggle');
@@ -66,7 +70,11 @@ function enviarCargo(accion,objCargo){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success:function(data){
-            $('#cargo').load(location.href+" #cargo>*");//actualiza
+            $('#cargo').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                value: data.cargo_id,
+                text: data.cargo_descripcion,
+                selected: true
+               }));
             $('#cargo').val(data.cargo_id).trigger("change"); //lo selecciona
             $('#textCargo').val('');
             $('#cargomodal').modal('toggle');
@@ -99,7 +107,11 @@ function enviarCentro(accion,objCentroC){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success:function(data){
-            $('#centroc').load(location.href+" #centroc>*");//actualiza
+            $('#centroc').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                value: data.centroC_id,
+                text: data.centroC_descripcion,
+                selected: true
+               }));
             $('#centroc').val(data.centroC_id).trigger("change"); //lo selecciona
             $('#textCentro').val('');
             $('#centrocmodal').modal('toggle');
@@ -131,7 +143,11 @@ function enviarLocal(accion,objLocal){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success:function(data){
-            $('#local').load(location.href+" #local>*");//actualiza
+            $('#local').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                value: data.local_id,
+                text: data.local_descripcion,
+                selected: true
+               }));
             $('#local').val(data.local_id).trigger("change"); //lo selecciona
             $('#textLocal').val('');
             $('#localmodal').modal('toggle');
@@ -164,7 +180,11 @@ function enviarNivel(accion,objNivel){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success:function(data){
-            $('#nivel').load(location.href+" #nivel>*");//actualiza
+            $('#nivel').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                value: data.nivel_id,
+                text: data.nivel_descripcion,
+                selected: true
+               }));
             $('#nivel').val(data.nivel_id).trigger("change"); //lo selecciona
             $('#textNivel').val('');
             $('#nivelmodal').modal('toggle');
@@ -233,7 +253,7 @@ function enviarEmpleado(accion,objEmpleado){
 
 
         },
-        error:function(data,errorThrown){ 
+        error:function(data,errorThrown){
             alert("Hay un error");
             alert('request failed:'+errorThrown);
         }
