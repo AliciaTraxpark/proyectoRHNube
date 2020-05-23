@@ -204,9 +204,6 @@ $('#guardarEmpleado').click(function(){
 
 
 function datosPersona(method){
-    if($('#tipo').val()=="Femenino"){
-    
-    }
     nuevoEmpleado={
         nombres:$('#nombres').val(),
         apPaterno:$('#apPaterno').val(),
@@ -234,6 +231,72 @@ function datosPersona(method){
 }
 
 function enviarEmpleado(accion,objEmpleado){
+
+    var formData = new FormData();
+    formData.append('file',$('#file').prop('files')[0]);
+    formData.append('objEmpleado',JSON.stringify(objEmpleado));
+    $.ajax({
+
+        type:"POST",
+        url:"/empleado/store"+accion,
+        data:formData,
+        contentType:false,
+        processData:false,
+        dataType:"json",
+        headers:{
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success:function(msg){
+            leertabla();
+            $('#smartwizard').smartWizard("reset");
+            $('input[type="text"]').val("");
+            $('input[type="radio"]').val("-1");
+            $('input[type="file"]').val("");
+            $('select').val("");
+        },
+        error:function(data,errorThrown){
+            alert("Hay un error");
+            alert('request failed:'+errorThrown);
+        }
+    });
+}
+
+//EMPLEADO ACTUALIZAR
+$('#actualizarEmpleado').click(function(){
+    $idE=$('#v_id').val();
+    objEmpleadoA=datosPersonaA("PUT");
+    actualizarEmpleado('/'+idE,objEmpleadoA);
+});
+
+
+function datosPersonaA(method){
+    nuevoEmpleado={
+        nombres:$('#v_nombres').val(),
+        apPaterno:$('#v_apPaterno').val(),
+        apMaterno:$('#v_apMaterno').val(),
+        fechaN:$('#v_fechaN').val(),
+        tipo:$('input:radio[name=tipo]:checked').val(),
+        documento:$('#documento').val(),
+        numDocumento:$('#numDocumento').val(),
+        departamento:$('#departamento').val(),
+        provincia:$('#provincia').val(),
+        distrito:$('#distrito').val(),
+        cargo:$('#cargo').val(),
+        area:$('#area').val(),
+        centroc:$('#centroc').val(),
+        dep:$('#dep').val(),
+        prov:$('#prov').val(),
+        dist:$('#dist').val(),
+        contrato:$('#contrato').val(),
+        direccion:$('#direccion').val(),
+        nivel:$('#nivel').val(),
+        local:$('#local').val(),
+        '_method':method
+    }
+    return(nuevoEmpleado);
+}
+
+function actualizarEmpleado(accion,objEmpleado){
 
     var formData = new FormData();
     formData.append('file',$('#file').prop('files')[0]);
