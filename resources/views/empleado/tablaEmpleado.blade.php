@@ -126,6 +126,7 @@
         $('#v_nivel').val(data[0].emple_nivel);
         $('#v_local').val(data[0].emple_local);
         $('#v_foto').attr("src","{{asset('/fotosEmpleado')}}"+"/"+data[0].foto);
+        $('#v_id').val(data[0].emple_id);
 
         },
         error:function(){ alert("Hay un error");}

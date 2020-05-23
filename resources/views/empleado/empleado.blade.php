@@ -449,6 +449,7 @@
                             <div id="persona-step-1">
                                 <div class="row">
                                     <div class="col-4">
+                                        <input style="display: none;" name="v_id" id="v_id">
                                         <div class="form-group">
                                             <label for="sw-default">Tipo Documento</label>
                                             <input type="text" class="form-control" name="v_tipoDoc" id="v_tipoDoc" required>
