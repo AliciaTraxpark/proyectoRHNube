@@ -83,6 +83,7 @@
         $('#v_contrato').val(data[0].emple_tipoContrato);
         $('#v_nivel').val(data[0].emple_nivel);
         $('#v_local').val(data[0].emple_local);
+        $('#v_foto').val(data[0].foto);
 
         },
         error:function(){ alert("Hay un error");}
