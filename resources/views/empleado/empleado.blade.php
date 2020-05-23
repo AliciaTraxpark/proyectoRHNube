@@ -224,7 +224,6 @@
                                     <li><a href="#sw-default-step-1">Personales</a></li>
                                     <li><a href="#sw-default-step-2">Empresarial</a></li>
                                     <li><a href="#sw-default-step-3">Foto</a></li>
-                                    <li><a href=""><button class="btn btn-danger btn-sm">Eliminar</button></a></li>
                                 </ul>
                                 <div class="p-3" id="form-registrar">
                                     <div id="sw-default-step-1">
@@ -411,7 +410,6 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="form-group">
-                                                    <label for="sw-default">Imagen</label>
                                                     <input type="file" name="file" id="file">
                                                 </div>
                                             </div> <!-- end col -->
@@ -445,6 +443,7 @@
                             <li><a href="#persona-step-1">Personales</a></li>
                             <li><a href="#sw-default-step-2">Empresarial</a></li>
                             <li><a href="#sw-default-step-3">Foto</a></li>
+                            <li><a href=""><button class="btn btn-danger btn-sm">Eliminar</button></a></li>
                         </ul>
                         <div class="p-3" id="form-registrar">
                             <div id="persona-step-1">
@@ -499,6 +498,9 @@
                                             <label for="sw-default"><br></label>
                                             <select  class="form-control " placeholder="Provincia " name="v_prov" id="v_prov" required>
                                                 <option value="">Provincia</option>
+                                                @foreach ($provincia as $provincias)
+                                                <option class="" value="{{$provincias->id}}">{{$provincias->name}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -524,6 +526,9 @@
                                             <label for="sw-default"><br></label>
                                             <select  class="form-control " placeholder="Distrito " name="v_dist" id="v_dist" required>
                                                 <option value="">Distrito</option>
+                                                @foreach ($distrito as $distritos)
+                                                <option class="" value="{{$distritos->id}}">{{$distritos->name}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -626,20 +631,19 @@
                                         </div>
                                     </div> <!-- end col -->
                                 </div> <!-- end row -->
-
                             </div>
                             <div id="sw-default-step-3">
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <input type="file" name="file" id="file">
+                                            <input type="file" name="file" id="file2">
                                         </div>
                                     </div> <!-- end col -->
                                 </div> <!-- end row -->
                                 <br>
                                 <div class="row">
                                     <div class="col-md-12  text-center">
-                                        <button type="button" id="guardarEmpleado" class="btn btn-primary">Guardar</button>
+                                        <button type="button" id="guardarEmpleado" class="btn btn-success">Actualizar</button>
                                     </div>
                                 </div>
                                 <br>
