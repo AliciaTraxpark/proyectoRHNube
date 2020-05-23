@@ -636,7 +636,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <input type="file" name="file" id="file2">
+                                            <img  alt="" id="v_foto">
                                         </div>
                                     </div> <!-- end col -->
                                 </div> <!-- end row -->
