@@ -1,211 +1,165 @@
-$( document ).ready(function() {
-    $('#Datoscalendar1').hide();
- });
- $('#nuevoCalendario').click(function(){
-     var departamento= $('#departamento').val();
-     var pais= $('#pais').val();
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <div class="row">
+        <div class="col-md-3" id="filter_global">
+            <td>busqueedad global</td>
+            <td align="center"><input type="text" class="global_filter" id="global_filter"></td>
+        </div>
+        <div class="col-md-3" id="filter_col1" data-column="0">
+
+                <td>Column - Name</td>
+                <td align="center"><input type="text" class="column_filter" id="col0_filter"></td>
+        </div>
+        <div class="col-md-3" id="filter_col2" data-column="1">
+
+            <td>Column - Position</td>
+                <td align="center"><input type="text" class="column_filter" id="col1_filter"></td>
+    </div>
+    <div class="col-md-3" id="filter_col3" data-column="2">
+
+        <td>Column - Office</td>
+                <td align="center"><input type="text" class="column_filter" id="col2_filter"></td>
+</div>
+    </div>
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+               <th><input type="radio" name="inputR" id="i1"></th>
+                <th><input type="radio" name="inputR" id="i2"></th>
+                <th><input type="radio" name="inputR" id="i3"></th>
+                <th><input type="radio" name="inputR" id="i4"></th>
+                <th><input type="radio" name="inputR" id="i5"></th>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Age</th>
+                <th>Start date</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Garrett Winters</td>
+                <td>Accountant</td>
+                <td>Tokyo</td>
+                <td>63</td>
+                <td>2011/07/25</td>
+                <td>$170,750</td>
+            </tr>
+            <tr>
+                <td>Ashton Cox</td>
+                <td>Junior Technical Author</td>
+                <td>San Francisco</td>
+                <td>66</td>
+                <td>2009/01/12</td>
+                <td>$86,000</td>
+            </tr>
+            <tr>
+                <td>Cedric Kelly</td>
+                <td>Senior Javascript Developer</td>
+                <td>Edinburgh</td>
+                <td>22</td>
+                <td>2012/03/29</td>
+                <td>$433,060</td>
+            </tr>
+            <tr>
+                <td>Airi Satou</td>
+                <td>Accountant</td>
+                <td>Tokyo</td>
+                <td>33</td>
+                <td>2008/11/28</td>
+                <td>$162,700</td>
+            </tr>
+            <tr>
+                <td>Brielle Williamson</td>
+                <td>Integration Specialist</td>
+                <td>New York</td>
+                <td>61</td>
+                <td>2012/12/02</td>
+                <td>$372,000</td>
+            </tr>
+
+        </tbody>
+
+    </table>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script>
+function filterGlobal () {
+    $('#example').DataTable().search(
+        $('#global_filter').val(),
+
+    ).draw();
+}
+function filterColumn ( i ) {
+    $('#example').DataTable().column( i ).search(
+        $('#col'+i+'_filter').val(),
+
+    ).draw();
+}
+
+$(document).ready(function() {
+    var table = $('#example').DataTable();
 
 
-     $.ajax(
-       {
+    $("#i1").click(function() {
+        if($("#i1").is(':checked')) {
+            table
+            .search( '' )
+            .columns().search( '' )
+            .draw();
+            $('#filter_global').show()
+            $('#filter_col1').show();
+            $('#filter_col2').hide();
+            $('#filter_col3').hide();
 
-       //url:"/calendario/store",
-       url:"/calendario/showDep/",
-       data:{departamento:departamento,pais:pais},
-       headers: {
-     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
- },
-       success:function(data){
-         $('#Datoscalendar').hide();
-         $('#Datoscalendar1').show();
+        } else {
+            alert("No está activado");
+        }
+    });
 
-         $.ajax(
-             {
+    $("#i2").click(function() {
+        if($("#i2").is(':checked')) {
+            table
+            .search( '' )
+            .columns().search( '' )
+            .draw();
+            $('#filter_global').hide()
+            $('#filter_col1').hide();
+            $('#filter_col2').show();
+            $('#filter_col3').hide();
 
-             //url:"/calendario/store",
-             url:"/calendario/showDep/confirmar",
-             data:{departamento:departamento,pais:pais},
-             headers: {
-             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-         },
-             success:function(dataA){
-                if (dataA==1)
-                {
-                    alert('ya esta creado');
-                }
-
-                 },
-             error:function(){ alert("Hay un error");}
-             }
-         );
-         calendario1(data);
-
-         },
-       error:function(){ alert("Hay un error");}
-       }
-   );
- });
-
- function calendario1(data) {
-     var calendarEl1 = document.getElementById('calendar1');
-     calendarEl1.innerHTML="";
-     var fecha = new Date();
-     var ano = fecha. getFullYear();
-     var id1;
-     var data=data;
-
-     var configuracionCalendario1 = {
-         locale: 'es',
-         defaultDate: ano+'-01-01',
-
-         plugins: [ 'dayGrid','interaction','timeGrid'],
-
-         selectable: true,
-         selectMirror: true,
-         select: function(arg) {
-
-
-          /*  calendar.addEvent({
-             title: 'title',
-             start: arg.start,
-             end: arg.end,
-             allDay: arg.allDay
-           }) */
-           $('#pruebaEnd').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
-           $('#pruebaStar').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
-         console.log(arg);
-       },
-       eventClick:function(info){
-         id1 = info.event.id;
-         console.log(info);
-         console.log(info.event.id);
-         console.log(info.event.title);
-         if(info.event.title == 'Descanso'){
-           $('#myModalEliminarDdep').modal();
-         }else{
-           $('#myModalEliminarNdep').modal();
-         }
-       },
-       editable: false,
-       eventLimit: true,
-         header:{
-           left:'prev,next today',
-           center:'title',
-           right:'dayGridMonth'
-         },
-         footer:{
-           left:'Descanso',
-           right:'NoLaborales'
-         },
-
-
-         events:data,
+        } else {
+            alert("No está activado");
+        }
+    });
 
 
 
-         customButtons:{
-           Descanso:{
-             text:"Asignar días de Descanso",
-             click:function(){
-                 var start=  $('#pruebaStar').val();
-                 var end=  $('#pruebaEnd').val();
-
-                 $('#start').val(start);
-                 $('#end').val(end);
-                 $('#myModal').modal('toggle');
-             }
-           },
-           NoLaborales:{
-             text:"Asignar días no Laborales",
-             click:function(){
-                 var start=  $('#pruebaStar').val();
-                 var end=  $('#pruebaEnd').val();
-                 $('#startF').val(start);
-                 $('#endF').val(end);
-                 $('#myModalFestivo').modal('toggle');
-
-             }
-           }
-         },
-       }
-     var calendar1 = new FullCalendar.Calendar(calendarEl1,configuracionCalendario1);
-     calendar1.setOption('locale',"Es");
-      //DESCANSO
-
-      $('#eliminarDescansodep').click(function(){
-       objEvento1=datos1("DELETE");
-       EliminarDescansoE('/'+id1,objEvento1);
-     });
-     function datos1(method){
-         nuevoEvento1={
-           title: $('#title').val(),
-           color:'#4673a0',
-           textColor:' #ffffff ',
-           start: $('#start').val(),
-           end: $('#end').val(),
-           tipo: 1,
-          pais:$('#pais').val(),
-           departamento:$('#departamento').val(),
-           '_method':method
-         }
-         return(nuevoEvento1);
-     }
-     function EliminarDescansoE(accion1,objEvento1){
-
-         $.ajax(
-             {
-             type: "DELETE",
-             url:"/calendario" +accion1,
-             data:objEvento1,
-             headers: {
-         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-         },
-             success:function(msg){
-             $('#myModalEliminarDdep').modal('toggle');
-
-            var event = calendar1.getEventById(id1);
-            event.remove();
 
 
-             },
+    $('#example').DataTable();
+    $('#filter_col1').hide();
+    $('#filter_col2').hide();
+    $('#filter_col3').hide();
 
-             }
-         );
-      }
+    $('input.global_filter').on( 'keyup click', function () {
+        filterGlobal();
+    } );
 
-     ///
-     //NO LABORABLE
-
-     $('#eliminarNLaboraldep').click(function(){
-       objEvento2=datos1("DELETE");
-       EliminarNola('/'+id1,objEvento2);
-     });
-
-     function EliminarNola(accion2,objEvento2){
-
-         $.ajax(
-             {
-             type: "DELETE",
-             url:"/calendario" +accion2,
-             data:objEvento2,
-             headers: {
-         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-         },
-             success:function(msg){
-             $('#myModalEliminarNdep').modal('toggle');
-
-            var event = calendar1.getEventById(id1);
-            event.remove();
-
-
-             },
-
-             }
-         );
-      }
-
-
-     ////
-     calendar1.render();
- }
- document.addEventListener('DOMContentLoaded',calendario1);
+    $('input.column_filter').on( 'keyup click', function () {
+        filterColumn( $(this).parents('div').attr('data-column') );
+    } );
+} );
+</script>

@@ -92,7 +92,7 @@
                         <div class="card-body" style="padding-top: 20px; background: #f8f8f8; font-size: 12.8px;
                         color: #222222;">
                             <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
-                            <h4 class="header-title mt-0 "></i>Búsquedad de empleado</h4>
+                            <h4 class="header-title mt-0 "></i>Búsqueda de empleado</h4>
                             <div id="tabladiv">
 
                             </div>
