@@ -410,7 +410,7 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="form-group">
-                                                    <input type="file" name="file" id="file">
+                                                    <input type="file" name="file" id="file" accept="image/*">
                                                 </div>
                                             </div> <!-- end col -->
                                         </div> <!-- end row -->
@@ -635,8 +635,8 @@
                             <div id="sw-default-step-3">
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="form-group">
-                                            <img  alt="" id="v_foto">
+                                        <div class="form-group text-center">
+                                            <img  alt="" id="v_foto" width="200" height="200">
                                         </div>
                                     </div> <!-- end col -->
                                 </div> <!-- end row -->
