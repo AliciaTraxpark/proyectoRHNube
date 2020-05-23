@@ -263,7 +263,7 @@ function enviarEmpleado(accion,objEmpleado){
 
 //EMPLEADO ACTUALIZAR
 $('#actualizarEmpleado').click(function(){
-    $idE=$('#v_id').val();
+    idE=$('#v_id').val();
     objEmpleadoA=datosPersonaA("PUT");
     actualizarEmpleado('/'+idE,objEmpleadoA);
 });
@@ -274,37 +274,31 @@ function datosPersonaA(method){
         nombres:$('#v_nombres').val(),
         apPaterno:$('#v_apPaterno').val(),
         apMaterno:$('#v_apMaterno').val(),
-        fechaN:$('#v_fechaN').val(),
-        tipo:$('input:radio[name=tipo]:checked').val(),
-        documento:$('#documento').val(),
-        numDocumento:$('#numDocumento').val(),
-        departamento:$('#departamento').val(),
-        provincia:$('#provincia').val(),
-        distrito:$('#distrito').val(),
-        cargo:$('#cargo').val(),
-        area:$('#area').val(),
-        centroc:$('#centroc').val(),
-        dep:$('#dep').val(),
-        prov:$('#prov').val(),
-        dist:$('#dist').val(),
-        contrato:$('#contrato').val(),
-        direccion:$('#direccion').val(),
-        nivel:$('#nivel').val(),
-        local:$('#local').val(),
+        numDocumento:$('#v_numDocumento').val(),
+        cargo:$('#v_cargo').val(),
+        area:$('#v_area').val(),
+        centroc:$('#v_centroc').val(),
+        dep:$('#v_dep').val(),
+        prov:$('#v_prov').val(),
+        dist:$('#v_dist').val(),
+        contrato:$('#v_contrato').val(),
+        direccion:$('#v_direccion').val(),
+        nivel:$('#v_nivel').val(),
+        local:$('#v_local').val(),
         '_method':method
     }
     return(nuevoEmpleado);
 }
 
-function actualizarEmpleado(accion,objEmpleado){
+function actualizarEmpleado(accion,objEmpleadoA){
 
     var formData = new FormData();
     formData.append('file',$('#file').prop('files')[0]);
-    formData.append('objEmpleado',JSON.stringify(objEmpleado));
+    formData.append('objEmpleadoA',JSON.stringify(objEmpleadoA));
     $.ajax({
 
-        type:"POST",
-        url:"/empleado/store"+accion,
+        type:"PUT",
+        url:"/empleado"+accion,
         data:formData,
         contentType:false,
         processData:false,
@@ -314,7 +308,7 @@ function actualizarEmpleado(accion,objEmpleado){
         },
         success:function(msg){
             leertabla();
-            $('#smartwizard').smartWizard("reset");
+            $('#smartwizard1').smartWizard("reset");
             $('input[type="text"]').val("");
             $('input[type="radio"]').val("-1");
             $('input[type="file"]').val("");
