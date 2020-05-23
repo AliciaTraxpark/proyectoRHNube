@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $("#file").fileinput({
-        allowedFileExtensions: ['jpg', 'png', 'gif'],
+        allowedFileExtensions: ['jpg','jpeg','png'],
         uploadAsync: false,
         overwriteInitial: false,
         minFileCount:0,
@@ -8,7 +8,8 @@ $(document).ready(function() {
         initialPreviewAsData: true ,// identify if you are sending preview data only and not the markup
         language: 'es',
         showBrowse: false,
-        browseOnZoneClick: true
+        browseOnZoneClick: true,
+        theme: "fa"
     });
 });
 $('#guardarArea').click(function(){
