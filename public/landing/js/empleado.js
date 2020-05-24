@@ -270,36 +270,36 @@ $('#actualizarEmpleado').click(function(){
 
 
 function datosPersonaA(method){
-    nuevoEmpleado={
-        nombres:$('#v_nombres').val(),
-        apPaterno:$('#v_apPaterno').val(),
-        apMaterno:$('#v_apMaterno').val(),
-        numDocumento:$('#v_numDocumento').val(),
-        cargo:$('#v_cargo').val(),
-        area:$('#v_area').val(),
-        centroc:$('#v_centroc').val(),
-        dep:$('#v_dep').val(),
-        prov:$('#v_prov').val(),
-        dist:$('#v_dist').val(),
-        contrato:$('#v_contrato').val(),
-        direccion:$('#v_direccion').val(),
-        nivel:$('#v_nivel').val(),
-        local:$('#v_local').val(),
+    nuevoEmpleadoA={
+        nombres_v:$('#v_nombres').val(),
+        apPaterno_v:$('#v_apPaterno').val(),
+        apMaterno_v:$('#v_apMaterno').val(),
+        numDocumento_v:$('#v_numDocumento').val(),
+        cargo_v:$('#v_cargo').val(),
+        area_v:$('#v_area').val(),
+        centroc_v:$('#v_centroc').val(),
+        dep_v:$('#v_dep').val(),
+        prov_v:$('#v_prov').val(),
+        dist_v:$('#v_dist').val(),
+        contrato_v:$('#v_contrato').val(),
+        direccion_v:$('#v_direccion').val(),
+        nivel_v:$('#v_nivel').val(),
+        local_v:$('#v_local').val(),
         '_method':method
     }
-    return(nuevoEmpleado);
+    return(nuevoEmpleadoA);
 }
 
 function actualizarEmpleado(accion,objEmpleadoA){
 
-    var formData = new FormData();
-    formData.append('file',$('#file').prop('files')[0]);
-    formData.append('objEmpleadoA',JSON.stringify(objEmpleadoA));
+    var formDataA = new FormData();
+    formDataA.append('file',$('#file').prop('files')[0]);
+    formDataA.append('objEmpleadoA',JSON.stringify(objEmpleadoA));
     $.ajax({
 
-        type:"PUT",
-        url:"/empleado"+accion,
-        data:formData,
+        type:"POST",
+        url:"/empleadoA"+accion,
+        data:formDataA,
         contentType:false,
         processData:false,
         dataType:"json",
@@ -316,7 +316,7 @@ function actualizarEmpleado(accion,objEmpleadoA){
         },
         error:function(data,errorThrown){
             alert("Hay un error");
-            alert('request failed:'+errorThrown);
+            console.log(formDataA.get('objEmpleadoA'));
         }
     });
 }

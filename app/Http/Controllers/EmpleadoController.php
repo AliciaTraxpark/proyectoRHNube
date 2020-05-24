@@ -198,22 +198,23 @@ class EmpleadoController extends Controller
      * @param  \App\empleado  $empleado
      * @return \Illuminate\Http\Response
      */
-    public function update($idE,Request $request)
+    public function update(Request $request,$idE)
     {
-        echo $request->get('objEmpleadoA');
+
         $objEmpleado = json_decode($request->get('objEmpleadoA'),true);
+        if($request==null)return false;
         $empleado= Empleado::findOrFail($idE);
         
-        $empleado->emple_nDoc=$objEmpleado['numDocumento'];
-        $empleado->emple_cargo=$objEmpleado['cargo'];
-        $empleado->emple_area=$objEmpleado['area'];
-        $empleado->emple_centCosto=$objEmpleado['centroc'];
-        $empleado->emple_departamento=$objEmpleado['dep'];
-        $empleado->emple_provincia=$objEmpleado['prov'];
-        $empleado->emple_distrito=$objEmpleado['dist'];
-        $empleado->emple_tipoContrato=$objEmpleado['contrato'];
-        $empleado->emple_local=$objEmpleado['local'];
-        $empleado->emple_nivel=$objEmpleado['nivel'];
+        $empleado->emple_nDoc=$objEmpleado['numDocumento_v'];
+        $empleado->emple_cargo=$objEmpleado['cargo_v'];
+        $empleado->emple_area=$objEmpleado['area_v'];
+        $empleado->emple_centCosto=$objEmpleado['centroc_v'];
+        $empleado->emple_departamento=$objEmpleado['dep_v'];
+        $empleado->emple_provincia=$objEmpleado['prov_v'];
+        $empleado->emple_distrito=$objEmpleado['dist_v'];
+        $empleado->emple_tipoContrato=$objEmpleado['contrato_v'];
+        $empleado->emple_local=$objEmpleado['local_v'];
+        $empleado->emple_nivel=$objEmpleado['nivel_v'];
         $empleado->save();
 
         $idpersona = DB::table('empleado as e')
@@ -222,11 +223,11 @@ class EmpleadoController extends Controller
         ->where('emple_id','=',$idE)
         ->get();
 
-        $persona = Persona::findOrFail($idpersona);
-        $persona->perso_nombre=$objEmpleado['nombres'];
-        $persona->perso_apPaterno=$objEmpleado['apPaterno'];
-        $persona->perso_apMaterno=$objEmpleado['apMaterno'];
-        $persona->perso_direccion=$objEmpleado['direccion'];
+        $persona = Persona::findOrFail($idpersona[0]->perso_id);
+        $persona->perso_nombre=$objEmpleado['nombres_v'];
+        $persona->perso_apPaterno=$objEmpleado['apPaterno_v'];
+        $persona->perso_apMaterno=$objEmpleado['apMaterno_v'];
+        $persona->perso_direccion=$objEmpleado['direccion_v'];
         $persona->save();
         return json_encode(array('status'=>true));
     }
