@@ -22,7 +22,14 @@
 @endsection
 
 @section('content')
+<style>
+    .border{
+        border: 1px solid #d6d6d6 !important;
+        padding-bottom: 5px;
+}
 
+    }
+</style>
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
@@ -71,10 +78,10 @@
                 </div>
 
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body" style="padding-left: 0px;">
                         <label>9:00 am - 10:00 am   </label>  &nbsp;&nbsp;&nbsp; <label>Tiempo trabajado 0:59:53</label><br><br>
-                        <div class="custom-accordion accordion ml-4" id="customaccordion_exa">
-                            <div class="card mb-1">
+                        <div class="custom-accordion accordion ml-4" id="customaccordion_exa" style="margin-left: 0px!important;">
+                            <div class="card mb-1" style="padding-left: 20px;">
                                 <a href="" class="text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
                                     aria-expanded="true" aria-controls="customaccorcollapseOne">
 
@@ -83,46 +90,93 @@
                                 <div id="customaccorcollapseOne" class="collapse show" aria-labelledby="customaccorheadingOne"
                                     data-parent="#customaccordion_exa">
                                    <div class="row">
-                                    <div class="col-md-3" >
-                                        <div class="card-body text-center col-md-9" style="background-color: rgb(207, 207, 207);padding-top: 8px;
+                                    <div class="col-md-2">
+                                        <div class=" text-center col-md-12 col-sm-6" style="background-color: rgb(234, 234, 234);padding-top: 8px;
                                         padding-bottom: 8px;">
-                                            <h5 class="m-0 font-size-14" >
-                                               Área 1
-                                            </h5>
+                                            <h5 class="m-0 font-size-14" > Área 1  </h5>
                                         </div>  <br>
-                                        <img src="{{asset('landing/images/captura.png')}}" height="85" >
-
+                                        <div class="col-md-12 col-sm-6 border" style="padding-left: 0px;">
+                                          <img src="{{asset('landing/images/captura.png')}}" height="79" >
+                                        &nbsp;  <label style="font-size: 12px" for="">9:00 am - 9:10 am</label>
+                                         <div class="progress" style="background-color: #d4d4d4;">
+                                            &nbsp;  <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
+                                                aria-valuemin="0" aria-valuemax="100">25%</div>
+                                        </div>
+                                        </div>
                                     </div>
-                                    <div class="col-md-3" >
-                                        <div class="card-body text-center col-md-9" style="background-color: rgb(207, 207, 207);padding-top: 8px;
+
+                                    <div class="col-md-2">
+                                        <div class=" text-center col-md-12 col-sm-6" style="background-color: rgb(234, 234, 234);padding-top: 8px;
                                         padding-bottom: 8px;">
-                                            <h5 class="m-0 font-size-14" >
-                                               Área 1
-                                            </h5>
+                                            <h5 class="m-0 font-size-14" > Área 1  </h5>
                                         </div>  <br>
-                                        <img src="{{asset('landing/images/captura.png')}}" height="85" >
-
+                                        <div class="col-md-12 col-sm-6 border" style="padding-left: 0px;">
+                                          <img src="{{asset('landing/images/captura.png')}}" height="79" >
+                                        &nbsp;  <label style="font-size: 12px" for="">9:00 am - 9:10 am</label>
+                                         <div class="progress" style="background-color: #d4d4d4;">
+                                            &nbsp;  <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
+                                                aria-valuemin="0" aria-valuemax="100">25%</div>
+                                        </div>
+                                        </div>
                                     </div>
-                                    <div class="col-md-3" >
-                                        <div class="card-body text-center col-md-9" style="background-color: rgb(207, 207, 207);padding-top: 8px;
+                                    <div class="col-md-2">
+                                        <div class=" text-center col-md-12 col-sm-6" style="background-color: rgb(234, 234, 234);padding-top: 8px;
                                         padding-bottom: 8px;">
-                                            <h5 class="m-0 font-size-14" >
-                                               Área 1
-                                            </h5>
+                                            <h5 class="m-0 font-size-14" > Área 1  </h5>
                                         </div>  <br>
-                                        <img src="{{asset('landing/images/captura.png')}}" height="85" >
-
+                                        <div class="col-md-12 col-sm-6 border" style="padding-left: 0px;">
+                                          <img src="{{asset('landing/images/captura.png')}}" height="79" >
+                                        &nbsp;  <label style="font-size: 12px" for="">9:00 am - 9:10 am</label>
+                                         <div class="progress" style="background-color: #d4d4d4;">
+                                            &nbsp;  <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
+                                                aria-valuemin="0" aria-valuemax="100">25%</div>
+                                        </div>
+                                        </div>
                                     </div>
-                                    <div class="col-md-3" >
-                                        <div class="card-body text-center col-md-9" style="background-color: rgb(207, 207, 207);padding-top: 8px;
+                                    <div class="col-md-2">
+                                        <div class=" text-center col-md-12 col-sm-6" style="background-color: rgb(234, 234, 234);padding-top: 8px;
                                         padding-bottom: 8px;">
-                                            <h5 class="m-0 font-size-14" >
-                                               Área 1
-                                            </h5>
+                                            <h5 class="m-0 font-size-14" > Área 1  </h5>
                                         </div>  <br>
-                                        <img src="{{asset('landing/images/captura.png')}}" height="85" >
-
+                                        <div class="col-md-12 col-sm-6 border" style="padding-left: 0px;">
+                                          <img src="{{asset('landing/images/captura.png')}}" height="79" >
+                                        &nbsp;  <label style="font-size: 12px" for="">9:00 am - 9:10 am</label>
+                                         <div class="progress" style="background-color: #d4d4d4;">
+                                            &nbsp;  <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
+                                                aria-valuemin="0" aria-valuemax="100">25%</div>
+                                        </div>
+                                        </div>
                                     </div>
+                                    <div class="col-md-2">
+                                        <div class=" text-center col-md-12 col-sm-6" style="background-color: rgb(234, 234, 234);padding-top: 8px;
+                                        padding-bottom: 8px;">
+                                            <h5 class="m-0 font-size-14" > Área 1  </h5>
+                                        </div>  <br>
+                                        <div class="col-md-12 col-sm-6 border" style="padding-left: 0px;">
+                                          <img src="{{asset('landing/images/captura.png')}}" height="79" >
+                                        &nbsp;  <label style="font-size: 12px" for="">9:00 am - 9:10 am</label>
+                                         <div class="progress" style="background-color: #d4d4d4;">
+                                            &nbsp;  <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
+                                                aria-valuemin="0" aria-valuemax="100">25%</div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class=" text-center col-md-12 col-sm-6" style="background-color: rgb(234, 234, 234);padding-top: 8px;
+                                        padding-bottom: 8px;">
+                                            <h5 class="m-0 font-size-14" > Área 1  </h5>
+                                        </div>  <br>
+                                        <div class="col-md-12 col-sm-6 border" style="padding-left: 0px;">
+                                          <img src="{{asset('landing/images/captura.png')}}" height="79" >
+                                        &nbsp;  <label style="font-size: 12px" for="">9:00 am - 9:10 am</label>
+                                         <div class="progress" style="background-color: #d4d4d4;">
+                                            &nbsp;  <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
+                                                aria-valuemin="0" aria-valuemax="100">25%</div>
+                                        </div>
+                                        </div>
+                                    </div>
+
+
                                    </div>
 
                                 </div>
