@@ -2,7 +2,14 @@
 
 
 @section('css')
-
+<link href="{{ URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.css') }}" rel="stylesheet" />
+<link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css') }}" rel="stylesheet"
+    type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css') }}" rel="stylesheet"
+    type="text/css" />
 @endsection
 
 @section('breadcrumb')
@@ -22,20 +29,118 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-2">
+                        <label><br></label><br>
                         <button type="button" class="btn btn-light"><i class="uil uil-arrow-left"></i></button>
                         <button type="button" class="btn btn-light"><i class="uil uil-arrow-right"></i></button>
                     </div>
-                    <div class="col-md-1">
-                        
+                    <div class="col-md-5 text-left">
+                        <label><br></label>
+                        <div class="input-group col-md-6">
+                            <input type="text" id="humanfd-datepicker" class="form-control" placeholder="May 25, 2020">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text form-control "><i class="uil uil-calender"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group mt-3 mt-sm-0 col-md-10">
+                            <label>Empleado</label>
+                            <select data-plugin="customselect" class="form-control">
+                                <option value="0">Shreyu</option>
+                                <option value="1">Greeva</option>
+                                <option value="2">Dhyanu</option>
+                                <option value="3" disabled>Disabled</option>
+                                <option value="4">Mannat</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group  col-md-10">
+                            <label>Área</label>
+                            <select data-plugin="customselect" class="form-control">
+                                <option value="0">Shreyu</option>
+                                <option value="1">Greeva</option>
+                                <option value="2">Dhyanu</option>
+                                <option value="3" disabled>Disabled</option>
+                                <option value="4">Mannat</option>
+                            </select>
+                        </div>
                     </div>
 
 
                 </div>
 
+                <div class="card">
+                    <div class="card-body">
+                        <label>9:00 am - 10:00 am   </label>  &nbsp;&nbsp;&nbsp; <label>Tiempo trabajado 0:59:53</label><br><br>
+                        <div class="custom-accordion accordion ml-4" id="customaccordion_exa">
+                            <div class="card mb-1">
+                                <a href="" class="text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
+                                    aria-expanded="true" aria-controls="customaccorcollapseOne">
+
+                                </a>
+
+                                <div id="customaccorcollapseOne" class="collapse show" aria-labelledby="customaccorheadingOne"
+                                    data-parent="#customaccordion_exa">
+                                   <div class="row">
+                                    <div class="col-md-3" >
+                                        <div class="card-body text-center col-md-9" style="background-color: rgb(207, 207, 207);padding-top: 8px;
+                                        padding-bottom: 8px;">
+                                            <h5 class="m-0 font-size-14" >
+                                               Área 1
+                                            </h5>
+                                        </div>  <br>
+                                        <img src="{{asset('landing/images/captura.png')}}" height="85" >
+
+                                    </div>
+                                    <div class="col-md-3" >
+                                        <div class="card-body text-center col-md-9" style="background-color: rgb(207, 207, 207);padding-top: 8px;
+                                        padding-bottom: 8px;">
+                                            <h5 class="m-0 font-size-14" >
+                                               Área 1
+                                            </h5>
+                                        </div>  <br>
+                                        <img src="{{asset('landing/images/captura.png')}}" height="85" >
+
+                                    </div>
+                                    <div class="col-md-3" >
+                                        <div class="card-body text-center col-md-9" style="background-color: rgb(207, 207, 207);padding-top: 8px;
+                                        padding-bottom: 8px;">
+                                            <h5 class="m-0 font-size-14" >
+                                               Área 1
+                                            </h5>
+                                        </div>  <br>
+                                        <img src="{{asset('landing/images/captura.png')}}" height="85" >
+
+                                    </div>
+                                    <div class="col-md-3" >
+                                        <div class="card-body text-center col-md-9" style="background-color: rgb(207, 207, 207);padding-top: 8px;
+                                        padding-bottom: 8px;">
+                                            <h5 class="m-0 font-size-14" >
+                                               Área 1
+                                            </h5>
+                                        </div>  <br>
+                                        <img src="{{asset('landing/images/captura.png')}}" height="85" >
+
+                                    </div>
+                                   </div>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
 
             </div> <!-- end card-body-->
         </div> <!-- end card-->
+
     </div> <!-- end col-->
+
+
+
+
 
 
 
@@ -45,5 +150,17 @@
 
 @endsection
 
+@section('script')
+<!-- Plugins Js -->
+<script src="{{ URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js') }}"></script>
+@endsection
 
+@section('script-bottom')
+<script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
+@endsection
 

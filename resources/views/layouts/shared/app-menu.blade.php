@@ -18,7 +18,7 @@
     <li>
         <a href="javascript: void(0);">
             <i data-feather="activity"></i>
-            <span>Tareas</span>
+            <span>Modulo 1: Tareas</span>
             <span class="menu-arrow"></span>
         </a>
         <ul lass="nav-second-level" aria-expanded="false">
