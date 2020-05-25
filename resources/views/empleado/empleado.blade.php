@@ -444,6 +444,8 @@
                             <li><a href="#sw-default-step-2">Empresarial</a></li>
                             <li><a href="#sw-default-step-3">Foto</a></li>
 
+                            <li style="text-align:right"><a id="eliminarE" href=""><img src="{{asset('admin/images/eliminar-e.svg')}}" height="18" > Eliminar</i></a></li>
+
                         </ul>
                         <div class="p-3" id="form-registrar">
                             <div id="persona-step-1">
