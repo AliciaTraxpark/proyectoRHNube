@@ -333,10 +333,10 @@ $(document).ready(function() {
         initialPreview: ["<img  id=v_foto style='width:200px'>"] ,// identify if you are sending preview data only and not the markup
         initialPreviewConfig: [{
             width: "120px",
-            url: "/eliminarFoto/"+v_id,
-            uploadExtraData:{'_token:X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+            url: "/eliminarFoto/"+v_id
         }],
         language: 'es',
+        uploadExtraData:{'_token:X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         showBrowse: false,
         browseOnZoneClick: true,
         theme: "fa",
