@@ -33,7 +33,13 @@ $(document).ready(function(){
                     "colvis": "Visibilidad"
                 }
             },
-
-
+            dom: 'Bfrtip',
+            buttons: [{
+                extend: 'excel',
+                customize: function(xlsx) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];},
+                sheetName: 'Exported data',
+                autoFilter: true
+            }]
         });
 });
