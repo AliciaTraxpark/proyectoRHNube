@@ -58,7 +58,7 @@
                     <div class="card" style="background:#f7f6f6;">
                         <div class="card-body" style="padding-top: 20px;color: #1b1b1b;">
                             <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
-                            <table id="basic-datatable" class="table dt-responsive nowrap">
+                            <table id="basic-datatable1" class="table  nowrap">
                                 <thead style="background: #4C5D73;color: white;">
                                     <tr>
                                         <th>Tipo de Doc.</th>
@@ -94,7 +94,7 @@
                                         <td>2011/03/21</td>
 
                                     </tr>
-                                    
+
                                 </tbody>
                             </table>
 
@@ -126,7 +126,13 @@
     <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 
     <script src="{{asset('landing/js/tabla.js')}}"></script>
-
+<script>
+    $(document).ready(function() {
+    $('#basic-datatable1').DataTable( {
+        "scrollX": true
+    } );
+} );
+</script>
 
 </body>
 </html>
