@@ -83,3 +83,8 @@ Route::post('/registrar/local','localController@store');
 
 //NIVEL
 Route::post('/registrar/nivel','nivelController@store');
+
+//TAREAS
+Route::get('/tareas', function () {
+    return view('tareas/tareas');
+})->name('tareas');
