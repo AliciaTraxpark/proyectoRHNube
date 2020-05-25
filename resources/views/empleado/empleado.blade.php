@@ -672,6 +672,7 @@
 
 
     <!-- Vendor js -->
+    <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
     <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script>
     <!-- App js -->
     <script src="{{asset('admin/assets/js/app.min.js')}}"></script>
