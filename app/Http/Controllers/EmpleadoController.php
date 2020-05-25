@@ -245,13 +245,11 @@ class EmpleadoController extends Controller
 
 
         $empleado = empleado::find($request->get('id'));
-        //$empleado->delete();
-        $persona= persona::where('perso_id','=', 114);
-        dd($persona);
-       /*  $persona = DB::table('persona as p')
-        ->join('empleado as e', 'e.emple_persona', '=', 'p.perso_id')
-        ->where('e.emple_id','=',$request->get('id'))->delete(); */
 
+
+        $empleado->delete();
+
+        $persona= persona::where('perso_id','=', $empleado->emple_persona)->delete();
 
 
     }
