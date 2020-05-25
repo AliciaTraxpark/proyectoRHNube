@@ -17,6 +17,18 @@
     </li>
     <li>
         <a href="javascript: void(0);">
+            <i data-feather="activity"></i>
+            <span>Tareas</span>
+            <span class="menu-arrow"></span>
+        </a>
+        <ul lass="nav-second-level" aria-expanded="false">
+            <li>
+                <a href="/tareas">Actividad de Captura de Pantalla</a>
+            </li>
+        </ul>
+    </li>
+    <!--<li>
+        <a href="javascript: void(0);">
             <i data-feather="inbox"></i>
             <span> Email </span>
             <span class="menu-arrow"></span>
@@ -215,5 +227,5 @@
                 <a href="/table/datatables">Advanced</a>
             </li>
         </ul>
-    </li>
+    </li>-->
 </ul>

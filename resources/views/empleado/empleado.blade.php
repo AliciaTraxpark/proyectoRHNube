@@ -639,7 +639,8 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group text-center">
-                                            <img  alt="" id="v_foto" width="300" height="200">
+                                            <!--<img  alt="" id="v_foto" width="300" height="200">-->
+                                            <input type="file" name="file" id="file2" accept="image/*">
                                         </div>
                                     </div> <!-- end col -->
                                 </div> <!-- end row -->
