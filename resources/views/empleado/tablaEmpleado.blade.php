@@ -97,7 +97,7 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success:function(data){
-            console.log(data);
+
 
         $('#v_tipoDoc').val(data[0].tipoDoc_descripcion);
         $('#v_apPaterno').val(data[0].perso_apPaterno);
@@ -112,21 +112,21 @@
 
         $('#v_numDocumento').val(data[0].emple_nDoc);
         $('#v_apMaterno').val(data[0].perso_apMaterno);
-
+        $("[name=v_tipo]").val([data[0].perso_sexo]);
         $('#v_fechaN').val(data[0].perso_fechaNacimiento);
         $('#v_nombres').val(data[0].perso_nombre);
         $('#v_direccion').val(data[0].perso_direccion);
 
-        $("[name=v_tipo]").val([data[0].perso_sexo]);
+
         $('#v_cargo').val(data[0].cargo_id);
         $('#v_area').val(data[0].area_id);
         $('#v_centroc').val(data[0].centroC_id);
-
+        $('#v_id').val(data[0].emple_id);
         $('#v_contrato').val(data[0].emple_tipoContrato);
         $('#v_nivel').val(data[0].emple_nivel);
         $('#v_local').val(data[0].emple_local);
         $('#v_foto').attr("src","{{asset('/fotosEmpleado')}}"+"/"+data[0].foto);
-        $('#v_id').val(data[0].emple_id);
+
 
         },
         error:function(){ alert("Hay un error");}

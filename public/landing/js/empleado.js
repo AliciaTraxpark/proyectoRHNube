@@ -247,12 +247,13 @@ function enviarEmpleado(accion,objEmpleado){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success:function(msg){
-            leertabla();
             $('#smartwizard').smartWizard("reset");
             $('input[type="text"]').val("");
-            $('input[type="radio"]').val("-1");
+            //$('input[type="radio"]').val("");
             $('input[type="file"]').val("");
             $('select').val("");
+            leertabla();
+
         },
         error:function(data,errorThrown){
             alert("Hay un error");

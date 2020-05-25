@@ -443,7 +443,7 @@
                             <li><a href="#persona-step-1">Personales</a></li>
                             <li><a href="#sw-default-step-2">Empresarial</a></li>
                             <li><a href="#sw-default-step-3">Foto</a></li>
-                            
+
                         </ul>
                         <div class="p-3" id="form-registrar">
                             <div id="persona-step-1">
@@ -543,7 +543,7 @@
                                         <div class="form-group">
                                             <label class="normal" for="">Genero</label>
                                             <label class="custom-control custom-radio">
-                                                <input type="radio" name="v_tipo" id="v_tipo" value="Femenino" disabled>
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Femenino" >
                                                 Femenino
                                               </label>
                                         </div>
@@ -552,7 +552,7 @@
                                         <div class="form-group">
                                             <label class="normal" for=""><br></label>
                                             <label class="custom-control custom-radio">
-                                                <input type="radio" name="v_tipo" id="v_tipo" value="Masculino" disabled>
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Masculino" >
                                                 Masculino
                                               </label>
                                         </div>
@@ -561,7 +561,7 @@
                                         <div class="form-group">
                                             <label class="normal" for=""><br></label>
                                             <label class="custom-control custom-radio">
-                                                <input type="radio" name="v_tipo" id="v_tipo" value="Personalizado" disabled>
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Personalizado" >
                                                 Personalizado
                                               </label>
                                         </div>
