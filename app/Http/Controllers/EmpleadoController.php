@@ -166,13 +166,13 @@ class EmpleadoController extends Controller
             ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
 
 
-            ->select('e.emple_id','p.perso_nombre','tipoD.tipoDoc_descripcion','e.emple_nDoc','p.perso_apPaterno',
+            ->select('e.emple_id','p.perso_id','p.perso_nombre','tipoD.tipoDoc_descripcion','e.emple_nDoc','p.perso_apPaterno',
             'p.perso_apMaterno', 'p.perso_fechaNacimiento' ,'p.perso_direccion','p.perso_sexo',
             'depar.id as depar','depar.id as deparNo','provi.id as proviId','provi.name as provi','dist.id as distId','dist.name as distNo',
             'c.cargo_descripcion', 'a.area_descripcion','cc.centroC_descripcion','para.id as iddepaN',
             'para.id as depaN','proviN.id as idproviN','proviN.name as proviN','distN.id as iddistN',
             'distN.name as distN','e.emple_id','c.cargo_id','a.area_id', 'cc.centroC_id','e.emple_tipoContrato',
-            'e.emple_local','e.emple_nivel','e.emple_departamento','e.emple_provincia','e.emple_distrito')
+            'e.emple_local','e.emple_nivel','e.emple_departamento','e.emple_provincia','e.emple_distrito','e.emple_foto as foto')
             ->where('emple_id','=',$idempleado)
             ->get();
         return $empleado;
@@ -198,9 +198,38 @@ class EmpleadoController extends Controller
      * @param  \App\empleado  $empleado
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, empleado $empleado)
+    public function update(Request $request,$idE)
     {
-        //
+
+        $objEmpleado = json_decode($request->get('objEmpleadoA'),true);
+        if($request==null)return false;
+        $empleado= Empleado::findOrFail($idE);
+        
+        $empleado->emple_nDoc=$objEmpleado['numDocumento_v'];
+        $empleado->emple_cargo=$objEmpleado['cargo_v'];
+        $empleado->emple_area=$objEmpleado['area_v'];
+        $empleado->emple_centCosto=$objEmpleado['centroc_v'];
+        $empleado->emple_departamento=$objEmpleado['dep_v'];
+        $empleado->emple_provincia=$objEmpleado['prov_v'];
+        $empleado->emple_distrito=$objEmpleado['dist_v'];
+        $empleado->emple_tipoContrato=$objEmpleado['contrato_v'];
+        $empleado->emple_local=$objEmpleado['local_v'];
+        $empleado->emple_nivel=$objEmpleado['nivel_v'];
+        $empleado->save();
+
+        $idpersona = DB::table('empleado as e')
+        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+        ->select('p.perso_id')
+        ->where('emple_id','=',$idE)
+        ->get();
+
+        $persona = Persona::findOrFail($idpersona[0]->perso_id);
+        $persona->perso_nombre=$objEmpleado['nombres_v'];
+        $persona->perso_apPaterno=$objEmpleado['apPaterno_v'];
+        $persona->perso_apMaterno=$objEmpleado['apMaterno_v'];
+        $persona->perso_direccion=$objEmpleado['direccion_v'];
+        $persona->save();
+        return json_encode(array('status'=>true));
     }
 
     /**

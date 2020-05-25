@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $("#file").fileinput({
-        allowedFileExtensions: ['jpg', 'png', 'gif'],
+        allowedFileExtensions: ['jpg','jpeg','png'],
         uploadAsync: false,
         overwriteInitial: false,
         minFileCount:0,
@@ -8,7 +8,8 @@ $(document).ready(function() {
         initialPreviewAsData: true ,// identify if you are sending preview data only and not the markup
         language: 'es',
         showBrowse: false,
-        browseOnZoneClick: true
+        browseOnZoneClick: true,
+        theme: "fa"
     });
 });
 $('#guardarArea').click(function(){
@@ -203,9 +204,6 @@ $('#guardarEmpleado').click(function(){
 
 
 function datosPersona(method){
-    if($('#tipo').val()=="Femenino"){
-    
-    }
     nuevoEmpleado={
         nombres:$('#nombres').val(),
         apPaterno:$('#apPaterno').val(),
@@ -259,6 +257,66 @@ function enviarEmpleado(accion,objEmpleado){
         error:function(data,errorThrown){
             alert("Hay un error");
             alert('request failed:'+errorThrown);
+        }
+    });
+}
+
+//EMPLEADO ACTUALIZAR
+$('#actualizarEmpleado').click(function(){
+    idE=$('#v_id').val();
+    objEmpleadoA=datosPersonaA("PUT");
+    actualizarEmpleado('/'+idE,objEmpleadoA);
+});
+
+
+function datosPersonaA(method){
+    nuevoEmpleadoA={
+        nombres_v:$('#v_nombres').val(),
+        apPaterno_v:$('#v_apPaterno').val(),
+        apMaterno_v:$('#v_apMaterno').val(),
+        numDocumento_v:$('#v_numDocumento').val(),
+        cargo_v:$('#v_cargo').val(),
+        area_v:$('#v_area').val(),
+        centroc_v:$('#v_centroc').val(),
+        dep_v:$('#v_dep').val(),
+        prov_v:$('#v_prov').val(),
+        dist_v:$('#v_dist').val(),
+        contrato_v:$('#v_contrato').val(),
+        direccion_v:$('#v_direccion').val(),
+        nivel_v:$('#v_nivel').val(),
+        local_v:$('#v_local').val(),
+        '_method':method
+    }
+    return(nuevoEmpleadoA);
+}
+
+function actualizarEmpleado(accion,objEmpleadoA){
+
+    var formDataA = new FormData();
+    formDataA.append('file',$('#file').prop('files')[0]);
+    formDataA.append('objEmpleadoA',JSON.stringify(objEmpleadoA));
+    $.ajax({
+
+        type:"POST",
+        url:"/empleadoA"+accion,
+        data:formDataA,
+        contentType:false,
+        processData:false,
+        dataType:"json",
+        headers:{
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success:function(msg){
+            leertabla();
+            $('#smartwizard1').smartWizard("reset");
+            $('input[type="text"]').val("");
+            $('input[type="radio"]').val("-1");
+            $('input[type="file"]').val("");
+            $('select').val("");
+        },
+        error:function(data,errorThrown){
+            alert("Hay un error");
+            console.log(formDataA.get('objEmpleadoA'));
         }
     });
 }

@@ -410,7 +410,7 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="form-group">
-                                                    <input type="file" name="file" id="file">
+                                                    <input type="file" name="file" id="file" accept="image/*">
                                                 </div>
                                             </div> <!-- end col -->
                                         </div> <!-- end row -->
@@ -449,9 +449,10 @@
                             <div id="persona-step-1">
                                 <div class="row">
                                     <div class="col-4">
+                                        <input style="display: none;" name="v_id" id="v_id">
                                         <div class="form-group">
                                             <label for="sw-default">Tipo Documento</label>
-                                            <input type="text" class="form-control" name="v_tipoDoc" id="v_tipoDoc" required>
+                                            <input type="text" class="form-control" name="v_tipoDoc" id="v_tipoDoc" disabled>
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Apellido Paterno</label>
@@ -507,7 +508,7 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="sw-default">Fecha Nacimiento</label>
-                                            <input class="form-control" id="v_fechaN" name="v_fechaN" required>
+                                            <input class="form-control" id="v_fechaN" name="v_fechaN" disabled>
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Nombres</label>
@@ -515,7 +516,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default"><br></label>
-                                            <select  class="form-control " placeholder="Distrito " name="v_distrito" id="v_distrito" required>
+                                            <select  class="form-control " placeholder="Distrito " name="v_distrito" id="v_distrito" disabled>
                                                 <option value="">Distrito</option>
                                                 @foreach ($distrito as $distritos)
                                                 <option class="" value="{{$distritos->id}}">{{$distritos->name}}</option>
@@ -542,7 +543,7 @@
                                         <div class="form-group">
                                             <label class="normal" for="">Genero</label>
                                             <label class="custom-control custom-radio">
-                                                <input type="radio" name="v_tipo" id="v_tipo" value="Femenino" required>
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Femenino" disabled>
                                                 Femenino
                                               </label>
                                         </div>
@@ -551,7 +552,7 @@
                                         <div class="form-group">
                                             <label class="normal" for=""><br></label>
                                             <label class="custom-control custom-radio">
-                                                <input type="radio" name="v_tipo" id="v_tipo" value="Masculino" required>
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Masculino" disabled>
                                                 Masculino
                                               </label>
                                         </div>
@@ -560,7 +561,7 @@
                                         <div class="form-group">
                                             <label class="normal" for=""><br></label>
                                             <label class="custom-control custom-radio">
-                                                <input type="radio" name="v_tipo" id="v_tipo" value="Personalizado" required>
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Personalizado" disabled>
                                                 Personalizado
                                               </label>
                                         </div>
@@ -635,15 +636,15 @@
                             <div id="sw-default-step-3">
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="form-group">
-                                            <input type="file" name="file" id="file2">
+                                        <div class="form-group text-center">
+                                            <img  alt="" id="v_foto" width="300" height="200">
                                         </div>
                                     </div> <!-- end col -->
                                 </div> <!-- end row -->
                                 <br>
                                 <div class="row">
                                     <div class="col-md-12  text-center">
-                                        <button type="button" id="guardarEmpleado" class="btn btn-success">Actualizar</button>
+                                        <button type="button" id="actualizarEmpleado" class="btn btn-success">Actualizar</button>
                                     </div>
                                 </div>
                                 <br>
