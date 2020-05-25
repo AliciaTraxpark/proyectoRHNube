@@ -16,6 +16,7 @@ use App\nivel;
 use App\local;
 use App\persona;
 use Illuminate\Support\Facades\DB;
+use Illiminate\Support\Facades\File;
 
 
 class EmpleadoController extends Controller
@@ -241,6 +242,17 @@ class EmpleadoController extends Controller
     public function destroy(empleado $empleado)
     {
         //
+    }
+
+    public function eliminarFoto(Request $request,$v_id){
+        $empleado= Empleado::findOrFail($v_id);
+        $idFoto= DB::table('empleado as e')
+        ->select('e.emple_foto')
+        ->where('emple_id','=',$v_id)
+        ->get();
+        unlink(public_path().'/fotoEmpleado'.$idFoto[0]->emple_foto);
+        $empleado->emple_foto="";
+        $empleado->save();
     }
 
 }

@@ -320,3 +320,29 @@ function actualizarEmpleado(accion,objEmpleadoA){
         }
     });
 }
+
+$(document).ready(function() {
+    $('#v_id').val();
+    $("#file2").fileinput({
+        allowedFileExtensions: ['jpg', 'png', 'gif'],
+        uploadAsync: false,
+        overwriteInitial: false,
+        minFileCount:0,
+        maxFileCount: 1,
+        initialPreviewFileType: 'image',
+        initialPreview: ["<img  id=v_foto style='width:200px'>"] ,// identify if you are sending preview data only and not the markup
+        initialPreviewConfig: [{
+            width: "120px",
+            url: "/eliminarFoto/"+v_id,
+            uploadExtraData:{'_token:X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        }],
+        language: 'es',
+        showBrowse: false,
+        browseOnZoneClick: true,
+        theme: "fa",
+        headers:{
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        fileActionSettings:{"showDrag":false, 'showZoom':false},
+    });
+});
