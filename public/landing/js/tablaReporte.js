@@ -33,7 +33,10 @@ $(document).ready(function(){
                     "colvis": "Visibilidad"
                 }
             },
-
-
+            dom: 'Bfrtip',
+            buttons: [{
+                extend: 'print',
+                text: 'Descargar'
+            }]
         });
 });
