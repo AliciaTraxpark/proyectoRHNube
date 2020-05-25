@@ -8,7 +8,7 @@
             <span> Dashboard </span>
         </a>
     </li>
-    <li class="menu-title">Apps</li>
+    
     <li>
         <a href="/calendario">
             <i data-feather="calendar"></i>
@@ -16,20 +16,24 @@
         </a>
     </li>
     <li>
+
         <a href="javascript: void(0);">
             <i data-feather="activity"></i>
             <span>Modulo 1: Tareas</span>
             <span class="menu-arrow"></span>
         </a>
-        <ul lass="nav-second-level" aria-expanded="false">
+
+        <ul class="nav-second-level" aria-expanded="false">
             <li>
                 <a href="/tareas">Actividad de Captura de Pantalla</a>
             </li>
             <li>
                 <a href="/reporteSemanal">Reporte Semanal</a>
             </li>
+
         </ul>
     </li>
+
     <!--<li>
         <a href="javascript: void(0);">
             <i data-feather="inbox"></i>
