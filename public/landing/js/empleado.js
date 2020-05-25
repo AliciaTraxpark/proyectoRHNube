@@ -321,3 +321,28 @@ function actualizarEmpleado(accion,objEmpleadoA){
         }
     });
 }
+///ELIMINAR EMPLEADO
+$( '#eliminarE' ).click(function() {
+   var id=$('#v_id').val()
+   $.ajax({
+    url:"/empleado/eliminar",
+    method:"POST",
+    data:{
+        id:id,
+    },
+    headers:{
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success:function(data){
+       alert('borrado');
+
+    },
+    error:function(data,errorThrown){
+        alert("Hay un error");
+
+    }
+
+});
+
+
+  });

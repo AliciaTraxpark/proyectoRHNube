@@ -204,7 +204,7 @@ class EmpleadoController extends Controller
         $objEmpleado = json_decode($request->get('objEmpleadoA'),true);
         if($request==null)return false;
         $empleado= Empleado::findOrFail($idE);
-        
+
         $empleado->emple_nDoc=$objEmpleado['numDocumento_v'];
         $empleado->emple_cargo=$objEmpleado['cargo_v'];
         $empleado->emple_area=$objEmpleado['area_v'];
@@ -238,9 +238,21 @@ class EmpleadoController extends Controller
      * @param  \App\empleado  $empleado
      * @return \Illuminate\Http\Response
      */
-    public function destroy(empleado $empleado)
+    public function destroy(Request $request)
     {
-        //
+
+
+
+        $empleado = empleado::find($request->get('id'));
+        //$empleado->delete();
+        $persona= persona::where('perso_id','=', 114);
+        dd($persona);
+       /*  $persona = DB::table('persona as p')
+        ->join('empleado as e', 'e.emple_persona', '=', 'p.perso_id')
+        ->where('e.emple_id','=',$request->get('id'))->delete(); */
+
+
+
     }
 
 }

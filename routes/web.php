@@ -67,6 +67,7 @@ Route::post('/empleado/file','EmpleadoController@upload');
 Route::get('tablaempleado/ver','EmpleadoController@tabla' );
 Route::get('empleado/show', 'EmpleadoController@show');
 Route::post('/empleadoA/{idE}','EmpleadoController@update');
+Route::post('/empleado/eliminar','EmpleadoController@destroy');
 
 //AREA
 Route::post('/registrar/area','areaController@store');
