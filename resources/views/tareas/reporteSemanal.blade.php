@@ -17,7 +17,13 @@
 @endsection
 
 @section('content')
-
+<style>
+     .flex-wrap{
+    text-align: right!important;
+    display: block!important;
+    margin-bottom: 10px;
+    }
+</style>
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
@@ -50,7 +56,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="header-title mt-0 mb-1">TRAXPARK</h4>
-                                <p class="sub-header">
+                                <p class="sub-header" style="margin-bottom: 0px">
                                     America-Bogota
                                 </p>
                                 <table id="tablaReporte" class="table dt-responsive nowrap">

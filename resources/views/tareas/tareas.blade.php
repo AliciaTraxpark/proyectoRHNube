@@ -26,9 +26,10 @@
     .border{
         border: 1px solid #d6d6d6 !important;
         padding-bottom: 5px;
-}
-
     }
+   
+
+
 </style>
 <div class="row">
     <div class="col-lg-12">
