@@ -35,8 +35,11 @@ $(document).ready(function(){
             },
             dom: 'Bfrtip',
             buttons: [{
-                extend: 'print',
-                text: 'Descargar'
+                extend: 'excel',
+                customize: function(xlsx) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];},
+                sheetName: 'Exported data',
+                autoFilter: true
             }]
         });
 });
