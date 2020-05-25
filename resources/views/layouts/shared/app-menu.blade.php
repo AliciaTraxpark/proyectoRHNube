@@ -25,6 +25,9 @@
             <li>
                 <a href="/tareas">Actividad de Captura de Pantalla</a>
             </li>
+            <li>
+                <a href="/reporteSemanal">Reporte Semanal</a>
+            </li>
         </ul>
     </li>
     <!--<li>

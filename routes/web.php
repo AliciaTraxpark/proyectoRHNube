@@ -88,3 +88,6 @@ Route::post('/registrar/nivel','nivelController@store');
 Route::get('/tareas', function () {
     return view('tareas/tareas');
 })->name('tareas');
+Route::get('/reporteSemanal', function () {
+    return view('tareas/reporteSemanal');
+})->name('reporteSemanal');
