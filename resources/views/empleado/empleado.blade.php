@@ -379,7 +379,7 @@
                                         <div class="row">
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="sw-default">Cargo<a  href="#cargomodal" data-toggle="modal" data-target="#cargomodal">(+)</a></label>
+                                                    <label for="sw-default">Cargo <a  href="#cargomodal" data-toggle="modal" data-target="#cargomodal"><i class="uil uil-plus"></i></a></label>
                                                     <select  class="form-control" name="cargo" id="cargo" required>
                                                         <option value="">Seleccionar</option>
 
@@ -400,7 +400,7 @@
                                             </div> <!-- end col -->
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="sw-default">Área<a href="#areamodal" data-toggle="modal" data-target="#areamodal">(+)</a></label>
+                                                    <label for="sw-default">Área <a href="#areamodal" data-toggle="modal" data-target="#areamodal"><i class="uil uil-plus"></i></a></label>
                                                     <select  class="form-control" name="area" id="area" required>
                                                         <option value="">Seleccionar</option>
                                                         @foreach ($area as $areas)
@@ -409,7 +409,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default">Nivel<a  href="#nivelmodal" data-toggle="modal" data-target="#nivelmodal">(+)</a></label>
+                                                    <label for="sw-default">Nivel <a  href="#nivelmodal" data-toggle="modal" data-target="#nivelmodal"><i class="uil uil-plus"></i></a></label>
                                                     <select  class="form-control" name="nivel" id="nivel">
                                                         <option value="">Seleccionar</option>
                                                         @foreach ($nivel as $niveles)
@@ -420,7 +420,7 @@
                                             </div> <!-- end col -->
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="sw-default">Centro Costo<a  href="#centrocmodal" data-toggle="modal" data-target="#centrocmodal">(+)</a></label>
+                                                    <label for="sw-default">Centro Costo <a  href="#centrocmodal" data-toggle="modal" data-target="#centrocmodal"><i class="uil uil-plus"></i></a></label>
                                                     <select  class="form-control" name="centroc" id="centroc" required>
                                                         <option value="">Seleccionar</option>
                                                         @foreach ($centro_costo as $centro_costos)
@@ -429,7 +429,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default">Local<a  href="#localmodal" data-toggle="modal" data-target="#localmodal">(+)</a></label>
+                                                    <label for="sw-default">Local <a  href="#localmodal" data-toggle="modal" data-target="#localmodal"><i class="uil uil-plus"></i></a></label>
                                                     <select  class="form-control" name="local" id="local">
                                                         <option value="">Seleccionar</option>
                                                         @foreach ($local as $locales)
@@ -614,7 +614,7 @@
                                 <div class="row">
                                     <div class="col-4">
                                         <div class="form-group">
-                                            <label for="sw-default">Cargo<a  href="#cargomodal" data-toggle="modal" data-target="#cargomodal">(+)</a></label>
+                                            <label for="sw-default">Cargo <a  href="#cargomodal" data-toggle="modal" data-target="#cargomodal"><i class="uil uil-plus"></i></a></label>
                                             <select  class="form-control" name="v_cargo" id="v_cargo" required>
                                                 <option value="">Seleccionar</option>
 
@@ -635,7 +635,7 @@
                                     </div> <!-- end col -->
                                     <div class="col-4">
                                         <div class="form-group">
-                                            <label for="sw-default">Área<a href="#areamodal" data-toggle="modal" data-target="#areamodal">(+)</a></label>
+                                            <label for="sw-default">Área <a href="#areamodal" data-toggle="modal" data-target="#areamodal"><i class="uil uil-plus"></i></a></label>
                                             <select  class="form-control" name="v_area" id="v_area" required>
                                                 <option value="">Seleccionar</option>
                                                 @foreach ($area as $areas)
@@ -644,7 +644,7 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="sw-default">Nivel<a  href="#nivelmodal" data-toggle="modal" data-target="#nivelmodal">(+)</a></label>
+                                            <label for="sw-default">Nivel <a  href="#nivelmodal" data-toggle="modal" data-target="#nivelmodal"><i class="uil uil-plus"></i></a></label>
                                             <select  class="form-control" name="v_nivel" id="v_nivel">
                                                 <option value="">Seleccionar</option>
                                                 @foreach ($nivel as $niveles)
@@ -655,7 +655,7 @@
                                     </div> <!-- end col -->
                                     <div class="col-4">
                                         <div class="form-group">
-                                            <label for="sw-default">Centro Costo<a  href="#centrocmodal" data-toggle="modal" data-target="#centrocmodal">(+)</a></label>
+                                            <label for="sw-default">Centro Costo <a  href="#centrocmodal" data-toggle="modal" data-target="#centrocmodal"><i class="uil uil-plus"></i></a></label>
                                             <select  class="form-control" name="v_centroc" id="v_centroc" required>
                                                 <option value="">Seleccionar</option>
                                                 @foreach ($centro_costo as $centro_costos)
@@ -664,7 +664,7 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="sw-default">Local<a  href="#localmodal" data-toggle="modal" data-target="#localmodal">(+)</a></label>
+                                            <label for="sw-default">Local <a  href="#localmodal" data-toggle="modal" data-target="#localmodal"><i class="uil uil-plus"></i></a></label>
                                             <select  class="form-control" name="v_local" id="v_local">
                                                 <option value="">Seleccionar</option>
                                                 @foreach ($local as $locales)
