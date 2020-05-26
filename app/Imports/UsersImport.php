@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
 class UsersImport implements ToModel,WithHeadingRow, WithValidation
-{   public $numRows = 0;
+{   private $numRows = 0;
     /**
     * @param array $row
     *
@@ -27,7 +27,7 @@ class UsersImport implements ToModel,WithHeadingRow, WithValidation
     public function rules(): array
     {
         return [
-            'rol_id' => 'int',
+            'rol_id' => 'required|int',
             'email' => 'required|max:45',
 
 
