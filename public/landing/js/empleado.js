@@ -360,7 +360,6 @@ function abrirnuevo(){
 
 
 $(document).ready(function() {
-    $('#v_id').val();
     $("#file2").fileinput({
         allowedFileExtensions: ['jpg', 'png', 'gif'],
         uploadAsync: true,
@@ -377,41 +376,28 @@ $(document).ready(function() {
         initialPreview: ["<img  id=v_foto style='width:200px'>"] ,// identify if you are sending preview data only and not the markup
         initialPreviewConfig: [{
             width: "120px",
-            url: "/eliminarFoto/",
+            url: "/eliminarFoto/"+$("#v_id").val(),
             showDelete: true,
-            //key:v_id
+            key:$("#v_id").val()
         }],
         language: 'es',
-        uploadExtraData:function(){
-            return{
-                _token: "{{ csrf_token() }}"
-            }
-        },
-        slugCallback: function (filename) {
-            return filename.replace('(', '_').replace(']', '_');
-        },
+        deleteExtraData:{_token:$("csrf_toke").val()},
         showBrowse: false,
         browseOnZoneClick: true,
         theme: "fa",
         fileActionSettings:{"showDrag":false, 'showZoom':false},
-    });
-    $("#file2").on("change", function(jqXHR) {
-        var abort = true;
-        if (confirm("Are you sure you want to delete this image?")) {
-            abort = false;
-            eliminarFoto();
-        }
-        return abort; // you can also send any data/object that you can receive on `filecustomerror` event
-    });
-});
-
-function eliminarFoto(){
-    var v_id = $('#v_id').val();
-    $.ajax({
-        url: "/eliminarFoto/"+v_id,
-        method:"POST",
-        headers:{
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
     })
-}
+    .on("filebeforedelete",function(){
+        var aborted = !window.confirm(
+            "¿Esta seguro que desea eliminar foto?"
+        );
+        if(aborted){
+            window.alert("File delection was aborted!");
+        }
+        return aborted;
+    })
+    .on("filedeleted",function(){
+        window.alert("File delection was successful!");
+    });
+    
+});
