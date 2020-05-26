@@ -263,6 +263,7 @@ class EmpleadoController extends Controller
         unlink(public_path().'/fotosEmpleado/'.$idFoto[0]->emple_foto);
         $empleado->emple_foto="";
         $empleado->save();
+        return json_encode(array("result"=>true));
     }
 
 }

@@ -707,7 +707,10 @@
     <!--<script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>-->
     <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
     <!--<script src="{{asset('landing/js/landingpage.js')}}"></script>-->
-    <script></script>
+    <script>
+        var urlFoto = "";
+        var hayFoto = false;
+    </script>
 
 
     <!-- Vendor js -->

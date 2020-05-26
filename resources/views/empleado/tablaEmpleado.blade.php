@@ -111,7 +111,18 @@
         $('#v_contrato').val(data[0].emple_tipoContrato);
         $('#v_nivel').val(data[0].emple_nivel);
         $('#v_local').val(data[0].emple_local);
-        $('#v_foto').attr("src","{{asset('/fotosEmpleado')}}"+"/"+data[0].foto);
+        if(data[0].foto!=""){
+            urlFoto = data[0].foto;
+            hayFoto= true;
+            $('#file2').fileinput('destroy');
+            cargarFile2();
+            $('#v_foto').attr("src","{{asset('/fotosEmpleado')}}"+"/"+data[0].foto);
+        }else{
+            hayFoto= false;
+            urlFoto = "";
+            $('#file2').fileinput('destroy');
+            cargarFile2();
+        }
 
 
         },

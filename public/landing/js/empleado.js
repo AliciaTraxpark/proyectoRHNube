@@ -359,28 +359,27 @@ function abrirnuevo(){
     $('#form-registrar').show();
 }
 
-
-$(document).ready(function() {
+function cargarFile2(){
     $("#file2").fileinput({
         allowedFileExtensions: ['jpg', 'png', 'gif'],
         uploadAsync: false,
         overwriteInitial: false,
-        showCaption: true,
-        showUpload: false,
         showRemove:true,
-        showPreview:true,
-        validateInitialCount: true,
-        autoReplace: true,
         minFileCount:0,
         maxFileCount: 1,
-        initialPreviewFileType: 'image',
-        initialPreview: ["<img  id=v_foto style='width:200px'>"] ,// identify if you are sending preview data only and not the markup
-        initialPreviewConfig: [{
-            width: "120px",
-            url: "/eliminarFoto/"+$("#v_id").val(),
-            showDelete: true,
-            key:$("#v_id").val()
-        }],
+        ...(hayFoto &&{
+            initialPreview: 
+            [
+                "<img  id=v_foto src='{{asset('/fotosEmpleado')}}/'"+
+                urlFoto + "'style='width:200px'>"
+            ] ,
+            initialPreviewConfig: [{
+                width: "120px",
+                url: "/eliminarFoto/"+id_empleado,
+                showDelete: true,
+                key:id_empelado
+            }]
+        }),
         language: 'es',
         deleteExtraData:{_token:$("csrf_toke").val()},
         showBrowse: false,
@@ -400,5 +399,4 @@ $(document).ready(function() {
     .on("filedeleted",function(){
         window.alert("File delection was successful!");
     });
-    
-});
+}
