@@ -310,11 +310,10 @@ function actualizarEmpleado(accion,objEmpleadoA){
         },
         success:function(msg){
             leertabla();
-            $('#smartwizard1').smartWizard("reset");
-            $('input[type="text"]').val("");
-            $('input[type="radio"]').val("-1");
-            $('input[type="file"]').val("");
-            $('select').val("");
+            $('#form-ver').hide();
+            $('#form-registrar').show();
+            $('#smartwizard').smartWizard("reset");
+
         },
         error:function(data,errorThrown){
             alert("Hay un error");
