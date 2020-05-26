@@ -550,7 +550,7 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="sw-default">Fecha Nacimiento</label>
-                                            <input class="form-control" id="v_fechaN" name="v_fechaN" disabled>
+                                            <input type="date" class="form-control" id="v_fechaN" name="v_fechaN" disabled>
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Nombres</label>

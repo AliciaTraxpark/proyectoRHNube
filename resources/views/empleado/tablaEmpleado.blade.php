@@ -141,8 +141,8 @@
 }
     function filterColumn ( i ) {
        $("#tablaEmpleado").DataTable({
-              "searching": true,
-            responsive: true,
+            "searching": true,
+            "scrollX": true,
             retrieve: true,
 
             language :
@@ -184,9 +184,9 @@
 
     $(document).ready(function() {
         var table =  $("#tablaEmpleado").DataTable({
-              "searching": true,
-              "lengthChange": false,
-            responsive: true,
+            "searching": true,
+            "lengthChange": false,
+            "scrollX": true,
             language :
             {
                 "sProcessing":     "Procesando...",
