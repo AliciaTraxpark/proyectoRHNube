@@ -32,6 +32,10 @@
 </head>
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
 <style>
+    .container{
+        margin-left: 40px;
+    margin-right: 28px;
+    }
     .fc-time{
         display: none;
     }
@@ -64,22 +68,22 @@
   <header id="header-section">
     <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
     <div class="container">
-        <div class="col-md-2">
+        <div class="col-md-2 col-xl-2" >
             <div class="navbar-brand-wrapper d-flex w-100">
                 <img src="{{asset('landing/images/logo.png')}}" height="100" >
               </div>
         </div>
-        <div class="col-md-6 text-left">
+        <div class="col-md-7 col-xl-7 text-left">
           <h5 style="color: #ffffff">Gestión de empleados</h5>
           <label for="" class="blanco">Tienes 2 minutos para registrar tu primer empleado</label>
         </div>
 
-        <div class=" col-md-2">
-            <a href="{{('/empleado/cargar')}}"> <button class="btn btn-sm btn-primary" style="background-color: #174f7d;border-color:#174f7d"><img src="{{asset('admin/images/avatar.svg')}}" height="25" class="mr-1" >Carga masiva</button></a>
+        <div class=" col-md-2 col-xl-2">
+            <a href="{{('/empleado/cargar')}}"> <button class="btn btn-sm btn-primary" style="background-color: #183b5d;border-color:#62778c"><img src="{{asset('admin/images/subir.ico')}}" height="25" class="mr-1" >Carga masiva</button></a>
 
           </div>
-        <div class=" col-md-3">
-            <button  class="btn btn-sm btn-primary" style="background-color: #174f7d;border-color:#174f7d"><img src="{{asset('admin/images/photo.svg')}}" height="25" class="mr-1" >Carga masiva fotos</button>
+        <div class=" col-md-3 col-xl-3">
+            <button  class="btn btn-sm btn-primary" style="background-color: #183b5d;border-color:#62778c"><img src="{{asset('admin/images/image.ico')}}" height="25" class="mr-1" >Carga masiva fotos</button>
         </div>
     </div>
     </nav>
@@ -101,6 +105,35 @@
                         </div> <!-- end card body-->
                     </div> <!-- end card -->
                 </div>
+                  <div id="modalEliminar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                   <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header" style="background-color:#163552;">
+                          <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Eliminar empleado</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">
+                        <form class="form-horizontal">
+                            <h5 class="modal-title" id="myModalLabel">¿Desea eliminar al empleado?</h5>
+                        </form>
+                      </div>
+                      <div class="modal-footer">
+                          <div class="col-md-12">
+                              <div class="row">
+                                  <div class="col-md-7 text-right">
+                                      <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                                  </div>
+                                  <div class="col-md-5 text-right" style="padding-right: 38px;  ">
+                                      <button type="button" id="confirmarE" name="confirmarE" style="background-color: #163552;" class="btn ">Eliminar</button>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
                 <div id="areamodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -225,7 +258,7 @@
                                     <li><a href="#sw-default-step-2">Empresarial</a></li>
                                     <li><a href="#sw-default-step-3">Foto</a></li>
                                 </ul>
-                                <div class="p-3" id="form-registrar">
+                                <div class="p-3" >
                                     <div id="sw-default-step-1">
                                         <div class="row">
                                             <div class="col-4">
@@ -428,24 +461,29 @@
 
                 </div>
                 <div class="col-md-6 col-xl-6" id="form-ver" style="font-size: 13px">
-                    <br>
-                    <div class="row">
+
+
                         <div class="col-md-6">
-                            <h4 class="header-title mt-0 "> </i>Datos de empleado</h4>
+                            <div class="row">
+                                <h4 class="header-title mt-0 ">Datos de empleado</h4><br>
+
+                            </div>
+
                         </div>
-                        <div class="col-md-6 text-right">
-                            <button type="button" style="background: #566879!important;" class="btn btn-dark btn-sm"> + Registrar nuevo</button>
-                        </div>
-                    </div>
+
+
 
                     <div id="smartwizard1" style="background: #f8f8f8; color:#3d3d3d;">
                         <ul style="background: #566879!important;" >
                             <li><a href="#persona-step-1">Personales</a></li>
                             <li><a href="#sw-default-step-2">Empresarial</a></li>
                             <li><a href="#sw-default-step-3">Foto</a></li>
-
-                            <li style="text-align:right"><a id="eliminarE" href=""><img src="{{asset('admin/images/eliminar-e.svg')}}" height="18" > Eliminar</i></a></li>
-
+                            <div class="col-md-2"></div>
+                            &nbsp; &nbsp; &nbsp;
+                             <div class="col-md-4 text-right" style="display: flex;
+                            align-items: center;">
+                            &nbsp; &nbsp; &nbsp; &nbsp;   &nbsp; &nbsp;<a style="color: #ebebec;"  href="#modalEliminar" data-toggle="modal" data-target="#modalEliminar"><img src="{{asset('admin/images/eliminar-e.svg')}}" height="18" > <span>Eliminar</span></i></a>
+                            &nbsp;  &nbsp; &nbsp; <a type="button" href="javascript:abrirnuevo()" style="color: #ebebec;" href=""><img src="{{asset('admin/images/agregar.svg')}}" height="17" > <span>+Nuevo</span></a></div>
                         </ul>
                         <div class="p-3" id="form-registrar">
                             <div id="persona-step-1">

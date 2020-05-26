@@ -82,23 +82,23 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <br>
-                            <div class="row">
+
+
                                 <h5>¿Asignar dias de descanso?</h5>
-                                    <div class="form-group row mb-3">
+
                                         {{-- <label for="start" class="col-sm-4 col-form-label">Fecha Inicial:</label> --}}
-                                            <div class="col-8">
+
                                                 <input type="hidden" name="start" class="form-control" id="start" readonly>
-                                            </div>
-                                    </div>
-                                    <div class="form-group row mb-3">
+
+
+
                                         {{-- <label for="start" class="col-sm-4 col-form-label">Fecha Final:</label> --}}
-                                        <div class="col-8">
+
                                             <input type="hidden" name="end" class="form-control" id="end" readonly>
-                                        </div>
-                                    </div>
+
+
                                     <input type="hidden" name="title" id="title" value="Descanso">
-                            </div>
+
                         </div>
                         <div class="modal-footer">
                             <div class="col-md-12">
@@ -125,23 +125,19 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <br>
-                            <div class="row">
+
                                 <h5>¿Asignar dias no laborales?</h5>
-                                    <div class="form-group row mb-3">
+
                                         {{-- <label for="start" class="col-sm-4 col-form-label">Fecha Inicial:</label> --}}
-                                        <div class="col-8">
+
                                             <input type="hidden" name="startF" class="form-control" id="startF" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row mb-3">
+
                                         {{-- <label for="start" class="col-sm-4 col-form-label">Fecha Final:</label> --}}
-                                        <div class="col-8">
+
                                             <input type="hidden" name="endF" class="form-control" id="endF" readonly>
-                                        </div>
-                                    </div>
+
                                 <input type="hidden" name="titleN" id="titleN" value="No laborable">
-                            </div>
+
                         </div>
                         <div class="modal-footer">
                             <div class="col-md-12">
@@ -168,14 +164,14 @@
                           </button>
                       </div>
                       <div class="modal-body">
-                          <br>
-                          <div class="row">
-                              <div class="col-md-12">
+
+
+
                                   <form class="form-horizontal">
                                     <h5 class="modal-title" id="myModalLabel">¿Desea eliminar días descanso?</h5>
                                   </form>
-                              </div>
-                          </div>
+
+
                       </div>
                       <div class="modal-footer">
                           <div class="col-md-12">
@@ -202,14 +198,14 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <br>
-                        <div class="row">
-                            <div class="col-md-12">
+
+
+
                                 <form class="form-horizontal">
                                   <h5 class="modal-title" id="myModalLabel">¿Desea eliminar días no Laborales?</h5>
                                 </form>
-                            </div>
-                        </div>
+
+
                     </div>
                     <div class="modal-footer">
                         <div class="col-md-12">
@@ -236,14 +232,10 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <br>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <form class="form-horizontal">
                                   <h5 class="modal-title" id="myModalLabel">¿Desea eliminar días descanso?</h5>
                                 </form>
-                            </div>
-                        </div>
+
                     </div>
                     <div class="modal-footer">
                         <div class="col-md-12">
@@ -270,14 +262,9 @@
                       </button>
                   </div>
                   <div class="modal-body">
-                      <br>
-                      <div class="row">
-                          <div class="col-md-12">
                               <form class="form-horizontal">
                                 <h5 class="modal-title" id="myModalLabel">¿Desea eliminar días no Laborales?</h5>
                               </form>
-                          </div>
-                      </div>
                   </div>
                   <div class="modal-footer">
                       <div class="col-md-12">
