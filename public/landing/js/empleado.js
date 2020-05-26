@@ -3,6 +3,7 @@ $(document).ready(function() {
         allowedFileExtensions: ['jpg','jpeg','png'],
         uploadAsync: false,
         overwriteInitial: false,
+        showUpload:false,
         minFileCount:0,
         maxFileCount: 1,
         initialPreviewAsData: true ,// identify if you are sending preview data only and not the markup
@@ -362,10 +363,10 @@ function abrirnuevo(){
 $(document).ready(function() {
     $("#file2").fileinput({
         allowedFileExtensions: ['jpg', 'png', 'gif'],
-        uploadAsync: true,
+        uploadAsync: false,
         overwriteInitial: false,
         showCaption: true,
-        showUpload: true,
+        showUpload: false,
         showRemove:true,
         showPreview:true,
         validateInitialCount: true,
