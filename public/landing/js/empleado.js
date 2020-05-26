@@ -295,7 +295,7 @@ function datosPersonaA(method){
 function actualizarEmpleado(accion,objEmpleadoA){
 
     var formDataA = new FormData();
-    formDataA.append('file',$('#file').prop('files')[0]);
+    formDataA.append('file',$('#file2').prop('files')[0]);
     formDataA.append('objEmpleadoA',JSON.stringify(objEmpleadoA));
     $.ajax({
 
