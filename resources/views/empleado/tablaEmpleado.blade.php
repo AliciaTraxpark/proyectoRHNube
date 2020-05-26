@@ -3,6 +3,7 @@
         display: none;
     }
 </style>
+<input type="hidden" id="csrf_token" name="_token" value="{{ csrf_token() }}">
    <div class="row">
 
     <div class="col-md-6" id="filter_global">
@@ -107,6 +108,7 @@
         $('#v_cargo').val(data[0].cargo_id);
         $('#v_area').val(data[0].area_id);
         $('#v_centroc').val(data[0].centroC_id);
+        id_empleado = data[0].emple_id;
         $('#v_id').val(data[0].emple_id);
         $('#v_contrato').val(data[0].emple_tipoContrato);
         $('#v_nivel').val(data[0].emple_nivel);

@@ -364,6 +364,7 @@ function cargarFile2(){
         allowedFileExtensions: ['jpg', 'png', 'gif'],
         uploadAsync: false,
         overwriteInitial: false,
+        showUpload:false,
         showRemove:true,
         minFileCount:0,
         maxFileCount: 1,
@@ -381,7 +382,7 @@ function cargarFile2(){
             }]
         }),
         language: 'es',
-        deleteExtraData:{_token:$("csrf_toke").val()},
+        deleteExtraData:{_token:$("#csrf_token").val()},
         showBrowse: false,
         browseOnZoneClick: true,
         theme: "fa",
