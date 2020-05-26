@@ -387,6 +387,9 @@ $(document).ready(function() {
                 _token: "{{ csrf_token() }}"
             }
         },
+        slugCallback: function (filename) {
+            return filename.replace('(', '_').replace(']', '_');
+        },
         showBrowse: false,
         browseOnZoneClick: true,
         theme: "fa",

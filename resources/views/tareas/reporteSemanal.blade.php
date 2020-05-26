@@ -62,54 +62,72 @@
                                 <table id="tablaReporte" class="table dt-responsive nowrap">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
+                                            <th>Member</th>
+                                            <th>Mon</th>
+                                            <th>Tue</th>
+                                            <th>Wed</th>
+                                            <th>Thu</th>
+                                            <th>Fri</th>
+                                            <th>Sat</th>
+                                            <th>Weekly Total</th>
+                                            <th>Activity</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
+                                            <td>8:01</td>
+                                            <td>8:01</td>
+                                            <td>8:01</td>
+                                            <td>8:01</td>
+                                            <td>8:01</td>
+                                            <td>8:01</td>
+                                            <td>44:51</td>
+                                            <td>44%</td>
                                         </tr>
                                         <tr>
-                                            <td>Angelica Ramos</td>
-                                            <td>Chief Executive Officer (CEO)</td>
-                                            <td>London</td>
-                                            <td>47</td>
-                                            <td>2009/10/09</td>
-                                            <td>$1,200,000</td>
+                                          <td>Tiger Nixon</td>
+                                          <td>8:01</td>
+                                          <td>8:01</td>
+                                          <td>8:01</td>
+                                          <td>8:01</td>
+                                          <td>8:01</td>
+                                          <td>8:01</td>
+                                          <td>44:51</td>
+                                          <td>44%</td>
                                         </tr>
                                         <tr>
-                                            <td>Gavin Joyce</td>
-                                            <td>Developer</td>
-                                            <td>Edinburgh</td>
-                                            <td>42</td>
-                                            <td>2010/12/22</td>
-                                            <td>$92,575</td>
+                                          <td>Tiger Nixon</td>
+                                          <td>8:01</td>
+                                          <td>8:01</td>
+                                          <td>8:01</td>
+                                          <td>8:01</td>
+                                          <td>8:01</td>
+                                          <td>8:01</td>
+                                          <td>44:51</td>
+                                          <td>44%</td>
                                         </tr>
                                         <tr>
-                                            <td>Jennifer Chang</td>
-                                            <td>Regional Director</td>
-                                            <td>Singapore</td>
-                                            <td>28</td>
-                                            <td>2010/11/14</td>
-                                            <td>$357,650</td>
+                                          <td>Tiger Nixon</td>
+                                          <td>8:01</td>
+                                          <td>8:01</td>
+                                          <td>8:01</td>
+                                          <td>8:01</td>
+                                          <td>8:01</td>
+                                          <td>8:01</td>
+                                          <td>44:51</td>
+                                          <td>44%</td>
                                         </tr>
                                         <tr>
-                                            <td>Brenden Wagner</td>
-                                            <td>Software Engineer</td>
-                                            <td>San Francisco</td>
-                                            <td>28</td>
-                                            <td>2011/06/07</td>
-                                            <td>$206,850</td>
+                                          <td>Tiger Nixon</td>
+                                          <td>8:01</td>
+                                          <td>8:01</td>
+                                          <td>8:01</td>
+                                          <td>8:01</td>
+                                          <td>8:01</td>
+                                          <td>8:01</td>
+                                          <td>44:51</td>
+                                          <td>44%</td>
                                         </tr>
 
                                     </tbody>
