@@ -12,10 +12,10 @@ $(document).ready(function() {
         theme: "fa"
     });
 });
-$('#guardarArea').click(function(){
+function agregarArea(){
     objArea=datos("POST");
     enviarArea('',objArea);
-});
+};
 
 function datos(method){
     nuevoArea={

@@ -144,6 +144,9 @@
                                 </button>
                             </div>
                             <div class="modal-body">
+                              <form action="javascript:agregarArea()">
+
+
                                 {{ csrf_field() }}
                                 <div class="col-md-12">
                                   <label for="">Área</label>
@@ -152,8 +155,9 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="button" id="guardarArea" class="btn btn-primary">Guardar</button>
+                                <button type="submit" id="guardarArea" class="btn btn-primary">Guardar</button>
                             </div>
+                        </form>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
