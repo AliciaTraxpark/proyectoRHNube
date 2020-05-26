@@ -387,16 +387,4 @@ function cargarFile2(){
         theme: "fa",
         fileActionSettings:{"showDrag":false, 'showZoom':false},
     })
-    .on("filebeforedelete",function(){
-        var aborted = !window.confirm(
-            "¿Esta seguro que desea eliminar foto?"
-        );
-        if(aborted){
-            window.alert("File delection was aborted!");
-        }
-        return aborted;
-    })
-    .on("filedeleted",function(){
-        window.alert("File delection was successful!");
-    });
 }

@@ -216,6 +216,13 @@ class EmpleadoController extends Controller
         $empleado->emple_tipoContrato=$objEmpleado['contrato_v'];
         $empleado->emple_local=$objEmpleado['local_v'];
         $empleado->emple_nivel=$objEmpleado['nivel_v'];
+        if($request->hasfile('file')){
+            $file = $request->file('file');
+            $path = public_path() . '/fotosEmpleado';
+            $fileName = uniqid().$file->getClientOriginalName();
+            $file->move($path,$fileName);
+            $empleado->emple_foto=$fileName;
+        }
         $empleado->save();
 
         $idpersona = DB::table('empleado as e')

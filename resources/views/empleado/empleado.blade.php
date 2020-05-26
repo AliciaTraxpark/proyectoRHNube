@@ -710,6 +710,7 @@
     <script>
         var urlFoto = "";
         var hayFoto = false;
+        var id_empleado = '';
     </script>
 
 
