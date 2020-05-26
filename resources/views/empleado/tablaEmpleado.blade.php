@@ -31,7 +31,7 @@
         <td align="center"><input type="text" class="column_filter form-control" id="col5_filter"></td>
 </div>
   </div>
-<table id="tablaEmpleado" class="table nowrap" style="font-size: 12.5px">
+<table id="tablaEmpleado" class="table nowrap" style="font-size: 12.5px; width: 100%">
     <thead style="background: #566879;color: white;">
         <tr style="background: #f8f8f8">
             <th style="border-top: 1px solid #f8f8f8;"></th>

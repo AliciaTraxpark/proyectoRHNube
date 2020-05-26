@@ -169,6 +169,8 @@
                                 </button>
                             </div>
                             <div class="modal-body">
+                                <form action="javascript:agregarcargo()">
+                                    {{ csrf_field() }}
                                 <div class="col-md-12">
                                   <label for="">Cargo</label>
                                   <input type="text" class="form-control" id="textCargo" required>
@@ -178,7 +180,7 @@
                                 <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
                                 <button type="submit" class="btn btn-primary" id="guardarCargo">Guardar</button>
                             </div>
-                        </form>
+                             </form>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
@@ -192,6 +194,8 @@
                                 </button>
                             </div>
                             <div class="modal-body">
+                                <form action="javascript:agregarcentro()">
+                                    {{ csrf_field() }}
                                 <div class="col-md-12">
                                   <label for="">Centro Costo</label>
                                   <input type="text" class="form-control" id="textCentro" required>
@@ -199,9 +203,9 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary" id="guardarCentro">Guardar</button>
-                            </div>
-                        </form>
+                                <button type="submit" class="btn btn-primary" id="guardarCentro">Guardar</button>
+                               </div>
+                               </form>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
@@ -215,7 +219,8 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-
+                                <form action="javascript:agregarlocal()">
+                                    {{ csrf_field() }}
                                 <div class="col-md-12">
                                   <label for="">Local</label>
                                   <input type="text" class="form-control" name="textLocal" id="textLocal" required>
@@ -223,8 +228,9 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="button" id="guardarLocal" class="btn btn-primary">Guardar</button>
+                                <button type="submit" id="guardarLocal" class="btn btn-primary">Guardar</button>
                             </div>
+                              </form>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
@@ -238,7 +244,8 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-
+                                <form action="javascript:agregarnivel()">
+                                    {{ csrf_field() }}
                                 <div class="col-md-12">
                                   <label for="">Nivel</label>
                                   <input type="text" class="form-control" name="textNivel" id="textNivel" required>
@@ -246,8 +253,9 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="button" id="guardarNivel" class="btn btn-primary">Guardar</button>
+                                <button type="submit" id="guardarNivel" class="btn btn-primary">Guardar</button>
                             </div>
+                              </form>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
