@@ -260,7 +260,7 @@ class EmpleadoController extends Controller
         ->select('e.emple_foto')
         ->where('emple_id','=',$v_id)
         ->get();
-        unlink(public_path().'/fotoEmpleado'.$idFoto[0]->emple_foto);
+        unlink(public_path().'/fotosEmpleado/'.$idFoto[0]->emple_foto);
         $empleado->emple_foto="";
         $empleado->save();
     }

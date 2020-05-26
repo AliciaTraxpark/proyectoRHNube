@@ -363,11 +363,12 @@ $(document).ready(function() {
     $('#v_id').val();
     $("#file2").fileinput({
         allowedFileExtensions: ['jpg', 'png', 'gif'],
-        uploadAsync: false,
+        uploadAsync: true,
         overwriteInitial: false,
         showCaption: true,
         showUpload: true,
         showRemove:true,
+        showPreview:true,
         validateInitialCount: true,
         autoReplace: true,
         minFileCount:0,
@@ -376,17 +377,38 @@ $(document).ready(function() {
         initialPreview: ["<img  id=v_foto style='width:200px'>"] ,// identify if you are sending preview data only and not the markup
         initialPreviewConfig: [{
             width: "120px",
-            url: "/eliminarFoto/"+v_id,
-            showDelete: true
+            url: "/eliminarFoto/",
+            showDelete: true,
+            //key:v_id
         }],
         language: 'es',
-        uploadExtraData:{'_token:X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        uploadExtraData:function(){
+            return{
+                _token: "{{ csrf_token() }}"
+            }
+        },
         showBrowse: false,
         browseOnZoneClick: true,
         theme: "fa",
-        headers:{
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
         fileActionSettings:{"showDrag":false, 'showZoom':false},
     });
+    $("#file2").on("change", function(jqXHR) {
+        var abort = true;
+        if (confirm("Are you sure you want to delete this image?")) {
+            abort = false;
+            eliminarFoto();
+        }
+        return abort; // you can also send any data/object that you can receive on `filecustomerror` event
+    });
 });
+
+function eliminarFoto(){
+    var v_id = $('#v_id').val();
+    $.ajax({
+        url: "/eliminarFoto/"+v_id,
+        method:"POST",
+        headers:{
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    })
+}
