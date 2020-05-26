@@ -145,8 +145,6 @@
                             </div>
                             <div class="modal-body">
                               <form action="javascript:agregarArea()">
-
-
                                 {{ csrf_field() }}
                                 <div class="col-md-12">
                                   <label for="">Área</label>
