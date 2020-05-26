@@ -256,11 +256,7 @@ class EmpleadoController extends Controller
 
     public function eliminarFoto(Request $request,$v_id){
         $empleado= Empleado::findOrFail($v_id);
-        $idFoto= DB::table('empleado as e')
-        ->select('e.emple_foto')
-        ->where('emple_id','=',$v_id)
-        ->get();
-        unlink(public_path().'/fotoEmpleado'.$idFoto[0]->emple_foto);
+        unlink(public_path().'/fotoEmpleado'.$empleado[0]->emple_foto);
         $empleado->emple_foto="";
         $empleado->save();
     }
