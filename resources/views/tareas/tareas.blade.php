@@ -27,7 +27,7 @@
         border: 1px solid #d6d6d6 !important;
         padding-bottom: 5px;
     }
-   
+
 
 
 </style>
@@ -113,7 +113,7 @@
                                         </div>  <br>
                                         <div class="col-md-12 col-sm-6 border" style="padding-left: 0px;">
                                           <img src="{{asset('landing/images/captura.png')}}" height="79" >
-                                        &nbsp;  <label style="font-size: 12px" for="">9:00 am - 9:10 am</label>
+                                        &nbsp;  <label style="font-size: 12px" for="">9:10 am - 9:20 am</label>
                                          <div class="progress" style="background-color: #d4d4d4;">
                                             &nbsp;  <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
                                                 aria-valuemin="0" aria-valuemax="100">25%</div>
@@ -127,7 +127,7 @@
                                         </div>  <br>
                                         <div class="col-md-12 col-sm-6 border" style="padding-left: 0px;">
                                           <img src="{{asset('landing/images/captura.png')}}" height="79" >
-                                        &nbsp;  <label style="font-size: 12px" for="">9:00 am - 9:10 am</label>
+                                        &nbsp;  <label style="font-size: 12px" for="">9:20 am - 9:30 am</label>
                                          <div class="progress" style="background-color: #d4d4d4;">
                                             &nbsp;  <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
                                                 aria-valuemin="0" aria-valuemax="100">25%</div>
@@ -141,7 +141,7 @@
                                         </div>  <br>
                                         <div class="col-md-12 col-sm-6 border" style="padding-left: 0px;">
                                           <img src="{{asset('landing/images/captura.png')}}" height="79" >
-                                        &nbsp;  <label style="font-size: 12px" for="">9:00 am - 9:10 am</label>
+                                        &nbsp;  <label style="font-size: 12px" for="">9:30 am - 9:40 am</label>
                                          <div class="progress" style="background-color: #d4d4d4;">
                                             &nbsp;  <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
                                                 aria-valuemin="0" aria-valuemax="100">25%</div>
@@ -155,7 +155,7 @@
                                         </div>  <br>
                                         <div class="col-md-12 col-sm-6 border" style="padding-left: 0px;">
                                           <img src="{{asset('landing/images/captura.png')}}" height="79" >
-                                        &nbsp;  <label style="font-size: 12px" for="">9:00 am - 9:10 am</label>
+                                        &nbsp;  <label style="font-size: 12px" for="">9:40 am - 9:50 am</label>
                                          <div class="progress" style="background-color: #d4d4d4;">
                                             &nbsp;  <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
                                                 aria-valuemin="0" aria-valuemax="100">25%</div>
@@ -169,7 +169,7 @@
                                         </div>  <br>
                                         <div class="col-md-12 col-sm-6 border" style="padding-left: 0px;">
                                           <img src="{{asset('landing/images/captura.png')}}" height="79" >
-                                        &nbsp;  <label style="font-size: 12px" for="">9:00 am - 9:10 am</label>
+                                        &nbsp;  <label style="font-size: 12px" for="">9:50 am - 10:00 am</label>
                                          <div class="progress" style="background-color: #d4d4d4;">
                                             &nbsp;  <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
                                                 aria-valuemin="0" aria-valuemax="100">25%</div>

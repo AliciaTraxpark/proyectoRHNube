@@ -322,8 +322,9 @@ function actualizarEmpleado(accion,objEmpleadoA){
     });
 }
 ///ELIMINAR EMPLEADO
-$( '#eliminarE' ).click(function() {
-   var id=$('#v_id').val()
+
+   $('#confirmarE').click(function() {
+       var id=$('#v_id').val()
    $.ajax({
     url:"/empleado/eliminar",
     method:"POST",
@@ -334,7 +335,13 @@ $( '#eliminarE' ).click(function() {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     success:function(data){
-       alert('borrado');
+        $('#modalEliminar').modal('hide');
+        $.notify(" Empleado eliminado", {align:"right", verticalAlign:"top",type: "danger", icon:"bell"});
+        leertabla();
+        $('#form-ver').hide();
+        $('#form-registrar').show();
+
+
 
     },
     error:function(data,errorThrown){
@@ -342,10 +349,15 @@ $( '#eliminarE' ).click(function() {
 
     }
 
-});
+});  });
 
 
-  });
+//abrir nuevo form
+function abrirnuevo(){
+    $('#form-ver').hide();
+    $('#form-registrar').show();
+}
+
 
 $(document).ready(function() {
     $('#v_id').val();
