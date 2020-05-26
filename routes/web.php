@@ -92,3 +92,9 @@ Route::get('/tareas', function () {
 Route::get('/reporteSemanal', function () {
     return view('tareas/reporteSemanal');
 })->name('reporteSemanal');
+
+
+//probando excel
+Route::get('export', 'MyController@export')->name('export');
+Route::get('importExportView', 'MyController@importExportView');
+Route::post('import', 'MyController@import')->name('import');
