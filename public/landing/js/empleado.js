@@ -313,6 +313,7 @@ function actualizarEmpleado(accion,objEmpleadoA){
             $('#form-ver').hide();
             $('#form-registrar').show();
             $('#smartwizard').smartWizard("reset");
+            $('input[type="file"]').val("");
         },
         error:function(data,errorThrown){
             alert("Hay un error");
