@@ -357,6 +357,7 @@ function abrirnuevo(){
     $('#form-registrar').show();
 }
 
+//eliminar foto
 function cargarFile2(){
     $("#file2").fileinput({
         allowedFileExtensions: ['jpg', 'png', 'gif'],
