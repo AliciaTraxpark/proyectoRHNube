@@ -377,7 +377,7 @@ function cargarFile2(){
                 width: "120px",
                 url: "/eliminarFoto/"+id_empleado,
                 showDelete: true,
-                key:id_empelado
+                key:id_empleado
             }]
         }),
         language: 'es',
