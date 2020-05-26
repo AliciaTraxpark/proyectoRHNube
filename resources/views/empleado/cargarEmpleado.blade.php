@@ -64,7 +64,8 @@
                                         <th>Tipo de Doc.</th>
                                         <th>Nro de documento</th>
                                         <th>Nombres</th>
-                                        <th>Apellidos</th>
+                                        <th>Ap. Paterno</th>
+                                        <th>Ap. Materno</th>
                                         <th>Direccion</th>
                                         <th>Departamento</th>
                                         <th>Provincia</th>
@@ -72,6 +73,13 @@
                                         <th>Cargo</th>
                                         <th>Área</th>
                                         <th>Centro de costo</th>
+                                        <th>Fecha nacimiento</th>
+                                        <th>Ciudad Nac</th>
+                                        <th>Departamento Nac.</th>
+                                        <th>Provincia Nac.</th>
+                                        <th>Distrito Nac.</th>
+                                        <th>Sexo</th>
+
 
 
                                     </tr>
@@ -92,6 +100,37 @@
                                         <td>47</td>
                                         <td>2011/03/21</td>
                                         <td>2011/03/21</td>
+                                        <td>Hermione Butler</td>
+                                        <td>Regional Director</td>
+                                        <td>London</td>
+                                        <td>47</td>
+                                        <td>2011/03/21</td>
+                                        <td>Hermione Butler</td>
+                                        <td>Regional Director</td>
+
+                                    </tr>
+
+
+
+                                    <tr>
+                                        <td>Hermione Butler</td>
+                                        <td>Regional Director</td>
+                                        <td>London</td>
+                                        <td>47</td>
+                                        <td>2011/03/21</td>
+                                        <td>Hermione Butler</td>
+                                        <td>Regional Director</td>
+                                        <td>London</td>
+                                        <td>47</td>
+                                        <td>2011/03/21</td>
+                                        <td>2011/03/21</td>
+                                        <td>Hermione Butler</td>
+                                        <td>Regional Director</td>
+                                        <td>London</td>
+                                        <td>47</td>
+                                        <td>2011/03/21</td>
+                                        <td>Hermione Butler</td>
+                                        <td>Regional Director</td>
 
                                     </tr>
 
