@@ -262,14 +262,14 @@
                 <div class="col-md-6 col-xl-6" style="font-size: 13px" id="form-registrar">
                             <br>
                             <h4 class="header-title mt-0 "></i>Datos de empleado</h4>
-                            <div id="smartwizard" style="background: #f8f8f8; color:#3d3d3d;">
+                            <div class="setup-panel" id="smartwizard" style="background: #f8f8f8; color:#3d3d3d;">
                                 <ul style="background: #566879!important;" >
                                     <li><a href="#sw-default-step-1">Personales</a></li>
                                     <li><a href="#sw-default-step-2">Empresarial</a></li>
                                     <li><a href="#sw-default-step-3">Foto</a></li>
                                 </ul>
                                 <div class="p-3" >
-                                    <div id="sw-default-step-1">
+                                    <div id="sw-default-step-1" class="setup-content">
                                         <div class="row">
                                             <div class="col-4">
                                                 <div class="form-group">
@@ -383,7 +383,7 @@
                                             </div>
                                         </div> <!-- end row -->
                                     </div>
-                                    <div id="sw-default-step-2">
+                                    <div id="sw-default-step-2" class="setup-content">
                                         <div class="row">
                                             <div class="col-4">
                                                 <div class="form-group">
@@ -449,7 +449,7 @@
                                         </div> <!-- end row -->
 
                                     </div>
-                                    <div id="sw-default-step-3">
+                                    <div id="sw-default-step-3" class="setup-content">
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="form-group">
@@ -593,7 +593,7 @@
                                         <div class="form-group">
                                             <label class="normal" for="">Genero</label>
                                             <label class="custom-control custom-radio">
-                                                <input type="radio" name="v_tipo" id="v_tipo" value="Femenino" >
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Femenino" disabled >
                                                 Femenino
                                               </label>
                                         </div>
@@ -602,7 +602,7 @@
                                         <div class="form-group">
                                             <label class="normal" for=""><br></label>
                                             <label class="custom-control custom-radio">
-                                                <input type="radio" name="v_tipo" id="v_tipo" value="Masculino" >
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Masculino" disabled>
                                                 Masculino
                                               </label>
                                         </div>
@@ -611,7 +611,7 @@
                                         <div class="form-group">
                                             <label class="normal" for=""><br></label>
                                             <label class="custom-control custom-radio">
-                                                <input type="radio" name="v_tipo" id="v_tipo" value="Personalizado" >
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Personalizado" disabled >
                                                 Personalizado
                                               </label>
                                         </div>
