@@ -14,4 +14,13 @@ class UsersExport implements FromCollection
     {
         return User::all();
     }
+    public function headings(): array
+    {
+        return [
+            '#',
+            'Id',
+            'Nombre',
+            'Email',
+        ];
+    }
 }
