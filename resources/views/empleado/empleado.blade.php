@@ -593,7 +593,7 @@
                                         <div class="form-group">
                                             <label class="normal" for="">Genero</label>
                                             <label class="custom-control custom-radio">
-                                                <input type="radio" name="v_tipo" id="v_tipo" value="Femenino" >
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Femenino" disabled >
                                                 Femenino
                                               </label>
                                         </div>
@@ -602,7 +602,7 @@
                                         <div class="form-group">
                                             <label class="normal" for=""><br></label>
                                             <label class="custom-control custom-radio">
-                                                <input type="radio" name="v_tipo" id="v_tipo" value="Masculino" >
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Masculino" disabled>
                                                 Masculino
                                               </label>
                                         </div>
@@ -611,7 +611,7 @@
                                         <div class="form-group">
                                             <label class="normal" for=""><br></label>
                                             <label class="custom-control custom-radio">
-                                                <input type="radio" name="v_tipo" id="v_tipo" value="Personalizado" >
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Personalizado" disabled >
                                                 Personalizado
                                               </label>
                                         </div>
