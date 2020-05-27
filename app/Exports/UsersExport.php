@@ -28,13 +28,4 @@ class UsersExport implements FromCollection,WithHeadings
             'fdf',
         ];
     }
-    public function headings(): array
-    {
-        return [
-            '#',
-            'Id',
-            'Nombre',
-            'Email',
-        ];
-    }
 }
