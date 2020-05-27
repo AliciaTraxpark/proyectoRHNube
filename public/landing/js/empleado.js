@@ -40,7 +40,13 @@ function enviarArea(accion,objArea){
                 text: data.area_descripcion,
                 selected: true
                }));
+               $('#v_area').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                value: data.area_id,
+                text: data.area_descripcion,
+                selected: true
+               }));
              $('#area').val(data.area_id).trigger("change"); //lo selecciona
+             $('#v_area').val(data.area_id).trigger("change");
              $('#textArea').val('');
             $('#areamodal').modal('toggle');
             $.notify("Área registrada", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
@@ -51,10 +57,10 @@ function enviarArea(accion,objArea){
 }
 
 ///CARGO
-$('#guardarCargo').click(function(){
+function agregarcargo(){
     objCargo=datosCargo("POST");
     enviarCargo('',objCargo);
-});
+};
 
 function datosCargo(method){
     nuevoCargo={
@@ -78,7 +84,13 @@ function enviarCargo(accion,objCargo){
                 text: data.cargo_descripcion,
                 selected: true
                }));
+               $('#v_cargo').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                value: data.cargo_id,
+                text: data.cargo_descripcion,
+                selected: true
+               }));
             $('#cargo').val(data.cargo_id).trigger("change"); //lo selecciona
+            $('#v_cargo').val(data.cargo_id).trigger("change"); //lo selecciona
             $('#textCargo').val('');
             $('#cargomodal').modal('toggle');
             $.notify("Cargo registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
@@ -88,10 +100,10 @@ function enviarCargo(accion,objCargo){
 }
 
 //centro costo
-$('#guardarCentro').click(function(){
+function agregarcentro(){
     objCentroC=datosCentro("POST");
     enviarCentro('',objCentroC);
-});
+};
 
 function datosCentro(method){
     nuevoCentro={
@@ -115,7 +127,13 @@ function enviarCentro(accion,objCentroC){
                 text: data.centroC_descripcion,
                 selected: true
                }));
+               $('#v_centroc').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                value: data.centroC_id,
+                text: data.centroC_descripcion,
+                selected: true
+               }));
             $('#centroc').val(data.centroC_id).trigger("change"); //lo selecciona
+            $('#v_centroc').val(data.centroC_id).trigger("change"); //lo selecciona
             $('#textCentro').val('');
             $('#centrocmodal').modal('toggle');
             $.notify("Centro de costo registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
@@ -124,10 +142,10 @@ function enviarCentro(accion,objCentroC){
     });
 }
 //LOCAL
-$('#guardarLocal').click(function(){
+function agregarlocal(){
     objLocal=datosLocal("POST");
     enviarLocal('',objLocal);
-});
+};
 
 function datosLocal(method){
     nuevoLocal={
@@ -151,7 +169,13 @@ function enviarLocal(accion,objLocal){
                 text: data.local_descripcion,
                 selected: true
                }));
+               $('#v_local').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                value: data.local_id,
+                text: data.local_descripcion,
+                selected: true
+               }));
             $('#local').val(data.local_id).trigger("change"); //lo selecciona
+            $('#v_local').val(data.local_id).trigger("change"); //lo selecciona
             $('#textLocal').val('');
             $('#localmodal').modal('toggle');
             $.notify("local registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
@@ -161,10 +185,10 @@ function enviarLocal(accion,objLocal){
     });
 }
 //NIVEL
-$('#guardarNivel').click(function(){
+function agregarnivel(){
     objNivel=datosNivel("POST");
     enviarNivel('',objNivel);
-});
+};
 
 function datosNivel(method){
     nuevoNivel={
@@ -188,7 +212,13 @@ function enviarNivel(accion,objNivel){
                 text: data.nivel_descripcion,
                 selected: true
                }));
+               $('#v_nivel').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                value: data.nivel_id,
+                text: data.nivel_descripcion,
+                selected: true
+               }));
             $('#nivel').val(data.nivel_id).trigger("change"); //lo selecciona
+            $('#v_nivel').val(data.nivel_id).trigger("change"); //lo selecciona
             $('#textNivel').val('');
             $('#nivelmodal').modal('toggle');
             $.notify("nivel registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
@@ -355,6 +385,7 @@ function actualizarEmpleado(accion,objEmpleadoA){
 //abrir nuevo form
 function abrirnuevo(){
     $('#form-ver').hide();
+    $('#tablaEmpleado tbody tr').removeClass('selected');
     $('#form-registrar').show();
 }
 
@@ -369,7 +400,7 @@ function cargarFile2(){
         minFileCount:0,
         maxFileCount: 1,
         ...(hayFoto &&{
-            initialPreview: 
+            initialPreview:
             [
                 "<img  id=v_foto src='{{asset('/fotosEmpleado')}}/'"+
                 urlFoto + "'style='width:200px'>"

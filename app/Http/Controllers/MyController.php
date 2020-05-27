@@ -31,7 +31,7 @@ class MyController extends Controller
     public function import()
     {
         $import =new  UsersImport();//del userimpor
-        Excel::import(new UsersImport,request()->file('file'));
+        Excel::import($import,request()->file('file'));
 
         return view('import', ['numRows'=>$import->getRowCount()]);
     }
