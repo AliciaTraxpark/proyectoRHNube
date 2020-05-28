@@ -12,6 +12,12 @@ class MyController extends Controller
      /**
     * @return \Illuminate\Support\Collection
     */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function importExportView()
     {
        return view('import');

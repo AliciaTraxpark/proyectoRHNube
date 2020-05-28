@@ -19,13 +19,8 @@ class UsersExport implements FromCollection,WithHeadings
     public function headings(): array
     {
         return [
-            '#',
-            'User',
-            'Date',
-            'd',
-            'f',
-            'ff',
-            'fdf',
+            ['First row', 'First row'],
+           ['Second row', 'Second row'],
         ];
     }
 }

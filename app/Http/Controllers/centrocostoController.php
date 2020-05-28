@@ -13,6 +13,12 @@ class centrocostoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function store(Request $request){
         $centro_costo=new centro_costo();
         $centro_costo->centroC_descripcion=$request->get('centroC_descripcion');

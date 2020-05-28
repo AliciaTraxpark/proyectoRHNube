@@ -88,10 +88,10 @@ Route::post('/registrar/nivel','nivelController@store');
 //TAREAS
 Route::get('/tareas', function () {
     return view('tareas/tareas');
-})->name('tareas');
+})->name('tareas')->middleware('auth');
 Route::get('/reporteSemanal', function () {
     return view('tareas/reporteSemanal');
-})->name('reporteSemanal');
+})->name('reporteSemanal')->middleware('auth');
 
 
 //probando excel
