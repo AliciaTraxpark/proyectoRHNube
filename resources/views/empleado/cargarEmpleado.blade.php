@@ -56,6 +56,27 @@
             <div class="row " >
                 <div class="col-xl-12">
                     <div class="card" style="background:#f7f6f6;">
+                        @if ( $errors->any() )
+
+                        <div class="alert alert-danger">
+                            @foreach( $errors->all() as $error )<li>{{ $error }}</li>@endforeach
+                        </div>
+                    @endif
+
+                    @if(isset($numRows))
+                        <div class="alert alert-sucess">
+                            Se importaron {{$numRows}} registros.
+                        </div>
+                    @endif
+                        <div class="card-body">
+                            <form action="{{ route('importEmpleado') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <input type="file" name="file" class="form-control">
+                                <br>
+                                <button class="btn btn-success">Import User Data</button>
+
+                            </form>
+                        </div>
                         <div class="card-body" style="padding-top: 20px;color: #1b1b1b;">
                             <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                             <table id="basic-datatable1" class="table  nowrap">

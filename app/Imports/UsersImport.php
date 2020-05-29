@@ -4,12 +4,15 @@ namespace App\Imports;
 
 use App\User;
 use App\persona;
+use App\empleado;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
+use Maatwebsite\Excel\Concerns\ToCollection;
 
 
-class UsersImport implements ToModel,WithHeadingRow, WithValidation
+class UsersImport implements ToCollection,WithHeadingRow, WithValidation
 {   private $numRows = 0;
 
     /**
@@ -17,23 +20,28 @@ class UsersImport implements ToModel,WithHeadingRow, WithValidation
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
-    public function model(array $row)
+    public function collection(Collection $rows)
+
     {   //++$this->numRows; puede servir para comparar cuantos elemtos se guardaron
 
-        if (!isset($row['nombres'])) {
-            return null;
-        }
- ++$this->numRows;
+        foreach ($rows as $row)
+        {
 
-        return new persona([
-
-            //importante
-
+        if($row->filter()->isNotEmpty()){
+            ++$this->numRows;
+            $personaId =persona::create([
             'perso_nombre'     => $row['nombres'] ,
             'perso_apPaterno'  => $row['apellido_paterno']  ,
-          
+
             //
         ]);
+        empleado::create([
+            'emple_persona'         => $personaId->perso_id,
+            'emple_nDoc'           =>('12345678'),
+
+            //
+        ]);
+         }
 
        /*  return new User([
 
@@ -42,6 +50,7 @@ class UsersImport implements ToModel,WithHeadingRow, WithValidation
             'password' =>('123456'),
             //
         ]); */
+        }
     }
     public function rules(): array
     {

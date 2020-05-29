@@ -99,6 +99,8 @@ Route::get('/export', 'MyController@export')->name('export');
 Route::get('importExportView', 'MyController@importExportView');
 Route::post('import', 'MyController@import')->name('import');
 
+//EXCEL EMPLEADO
+Route::post('importEmpleado', 'excelEmpleadoController@import')->name('importEmpleado');
 //PROYECTO
 Route::get('/proyecto','ProyectoController@index' );
 Route::get('/proyecto/empleado','ProyectoController@cargarEmpleado');
