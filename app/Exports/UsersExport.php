@@ -47,8 +47,6 @@ class UsersExport implements FromCollection,WithHeadings,ShouldAutoSize,WithEven
 
                 $departamentos=ubigeo_peru_departments::all();
 
-                $opcionesDepartamento = "";
-
                 $drop_column = 'B';
                 //getHighestRow();
 
@@ -59,7 +57,10 @@ class UsersExport implements FromCollection,WithHeadings,ShouldAutoSize,WithEven
                 $event->sheet->getDelegate()->getStyle('A1');
                 $event->sheet->getDelegate()->setTitle("Departamento");
 
-                $validation = $event->sheet->getDelegate()->getCell("{$drop_column}11")->getDataValidation();
+                $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+
+                //$validation = $event->sheet->getDelegate()->getCell("{$drop_column}11")->getDataValidation();
+                $validation = $spreadsheet->getActiveSheet()->getCell("{$drop_column}11")->getDataValidation();
                 $validation->setType(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::TYPE_LIST);
                 $validation->setErrorStyle(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::STYLE_INFORMATION);
                 $validation->setAllowBlank(false);
