@@ -25,12 +25,24 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation
         {
             if($row->filter()->isNotEmpty()){
 
+                //departamento
+                $dep = explode(" ", $row['departamento']);
+                if($row['departamento']!=null){
+                    $row['iddep'] = $dep[0]; } else{ $row['iddep']=null; }
+
+
+                //provincia
+                $provi = explode(" ", $row['provincia']);
+                if($row['provincia']!=null){
+                    $row['idprov'] = $provi[0]; } else{ $row['idprov']=null; }
+
+
+               //distrito
                 $idD = ubigeo_peru_districts::where("name", "like", "%".$row['distrito']."%")->first();
                 if($row['distrito']!=null){
                 $row['id'] = $idD->id;} else{$row['id'] = null; }
 
-                if($row['provincia']==null){
-                    $row['provincia']=='1'; }
+
 
                 ++$this->numRows;
                 $personaId =persona::create([
@@ -56,11 +68,11 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation
 
                     'emple_nDoc'       =>$row['numero_documento']
                     ,
-                    $dep = explode(" ", $row['departamento']),
-                    'emple_departamento'=> $dep[0],
+                   
+                    'emple_departamento'=> $row['iddep'],
 
-                   $provi = explode(" ", $row['provincia']),
-                    'emple_provincia'  => $provi[0],
+
+                    'emple_provincia'  => $row['idprov'],
 
 
                     'emple_distrito'   =>  $row['id'],
