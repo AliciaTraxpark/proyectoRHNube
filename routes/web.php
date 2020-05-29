@@ -100,6 +100,5 @@ Route::get('importExportView', 'MyController@importExportView');
 Route::post('import', 'MyController@import')->name('import');
 
 //PROYECTO
-Route::get('/proyecto', function () {
-    return view('Proyecto/proyecto');
-})->name('proyecto')->middleware('auth');
+Route::get('/proyecto','ProyectoController@index' );
+Route::get('/proyecto/empleado','ProyectoController@cargarEmpleado');

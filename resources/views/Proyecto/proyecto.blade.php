@@ -11,6 +11,7 @@
 @section('breadcrumb')
 <div class="row page-title">
     <div class="col-md-12">
+        <h4 class="mb-1 mt-0">Proyecto - Empleado</h4>
     </div>
 </div>
 @endsection
@@ -18,7 +19,6 @@
 @section('content')
 <div class="row">
     <div class="col-xl-4">
-        <br><br>
         <div class="card">
             <div class="card-headers text-center">
                 <br>
@@ -37,21 +37,23 @@
     </div>
     <div class="col-xl-8">
         <div class="inbox-rightbar">
-            <div class="mt-2">
-                <h5 class="mt-3 mb-2 font-size-16">Empleados</h5>
+            <div class="">
                 <ul class="message-list">
+                    @foreach ($empleado as  $empleados)
                     <li class="unread">
                         <div class="col-mail col-mail-1">
+                            
                             <div class="checkbox-wrapper-mail">
                                 <input type="checkbox" id="chk1">
                                 <label for="chk1" class="toggle"></label>
                             </div>
-                            <a class="title">Lucas Kriebel (via Twitter)</a>
+                                <a class="title">{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</a>
                         </div>
-                        <div class="col-mail col-mail-2">
-                            <a class="subject">Lucas Kriebel (@LucasKriebel)</a>
+                        <div class="col-mail col-mail-1">
+                            <a class="subject badge badge-success">Proyecto 1</a>
                         </div>
                     </li>
+                    @endforeach
                 </ul>
             </div>
         </div>
