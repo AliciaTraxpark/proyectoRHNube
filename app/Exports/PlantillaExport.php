@@ -65,6 +65,8 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
                 $drop_columnP = 'H';
                 $drop_columnD = 'A';
                 $drop_columnC = 'R';
+                $drop_columnN = 'N';
+                $drop_columnPN = 'O';
                 //getHighestRow();
 
                 $row = 1;
@@ -148,6 +150,8 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
                     $event->sheet->getCell("{$drop_columnD}{$i}")->setDataValidation(clone $validationD);
                     $event->sheet->getCell("{$drop_column}{$i}")->setDataValidation(clone $validation);
                     $event->sheet->getCell("{$drop_columnP}{$i}")->setDataValidation(clone $validationP);
+                    $event->sheet->getCell("{$drop_columnN}{$i}")->setDataValidation(clone $validation);
+                    $event->sheet->getCell("{$drop_columnPN}{$i}")->setDataValidation(clone $validationP);
                     $event->sheet->getCell("{$drop_columnC}{$i}")->setDataValidation(clone $validationC);
                 }
             }
