@@ -27,13 +27,8 @@
             <div class="card-body">
                 <div class="row justify-content-sm-between">
                     <div class="col-lg-6 mb-2 mb-lg-0">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox"
-                                class="custom-control-input" id="task1">
-                            <label class="custom-control-label"
-                                for="task1">
-                               Proyecto 1
-                            </label>
+                        <div class="mail-list mt-1">
+                            <a href="" class="list-group-item border-0">Proyecto 1</a>
                         </div> <!-- end checkbox -->
                     </div> <!-- end col -->
                 </div>
