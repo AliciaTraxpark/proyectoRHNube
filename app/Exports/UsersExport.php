@@ -54,7 +54,7 @@ class UsersExport implements FromCollection,WithHeadings,ShouldAutoSize,WithEven
 
                 $row = 1;
                 foreach($departamentos as $departamento){
-                    $event->sheet->getDelegate()->setCellValue('F'.$row,$departamento->name);
+                    $event->sheet->getDelegate()->setCellValue('F'.$row++,$departamento->name);
                 }
                 $event->sheet->getDelegate()->getStyle('A1');
                 $event->sheet->getDelegate()->setTitle("Departamento");
@@ -70,7 +70,7 @@ class UsersExport implements FromCollection,WithHeadings,ShouldAutoSize,WithEven
                 $validation->setError('Value is not in list.');
                 $validation->setPromptTitle('Pick from list');
                 $validation->setPrompt('Please value from');
-                $validation->setFormula1('Departamento!$F$1:$F$15');
+                $validation->setFormula1('Departamento!$F$1:$F$25');
 
                 for ($i = 11; $i <= 15; $i++) {
                     $event->sheet->getCell("{$drop_column}{$i}")->setDataValidation(clone $validation);
