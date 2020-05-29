@@ -3,6 +3,7 @@ $(document).ready(function() {
         allowedFileExtensions: ['jpg','jpeg','png'],
         uploadAsync: false,
         overwriteInitial: false,
+        validateInitialCount: true,
         showUpload:false,
         minFileCount:0,
         maxFileCount: 1,
@@ -280,7 +281,8 @@ function enviarEmpleado(accion,objEmpleado){
         success:function(msg){
             $('#smartwizard').smartWizard("reset");
             $('input[type="text"]').val("");
-            //$('input[type="radio"]').val("");
+            $('input:radio[name=tipo]:checked').prop('checked',false);
+            $('input[type="date"]').val("");
             $('input[type="file"]').val("");
             $('select').val("");
             leertabla();
@@ -386,6 +388,12 @@ function actualizarEmpleado(accion,objEmpleadoA){
 function abrirnuevo(){
     $('#form-ver').hide();
     $('#tablaEmpleado tbody tr').removeClass('selected');
+    $('#form-registrar').smartWizard("reset");
+    $('input[type="text"]').val("");
+    $('input:radio[name=tipo]:checked').prop('checked',false);
+    $('input[type="date"]').val("");
+    $('input[type="file"]').val("");
+    $('select').val("");
     $('#form-registrar').show();
 }
 
@@ -396,6 +404,7 @@ function cargarFile2(){
         uploadAsync: false,
         overwriteInitial: false,
         showUpload:false,
+        validateInitialCount: true,
         showRemove:true,
         minFileCount:0,
         maxFileCount: 1,

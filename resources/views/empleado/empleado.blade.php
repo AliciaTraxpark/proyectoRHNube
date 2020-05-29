@@ -388,7 +388,7 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Cargo <a  href="#cargomodal" data-toggle="modal" data-target="#cargomodal"><i class="uil uil-plus"></i></a></label>
-                                                    <select  class="form-control" name="cargo" id="cargo" required>
+                                                    <select  class="form-control" name="cargo" id="cargo">
                                                         <option value="">Seleccionar</option>
 
                                                           @foreach ($cargo as $cargos)
@@ -409,7 +409,7 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Área <a href="#areamodal" data-toggle="modal" data-target="#areamodal"><i class="uil uil-plus"></i></a></label>
-                                                    <select  class="form-control" name="area" id="area" required>
+                                                    <select  class="form-control" name="area" id="area">
                                                         <option value="">Seleccionar</option>
                                                         @foreach ($area as $areas)
                                                         <option class="" value="{{$areas->area_id}}">{{$areas->area_descripcion}}</option>
@@ -429,7 +429,7 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Centro Costo <a  href="#centrocmodal" data-toggle="modal" data-target="#centrocmodal"><i class="uil uil-plus"></i></a></label>
-                                                    <select  class="form-control" name="centroc" id="centroc" required>
+                                                    <select  class="form-control" name="centroc" id="centroc">
                                                         <option value="">Seleccionar</option>
                                                         @foreach ($centro_costo as $centro_costos)
                                                         <option class="" value="{{$centro_costos->centroC_id}}">{{$centro_costos->centroC_descripcion}}</option>
