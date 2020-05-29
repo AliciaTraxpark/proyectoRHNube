@@ -14,7 +14,7 @@ use Maatwebsite\Excel\Concerns\NumberFormat;
 use Maatwebsite\Excel\Concerns\WithColumnFormating;
 use App\ubigeo_peru_departments;
 
-class PlantillaExport implements FromCollection,WithHeadings,ShouldAutoSize,WithEvents
+class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -53,7 +53,7 @@ class PlantillaExport implements FromCollection,WithHeadings,ShouldAutoSize,With
 
                 $row = 1;
                 foreach($departamentos as $departamento){
-                    $event->sheet->getDelegate()->setCellValue('Z'.$row++,$departamento->id."".$departamento->name);
+                    $event->sheet->getDelegate()->setCellValue('GA'.$row++,$departamento->id."".$departamento->name);
                 }
                 $event->sheet->getDelegate()->setTitle("Departamento");
 
@@ -68,7 +68,7 @@ class PlantillaExport implements FromCollection,WithHeadings,ShouldAutoSize,With
                 $validation->setError('Value is not in list.');
                 $validation->setPromptTitle('Pick from list');
                 $validation->setPrompt('Please value from');
-                $validation->setFormula1('Departamento!$Z$1:$Z$25');
+                $validation->setFormula1('Departamento!$GA$1:$GA$25');
 
                 for ($i = 2; $i <= $this->total; $i++) {
                     $event->sheet->getCell("{$drop_column}{$i}")->setDataValidation(clone $validation);
