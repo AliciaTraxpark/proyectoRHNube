@@ -14,25 +14,26 @@ use Maatwebsite\Excel\Concerns\NumberFormat;
 use Maatwebsite\Excel\Concerns\WithColumnFormating;
 use App\ubigeo_peru_departments;
 
-class UsersExport implements FromCollection,WithHeadings,ShouldAutoSize,WithEvents
+class PlantillaExport implements FromCollection,WithHeadings,ShouldAutoSize,WithEvents
 {
     /**
     * @return \Illuminate\Support\Collection
     */
    
-    
+    public function __construct($total)
+    {
+        $this->total = $total;
+    }
 
     public function headings(): array
     {
         return[
-            'Date','Task','Time'
+            'tipo_documento','numero_documento','nombres','apellido_paterno',
+            'apellido_materno','direccion','departamento','provincia','distrito',
+            'cargo','area','centro_costo','fecha_nacimiento','departamento_nacimiento',
+            'provincia_nacimiento','distrito_nacimiento','sexo','tipo_contrato','local'
+            ,'nivel'
         ];
-    }
-
-    public function collection()
-    {
-        return User::all();
-
     }
 
     public function registerEvents(): array
@@ -47,14 +48,13 @@ class UsersExport implements FromCollection,WithHeadings,ShouldAutoSize,WithEven
 
                 $departamentos=ubigeo_peru_departments::all();
 
-                $drop_column = 'B';
+                $drop_column = 'G';
                 //getHighestRow();
 
                 $row = 1;
                 foreach($departamentos as $departamento){
-                    $event->sheet->getDelegate()->setCellValue('F'.$row++,$departamento->name);
+                    $event->sheet->getDelegate()->setCellValue('Z'.$row++,$departamento->id."".$departamento->name);
                 }
-                $event->sheet->getDelegate()->getStyle('A1');
                 $event->sheet->getDelegate()->setTitle("Departamento");
 
                 $validation = $event->sheet->getDelegate()->getCell("{$drop_column}11")->getDataValidation();
@@ -68,9 +68,9 @@ class UsersExport implements FromCollection,WithHeadings,ShouldAutoSize,WithEven
                 $validation->setError('Value is not in list.');
                 $validation->setPromptTitle('Pick from list');
                 $validation->setPrompt('Please value from');
-                $validation->setFormula1('Departamento!$F$1:$F$25');
+                $validation->setFormula1('Departamento!$Z$1:$Z$25');
 
-                for ($i = 11; $i <= 15; $i++) {
+                for ($i = 2; $i <= $this->total; $i++) {
                     $event->sheet->getCell("{$drop_column}{$i}")->setDataValidation(clone $validation);
                 }
             }

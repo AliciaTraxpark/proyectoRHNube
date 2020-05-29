@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Imports\UsersImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
-use App\Exports\UsersExport;
+use App\Exports\PlantillaExport;
 
 class MyController extends Controller
 {
@@ -28,7 +28,7 @@ class MyController extends Controller
     */
     public function export()
     {
-        return Excel::download(new UsersExport, 'Empleados.xlsx');
+        return Excel::download(new PlantillaExport(20), 'Empleados.xlsx');
     }
 
     /**
