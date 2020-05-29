@@ -4,6 +4,7 @@ namespace App\Imports;
 
 use App\empleado;
 use App\persona;
+use App\ubigeo_peru_districts;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -23,17 +24,76 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation
         foreach ($rows as $row)
         {
             if($row->filter()->isNotEmpty()){
+
+                $idD = ubigeo_peru_districts::where("name", "like", "%".$row['distrito']."%")->first();
+                if($row['distrito']!=null){
+                $row['id'] = $idD->id;} else{$row['id'] = null; }
+
+                if($row['provincia']==null){
+                    $row['provincia']=='1'; }
+
                 ++$this->numRows;
                 $personaId =persona::create([
+
                     'perso_nombre'     => $row['nombres'] ,
+                    'perso_apPaterno'  => $row['apellido_paterno'] ,
+                    'perso_apMaterno'  => $row['apellido_materno'] ,
+                    'perso_direccion'  => $row['direccion'] ,
+                    'perso_fechaNacimiento' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['fecha_nacimiento']),
+                    'perso_sexo'  => $row['sexo'] ,
                    /*  $porciones = explode(" ", $row['apellido_paterno']),
                     'perso_apPaterno'  => $porciones[0]  , */
 
                     //
                 ]);
+
+
                 empleado::create([
-                    'emple_persona'         => $personaId->perso_id,
-                    'emple_nDoc'           =>('12345678'),
+                    'emple_persona'    => $personaId->perso_id,
+
+                    $tipoDoc = explode(" ", $row['tipo_documento']),
+                    'emple_tipoDoc'    => $tipoDoc[0],
+
+                    'emple_nDoc'       =>$row['numero_documento']
+                    ,
+                    $dep = explode(" ", $row['departamento']),
+                    'emple_departamento'=> $dep[0],
+
+                   $provi = explode(" ", $row['provincia']),
+                    'emple_provincia'  => $provi[0],
+
+
+                    'emple_distrito'   =>  $row['id'],
+
+                   /*  $cargo = explode(" ", $row['cargo']),
+                    'emple_cargo'      => $cargo[0],
+
+                    $area = explode(" ", $row['area']),
+                    'emple_area'       => $area[0],
+
+                    $ceCosto = explode(" ", $row['centro_costo']),
+                    'emple_centCosto'  => $ceCosto[0],
+
+                    $depN = explode(" ", $row['departamento_nacimiento']),
+                    'emple_departamentoN' => $depN[0],
+
+                    $provN = explode(" ", $row['provincia_nacimiento']),
+                    'emple_provinciaN'  => $provN[0],
+
+                    $distN = explode(" ", $row['distrito_nacimiento']),
+                    'emple_distritoN'   => $distN[0],
+
+                    $tipoC = explode(" ", $row['tipo_contrato']),
+                    'emple_tipoContrato' => $tipoC[0],
+
+                    $local = explode(" ", $row['local']),
+                    'emple_local' => $local[0],
+
+                    $nivel = explode(" ", $row['nivel']),
+                    'emple_nivel'  => $nivel[0],
+ */
+
+
 
                     //
                 ]);
