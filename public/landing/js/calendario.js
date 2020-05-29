@@ -44,7 +44,7 @@ function calendario() {
         header:{
           left:'prev,next today',
           center:'title',
-          right:'dayGridMonth'
+          right:''
         },
         footer:{
           left:'Descanso',
@@ -341,7 +341,7 @@ $( document ).ready(function() {
          header:{
            left:'prev,next today',
            center:'title',
-           right:'dayGridMonth'
+           right:''
          },
          footer:{
            left:'Descanso',
