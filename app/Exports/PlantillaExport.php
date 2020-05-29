@@ -2,7 +2,6 @@
 
 namespace App\Exports;
 
-use App\tipo_contrato;
 use App\User;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -17,6 +16,7 @@ use App\ubigeo_peru_departments;
 use App\ubigeo_peru_provinces;
 use App\ubigeo_peru_districts;
 use App\tipo_documento;
+use App\tipo_contrato;
 
 class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
 {
@@ -59,15 +59,18 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
                 $departamentos=ubigeo_peru_departments::all();
                 $provincias = ubigeo_peru_provinces::all();
                 $tipoDocumento = tipo_documento::all();
+                $tipoContrato = tipo_contrato::all();
 
                 $drop_column = 'G';
                 $drop_columnP = 'H';
                 $drop_columnD = 'A';
+                $drop_columnC = 'R';
                 //getHighestRow();
 
                 $row = 1;
                 $rowP = 1;
                 $rowD = 1;
+                $rowC = 1;
 
                 //TIPODOCUMENTO
                 foreach($tipoDocumento as $tipoDocumentos){
@@ -123,10 +126,29 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
                 $validationP->setPrompt('Please value from');
                 $validationP->setFormula1('Empleado!$GA$1:$GA$25');
 
+                //TIPO CONTRATO
+                foreach($tipoContrato as $tipoContratos){
+                    $event->sheet->getDelegate()->setCellValue('DA'.$rowC++,$tipoContratos->contrato_id ." ".$tipoContratos->contrato_descripcion);
+                }
+
+                $validationC = $event->sheet->getDelegate()->getCell("{$drop_columnC}2")->getDataValidation();
+                $validationC->setType(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::TYPE_LIST);
+                $validationC->setErrorStyle(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::STYLE_INFORMATION);
+                $validationC->setAllowBlank(false);
+                $validationC->setShowInputMessage(true);
+                $validationC->setShowErrorMessage(true);
+                $validationC->setShowDropDown(true);
+                $validationC->setErrorTitle('Input Error');
+                $validationC->setError('Value is not in list.');
+                $validationC->setPromptTitle('Pick from list');
+                $validationC->setPrompt('Please value from');
+                $validationC->setFormula1('Empleado!$DA$1:$DA$2');
+
                 for ($i = 2; $i <= $this->total; $i++) {
                     $event->sheet->getCell("{$drop_columnD}{$i}")->setDataValidation(clone $validationD);
                     $event->sheet->getCell("{$drop_column}{$i}")->setDataValidation(clone $validation);
                     $event->sheet->getCell("{$drop_columnP}{$i}")->setDataValidation(clone $validationP);
+                    $event->sheet->getCell("{$drop_columnC}{$i}")->setDataValidation(clone $validationC);
                 }
             }
         ];
