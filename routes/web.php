@@ -98,3 +98,8 @@ Route::get('/reporteSemanal', function () {
 Route::get('/export', 'MyController@export')->name('export');
 Route::get('importExportView', 'MyController@importExportView');
 Route::post('import', 'MyController@import')->name('import');
+
+//PROYECTO
+Route::get('/proyecto', function () {
+    return view('Proyecto/proyecto');
+})->name('proyecto')->middleware('auth');

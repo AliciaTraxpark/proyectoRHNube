@@ -34,6 +34,13 @@
         </ul>
     </li>
 
+    <li>
+        <a href="/proyecto">
+            <i data-feather="briefcase"></i>
+            <span>Asignar Proyecto</span>
+        </a>
+    </li>
+
     <!--<li>
         <a href="javascript: void(0);">
             <i data-feather="inbox"></i>
