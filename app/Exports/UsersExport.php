@@ -32,6 +32,7 @@ class UsersExport implements FromCollection,WithHeadings,ShouldAutoSize,WithEven
     public function collection()
     {
         return User::all();
+
     }
 
     public function registerEvents(): array
@@ -48,13 +49,17 @@ class UsersExport implements FromCollection,WithHeadings,ShouldAutoSize,WithEven
 
                 $opcionesDepartamento = "";
 
+                $drop_column = 'B';
+                //getHighestRow();
+
+                $row = 1;
                 foreach($departamentos as $departamento){
-                    $opcionesDepartamento .= $departamento->nombre.'","';
+                    $event->sheet->getDelegate()->setCellValue('F'.$row,$departamento->name);
                 }
-
                 $event->sheet->getDelegate()->getStyle('A1');
+                $event->sheet->getDelegate()->setTitle("Departamento");
 
-                $validation = $event->sheet->getDelegate()->getCell('B11')->getDataValidation();
+                $validation = $event->sheet->getDelegate()->getCell("{$drop_column}11")->getDataValidation();
                 $validation->setType(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::TYPE_LIST);
                 $validation->setErrorStyle(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::STYLE_INFORMATION);
                 $validation->setAllowBlank(false);
@@ -65,7 +70,11 @@ class UsersExport implements FromCollection,WithHeadings,ShouldAutoSize,WithEven
                 $validation->setError('Value is not in list.');
                 $validation->setPromptTitle('Pick from list');
                 $validation->setPrompt('Please value from');
-                $validation->setFormula1('","'.$opcionesDepartamento.'","');
+                $validation->setFormula1('Departamento!$F$1:$F$15');
+
+                for ($i = 11; $i <= 15; $i++) {
+                    $event->sheet->getCell("{$drop_column}{$i}")->setDataValidation(clone $validation);
+                }
             }
         ];
     }
