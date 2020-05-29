@@ -88,16 +88,19 @@ Route::post('/registrar/nivel','nivelController@store');
 //TAREAS
 Route::get('/tareas', function () {
     return view('tareas/tareas');
-})->name('tareas');
+})->name('tareas')->middleware('auth');
 Route::get('/reporteSemanal', function () {
     return view('tareas/reporteSemanal');
-})->name('reporteSemanal');
+})->name('reporteSemanal')->middleware('auth');
 
 
 //probando excel
-Route::get('export', 'MyController@export')->name('export');
+Route::get('/export', 'MyController@export')->name('export');
 Route::get('importExportView', 'MyController@importExportView');
 Route::post('import', 'MyController@import')->name('import');
 
 //EXCEL EMPLEADO
 Route::post('importEmpleado', 'excelEmpleadoController@import')->name('importEmpleado');
+//PROYECTO
+Route::get('/proyecto','ProyectoController@index' );
+Route::get('/proyecto/empleado','ProyectoController@cargarEmpleado');

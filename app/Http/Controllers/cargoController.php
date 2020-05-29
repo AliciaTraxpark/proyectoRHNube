@@ -13,6 +13,12 @@ class cargoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function store(Request $request){
         $cargo=new cargo();
         $cargo->cargo_descripcion=$request->get('cargo_descripcion');

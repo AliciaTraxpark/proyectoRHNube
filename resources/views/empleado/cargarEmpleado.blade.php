@@ -43,7 +43,7 @@
         </div>
         <div class="col-md-3 " style="margin-left: 23%;">
 
-            <a href=""> <button style="background-color: #155E5B;border-color: #155E5B"  class="btn btn-sm  btn-primary "> <img src="{{asset('admin/images/excel.svg')}}" height="25" ></i>  Descargar plantilla</button></a>
+            <a href="{{'/export'}}"> <button style="background-color: #155E5B;border-color: #155E5B"  class="btn btn-sm  btn-primary "> <img src="{{asset('admin/images/excel.svg')}}" height="25" ></i>  Descargar plantilla</button></a>
         </div>
 
 

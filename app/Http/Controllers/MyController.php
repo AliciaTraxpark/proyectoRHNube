@@ -12,6 +12,12 @@ class MyController extends Controller
      /**
     * @return \Illuminate\Support\Collection
     */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function importExportView()
     {
        return view('import');
@@ -22,7 +28,7 @@ class MyController extends Controller
     */
     public function export()
     {
-        return Excel::download(new UsersExport, 'users.xlsx');
+        return Excel::download(new UsersExport, 'Empleados.xlsx');
     }
 
     /**

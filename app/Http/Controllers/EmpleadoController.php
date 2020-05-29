@@ -27,7 +27,10 @@ class EmpleadoController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-
+    public function __construct()
+    {
+        $this->middleware('auth')->except('provincias','distritos');
+    }
     public function provincias($id){
         return ubigeo_peru_provinces::where('departamento_id',$id)->get();
     }
