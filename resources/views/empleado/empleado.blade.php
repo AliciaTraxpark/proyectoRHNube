@@ -294,15 +294,6 @@
                                                           @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default">Dirección Domiciliara</label>
-                                                    <select  class="form-control" placeholder="Departamento" name="departamento" id="dep" required>
-                                                        <option value="">Departamento</option>
-                                                        @foreach ($departamento as $departamentos)
-                                                          <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
-                                                          @endforeach
-                                                    </select>
-                                                </div>
                                             </div> <!-- end col -->
                                             <div class="col-4">
                                                 <div class="form-group">
@@ -316,12 +307,6 @@
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
                                                     <select  class="form-control " placeholder="Provincia " name="provincia" id="provincia" required>
-                                                        <option value="">Provincia</option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default"><br></label>
-                                                    <select  class="form-control " placeholder="Provincia " name="provincia" id="prov" required>
                                                         <option value="">Provincia</option>
                                                     </select>
                                                 </div>
@@ -341,12 +326,6 @@
                                                         <option value="">Distrito</option>
                                                     </select>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default"><br></label>
-                                                    <select  class="form-control " placeholder="Distrito " name="distrito" id="dist" required>
-                                                        <option value="">Distrito</option>
-                                                    </select>
-                                                </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-group">
@@ -355,6 +334,15 @@
                                                 </div>
                                             </div>
                                             <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="sw-default">Dirección Domiciliara</label>
+                                                    <select  class="form-control" placeholder="Departamento" name="departamento" id="dep" required>
+                                                        <option value="">Departamento</option>
+                                                        @foreach ($departamento as $departamentos)
+                                                          <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
+                                                          @endforeach
+                                                    </select>
+                                                </div>
                                                 <div class="form-group">
                                                     <label class="normal" for="">Genero</label>
                                                     <label class="custom-control custom-radio">
@@ -365,6 +353,12 @@
                                             </div>
                                             <div class="col-4">
                                                 <div class="form-group">
+                                                    <label for="sw-default"><br></label>
+                                                    <select  class="form-control " placeholder="Provincia " name="provincia" id="prov" required>
+                                                        <option value="">Provincia</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
                                                     <label class="normal" for=""><br></label>
                                                     <label class="custom-control custom-radio">
                                                         <input type="radio" name="tipo" id="tipo" value="Masculino" required>
@@ -373,6 +367,12 @@
                                                 </div>
                                             </div>
                                             <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="sw-default"><br></label>
+                                                    <select  class="form-control " placeholder="Distrito " name="distrito" id="dist" required>
+                                                        <option value="">Distrito</option>
+                                                    </select>
+                                                </div>
                                                 <div class="form-group">
                                                     <label class="normal" for=""><br></label>
                                                     <label class="custom-control custom-radio">
