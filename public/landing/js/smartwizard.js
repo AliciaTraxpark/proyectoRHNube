@@ -146,5 +146,13 @@ $(document).ready(function(){
     $('#smartwizard1').on("leaveStep",function leaveAStepCallback(event,obj, indice){
         console.log(indice);
         return validateSteps1(indice);
+    });
+    $('#smartwizard').on("showStep",function(e,anchorObject,stepNumber,stepDirection){
+        if($('button.sw-btn-next').hasClass('disabled')){
+            $('button.sw-btn-next').hide();
+        }
+        else{
+            $('button.sw-btn-next').show();
+        }
     })          
   });
