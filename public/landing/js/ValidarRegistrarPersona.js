@@ -1,41 +1,50 @@
-const registrar = document.getElementById("botonRegistrar");
-  registrar.addEventListener('click',function(e){
-   e.preventDefault(); 
-	
-$.ajax({
-  headers: {
-          'X-CSRF-TOKEN': document.getElementsByName("_token")[0].value
-          },
-    url:"/persona",
-    data:{
-        'name': document.getElementById("name").value, 
-        //'apellidos': document.getElementById("apellidos").value, 
-        'email': document.getElementById("email").value, 
-        'password': document.getElementById("password").value, 
-        //'fecha': document.getElementById("reservationDate").value 
-        'rol_id': 1
-    },
-    type:"post",
-    success: function (datos) {
-        const mensajeRegistro = document.getElementById("mensaje");{
-            mensaje.innerHTML = "Registro con Exito"
-        }
-        document.forms.formularioPersona.reset();
-    },
-    error:function (error) {
-        //valido que llegue errors
-        const mensaje = document.getElementById("mensaje");
-            //valido que tenga el error nombre
-            if(error.responseJSON.errors.name){
-                mensaje.innerHTML = error.responseJSON.errors.name
-            }
-            if(error.responseJSON.errors.email){
-                mensaje.innerHTML = error.responseJSON.errors.email
-            }
-            if(error.responseJSON.errors.password){
-                mensaje.innerHTML = error.responseJSON.errors.password
-            }
-    }
-});
+function agregarempleado(){
+    var dia=$('#dia_fecha').val();
+    var mes=$('#mes_fecha').val();
 
-}, false);
+    switch (mes) {
+        case 1:
+            $('#mesN').val('Enero');
+          break;
+        case 2:
+            $('#mesN').val('Febrero');
+          break;
+        case 3:
+            $('#mesN').val('Marzo');
+          break;
+        case 4:
+            $('#mesN').val('Abril');
+          break;
+        case 5:
+            $('#mesN').val('Mayo');
+          break;
+        case 6:
+            $('#mesN').val('Junio');
+          break;
+        case  7:
+            $('#mesN').val('Julio');
+           break;
+        case  8:
+            $('#mesN').val('Agosto');
+         break;
+        case  9:
+            $('#mesN').val('Setiembre');
+           break;
+        case  10:
+            $('#mesN').val('Octubre');
+           break;
+        case  11:
+            $('#mesN').val('Noviembre');
+           break;
+        case  12:
+             $('#mesN').val('Diciembre');
+
+      }
+    var ano=$('#ano_fecha').val();
+    $('#diaN').val(dia);
+
+    $('#anoN').val(ano);
+    $('#myModal').modal('toggle');
+    //
+
+ }
