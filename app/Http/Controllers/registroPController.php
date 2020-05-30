@@ -44,7 +44,7 @@ class registroPController extends Controller
     $User->save();
     $user1= $User->id;
 
-    return redirect()->action('registroEmpresaController@index',['user1'=>$user1]);
+    return $user1;
 
 
 

@@ -65,6 +65,11 @@ function agregarempleado(){
         headers:{
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
+        success:function(user){
+          window.location.replace(
+            location.origin + "/registro/organizacion/" + user
+          );
+        }
 
     });
 
