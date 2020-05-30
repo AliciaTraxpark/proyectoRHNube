@@ -1,3 +1,9 @@
+$('#fechaN').flatpickr({
+     dateFormat: 'yy',
+     changeMonth: false,
+     changeYear: false,
+     noCalendar: false
+     })
 $(document).ready(function() {
     $("#file").fileinput({
         allowedFileExtensions: ['jpg','jpeg','png'],

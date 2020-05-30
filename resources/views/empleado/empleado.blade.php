@@ -18,6 +18,7 @@
     <link href="{{asset('admin/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
 
     <link href="{{asset('admin/assets/libs/bootstrap-fileinput/fileinput.min.css')}}" rel="stylesheet" type="text/css" />
 
@@ -743,6 +744,7 @@
     <script src="{{asset('admin/assets/libs/bootstrap-fileinput/es.js')}}" ></script>
 
     <script src="{{asset('admin/assets/js/pages/form-wizard.init.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
     <script src="{{asset('landing/js/tabla.js')}}"></script>
     <script src="{{asset('landing/js/smartwizard.js')}}"></script>
     <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
