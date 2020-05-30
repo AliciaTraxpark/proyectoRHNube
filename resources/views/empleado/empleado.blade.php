@@ -49,12 +49,12 @@
 
     }
 
-.sw-theme-default > ul.step-anchor > li.active > a{
-    color: #ffffff !important;
-}
-.sw-theme-default > ul.step-anchor > li.done > a, .sw-theme-default > ul.step-anchor > li > a {
-    color: #d2d2d2!important;
-}
+    .sw-theme-default > ul.step-anchor > li.active > a{
+        color: #ffffff !important;
+    }
+    .sw-theme-default > ul.step-anchor > li.done > a, .sw-theme-default > ul.step-anchor > li > a {
+        color: #d2d2d2!important;
+    }
 </style>
 <div id="preloader">
     <div id="status">

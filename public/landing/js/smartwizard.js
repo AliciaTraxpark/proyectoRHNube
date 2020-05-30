@@ -150,8 +150,10 @@ $(document).ready(function(){
     $('#smartwizard').on("showStep",function(e,anchorObject,stepNumber,stepDirection){
         if($('button.sw-btn-next').hasClass('disabled')){
             $('button.sw-btn-next').hide();
+            $('button.sw-btn-prev').hide();
         }
         else{
+            $('button.sw-btn-prev').show();
             $('button.sw-btn-next').show();
         }
     })          
