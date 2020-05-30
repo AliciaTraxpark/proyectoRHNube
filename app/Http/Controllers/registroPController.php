@@ -23,8 +23,11 @@ class registroPController extends Controller
     $persona->perso_apPaterno= $request->get('apPaterno');
     $persona->perso_apMaterno= $request->get('apMaterno');
     $persona->perso_direccion=$request->get('direccion');
-    $f1 = explode("/", $request->get('fecha'));
-    $fechaN = $f1[2]."-".$f1[1]."-".$f1[0];
+    $diaf=$request->get('dia_fecha');
+    $mesf=$request->get('mes_fecha');
+    $anof=$request->get('ano_fecha');
+    //$f1 = explode("/", $request->get('fecha'));
+    $fechaN = $anof."-".$mesf."-".$diaf;
     $persona->perso_fechaNacimiento=$fechaN;
 
     $persona->perso_sexo= $request->get('sexo');
@@ -57,6 +60,6 @@ public function mensajes(Request $request){
         'sexo' => 'required'
     ]);
 
-    return $request->all(); 
+    return $request->all();
 }
 }
