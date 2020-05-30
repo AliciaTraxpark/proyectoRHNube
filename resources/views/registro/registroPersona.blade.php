@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
   <link rel="stylesheet" href="{{asset('landing/vendors/owl-carousel/css/owl.carousel.min.css')}}">
   <link rel="stylesheet" href="{{asset('landing/vendors/owl-carousel/css/owl.theme.default.css')}}">
   <link rel="stylesheet" href="{{asset('landing/vendors/mdi/css/materialdesignicons.min.css')}}">
@@ -20,6 +21,14 @@
     .btn-group-sm>.btn, .btn-sm {
     padding: .25rem .5rem!important;
     font-size: 14px!important;}
+    .inp{
+    border: 0;
+    font-weight: 550;
+    background: white;
+    padding-left: 8px;
+    padding-right: 8px;
+    text-align: center;
+    }
 </style>
   <header id="header-section">
     <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
@@ -52,16 +61,18 @@
                             </button>
                         </div>
                         <div class="modal-body">
+                         <form method="POST" action="javascript:registerP()">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <label class="col-lg-6 col-form-label" for="simpleinput">Naciste el<input type="text" id="diaN"> de  <input type="text" id="mesN"> de <input type="text" id="anoN"> ?</label>
+                                    <label class="col-lg-12 col-form-label" for="simpleinput">Naciste el<input type="text" id="diaN" class="inp col-md-1" disabled>de<input type="text" class="inp col-md-3" id="mesN" disabled>de<input type="text" id="anoN" class="inp col-md-2" disabled>?</label>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" style="background: #f0f0f0" class="btn  btn-sm" data-dismiss="modal">No</button>
-                            <button type="button" style="background: #302f56;color: #ecebeb" class="btn btn-sm">Sí</button>
+                            <button type="button" style="background: #f0f0f0" class="btn  btn-sm" data-dismiss="modal">&nbsp; &nbsp;No &nbsp; &nbsp;</button>
+                            <button type="submit" style="background: #302f56;color: #ecebeb" class="btn btn-sm" id="confirmar"> &nbsp; &nbsp; Sí &nbsp; &nbsp; </button>
                         </div>
+                        </form>
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
@@ -151,7 +162,7 @@
                     <div class="col-md-2">
                         <div class="control">
                             <label class="radio normal">
-                              <input type="radio" name="sexo" value="Mujer" required>
+                              <input type="radio" name="sexo" id="sexo" value="Mujer" required>
                               Mujer
                             </label>
                       </div>
@@ -159,7 +170,7 @@
                     <div class="col-md-2">
                         <div class="control">
                             <label class="radio normal">
-                              <input type="radio" name="sexo" value="Hombre" required>
+                              <input type="radio" name="sexo" id="sexo" value="Hombre" required>
                              Hombre
                             </label>
                       </div>
@@ -169,7 +180,7 @@
                             <label class="radio normal" data-toggle="tooltip"
                             data-placement="right" title=""
                             data-original-title="Puedes elegir personalizado si no deseas especificar tu sexo.">
-                              <input type="radio" name="sexo" value="Personalizado"  required>
+                              <input type="radio" name="sexo" id="sexo" value="Personalizado"  required>
                              Personalizado
                             </label>
                       </div>
