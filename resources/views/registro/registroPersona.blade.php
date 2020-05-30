@@ -128,9 +128,9 @@
                                     <option class="" value="7">Julio</option>
                                     <option class="" value="8">Agosto</option>
                                     <option class="" value="9">Setiembre</option>
-                                    <option class="" value="9">Octubre</option>
-                                    <option class="" value="9">Noviembre</option>
-                                    <option class="" value="9">Diciembre</option>
+                                    <option class="" value="10">Octubre</option>
+                                    <option class="" value="11">Noviembre</option>
+                                    <option class="" value="12">Diciembre</option>
                                  </select>
                             </div>
                             <div class="col-md-3">

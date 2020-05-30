@@ -1,6 +1,6 @@
 function agregarempleado(){
     var dia=$('#dia_fecha').val();
-    var mes=$('#mes_fecha').val();
+    var mes=parseInt($('#mes_fecha').val());
 
     switch (mes) {
         case 1:
