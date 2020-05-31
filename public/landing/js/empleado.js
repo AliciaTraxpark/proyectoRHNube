@@ -2,6 +2,10 @@ $('#fechaN').combodate({
     customClass: 'form-control',
     moment:'es'
 }); 
+$('#v_fechaN').combodate({
+    customClass: 'form-control',
+    moment:'es'
+}); 
 console.log('fechaN');
 $(document).ready(function() {
     $("#file").fileinput({

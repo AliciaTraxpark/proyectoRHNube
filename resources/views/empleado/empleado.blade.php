@@ -61,13 +61,20 @@
         justify-content: space-between;
     }
     .day{
-        max-width: 27%;
+        max-width: 25%;
     }
     .month{
-        max-width: 30%;
+        max-width: 33%;
     }
     .year{
         max-width: 40%;
+    }
+    .btn-group{
+        width: 100%;
+        justify-content: space-between;
+    }
+    .btn-secondary{
+        max-width: 10em;
     }
 </style>
 <div id="preloader">
@@ -572,7 +579,7 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="sw-default">Fecha Nacimiento</label>
-                                            <input type="date" class="form-control" id="v_fechaN" name="v_fechaN" disabled style="background-color: #f0f0f0;">
+                                            <input type="text" data-custom-class="form-control" id="v_fechaN" data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date">
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Nombres</label>
