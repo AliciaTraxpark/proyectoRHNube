@@ -1,7 +1,7 @@
-$('#fechaN').flatpickr({
-     dateFormat: 'yy',
-     changeMonth: false,
-     })
+$('#fechaN').combodate(
+    moment.locale('es')
+); 
+console.log('fechaN');
 $(document).ready(function() {
     $("#file").fileinput({
         allowedFileExtensions: ['jpg','jpeg','png'],

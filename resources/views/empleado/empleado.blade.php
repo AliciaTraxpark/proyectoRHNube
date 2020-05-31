@@ -315,7 +315,7 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Fecha Nacimiento</label>
-                                                    <input class="form-control" id="fechaN" type="date" name="fechaN" required>
+                                                    <input type="text" class="form-control" id="fechaN" data-format="DD-MM-YYYY" data-template="D MMM YYYY" name="date">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Nombres</label>
@@ -742,6 +742,9 @@
     <script src="{{asset('admin/assets/libs/bootstrap-fileinput/fileinput.min.js')}}" ></script>
     <script src="{{asset('admin/assets/libs/bootstrap-fileinput/theme.js')}}" ></script>
     <script src="{{asset('admin/assets/libs/bootstrap-fileinput/es.js')}}" ></script>
+    <script src="{{asset('admin/assets/libs/combodate-1.0.7/combodate.js')}}" ></script>
+    <script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}" ></script>
+    <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}" ></script>
 
     <script src="{{asset('admin/assets/js/pages/form-wizard.init.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
