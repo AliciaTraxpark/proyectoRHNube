@@ -1,6 +1,7 @@
-$('#fechaN').combodate(
-    moment.locale('es')
-); 
+$('#fechaN').combodate({
+    customClass: 'form-control',
+    moment:'es'
+}); 
 console.log('fechaN');
 $(document).ready(function() {
     $("#file").fileinput({

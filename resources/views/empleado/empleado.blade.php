@@ -56,6 +56,19 @@
     .sw-theme-default > ul.step-anchor > li.done > a, .sw-theme-default > ul.step-anchor > li > a {
         color: #d2d2d2!important;
     }
+    .combodate{
+        display: flex;
+        justify-content: space-between;
+    }
+    .day{
+        max-width: 27%;
+    }
+    .month{
+        max-width: 30%;
+    }
+    .year{
+        max-width: 40%;
+    }
 </style>
 <div id="preloader">
     <div id="status">
@@ -315,7 +328,7 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Fecha Nacimiento</label>
-                                                    <input type="text" data-custom-class="form-control" id="fechaN" data-format="DD-MM-YYYY" data-template="D MMM YYYY" name="date">
+                                                    <input type="text" data-custom-class="form-control" id="fechaN" data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Nombres</label>
