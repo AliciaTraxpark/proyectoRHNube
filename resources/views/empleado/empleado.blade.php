@@ -315,7 +315,7 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Fecha Nacimiento</label>
-                                                    <input type="text" class="form-control" id="fechaN" data-format="DD-MM-YYYY" data-template="D MMM YYYY" name="date">
+                                                    <input type="text" data-custom-class="form-control" id="fechaN" data-format="DD-MM-YYYY" data-template="D MMM YYYY" name="date">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Nombres</label>
