@@ -333,6 +333,8 @@ function datosPersona(method){
         local:$('#local').val(),
         celular:$('#celular').val(),
         telefono:$('#telefono').val(),
+        fechaI:$('#c_fechaI').text(),
+        fechaF:$('#c_fechaF').text(),
         '_method':method
     }
     return(nuevoEmpleado);
