@@ -21,6 +21,7 @@ $(document).ready(function() {
         theme: "fa"
     });
 });
+//AREA
 function agregarArea(){
     objArea=datos("POST");
     enviarArea('',objArea);
@@ -235,6 +236,53 @@ function enviarNivel(accion,objNivel){
         error:function(){alert("Hay un error");}
     });
 }
+
+//CONTRATO
+function agregarContrato(){
+    objContrato=datos("POST");
+    enviarContrato('',objContrato);
+};
+
+function datos(method){
+    nuevoArea={
+        contrato_descripcion: $('#textContrato').val(),
+        contrato_fechaI:$('#fechaI').val(),
+        contrato_fechaF:$('#fechaF').val(),
+        '_method':method
+    }
+    return(nuevoArea);
+}
+
+function enviarContrato(accion,objArea){
+    $.ajax({
+        type:"POST",
+        url:"/registrar/contrato"+accion,
+        data:objContrato,
+        headers:{
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success:function(data){
+            $('#contrato').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                value: data.contrato_id,
+                text: data.contrato_descripcion,
+                selected: true
+               }));
+               $('#v_contrato').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                value: data.contrato_id,
+                text: data.contrato_descripcion,
+                selected: true
+               }));
+             $('#contrato').val(data.contrato_id).trigger("change"); //lo selecciona
+             $('#v_contrato').val(data.contrato_id).trigger("change");
+             $('#textcontrato').val('');
+            $('#contratomodal').modal('toggle');
+            $.notify("Contrato registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
+
+        },
+        error:function(){ alert("Hay un error");}
+    });
+}
+
 //EMPLEADO
 $('#guardarEmpleado').click(function(){
     objEmpleado=datosPersona("POST");

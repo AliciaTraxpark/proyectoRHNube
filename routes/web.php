@@ -86,6 +86,9 @@ Route::post('/registrar/local','localController@store');
 //NIVEL
 Route::post('/registrar/nivel','nivelController@store');
 
+//CONTRATO
+Route::post('/registrar/contrato','contratoController@store');
+
 //TAREAS
 Route::get('/tareas', function () {
     return view('tareas/tareas');

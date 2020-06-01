@@ -279,7 +279,36 @@
                               </form>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
-                </div><!-- /.modal -->
+                </div>
+                <div id="contratomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="myModalLabel">Agregar Contrato</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                              <form action="javascript:agregarContrato()">
+                                {{ csrf_field() }}
+                                <div class="col-md-12">
+                                  <label for="">Contrato</label>
+                                  <input type="text" class="form-control" name="textArea" id="textContrato" required>
+                                  <label for="">Fecha Inicio</label>
+                                  <input type="date" class="form-control" name="fechaI" id="fechaI" required>
+                                  <label for="">Fecha Final</label>
+                                  <input type="date" class="form-control" name="fechaF" id="fechaF" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" id="guardarContrato" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </form>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal --><!-- /.modal -->
                 <div class="col-md-6 col-xl-6" style="font-size: 13px" id="form-registrar">
                             <br>
                             <h4 class="header-title mt-0 "></i>Datos de empleado</h4>
@@ -420,7 +449,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default">Contrato</label>
+                                                    <label for="sw-default">Contrato <a  href="#contratomodal" data-toggle="modal" data-target="#contratomodal"><i class="uil uil-plus"></i></a></label>
                                                     <select  class="form-control" name="contrato" id="contrato" required>
                                                         <option value="">Seleccionar</option>
                                                         @foreach ($tipo_cont as $tipo_conts)
