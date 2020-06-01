@@ -442,7 +442,6 @@
                                                     <label for="sw-default">Cargo <a  href="#cargomodal" data-toggle="modal" data-target="#cargomodal"><i class="uil uil-plus"></i></a></label>
                                                     <select  class="form-control" name="cargo" id="cargo">
                                                         <option value="">Seleccionar</option>
-
                                                           @foreach ($cargo as $cargos)
                                                           <option class="" value="{{$cargos->cargo_id}}">{{$cargos->cargo_descripcion}}</option>
                                                           @endforeach
@@ -456,6 +455,10 @@
                                                         <option class="" value="{{$tipo_conts->contrato_id}}">{{$tipo_conts->contrato_descripcion}}</option>
                                                         @endforeach
                                                     </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sw-default" id="c_fechaI">FechaI</label>
+                                                    <label for="sw-default" id="c_fechaF">FechaF</label>
                                                 </div>
                                             </div> <!-- end col -->
                                             <div class="col-4">
@@ -806,5 +809,6 @@
     <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
     <script src="{{asset('landing/js/seleccionarDepProv.js')}}"></script>
     <script src="{{asset('landing/js/empleado.js')}}"></script>
+    <script src="{{asset('landing/js/tipoContrato.js')}}"></script>
 </body>
 </html>
