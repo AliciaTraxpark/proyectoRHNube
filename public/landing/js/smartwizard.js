@@ -46,6 +46,11 @@ $(document).ready(function(){
                 isStepValid = false;
                 $('#dist').addClass("is-invalid");
             }else{$('#dist').removeClass("is-invalid");}
+            if($("input[type=radio]:checked").length ==0){
+                isStepValid = false;
+            }else{
+                
+            }
             console.log(isStepValid)
         }
         if(stepnumber == 1){

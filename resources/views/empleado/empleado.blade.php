@@ -533,7 +533,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Lugar Nacimiento</label>
-                                            <select  class="form-control" placeholder="Departamento" name="v_departamento" id="v_departamento" disabled style="background-color: #f0f0f0;">
+                                            <select  class="form-control" placeholder="Departamento" name="v_departamento" id="v_departamento">
                                                 <option value="">Departamento</option>
                                                 @foreach ($departamento as $departamentos)
                                                   <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
@@ -553,7 +553,7 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="sw-default">Num. Documento</label>
-                                            <input type="text" class="form-control" name="v_numDocumento" id="v_numDocumento" required>
+                                            <input type="text" class="form-control" name="v_numDocumento" id="v_numDocumento" required disabled style="background-color: #f0f0f0;">
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Apellido Materno</label>
@@ -561,7 +561,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default"><br></label>
-                                            <select  class="form-control " placeholder="Provincia " name="v_provincia" id="v_provincia"  disabled style="background-color: #f0f0f0;">
+                                            <select  class="form-control " placeholder="Provincia " name="v_provincia" id="v_provincia">
                                                 <option value="">Provincia</option>
                                                 @foreach ($provincia as $provincias)
                                                 <option class="" value="{{$provincias->id}}">{{$provincias->name}}</option>
@@ -589,7 +589,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default"><br></label>
-                                            <select  class="form-control " placeholder="Distrito " name="v_distrito" id="v_distrito" disabled style="background-color: #f0f0f0;">
+                                            <select  class="form-control " placeholder="Distrito " name="v_distrito" id="v_distrito">
                                                 <option value="">Distrito</option>
                                                 @foreach ($distrito as $distritos)
                                                 <option class="" value="{{$distritos->id}}">{{$distritos->name}}</option>
@@ -616,7 +616,7 @@
                                         <div class="form-group">
                                             <label class="normal" for="">Genero</label>
                                             <label class="custom-control custom-radio">
-                                                <input type="radio" name="v_tipo" id="v_tipo" value="Femenino" disabled >
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Femenino">
                                                 Femenino
                                               </label>
                                         </div>
@@ -625,7 +625,7 @@
                                         <div class="form-group">
                                             <label class="normal" for=""><br></label>
                                             <label class="custom-control custom-radio">
-                                                <input type="radio" name="v_tipo" id="v_tipo" value="Masculino" disabled>
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Masculino">
                                                 Masculino
                                               </label>
                                         </div>
@@ -634,7 +634,7 @@
                                         <div class="form-group">
                                             <label class="normal" for=""><br></label>
                                             <label class="custom-control custom-radio">
-                                                <input type="radio" name="v_tipo" id="v_tipo" value="Personalizado" disabled >
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Personalizado">
                                                 Personalizado
                                               </label>
                                         </div>
