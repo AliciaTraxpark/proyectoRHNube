@@ -486,8 +486,8 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default" id="c_fechaI"></label>
-                                                    <label for="sw-default" id="c_fechaF"></label>
+                                                    <label for="sw-default" style="color: darkblue;">Fecha Inicio <label for="sw-default" id="c_fechaI"></label></label>
+                                                    <label for="sw-default" style="color: red;">Fecha Final <label for="sw-default" id="c_fechaF"></label></label>
                                                 </div>
                                             </div> <!-- end col -->
                                             <div class="col-4">

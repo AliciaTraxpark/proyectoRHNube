@@ -297,8 +297,8 @@ $('#guardarFechas').click(function(){
     fechaI = $('#m_fechaI').val();
     fechaF = $('#m_fechaF').val();
     if($('#m_fechaI').val() != "" && $('#m_fechaF') != ""){
-        $('#c_fechaI').val(fechaI);
-        $('#c_fechaF').val(fechaF);
+        $('#c_fechaI').text(fechaI);
+        $('#c_fechaF').text(fechaF);
         $('#fechasmodal').modal('toggle');
     }
 });
