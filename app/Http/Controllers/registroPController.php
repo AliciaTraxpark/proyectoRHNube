@@ -64,4 +64,17 @@ public function mensajes(Request $request){
 
     return $request->all();
 }
+public function comprobar(Request $request){
+    $email=$request->get('email');
+    $UsuarioN=user::where('email', '=', $email)->first();
+
+
+    if($UsuarioN!=null){
+        return 1;
+    }
+
+
+
+}
+
 }

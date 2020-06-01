@@ -109,7 +109,8 @@
                     </div><br><br>
                  </div>
                      <div class="row">
-                    <div class="col-md-9 mt-2">
+                         <div class="col-md-12" style="color: #d03310; font-size: 14px;"  id="Mensaje"></div>
+                    <div class="col-md-12 mt-2">
                         <label class="normal" for="">Fecha de nacimiento:</label>
                     </div>
                     <div class="col-md-9">
@@ -228,8 +229,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script>
      $( document ).ready(function() {
+         // Función para permitir sólo números, retroceso y enter
 
- })
+})
 </script>
 <script>
     $(function () {

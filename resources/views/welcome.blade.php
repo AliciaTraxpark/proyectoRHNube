@@ -426,8 +426,8 @@
   <div class="modal " id="modal"  role="dialog"  style="display: block;">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">CONFIRMACION</h5>
+        <div class="modal-header" style=" padding-top: 8px; padding-bottom: 5px;">
+          <h5 style="font-size: 14px" class="modal-title">CONFIRMACION</h5>
           <button type="button" class="close" data-dismiss="modal" onclick="cerrarModal()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -435,8 +435,8 @@
         <div class="modal-body">
           <p>{{ session('mensaje') }}</p>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" onclick="cerrarModal()">OK</button>
+        <div class="modal-footer" style=" padding-top: 8px; padding-bottom: 8px; ">
+          <button type="button" class="btn btn-primary btn-sm" onclick="cerrarModal()">OK</button>
         </div>
       </div>
     </div>
