@@ -419,7 +419,7 @@ function cargarFile2(){
             initialPreview:
             [
                 "<img  id=v_foto src='{{asset('/fotosEmpleado')}}/'"+
-                urlFoto + "'style='width:200px'>"
+                urlFoto + "'style='width:120px'>"
             ] ,
             initialPreviewConfig: [{
                 width: "120px",

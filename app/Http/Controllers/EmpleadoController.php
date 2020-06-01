@@ -130,6 +130,7 @@ class EmpleadoController extends Controller
         $empleado->emple_tipoContrato=$objEmpleado['contrato'];
         $empleado->emple_local=$objEmpleado['local'];
         $empleado->emple_nivel=$objEmpleado['nivel'];
+        $empleado->emple_foto='';
 
         if($request->hasFile('file')){
             $file = $request->file('file');
