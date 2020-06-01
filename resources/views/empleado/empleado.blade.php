@@ -295,10 +295,6 @@
                                 <div class="col-md-12">
                                   <label for="">Contrato</label>
                                   <input type="text" class="form-control" name="textArea" id="textContrato" required>
-                                  <label for="">Fecha Inicio</label>
-                                  <input type="date" class="form-control" name="fechaI" id="fechaI" required>
-                                  <label for="">Fecha Final</label>
-                                  <input type="date" class="form-control" name="fechaF" id="fechaF" required>
                                 </div>
                             </div>
                             <div class="modal-footer">

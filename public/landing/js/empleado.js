@@ -246,8 +246,6 @@ function agregarContrato(){
 function datos(method){
     nuevoArea={
         contrato_descripcion: $('#textContrato').val(),
-        contrato_fechaI:$('#fechaI').val(),
-        contrato_fechaF:$('#fechaF').val(),
         '_method':method
     }
     return(nuevoArea);
