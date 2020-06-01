@@ -215,9 +215,11 @@ class EmpleadoController extends Controller
         if($request==null)return false;
         $empleado= Empleado::findOrFail($idE);
 
-        $empleado->emple_nDoc=$objEmpleado['numDocumento_v'];
         $empleado->emple_cargo=$objEmpleado['cargo_v'];
         $empleado->emple_area=$objEmpleado['area_v'];
+        $empleado->emple_departamentoN=$objEmpleado['departamento_v'];
+        $empleado->emple_provinciaN=$objEmpleado['provincia_v'];
+        $empleado->emple_distritoN=$objEmpleado['distrito_v'];
         $empleado->emple_centCosto=$objEmpleado['centroc_v'];
         $empleado->emple_departamento=$objEmpleado['dep_v'];
         $empleado->emple_provincia=$objEmpleado['prov_v'];
@@ -247,6 +249,8 @@ class EmpleadoController extends Controller
         $persona->perso_apPaterno=$objEmpleado['apPaterno_v'];
         $persona->perso_apMaterno=$objEmpleado['apMaterno_v'];
         $persona->perso_direccion=$objEmpleado['direccion_v'];
+        $persona->perso_fechaNacimiento=$objEmpleado['fechaN_v'];
+        $persona->perso_sexo=$objEmpleado['tipo_v'];
         $persona->save();
         return json_encode(array('status'=>true));
     }
