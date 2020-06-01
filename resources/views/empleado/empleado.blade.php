@@ -304,6 +304,31 @@
                         </form>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
+                </div>
+                <div id="fechasmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="myModalLabel">Indicar fechas de Contrato</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                {{ csrf_field() }}
+                                <div class="col-md-12">
+                                  <label for="">Fecha Inicial</label>
+                                  <input type="text" data-custom-class="form-control" id="m_fechaI" data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date" required>
+                                  <label for="">Fecha Final</label>
+                                  <input type="text" data-custom-class="form-control" id="m_fechaF" data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="button" id="guardarFechas" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
                 </div><!-- /.modal --><!-- /.modal -->
                 <div class="col-md-6 col-xl-6" style="font-size: 13px" id="form-registrar">
                             <br>
@@ -461,8 +486,8 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default" id="c_fechaI">FechaI</label>
-                                                    <label for="sw-default" id="c_fechaF">FechaF</label>
+                                                    <label for="sw-default" id="c_fechaI"></label>
+                                                    <label for="sw-default" id="c_fechaF"></label>
                                                 </div>
                                             </div> <!-- end col -->
                                             <div class="col-4">
@@ -821,6 +846,5 @@
     <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
     <script src="{{asset('landing/js/seleccionarDepProv.js')}}"></script>
     <script src="{{asset('landing/js/empleado.js')}}"></script>
-    <script src="{{asset('landing/js/tipoContrato.js')}}"></script>
 </body>
 </html>

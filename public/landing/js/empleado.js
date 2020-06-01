@@ -1,6 +1,12 @@
 $('#fechaN').combodate({
     minYear: 1900,
 }); 
+$('#m_fechaI').combodate({
+    minYear: 1900,
+});
+$('#m_fechaF').combodate({
+    minYear: 1900,
+});
 $('#v_fechaN').combodate({
     minYear: 1900,
 }); 
@@ -280,7 +286,22 @@ function enviarContrato(accion,objArea){
         error:function(){ alert("Hay un error");}
     });
 }
-
+//FECHAS
+$(function(){
+    $('#contrato').on('change',onSelectFecha);
+});
+function onSelectFecha(){
+    $('#fechasmodal').modal();
+}
+$('#guardarFechas').click(function(){
+    fechaI = $('#m_fechaI').val();
+    fechaF = $('#m_fechaF').val()
+    if($('#m_fechaI').val() != "" && $('#m_fechaF') != ""){
+        $('#fechasmodal').modal('toggle');
+        $('#c_fechaI').val(fechaI);
+        $('#c_fechaF').val(fechaF);
+    }
+});
 //EMPLEADO
 $('#guardarEmpleado').click(function(){
     objEmpleado=datosPersona("POST");
