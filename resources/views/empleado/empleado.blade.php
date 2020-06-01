@@ -644,7 +644,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Celular</label>
-                                            <input type="text" class="form-control" name="celular" id="celular">
+                                            <input type="text" class="form-control" name="v_celular" id="v_celular">
                                         </div>
                                     </div>
                                     <div class="col-4">
@@ -684,7 +684,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Telefono</label>
-                                            <input type="text" class="form-control" name="telefono" id="telefono">
+                                            <input type="text" class="form-control" name="v_telefono" id="v_telefono">
                                         </div>
                                     </div>
                                 </div> <!-- end row -->
