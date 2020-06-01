@@ -400,6 +400,10 @@
                                                         Femenino
                                                       </label>
                                                 </div>
+                                                <div class="form-group">
+                                                    <label for="sw-default">Celular</label>
+                                                    <input type="text" class="form-control" name="celular" id="celular">
+                                                </div>
                                             </div>
                                             <div class="col-4">
                                                 <div class="form-group">
@@ -431,6 +435,10 @@
                                                         <input type="radio" name="tipo" id="tipo" value="Personalizado" required>
                                                         Personalizado
                                                       </label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sw-default">Telefono</label>
+                                                    <input type="text" class="form-control" name="telefono" id="telefono">
                                                 </div>
                                             </div>
                                         </div> <!-- end row -->

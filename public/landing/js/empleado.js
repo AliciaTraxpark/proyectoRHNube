@@ -312,6 +312,8 @@ function datosPersona(method){
         direccion:$('#direccion').val(),
         nivel:$('#nivel').val(),
         local:$('#local').val(),
+        celular:$('#celular').val(),
+        telefono:$('#telefono').val(),
         '_method':method
     }
     return(nuevoEmpleado);
