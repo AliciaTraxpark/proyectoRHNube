@@ -30,8 +30,14 @@ $(document).ready(function(){
             }else{$('#prov').removeClass("is-invalid");}
             if($('#fechaN').val() == ""){
                 isStepValid = false;
-                $('#fechaN').addClass("is-invalid");
-            }else{$('#fechaN').removeClass("is-invalid");}
+                $('.day').addClass("is-invalid");
+                $('.month').addClass("is-invalid");
+                $('.year').addClass("is-invalid");
+            }else{
+                $('.day').removeClass("is-invalid");
+                $('.month').removeClass("is-invalid");
+                $('.year').removeClass("is-invalid");
+            }
             if($('#nombres').val() ==""){
                 isStepValid = false;
                 $('#nombres').addClass("is-invalid");
