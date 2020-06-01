@@ -376,6 +376,8 @@ function datosPersonaA(method){
         direccion_v:$('#v_direccion').val(),
         nivel_v:$('#v_nivel').val(),
         local_v:$('#v_local').val(),
+        celular_v:$('#v_celular').val(),
+        telefono_v:$('#v_telefono').val(),
         '_method':method
     }
     return(nuevoEmpleadoA);

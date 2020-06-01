@@ -225,6 +225,8 @@ class EmpleadoController extends Controller
         $empleado->emple_tipoContrato=$objEmpleado['contrato_v'];
         $empleado->emple_local=$objEmpleado['local_v'];
         $empleado->emple_nivel=$objEmpleado['nivel_v'];
+        $empleado->emple_celular=$objEmpleado['celular_v'];
+        $empleado->emple_telefono=$objEmpleado['telefono_v'];
         if($request->hasfile('file')){
             $file = $request->file('file');
             $path = public_path() . '/fotosEmpleado';
