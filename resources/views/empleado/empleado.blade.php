@@ -396,7 +396,9 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="normal" for=""><br></label>
-                                                    <label class="custom-control custom-radio">
+                                                    <label class="custom-control custom-radio" data-toggle="tooltip"
+                                                    data-placement="right" title=""
+                                                    data-original-title="Puedes elegir personalizado si no deseas especificar tu sexo.">
                                                         <input type="radio" name="tipo" id="tipo" value="Personalizado" required>
                                                         Personalizado
                                                       </label>
