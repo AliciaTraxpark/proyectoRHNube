@@ -182,7 +182,7 @@ class EmpleadoController extends Controller
             'c.cargo_descripcion', 'a.area_descripcion','cc.centroC_descripcion','para.id as iddepaN',
             'para.id as depaN','proviN.id as idproviN','proviN.name as proviN','distN.id as iddistN',
             'distN.name as distN','e.emple_id','c.cargo_id','a.area_id', 'cc.centroC_id','e.emple_tipoContrato',
-            'e.emple_local','e.emple_nivel','e.emple_departamento','e.emple_provincia','e.emple_distrito','e.emple_foto as foto')
+            'e.emple_local','e.emple_nivel','e.emple_departamento','e.emple_provincia','e.emple_distrito','e.emple_foto as foto','e.emple_celular','e.emple_telefono')
             ->where('emple_id','=',$idempleado)
             ->get();
         return $empleado;
