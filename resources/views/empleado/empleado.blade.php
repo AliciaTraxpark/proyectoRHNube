@@ -61,20 +61,20 @@
         justify-content: space-between;
     }
     .day{
-        max-width: 25%;
+        max-width: 28%;
     }
     .month{
-        max-width: 33%;
+        max-width: 35%;
     }
     .year{
-        max-width: 40%;
+        max-width: 37%;
     }
     .btn-group{
         width: 100%;
         justify-content: space-between;
     }
     .btn-secondary{
-        max-width: 10em;
+        max-width: 9em;
     }
 </style>
 <div id="preloader">

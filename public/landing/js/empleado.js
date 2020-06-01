@@ -1,10 +1,8 @@
 $('#fechaN').combodate({
-    customClass: 'form-control',
-    moment:'es'
+    minYear: 1900,
 }); 
 $('#v_fechaN').combodate({
-    customClass: 'form-control',
-    moment:'es'
+    minYear: 1900,
 }); 
 console.log('fechaN');
 $(document).ready(function() {
