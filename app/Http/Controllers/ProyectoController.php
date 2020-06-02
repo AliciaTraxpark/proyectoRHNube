@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\empleado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\proyecto;
@@ -37,6 +38,21 @@ class ProyectoController extends Controller
         $proyecto_empleado->Proyecto_Proye_id=$request->get('proyecto');
         $proyecto_empleado->empleado_emple_id=$request->get('empleado');
         $proyecto_empleado->save();
+    }
+
+    public function selectValidar(Request $request)
+    {
+        $idproyecto=$request->get('id');
+        $empleadoSelect = DB::table('empleado as em')
+            ->leftJoin('proyecto_empleado as pe', 'em.emple_id', '=', 'pe.empleado_emple_id')
+            ->join('persona as p', 'em.emple_persona', '=', 'p.perso_id')
+            ->select('em.emple_id','p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','pe.Proyecto_Proye_id')
+            ->where('pe.Proyecto_Proye_id','!=',$idproyecto)
+            ->orwhereNull('pe.Proyecto_Proye_id')
+            ->get();
+            return response()->json($empleadoSelect);
+
+
     }
 
 }

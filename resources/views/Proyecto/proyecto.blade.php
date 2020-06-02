@@ -106,9 +106,9 @@
                                                 <div class="col-lg-8">
                                                     <select data-plugin="customselect" id="idempleado" class="form-control" data-placeholder="Seleccione empleado">
                                                         <option></option>
-                                                        @foreach ($empleado as $empleados)
+                                                       {{--  @foreach ($empleado as $empleados)
                                                         <option class="" value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}} </option>
-                                                        @endforeach
+                                                        @endforeach --}}
 
                                                     </select>
                                                 </div>
@@ -162,7 +162,7 @@
                                 ->get();
 
                                 @endphp
-                               
+
                                 <span>{{$empleado[0]->perso_nombre }} {{$empleado[0]->perso_apPaterno}} {{$empleado[0]->perso_apMaterno }},</span>
                                  @endforeach
 

@@ -22,7 +22,7 @@ function agregarProyecto(){
 
 
     function abrirM(id) {
-
+        $('#idempleado').empty()
         $.ajax({
             type:"POST",
             url:"/proyecto/proyectoV",
@@ -34,6 +34,26 @@ function agregarProyecto(){
               $('#nombre1').val(data.Proye_Nombre);
               $('#id1').val(data.Proye_id);
               $('#myModal1').modal('toggle');
+
+            },
+            error:function(){ alert("Hay un error");}
+        });
+        var $select=$('#idempleado').select2();
+        $.ajax({
+
+            type:"POST",
+            url:"/proyecto/selectValidar",
+            data:{id},
+            headers:{
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success:function(data){
+
+                $.each(data, function (i, json) {
+                    $select.append('<option value="' + json.emple_id + '">' + json.perso_nombre + '</option>');
+                  });
+
+
 
             },
             error:function(){ alert("Hay un error");}
@@ -60,7 +80,7 @@ function registrarPE(){
         success:function(data){
             $('#idempleado').val(null).trigger('change');
             $('#myModal1').modal('hide');
-           
+
             $('#tablaProyecto').load(location.href+" #tablaProyecto>*");
             $.notify("empleado registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
 
