@@ -418,15 +418,15 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
+                                                    <label for="sw-default">Correo Electronico</label>
+                                                    <input type="email" class="form-control" id="email" name="email">
+                                                </div>
+                                                <div class="form-group">
                                                     <label class="normal" for="">Genero</label>
                                                     <label class="custom-control custom-radio">
                                                         <input type="radio" name="tipo" id="tipo" value="Femenino" required>
                                                         Femenino
                                                       </label>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default">Celular</label>
-                                                    <input type="text" class="form-control" name="celular" id="celular">
                                                 </div>
                                             </div>
                                             <div class="col-4">
@@ -435,6 +435,10 @@
                                                     <select  class="form-control " placeholder="Provincia " name="provincia" id="prov" required>
                                                         <option value="">Provincia</option>
                                                     </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sw-default">Celular</label>
+                                                    <input type="text" class="form-control" name="celular" id="celular">
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="normal" for=""><br></label>
@@ -452,6 +456,10 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
+                                                    <label for="sw-default">Telefono</label>
+                                                    <input type="text" class="form-control" name="telefono" id="telefono">
+                                                </div>
+                                                <div class="form-group">
                                                     <label class="normal" for=""><br></label>
                                                     <label class="custom-control custom-radio" data-toggle="tooltip"
                                                     data-placement="right" title=""
@@ -459,10 +467,6 @@
                                                         <input type="radio" name="tipo" id="tipo" value="Personalizado" required>
                                                         Personalizado
                                                       </label>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default">Telefono</label>
-                                                    <input type="text" class="form-control" name="telefono" id="telefono">
                                                 </div>
                                             </div>
                                         </div> <!-- end row -->
@@ -660,15 +664,15 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
+                                            <label for="sw-default">Correo Electronico</label>
+                                            <input type="email" class="form-control" id="v_email" name="email">
+                                        </div>
+                                        <div class="form-group">
                                             <label class="normal" for="">Genero</label>
                                             <label class="custom-control custom-radio">
                                                 <input type="radio" name="v_tipo" id="v_tipo" value="Femenino">
                                                 Femenino
                                               </label>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="sw-default">Celular</label>
-                                            <input type="text" class="form-control" name="v_celular" id="v_celular">
                                         </div>
                                     </div>
                                     <div class="col-4">
@@ -680,6 +684,10 @@
                                                 <option class="" value="{{$provincias->id}}">{{$provincias->name}}</option>
                                                 @endforeach
                                             </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Celular</label>
+                                            <input type="text" class="form-control" name="v_celular" id="v_celular">
                                         </div>
                                         <div class="form-group">
                                             <label class="normal" for=""><br></label>
@@ -700,15 +708,15 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
+                                            <label for="sw-default">Telefono</label>
+                                            <input type="text" class="form-control" name="v_telefono" id="v_telefono">
+                                        </div>
+                                        <div class="form-group">
                                             <label class="normal" for=""><br></label>
                                             <label class="custom-control custom-radio">
                                                 <input type="radio" name="v_tipo" id="v_tipo" value="Personalizado">
                                                 Personalizado
                                               </label>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="sw-default">Telefono</label>
-                                            <input type="text" class="form-control" name="v_telefono" id="v_telefono">
                                         </div>
                                     </div>
                                 </div> <!-- end row -->

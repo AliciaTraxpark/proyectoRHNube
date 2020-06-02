@@ -297,6 +297,7 @@ function enviarContrato(accion,objArea){
 //FECHAS
 $(function(){
     $('#contrato').on('change',onSelectFecha);
+    $('#v_contrato').on('change',onSelectFecha);
 });
 function onSelectFecha(){
     $('#fechasmodal').modal();
@@ -345,6 +346,7 @@ function datosPersona(method){
         telefono:$('#telefono').val(),
         fechaI:$('#c_fechaI').text(),
         fechaF:$('#c_fechaF').text(),
+        correo:$('#email').val(),
         '_method':method
     }
     return(nuevoEmpleado);
@@ -372,6 +374,7 @@ function enviarEmpleado(accion,objEmpleado){
             $('input:radio[name=tipo]:checked').prop('checked',false);
             $('input[type="date"]').val("");
             $('input[type="file"]').val("");
+            $('input[type="email"]').val("");
             $('select').val("");
             leertabla();
 
@@ -413,6 +416,9 @@ function datosPersonaA(method){
         local_v:$('#v_local').val(),
         celular_v:$('#v_celular').val(),
         telefono_v:$('#v_telefono').val(),
+        correo_v:$('#v_email').val(),
+        fechaI_v:$('#v_fechaIC').text(),
+        fechaF_v:$('#v_fechaFC').text(),
         '_method':method
     }
     return(nuevoEmpleadoA);
