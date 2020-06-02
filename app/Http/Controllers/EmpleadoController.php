@@ -147,10 +147,12 @@ class EmpleadoController extends Controller
         if($objEmpleado['nivel'] != ''){
             $empleado->emple_nivel=$objEmpleado['nivel'];
         }
-        $empleado->emple_celular=$objEmpleado['celular'];
-        $empleado->emple_telefono=$objEmpleado['telefono'];
-        $empleado->emple_fechaIC=$objEmpleado['fechaI'];
-        $empleado->emple_fechaFC=$objEmpleado['fechaF'];
+            $empleado->emple_celular=$objEmpleado['celular'];
+            $empleado->emple_telefono=$objEmpleado['telefono'];
+        if($objEmpleado['fechaI'] != '' && $objEmpleado['fechaF'] != '' ){
+            $empleado->emple_fechaIC=$objEmpleado['fechaI'];
+            $empleado->emple_fechaFC=$objEmpleado['fechaF'];
+        }
         $empleado->emple_foto='';
 
         if($request->hasFile('file')){

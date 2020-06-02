@@ -1,5 +1,5 @@
 $('#fechaN').combodate({
-    minYear: 1900,
+    minYear: 1960,
     yearDescending: false,
 }); 
 $('#m_fechaI').combodate({
@@ -10,7 +10,7 @@ $('#m_fechaI').combodate({
 });
 $('#m_fechaF').combodate({
     value: new Date(),
-    minYear: 1900,
+    minYear: 1960,
     maxYear: moment().format('YYYY') + 1,
     yearDescending: false,
 });
