@@ -22,6 +22,7 @@ function agregarProyecto(){
 
 
     function abrirM(id) {
+
         $.ajax({
             type:"POST",
             url:"/proyecto/proyectoV",
@@ -41,12 +42,14 @@ function agregarProyecto(){
     };
 
 function registrarPE(){
+
     var proyecto=$('#id1').val();
     var empleado= $('#idempleado').val();
     if(empleado==''){
         alert('Seleccione empleado')
         return false;
     }
+
     $.ajax({
         type:"POST",
         url:"/proyecto/registrarPrEm",
@@ -55,8 +58,9 @@ function registrarPE(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success:function(data){
-            $('#idempleado').val('');
+            $('#idempleado').val(null).trigger('change');
             $('#myModal1').modal('hide');
+           
             $('#tablaProyecto').load(location.href+" #tablaProyecto>*");
             $.notify("empleado registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
 
