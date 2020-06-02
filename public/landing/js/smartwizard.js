@@ -12,10 +12,6 @@ $(document).ready(function(){
                 isStepValid = false;
                 $('#apPaterno').addClass("is-invalid");
             }else{$('#apPaterno').removeClass("is-invalid");}
-            if($('#dep').val() == "" ){
-                isStepValid = false;
-                $('#dep').addClass("is-invalid");
-            }else{$('#dep').removeClass("is-invalid");}
             if($('#numDocumento').val() == ""){
                 isStepValid = false;
                 $('#numDocumento').addClass("is-invalid");
@@ -24,10 +20,6 @@ $(document).ready(function(){
                 isStepValid = false;
                 $('#apMaterno').addClass("is-invalid");
             }else{$('#apMaterno').removeClass("is-invalid");}
-            if($('#prov').val() == ""){
-                isStepValid = false;
-                $('#prov').addClass("is-invalid");
-            }else{$('#prov').removeClass("is-invalid");}
             if($('#fechaN').val() == ""){
                 isStepValid = false;
                 $('.day').addClass("is-invalid");
@@ -42,10 +34,6 @@ $(document).ready(function(){
                 isStepValid = false;
                 $('#nombres').addClass("is-invalid");
             }else{$('#nombres').removeClass("is-invalid");}
-            if($('#dist').val() == "" ){
-                isStepValid = false;
-                $('#dist').addClass("is-invalid");
-            }else{$('#dist').removeClass("is-invalid");}
             if($("input[type=radio]:checked").length ==0){
                 isStepValid = false;
             }else{
