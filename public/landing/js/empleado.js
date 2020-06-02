@@ -1,14 +1,22 @@
 $('#fechaN').combodate({
     minYear: 1900,
+    yearDescending: false,
 }); 
 $('#m_fechaI').combodate({
-    minYear: 1900,
+    value: new Date(),
+    minYear: 2000,
+    maxYear: moment().format('YYYY')+1,
+    yearDescending: false
 });
 $('#m_fechaF').combodate({
+    value: new Date(),
     minYear: 1900,
+    maxYear: moment().format('YYYY') + 1,
+    yearDescending: false,
 });
 $('#v_fechaN').combodate({
     minYear: 1900,
+    yearDescending: false,
 }); 
 console.log('fechaN');
 $(document).ready(function() {
@@ -297,10 +305,12 @@ $('#guardarFechas').click(function(){
     fechaI = $('#m_fechaI').val();
     fechaF = $('#m_fechaF').val();
     if($('#m_fechaI').val() != "" && $('#m_fechaF') != ""){
+        $('#c_fechaI').text(fechaI);
+        $('#c_fechaF').text(fechaF);
         $('#fechasmodal').modal('toggle');
-        $('#m_fechaI').combodate("clearValue");
-        $('#m_fechaF').combodate("clearValue");
     }
+    $('#m_fechaI').combodate("clearValue");
+    $('#m_fechaF').combodate("clearValue");
 });
 //EMPLEADO
 $('#guardarEmpleado').click(function(){
