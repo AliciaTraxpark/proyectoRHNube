@@ -300,7 +300,7 @@ $(function(){
 function onSelectFecha(){
     $('#fechasmodal').modal();
 }
-$('#guardarFechas').click(function(){
+function agregarFechas(){
     fechaI = $('#m_fechaI').val();
     fechaF = $('#m_fechaF').val();
     if($('#m_fechaI').val() != "" && $('#m_fechaF') != ""){
@@ -310,7 +310,7 @@ $('#guardarFechas').click(function(){
     }
     $('#m_fechaI').combodate("clearValue");
     $('#m_fechaF').combodate("clearValue");
-});
+}
 //EMPLEADO
 $('#guardarEmpleado').click(function(){
     objEmpleado=datosPersona("POST");

@@ -58,10 +58,6 @@ $(document).ready(function(){
                 isStepValid = false;
                 $('#v_apPaterno').addClass("is-invalid");
             }else{$('#v_apPaterno').removeClass("is-invalid");}
-            if($('#v_dep').val() == "" ){
-                isStepValid = false;
-                $('#v_dep').addClass("is-invalid");
-            }else{$('#v_dep').removeClass("is-invalid");}
             if($('#v_numDocumento').val() == ""){
                 isStepValid = false;
                 $('#v_numDocumento').addClass("is-invalid");
@@ -70,18 +66,10 @@ $(document).ready(function(){
                 isStepValid = false;
                 $('#v_apMaterno').addClass("is-invalid");
             }else{$('#v_apMaterno').removeClass("is-invalid");}
-            if($('#v_prov').val() == ""){
-                isStepValid = false;
-                $('#v_prov').addClass("is-invalid");
-            }else{$('#v_prov').removeClass("is-invalid");}
             if($('#v_nombres').val() ==""){
                 isStepValid = false;
                 $('#v_nombres').addClass("is-invalid");
             }else{$('#v_nombres').removeClass("is-invalid");}
-            if($('#v_dist').val() == "" ){
-                isStepValid = false;
-                $('#v_dist').addClass("is-invalid");
-            }else{$('#v_dist').removeClass("is-invalid");}
             console.log(isStepValid)
         }
         if(stepnumber == 1){
