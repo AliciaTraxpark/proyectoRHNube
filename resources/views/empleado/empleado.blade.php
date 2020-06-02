@@ -76,6 +76,9 @@
     .btn-secondary{
         max-width: 9em;
     }
+    .form-control:disabled{
+        background-color: #f0f0f0;
+    }
 </style>
 <div id="preloader">
     <div id="status">

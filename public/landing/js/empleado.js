@@ -1,3 +1,34 @@
+$('#numDocumento').prop('disabled',true);
+$('#apPaterno').prop('disabled',true);
+$('#apMaterno').prop('disabled',true);
+$('#departamento').prop('disabled',true);
+$('#provincia').prop('disabled',true);
+$('#distrito').prop('disabled',true);
+$('#dep').prop('disabled',true);
+$('#prov').prop('disabled',true);
+$('#dist').prop('disabled',true);
+$('#nombres').prop('disabled',true);
+$('#direccion').prop('disabled',true);
+$('input:radio[name=tipo]').prop('disabled',true);
+$('#celular').prop('disabled',true);
+$('#telefono').prop('disabled',true);
+$('#documento').on('change',function(){
+    $('#numDocumento').prop('disabled',false);
+    $('#apPaterno').prop('disabled',false);
+    $('#apMaterno').prop('disabled',false);
+    $('#departamento').prop('disabled',false);
+    $('#provincia').prop('disabled',false);
+    $('#distrito').prop('disabled',false);
+    $('#dep').prop('disabled',false);
+    $('#prov').prop('disabled',false);
+    $('#dist').prop('disabled',false);
+    $('#nombres').prop('disabled',false);
+    $('#direccion').prop('disabled',false);
+    $('input:radio[name=tipo]').prop('disabled',false);
+    $('#celular').prop('disabled',false);
+    $('#telefono').prop('disabled',false);
+});
+//********************** */
 $('#fechaN').combodate({
     minYear: 1960,
     yearDescending: false,
