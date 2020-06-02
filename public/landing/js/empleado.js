@@ -12,8 +12,6 @@ $('#direccion').prop('disabled',true);
 $('input:radio[name=tipo]').prop('disabled',true);
 $('#celular').prop('disabled',true);
 $('#telefono').prop('disabled',true);
-$('day').attr('disabled','disabled')
-.siblings().removeAttr('disabled');
 $('#documento').on('change',function(){
     $('#numDocumento').prop('disabled',false);
     $('#apPaterno').prop('disabled',false);
