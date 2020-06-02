@@ -297,7 +297,6 @@ function enviarContrato(accion,objArea){
 //FECHAS
 $(function(){
     $('#contrato').on('change',onSelectFecha);
-    $('#v_contrato').on('change',onSelectFecha);
 });
 function onSelectFecha(){
     $('#fechasmodal').modal();
