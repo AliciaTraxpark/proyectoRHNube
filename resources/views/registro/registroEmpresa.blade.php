@@ -23,7 +23,7 @@
         </div>
         <div class="col-md-9 text-left">
         <h5 style="color: #ffffff">Ahora registra tu organización: Empresarial, Gobierno, Ong…</h5>
-        <label for="" class="blanco">Tienes 2 minutos</label>
+        <label for="" class="blanco font-italic">Tienes 2 minutos</label>
 
         </div>
     </div>
