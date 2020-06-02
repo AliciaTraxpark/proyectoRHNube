@@ -732,6 +732,10 @@
                                                 @endforeach
                                             </select>
                                         </div>
+                                        <div class="form-group">
+                                            <label for="sw-default" style="color: darkblue;">Fecha Inicio <label for="sw-default" id="v_fechaIC"></label></label>
+                                            <label for="sw-default" style="color: red;">Fecha Final <label for="sw-default" id="v_fechaFC"></label></label>
+                                        </div>
                                     </div> <!-- end col -->
                                     <div class="col-4">
                                         <div class="form-group">
