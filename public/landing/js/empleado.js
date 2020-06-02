@@ -9,7 +9,6 @@ $('#m_fechaI').combodate({
     yearDescending: false
 });
 $('#m_fechaF').combodate({
-    value: new Date(),
     minYear: 1960,
     maxYear: moment().format('YYYY') + 1,
     yearDescending: false,
