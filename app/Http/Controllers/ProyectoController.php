@@ -12,11 +12,13 @@ class ProyectoController extends Controller
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->select('p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno')
             ->get();
-        
+
             return view('Proyecto.proyecto',['empleado'=> $empleado]);
     }
 
-    public function cargarEmpleado(){
+    public function store(Request $request){
         
+
     }
+
 }

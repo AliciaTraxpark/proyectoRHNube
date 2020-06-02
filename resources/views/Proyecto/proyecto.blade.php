@@ -35,13 +35,57 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
+                                <form class="form-horizontal col-lg-12" >
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group col-lg-12 row">
+                                                <label class="col-lg-4 col-form-label" for="simpleinput">Nombre de proyecto</label>
+                                                <div class="col-lg-8">
+                                                    <input type="text" class="form-control" id="nombreProyecto" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                       <div class="col-lg-12">
+                                        <div class="form-group col-lg-12 row">
+                                            <label class="col-lg-4 col-form-label"
+                                                for="example-textarea">Descripcion</label>
+                                            <div class="col-lg-8">
+                                                <textarea class="form-control" rows="3"
+                                                    id="detalleProyecto"></textarea>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                              </div>
+                           </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
+                <div id="myModal1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog ">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="myModalLabel">Agregar miembros</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
                                 <form class="form-horizontal col-lg-12">
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group col-lg-12 row">
                                                 <label class="col-lg-6 col-form-label" for="simpleinput">Nombre de proyecto</label>
                                                 <div class="col-lg-6">
-                                                    <input type="text" class="form-control" id="simpleinput" value="">
+                                                    <input type="text" class="form-control" id="simpleinput" value="proyecto1">
                                                 </div>
                                             </div>
                                         </div>
@@ -91,12 +135,14 @@
                         <tr>
                             <td>Proyecto1</td>
                             <td><span>Miembro1</span> ,<span>Miembro2</span></td>
-                            <td><button class="btn btn-success btn-sm">Agregar miembro</button></td>
+                            <td><button class="btn btn-success btn-sm" data-toggle="modal"
+                                data-target="#myModal1">Agregar miembro</button></td>
                         </tr>
                         <tr>
                             <td>Proyecto2</td>
                             <td><span>Miembro1</span> ,<span>Miembro2</span></td>
-                            <td><button class="btn btn-success btn-sm">Agregar miembro</button></td>
+                            <td><button class="btn btn-success btn-sm"  data-toggle="modal"
+                                data-target="#myModal1">Agregar miembro</button></td>
                         </tr>
 
                     </tbody>

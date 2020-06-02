@@ -104,4 +104,4 @@ Route::post('import', 'MyController@import')->name('import');
 Route::post('importEmpleado', 'excelEmpleadoController@import')->name('importEmpleado');
 //PROYECTO
 Route::get('/proyecto','ProyectoController@index' );
-Route::get('/proyecto/empleado','ProyectoController@cargarEmpleado');
+Route::post('/proyecto/registrar','ProyectoController@store');
