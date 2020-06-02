@@ -153,6 +153,7 @@ class EmpleadoController extends Controller
             $empleado->emple_fechaIC=$objEmpleado['fechaI'];
             $empleado->emple_fechaFC=$objEmpleado['fechaF'];
         }
+        $empleado->emple_Correo=$objEmpleado['correo'];
         $empleado->emple_foto='';
 
         if($request->hasFile('file')){
@@ -201,7 +202,7 @@ class EmpleadoController extends Controller
             'para.id as depaN','proviN.id as idproviN','proviN.name as proviN','distN.id as iddistN',
             'distN.name as distN','e.emple_id','c.cargo_id','a.area_id', 'cc.centroC_id','e.emple_tipoContrato',
             'e.emple_local','e.emple_nivel','e.emple_departamento','e.emple_provincia','e.emple_distrito','e.emple_foto as foto',
-            'e.emple_celular','e.emple_telefono','e.emple_fechaIC','e.emple_fechaFC')
+            'e.emple_celular','e.emple_telefono','e.emple_fechaIC','e.emple_fechaFC','e.emple_Correo')
             ->where('emple_id','=',$idempleado)
             ->get();
         return $empleado;
@@ -248,6 +249,9 @@ class EmpleadoController extends Controller
         $empleado->emple_nivel=$objEmpleado['nivel_v'];
         $empleado->emple_celular=$objEmpleado['celular_v'];
         $empleado->emple_telefono=$objEmpleado['telefono_v'];
+        $empleado->emple_Correo=$objEmpleado['correo_v'];
+        $empleado->emple_fechaIC=$objEmpleado['fechaI_v'];
+        $empleado->emple_fechaFC=$objEmpleado['fechaF_v'];
         if($request->hasfile('file')){
             $file = $request->file('file');
             $path = public_path() . '/fotosEmpleado';

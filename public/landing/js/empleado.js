@@ -1,36 +1,3 @@
-$('#numDocumento').prop('disabled',true);
-$('#apPaterno').prop('disabled',true);
-$('#apMaterno').prop('disabled',true);
-$('#departamento').prop('disabled',true);
-$('#provincia').prop('disabled',true);
-$('#distrito').prop('disabled',true);
-$('#dep').prop('disabled',true);
-$('#prov').prop('disabled',true);
-$('#dist').prop('disabled',true);
-$('#nombres').prop('disabled',true);
-$('#direccion').prop('disabled',true);
-$('input:radio[name=tipo]').prop('disabled',true);
-$('#celular').prop('disabled',true);
-$('#telefono').prop('disabled',true);
-$('day').attr('disabled','disabled')
-.siblings().removeAttr('disabled');
-$('#documento').on('change',function(){
-    $('#numDocumento').prop('disabled',false);
-    $('#apPaterno').prop('disabled',false);
-    $('#apMaterno').prop('disabled',false);
-    $('#departamento').prop('disabled',false);
-    $('#provincia').prop('disabled',false);
-    $('#distrito').prop('disabled',false);
-    $('#dep').prop('disabled',false);
-    $('#prov').prop('disabled',false);
-    $('#dist').prop('disabled',false);
-    $('#nombres').prop('disabled',false);
-    $('#direccion').prop('disabled',false);
-    $('input:radio[name=tipo]').prop('disabled',false);
-    $('#celular').prop('disabled',false);
-    $('#telefono').prop('disabled',false);
-});
-//********************** */
 $('#fechaN').combodate({
     minYear: 1960,
     yearDescending: false,
@@ -378,6 +345,7 @@ function datosPersona(method){
         telefono:$('#telefono').val(),
         fechaI:$('#c_fechaI').text(),
         fechaF:$('#c_fechaF').text(),
+        correo:$('#email').val(),
         '_method':method
     }
     return(nuevoEmpleado);
@@ -405,6 +373,7 @@ function enviarEmpleado(accion,objEmpleado){
             $('input:radio[name=tipo]:checked').prop('checked',false);
             $('input[type="date"]').val("");
             $('input[type="file"]').val("");
+            $('input[type="email"]').val("");
             $('select').val("");
             leertabla();
 
@@ -446,6 +415,9 @@ function datosPersonaA(method){
         local_v:$('#v_local').val(),
         celular_v:$('#v_celular').val(),
         telefono_v:$('#v_telefono').val(),
+        correo_v:$('#v_email').val(),
+        fechaI_v:$('#v_fechaIC').text(),
+        fechaF_v:$('#v_fechaFC').text(),
         '_method':method
     }
     return(nuevoEmpleadoA);
@@ -556,3 +528,9 @@ function cargarFile2(){
         fileActionSettings:{"showDrag":false, 'showZoom':false},
     })
 }
+//********************** */
+$("#form-registrar :input").prop('disabled',true);
+$('#documento').attr('disabled',false);
+$('#documento').on('change',function(){
+    $("#form-registrar :input").attr('disabled',false);
+});

@@ -117,6 +117,7 @@
         $('#v_telefono').val(data[0].emple_telefono);
         $('#v_fechaIC').text(data[0].emple_fechaIC);
         $('#v_fechaFC').text(data[0].emple_fechaFC);
+        $('#v_email').val(data[0].emple_Correo);
         if(data[0].foto!=""){
             urlFoto = data[0].foto;
             hayFoto= true;
