@@ -162,7 +162,7 @@
                                 ->get();
 
                                 @endphp
-                                <span>{{$empleado[0]->perso_nombre }} {{$empleado[0]->perso_apPaterno}} {{$empleado[0]->perso_apMaterno }}</span>
+                                <span>{{$empleado[0]->perso_nombre }} {{$empleado[0]->perso_apPaterno}} {{$empleado[0]->perso_apMaterno }},</span>
                                  @endforeach
 
                             </td>

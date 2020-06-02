@@ -8,7 +8,7 @@ class proyecto_empleado extends Model
 {
     //
     protected $table = 'proyecto_empleado';
-    protected $primaryKey = 'Proyecto_Proye_id';
-    protected $fillable = ['Proyecto_Proye_id','empleado_emple_id ','Fecha_Ini','Fecha_Fin'];
+    protected $primaryKey = 'proye_empleado_id';
+    protected $fillable = ['proye_empleado_id','Proyecto_Proye_id','empleado_emple_id ','Fecha_Ini','Fecha_Fin'];
     public $timestamps = false;
 }
