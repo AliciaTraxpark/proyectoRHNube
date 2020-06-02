@@ -1,12 +1,20 @@
+@php
+  use App\proyecto_empleado;
+@endphp
+
 @extends('layouts.vertical')
 
 @section('css')
+
+    <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+
 <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
+
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
@@ -80,13 +88,15 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <form class="form-horizontal col-lg-12">
+                                <form class="form-horizontal col-lg-12" action="javascript:registrarPE()">
+                                    {{ csrf_field() }}
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group col-lg-12 row">
                                                 <label class="col-lg-6 col-form-label" for="simpleinput">Nombre de proyecto</label>
                                                 <div class="col-lg-6">
-                                                    <input type="text" class="form-control-plaintext" id="simpleinput" value="proyecto1" disabled>
+                                                    <input type="text" class="form-control-plaintext" id="nombre1"  disabled>
+                                                    <input type="hidden"  id="id1">
                                                 </div>
                                             </div>
                                         </div>
@@ -94,7 +104,7 @@
                                             <div class="form-group col-lg-12 row">
                                                 <label class="col-lg-4 col-form-label" for="simpleinput">Miembros de proyecto</label>
                                                 <div class="col-lg-8">
-                                                    <select data-plugin="customselect" class="form-control" data-placeholder="Seleccione empleado">
+                                                    <select data-plugin="customselect" id="idempleado" class="form-control" data-placeholder="Seleccione empleado">
                                                         <option></option>
                                                         @foreach ($empleado as $empleados)
                                                         <option class="" value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}} </option>
@@ -104,16 +114,14 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
-                                </form>
-
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                            <button type="button" class="btn btn-primary">Guardar</button>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
                         </div>
+                    </form>
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
@@ -136,13 +144,30 @@
                     </thead>
                     <tbody>
                         @foreach ($proyecto as $proyectos)
+                        @php
+                             $proyectoEmp=proyecto_empleado::where('Proyecto_Proye_id','=',$proyectos->Proye_id)->get();
+
+                              @endphp
                         <tr>
                             <th>{{$loop->index+1}}</th>
                             <td>{{$proyectos->Proye_Nombre}}</td>
                             <td>{{$proyectos->Proye_Detalle}}</td>
-                            <td><span>Miembro1</span> ,<span>Miembro2</span></td>
-                            <td><button class="btn btn-success btn-sm" data-toggle="modal"
-                                data-target="#myModal1">Agregar miembro</button></td>
+                            <td>
+                                @foreach ( $proyectoEmp as $proyectoEmps)
+                                @php
+                                $empleado = DB::table('empleado as e')
+                                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                ->select('e.emple_id','p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno')
+                                ->where('e.emple_id','=',$proyectoEmps->empleado_emple_id)
+                                ->get();
+
+                                @endphp
+                                <span>{{$empleado[0]->perso_nombre }} {{$empleado[0]->perso_apPaterno}} {{$empleado[0]->perso_apMaterno }}</span>
+                                 @endforeach
+
+                            </td>
+                            <td><button  class="btn btn-success btn-sm" onclick="abrirM({{$proyectos->Proye_id}})"
+                              >Agregar miembro </button></td>
                         </tr>
                        @endforeach
                     </tbody>
@@ -177,6 +202,8 @@
 @endsection
 @section('script')
 <!-- Plugins Js -->
+
+
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js') }}"></script>
@@ -184,8 +211,10 @@
 <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{asset('landing/js/proyecto.js')}}"></script>
+
 @endsection
 
 @section('script-bottom')
 <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
 @endsection
+
