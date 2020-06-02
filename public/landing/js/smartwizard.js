@@ -12,10 +12,6 @@ $(document).ready(function(){
                 isStepValid = false;
                 $('#apPaterno').addClass("is-invalid");
             }else{$('#apPaterno').removeClass("is-invalid");}
-            if($('#departamento').val() == ""){
-                isStepValid = false;
-                $('#departamento').addClass("is-invalid");
-            }else{$('#departamento').removeClass("is-invalid");}
             if($('#dep').val() == "" ){
                 isStepValid = false;
                 $('#dep').addClass("is-invalid");
@@ -28,35 +24,33 @@ $(document).ready(function(){
                 isStepValid = false;
                 $('#apMaterno').addClass("is-invalid");
             }else{$('#apMaterno').removeClass("is-invalid");}
-            if($('#provincia').val() == ""){
-                isStepValid = false;
-                $('#provincia').addClass("is-invalid");
-            }else{$('#provincia').removeClass("is-invalid");}
             if($('#prov').val() == ""){
                 isStepValid = false;
                 $('#prov').addClass("is-invalid");
             }else{$('#prov').removeClass("is-invalid");}
             if($('#fechaN').val() == ""){
                 isStepValid = false;
-                $('#fechaN').addClass("is-invalid");
-            }else{$('#fechaN').removeClass("is-invalid");}
+                $('.day').addClass("is-invalid");
+                $('.month').addClass("is-invalid");
+                $('.year').addClass("is-invalid");
+            }else{
+                $('.day').removeClass("is-invalid");
+                $('.month').removeClass("is-invalid");
+                $('.year').removeClass("is-invalid");
+            }
             if($('#nombres').val() ==""){
                 isStepValid = false;
                 $('#nombres').addClass("is-invalid");
             }else{$('#nombres').removeClass("is-invalid");}
-            if($('#distrito').val() == ""){
-                isStepValid = false;
-                $('#distrito').addClass("is-invalid");
-            }else{
-                $('#distrito').removeClass("is-invalid");}
             if($('#dist').val() == "" ){
                 isStepValid = false;
                 $('#dist').addClass("is-invalid");
             }else{$('#dist').removeClass("is-invalid");}
-            if($('#direccion').val() == ""){
+            if($("input[type=radio]:checked").length ==0){
                 isStepValid = false;
-                $('#direccion').addClass("is-invalid");
-            }else{$('#direccion').removeClass("is-invalid");}
+            }else{
+                
+            }
             console.log(isStepValid)
         }
         if(stepnumber == 1){
@@ -100,10 +94,6 @@ $(document).ready(function(){
                 isStepValid = false;
                 $('#v_dist').addClass("is-invalid");
             }else{$('#v_dist').removeClass("is-invalid");}
-            if($('#v_direccion').val() == ""){
-                isStepValid = false;
-                $('#v_direccion').addClass("is-invalid");
-            }else{$('#v_direccion').removeClass("is-invalid");}
             console.log(isStepValid)
         }
         if(stepnumber == 1){

@@ -29,8 +29,11 @@ class EmpleadoController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except('provincias','distritos');
+        $this->middleware('auth')->except('provincias','distritos','fechas');
     }
+    public function fechas($id){
+        return tipo_contrato::where('contrato_id',$id)->get();
+     }
     public function provincias($id){
         return ubigeo_peru_provinces::where('departamento_id',$id)->get();
     }
@@ -118,18 +121,37 @@ class EmpleadoController extends Controller
         $empleado->emple_tipoDoc=$objEmpleado['documento'];
         $empleado->emple_nDoc=$objEmpleado['numDocumento'];
         $empleado->emple_persona=$emple_persona;
-        $empleado->emple_departamentoN=$objEmpleado['departamento'];
-        $empleado->emple_provinciaN=$objEmpleado['provincia'];
-        $empleado->emple_distritoN=$objEmpleado['distrito'];
-        $empleado->emple_cargo=$objEmpleado['cargo'];
-        $empleado->emple_area=$objEmpleado['area'];
-        $empleado->emple_centCosto=$objEmpleado['centroc'];
+        if($objEmpleado['departamento'] != ''){
+            $empleado->emple_departamentoN=$objEmpleado['departamento'];
+            $empleado->emple_provinciaN=$objEmpleado['provincia'];
+            $empleado->emple_distritoN=$objEmpleado['distrito'];
+        }
+        if($objEmpleado['cargo'] != ''){
+            $empleado->emple_cargo=$objEmpleado['cargo'];
+        }
+        if($objEmpleado['area'] != ''){
+            $empleado->emple_area=$objEmpleado['area'];
+        }
+        if($objEmpleado['centroc'] != ''){
+            $empleado->emple_centCosto=$objEmpleado['centroc'];
+        }
         $empleado->emple_departamento=$objEmpleado['dep'];
         $empleado->emple_provincia=$objEmpleado['prov'];
         $empleado->emple_distrito=$objEmpleado['dist'];
-        $empleado->emple_tipoContrato=$objEmpleado['contrato'];
-        $empleado->emple_local=$objEmpleado['local'];
-        $empleado->emple_nivel=$objEmpleado['nivel'];
+        if($objEmpleado['contrato'] != ''){
+            $empleado->emple_tipoContrato=$objEmpleado['contrato'];
+        }
+        if($objEmpleado['local'] != ''){
+            $empleado->emple_local=$objEmpleado['local'];
+        }
+        if($objEmpleado['nivel'] != ''){
+            $empleado->emple_nivel=$objEmpleado['nivel'];
+        }
+        $empleado->emple_celular=$objEmpleado['celular'];
+        $empleado->emple_telefono=$objEmpleado['telefono'];
+        $empleado->emple_fechaIC=$objEmpleado['fechaI'];
+        $empleado->emple_fechaFC=$objEmpleado['fechaF'];
+        $empleado->emple_foto='';
 
         if($request->hasFile('file')){
             $file = $request->file('file');
@@ -176,7 +198,7 @@ class EmpleadoController extends Controller
             'c.cargo_descripcion', 'a.area_descripcion','cc.centroC_descripcion','para.id as iddepaN',
             'para.id as depaN','proviN.id as idproviN','proviN.name as proviN','distN.id as iddistN',
             'distN.name as distN','e.emple_id','c.cargo_id','a.area_id', 'cc.centroC_id','e.emple_tipoContrato',
-            'e.emple_local','e.emple_nivel','e.emple_departamento','e.emple_provincia','e.emple_distrito','e.emple_foto as foto')
+            'e.emple_local','e.emple_nivel','e.emple_departamento','e.emple_provincia','e.emple_distrito','e.emple_foto as foto','e.emple_celular','e.emple_telefono')
             ->where('emple_id','=',$idempleado)
             ->get();
         return $empleado;
@@ -209,9 +231,11 @@ class EmpleadoController extends Controller
         if($request==null)return false;
         $empleado= Empleado::findOrFail($idE);
 
-        $empleado->emple_nDoc=$objEmpleado['numDocumento_v'];
         $empleado->emple_cargo=$objEmpleado['cargo_v'];
         $empleado->emple_area=$objEmpleado['area_v'];
+        $empleado->emple_departamentoN=$objEmpleado['departamento_v'];
+        $empleado->emple_provinciaN=$objEmpleado['provincia_v'];
+        $empleado->emple_distritoN=$objEmpleado['distrito_v'];
         $empleado->emple_centCosto=$objEmpleado['centroc_v'];
         $empleado->emple_departamento=$objEmpleado['dep_v'];
         $empleado->emple_provincia=$objEmpleado['prov_v'];
@@ -219,6 +243,8 @@ class EmpleadoController extends Controller
         $empleado->emple_tipoContrato=$objEmpleado['contrato_v'];
         $empleado->emple_local=$objEmpleado['local_v'];
         $empleado->emple_nivel=$objEmpleado['nivel_v'];
+        $empleado->emple_celular=$objEmpleado['celular_v'];
+        $empleado->emple_telefono=$objEmpleado['telefono_v'];
         if($request->hasfile('file')){
             $file = $request->file('file');
             $path = public_path() . '/fotosEmpleado';
@@ -239,6 +265,8 @@ class EmpleadoController extends Controller
         $persona->perso_apPaterno=$objEmpleado['apPaterno_v'];
         $persona->perso_apMaterno=$objEmpleado['apMaterno_v'];
         $persona->perso_direccion=$objEmpleado['direccion_v'];
+        $persona->perso_fechaNacimiento=$objEmpleado['fechaN_v'];
+        $persona->perso_sexo=$objEmpleado['tipo_v'];
         $persona->save();
         return json_encode(array('status'=>true));
     }

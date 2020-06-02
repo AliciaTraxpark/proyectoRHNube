@@ -1,10 +1,14 @@
 $('#fechaN').combodate({
-    customClass: 'form-control',
-    moment:'es'
+    minYear: 1900,
 }); 
+$('#m_fechaI').combodate({
+    minYear: 1900,
+});
+$('#m_fechaF').combodate({
+    minYear: 1900,
+});
 $('#v_fechaN').combodate({
-    customClass: 'form-control',
-    moment:'es'
+    minYear: 1900,
 }); 
 console.log('fechaN');
 $(document).ready(function() {
@@ -23,6 +27,7 @@ $(document).ready(function() {
         theme: "fa"
     });
 });
+//AREA
 function agregarArea(){
     objArea=datos("POST");
     enviarArea('',objArea);
@@ -237,6 +242,68 @@ function enviarNivel(accion,objNivel){
         error:function(){alert("Hay un error");}
     });
 }
+
+//CONTRATO
+function agregarContrato(){
+    objContrato=datos("POST");
+    enviarContrato('',objContrato);
+};
+
+function datos(method){
+    nuevoArea={
+        contrato_descripcion: $('#textContrato').val(),
+        '_method':method
+    }
+    return(nuevoArea);
+}
+
+function enviarContrato(accion,objArea){
+    $.ajax({
+        type:"POST",
+        url:"/registrar/contrato"+accion,
+        data:objContrato,
+        headers:{
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success:function(data){
+            $('#contrato').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                value: data.contrato_id,
+                text: data.contrato_descripcion,
+                selected: true
+               }));
+               $('#v_contrato').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                value: data.contrato_id,
+                text: data.contrato_descripcion,
+                selected: true
+               }));
+             $('#contrato').val(data.contrato_id).trigger("change"); //lo selecciona
+             $('#v_contrato').val(data.contrato_id).trigger("change");
+             $('#textcontrato').val('');
+            $('#contratomodal').modal('toggle');
+            $.notify("Contrato registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
+
+        },
+        error:function(){ alert("Hay un error");}
+    });
+}
+//FECHAS
+$(function(){
+    $('#contrato').on('change',onSelectFecha);
+});
+function onSelectFecha(){
+    $('#fechasmodal').modal();
+}
+$('#guardarFechas').click(function(){
+    fechaI = $('#m_fechaI').val();
+    fechaF = $('#m_fechaF').val();
+    if($('#m_fechaI').val() != "" && $('#m_fechaF') != ""){
+        $('#c_fechaI').text(fechaI);
+        $('#c_fechaF').text(fechaF);
+        $('#fechasmodal').modal('toggle');
+        $('#m_fechaI').combodate('setValue', '');
+        $('#m_fechaF').combodate('setValue', '');
+    }
+});
 //EMPLEADO
 $('#guardarEmpleado').click(function(){
     objEmpleado=datosPersona("POST");
@@ -266,6 +333,10 @@ function datosPersona(method){
         direccion:$('#direccion').val(),
         nivel:$('#nivel').val(),
         local:$('#local').val(),
+        celular:$('#celular').val(),
+        telefono:$('#telefono').val(),
+        fechaI:$('#c_fechaI').text(),
+        fechaF:$('#c_fechaF').text(),
         '_method':method
     }
     return(nuevoEmpleado);
@@ -317,7 +388,11 @@ function datosPersonaA(method){
         nombres_v:$('#v_nombres').val(),
         apPaterno_v:$('#v_apPaterno').val(),
         apMaterno_v:$('#v_apMaterno').val(),
-        numDocumento_v:$('#v_numDocumento').val(),
+        fechaN_v:$('#v_fechaN').val(),
+        tipo_v:$('input:radio[name=v_tipo]:checked').val(),
+        departamento_v:$('#v_departamento').val(),
+        provincia_v:$('#v_provincia').val(),
+        distrito_v:$('#v_distrito').val(),
         cargo_v:$('#v_cargo').val(),
         area_v:$('#v_area').val(),
         centroc_v:$('#v_centroc').val(),
@@ -328,6 +403,8 @@ function datosPersonaA(method){
         direccion_v:$('#v_direccion').val(),
         nivel_v:$('#v_nivel').val(),
         local_v:$('#v_local').val(),
+        celular_v:$('#v_celular').val(),
+        telefono_v:$('#v_telefono').val(),
         '_method':method
     }
     return(nuevoEmpleadoA);
@@ -421,7 +498,7 @@ function cargarFile2(){
             initialPreview:
             [
                 "<img  id=v_foto src='{{asset('/fotosEmpleado')}}/'"+
-                urlFoto + "'style='width:200px'>"
+                urlFoto + "'style='width:120px'>"
             ] ,
             initialPreviewConfig: [{
                 width: "120px",

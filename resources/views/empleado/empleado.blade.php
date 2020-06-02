@@ -61,20 +61,20 @@
         justify-content: space-between;
     }
     .day{
-        max-width: 25%;
+        max-width: 28%;
     }
     .month{
-        max-width: 33%;
+        max-width: 35%;
     }
     .year{
-        max-width: 40%;
+        max-width: 37%;
     }
     .btn-group{
         width: 100%;
         justify-content: space-between;
     }
     .btn-secondary{
-        max-width: 10em;
+        max-width: 9em;
     }
 </style>
 <div id="preloader">
@@ -279,7 +279,57 @@
                               </form>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
-                </div><!-- /.modal -->
+                </div>
+                <div id="contratomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="myModalLabel">Agregar Contrato</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                              <form action="javascript:agregarContrato()">
+                                {{ csrf_field() }}
+                                <div class="col-md-12">
+                                  <label for="">Contrato</label>
+                                  <input type="text" class="form-control" name="textArea" id="textContrato" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" id="guardarContrato" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </form>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div>
+                <div id="fechasmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="myModalLabel">Indicar fechas de Contrato</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                {{ csrf_field() }}
+                                <div class="col-md-12">
+                                  <label for="">Fecha Inicial</label>
+                                  <input type="text" data-custom-class="form-control" id="m_fechaI" data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date" required>
+                                  <label for="">Fecha Final</label>
+                                  <input type="text" data-custom-class="form-control" id="m_fechaF" data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="button" id="guardarFechas" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal --><!-- /.modal -->
                 <div class="col-md-6 col-xl-6" style="font-size: 13px" id="form-registrar">
                             <br>
                             <h4 class="header-title mt-0 "></i>Datos de empleado</h4>
@@ -371,6 +421,10 @@
                                                         Femenino
                                                       </label>
                                                 </div>
+                                                <div class="form-group">
+                                                    <label for="sw-default">Celular</label>
+                                                    <input type="text" class="form-control" name="celular" id="celular">
+                                                </div>
                                             </div>
                                             <div class="col-4">
                                                 <div class="form-group">
@@ -396,10 +450,16 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="normal" for=""><br></label>
-                                                    <label class="custom-control custom-radio">
+                                                    <label class="custom-control custom-radio" data-toggle="tooltip"
+                                                    data-placement="right" title=""
+                                                    data-original-title="Puedes elegir personalizado si no deseas especificar tu sexo.">
                                                         <input type="radio" name="tipo" id="tipo" value="Personalizado" required>
                                                         Personalizado
                                                       </label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sw-default">Telefono</label>
+                                                    <input type="text" class="form-control" name="telefono" id="telefono">
                                                 </div>
                                             </div>
                                         </div> <!-- end row -->
@@ -411,20 +471,23 @@
                                                     <label for="sw-default">Cargo <a  href="#cargomodal" data-toggle="modal" data-target="#cargomodal"><i class="uil uil-plus"></i></a></label>
                                                     <select  class="form-control" name="cargo" id="cargo">
                                                         <option value="">Seleccionar</option>
-
                                                           @foreach ($cargo as $cargos)
                                                           <option class="" value="{{$cargos->cargo_id}}">{{$cargos->cargo_descripcion}}</option>
                                                           @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default">Contrato</label>
+                                                    <label for="sw-default">Contrato <a  href="#contratomodal" data-toggle="modal" data-target="#contratomodal"><i class="uil uil-plus"></i></a></label>
                                                     <select  class="form-control" name="contrato" id="contrato" required>
                                                         <option value="">Seleccionar</option>
                                                         @foreach ($tipo_cont as $tipo_conts)
                                                         <option class="" value="{{$tipo_conts->contrato_id}}">{{$tipo_conts->contrato_descripcion}}</option>
                                                         @endforeach
                                                     </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sw-default" style="color: darkblue;">Fecha Inicio <label for="sw-default" id="c_fechaI"></label></label>
+                                                    <label for="sw-default" style="color: red;">Fecha Final <label for="sw-default" id="c_fechaF"></label></label>
                                                 </div>
                                             </div> <!-- end col -->
                                             <div class="col-4">
@@ -531,16 +594,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Lugar Nacimiento</label>
-                                            <select  class="form-control" placeholder="Departamento" name="v_departamento" id="v_departamento" disabled style="background-color: #f0f0f0;">
-                                                <option value="">Departamento</option>
-                                                @foreach ($departamento as $departamentos)
-                                                  <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
-                                                  @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="sw-default">Dirección Domiciliara</label>
-                                            <select  class="form-control" placeholder="Departamento" name="v_dep" id="v_dep" required>
+                                            <select  class="form-control" placeholder="Departamento" name="v_departamento" id="v_departamento">
                                                 <option value="">Departamento</option>
                                                 @foreach ($departamento as $departamentos)
                                                   <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
@@ -551,7 +605,7 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="sw-default">Num. Documento</label>
-                                            <input type="text" class="form-control" name="v_numDocumento" id="v_numDocumento" required>
+                                            <input type="text" class="form-control" name="v_numDocumento" id="v_numDocumento" required disabled style="background-color: #f0f0f0;">
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Apellido Materno</label>
@@ -559,16 +613,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default"><br></label>
-                                            <select  class="form-control " placeholder="Provincia " name="v_provincia" id="v_provincia"  disabled style="background-color: #f0f0f0;">
-                                                <option value="">Provincia</option>
-                                                @foreach ($provincia as $provincias)
-                                                <option class="" value="{{$provincias->id}}">{{$provincias->name}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="sw-default"><br></label>
-                                            <select  class="form-control " placeholder="Provincia " name="v_prov" id="v_prov" required>
+                                            <select  class="form-control " placeholder="Provincia " name="v_provincia" id="v_provincia">
                                                 <option value="">Provincia</option>
                                                 @foreach ($provincia as $provincias)
                                                 <option class="" value="{{$provincias->id}}">{{$provincias->name}}</option>
@@ -587,16 +632,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default"><br></label>
-                                            <select  class="form-control " placeholder="Distrito " name="v_distrito" id="v_distrito" disabled style="background-color: #f0f0f0;">
-                                                <option value="">Distrito</option>
-                                                @foreach ($distrito as $distritos)
-                                                <option class="" value="{{$distritos->id}}">{{$distritos->name}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="sw-default"><br></label>
-                                            <select  class="form-control " placeholder="Distrito " name="v_dist" id="v_dist" required>
+                                            <select  class="form-control " placeholder="Distrito " name="v_distrito" id="v_distrito">
                                                 <option value="">Distrito</option>
                                                 @foreach ($distrito as $distritos)
                                                 <option class="" value="{{$distritos->id}}">{{$distritos->name}}</option>
@@ -612,29 +648,64 @@
                                     </div>
                                     <div class="col-4">
                                         <div class="form-group">
+                                            <label for="sw-default">Dirección Domiciliara</label>
+                                            <select  class="form-control" placeholder="Departamento" name="v_dep" id="v_dep" required>
+                                                <option value="">Departamento</option>
+                                                @foreach ($departamento as $departamentos)
+                                                  <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
+                                                  @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="normal" for="">Genero</label>
                                             <label class="custom-control custom-radio">
-                                                <input type="radio" name="v_tipo" id="v_tipo" value="Femenino" disabled >
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Femenino">
                                                 Femenino
                                               </label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Celular</label>
+                                            <input type="text" class="form-control" name="v_celular" id="v_celular">
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="form-group">
+                                            <label for="sw-default"><br></label>
+                                            <select  class="form-control " placeholder="Provincia " name="v_prov" id="v_prov" required>
+                                                <option value="">Provincia</option>
+                                                @foreach ($provincia as $provincias)
+                                                <option class="" value="{{$provincias->id}}">{{$provincias->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="normal" for=""><br></label>
                                             <label class="custom-control custom-radio">
-                                                <input type="radio" name="v_tipo" id="v_tipo" value="Masculino" disabled>
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Masculino">
                                                 Masculino
                                               </label>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="form-group">
+                                            <label for="sw-default"><br></label>
+                                            <select  class="form-control " placeholder="Distrito " name="v_dist" id="v_dist" required>
+                                                <option value="">Distrito</option>
+                                                @foreach ($distrito as $distritos)
+                                                <option class="" value="{{$distritos->id}}">{{$distritos->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="normal" for=""><br></label>
                                             <label class="custom-control custom-radio">
-                                                <input type="radio" name="v_tipo" id="v_tipo" value="Personalizado" disabled >
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Personalizado">
                                                 Personalizado
                                               </label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Telefono</label>
+                                            <input type="text" class="form-control" name="v_telefono" id="v_telefono">
                                         </div>
                                     </div>
                                 </div> <!-- end row -->
@@ -653,7 +724,7 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="sw-default">Contrato</label>
+                                            <label for="sw-default">Contrato <a  href="#contratomodal" data-toggle="modal" data-target="#contratomodal"><i class="uil uil-plus"></i></a></label>
                                             <select  class="form-control" name="v_contrato" id="v_contrato" required>
                                                 <option value="">Seleccionar</option>
                                                 @foreach ($tipo_cont as $tipo_conts)

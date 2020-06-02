@@ -100,7 +100,7 @@
         $('#v_numDocumento').val(data[0].emple_nDoc);
         $('#v_apMaterno').val(data[0].perso_apMaterno);
         $("[name=v_tipo]").val([data[0].perso_sexo]);
-        $('#v_fechaN').val(data[0].perso_fechaNacimiento);
+        $('#v_fechaN').combodate('setValue', data[0].perso_fechaNacimiento);
         $('#v_nombres').val(data[0].perso_nombre);
         $('#v_direccion').val(data[0].perso_direccion);
 
@@ -113,6 +113,8 @@
         $('#v_contrato').val(data[0].emple_tipoContrato);
         $('#v_nivel').val(data[0].emple_nivel);
         $('#v_local').val(data[0].emple_local);
+        $('#v_celular').val(data[0].emple_celular);
+        $('#v_telefono').val(data[0].emple_telefono);
         if(data[0].foto!=""){
             urlFoto = data[0].foto;
             hayFoto= true;
