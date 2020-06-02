@@ -287,6 +287,17 @@
          If format not specified - `options.format` used.
          If format = `null` - Moment object returned.
         */
+       clearValue:function(){
+        var that = this;
+
+        $.each(this.map, function(k, v) {
+            if(that['$'+k]) {
+                that['$'+k].val("");
+            }
+        });
+
+        this.datetime = null;
+       },
         getValue: function(format) {
             var dt, values = {}, 
                 that = this,
