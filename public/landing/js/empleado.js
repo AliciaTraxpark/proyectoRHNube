@@ -300,6 +300,8 @@ $('#guardarFechas').click(function(){
         $('#c_fechaI').text(fechaI);
         $('#c_fechaF').text(fechaF);
         $('#fechasmodal').modal('toggle');
+        $('#m_fechaI').combodate('setValue', '');
+        $('#m_fechaF').combodate('setValue', '');
     }
 });
 //EMPLEADO
