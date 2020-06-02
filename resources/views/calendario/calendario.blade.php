@@ -39,7 +39,7 @@
             </div>
             <div class="col-md-6 text-left">
             <h5 style="color: #ffffff">Gestión de Calendarios</h5>
-            <label for="" class="blanco">Calendario de Perú, puedes crear calendarios regionales o personalizados</label>
+            <label for="" class="blanco font-italic">Calendario de Perú, puedes crear calendarios regionales o personalizados</label>
             </div>
             <div class="col-md-2 text-left">
             <select  class="form-control" placeholder="pais" name="pais" id="pais">
