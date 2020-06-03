@@ -43,14 +43,20 @@ class ProyectoController extends Controller
     public function selectValidar(Request $request)
     {
         $idproyecto=$request->get('id');
-        $empleadoSelect = DB::table('empleado as em')
+        /* $empleadoSelect = DB::table('empleado as em')
             ->leftJoin('proyecto_empleado as pe', 'em.emple_id', '=', 'pe.empleado_emple_id')
             ->join('persona as p', 'em.emple_persona', '=', 'p.perso_id')
             ->select('em.emple_id','p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','pe.Proyecto_Proye_id')
             ->where('pe.Proyecto_Proye_id','!=',$idproyecto)
             ->orwhereNull('pe.Proyecto_Proye_id')
+            ->get(); */
+
+            $empleadoSelect = DB::table('proyecto_empleado as pe')
+            ->select('pe.empleado_emple_id','pe.Proyecto_Proye_id')
+            ->where('pe.Proyecto_Proye_id','=',$idproyecto)
             ->get();
-            return response()->json($empleadoSelect);
+           return response()->json($empleadoSelect);
+            // return $empleadoSelect;
 
 
     }

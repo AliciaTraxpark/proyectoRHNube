@@ -88,8 +88,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <form class="form-horizontal col-lg-12" action="javascript:registrarPE()">
-                                    {{ csrf_field() }}
+
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group col-lg-12 row">
@@ -104,13 +103,19 @@
                                             <div class="form-group col-lg-12 row">
                                                 <label class="col-lg-4 col-form-label" for="simpleinput">Miembros de proyecto</label>
                                                 <div class="col-lg-8">
-                                                    <select data-plugin="customselect" id="idempleado" class="form-control" data-placeholder="Seleccione empleado">
-                                                        <option></option>
-                                                       {{--  @foreach ($empleado as $empleados)
+                                                    <select data-plugin="customselect" id="idempleado" class="form-control" >
+                                                        <option value="0" disabled selected>Selecciona</option>
+                                                       @foreach ($empleado as $empleados)
                                                         <option class="" value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}} </option>
-                                                        @endforeach --}}
+                                                        @endforeach
 
                                                     </select>
+                                                   {{--  <select name="" id="prue" class="sel">
+                                                        <option value="0">Selecciona</option>
+                                                        @foreach ($empleado as $empleados)
+                                                        <option class="" value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}} </option>
+                                                        @endforeach
+                                                    </select> --}}
                                                 </div>
                                             </div>
                                         </div>
@@ -119,9 +124,9 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <button type="" class="btn btn-primary" onclick="registrarPE()">Guardar</button>
                         </div>
-                    </form>
+
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
