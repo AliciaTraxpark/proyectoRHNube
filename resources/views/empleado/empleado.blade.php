@@ -612,13 +612,8 @@
                                                         <input type="text" class="form-control" name="v_apPaterno" id="v_apPaterno" required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="sw-default">Lugar Nacimiento</label>
-                                                        <select  class="form-control" placeholder="Departamento" name="v_departamento" id="v_departamento">
-                                                            <option value="">Departamento</option>
-                                                            @foreach ($departamento as $departamentos)
-                                                            <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
-                                                            @endforeach
-                                                        </select>
+                                                        <label for="sw-default">Correo Electronico</label>
+                                                        <input type="email" class="form-control" id="v_email" name="email">
                                                     </div>
                                                 </div> <!-- end col -->
                                                 <div class="col-4">
@@ -631,13 +626,8 @@
                                                         <input type="text" class="form-control" name="v_apMaterno" id="v_apMaterno" required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="sw-default"><br></label>
-                                                        <select  class="form-control " placeholder="Provincia " name="v_provincia" id="v_provincia">
-                                                            <option value="">Provincia</option>
-                                                            @foreach ($provincia as $provincias)
-                                                            <option class="" value="{{$provincias->id}}">{{$provincias->name}}</option>
-                                                            @endforeach
-                                                        </select>
+                                                        <label for="sw-default">Celular</label>
+                                                        <input type="text" class="form-control" name="v_celular" id="v_celular">
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
@@ -650,13 +640,8 @@
                                                         <input type="text" class="form-control" name="v_nombres" id="v_nombres" required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="sw-default"><br></label>
-                                                        <select  class="form-control " placeholder="Distrito " name="v_distrito" id="v_distrito">
-                                                            <option value="">Distrito</option>
-                                                            @foreach ($distrito as $distritos)
-                                                            <option class="" value="{{$distritos->id}}">{{$distritos->name}}</option>
-                                                            @endforeach
-                                                        </select>
+                                                        <label for="sw-default">Telefono</label>
+                                                        <input type="text" class="form-control" name="v_telefono" id="v_telefono">
                                                     </div>
                                                 </div>
                                                 <div class="col-12">
@@ -676,8 +661,13 @@
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="sw-default">Correo Electronico</label>
-                                                        <input type="email" class="form-control" id="v_email" name="email">
+                                                        <label for="sw-default">Lugar Nacimiento</label>
+                                                        <select  class="form-control" placeholder="Departamento" name="v_departamento" id="v_departamento">
+                                                            <option value="">Departamento</option>
+                                                            @foreach ($departamento as $departamentos)
+                                                            <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="normal" for="">Genero</label>
@@ -698,8 +688,13 @@
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="sw-default">Celular</label>
-                                                        <input type="text" class="form-control" name="v_celular" id="v_celular">
+                                                        <label for="sw-default"><br></label>
+                                                        <select  class="form-control " placeholder="Provincia " name="v_provincia" id="v_provincia">
+                                                            <option value="">Provincia</option>
+                                                            @foreach ($provincia as $provincias)
+                                                            <option class="" value="{{$provincias->id}}">{{$provincias->name}}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="normal" for=""><br></label>
@@ -720,8 +715,13 @@
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="sw-default">Telefono</label>
-                                                        <input type="text" class="form-control" name="v_telefono" id="v_telefono">
+                                                        <label for="sw-default"><br></label>
+                                                        <select  class="form-control " placeholder="Distrito " name="v_distrito" id="v_distrito">
+                                                            <option value="">Distrito</option>
+                                                            @foreach ($distrito as $distritos)
+                                                            <option class="" value="{{$distritos->id}}">{{$distritos->name}}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="normal" for=""><br></label>
