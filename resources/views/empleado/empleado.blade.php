@@ -33,6 +33,10 @@
 </head>
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
 <style>
+    .sw-main {
+    box-shadow: none;
+    border-top: 0.5px solid #617589;
+}
     .container{
         margin-left: 40px;
     margin-right: 28px;
@@ -360,7 +364,7 @@
                             <div class="modal-header">
                                 <h4 class="header-title mt-0 "></i>Datos de empleado</h4>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body" style="padding: 0px">
                                 <div class="setup-panel" id="smartwizard" style="background: #f8f8f8; color:#3d3d3d;">
                                     <ul style="background: #566879!important;" >
                                         <li><a href="#sw-default-step-1">Personales</a></li>
@@ -596,7 +600,7 @@
                             <div class="modal-header">
                                 <h4 class="header-title mt-0 ">Datos de empleado</h4><br>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body" style="padding: 0px;">
                                 <div id="smartwizard1" style="background: #f8f8f8; color:#3d3d3d;">
                                     <ul style="background: #566879!important;" >
                                         <li><a href="#persona-step-1">Personales</a></li>
