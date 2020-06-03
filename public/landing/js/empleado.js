@@ -1,14 +1,3 @@
-$('#formNuevoE').click(function(){
-    $('#form-registrar').modal();
-});
-$('#formNuevoEd').click(function(){
-    $('#form-ver').modal();
-});
-$('#formNuevoEl').click(function(){
-    $('#modalEliminar').modal();
-});
-$('#formNuevoEd').hide();
-$('#formNuevoEl').hide();
 $('#fechaN').combodate({
     minYear: 1960,
     yearDescending: false,
@@ -556,16 +545,34 @@ $('#cerrar').click(function(){
         $("#form-registrar :input").attr('disabled',false);
     });
 });
+$("#form-registrar :input").prop('disabled',true);
+$('#documento').attr('disabled',false);
+$('#cerrar').attr('disabled',false);
+$('#cerrarE').attr('disabled',false);
+$('#cerrarEd').attr('disabled',false);
+$('#documento').on('change',function(){
+    $("#form-registrar :input").attr('disabled',false);
+});
+$('#formNuevoE').click(function(){
+    $('#form-registrar').modal();
+});
+$('#formNuevoEd').click(function(){
+    $('#form-ver').modal();
+});
+$('#formNuevoEl').click(function(){
+    $('#modalEliminar').modal();
+});
+$('#formNuevoEd').hide();
+$('#formNuevoEl').hide();
 $('#cerrarE').click(function(){
     leertabla();
     $('#smartwizard1').smartWizard("reset");
     $('#formNuevoEd').hide();
     $('#formNuevoEl').hide();
 });
-$("#form-registrar :input").prop('disabled',true);
-$('#documento').attr('disabled',false);
-$('#cerrar').attr('disabled',false);
-$('#cerrarE').attr('disabled',false);
-$('#documento').on('change',function(){
-    $("#form-registrar :input").attr('disabled',false);
+$('#cerrarEd').click(function(){
+    leertabla();
+    $('#smartwizard1').smartWizard("reset");
+    $('#formNuevoEd').hide();
+    $('#formNuevoEl').hide();
 });
