@@ -110,4 +110,6 @@ Route::get('/proyecto','ProyectoController@index' );
 Route::post('/proyecto/registrar','ProyectoController@store');
 Route::post('/proyecto/proyectoV','ProyectoController@proyectoV');
 Route::post('/proyecto/registrarPrEm','ProyectoController@registrarPrEm');
+Route::post('/proyecto/selectValidar','ProyectoController@selectValidar');
+
 

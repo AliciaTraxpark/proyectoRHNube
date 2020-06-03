@@ -22,6 +22,7 @@ function agregarProyecto(){
 
 
     function abrirM(id) {
+        $('#idempleado').empty()
         $.ajax({
             type:"POST",
             url:"/proyecto/proyectoV",
@@ -37,16 +38,38 @@ function agregarProyecto(){
             },
             error:function(){ alert("Hay un error");}
         });
+        var $select=$('#idempleado').select2();
+        $.ajax({
+
+            type:"POST",
+            url:"/proyecto/selectValidar",
+            data:{id},
+            headers:{
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success:function(data){
+
+                $.each(data, function (i, json) {
+                    $select.append('<option value="' + json.emple_id + '">' + json.perso_nombre + '</option>');
+                  });
+
+
+
+            },
+            error:function(){ alert("Hay un error");}
+        });
 
     };
 
 function registrarPE(){
+
     var proyecto=$('#id1').val();
     var empleado= $('#idempleado').val();
     if(empleado==''){
         alert('Seleccione empleado')
         return false;
     }
+
     $.ajax({
         type:"POST",
         url:"/proyecto/registrarPrEm",
@@ -55,8 +78,9 @@ function registrarPE(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success:function(data){
-            $('#idempleado').val('');
+            $('#idempleado').val(null).trigger('change');
             $('#myModal1').modal('hide');
+
             $('#tablaProyecto').load(location.href+" #tablaProyecto>*");
             $.notify("empleado registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
 
