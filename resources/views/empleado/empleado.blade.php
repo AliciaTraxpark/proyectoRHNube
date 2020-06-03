@@ -825,7 +825,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" id="cerrarE" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="button" id="cerrarEd" class="btn btn-light" data-dismiss="modal">Cerrar</button>
                             </div>
                         </div>
                     </div>
