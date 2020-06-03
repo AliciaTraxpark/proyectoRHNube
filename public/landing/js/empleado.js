@@ -1,6 +1,14 @@
 $('#formNuevoE').click(function(){
     $('#form-registrar').modal();
 });
+$('#formNuevoEd').click(function(){
+    $('#form-ver').modal();
+});
+$('#formNuevoEl').click(function(){
+    $('#modalEliminar').modal();
+});
+$('#formNuevoEd').hide();
+$('#formNuevoEl').hide();
 $('#fechaN').combodate({
     minYear: 1960,
     yearDescending: false,
@@ -384,7 +392,7 @@ function enviarEmpleado(accion,objEmpleado){
             $('select').val("");
             $('#form-registrar').modal('hide');
             leertabla();
-
+            $.notify("Empleado registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
         },
         error:function(data,errorThrown){
             alert("Hay un error");
@@ -449,10 +457,10 @@ function actualizarEmpleado(accion,objEmpleadoA){
         },
         success:function(msg){
             leertabla();
-            $('#form-ver').hide();
-            $('#form-registrar').show();
+            $('#form-ver').modal('toggle');
             $('#smartwizard').smartWizard("reset");
             $('input[type="file"]').val("");
+            $.notify("Empleado actualizado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
         },
         error:function(data,errorThrown){
             alert("Hay un error");
@@ -477,8 +485,6 @@ function actualizarEmpleado(accion,objEmpleadoA){
         $('#modalEliminar').modal('hide');
         $.notify(" Empleado eliminado", {align:"right", verticalAlign:"top",type: "danger", icon:"bell"});
         leertabla();
-        $('#form-ver').hide();
-        $('#form-registrar').show();
     },
     error:function(data,errorThrown){
         alert("Hay un error");
@@ -550,9 +556,16 @@ $('#cerrar').click(function(){
         $("#form-registrar :input").attr('disabled',false);
     });
 });
+$('#cerrarE').click(function(){
+    leertabla();
+    $('#smartwizard1').smartWizard("reset");
+    $('#formNuevoEd').hide();
+    $('#formNuevoEl').hide();
+});
 $("#form-registrar :input").prop('disabled',true);
 $('#documento').attr('disabled',false);
 $('#cerrar').attr('disabled',false);
+$('#cerrarE').attr('disabled',false);
 $('#documento').on('change',function(){
     $("#form-registrar :input").attr('disabled',false);
 });

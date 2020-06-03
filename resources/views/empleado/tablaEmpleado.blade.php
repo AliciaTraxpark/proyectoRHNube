@@ -74,8 +74,8 @@
     $('#smartwizard1').smartWizard("reset");
     $(this).addClass('selected').siblings().removeClass('selected');
     var value=$(this).find('input[type=hidden]').val();
-    $('#form-registrar').hide();
-    $('#form-ver').show();
+    $('#formNuevoEd').show();
+    $('#formNuevoEl').show();
     $.ajax({
         type:"get",
         url:"empleado/show",
@@ -314,14 +314,6 @@
                 alert("No está activado");
             }
         });
-
-
-
-
-
-
-
-
         $('#filter_col1').hide();
         $('#filter_col2').hide();
         $('#filter_col3').hide();
