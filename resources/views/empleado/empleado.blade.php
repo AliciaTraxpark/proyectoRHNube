@@ -155,7 +155,7 @@
                           <div class="col-md-12">
                               <div class="row">
                                   <div class="col-md-7 text-right">
-                                      <button type="button" onclick="$('#form-registrar').modal('show');"  class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                                      <button type="button" id="cerrarE" class="btn btn-light" data-dismiss="modal">Cancelar</button>
                                   </div>
                                   <div class="col-md-5 text-right" style="padding-right: 38px;  ">
                                       <button type="button" id="confirmarE" name="confirmarE" style="background-color: #163552;" class="btn ">Eliminar</button>
