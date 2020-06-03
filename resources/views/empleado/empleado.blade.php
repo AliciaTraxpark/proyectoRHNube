@@ -79,6 +79,9 @@
     .form-control:disabled{
         background-color: #f0f0f0;
     }
+    body{
+        background-color: #f8f8f8;
+    }
 </style>
 <div id="preloader">
     <div id="status">
@@ -115,20 +118,28 @@
     <div class="content-page" style="margin-top: 20px;margin-left: 0px">
         <div class="content">
             <div class="row">
-                <div class=" col-md-12 col-xl-12 text-right">
-                    <button class="btn btn-sm btn-primary" id="formNuevoEl" style="background-color: #183b5d;border-color:#62778c">Eliminar</button>
-                    <button class="btn btn-sm btn-primary" id="formNuevoEd" style="background-color: #183b5d;border-color:#62778c">Editar</button>
-                    <button class="btn btn-sm btn-primary" id="formNuevoE" style="background-color: #183b5d;border-color:#62778c">Nuevo</button>
-                </div>
+
             </div>
-            <br><br>
+
             <div class="row row-divided">
                 <div class="col-md-12 col-xl-12">
                     <div class="card">
                         <div class="card-body" style="padding-top: 20px; background: #f8f8f8; font-size: 12.8px;
-                        color: #222222;">
+                        color: #222222;   padding-left: 60px; padding-right: 80px;">
+
                             <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
-                            <h4 class="header-title mt-0 "></i>Búsqueda de empleado</h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4 class="header-title mt-0 "></i>Búsqueda de empleado</h4>
+                                </div>
+                                <div class=" col-md-6 col-xl-6 text-right">
+                                    <button class="btn btn-sm btn-primary" id="formNuevoEl" style="background-color: #183b5d;border-color:#62778c">Eliminar</button>
+                                    <button class="btn btn-sm btn-primary" id="formNuevoEd" style="background-color: #183b5d;border-color:#62778c">Editar</button>
+                                    <button class="btn btn-sm btn-primary" id="formNuevoE" style="background-color: #183b5d;border-color:#62778c">Nuevo</button>
+                                </div>
+                            </div>
+
+
                             <div id="tabladiv">
 
                             </div>
@@ -552,7 +563,7 @@
                                                     </div>
                                                 </div> <!-- end col -->
                                             </div> <!-- end row -->
-    
+
                                         </div>
                                         <div id="sw-default-step-3" class="setup-content">
                                             <div class="row">
@@ -740,7 +751,7 @@
                                                         <label for="sw-default">Cargo <a  href="#cargomodal" data-toggle="modal" data-target="#cargomodal"><i class="uil uil-plus"></i></a></label>
                                                         <select  class="form-control" name="v_cargo" id="v_cargo" required>
                                                             <option value="">Seleccionar</option>
-    
+
                                                             @foreach ($cargo as $cargos)
                                                             <option class="" value="{{$cargos->cargo_id}}">{{$cargos->cargo_descripcion}}</option>
                                                             @endforeach
@@ -821,7 +832,7 @@
                                             <br>
                                         </div>
                                     </div>
-    
+
                                 </div>
                             </div>
                             <div class="modal-footer">
