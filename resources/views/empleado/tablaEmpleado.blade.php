@@ -89,13 +89,17 @@
         $('#v_tipoDoc').val(data[0].tipoDoc_descripcion);
         $('#v_apPaterno').val(data[0].perso_apPaterno);
         $('#v_departamento').val(data[0].depaN);
-        $('#v_provincia').val(data[0].idproviN);
-        $('#v_distrito').val(data[0].iddistN);
+        onSelectVDepartamento('#v_departamento').then(function (){
+            $('#v_provincia').val(data[0].idproviN);
+            onSelectVProvincia('#v_provincia').then( (result) => $('#v_distrito').val(data[0].iddistN))
+        });
+        
 
         $('#v_dep').val(data[0].deparNo);
-        $('#v_prov').val(data[0].proviId);
-        $('#v_dist').val(data[0].distId);
-
+        onSelectVDepart('#v_dep').then(function (){
+            $('#v_prov').val(data[0].proviId);
+            onSelectVProv('#v_prov').then( (result) => $('#v_dist').val(data[0].distId))
+        });
 
         $('#v_numDocumento').val(data[0].emple_nDoc);
         $('#v_apMaterno').val(data[0].perso_apMaterno);
