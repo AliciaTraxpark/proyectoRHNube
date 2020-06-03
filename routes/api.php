@@ -24,4 +24,4 @@ Route::get('/provincia/{id}/niveles','registroEmpresaController@distritos');
 Route::get('/departamento/{id}/niveles','EmpleadoController@provincias');
 Route::get('/provincia/{id}/niveles','EmpleadoController@distritos');
 
-Route::get('/contrato/{id}/contrato','EmpleadoController@fechas');
+Route::get("empleado","EmpleadoController@api");

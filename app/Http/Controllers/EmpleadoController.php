@@ -29,7 +29,7 @@ class EmpleadoController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except('provincias','distritos','fechas');
+        $this->middleware('auth')->except('provincias','distritos','fechas','api');
     }
     public function fechas($id){
         return tipo_contrato::where('contrato_id',$id)->get();
@@ -91,6 +91,19 @@ class EmpleadoController extends Controller
             //dd($tabla_empleado);
         return view('empleado.tablaEmpleado',['tabla_empleado'=> $tabla_empleado1]);
     }
+
+    public function api(){
+        $empleado = DB::table('empleado as e')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->join('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+            ->join('area as a', 'e.emple_area', '=', 'a.area_id')
+            ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+            ->select('p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','c.cargo_descripcion',
+            'a.area_descripcion','cc.centroC_descripcion','e.emple_id')
+            ->get();
+            return $empleado;
+    }
+
     public function create()
     {
 
