@@ -61,13 +61,13 @@
         justify-content: space-between;
     }
     .day{
-        max-width: 28%;
+        max-width: 25%;
     }
     .month{
         max-width: 35%;
     }
     .year{
-        max-width: 37%;
+        max-width: 40%;
     }
     .btn-group{
         width: 100%;
@@ -114,8 +114,16 @@
   </header>
     <div class="content-page" style="margin-top: 20px;margin-left: 0px">
         <div class="content">
+            <div class="row">
+                <div class="col-md-12 col-xl-12 text-right">
+                    <div class=" col-md-12 col-xl-12">
+                        <button class="btn btn-sm btn-primary" id="formNuevoE" style="background-color: #183b5d;border-color:#62778c">Nuevo</button>
+                    </div>
+                </div>
+            </div>
+            <br><br>
             <div class="row row-divided">
-                <div class="col-md-6 col-xl-6">
+                <div class="col-md-12 col-xl-12">
                     <div class="card">
                         <div class="card-body" style="padding-top: 20px; background: #f8f8f8; font-size: 12.8px;
                         color: #222222;">
@@ -129,7 +137,7 @@
                         </div> <!-- end card body-->
                     </div> <!-- end card -->
                 </div>
-                  <div id="modalEliminar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div id="modalEliminar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                    <div class="modal-dialog">
                   <div class="modal-content">
                       <div class="modal-header" style="background-color:#163552;">
@@ -147,7 +155,7 @@
                           <div class="col-md-12">
                               <div class="row">
                                   <div class="col-md-7 text-right">
-                                      <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                                      <button type="button" onclick="$('#form-registrar').modal('show');"  class="btn btn-light" data-dismiss="modal">Cancelar</button>
                                   </div>
                                   <div class="col-md-5 text-right" style="padding-right: 38px;  ">
                                       <button type="button" id="confirmarE" name="confirmarE" style="background-color: #163552;" class="btn ">Eliminar</button>
@@ -158,7 +166,7 @@
                   </div><!-- /.modal-content -->
               </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
-                <div id="areamodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal" aria-hidden="true">
+                <div id="areamodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal" aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -176,14 +184,14 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="button" onclick="$('#form-registrar').modal('show');" class="btn btn-light" data-dismiss="modal">Cerrar</button>
                                 <button type="submit" id="guardarArea" class="btn btn-primary">Guardar</button>
                             </div>
                         </form>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-                <div id="cargomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal" aria-hidden="true">
+                <div id="cargomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal" aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -201,14 +209,14 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="button" onclick="$('#form-registrar').modal('show');"  class="btn btn-light" data-dismiss="modal">Cerrar</button>
                                 <button type="submit" class="btn btn-primary" id="guardarCargo">Guardar</button>
                             </div>
                              </form>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-                <div id="centrocmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal" aria-hidden="true">
+                <div id="centrocmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal" aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -226,14 +234,14 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="button" onclick="$('#form-registrar').modal('show');"  class="btn btn-light" data-dismiss="modal">Cerrar</button>
                                 <button type="submit" class="btn btn-primary" id="guardarCentro">Guardar</button>
                                </div>
                                </form>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-                <div id="localmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="localmodal" aria-hidden="true">
+                <div id="localmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="localmodal" aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -251,14 +259,14 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="button" onclick="$('#form-registrar').modal('show');"  class="btn btn-light" data-dismiss="modal">Cerrar</button>
                                 <button type="submit" id="guardarLocal" class="btn btn-primary">Guardar</button>
                             </div>
                               </form>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-                <div id="nivelmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="nivelmodal" aria-hidden="true">
+                <div id="nivelmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="nivelmodal" aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -276,14 +284,14 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="button" onclick="$('#form-registrar').modal('show');"  class="btn btn-light" data-dismiss="modal">Cerrar</button>
                                 <button type="submit" id="guardarNivel" class="btn btn-primary">Guardar</button>
                             </div>
                               </form>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div>
-                <div id="contratomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal" aria-hidden="true">
+                <div id="contratomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal" aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -301,14 +309,14 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="button" onclick="$('#form-registrar').modal('show');"  class="btn btn-light" data-dismiss="modal">Cerrar</button>
                                 <button type="submit" id="guardarContrato" class="btn btn-primary">Guardar</button>
                             </div>
                         </form>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div>
-                <div id="fechasmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal" aria-hidden="true">
+                <div id="fechasmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal" aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -328,240 +336,248 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="button" onclick="$('#form-registrar').modal('show');"  class="btn btn-light" data-dismiss="modal">Cerrar</button>
                                 <button type="submit" id="guardarFechas" class="btn btn-primary">Guardar</button>
                             </div>
                         </form>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal --><!-- /.modal -->
-                <div class="col-md-6 col-xl-6" style="font-size: 13px" id="form-registrar">
-                            <br>
-                            <h4 class="header-title mt-0 "></i>Datos de empleado</h4>
-                            <div class="setup-panel" id="smartwizard" style="background: #f8f8f8; color:#3d3d3d;">
-                                <ul style="background: #566879!important;" >
-                                    <li><a href="#sw-default-step-1">Personales</a></li>
-                                    <li><a href="#sw-default-step-2">Empresarial</a></li>
-                                    <li><a href="#sw-default-step-3">Foto</a></li>
-                                </ul>
-                                <div class="p-3" >
-                                    <div id="sw-default-step-1" class="setup-content">
-                                        <div class="row">
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label for="sw-default">Tipo Documento</label>
-                                                    <select  class="form-control" placeholder="Tipo Documento " name="documento" id="documento" required>
-                                                        <option value="">Seleccionar</option>
-                                                        @foreach ($tipo_doc as $tipo_docs)
-                                                        <option class="" value="{{$tipo_docs->tipoDoc_id}}">{{$tipo_docs->tipoDoc_descripcion}}</option>
-                                                        @endforeach
-                                                    </select>
+                <div class="modal" style="font-size: 13px" id="form-registrar" tabindex="-1" role="dialog" aria-labelledby="areamodal" aria-hidden="true" data-backdrop="static">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="header-title mt-0 "></i>Datos de empleado</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="setup-panel" id="smartwizard" style="background: #f8f8f8; color:#3d3d3d;">
+                                    <ul style="background: #566879!important;" >
+                                        <li><a href="#sw-default-step-1">Personales</a></li>
+                                        <li><a href="#sw-default-step-2">Empresarial</a></li>
+                                        <li><a href="#sw-default-step-3">Foto</a></li>
+                                    </ul>
+                                    <div class="p-3" >
+                                        <div id="sw-default-step-1" class="setup-content">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="sw-default">Tipo Documento</label>
+                                                        <select  class="form-control" placeholder="Tipo Documento " name="documento" id="documento" required>
+                                                            <option value="">Seleccionar</option>
+                                                            @foreach ($tipo_doc as $tipo_docs)
+                                                            <option class="" value="{{$tipo_docs->tipoDoc_id}}">{{$tipo_docs->tipoDoc_descripcion}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="sw-default">Apellido Paterno</label>
+                                                        <input type="text" class="form-control" name="apPaterno" id="apPaterno" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="sw-default">Correo Electronico</label>
+                                                        <input type="email" class="form-control" id="email" name="email">
+                                                    </div>
+                                                </div> <!-- end col -->
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="sw-default">Num. Documento</label>
+                                                        <input type="text" class="form-control" name="numDocumento" id="numDocumento" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="sw-default">Apellido Materno</label>
+                                                        <input type="text" class="form-control" name="apMaterno" id="apMaterno" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="sw-default">Celular</label>
+                                                        <input type="text" class="form-control" name="celular" id="celular">
+                                                    </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default">Apellido Paterno</label>
-                                                    <input type="text" class="form-control" name="apPaterno" id="apPaterno" required>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="sw-default">Fecha Nacimiento</label>
+                                                        <input type="text" data-custom-class="form-control" id="fechaN" data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="sw-default">Nombres</label>
+                                                        <input type="text" class="form-control" name="nombres" id="nombres" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="sw-default">Telefono</label>
+                                                        <input type="text" class="form-control" name="telefono" id="telefono">
+                                                    </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default">Lugar Nacimiento</label>
-                                                    <select  class="form-control" placeholder="Departamento" name="departamento" id="departamento" required>
-                                                        <option value="">Departamento</option>
-                                                        @foreach ($departamento as $departamentos)
-                                                          <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
-                                                          @endforeach
-                                                    </select>
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label for="sw-default">Dirección</label>
+                                                        <input type="text" class="form-control" name="direccion" id="direccion" required>
+                                                    </div>
                                                 </div>
-                                            </div> <!-- end col -->
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label for="sw-default">Num. Documento</label>
-                                                    <input type="text" class="form-control" name="numDocumento" id="numDocumento" required>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="sw-default">Dirección Domiciliara</label>
+                                                        <select  class="form-control" placeholder="Departamento" name="departamento" id="dep" required>
+                                                            <option value="">Departamento</option>
+                                                            @foreach ($departamento as $departamentos)
+                                                              <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
+                                                              @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="sw-default">Lugar Nacimiento</label>
+                                                        <select  class="form-control" placeholder="Departamento" name="departamento" id="departamento" required>
+                                                            <option value="">Departamento</option>
+                                                            @foreach ($departamento as $departamentos)
+                                                              <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
+                                                              @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="normal" for="">Genero</label>
+                                                        <label class="custom-control custom-radio">
+                                                            <input type="radio" name="tipo" id="tipo" value="Femenino" required>
+                                                            Femenino
+                                                          </label>
+                                                    </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default">Apellido Materno</label>
-                                                    <input type="text" class="form-control" name="apMaterno" id="apMaterno" required>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="sw-default"><br></label>
+                                                        <select  class="form-control " placeholder="Provincia " name="provincia" id="prov" required>
+                                                            <option value="">Provincia</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="sw-default"><br></label>
+                                                        <select  class="form-control " placeholder="Provincia " name="provincia" id="provincia" required>
+                                                            <option value="">Provincia</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="normal" for=""><br></label>
+                                                        <label class="custom-control custom-radio">
+                                                            <input type="radio" name="tipo" id="tipo" value="Masculino" required>
+                                                            Masculino
+                                                          </label>
+                                                    </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default"><br></label>
-                                                    <select  class="form-control " placeholder="Provincia " name="provincia" id="provincia" required>
-                                                        <option value="">Provincia</option>
-                                                    </select>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="sw-default"><br></label>
+                                                        <select  class="form-control " placeholder="Distrito " name="distrito" id="dist" required>
+                                                            <option value="">Distrito</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="sw-default"><br></label>
+                                                        <select  class="form-control " placeholder="Distrito " name="distrito" id="distrito" required>
+                                                            <option value="">Distrito</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="normal" for=""><br></label>
+                                                        <label class="custom-control custom-radio" data-toggle="tooltip"
+                                                        data-placement="right" title=""
+                                                        data-original-title="Puedes elegir personalizado si no deseas especificar tu sexo.">
+                                                            <input type="radio" name="tipo" id="tipo" value="Personalizado" required>
+                                                            Personalizado
+                                                          </label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label for="sw-default">Fecha Nacimiento</label>
-                                                    <input type="text" data-custom-class="form-control" id="fechaN" data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default">Nombres</label>
-                                                    <input type="text" class="form-control" name="nombres" id="nombres" required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default"><br></label>
-                                                    <select  class="form-control " placeholder="Distrito " name="distrito" id="distrito" required>
-                                                        <option value="">Distrito</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label for="sw-default">Dirección</label>
-                                                    <input type="text" class="form-control" name="direccion" id="direccion" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label for="sw-default">Dirección Domiciliara</label>
-                                                    <select  class="form-control" placeholder="Departamento" name="departamento" id="dep" required>
-                                                        <option value="">Departamento</option>
-                                                        @foreach ($departamento as $departamentos)
-                                                          <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
-                                                          @endforeach
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default">Correo Electronico</label>
-                                                    <input type="email" class="form-control" id="email" name="email">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="normal" for="">Genero</label>
-                                                    <label class="custom-control custom-radio">
-                                                        <input type="radio" name="tipo" id="tipo" value="Femenino" required>
-                                                        Femenino
-                                                      </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label for="sw-default"><br></label>
-                                                    <select  class="form-control " placeholder="Provincia " name="provincia" id="prov" required>
-                                                        <option value="">Provincia</option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default">Celular</label>
-                                                    <input type="text" class="form-control" name="celular" id="celular">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="normal" for=""><br></label>
-                                                    <label class="custom-control custom-radio">
-                                                        <input type="radio" name="tipo" id="tipo" value="Masculino" required>
-                                                        Masculino
-                                                      </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label for="sw-default"><br></label>
-                                                    <select  class="form-control " placeholder="Distrito " name="distrito" id="dist" required>
-                                                        <option value="">Distrito</option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default">Telefono</label>
-                                                    <input type="text" class="form-control" name="telefono" id="telefono">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="normal" for=""><br></label>
-                                                    <label class="custom-control custom-radio" data-toggle="tooltip"
-                                                    data-placement="right" title=""
-                                                    data-original-title="Puedes elegir personalizado si no deseas especificar tu sexo.">
-                                                        <input type="radio" name="tipo" id="tipo" value="Personalizado" required>
-                                                        Personalizado
-                                                      </label>
-                                                </div>
-                                            </div>
-                                        </div> <!-- end row -->
-                                    </div>
-                                    <div id="sw-default-step-2" class="setup-content">
-                                        <div class="row">
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label for="sw-default">Cargo <a  href="#cargomodal" data-toggle="modal" data-target="#cargomodal"><i class="uil uil-plus"></i></a></label>
-                                                    <select  class="form-control" name="cargo" id="cargo">
-                                                        <option value="">Seleccionar</option>
-                                                          @foreach ($cargo as $cargos)
-                                                          <option class="" value="{{$cargos->cargo_id}}">{{$cargos->cargo_descripcion}}</option>
-                                                          @endforeach
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default">Contrato <a  href="#contratomodal" data-toggle="modal" data-target="#contratomodal"><i class="uil uil-plus"></i></a></label>
-                                                    <select  class="form-control" name="contrato" id="contrato" required>
-                                                        <option value="">Seleccionar</option>
-                                                        @foreach ($tipo_cont as $tipo_conts)
-                                                        <option class="" value="{{$tipo_conts->contrato_id}}">{{$tipo_conts->contrato_descripcion}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default" style="color: darkblue;">Fecha Inicio <label for="sw-default" id="c_fechaI"></label></label>
-                                                    <label for="sw-default" style="color: red;">Fecha Final <label for="sw-default" id="c_fechaF"></label></label>
-                                                </div>
-                                            </div> <!-- end col -->
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label for="sw-default">Área <a href="#areamodal" data-toggle="modal" data-target="#areamodal"><i class="uil uil-plus"></i></a></label>
-                                                    <select  class="form-control" name="area" id="area">
-                                                        <option value="">Seleccionar</option>
-                                                        @foreach ($area as $areas)
-                                                        <option class="" value="{{$areas->area_id}}">{{$areas->area_descripcion}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default">Nivel <a  href="#nivelmodal" data-toggle="modal" data-target="#nivelmodal"><i class="uil uil-plus"></i></a></label>
-                                                    <select  class="form-control" name="nivel" id="nivel">
-                                                        <option value="">Seleccionar</option>
-                                                        @foreach ($nivel as $niveles)
-                                                        <option class="" value="{{$niveles->nivel_id}}">{{$niveles->nivel_descripcion}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div> <!-- end col -->
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label for="sw-default">Centro Costo <a  href="#centrocmodal" data-toggle="modal" data-target="#centrocmodal"><i class="uil uil-plus"></i></a></label>
-                                                    <select  class="form-control" name="centroc" id="centroc">
-                                                        <option value="">Seleccionar</option>
-                                                        @foreach ($centro_costo as $centro_costos)
-                                                        <option class="" value="{{$centro_costos->centroC_id}}">{{$centro_costos->centroC_descripcion}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default">Local <a  href="#localmodal" data-toggle="modal" data-target="#localmodal"><i class="uil uil-plus"></i></a></label>
-                                                    <select  class="form-control" name="local" id="local">
-                                                        <option value="">Seleccionar</option>
-                                                        @foreach ($local as $locales)
-                                                        <option class="" value="{{$locales->local_id}}">{{$locales->local_descripcion}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div> <!-- end col -->
-                                        </div> <!-- end row -->
-
-                                    </div>
-                                    <div id="sw-default-step-3" class="setup-content">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <input type="file" name="file" id="file" accept="image/*">
-                                                </div>
-                                            </div> <!-- end col -->
-                                        </div> <!-- end row -->
-                                        <br>
-                                        <div class="row">
-                                            <div class="col-md-12  text-center">
-                                                <button type="button" id="guardarEmpleado" class="btn btn-primary">Guardar</button>
-                                            </div>
+                                            </div> <!-- end row -->
                                         </div>
-                                        <br>
+                                        <div id="sw-default-step-2" class="setup-content">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="sw-default">Cargo <a onclick="$('#form-registrar').modal('hide');" href="#cargomodal" data-toggle="modal" data-target="#cargomodal"><i class="uil uil-plus"></i></a></label>
+                                                        <select  class="form-control" name="cargo" id="cargo">
+                                                            <option value="">Seleccionar</option>
+                                                              @foreach ($cargo as $cargos)
+                                                              <option class="" value="{{$cargos->cargo_id}}">{{$cargos->cargo_descripcion}}</option>
+                                                              @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="sw-default">Contrato <a onclick="$('#form-registrar').modal('hide');" href="#contratomodal" data-toggle="modal" data-target="#contratomodal"><i class="uil uil-plus"></i></a></label>
+                                                        <select  class="form-control" name="contrato" id="contrato" required>
+                                                            <option value="">Seleccionar</option>
+                                                            @foreach ($tipo_cont as $tipo_conts)
+                                                            <option class="" value="{{$tipo_conts->contrato_id}}">{{$tipo_conts->contrato_descripcion}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="sw-default" style="color: darkblue;">Fecha Inicio <label for="sw-default" id="c_fechaI"></label></label>
+                                                        <label for="sw-default" style="color: red;">Fecha Final <label for="sw-default" id="c_fechaF"></label></label>
+                                                    </div>
+                                                </div> <!-- end col -->
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="sw-default">Área <a onclick="$('#form-registrar').modal('hide');" href="#areamodal" data-toggle="modal" data-target="#areamodal"><i class="uil uil-plus"></i></a></label>
+                                                        <select  class="form-control" name="area" id="area">
+                                                            <option value="">Seleccionar</option>
+                                                            @foreach ($area as $areas)
+                                                            <option class="" value="{{$areas->area_id}}">{{$areas->area_descripcion}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="sw-default">Nivel <a onclick="$('#form-registrar').modal('hide');" href="#nivelmodal" data-toggle="modal" data-target="#nivelmodal"><i class="uil uil-plus"></i></a></label>
+                                                        <select  class="form-control" name="nivel" id="nivel">
+                                                            <option value="">Seleccionar</option>
+                                                            @foreach ($nivel as $niveles)
+                                                            <option class="" value="{{$niveles->nivel_id}}">{{$niveles->nivel_descripcion}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div> <!-- end col -->
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="sw-default">Centro Costo <a onclick="$('#form-registrar').modal('hide');" href="#centrocmodal" data-toggle="modal" data-target="#centrocmodal"><i class="uil uil-plus"></i></a></label>
+                                                        <select  class="form-control" name="centroc" id="centroc">
+                                                            <option value="">Seleccionar</option>
+                                                            @foreach ($centro_costo as $centro_costos)
+                                                            <option class="" value="{{$centro_costos->centroC_id}}">{{$centro_costos->centroC_descripcion}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="sw-default">Local <a onclick="$('#form-registrar').modal('hide');" href="#localmodal" data-toggle="modal" data-target="#localmodal"><i class="uil uil-plus"></i></a></label>
+                                                        <select  class="form-control" name="local" id="local">
+                                                            <option value="">Seleccionar</option>
+                                                            @foreach ($local as $locales)
+                                                            <option class="" value="{{$locales->local_id}}">{{$locales->local_descripcion}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div> <!-- end col -->
+                                            </div> <!-- end row -->
+    
+                                        </div>
+                                        <div id="sw-default-step-3" class="setup-content">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <input type="file" name="file" id="file" accept="image/*">
+                                                    </div>
+                                                </div> <!-- end col -->
+                                            </div> <!-- end row -->
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-12  text-center">
+                                                    <button type="button" id="guardarEmpleado" class="btn btn-primary">Guardar</button>
+                                                </div>
+                                            </div>
+                                            <br>
+                                        </div>
                                     </div>
                                 </div>
-
                             </div>
-
+                            <div class="modal-footer">
+                                <button type="button" id="cerrar" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-6 col-xl-6" id="form-ver" style="font-size: 13px">
 

@@ -1,3 +1,6 @@
+$('#formNuevoE').click(function(){
+    $('#form-registrar').modal();
+});
 $('#fechaN').combodate({
     minYear: 1960,
     yearDescending: false,
@@ -9,7 +12,7 @@ $('#m_fechaI').combodate({
     yearDescending: false
 });
 $('#m_fechaF').combodate({
-    minYear: 1960,
+    minYear: 2014,
     maxYear: moment().format('YYYY') + 1,
     yearDescending: false,
 });
@@ -36,18 +39,17 @@ $(document).ready(function() {
 });
 //AREA
 function agregarArea(){
-    objArea=datos("POST");
+    objArea=datosArea("POST");
     enviarArea('',objArea);
 };
 
-function datos(method){
+function datosArea(method){
     nuevoArea={
         area_descripcion: $('#textArea').val(),
         '_method':method
     }
     return(nuevoArea);
 }
-
 function enviarArea(accion,objArea){
     $.ajax({
         type:"POST",
@@ -71,6 +73,7 @@ function enviarArea(accion,objArea){
              $('#v_area').val(data.area_id).trigger("change");
              $('#textArea').val('');
             $('#areamodal').modal('toggle');
+            $('#form-registrar').modal('show');
             $.notify("Área registrada", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
 
         },
@@ -115,6 +118,7 @@ function enviarCargo(accion,objCargo){
             $('#v_cargo').val(data.cargo_id).trigger("change"); //lo selecciona
             $('#textCargo').val('');
             $('#cargomodal').modal('toggle');
+            $('#form-registrar').modal('show');
             $.notify("Cargo registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
         },
         error:function(){ alert("Hay un error");}
@@ -158,6 +162,7 @@ function enviarCentro(accion,objCentroC){
             $('#v_centroc').val(data.centroC_id).trigger("change"); //lo selecciona
             $('#textCentro').val('');
             $('#centrocmodal').modal('toggle');
+            $('#form-registrar').modal('show');
             $.notify("Centro de costo registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
         },
         error:function(){ alert("Hay un error");}
@@ -200,6 +205,7 @@ function enviarLocal(accion,objLocal){
             $('#v_local').val(data.local_id).trigger("change"); //lo selecciona
             $('#textLocal').val('');
             $('#localmodal').modal('toggle');
+            $('#form-registrar').modal('show');
             $.notify("local registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
 
         },
@@ -243,6 +249,7 @@ function enviarNivel(accion,objNivel){
             $('#v_nivel').val(data.nivel_id).trigger("change"); //lo selecciona
             $('#textNivel').val('');
             $('#nivelmodal').modal('toggle');
+            $('#form-registrar').modal('show');
             $.notify("nivel registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
 
         },
@@ -252,19 +259,19 @@ function enviarNivel(accion,objNivel){
 
 //CONTRATO
 function agregarContrato(){
-    objContrato=datos("POST");
+    objContrato=datosContrato("POST");
     enviarContrato('',objContrato);
 };
 
-function datos(method){
-    nuevoArea={
+function datosContrato(method){
+    nuevoContrato={
         contrato_descripcion: $('#textContrato').val(),
         '_method':method
     }
-    return(nuevoArea);
+    return(nuevoContrato);
 }
 
-function enviarContrato(accion,objArea){
+function enviarContrato(accion,objContrato){
     $.ajax({
         type:"POST",
         url:"/registrar/contrato"+accion,
@@ -287,6 +294,7 @@ function enviarContrato(accion,objArea){
              $('#v_contrato').val(data.contrato_id).trigger("change");
              $('#textcontrato').val('');
             $('#contratomodal').modal('toggle');
+            $('#form-registrar').modal('show');
             $.notify("Contrato registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
 
         },
@@ -298,16 +306,16 @@ $(function(){
     $('#contrato').on('change',onSelectFecha);
 });
 function onSelectFecha(){
-    $('#fechasmodal').modal();
+    $('#form-registrar').modal('hide');
+    $('#fechasmodal').modal('show');
 }
 function agregarFechas(){
     fechaI = $('#m_fechaI').val();
     fechaF = $('#m_fechaF').val();
-    if($('#m_fechaI').val() != "" && $('#m_fechaF') != ""){
-        $('#c_fechaI').text(fechaI);
-        $('#c_fechaF').text(fechaF);
-        $('#fechasmodal').modal('toggle');
-    }
+    $('#c_fechaI').text(fechaI);
+    $('#c_fechaF').text(fechaF);
+    $('#fechasmodal').modal('toggle');
+    $('#form-registrar').modal('show');
     $('#m_fechaI').combodate("clearValue");
     $('#m_fechaF').combodate("clearValue");
 }
@@ -374,6 +382,7 @@ function enviarEmpleado(accion,objEmpleado){
             $('input[type="file"]').val("");
             $('input[type="email"]').val("");
             $('select').val("");
+            $('#form-registrar').modal('hide');
             leertabla();
 
         },
@@ -470,16 +479,14 @@ function actualizarEmpleado(accion,objEmpleadoA){
         leertabla();
         $('#form-ver').hide();
         $('#form-registrar').show();
-
-
-
     },
     error:function(data,errorThrown){
         alert("Hay un error");
 
     }
 
-});  });
+});  
+});
 
 
 //abrir nuevo form
@@ -528,8 +535,24 @@ function cargarFile2(){
     })
 }
 //********************** */
+$('#cerrar').click(function(){
+    $('#smartwizard').smartWizard("reset");
+    $('input[type="text"]').val("");
+    $('input:radio[name=tipo]:checked').prop('checked',false);
+    $('input[type="date"]').val("");
+    $('input[type="file"]').val("");
+    $('input[type="email"]').val("");
+    $('select').val("");
+    $("#form-registrar :input").prop('disabled',true);
+    $('#documento').attr('disabled',false);
+    $('#cerrar').attr('disabled',false);
+    $('#documento').on('change',function(){
+        $("#form-registrar :input").attr('disabled',false);
+    });
+});
 $("#form-registrar :input").prop('disabled',true);
 $('#documento').attr('disabled',false);
+$('#cerrar').attr('disabled',false);
 $('#documento').on('change',function(){
     $("#form-registrar :input").attr('disabled',false);
 });
