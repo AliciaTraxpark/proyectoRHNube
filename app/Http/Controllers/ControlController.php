@@ -23,6 +23,9 @@ class ControlController extends Controller
     }
 
     public function show(Request $request){
-        
+        $control = DB::table('control as c')
+            ->select('c.hora_i','c.hora_f','c.Imag')
+            ->get();
+        return view('tareas.tareas',['control'=>$control]);
     }
 }
