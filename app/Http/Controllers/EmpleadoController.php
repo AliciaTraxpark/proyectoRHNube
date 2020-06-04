@@ -29,7 +29,7 @@ class EmpleadoController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except('provincias','distritos','fechas','api');
+        $this->middleware('auth')->except('provincias','distritos','fechas','api','logueoEmpleado');
     }
     public function fechas($id){
         return tipo_contrato::where('contrato_id',$id)->get();
@@ -104,6 +104,25 @@ class EmpleadoController extends Controller
             return $empleado;
     }
 
+    public function logueoEmpleado(Request $request){
+       $pass = DB::table('empleado as e')
+        ->select('e.emple_pasword')
+        ->where('e.emple_nDoc','=',$request->get('emple_nDoc'))
+        ->get();
+
+        if(count($pass)==0)  return response()->json(null,404);
+        //if(password_verify($request->get("emple_pasword"),$pass[0]->emple_pasword)){
+        if($request->get("emple_pasword")== $pass[0]->emple_pasword){
+            $empleado = DB::table('empleado as e')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->select('p.perso_nombre')
+            ->where('e.emple_nDoc','=',$request->get('emple_nDoc'))
+            ->get();
+            return response()->json($empleado,200);
+        }else{
+            return response()->json(null,403);
+        }
+    }
     public function create()
     {
 

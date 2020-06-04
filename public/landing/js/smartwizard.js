@@ -41,12 +41,6 @@ $(document).ready(function(){
             }
             console.log(isStepValid)
         }
-        if(stepnumber == 1){
-            if($('#contrato').val() == ""){
-                isStepValid = false;
-                $('#contrato').addClass("is-invalid");
-            }else{$('#contrato').removeClass("is-invalid");}
-        }
         return isStepValid;    
     }
     function validateSteps1(stepnumber){
@@ -71,12 +65,6 @@ $(document).ready(function(){
                 $('#v_nombres').addClass("is-invalid");
             }else{$('#v_nombres').removeClass("is-invalid");}
             console.log(isStepValid)
-        }
-        if(stepnumber == 1){
-            if($('#v_contrato').val() == ""){
-                isStepValid = false;
-                $('#v_contrato').addClass("is-invalid");
-            }else{$('#v_contrato').removeClass("is-invalid");}
         }
         return isStepValid;    
     }
