@@ -123,6 +123,11 @@ class EmpleadoController extends Controller
             return response()->json(null,403);
         }
     }
+
+    public function apiControl(Request $request){
+        $control = new control();
+    }
+
     public function create()
     {
 
