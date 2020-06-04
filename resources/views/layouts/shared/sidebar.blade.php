@@ -5,7 +5,10 @@
         <img src="{{ URL::asset('admin/assets//images/users/avatar-7.jpg') }}" class="avatar-xs rounded-circle mr-2" alt="Shreyu" />
 
         <div class="media-body">
-            <h6 class="pro-user-name mt-0 mb-0">Shreyu N</h6>
+            @php
+            $usuario=Auth::user();
+            @endphp
+            <h6 class="pro-user-name mt-0 mb-0">{{$usuario->email}}</h6>
             <span class="pro-user-desc">Administrator</span>
         </div>
         <div class="dropdown align-self-center profile-dropdown-menu">

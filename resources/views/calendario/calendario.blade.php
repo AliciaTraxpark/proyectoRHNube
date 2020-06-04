@@ -290,8 +290,9 @@
                   <div class="col-md-7" style="left: 10%;max-width: 80%; " id="Datoscalendar">
                       <div class="card">
                           <div class="card-body">
+                             
                               <div id="calendar">
-                                  
+
                               </div>
 
                           </div> <!-- end card body-->
