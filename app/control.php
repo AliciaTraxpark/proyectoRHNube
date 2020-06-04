@@ -8,6 +8,6 @@ class control extends Model
 {
     protected $table = 'control';
     protected $primaryKey = 'Cont_id';
-    protected $fillable = ['Cont_id','Proyecto_Proye_id','fecha i','Fecha f','hora i','hora f',
+    protected $fillable = ['Cont_id','Proyecto_Proye_id','fecha_i','fecha_f','hora_i','hora_f',
                             'Imag'];
 }
