@@ -226,8 +226,8 @@ class EmpleadoController extends Controller
             ->leftJoin('ubigeo_peru_departments as para', 'e.emple_departamentoN', '=', 'para.id')
             ->leftJoin('ubigeo_peru_provinces as proviN', 'e.emple_provinciaN', '=', 'proviN.id')
             ->leftJoin('ubigeo_peru_districts as distN', 'e.emple_distritoN', '=', 'distN.id')
-            ->join('area as a', 'e.emple_area', '=', 'a.area_id')
-            ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+            ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+            ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
 
 
             ->select('e.emple_id','p.perso_id','p.perso_nombre','tipoD.tipoDoc_descripcion','e.emple_nDoc','p.perso_apPaterno',
