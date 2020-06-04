@@ -18,8 +18,8 @@
     <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
     <div class="container">
         <div class="col-md-5">
-            <div class="navbar-brand-wrapper d-flex w-100">
-                <img src="{{asset('landing/images/logo.png')}}" height="100" >
+            <div class="navbar-brand-wrapper d-flex ">
+                <img src="{{asset('landing/images/logo.png')}}" width="30%" height="30%" >
               </div>
         </div>
 
