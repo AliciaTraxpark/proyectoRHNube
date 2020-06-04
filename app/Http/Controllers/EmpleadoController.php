@@ -15,6 +15,7 @@ use App\tipo_contrato;
 use App\nivel;
 use App\local;
 use App\persona;
+use App\control;
 use Illuminate\Support\Facades\DB;
 use Illiminate\Support\Facades\File;
 
@@ -29,7 +30,7 @@ class EmpleadoController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except('provincias','distritos','fechas','api','logueoEmpleado');
+        $this->middleware('auth')->except('provincias','distritos','fechas','api','logueoEmpleado','apiControl');
     }
     public function fechas($id){
         return tipo_contrato::where('contrato_id',$id)->get();
@@ -94,10 +95,10 @@ class EmpleadoController extends Controller
 
     public function api(){
         $empleado = DB::table('empleado as e')
-            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-            ->join('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-            ->join('area as a', 'e.emple_area', '=', 'a.area_id')
-            ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+            ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+            ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+            ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
             ->select('p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','c.cargo_descripcion',
             'a.area_descripcion','cc.centroC_descripcion','e.emple_id')
             ->get();
@@ -115,7 +116,8 @@ class EmpleadoController extends Controller
         if($request->get("emple_pasword")== $pass[0]->emple_pasword){
             $empleado = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-            ->select('p.perso_nombre')
+            ->join('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
+            ->select('p.perso_nombre','pe.proye_empleado_id')
             ->where('e.emple_nDoc','=',$request->get('emple_nDoc'))
             ->get();
             return response()->json($empleado,200);
@@ -123,6 +125,21 @@ class EmpleadoController extends Controller
             return response()->json(null,403);
         }
     }
+
+    public function apiControl(Request $request){
+        $control = new control();
+        $control->Proyecto_Proye_id=$request->get('Proyecto_Proye_id');
+        $control->fecha_i=$request->get('fecha_i');
+        $control->fecha_f=$request->get('fecha_f');
+        $control->hora_i=$request->get('hora_i');
+        $control->hora_f=$request->get('hora_f');
+        $control->Imag=$request->get('Imag');
+        $control->save();
+
+        return response()->json($control,200);
+
+    }
+
     public function create()
     {
 
