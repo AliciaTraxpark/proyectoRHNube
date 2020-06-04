@@ -35,11 +35,11 @@
     <thead style="background: #566879;color: white;">
         <tr style="background: #f8f8f8">
             <th style="border-top: 1px solid #f8f8f8;"></th>
-            <th style="border-top: 1px solid #f8f8f8;" class="text-center"><input type="radio" name="inputR" id="i1"></th>
-             <th style="border-top: 1px solid #f8f8f8;"class="text-center"><input type="radio" name="inputR" id="i2"></th>
-             <th style="border-top: 1px solid #f8f8f8;" class="text-center"><input type="radio" name="inputR" id="i3"></th>
-             <th style="border-top: 1px solid #f8f8f8;" class="text-center"><input type="radio" name="inputR" id="i4"></th>
-             <th style="border-top: 1px solid #f8f8f8;" class="text-center"><input type="radio" name="inputR" id="i5"></th>
+            <th style="border-top: 1px solid #f8f8f8;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="inputR" id="i1"></th>
+             <th style="border-top: 1px solid #f8f8f8;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR" id="i2"></th>
+             <th style="border-top: 1px solid #f8f8f8;">&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR" id="i3"></th>
+             <th style="border-top: 1px solid #f8f8f8;" >&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR" id="i4"></th>
+             <th style="border-top: 1px solid #f8f8f8;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR" id="i5"></th>
          </tr>
         <tr>
             <th>#</th>
@@ -52,7 +52,7 @@
     </thead>
     <tbody style="background:#f8f8f8;color: #2c2c2c;">
         @foreach ($tabla_empleado as  $tabla_empleados)
-    <tr id="{{$tabla_empleados->emple_id}}" value= "{{$tabla_empleados->emple_id}}">
+    <tr class="text-justify" id="{{$tabla_empleados->emple_id}}" value= "{{$tabla_empleados->emple_id}}">
 
             <td   > <input type="hidden" value="{{$tabla_empleados->emple_id}}">   {{$loop->index+1}}</td>
             <td>{{$tabla_empleados->perso_nombre}}</td>
