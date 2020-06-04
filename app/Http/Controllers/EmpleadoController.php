@@ -17,6 +17,8 @@ use App\local;
 use App\persona;
 use App\control;
 use Illuminate\Support\Facades\DB;
+use Tymon\JWTAuth\Facades\JWTFactory;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Illiminate\Support\Facades\File;
 
 
@@ -120,7 +122,12 @@ class EmpleadoController extends Controller
             ->select('p.perso_nombre','pe.proye_empleado_id')
             ->where('e.emple_nDoc','=',$request->get('emple_nDoc'))
             ->get();
-            return response()->json($empleado,200);
+            $factory = JWTFactory::customClaims([
+                'sub' => env('API_ID'),
+            ]);
+            $payload = $factory->make();
+            $token = JWTAuth::encode($payload);
+            return response()->json(array('data' => $empleado, 'token' => $token->get()),200);
         }else{
             return response()->json(null,403);
         }
