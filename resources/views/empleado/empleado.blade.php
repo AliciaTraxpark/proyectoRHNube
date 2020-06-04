@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{{asset('landing/vendors/owl-carousel/css/owl.carousel.min.css')}}">
+    {{-- <link rel="stylesheet" href="{{asset('landing/vendors/owl-carousel/css/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{asset('landing/vendors/owl-carousel/css/owl.theme.default.css')}}">
-    <link rel="stylesheet" href="{{asset('landing/vendors/mdi/css/materialdesignicons.min.css')}}">
+    <link rel="stylesheet" href="{{asset('landing/vendors/mdi/css/materialdesignicons.min.css')}}"> --}}
     <link rel="stylesheet" href="{{asset('landing/vendors/aos/css/aos.css')}}">
     <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -33,9 +33,9 @@
 </head>
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
 <style>
-    .sw-main {
-    box-shadow: none;
-    border-top: 0.5px solid #617589;
+
+nav-item active{
+
 }
     .container{
         margin-left: 40px;
@@ -55,10 +55,10 @@
     }
 
     .sw-theme-default > ul.step-anchor > li.active > a{
-        color: #ffffff !important;
+        color: #1c68b1 !important;
     }
     .sw-theme-default > ul.step-anchor > li.done > a, .sw-theme-default > ul.step-anchor > li > a {
-        color: #d2d2d2!important;
+        color: #0b1b29!important;
     }
     .combodate{
         display: flex;
@@ -81,7 +81,7 @@
         max-width: 9em;
     }
     .form-control:disabled{
-        background-color: #f0f0f0;
+        background-color: #fcfcfc;
     }
     body{
         background-color: #f8f8f8;
@@ -144,9 +144,11 @@
                             </div>
 
 
-                            <div id="tabladiv">
+                                <div id="tabladiv">
 
-                            </div>
+                                </div>
+
+
 
 
                         </div> <!-- end card body-->
@@ -361,12 +363,12 @@
                 <div class="modal fade" style="font-size: 13px" id="form-registrar" tabindex="-1" role="dialog" aria-labelledby="areamodal" aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog modal-dialog-scrollable modal-lg">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="header-title mt-0 "></i>Datos de empleado</h4>
+                            <div class="modal-header" style="background: #163552;">
+                                <h4 class="header-title mt-0 " style="color: #f0f0f0"></i>Datos de empleado</h4>
                             </div>
                             <div class="modal-body" style="padding: 0px">
-                                <div class="setup-panel" id="smartwizard" style="background: #f8f8f8; color:#3d3d3d;">
-                                    <ul style="background: #566879!important;" >
+                                <div class="setup-panel" id="smartwizard" style="background: #ffffff; color:#3d3d3d;">
+                                    <ul style="background: #fdfdfd!important;" >
                                         <li><a href="#sw-default-step-1">Personales</a></li>
                                         <li><a href="#sw-default-step-2">Empresarial</a></li>
                                         <li><a href="#sw-default-step-3">Foto</a></li>
@@ -589,7 +591,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" id="cerrar" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="button" id="cerrar" class="btn btn-light" data-dismiss="modal" style="background: #183857; color: white;">Cerrar</button>
                             </div>
                         </div>
                     </div>
@@ -597,12 +599,12 @@
                 <div class="modal fade" id="form-ver" style="font-size: 13px" tabindex="-1" role="dialog" aria-labelledby="areamodal" aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog modal-dialog-scrollable modal-lg">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="header-title mt-0 ">Datos de empleado</h4><br>
+                            <div class="modal-header" style="background: #163552;">
+                                <h4 class="header-title mt-0 " style="color: #f0f0f0">Datos de empleado</h4><br>
                             </div>
                             <div class="modal-body" style="padding: 0px;">
-                                <div id="smartwizard1" style="background: #f8f8f8; color:#3d3d3d;">
-                                    <ul style="background: #566879!important;" >
+                                <div id="smartwizard1" style="background: #ffffff; color:#3d3d3d;">
+                                    <ul style="background: #fdfdfd!important;" >
                                         <li><a href="#persona-step-1">Personales</a></li>
                                         <li><a href="#sw-default-step-2">Empresarial</a></li>
                                         <li><a href="#sw-default-step-3">Foto</a></li>
@@ -620,7 +622,7 @@
                                                     <input style="display: none;" name="v_id" id="v_id">
                                                     <div class="form-group">
                                                         <label for="sw-default">Tipo Documento</label>
-                                                        <input type="text" class="form-control" name="v_tipoDoc" id="v_tipoDoc" disabled style="background-color: #f0f0f0;">
+                                                        <input type="text" class="form-control" name="v_tipoDoc" id="v_tipoDoc" disabled style="background-color: #fcfcfc;">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Apellido Paterno</label>
@@ -634,7 +636,7 @@
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Num. Documento</label>
-                                                        <input type="text" class="form-control" name="v_numDocumento" id="v_numDocumento" required disabled style="background-color: #f0f0f0;">
+                                                        <input type="text" class="form-control" name="v_numDocumento" id="v_numDocumento" required disabled style="background-color: #fcfcfc;">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Apellido Materno</label>
@@ -840,7 +842,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" id="cerrarEd" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="button" id="cerrarEd" class="btn btn-light" data-dismiss="modal" style="background:#183857; color: white;">Cerrar</button>
                             </div>
                         </div>
                     </div>
@@ -864,7 +866,7 @@
 
 
     <!-- Vendor js -->
-    <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
+    {{-- <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script> --}}
     <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script>
     <!-- App js -->
     <script src="{{asset('admin/assets/js/app.min.js')}}"></script>
