@@ -1,7 +1,26 @@
 
+
+ $( document ).ready(function() {
+    $('#calendar .fc-Descanso-button').prop('disabled', true);
+    $('#calendar .fc-NoLaborales-button').prop('disabled', true);
+    $("#calendar .fc-left").on("click",myFuncion);
+
+
+
+    function myFuncion(){
+        $('#calendar .fc-Descanso-button').prop('disabled', true);
+        $('#calendar .fc-NoLaborales-button').prop('disabled', true);
+        $("#calendar .fc-left").on("click",myFuncion);
+    }
+
+
+});
+
+
 function calendario() {
     var calendarEl = document.getElementById('calendar');
     calendarEl.innerHTML="";
+
     var fecha = new Date();
     var ano = fecha. getFullYear();
     var id;
@@ -23,7 +42,8 @@ function calendario() {
             end: arg.end,
             allDay: arg.allDay
           }) */
-
+          $('#calendar .fc-Descanso-button').prop('disabled', false);
+          $('#calendar .fc-NoLaborales-button').prop('disabled', false);
           $('#pruebaEnd').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
           $('#pruebaStar').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
         console.log(arg);
@@ -55,6 +75,7 @@ function calendario() {
         customButtons:{
           Descanso:{
             text:"Asignar días de Descanso",
+
             click:function(){
                 var start=  $('#pruebaStar').val();
                 var end=  $('#pruebaEnd').val();
@@ -71,6 +92,8 @@ function calendario() {
                 $('#startF').val(start);
                 $('#endF').val(end);
                 $('#myModalFestivo').modal('toggle');
+                $('#calendar .fc-Descanso-button').prop('disabled', true);
+                $('#calendar .fc-NoLaborales-button').prop('disabled', true);
 
             }
           }
@@ -117,6 +140,8 @@ function calendario() {
 
               $('#myModal').modal('toggle');
               calendar.refetchEvents();
+
+
               $.ajax(
                 {
 
@@ -130,6 +155,14 @@ function calendario() {
 
 
                   calendario1(data);
+                  $('#calendar1 .fc-Descanso-button').prop('disabled', true);
+                  $('#calendar1 .fc-NoLaborales-button').prop('disabled', true);
+                  $("#calendar1 .fc-left").on("click",myFuncion1);
+                  function myFuncion1(){
+                  $('#calendar1 .fc-Descanso-button').prop('disabled', true);
+                  $('#calendar1 .fc-NoLaborales-button').prop('disabled', true);
+                  $("#calendar1 .fc-left").on("click",myFuncion1);
+                  }
 
                   },
                 error:function(){ alert("Hay un error");}
@@ -155,7 +188,7 @@ function calendario() {
               calendar.refetchEvents();
               console.log(msg);
               },
-            error:function(){ alert("Accion no permitida");}
+            error:function(){ alert("No puede eliminar dia feriado");}
             }
         );
     }
@@ -208,9 +241,15 @@ function calendario() {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
                 success:function(data){
-
-
-                  calendario1(data);
+                calendario1(data);
+                $('#calendar1 .fc-Descanso-button').prop('disabled', true);
+                $('#calendar1 .fc-NoLaborales-button').prop('disabled', true);
+                $("#calendar1 .fc-left").on("click",myFuncion1);
+                function myFuncion1(){
+                $('#calendar1 .fc-Descanso-button').prop('disabled', true);
+                $('#calendar1 .fc-NoLaborales-button').prop('disabled', true);
+                $("#calendar1 .fc-left").on("click",myFuncion1);
+                }
 
                   },
                 error:function(){ alert("Hay un error");}
@@ -234,7 +273,7 @@ function calendario() {
             $('#myModalEliminarN').modal('toggle');
             calendar.refetchEvents();
             console.log(msg); },
-          error:function(){ alert("Accion no permitida");}
+          error:function(){ alert("No puede eliminar dia feriado");}
           }
       );
   }
@@ -288,6 +327,14 @@ $( document ).ready(function() {
              }
          );
          calendario1(data);
+         $('#calendar1 .fc-Descanso-button').prop('disabled', true);
+         $('#calendar1 .fc-NoLaborales-button').prop('disabled', true);
+         $("#calendar1 .fc-left").on("click",myFuncion1);
+         function myFuncion1(){
+            $('#calendar1 .fc-Descanso-button').prop('disabled', true);
+            $('#calendar1 .fc-NoLaborales-button').prop('disabled', true);
+            $("#calendar1 .fc-left").on("click",myFuncion1);
+        }
 
          },
        error:function(){ alert("Hay un error");}
@@ -321,6 +368,8 @@ $( document ).ready(function() {
              end: arg.end,
              allDay: arg.allDay
            }) */
+           $('#calendar1 .fc-Descanso-button').prop('disabled', false);
+           $('#calendar1 .fc-NoLaborales-button').prop('disabled', false);
            $('#pruebaEnd').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
            $('#pruebaStar').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
          console.log(arg);

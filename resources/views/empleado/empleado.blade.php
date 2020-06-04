@@ -33,7 +33,9 @@
 </head>
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
 <style>
-.container{
+
+
+    .container{
         margin-left: 40px;
     margin-right: 28px;
     }
