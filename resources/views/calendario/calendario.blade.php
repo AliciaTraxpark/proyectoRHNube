@@ -24,11 +24,13 @@
   <link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
 </head>
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
+
 <style>
     .fc-time{
         display: none;
     }
 </style>
+
   <header id="header-section">
     <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
         <div class="container">
@@ -70,6 +72,7 @@
         </div>
     </nav>
   </header>
+
     <div class="content-page" style="margin-top: 40px; margin-left: 55px; margin-right: 55px;">
         <div class="content">
             <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -282,11 +285,14 @@
           </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
             <div class="row " >
+
                 <div class="col-md-12 text-center">
                   <div class="col-md-7" style="left: 10%;max-width: 80%; " id="Datoscalendar">
                       <div class="card">
                           <div class="card-body">
-                              <div id="calendar"></div>
+                              <div id="calendar">
+                                  
+                              </div>
 
                           </div> <!-- end card body-->
                           <div class="card-footer">

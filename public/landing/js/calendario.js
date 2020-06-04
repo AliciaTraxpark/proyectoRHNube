@@ -1,7 +1,18 @@
 
+
+ $( document ).ready(function() {
+    $('.fc-Descanso-button').prop('disabled', true);
+    $('.fc-NoLaborales-button').prop('disabled', true);
+
+});
+
+$('.fc-next-button').on('click', function() {
+    alert('g');
+  });
 function calendario() {
     var calendarEl = document.getElementById('calendar');
     calendarEl.innerHTML="";
+
     var fecha = new Date();
     var ano = fecha. getFullYear();
     var id;
@@ -55,6 +66,7 @@ function calendario() {
         customButtons:{
           Descanso:{
             text:"Asignar días de Descanso",
+           
             click:function(){
                 var start=  $('#pruebaStar').val();
                 var end=  $('#pruebaEnd').val();

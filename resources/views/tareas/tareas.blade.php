@@ -80,7 +80,9 @@
 
                 <div class="card">
                     <div class="card-body" style="padding-left: 0px;">
-                        <label>{{$control[0]->hora_i}} {{$control[0]->hora_f}}</label>  &nbsp;&nbsp;&nbsp; <label>Tiempo trabajado 0:59:53</label><br><br>
+                        @if (count($control))
+                        <label>{{$control[0]->hora_i}} {{$control[0]->hora_f}}</label>
+                        @endif  &nbsp;&nbsp;&nbsp; <label>Tiempo trabajado 0:59:53</label><br><br>
                         <div class="custom-accordion accordion ml-4" id="customaccordion_exa" style="margin-left: 0px!important;">
                             <div class="card mb-1" style="padding-left: 20px;">
                                 <a href="" class="text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
@@ -97,7 +99,10 @@
                                             <h5 class="m-0 font-size-14" > Área 1  </h5>
                                         </div>  <br>
                                         <div class="col-md-12 col-sm-6 border" style="padding-left: 0px;">
-                                          <img src="{{'data:image/jpeg;base64,'.$control[0]->Imag}}" height="79">
+                                            @if (count($control))
+                                            <img src="{{'data:image/jpeg;base64,'.$control[0]->Imag}}" height="79">
+                                            @endif
+
                                         &nbsp;  <label style="font-size: 12px" for="">9:00 am - 9:10 am</label>
                                          <div class="progress" style="background-color: #d4d4d4;">
                                             &nbsp;  <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
