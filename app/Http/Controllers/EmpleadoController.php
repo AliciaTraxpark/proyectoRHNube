@@ -148,7 +148,7 @@ class EmpleadoController extends Controller
         if($objEmpleado['centroc'] != ''){
             $empleado->emple_centCosto=$objEmpleado['centroc'];
         }
-      
+
         if($objEmpleado['dep'] != ''){
             $empleado->emple_departamento=$objEmpleado['dep'];
             $empleado->emple_provincia=$objEmpleado['prov'];
@@ -197,18 +197,18 @@ class EmpleadoController extends Controller
         $departamento=ubigeo_peru_departments::all();
         $empleado = DB::table('empleado as e')
 
-            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->join('tipo_documento as tipoD', 'e.emple_tipoDoc', '=', 'tipoD.tipoDoc_id')
             ->leftJoin('ubigeo_peru_departments as depar', 'e.emple_departamento', '=', 'depar.id')
             ->leftJoin('ubigeo_peru_provinces as provi', 'e.emple_provincia', '=', 'provi.id')
             ->leftJoin('ubigeo_peru_districts as dist', 'e.emple_distrito', '=', 'dist.id')
 
-            ->join('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
             ->leftJoin('ubigeo_peru_departments as para', 'e.emple_departamentoN', '=', 'para.id')
             ->leftJoin('ubigeo_peru_provinces as proviN', 'e.emple_provinciaN', '=', 'proviN.id')
             ->leftJoin('ubigeo_peru_districts as distN', 'e.emple_distritoN', '=', 'distN.id')
-            ->join('area as a', 'e.emple_area', '=', 'a.area_id')
-            ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+            ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+            ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
 
 
             ->select('e.emple_id','p.perso_id','p.perso_nombre','tipoD.tipoDoc_descripcion','e.emple_nDoc','p.perso_apPaterno',
