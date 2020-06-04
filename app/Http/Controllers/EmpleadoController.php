@@ -15,7 +15,6 @@ use App\tipo_contrato;
 use App\nivel;
 use App\local;
 use App\persona;
-use App\control;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTFactory;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -131,20 +130,6 @@ class EmpleadoController extends Controller
         }else{
             return response()->json(null,403);
         }
-    }
-
-    public function apiControl(Request $request){
-        $control = new control();
-        $control->Proyecto_Proye_id=$request->get('Proyecto_Proye_id');
-        $control->fecha_i=$request->get('fecha_i');
-        $control->fecha_f=$request->get('fecha_f');
-        $control->hora_i=$request->get('hora_i');
-        $control->hora_f=$request->get('hora_f');
-        $control->Imag=$request->get('Imag');
-        $control->save();
-
-        return response()->json($control,200);
-
     }
 
     public function create()
