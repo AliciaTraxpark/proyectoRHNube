@@ -19,10 +19,12 @@ function onMostrarPantallas(){
                 //image += '<img src="data:image/jpeg;base64,'+data[i].Img+'">';
                 //$('#hora').html(label);
                 //$('#imagen').html(image);
-                card = `<div class="card-body">
-                    '<label>'data[i].hora_i+' '+data[i].hora_f+'</label>'
-                    '<img src="data:image/jpeg;base64,'+data[i].Img+'">'
-                </div>`
+                card = `<div class="card-body" style="padding-left: 0px;">
+                        <label>${data[i].hora_i} ${data[i].hora_f}</label>
+                        <div class="row">
+                        <img src="data:image/jpeg;base64,${data[i].Imag}" height="150" width="150">
+                    </div>
+                    </div>`
             }
             container.append(card);
         },
