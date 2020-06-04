@@ -35,11 +35,11 @@
     <thead style="background: #566879;color: white;">
         <tr style="background: #f8f8f8">
             <th style="border-top: 1px solid #f8f8f8;"></th>
-            <th style="border-top: 1px solid #f8f8f8;"><input type="radio" name="inputR" id="i1"></th>
-             <th style="border-top: 1px solid #f8f8f8;"><input type="radio" name="inputR" id="i2"></th>
-             <th style="border-top: 1px solid #f8f8f8;"><input type="radio" name="inputR" id="i3"></th>
-             <th style="border-top: 1px solid #f8f8f8;"><input type="radio" name="inputR" id="i4"></th>
-             <th style="border-top: 1px solid #f8f8f8;"><input type="radio" name="inputR" id="i5"></th>
+            <th style="border-top: 1px solid #f8f8f8;" class="text-center"><input type="radio" name="inputR" id="i1"></th>
+             <th style="border-top: 1px solid #f8f8f8;"class="text-center"><input type="radio" name="inputR" id="i2"></th>
+             <th style="border-top: 1px solid #f8f8f8;" class="text-center"><input type="radio" name="inputR" id="i3"></th>
+             <th style="border-top: 1px solid #f8f8f8;" class="text-center"><input type="radio" name="inputR" id="i4"></th>
+             <th style="border-top: 1px solid #f8f8f8;" class="text-center"><input type="radio" name="inputR" id="i5"></th>
          </tr>
         <tr>
             <th>#</th>
@@ -93,7 +93,7 @@
             $('#v_provincia').val(data[0].idproviN);
             onSelectVProvincia('#v_provincia').then( (result) => $('#v_distrito').val(data[0].iddistN))
         });
-        
+
 
         $('#v_dep').val(data[0].deparNo);
         onSelectVDepart('#v_dep').then(function (){

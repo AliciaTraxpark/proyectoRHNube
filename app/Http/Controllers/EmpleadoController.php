@@ -82,10 +82,10 @@ class EmpleadoController extends Controller
      */
     public function tabla(){
         $tabla_empleado1 = DB::table('empleado as e')
-            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-            ->join('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-            ->join('area as a', 'e.emple_area', '=', 'a.area_id')
-            ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+            ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+            ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+            ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
             ->select('p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','c.cargo_descripcion',
             'a.area_descripcion','cc.centroC_descripcion','e.emple_id')
             ->get();
@@ -232,9 +232,8 @@ class EmpleadoController extends Controller
         $idempleado=$request->get('value');
         $departamento=ubigeo_peru_departments::all();
         $empleado = DB::table('empleado as e')
-
             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-            ->join('tipo_documento as tipoD', 'e.emple_tipoDoc', '=', 'tipoD.tipoDoc_id')
+            ->leftJoin('tipo_documento as tipoD', 'e.emple_tipoDoc', '=', 'tipoD.tipoDoc_id')
             ->leftJoin('ubigeo_peru_departments as depar', 'e.emple_departamento', '=', 'depar.id')
             ->leftJoin('ubigeo_peru_provinces as provi', 'e.emple_provincia', '=', 'provi.id')
             ->leftJoin('ubigeo_peru_districts as dist', 'e.emple_distrito', '=', 'dist.id')
