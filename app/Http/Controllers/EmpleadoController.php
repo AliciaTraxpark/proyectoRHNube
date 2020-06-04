@@ -110,8 +110,9 @@ class EmpleadoController extends Controller
         ->where('e.emple_nDoc','=',$request->get('emple_nDoc'))
         ->get();
 
-        //if(password_verify($request->get("emple_pasword"),$pass)){
-        if($request->get("emple_pasword")== $pass){
+        if(count($pass)==0)  return response()->json(null,404);
+        //if(password_verify($request->get("emple_pasword"),$pass[0]->emple_pasword)){
+        if($request->get("emple_pasword")== $pass[0]->emple_pasword){
             $empleado = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->select('p.perso_nombre')
