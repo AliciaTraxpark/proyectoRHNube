@@ -5,7 +5,7 @@
     }
     #sidebar-menu > ul > li > a{
         padding: 9px 30px;
-        font-size: 14.5px;
+        font-size: 14px;
     }
 
 </style>

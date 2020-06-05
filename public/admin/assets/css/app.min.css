@@ -860,7 +860,7 @@ body {
 }
 
 .page-title {
-  padding: 20px 0;
+  padding: 15px 0;
 }
 
 .page-title .breadcrumb {
@@ -1433,7 +1433,7 @@ body[data-layout=topnav] .profile-dropdown {
 }
 
 .font-family-secondary {
-  font-family: "Nunito Sans", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .avatar-xs {
@@ -2120,7 +2120,7 @@ body[data-layout=topnav] .profile-dropdown {
 }
 
 .apex-charts text {
-  font-family: "Nunito Sans", sans-serif !important;
+  font-family: "Roboto", sans-serif !important;
   fill: #4B4B5A;
 }
 
@@ -2130,7 +2130,7 @@ body[data-layout=topnav] .profile-dropdown {
 
 .apexcharts-tooltip-title,
 .apexcharts-tooltip-text {
-  font-family: "Nunito Sans", sans-serif !important;
+  font-family: "Roboto", sans-serif !important;
 }
 
 .apexcharts-legend-series {
@@ -2144,7 +2144,7 @@ body[data-layout=topnav] .profile-dropdown {
 
 .apexcharts-legend-text {
   color: #6c757d !important;
-  font-family: "Nunito Sans", sans-serif !important;
+  font-family: "Roboto", sans-serif !important;
   font-size: 13px !important;
 }
 
@@ -2154,7 +2154,7 @@ body[data-layout=topnav] .profile-dropdown {
 
 .apexcharts-yaxis text,
 .apexcharts-xaxis text {
-  font-family: "Nunito Sans", sans-serif !important;
+  font-family: "Roboto", sans-serif !important;
   fill: #adb5bd;
 }
 
@@ -2508,7 +2508,7 @@ th.fc-day-header {
 
 .ms-optgroup-label {
   font-weight: 500;
-  font-family: "Nunito Sans", sans-serif;
+  font-family: "Roboto", sans-serif;
   color: #343a40 !important;
   font-size: 13px;
 }
