@@ -1,8 +1,8 @@
 <!-- ========== Left Sidebar Start ========== -->
 <div class="left-side-menu">
     <div class="media user-profile mt-2 mb-2">
-        <img src="{{ URL::asset('admin/assets//images/users/avatar-7.jpg') }}" class="avatar-sm rounded-circle mr-2" alt="Shreyu" />
-        <img src="{{ URL::asset('admin/assets//images/users/avatar-7.jpg') }}" class="avatar-xs rounded-circle mr-2" alt="Shreyu" />
+        <img src="{{ URL::asset('admin/assets//images/users/avatar-7.png') }}" class="avatar-sm rounded-circle mr-2" alt="Shreyu" />
+        <img src="{{ URL::asset('admin/assets//images/users/avatar-7.png') }}" class="avatar-xs rounded-circle mr-2" alt="Shreyu" />
 
         <div class="media-body">
             @php

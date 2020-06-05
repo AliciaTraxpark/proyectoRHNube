@@ -130,15 +130,19 @@
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
+             <div class="row">
+                 {{-- <div class="col-md-2">
+                     <label for="" style="font-weight: 600">Lista de Proyectos</label>
+                 </div> --}}
+                 <div class="col-md-5 text-left" style="bottom: 5px;">
+                    <button type="button" class="btn btn-secondary  btn-sm" data-toggle="modal"
+                    data-target="#myModal" style="background: #507394; border-color: #507394;">+ Agregar proyecto</button>
+                 </div>
+             </div>
+               <br>
 
-                <div class="button-list">
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                        data-target="#myModal">+ Agregar proyecto</button>
-                </div><br><br>
-
-                <table id="tablaProyecto" class="table dt-responsive nowrap" style="font-size: 14px!important">
-                    <thead>
+                <table id="tablaProyecto" class="table dt-responsive nowrap" style="font-size: 13px!important">
+                    <thead style="background: #fafafa">
                         <tr>
                             <th>#</th>
                             <th>Nombre</th>
@@ -168,12 +172,12 @@
 
                                 @endphp
 
-                                <span>{{$empleado[0]->perso_nombre }} {{$empleado[0]->perso_apPaterno}} {{$empleado[0]->perso_apMaterno }},</span>
+                                <span> <img src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class=" mr-2" alt="" />{{$empleado[0]->perso_nombre }} {{$empleado[0]->perso_apPaterno}} &nbsp;</span>
                                  @endforeach
 
                             </td>
-                            <td><button  class="btn btn-success btn-sm" onclick="abrirM({{$proyectos->Proye_id}})"
-                              >Agregar miembro </button></td>
+                            <td><button style="background:#f0f4fd; border-color:#f0f4fd; color:#a0add3"  class="btn btn-secondary btn-sm" onclick="abrirM({{$proyectos->Proye_id}})"
+                              ><i data-feather="plus" class="icon-xs"></i> Miembro </button></td>
                         </tr>
                        @endforeach
                     </tbody>
@@ -216,6 +220,8 @@
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <script src="{{asset('landing/js/proyecto.js')}}"></script>
 
 @endsection

@@ -40,14 +40,14 @@
                         <label style="font-weight: 700">Búsqueda por fecha</label>
                     </div>
 
-                    <div class="col-md-2">
+                    {{-- <div class="col-md-2">
                         <label style="font-weight: 700"><br></label><br>
                         <button type="button" class="btn btn-light"><i class="uil uil-arrow-left"></i></button>
                         <button type="button" class="btn btn-light"><i class="uil uil-arrow-right"></i></button>
-                    </div>
-                    <div class="col-md-4 text-left">
+                    </div> --}}
+                    <div class="col-md-6">
                         <label><br> </label>
-                        <div class="input-group col-md-6">
+                        <div class="input-group col-md-5" style="padding-left: 0px;">
                             <input type="text" id="humanfd-datepicker" class="form-control" placeholder="May 25, 2020">
                             <div class="input-group-prepend">
                                 <div class="input-group-text form-control "><i class="uil uil-calender"></i></div>
@@ -58,7 +58,7 @@
                         <div class="form-group mt-3 mt-sm-0 col-md-10">
                             <label>Empleado</label>
                             <select id="empleado" data-plugin="customselect" class="form-control">
-                                <option value="">SELECCIONAR</option>
+                                <option value="" disabled selected>Seleccionar</option>
                                 @foreach ($empleado as $empleados)
                                     <option class="" value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</option>
                                 @endforeach
