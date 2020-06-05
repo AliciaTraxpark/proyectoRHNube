@@ -70,14 +70,17 @@
                     </div>
                     <br>
                     <div class="row">
-                        <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1"><span>Recuerda que necesitas Habilitar Edición para poder llenar tus datos.</span>
+                        <div class="col-md-12">
+                            <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1"><span>Recuerda que necesitas Habilitar Edición para poder llenar tus datos.</span>
+                        </div>
+
                     </div>
                    </div>
                    <div class="modal-footer">
                        <div class="col-md-12">
                            <div class="row">
-                               <div class="col-md-7 text-right">
-                                   <button type="button" id="cerrarE" class="btn btn-light" data-dismiss="modal">Entendido</button>
+                               <div class="col-md-12 text-right">
+                                   <button style="background-color: #024079;color: white;" type="button" id="cerrarE" class="btn btn-light" data-dismiss="modal">Entendido</button>
                                </div>
                            </div>
                        </div>
@@ -217,7 +220,7 @@
     <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 
-    <script src="{{asset('landing/js/tabla.js')}}"></script>
+
 <script>
     $(document).ready(function() {
     $('#basic-datatable1').DataTable( {
