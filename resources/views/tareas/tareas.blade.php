@@ -36,13 +36,17 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
+                    <div class="col-md-12">
+                        <label style="font-weight: 700">Búsqueda por fecha</label>
+                    </div>
+
                     <div class="col-md-2">
-                        <label><br></label><br>
+                        <label style="font-weight: 700"><br></label><br>
                         <button type="button" class="btn btn-light"><i class="uil uil-arrow-left"></i></button>
                         <button type="button" class="btn btn-light"><i class="uil uil-arrow-right"></i></button>
                     </div>
                     <div class="col-md-4 text-left">
-                        <label><br></label>
+                        <label><br> </label>
                         <div class="input-group col-md-6">
                             <input type="text" id="humanfd-datepicker" class="form-control" placeholder="May 25, 2020">
                             <div class="input-group-prepend">

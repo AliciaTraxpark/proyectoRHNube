@@ -29,6 +29,9 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
+                    <div class="col-md-12">
+                        <label style="font-weight: 700">Búsqueda por fecha</label>
+                    </div>
                         <div class="col-lg-8 text-right">
                             <button type="button" class="btn btn-light"><i class="uil uil-arrow-left"></i></button>
                             <button type="button" class="btn btn-light"><i class="uil uil-arrow-right"></i></button>
