@@ -43,7 +43,7 @@
         </div>
         <div class="col-md-3 " style="margin-left: 23%;">
 
-            <a href="{{'/export'}}"> <button style="background-color: #155E5B;border-color: #155E5B"  class="btn btn-sm  btn-primary "> <img src="{{asset('admin/images/excel.svg')}}" height="25" ></i>  Descargar plantilla</button></a>
+            <a href="{{'/export'}}"> <button id="export" style="background-color: #155E5B;border-color: #155E5B"  class="btn btn-sm  btn-primary "> <img src="{{asset('admin/images/excel.svg')}}" height="25" ></i>  Descargar plantilla</button></a>
         </div>
 
 
@@ -53,6 +53,38 @@
   </header>
     <div class="content-page" style="margin-top: 20px;margin-left: 0px">
         <div class="content">
+            <div id="modalInformacion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog">
+               <div class="modal-content">
+                   <div class="modal-header" style="background-color:#163552;">
+                       <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Recomendaciones</h5>
+                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                       </button>
+                   </div>
+                   <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-12 text-center">
+                            <img src="{{asset('landing/images/excelR.PNG')}}" height="100">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1"><span>Recuerda que necesitas Habilitar Edición para poder llenar tus datos.</span>
+                    </div>
+                   </div>
+                   <div class="modal-footer">
+                       <div class="col-md-12">
+                           <div class="row">
+                               <div class="col-md-7 text-right">
+                                   <button type="button" id="cerrarE" class="btn btn-light" data-dismiss="modal">Entendido</button>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div><!-- /.modal-content -->
+           </div><!-- /.modal-dialog -->
+         </div><!-- /.modal -->
             <div class="row " >
                 <div class="col-xl-12">
                     <div class="card" style="background:#f7f6f6;">
@@ -192,6 +224,11 @@
         "scrollX": true
     } );
 } );
+
+$('#export').click('change',function(){
+    $('#modalInformacion').modal('show');
+});
+
 </script>
 
 </body>
