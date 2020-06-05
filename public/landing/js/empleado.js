@@ -512,10 +512,11 @@ function cargarFile2(){
             initialPreview:
             [
                 "<img  id=v_foto src='{{asset('/fotosEmpleado')}}/'"+
-                urlFoto + "'style='width:120px'>"
+                urlFoto + " style='max-width:200px; max-height:200px; height:auto; width:auto'>"
             ] ,
             initialPreviewConfig: [{
-                width: "120px",
+                width: "200px",
+                height:"200px",
                 url: "/eliminarFoto/"+id_empleado,
                 showDelete: true,
                 key:id_empleado
