@@ -10,4 +10,5 @@ class control extends Model
     protected $primaryKey = 'Cont_id';
     protected $fillable = ['Cont_id','Proyecto_Proye_id','fecha_ini','Fecha_fin','hora_ini','hora_fin',
                             'idEnvio'];
+    public $timestamps =false;
 }

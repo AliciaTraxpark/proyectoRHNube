@@ -16,7 +16,7 @@ function onMostrarPantallas(){
             console.log(data)
             for(var i=0; i<data.length; i++){
                 card = `<div class="card-body" style="padding-left: 0px;">
-                        <label>${data[i].hora_i} ${data[i].hora_f}</label>
+                        <label>${data[i].hora_ini} ${data[i].hora_fin}</label>
                             <div class="custom-accordion accordion ml-4" id="customaccordion_exa" style="margin-left: 0px!important;">
                                     <div class="card mb-1" style="padding-left: 20px;">
                                         <a href="" class="text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
@@ -31,7 +31,7 @@ function onMostrarPantallas(){
                                                     <h5 class="m-0 font-size-14" > Área 1  </h5>
                                                 </div>  <br>
                                                 <div class="col-md-12 col-sm-6 border" style="padding-left: 0px;">
-                                                <img src="data:image/jpeg;base64,${data[i].Imag}" height="225" width="225">
+                                                <img src="data:image/jpeg;base64,${data[i].imagen}" height="225" width="225">
                                                 &nbsp;  <label style="font-size: 12px" for="">9:00 am - 9:10 am</label>
                                                 <div class="progress" style="background-color: #d4d4d4;">
                                                     &nbsp;  <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"

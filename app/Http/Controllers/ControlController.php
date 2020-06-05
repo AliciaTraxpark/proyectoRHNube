@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\captura;
 use Illuminate\Http\Request;
 use App\control;
 use Illuminate\Support\Facades\DB;
 use App\empleado;
+use App\envio;
 
 class ControlController extends Controller
 {
@@ -20,13 +22,27 @@ class ControlController extends Controller
     }
 
     public function store(Request $request){
+        $envio = new envio();
+        $envio->hora_Envio=$request->get('hora_Envio');
+        $envio->Total_Envio=$request->get('Total_Envio');
+        $envio->idEmpleado=$request->get('idEmpleado');
+        $envio->save();
+        $idEnvio=$envio->idEnvio;
+
+        $captura = new captura();
+        $captura->idEnvio=$idEnvio;
+        $captura->estado=$request->get('estado');
+        $captura->fecha_hora=$request->get('fecha_hora');
+        $captura->imagen=$request->get('imagen');
+        $captura->save();
+
         $control = new control();
         $control->Proyecto_Proye_id=$request->get('Proyecto_Proye_id');
-        $control->fecha_i=$request->get('fecha_i');
-        $control->fecha_f=$request->get('fecha_f');
-        $control->hora_i=$request->get('hora_i');
-        $control->hora_f=$request->get('hora_f');
-        $control->Imag=$request->get('Imag');
+        $control->fecha_ini=$request->get('fecha_ini');
+        $control->Fecha_fin=$request->get('Fecha_fin');
+        $control->hora_ini=$request->get('hora_ini');
+        $control->hora_fin=$request->get('hora_fin');
+        $control->idEnvio=$idEnvio;
         $control->save();
 
         return response()->json($control,200);
@@ -38,8 +54,10 @@ class ControlController extends Controller
         $control = DB::table('empleado as e')
             ->join('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
             ->join('proyecto as p','p.Proye_id','=','Proyecto_Proye_id')
+            ->join('envio as en','en.idEmpleado','=','e.emple_id')
             ->join('control as c','c.Cont_id','=','p.Proye_id')
-            ->select('c.hora_i','c.hora_f','c.Imag')
+            ->join('captura as cp','c.idEnvio','=','en.idEnvio')
+            ->select('c.hora_ini','c.hora_fin','cp.imagen')
             ->where('e.emple_id','=',$idempleado)
             ->get();
             return response()->json($control,200);
