@@ -23,7 +23,7 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation
     {
         foreach ($rows as $row)
         {
-            if($row->filter()->isNotEmpty()){
+            if($row['numero_documento']!= ""){
 
                 //departamento
                 $dep = explode(" ", $row['departamento']);
