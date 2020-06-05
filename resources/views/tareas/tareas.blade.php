@@ -81,7 +81,7 @@
 
                 </div>
                 <div class="card" id="card">
-                        <div class="card-body" style="padding-left: 0px;">
+                        <!--<div class="card-body" style="padding-left: 0px;">
                             <label id="hora"></label>  &nbsp;&nbsp;&nbsp; <label>Tiempo trabajado 0:59:53</label><br><br>
                             <div class="custom-accordion accordion ml-4" id="customaccordion_exa" style="margin-left: 0px!important;">
                                 <div class="card mb-1" style="padding-left: 20px;">
@@ -109,7 +109,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                 </div>
             </div> <!-- end card-body-->
         </div> <!-- end card-->
