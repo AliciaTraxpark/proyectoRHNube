@@ -28,7 +28,7 @@ class MyController extends Controller
     */
     public function export()
     {
-        return Excel::download(new PlantillaExport(20), 'Empleados.xlsx');
+        return Excel::download(new PlantillaExport(301), 'Empleados.xlsx');
     }
 
     /**
