@@ -37,10 +37,10 @@ function onMostrarPantallas(){
                                         <div id="customaccorcollapseOne" class="collapse show" aria-labelledby="customaccorheadingOne"
                                             data-parent="#customaccordion_exa">
                                         <div class="row">
-                                            <div class="col-md-3">
+                                            <div class="col-md-6">
                                                 <div class=" text-center col-md-12 col-sm-6" style="background-color: rgb(234, 234, 234);padding-top: 8px;
                                                 padding-bottom: 8px;">
-                                                    <h5 class="m-0 font-size-14" > Área 1  </h5>
+                                                    <h5 class="m-0 font-size-14" >${data[i].Proye_Nombre} </h5>
                                                 </div>  <br>
                                                 <div class="col-md-12 col-sm-6 border" style="padding-left: 0px;">
                                                 <img src="data:image/jpeg;base64,${data[i].imagen}" height="225" width="225">

@@ -57,7 +57,7 @@ class ControlController extends Controller
             ->join('control as c','c.Proyecto_Proye_id','=','p.Proye_id')
             ->join('envio as en','en.idEnvio','=','c.idEnvio')
             ->join('captura as cp','cp.idEnvio','=','en.idEnvio')
-            ->select('c.hora_ini','c.hora_fin','cp.imagen')
+            ->select('P.Proye_Nombre','c.hora_ini','c.hora_fin','cp.imagen','en.hora_Envio')
             ->where('e.emple_id','=',$idempleado)
             ->orderBy('c.hora_ini','desc')
             ->get();
