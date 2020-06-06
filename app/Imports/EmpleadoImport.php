@@ -10,8 +10,9 @@ use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithBatchInserts;
 
-class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation
+class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, WithBatchInserts
 {
     private $numRows = 0;
     /**
@@ -42,7 +43,50 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation
                 if($row['distrito']!=null){
                 $row['id'] = $idD->id;} else{$row['id'] = null; }
 
+                //cargo
+                $cargo = explode(" ", $row['cargo']);
+                if($row['cargo']!=null){
+                $row['idcargo'] = $cargo[0]; } else{ $row['idcargo']=null; }
 
+                //area
+                $area = explode(" ", $row['area']);
+                if($row['area']!=null){
+                $row['idarea'] = $area[0]; } else{ $row['idarea']=null; }
+
+                //centro_costo
+                $centro_costo = explode(" ", $row['centro_costo']);
+                if($row['centro_costo']!=null){
+                $row['idcentro_costo'] = $centro_costo[0]; } else{ $row['idcentro_costo']=null; }
+
+                //departamentoNac
+                $depN = explode(" ", $row['departamento_nacimiento']);
+                if($row['departamento_nacimiento']!=null){
+                $row['iddepartamento_nacimiento'] = $depN[0]; } else{ $row['iddepartamento_nacimiento']=null; }
+
+                //provinciaNac
+                $proviN = explode(" ", $row['provincia_nacimiento']);
+                if($row['provincia_nacimiento']!=null){
+                $row['idprovincia_nacimiento'] = $proviN[0]; } else{ $row['idprovincia_nacimiento']=null; }
+
+               //distritoNac
+                $idDN = ubigeo_peru_districts::where("name", "like", "%".$row['distrito_nacimiento']."%")->first();
+                if($row['distrito_nacimiento']!=null){
+                $row['iddistrito_nacimiento'] = $idDN->id;} else{$row['distrito_nacimiento'] = null; }
+
+                //tipo_contrato
+                $tipo_contrato = explode(" ", $row['tipo_contrato']);
+                if($row['tipo_contrato']!=null){
+                $row['idtipo_contrato'] = $tipo_contrato[0]; } else{ $row['idtipo_contrato']=null; }
+
+                //local
+                $local = explode(" ", $row['local']);
+                if($row['local']!=null){
+                $row['idlocal'] = $local[0]; } else{ $row['idlocal']=null; }
+
+                //nivel
+                $nivel = explode(" ", $row['nivel']);
+                if($row['nivel']!=null){
+                $row['idnivel'] = $nivel[0]; } else{ $row['idnivel']=null; }
 
                 ++$this->numRows;
                 $personaId =persona::create([
@@ -68,7 +112,7 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation
 
                     'emple_nDoc'       =>$row['numero_documento']
                     ,
-                   
+
                     'emple_departamento'=> $row['iddep'],
 
 
@@ -77,33 +121,24 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation
 
                     'emple_distrito'   =>  $row['id'],
 
-                   /*  $cargo = explode(" ", $row['cargo']),
-                    'emple_cargo'      => $cargo[0],
 
-                    $area = explode(" ", $row['area']),
-                    'emple_area'       => $area[0],
+                    'emple_cargo'      =>  $row['idcargo'],
 
-                    $ceCosto = explode(" ", $row['centro_costo']),
-                    'emple_centCosto'  => $ceCosto[0],
+                    'emple_area'       => $row['idarea'],
 
-                    $depN = explode(" ", $row['departamento_nacimiento']),
-                    'emple_departamentoN' => $depN[0],
+                    'emple_centCosto'  => $row['idcentro_costo'],
 
-                    $provN = explode(" ", $row['provincia_nacimiento']),
-                    'emple_provinciaN'  => $provN[0],
+                    'emple_departamentoN' => $row['iddepartamento_nacimiento'],
 
-                    $distN = explode(" ", $row['distrito_nacimiento']),
-                    'emple_distritoN'   => $distN[0],
+                    'emple_provinciaN'  => $row['idprovincia_nacimiento'],
 
-                    $tipoC = explode(" ", $row['tipo_contrato']),
-                    'emple_tipoContrato' => $tipoC[0],
+                    'emple_distritoN'   => $row['iddistrito_nacimiento'],
 
-                    $local = explode(" ", $row['local']),
-                    'emple_local' => $local[0],
+                    'emple_tipoContrato' => $row['idtipo_contrato'],
 
-                    $nivel = explode(" ", $row['nivel']),
-                    'emple_nivel'  => $nivel[0],
- */
+                    'emple_local' => $row['idlocal'],
+
+                    'emple_nivel'  =>$row['idnivel'],
 
 
 
@@ -118,6 +153,10 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation
 
 
         ];
+    }
+    public function batchSize(): int
+    {
+        return 1000;
     }
     public function getRowCount(): int
     {
