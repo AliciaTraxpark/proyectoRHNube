@@ -156,7 +156,7 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
     }
     public function batchSize(): int
     {
-        return 1000;
+        return 2000;
     }
     public function getRowCount(): int
     {

@@ -106,10 +106,16 @@
                         <div class="card-body">
                             <form action="{{ route('importEmpleado') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
-                                <input type="file" name="file" class="form-control">
-                                <br>
-                                <button class="btn btn-success">Import User Data</button>
-
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="file" name="file" class="form-control">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button class="btn btn-sm" style="background-color: #e1eae5; color: #61886c;"><img src="{{ URL::asset('admin/assets/images/users/importar.png') }}" height="20" class=" mr-2" alt="" />Importar empleados</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                         <div class="card-body" style="padding-top: 20px;color: #1b1b1b;">
