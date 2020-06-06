@@ -116,8 +116,8 @@ class EmpleadoController extends Controller
         //if(password_verify($request->get("emple_pasword"),$pass[0]->emple_pasword)){
         if(Hash::check($request->get("emple_pasword"), $pass[0]->emple_pasword)){
             $empleado = DB::table('empleado as e')
-            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-            ->join('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
+            ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->leftJoin('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
             ->select('e.emple_id','p.perso_nombre','pe.proye_empleado_id')
             ->where('e.emple_nDoc','=',$request->get('emple_nDoc'))
             ->get();
