@@ -106,13 +106,11 @@
           <h5 style="color: #ffffff">Gestión de empleados</h5>
           <label for="" class="blanco font-italic">Tienes 2 minutos para registrar tu primer empleado</label>
         </div>
-
         <div class=" col-md-2 col-xl-2">
             <a href="{{('/empleado/cargar')}}"> <button class="btn btn-sm btn-primary" style="background-color: #183b5d;border-color:#62778c"><img src="{{asset('admin/images/subir.ico')}}" height="25" class="mr-1" >Carga masiva</button></a>
-
           </div>
         <div class=" col-md-3 col-xl-3">
-            <button  class="btn btn-sm btn-primary" style="background-color: #183b5d;border-color:#62778c"><img src="{{asset('admin/images/image.ico')}}" height="25" class="mr-1" >Carga masiva fotos</button>
+            <button class="btn btn-sm btn-primary" style="background-color: #183b5d;border-color:#62778c" id="cargaMasivaF"><img src="{{asset('admin/images/image.ico')}}" height="25" class="mr-1" >Carga masiva fotos</button>
         </div>
     </div>
     </nav>
@@ -120,15 +118,12 @@
     <div class="content-page" style="margin-top: 20px;margin-left: 0px">
         <div class="content">
             <div class="row">
-
             </div>
-
             <div class="row row-divided">
                 <div class="col-md-12 col-xl-12">
                     <div class="card">
                         <div class="card-body" style="padding-top: 20px; background: #f8f8f8; font-size: 12.8px;
                         color: #222222;   padding-left: 60px; padding-right: 80px;">
-
                             <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                             <div class="row">
                                 <div class="col-md-6">
@@ -140,18 +135,83 @@
                                     <button class="btn btn-sm btn-primary" id="formNuevoE" style="background-color: #183b5d;border-color:#62778c">Nuevo</button>
                                 </div>
                             </div>
-
-
                                 <div id="tabladiv">
-
                                 </div>
-
-
-
-
                         </div> <!-- end card body-->
                     </div> <!-- end card -->
                 </div>
+                <div id="modalInformacionF" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                    <div class="modal-dialog">
+                   <div class="modal-content">
+                       <div class="modal-header" style="background-color:#163552;">
+                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                               <span aria-hidden="true">&times;</span>
+                           </button>
+                       </div>
+                       <div class="modal-body">
+                           <div class="row">
+                               <span class="mr-2 text-center">Despues de haber registrado o cargado tus empleados, puedes cargar sus fotos de una manera más simple.</span>
+                           </div>
+                           <br>
+                            <div class="row">
+                                <div class="col-xl-5 text-center">
+                                    <img src="{{asset('landing/images/photo (3).svg')}}" height="100">
+                                    <br>
+                                    <span class="mr-2 text-center" style="color: #024079;font-weight: bold;">DNI Empleado</span>
+                                </div>
+                                <div class="col-xl-2 text-left">
+                                    <img src="{{asset('landing/images/right-arrow.svg')}}" height="80" >
+                                </div>
+                                <div class="col-xl-5 text-center">
+                                    <img src="{{asset('landing/images/photo (3).svg')}}" height="100">
+                                    <br>
+                                    <span class="mr-2 text-center" style="color: #024079;font-weight: bold;">12345678</span>
+                                </div>
+                            </div>
+                       </div>
+                       <div class="modal-footer">
+                           <div class="col-md-12">
+                               <div class="row">
+                                   <div class="col-md-12 text-right">
+                                       <button style="background-color: #024079;color: white;" type="button" id="cerrarIF" class="btn btn-light" data-dismiss="modal">Entendido</button>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div><!-- /.modal-content -->
+               </div><!-- /.modal-dialog -->
+             </div><!-- /.modal -->
+             <div id="modalMasivaFoto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Recomendaciones</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <br>
+                            <div class="row">
+                                <div class="col-xl-12 text-center">
+                                    <div class="file-loading">
+                                        <input id="fileMasiva" type="file" multiple webkitdirectory accept="image/*">
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <button style="background-color: #024079;color: white;" type="button" id="cerrarIF" class="btn btn-light" data-dismiss="modal">Entendido</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+           </div><!-- /.modal-dialog -->
+         </div><!-- /.modal -->
                   <div id="modalEliminar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                    <div class="modal-dialog">
                   <div class="modal-content">
@@ -893,5 +953,6 @@
     <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
     <script src="{{asset('landing/js/seleccionarDepProv.js')}}"></script>
     <script src="{{asset('landing/js/empleado.js')}}"></script>
+    <script src="{{asset('landing/js/cargaMasivaF.js')}}"></script>
 </body>
 </html>
