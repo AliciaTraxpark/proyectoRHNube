@@ -20,7 +20,7 @@ function onMostrarPantallas(){
             for(var i=0; i<data.length; i++){
                 console.log(horaDelGrupo);
                 console.log(data[i].hora_ini);
-                if(parseInt(data[i].hora_ini.split(":")[0]) > horaDelGrupo || i==data.length-1){
+                if(parseInt(data[i].hora_ini.split(":")[0]) > horaDelGrupo){
                     grupo += `</div><br>`;
                     container.append(grupo);
                     console.log(grupo);
@@ -58,6 +58,14 @@ function onMostrarPantallas(){
                             </div>
                     </div>`
                     grupo +=card;
+
+                    if(i==data.length-1){
+                        grupo += `</div><br>`;
+                        container.append(grupo);
+                        horaDelGrupo = parseInt(data[i].hora_ini.split(":")[0]);
+                        var labelDelGrupo = horaDelGrupo + ":00:00" + (horaDelGrupo+1) + ":00:00";
+                        grupo = `<div class="card">${labelDelGrupo}`;
+                    }
             }
         },
         error:function(data){
