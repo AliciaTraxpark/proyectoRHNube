@@ -13,10 +13,22 @@ function onMostrarPantallas(){
         },
         success:function(data){
             var container = $('#card');
-            console.log(data)
+            var horaDelGrupo = parseInt(data[0].hora_ini.split(":")[0]);
+            var labelDelGrupo = horaDelGrupo+":00:00" + " - " + (horaDelGrupo+1) + ":00:00";
+            var grupo = `<div class="card">${labelDelGrupo}`
+            console.log(data);
             for(var i=0; i<data.length; i++){
+                console.log(horaDelGrupo);
+                console.log(data[i].hora_ini);
+                if(parseInt(data[i].hora_ini.split(":")[0]) > horaDelGrupo){
+                    grupo += `</div><br>`;
+                    container.append(grupo);
+                    console.log(grupo);
+                    horaDelGrupo = parseInt(data[i].hora_ini.split(":")[0]);
+                    var labelDelGrupo = horaDelGrupo + ":00:00" + (horaDelGrupo+1) + ":00:00";
+                    grupo = `<div class="card">${labelDelGrupo}`;
+                }
                 card = `<div class="card-body" style="padding-left: 0px;">
-                        <label>${data[i].hora_ini} ${data[i].hora_fin}</label>
                             <div class="custom-accordion accordion ml-4" id="customaccordion_exa" style="margin-left: 0px!important;">
                                     <div class="card mb-1" style="padding-left: 20px;">
                                         <a href="" class="text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
@@ -45,12 +57,19 @@ function onMostrarPantallas(){
                                 </div>
                             </div>
                     </div>`
+                    grupo +=card;
+
+                    if(i==data.length-1){
+                        grupo += `</div><br>`;
+                        container.append(grupo);
+                        horaDelGrupo = parseInt(data[i].hora_ini.split(":")[0]);
+                        var labelDelGrupo = horaDelGrupo + ":00:00" + (horaDelGrupo+1) + ":00:00";
+                        grupo = `<div class="card">${labelDelGrupo}`;
+                    }
             }
-            container.append(card);
         },
         error:function(data){
             alert("Hay un error");
-            console.log(data)
         }
     })
 }
