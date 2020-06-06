@@ -59,7 +59,7 @@ class ControlController extends Controller
             ->join('captura as cp','cp.idEnvio','=','en.idEnvio')
             ->select('c.hora_ini','c.hora_fin','cp.imagen')
             ->where('e.emple_id','=',$idempleado)
-            ->orderBy('c.hora_ini')
+            ->orderBy('c.hora_ini','desc')
             ->get();
             return response()->json($control,200);
     }
