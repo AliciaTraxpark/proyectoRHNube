@@ -61,7 +61,11 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
                         'startColor' => [
                             'rgb' => '0A0A2A',
                         ]
-                    ]
+                    ],
+                    'alignment' => [
+                        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    ],
                 ];
 
                 $event->sheet->getStyle('A1:T1')->applyFromArray($styleArray);
@@ -88,7 +92,8 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
                 $drop_columnLocal = 'S';
                 $drop_columnNivel = 'T';
                 $drop_columnGenero = 'Q';
-                //getHighestRow();
+
+                $drop_columnFecha = 'M';
 
                 $row = 1;
                 $rowP = 1;
@@ -290,6 +295,7 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
                     $event->sheet->getCell("{$drop_columnLocal}{$i}")->setDataValidation(clone $validationLocal);
                     $event->sheet->getCell("{$drop_columnNivel}{$i}")->setDataValidation(clone $validationNivel);
                     $event->sheet->getCell("{$drop_columnGenero}{$i}")->setDataValidation(clone $validationGenero);
+                    $event->sheet->getStyle("{$drop_columnFecha}{$i}")->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_YYYYMMDD);
                 }
             }
         ];

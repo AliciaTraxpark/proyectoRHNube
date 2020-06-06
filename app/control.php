@@ -8,6 +8,7 @@ class control extends Model
 {
     protected $table = 'control';
     protected $primaryKey = 'Cont_id';
-    protected $fillable = ['Cont_id','Proyecto_Proye_id','fecha_i','fecha_f','hora_i','hora_f',
-                            'Imag'];
+    protected $fillable = ['Cont_id','Proyecto_Proye_id','fecha_ini','Fecha_fin','hora_ini','hora_fin',
+                            'idEnvio'];
+    public $timestamps =false;
 }

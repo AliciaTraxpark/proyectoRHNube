@@ -1,3 +1,14 @@
+
+<style>
+    .left-side-menu {
+        background: #fafafa;
+    }
+    #sidebar-menu > ul > li > a{
+        padding: 9px 30px;
+        font-size: 14px;
+    }
+
+</style>
 <ul class="metismenu" id="menu-bar">
     <li class="menu-title">Navigation</li>
 
@@ -8,7 +19,13 @@
             <span> Dashboard </span>
         </a>
     </li>
-    
+    <li>
+        <a href="/empleado">
+            <i data-feather="list"></i>
+            <span>Gestión de empleado</span>
+        </a>
+    </li>
+
     <li>
         <a href="/calendario">
             <i data-feather="calendar"></i>
@@ -28,7 +45,7 @@
                 <a href="/tareas">Actividad de Captura de Pantalla</a>
             </li>
             <li>
-                <a href="/reporteSemanal">Reporte Semanal</a>
+                <a href="/reporteSemanal">Reporte</a>
             </li>
 
         </ul>
@@ -99,32 +116,7 @@
             <span> Pages </span>
             <span class="menu-arrow"></span>
         </a>
-        <ul class="nav-second-level" aria-expanded="false">
-            <li>
-                <a href="/pages/starter">Starter</a>
-            </li>
-            <li>
-                <a href="/pages/profile">Profile</a>
-            </li>
-            <li>
-                <a href="/pages/activity">Activity</a>
-            </li>
-            <li>
-                <a href="/pages/invoice">Invoice</a>
-            </li>
-            <li>
-                <a href="/pages/pricing">Pricing</a>
-            </li>
-            <li>
-                <a href="/pages/maintenance">Maintenance</a>
-            </li>
-            <li>
-                <a href="/errors/404">Error 404</a>
-            </li>
-            <li>
-                <a href="/errors/500">Error 500</a>
-            </li>
-        </ul>
+
     </li>
 
     <li>

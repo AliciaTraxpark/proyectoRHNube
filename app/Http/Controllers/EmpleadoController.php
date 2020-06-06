@@ -15,8 +15,9 @@ use App\tipo_contrato;
 use App\nivel;
 use App\local;
 use App\persona;
-use App\control;
 use Illuminate\Support\Facades\DB;
+use Tymon\JWTAuth\Facades\JWTFactory;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Illiminate\Support\Facades\File;
 
 
@@ -117,27 +118,18 @@ class EmpleadoController extends Controller
             $empleado = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->join('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
-            ->select('p.perso_nombre','pe.proye_empleado_id')
+            ->select('e.emple_id','p.perso_nombre','pe.proye_empleado_id')
             ->where('e.emple_nDoc','=',$request->get('emple_nDoc'))
             ->get();
-            return response()->json($empleado,200);
+            $factory = JWTFactory::customClaims([
+                'sub' => env('API_ID'),
+            ]);
+            $payload = $factory->make();
+            $token = JWTAuth::encode($payload);
+            return response()->json(array('data' => $empleado, 'token' => $token->get()),200);
         }else{
             return response()->json(null,403);
         }
-    }
-
-    public function apiControl(Request $request){
-        $control = new control();
-        $control->Proyecto_Proye_id=$request->get('Proyecto_Proye_id');
-        $control->fecha_i=$request->get('fecha_i');
-        $control->fecha_f=$request->get('fecha_f');
-        $control->hora_i=$request->get('hora_i');
-        $control->hora_f=$request->get('hora_f');
-        $control->Imag=$request->get('Imag');
-        $control->save();
-
-        return response()->json($control,200);
-
     }
 
     public function create()

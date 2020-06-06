@@ -90,9 +90,8 @@ Route::post('/registrar/nivel','nivelController@store');
 Route::post('/registrar/contrato','contratoController@store');
 
 //TAREAS
-Route::get('/tareas', function () {
-    return view('tareas/tareas');
-})->name('tareas')->middleware('auth');
+Route::get('/tareas','ControlController@index')->middleware('auth');
+Route::get('/tareas/show','ControlController@show')->middleware('auth');
 Route::get('/reporteSemanal', function () {
     return view('tareas/reporteSemanal');
 })->name('reporteSemanal')->middleware('auth');
