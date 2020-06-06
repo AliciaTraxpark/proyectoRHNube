@@ -19,7 +19,12 @@ $(document).ready(function() {
         language: 'es',
         showBrowse: true,
         browseOnZoneClick: true,
-        theme: "fa"
+        theme: "fa",
+        uploadExtraData: function() {
+            return {
+                _token: $("input[name='_token']").val(),
+            };
+        }
     });
     $("#fileMasiva").on('fileuploaded',function(event, data, previewId, index){
         var files = [];
@@ -35,9 +40,6 @@ $(document).ready(function() {
                         url:"/subirfoto",
                         method: "post",
                         data:{foto:foto},
-                        cache: false,
-                        contentType: false,
-                        processData: false,
                         headers:{
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
