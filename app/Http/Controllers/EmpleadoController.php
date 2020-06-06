@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Hash;
 use App\empleado;
 use App\area;
 use App\cargo;
@@ -114,7 +114,7 @@ class EmpleadoController extends Controller
 
         if(count($pass)==0)  return response()->json(null,404);
         //if(password_verify($request->get("emple_pasword"),$pass[0]->emple_pasword)){
-        if($request->get("emple_pasword")== $pass[0]->emple_pasword){
+        if(Hash::check($request->get("emple_pasword"), $pass[0]->emple_pasword)){
             $empleado = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->join('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
