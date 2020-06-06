@@ -53,10 +53,10 @@ class ControlController extends Controller
         $idempleado=$request->get('value');
         $control = DB::table('empleado as e')
             ->join('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
-            ->join('proyecto as p','p.Proye_id','=','Proyecto_Proye_id')
-            ->join('envio as en','en.idEmpleado','=','e.emple_id')
-            ->join('control as c','c.Cont_id','=','p.Proye_id')
-            ->join('captura as cp','c.idEnvio','=','en.idEnvio')
+            ->join('proyecto as p','p.Proye_id','=','pe.Proyecto_Proye_id')
+            ->join('control as c','c.Proyecto_Proye_id','=','p.Proye_id')
+            ->join('envio as en','en.idEnvio','=','c.idEnvio')
+            ->join('captura as cp','cp.idEnvio','=','en.idEnvio')
             ->select('c.hora_ini','c.hora_fin','cp.imagen')
             ->where('e.emple_id','=',$idempleado)
             ->get();

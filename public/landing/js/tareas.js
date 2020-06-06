@@ -13,7 +13,7 @@ function onMostrarPantallas(){
         },
         success:function(data){
             var container = $('#card');
-            console.log(data)
+            console.log(data);
             for(var i=0; i<data.length; i++){
                 card = `<div class="card-body" style="padding-left: 0px;">
                         <label>${data[i].hora_ini} ${data[i].hora_fin}</label>
@@ -50,7 +50,6 @@ function onMostrarPantallas(){
         },
         error:function(data){
             alert("Hay un error");
-            console.log(data)
         }
     })
 }
