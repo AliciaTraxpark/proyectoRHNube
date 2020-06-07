@@ -80,7 +80,7 @@
 
 
                 </div>
-                <div class="row" id="card">
+                <div id="card">
                 </div>
             </div> <!-- end card-body-->
         </div> <!-- end card-->
