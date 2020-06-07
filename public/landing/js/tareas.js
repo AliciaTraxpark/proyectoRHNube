@@ -15,7 +15,7 @@ function onMostrarPantallas(){
             var container = $('#card');
             var horaDelGrupo = parseInt(data[0].hora_ini.split(":")[0]);
             var labelDelGrupo = horaDelGrupo+":00:00" + " - " + (horaDelGrupo+1) + ":00:00";
-            var grupo = `<div style="display:flex">${labelDelGrupo}`;
+            var grupo = `<span>${labelDelGrupo}</span><div style="display:flex">`;
             console.log(data);
             for(var i=0; i<data.length; i++){
                 for(var j=0; j<6; j++){
@@ -27,16 +27,16 @@ function onMostrarPantallas(){
                                                 <a href="" class="text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
                                                     aria-expanded="true" aria-controls="customaccorcollapseOne">
                                                 </a>
-                                                <div id="customaccorcollapseOne" class="collapse show" aria-labelledby="customaccorheadingOne"
+                                                <div class="collapse show" aria-labelledby="customaccorheadingOne"
                                                     data-parent="#customaccordion_exa">
                                                 <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class=" text-center col-md-12 col-sm-6" style="background-color: rgb(234, 234, 234);padding-top: 8px;
+                                                    <div class="col-md-7">
+                                                        <div class=" text-center col-md-12 col-sm-6" style="background:#f0f4fd; border-color:#f0f4fd;padding-top: 8px;
                                                         padding-bottom: 8px;">
-                                                            <h5 class="m-0 font-size-14" >${data[i].Proye_Nombre} </h5>
+                                                            <h5 class="m-0 font-size-14" style="color:#a0add3;" >${data[i].Proye_Nombre} </h5>
                                                         </div>  <br>
-                                                        <div class="col-md-12 col-sm-6 border" style="padding-left: 0px;">
-                                                        <img src="data:image/jpeg;base64,${data[i].imagen}" height="225" width="225">
+                                                        <div class="col-md-12 col-sm-6" style="padding-left: 0px;">
+                                                        <img src="data:image/jpeg;base64,${data[i].imagen}" height="154" width="154">
                                                         &nbsp;  <label style="font-size: 12px" for="">9:00 am - 9:10 am</label>
                                                         <div class="progress" style="background-color: #d4d4d4;">
                                                             &nbsp;  <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
@@ -54,7 +54,27 @@ function onMostrarPantallas(){
                         }
                         grupo+=card;
                     }else{
-                        card = `<div class="card-body">Vacio</div>`;
+                        card = `<div class="card-body" style="padding-left: 0px;">
+                        <div class="custom-accordion ml-4" style="margin-left: 0px!important;justify-content:center;!important">
+                        <br><br><br><br><br>
+                                <div class="card mb-1" style="padding-left: 20px;">
+                                    <a href="" class="text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
+                                        aria-expanded="true" aria-controls="customaccorcollapseOne">
+                                    </a>
+                                    <div class="collapse show" aria-labelledby="customaccorheadingOne"
+                                        data-parent="#customaccordion_exa">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class=" text-center col-md-12 col-sm-12" style="background:#f0f4fd; border-color:#f0f4fd;padding-top: 8px;
+                                            padding-bottom: 8px;">
+                                                <h5 class="m-0 font-size-14" style="color:#a0add3;" >Vacio</h5>
+                                            </div>  <br>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
                         grupo += card;
                     }
                 }
@@ -66,7 +86,7 @@ function onMostrarPantallas(){
                 console.log(grupo);
                 horaDelGrupo = parseInt(data[i + 1].hora_ini.split(":")[0]);
                 var labelDelGrupo = horaDelGrupo + ":00:00" + (horaDelGrupo+1) + ":00:00";
-                grupo = `<div style="display:flex">${labelDelGrupo}`;
+                grupo = `<span>${labelDelGrupo}</span><div style="display:flex">`;
             }
         },
         error:function(data){

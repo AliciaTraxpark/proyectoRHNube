@@ -80,7 +80,7 @@
 
 
                 </div>
-                <div id="card">
+                <div class="col-xl-12" id="card">
                 </div>
             </div> <!-- end card-body-->
         </div> <!-- end card-->
