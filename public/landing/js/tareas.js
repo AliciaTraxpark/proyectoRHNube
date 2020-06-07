@@ -48,11 +48,11 @@ function onMostrarPantallas(){
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>`
+                                    </div>`
                         if(i!= data.length-1){
                             i++;
                         }
+                        grupo+=card;
                     }else{
                         card = `<div class="card-body">Vacio</div>`;
                         grupo += card;
