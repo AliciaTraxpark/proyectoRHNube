@@ -168,11 +168,17 @@
                                     <span class="mr-2 text-center" style="color: #024079;font-weight: bold;">12345678</span>
                                 </div>
                             </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-xl-12 text-center">
+                                    <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1"><span>Puedes guardar tus fotos en una carpeta especifica.</span>
+                                </div>
+                            </div>
                        </div>
                        <div class="modal-footer">
                            <div class="col-md-12">
                                <div class="row">
-                                   <div class="col-md-12 text-right">
+                                   <div class="col-md-12 text-center">
                                        <button style="background-color: #024079;color: white;" type="button" id="cerrarIF" class="btn btn-light" data-dismiss="modal">Entendido</button>
                                    </div>
                                </div>
@@ -185,7 +191,7 @@
                 <div class="modal-dialog modal-dialog-scrollable modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Recomendaciones</h5>
+                        <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Foto Empleado</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -204,8 +210,8 @@
                     <div class="modal-footer">
                         <div class="col-md-12">
                             <div class="row">
-                                <div class="col-md-12 text-right">
-                                    <button style="background-color: #024079;color: white;" type="button" id="cerrarIF" class="btn btn-light" data-dismiss="modal">Entendido</button>
+                                <div class="col-md-12 text-center">
+                                    <button type="button" id="cerrarMFotos" class="btn btn-light" data-dismiss="modal">Cerrar</button>
                                 </div>
                             </div>
                         </div>

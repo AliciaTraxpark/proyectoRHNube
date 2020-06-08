@@ -20,6 +20,6 @@ class CargaMasivaFotoController extends Controller
             $empleado->save();
             return json_encode(array('status'=>true));
         }
-        return response()->json($file[0]->getClientOriginalName(),400);
+        return response()->json($idempleado . "Numero de Documento no registrado.",400);
     }
 }

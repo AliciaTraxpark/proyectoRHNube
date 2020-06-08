@@ -4,6 +4,8 @@ $('#cargaMasivaF').click('change',function(){
 $('#cerrarIF').click('change',function(){
     $('#modalInformacionF').modal('toggle');
     $('#modalMasivaFoto').modal();
+    $("#fileMasiva").val('');
+    $("#fileMasiva").fileinput('refresh');
 });
 $(document).ready(function() {
     $("#fileMasiva").fileinput({
@@ -27,4 +29,3 @@ $(document).ready(function() {
         },
     });
 });
-
