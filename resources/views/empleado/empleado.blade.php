@@ -195,6 +195,7 @@
                             <div class="row">
                                 <div class="col-xl-12 text-center">
                                     <div class="file-loading">
+                                        {{ csrf_field() }}
                                         <input id="fileMasiva" type="file" multiple webkitdirectory accept="image/*">
                                     </div>
                                 </div>

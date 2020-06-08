@@ -111,4 +111,6 @@ Route::post('/proyecto/proyectoV','ProyectoController@proyectoV');
 Route::post('/proyecto/registrarPrEm','ProyectoController@registrarPrEm');
 Route::post('/proyecto/selectValidar','ProyectoController@selectValidar');
 
-
+//carga masiva de fotos
+Route::post('/empleadoFoto','CargaMasivaFotoController@empleado');
+Route::post('/subirfoto','CargaMasivaFotoController@subirfoto');

@@ -9,15 +9,53 @@ $(document).ready(function() {
     $("#fileMasiva").fileinput({
         browseLabel: 'Seleccionar Carpeta...',
         allowedFileExtensions: ['jpg','jpeg','png'],
-        uploadAsync: false,
+        uploadUrl:'/subirfoto',
+        uploadAsync: true,
         overwriteInitial: false,
         validateInitialCount: true,
-        showUpload:false,
+        showUpload:true,
         minFileCount:6,
         initialPreviewAsData: true ,// identify if you are sending preview data only and not the markup
         language: 'es',
         showBrowse: true,
         browseOnZoneClick: true,
-        theme: "fa"
+        theme: "fa",
+        uploadExtraData: function() {
+            return {
+                _token: $("input[name='_token']").val(),
+            };
+        }
     });
+    $("#fileMasiva").on('fileuploaded',function(event, data, previewId, index){
+        var files = [];
+        for (var i = 0; i < $(this)[0].files.length; i++) {
+            files.Push($(this)[0].files[i].name);
+        }
+
+        for(var i = 0; i< files.length;i++){
+            for(var j = 0; j < data[0].length; j++){
+                if(files[i] == data[j].emple_nroDoc){
+                    var foto = files[i];
+                    $.ajax({
+                        url:"/subirfoto",
+                        method: "post",
+                        data:{foto:foto},
+                        headers:{
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success:function(data){},
+                        error:function(){ alert("Hay un error");}
+                    })
+                }else{
+                    $errors[i] = $files[i].name;
+                }
+            }
+        }
+        if (!empty($errors)) {
+            $img = count($errors) === 1 ? 'file "' + $error[0]  + '" ' : 'files: "' + implode('", "', $errors) + '" ';
+            $out['error'] = 'Oh snap! We could not upload the ' + $img + 'now. Please try again later.';
+        }
+        return $out;
+    })
 });
+
