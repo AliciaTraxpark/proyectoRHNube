@@ -4,6 +4,7 @@ $(function(){
 
 function onMostrarPantallas(){
     var value = $('#empleado').val();
+    $('#card').empty();
     $.ajax({
         url:"tareas/show",
         method: "GET",

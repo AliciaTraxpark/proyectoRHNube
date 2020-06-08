@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\actividad;
 use Illuminate\Support\Facades\Hash;
 use App\empleado;
 use App\area;
@@ -15,6 +17,9 @@ use App\tipo_contrato;
 use App\nivel;
 use App\local;
 use App\persona;
+use App\proyecto;
+use App\proyecto_empleado;
+use App\tarea;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTFactory;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -31,7 +36,7 @@ class EmpleadoController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except('provincias','distritos','fechas','api','logueoEmpleado','apiControl');
+        $this->middleware('auth')->except('provincias','distritos','fechas','api','logueoEmpleado','apiProyecto');
     }
     public function fechas($id){
         return tipo_contrato::where('contrato_id',$id)->get();
@@ -157,6 +162,40 @@ class EmpleadoController extends Controller
         }else{
             return response()->json(null,403);
         }
+    }
+
+    public function apiProyecto(Request $request){
+        $proyecto = new proyecto();
+        $proyecto->Proye_Nombre=$request['Proye_Nombre'];
+        $proyecto->Proye_Detalle=$request['Proye_Detalle'];
+        $proyecto->save();
+        $Proyecto_Proye_id=$proyecto->Proye_id;
+
+        $proye_empleado = new proyecto_empleado();
+        $proye_empleado->Proyecto_Proye_id=$Proyecto_Proye_id;
+        $proye_empleado->empleado_emple_id=$request['emple_id'];
+        $proye_empleado->Fecha_Ini=$request['Fecha_Ini'];
+        $proye_empleado->Fecha_Fin=$request['Fecha_Fin'];
+        $proye_empleado->save();
+
+        if($request['Tarea_Nombre'] != ""){
+            $tarea = new tarea();
+            $tarea->Tarea_Nombre=$request['Tarea_Nombre'];
+            $tarea->Proyecto_Proye_id=$Proyecto_Proye_id;
+            $tarea->empleado_emple_id=$request['emple_id'];
+            $tarea->save();
+            $Tarea_Tarea_id=$tarea->Tarea_id;
+        }
+
+        if($request['Activi_Nombre'] != ""){
+            $actividad = new actividad();
+            $actividad->Activi_Nombre=$request['Activi_Nombre'];
+            $actividad->Tarea_Tarea_id=$Tarea_Tarea_id;
+            $actividad->empleado_emple_id=$request['emple_id'];
+            $actividad->save();
+        }
+        
+        return response()->json($proyecto,200);
     }
 
     public function create()
