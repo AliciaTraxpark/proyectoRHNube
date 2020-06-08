@@ -20,6 +20,6 @@ class CargaMasivaFotoController extends Controller
             $empleado->save();
             return json_encode(array('status'=>true));
         }
-        return json_encode(array('status'=>false));
+        return response()->json($file[0]->getClientOriginalName(),400);
     }
 }

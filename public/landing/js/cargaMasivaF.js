@@ -14,7 +14,7 @@ $(document).ready(function() {
         overwriteInitial: false,
         validateInitialCount: true,
         showUpload:true,
-        minFileCount:6,
+        minFileCount:1,
         initialPreviewAsData: true ,// identify if you are sending preview data only and not the markup
         language: 'es',
         showBrowse: true,
@@ -25,9 +25,6 @@ $(document).ready(function() {
                 _token: $("input[name='_token']").val(),
             };
         },
-        slugCallback: function (filename) {
-            return filename.replace('(', '_').replace(']', '_');
-        }
     });
 });
 
