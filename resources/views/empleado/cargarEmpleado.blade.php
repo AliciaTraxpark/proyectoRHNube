@@ -28,6 +28,9 @@
     .fc-time{
         display: none;
     }
+    .table td{
+        border-top: 1px solid #c7c7c7;
+    }
 </style>
   <header id="header-section">
     <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
@@ -120,7 +123,7 @@
                         </div>
                         <div class="card-body" style="padding-top: 20px;color: #1b1b1b;">
                             <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
-                            <table id="basic-datatable1" class="table  nowrap">
+                            <table id="basic-datatable1" class="table  nowrap" style="font-size: 13px!important">
                                 <thead style="background: #4C5D73;color: white;">
                                     <tr>
                                         <th>Tipo de Doc.</th>
@@ -136,7 +139,7 @@
                                         <th>Área</th>
                                         <th>Centro de costo</th>
                                         <th>Fecha nacimiento</th>
-                                        <th>Ciudad Nac</th>
+                                        {{-- <th>Ciudad Nac</th> --}}
                                         <th>Departamento Nac.</th>
                                         <th>Provincia Nac.</th>
                                         <th>Distrito Nac.</th>
@@ -148,53 +151,36 @@
                                 </thead>
 
 
-                                <tbody style="background: #f3f4f7;color: #2c2c2c;">
+                                <tbody style="background:#f7f7f7;color: #2c2c2c;">
+                                  @foreach ($empleado as $empleados)
+                                  <tr>
+                                    <td>{{$empleados->tipoDoc_descripcion}}</td>
+                                    <td>{{$empleados->emple_nDoc}}</td>
+                                    <td>{{$empleados->perso_nombre}}</td>
+                                    <td>{{$empleados->perso_apPaterno}}</td>
+                                    <td>{{$empleados->perso_apMaterno}}</td>
+                                    <td>{{$empleados->perso_direccion}}</td>
+                                    <td>{{$empleados->deparNom}}</td>
+                                    <td>{{$empleados->provi}}</td>
+                                    <td>{{$empleados->distNo}}</td>
+                                    <td>{{$empleados->cargo_descripcion}}</td>
+                                    <td>{{$empleados->area_descripcion}}</td>
+                                    <td>{{$empleados->centroC_descripcion}}</td>
+                                    <td>{{$empleados->perso_fechaNacimiento}}</td>
 
-                                    <tr>
-                                        <td>Hermione Butler</td>
-                                        <td>Regional Director</td>
-                                        <td>London</td>
-                                        <td>47</td>
-                                        <td>2011/03/21</td>
-                                        <td>Hermione Butler</td>
-                                        <td>Regional Director</td>
-                                        <td>London</td>
-                                        <td>47</td>
-                                        <td>2011/03/21</td>
-                                        <td>2011/03/21</td>
-                                        <td>Hermione Butler</td>
-                                        <td>Regional Director</td>
-                                        <td>London</td>
-                                        <td>47</td>
-                                        <td>2011/03/21</td>
-                                        <td>Hermione Butler</td>
-                                        <td>Regional Director</td>
+                                    <td>{{$empleados->depaN}}</td>
+                                    <td>{{$empleados->proviN}}</td>
+                                    <td>{{$empleados->distN}}</td>
+                                    <td>{{$empleados->perso_sexo}}</td>
 
-                                    </tr>
+                                </tr>
+
+                                  @endforeach
 
 
 
-                                    <tr>
-                                        <td>Hermione Butler</td>
-                                        <td>Regional Director</td>
-                                        <td>London</td>
-                                        <td>47</td>
-                                        <td>2011/03/21</td>
-                                        <td>Hermione Butler</td>
-                                        <td>Regional Director</td>
-                                        <td>London</td>
-                                        <td>47</td>
-                                        <td>2011/03/21</td>
-                                        <td>2011/03/21</td>
-                                        <td>Hermione Butler</td>
-                                        <td>Regional Director</td>
-                                        <td>London</td>
-                                        <td>47</td>
-                                        <td>2011/03/21</td>
-                                        <td>Hermione Butler</td>
-                                        <td>Regional Director</td>
 
-                                    </tr>
+
 
                                 </tbody>
                             </table>

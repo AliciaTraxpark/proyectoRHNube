@@ -71,6 +71,7 @@ Route::post('/empleadoA/{idE}','EmpleadoController@update');
 Route::post('/empleado/eliminar','EmpleadoController@destroy');
 Route::post('/eliminarFoto/{v_id}','EmpleadoController@eliminarFoto');
 
+
 //AREA
 Route::post('/registrar/area','areaController@store');
 
