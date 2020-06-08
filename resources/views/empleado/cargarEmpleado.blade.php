@@ -144,14 +144,10 @@
                                         <th>Provincia Nac.</th>
                                         <th>Distrito Nac.</th>
                                         <th>Sexo</th>
-
-
-
                                     </tr>
                                 </thead>
-
-
                                 <tbody style="background:#f7f7f7;color: #2c2c2c;">
+                                @if(isset($empleado))
                                   @foreach ($empleado as $empleados)
                                   <tr>
                                     <td>{{$empleados->tipoDoc_descripcion}}</td>
@@ -167,24 +163,15 @@
                                     <td>{{$empleados->area_descripcion}}</td>
                                     <td>{{$empleados->centroC_descripcion}}</td>
                                     <td>{{$empleados->perso_fechaNacimiento}}</td>
-
                                     <td>{{$empleados->depaN}}</td>
                                     <td>{{$empleados->proviN}}</td>
                                     <td>{{$empleados->distN}}</td>
                                     <td>{{$empleados->perso_sexo}}</td>
-
-                                </tr>
-
+                                  </tr>
                                   @endforeach
-
-
-
-
-
-
+                                 @endif
                                 </tbody>
                             </table>
-
                         </div> <!-- end card body-->
                     </div> <!-- end card -->
                 </div>
