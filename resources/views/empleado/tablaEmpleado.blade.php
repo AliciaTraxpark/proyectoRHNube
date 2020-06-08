@@ -251,13 +251,15 @@
                 .search( '' )
                 .columns().search( '' )
                 .draw();
+                $('#i1').prop('checked',true);
                 $('#filter_global').hide()
                 $('#filter_col1').show();
                 $('#filter_col2').hide();
                 $('#filter_col3').hide();
                 $('#filter_col4').hide();
                 $('#filter_col5').hide();
-
+                table.columns([1]).select();
+                table.columns([2,3,4,5]).deselect();
             } else {
                 alert("No está activado");
             }
@@ -269,12 +271,15 @@
                 .search( '' )
                 .columns().search( '' )
                 .draw();
+                $('#i2').prop('checked',true);
                 $('#filter_global').hide()
                 $('#filter_col1').hide();
                 $('#filter_col2').show();
                 $('#filter_col3').hide();
                 $('#filter_col4').hide();
                 $('#filter_col5').hide();
+                table.columns([2]).select();
+                table.columns([1,3,5]).deselect();
 
             } else {
                 alert("No está activado");
@@ -287,13 +292,15 @@
                 .search( '' )
                 .columns().search( '' )
                 .draw();
+                $('#i3').prop('checked',true);
                 $('#filter_global').hide()
                 $('#filter_col1').hide();
                 $('#filter_col2').hide();
                 $('#filter_col3').show();
                 $('#filter_col4').hide();
                 $('#filter_col5').hide();
-
+                table.columns([3]).select();
+                table.columns([1,2,4,5]).deselect();
             } else {
                 alert("No está activado");
             }
@@ -304,13 +311,15 @@
                 .search( '' )
                 .columns().search( '' )
                 .draw();
+                $('#i4').prop('checked',true);
                 $('#filter_global').hide()
                 $('#filter_col1').hide();
                 $('#filter_col2').hide();
                 $('#filter_col3').hide();
                 $('#filter_col4').show();
                 $('#filter_col5').hide();
-
+                table.columns([4]).select();
+                table.columns([1,2,3,5]).deselect();
             } else {
                 alert("No está activado");
             }
@@ -321,13 +330,15 @@
                 .search( '' )
                 .columns().search( '' )
                 .draw();
+                $('#i5').prop('checked',true);
+                table.columns([1,2,3,4]).deselect();
                 $('#filter_global').hide()
                 $('#filter_col1').hide();
                 $('#filter_col2').hide();
                 $('#filter_col3').hide();
                 $('#filter_col4').hide();
                 $('#filter_col5').show();
-
+                table.columns([5]).select();
             } else {
                 alert("No está activado");
             }
