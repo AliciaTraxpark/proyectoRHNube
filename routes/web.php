@@ -70,6 +70,7 @@ Route::get('empleado/show', 'EmpleadoController@show');
 Route::post('/empleadoA/{idE}','EmpleadoController@update');
 Route::post('/empleado/eliminar','EmpleadoController@destroy');
 Route::post('/eliminarFoto/{v_id}','EmpleadoController@eliminarFoto');
+Route::delete('/eliminarEmpleados', 'EmpleadoController@deleteAll');
 
 //AREA
 Route::post('/registrar/area','areaController@store');

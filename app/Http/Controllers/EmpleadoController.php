@@ -101,7 +101,7 @@ class EmpleadoController extends Controller
             'e.emple_celular','e.emple_telefono','e.emple_fechaIC','e.emple_fechaFC','e.emple_Correo')
 
             ->get();
-       
+
         //
 
         return view('empleado.cargarEmpleado',['empleado'=>$empleado]);
@@ -194,7 +194,7 @@ class EmpleadoController extends Controller
             $actividad->empleado_emple_id=$request['emple_id'];
             $actividad->save();
         }
-        
+
         return response()->json($proyecto,200);
     }
 
@@ -418,6 +418,13 @@ class EmpleadoController extends Controller
         $empleado->emple_foto="";
         $empleado->save();
         return json_encode(array("result"=>true));
+    }
+
+     public function deleteAll(Request $request)
+    {
+        $ids = $request->ids;
+        DB::table("empleado")->whereIn('emple_id',explode(",",$ids))->delete();
+        return response()->json(['success'=>"Productos eliminados correctamente."]);
     }
 
 

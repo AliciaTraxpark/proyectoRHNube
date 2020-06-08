@@ -117,7 +117,6 @@
   </header>
     <div class="content-page" style="margin-top: 20px;margin-left: 0px">
         <div class="content">
-
             <div class="row row-divided">
                 <div class="col-md-12 col-xl-12">
                     <div class="card">
