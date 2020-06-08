@@ -34,14 +34,14 @@
   </div>
 
 <table id="tablaEmpleado" class="table nowrap" style="font-size: 12.5px; width: 100%">
-    <thead style="background: #566879;color: white;">
-        <tr style="background: #f8f8f8">
-            <th style="border-top: 1px solid #f8f8f8;"></th>
-            <th style="border-top: 1px solid #f8f8f8;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="inputR" id="i1"></th>
-             <th style="border-top: 1px solid #f8f8f8;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR" id="i2"></th>
-             <th style="border-top: 1px solid #f8f8f8;">&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR" id="i3"></th>
-             <th style="border-top: 1px solid #f8f8f8;" >&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR" id="i4"></th>
-             <th style="border-top: 1px solid #f8f8f8;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR" id="i5"></th>
+    <thead style="background: #fafafa;">
+        <tr style="background: #fdfdfd">
+            <th style="border-top: 1px solid #fdfdfd;"></th>
+            <th style="border-top: 1px solid #fdfdfd;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="inputR" id="i1"></th>
+             <th style="border-top: 1px solid #fdfdfd;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR" id="i2"></th>
+             <th style="border-top: 1px solid #fdfdfd;">&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR" id="i3"></th>
+             <th style="border-top: 1px solid #fdfdfd;" >&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR" id="i4"></th>
+             <th style="border-top: 1px solid #fdfdfd;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR" id="i5"></th>
          </tr>
         <tr>
             <th>#</th>
@@ -54,11 +54,11 @@
 
         </tr>
     </thead>
-    <tbody style="background:#f8f8f8;color: #2c2c2c;">
+    <tbody style="background:#fdfdfd;color: #2c2c2c;">
         @foreach ($tabla_empleado as  $tabla_empleados)
     <tr class="" id="{{$tabla_empleados->emple_id}}" value= "{{$tabla_empleados->emple_id}}">
 
-            <td   > <input type="hidden" value="{{$tabla_empleados->emple_id}}">   {{$loop->index+1}}</td>
+            <td> <input type="hidden" value="{{$tabla_empleados->emple_id}}"><img src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class=" mr-2" alt="" /></td>
             <td>{{$tabla_empleados->perso_nombre}}</td>
             <td>{{$tabla_empleados->perso_apPaterno}} {{$tabla_empleados->perso_apMaterno}}</td>
             <td>{{$tabla_empleados->cargo_descripcion}}</td>
