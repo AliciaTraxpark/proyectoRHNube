@@ -30,7 +30,9 @@
         <label for="">Costo</label>
         <td align="center"><input type="text" class="column_filter form-control" id="col5_filter"></td>
 </div>
+<button style="margin-bottom: 10px" class="btn btn-sm btn-primary delete_all" data-url="">Eliminar seleccion </button>
   </div>
+
 <table id="tablaEmpleado" class="table nowrap" style="font-size: 12.5px; width: 100%">
     <thead style="background: #fafafa;">
         <tr style="background: #fdfdfd">
@@ -62,7 +64,7 @@
             <td>{{$tabla_empleados->cargo_descripcion}}</td>
             <td>{{$tabla_empleados->area_descripcion}}</td>
             <td>{{$tabla_empleados->centroC_descripcion}} </td>
-            <td ><input type="checkbox" id="tdC" class="form-check-input" ></td>
+            <td ><input type="checkbox" id="tdC" class="form-check-input sub_chk" data-id="{{$tabla_empleados->emple_id}}" > </td>
         </tr>
 
         @endforeach
@@ -356,3 +358,62 @@
         } );
     } );
     </script>
+    {{-- ELIMINAR VARIOS ELEMENTOS --}}
+   <script>
+
+    $(document).ready(function () {
+
+$('.delete_all').on('click', function(e) {
+
+
+    var allVals = [];
+    $(".sub_chk:checked").each(function() {
+        allVals.push($(this).attr('data-id'));
+    });
+
+
+    if(allVals.length <=0)
+    {
+        alert("Por favor seleccione una fila.");
+    }  else {
+
+
+        var check = confirm("Esta seguro que quiere eliminar este(os) empleado(s)?");
+        if(check == true){
+
+
+            var join_selected_values = allVals.join(",");
+
+
+            $.ajax({
+                url: "/eliminarEmpleados",
+                type: 'DELETE',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data: 'ids='+join_selected_values,
+                success: function (data) {
+                    if (data['success']) {
+                        $(".sub_chk:checked").each(function() {
+                            $(this).parents("tr").remove();
+                        });
+                        alert(data['success']);
+                    } else if (data['error']) {
+                        alert(data['error']);
+                    } else {
+                        alert('Whoops Something went wrong!!');
+                    }
+                },
+                error: function (data) {
+                    alert(data.responseText);
+                }
+            });
+
+
+          $.each(allVals, function( index, value ) {
+              $('table tr').filter("[data-row-id='" + value + "']").remove();
+          });
+        }
+    }
+});
+});
+
+   </script>
