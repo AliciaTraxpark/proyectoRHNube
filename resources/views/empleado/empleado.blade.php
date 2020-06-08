@@ -196,7 +196,7 @@
                                 <div class="col-xl-12 text-center">
                                     <div class="file-loading">
                                         {{ csrf_field() }}
-                                        <input id="fileMasiva" type="file" multiple webkitdirectory accept="image/*">
+                                        <input id="fileMasiva" name="fileMasiva[]" type="file" multiple webkitdirectory accept="image/*">
                                     </div>
                                 </div>
                             </div>
