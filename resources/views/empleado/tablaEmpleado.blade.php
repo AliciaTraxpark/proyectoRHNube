@@ -48,19 +48,21 @@
             <th>Cargo</th>
             <th>Área</th>
             <th>Centro de Costo</th>
+           <th></th>
+
         </tr>
     </thead>
     <tbody style="background:#f8f8f8;color: #2c2c2c;">
         @foreach ($tabla_empleado as  $tabla_empleados)
-    <tr class="text-justify" id="{{$tabla_empleados->emple_id}}" value= "{{$tabla_empleados->emple_id}}">
+    <tr class="" id="{{$tabla_empleados->emple_id}}" value= "{{$tabla_empleados->emple_id}}">
 
             <td   > <input type="hidden" value="{{$tabla_empleados->emple_id}}">   {{$loop->index+1}}</td>
             <td>{{$tabla_empleados->perso_nombre}}</td>
             <td>{{$tabla_empleados->perso_apPaterno}} {{$tabla_empleados->perso_apMaterno}}</td>
             <td>{{$tabla_empleados->cargo_descripcion}}</td>
             <td>{{$tabla_empleados->area_descripcion}}</td>
-            <td>{{$tabla_empleados->centroC_descripcion}}</td>
-
+            <td>{{$tabla_empleados->centroC_descripcion}} </td>
+            <td ><input type="checkbox" id="tdC" class="form-check-input" ></td>
         </tr>
 
         @endforeach
@@ -228,6 +230,16 @@
 
 
         });
+        //$('#verf1').hide();
+        //$('#tablaEmpleado tbody #tdC').css('display', 'none');
+
+        $("#tablaEmpleado tbody tr").hover(function(){
+           //$('#verf1').css('display', 'block');
+            $('#tablaEmpleado tbody #tdC').css('display', 'block');
+
+		}, function(){
+
+		});
 
 
         $("#i1").click(function() {
@@ -237,13 +249,15 @@
                 .search( '' )
                 .columns().search( '' )
                 .draw();
+                $('#i1').prop('checked',true);
                 $('#filter_global').hide()
                 $('#filter_col1').show();
                 $('#filter_col2').hide();
                 $('#filter_col3').hide();
                 $('#filter_col4').hide();
                 $('#filter_col5').hide();
-
+                table.columns([1]).select();
+                table.columns([2,3,4,5]).deselect();
             } else {
                 alert("No está activado");
             }
@@ -255,12 +269,15 @@
                 .search( '' )
                 .columns().search( '' )
                 .draw();
+                $('#i2').prop('checked',true);
                 $('#filter_global').hide()
                 $('#filter_col1').hide();
                 $('#filter_col2').show();
                 $('#filter_col3').hide();
                 $('#filter_col4').hide();
                 $('#filter_col5').hide();
+                table.columns([2]).select();
+                table.columns([1,3,5]).deselect();
 
             } else {
                 alert("No está activado");
@@ -273,13 +290,15 @@
                 .search( '' )
                 .columns().search( '' )
                 .draw();
+                $('#i3').prop('checked',true);
                 $('#filter_global').hide()
                 $('#filter_col1').hide();
                 $('#filter_col2').hide();
                 $('#filter_col3').show();
                 $('#filter_col4').hide();
                 $('#filter_col5').hide();
-
+                table.columns([3]).select();
+                table.columns([1,2,4,5]).deselect();
             } else {
                 alert("No está activado");
             }
@@ -290,13 +309,15 @@
                 .search( '' )
                 .columns().search( '' )
                 .draw();
+                $('#i4').prop('checked',true);
                 $('#filter_global').hide()
                 $('#filter_col1').hide();
                 $('#filter_col2').hide();
                 $('#filter_col3').hide();
                 $('#filter_col4').show();
                 $('#filter_col5').hide();
-
+                table.columns([4]).select();
+                table.columns([1,2,3,5]).deselect();
             } else {
                 alert("No está activado");
             }
@@ -307,13 +328,15 @@
                 .search( '' )
                 .columns().search( '' )
                 .draw();
+                $('#i5').prop('checked',true);
+                table.columns([1,2,3,4]).deselect();
                 $('#filter_global').hide()
                 $('#filter_col1').hide();
                 $('#filter_col2').hide();
                 $('#filter_col3').hide();
                 $('#filter_col4').hide();
                 $('#filter_col5').show();
-
+                table.columns([5]).select();
             } else {
                 alert("No está activado");
             }

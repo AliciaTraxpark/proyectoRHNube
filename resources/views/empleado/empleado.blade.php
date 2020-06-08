@@ -117,13 +117,12 @@
   </header>
     <div class="content-page" style="margin-top: 20px;margin-left: 0px">
         <div class="content">
-            <div class="row">
-            </div>
+
             <div class="row row-divided">
                 <div class="col-md-12 col-xl-12">
                     <div class="card">
-                        <div class="card-body" style="padding-top: 20px; background: #f8f8f8; font-size: 12.8px;
-                        color: #222222;   padding-left: 60px; padding-right: 80px;">
+                        <div class="card-body" style="padding-top: 0px; background: #f8f8f8; font-size: 12.8px;
+                        color: #222222;   padding-left: 60px; padding-right: 80px; ">
                             <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                             <div class="row">
                                 <div class="col-md-6">
@@ -168,11 +167,17 @@
                                     <span class="mr-2 text-center" style="color: #024079;font-weight: bold;">12345678</span>
                                 </div>
                             </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-xl-12 text-center">
+                                    <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1"><span>Puedes guardar tus fotos en una carpeta especifica.</span>
+                                </div>
+                            </div>
                        </div>
                        <div class="modal-footer">
                            <div class="col-md-12">
                                <div class="row">
-                                   <div class="col-md-12 text-right">
+                                   <div class="col-md-12 text-center">
                                        <button style="background-color: #024079;color: white;" type="button" id="cerrarIF" class="btn btn-light" data-dismiss="modal">Entendido</button>
                                    </div>
                                </div>
@@ -185,7 +190,7 @@
                 <div class="modal-dialog modal-dialog-scrollable modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Recomendaciones</h5>
+                        <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Foto Empleado</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -196,7 +201,7 @@
                                 <div class="col-xl-12 text-center">
                                     <div class="file-loading">
                                         {{ csrf_field() }}
-                                        <input id="fileMasiva" type="file" multiple webkitdirectory accept="image/*">
+                                        <input id="fileMasiva" name="fileMasiva[]" type="file" multiple webkitdirectory accept="image/*">
                                     </div>
                                 </div>
                             </div>
@@ -204,8 +209,8 @@
                     <div class="modal-footer">
                         <div class="col-md-12">
                             <div class="row">
-                                <div class="col-md-12 text-right">
-                                    <button style="background-color: #024079;color: white;" type="button" id="cerrarIF" class="btn btn-light" data-dismiss="modal">Entendido</button>
+                                <div class="col-md-12 text-center">
+                                    <button type="button" id="cerrarMFotos" class="btn btn-light" data-dismiss="modal">Cerrar</button>
                                 </div>
                             </div>
                         </div>
@@ -914,9 +919,8 @@
     </div>
 
 
-    <!--<script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>-->
-    <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
-    <!--<script src="{{asset('landing/js/landingpage.js')}}"></script>-->
+
+
     <script>
         var urlFoto = "";
         var hayFoto = false;
@@ -929,7 +933,6 @@
     <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script>
     <!-- App js -->
     <script src="{{asset('admin/assets/js/app.min.js')}}"></script>
-
     <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
