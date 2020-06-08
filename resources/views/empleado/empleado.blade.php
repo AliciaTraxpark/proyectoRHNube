@@ -117,13 +117,12 @@
   </header>
     <div class="content-page" style="margin-top: 20px;margin-left: 0px">
         <div class="content">
-            <div class="row">
-            </div>
+
             <div class="row row-divided">
                 <div class="col-md-12 col-xl-12">
                     <div class="card">
-                        <div class="card-body" style="padding-top: 20px; background: #f8f8f8; font-size: 12.8px;
-                        color: #222222;   padding-left: 60px; padding-right: 80px;">
+                        <div class="card-body" style="padding-top: 0px; background: #f8f8f8; font-size: 12.8px;
+                        color: #222222;   padding-left: 60px; padding-right: 80px; ">
                             <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                             <div class="row">
                                 <div class="col-md-6">
@@ -914,9 +913,8 @@
     </div>
 
 
-    <!--<script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>-->
-    <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
-    <!--<script src="{{asset('landing/js/landingpage.js')}}"></script>-->
+
+
     <script>
         var urlFoto = "";
         var hayFoto = false;
@@ -929,7 +927,6 @@
     <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script>
     <!-- App js -->
     <script src="{{asset('admin/assets/js/app.min.js')}}"></script>
-
     <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
