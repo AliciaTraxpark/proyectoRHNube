@@ -31,7 +31,7 @@
     <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
 </head>
-<body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
+<body id="body" data-spy="scroll" data-target=".navbar" data-offset="100" style="background-color: #fdfdfd;">
 <style>
 
 
@@ -117,11 +117,10 @@
   </header>
     <div class="content-page" style="margin-top: 20px;margin-left: 0px">
         <div class="content">
-
             <div class="row row-divided">
                 <div class="col-md-12 col-xl-12">
                     <div class="card">
-                        <div class="card-body" style="padding-top: 0px; background: #f8f8f8; font-size: 12.8px;
+                        <div class="card-body" style="padding-top: 0px; background: #fdfdfd; font-size: 12.8px;
                         color: #222222;   padding-left: 60px; padding-right: 80px; ">
                             <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                             <div class="row">
