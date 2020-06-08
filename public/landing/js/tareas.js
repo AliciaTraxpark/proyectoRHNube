@@ -16,17 +16,17 @@ function onMostrarPantallas(){
             var container = $('#card');
             var horaDelGrupo = parseInt(data[0].hora_ini.split(":")[0]);
             var labelDelGrupo = horaDelGrupo+":00:00" + " - " + (horaDelGrupo+1) + ":00:00";
-            var grupo = `<span style="font-weight: bold;">${labelDelGrupo}</span><div style="display:flex">`;
+            var grupo = `<span style="font-weight: bold;">${labelDelGrupo}</span><div style="display:grid">`;
             for(var i=0; i<data.length; i++){
                 for(var j=0; j<6; j++){
                     if(parseInt(data[i].hora_ini.split(":")[1].charAt(0)) == j && 
                     parseInt(data[i].hora_ini.split(":")[0]) == horaDelGrupo){
                         card = `<div class="custom-accordion accordion" id="customaccordion_exa" style="margin-left: 0px!important;">
-                                            <div class="card mb-0 text-center" style="padding-left: 20px;">
-                                                <a href="" class="text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
+                                            <div class="row card mb-0 text-center" style="padding-left: 20px;">
+                                                <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
                                                     aria-expanded="true" aria-controls="customaccorcollapseOne">
                                                 </a>
-                                                <div class="collapse show" aria-labelledby="customaccorheadingOne"
+                                                <div class="col collapse show" aria-labelledby="customaccorheadingOne"
                                                     data-parent="#customaccordion_exa">
                                                 <div class="row">
                                                     <div class="col-md-10">
