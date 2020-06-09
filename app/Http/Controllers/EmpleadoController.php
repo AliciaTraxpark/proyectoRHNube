@@ -423,7 +423,24 @@ class EmpleadoController extends Controller
      public function deleteAll(Request $request)
     {
         $ids = $request->ids;
-        DB::table("empleado")->whereIn('emple_id',explode(",",$ids))->delete();
+
+        $empleado = empleado::whereIn('emple_id',explode(",",$ids))->get();
+        //$empleado = empleado::find(explode(",",$ids))->first();
+
+        $array = array();
+        foreach($empleado as $t){
+
+        $array[] = $t->emple_persona;
+
+        } $idem = implode(',', $array);
+
+            //dd($idem);
+
+        $empleado->each->delete();
+        $persona= persona::whereIn('perso_id',explode(",",$idem))->get();
+        $persona->each->delete();
+        //$persona= persona::where('perso_id','=',$empleado->emple_persona);
+        //dd($empleado->emple_persona);
         return response()->json(['success'=>"Productos eliminados correctamente."]);
     }
 
