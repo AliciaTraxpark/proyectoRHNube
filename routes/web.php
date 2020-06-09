@@ -93,9 +93,8 @@ Route::post('/registrar/contrato','contratoController@store');
 //TAREAS
 Route::get('/tareas','ControlController@index')->middleware('auth');
 Route::get('/tareas/show','ControlController@show')->middleware('auth');
-Route::get('/reporteSemanal', function () {
-    return view('tareas/reporteSemanal');
-})->name('reporteSemanal')->middleware('auth');
+Route::get('/tareas/proyecto','ControlController@proyecto')->middleware('auth');
+Route::get('/reporteSemanal','ControlController@reporteS')->middleware('auth');
 
 
 //probando excel

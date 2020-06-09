@@ -36,7 +36,7 @@ class EmpleadoController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except('provincias','distritos','fechas','api','logueoEmpleado','apiProyecto');
+        $this->middleware('auth')->except('provincias','distritos','fechas','api','logueoEmpleado','apiTarea','apiActividad');
     }
     public function fechas($id){
         return tipo_contrato::where('contrato_id',$id)->get();
@@ -164,38 +164,36 @@ class EmpleadoController extends Controller
         }
     }
 
-    public function apiProyecto(Request $request){
-        $proyecto = new proyecto();
-        $proyecto->Proye_Nombre=$request['Proye_Nombre'];
-        $proyecto->Proye_Detalle=$request['Proye_Detalle'];
-        $proyecto->save();
-        $Proyecto_Proye_id=$proyecto->Proye_id;
-
-        $proye_empleado = new proyecto_empleado();
-        $proye_empleado->Proyecto_Proye_id=$Proyecto_Proye_id;
-        $proye_empleado->empleado_emple_id=$request['emple_id'];
-        $proye_empleado->Fecha_Ini=$request['Fecha_Ini'];
-        $proye_empleado->Fecha_Fin=$request['Fecha_Fin'];
-        $proye_empleado->save();
-
-        if($request['Tarea_Nombre'] != ""){
+    public function apiTarea(Request $request){
+        $Proye_id = $request['Proye_id'];
+        $proyecto = proyecto::where('Proye_id',$Proye_id)->first();
+        if($proyecto){
             $tarea = new tarea();
             $tarea->Tarea_Nombre=$request['Tarea_Nombre'];
-            $tarea->Proyecto_Proye_id=$Proyecto_Proye_id;
+            $tarea->Proyecto_Proye_id=$Proye_id;
             $tarea->empleado_emple_id=$request['emple_id'];
             $tarea->save();
             $Tarea_Tarea_id=$tarea->Tarea_id;
+            if($request['Activi_Nombre'] != ""){
+                $actividad = new actividad();
+                $actividad->Activi_Nombre=$request['Activi_Nombre'];
+                $actividad->Tarea_Tarea_id=$Tarea_Tarea_id;
+                $actividad->empleado_emple_id=$request['emple_id'];
+                $actividad->save();
+            }
+            return response()->json($proyecto,200);
         }
 
-        if($request['Activi_Nombre'] != ""){
-            $actividad = new actividad();
-            $actividad->Activi_Nombre=$request['Activi_Nombre'];
-            $actividad->Tarea_Tarea_id=$Tarea_Tarea_id;
-            $actividad->empleado_emple_id=$request['emple_id'];
-            $actividad->save();
-        }
+        return response()->json($proyecto,400);
+    }
 
-        return response()->json($proyecto,200);
+    public function apiActividad(Request $request){
+        $actividad = new actividad();
+        $actividad->Activi_Nombre=$request['Activi_Nombre'];
+        $actividad->Tarea_Tarea_id=$request['Tarea_Tarea_id'];
+        $actividad->empleado_emple_id=$request['emple_id'];
+        $actividad->save();
+        return response()->json($actividad,200);
     }
 
     public function create()
