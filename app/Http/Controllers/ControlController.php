@@ -65,6 +65,7 @@ class ControlController extends Controller
 
     public function show(Request $request){
         $idempleado=$request->get('value');
+        $fecha=$request->get('fecha');
         $control = DB::table('empleado as e')
             ->join('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
             ->join('proyecto as p','p.Proye_id','=','pe.Proyecto_Proye_id')
@@ -73,6 +74,7 @@ class ControlController extends Controller
             ->join('captura as cp','cp.idEnvio','=','en.idEnvio')
             ->select('P.Proye_Nombre','c.hora_ini','c.hora_fin','cp.imagen','en.hora_Envio','c.Fecha_fin')
             ->where('e.emple_id','=',$idempleado)
+            ->where('c.Fecha_fin','=',$fecha)
             ->orderBy('c.Fecha_fin','asc')
             ->orderBy('c.hora_ini','asc')
             ->get();

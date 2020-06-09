@@ -38,7 +38,7 @@
                     <div class="col-md-6">
                         <label><br> </label>
                         <div class="input-group col-md-5" style="padding-left: 0px;">
-                            <input type="text" id="humanfd-datepicker" class="form-control" placeholder="May 25, 2020">
+                            <input type="text" id="fecha" class="form-control">
                             <div class="input-group-prepend">
                                 <div class="input-group-text form-control "><i class="uil uil-calender"></i></div>
                             </div>

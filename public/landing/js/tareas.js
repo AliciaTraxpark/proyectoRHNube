@@ -1,14 +1,17 @@
+$('#fecha').flatpickr();
 $(function(){
     $('#empleado').on('change',onMostrarPantallas);
+    $('#fecha').on('change',onMostrarPantallas);
 });
 
 function onMostrarPantallas(){
     var value = $('#empleado').val();
+    var fecha = $('#fecha').val();
     $('#card').empty();
     $.ajax({
         url:"tareas/show",
         method: "GET",
-        data:{value:value},
+        data:{value:value,fecha:fecha},
         headers:{
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
