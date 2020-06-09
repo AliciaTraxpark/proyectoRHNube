@@ -152,6 +152,7 @@
 
 
                                 <tbody style="background:#f7f7f7;color: #2c2c2c;">
+                                @if(isset($empleado))
                                   @foreach ($empleado as $empleados)
                                   <tr>
                                     <td>{{$empleados->tipoDoc_descripcion}}</td>
@@ -176,7 +177,7 @@
                                 </tr>
 
                                   @endforeach
-
+                                  @endif
 
 
 
