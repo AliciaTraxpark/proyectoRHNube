@@ -36,7 +36,7 @@ function onMostrarPantallas(){
                                                     data-parent="#customaccordion_exa">
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <div class=" text-center col-md-12 col-sm-6" style="background:#a6b1e1; border-color:#a6b1e1;padding-top: 4px;
+                                                        <div class=" text-center col-md-12 col-sm-6" style="background:#888888; border-color:#888888;padding-top: 4px;
                                                         padding-bottom: 4px;">
                                                             <h5 class="m-0 font-size-16" style="color:#fafafa">${data[i].Proye_Nombre} </h5>
                                                         </div>  <br>
@@ -72,7 +72,7 @@ function onMostrarPantallas(){
                                         data-parent="#customaccordion_exa">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class=" text-center col-md-12 col-sm-12" style="background:#a6b1e1; border-color:#a6b1e1;padding-top: 4px;
+                                            <div class=" text-center col-md-12 col-sm-12" style="background:#888888; border-color:#888888;padding-top: 4px;
                                             padding-bottom: 4px;">
                                                 <h5 class="m-0 font-size-14" style="color:#fafafa">Vacio</h5>
                                             </div>  <br>
