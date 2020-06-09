@@ -29,15 +29,9 @@
                     <div class="col-md-12">
                         <label style="font-weight: 700">Búsqueda por fecha</label>
                     </div>
-
-                    {{-- <div class="col-md-2">
-                        <label style="font-weight: 700"><br></label><br>
-                        <button type="button" class="btn btn-light"><i class="uil uil-arrow-left"></i></button>
-                        <button type="button" class="btn btn-light"><i class="uil uil-arrow-right"></i></button>
-                    </div> --}}
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label><br> </label>
-                        <div class="input-group col-md-8" style="padding-left: 0px;">
+                        <div class="input-group col-md-10" style="padding-left: 0px;">
                             <input type="text" id="fecha" class="form-control">
                             <div class="input-group-prepend">
                                 <div class="input-group-text form-control "><i class="uil uil-calender"></i></div>
@@ -45,7 +39,7 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="form-group mt-2 mt-sm-0 col-md-10">
+                        <div class="form-group col-md-10">
                             <label>Empleado</label>
                             <select id="empleado" data-plugin="customselect" class="form-control">
                                 <option value="" disabled selected>Seleccionar</option>
@@ -55,7 +49,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <div class="form-group  col-md-10">
                             <label>Proyecto</label>
                             <select data-plugin="customselect" class="form-control" id="proyecto">
