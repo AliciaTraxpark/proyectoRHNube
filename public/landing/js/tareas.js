@@ -1,17 +1,20 @@
+//FECHA
 $('#fecha').flatpickr();
+//CAPTURAS
 $(function(){
     $('#empleado').on('change',onMostrarPantallas);
     $('#fecha').on('change',onMostrarPantallas);
+    $('#proyecto').on('change',onMostrarPantallas);
 });
-
 function onMostrarPantallas(){
     var value = $('#empleado').val();
     var fecha = $('#fecha').val();
+    var proyecto = $('#proyecto').val();
     $('#card').empty();
     $.ajax({
         url:"tareas/show",
         method: "GET",
-        data:{value:value,fecha:fecha},
+        data:{value:value,fecha:fecha,proyecto:proyecto},
         headers:{
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -93,6 +96,27 @@ function onMostrarPantallas(){
         },
         error:function(data){
             alert("Hay un error");
+        }
+    })
+}
+//PROYECTO
+$(function(){
+    $('#empleado').on('change',onMostrarProyecto);
+});
+function onMostrarProyecto(){
+    var value = $('#empleado').val();
+    $.ajax({
+        url:"tareas/proyecto",
+        method: "GET",
+        data:{value:value},
+        headers:{
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success:function(data){
+            var html_select = '<option value="">Seleccionar</option>';
+            for(var i=0; i<data.length; i++)
+                html_select += '<option value="'+ data[i].Proye_id +'">'+ data[i].Proye_Nombre +'</option>';
+                $('#proyecto').html(html_select);
         }
     })
 }

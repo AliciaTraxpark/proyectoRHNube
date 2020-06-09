@@ -63,16 +63,44 @@ class ControlController extends Controller
 
     }
 
+    public function proyecto(Request $request){
+        $idempleado=$request->get('value');
+        $proyecto = DB::table('empleado as e')
+            ->join('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
+            ->join('proyecto as p','p.Proye_id','=','pe.Proyecto_Proye_id')
+            ->select('P.Proye_id','P.Proye_Nombre')
+            ->where('e.emple_id','=',$idempleado)
+            ->get();
+        return response()->json($proyecto,200);
+    }
+
     public function show(Request $request){
         $idempleado=$request->get('value');
         $fecha=$request->get('fecha');
+        $proyecto=$request->get('proyecto');
+        if($proyecto != ''){
+            $control = DB::table('empleado as e')
+            ->join('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
+            ->join('proyecto as p','p.Proye_id','=','pe.Proyecto_Proye_id')
+            ->join('control as c','c.Proyecto_Proye_id','=','p.Proye_id')
+            ->join('envio as en','en.idEnvio','=','c.idEnvio')
+            ->join('captura as cp','cp.idEnvio','=','en.idEnvio')
+            ->select('P.Proye_id','P.Proye_Nombre','c.hora_ini','c.hora_fin','cp.imagen','en.hora_Envio','c.Fecha_fin')
+            ->where('e.emple_id','=',$idempleado)
+            ->where('c.Fecha_fin','=',$fecha)
+            ->Where('P.Proye_id','=',$proyecto)
+            ->orderBy('c.Fecha_fin','asc')
+            ->orderBy('c.hora_ini','asc')
+            ->get();
+            return response()->json($control,200);
+        }
         $control = DB::table('empleado as e')
             ->join('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
             ->join('proyecto as p','p.Proye_id','=','pe.Proyecto_Proye_id')
             ->join('control as c','c.Proyecto_Proye_id','=','p.Proye_id')
             ->join('envio as en','en.idEnvio','=','c.idEnvio')
             ->join('captura as cp','cp.idEnvio','=','en.idEnvio')
-            ->select('P.Proye_Nombre','c.hora_ini','c.hora_fin','cp.imagen','en.hora_Envio','c.Fecha_fin')
+            ->select('P.Proye_id','P.Proye_Nombre','c.hora_ini','c.hora_fin','cp.imagen','en.hora_Envio','c.Fecha_fin')
             ->where('e.emple_id','=',$idempleado)
             ->where('c.Fecha_fin','=',$fecha)
             ->orderBy('c.Fecha_fin','asc')
