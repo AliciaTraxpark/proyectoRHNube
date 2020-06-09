@@ -114,3 +114,6 @@ Route::post('/proyecto/selectValidar','ProyectoController@selectValidar');
 
 //carga masiva de fotos
 Route::post('/subirfoto','CargaMasivaFotoController@subirfoto');
+
+//HORARIO
+Route::get('/horario', 'horarioController@index');
