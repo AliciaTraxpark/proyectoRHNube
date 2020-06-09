@@ -36,13 +36,11 @@ function onMostrarPantallas(){
                                                         </div>  <br>
                                                         <div class="col-md-12 col-sm-6" style="padding-left: 0px;">
                                                         <img src="data:image/jpeg;base64,${data[i].imagen}" height="120" width="120">
-                                                        &nbsp;  
-                                                        if(${parseInt(data[i].hora_ini.split(":")[1].charAt(0))!= 5}){
-                                                            <label style="font-size: 12px" for="">${data[i].hora_ini.split(":")[0].charAt(0)+
+                                                        &nbsp;
+                                                        <label style="font-size: 12px" for="">${data[i].hora_ini.split(":")[0].charAt(0)+
                                                         data[i].hora_ini.split(":")[0].charAt(1) + ":" +data[i].hora_ini.split(":")[1].charAt(0) + 
                                                         "0" + " - " + data[i].hora_ini.split(":")[0].charAt(0)+ data[i].hora_ini.split(":")[0].charAt(1) + 
                                                         ":" +(parseInt(data[i].hora_ini.split(":")[1].charAt(0))+1) + "0"}</label>
-                                                        }
                                                         <div class="progress" style="background-color: #d4d4d4;">
                                                             &nbsp;  <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
                                                                 aria-valuemin="0" aria-valuemax="100">25%</div>

@@ -77,62 +77,12 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                      @foreach ($empleado as $empleados)
                                         <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>8:01</td>
-                                            <td>8:01</td>
-                                            <td>8:01</td>
-                                            <td>8:01</td>
-                                            <td>8:01</td>
-                                            <td>8:01</td>
-                                            <td>44:51</td>
-                                            <td>44%</td>
+                                            <td>{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</td>
+                                            <td>{{$empleados->Total_Envio}}</td>
                                         </tr>
-                                        <tr>
-                                          <td>Tiger Nixon</td>
-                                          <td>8:01</td>
-                                          <td>8:01</td>
-                                          <td>8:01</td>
-                                          <td>8:01</td>
-                                          <td>8:01</td>
-                                          <td>8:01</td>
-                                          <td>44:51</td>
-                                          <td>44%</td>
-                                        </tr>
-                                        <tr>
-                                          <td>Tiger Nixon</td>
-                                          <td>8:01</td>
-                                          <td>8:01</td>
-                                          <td>8:01</td>
-                                          <td>8:01</td>
-                                          <td>8:01</td>
-                                          <td>8:01</td>
-                                          <td>44:51</td>
-                                          <td>44%</td>
-                                        </tr>
-                                        <tr>
-                                          <td>Tiger Nixon</td>
-                                          <td>8:01</td>
-                                          <td>8:01</td>
-                                          <td>8:01</td>
-                                          <td>8:01</td>
-                                          <td>8:01</td>
-                                          <td>8:01</td>
-                                          <td>44:51</td>
-                                          <td>44%</td>
-                                        </tr>
-                                        <tr>
-                                          <td>Tiger Nixon</td>
-                                          <td>8:01</td>
-                                          <td>8:01</td>
-                                          <td>8:01</td>
-                                          <td>8:01</td>
-                                          <td>8:01</td>
-                                          <td>8:01</td>
-                                          <td>44:51</td>
-                                          <td>44%</td>
-                                        </tr>
-
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div> <!-- end card body-->
