@@ -31,7 +31,7 @@
     <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
 </head>
-<body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
+<body id="body" data-spy="scroll" data-target=".navbar" data-offset="100" style="background-color: #fdfdfd;">
 <style>
 
 
@@ -117,11 +117,10 @@
   </header>
     <div class="content-page" style="margin-top: 20px;margin-left: 0px">
         <div class="content">
-
             <div class="row row-divided">
                 <div class="col-md-12 col-xl-12">
                     <div class="card">
-                        <div class="card-body" style="padding-top: 0px; background: #f8f8f8; font-size: 12.8px;
+                        <div class="card-body" style="padding-top: 0px; background: #fdfdfd; font-size: 12.8px;
                         color: #222222;   padding-left: 60px; padding-right: 80px; ">
                             <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                             <div class="row">
@@ -129,7 +128,8 @@
                                     <h4 class="header-title mt-0 "></i>Búsqueda de empleado</h4>
                                 </div>
                                 <div class=" col-md-6 col-xl-6 text-right">
-                                    <button class="btn btn-sm btn-primary" id="formNuevoEl" style="background-color: #183b5d;border-color:#62778c">Eliminar</button>
+                                    
+                                    <button id="formNuevoEl" style="background-color: #183b5d;border-color:#62778c" class="btn btn-sm btn-primary delete_all" data-url="">Eliminar seleccion </button>
                                     <button class="btn btn-sm btn-primary" id="formNuevoEd" style="background-color: #183b5d;border-color:#62778c">Editar</button>
                                     <button class="btn btn-sm btn-primary" id="formNuevoE" style="background-color: #183b5d;border-color:#62778c">Nuevo</button>
                                 </div>

@@ -101,7 +101,7 @@ class EmpleadoController extends Controller
             'e.emple_celular','e.emple_telefono','e.emple_fechaIC','e.emple_fechaFC','e.emple_Correo')
 
             ->get();
-       
+
         //
 
         return view('empleado.cargarEmpleado',['empleado'=>$empleado]);
@@ -194,7 +194,7 @@ class EmpleadoController extends Controller
             $actividad->empleado_emple_id=$request['emple_id'];
             $actividad->save();
         }
-        
+
         return response()->json($proyecto,200);
     }
 
@@ -418,6 +418,30 @@ class EmpleadoController extends Controller
         $empleado->emple_foto="";
         $empleado->save();
         return json_encode(array("result"=>true));
+    }
+
+     public function deleteAll(Request $request)
+    {
+        $ids = $request->ids;
+
+        $empleado = empleado::whereIn('emple_id',explode(",",$ids))->get();
+        //$empleado = empleado::find(explode(",",$ids))->first();
+
+        $array = array();
+        foreach($empleado as $t){
+
+        $array[] = $t->emple_persona;
+
+        } $idem = implode(',', $array);
+
+            //dd($idem);
+
+        $empleado->each->delete();
+        $persona= persona::whereIn('perso_id',explode(",",$idem))->get();
+        $persona->each->delete();
+        //$persona= persona::where('perso_id','=',$empleado->emple_persona);
+        //dd($empleado->emple_persona);
+        return response()->json(['success'=>"Productos eliminados correctamente."]);
     }
 
 
