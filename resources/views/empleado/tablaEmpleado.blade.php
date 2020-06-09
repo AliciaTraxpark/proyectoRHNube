@@ -30,11 +30,11 @@
         <label for="">Costo</label>
         <td align="center"><input type="text" class="column_filter form-control" id="col5_filter"></td>
 </div>
-<button style="margin-bottom: 10px" class="btn btn-sm btn-primary delete_all" data-url="">Eliminar seleccion </button>
+
   </div>
 
 <table id="tablaEmpleado" class="table nowrap" style="font-size: 12.5px; width: 100%">
-    <thead style="background: #fafafa;">
+    <thead style=" background: #5a6f82;color: white;">
         <tr style="background: #fdfdfd">
             <th style="border-top: 1px solid #fdfdfd;"></th>
             <th style="border-top: 1px solid #fdfdfd;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="inputR" id="i1"></th>
@@ -376,15 +376,9 @@ $('.delete_all').on('click', function(e) {
     {
         alert("Por favor seleccione una fila.");
     }  else {
-
-
-        var check = confirm("Esta seguro que quiere eliminar este(os) empleado(s)?");
-        if(check == true){
-
-
+            $('#modalEliminar').modal();
+            $('#confirmarE').click(function(){
             var join_selected_values = allVals.join(",");
-
-
             $.ajax({
                 url: "/eliminarEmpleados",
                 type: 'DELETE',
@@ -395,7 +389,8 @@ $('.delete_all').on('click', function(e) {
                         $(".sub_chk:checked").each(function() {
                             $(this).parents("tr").remove();
                         });
-                        alert(data['success']);
+                        $('#modalEliminar').modal('hide');
+                       $.notify(" Empleado eliminado", {align:"right", verticalAlign:"top",type: "danger", icon:"bell"});
                     } else if (data['error']) {
                         alert(data['error']);
                     } else {
@@ -411,7 +406,7 @@ $('.delete_all').on('click', function(e) {
           $.each(allVals, function( index, value ) {
               $('table tr').filter("[data-row-id='" + value + "']").remove();
           });
-        }
+        });
     }
 });
 });

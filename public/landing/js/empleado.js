@@ -1,7 +1,7 @@
 $('#fechaN').combodate({
     minYear: 1960,
     yearDescending: false,
-}); 
+});
 $('#m_fechaI').combodate({
     value: new Date(),
     minYear: 2000,
@@ -16,7 +16,7 @@ $('#m_fechaF').combodate({
 $('#v_fechaN').combodate({
     minYear: 1900,
     yearDescending: false,
-}); 
+});
 console.log('fechaN');
 $(document).ready(function() {
     $("#file").fileinput({
@@ -459,29 +459,6 @@ function actualizarEmpleado(accion,objEmpleadoA){
 }
 ///ELIMINAR EMPLEADO
 
-   $('#confirmarE').click(function() {
-       var id=$('#v_id').val()
-   $.ajax({
-    url:"/empleado/eliminar",
-    method:"POST",
-    data:{
-        id:id,
-    },
-    headers:{
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
-    success:function(data){
-        $('#modalEliminar').modal('hide');
-        $.notify(" Empleado eliminado", {align:"right", verticalAlign:"top",type: "danger", icon:"bell"});
-        leertabla();
-    },
-    error:function(data,errorThrown){
-        alert("Hay un error");
-
-    }
-
-});  
-});
 
 
 //abrir nuevo form
