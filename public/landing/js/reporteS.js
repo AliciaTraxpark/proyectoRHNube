@@ -18,16 +18,13 @@ function onSelectFechas(){
         },
         success:function(data){
             var container = $('#empleado');
-            var html_tr = '<tr><td></td></tr>';
-            console.log(data);
+            var html_tr = "";
             for(var i=0; i<data.length; i++){
-                html_tr += '<tr><td>'+ data[i].Total_Envio +'</td></tr>';
+                html_tr += '<tr><td>'+ data[i].perso_nombre + '</td><td>' + data[i].Total_Envio +'</td></tr>';
             }
             container.append(html_tr);
-            console.log(container);
         },
         error:function(data){
-            $('#empleado').empty();
         }
     })
 }

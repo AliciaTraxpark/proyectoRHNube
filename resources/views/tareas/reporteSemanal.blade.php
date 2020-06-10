@@ -83,6 +83,7 @@
                                       @foreach ($empleado as $empleados)
                                       <tr>
                                         <td>{{$empleados->perso_nombre}}</td>
+                                        <td id="td"></td>
                                       </tr>
                                       @endforeach
                                     </tbody>
