@@ -136,6 +136,9 @@
                             </div>
                                 <div id="tabladiv">
                                 </div>
+                                <div class="text-right"><br><br>
+                                    <a href="{{('/horario')}}"><button class="boton btn btn-default mr-1" >CONTINUAR</button></a>
+                                </div>
                         </div> <!-- end card body-->
                     </div> <!-- end card -->
                 </div>
@@ -229,17 +232,17 @@
                       </div>
                       <div class="modal-body">
                         <form class="form-horizontal">
-                            <h5 class="modal-title" id="myModalLabel">¿Desea eliminar al empleado?</h5>
+                            <h5 class="modal-title" id="myModalLabel" style="font-size: 15px">¿Desea eliminar al empleado?</h5>
                         </form>
                       </div>
                       <div class="modal-footer">
                           <div class="col-md-12">
                               <div class="row">
                                   <div class="col-md-7 text-right">
-                                      <button type="button" id="cerrarE" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                                      <button type="button" id="cerrarE" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
                                   </div>
                                   <div class="col-md-5 text-right" style="padding-right: 38px;  ">
-                                      <button type="button" id="confirmarE" name="confirmarE" style="background-color: #163552;" class="btn ">Eliminar</button>
+                                      <button type="button" id="confirmarE" name="confirmarE" style="background-color: #163552;" class="btn btn-sm ">Eliminar</button>
                                   </div>
                               </div>
                           </div>
@@ -911,7 +914,9 @@
                         </div>
                     </div>
                 </div>
+
             </div>
+
         <footer class="border-top">
             <p class="text-center text-muted pt-4">© <?php echo date("Y"); ?> - RH Solution | Todos los derechos reservados.</p>
         </footer>

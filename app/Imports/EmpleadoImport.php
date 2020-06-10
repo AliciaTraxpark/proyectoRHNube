@@ -5,6 +5,15 @@ namespace App\Imports;
 use App\empleado;
 use App\persona;
 use App\ubigeo_peru_districts;
+use App\ubigeo_peru_provinces;
+use App\ubigeo_peru_departments;
+use App\tipo_documento;
+use App\cargo;
+use App\area;
+use App\centro_costo;
+use App\tipo_contrato;
+use App\local;
+use App\nivel;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -26,67 +35,72 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
         {
             if($row['numero_documento']!= ""){
 
+                //tipo_doc
+                $tipoDoc = tipo_documento::where("tipoDoc_descripcion", "like", "%".$row['tipo_documento']."%")->first();
+                if($row['tipo_documento']!=null){
+                    $row['tipo_doc'] =  $tipoDoc->tipoDoc_id; } else{ $row['tipo_doc']=null; }
+
                 //departamento
-                $dep = explode(" ", $row['departamento']);
+                $dep = ubigeo_peru_departments::where("name", "like", "%".$row['departamento']."%")->first();
                 if($row['departamento']!=null){
-                    $row['iddep'] = $dep[0]; } else{ $row['iddep']=null; }
+                    $row['iddep'] = $dep->id; } else{ $row['iddep']=null; }
 
 
                 //provincia
-                $provi = explode(" ", $row['provincia']);
+                $provi = ubigeo_peru_provinces::where("name", "like", "%".$row['provincia']."%")->first();
                 if($row['provincia']!=null){
-                    $row['idprov'] = $provi[0]; } else{ $row['idprov']=null; }
+                    $row['idprov'] = $provi->id; } else{ $row['idprov']=null; }
 
 
                //distrito
-                $idD = ubigeo_peru_districts::where("name", "like", "%".$row['distrito']."%")->first();
+                $idD = ubigeo_peru_districts::where("name", "like", "%".$row['distrito']."%")->where("province_id", "=",$provi->id)->first();
                 if($row['distrito']!=null){
                 $row['id'] = $idD->id;} else{$row['id'] = null; }
 
                 //cargo
-                $cargo = explode(" ", $row['cargo']);
+                $cargo = cargo::where("cargo_descripcion", "like", "%".$row['cargo']."%")->first();
                 if($row['cargo']!=null){
-                $row['idcargo'] = $cargo[0]; } else{ $row['idcargo']=null; }
+                $row['idcargo'] = $cargo->cargo_id; } else{ $row['idcargo']=null; }
 
                 //area
-                $area = explode(" ", $row['area']);
+                $area = area::where("area_descripcion", "like", "%".$row['area']."%")->first();
                 if($row['area']!=null){
-                $row['idarea'] = $area[0]; } else{ $row['idarea']=null; }
+                $row['idarea'] = $area->area_id; } else{ $row['idarea']=null; }
 
                 //centro_costo
-                $centro_costo = explode(" ", $row['centro_costo']);
+                $centro_costo = centro_costo::where("centroC_descripcion", "like", "%".$row['centro_costo']."%")->first();
                 if($row['centro_costo']!=null){
-                $row['idcentro_costo'] = $centro_costo[0]; } else{ $row['idcentro_costo']=null; }
+                $row['idcentro_costo'] = $centro_costo->centroC_id;} else{ $row['idcentro_costo']=null; }
 
                 //departamentoNac
-                $depN = explode(" ", $row['departamento_nacimiento']);
+                $depN = ubigeo_peru_departments::where("name", "like", "%".$row['departamento_nacimiento']."%")->first();
                 if($row['departamento_nacimiento']!=null){
-                $row['iddepartamento_nacimiento'] = $depN[0]; } else{ $row['iddepartamento_nacimiento']=null; }
+                $row['iddepartamento_nacimiento'] = $depN->id; } else{ $row['iddepartamento_nacimiento']=null; }
 
                 //provinciaNac
-                $proviN = explode(" ", $row['provincia_nacimiento']);
+                $proviN = ubigeo_peru_provinces::where("name", "like", "%".$row['provincia_nacimiento']."%")->first();
                 if($row['provincia_nacimiento']!=null){
-                $row['idprovincia_nacimiento'] = $proviN[0]; } else{ $row['idprovincia_nacimiento']=null; }
+                $row['idprovincia_nacimiento'] = $proviN->id; } else{ $row['idprovincia_nacimiento']=null; }
 
                //distritoNac
-                $idDN = ubigeo_peru_districts::where("name", "like", "%".$row['distrito_nacimiento']."%")->first();
+                $idDN = ubigeo_peru_districts::where("name", "like", "%".$row['distrito_nacimiento']."%")->where("province_id", "=",$proviN->id)->first();
                 if($row['distrito_nacimiento']!=null){
                 $row['iddistrito_nacimiento'] = $idDN->id;} else{$row['distrito_nacimiento'] = null; }
 
                 //tipo_contrato
-                $tipo_contrato = explode(" ", $row['tipo_contrato']);
+                $tipo_contrato = tipo_contrato::where("contrato_descripcion", "like", "%".$row['tipo_contrato']."%")->first();
                 if($row['tipo_contrato']!=null){
-                $row['idtipo_contrato'] = $tipo_contrato[0]; } else{ $row['idtipo_contrato']=null; }
+                $row['idtipo_contrato'] = $tipo_contrato->contrato_id; } else{ $row['idtipo_contrato']=null; }
 
                 //local
-                $local = explode(" ", $row['local']);
+                $local = local::where("local_descripcion", "like", "%".$row['local']."%")->first();
                 if($row['local']!=null){
-                $row['idlocal'] = $local[0]; } else{ $row['idlocal']=null; }
+                $row['idlocal'] = $local->local_id; } else{ $row['idlocal']=null; }
 
                 //nivel
-                $nivel = explode(" ", $row['nivel']);
+                $nivel = nivel::where("nivel_descripcion", "like", "%".$row['nivel']."%")->first();
                 if($row['nivel']!=null){
-                $row['idnivel'] = $nivel[0]; } else{ $row['idnivel']=null; }
+                $row['idnivel'] = $nivel->nivel_id; } else{ $row['idnivel']=null; }
 
                 ++$this->numRows;
                 $personaId =persona::create([
@@ -107,8 +121,8 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                 empleado::create([
                     'emple_persona'    => $personaId->perso_id,
 
-                    $tipoDoc = explode(" ", $row['tipo_documento']),
-                    'emple_tipoDoc'    => $tipoDoc[0],
+
+                    'emple_tipoDoc'    => $row['tipo_doc'],
 
                     'emple_nDoc'       =>$row['numero_documento']
                     ,
@@ -139,6 +153,8 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                     'emple_local' => $row['idlocal'],
 
                     'emple_nivel'  =>$row['idnivel'],
+
+                    'emple_foto' =>'',
 
 
 

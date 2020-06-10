@@ -534,9 +534,7 @@ $('#formNuevoE').click(function(){
 $('#formNuevoEd').click(function(){
     $('#form-ver').modal();
 });
-$('#formNuevoEl').click(function(){
-    $('#modalEliminar').modal();
-});
+
 $('#formNuevoEd').hide();
 $('#formNuevoEl').hide();
 $('#cerrarE').click(function(){
