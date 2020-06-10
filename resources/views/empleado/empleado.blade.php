@@ -639,7 +639,7 @@
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="form-group">
-                                                        <input type="file" name="file" id="file" accept="image/*">
+                                                        <input type="file" name="fileF" id="fileF" accept="image/*">
                                                     </div>
                                                 </div> <!-- end col -->
                                             </div> <!-- end row -->
@@ -956,7 +956,7 @@
     <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
     <script src="{{asset('landing/js/seleccionarDepProv.js')}}"></script>
-    <script src="{{asset('landing/js/empleado.js')}}"></script>
     <script src="{{asset('landing/js/cargaMasivaF.js')}}"></script>
+    <script src="{{asset('landing/js/empleado.js')}}"></script>
 </body>
 </html>

@@ -264,8 +264,8 @@ class EmpleadoController extends Controller
         $empleado->emple_Correo=$objEmpleado['correo'];
         $empleado->emple_foto='';
 
-        if($request->hasFile('file')){
-            $file = $request->file('file');
+        if($request->hasFile('fileF')){
+            $file = $request->file('fileF');
             $path = public_path() . '/fotosEmpleado';
             $fileName = uniqid().$file->getClientOriginalName();
             $file->move($path,$fileName);
