@@ -258,8 +258,7 @@
                 $('#filter_col3').hide();
                 $('#filter_col4').hide();
                 $('#filter_col5').hide();
-                table.columns([1]).select();
-                table.columns([2,3,4,5]).deselect();
+
             } else {
                 alert("No está activado");
             }
@@ -278,8 +277,7 @@
                 $('#filter_col3').hide();
                 $('#filter_col4').hide();
                 $('#filter_col5').hide();
-                table.columns([2]).select();
-                table.columns([1,3,5]).deselect();
+
 
             } else {
                 alert("No está activado");
@@ -299,8 +297,7 @@
                 $('#filter_col3').show();
                 $('#filter_col4').hide();
                 $('#filter_col5').hide();
-                table.columns([3]).select();
-                table.columns([1,2,4,5]).deselect();
+
             } else {
                 alert("No está activado");
             }
@@ -318,8 +315,7 @@
                 $('#filter_col3').hide();
                 $('#filter_col4').show();
                 $('#filter_col5').hide();
-                table.columns([4]).select();
-                table.columns([1,2,3,5]).deselect();
+
             } else {
                 alert("No está activado");
             }
@@ -338,7 +334,7 @@
                 $('#filter_col3').hide();
                 $('#filter_col4').hide();
                 $('#filter_col5').show();
-                table.columns([5]).select();
+
             } else {
                 alert("No está activado");
             }
@@ -364,21 +360,17 @@
 
 
 $('.delete_all').on('click', function(e) {
-
-
-
     var allVals = [];
     $(".sub_chk:checked").each(function() {
         allVals.push($(this).attr('data-id'));
     });
 
-
-    if(allVals.length <=0)
+    if(allVals.length<=0)
     {
         alert("Por favor seleccione una fila.");
+        return false;
     }  else {
-            $('#modalEliminar').modal();
-
+        $('#modalEliminar').modal();
 
             $('#confirmarE').click(function(){
 
@@ -395,9 +387,6 @@ $('.delete_all').on('click', function(e) {
                             $(this).parents("tr").remove();
                         });
                         $('#modalEliminar').modal('hide');
-
-
-
                 },
                 error: function (data) {
                     alert(data.responseText);
@@ -407,6 +396,5 @@ $('.delete_all').on('click', function(e) {
     }
 
 });
-
 
    </script>

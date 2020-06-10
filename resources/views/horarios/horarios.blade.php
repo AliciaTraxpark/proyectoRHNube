@@ -20,7 +20,10 @@
     <link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
 </head>
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100" style="background-color: #fdfdfd;">
 <style>
@@ -75,6 +78,9 @@
     body{
         background-color: #f8f8f8;
     }
+    .flatpickr-calendar{
+        width: 240px!important;
+    }
 </style>
 <div id="preloader">
     <div id="status">
@@ -114,19 +120,75 @@
                                     <h4 class="header-title mt-0 "></i>Búsqueda de empleado</h4>
                                 </div>
                                 <div class=" col-md-6 col-xl-6 text-right">
-
-                                    <button id="formNuevoEl" style="background-color: #183b5d;border-color:#62778c" class="btn btn-sm btn-primary delete_all" data-url="">Eliminar seleccion </button>
-                                    <button class="btn btn-sm btn-primary" id="formNuevoEd" style="background-color: #183b5d;border-color:#62778c">Editar</button>
-                                    <button class="btn btn-sm btn-primary" id="formNuevoE" style="background-color: #183b5d;border-color:#62778c">Nuevo</button>
+                                    <button class="btn btn-sm btn-primary" id="btnasignar" style="background-color: #183b5d;border-color:#62778c">Asignar horarios</button>
+                                    <button class="btn btn-sm btn-primary" id="" style="background-color: #183b5d;border-color:#62778c">Asignar descansos</button>
                                 </div>
                             </div>
                                 <div id="tabladiv">
                                 </div>
                         </div> <!-- end card body-->
                     </div> <!-- end card -->
+                    <div id="asignarHorario" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                        <div class="modal-dialog  modal-lg">
+                        <div class="modal-content">
+                           <div class="modal-header" style="background-color:#163552;">
+                               <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Asignar horario</h5>
+                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                   <span aria-hidden="true">&times;</span>
+                               </button>
+                           </div>
+                           <div class="modal-body">
+                             <div class="row">
+                                 <div class="col-md-4">
+                                    <div class="form-check">
+                                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                      <label class="form-check-label" for="exampleCheck1">Aplicar sobretiempo</label>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-4">
+                                   <div class="form-group">
+                                      <label for="">Tipo de horario</label>
+                                      <select class="form-control custom-select custom-select-sm">
+                                        <option>Normal</option>
+                                        <option>Guardía</option>
+                                        <option>Nocturno</option>
+                                      </select>
+                                   </div>
+                                 </div>
+                                 <div class="col-md-4">
+                                    <div class="form-group">
+                                       <label for="">Descripcion</label>
+                                       <input type="text" class="form-control form-control-sm" id="">
+                                    </div>
+                                 </div>
+                                 <div class="col-md-4">
+                                    <div class="form-group">
+                                       <label for="">Hora de inicio</label>
+                                       <input type="text" id="horaI" class="form-control form-control-sm">
+                                    </div>
+                                 </div>
+                                 <div class="col-md-4">
+                                    <div class="form-group">
+                                       <label for="">Hora de fin</label>
+                                       <input type="text" id="horaF" class="form-control form-control-sm">
+                                    </div>
+                                 </div>
+                             </div>
+                           </div>
+                           <div class="modal-footer">
+                               <div class="col-md-12">
+                                   <div class="row">
+                                       <div class="col-md-12 text-right" >
+                                        <button type="button" id="" class="btn btn-light " data-dismiss="modal">Cancelar</button>
+                                        <button type="button" id="" name="" style="background-color: #163552;" class="btn ">Guardar</button>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div><!-- /.modal-content -->
+                     </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
                 </div>
-
-
             </div>
         <footer class="border-top">
             <p class="text-center text-muted pt-4">© <?php echo date("Y"); ?> - RH Solution | Todos los derechos reservados.</p>
@@ -143,9 +205,13 @@
     <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
     <script src="{{asset('landing/js/tabla.js')}}"></script>
+    <script src="{{asset('landing/js/horario.js')}}"></script>
     <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
 
 </body>
 </html>

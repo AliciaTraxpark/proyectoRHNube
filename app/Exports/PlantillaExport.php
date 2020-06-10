@@ -28,7 +28,7 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
     /**
     * @return \Illuminate\Support\Collection
     */
-   
+
     public function __construct($total)
     {
         $this->total = $total;
@@ -107,7 +107,7 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
 
                 //TIPODOCUMENTO
                 foreach($tipoDocumento as $tipoDocumentos){
-                    $event->sheet->getDelegate()->setCellValue('BC'.$rowD++,$tipoDocumentos->tipoDoc_id ." ".$tipoDocumentos->tipoDoc_descripcion);
+                    $event->sheet->getDelegate()->setCellValue('BC'.$rowD++,$tipoDocumentos->tipoDoc_descripcion);
                 }
 
                 $validationD = $event->sheet->getDelegate()->getCell("{$drop_columnD}2")->getDataValidation();
@@ -125,7 +125,7 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
 
                 //DEPARTAMENTO
                 foreach($departamentos as $departamento){
-                    $event->sheet->getDelegate()->setCellValue('BA'.$row++,$departamento->id." ".$departamento->name);
+                    $event->sheet->getDelegate()->setCellValue('BA'.$row++,$departamento->name);
                 }
 
                 $validation = $event->sheet->getDelegate()->getCell("{$drop_column}2")->getDataValidation();
@@ -143,7 +143,7 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
 
                 //PROVINCIA
                 foreach($provincias as $provincia){
-                    $event->sheet->getDelegate()->setCellValue('BF'.$rowP++,$provincia->id." ".$provincia->name);
+                    $event->sheet->getDelegate()->setCellValue('BF'.$rowP++,$provincia->name);
                 }
 
                 $validationP = $event->sheet->getDelegate()->getCell("{$drop_columnP}2")->getDataValidation();
@@ -161,7 +161,7 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
 
                 //TIPO CONTRATO
                 foreach($tipoContrato as $tipoContratos){
-                    $event->sheet->getDelegate()->setCellValue('BJ'.$rowC++,$tipoContratos->contrato_id ." ".$tipoContratos->contrato_descripcion);
+                    $event->sheet->getDelegate()->setCellValue('BJ'.$rowC++,$tipoContratos->contrato_descripcion);
                 }
 
                 $validationC = $event->sheet->getDelegate()->getCell("{$drop_columnC}2")->getDataValidation();
@@ -179,7 +179,7 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
 
                 //CARGO
                 foreach($cargo as $cargos){
-                    $event->sheet->getDelegate()->setCellValue('BN'.$rowCargo++,$cargos->cargo_id ." ".$cargos->cargo_descripcion);
+                    $event->sheet->getDelegate()->setCellValue('BN'.$rowCargo++,$cargos->cargo_descripcion);
                 }
 
                 $validationCargo = $event->sheet->getDelegate()->getCell("{$drop_columnCargo}2")->getDataValidation();
@@ -197,7 +197,7 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
 
                 //AREA
                 foreach($area as $areas){
-                    $event->sheet->getDelegate()->setCellValue('BQ'.$rowArea++,$areas->area_id ." ".$areas->area_descripcion);
+                    $event->sheet->getDelegate()->setCellValue('BQ'.$rowArea++,$areas->area_descripcion);
                 }
 
                 $validationArea = $event->sheet->getDelegate()->getCell("{$drop_columnArea}2")->getDataValidation();
@@ -215,7 +215,7 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
 
                 //CENTRO
                 foreach($centroC as $centroCs){
-                    $event->sheet->getDelegate()->setCellValue('BT'.$rowCentro++,$centroCs->centroC_id ." ".$centroCs->centroC_descripcion);
+                    $event->sheet->getDelegate()->setCellValue('BT'.$rowCentro++,$centroCs->centroC_descripcion);
                 }
 
                 $validationCentro = $event->sheet->getDelegate()->getCell("{$drop_columnCentro}2")->getDataValidation();
@@ -233,7 +233,7 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
 
                 //LOCAL
                 foreach($local as $locals){
-                    $event->sheet->getDelegate()->setCellValue('CA'.$rowLocal++,$locals->local_id ." ".$locals->local_descripcion);
+                    $event->sheet->getDelegate()->setCellValue('CA'.$rowLocal++,$locals->local_descripcion);
                 }
 
                 $validationLocal = $event->sheet->getDelegate()->getCell("{$drop_columnLocal}2")->getDataValidation();
@@ -251,7 +251,7 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
 
                 //NIVEL
                 foreach($nivel as $nivels){
-                    $event->sheet->getDelegate()->setCellValue('CC'.$rowNivel++,$nivels->nivel_id ." ".$nivels->nivel_descripcion);
+                    $event->sheet->getDelegate()->setCellValue('CC'.$rowNivel++,$nivels->nivel_descripcion);
                 }
 
                 $validationNivel = $event->sheet->getDelegate()->getCell("{$drop_columnNivel}2")->getDataValidation();
