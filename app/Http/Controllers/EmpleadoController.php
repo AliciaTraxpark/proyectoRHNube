@@ -439,7 +439,7 @@ class EmpleadoController extends Controller
         $persona->each->delete();
         //$persona= persona::where('perso_id','=',$empleado->emple_persona);
         //dd($empleado->emple_persona);
-        return response()->json(['success'=>"Productos eliminados correctamente."]);
+       
     }
 
 
