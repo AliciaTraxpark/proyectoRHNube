@@ -60,17 +60,41 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                 //cargo
                 $cargo = cargo::where("cargo_descripcion", "like", "%".$row['cargo']."%")->first();
                 if($row['cargo']!=null){
-                $row['idcargo'] = $cargo->cargo_id; } else{ $row['idcargo']=null; }
+                    if($cargo!=null){
+                     $row['idcargo'] = $cargo->cargo_id;
+                    } else{
+                        $cargorow=new cargo();
+                        $cargorow->cargo_descripcion=$row['cargo'];
+                        $cargorow->save();
+                        $row['idcargo']=$cargorow->cargo_id;
+                    }
+                 } else{ $row['idcargo']=null; }
 
                 //area
                 $area = area::where("area_descripcion", "like", "%".$row['area']."%")->first();
                 if($row['area']!=null){
-                $row['idarea'] = $area->area_id; } else{ $row['idarea']=null; }
+                    if($area!=null){
+                     $row['idarea'] = $area->area_id;
+                    } else{
+                        $arearow = new area();
+                        $arearow->area_descripcion=$row['area'];
+                        $arearow->save();
+                        $row['idarea']= $arearow->area_id;
+                    }
+                 } else{ $row['idarea']=null; }
 
                 //centro_costo
                 $centro_costo = centro_costo::where("centroC_descripcion", "like", "%".$row['centro_costo']."%")->first();
                 if($row['centro_costo']!=null){
-                $row['idcentro_costo'] = $centro_costo->centroC_id;} else{ $row['idcentro_costo']=null; }
+                    if($centro_costo!=null){
+                     $row['idcentro_costo'] = $centro_costo->centroC_id;
+                    } else{
+                        $centrorow = new centro_costo();
+                        $centrorow->centroC_descripcion=$row['centro_costo'];
+                        $centrorow->save();
+                        $row['idcentro_costo']= $centrorow->centroC_id;
+                    }
+                } else{ $row['idcentro_costo']=null; }
 
                 //departamentoNac
                 $depN = ubigeo_peru_departments::where("name", "like", "%".$row['departamento_nacimiento']."%")->first();
@@ -90,17 +114,42 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                 //tipo_contrato
                 $tipo_contrato = tipo_contrato::where("contrato_descripcion", "like", "%".$row['tipo_contrato']."%")->first();
                 if($row['tipo_contrato']!=null){
-                $row['idtipo_contrato'] = $tipo_contrato->contrato_id; } else{ $row['idtipo_contrato']=null; }
+                    if($tipo_contrato!=null){
+                        $row['idtipo_contrato'] = $tipo_contrato->contrato_id;
+                    } else{
+                        $tipoCrow = new tipo_contrato();
+                        $tipoCrow->contrato_descripcion=$row['tipo_contrato'];
+                        $tipoCrow->save();
+                        $row['idtipo_contrato']= $tipoCrow->contrato_id;
+                    }
+                 } else{ $row['idtipo_contrato']=null; }
 
                 //local
                 $local = local::where("local_descripcion", "like", "%".$row['local']."%")->first();
                 if($row['local']!=null){
-                $row['idlocal'] = $local->local_id; } else{ $row['idlocal']=null; }
+                    if ($local!=null){
+                        $row['idlocal'] = $local->local_id;
+                    } else{
+                        $localrow = new local();
+                        $localrow->local_descripcion=$row['local'];
+                        $localrow->save();
+                        $row['idlocal'] = $localrow->local_id;
+
+                    }
+                 } else{ $row['idlocal']=null; }
 
                 //nivel
                 $nivel = nivel::where("nivel_descripcion", "like", "%".$row['nivel']."%")->first();
                 if($row['nivel']!=null){
-                $row['idnivel'] = $nivel->nivel_id; } else{ $row['idnivel']=null; }
+                    if ($nivel!=null){
+                    $row['idnivel'] = $nivel->nivel_id;
+                    } else{
+                        $nivelrow = new nivel();
+                        $nivelrow->nivel_descripcion=$row['nivel'];
+                        $nivelrow->save();
+                       $row['idnivel'] =  $nivelrow->nivel_id;
+                   }
+                 } else{ $row['idnivel']=null; }
 
                 ++$this->numRows;
                 $personaId =persona::create([
