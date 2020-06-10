@@ -67,16 +67,15 @@
                    </div>
                    <div class="modal-body">
                     <div class="row">
-                        <div class="col-xl-12 text-center">
-                            <img src="{{asset('landing/images/excelR.PNG')}}" height="100">
+                        <div class="col-md-12 text-center">
+                            <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1"><span>Recuerda que necesitas Habilitar Edición para poder llenar tus datos.</span>
                         </div>
                     </div>
                     <br>
                     <div class="row">
-                        <div class="col-md-12">
-                            <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1"><span>Recuerda que necesitas Habilitar Edición para poder llenar tus datos.</span>
+                        <div class="col-md-12 text-center">
+                            <img src="{{asset('landing/images/excelR.PNG')}}" height="100">
                         </div>
-
                     </div>
                    </div>
                    <div class="modal-footer">
