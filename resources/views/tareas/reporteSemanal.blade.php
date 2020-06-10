@@ -66,23 +66,23 @@
                                     America-Bogota
                                 </p>
                                 <table id="tablaReporte" class="table dt-responsive nowrap">
-                                    <thead>
+                                    <thead style="background: #fafafa;">
                                         <tr>
-                                            <th>EMPLEADO</th>
-                                            <th>LUNES</th>
-                                            <th>MARTES</th>
-                                            <th>MIERCOLES</th>
-                                            <th>JUEVES</th>
-                                            <th>VIERNES</th>
-                                            <th>SABADO</th>
-                                            <th>TOTAL SEMANAL</th>
-                                            <th>ACTIVIDAD</th>
+                                            <th>Empleado</th>
+                                            <th>Lunes</th>
+                                            <th>Martes</th>
+                                            <th>Miercoles</th>
+                                            <th>Jueves</th>
+                                            <th>Viernes</th>
+                                            <th>Sabado</th>
+                                            <th>Total Semanal</th>
+                                            <th>Actividad</th>
                                         </tr>
                                     </thead>
                                     <tbody id="empleado">
                                       @foreach ($empleado as $empleados)
                                       <tr>
-                                        <td>{{$empleados->perso_nombre}}</td>
+                                        <td><img src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class=" mr-2" alt="" />{{$empleados->perso_nombre}}</td>
                                         <td id="td"></td>
                                       </tr>
                                       @endforeach

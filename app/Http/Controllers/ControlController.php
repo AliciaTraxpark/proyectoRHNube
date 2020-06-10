@@ -40,20 +40,33 @@ class ControlController extends Controller
     public function EmpleadoReporte(Request $request){
         $fecha = $request->get('fecha');
         $fechaF = explode("to",$fecha);
-        $empleado = DB::table('empleado as e')
+
+        $count = DB::table('empleado as e')
+            ->join('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
+            ->join('proyecto as pr','pr.Proye_id','=','pe.Proyecto_Proye_id')
+            ->groupBy('e.emple_id')
+            ->count();
+
+        $empleados = DB::table('empleado as e')
         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
         ->join('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
         ->join('proyecto as pr','pr.Proye_id','=','pe.Proyecto_Proye_id')
-        ->join('control as c','c.Proyecto_Proye_id','=','pr.Proye_id')
-        ->join('envio as en',function($join){
+        ->leftJoin('control as c','c.Proyecto_Proye_id','=','pr.Proye_id')
+        ->leftJoin('envio as en',function($join){
             $join->on('en.idEnvio','=','c.idEnvio')
             ->on('en.idEmpleado','=','e.emple_id');
         })
         ->select('e.emple_id','p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno',DB::raw('MAX(en.Total_Envio) as Total_Envio'),'c.Fecha_fin')
         ->where('c.Fecha_fin','<=',$fechaF[1])
-        ->groupBy('en.idEmpleado')
+        ->where('c.Fecha_fin','>=',$fechaF[0])
+        ->groupBy('c.Fecha_fin','e.emple_id')
         ->get();
-        return response()->json($empleado,200);
+
+        $respuesta = [];
+        for($i=0; $i< sizeof($empleados); $i++){
+            
+        }
+        return response()->json($empleados,200);
     }
 
     public function store(Request $request){

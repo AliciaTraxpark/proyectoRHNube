@@ -19,6 +19,7 @@ function onSelectFechas(){
         success:function(data){
             var container = $('#empleado');
             var html_tr = "";
+            console.log(data);
             for(var i=0; i<data.length; i++){
                 html_tr += '<tr><td>'+ data[i].perso_nombre + '</td><td>' + data[i].Total_Envio +'</td></tr>';
             }
