@@ -40,13 +40,16 @@
                 <img src="{{asset('landing/images/logo.png')}}" height="100" >
               </div>
         </div>
-        <div class="col-md-7 text-left">
+        <div class="col-md-4 text-left">
           <h5 style="color: #ffffff">Gestión de empleados</h5>
           <label for="" class="blanco">Validaremos los datos antes de cargarlos  :)</label>
         </div>
-        <div class="col-md-3 " style="margin-left: 23%;">
+        <div class="col-md-4 text-right" style="margin-left: 12%" >
 
             <a href="{{'/export'}}"> <button id="export" style="background-color: #155E5B;border-color: #155E5B"  class="btn btn-sm  btn-primary "> <img src="{{asset('admin/images/excel.svg')}}" height="25" ></i>  Descargar plantilla</button></a>
+        </div>
+        <div class="col-md-2 text-right" style="margin-left: 3%">
+            <a href="{{('/empleado')}}"><button class="boton btn " > > empleados </button></a>
         </div>
 
 
