@@ -68,24 +68,24 @@
                                 <table id="tablaReporte" class="table dt-responsive nowrap">
                                     <thead>
                                         <tr>
-                                            <th>Member</th>
-                                            <th>Mon</th>
-                                            <th>Tue</th>
-                                            <th>Wed</th>
-                                            <th>Thu</th>
-                                            <th>Fri</th>
-                                            <th>Sat</th>
-                                            <th>Weekly Total</th>
-                                            <th>Activity</th>
+                                            <th>EMPLEADO</th>
+                                            <th>LUNES</th>
+                                            <th>MARTES</th>
+                                            <th>MIERCOLES</th>
+                                            <th>JUEVES</th>
+                                            <th>VIERNES</th>
+                                            <th>SABADO</th>
+                                            <th>TOTAL SEMANAL</th>
+                                            <th>ACTIVIDAD</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="empleado">
                                       @foreach ($empleado as $empleados)
-                                        <tr>
-                                            <td>{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</td>
-                                            <td>{{$empleados->Total_Envio}}</td>
-                                        </tr>
-                                        @endforeach
+                                      <tr>
+                                        <td>{{$empleados->perso_nombre}}</td>
+                                        <td id="td"></td>
+                                      </tr>
+                                      @endforeach
                                     </tbody>
                                 </table>
                             </div> <!-- end card body-->
@@ -108,11 +108,8 @@
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 <script src="{{asset('landing/js/tablaReporte.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
+<script src="{{asset('landing/js/reporteS.js')}}"></script>
 <script>
-    flatpickr("#fecha", {
-        mode: "range"
-    });
-
     const dataSource = {
   chart: {
     caption: "Horas trabajadas por Miembro",

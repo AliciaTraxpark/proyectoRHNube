@@ -95,6 +95,7 @@ Route::get('/tareas','ControlController@index')->middleware('auth');
 Route::get('/tareas/show','ControlController@show')->middleware('auth');
 Route::get('/tareas/proyecto','ControlController@proyecto')->middleware('auth');
 Route::get('/reporteSemanal','ControlController@reporteS')->middleware('auth');
+Route::get('/reporte/empleado','ControlController@EmpleadoReporte')->middleware('auth');
 
 
 //probando excel
