@@ -68,19 +68,23 @@
                                 <table id="tablaReporte" class="table dt-responsive nowrap">
                                     <thead>
                                         <tr>
-                                            <th>Member</th>
-                                            <th>Mon</th>
-                                            <th>Tue</th>
-                                            <th>Wed</th>
-                                            <th>Thu</th>
-                                            <th>Fri</th>
-                                            <th>Sat</th>
-                                            <th>Weekly Total</th>
-                                            <th>Activity</th>
+                                            <th>EMPLEADO</th>
+                                            <th>LUNES</th>
+                                            <th>MARTES</th>
+                                            <th>MIERCOLES</th>
+                                            <th>JUEVES</th>
+                                            <th>VIERNES</th>
+                                            <th>SABADO</th>
+                                            <th>TOTAL SEMANAL</th>
+                                            <th>ACTIVIDAD</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr id="empleado"></tr>
+                                    <tbody id="empleado">
+                                      @foreach ($empleado as $empleados)
+                                      <tr>
+                                        <td>{{$empleados->perso_nombre}}</td>
+                                      </tr>
+                                      @endforeach
                                     </tbody>
                                 </table>
                             </div> <!-- end card body-->
