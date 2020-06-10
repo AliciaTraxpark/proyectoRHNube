@@ -80,12 +80,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                      @foreach ($empleado as $empleados)
-                                        <tr>
-                                            <td>{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</td>
-                                            <td>{{$empleados->Total_Envio}}</td>
-                                        </tr>
-                                        @endforeach
+                                        <tr id="empleado"></tr>
                                     </tbody>
                                 </table>
                             </div> <!-- end card body-->
@@ -108,11 +103,8 @@
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 <script src="{{asset('landing/js/tablaReporte.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
+<script src="{{asset('landing/js/reporteS.js')}}"></script>
 <script>
-    flatpickr("#fecha", {
-        mode: "range"
-    });
-
     const dataSource = {
   chart: {
     caption: "Horas trabajadas por Miembro",

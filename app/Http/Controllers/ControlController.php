@@ -22,19 +22,28 @@ class ControlController extends Controller
     }
 
     public function ReporteS(){
+        
+        return view('tareas.reporteSemanal');
+    }
+
+    public function EmpleadoReporte(Request $request){
+        $fecha = $request->get('fecha');
         $empleado = DB::table('empleado as e')
         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
         ->join('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
         ->join('proyecto as pr','pr.Proye_id','=','pe.Proyecto_Proye_id')
-        ->join('envio as en','en.idEmpleado','=','e.emple_id')
-        ->join('control as c','c.idEnvio','=','en.idEnvio')
-        ->select('e.emple_id','p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','en.Total_Envio','c.Fecha_fin')
-        ->orderBy('c.Fecha_fin','asc')
-        ->orderBy('en.Total_Envio','desc')
-        ->take(1)
+        ->join('control as c','c.Proyecto_Proye_id','=','pr.Proye_id')
+        ->join('envio as en',function($join){
+            $join->on('en.idEnvio','=','c.idEnvio')
+            ->on('en.idEmpleado','=','e.emple_id');
+        })
+        ->select('e.emple_id','p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno',DB::raw('MAX(en.Total_Envio) as Total_Envio'),'c.Fecha_fin')
+        ->where('c.Fecha_fin','=',$fecha)
+        ->groupBy('en.idEmpleado')
         ->get();
-        return view('tareas.reporteSemanal',['empleado'=>$empleado]);
+        return response()->json($empleado,200);
     }
+
     public function store(Request $request){
         $envio = new envio();
         $envio->hora_Envio=$request->get('hora_Envio');
