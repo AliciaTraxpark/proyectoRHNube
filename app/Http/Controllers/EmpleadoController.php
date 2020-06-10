@@ -36,7 +36,7 @@ class EmpleadoController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except('provincias','distritos','fechas','api','logueoEmpleado','apiTarea','apiActividad');
+        $this->middleware('auth')->except('provincias','distritos','fechas','api','logueoEmpleado','apiTarea','apiActividad','editarApiTarea');
     }
     public function fechas($id){
         return tipo_contrato::where('contrato_id',$id)->get();
@@ -196,6 +196,25 @@ class EmpleadoController extends Controller
         return response()->json($actividad,200);
     }
 
+    public function editarApiTarea(Request $request){
+        $Tarea_id = $request['Tarea_id'];
+        $Activi_id = $request['Activi_id'];
+        $tarea = tarea::where('Tarea_id',$Tarea_id)->first();
+        if($tarea){
+            $tarea->Tarea_Nombre=$request['Tarea_Nombre'];
+            if($request['Activi_id'] != ''){
+                $actividad = actividad::where('Activi_id',$Activi_id)->first();
+                if($actividad){
+                    $actividad->Activi_Nombre=$request['Activi_Nombre'];
+                    $actividad->save();
+                    return response()->json($actividad,200);
+                }
+            }
+            $tarea->save();
+            return response()->json($tarea,200);
+        }
+        return response()->json($tarea,400);
+    }
     public function create()
     {
 

@@ -28,4 +28,5 @@ Route::get("empleado","EmpleadoController@api");
 Route::post("tarea","EmpleadoController@apiTarea");
 Route::post("actividad","EmpleadoController@apiActvidad");
 Route::post("logueo","EmpleadoController@logueoEmpleado");
+Route::post("editarTarea","EmpleadoController@editarApiTarea");
 Route::post("control","ControlController@store");
