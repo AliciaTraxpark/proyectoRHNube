@@ -639,7 +639,7 @@
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="form-group">
-                                                        <input type="file" name="fileF" id="fileF" accept="image/*">
+                                                        <input type="file" name="file" id="file" accept="image/*">
                                                     </div>
                                                 </div> <!-- end col -->
                                             </div> <!-- end row -->

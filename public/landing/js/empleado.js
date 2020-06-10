@@ -1,4 +1,4 @@
-$("#fileF").fileinput({
+$("#file").fileinput({
     allowedFileExtensions: ['jpg','jpeg','png'],
     uploadAsync: false,
     showRemove:true,

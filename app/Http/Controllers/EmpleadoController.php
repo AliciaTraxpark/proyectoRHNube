@@ -264,8 +264,8 @@ class EmpleadoController extends Controller
         $empleado->emple_Correo=$objEmpleado['correo'];
         $empleado->emple_foto='';
 
-        if($request->hasFile('fileF')){
-            $file = $request->file('fileF');
+        if($request->hasFile('file')){
+            $file = $request->file('file');
             $path = public_path() . '/fotosEmpleado';
             $fileName = uniqid().$file->getClientOriginalName();
             $file->move($path,$fileName);
@@ -342,18 +342,34 @@ class EmpleadoController extends Controller
         if($request==null)return false;
         $empleado= Empleado::findOrFail($idE);
 
-        $empleado->emple_cargo=$objEmpleado['cargo_v'];
-        $empleado->emple_area=$objEmpleado['area_v'];
-        $empleado->emple_departamentoN=$objEmpleado['departamento_v'];
-        $empleado->emple_provinciaN=$objEmpleado['provincia_v'];
-        $empleado->emple_distritoN=$objEmpleado['distrito_v'];
-        $empleado->emple_centCosto=$objEmpleado['centroc_v'];
-        $empleado->emple_departamento=$objEmpleado['dep_v'];
-        $empleado->emple_provincia=$objEmpleado['prov_v'];
-        $empleado->emple_distrito=$objEmpleado['dist_v'];
-        $empleado->emple_tipoContrato=$objEmpleado['contrato_v'];
-        $empleado->emple_local=$objEmpleado['local_v'];
-        $empleado->emple_nivel=$objEmpleado['nivel_v'];
+        if($objEmpleado['cargo_v'] != ''){
+            $empleado->emple_cargo=$objEmpleado['cargo_v'];
+        }
+        if($objEmpleado['area_v'] != ''){
+            $empleado->emple_area=$objEmpleado['area_v'];
+        }
+        if($objEmpleado['departamento_v'] != ''){
+            $empleado->emple_departamentoN=$objEmpleado['departamento_v'];
+            $empleado->emple_provinciaN=$objEmpleado['provincia_v'];
+            $empleado->emple_distritoN=$objEmpleado['distrito_v'];
+        }
+        if($objEmpleado['centroc_v'] != ''){
+            $empleado->emple_centCosto=$objEmpleado['centroc_v'];
+        }
+        if($objEmpleado['dep_v'] != ''){
+            $empleado->emple_departamento=$objEmpleado['dep_v'];
+            $empleado->emple_provincia=$objEmpleado['prov_v'];
+            $empleado->emple_distrito=$objEmpleado['dist_v'];
+        }
+        if($objEmpleado['contrato_v'] != ''){
+            $empleado->emple_tipoContrato=$objEmpleado['contrato_v'];
+        }
+        if($objEmpleado['local_v'] != ''){
+            $empleado->emple_local=$objEmpleado['local_v'];
+        }
+        if($objEmpleado['nivel_v'] != ''){
+            $empleado->emple_nivel=$objEmpleado['nivel_v'];
+        }
         $empleado->emple_celular=$objEmpleado['celular_v'];
         $empleado->emple_telefono=$objEmpleado['telefono_v'];
         $empleado->emple_Correo=$objEmpleado['correo_v'];
