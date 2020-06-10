@@ -154,6 +154,8 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
 
                     'emple_nivel'  =>$row['idnivel'],
 
+                    'emple_foto' =>'',
+
 
 
                     //
