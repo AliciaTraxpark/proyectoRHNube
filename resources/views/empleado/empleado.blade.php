@@ -961,7 +961,7 @@
     <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
     <script src="{{asset('landing/js/seleccionarDepProv.js')}}"></script>
-    <script src="{{asset('landing/js/empleado.js')}}"></script>
     <script src="{{asset('landing/js/cargaMasivaF.js')}}"></script>
+    <script src="{{asset('landing/js/empleado.js')}}"></script>
 </body>
 </html>

@@ -1,3 +1,16 @@
+$("#file").fileinput({
+    allowedFileExtensions: ['jpg','jpeg','png'],
+    uploadAsync: false,
+    showRemove:true,
+    minFileCount:0,
+    maxFileCount: 1,
+    initialPreviewAsData: true ,// identify if you are sending preview data only and not the markup
+    language: 'es',
+    browseOnZoneClick: true,
+    theme: "fa",
+    showUpload:false,
+    showBrowse: false
+});
 $('#fechaN').combodate({
     minYear: 1960,
     yearDescending: false,
@@ -18,22 +31,6 @@ $('#v_fechaN').combodate({
     yearDescending: false,
 });
 console.log('fechaN');
-$(document).ready(function() {
-    $("#file").fileinput({
-        allowedFileExtensions: ['jpg','jpeg','png'],
-        uploadAsync: false,
-        overwriteInitial: false,
-        validateInitialCount: true,
-        showUpload:false,
-        minFileCount:0,
-        maxFileCount: 1,
-        initialPreviewAsData: true ,// identify if you are sending preview data only and not the markup
-        language: 'es',
-        showBrowse: false,
-        browseOnZoneClick: true,
-        theme: "fa"
-    });
-});
 //AREA
 function agregarArea(){
     objArea=datosArea("POST");
