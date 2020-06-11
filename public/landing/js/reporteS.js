@@ -59,8 +59,8 @@ function onSelectFechas(){
             var containerD = $('#dias');
             var nombre =[];
             var horas=[];
-            var color = ['rgb(160, 173, 211)'];
-            var borderColor = ['rgb(160, 173, 211)'];
+            var color = ['rgb(185,204,237)'];
+            var borderColor = ['rgb(185,204,237)'];
             var html_tr = "";
             var html_trD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
             for(var i=0; i<data.length; i++){
@@ -69,15 +69,17 @@ function onSelectFechas(){
                 var total = data[i].horas.reduce(function(a,b){
                     return sumarHora(a,b);
                 });
+                if(total != null){
+                    horas.push(total.split(":")[0]);
+                }
                 for(let j = 0; j < data[i].horas.length; j++){
                     if(data[i].horas[j] == null){
-                        html_tr += '<td>No Trabajo</td>';
+                        html_tr += '<td>00:00:00</td>';
                     }else{
                         html_tr += '<td>'+ data[i].horas[j] + '</td>';
                     }
                 }
                 html_tr += '<td>'+ total +'</td>';
-                horas.push(total.split(":")[0]);
                 html_tr += '</tr>';
             }
             for(var m = 0; m < data[0].fechaF.length; m++){
