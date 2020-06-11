@@ -8,7 +8,40 @@ $(function(){
     $("#fecha").on('change',onSelectFechas);
 });
 
+function acumular60(suma,acumulado){
+    if(suma > 60){
+        suma = suma - 60;
+        acumulado += 1;
+        acumular60(suma,acumulado);
+    }
 
+    if(suma == 60){
+        suma = 0;
+        acumulado += 1;
+        acumular60(suma,acumulado);
+    }
+    return[suma,acumulado];
+}
+
+function sumarHora(a,b){
+    if(!a) return b;
+    let resultado = [];
+    a = a.split(":").reverse();
+    b = b.split(":").reverse();
+    let acumulado = 0;
+    let sumaAcumulado;
+    let suma = parseInt(a[0]) + parseInt(b[0]);
+    sumaAcumulado = acumular60(suma,acumulado);
+    resultado.push(sumaAcumulado[0]);
+    suma = parseInt(a[1]) + parseInt(b[1]) + sumaAcumulado[1];
+    acumulado = 0;
+    sumaAcumulado = acumular60(suma,acumulado);
+    resultado.push(sumaAcumulado[0]);
+    suma = parseInt(a[2]) + parseInt(b[2]) + sumaAcumulado[1];
+    resultado.push(suma);
+    resultado.reverse();
+    return resultado.join(":");
+}
 
 function onSelectFechas(){
     var fecha = $('#fecha').val();
@@ -32,21 +65,18 @@ function onSelectFechas(){
             var html_trD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
             for(var i=0; i<data.length; i++){
                 html_tr += '<tr><td>'+ data[i].nombre + ' ' + data[i].apPaterno + ' ' + data[i].apMaterno + '</td>';
+                var total = data[i].horas.reduce(function(a,b){
+                    return sumarHora(a,b);
+                });
+                horas.push(total);
                 for(let j = 0; j < data[i].horas.length; j++){
                     if(data[i].horas[j] == null){
                         html_tr += '<td>No Trabajo</td>';
                     }else{
                         html_tr += '<td>'+ data[i].horas[j] + '</td>';
-                        var sumar = [];
-                        sumar.push(data[i].horas[j]);
-                        var total = moment();
-                        total.format("HH:mm:ss");
-                        total.add(sumar);
-                        total.format("HH:mm:ss")
-                        horas.push(total);
-                        console.log(total);
                     }
                 }
+                html_tr += '<td>'+ total +'</td>';
                 html_tr += '</tr>';
             }
             for(var m = 0; m < data[0].fechaF.length; m++){
@@ -69,7 +99,7 @@ function onSelectFechas(){
                     borderWidth: 2,
                     hoverBackgroundColor: color,
                     hoverBorderColor: borderColor,
-                    data:horas
+                    data:total
                 }]
             };
             var mostrar = $("#myChart");
