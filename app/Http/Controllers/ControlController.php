@@ -41,13 +41,15 @@ class ControlController extends Controller
         $fecha = $request->get('fecha');
         $fechaF = explode("to",$fecha);
 
-        $count = DB::table('empleado as e')
+        $empleados = DB::table('empleado as e')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->join('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
             ->join('proyecto as pr','pr.Proye_id','=','pe.Proyecto_Proye_id')
+            ->select('e.emple_id','p.perso_nombre as nombre','p.perso_apPaterno as apPaterno','p.perso_apMaterno as apMaterno')
             ->groupBy('e.emple_id')
-            ->count();
+            ->get();
 
-        $empleados = DB::table('empleado as e')
+        $horasTrabajadas = DB::table('empleado as e')
         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
         ->join('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
         ->join('proyecto as pr','pr.Proye_id','=','pe.Proyecto_Proye_id')
@@ -63,10 +65,18 @@ class ControlController extends Controller
         ->get();
 
         $respuesta = [];
-        for($i=0; $i< sizeof($empleados); $i++){
-            
+        foreach($empleados as $empleado){
+            array_push($respuesta,array("id"=>$empleado->emple_id,"nombre"=>$empleado->nombre,"apPaterno"=>$empleado->apPaterno,
+            "apMaterno"=>$empleado->apMaterno,"horas"=>array()));
         }
-        return response()->json($empleados,200);
+        for($i = 0; $i < sizeof($horasTrabajadas); $i++){
+            for($j = 0; $j < sizeof($respuesta); $j++){
+                if($respuesta[$j]["id"] == $horasTrabajadas[$i]->emple_id){
+                    array_push($respuesta[$j]["horas"], $horasTrabajadas[$i]->Total_Envio);
+                }
+            }
+        }
+        return response()->json($respuesta,200);
     }
 
     public function store(Request $request){

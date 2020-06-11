@@ -65,24 +65,25 @@
                                 <p class="sub-header" style="margin-bottom: 0px">
                                     America-Bogota
                                 </p>
+                                <br>
                                 <table id="tablaReporte" class="table dt-responsive nowrap">
-                                    <thead style="background: #fafafa;">
+                                    <thead style="background: #fafafa;text-align: center;">
                                         <tr>
-                                            <th>Empleado</th>
-                                            <th>Lunes</th>
-                                            <th>Martes</th>
-                                            <th>Miercoles</th>
-                                            <th>Jueves</th>
-                                            <th>Viernes</th>
-                                            <th>Sabado</th>
-                                            <th>Total Semanal</th>
-                                            <th>Actividad</th>
+                                            <th><img src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class=" mr-2" alt="" /></th>
+                                            <th>LUN.</th>
+                                            <th>MAR.</th>
+                                            <th>MIE.</th>
+                                            <th>JUE.</th>
+                                            <th>VIE.</th>
+                                            <th>SAB.</th>
+                                            <th>TOTAL</th>
+                                            <th>ACTIV.</th>
                                         </tr>
                                     </thead>
                                     <tbody id="empleado">
                                       @foreach ($empleado as $empleados)
                                       <tr>
-                                        <td><img src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class=" mr-2" alt="" />{{$empleados->perso_nombre}}</td>
+                                        <td>{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</td>
                                         <td id="td"></td>
                                       </tr>
                                       @endforeach
@@ -106,6 +107,7 @@
 <!-- datatable js -->
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
 <script src="{{asset('landing/js/tablaReporte.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <script src="{{asset('landing/js/reporteS.js')}}"></script>
