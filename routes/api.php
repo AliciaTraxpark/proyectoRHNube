@@ -30,3 +30,4 @@ Route::post("actividad","apiController@apiActvidad");
 Route::post("logueo","apiController@logueoEmpleado");
 Route::post("editarTarea","apiController@editarApiTarea");
 Route::post("control","apiController@store");
+Route::post("proyecto","apiController@selectProyecto");

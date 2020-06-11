@@ -7,6 +7,7 @@ use App\captura;
 use App\control;
 use App\envio;
 use App\proyecto;
+use App\proyecto_empleado;
 use App\tarea;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -129,9 +130,33 @@ class apiController extends Controller
         $control->hora_ini=$request->get('hora_ini');
         $control->hora_fin=$request->get('hora_fin');
         $control->idEnvio=$idEnvio;
+        if($request->get('Tarea_Tarea_id') != ''){
+            $control->Tarea_Tarea_id=$request->get('Tarea_Tarea_id');
+        }
+        if($request->get('Actividad_Activi_id') != ''){
+            $control->Actividad_Activi_id=$request->get('Actividad_Activi_id');
+        }
         $control->save();
 
         return response()->json($control,200);
 
+    }
+
+    public function selectProyecto(Request $request){
+        $empleado = $request->get('emple_id');
+        $proyecto = $request->get('proye_id');
+
+        $proyecto_empleado = proyecto_empleado::where('Proye_empleado_id',$empleado,'Proyecto_Proye_id',$proyecto)->first();
+
+        if($proyecto_empleado){
+            $datos = DB::table('empleado as e')
+                ->join('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
+                ->join('proyecto as pr','pr.Proye_id','=','pe.Proyecto_Proye_id')
+                ->leftJoin('tarea as t','t.Proyecto_Proye_id','=','pr.Proye_id')
+                ->leftJoin('actividad as ac','a.Tarea_Tarea_id','=','t.Tarea_id')
+                ->select('pr.Proye_Nombre','t.Tarea_Nombre','ac.Activi_Nombre')
+                ->get();
+            return response()->json($datos,200);
+        }
     }
 }
