@@ -66,7 +66,7 @@ function onSelectFechas(){
             };
             var mostrar = $("#myChart");
             var grafico = new Chart(mostrar, {
-                type: 'bar',
+                type: 'horizontalBar',
                 data: chartdata,
                 options: {
                     responsive: true,
