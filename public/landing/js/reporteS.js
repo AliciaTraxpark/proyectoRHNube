@@ -65,10 +65,10 @@ function onSelectFechas(){
             var html_trD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
             for(var i=0; i<data.length; i++){
                 html_tr += '<tr><td>'+ data[i].nombre + ' ' + data[i].apPaterno + ' ' + data[i].apMaterno + '</td>';
+                nombre.push(data[i].nombre.split('')[0]+data[i].apPaterno.split('')[0]+data[i].apMaterno.split('')[0]);
                 var total = data[i].horas.reduce(function(a,b){
                     return sumarHora(a,b);
                 });
-                horas.push(total);
                 for(let j = 0; j < data[i].horas.length; j++){
                     if(data[i].horas[j] == null){
                         html_tr += '<td>No Trabajo</td>';
@@ -77,6 +77,7 @@ function onSelectFechas(){
                     }
                 }
                 html_tr += '<td>'+ total +'</td>';
+                horas.push(total.split(":")[0]);
                 html_tr += '</tr>';
             }
             for(var m = 0; m < data[0].fechaF.length; m++){
@@ -84,7 +85,6 @@ function onSelectFechas(){
                     momentValue.toDate();
                     momentValue.format("ddd");
                     html_trD += '<th>'+momentValue.format("ddd")+'</th>';
-                    nombre.push(momentValue.format("ddd"));
             }
             html_trD += '<th>TOTAL</th></tr>';
             container.append(html_tr);
@@ -113,14 +113,7 @@ function onSelectFechas(){
                             stacked: true
                         }],
                         yAxes: [{
-                            type:       "time",
-                            time:       {
-                                tooltipFormat: 'HH:mm:ss'
-                            },
-                            scaleLabel: {
-                                display:     true,
-                                labelString: 'Date'
-                            }
+                            stacked: true
                         }]
                     }
                 }
