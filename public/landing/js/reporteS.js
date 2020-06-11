@@ -52,7 +52,7 @@ function onSelectFechas(){
                     html_trD += '<th>'+momentValue.format("ddd")+'</th>';
                     nombre.push(momentValue.format("ddd"));
             }
-            html_trD += '</tr>';
+            html_trD += '<th>TOTAL</th></tr>';
             container.append(html_tr);
             containerD.append(html_trD);
 
