@@ -103,12 +103,12 @@
                                             <div class="form-group col-lg-12 row">
                                                 <label class="col-lg-4 col-form-label" for="simpleinput">Miembros de proyecto</label>
                                                 <div class="col-lg-8">
-                                                    <select data-plugin="customselect" id="idempleado" class="form-control" >
-                                                        <option value="0" disabled selected>Selecciona</option>
-                                                       @foreach ($empleado as $empleados)
+                      
+                                                    <select class="form-control wide" data-plugin="customselect" multiple id="idempleado" >
+
+                                                        @foreach ($empleado as $empleados)
                                                         <option class="" value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}} </option>
                                                         @endforeach
-
                                                     </select>
                                                    {{--  <select name="" id="prue" class="sel">
                                                         <option value="0">Selecciona</option>

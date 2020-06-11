@@ -34,10 +34,19 @@ class ProyectoController extends Controller
     }
 
     public function registrarPrEm (Request $request){
-        $proyecto_empleado=new proyecto_empleado();
-        $proyecto_empleado->Proyecto_Proye_id=$request->get('proyecto');
-        $proyecto_empleado->empleado_emple_id=$request->get('empleado');
-        $proyecto_empleado->save();
+
+        $ids=$request->empleado;
+
+        //dd($ids);
+        foreach($ids as $idse){
+            $proyecto_empleado=new proyecto_empleado();
+            $proyecto_empleado->Proyecto_Proye_id=$request->get('proyecto');
+            $proyecto_empleado->empleado_emple_id=$idse;
+            $proyecto_empleado->save();
+
+        }
+
+
     }
 
     public function selectValidar(Request $request)
