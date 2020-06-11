@@ -86,14 +86,20 @@ function agregarProyecto(){
             },
             error:function(){ alert("Hay un error");}
         });
-
+        $('#idempleado').change(function() {
+        var selections = ( JSON.stringify($('#idempleado').select2('data')) );
+        //console.log('Selected IDs: ' + ids);
+        console.log('Selected options: ' + selections);
+        //$('#selectedIDs').text(ids);
+        //$('#selectedText').text(selections);
+        });
     };
 
 function registrarPE(){
 
     var proyecto=$('#id1').val();
     var empleado= $('#idempleado').val();
-
+   
 
     $.ajax({
         type:"POST",
@@ -146,7 +152,7 @@ $(document).ready(function(){
                 },
 
             },
-            
+
 
         });
 });
