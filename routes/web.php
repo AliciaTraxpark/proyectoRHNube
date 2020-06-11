@@ -50,7 +50,7 @@ Route::post('organizacion/store','registroEmpresaController@registrarDatos')->na
 Route::POST('organizacion/create', 'registroEmpresaController@create')->name('registerOrganizacion');
 
 //calendario_usuario
-Route::post('/eventos_usuario/store','EventosUsuarioController@store');
+Route::post('eventos_usuario/store','EventosUsuarioController@store');
 
 
 Route::get('/departamento', function () {
