@@ -10,4 +10,5 @@ class tipo_contrato extends Model
     protected $table = 'tipo_contrato';
     protected $primaryKey = 'contrato_id';
     protected $fillable = ['contrato_id','contrato_descripcion','contrato_fechaI','contrato_fechaF'];
+    public $timestamps =false;
 }
