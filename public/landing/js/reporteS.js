@@ -37,10 +37,14 @@ function onSelectFechas(){
                         html_tr += '<td>No Trabajo</td>';
                     }else{
                         html_tr += '<td>'+ data[i].horas[j] + '</td>';
-                        var sumar = 0;
-                        sumar+= parseInt(data[i].horas[j]);
-                        horas.push(sumar);
-                        console.log(parseInt(data[i].horas[j]));
+                        var sumar = [];
+                        sumar.push(data[i].horas[j]);
+                        var total = moment();
+                        total.format("HH:mm:ss");
+                        total.add(sumar);
+                        total.format("HH:mm:ss")
+                        horas.push(total);
+                        console.log(total);
                     }
                 }
                 html_tr += '</tr>';
