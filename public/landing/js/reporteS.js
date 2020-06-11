@@ -8,6 +8,8 @@ $(function(){
     $("#fecha").on('change',onSelectFechas);
 });
 
+
+
 function onSelectFechas(){
     var fecha = $('#fecha').val();
     $('#empleado').empty();
@@ -35,8 +37,10 @@ function onSelectFechas(){
                         html_tr += '<td>No Trabajo</td>';
                     }else{
                         html_tr += '<td>'+ data[i].horas[j] + '</td>';
-                        horas.push(data[i].horas[j]);
-                        console.log(horas);
+                        var sumar = 0;
+                        sumar+= parseInt(data[i].horas[j]);
+                        horas.push(sumar);
+                        console.log(parseInt(data[i].horas[j]));
                     }
                 }
                 html_tr += '</tr>';
@@ -66,10 +70,18 @@ function onSelectFechas(){
             };
             var mostrar = $("#myChart");
             var grafico = new Chart(mostrar, {
-                type: 'horizontalBar',
+                type: 'bar',
                 data: chartdata,
                 options: {
                     responsive: true,
+                    scales: {
+                        xAxes: [{
+                            stacked: true
+                        }],
+                        yAxes: [{
+                            stacked: true
+                        }]
+                    }
                 }
             });
         },
