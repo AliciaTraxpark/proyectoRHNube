@@ -39,7 +39,7 @@ class ControlController extends Controller
 
     public function EmpleadoReporte(Request $request){
         $fecha = $request->get('fecha');
-        $fechaF = explode("to",$fecha);
+        $fechaF = explode("a",$fecha);
 
         $empleados = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')

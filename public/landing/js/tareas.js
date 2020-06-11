@@ -1,6 +1,7 @@
 //FECHA
 $('#fecha').flatpickr({
-    locale:"es"
+    locale:"es",
+    maxDate: "today"
 });
 //CAPTURAS
 $(function(){

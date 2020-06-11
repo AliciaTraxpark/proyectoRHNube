@@ -1,7 +1,8 @@
 $('#fecha').flatpickr({
     mode: "range",
     inline: false,
-    locale:"es"
+    locale:"es",
+    maxDate: "today"
 });
 $(function(){
     $("#fecha").on('change',onSelectFechas);
