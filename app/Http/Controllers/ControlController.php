@@ -58,7 +58,7 @@ class ControlController extends Controller
             $join->on('en.idEnvio','=','c.idEnvio')
             ->on('en.idEmpleado','=','e.emple_id');
         })
-        ->select('e.emple_id','p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno',DB::raw('MAX(en.Total_Envio) as Total_Envio'),'c.Fecha_fin')
+        ->select('e.emple_id','p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno',DB::raw('MAX(en.Total_Envio) as Total_Envio'),'c.Fecha_fin as fechaF')
         ->where('c.Fecha_fin','<=',$fechaF[1])
         ->where('c.Fecha_fin','>=',$fechaF[0])
         ->groupBy('c.Fecha_fin','e.emple_id')
@@ -67,12 +67,13 @@ class ControlController extends Controller
         $respuesta = [];
         foreach($empleados as $empleado){
             array_push($respuesta,array("id"=>$empleado->emple_id,"nombre"=>$empleado->nombre,"apPaterno"=>$empleado->apPaterno,
-            "apMaterno"=>$empleado->apMaterno,"horas"=>array()));
+            "apMaterno"=>$empleado->apMaterno,"horas"=>array(),"fechaF"=>array()));
         }
         for($i = 0; $i < sizeof($horasTrabajadas); $i++){
             for($j = 0; $j < sizeof($respuesta); $j++){
                 if($respuesta[$j]["id"] == $horasTrabajadas[$i]->emple_id){
                     array_push($respuesta[$j]["horas"], $horasTrabajadas[$i]->Total_Envio);
+                    array_push($respuesta[$j]["fechaF"],$horasTrabajadas[$i]->fechaF);
                 }
             }
         }

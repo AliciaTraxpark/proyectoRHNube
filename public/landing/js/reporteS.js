@@ -11,6 +11,7 @@ $(function(){
 function onSelectFechas(){
     var fecha = $('#fecha').val();
     $('#empleado').empty();
+    $('#dias').empty();
     $.ajax({
         url:"reporte/empleado",
         method: "GET",
@@ -20,7 +21,9 @@ function onSelectFechas(){
         },
         success:function(data){
             var container = $('#empleado');
+            var containerD = $('#dias');
             var html_tr = "";
+            var html_trD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
             console.log(data);
             for(var i=0; i<data.length; i++){
                 html_tr += '<tr><td>'+ data[i].nombre + ' ' + data[i].apPaterno + ' ' + data[i].apMaterno + '</td>';
@@ -33,7 +36,16 @@ function onSelectFechas(){
                 }
                 html_tr += '</tr>';
             }
+            for(var m = 0; m < data[0].fechaF.length; m++){
+                var momentValue = moment(data[0].fechaF[m]);
+                    momentValue.toDate();
+                    momentValue.format("ddd");
+                    html_trD += '<th>'+momentValue.format("ddd")+'</th>';
+                    console.log(momentValue.format("ddd"));
+            }
+            html_trD += '</tr>';
             container.append(html_tr);
+            containerD.append(html_trD);
         },
         error:function(data){
         }

@@ -66,16 +66,16 @@
                                     America-Bogota
                                 </p>
                                 <br>
-                                <table id="tablaReporte" class="table dt-responsive nowrap">
-                                    <thead style="background: #fafafa;text-align: center;">
+                                <table id="tablaReporte" class="table dt-responsive nowrap" style="font-size: 13px!important">
+                                    <thead style="background: #fafafa;" id="dias">
                                         <tr>
-                                            <th><img src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class=" mr-2" alt="" /></th>
+                                            <th><img src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class=" mr-2" alt="" />Miembro</th>
                                             <th>LUN.</th>
                                             <th>MAR.</th>
-                                            <th>MIE.</th>
+                                            <th>MIÉ.</th>
                                             <th>JUE.</th>
                                             <th>VIE.</th>
-                                            <th>SAB.</th>
+                                            <th>SÁB.</th>
                                             <th>TOTAL</th>
                                             <th>ACTIV.</th>
                                         </tr>
@@ -110,6 +110,8 @@
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
 <script src="{{asset('landing/js/tablaReporte.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
+<script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}" ></script>
+<script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}" ></script>
 <script src="{{asset('landing/js/reporteS.js')}}"></script>
 <script>
     const dataSource = {
