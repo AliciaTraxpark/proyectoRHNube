@@ -137,7 +137,8 @@ function calendario() {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
             success:function(msg){
-
+                //var date = calendar1.getDate();
+                //alert("The current date of the calendar is " + date.toISOString());
               $('#myModal').modal('toggle');
               calendar.refetchEvents();
 
@@ -152,9 +153,11 @@ function calendario() {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
                 success:function(data){
-
-
-                  calendario1(data);
+                   var mesAg= $('#fechaDa').val();
+                    var d  =mesAg;
+                    var fechas=new Date(d);
+                 console.log(fechas);
+                  calendario1(data,fechas);
                   $('#calendar1 .fc-Descanso-button').prop('disabled', true);
                   $('#calendar1 .fc-NoLaborales-button').prop('disabled', true);
                   $("#calendar1 .fc-left").on("click",myFuncion1);
@@ -241,7 +244,11 @@ function calendario() {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
                 success:function(data){
-                calendario1(data);
+                    var mesAg= $('#fechaDa2').val();
+                    var d  =mesAg;
+                    var fechas=new Date(d);
+                 console.log(fechas);
+                  calendario1(data,fechas);
                 $('#calendar1 .fc-Descanso-button').prop('disabled', true);
                 $('#calendar1 .fc-NoLaborales-button').prop('disabled', true);
                 $("#calendar1 .fc-left").on("click",myFuncion1);
@@ -326,7 +333,12 @@ $( document ).ready(function() {
              error:function(){ alert("Hay un error");}
              }
          );
-         calendario1(data);
+         var fecha = new Date();
+         var ano = fecha. getFullYear();
+         fechas1=ano+'-01-02';
+         var fechas=new Date(fechas1);
+
+         calendario1(data,fechas);
          $('#calendar1 .fc-Descanso-button').prop('disabled', true);
          $('#calendar1 .fc-NoLaborales-button').prop('disabled', true);
          $("#calendar1 .fc-left").on("click",myFuncion1);
@@ -342,17 +354,18 @@ $( document ).ready(function() {
    );
  });
 
- function calendario1(data) {
+ function calendario1(data,fechas) {
      var calendarEl1 = document.getElementById('calendar1');
      calendarEl1.innerHTML="";
      var fecha = new Date();
      var ano = fecha. getFullYear();
      var id1;
      var data=data;
+     var fechas=fechas;
 
      var configuracionCalendario1 = {
          locale: 'es',
-         defaultDate: ano+'-01-01',
+         defaultDate: fechas,
 
          plugins: [ 'dayGrid','interaction','timeGrid'],
          height: 550,
@@ -375,6 +388,7 @@ $( document ).ready(function() {
          console.log(arg);
        },
        eventClick:function(info){
+
          id1 = info.event.id;
          console.log(info);
          console.log(info.event.id);
@@ -408,9 +422,10 @@ $( document ).ready(function() {
              click:function(){
                  var start=  $('#pruebaStar').val();
                  var end=  $('#pruebaEnd').val();
-
+                 var date1 = calendar1.getDate();
                  $('#start').val(start);
                  $('#end').val(end);
+                 $('#fechaDa').val(date1);
                  $('#myModal').modal('toggle');
              }
            },
@@ -419,8 +434,10 @@ $( document ).ready(function() {
              click:function(){
                  var start=  $('#pruebaStar').val();
                  var end=  $('#pruebaEnd').val();
+                 var date2 = calendar1.getDate();
                  $('#startF').val(start);
                  $('#endF').val(end);
+                 $('#fechaDa2').val(date2);
                  $('#myModalFestivo').modal('toggle');
 
              }

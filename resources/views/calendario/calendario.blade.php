@@ -88,6 +88,7 @@
 
 
                                 <h5>¿Asignar dias de descanso?</h5>
+                                <input type="hidden" id="fechaDa" name="fechaDa">
 
                                         {{-- <label for="start" class="col-sm-4 col-form-label">Fecha Inicial:</label> --}}
 
@@ -130,6 +131,7 @@
                         <div class="modal-body">
 
                                 <h5>¿Asignar dias no laborales?</h5>
+                                <input type="hidden" id="fechaDa2" name="fechaDa2">
 
                                         {{-- <label for="start" class="col-sm-4 col-form-label">Fecha Inicial:</label> --}}
 
@@ -290,7 +292,7 @@
                   <div class="col-md-7" style="left: 10%;max-width: 80%; " id="Datoscalendar">
                       <div class="card">
                           <div class="card-body">
-                             
+
                               <div id="calendar">
 
                               </div>
