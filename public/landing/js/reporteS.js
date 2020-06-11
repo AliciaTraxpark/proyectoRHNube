@@ -47,6 +47,7 @@ function onSelectFechas(){
     var fecha = $('#fecha').val();
     $('#empleado').empty();
     $('#dias').empty();
+    $('#myChart').show();
     $.ajax({
         url:"reporte/empleado",
         method: "GET",
@@ -63,65 +64,78 @@ function onSelectFechas(){
             var borderColor = ['rgb(185,204,237)'];
             var html_tr = "";
             var html_trD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
-            for(var i=0; i<data.length; i++){
-                html_tr += '<tr><td>'+ data[i].nombre + ' ' + data[i].apPaterno + ' ' + data[i].apMaterno + '</td>';
-                nombre.push(data[i].nombre.split('')[0]+data[i].apPaterno.split('')[0]+data[i].apMaterno.split('')[0]);
-                var total = data[i].horas.reduce(function(a,b){
-                    return sumarHora(a,b);
-                });
-                if(total != null){
-                    horas.push(total.split(":")[0]);
-                }
-                for(let j = 0; j < data[i].horas.length; j++){
-                    if(data[i].horas[j] == null){
+
+            console.log(data[0].fechaF.length);
+            if(data[0].fechaF.length == 0){
+                $('#tablaReporte').html(tablaDefecto);
+            }else{
+
+                for(var i=0; i<data.length; i++){
+                    html_tr += '<tr><td>'+ data[i].nombre + ' ' + data[i].apPaterno + ' ' + data[i].apMaterno + '</td>';
+                    nombre.push(data[i].nombre.split('')[0]+data[i].apPaterno.split('')[0]+data[i].apMaterno.split('')[0]);
+                    var total = data[i].horas.reduce(function(a,b){
+                        return sumarHora(a,b);
+                    });
+                    for(let j = 0; j < data[i].horas.length; j++){
+                        if(data[i].horas[j] == null){
+                            html_tr += '<td>00:00:00</td>';
+                        }else{
+                            html_tr += '<td>'+ data[i].horas[j] + '</td>';
+                        }
+                    }
+                    if(total == null){
                         html_tr += '<td>00:00:00</td>';
                     }else{
-                        html_tr += '<td>'+ data[i].horas[j] + '</td>';
+                        html_tr += '<td>'+ total +'</td>';
+                        horas.push(total.split(":")[0]);
                     }
+                    html_tr += '</tr>';
                 }
-                html_tr += '<td>'+ total +'</td>';
-                html_tr += '</tr>';
-            }
-            for(var m = 0; m < data[0].fechaF.length; m++){
-                var momentValue = moment(data[0].fechaF[m]);
-                    momentValue.toDate();
-                    momentValue.format("ddd");
-                    html_trD += '<th>'+momentValue.format("ddd")+'</th>';
-            }
-            html_trD += '<th>TOTAL</th></tr>';
-            container.append(html_tr);
-            containerD.append(html_trD);
+                for(var m = 0; m < data[0].fechaF.length; m++){
+                    var momentValue = moment(data[0].fechaF[m]);
+                        momentValue.toDate();
+                        momentValue.format("ddd");
+                        html_trD += '<th>'+momentValue.format("ddd")+'</th>';
+                }
+                html_trD += '<th>TOTAL</th></tr>';
+                container.append(html_tr);
+                containerD.append(html_trD);
 
-            var chartdata = {
-                labels: nombre,
-                datasets: [{
-                    label: nombre,
-                    backgroundColor: color,
-                    borderColor: color,
-                    borderWidth: 2,
-                    hoverBackgroundColor: color,
-                    hoverBorderColor: borderColor,
-                    data:horas
-                }]
-            };
-            var mostrar = $("#myChart");
-            var grafico = new Chart(mostrar, {
-                type: 'bar',
-                data: chartdata,
-                options: {
-                    responsive: true,
-                    scales: {
-                        xAxes: [{
-                            stacked: true
-                        }],
-                        yAxes: [{
-                            stacked: true
-                        }]
+                var chartdata = {
+                    labels: nombre,
+                    datasets: [{
+                        label: nombre,
+                        backgroundColor: color,
+                        borderColor: color,
+                        borderWidth: 2,
+                        hoverBackgroundColor: color,
+                        hoverBorderColor: borderColor,
+                        data:horas
+                    }]
+                };
+                var mostrar = $("#myChart");
+                var grafico = new Chart(mostrar, {
+                    type: 'bar',
+                    data: chartdata,
+                    options: {
+                        responsive: true,
+                        scales: {
+                            xAxes: [{
+                                stacked: true
+                            }],
+                            yAxes: [{
+                                stacked: true
+                            }]
+                        }
                     }
-                }
-            });
+                });
+                $('#myChartD').hide();
+            }
         },
         error:function(data){
+            $('#tablaReporte').html(tablaDefecto);
+            $('#myChart').hide();
+            $('#myChartD').show();
         }
     })
 }

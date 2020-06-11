@@ -50,6 +50,7 @@
                         <!-- Portlet card -->
                         <div class="card">
                             <div class="card-body">
+                                <canvas id="myChartD" height="35vh" width="85vw"></canvas>
                               <canvas id="myChart" height="35vh" width="85vw"></canvas>
                             </div> <!-- end card-body -->
                         </div> <!-- end card-->
@@ -113,4 +114,27 @@
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}" ></script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}" ></script>
 <script src="{{asset('landing/js/reporteS.js')}}"></script>
+<script>
+    var tablaDefecto = $('#tablaReporte').html();
+
+    var ctx = $('#myChartD');
+    var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
+
+    // The data for our dataset
+    data: {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [{
+        }]
+    },
+
+    // Configuration options go here
+    options: {
+        legend:{
+            display:false
+        }
+    }
+});
+</script>
 @endsection
