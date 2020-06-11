@@ -99,7 +99,7 @@ function onSelectFechas(){
                     borderWidth: 2,
                     hoverBackgroundColor: color,
                     hoverBorderColor: borderColor,
-                    data:total
+                    data:horas
                 }]
             };
             var mostrar = $("#myChart");
@@ -113,7 +113,14 @@ function onSelectFechas(){
                             stacked: true
                         }],
                         yAxes: [{
-                            stacked: true
+                            type:       "time",
+                            time:       {
+                                tooltipFormat: 'HH:mm:ss'
+                            },
+                            scaleLabel: {
+                                display:     true,
+                                labelString: 'Date'
+                            }
                         }]
                     }
                 }
