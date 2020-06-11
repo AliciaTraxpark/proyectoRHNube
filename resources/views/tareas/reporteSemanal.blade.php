@@ -50,7 +50,7 @@
                         <!-- Portlet card -->
                         <div class="card">
                             <div class="card-body">
-                                <div id="chart-container"  dir="ltr"></div>
+                              <canvas id="myChart" height="35vh" width="85vw"></canvas>
                             </div> <!-- end card-body -->
                         </div> <!-- end card-->
                     </div> <!-- end col-->
