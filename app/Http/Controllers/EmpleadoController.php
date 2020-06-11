@@ -180,8 +180,9 @@ class EmpleadoController extends Controller
                 $actividad->Tarea_Tarea_id=$Tarea_Tarea_id;
                 $actividad->empleado_emple_id=$request['emple_id'];
                 $actividad->save();
+                return response()->json([$tarea,$actividad],200);
             }
-            return response()->json($proyecto,200);
+            return response()->json($tarea,200);
         }
 
         return response()->json($proyecto,400);

@@ -26,8 +26,8 @@ function onSelectFechas(){
             var containerD = $('#dias');
             var nombre =[];
             var horas=[];
-            var color = ['rgb(255, 99, 132)'];
-            var borderColor = ['rgb(255, 99, 132)'];
+            var color = ['rgb(160, 173, 211)'];
+            var borderColor = ['rgb(160, 173, 211)'];
             var html_tr = "";
             var html_trD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
             for(var i=0; i<data.length; i++){
