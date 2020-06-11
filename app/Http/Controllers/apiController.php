@@ -144,19 +144,23 @@ class apiController extends Controller
 
     public function selectProyecto(Request $request){
         $empleado = $request->get('emple_id');
-        $proyecto = $request->get('proye_id');
+        $proyecto = $request->get('Proye_id');
 
-        $proyecto_empleado = proyecto_empleado::where('Proye_empleado_id',$empleado,'Proyecto_Proye_id',$proyecto)->first();
+        $proyecto_empleado = proyecto_empleado::where('Proye_empleado_id',$empleado)->where('Proyecto_Proye_id',$proyecto)->first();
 
         if($proyecto_empleado){
             $datos = DB::table('empleado as e')
                 ->join('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
                 ->join('proyecto as pr','pr.Proye_id','=','pe.Proyecto_Proye_id')
                 ->leftJoin('tarea as t','t.Proyecto_Proye_id','=','pr.Proye_id')
-                ->leftJoin('actividad as ac','a.Tarea_Tarea_id','=','t.Tarea_id')
+                ->leftJoin('actividad as ac','ac.Tarea_Tarea_id','=','t.Tarea_id')
                 ->select('pr.Proye_Nombre','t.Tarea_Nombre','ac.Activi_Nombre')
+                ->where('e.emple_id','=',$empleado)
+                ->where('pr.Proye_id','=',$proyecto)
+                ->groupBy('t.Tarea_id')
                 ->get();
             return response()->json($datos,200);
         }
+        return response()->json(null,400);
     }
 }
