@@ -115,6 +115,11 @@
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}" ></script>
 <script src="{{asset('landing/js/reporteS.js')}}"></script>
 <script>
+    var empleadosDefecto = @json($empleado);
+    empleadosDefecto = empleadosDefecto.map(function(empleado){
+        return empleado.perso_nombre.charAt(0) + empleado.perso_apPaterno.charAt(0) + empleado.perso_apMaterno.charAt(0)
+    });
+    console.log(empleadosDefecto);
     var tablaDefecto = $('#tablaReporte').html();
 
     var ctx = $('#myChartD');
@@ -124,7 +129,7 @@
 
     // The data for our dataset
     data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: empleadosDefecto ,
         datasets: [{
         }]
     },
