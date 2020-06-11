@@ -41,7 +41,8 @@ class apiController extends Controller
             $empleado = DB::table('empleado as e')
             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->leftJoin('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
-            ->select('e.emple_id',DB::raw('CONCAT(p.perso_nombre ," ", p.perso_apPaterno, " ", p.perso_apMaterno) AS nombre'),'pe.proye_empleado_id','e.emple_estado')
+            ->leftJoin('proyecto as pr','pr.Proye_id','=','pe.Proyecto_Proye_id')
+            ->select('e.emple_id',DB::raw('CONCAT(p.perso_nombre ," ", p.perso_apPaterno, " ", p.perso_apMaterno) AS nombre'),'pr.Proye_id','e.emple_estado')
             ->where('e.emple_nDoc','=',$request->get('emple_nDoc'))
             ->get();
             $factory = JWTFactory::customClaims([
