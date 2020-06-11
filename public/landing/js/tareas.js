@@ -1,5 +1,8 @@
 //FECHA
-$('#fecha').flatpickr();
+$('#fecha').flatpickr({
+    locale:"es",
+    maxDate: "today"
+});
 //CAPTURAS
 $(function(){
     $('#empleado').on('change',onMostrarPantallas);

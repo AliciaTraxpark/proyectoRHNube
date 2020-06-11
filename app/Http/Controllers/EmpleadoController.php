@@ -150,7 +150,7 @@ class EmpleadoController extends Controller
             $empleado = DB::table('empleado as e')
             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->leftJoin('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
-            ->select('e.emple_id','p.perso_nombre','pe.proye_empleado_id')
+            ->select('e.emple_id',DB::raw('CONCAT(p.perso_nombre ," ", p.perso_apPaterno, " ", p.perso_apMaterno) AS nombre'),'pe.proye_empleado_id','e.emple_estado')
             ->where('e.emple_nDoc','=',$request->get('emple_nDoc'))
             ->get();
             $factory = JWTFactory::customClaims([
@@ -180,8 +180,9 @@ class EmpleadoController extends Controller
                 $actividad->Tarea_Tarea_id=$Tarea_Tarea_id;
                 $actividad->empleado_emple_id=$request['emple_id'];
                 $actividad->save();
+                return response()->json([$tarea,$actividad],200);
             }
-            return response()->json($proyecto,200);
+            return response()->json($tarea,200);
         }
 
         return response()->json($proyecto,400);

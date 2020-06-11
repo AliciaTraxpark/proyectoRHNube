@@ -2,10 +2,9 @@
 
 @section('css')
 <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
-<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/chart/Chart.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('breadcrumb')
@@ -51,7 +50,7 @@
                         <!-- Portlet card -->
                         <div class="card">
                             <div class="card-body">
-                                <div id="chart-container"  dir="ltr"></div>
+                              <canvas id="myChart" height="35vh" width="85vw"></canvas>
                             </div> <!-- end card-body -->
                         </div> <!-- end card-->
                     </div> <!-- end col-->
@@ -65,24 +64,25 @@
                                 <p class="sub-header" style="margin-bottom: 0px">
                                     America-Bogota
                                 </p>
-                                <table id="tablaReporte" class="table dt-responsive nowrap">
-                                    <thead style="background: #fafafa;">
+                                <br>
+                                <table id="tablaReporte" class="table dt-responsive nowrap" style="font-size: 13px!important">
+                                    <thead style="background: #fafafa;" id="dias">
                                         <tr>
-                                            <th>Empleado</th>
-                                            <th>Lunes</th>
-                                            <th>Martes</th>
-                                            <th>Miercoles</th>
-                                            <th>Jueves</th>
-                                            <th>Viernes</th>
-                                            <th>Sabado</th>
-                                            <th>Total Semanal</th>
-                                            <th>Actividad</th>
+                                            <th><img src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class=" mr-2" alt="" />Miembro</th>
+                                            <th>LUN.</th>
+                                            <th>MAR.</th>
+                                            <th>MIÉ.</th>
+                                            <th>JUE.</th>
+                                            <th>VIE.</th>
+                                            <th>SÁB.</th>
+                                            <th>TOTAL</th>
+                                            <th>ACTIV.</th>
                                         </tr>
                                     </thead>
                                     <tbody id="empleado">
                                       @foreach ($empleado as $empleados)
                                       <tr>
-                                        <td><img src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class=" mr-2" alt="" />{{$empleados->perso_nombre}}</td>
+                                        <td>{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</td>
                                         <td id="td"></td>
                                       </tr>
                                       @endforeach
@@ -106,92 +106,11 @@
 <!-- datatable js -->
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/chart/Chart.min.js') }}"></script>
 <script src="{{asset('landing/js/tablaReporte.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
+<script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}" ></script>
+<script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}" ></script>
 <script src="{{asset('landing/js/reporteS.js')}}"></script>
-<script>
-    const dataSource = {
-  chart: {
-    caption: "Horas trabajadas por Miembro",
-    theme: "fusion"
-  },
-  data: [
-    {
-      label: "Venezuela",
-      value: "290"
-    },
-    {
-      label: "Saudi",
-      value: "260"
-    },
-    {
-      label: "Canada",
-      value: "230"
-    },
-    {
-      label: "Iran",
-      value: "200"
-    },
-    {
-      label: "Russia",
-      value: "170"
-    },
-    {
-      label: "UAE",
-      value: "140"
-    },
-    {
-      label: "US",
-      value: "110"
-    },
-    {
-      label: "China",
-      value: "80"
-    },
-    {
-      label: "Venezuela",
-      value: "90"
-    },
-    {
-      label: "Saudi",
-      value: "60"
-    },
-    {
-      label: "Canada",
-      value: "80"
-    },
-    {
-      label: "Iran",
-      value: "140"
-    },
-    {
-      label: "Russia",
-      value: "115"
-    },
-    {
-      label: "UAE",
-      value: "100"
-    },
-    {
-      label: "US",
-      value: "30"
-    },
-    {
-      label: "China",
-      value: "30"
-    }
-  ]
-};
-
-FusionCharts.ready(function() {
-  var myChart = new FusionCharts({
-    type: "column2d",
-    renderAt: "chart-container",
-    width: "100%",
-    height: "450%",
-    dataFormat: "json",
-    dataSource
-  }).render();
-});
-</script>
 @endsection
