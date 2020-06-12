@@ -22,6 +22,7 @@ function onMostrarPantallas(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success:function(data){
+           if(data.length != 0){
             var container = $('#card');
             var horaDelGrupo = parseInt(data[0].hora_ini.split(":")[0]);
             var labelDelGrupo = horaDelGrupo+":00:00" + " - " + (horaDelGrupo+1) + ":00:00";
@@ -96,6 +97,9 @@ function onMostrarPantallas(){
                 var labelDelGrupo = horaDelGrupo + ":00:00" + " - "  + (horaDelGrupo+1) + ":00:00";
                 grupo = `<span style="font-weight: bold;color:#507394;">${labelDelGrupo}</span><br><br><div class="row">`;
             }
+           }else{
+            $.notify("Falta elegir campos o No se encontrado capturas.", {align:"right", verticalAlign:"top",type: "warning", icon:"warning"});
+           }
         },
         error:function(data){
             alert("Hay un error");
