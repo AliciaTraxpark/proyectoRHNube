@@ -31,30 +31,52 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
     */
     public function collection(Collection $rows)
     {
+        function escape_like(string $value, string $char = '\\')
+        {
+            return str_replace(
+                [$char, '%', '_'],
+                [$char.$char, $char.'%', $char.'_'],
+                $value
+            );
+        }
         foreach ($rows as $row)
         {
             if($row['numero_documento']!= ""){
 
                 //tipo_doc
-                $tipoDoc = tipo_documento::where("tipoDoc_descripcion", "like", "%".$row['tipo_documento']."%")->first();
+                $tipoDoc = tipo_documento::where("tipoDoc_descripcion", "like", "%". escape_like($row['tipo_documento'])."%")->first();
                 if($row['tipo_documento']!=null){
                     $row['tipo_doc'] =  $tipoDoc->tipoDoc_id; } else{ $row['tipo_doc']=null; }
 
                 //departamento
-                $dep = ubigeo_peru_departments::where("name", "like", "%".$row['departamento']."%")->first();
+                $cadDep=$row['departamento'];
+                if(strlen($cadDep)>3){
+                   $cadDep = substr ($cadDep, 0, -1);
+                }
+               ;
                 if($row['departamento']!=null){
+                    $dep = ubigeo_peru_departments::where('name', 'like', "%".escape_like($cadDep)."%")->first();
                     $row['iddep'] = $dep->id; } else{ $row['iddep']=null; }
 
 
                 //provincia
-                $provi = ubigeo_peru_provinces::where("name", "like", "%".$row['provincia']."%")->first();
+                $cadProv=$row['provincia'];
+                if(strlen($cadProv)>3){
+                    $cadProv = substr ($cadProv, 0, -1);
+                }
                 if($row['provincia']!=null){
+                    $provi = ubigeo_peru_provinces::where("name", "like", "%".escape_like($cadProv)."%")->first();
                     $row['idprov'] = $provi->id; } else{ $row['idprov']=null; }
 
 
                //distrito
-                $idD = ubigeo_peru_districts::where("name", "like", "%".$row['distrito']."%")->where("province_id", "=",$provi->id)->first();
+               $cadDist=$row['distrito'];
+                if(strlen($cadDist)>3){
+                    $cadDist = substr ($cadDist, 0, -1);
+                }
+
                 if($row['distrito']!=null){
+                    $idD = ubigeo_peru_districts::where("name", "like", "%".escape_like($cadDist)."%")->where("province_id", "=",$provi->id)->first();
                 $row['id'] = $idD->id;} else{$row['id'] = null; }
 
                 //cargo
@@ -97,18 +119,31 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                 } else{ $row['idcentro_costo']=null; }
 
                 //departamentoNac
-                $depN = ubigeo_peru_departments::where("name", "like", "%".$row['departamento_nacimiento']."%")->first();
+                $cadDepN=$row['departamento_nacimiento'];
+                if(strlen($cadDepN)>3){
+                    $cadDepN = substr ($cadDepN, 0, -1);
+                }
+
                 if($row['departamento_nacimiento']!=null){
+                $depN = ubigeo_peru_departments::where("name", "like", "%".escape_like($cadDepN)."%")->first();
                 $row['iddepartamento_nacimiento'] = $depN->id; } else{ $row['iddepartamento_nacimiento']=null; }
 
                 //provinciaNac
-                $proviN = ubigeo_peru_provinces::where("name", "like", "%".$row['provincia_nacimiento']."%")->first();
+                $cadProvN=$row['provincia_nacimiento'];
+                if(strlen($cadProvN)>3){
+                    $cadProvN = substr ($cadProvN, 0, -1);
+                }
                 if($row['provincia_nacimiento']!=null){
+                $proviN = ubigeo_peru_provinces::where("name", "like", "%".escape_like($cadProvN)."%")->first();
                 $row['idprovincia_nacimiento'] = $proviN->id; } else{ $row['idprovincia_nacimiento']=null; }
 
                //distritoNac
-                $idDN = ubigeo_peru_districts::where("name", "like", "%".$row['distrito_nacimiento']."%")->where("province_id", "=",$proviN->id)->first();
+               $cadDistN=$row['distrito_nacimiento'];
+               if(strlen($cadDistN)>3){
+                   $cadDistN = substr ($cadDistN, 0, -1);
+               }
                 if($row['distrito_nacimiento']!=null){
+                $idDN = ubigeo_peru_districts::where("name", "like", "%".escape_like($cadDistN)."%")->where("province_id", "=",$proviN->id)->first();
                 $row['iddistrito_nacimiento'] = $idDN->id;} else{$row['distrito_nacimiento'] = null; }
 
                 //tipo_contrato
