@@ -147,7 +147,10 @@ class apiController extends Controller
         $empleado = $request->get('emple_id');
         $proyecto = $request->get('Proye_id');
 
-        $proyecto_empleado = proyecto_empleado::where('Proye_empleado_id',$empleado)->where('Proyecto_Proye_id',$proyecto)->first();
+        $proyecto_empleado = DB::table('proyecto_empleado as pe')
+            ->where('Proye_empleado_id',$empleado)
+            ->where('Proyecto_Proye_id',$proyecto)
+            ->get();
 
         if($proyecto_empleado){
             $datos = DB::table('empleado as e')

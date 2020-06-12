@@ -43,7 +43,7 @@
                         </div>
                         <div class="col-md-4 text-right">
                             <div class="input-group col-md-12 text-right">
-                                <input type="date" name="date" class="form-control" id="fecha" style="min-width: 190px;" />
+                                <input type="text" name="date" class="form-control" id="fecha" style="min-width: 190px;" />
                                 <div class="input-group-prepend">
                                   <div class="input-group-text form-control "><i class="uil uil-calender"></i></div>
                               </div>
