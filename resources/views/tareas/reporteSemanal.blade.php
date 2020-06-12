@@ -1,10 +1,16 @@
 @extends('layouts.vertical')
 
 @section('css')
+<link rel="shortcut icon" href="{{asset('admin/assets/images/favicon.ico')}}">
+<link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.css') }}" rel="stylesheet" />
 <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/chart/Chart.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css') }}" rel="stylesheet" />
 @endsection
 
 @section('breadcrumb')
@@ -37,7 +43,7 @@
                         </div>
                         <div class="col-md-4 text-right">
                             <div class="input-group col-md-12 text-right">
-                                <input type="date" name="date" class="form-control" id="fecha" style="min-width: 190px;" />
+                                <input type="text" name="date" class="form-control" id="fecha" style="min-width: 190px;" />
                                 <div class="input-group-prepend">
                                   <div class="input-group-text form-control "><i class="uil uil-calender"></i></div>
                               </div>
@@ -50,6 +56,7 @@
                         <!-- Portlet card -->
                         <div class="card">
                             <div class="card-body">
+                                <canvas id="myChartD" height="35vh" width="85vw"></canvas>
                               <canvas id="myChart" height="35vh" width="85vw"></canvas>
                             </div> <!-- end card-body -->
                         </div> <!-- end card-->
@@ -99,6 +106,7 @@
 <!-- end row -->
 @endsection
 @section('script')
+<script src="{{ URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
 <!-- Vendor js -->
 <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script>
 <!-- App js -->
@@ -109,8 +117,39 @@
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/chart/Chart.min.js') }}"></script>
 <script src="{{asset('landing/js/tablaReporte.js')}}"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}" ></script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}" ></script>
 <script src="{{asset('landing/js/reporteS.js')}}"></script>
+<script>
+    var empleadosDefecto = @json($empleado);
+    empleadosDefecto = empleadosDefecto.map(function(empleado){
+        return empleado.perso_nombre.charAt(0) + empleado.perso_apPaterno.charAt(0) + empleado.perso_apMaterno.charAt(0)
+    });
+    console.log(empleadosDefecto);
+    var tablaDefecto = $('#tablaReporte').html();
+
+    var ctx = $('#myChartD');
+    var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
+
+    // The data for our dataset
+    data: {
+        labels: empleadosDefecto ,
+        datasets: [{
+        }]
+    },
+
+    // Configuration options go here
+    options: {
+        legend:{
+            display:false
+        }
+    }
+});
+</script>
 @endsection

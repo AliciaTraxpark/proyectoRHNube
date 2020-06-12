@@ -26,8 +26,8 @@ class ControlController extends Controller
         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
         ->join('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
         ->join('proyecto as pr','pr.Proye_id','=','pe.Proyecto_Proye_id')
-        ->join('control as c','c.Proyecto_Proye_id','=','pr.Proye_id')
-        ->join('envio as en',function($join){
+        ->leftJoin('control as c','c.Proyecto_Proye_id','=','pr.Proye_id')
+        ->leftJoin('envio as en',function($join){
             $join->on('en.idEnvio','=','c.idEnvio')
             ->on('en.idEmpleado','=','e.emple_id');
         })
