@@ -76,22 +76,22 @@ function onSelectFechas(){
                         var total = data[i].horas.reduce(function(a,b){
                             return sumarHora(a,b);
                         });
-                    }
-                    for(let j = 0; j < data[i].horas.length; j++){
-                        if(data[i].horas[j] == null){
+                        for(let j = 0; j < data[i].horas.length; j++){
+                            if(data[i].horas[j] == null){
+                                html_tr += '<td>00:00:00</td>';
+                            }else{
+                                html_tr += '<td>'+ data[i].horas[j] + '</td>';
+                                console.log(data[i].horas[j]);
+                            }
+                        }
+                        if(total == null){
                             html_tr += '<td>00:00:00</td>';
                         }else{
-                            html_tr += '<td>'+ data[i].horas[j] + '</td>';
-                            console.log(data[i].horas[j]);
+                            html_tr += '<td>'+ total +'</td>';
+                            horas.push(total.split(":")[0]);
                         }
+                        html_tr += '</tr>';
                     }
-                    if(total == null){
-                        html_tr += '<td>00:00:00</td>';
-                    }else{
-                        html_tr += '<td>'+ total +'</td>';
-                        horas.push(total.split(":")[0]);
-                    }
-                    html_tr += '</tr>';
                 }
                 for(var m = 0; m < data[0].fechaF.length; m++){
                     var momentValue = moment(data[0].fechaF[m]);
