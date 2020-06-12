@@ -136,6 +136,7 @@ function onSelectFechas(){
             $('#tablaReporte').html(tablaDefecto);
             $('#myChart').hide();
             $('#myChartD').show();
+            $.notify("No se encontraron datos.", {align:"right", verticalAlign:"top",type: "warning", icon:"warning"});
         }
     })
 }
