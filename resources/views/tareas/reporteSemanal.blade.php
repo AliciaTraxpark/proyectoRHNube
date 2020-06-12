@@ -69,7 +69,7 @@
                                     America-Bogota
                                 </p>
                                 <br>
-                                <table id="tablaReporte" class="table nowrap" style="font-size: 13px!important;">
+                                <table id="Reporte" class="table nowrap" style="font-size: 13px!important;">
                                     <thead style="background: #fafafa;" id="dias">
                                         <tr>
                                             <th><img src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class=" mr-2" alt="" />Miembro</th>
@@ -127,7 +127,7 @@
         return empleado.perso_nombre.charAt(0) + empleado.perso_apPaterno.charAt(0) + empleado.perso_apMaterno.charAt(0)
     });
     console.log(empleadosDefecto);
-    var tablaDefecto = $('#tablaReporte').html();
+    var tablaDefecto = $('#Reporte').html();
 
     var ctx = $('#myChartD');
     var chart = new Chart(ctx, {

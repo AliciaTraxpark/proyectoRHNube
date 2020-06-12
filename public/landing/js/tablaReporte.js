@@ -1,8 +1,7 @@
-$(document).ready(function(){
-    $("#tablaReporte").DataTable({
+    $("#Reporte").DataTable({
               "searching": true,
-            responsive: true,
-            retrieve: true,
+              "scrollX": true,
+                retrieve: true,
 
             language :
             {
@@ -42,4 +41,3 @@ $(document).ready(function(){
                 autoFilter: true
             }]
         });
-});
