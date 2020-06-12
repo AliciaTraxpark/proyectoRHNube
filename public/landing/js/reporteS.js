@@ -76,6 +76,7 @@ function onSelectFechas(){
                         var total = data[i].horas.reduce(function(a,b){
                             return sumarHora(a,b);
                         });
+                    }
                         for(let j = 0; j < data[i].horas.length; j++){
                             if(data[i].horas[j] == null){
                                 html_tr += '<td>00:00:00</td>';
@@ -92,12 +93,11 @@ function onSelectFechas(){
                         }
                         html_tr += '</tr>';
                     }
-                }
                 for(var m = 0; m < data[0].fechaF.length; m++){
                     var momentValue = moment(data[0].fechaF[m]);
                         momentValue.toDate();
-                        momentValue.format("ddd");
-                        html_trD += '<th>'+momentValue.format("ddd")+'</th>';
+                        momentValue.format("ddd DD/MM");
+                        html_trD += '<th>'+momentValue.format("ddd DD/MM")+'</th>';
                 }
                 html_trD += '<th>TOTAL</th></tr>';
                 container.append(html_tr);

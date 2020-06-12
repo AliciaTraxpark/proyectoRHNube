@@ -32,7 +32,7 @@ class ControlController extends Controller
             ->on('en.idEmpleado','=','e.emple_id');
         })
         ->select('e.emple_id','p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','en.Total_Envio','c.Fecha_fin')
-        ->groupBy('en.idEmpleado')
+        ->groupBy('e.emple_id')
         ->get();
         return view('tareas.reporteSemanal',['empleado'=>$empleado]);
     }
