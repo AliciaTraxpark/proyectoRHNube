@@ -11,6 +11,16 @@
   <link rel="stylesheet" href="{{asset('landing/vendors/mdi/css/materialdesignicons.min.css')}}">
   <link rel="stylesheet" href="{{asset('landing/vendors/aos/css/aos.css')}}">
   <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-169261172-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-169261172-1');
+</script>
+
 </head>
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
 
