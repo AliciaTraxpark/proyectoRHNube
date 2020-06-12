@@ -18,6 +18,11 @@
     <link href="{{asset('admin/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
+     <!-- Plugin css  CALENDAR-->
+    <link href="{{asset('admin/packages/core/main.css')}}" rel="stylesheet" />
+    <link href="{{asset('admin/packages/daygrid/main.css')}}" rel="stylesheet" />
+    <link href="{{asset('admin/packages/timegrid/main.css')}}" rel="stylesheet" />
+
     <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
@@ -27,7 +32,9 @@
 </head>
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100" style="background-color: #fdfdfd;">
 <style>
-
+.fc-toolbar.fc-header-toolbar{
+    zoom:80%;
+}
 
     .container{
         margin-left: 40px;
@@ -36,9 +43,7 @@
     .fc-time{
         display: none;
     }
-    .v-divider{
-    border-right:5px solid #4C5D73;
-    }
+
     .table th, .table td{
         padding: 0.55rem;
 
@@ -52,10 +57,7 @@
     .sw-theme-default > ul.step-anchor > li.done > a, .sw-theme-default > ul.step-anchor > li > a {
         color: #0b1b29!important;
     }
-    .combodate{
-        display: flex;
-        justify-content: space-between;
-    }
+
     .day{
         max-width: 25%;
     }
@@ -72,9 +74,7 @@
     .btn-secondary{
         max-width: 9em;
     }
-    .form-control:disabled{
-        background-color: #fcfcfc;
-    }
+
     body{
         background-color: #f8f8f8;
     }
@@ -129,7 +129,7 @@
                         </div> <!-- end card body-->
                     </div> <!-- end card -->
                     <div id="asignarHorario" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-                        <div class="modal-dialog  modal-lg">
+                        <div class="modal-dialog  modal-xl">
                         <div class="modal-content">
                            <div class="modal-header" style="background-color:#163552;">
                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Asignar horario</h5>
@@ -138,42 +138,73 @@
                                </button>
                            </div>
                            <div class="modal-body">
-                             <div class="row">
-                                 <div class="col-md-4">
-                                    <div class="form-check">
-                                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                      <label class="form-check-label" for="exampleCheck1">Aplicar sobretiempo</label>
-                                    </div>
-                                 </div>
-                                 <div class="col-md-4">
-                                   <div class="form-group">
-                                      <label for="">Tipo de horario</label>
-                                      <select class="form-control custom-select custom-select-sm">
-                                        <option>Normal</option>
-                                        <option>Guardía</option>
-                                        <option>Nocturno</option>
-                                      </select>
+                               <div class="row">
+
+                                   <div class="col-md-6">
+                                       <div class="row">
+                                        <div class="col-md-12">
+                                            <br>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                               <label for="">Empleado(s):</label>
+                                               <input type="text" class="form-control form-control-sm" id="">
+                                            </div>
+                                         </div>
+                                        <div class="col-md-6"><label for=""><br></label>
+                                            <div class="form-check">
+
+                                              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                              <label class="form-check-label" for="exampleCheck1">Aplicar sobretiempo</label>
+                                            </div>
+                                         </div>
+                                         <div class="col-md-6">
+                                           <div class="form-group">
+                                              <label for="">Tipo de horario:</label>
+                                              <select class="form-control custom-select custom-select-sm">
+                                                <option>Normal</option>
+                                                <option>Guardía</option>
+                                                <option>Nocturno</option>
+                                              </select>
+                                           </div>
+                                         </div>
+                                         <div class="col-md-6">
+                                            <div class="form-group">
+                                               <label for="">Descripcion:</label>
+                                               <input type="text" class="form-control form-control-sm" id="">
+                                            </div>
+                                         </div>
+                                         <div class="col-md-6">
+                                            <div class="form-group">
+                                               <label for="">Hora de inicio:</label>
+                                               <input type="text" id="horaI" class="form-control form-control-sm">
+                                            </div>
+                                         </div>
+                                         <div class="col-md-6">
+                                            <div class="form-group">
+                                               <label for="">Hora de fin:</label>
+                                               <input type="text" id="horaF" class="form-control form-control-sm">
+                                            </div>
+                                         </div>
+                                         <div class="col-md-6">
+                                            <div class="form-group">
+                                               <label for="">Tolerancia(Min):</label>
+                                               <input type="number"  class="form-control form-control-sm">
+                                            </div>
+                                         </div>
+                                       </div>
                                    </div>
-                                 </div>
-                                 <div class="col-md-4">
-                                    <div class="form-group">
-                                       <label for="">Descripcion</label>
-                                       <input type="text" class="form-control form-control-sm" id="">
+
+
+                                    <div class="col-md-6 text-right" style=" max-width: 48%;">
+                                                <div id="calendar">
+
+                                                </div>
+
                                     </div>
-                                 </div>
-                                 <div class="col-md-4">
-                                    <div class="form-group">
-                                       <label for="">Hora de inicio</label>
-                                       <input type="text" id="horaI" class="form-control form-control-sm">
-                                    </div>
-                                 </div>
-                                 <div class="col-md-4">
-                                    <div class="form-group">
-                                       <label for="">Hora de fin</label>
-                                       <input type="text" id="horaF" class="form-control form-control-sm">
-                                    </div>
-                                 </div>
-                             </div>
+
+                               </div>
+
                            </div>
                            <div class="modal-footer">
                                <div class="col-md-12">
@@ -204,13 +235,24 @@
     <script src="{{asset('admin/assets/js/app.min.js')}}"></script>
     <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
+    <script src="{{asset('admin/assets/libs/smartwizard/jquery.smartWizard.min.js') }}"></script>
+    <script src="{{asset('admin/assets/js/pages/form-wizard.init.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
     <script src="{{asset('landing/js/tabla.js')}}"></script>
     <script src="{{asset('landing/js/horario.js')}}"></script>
     <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
-    <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+    <script src="{{asset('landing/js/smartwizard.js')}}"></script>
+    <script src="{{asset('admin/assets/libs/moment/moment.min.js')}}"></script>
+    <script src="{{asset('admin/packages/core/main.js')}}"></script>
+    <script src="{{asset('admin/packages/core/locales/es.js')}}"></script>
+
+    <script src="{{asset('admin/packages/daygrid/main.js')}}"></script>
+    <script src="{{asset('admin/packages/timegrid/main.js')}}"></script>
+    <script src="{{asset('admin/packages/interaction/main.js')}}"></script>
+
     <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
 
 </body>
