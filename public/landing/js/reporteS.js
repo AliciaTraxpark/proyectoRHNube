@@ -101,75 +101,58 @@ function onSelectFechas(){
             var html_tr = "";
             var html_trD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
 
-            if(data[0].fechaF.length == 0){
-                $('#tablaReporte').html(tablaDefecto);
-                $.notify("No se encontraron datos.", {align:"right", verticalAlign:"top",type: "warning", icon:"warning"});
-            }else{
-
-                for(var i=0; i<data.length; i++){
-                    html_tr += '<tr><td>'+ data[i].nombre + ' ' + data[i].apPaterno + ' ' + data[i].apMaterno + '</td>';
-                    nombre.push(data[i].nombre.split('')[0]+data[i].apPaterno.split('')[0]+data[i].apMaterno.split('')[0]);
-                    if(data[i].horas.length != 0){
-                        var total = data[i].horas.reduce(function(a,b){
-                            return sumarHora(a,b);
-                        });
-                    }
-                        for(let j = 0; j < data[i].horas.length; j++){
-                            if(data[i].horas[j] == null){
-                                html_tr += '<td>00:00:00</td>';
-                            }else{
-                                html_tr += '<td>'+ data[i].horas[j] + '</td>';
-                                console.log(data[i].horas[j]);
-                            }
-                        }
-                        if(total == null){
-                            html_tr += '<td>00:00:00</td>';
-                        }else{
-                            html_tr += '<td>'+ total +'</td>';
-                            horas.push(total.split(":")[0]);
-                        }
-                        html_tr += '</tr>';
-                    }
-                for(var m = 0; m < data[0].fechaF.length; m++){
-                    var momentValue = moment(data[0].fechaF[m]);
-                        momentValue.toDate();
-                        momentValue.format("ddd DD/MM");
-                        html_trD += '<th>'+momentValue.format("ddd DD/MM")+'</th>';
-                }
-                html_trD += '<th>TOTAL</th></tr>';
-                container.append(html_tr);
-                containerD.append(html_trD);
-
-                var chartdata = {
-                    labels: nombre,
-                    datasets: [{
-                        label: nombre,
-                        backgroundColor: color,
-                        borderColor: color,
-                        borderWidth: 2,
-                        hoverBackgroundColor: color,
-                        hoverBorderColor: borderColor,
-                        data:horas
-                    }]
-                };
-                var mostrar = $("#myChart");
-                var grafico = new Chart(mostrar, {
-                    type: 'bar',
-                    data: chartdata,
-                    options: {
-                        responsive: true,
-                        scales: {
-                            xAxes: [{
-                                stacked: true
-                            }],
-                            yAxes: [{
-                                stacked: true
-                            }]
-                        }
-                    }
+            for(var i=0; i<data.length; i++){
+                html_tr += '<tr><td>'+ data[i].nombre + ' ' + data[i].apPaterno + ' ' + data[i].apMaterno + '</td>';
+                nombre.push(data[i].nombre.split('')[0]+data[i].apPaterno.split('')[0]+data[i].apMaterno.split('')[0]);
+                var total = data[i].horas.reduce(function(a,b){
+                    return sumarHora(a,b);
                 });
-                $('#myChartD').hide();
+                for(let j = 0; j < data[i].horas.length; j++){
+                    html_tr += '<td>'+ data[i].horas[j] + '</td>';
+                }
+                html_tr += '<td>'+ total +'</td>';
+                horas.push(total.split(":")[0]);
+                html_tr += '</tr>';
             }
+            for(var m = 0; m < data[0].fechaF.length; m++){
+                var momentValue = moment(data[0].fechaF[m]);
+                    momentValue.toDate();
+                    momentValue.format("ddd DD/MM");
+                    html_trD += '<th>'+momentValue.format("ddd DD/MM")+'</th>';
+            }
+            html_trD += '<th>TOTAL</th></tr>';
+            container.append(html_tr);
+            containerD.append(html_trD);
+
+            var chartdata = {
+                labels: nombre,
+                datasets: [{
+                    label: nombre,
+                    backgroundColor: color,
+                    borderColor: color,
+                    borderWidth: 2,
+                    hoverBackgroundColor: color,
+                    hoverBorderColor: borderColor,
+                    data:horas
+                }]
+            };
+            var mostrar = $("#myChart");
+            var grafico = new Chart(mostrar, {
+                type: 'bar',
+                data: chartdata,
+                options: {
+                    responsive: true,
+                    scales: {
+                        xAxes: [{
+                            stacked: true
+                        }],
+                        yAxes: [{
+                            stacked: true
+                        }]
+                    }
+                }
+            });
+            $('#myChartD').hide();
         },
         error:function(data){
             $.notify("Error", {align:"right", verticalAlign:"top",type: "danger", icon:"warning"});

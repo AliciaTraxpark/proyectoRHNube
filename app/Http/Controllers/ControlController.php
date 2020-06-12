@@ -8,6 +8,7 @@ use App\control;
 use Illuminate\Support\Facades\DB;
 use App\empleado;
 use App\envio;
+use DateTime;
 
 class ControlController extends Controller
 {
@@ -48,6 +49,7 @@ class ControlController extends Controller
             ->groupBy('e.emple_id')
             ->get();
 
+        $sql = "if(DATEDIFF('" . $fechaF[1] . "',c.Fecha_fin) > 0 , DAY(c.Fecha_fin), DATEDIFF('" . $fechaF[1] . "',c.Fecha_fin) ) as dia";
         $horasTrabajadas = DB::table('empleado as e')
         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
         ->join('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
@@ -57,24 +59,40 @@ class ControlController extends Controller
             $join->on('en.idEnvio','=','c.idEnvio')
             ->on('en.idEmpleado','=','e.emple_id');
         })
-        ->select('e.emple_id','p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno',DB::raw('MAX(en.Total_Envio) as Total_Envio'),'c.Fecha_fin as fechaF')
+        ->select('e.emple_id','p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno',DB::raw('MAX(en.Total_Envio) as Total_Envio'),DB::raw($sql))
         ->where('c.Fecha_fin','<=',$fechaF[1])
         ->where('c.Fecha_fin','>=',$fechaF[0])
         ->groupBy('c.Fecha_fin','e.emple_id')
         ->get();
 
         $respuesta = [];
+
+        $date1 = new DateTime($fechaF[0]);
+        $date2 = new DateTime($fechaF[1]);
+        $diff = $date1->diff($date2);
+
+        //Array
+        $horas = array();
+        $dias = array();
+
+        for($i=0; $i<=$diff->days; $i++){
+            array_push($horas,"00:00:00");
+            $dia = strtotime('+' . $i . 'day', strtotime($fechaF[0]));
+
+            array_push($dias, date('Y-m-j',$dia));
+        }
+
         foreach($empleados as $empleado){
             array_push($respuesta,array("id"=>$empleado->emple_id,"nombre"=>$empleado->nombre,"apPaterno"=>$empleado->apPaterno,
-            "apMaterno"=>$empleado->apMaterno,"horas"=>array(),"fechaF"=>array()));
+            "apMaterno"=>$empleado->apMaterno,"horas"=>$horas,"fechaF"=>$dias));
         }
-        for($i = 0; $i < sizeof($horasTrabajadas); $i++){
-            for($j = 0; $j < sizeof($respuesta); $j++){
+        for($j = 0; $j < sizeof($respuesta); $j++){
+            for($i = 0; $i < sizeof($horasTrabajadas); $i++){
                 if($respuesta[$j]["id"] == $horasTrabajadas[$i]->emple_id){
-                    array_push($respuesta[$j]["horas"], $horasTrabajadas[$i]->Total_Envio);
-                    array_push($respuesta[$j]["fechaF"],$horasTrabajadas[$i]->fechaF);
+                    $respuesta[$j]["horas"][$horasTrabajadas[$i]->dia] = $horasTrabajadas[$i]->Total_Envio == null ? "00:00:00" : $horasTrabajadas[$i]->Total_Envio;
                 }
             }
+            $respuesta[$j]['horas'] = array_reverse($respuesta[$j]['horas']);
         }
         return response()->json($respuesta,200);
     }
