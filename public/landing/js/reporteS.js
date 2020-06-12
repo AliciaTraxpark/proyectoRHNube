@@ -1,11 +1,46 @@
-$('#fecha').flatpickr({
-    mode: "range",
-    inline: false,
-    locale:"es",
-    maxDate: "today"
+$('#fecha').daterangepicker({
+    "locale": {
+        "format": "YYYY-MM-DD",
+        "separator": " a ",
+        "applyLabel": "Aplicar",
+        "cancelLabel": "Cerrar",
+        "customRangeLabel": "Seleccionar Fechas",
+        "daysOfWeek": [
+            "Do",
+            "Lu",
+            "Ma",
+            "Mi",
+            "Ju",
+            "Vi",
+            "Sa"
+        ],
+        "monthNames": [
+            "Enero",
+            "Febrero",
+            "Marzo",
+            "Abril",
+            "Mayo",
+            "Junio",
+            "Julio",
+            "Agosto",
+            "Setiembre",
+            "Octubre",
+            "Noviembre",
+            "Diciembre"
+        ],
+    },
+    ranges: {
+        'Hace 1 día': [moment().subtract(1, 'days'), moment().add('days')],
+        'Hace 1 semana': [moment().subtract(6, 'days'), moment()],
+        'Hace 1 mes': [moment().subtract(29, 'days'), moment()]
+     }
 });
+$('#fecha').val('');
 $(function(){
-    $("#fecha").on('change',onSelectFechas);
+    $('#fecha').on('cancel.daterangepicker', function(ev, picker) {
+        $('#fecha').val('');
+    });
+    $("#fecha").on('apply.daterangepicker',onSelectFechas);
 });
 
 function acumular60(suma,acumulado){
@@ -45,6 +80,7 @@ function sumarHora(a,b){
 
 function onSelectFechas(){
     var fecha = $('#fecha').val();
+    console.log($('#fecha').val());
     $('#empleado').empty();
     $('#dias').empty();
     $('#myChart').show();
@@ -67,6 +103,7 @@ function onSelectFechas(){
 
             if(data[0].fechaF.length == 0){
                 $('#tablaReporte').html(tablaDefecto);
+                $.notify("No se encontraron datos.", {align:"right", verticalAlign:"top",type: "warning", icon:"warning"});
             }else{
 
                 for(var i=0; i<data.length; i++){
@@ -135,10 +172,7 @@ function onSelectFechas(){
             }
         },
         error:function(data){
-            $('#tablaReporte').html(tablaDefecto);
-            $('#myChart').hide();
-            $('#myChartD').show();
-            $.notify("No se encontraron datos.", {align:"right", verticalAlign:"top",type: "warning", icon:"warning"});
+            $.notify("Error", {align:"right", verticalAlign:"top",type: "danger", icon:"warning"});
         }
     })
 }

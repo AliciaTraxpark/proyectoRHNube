@@ -40,7 +40,6 @@ class ControlController extends Controller
     public function EmpleadoReporte(Request $request){
         $fecha = $request->get('fecha');
         $fechaF = explode("a",$fecha);
-
         $empleados = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->join('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')

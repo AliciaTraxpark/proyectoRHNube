@@ -4,8 +4,8 @@
 <link rel="shortcut icon" href="{{asset('admin/assets/images/favicon.ico')}}">
 <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.css') }}" rel="stylesheet" />
-<link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<link href="{{ URL::asset('admin/assets/libs/daterangepicker-master/daterangepicker.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/chart/Chart.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
@@ -37,13 +37,10 @@
                     <div class="col-md-12">
                         <label style="font-weight: 700">Búsqueda por fecha</label>
                     </div>
-                        <div class="col-md-8 text-right">
-                            <button type="button" class="btn btn-light"><i class="uil uil-arrow-left"></i></button>
-                            <button type="button" class="btn btn-light"><i class="uil uil-arrow-right"></i></button>
-                        </div>
-                        <div class="col-md-4 text-right">
-                            <div class="input-group col-md-12 text-right">
-                                <input type="text" name="date" class="form-control" id="fecha" style="min-width: 190px;" />
+                    <div class="col-md-8"><br></div>
+                        <div class="col-md-4">
+                            <div class="input-group col-md-12">
+                                <input type="text" id="fecha" name="date_range" class="form-control">
                                 <div class="input-group-prepend">
                                   <div class="input-group-text form-control "><i class="uil uil-calender"></i></div>
                               </div>
@@ -113,7 +110,8 @@
 <script src="{{asset('admin/assets/js/app.min.js')}}"></script>
 <!-- datatable js -->
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/daterangepicker-master/moment.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/daterangepicker-master/daterangepicker.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/chart/Chart.min.js') }}"></script>
 <script src="{{asset('landing/js/tablaReporte.js')}}"></script>
