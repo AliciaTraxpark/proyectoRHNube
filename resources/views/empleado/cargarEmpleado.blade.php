@@ -31,6 +31,11 @@
     .table td{
         border-top: 1px solid #c7c7c7;
     }
+    .alert-danger{
+    color: #b23232;
+    background-color: #f4c8ce;
+    border-color: #d77985;
+    }
 </style>
   <header id="header-section">
     <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
@@ -102,13 +107,18 @@
                             @foreach( $errors->all() as $error )<li>{{ $error }}</li>@endforeach
                         </div>
                     @endif
+                    @if (session('alert'))
+                        <div class="alert alert-danger">
+                            {{ session('alert') }}
+                        </div>
+                    @endif
 
                     @if(isset($numRows))
                         <div class="alert alert-sucess">
                             Se importaron {{$numRows}} registros.
                         </div>
                     @endif
-                        <div class="card-body">
+                        <div class="card-body" style="padding-top: 0px;padding-bottom: 0px;">
                             <form action="{{ route('importEmpleado') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="col-md-12">

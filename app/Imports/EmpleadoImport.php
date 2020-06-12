@@ -20,9 +20,11 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
-
-class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, WithBatchInserts
-{
+use Maatwebsite\Excel\Concerns\SkipsErrors;
+use Maatwebsite\Excel\Concerns\SkipsOnError;
+use Maatwebsite\Excel\Concerns\Importable;
+class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, WithBatchInserts, SkipsOnError
+{    use Importable, SkipsErrors;
     private $numRows = 0;
     /**
     * @param array $row
@@ -42,7 +44,8 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
         foreach ($rows as $row)
         {
             if($row['numero_documento']!= ""){
-
+               $filaA= $this->numRows;
+               $filas= $filaA+2;
                 //tipo_doc
                 $tipoDoc = tipo_documento::where("tipoDoc_descripcion", "like", "%". escape_like($row['tipo_documento'])."%")->first();
                 if($row['tipo_documento']!=null){
@@ -56,7 +59,9 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                ;
                 if($row['departamento']!=null){
                     $dep = ubigeo_peru_departments::where('name', 'like', "%".escape_like($cadDep)."%")->first();
-                    $row['iddep'] = $dep->id; } else{ $row['iddep']=null; }
+                    if($dep!=null){
+                    $row['iddep'] = $dep->id; }else{return redirect()->back()->with('alert', 'No se encontro el departamento:'.$row['departamento'].'.  El proceso se interrumpio en la fila:'.$filas); $row['iddep']=null;}}
+                    else{ $row['iddep']=null; }
 
 
                 //provincia
@@ -261,6 +266,10 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
     public function getRowCount(): int
     {
         return $this->numRows;
+    }
+    public function onError(\Throwable $e)
+    {
+        // Handle the exception how you'd like.
     }
 
 }
