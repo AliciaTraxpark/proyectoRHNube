@@ -69,7 +69,7 @@
                                     America-Bogota
                                 </p>
                                 <br>
-                                <table id="tablaReporte" class="table dt-responsive nowrap" style="font-size: 13px!important">
+                                <table id="tablaReporte" class="table nowrap" style="font-size: 13px!important;">
                                     <thead style="background: #fafafa;" id="dias">
                                         <tr>
                                             <th><img src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class=" mr-2" alt="" />Miembro</th>
@@ -87,7 +87,6 @@
                                       @foreach ($empleado as $empleados)
                                       <tr>
                                         <td>{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</td>
-                                        <td id="td"></td>
                                       </tr>
                                       @endforeach
                                     </tbody>
@@ -109,19 +108,19 @@
 <!-- App js -->
 <script src="{{asset('admin/assets/js/app.min.js')}}"></script>
 <!-- datatable js -->
+<script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/daterangepicker-master/moment.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/daterangepicker-master/daterangepicker.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/chart/Chart.min.js') }}"></script>
-<script src="{{asset('landing/js/tablaReporte.js')}}"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}" ></script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}" ></script>
 <script src="{{asset('landing/js/reporteS.js')}}"></script>
+<script src="{{asset('landing/js/tablaReporte.js')}}"></script>
 <script>
     var empleadosDefecto = @json($empleado);
     empleadosDefecto = empleadosDefecto.map(function(empleado){

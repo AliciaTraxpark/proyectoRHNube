@@ -153,17 +153,45 @@ class apiController extends Controller
             ->get();
 
         if($proyecto_empleado){
+            //PROYECTO
             $datos = DB::table('empleado as e')
                 ->join('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
                 ->join('proyecto as pr','pr.Proye_id','=','pe.Proyecto_Proye_id')
                 ->leftJoin('tarea as t','t.Proyecto_Proye_id','=','pr.Proye_id')
                 ->leftJoin('actividad as ac','ac.Tarea_Tarea_id','=','t.Tarea_id')
-                ->select('pr.Proye_Nombre','t.Tarea_Nombre','ac.Activi_Nombre')
+                ->select('pr.Proye_Nombre')
                 ->where('e.emple_id','=',$empleado)
                 ->where('pr.Proye_id','=',$proyecto)
-                ->groupBy('t.Tarea_id')
+                ->groupBy('pr.Proye_id')
                 ->get();
-            return response()->json($datos,200);
+
+            $respuesta = [];
+
+            foreach($datos as $dato){
+                //TAREAS
+                $tareas = DB::table('empleado as e')
+                ->join('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
+                ->join('proyecto as pr','pr.Proye_id','=','pe.Proyecto_Proye_id')
+                ->leftJoin('tarea as t','t.Proyecto_Proye_id','=','pr.Proye_id')
+                ->leftJoin('actividad as ac','ac.Tarea_Tarea_id','=','t.Tarea_id')
+                ->select('t.Tarea_Nombre')
+                ->where('e.emple_id','=',$empleado)
+                ->where('pr.Proye_id','=',$proyecto)
+                ->get();
+
+                //ACTIVIDAD
+                $actividad = DB::table('empleado as e')
+                ->join('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
+                ->join('proyecto as pr','pr.Proye_id','=','pe.Proyecto_Proye_id')
+                ->leftJoin('tarea as t','t.Proyecto_Proye_id','=','pr.Proye_id')
+                ->leftJoin('actividad as ac','ac.Tarea_Tarea_id','=','t.Tarea_id')
+                ->select('ac.Activi_Nombre')
+                ->where('e.emple_id','=',$empleado)
+                ->where('pr.Proye_id','=',$proyecto)
+                ->get();
+                array_push($respuesta,array("Proye_Nombre"=>$dato->Proye_Nombre,"Tareas"=>$tareas,"Actividad"=>$actividad));
+            }
+            return response()->json($respuesta,200);
         }
         return response()->json(null,400);
     }
