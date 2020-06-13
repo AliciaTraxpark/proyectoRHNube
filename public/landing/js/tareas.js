@@ -46,7 +46,7 @@ function onMostrarPantallas(){
                                                     data-parent="#customaccordion_exa">
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <div class=" text-center col-md-12 col-sm-6" style="background:#888888; border-color:#888888;padding-top: 4px;
+                                                        <div class=" text-center col-md-12 col-sm-6" style="background:#393e46; border-color:#393e46;padding-top: 4px;
                                                         padding-bottom: 4px;">
                                                             <h5 class="m-0 font-size-16" style="color:#fafafa">${data[i].Proye_Nombre} </h5>
                                                         </div>  <br>
@@ -58,7 +58,7 @@ function onMostrarPantallas(){
                                                         "0" + " - " + data[i].hora_ini.split(":")[0].charAt(0)+ data[i].hora_ini.split(":")[0].charAt(1) + 
                                                         ":" +(parseInt(data[i].hora_ini.split(":")[1].charAt(0))+1) + "0"}</label>
                                                         <div class="progress" style="background-color: #d4d4d4;">
-                                                            <div class="progress-bar bg-success" role="progressbar" style="width:${promedio}%" aria-valuenow=${promedio}
+                                                            <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:#21bf73" aria-valuenow=${promedio}
                                                                 aria-valuemin="0" aria-valuemax="100">${promedio + "%"}</div>
                                                         </div>
                                                         </div>
@@ -82,7 +82,7 @@ function onMostrarPantallas(){
                                         data-parent="#customaccordion_exa">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class=" text-center col-md-12 col-sm-12" style="background:#888888; border-color:#888888;padding-top: 4px;
+                                            <div class=" text-center col-md-12 col-sm-12" style="background:#393e46; border-color:#393e46;padding-top: 4px;
                                             padding-bottom: 4px;">
                                                 <h5 class="m-0 font-size-14" style="color:#fafafa">Vacio</h5>
                                             </div>  <br>

@@ -152,6 +152,17 @@
     options: {
         legend:{
             display:false
+        },
+        scales: {
+            xAxes: [{
+                stacked: true,
+                gridLines: {
+                    display:false
+                } 
+            }],
+            yAxes: [{
+                stacked: true
+            }]
         }
     }
 });
