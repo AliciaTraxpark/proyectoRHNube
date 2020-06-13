@@ -1,8 +1,9 @@
     $("#Reporte").DataTable({
-              "searching": true,
+              "searching": false,
+              "responsive":true,
               "scrollX": true,
                 retrieve: true,
-
+                "ordering": false,
             language :
             {
                 "sProcessing":     "Procesando...",
@@ -39,5 +40,10 @@
                     var sheet = xlsx.xl.worksheets['sheet1.xml'];},
                 sheetName: 'Exported data',
                 autoFilter: true
-            }]
+            }],
+            paging: true,
+            fixedHeader: {
+                header: true,
+                headerOffset: 45,
+                },
         });

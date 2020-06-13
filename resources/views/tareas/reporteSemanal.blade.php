@@ -69,7 +69,7 @@
                                     America-Bogota
                                 </p>
                                 <br>
-                                <table id="Reporte" class="table nowrap" style="font-size: 13px!important;">
+                                <table id="Reporte" class="table nowrap" style="font-size: 13px!important;width: 100%;">
                                     <thead style="background: #fafafa;" id="dias">
                                         <tr>
                                             <th><img src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class=" mr-2" alt="" />Miembro</th>
@@ -84,12 +84,20 @@
                                         </tr>
                                     </thead>
                                     <tbody id="empleado">
-                                      @foreach ($empleado as $empleados)
-                                      <tr>
-                                        <td>{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</td>
-                                      </tr>
-                                      @endforeach
-                                    </tbody>
+                                        @foreach ($empleado as $empleados)
+                                        <tr>
+                                          <td>{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                        </tr>
+                                        @endforeach
+                                      </tbody>
                                 </table>
                             </div> <!-- end card body-->
                         </div>
@@ -108,8 +116,6 @@
 <!-- App js -->
 <script src="{{asset('admin/assets/js/app.min.js')}}"></script>
 <!-- datatable js -->
-<script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/daterangepicker-master/moment.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/daterangepicker-master/daterangepicker.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
@@ -119,6 +125,8 @@
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}" ></script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}" ></script>
+<script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
 <script src="{{asset('landing/js/reporteS.js')}}"></script>
 <script src="{{asset('landing/js/tablaReporte.js')}}"></script>
 <script>
