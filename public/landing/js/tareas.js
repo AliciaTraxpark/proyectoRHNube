@@ -31,6 +31,12 @@ function onMostrarPantallas(){
                 for(var j=0; j<6; j++){
                     if(parseInt(data[i].hora_ini.split(":")[1].charAt(0)) == j && 
                     parseInt(data[i].hora_ini.split(":")[0]) == horaDelGrupo){
+                        var horaP = data[i].promedio.split(":");
+                        var segundos = parseInt(horaP[0])*3600 + parseInt(horaP[1])*60 + parseInt(horaP[2]);
+                        var totalE = data[i].Total_Envio.split(":");
+                        var segundosT = parseInt(totalE[0])*3600 + parseInt(totalE[1])*60 + parseInt(totalE[2]);
+                        var promedio = Math.round((segundos*100)/segundosT);
+                        console.log(promedio);
                         card = `<div class="col-2" style="margin-left: 0px!important;">
                                             <div class="card mb-0 text-center" style="padding-left: 20px;">
                                                 <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
@@ -52,8 +58,8 @@ function onMostrarPantallas(){
                                                         "0" + " - " + data[i].hora_ini.split(":")[0].charAt(0)+ data[i].hora_ini.split(":")[0].charAt(1) + 
                                                         ":" +(parseInt(data[i].hora_ini.split(":")[1].charAt(0))+1) + "0"}</label>
                                                         <div class="progress" style="background-color: #d4d4d4;">
-                                                            &nbsp;  <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
-                                                                aria-valuemin="0" aria-valuemax="100">25%</div>
+                                                            &nbsp;  <div class="progress-bar bg-success" role="progressbar" style="width:${promedio}%" aria-valuenow=${promedio}
+                                                                aria-valuemin="0" aria-valuemax="100">${promedio + "%"}</div>
                                                         </div>
                                                         </div>
                                                     </div>
