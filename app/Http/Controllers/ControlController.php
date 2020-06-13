@@ -49,7 +49,7 @@ class ControlController extends Controller
             ->groupBy('e.emple_id')
             ->get();
 
-        $sql = "if(DATEDIFF('" . $fechaF[1] . "',c.Fecha_fin) > 0 , DAY(c.Fecha_fin), DATEDIFF('" . $fechaF[1] . "',c.Fecha_fin) ) as dia";
+        $sql = "if(DATEDIFF('" . $fechaF[1] . "',c.Fecha_fin) >= 0 , DATEDIFF('" . $fechaF[1] . "',c.Fecha_fin), DAY(c.Fecha_fin) ) as dia";
         $horasTrabajadas = DB::table('empleado as e')
         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
         ->join('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
@@ -119,7 +119,7 @@ class ControlController extends Controller
             ->join('control as c','c.Proyecto_Proye_id','=','p.Proye_id')
             ->join('envio as en','en.idEnvio','=','c.idEnvio')
             ->join('captura as cp','cp.idEnvio','=','en.idEnvio')
-            ->select('P.Proye_id','P.Proye_Nombre','c.hora_ini','c.hora_fin','cp.imagen','en.hora_Envio','c.Fecha_fin')
+            ->select('P.Proye_id','P.Proye_Nombre','c.hora_ini','c.hora_fin','cp.imagen','cp.promedio','en.hora_Envio','c.Fecha_fin','en.Total_Envio')
             ->where('e.emple_id','=',$idempleado)
             ->where('en.idEmpleado','=',$idempleado)
             ->where('c.Fecha_fin','=',$fecha)
@@ -135,7 +135,7 @@ class ControlController extends Controller
             ->join('control as c','c.Proyecto_Proye_id','=','p.Proye_id')
             ->join('envio as en','en.idEnvio','=','c.idEnvio')
             ->join('captura as cp','cp.idEnvio','=','en.idEnvio')
-            ->select('P.Proye_id','P.Proye_Nombre','c.hora_ini','c.hora_fin','cp.imagen','en.hora_Envio','c.Fecha_fin')
+            ->select('P.Proye_id','P.Proye_Nombre','c.hora_ini','c.hora_fin','cp.imagen','cp.promedio','en.hora_Envio','c.Fecha_fin','en.Total_Envio')
             ->where('e.emple_id','=',$idempleado)
             ->where('en.idEmpleado','=',$idempleado)
             ->where('c.Fecha_fin','=',$fecha)

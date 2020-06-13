@@ -32,7 +32,7 @@ $('#fecha').daterangepicker({
     ranges: {
         'Hace 1 día': [moment().subtract(1, 'days'), moment().add('days')],
         'Hace 1 semana': [moment().subtract(6, 'days'), moment()]
-     }
+    }
 });
 $('#fecha').val('');
 $(function(){
@@ -79,7 +79,9 @@ function sumarHora(a,b){
 
 function onSelectFechas(){
     var fecha = $('#fecha').val();
-    console.log($('#fecha').val());
+    if($.fn.DataTable.isDataTable("#Reporte")){
+        $('#Reporte').DataTable().destroy();
+    }
     $('#empleado').empty();
     $('#dias').empty();
     $('#myChart').show();
@@ -119,11 +121,57 @@ function onSelectFechas(){
                     html_trD += '<th>'+momentValue.format("ddd DD/MM")+'</th>';
             }
             html_trD += '<th>TOTAL</th></tr>';
-            $("#Reporte").DataTable();
-            $("#Reporte").append(html_trD);
-            $("#Reporte").append(html_tr);
+            $("#dias").html(html_trD);
+            $("#empleado").html(html_tr);
             //container.append(html_tr);
             //containerD.append(html_trD);
+
+            $("#Reporte").DataTable({
+                "searching": true,
+                "responsive":true,
+                "scrollX": true,
+                retrieve: true,
+                "ordering": false,
+                language :
+                {
+                    "sProcessing":     "Procesando...",
+                    "sLengthMenu":     "Mostrar _MENU_ registros",
+                    "sZeroRecords":    "No se encontraron resultados",
+                    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                    "sInfo":           "Mostrando registros del _START_ al _END_ ",
+                    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix":    "",
+                    "sSearch":         "Buscar:",
+                    "sUrl":            "",
+                    "sInfoThousands":  ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst":    "Primero",
+                        "sLast":     "Último",
+                        "sNext":     ">",
+                        "sPrevious": "<"
+                    },
+                    "oAria": {
+                        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    },
+                    "buttons": {
+                        "copy": "Copiar",
+                        "colvis": "Visibilidad"
+                    }
+                },
+                dom: 'Bfrtip',
+                buttons: [{
+                    extend: 'excel',
+                    text:"<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
+                    customize: function(xlsx) {
+                        var sheet = xlsx.xl.worksheets['sheet1.xml'];},
+                        sheetName: 'Exported data',
+                        autoFilter: false
+                }],
+                paging: true
+            });
 
             var chartdata = {
                 labels: nombre,

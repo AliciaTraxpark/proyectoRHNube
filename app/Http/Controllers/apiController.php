@@ -122,6 +122,7 @@ class apiController extends Controller
         $captura->estado=$request->get('estado');
         $captura->fecha_hora=$request->get('fecha_hora');
         $captura->imagen=$request->get('imagen');
+        $captura->promedio=$request->get('promedio');
         $captura->save();
 
         $control = new control();
