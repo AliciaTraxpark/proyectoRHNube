@@ -11,19 +11,32 @@ $('#horaF').flatpickr({
     time_24hr: true
 });
 $('#btnasignar').on('click', function(e) {
+    $('#nombreEmpleado').load(location.href+" #nombreEmpleado>*");
     var allVals = [];
     $(".sub_chk:checked").each(function() {
         allVals.push($(this).attr('data-id'));
     });
+    $('#asignarHorario').modal('toggle');
+    if(allVals.length<=0){
+        $.ajax({
+            type:"post",
+            url:"/horarioVerTodEmp",
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            success: function (data) {
+                json1 = JSON.parse(JSON.stringify(data));
 
-    if(allVals.length<=0)
-    {
-        /* alert("Selecciona al menos un empleado.");
-        return false; */
-    }  else {
-        $('#nombreEmpleado').load(location.href+" #nombreEmpleado>*");
-        $('#asignarHorario').modal('toggle');
+                for (var i in json1) {
+                    //allVals4.push(json[i].perso_nombre+" "+json[i].perso_apPaterno);
+                    $('#nombreEmpleado').append('<option value="'+json1[i].emple_id+'" >'+json1[i].perso_nombre+" "+json1[i].perso_apPaterno+'</option>');
 
+                }
+            },
+            error: function (data) {
+                alert('Ocurrio un error');
+            }
+        });
+
+    }else{
         var idsempleados = allVals.join(",");
         $.ajax({
             type:"post",
@@ -52,12 +65,7 @@ $('#btnasignar').on('click', function(e) {
             }
 
         });
-
-
-
-
-
-    }
+        }
 
 });
 //CALENDARIO//
