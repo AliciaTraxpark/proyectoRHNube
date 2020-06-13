@@ -15,7 +15,7 @@ class horarioController extends Controller
         $idsEm=$request->ids;
         $empleado = DB::table('empleado as e')
         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-        ->select('p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','e.emple_nDoc','p.perso_id')
+        ->select('p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','e.emple_nDoc','p.perso_id','e.emple_id')
         ->whereIn('emple_id',explode(",",$idsEm))->get();
 
         return $empleado;

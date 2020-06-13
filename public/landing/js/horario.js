@@ -21,6 +21,7 @@ $('#btnasignar').on('click', function(e) {
         /* alert("Selecciona al menos un empleado.");
         return false; */
     }  else {
+        $('#nombreEmpleado').load(location.href+" #nombreEmpleado>*");
         $('#asignarHorario').modal('toggle');
 
         var idsempleados = allVals.join(",");
@@ -30,22 +31,21 @@ $('#btnasignar').on('click', function(e) {
             data:'ids='+idsempleados,
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             success: function (data) {
-
             /*   UNO X UNO MUESTRA  $.each(data,function(i,json){
                     array[json.emple_nDoc]=(parseInt(json.emple_nDoc));
                     alert(json.emple_nDoc);
-
                   }); */
                   var allVals4 = [];
                   json = JSON.parse(JSON.stringify(data));
 
                 for (var i in json) {
-                    allVals4.push(json[i].perso_nombre+" "+json[i].perso_apPaterno);
+                    //allVals4.push(json[i].perso_nombre+" "+json[i].perso_apPaterno);
+                    $('#nombreEmpleado').append('<option value="'+json[i].emple_id+'" selected="selected">'+json[i].perso_nombre+" "+json[i].perso_apPaterno+'</option>');
 
                 }
-                var idsv = allVals4.join(", ");
+
                 console.log(allVals4);
-                $('#nombreEmpleado').val((allVals4));
+                //$('#nombreEmpleado').val(allVals4);
             },
             error: function (data) {
                 alert('Ocurrio un error');
