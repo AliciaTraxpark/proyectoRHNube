@@ -1,5 +1,5 @@
     $("#Reporte").DataTable({
-              "searching": true,
+              "searching": false,
               "responsive":true,
               "scrollX": true,
                 retrieve: true,
