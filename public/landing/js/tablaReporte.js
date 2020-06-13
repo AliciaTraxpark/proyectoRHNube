@@ -37,14 +37,13 @@
             buttons: [{
                 extend: 'excel',
                 text:"<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
+                /*exportOptions: {
+                    columns: ':visible'
+                },*/
                 customize: function(xlsx) {
                     var sheet = xlsx.xl.worksheets['sheet1.xml'];},
                     sheetName: 'Exported data',
                     autoFilter: true
             }],
-            paging: true,
-            fixedHeader: {
-                header: true,
-                headerOffset: 45,
-                },
+            paging: true
         });
