@@ -66,7 +66,7 @@ function agregarProyecto(){
 
 
 
-                  })
+                  });
                   $('#idempleado').select2({});;
                  //alert(array);
                /*    for(i=0;i<array.length;i++){
@@ -99,7 +99,7 @@ function registrarPE(){
 
     var proyecto=$('#id1').val();
     var empleado= $('#idempleado').val();
-   
+
 
     $.ajax({
         type:"POST",

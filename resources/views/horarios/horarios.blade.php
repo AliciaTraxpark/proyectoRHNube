@@ -148,7 +148,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                <label for="">Empleado(s):</label>
-                                               <input type="text" class="form-control form-control-sm" id="">
+                                               <input type="text" class="form-control form-control-sm" id="nombreEmpleado">
                                             </div>
                                          </div>
                                         <div class="col-md-6"><label for=""><br></label>
