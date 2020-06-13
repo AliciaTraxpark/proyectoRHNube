@@ -37,7 +37,8 @@ function onMostrarPantallas(){
                         var segundosT = parseInt(totalE[0])*3600 + parseInt(totalE[1])*60 + parseInt(totalE[2]);
                         var promedio = Math.round((segundos*100)/segundosT);
                         console.log(promedio);
-                        card = `<div class="col-2" style="margin-left: 0px!important;">
+                        if(parseInt(data[i].hora_ini.split(":")[1].charAt(0)) <5){
+                            card = `<div class="col-2" style="margin-left: 0px!important;">
                                             <div class="card mb-0 text-center" style="padding-left: 20px;">
                                                 <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
                                                     aria-expanded="true" aria-controls="customaccorcollapseOne">
@@ -46,7 +47,7 @@ function onMostrarPantallas(){
                                                     data-parent="#customaccordion_exa">
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <div class=" text-center col-md-12 col-sm-6" style="background:#888888; border-color:#888888;padding-top: 4px;
+                                                        <div class=" text-center col-md-12 col-sm-6" style="background:#393e46; border-color:#393e46;padding-top: 4px;
                                                         padding-bottom: 4px;">
                                                             <h5 class="m-0 font-size-16" style="color:#fafafa">${data[i].Proye_Nombre} </h5>
                                                         </div>  <br>
@@ -58,7 +59,7 @@ function onMostrarPantallas(){
                                                         "0" + " - " + data[i].hora_ini.split(":")[0].charAt(0)+ data[i].hora_ini.split(":")[0].charAt(1) + 
                                                         ":" +(parseInt(data[i].hora_ini.split(":")[1].charAt(0))+1) + "0"}</label>
                                                         <div class="progress" style="background-color: #d4d4d4;">
-                                                            <div class="progress-bar bg-success" role="progressbar" style="width:${promedio}%" aria-valuenow=${promedio}
+                                                            <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:#21bf73" aria-valuenow=${promedio}
                                                                 aria-valuemin="0" aria-valuemax="100">${promedio + "%"}</div>
                                                         </div>
                                                         </div>
@@ -67,6 +68,38 @@ function onMostrarPantallas(){
                                                 </div>
                                             </div>
                                         </div>`
+                        }else{
+                            card = `<div class="col-2" style="margin-left: 0px!important;">
+                                            <div class="card mb-0 text-center" style="padding-left: 20px;">
+                                                <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
+                                                    aria-expanded="true" aria-controls="customaccorcollapseOne">
+                                                </a>
+                                                <div class="collapse show" aria-labelledby="customaccorheadingOne"
+                                                    data-parent="#customaccordion_exa">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class=" text-center col-md-12 col-sm-6" style="background:#393e46; border-color:#393e46;padding-top: 4px;
+                                                        padding-bottom: 4px;">
+                                                            <h5 class="m-0 font-size-16" style="color:#fafafa">${data[i].Proye_Nombre} </h5>
+                                                        </div>  <br>
+                                                        <div class="col-md-12 col-sm-6" style="padding-left: 0px;">
+                                                        <img src="data:image/jpeg;base64,${data[i].imagen}" height="120" width="120">
+                                                        &nbsp;
+                                                        <label style="font-size: 12px" for="">${data[i].hora_ini.split(":")[0].charAt(0)+
+                                                        data[i].hora_ini.split(":")[0].charAt(1) + ":" +data[i].hora_ini.split(":")[1].charAt(0) + 
+                                                        "0" + " - " + data[i].hora_ini.split(":")[0].charAt(0)+ (parseInt(data[i].hora_ini.split(":")[0].charAt(1))+1) + 
+                                                        ":00"}</label>
+                                                        <div class="progress" style="background-color: #d4d4d4;">
+                                                            <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:#21bf73" aria-valuenow=${promedio}
+                                                                aria-valuemin="0" aria-valuemax="100">${promedio + "%"}</div>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>`
+                        }
                         if(i!= data.length-1){
                             i++;
                         }
@@ -82,7 +115,7 @@ function onMostrarPantallas(){
                                         data-parent="#customaccordion_exa">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class=" text-center col-md-12 col-sm-12" style="background:#888888; border-color:#888888;padding-top: 4px;
+                                            <div class=" text-center col-md-12 col-sm-12" style="background:#393e46; border-color:#393e46;padding-top: 4px;
                                             padding-bottom: 4px;">
                                                 <h5 class="m-0 font-size-14" style="color:#fafafa">Vacio</h5>
                                             </div>  <br>

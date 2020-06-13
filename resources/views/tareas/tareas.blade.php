@@ -32,7 +32,7 @@
                     <div class="col-md-12">
                         <label style="font-weight: 700">Búsqueda por fecha</label>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label><br> </label>
                         <div class="input-group col-md-10" style="padding-left: 0px;">
                             <input type="text" id="fecha" class="form-control">
@@ -52,23 +52,11 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group  col-md-10">
                             <label>Proyecto</label>
                             <select data-plugin="customselect" class="form-control" id="proyecto">
                                 <option value="">Seleccionar</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group  col-md-10">
-                            <label>Área</label>
-                            <select data-plugin="customselect" class="form-control">
-                                <option value="0">Shreyu</option>
-                                <option value="1">Greeva</option>
-                                <option value="2">Dhyanu</option>
-                                <option value="3" disabled>Disabled</option>
-                                <option value="4">Mannat</option>
                             </select>
                         </div>
                     </div>

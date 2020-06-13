@@ -31,7 +31,8 @@ $('#fecha').daterangepicker({
     },
     ranges: {
         'Hace 1 día': [moment().subtract(1, 'days'), moment().add('days')],
-        'Hace 1 semana': [moment().subtract(6, 'days'), moment()]
+        'Hace 1 semana': [moment().subtract(6, 'days'), moment()],
+        'Hce 1 mes': [moment().subtract(29, 'days'), moment()],
     }
 });
 $('#fecha').val('');
@@ -97,8 +98,8 @@ function onSelectFechas(){
             var containerD = $('#dias');
             var nombre =[];
             var horas=[];
-            var color = ['rgb(185,204,237)'];
-            var borderColor = ['rgb(185,204,237)'];
+            var color = ['rgb(63,77,113)'];
+            var borderColor = ['rgb(63,77,113)'];
             var html_tr = "";
             var html_trD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
             for(var i=0; i<data.length; i++){
@@ -128,7 +129,6 @@ function onSelectFechas(){
 
             $("#Reporte").DataTable({
                 "searching": true,
-                "responsive":true,
                 "scrollX": true,
                 retrieve: true,
                 "ordering": false,
@@ -193,7 +193,10 @@ function onSelectFechas(){
                     responsive: true,
                     scales: {
                         xAxes: [{
-                            stacked: true
+                            stacked: true,
+                            gridLines: {
+                                display:false
+                            } 
                         }],
                         yAxes: [{
                             stacked: true

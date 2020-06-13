@@ -180,6 +180,10 @@ class apiController extends Controller
                 ->where('pr.Proye_id','=',$proyecto)
                 ->get();
 
+                $elemento = [];
+                foreach($tareas as $tarea){
+                    array_push($elemento,$tarea->Tarea_Nombre);
+                }
                 //ACTIVIDAD
                 $actividad = DB::table('empleado as e')
                 ->join('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
@@ -190,7 +194,12 @@ class apiController extends Controller
                 ->where('e.emple_id','=',$empleado)
                 ->where('pr.Proye_id','=',$proyecto)
                 ->get();
-                array_push($respuesta,array("Proye_Nombre"=>$dato->Proye_Nombre,"Tareas"=>$tareas,"Actividad"=>$actividad));
+
+                $elementoA = [];
+                foreach($actividad as $activ){
+                    array_push($elementoA,$activ->Activi_Nombre);
+                }
+                array_push($respuesta,array("Proye_Nombre"=>$dato->Proye_Nombre,"Tareas"=>$elemento,"Actividad"=>$elementoA));
             }
             return response()->json($respuesta,200);
         }
