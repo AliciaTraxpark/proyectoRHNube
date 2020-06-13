@@ -1,6 +1,5 @@
 @extends('layouts.vertical')
 
-
 @section('css')
 <link rel="shortcut icon" href="{{asset('admin/assets/images/favicon.ico')}}">
 <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
@@ -79,17 +78,8 @@
             </div> <!-- end card-body-->
         </div> <!-- end card-->
     </div> <!-- end col-->
-
-
-
-
-
-
-
 </div>
 <!-- end row -->
-
-
 @endsection
 
 @section('script')
