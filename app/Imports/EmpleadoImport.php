@@ -20,9 +20,11 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
-
-class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, WithBatchInserts
-{
+use Maatwebsite\Excel\Concerns\SkipsErrors;
+use Maatwebsite\Excel\Concerns\SkipsOnError;
+use Maatwebsite\Excel\Concerns\Importable;
+class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, WithBatchInserts, SkipsOnError
+{    use Importable, SkipsErrors;
     private $numRows = 0;
     /**
     * @param array $row
@@ -31,31 +33,64 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
     */
     public function collection(Collection $rows)
     {
+        function escape_like(string $value, string $char = '\\')
+        {
+            return str_replace(
+                [$char, '%', '_'],
+                [$char.$char, $char.'%', $char.'_'],
+                $value
+            );
+        }
         foreach ($rows as $row)
         {
             if($row['numero_documento']!= ""){
-
+               $filaA= $this->numRows;
+               $filas= $filaA+2;
                 //tipo_doc
-                $tipoDoc = tipo_documento::where("tipoDoc_descripcion", "like", "%".$row['tipo_documento']."%")->first();
+                $tipoDoc = tipo_documento::where("tipoDoc_descripcion", "like", "%". escape_like($row['tipo_documento'])."%")->first();
                 if($row['tipo_documento']!=null){
                     $row['tipo_doc'] =  $tipoDoc->tipoDoc_id; } else{ $row['tipo_doc']=null; }
 
                 //departamento
-                $dep = ubigeo_peru_departments::where("name", "like", "%".$row['departamento']."%")->first();
+                $cadDep=$row['departamento'];
+                if(strlen($cadDep)>3){
+                   $cadDep = substr ($cadDep, 0, -1);
+                }
+               ;
                 if($row['departamento']!=null){
-                    $row['iddep'] = $dep->id; } else{ $row['iddep']=null; }
+                    $dep = ubigeo_peru_departments::where('name', 'like', "%".escape_like($cadDep)."%")->first();
+                    if($dep!=null){
+                    $row['iddep'] = $dep->id; }
+                    else{return redirect()->back()->with('alert', 'No se encontro el departamento:'.$row['departamento'].'.  El proceso se interrumpio en la fila:'.$filas); $row['iddep']=null;}
+                }
+                    else{ $row['iddep']=null; }
 
 
                 //provincia
-                $provi = ubigeo_peru_provinces::where("name", "like", "%".$row['provincia']."%")->first();
+                $cadProv=$row['provincia'];
+                if(strlen($cadProv)>3){
+                    $cadProv = substr ($cadProv, 0, -1);
+                }
                 if($row['provincia']!=null){
-                    $row['idprov'] = $provi->id; } else{ $row['idprov']=null; }
+                    $provi = ubigeo_peru_provinces::where("name", "like", "%".escape_like($cadProv)."%")->first();
+                    if( $provi!=null){
+                        $row['idprov'] = $provi->id; }
+                        else{return redirect()->back()->with('alert', 'No se encontro la provincia:'.$row['provincia'].'.  El proceso se interrumpio en la fila:'.$filas); $row['idprov']=null;}
+                } else{ $row['idprov']=null; }
 
 
                //distrito
-                $idD = ubigeo_peru_districts::where("name", "like", "%".$row['distrito']."%")->where("province_id", "=",$provi->id)->first();
+               $cadDist=$row['distrito'];
+                if(strlen($cadDist)>3){
+                    $cadDist = substr ($cadDist, 0, -1);
+                }
                 if($row['distrito']!=null){
-                $row['id'] = $idD->id;} else{$row['id'] = null; }
+                    $idD = ubigeo_peru_districts::where("name", "like", "%".escape_like($cadDist)."%")->where("province_id", "=",$provi->id)->first();
+                     if($idD!=null){
+                        $row['id'] = $idD->id;
+                     }
+                     else{return redirect()->back()->with('alert', 'No se encontro el distrito:'.$row['distrito'].'.  El proceso se interrumpio en la fila:'.$filas); $row['id']=null;}
+                    } else{$row['id'] = null; }
 
                 //cargo
                 $cargo = cargo::where("cargo_descripcion", "like", "%".$row['cargo']."%")->first();
@@ -97,19 +132,44 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                 } else{ $row['idcentro_costo']=null; }
 
                 //departamentoNac
-                $depN = ubigeo_peru_departments::where("name", "like", "%".$row['departamento_nacimiento']."%")->first();
+                $cadDepN=$row['departamento_nacimiento'];
+                if(strlen($cadDepN)>3){
+                    $cadDepN = substr ($cadDepN, 0, -1);
+                }
+
                 if($row['departamento_nacimiento']!=null){
-                $row['iddepartamento_nacimiento'] = $depN->id; } else{ $row['iddepartamento_nacimiento']=null; }
+                $depN = ubigeo_peru_departments::where("name", "like", "%".escape_like($cadDepN)."%")->first();
+                if($depN!=null){
+                    $row['iddepartamento_nacimiento'] = $depN->id;
+                }
+                else{return redirect()->back()->with('alert', 'No se encontro el departamento:'.$row['departamento_nacimiento'].'.  El proceso se interrumpio en la fila:'.$filas); $row['iddepartamento_nacimiento']=null;}
+                } else{ $row['iddepartamento_nacimiento']=null; }
 
                 //provinciaNac
-                $proviN = ubigeo_peru_provinces::where("name", "like", "%".$row['provincia_nacimiento']."%")->first();
+                $cadProvN=$row['provincia_nacimiento'];
+                if(strlen($cadProvN)>3){
+                    $cadProvN = substr ($cadProvN, 0, -1);
+                }
                 if($row['provincia_nacimiento']!=null){
-                $row['idprovincia_nacimiento'] = $proviN->id; } else{ $row['idprovincia_nacimiento']=null; }
+                $proviN = ubigeo_peru_provinces::where("name", "like", "%".escape_like($cadProvN)."%")->first();
+                if($proviN!=null){
+                    $row['idprovincia_nacimiento'] = $proviN->id;
+                }
+                else{return redirect()->back()->with('alert', 'No se encontro la provincia:'.$row['provincia_nacimiento'].'.  El proceso se interrumpio en la fila:'.$filas); $row['idprovincia_nacimiento']=null;}
+                 } else{ $row['idprovincia_nacimiento']=null; }
 
                //distritoNac
-                $idDN = ubigeo_peru_districts::where("name", "like", "%".$row['distrito_nacimiento']."%")->where("province_id", "=",$proviN->id)->first();
+               $cadDistN=$row['distrito_nacimiento'];
+               if(strlen($cadDistN)>3){
+                   $cadDistN = substr ($cadDistN, 0, -1);
+               }
                 if($row['distrito_nacimiento']!=null){
-                $row['iddistrito_nacimiento'] = $idDN->id;} else{$row['distrito_nacimiento'] = null; }
+                $idDN = ubigeo_peru_districts::where("name", "like", "%".escape_like($cadDistN)."%")->where("province_id", "=",$proviN->id)->first();
+                if($idDN!=null){
+                    $row['iddistrito_nacimiento'] = $idDN->id;
+                }
+                else{return redirect()->back()->with('alert', 'No se encontro el distrito:'.$row['distrito_nacimiento'].'.  El proceso se interrumpio en la fila:'.$filas); $row['iddistrito_nacimiento']=null;}
+                } else{$row['iddistrito_nacimiento'] = null; }
 
                 //tipo_contrato
                 $tipo_contrato = tipo_contrato::where("contrato_descripcion", "like", "%".$row['tipo_contrato']."%")->first();
@@ -226,6 +286,10 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
     public function getRowCount(): int
     {
         return $this->numRows;
+    }
+    public function onError(\Throwable $e)
+    {
+        // Handle the exception how you'd like.
     }
 
 }

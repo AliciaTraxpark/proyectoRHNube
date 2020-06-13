@@ -13,6 +13,6 @@ class excelEmpleadoController extends Controller
         $import =new  EmpleadoImport();//del userimpor
         Excel::import($import,request()->file('file'));
 
-        return view('empleado.cargarEmpleado', ['numRows'=>$import->getRowCount()]);
+        return view('empleado.cargarEmpleado', ['numRows'=>$import->getRowCount(),'alert'=>$import->errors()]);
     }
 }
