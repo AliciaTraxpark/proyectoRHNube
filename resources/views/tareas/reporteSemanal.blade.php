@@ -128,7 +128,6 @@
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
 <script src="{{asset('landing/js/reporteS.js')}}"></script>
-<script src="{{asset('landing/js/tablaReporte.js')}}"></script>
 <script>
     var empleadosDefecto = @json($empleado);
     empleadosDefecto = empleadosDefecto.map(function(empleado){
