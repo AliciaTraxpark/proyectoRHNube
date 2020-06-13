@@ -58,7 +58,7 @@ function onMostrarPantallas(){
                                                         "0" + " - " + data[i].hora_ini.split(":")[0].charAt(0)+ data[i].hora_ini.split(":")[0].charAt(1) + 
                                                         ":" +(parseInt(data[i].hora_ini.split(":")[1].charAt(0))+1) + "0"}</label>
                                                         <div class="progress" style="background-color: #d4d4d4;">
-                                                            &nbsp;  <div class="progress-bar bg-success" role="progressbar" style="width:${promedio}%" aria-valuenow=${promedio}
+                                                            <div class="progress-bar bg-success" role="progressbar" style="width:${promedio}%" aria-valuenow=${promedio}
                                                                 aria-valuemin="0" aria-valuemax="100">${promedio + "%"}</div>
                                                         </div>
                                                         </div>

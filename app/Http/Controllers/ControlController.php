@@ -49,7 +49,7 @@ class ControlController extends Controller
             ->groupBy('e.emple_id')
             ->get();
 
-        $sql = "if(DATEDIFF('" . $fechaF[1] . "',c.Fecha_fin) > 0 , DAY(c.Fecha_fin), DATEDIFF('" . $fechaF[1] . "',c.Fecha_fin) ) as dia";
+        $sql = "if(DATEDIFF('" . $fechaF[1] . "',c.Fecha_fin) >= 0 , DATEDIFF('" . $fechaF[1] . "',c.Fecha_fin), DAY(c.Fecha_fin) ) as dia";
         $horasTrabajadas = DB::table('empleado as e')
         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
         ->join('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
