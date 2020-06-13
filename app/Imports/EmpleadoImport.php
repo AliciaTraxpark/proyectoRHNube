@@ -49,7 +49,10 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                 //tipo_doc
                 $tipoDoc = tipo_documento::where("tipoDoc_descripcion", "like", "%". escape_like($row['tipo_documento'])."%")->first();
                 if($row['tipo_documento']!=null){
-                    $row['tipo_doc'] =  $tipoDoc->tipoDoc_id; } else{ $row['tipo_doc']=null; }
+                    if($tipoDoc!=null){
+                          $row['tipo_doc'] =  $tipoDoc->tipoDoc_id;
+                    }  else{return redirect()->back()->with('alert', 'No se encontro el tipo de documento:'.$row['tipo_documento'].'.  El proceso se interrumpio en la fila:'.$filas); $row['tipo_doc']=null;}
+                   } else{ $row['tipo_doc']=null; }
 
                 //departamento
                 $cadDep=$row['departamento'];
