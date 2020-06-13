@@ -99,7 +99,6 @@ function onSelectFechas(){
             var borderColor = ['rgb(185,204,237)'];
             var html_tr = "";
             var html_trD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
-            $("#Reporte").DataTable();
             for(var i=0; i<data.length; i++){
                 html_tr += '<tr><td>'+ data[i].nombre + ' ' + data[i].apPaterno + ' ' + data[i].apMaterno + '</td>';
                 nombre.push(data[i].nombre.split('')[0]+data[i].apPaterno.split('')[0]+data[i].apMaterno.split('')[0]);
@@ -120,6 +119,7 @@ function onSelectFechas(){
                     html_trD += '<th>'+momentValue.format("ddd DD/MM")+'</th>';
             }
             html_trD += '<th>TOTAL</th></tr>';
+            $("#Reporte").DataTable();
             $("#Reporte").append(html_trD);
             $("#Reporte").append(html_tr);
             //container.append(html_tr);

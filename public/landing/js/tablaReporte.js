@@ -1,5 +1,5 @@
     $("#Reporte").DataTable({
-              "searching": false,
+              "searching": true,
               "responsive":true,
               "scrollX": true,
                 retrieve: true,
@@ -36,10 +36,11 @@
             dom: 'Bfrtip',
             buttons: [{
                 extend: 'excel',
+                text:"<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
                 customize: function(xlsx) {
                     var sheet = xlsx.xl.worksheets['sheet1.xml'];},
-                sheetName: 'Exported data',
-                autoFilter: true
+                    sheetName: 'Exported data',
+                    autoFilter: true
             }],
             paging: true,
             fixedHeader: {
