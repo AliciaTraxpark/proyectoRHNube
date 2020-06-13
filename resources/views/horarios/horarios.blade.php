@@ -81,6 +81,12 @@
     .flatpickr-calendar{
         width: 240px!important;
     }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice{
+        background-color: #52565b;
+    }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
+        color: #fdfdfd;
+    }
 </style>
 <div id="preloader">
     <div id="status">
@@ -148,7 +154,10 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                <label for="">Empleado(s):</label>
-                                               <input type="text" class="form-control form-control-sm" id="">
+                                               {{-- <input type="text" class="form-control form-control-sm" id="nombreEmpleado"> --}}
+                                               <select class="form-control wide" data-plugin="customselect" multiple id="nombreEmpleado" >
+
+                                            </select>
                                             </div>
                                          </div>
                                         <div class="col-md-6"><label for=""><br></label>
