@@ -108,6 +108,7 @@ function onSelectFechas(){
                 var total = data[i].horas.reduce(function(a,b){
                     return sumarHora(a,b);
                 });
+                //console.log(data[i].promedio);
                 for(let j = 0; j < data[i].horas.length; j++){
                     html_tr += '<td>'+ data[i].horas[j] + '</td>';
                 }
