@@ -44,33 +44,6 @@ function onMostrarPantallas(){
                                                 aria-expanded="true" aria-controls="customaccorcollapseOne">
                                             </a>
                                             <div class="collapse show" aria-labelledby="customaccorheadingOne" data-parent="#customaccordion_exa">
-                                            <div id="modalZoom" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                            <div class="row">
-                                                                <div class="col-xl-12 text-center">
-                                                                <img id="imagenZoom" height="300" width="300">
-                                                                </div>
-                                                            </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <div class="col-md-12">
-                                                            <div class="row">
-                                                                <div class="col-md-12 text-center">
-                                                                    <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- /.modal-content -->
-                                            </div><!-- /.modal-dialog -->
-                                        </div><!-- /.modal -->
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class=" text-center col-md-12 col-sm-6" style="background:#393e46; border-color:#393e46;padding-top: 4px;
@@ -107,33 +80,6 @@ function onMostrarPantallas(){
                                                 </a>
                                                 <div class="collapse show" aria-labelledby="customaccorheadingOne"
                                                     data-parent="#customaccordion_exa">
-                                                    <div id="modalZoom" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                    <div class="row">
-                                                                        <div class="col-xl-12 text-center">
-                                                                        <img src="data:image/jpeg;base64,${data[i].imagen}" height="300" width="300" class="img-responsive">
-                                                                        </div>
-                                                                    </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <div class="col-md-12">
-                                                                    <div class="row">
-                                                                        <div class="col-md-12 text-center">
-                                                                            <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div><!-- /.modal-content -->
-                                                    </div><!-- /.modal-dialog -->
-                                                </div><!-- /.modal -->
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class=" text-center col-md-12 col-sm-6" style="background:#393e46; border-color:#393e46;padding-top: 4px;
@@ -233,4 +179,9 @@ function onMostrarProyecto(){
 function zoom(img){
     $('#imagenZoom').attr("src",`data:image/jpeg;base64,${img}`);
     $('#modalZoom').modal();
+    $('#imagenZoom').elevateZoom({
+        cursor: "crosshair",  
+        zoomWindowFadeIn: 500, 
+        zoomWindowFadeOut: 750 
+      }); 
 }
