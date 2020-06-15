@@ -8,8 +8,15 @@ use Maatwebsite\Excel\Facades\Excel;
 class excelEmpleadoController extends Controller
 {
     //
-    public function import()
+    public function import(request $request)
     {
+        $file = $request->file('file');
+
+           if ($file == null) {
+
+        return back()->with('alert', 'No se ha cargado ningún archivo');
+
+           }
         $import =new  EmpleadoImport();//del userimpor
         Excel::import($import,request()->file('file'));
 
