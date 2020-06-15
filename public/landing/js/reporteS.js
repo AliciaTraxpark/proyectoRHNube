@@ -32,7 +32,7 @@ $('#fecha').daterangepicker({
     ranges: {
         'Hace 1 día': [moment().subtract(1, 'days'), moment().add('days')],
         'Hace 1 semana': [moment().subtract(6, 'days'), moment()],
-        'Hce 1 mes': [moment().subtract(29, 'days'), moment()],
+        'Hace 1 mes': [moment().subtract(29, 'days'), moment()],
     }
 });
 $('#fecha').val('');
