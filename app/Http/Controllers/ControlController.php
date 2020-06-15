@@ -59,7 +59,8 @@ class ControlController extends Controller
             $join->on('en.idEnvio','=','c.idEnvio')
             ->on('en.idEmpleado','=','e.emple_id');
         })
-        ->select('e.emple_id','p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno',DB::raw('MAX(en.Total_Envio) as Total_Envio'),DB::raw($sql))
+        ->leftJoin('captura as cp','cp.idEnvio','=','en.idEnvio')
+        ->select('e.emple_id','p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno',DB::raw('MAX(en.Total_Envio) as Total_Envio'),DB::raw('MAX(cp.promedio) as promedio'),DB::raw($sql))
         ->where('c.Fecha_fin','<=',$fechaF[1])
         ->where('c.Fecha_fin','>=',$fechaF[0])
         ->groupBy('c.Fecha_fin','e.emple_id')
@@ -70,13 +71,14 @@ class ControlController extends Controller
         $date1 = new DateTime($fechaF[0]);
         $date2 = new DateTime($fechaF[1]);
         $diff = $date1->diff($date2);
-
         //Array
         $horas = array();
         $dias = array();
+        $promedio = array();
 
         for($i=0; $i<=$diff->days; $i++){
             array_push($horas,"00:00:00");
+            array_push($promedio,"00:00:00");
             $dia = strtotime('+' . $i . 'day', strtotime($fechaF[0]));
 
             array_push($dias, date('Y-m-j',$dia));
@@ -84,15 +86,17 @@ class ControlController extends Controller
 
         foreach($empleados as $empleado){
             array_push($respuesta,array("id"=>$empleado->emple_id,"nombre"=>$empleado->nombre,"apPaterno"=>$empleado->apPaterno,
-            "apMaterno"=>$empleado->apMaterno,"horas"=>$horas,"fechaF"=>$dias));
+            "apMaterno"=>$empleado->apMaterno,"horas"=>$horas,"fechaF"=>$dias,"promedio"=>$promedio));
         }
         for($j = 0; $j < sizeof($respuesta); $j++){
             for($i = 0; $i < sizeof($horasTrabajadas); $i++){
                 if($respuesta[$j]["id"] == $horasTrabajadas[$i]->emple_id){
                     $respuesta[$j]["horas"][$horasTrabajadas[$i]->dia] = $horasTrabajadas[$i]->Total_Envio == null ? "00:00:00" : $horasTrabajadas[$i]->Total_Envio;
+                    $respuesta[$j]["promedio"][$horasTrabajadas[$i]->dia] = $horasTrabajadas[$i]->promedio == null ? "00:00:00" : $horasTrabajadas[$i]->promedio;
                 }
             }
             $respuesta[$j]['horas'] = array_reverse($respuesta[$j]['horas']);
+            $respuesta[$j]['promedio'] = array_reverse($respuesta[$j]['promedio']);
         }
         return response()->json($respuesta,200);
     }
