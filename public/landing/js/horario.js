@@ -81,7 +81,7 @@ $('#btnasignar').on('click', function(e) {
         locale: 'es',
         defaultDate: ano+'-01-01',
          height:  "auto",
-         contentHeight: "auto",
+         contentHeight: 410,
          fixedWeekCount:false,
         plugins: [ 'dayGrid','interaction','timeGrid'],
 
@@ -114,3 +114,130 @@ $('#btnasignar').on('click', function(e) {
 }
 document.addEventListener('DOMContentLoaded',calendario);
 
+///////////////////////////////
+$( document ).ready(function() {
+    $('#Datoscalendar1').hide();
+ });
+ $('#nuevoCalendario').click(function(){
+     var departamento= $('#departamento').val();
+     var pais= $('#pais').val();
+
+
+     $.ajax(
+       {
+
+       //url:"/calendario/store",
+       url:"/calendario/showDep/",
+       data:{departamento:departamento,pais:pais},
+       headers: {
+     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+ },
+       success:function(data){
+         $('#Datoscalendar').hide();
+         $('#Datoscalendar1').show();
+
+         $.ajax(
+             {
+
+             //url:"/calendario/store",
+             url:"/calendario/showDep/confirmar",
+             data:{departamento:departamento,pais:pais},
+             headers: {
+             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+         },
+             success:function(dataA){
+                if (dataA==1)
+                {
+                    alert('ya esta creado');
+                }
+
+                 },
+             error:function(){ alert("Hay un error");}
+             }
+         );
+         var fecha = new Date();
+         var ano = fecha. getFullYear();
+         fechas1=ano+'-01-02';
+         var fechas=new Date(fechas1);
+
+         calendario1(data,fechas);
+         $('#calendar1 .fc-Descanso-button').prop('disabled', true);
+         $('#calendar1 .fc-NoLaborales-button').prop('disabled', true);
+         $("#calendar1 .fc-left").on("click",myFuncion1);
+         function myFuncion1(){
+            $('#calendar1 .fc-Descanso-button').prop('disabled', true);
+            $('#calendar1 .fc-NoLaborales-button').prop('disabled', true);
+            $("#calendar1 .fc-left").on("click",myFuncion1);
+        }
+
+         },
+       error:function(){ alert("Hay un error");}
+       }
+   );
+ });
+//SEGUNDO CALENDAR
+function calendario1(data,fechas) {
+    var calendarEl1 = document.getElementById('calendar1');
+    calendarEl1.innerHTML="";
+    var fecha = new Date();
+    var ano = fecha. getFullYear();
+    var id1;
+    var data=data;
+    var fechas=fechas;
+
+    var configuracionCalendario1 = {
+        locale: 'es',
+        defaultDate: fechas,
+
+        plugins: [ 'dayGrid','interaction','timeGrid'],
+        height:  "auto",
+        contentHeight: 450,
+        fixedWeekCount:false,
+        selectable: true,
+        selectMirror: true,
+        select: function(arg) {
+
+
+         /*  calendar.addEvent({
+            title: 'title',
+            start: arg.start,
+            end: arg.end,
+            allDay: arg.allDay
+          }) */
+
+        console.log(arg);
+      },
+      eventClick:function(info){
+
+        id1 = info.event.id;
+        console.log(info);
+        console.log(info.event.id);
+        console.log(info.event.title);
+
+      },
+      editable: false,
+      eventLimit: true,
+        header:{
+          left:'prev,next today',
+          center:'title',
+          right:''
+        },
+        footer:{
+          left:'Descanso',
+          right:'NoLaborales'
+        },
+
+
+        events:data,
+
+
+
+
+      }
+    var calendar1 = new FullCalendar.Calendar(calendarEl1,configuracionCalendario1);
+    calendar1.setOption('locale',"Es");
+     //DESCANSO
+
+    calendar1.render();
+}
+document.addEventListener('DOMContentLoaded',calendario1);
