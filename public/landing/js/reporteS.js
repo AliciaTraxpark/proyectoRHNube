@@ -98,6 +98,7 @@ function onSelectFechas(){
             var containerD = $('#dias');
             var nombre =[];
             var horas=[];
+            var prom=[];
             var color = ['rgb(63,77,113)'];
             var borderColor = ['rgb(63,77,113)'];
             var html_tr = "";
@@ -108,11 +109,26 @@ function onSelectFechas(){
                 var total = data[i].horas.reduce(function(a,b){
                     return sumarHora(a,b);
                 });
-                //console.log(data[i].promedio);
+                var promedio = data[i].promedio.reduce(function(a,b){
+                    return sumarHora(a,b);
+                });
                 for(let j = 0; j < data[i].horas.length; j++){
                     html_tr += '<td>'+ data[i].horas[j] + '</td>';
                 }
+                var p1 = promedio.split(":");
+                var t1 = total.split(":");
+                var sumaT = parseInt(t1[0])*3600 + parseInt(t1[1])*60 + parseInt(t1[2]);
+                var sumaP = parseInt(p1[0])*3600 + parseInt(p1[1])*60 + parseInt(p1[2]);
+                var sumaTotalP = 0;
+                if(sumaT != 0){
+                    sumaTotalP = Math.round((sumaP*100)/sumaT);
+                    prom.push(sumaTotalP);
+                }else{
+                    sumaTotalP = 0;
+                    prom.push(sumaTotalP);
+                }
                 html_tr += '<td>'+ total +'</td>';
+                html_tr += '<td>'+ sumaTotalP + '%' +'</td>';
                 horas.push(total.split(":")[0]);
                 html_tr += '</tr>';
             }
@@ -122,7 +138,8 @@ function onSelectFechas(){
                     momentValue.format("ddd DD/MM");
                     html_trD += '<th>'+momentValue.format("ddd DD/MM")+'</th>';
             }
-            html_trD += '<th>TOTAL</th></tr>';
+            html_trD += '<th>TOTAL</th>';
+            html_trD += '<th>ACTIV.</th></tr>';
             $("#dias").html(html_trD);
             $("#empleado").html(html_tr);
             //container.append(html_tr);
