@@ -112,9 +112,9 @@
 @section('script')
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
 <!-- Vendor js -->
-<script src="{{asset('admin/assets/js/vendor.min.js')}}"></script>
+{{-- <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script> --}}
 <!-- App js -->
-<script src="{{asset('admin/assets/js/app.min.js')}}"></script>
+{{-- <script src="{{asset('admin/assets/js/app.min.js')}}"></script> --}}
 <!-- datatable js -->
 <script src="{{ URL::asset('admin/assets/libs/daterangepicker-master/moment.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/daterangepicker-master/daterangepicker.js') }}"></script>
@@ -158,7 +158,7 @@
                 stacked: true,
                 gridLines: {
                     display:false
-                } 
+                }
             }],
             yAxes: [{
                 stacked: true

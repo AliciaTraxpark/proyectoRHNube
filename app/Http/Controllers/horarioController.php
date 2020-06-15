@@ -20,4 +20,11 @@ class horarioController extends Controller
 
         return $empleado;
     }
+    public function verTodEmpleado(Request $request){
+        $empleados = DB::table('empleado as e')
+        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+        ->select('p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','e.emple_nDoc','p.perso_id','e.emple_id')
+        ->get();
+        return $empleados;
+    }
 }
