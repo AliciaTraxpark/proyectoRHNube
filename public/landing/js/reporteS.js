@@ -129,7 +129,8 @@ function onSelectFechas(){
                 }
                 html_tr += '<td>'+ total +'</td>';
                 html_tr += '<td>'+ sumaTotalP + '%' +'</td>';
-                horas.push(total.split(":")[0]);
+                var decimal = parseFloat(total.split(":")[0] + "." + total.split(":")[1] + total.split(":")[2]).toFixed(2);
+                horas.push(decimal);
                 html_tr += '</tr>';
             }
             for(var m = 0; m < data[0].fechaF.length; m++){
