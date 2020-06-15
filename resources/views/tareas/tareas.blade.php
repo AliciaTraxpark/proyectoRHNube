@@ -108,7 +108,7 @@ transition-delay:.2s;
             </div>
             <div class="modal-body">
                     <div class="row">
-                        <div class="col-xl-12 text-center img-contenedor">
+                        <div class="col-xl-12 text-center">
                         <img id="imagenZoom" height="300" width="300">
                         </div>
                     </div>
