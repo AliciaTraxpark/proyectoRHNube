@@ -107,22 +107,38 @@
                             @foreach( $errors->all() as $error )<li>{{ $error }}</li>@endforeach
                         </div>
                     @endif
-                    @if (session('alert'))
-                        <div class="alert alert-danger">
-                            {{ session('alert') }}
-                        </div>
-                    @endif
 
-                    @if(isset($numRows))
-                        <div class="alert alert-sucess">
-                            Se importaron {{$numRows}} registros.
-                        </div>
-                    @endif
-                        <div class="card-body" style="padding-top: 0px;padding-bottom: 0px;">
+
+
+                        <div class="card-body" style="padding-top: 10px;padding-bottom: 0px;">
                             <form action="{{ route('importEmpleado') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
-                                <div class="col-md-12">
+                                <div class="col-md-12" style="padding-left: 0px;">
                                     <div class="row">
+
+                                        <div class="col-md-4">
+                                            @if (session('alertE'))
+                                            <div class="alert alert-danger" style="padding-top: 4px; padding-bottom: 4px;padding-left: 0px;font-size: 16px; font-weight: 700; color: #b23232;
+                                            background-color: #f7f6f6;border-color: #f7f6f6;">
+                                                {{ session('alertE') }}
+                                            </div>
+                                           @endif
+                                        </div> <div class="col-md-8"></div>
+                                        <div class="col-md-12">
+                                            @if (session('alert'))
+                                            <div class="alert alert-danger">
+                                                {{ session('alert') }}
+                                            </div>
+                                           @endif
+                                        </div>
+                                        <div class="col-md-12">
+                                            @if (session('filas'))
+                                            <div class="alert alert-sucess" style="padding-left: 0px; padding-top: 0px; margin-bottom: 0px;">
+                                                Se importaron  {{ session('filas') }} registros.
+                                            </div>
+                                        @endif
+                                        </div>
+
                                         <div class="col-md-6">
                                             <input type="file" name="file" class="form-control">
                                         </div>
@@ -134,6 +150,7 @@
                             </form>
                         </div>
                         <div class="card-body" style="padding-top: 20px;color: #1b1b1b;">
+
                             <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                             <table id="basic-datatable1" class="table  nowrap" style="font-size: 13px!important">
                                 <thead style="background: #4C5D73;color: white;">
@@ -159,51 +176,9 @@
                                     </tr>
                                 </thead>
                                 <tbody style="background:#f7f7f7;color: #2c2c2c;">
-                                @php
-                                $empleado = DB::table('empleado as e')
-                                ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                                ->leftJoin('tipo_documento as tipoD', 'e.emple_tipoDoc', '=', 'tipoD.tipoDoc_id')
-                                ->leftJoin('ubigeo_peru_departments as depar', 'e.emple_departamento', '=', 'depar.id')
-                                ->leftJoin('ubigeo_peru_provinces as provi', 'e.emple_provincia', '=', 'provi.id')
-                                ->leftJoin('ubigeo_peru_districts as dist', 'e.emple_distrito', '=', 'dist.id')
-                                ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                                ->leftJoin('ubigeo_peru_departments as para', 'e.emple_departamentoN', '=', 'para.id')
-                                ->leftJoin('ubigeo_peru_provinces as proviN', 'e.emple_provinciaN', '=', 'proviN.id')
-                                ->leftJoin('ubigeo_peru_districts as distN', 'e.emple_distritoN', '=', 'distN.id')
-                                ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                                ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
-                                ->select('e.emple_id','p.perso_id','p.perso_nombre','tipoD.tipoDoc_descripcion','e.emple_nDoc','p.perso_apPaterno',
-                                'p.perso_apMaterno', 'p.perso_fechaNacimiento' ,'p.perso_direccion','p.perso_sexo',
-                                'depar.id as depar','depar.name as deparNom','provi.id as proviId','provi.name as provi','dist.id as distId','dist.name as distNo',
-                                'c.cargo_descripcion', 'a.area_descripcion','cc.centroC_descripcion','para.id as iddepaN',
-                                'para.name as depaN','proviN.id as idproviN','proviN.name as proviN','distN.id as iddistN',
-                                'distN.name as distN','e.emple_id','c.cargo_id','a.area_id', 'cc.centroC_id','e.emple_tipoContrato',
-                                'e.emple_local','e.emple_nivel','e.emple_departamento','e.emple_provincia','e.emple_distrito','e.emple_foto as foto',
-                                'e.emple_celular','e.emple_telefono','e.emple_fechaIC','e.emple_fechaFC','e.emple_Correo')
-                                ->get();
-                                @endphp
+
                                 @if(isset($empleado))
-                                  @foreach ($empleado as $empleados)
-                                  <tr>
-                                    <td>{{$empleados->tipoDoc_descripcion}}</td>
-                                    <td>{{$empleados->emple_nDoc}}</td>
-                                    <td>{{$empleados->perso_nombre}}</td>
-                                    <td>{{$empleados->perso_apPaterno}}</td>
-                                    <td>{{$empleados->perso_apMaterno}}</td>
-                                    <td>{{$empleados->perso_direccion}}</td>
-                                    <td>{{$empleados->deparNom}}</td>
-                                    <td>{{$empleados->provi}}</td>
-                                    <td>{{$empleados->distNo}}</td>
-                                    <td>{{$empleados->cargo_descripcion}}</td>
-                                    <td>{{$empleados->area_descripcion}}</td>
-                                    <td>{{$empleados->centroC_descripcion}}</td>
-                                    <td>{{$empleados->perso_fechaNacimiento}}</td>
-                                    <td>{{$empleados->depaN}}</td>
-                                    <td>{{$empleados->proviN}}</td>
-                                    <td>{{$empleados->distN}}</td>
-                                    <td>{{$empleados->perso_sexo}}</td>
-                                  </tr>
-                                  @endforeach
+
                                  @endif
                                 </tbody>
                             </table>
