@@ -14,12 +14,14 @@ class excelEmpleadoController extends Controller
 
            if ($file == null) {
 
-        return back()->with('alert', 'No se ha cargado ningún archivo');
+        return back()->with('alertE', 'No se ha cargado ningún archivo excel');
 
            }
         $import =new  EmpleadoImport();//del userimpor
         Excel::import($import,request()->file('file'));
-
-        return view('empleado.cargarEmpleado', ['numRows'=>$import->getRowCount(),'alert'=>$import->errors()]);
+        $filas=$import->getRowCount();
+        //$parameters =  ['numRows'=>$import->getRowCount(),'alert'=>$import->errors()];
+        //return back()->with(['numRows'=>$import->getRowCount(),'alert'=>$import->errors()]);
+        return back()->with('filas',$filas);
     }
 }
