@@ -54,7 +54,7 @@ function onMostrarPantallas(){
                                                     <div class="hovereffect">
                                                     <img src="data:image/jpeg;base64,${data[i].imagen}" height="120" width="120" class="img-responsive">
                                                     <div class="overlay">
-                                                    <a class="info" onclick="zoom('${data[i].imagen}')">ZOOM</a>
+                                                    <a class="info" onclick="zoom('${data[i].imagen}')" style="color:#fdfdfd">ZOOM</a>
                                                     </div>
                                                     </div>
                                                     &nbsp;
@@ -90,7 +90,7 @@ function onMostrarPantallas(){
                                                         <div class="hovereffect">
                                                         <img src="data:image/jpeg;base64,${data[i].imagen}" height="120" width="120" class="img-responsive">
                                                         <div class="overlay">
-                                                        <a class="info" onclick="zoom('${data[i].imagen}')">ZOOM</a>
+                                                        <a class="info" onclick="zoom('${data[i].imagen}')" style="color:#fdfdfd">ZOOM</a>
                                                         </div>
                                                         </div>
                                                         &nbsp;
@@ -178,10 +178,11 @@ function onMostrarProyecto(){
 
 function zoom(img){
     $('#imagenZoom').attr("src",`data:image/jpeg;base64,${img}`);
+    $('#zoom').zoom({
+        on : 'click'
+    });
     $('#modalZoom').modal();
-    $('#imagenZoom').elevateZoom({
-        cursor: "crosshair",  
-        zoomWindowFadeIn: 500, 
-        zoomWindowFadeOut: 750 
-      }); 
+    $('.close').on('click',function(){
+        $('#zoom').trigger('zoom.destroy'); 
+    });
 }
