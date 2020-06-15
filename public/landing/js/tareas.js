@@ -39,6 +39,68 @@ function onMostrarPantallas(){
                         console.log(promedio);
                         if(parseInt(data[i].hora_ini.split(":")[1].charAt(0)) <5){
                             card = `<div class="col-2" style="margin-left: 0px!important;">
+                                        <div class="card mb-0 text-center" style="padding-left: 20px;">
+                                            <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
+                                                aria-expanded="true" aria-controls="customaccorcollapseOne">
+                                            </a>
+                                            <div class="collapse show" aria-labelledby="customaccorheadingOne" data-parent="#customaccordion_exa">
+                                            <div id="modalZoom" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                            <div class="row">
+                                                                <div class="col-xl-12 text-center">
+                                                                <img id="imagenZoom" height="300" width="300">
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                                <div class="col-md-12 text-center">
+                                                                    <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- /.modal-content -->
+                                            </div><!-- /.modal-dialog -->
+                                        </div><!-- /.modal -->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class=" text-center col-md-12 col-sm-6" style="background:#393e46; border-color:#393e46;padding-top: 4px;
+                                                    padding-bottom: 4px;">
+                                                        <h5 class="m-0 font-size-16" style="color:#fafafa">${data[i].Proye_Nombre} </h5>
+                                                    </div>  <br>
+                                                    <div class="col-md-12 col-sm-6" style="padding-left: 0px;">
+                                                    <div class="hovereffect">
+                                                    <img src="data:image/jpeg;base64,${data[i].imagen}" height="120" width="120" class="img-responsive">
+                                                    <div class="overlay">
+                                                    <a class="info" onclick="zoom('${data[i].imagen}')">ZOOM</a>
+                                                    </div>
+                                                    </div>
+                                                    &nbsp;
+                                                    <label style="font-size: 12px" for="">${data[i].hora_ini.split(":")[0].charAt(0)+
+                                                    data[i].hora_ini.split(":")[0].charAt(1) + ":" +data[i].hora_ini.split(":")[1].charAt(0) + 
+                                                    "0" + " - " + data[i].hora_ini.split(":")[0].charAt(0)+ data[i].hora_ini.split(":")[0].charAt(1) + 
+                                                    ":" +(parseInt(data[i].hora_ini.split(":")[1].charAt(0))+1) + "0"}</label>
+                                                    <div class="progress" style="background-color: #d4d4d4;">
+                                                        <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:#21bf73" aria-valuenow=${promedio}
+                                                            aria-valuemin="0" aria-valuemax="100">${promedio + "%"}</div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>`
+                        }else{
+                            card = `<div class="col-2" style="margin-left: 0px!important;">
                                             <div class="card mb-0 text-center" style="padding-left: 20px;">
                                                 <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
                                                     aria-expanded="true" aria-controls="customaccorcollapseOne">
@@ -46,51 +108,31 @@ function onMostrarPantallas(){
                                                 <div class="collapse show" aria-labelledby="customaccorheadingOne"
                                                     data-parent="#customaccordion_exa">
                                                     <div id="modalZoom" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-                                                        <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header" style="background-color:#163552;">
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="row">
-                                                                <span class="mr-2 text-center">Despues de haber registrado o cargado tus empleados, puedes cargar sus fotos de una manera más simple.</span>
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
                                                             </div>
-                                                            <br>
-                                                                <div class="row">
-                                                                    <div class="col-xl-5 text-center">
-                                                                        <img src="landing/images/photo (3).svg" height="100">
-                                                                        <br>
-                                                                        <span class="mr-2 text-center" style="color: #024079;font-weight: bold;">DNI Empleado</span>
+                                                            <div class="modal-body">
+                                                                    <div class="row">
+                                                                        <div class="col-xl-12 text-center">
+                                                                        <img src="data:image/jpeg;base64,${data[i].imagen}" height="300" width="300" class="img-responsive">
+                                                                        </div>
                                                                     </div>
-                                                                    <div class="col-xl-2 text-left">
-                                                                        <img src="landing/images/right-arrow.svg" height="80" >
-                                                                    </div>
-                                                                    <div class="col-xl-5 text-center">
-                                                                        <img src="landing/images/photo (3).svg" height="100">
-                                                                        <br>
-                                                                        <span class="mr-2 text-center" style="color: #024079;font-weight: bold;">12345678</span>
-                                                                    </div>
-                                                                </div>
-                                                                <br>
-                                                                <div class="row">
-                                                                    <div class="col-xl-12 text-center">
-                                                                        <img src="landing/images/alert.svg" height="25" class="mr-1"><span>Puedes guardar tus fotos en una carpeta especifica.</span>
-                                                                    </div>
-                                                                </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <div class="col-md-12">
-                                                                <div class="row">
-                                                                    <div class="col-md-12 text-center">
-                                                                        <button style="background-color: #024079;color: white;" type="button" id="cerrarIF" class="btn btn-light" data-dismiss="modal">Entendido</button>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <div class="col-md-12">
+                                                                    <div class="row">
+                                                                        <div class="col-md-12 text-center">
+                                                                            <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </div><!-- /.modal-content -->
-                                                </div><!-- /.modal-dialog -->
+                                                        </div><!-- /.modal-content -->
+                                                    </div><!-- /.modal-dialog -->
                                                 </div><!-- /.modal -->
                                                 <div class="row">
                                                     <div class="col-md-12">
@@ -102,43 +144,7 @@ function onMostrarPantallas(){
                                                         <div class="hovereffect">
                                                         <img src="data:image/jpeg;base64,${data[i].imagen}" height="120" width="120" class="img-responsive">
                                                         <div class="overlay">
-                                                        <a class="info" id="zoom">ZOOM</a>
-                                                        </div>
-                                                        </div>
-                                                        &nbsp;
-                                                        <label style="font-size: 12px" for="">${data[i].hora_ini.split(":")[0].charAt(0)+
-                                                        data[i].hora_ini.split(":")[0].charAt(1) + ":" +data[i].hora_ini.split(":")[1].charAt(0) + 
-                                                        "0" + " - " + data[i].hora_ini.split(":")[0].charAt(0)+ data[i].hora_ini.split(":")[0].charAt(1) + 
-                                                        ":" +(parseInt(data[i].hora_ini.split(":")[1].charAt(0))+1) + "0"}</label>
-                                                        <div class="progress" style="background-color: #d4d4d4;">
-                                                            <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:#21bf73" aria-valuenow=${promedio}
-                                                                aria-valuemin="0" aria-valuemax="100">${promedio + "%"}</div>
-                                                        </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                </div>
-                                            </div>
-                                        </div>`
-                        }else{
-                            card = `<div class="col-2" style="margin-left: 0px!important;">
-                                            <div class="card mb-0 text-center" style="padding-left: 20px;">
-                                                <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
-                                                    aria-expanded="true" aria-controls="customaccorcollapseOne">
-                                                </a>
-                                                <div class="collapse show" aria-labelledby="customaccorheadingOne"
-                                                    data-parent="#customaccordion_exa">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class=" text-center col-md-12 col-sm-6" style="background:#393e46; border-color:#393e46;padding-top: 4px;
-                                                        padding-bottom: 4px;">
-                                                            <h5 class="m-0 font-size-16" style="color:#fafafa">${data[i].Proye_Nombre} </h5>
-                                                        </div>  <br>
-                                                        <div class="col-md-12 col-sm-6" style="padding-left: 0px;">
-                                                        <div class="hovereffect">
-                                                        <img src="data:image/jpeg;base64,${data[i].imagen}" height="120" width="120" class="img-responsive">
-                                                        <div class="overlay">
-                                                        <a class="info" href="#">link here</a>
+                                                        <a class="info" onclick="zoom('${data[i].imagen}')">ZOOM</a>
                                                         </div>
                                                         </div>
                                                         &nbsp;
@@ -192,9 +198,6 @@ function onMostrarPantallas(){
                 horaDelGrupo = parseInt(data[i + 1].hora_ini.split(":")[0]);
                 var labelDelGrupo = horaDelGrupo + ":00:00" + " - "  + (horaDelGrupo+1) + ":00:00";
                 grupo = `<span style="font-weight: bold;color:#507394;">${labelDelGrupo}</span><br><br><div class="row">`;
-                $('#zoom').on('click',function(){
-                    $('#modalZoom').modal();
-                });
             }
            }else{
             $.notify("Falta elegir campos o No se encontrado capturas.", {align:"right", verticalAlign:"top",type: "warning", icon:"warning"});
@@ -225,4 +228,9 @@ function onMostrarProyecto(){
                 $('#proyecto').html(html_select);
         }
     })
+}
+
+function zoom(img){
+    $('#imagenZoom').attr("src",`data:image/jpeg;base64,${img}`);
+    $('#modalZoom').modal();
 }
