@@ -146,7 +146,7 @@ function onSelectFechas(){
             //container.append(html_tr);
             //containerD.append(html_trD);
 
-            var table = $("#Reporte").DataTable({
+            $("#Reporte").DataTable({
                 "searching": true,
                 "scrollX": true,
                 retrieve: true,
@@ -194,8 +194,6 @@ function onSelectFechas(){
                 }],
                 paging: true
             });
-            table.buttons().container()
-    .appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
             var chartdata = {
                 labels: nombre,
                 datasets: [{
