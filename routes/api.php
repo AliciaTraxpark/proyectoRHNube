@@ -29,5 +29,6 @@ Route::post("tarea","apiController@apiTarea");
 Route::post("actividad","apiController@apiActvidad");
 Route::post("logueo","apiController@logueoEmpleado");
 Route::post("editarTarea","apiController@editarApiTarea");
+Route::post("editarActividad","apiController@editarApiActividad");
 Route::post("control","apiController@store");
 Route::post("proyecto","apiController@selectProyecto");

@@ -91,22 +91,24 @@ class apiController extends Controller
 
     public function editarApiTarea(Request $request){
         $Tarea_id = $request['Tarea_id'];
-        $Activi_id = $request['Activi_id'];
         $tarea = tarea::where('Tarea_id',$Tarea_id)->first();
         if($tarea){
             $tarea->Tarea_Nombre=$request['Tarea_Nombre'];
-            if($request['Activi_id'] != ''){
-                $actividad = actividad::where('Activi_id',$Activi_id)->first();
-                if($actividad){
-                    $actividad->Activi_Nombre=$request['Activi_Nombre'];
-                    $actividad->save();
-                    return response()->json($actividad,200);
-                }
-            }
             $tarea->save();
             return response()->json($tarea,200);
         }
         return response()->json($tarea,400);
+    }
+
+    public function editarApiActividad(Request $request){
+        $Activi_id = $request['Activi_id'];
+        $actividad= actividad::where('Activi_id',$Activi_id)->first();
+        if($actividad){
+            $actividad->Activi_Nombre=$request['Activi_Nombre'];
+            $actividad->save();
+            return response()->json($actividad,200);
+        }
+        return response()->json($actividad,400);
     }
 
     public function store(Request $request){

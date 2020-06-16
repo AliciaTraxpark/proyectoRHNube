@@ -181,14 +181,15 @@ function onSelectFechas(){
                     }
                 },
                 dom: 'Bfrtip',
-                buttons: [{
+                /*buttons: [{
                     extend: 'excel',
                     text:"<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
                     customize: function(xlsx) {
                         var sheet = xlsx.xl.worksheets['sheet1.xml'];},
                         sheetName: 'Exported data',
                         autoFilter: false
-                }],
+                }],*/
+                buttons: ["copy","excel","pdf","print"],
                 paging: true
             });
 
