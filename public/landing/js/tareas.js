@@ -36,7 +36,10 @@ function onMostrarPantallas(){
                         var totalE = data[i].Total_Envio.split(":");
                         var segundosT = parseInt(totalE[0])*3600 + parseInt(totalE[1])*60 + parseInt(totalE[2]);
                         var promedio = Math.round((segundos*100)/segundosT);
-                        console.log(promedio);
+                        var nivel;
+                        if(promedio >= 55) nivel = "green";
+                        else if (promedio > 35) nivel = "#f3c623";
+                        else nivel = "red";
                         if(parseInt(data[i].hora_ini.split(":")[1].charAt(0)) <5){
                             card = `<div class="col-2" style="margin-left: 0px!important;">
                                         <div class="card mb-0 text-center" style="padding-left: 20px;">
@@ -63,7 +66,7 @@ function onMostrarPantallas(){
                                                     "0" + " - " + data[i].hora_ini.split(":")[0].charAt(0)+ data[i].hora_ini.split(":")[0].charAt(1) + 
                                                     ":" +(parseInt(data[i].hora_ini.split(":")[1].charAt(0))+1) + "0"}</label>
                                                     <div class="progress" style="background-color: #d4d4d4;">
-                                                        <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:#21bf73" aria-valuenow=${promedio}
+                                                        <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:${nivel}" aria-valuenow=${promedio}
                                                             aria-valuemin="0" aria-valuemax="100">${promedio + "%"}</div>
                                                     </div>
                                                     </div>
@@ -99,7 +102,7 @@ function onMostrarPantallas(){
                                                         "0" + " - " + data[i].hora_ini.split(":")[0].charAt(0)+ (parseInt(data[i].hora_ini.split(":")[0].charAt(1))+1) + 
                                                         ":00"}</label>
                                                         <div class="progress" style="background-color: #d4d4d4;">
-                                                            <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:#21bf73" aria-valuenow=${promedio}
+                                                            <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:${nivel}" aria-valuenow=${promedio}
                                                                 aria-valuemin="0" aria-valuemax="100">${promedio + "%"}</div>
                                                         </div>
                                                         </div>
