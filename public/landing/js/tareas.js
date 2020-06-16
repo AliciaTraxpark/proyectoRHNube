@@ -149,7 +149,7 @@ function onMostrarPantallas(){
                 grupo = `<span style="font-weight: bold;color:#507394;">${labelDelGrupo}</span><br><br><div class="row">`;
             }
            }else{
-            $.notify("Falta elegir campos o No se encontrado capturas.", {align:"right", verticalAlign:"top",type: "warning", icon:"warning"});
+            $.notify("Falta elegir campos o No se encontrado capturas.", {align:"right", verticalAlign:"top",type: "warning", icon:"warning",delay:1000});
            }
         },
         error:function(data){
