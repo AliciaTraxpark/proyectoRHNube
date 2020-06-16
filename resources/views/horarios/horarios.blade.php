@@ -87,6 +87,15 @@
     .select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
         color: #fdfdfd;
     }
+    .fc th.fc-widget-header{
+        background: #dfe6f2;
+    font-size: 13px;
+    color: #163552;
+    line-height: 20px;
+    padding: 5px 0;
+    text-transform: uppercase;
+    font-weight: 500;
+    }
 </style>
 <div id="preloader">
     <div id="status">
@@ -135,7 +144,7 @@
                         </div> <!-- end card body-->
                     </div> <!-- end card -->
                     <div id="asignarHorario" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-                        <div class="modal-dialog  modal-xl">
+                        <div class="modal-dialog  modal-xl" style="margin-top: 5px">
                         <div class="modal-content">
                            <div class="modal-header" style="background-color:#163552;">
                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Asignar horario</h5>
@@ -149,17 +158,44 @@
                                    <div class="col-md-6">
                                        <div class="row">
                                         <div class="col-md-12">
-                                            <br>
-                                        </div>
-                                        <div class="col-md-12">
                                             <div class="form-group">
-                                               <label for="">Empleado(s):</label>
+                                               <label for="">Asignar empleado(s):</label>
                                                {{-- <input type="text" class="form-control form-control-sm" id="nombreEmpleado"> --}}
                                                <select class="form-control wide" data-plugin="customselect" multiple id="nombreEmpleado" >
 
                                             </select>
                                             </div>
                                          </div>
+                                         <div class="col-md-12">
+                                            <label for="">Calendario:</label>
+                                         </div>
+                                        <div class="col-md-4 ">
+                                            <select  class="form-control custom-select custom-select-sm" placeholder="pais" name="pais" id="pais">
+                                                <option value="">PAIS</option>
+                                                    @foreach ($pais as $paises)
+                                                        @if($paises->id==173)
+                                                            <option class="" selected="true" value="{{$paises->id}}" >{{$paises->nombre}}</option>
+                                                        @else
+                                                            <option class="" value="{{$paises->id}}">{{$paises->nombre}}</option>
+                                                        @endif
+                                                    @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            @if(!empty($eventos_usuario))
+                                                <h1>sdfg</h1>
+                                            @endif
+                                            <select  class="form-control custom-select custom-select-sm" placeholder="Departamento " name="departamento" id="departamento" style="display: flex;">
+                                                <option value="">DEPARTAMENTO</option>
+                                                 @foreach ($departamento as $departamentos)
+                                                <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
+                                                 @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4 text-left">
+                                           <button  id="nuevoCalendario" type="submit" style="padding-top: 4px; padding-bottom:4px;background: #a2b3c180;color:#58646f;border: none;" >cambiar de calendario &nbsp; </button>
+                                        </div>
+                                        <div class="col-md-12"><br></div>
                                         <div class="col-md-6"><label for=""><br></label>
                                             <div class="form-check">
 
@@ -201,14 +237,26 @@
                                                <input type="number"  class="form-control form-control-sm">
                                             </div>
                                          </div>
+
                                        </div>
                                    </div>
 
 
-                                    <div class="col-md-6 text-right" style=" max-width: 48%;">
-                                                <div id="calendar">
+                                    <div class="col-md-6" >
+                                     <div class="row">
 
-                                                </div>
+                                      </div>
+                                      <div class="col-md-12 text-right" id="Datoscalendar" style=" max-width: 96%;">
+                                        <div id="calendar">
+
+                                        </div>
+                                      </div>
+                                      <div class="col-md-12 text-right" id="Datoscalendar1" style=" max-width: 96%;">
+                                        <div id="calendar1">
+
+                                        </div>
+                                      </div>
+
 
                                     </div>
 

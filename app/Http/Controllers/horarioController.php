@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\empleado;
+use App\paises;
+use App\ubigeo_peru_departments;
 use Illuminate\Support\Facades\DB;
 class horarioController extends Controller
 {
@@ -13,7 +15,10 @@ class horarioController extends Controller
     }
     //
     public function index(){
-        return view('horarios.horarios');
+        $paises=paises::all();
+        $departamento=ubigeo_peru_departments::all();
+
+        return view('horarios.horarios',['pais'=>$paises,'departamento'=>$departamento]);
     }
     public function verEmpleado(Request $request){
         $idsEm=$request->ids;
