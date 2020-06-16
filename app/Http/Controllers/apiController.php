@@ -182,8 +182,9 @@ class apiController extends Controller
 
                 $elemento = [];
                 foreach($tareas as $tarea){
-                    array_push($elemento,array("id"=>$tarea->Tarea_id,"Tarea"=>$tarea->Tarea_Nombre));
+                    array_push($elemento,array("idTarea"=>$tarea->Tarea_id,"Tarea"=>$tarea->Tarea_Nombre));
                 }
+                
                 //ACTIVIDAD
                 $actividad = DB::table('empleado as e')
                 ->join('proyecto_empleado as pe','pe.empleado_emple_id','=','e.emple_id')
@@ -197,7 +198,7 @@ class apiController extends Controller
 
                 $elementoA = [];
                 foreach($actividad as $activ){
-                    array_push($elementoA,array("id"=>$activ->Activi_id,"Actividad"=>$activ->Activi_Nombre,"Tarea"=>$activ->Tarea_id));
+                    array_push($elementoA,array("idActividad"=>$activ->Activi_id,"Actividad"=>$activ->Activi_Nombre,"Tarea_id"=>$activ->Tarea_id));
                 }
                 array_push($respuesta,array("Proye_Nombre"=>$dato->Proye_Nombre,"Tareas"=>$elemento,"Actividad"=>$elementoA));
             }
