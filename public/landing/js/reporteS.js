@@ -146,7 +146,7 @@ function onSelectFechas(){
             //container.append(html_tr);
             //containerD.append(html_trD);
 
-            $("#Reporte").DataTable({
+            var table = $("#Reporte").DataTable({
                 "searching": true,
                 "scrollX": true,
                 retrieve: true,
@@ -181,18 +181,21 @@ function onSelectFechas(){
                     }
                 },
                 dom: 'Bfrtip',
-                /*buttons: [{
+                buttons: [{
                     extend: 'excel',
                     text:"<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
                     customize: function(xlsx) {
                         var sheet = xlsx.xl.worksheets['sheet1.xml'];},
                         sheetName: 'Exported data',
                         autoFilter: false
-                }],*/
-                buttons: ["copy","excel","pdf","print"],
+                },{
+                    extend: "pdfHtml5",
+                    text:"<i><img src='admin/images/pdf.svg' height='20'></i> Descargar"
+                }],
                 paging: true
             });
-
+            table.buttons().container()
+    .appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
             var chartdata = {
                 labels: nombre,
                 datasets: [{
