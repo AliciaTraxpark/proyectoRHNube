@@ -37,7 +37,7 @@ function onMostrarPantallas(){
                         var segundosT = parseInt(totalE[0])*3600 + parseInt(totalE[1])*60 + parseInt(totalE[2]);
                         var promedio = Math.round((segundos*100)/segundosT);
                         var nivel;
-                        if(promedio >= 55) nivel = "green";
+                        if(promedio >= 50) nivel = "green";
                         else if (promedio > 35) nivel = "#f3c623";
                         else nivel = "red";
                         if(parseInt(data[i].hora_ini.split(":")[1].charAt(0)) <5){
