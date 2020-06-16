@@ -36,4 +36,7 @@ class horarioController extends Controller
         ->get();
         return $empleados;
     }
+    public function guardarEventos(Request $request){
+        
+    }
 }

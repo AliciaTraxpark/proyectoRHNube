@@ -69,31 +69,7 @@ $('#btnasignar').on('click', function(e) {
 
 });
 //CALENDARIO//
-/* function agregarHoras(){
-    $('#aplicarHorario').prop('disabled',true);
-      //sacar dias entre fecha
-    var diasEntreFechas = function(desde, hasta) {
-        var dia_actual = desde;
-      var fechas = [];
-        while (dia_actual.isSameOrBefore(hasta)) {
-          fechas.push(dia_actual.format('YYYY-MM-DD'));
-             dia_actual.add(1, 'days');
-        }
-        return fechas;
-  };
-   f1= $('#horarioStart').val();
-     f2= $('#horarioEnd').val();
-    desde=moment(f1);
-    hasta=moment(f2);
-    var results = diasEntreFechas(desde, hasta);
-    results.pop();
-    console.log(results);
 
-    //agregar datos al calendar
-
-
-
-} */
  function calendario() {
     var calendarEl = document.getElementById('calendar');
     calendarEl.innerHTML="";
@@ -141,30 +117,66 @@ $('#btnasignar').on('click', function(e) {
          hasta=moment(f2);
          var results = diasEntreFechas(desde, hasta);
         results.pop();
-        console.log(results);
+        //console.log(results);
+        var fechasArray =[];
+        var fechastart=[];
+
+        var objeto = [
+
+        ];
+        $.each( results, function( key, value ) {
+            //alert( value );
+            fechasArray.push(inicio+'-'+fin
+            );
+            fechastart.push(value
+            );
 
 
-                  $.each( results, function( key, value ) {
-                    //alert( value );
-                    calendar.addEvent({
-                        title: inicio+'-'+fin,
-                        start: value,
-                        //end:f2,
-                        color:'#ffffff',
-                        textColor:' #000000',
-                        allDay: true
-                      })
+            objeto.push({"title": inicio+'-'+fin, "start":value});
+            calendar.addEvent({
+                title: inicio+'-'+fin,
+                start: value,
+                //end:f2,
+                color:'#ffffff',
+                textColor:' #000000',
+                allDay: true
+            })
 
-                  });
+                //
+
+        });
+        console.log(fechasArray);
+        //alert(fechasArray);
+        //alert(fechastart);
+ console.log(objeto);
+
+
 
           };
 
+          $('#guardarTodoHorario').click(function(){
+
+            //alert(fechasArray);
+        $.ajax({
+            url:"/guardarEventos",
+            data:{departamento:departamento,pais:pais},
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success:function(data){
+
+                },
+            error:function(){ alert("Hay un error");}
+            });
+        })
       },
       eventClick:function(info){
         id = info.event.id;
         console.log(info);
         console.log(info.event.id);
         console.log(info.event.title);
+        //var event = calendar.getEventById(id);
+        info.event.remove();
       },
       editable: false,
       eventLimit: true,

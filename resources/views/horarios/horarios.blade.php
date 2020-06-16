@@ -268,7 +268,8 @@
                                    <div class="row">
                                        <div class="col-md-12 text-right" >
                                         <button type="button" id="" class="btn btn-light " data-dismiss="modal">Cancelar</button>
-                                        <button type="button" id="" name="" style="background-color: #163552;" class="btn ">Guardar</button>
+                                        <button type="button" id="guardarTodoHorario" name="" style="background-color: #163552;" class="btn ">Guardar</button>
+                                        
                                        </div>
                                    </div>
                                </div>
