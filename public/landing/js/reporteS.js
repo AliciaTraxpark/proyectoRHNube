@@ -33,7 +33,8 @@ $('#fecha').daterangepicker({
         'Hace 1 día': [moment().subtract(1, 'days'), moment().add('days')],
         'Hace 1 semana': [moment().subtract(6, 'days'), moment()],
         'Hace 1 mes': [moment().subtract(29, 'days'), moment()],
-    }
+    },
+    autoUpdateInput: false
 });
 $('#fecha').val('');
 $(function(){
@@ -86,6 +87,7 @@ function onSelectFechas(){
     $('#empleado').empty();
     $('#dias').empty();
     $('#myChart').show();
+    $("[type=button]").prop('disabled', false);
     $.ajax({
         url:"reporte/empleado",
         method: "GET",

@@ -28,6 +28,9 @@
     display: block!important;
     margin-bottom: 10px;
     }
+    .drp-selected{
+        display: none!important;
+    }
 </style>
 <div class="row">
     <div class="col-lg-12">
