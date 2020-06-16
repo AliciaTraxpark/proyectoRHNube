@@ -150,7 +150,6 @@ class apiController extends Controller
 
         $proyecto_empleado = DB::table('proyecto_empleado as pe')
             ->where('Proye_empleado_id',$empleado)
-            ->where('Proyecto_Proye_id',$proyecto)
             ->get();
 
         if($proyecto_empleado){
@@ -162,7 +161,6 @@ class apiController extends Controller
                 ->leftJoin('actividad as ac','ac.Tarea_Tarea_id','=','t.Tarea_id')
                 ->select('pr.Proye_Nombre')
                 ->where('e.emple_id','=',$empleado)
-                ->where('pr.Proye_id','=',$proyecto)
                 ->groupBy('pr.Proye_id')
                 ->get();
 
@@ -177,7 +175,6 @@ class apiController extends Controller
                 ->leftJoin('actividad as ac','ac.Tarea_Tarea_id','=','t.Tarea_id')
                 ->select('t.Tarea_id','t.Tarea_Nombre')
                 ->where('e.emple_id','=',$empleado)
-                ->where('pr.Proye_id','=',$proyecto)
                 ->get();
 
                 $elemento = [];
@@ -193,7 +190,6 @@ class apiController extends Controller
                 ->leftJoin('actividad as ac','ac.Tarea_Tarea_id','=','t.Tarea_id')
                 ->select('ac.Activi_id','ac.Activi_Nombre','t.Tarea_id')
                 ->where('e.emple_id','=',$empleado)
-                ->where('pr.Proye_id','=',$proyecto)
                 ->get();
 
                 $elementoA = [];
