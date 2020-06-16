@@ -175,14 +175,14 @@ class apiController extends Controller
                 ->join('proyecto as pr','pr.Proye_id','=','pe.Proyecto_Proye_id')
                 ->leftJoin('tarea as t','t.Proyecto_Proye_id','=','pr.Proye_id')
                 ->leftJoin('actividad as ac','ac.Tarea_Tarea_id','=','t.Tarea_id')
-                ->select('t.Tarea_Nombre')
+                ->select('t.Tarea_id','t.Tarea_Nombre')
                 ->where('e.emple_id','=',$empleado)
                 ->where('pr.Proye_id','=',$proyecto)
                 ->get();
 
                 $elemento = [];
                 foreach($tareas as $tarea){
-                    array_push($elemento,$tarea->Tarea_Nombre);
+                    array_push($elemento,array("id"=>$tarea->Tarea_id,"Tarea"=>$tarea->Tarea_Nombre));
                 }
                 //ACTIVIDAD
                 $actividad = DB::table('empleado as e')
@@ -190,14 +190,14 @@ class apiController extends Controller
                 ->join('proyecto as pr','pr.Proye_id','=','pe.Proyecto_Proye_id')
                 ->leftJoin('tarea as t','t.Proyecto_Proye_id','=','pr.Proye_id')
                 ->leftJoin('actividad as ac','ac.Tarea_Tarea_id','=','t.Tarea_id')
-                ->select('ac.Activi_Nombre')
+                ->select('ac.Activi_id','ac.Activi_Nombre','t.Tarea_id')
                 ->where('e.emple_id','=',$empleado)
                 ->where('pr.Proye_id','=',$proyecto)
                 ->get();
 
                 $elementoA = [];
                 foreach($actividad as $activ){
-                    array_push($elementoA,$activ->Activi_Nombre);
+                    array_push($elementoA,array("id"=>$activ->Activi_id,"Actividad"=>$activ->Activi_Nombre,"Tarea"=>$activ->Tarea_id));
                 }
                 array_push($respuesta,array("Proye_Nombre"=>$dato->Proye_Nombre,"Tareas"=>$elemento,"Actividad"=>$elementoA));
             }
