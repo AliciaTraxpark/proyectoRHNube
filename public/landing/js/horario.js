@@ -69,6 +69,31 @@ $('#btnasignar').on('click', function(e) {
 
 });
 //CALENDARIO//
+/* function agregarHoras(){
+    $('#aplicarHorario').prop('disabled',true);
+      //sacar dias entre fecha
+    var diasEntreFechas = function(desde, hasta) {
+        var dia_actual = desde;
+      var fechas = [];
+        while (dia_actual.isSameOrBefore(hasta)) {
+          fechas.push(dia_actual.format('YYYY-MM-DD'));
+             dia_actual.add(1, 'days');
+        }
+        return fechas;
+  };
+   f1= $('#horarioStart').val();
+     f2= $('#horarioEnd').val();
+    desde=moment(f1);
+    hasta=moment(f2);
+    var results = diasEntreFechas(desde, hasta);
+    results.pop();
+    console.log(results);
+
+    //agregar datos al calendar
+
+
+
+} */
  function calendario() {
     var calendarEl = document.getElementById('calendar');
     calendarEl.innerHTML="";
@@ -81,7 +106,7 @@ $('#btnasignar').on('click', function(e) {
         locale: 'es',
         defaultDate: ano+'-01-01',
          height:  "auto",
-         contentHeight: 410,
+         contentHeight: 430,
          fixedWeekCount:false,
         plugins: [ 'dayGrid','interaction','timeGrid'],
 
@@ -89,9 +114,51 @@ $('#btnasignar').on('click', function(e) {
         selectMirror: true,
         select: function(arg) {
         console.log(arg);
-        $('#aplicarHorario').prop('disabled', false);
+
         $('#horarioEnd').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
         $('#horarioStart').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
+        f1= $('#horarioStart').val();
+        f2= $('#horarioEnd').val();
+        inicio=$('#horaI').val();
+        fin=$('#horaF').val();
+        if(inicio=='' || fin=='' ){
+        alert('Indique hora de inicio y fin');}else{
+            agregarHoras();
+        }
+        function agregarHoras() {
+          //sacar dias entre fecha
+          var diasEntreFechas = function(desde, hasta) {
+            var dia_actual = desde;
+          var fechas = [];
+            while (dia_actual.isSameOrBefore(hasta)) {
+              fechas.push(dia_actual.format('YYYY-MM-DD'));
+                 dia_actual.add(1, 'days');
+            }
+            return fechas;
+          };
+
+         desde=moment(f1);
+         hasta=moment(f2);
+         var results = diasEntreFechas(desde, hasta);
+        results.pop();
+        console.log(results);
+
+
+                  $.each( results, function( key, value ) {
+                    //alert( value );
+                    calendar.addEvent({
+                        title: inicio+'-'+fin,
+                        start: value,
+                        //end:f2,
+                        color:'#ffffff',
+                        textColor:' #000000',
+                        allDay: true
+                      })
+
+                  });
+
+          };
+
       },
       eventClick:function(info){
         id = info.event.id;
@@ -228,26 +295,4 @@ function calendario1(data,fechas) {
 document.addEventListener('DOMContentLoaded',calendario1);
 //////////////////////
 
-function agregarHoras(){
-    $('#aplicarHorario').prop('disabled',true);
 
-
-
-    var diasEntreFechas = function(desde, hasta) {
-        var dia_actual = desde;
-      var fechas = [];
-        while (dia_actual.isSameOrBefore(hasta)) {
-          fechas.push(dia_actual.format('YYYY-MM-DD'));
-             dia_actual.add(1, 'days');
-        }
-        return fechas;
-  };
- f1= $('#horarioStart').val();
- f2= $('#horarioEnd').val();
- desde=moment(f1);
-    hasta=moment(f2);
-  var results = diasEntreFechas(desde, hasta);
-  results.pop();
-  console.log(results);
-
-}

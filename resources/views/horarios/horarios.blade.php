@@ -153,7 +153,7 @@
                                <div class="row">
 
                                    <div class="col-md-6">
-                                    <form action="javascript:agregarHoras()">
+                                    <form id="formulario" action="javascript:agregarHoras()">
                                        <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
@@ -211,7 +211,7 @@
                                          <div class="col-md-6">
                                             <div class="form-group">
                                                <label for="">Descripcion:</label>
-                                               <input type="text" class="form-control form-control-sm" id="" required>
+                                               <input type="text" class="form-control form-control-sm" id="descripcionCa" required>
                                             </div>
                                          </div>
                                          <div class="col-md-6">
@@ -232,8 +232,9 @@
                                                <input type="number"  class="form-control form-control-sm" required>
                                             </div>
                                          </div>
-                                         <div class="col-md-12 text-right">
-                                             <button type="submit" class="btn btn-light btn-sm" id="aplicarHorario" style="background: #5f88a4; color: #fff;">Aplicar horario a seleccion</button>
+                                         <div class="col-md-12 text-left">
+                                             {{-- <button type="submit" class="btn btn-light btn-sm" id="aplicarHorario" style="background: #5f88a4; color: #fff;">Aplicar horario a seleccion</button> --}}
+                                             <label for="" style="font-weight: 600">Seleccione dias para agregar el horario establecido -></label>
                                          </div>
 
                                        </div>
@@ -244,12 +245,12 @@
                                      <div class="row">
 
                                       </div>
-                                      <div class="col-md-12 text-right" id="Datoscalendar" style=" max-width: 96%;">
+                                      <div class="col-md-12 text-right" id="Datoscalendar" style=" max-width: 100%;">
                                         <div id="calendar">
                                         </div>
                                       </div>
-                                      <input type="text" id="horarioEnd">
-                                      <input type="text" id="horarioStart">
+                                      <input type="hidden" id="horarioEnd">
+                                      <input type="hidden" id="horarioStart">
 
                                       <div class="col-md-12 text-right" id="Datoscalendar1" style=" max-width: 96%;">
                                         <div id="calendar1">
