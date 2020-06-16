@@ -159,7 +159,7 @@ class apiController extends Controller
                 ->join('proyecto as pr','pr.Proye_id','=','pe.Proyecto_Proye_id')
                 ->leftJoin('tarea as t','t.Proyecto_Proye_id','=','pr.Proye_id')
                 ->leftJoin('actividad as ac','ac.Tarea_Tarea_id','=','t.Tarea_id')
-                ->select('pr.Proye_Nombre')
+                ->select('pr.Proye_id','pr.Proye_Nombre')
                 ->where('e.emple_id','=',$empleado)
                 ->groupBy('pr.Proye_id')
                 ->get();
@@ -196,7 +196,7 @@ class apiController extends Controller
                 foreach($actividad as $activ){
                     array_push($elementoA,array("idActividad"=>$activ->Activi_id,"Actividad"=>$activ->Activi_Nombre,"Tarea_id"=>$activ->Tarea_id));
                 }
-                array_push($respuesta,array("Proye_Nombre"=>$dato->Proye_Nombre,"Tareas"=>$elemento,"Actividad"=>$elementoA));
+                array_push($respuesta,array("Proye_id"=>$dato->Proye_id,"Proye_Nombre"=>$dato->Proye_Nombre,"Tareas"=>$elemento,"Actividad"=>$elementoA));
             }
             return response()->json($respuesta,200);
         }
