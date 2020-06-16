@@ -42,7 +42,7 @@ function onMostrarPantallas(){
                         else nivel = "red";
                         if(parseInt(data[i].hora_ini.split(":")[1].charAt(0)) <5){
                             card = `<div class="col-2" style="margin-left: 0px!important;">
-                                        <div class="card mb-0 text-center" style="padding-left: 20px;">
+                                        <div class="mb-0 text-center" style="padding-left: 0px;">
                                             <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
                                                 aria-expanded="true" aria-controls="customaccorcollapseOne">
                                             </a>
@@ -77,7 +77,7 @@ function onMostrarPantallas(){
                                     </div>`
                         }else{
                             card = `<div class="col-2" style="margin-left: 0px!important;">
-                                            <div class="card mb-0 text-center" style="padding-left: 20px;">
+                                            <div class="mb-0 text-center" style="padding-left: 0px;">
                                                 <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
                                                     aria-expanded="true" aria-controls="customaccorcollapseOne">
                                                 </a>
@@ -119,7 +119,7 @@ function onMostrarPantallas(){
                     }else{
                         card = `<div class="col-2" style="margin-left: 0px!important;justify-content:center;!important">
                         <br><br><br><br><br>
-                                <div class="card mb-0" style="padding-left: 20px;padding-right: 20px;">
+                                <div class="mb-0">
                                     <a href="" class="text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
                                         aria-expanded="true" aria-controls="customaccorcollapseOne">
                                     </a>
