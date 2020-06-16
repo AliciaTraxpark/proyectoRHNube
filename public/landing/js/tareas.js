@@ -36,7 +36,6 @@ function onMostrarPantallas(){
                         var totalE = data[i].Total_Envio.split(":");
                         var segundosT = parseInt(totalE[0])*3600 + parseInt(totalE[1])*60 + parseInt(totalE[2]);
                         var promedio = Math.round((segundos*100)/segundosT);
-                        console.log(promedio);
                         if(parseInt(data[i].hora_ini.split(":")[1].charAt(0)) <5){
                             card = `<div class="col-2" style="margin-left: 0px!important;">
                                         <div class="card mb-0 text-center" style="padding-left: 20px;">
