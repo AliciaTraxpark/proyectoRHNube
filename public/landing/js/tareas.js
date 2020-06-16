@@ -54,8 +54,7 @@ function onMostrarPantallas(){
                                                     <div class="hovereffect">
                                                     <img src="data:image/jpeg;base64,${data[i].imagen}" height="120" width="120" class="img-responsive">
                                                     <div class="overlay">
-                                                    <h2>Vista</h2>
-                                                    <a class="info" onclick="zoom('${data[i].imagen}')" style="color:#fdfdfd">Previa</a>
+                                                    <a class="info" onclick="zoom('${data[i].imagen}')" style="color:#fdfdfd">Zoom</a>
                                                     </div>
                                                     </div>
                                                     &nbsp;
@@ -91,7 +90,7 @@ function onMostrarPantallas(){
                                                         <div class="hovereffect">
                                                         <img src="data:image/jpeg;base64,${data[i].imagen}" height="120" width="120" class="img-responsive">
                                                         <div class="overlay">
-                                                        <a class="info" onclick="zoom('${data[i].imagen}')" style="color:#fdfdfd">ZOOM</a>
+                                                        <a class="info" onclick="zoom('${data[i].imagen}')" style="color:#fdfdfd">zoom</a>
                                                         </div>
                                                         </div>
                                                         &nbsp;
