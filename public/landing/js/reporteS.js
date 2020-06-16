@@ -87,7 +87,6 @@ function onSelectFechas(){
     $('#empleado').empty();
     $('#dias').empty();
     $('#myChart').show();
-    $("[type=button]").prop('disabled', false);
     $.ajax({
         url:"reporte/empleado",
         method: "GET",
