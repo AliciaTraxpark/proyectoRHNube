@@ -5,9 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    {{-- <link rel="stylesheet" href="{{asset('landing/vendors/owl-carousel/css/owl.carousel.min.css')}}">
-    <link rel="stylesheet" href="{{asset('landing/vendors/owl-carousel/css/owl.theme.default.css')}}">
-    <link rel="stylesheet" href="{{asset('landing/vendors/mdi/css/materialdesignicons.min.css')}}"> --}}
     <link rel="stylesheet" href="{{asset('landing/vendors/aos/css/aos.css')}}">
     <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -156,6 +153,7 @@
                                <div class="row">
 
                                    <div class="col-md-6">
+                                    <form action="javascript:agregarHoras()">
                                        <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
@@ -182,9 +180,6 @@
                                             </select>
                                         </div>
                                         <div class="col-md-4">
-                                            @if(!empty($eventos_usuario))
-                                                <h1>sdfg</h1>
-                                            @endif
                                             <select  class="form-control custom-select custom-select-sm" placeholder="Departamento " name="departamento" id="departamento" style="display: flex;">
                                                 <option value="">DEPARTAMENTO</option>
                                                  @foreach ($departamento as $departamentos)
@@ -193,7 +188,7 @@
                                             </select>
                                         </div>
                                         <div class="col-md-4 text-left">
-                                           <button  id="nuevoCalendario" type="submit" style="padding-top: 4px; padding-bottom:4px;background: #a2b3c180;color:#58646f;border: none;" >cambiar de calendario &nbsp; </button>
+                                           <button  id="nuevoCalendario" class="btn btn-light btn-sm" type="button" style="padding-top: 5px; padding-bottom:5px;background: #d1e1ef;color:#1b4165;border: none;" >cambiar de calendario &nbsp; </button>
                                         </div>
                                         <div class="col-md-12"><br></div>
                                         <div class="col-md-6"><label for=""><br></label>
@@ -216,31 +211,34 @@
                                          <div class="col-md-6">
                                             <div class="form-group">
                                                <label for="">Descripcion:</label>
-                                               <input type="text" class="form-control form-control-sm" id="">
+                                               <input type="text" class="form-control form-control-sm" id="" required>
                                             </div>
                                          </div>
                                          <div class="col-md-6">
                                             <div class="form-group">
                                                <label for="">Hora de inicio:</label>
-                                               <input type="text" id="horaI" class="form-control form-control-sm">
+                                               <input type="text" id="horaI" class="form-control form-control-sm" required>
                                             </div>
                                          </div>
                                          <div class="col-md-6">
                                             <div class="form-group">
                                                <label for="">Hora de fin:</label>
-                                               <input type="text" id="horaF" class="form-control form-control-sm">
+                                               <input type="text" id="horaF" class="form-control form-control-sm" required>
                                             </div>
                                          </div>
                                          <div class="col-md-6">
                                             <div class="form-group">
                                                <label for="">Tolerancia(Min):</label>
-                                               <input type="number"  class="form-control form-control-sm">
+                                               <input type="number"  class="form-control form-control-sm" required>
                                             </div>
+                                         </div>
+                                         <div class="col-md-12 text-right">
+                                             <button type="submit" class="btn btn-light btn-sm" id="aplicarHorario" style="background: #5f88a4; color: #fff;">Aplicar horario a seleccion</button>
                                          </div>
 
                                        </div>
+                                     </form>
                                    </div>
-
 
                                     <div class="col-md-6" >
                                      <div class="row">
@@ -248,12 +246,13 @@
                                       </div>
                                       <div class="col-md-12 text-right" id="Datoscalendar" style=" max-width: 96%;">
                                         <div id="calendar">
-
                                         </div>
                                       </div>
+                                      <input type="text" id="horarioEnd">
+                                      <input type="text" id="horarioStart">
+
                                       <div class="col-md-12 text-right" id="Datoscalendar1" style=" max-width: 96%;">
                                         <div id="calendar1">
-
                                         </div>
                                       </div>
 
@@ -309,7 +308,7 @@
     <script src="{{asset('admin/packages/daygrid/main.js')}}"></script>
     <script src="{{asset('admin/packages/timegrid/main.js')}}"></script>
     <script src="{{asset('admin/packages/interaction/main.js')}}"></script>
-
+{{--     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"></script> --}}
     <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
 
 </body>

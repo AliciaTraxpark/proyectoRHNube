@@ -1,4 +1,4 @@
-$('#horaI').flatpickr({
+ $('#horaI').flatpickr({
     enableTime: true,
     noCalendar: true,
     dateFormat: "H:i",
@@ -89,6 +89,9 @@ $('#btnasignar').on('click', function(e) {
         selectMirror: true,
         select: function(arg) {
         console.log(arg);
+        $('#aplicarHorario').prop('disabled', false);
+        $('#horarioEnd').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
+        $('#horarioStart').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
       },
       eventClick:function(info){
         id = info.event.id;
@@ -116,7 +119,13 @@ document.addEventListener('DOMContentLoaded',calendario);
 
 ///////////////////////////////
 $( document ).ready(function() {
-    $('#Datoscalendar1').hide();
+    $('#Datoscalendar1').css("display","none");
+    $('#aplicarHorario').prop('disabled', true);
+
+    $ ('.flatpickr-input[readonly]'). on ('focus', function () {
+        $ (this) .blur ()
+        })
+        $ ('.flatpickr-input[readonly]'). prop ('readonly', false)
  });
  $('#nuevoCalendario').click(function(){
      var departamento= $('#departamento').val();
@@ -161,14 +170,6 @@ $( document ).ready(function() {
          var fechas=new Date(fechas1);
 
          calendario1(data,fechas);
-         $('#calendar1 .fc-Descanso-button').prop('disabled', true);
-         $('#calendar1 .fc-NoLaborales-button').prop('disabled', true);
-         $("#calendar1 .fc-left").on("click",myFuncion1);
-         function myFuncion1(){
-            $('#calendar1 .fc-Descanso-button').prop('disabled', true);
-            $('#calendar1 .fc-NoLaborales-button').prop('disabled', true);
-            $("#calendar1 .fc-left").on("click",myFuncion1);
-        }
 
          },
        error:function(){ alert("Hay un error");}
@@ -196,15 +197,6 @@ function calendario1(data,fechas) {
         selectable: true,
         selectMirror: true,
         select: function(arg) {
-
-
-         /*  calendar.addEvent({
-            title: 'title',
-            start: arg.start,
-            end: arg.end,
-            allDay: arg.allDay
-          }) */
-
         console.log(arg);
       },
       eventClick:function(info){
@@ -226,18 +218,36 @@ function calendario1(data,fechas) {
           left:'Descanso',
           right:'NoLaborales'
         },
-
-
         events:data,
-
-
-
-
       }
     var calendar1 = new FullCalendar.Calendar(calendarEl1,configuracionCalendario1);
     calendar1.setOption('locale',"Es");
      //DESCANSO
-
     calendar1.render();
 }
 document.addEventListener('DOMContentLoaded',calendario1);
+//////////////////////
+
+function agregarHoras(){
+    $('#aplicarHorario').prop('disabled',true);
+
+
+
+    var diasEntreFechas = function(desde, hasta) {
+        var dia_actual = desde;
+      var fechas = [];
+        while (dia_actual.isSameOrBefore(hasta)) {
+          fechas.push(dia_actual.format('YYYY-MM-DD'));
+             dia_actual.add(1, 'days');
+        }
+        return fechas;
+  };
+ f1= $('#horarioStart').val();
+ f2= $('#horarioEnd').val();
+ desde=moment(f1);
+    hasta=moment(f2);
+  var results = diasEntreFechas(desde, hasta);
+  results.pop();
+  console.log(results);
+
+}
