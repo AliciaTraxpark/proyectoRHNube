@@ -34,7 +34,6 @@ class HomeController extends Controller
             $variable=1;
          }
 
-
          else{
             $variable=0;
         }
@@ -44,5 +43,5 @@ class HomeController extends Controller
 
 
 }
-    
+
 }

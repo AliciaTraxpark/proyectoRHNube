@@ -9,6 +9,7 @@ use App\ubigeo_peru_departments;
 use Illuminate\Support\Facades\DB;
 use App\temporal_eventos;
 use App\horario_dias;
+use App\horario;
 use Illuminate\Support\Facades\Auth;
 class horarioController extends Controller
 {
@@ -61,7 +62,6 @@ class horarioController extends Controller
         $temporal_eventos->save();
         }
 
-
     }
     public function eventos(){
         $eventos=DB::table('eventos')->select(['id','title' ,'color', 'textColor', 'start','end']);
@@ -73,16 +73,19 @@ class horarioController extends Controller
              ->where('evento_pais','=',173)
                 ->union($eventos);
 
-
         $temporal_eventos=DB::table('temporal_eventos')->select(['id','title' ,'color', 'textColor', 'start','end'])
         ->where('users_id','=',Auth::user()->id)
         ->union($eventos_usuario)
         ->get();
 
-
         return response()->json($temporal_eventos);
     }
     public function guardarEventosBD(Request $request){
+        $idemps=$request->idemps;
+        $sobretiempo=$request->sobretiempo;
+        $tipHorario=$request->tipHorario;
+        $descripcion=$request->descripcion;
+        $toleranciaH=$request->toleranciaH;
         $temporal_evento=  temporal_eventos::where('users_id','=',Auth::user()->id)->get();
         foreach($temporal_evento as $temporal_eventos)
         {   $horario_dias=new horario_dias();
@@ -97,7 +100,14 @@ class horarioController extends Controller
             $horario_dias->horaF= $temporal_eventos->temp_horaF;
             $horario_dias->save();
             $temporal_evento->each->delete();
+
         }
+        $horario=new horario();
+        $horario->horario_sobretiempo=$sobretiempo;
+        $horario->horario_tipo=$tipHorario;
+        $horario->horario_descripcion=$descripcion;
+        $horario->horario_tolerancia=$toleranciaH;
+        $horario->save();
 
         }
 

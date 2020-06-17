@@ -151,6 +151,7 @@ $('#btnasignar').on('click', function(e) {
         //alert(fechastart);
         idpais=$('#pais').val();
         iddepartamento=$('#departamento').val();
+
         $.ajax({
             type:"post",
             url:"/guardarEventos",
@@ -311,12 +312,18 @@ document.addEventListener('DOMContentLoaded',calendario1);
 //////////////////////
 
 $('#guardarTodoHorario').click(function(){
+    idemps=$('#nombreEmpleado').val();
+    if( $('#exampleCheck1').prop('checked') ) {
+       sobretiempo=1;
+    } else { sobretiempo=0;}
+    tipHorario=$('#tipHorario').val();
+    descripcion=$('#descripcionCa').val();
+    toleranciaH=$('#toleranciaH').val();
 
-    //alert(fechasArray);
 $.ajax({
     type:"post",
     url:"/guardarEventosBD",
-    data:"",
+    data:{idemps,sobretiempo,tipHorario,descripcion,toleranciaH},
     headers: {
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
