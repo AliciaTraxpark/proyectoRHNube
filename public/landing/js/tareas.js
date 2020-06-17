@@ -1,47 +1,52 @@
 //FECHA
 $('#fecha').flatpickr({
-    locale:"es",
+    locale: "es",
     maxDate: "today"
 });
 //CAPTURAS
-$(function(){
-    $('#empleado').on('change',onMostrarPantallas);
-    $('#fecha').on('change',onMostrarPantallas);
-    $('#proyecto').on('change',onMostrarPantallas);
+$(function () {
+    $('#empleado').on('change', onMostrarPantallas);
+    $('#fecha').on('change', onMostrarPantallas);
+    $('#proyecto').on('change', onMostrarPantallas);
 });
-function onMostrarPantallas(){
+
+function onMostrarPantallas() {
     var value = $('#empleado').val();
     var fecha = $('#fecha').val();
     var proyecto = $('#proyecto').val();
     $('#card').empty();
     $.ajax({
-        url:"tareas/show",
+        url: "tareas/show",
         method: "GET",
-        data:{value:value,fecha:fecha,proyecto:proyecto},
-        headers:{
+        data: {
+            value: value,
+            fecha: fecha,
+            proyecto: proyecto
+        },
+        headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        success:function(data){
-           if(data.length != 0){
-            var container = $('#card');
-            var horaDelGrupo = parseInt(data[0].hora_ini.split(":")[0]);
-            var labelDelGrupo = horaDelGrupo+":00:00" + " - " + (horaDelGrupo+1) + ":00:00";
-            var grupo = `<span style="font-weight: bold;color:#507394;">${labelDelGrupo}</span><br><br><div class="row">`;
-            for(var i=0; i<data.length; i++){
-                for(var j=0; j<6; j++){
-                    if(parseInt(data[i].hora_ini.split(":")[1].charAt(0)) == j && 
-                    parseInt(data[i].hora_ini.split(":")[0]) == horaDelGrupo){
-                        var horaP = data[i].promedio.split(":");
-                        var segundos = parseInt(horaP[0])*3600 + parseInt(horaP[1])*60 + parseInt(horaP[2]);
-                        var totalE = data[i].Total_Envio.split(":");
-                        var segundosT = parseInt(totalE[0])*3600 + parseInt(totalE[1])*60 + parseInt(totalE[2]);
-                        var promedio = Math.round((segundos*100)/segundosT);
-                        var nivel;
-                        if(promedio >= 50) nivel = "green";
-                        else if (promedio > 35) nivel = "#f3c623";
-                        else nivel = "red";
-                        if(parseInt(data[i].hora_ini.split(":")[1].charAt(0)) <5){
-                            card = `<div class="col-2" style="margin-left: 0px!important;">
+        success: function (data) {
+            if (data.length != 0) {
+                var container = $('#card');
+                var horaDelGrupo = parseInt(data[0].hora_ini.split(":")[0]);
+                var labelDelGrupo = horaDelGrupo + ":00:00" + " - " + (horaDelGrupo + 1) + ":00:00";
+                var grupo = `<span style="font-weight: bold;color:#507394;">${labelDelGrupo}</span><br><br><div class="row">`;
+                for (var i = 0; i < data.length; i++) {
+                    for (var j = 0; j < 6; j++) {
+                        if (parseInt(data[i].hora_ini.split(":")[1].charAt(0)) == j &&
+                            parseInt(data[i].hora_ini.split(":")[0]) == horaDelGrupo) {
+                            var horaP = data[i].promedio.split(":");
+                            var segundos = parseInt(horaP[0]) * 3600 + parseInt(horaP[1]) * 60 + parseInt(horaP[2]);
+                            var totalE = data[i].Total_Envio.split(":");
+                            var segundosT = parseInt(totalE[0]) * 3600 + parseInt(totalE[1]) * 60 + parseInt(totalE[2]);
+                            var promedio = Math.round((segundos * 100) / segundosT);
+                            var nivel;
+                            if (promedio >= 50) nivel = "green";
+                            else if (promedio > 35) nivel = "#f3c623";
+                            else nivel = "red";
+                            if (parseInt(data[i].hora_ini.split(":")[1].charAt(0)) < 5) {
+                                card = `<div class="col-2" style="margin-left: 0px!important;">
                                         <div class="mb-0 text-center" style="padding-left: 0px;">
                                             <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
                                                 aria-expanded="true" aria-controls="customaccorcollapseOne">
@@ -75,8 +80,8 @@ function onMostrarPantallas(){
                                             </div>
                                         </div>
                                     </div>`
-                        }else{
-                            card = `<div class="col-2" style="margin-left: 0px!important;">
+                            } else {
+                                card = `<div class="col-2" style="margin-left: 0px!important;">
                                             <div class="mb-0 text-center" style="padding-left: 0px;">
                                                 <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
                                                     aria-expanded="true" aria-controls="customaccorcollapseOne">
@@ -111,13 +116,13 @@ function onMostrarPantallas(){
                                                 </div>
                                             </div>
                                         </div>`
-                        }
-                        if(i!= data.length-1){
-                            i++;
-                        }
-                        grupo+=card;
-                    }else{
-                        card = `<div class="col-2" style="margin-left: 0px!important;justify-content:center;!important">
+                            }
+                            if (i != data.length - 1) {
+                                i++;
+                            }
+                            grupo += card;
+                        } else {
+                            card = `<div class="col-2" style="margin-left: 0px!important;justify-content:center;!important">
                         <br><br><br><br><br>
                                 <div class="mb-0">
                                     <a href="" class="text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
@@ -136,56 +141,65 @@ function onMostrarPantallas(){
                                     </div>
                                 </div>
                             </div>`;
-                        grupo += card;
+                            grupo += card;
+                        }
                     }
+                    if (parseInt(data[i].hora_ini.split(":")[0]) > horaDelGrupo) {
+                        i--;
+                    }
+                    grupo += `</div><br>`;
+                    container.append(grupo);
+                    horaDelGrupo = parseInt(data[i + 1].hora_ini.split(":")[0]);
+                    var labelDelGrupo = horaDelGrupo + ":00:00" + " - " + (horaDelGrupo + 1) + ":00:00";
+                    grupo = `<span style="font-weight: bold;color:#507394;">${labelDelGrupo}</span><br><br><div class="row">`;
                 }
-                if(parseInt(data[i].hora_ini.split(":")[0] ) > horaDelGrupo){
-                    i--;
-                }
-                grupo += `</div><br>`;
-                container.append(grupo);
-                horaDelGrupo = parseInt(data[i + 1].hora_ini.split(":")[0]);
-                var labelDelGrupo = horaDelGrupo + ":00:00" + " - "  + (horaDelGrupo+1) + ":00:00";
-                grupo = `<span style="font-weight: bold;color:#507394;">${labelDelGrupo}</span><br><br><div class="row">`;
+            } else {
+                $.notify("Falta elegir campos o No se encontrado capturas.", {
+                    align: "right",
+                    verticalAlign: "top",
+                    type: "warning",
+                    icon: "warning",
+                    delay: 1000
+                });
             }
-           }else{
-            $.notify("Falta elegir campos o No se encontrado capturas.", {align:"right", verticalAlign:"top",type: "warning", icon:"warning",delay:1000});
-           }
         },
-        error:function(data){
+        error: function (data) {
             alert("Hay un error");
         }
     })
 }
 //PROYECTO
-$(function(){
-    $('#empleado').on('change',onMostrarProyecto);
+$(function () {
+    $('#empleado').on('change', onMostrarProyecto);
 });
-function onMostrarProyecto(){
+
+function onMostrarProyecto() {
     var value = $('#empleado').val();
     $.ajax({
-        url:"tareas/proyecto",
+        url: "tareas/proyecto",
         method: "GET",
-        data:{value:value},
-        headers:{
+        data: {
+            value: value
+        },
+        headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        success:function(data){
+        success: function (data) {
             var html_select = '<option value="">Seleccionar</option>';
-            for(var i=0; i<data.length; i++)
-                html_select += '<option value="'+ data[i].Proye_id +'">'+ data[i].Proye_Nombre +'</option>';
-                $('#proyecto').html(html_select);
+            for (var i = 0; i < data.length; i++)
+                html_select += '<option value="' + data[i].Proye_id + '">' + data[i].Proye_Nombre + '</option>';
+            $('#proyecto').html(html_select);
         }
     })
 }
 
-function zoom(img){
-    $('#imagenZoom').attr("src",`data:image/jpeg;base64,${img}`);
+function zoom(img) {
+    $('#imagenZoom').attr("src", `data:image/jpeg;base64,${img}`);
     $('#zoom').zoom({
-        on : 'click'
+        on: 'click'
     });
     $('#modalZoom').modal();
-    $('.close').on('click',function(){
-        $('#zoom').trigger('zoom.destroy'); 
+    $('.close').on('click', function () {
+        $('#zoom').trigger('zoom.destroy');
     });
 }
