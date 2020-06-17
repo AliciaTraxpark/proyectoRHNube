@@ -201,7 +201,7 @@
                                          <div class="col-md-6">
                                            <div class="form-group">
                                               <label for="">Tipo de horario:</label>
-                                              <select class="form-control custom-select custom-select-sm">
+                                              <select class="form-control custom-select custom-select-sm" id="tipHorario">
                                                 <option>Normal</option>
                                                 <option>Guardía</option>
                                                 <option>Nocturno</option>
@@ -229,7 +229,7 @@
                                          <div class="col-md-6">
                                             <div class="form-group">
                                                <label for="">Tolerancia(Min):</label>
-                                               <input type="number"  class="form-control form-control-sm" required>
+                                               <input type="number"  class="form-control form-control-sm" id="toleranciaH" required>
                                             </div>
                                          </div>
                                          <div class="col-md-12 text-left">
@@ -269,7 +269,7 @@
                                        <div class="col-md-12 text-right" >
                                         <button type="button" id="" class="btn btn-light " data-dismiss="modal">Cancelar</button>
                                         <button type="button" id="guardarTodoHorario" name="" style="background-color: #163552;" class="btn ">Guardar</button>
-                                        
+
                                        </div>
                                    </div>
                                </div>
