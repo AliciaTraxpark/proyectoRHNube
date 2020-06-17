@@ -133,6 +133,7 @@ $('#btnasignar').on('click', function(e) {
 
 
             objeto.push({"title": inicio+'-'+fin, "start":value});
+
             calendar.addEvent({
                 title: inicio+'-'+fin,
                 start: value,
@@ -148,7 +149,20 @@ $('#btnasignar').on('click', function(e) {
         console.log(fechasArray);
         //alert(fechasArray);
         //alert(fechastart);
- console.log(objeto);
+        $.ajax({
+            type:"post",
+            url:"/guardarEventos",
+            data:{fechasArray:fechastart,hora:inicio+'-'+fin},
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            success: function (data) {
+
+            },
+            error: function (data) {
+                alert('Ocurrio un error');
+            }
+
+
+        });
 
 
 

@@ -7,6 +7,8 @@ use App\empleado;
 use App\paises;
 use App\ubigeo_peru_departments;
 use Illuminate\Support\Facades\DB;
+use App\temporal_eventos;
+use Illuminate\Support\Facades\Auth;
 class horarioController extends Controller
 {
     public function __construct()
@@ -37,6 +39,18 @@ class horarioController extends Controller
         return $empleados;
     }
     public function guardarEventos(Request $request){
-        
+        $datafecha=$request->fechasArray;
+        $horas=$request->hora;
+        foreach($datafecha as $datafechas){
+        $temporal_eventos=new temporal_eventos();
+        $temporal_eventos->title=$horas;
+        $temporal_eventos->start=$datafechas;
+        $temporal_eventos->color='#ffffff';
+        $temporal_eventos->textColor='000000';
+        $temporal_eventos->users_id=Auth::user()->id;
+        $temporal_eventos->save();
+        }
+
+
     }
 }
