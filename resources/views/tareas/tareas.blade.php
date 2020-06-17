@@ -25,7 +25,8 @@
 @endsection
 
 @section('content')
-<div id="modalZoom" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+<div id="modalZoom" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    data-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
@@ -35,13 +36,13 @@
                 </button>
             </div>
             <div class="modal-body">
-                    <div class="row">
-                        <div class="col-xl-12 text-center">
+                <div class="row">
+                    <div class="col-xl-12 text-center">
                         <span id="zoom">
                             <img id="imagenZoom" height="300" width="300">
                         </span>
-                        </div>
                     </div>
+                </div>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -69,7 +70,8 @@
                             <select id="empleado" data-plugin="customselect" class="form-control">
                                 <option value="" disabled selected>Seleccionar</option>
                                 @foreach ($empleado as $empleados)
-                                    <option class="" value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</option>
+                                <option class="" value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}}
+                                    {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -112,4 +114,3 @@
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{asset('landing/js/tareas.js')}}"></script>
 @endsection
-
