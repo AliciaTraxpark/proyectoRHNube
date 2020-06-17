@@ -3,14 +3,20 @@
 @section('css')
 <link rel="shortcut icon" href="{{asset('admin/assets/images/favicon.ico')}}">
 <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.css') }}" rel="stylesheet" />
+<link href="{{
+    URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.css')
+    }}" rel="stylesheet" />
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<link href="{{ URL::asset('admin/assets/libs/daterangepicker-master/daterangepicker.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{
+    URL::asset('admin/assets/libs/daterangepicker-master/daterangepicker.css')
+    }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/chart/Chart.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css') }}" rel="stylesheet" />
+<link href="{{
+    URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')
+    }}" rel="stylesheet" />
 @endsection
 
 @section('breadcrumb')
@@ -23,13 +29,14 @@
 
 @section('content')
 <style>
-     .flex-wrap{
-    text-align: left!important;
-    display: block!important;
-    margin-bottom: 10px;
+    .flex-wrap {
+        text-align: left !important;
+        display: block !important;
+        margin-bottom: 10px;
     }
-    .drp-selected{
-        display: none!important;
+
+    .drp-selected {
+        display: none !important;
     }
 </style>
 <div class="row">
@@ -41,14 +48,14 @@
                         <label style="font-weight: 700">Búsqueda por fecha</label>
                     </div>
                     <div class="col-md-8"><br></div>
-                        <div class="col-md-4">
-                            <div class="input-group col-md-12">
-                                <input type="text" id="fecha" name="date_range" class="form-control">
-                                <div class="input-group-prepend">
-                                  <div class="input-group-text form-control "><i class="uil uil-calender"></i></div>
-                              </div>
+                    <div class="col-md-4">
+                        <div class="input-group col-md-12">
+                            <input type="text" id="fecha" name="date_range" class="form-control">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text form-control"><i class="uil uil-calender"></i></div>
                             </div>
                         </div>
+                    </div>
                 </div>
                 <br>
                 <div class="row">
@@ -57,7 +64,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <canvas id="myChartD" height="35vh" width="85vw"></canvas>
-                              <canvas id="myChart" height="35vh" width="85vw"></canvas>
+                                <canvas id="myChart" height="35vh" width="85vw"></canvas>
                             </div> <!-- end card-body -->
                         </div> <!-- end card-->
                     </div> <!-- end col-->
@@ -68,14 +75,18 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="header-title mt-0 mb-1">TRAXPARK</h4>
-                                <p class="sub-header" style="margin-bottom: 0px">
+                                <p class="sub-header" style="margin-bottom:
+                                    0px">
                                     America-Bogota
                                 </p>
                                 <br>
-                                <table id="Reporte" class="table nowrap" style="font-size: 13px!important;width: 100%;">
+                                <table id="Reporte" class="table nowrap" style="font-size: 13px!important;width:
+                                    100%;">
                                     <thead style="background: #fafafa;" id="dias">
                                         <tr>
-                                            <th><img src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class=" mr-2" alt="" />Miembro</th>
+                                            <th><img src="{{
+                                                    URL::asset('admin/assets/images/users/empleado.png')
+                                                    }}" class="mr-2" alt="" />Miembro</th>
                                             <th>LUN.</th>
                                             <th>MAR.</th>
                                             <th>MIÉ.</th>
@@ -89,18 +100,20 @@
                                     <tbody id="empleado">
                                         @foreach ($empleado as $empleados)
                                         <tr>
-                                          <td>{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</td>
-                                          <td></td>
-                                          <td></td>
-                                          <td></td>
-                                          <td></td>
-                                          <td></td>
-                                          <td></td>
-                                          <td></td>
-                                          <td></td>
+                                            <td>{{$empleados->perso_nombre}}
+                                                {{$empleados->perso_apPaterno}}
+                                                {{$empleados->perso_apMaterno}}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                         </tr>
                                         @endforeach
-                                      </tbody>
+                                    </tbody>
                                 </table>
                             </div> <!-- end card body-->
                         </div>
@@ -113,24 +126,31 @@
 <!-- end row -->
 @endsection
 @section('script')
-<script src="{{ URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
+<script src="{{
+    URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js')
+    }}"></script>
 <!-- Vendor js -->
 {{-- <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script> --}}
 <!-- App js -->
 {{-- <script src="{{asset('admin/assets/js/app.min.js')}}"></script> --}}
 <!-- datatable js -->
-<script src="{{ URL::asset('admin/assets/libs/daterangepicker-master/moment.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/daterangepicker-master/daterangepicker.js') }}"></script>
+<script src="{{
+    URL::asset('admin/assets/libs/daterangepicker-master/moment.min.js') }}"></script>
+<script src="{{
+    URL::asset('admin/assets/libs/daterangepicker-master/daterangepicker.js')
+    }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/chart/Chart.min.js') }}"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
-<script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}" ></script>
-<script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}" ></script>
+<script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
+<script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/datatables/buttons.html5.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js')
+    }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/datatables/buttons.html5.min.js')
+    }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/pdfmake.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/vfs_fonts.js') }}"></script>
 <script src="{{asset('landing/js/reporteS.js')}}"></script>
