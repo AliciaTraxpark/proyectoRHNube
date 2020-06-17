@@ -68,14 +68,8 @@ var chart = new Chart(ctx, {
             datalabels: {
                 formatter: function (value, context) {
                     var label = context.chart.data.labels[context.dataIndex];
-                    var sum = 0;
-                    var dataArr = context.chart.data.datasets[0].data;
-                    dataArr.map(data => {
-                        sum += data;
-                    });
-                    var percentage = (value * 100 / sum).toFixed(2) + "%"
                     var mostrar = [];
-                    mostrar.push(label, percentage);
+                    mostrar.push(label);
                     return mostrar;
                 },
                 color: '#323232',
@@ -83,16 +77,16 @@ var chart = new Chart(ctx, {
                 align: 'center',
                 font: {
                     weight: 'bold',
-                    fontSize: 24
+                    fontSize: 20
                 }
             }
         },
         elements: {
             center: {
                 text: '350 por Área',
-                color: '#000', //Default black
-                fontStyle: 'Arial', //Default Arial
-                fontSize: 24,
+                color: '#1f4068', //Default black
+                fontFamily: 'Arial', //Default Arial
+                sidePadding: 35,
             }
         }
     }
@@ -126,29 +120,25 @@ var chart = new Chart(ctx, {
             datalabels: {
                 formatter: function (value, context) {
                     var label = context.chart.data.labels[context.dataIndex];
-                    var sum = 0;
-                    var dataArr = context.chart.data.datasets[0].data;
-                    dataArr.map(data => {
-                        sum += data;
-                    });
-                    var percentage = (value * 100 / sum).toFixed(2) + "%"
                     var mostrar = [];
-                    mostrar.push(label, percentage);
+                    mostrar.push(label);
                     return mostrar;
                 },
                 color: '#323232',
                 anchor: 'center',
+                align: 'center',
                 font: {
                     weight: 'bold',
-                    fontSize: 24
+                    fontSize: 20
                 }
             }
         },
         elements: {
             center: {
                 text: '350 por Contrato',
-                color: '#000', //Default black
+                color: '#1f4068', //Default black
                 fontStyle: 'Helvetica', //Default Arial
+                sidePadding: 20
             }
         }
     }
@@ -182,18 +172,13 @@ var chart = new Chart(ctx, {
             datalabels: {
                 formatter: function (value, context) {
                     var label = context.chart.data.labels[context.dataIndex];
-                    var sum = 0;
-                    var dataArr = context.chart.data.datasets[0].data;
-                    dataArr.map(data => {
-                        sum += data;
-                    });
-                    var percentage = (value * 100 / sum).toFixed(2) + "%"
                     var mostrar = [];
-                    mostrar.push(label, percentage);
+                    mostrar.push(label);
                     return mostrar;
                 },
                 color: '#323232',
                 anchor: 'center',
+                align: 'center',
                 font: {
                     weight: 'bold',
                     fontSize: 24
@@ -203,8 +188,9 @@ var chart = new Chart(ctx, {
         elements: {
             center: {
                 text: '350 por Nivel',
-                color: '#000', //Default black
+                color: '#1f4068', //Default black
                 fontStyle: 'Helvetica', //Default Arial
+                sidePadding: 35
             }
         }
     }
@@ -239,29 +225,25 @@ var chart = new Chart(ctx, {
             datalabels: {
                 formatter: function (value, context) {
                     var label = context.chart.data.labels[context.dataIndex];
-                    var sum = 0;
-                    var dataArr = context.chart.data.datasets[0].data;
-                    dataArr.map(data => {
-                        sum += data;
-                    });
-                    var percentage = (value * 100 / sum).toFixed(2) + "%"
                     var mostrar = [];
-                    mostrar.push(label, percentage);
+                    mostrar.push(label);
                     return mostrar;
                 },
                 color: '#323232',
                 anchor: 'center',
+                align: 'center',
                 font: {
                     weight: 'bold',
-                    fontSize: 24
+                    fontSize: 20
                 }
             }
         },
         elements: {
             center: {
                 text: '350 por Centro Costo',
-                color: '#000', //Default black
+                color: '#1f4068', //Default black
                 fontStyle: 'Helvetica', //Default Arial
+                sidePadding: 20
             }
         }
     }
@@ -295,29 +277,25 @@ var chart = new Chart(ctx, {
             datalabels: {
                 formatter: function (value, context) {
                     var label = context.chart.data.labels[context.dataIndex];
-                    var sum = 0;
-                    var dataArr = context.chart.data.datasets[0].data;
-                    dataArr.map(data => {
-                        sum += data;
-                    });
-                    var percentage = (value * 100 / sum).toFixed(2) + "%"
                     var mostrar = [];
-                    mostrar.push(label, percentage);
+                    mostrar.push(label);
                     return mostrar;
                 },
                 color: '#323232',
                 anchor: 'center',
+                align: 'center',
                 font: {
                     weight: 'bold',
-                    fontSize: 24
+                    fontSize: 20
                 }
             }
         },
         elements: {
             center: {
                 text: '350 por Local',
-                color: '#000', //Default black
+                color: '#1f4068', //Default black
                 fontStyle: 'Helvetica', //Default Arial
+                sidePadding: 35
             }
         }
     }
@@ -352,29 +330,25 @@ var chart = new Chart(ctx, {
             datalabels: {
                 formatter: function (value, context) {
                     var label = context.chart.data.labels[context.dataIndex];
-                    var sum = 0;
-                    var dataArr = context.chart.data.datasets[0].data;
-                    dataArr.map(data => {
-                        sum += data;
-                    });
-                    var percentage = (value * 100 / sum).toFixed(2) + "%"
                     var mostrar = [];
-                    mostrar.push(label, percentage);
+                    mostrar.push(label);
                     return mostrar;
                 },
                 color: '#323232',
                 anchor: 'center',
+                align: 'center',
                 font: {
                     weight: 'bold',
-                    fontSize: 24
+                    fontSize: 20
                 }
             }
         },
         elements: {
             center: {
                 text: '350 por Rango de Edad',
-                color: '#000', //Default black
+                color: '#1f4068', //Default black
                 fontStyle: 'Helvetica', //Default Arial
+                sidePadding: 20
             }
         }
     }

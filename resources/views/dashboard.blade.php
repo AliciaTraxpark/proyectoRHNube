@@ -30,17 +30,30 @@
     </div>
 </div>
 <br><br><br>
-<div class="row" style="opacity: 0.2;">
-  <canvas class="col-md-4" id="areaD"></canvas>
-  <canvas class="col-md-4" id="nivelD"></canvas>
-  <canvas class="col-md-4" id="contratoD"></canvas>
+<div class="row" style="opacity: 0.3;">
+    <div class="col-md-4">
+        <canvas id="areaD" height="180"></canvas>
+    </div>
+    <div class="col-md-4">
+        <canvas id="nivelD" height="180"></canvas>
+    </div>
+    <div class="col-md-4">
+        <canvas id="contratoD" height="180"></canvas>
+    </div>
 </div>
 <br><br><br>
-<div class="row" style="opacity: 0.2;">
-  <canvas class="col-md-4" id="centroD"></canvas>
-  <canvas class="col-md-4" id="localD"></canvas>
-  <canvas class="col-md-4" id="edadD"></canvas>
+<div class="row" style="opacity: 0.3;">
+    <div class="col-md-4">
+        <canvas id="centroD" height="180"></canvas>
+    </div>
+    <div class="col-md-4">
+        <canvas id="localD" height="180"></canvas>
+    </div>
+    <div class="col-md-4">
+        <canvas id="edadD" height="180"></canvas>
+    </div>
 </div>
+<br><br>
 <!-- end row -->
 @endsection
 @else
