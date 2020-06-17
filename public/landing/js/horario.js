@@ -134,14 +134,14 @@ $('#btnasignar').on('click', function(e) {
 
             objeto.push({"title": inicio+'-'+fin, "start":value});
 
-            calendar.addEvent({
+/*             calendar.addEvent({
                 title: inicio+'-'+fin,
                 start: value,
                 //end:f2,
                 color:'#ffffff',
                 textColor:' #000000',
                 allDay: true
-            })
+            }) */
 
                 //
 
@@ -149,12 +149,15 @@ $('#btnasignar').on('click', function(e) {
         console.log(fechasArray);
         //alert(fechasArray);
         //alert(fechastart);
+        idpais=$('#pais').val();
+        iddepartamento=$('#departamento').val();
         $.ajax({
             type:"post",
             url:"/guardarEventos",
-            data:{fechasArray:fechastart,hora:inicio+'-'+fin},
+            data:{fechasArray:fechastart,hora:inicio+'-'+fin,pais:idpais,departamento:iddepartamento,inicio:inicio,fin:fin},
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             success: function (data) {
+                calendar.refetchEvents();
 
             },
             error: function (data) {
@@ -168,21 +171,7 @@ $('#btnasignar').on('click', function(e) {
 
           };
 
-          $('#guardarTodoHorario').click(function(){
 
-            //alert(fechasArray);
-        $.ajax({
-            url:"/guardarEventos",
-            data:{departamento:departamento,pais:pais},
-            headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success:function(data){
-
-                },
-            error:function(){ alert("Hay un error");}
-            });
-        })
       },
       eventClick:function(info){
         id = info.event.id;
@@ -200,7 +189,7 @@ $('#btnasignar').on('click', function(e) {
           right:''
         },
 
-        events:"calendario/show",
+        events:"/eventosHorario",
       }
     var calendar = new FullCalendar.Calendar(calendarEl,configuracionCalendario);
     calendar.setOption('locale',"Es");
@@ -321,4 +310,19 @@ function calendario1(data,fechas) {
 document.addEventListener('DOMContentLoaded',calendario1);
 //////////////////////
 
+$('#guardarTodoHorario').click(function(){
 
+    //alert(fechasArray);
+$.ajax({
+    type:"post",
+    url:"/guardarEventosBD",
+    data:"",
+    headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success:function(data){
+
+        },
+    error:function(){ alert("Hay un error");}
+    });
+})
