@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/','Auth\LoginController@principal', function () {
+Route::get('/', 'Auth\LoginController@principal', function () {
     return view('welcome');
 })->name('principal');
 Auth::routes();
@@ -23,22 +23,22 @@ Auth::routes();
 /* Route::get('/', 'HomeController@principal')->name('principal'); */
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 //MENU
-Route::name('dashboard')->get('dashboard','HomeController@index')->middleware('auth');
+Route::name('dashboard')->get('dashboard', 'HomeController@index')->middleware('auth');
 //CALENDARIO
-Route::name('calendario')->get('calendario','calendarioController@index');
-Route::post('/calendario/store','calendarioController@store');
+Route::name('calendario')->get('calendario', 'calendarioController@index');
+Route::post('/calendario/store', 'calendarioController@store');
 Route::get('calendario/show', 'calendarioController@show')->name('calendarioShow');
 Route::get('calendario/showDep', 'calendarioController@showDep')->name('calendarioShowDep');
 Route::get('calendario/showDep/confirmar', 'calendarioController@showDepconfirmar')->name('calendarioShowDepc');
-Route::delete('calendario/{id}','calendarioController@destroy');
-Route::get('eliminarE/{id}','EventosUsuarioController@destroy');
+Route::delete('calendario/{id}', 'calendarioController@destroy');
+Route::get('eliminarE/{id}', 'EventosUsuarioController@destroy');
 
 //PERSONA
 
 
 //persona
 Route::get('registro/persona', 'registroPController@index')->name('registroPersona');
-Route::post('/persona/store','registroPController@registrarDatos')->name('persona');
+Route::post('/persona/store', 'registroPController@registrarDatos')->name('persona');
 Route::POST('persona/create', 'RegistroPController@create')->name('registerPersona');
 Route::get('/persona/comprobar', 'registroPController@comprobar');
 
@@ -46,11 +46,11 @@ Route::get('/persona/comprobar', 'registroPController@comprobar');
 //ORGANIZACION
 
 Route::get('registro/organizacion/{user1}', 'registroEmpresaController@index')->name('registroorganizacion');
-Route::post('organizacion/store','registroEmpresaController@registrarDatos')->name('organizacion');
+Route::post('organizacion/store', 'registroEmpresaController@registrarDatos')->name('organizacion');
 Route::POST('organizacion/create', 'registroEmpresaController@create')->name('registerOrganizacion');
 
 //calendario_usuario
-Route::post('eventos_usuario/store','EventosUsuarioController@store');
+Route::post('eventos_usuario/store', 'EventosUsuarioController@store');
 
 
 Route::get('/departamento', function () {
@@ -58,44 +58,44 @@ Route::get('/departamento', function () {
 })->name('depas');
 
 
-Route::get('/eventos_usuario/store','EventosUsuarioController@store');
+Route::get('/eventos_usuario/store', 'EventosUsuarioController@store');
 
 //EMPLEADOS
-Route::post('/empleado/store','EmpleadoController@store');
-Route::get('/empleado','EmpleadoController@index' );
-Route::get('/empleado/cargar','EmpleadoController@cargarDatos' );
-Route::post('/empleado/file','EmpleadoController@upload');
-Route::get('tablaempleado/ver','EmpleadoController@tabla' );
+Route::post('/empleado/store', 'EmpleadoController@store');
+Route::get('/empleado', 'EmpleadoController@index');
+Route::get('/empleado/cargar', 'EmpleadoController@cargarDatos');
+Route::post('/empleado/file', 'EmpleadoController@upload');
+Route::get('tablaempleado/ver', 'EmpleadoController@tabla');
 Route::get('empleado/show', 'EmpleadoController@show');
-Route::post('/empleadoA/{idE}','EmpleadoController@update');
-Route::post('/empleado/eliminar','EmpleadoController@destroy');
-Route::post('/eliminarFoto/{v_id}','EmpleadoController@eliminarFoto');
+Route::post('/empleadoA/{idE}', 'EmpleadoController@update');
+Route::post('/empleado/eliminar', 'EmpleadoController@destroy');
+Route::post('/eliminarFoto/{v_id}', 'EmpleadoController@eliminarFoto');
 Route::delete('/eliminarEmpleados', 'EmpleadoController@deleteAll');
 
 //AREA
-Route::post('/registrar/area','areaController@store');
+Route::post('/registrar/area', 'areaController@store');
 
 //CARGO
-Route::post('/registrar/cargo','cargoController@store');
+Route::post('/registrar/cargo', 'cargoController@store');
 
 //CENTRO
-Route::post('/registrar/centro','centrocostoController@store');
+Route::post('/registrar/centro', 'centrocostoController@store');
 
 //LOCAL
-Route::post('/registrar/local','localController@store');
+Route::post('/registrar/local', 'localController@store');
 
 //NIVEL
-Route::post('/registrar/nivel','nivelController@store');
+Route::post('/registrar/nivel', 'nivelController@store');
 
 //CONTRATO
-Route::post('/registrar/contrato','contratoController@store');
+Route::post('/registrar/contrato', 'contratoController@store');
 
 //TAREAS
-Route::get('/tareas','ControlController@index')->middleware('auth');
-Route::get('/tareas/show','ControlController@show')->middleware('auth');
-Route::get('/tareas/proyecto','ControlController@proyecto')->middleware('auth');
-Route::get('/reporteSemanal','ControlController@reporteS')->middleware('auth');
-Route::get('/reporte/empleado','ControlController@EmpleadoReporte')->middleware('auth');
+Route::get('/tareas', 'ControlController@index')->middleware('auth');
+Route::get('/tareas/show', 'ControlController@show')->middleware('auth');
+Route::get('/tareas/proyecto', 'ControlController@proyecto')->middleware('auth');
+Route::get('/reporteSemanal', 'ControlController@reporteS')->middleware('auth');
+Route::get('/reporte/empleado', 'ControlController@EmpleadoReporte')->middleware('auth');
 
 
 //probando excel
@@ -106,17 +106,19 @@ Route::post('import', 'MyController@import')->name('import');
 //EXCEL EMPLEADO
 Route::post('importEmpleado', 'excelEmpleadoController@import')->name('importEmpleado');
 //PROYECTO
-Route::get('/proyecto','ProyectoController@index' );
-Route::post('/proyecto/registrar','ProyectoController@store');
-Route::post('/proyecto/proyectoV','ProyectoController@proyectoV');
-Route::post('/proyecto/registrarPrEm','ProyectoController@registrarPrEm');
-Route::post('/proyecto/selectValidar','ProyectoController@selectValidar');
+Route::get('/proyecto', 'ProyectoController@index');
+Route::post('/proyecto/registrar', 'ProyectoController@store');
+Route::post('/proyecto/proyectoV', 'ProyectoController@proyectoV');
+Route::post('/proyecto/registrarPrEm', 'ProyectoController@registrarPrEm');
+Route::post('/proyecto/selectValidar', 'ProyectoController@selectValidar');
 
 //carga masiva de fotos
-Route::post('/subirfoto','CargaMasivaFotoController@subirfoto');
+Route::post('/subirfoto', 'CargaMasivaFotoController@subirfoto');
 
 //HORARIO
 Route::get('/horario', 'horarioController@index');
 Route::post('/horarioVerEmp', 'horarioController@verEmpleado');
 Route::post('/horarioVerTodEmp', 'horarioController@verTodEmpleado');
 
+//DASHBOARD
+Route::get('/totalA', 'dashboardController@area');
