@@ -124,7 +124,7 @@ class apiController extends Controller
         return response()->json($actividad, 400);
     }
 
-    public function store(Request $request)
+    public function envio(Request $request)
     {
         $envio = new envio();
         $envio->hora_Envio = $request->get('hora_Envio');
@@ -133,14 +133,12 @@ class apiController extends Controller
         $envio->save();
         $idEnvio = $envio->idEnvio;
 
-        $captura = new captura();
-        $captura->idEnvio = $idEnvio;
-        $captura->estado = $request->get('estado');
-        $captura->fecha_hora = $request->get('fecha_hora');
-        $captura->imagen = $request->get('imagen');
-        $captura->promedio = $request->get('promedio');
-        $captura->save();
+        return response()->json($idEnvio, 200);
+    }
 
+    public function controlCaptura(Request $request)
+    {
+        $idEnvio = $request['idEnvio'];
         $control = new control();
         $control->Proyecto_Proye_id = $request->get('Proyecto_Proye_id');
         $control->fecha_ini = $request->get('fecha_ini');
@@ -155,8 +153,14 @@ class apiController extends Controller
             $control->Actividad_Activi_id = $request->get('Actividad_Activi_id');
         }
         $control->save();
-
-        return response()->json($control, 200);
+        $captura = new captura();
+        $captura->idEnvio = $idEnvio;
+        $captura->estado = $request->get('estado');
+        $captura->fecha_hora = $request->get('fecha_hora');
+        $captura->imagen = $request->get('imagen');
+        $captura->promedio = $request->get('promedio');
+        $captura->save();
+        return response()->json($captura, 200);
     }
 
     public function selectProyecto(Request $request)
