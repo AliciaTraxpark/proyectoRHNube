@@ -8,6 +8,7 @@ use App\paises;
 use App\ubigeo_peru_departments;
 use Illuminate\Support\Facades\DB;
 use App\temporal_eventos;
+use App\horario_dias;
 use Illuminate\Support\Facades\Auth;
 class horarioController extends Controller
 {
@@ -37,10 +38,15 @@ class horarioController extends Controller
         ->select('p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','e.emple_nDoc','p.perso_id','e.emple_id')
         ->get();
         return $empleados;
+
     }
     public function guardarEventos(Request $request){
+        $pais=$request->pais;
+        $departamento=$request->departamento;
         $datafecha=$request->fechasArray;
         $horas=$request->hora;
+        $inicio=$request->inicio;
+        $fin=$request->fin;
         foreach($datafecha as $datafechas){
         $temporal_eventos=new temporal_eventos();
         $temporal_eventos->title=$horas;
@@ -48,9 +54,53 @@ class horarioController extends Controller
         $temporal_eventos->color='#ffffff';
         $temporal_eventos->textColor='000000';
         $temporal_eventos->users_id=Auth::user()->id;
+        $temporal_eventos->paises_id=$pais;
+        $temporal_eventos->ubigeo_peru_departments_id=$departamento;
+        $temporal_eventos->temp_horaI=$inicio;
+        $temporal_eventos->temp_horaF=$fin;
         $temporal_eventos->save();
         }
 
 
     }
-}
+    public function eventos(){
+        $eventos=DB::table('eventos')->select(['id','title' ,'color', 'textColor', 'start','end']);
+
+        $eventos_usuario = DB::table('eventos_usuario')
+        ->select(['id','title' ,'color', 'textColor', 'start','end'])
+             ->where('Users_id','=',Auth::user()->id)
+             ->where('evento_departamento','=',null)
+             ->where('evento_pais','=',173)
+                ->union($eventos);
+
+
+        $temporal_eventos=DB::table('temporal_eventos')->select(['id','title' ,'color', 'textColor', 'start','end'])
+        ->where('users_id','=',Auth::user()->id)
+        ->union($eventos_usuario)
+        ->get();
+
+
+        return response()->json($temporal_eventos);
+    }
+    public function guardarEventosBD(Request $request){
+        $temporal_evento=  temporal_eventos::where('users_id','=',Auth::user()->id)->get();
+        foreach($temporal_evento as $temporal_eventos)
+        {   $horario_dias=new horario_dias();
+            $horario_dias->title=$temporal_eventos->title;
+            $horario_dias->start=$temporal_eventos->start;
+            $horario_dias->color=$temporal_eventos->color;
+            $horario_dias->textColor=$temporal_eventos->textColor;
+            $horario_dias->users_id=$temporal_eventos->users_id;
+            $horario_dias->paises_id=$temporal_eventos->paises_id;
+            $horario_dias->ubigeo_peru_departments_id=$temporal_eventos->ubigeo_peru_departments_id;
+            $horario_dias->horaI=$temporal_eventos->temp_horaI;
+            $horario_dias->horaF= $temporal_eventos->temp_horaF;
+            $horario_dias->save();
+            $temporal_evento->each->delete();
+        }
+
+        }
+
+
+    }
+
