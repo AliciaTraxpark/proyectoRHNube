@@ -26,22 +26,37 @@ $.ajax({
             data: chartdata,
             options: {
                 responsive: true,
-                cutoutPercentage: 80,
+                cutoutPercentage: 70,
                 tooltips: {
-                    callbacks: {
-                        title: function (tooltipItem, data) {
-                            return data['labels'][tooltipItem[0]['index']];
+                    enabled: false
+                },
+                legend: {
+                    display: false
+                },
+                plugins: {
+                    datalabels: {
+                        formatter: function (value, context) {
+                            var label = context.chart.data.labels[context.dataIndex];
+                            var mostrar = [];
+                            mostrar.push(label);
+                            return mostrar;
                         },
-                        label: function (tooltipItem, data) {
-                            return data['datasets'][0]['data'][tooltipItem['index']];
-                        },
-                        afterLabel: function (tooltipItem, data) {
-                            var dataset = data['datasets'][0];
-                            var percent = Math.round((dataset['data'][tooltipItem['index']] / dataset["_meta"][0]['total']) * 100)
-                            return '(' + percent + '%)';
+                        color: '#323232',
+                        anchor: 'center',
+                        align: 'center',
+                        font: {
+                            weight: 'bold',
+                            fontSize: 20
                         }
-                    },
-                    
+                    }
+                },
+                elements: {
+                    center: {
+                        text: '350 por Área',
+                        color: '#1f4068', //Default black
+                        fontFamily: 'Arial', //Default Arial
+                        sidePadding: 35,
+                    }
                 }
             }
         })

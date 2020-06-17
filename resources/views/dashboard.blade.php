@@ -59,7 +59,9 @@
 @else
 @section('content')
 <div class="row">
-    <canvas class="col-md-4" id="area"></canvas>
+    <div class="col-md-4">
+        <canvas id="area" height="180"></canvas>
+    </div>
 </div>
 
 @endsection
