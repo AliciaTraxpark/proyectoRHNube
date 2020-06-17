@@ -85,4 +85,13 @@
   -webkit-transition-delay:.2s;
   transition-delay:.2s;
   }
-  
+  .flatpickr-weekdays {
+    background: #1f4068!important;
+}
+.flatpickr-day.selected{
+  background: #1f4068!important;
+  border-color: #1f4068!important;
+}
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: #1f4068!important;
+}
