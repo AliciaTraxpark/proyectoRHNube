@@ -199,7 +199,7 @@ class apiController extends Controller
                 foreach($actividad as $activ){
                     array_push($elementoA,array("idActividad"=>$activ->Activi_id,"Actividad"=>$activ->Activi_Nombre,"Tarea_id"=>$activ->Tarea_id));
                 }
-                array_push($respuesta,array("Proye_id"=>$dato->Proye_id,"Proye_Nombre"=>$dato->Proye_Nombre,"Tareas"=>$elemento,"Actividad"=>$elementoA));
+                array_push($respuesta,array("Proye_id"=>$dato->Proye_id,"Proye_Nombre"=>$dato->Proye_Nombre,"Tareas"=>$elemento,"Actividades"=>$elementoA));
             }
             return response()->json($respuesta,200);
         }
