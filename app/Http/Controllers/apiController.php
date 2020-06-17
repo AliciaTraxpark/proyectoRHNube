@@ -91,22 +91,24 @@ class apiController extends Controller
 
     public function editarApiTarea(Request $request){
         $Tarea_id = $request['Tarea_id'];
-        $Activi_id = $request['Activi_id'];
         $tarea = tarea::where('Tarea_id',$Tarea_id)->first();
         if($tarea){
             $tarea->Tarea_Nombre=$request['Tarea_Nombre'];
-            if($request['Activi_id'] != ''){
-                $actividad = actividad::where('Activi_id',$Activi_id)->first();
-                if($actividad){
-                    $actividad->Activi_Nombre=$request['Activi_Nombre'];
-                    $actividad->save();
-                    return response()->json($actividad,200);
-                }
-            }
             $tarea->save();
             return response()->json($tarea,200);
         }
         return response()->json($tarea,400);
+    }
+
+    public function editarApiActividad(Request $request){
+        $Activi_id = $request['Activi_id'];
+        $actividad= actividad::where('Activi_id',$Activi_id)->first();
+        if($actividad){
+            $actividad->Activi_Nombre=$request['Activi_Nombre'];
+            $actividad->save();
+            return response()->json($actividad,200);
+        }
+        return response()->json($actividad,400);
     }
 
     public function store(Request $request){
@@ -175,6 +177,7 @@ class apiController extends Controller
                 ->leftJoin('actividad as ac','ac.Tarea_Tarea_id','=','t.Tarea_id')
                 ->select('t.Tarea_id','t.Tarea_Nombre')
                 ->where('e.emple_id','=',$empleado)
+                ->groupBy('t.Tarea_id')
                 ->get();
 
                 $elemento = [];
@@ -196,7 +199,7 @@ class apiController extends Controller
                 foreach($actividad as $activ){
                     array_push($elementoA,array("idActividad"=>$activ->Activi_id,"Actividad"=>$activ->Activi_Nombre,"Tarea_id"=>$activ->Tarea_id));
                 }
-                array_push($respuesta,array("Proye_id"=>$dato->Proye_id,"Proye_Nombre"=>$dato->Proye_Nombre,"Tareas"=>$elemento,"Actividad"=>$elementoA));
+                array_push($respuesta,array("Proye_id"=>$dato->Proye_id,"Proye_Nombre"=>$dato->Proye_Nombre,"Tareas"=>$elemento,"Actividades"=>$elementoA));
             }
             return response()->json($respuesta,200);
         }

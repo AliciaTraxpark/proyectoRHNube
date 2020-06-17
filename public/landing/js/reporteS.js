@@ -188,10 +188,12 @@ function onSelectFechas(){
                         var sheet = xlsx.xl.worksheets['sheet1.xml'];},
                         sheetName: 'Exported data',
                         autoFilter: false
+                },{
+                    extend: "pdfHtml5",
+                    text:"<i><img src='admin/images/pdf.svg' height='20'></i> Descargar"
                 }],
                 paging: true
             });
-
             var chartdata = {
                 labels: nombre,
                 datasets: [{

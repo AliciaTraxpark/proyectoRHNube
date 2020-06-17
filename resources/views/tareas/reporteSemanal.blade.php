@@ -24,9 +24,12 @@
 @section('content')
 <style>
      .flex-wrap{
-    text-align: right!important;
+    text-align: left!important;
     display: block!important;
     margin-bottom: 10px;
+    }
+    .drp-selected{
+        display: none!important;
     }
 </style>
 <div class="row">
@@ -127,6 +130,9 @@
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}" ></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/datatables/buttons.html5.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/datatables/pdfmake.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/datatables/vfs_fonts.js') }}"></script>
 <script src="{{asset('landing/js/reporteS.js')}}"></script>
 <script>
     var empleadosDefecto = @json($empleado);

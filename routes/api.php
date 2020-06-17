@@ -26,8 +26,9 @@ Route::get('/provincia/{id}/niveles','EmpleadoController@distritos');
 
 Route::get("empleado","apiController@api");
 Route::post("tarea","apiController@apiTarea");
-Route::post("actividad","apiController@apiActvidad");
+Route::post("actividad","apiController@apiActividad");
 Route::post("logueo","apiController@logueoEmpleado");
 Route::post("editarTarea","apiController@editarApiTarea");
+Route::post("editarActividad","apiController@editarApiActividad");
 Route::post("control","apiController@store");
 Route::post("proyecto","apiController@selectProyecto");
