@@ -29,7 +29,17 @@
                 COMIENZA AHORA</button></a>
     </div>
 </div>
+<br><br><br>
 <div class="row" style="opacity: 0.2;">
+  <canvas class="col-md-4" id="areaD"></canvas>
+  <canvas class="col-md-4" id="nivelD"></canvas>
+  <canvas class="col-md-4" id="contratoD"></canvas>
+</div>
+<br><br><br>
+<div class="row" style="opacity: 0.2;">
+  <canvas class="col-md-4" id="centroD"></canvas>
+  <canvas class="col-md-4" id="localD"></canvas>
+  <canvas class="col-md-4" id="edadD"></canvas>
 </div>
 <!-- end row -->
 @endsection
@@ -45,9 +55,13 @@
 <!-- optional plugins -->
 <script src="{{ URL::asset('admin/assets/libs/moment/moment.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/chart/Chart.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/chart/Chart.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.min.js') }}"></script>
 @endsection
 @section('script-bottom')
 <!-- init js -->
-<script src="{{ URL::asset('admin/assets/libs/chart/Chart.js') }}"></script>
+<script src="{{asset('landing/js/dashboardD.js')}}"></script>
 <script src="{{asset('landing/js/dashboard.js')}}"></script>
 @endsection
