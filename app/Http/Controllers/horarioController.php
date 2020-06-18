@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use App\empleado;
 use App\paises;
 use App\ubigeo_peru_departments;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\temporal_eventos;
 use App\horario_dias;
 use App\horario;
+use App\horario_empleado;
 use Illuminate\Support\Facades\Auth;
 class horarioController extends Controller
 {
@@ -87,6 +89,7 @@ class horarioController extends Controller
         $descripcion=$request->descripcion;
         $toleranciaH=$request->toleranciaH;
         $temporal_evento=  temporal_eventos::where('users_id','=',Auth::user()->id)->get();
+        $idasignar = collect();
         foreach($temporal_evento as $temporal_eventos)
         {   $horario_dias=new horario_dias();
             $horario_dias->title=$temporal_eventos->title;
@@ -98,10 +101,37 @@ class horarioController extends Controller
             $horario_dias->ubigeo_peru_departments_id=$temporal_eventos->ubigeo_peru_departments_id;
             $horario_dias->horaI=$temporal_eventos->temp_horaI;
             $horario_dias->horaF= $temporal_eventos->temp_horaF;
+
             $horario_dias->save();
-            $temporal_evento->each->delete();
+            //$contar=$temporal_eventos->count();
+            //$idasignar=add($horario_dias->id);
+
+
+            $idasignar->push($horario_dias->id);
+ $temporal_evento->each->delete();
+            //$idsh = $horario_dias->id;
+            //return($idsh);
+            //return($horario_dias->where('id','=',$horario_dias->id)->get());
+
+
+
 
         }
+
+         //dd($idasignar);
+
+  /*       $array = array();
+        foreach( $idasignar as $t){
+
+        $array[] = $t;
+
+        }
+        $horario_pe=$horario_dias->get(); */
+
+
+
+
+        //return($horario_dias->where('id','=',$horario_dias->id)->get());
         $horario=new horario();
         $horario->horario_sobretiempo=$sobretiempo;
         $horario->horario_tipo=$tipHorario;
@@ -109,7 +139,19 @@ class horarioController extends Controller
         $horario->horario_tolerancia=$toleranciaH;
         $horario->save();
 
+       foreach($idemps as $idempleados){
+            foreach($idasignar as $horariosdias){
+            $horario_empleado=new horario_empleado();
+            $horario_empleado->horario_horario_id=$horario->horario_id;
+            $horario_empleado->empleado_emple_id=$idempleados;
+            $horario_empleado->horario_dias_id=$horariosdias;
+            $horario_empleado->save();
+            }
         }
+
+        }
+
+
 
 
     }
