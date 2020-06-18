@@ -5,6 +5,11 @@
 <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
 <link href="{{ URL::asset('admin/assets/libs/chart/Chart.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{
+    URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')
+    }}" rel="stylesheet" />
 @endsection
 
 @section('breadcrumb')
@@ -74,6 +79,9 @@
 <script src="{{ URL::asset('admin/assets/libs/chart/Chart.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.min.js') }}"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 @endsection
 @section('script-bottom')
 <!-- init js -->
