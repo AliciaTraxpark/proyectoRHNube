@@ -28,4 +28,15 @@ class dashboardController extends Controller
 
         return response()->json($nivel, 200);
     }
+
+    public function contrato()
+    {
+        $contrato = DB::table('empleado as e')
+            ->join('tipo_contrato as c', 'e.emple_tipoContrato', '=', 'c.contrato_id')
+            ->select('c.contrato_descripcion', DB::raw('COUNT(c.contrato_descripcion) as Total'))
+            ->groupBy('c.contrato_id')
+            ->get();
+
+        return response()->json($contrato, 200);
+    }
 }

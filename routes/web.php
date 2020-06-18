@@ -126,3 +126,4 @@ Route::post('/guardarEventosBD', 'horarioController@guardarEventosBD');
 //DASHBOARD
 Route::get('/totalA', 'dashboardController@area');
 Route::get('/totalN', 'dashboardController@nivel');
+Route::get('/totalC', 'dashboardController@contrato');
