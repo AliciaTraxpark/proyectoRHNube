@@ -10,12 +10,16 @@ $.ajax({
         var total = [];
         var color = ['#eb4559', '#ffd31d', '#21bf73'];
         var suma = 0;
-        if (data.length != 0) {
-            for (var i = 0; i < data.length; i++) {
-                suma += data[i].Total;
-                nombre.push(data[i].area_descripcion);
-                total.push(data[i].Total);
+        var totalP = 0;
+        if (data[0].area.length != 0) {
+            for (var i = 0; i < data[0].area.length; i++) {
+                suma += data[0].area[i].Total;
+                nombre.push(data[0].area[i].area_descripcion);
+                total.push(data[0].area[i].Total);
             }
+            var promedio = (suma*100)/data[0].empleado[0].totalE;
+            totalP = Math.round(promedio);
+            console.log(totalP);
             var chartdata = {
                 labels: nombre,
                 datasets: [{
@@ -53,10 +57,10 @@ $.ajax({
                     },
                     elements: {
                         center: {
-                            text: suma + ' empleados',
+                            text: totalP + '% de empleados',
                             color: '#424874', //Default black
                             fontFamily: 'Arial', //Default Arial
-                            sidePadding: 35,
+                            sidePadding: 20,
                         }
                     }
                 }

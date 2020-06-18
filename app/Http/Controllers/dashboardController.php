@@ -9,13 +9,18 @@ class dashboardController extends Controller
 {
     public function area()
     {
+        $datos = [];
+        $empleado = DB::table('empleado as e')
+            ->select(DB::raw('COUNT(e.emple_id) as totalE'))
+            ->get();
         $area = DB::table('empleado as e')
             ->join('area as a', 'e.emple_area', '=', 'a.area_id')
             ->select('a.area_descripcion', DB::raw('COUNT(a.area_descripcion) as Total'))
             ->groupBy('a.area_id')
             ->get();
 
-        return response()->json($area, 200);
+            array_push($datos,array("empleado"=>$empleado,"area"=>$area));
+        return response()->json($datos, 200);
     }
 
     public function nivel()
