@@ -53,7 +53,7 @@ $.ajax({
                     },
                     elements: {
                         center: {
-                            text: suma + ' por Área',
+                            text: suma + ' empleados',
                             color: '#424874', //Default black
                             fontFamily: 'Arial', //Default Arial
                             sidePadding: 35,
@@ -62,6 +62,7 @@ $.ajax({
                 }
             });
         } else {
+            $('#divarea').hide();
             $.notify(" Aún no has asignado empleados a una área.", {
                 align: "right",
                 verticalAlign: "top",
@@ -136,7 +137,7 @@ $.ajax({
                     },
                     elements: {
                         center: {
-                            text: suma + 'por Nivel',
+                            text: suma + ' empleados',
                             color: '#424874', //Default black
                             fontFamily: 'Arial', //Default Arial
                             sidePadding: 35,
@@ -145,6 +146,7 @@ $.ajax({
                 }
             });
         } else {
+            $('#divnivel').hide();
             $.notify(" Aún no has asignado empleados a un nivel.", {
                 align: "right",
                 verticalAlign: "top",
@@ -219,7 +221,7 @@ $.ajax({
                     },
                     elements: {
                         center: {
-                            text: suma + 'por Contrato',
+                            text: suma + ' empleado',
                             color: '#424874', //Default black
                             fontFamily: 'Arial', //Default Arial
                             sidePadding: 35,
@@ -228,6 +230,7 @@ $.ajax({
                 }
             });
         } else {
+            $('#divcontrato').hide();
             $.notify(" Aún no has asignado empleados a un tipo de contrato.", {
                 align: "right",
                 verticalAlign: "top",
@@ -302,7 +305,7 @@ $.ajax({
                     },
                     elements: {
                         center: {
-                            text: suma + 'por Centro Costo',
+                            text: suma + 'empleados',
                             color: '#424874', //Default black
                             fontFamily: 'Arial', //Default Arial
                             sidePadding: 35,
@@ -311,6 +314,7 @@ $.ajax({
                 }
             });
         } else {
+            $('#divcentro').hide();
             $.notify(" Aún no has asignado empleados a un tipo de centro costo.", {
                 align: "right",
                 verticalAlign: "top",
@@ -385,7 +389,7 @@ $.ajax({
                     },
                     elements: {
                         center: {
-                            text: suma + 'por Centro Costo',
+                            text: suma + 'empleado',
                             color: '#424874', //Default black
                             fontFamily: 'Arial', //Default Arial
                             sidePadding: 35,
@@ -394,6 +398,7 @@ $.ajax({
                 }
             });
         } else {
+            $('#divlocal').hide();
             $.notify(" Aún no has asignado empleados a un local.", {
                 align: "right",
                 verticalAlign: "top",
@@ -468,7 +473,7 @@ $.ajax({
                     },
                     elements: {
                         center: {
-                            text: suma + 'por Centro Costo',
+                            text: suma + 'empleado',
                             color: '#424874', //Default black
                             fontFamily: 'Arial', //Default Arial
                             sidePadding: 35,
@@ -477,6 +482,7 @@ $.ajax({
                 }
             });
         } else {
+            $('#divedades').hide();
             $.notify(" Aún no has asignado empleados a un local.", {
                 align: "right",
                 verticalAlign: "top",
