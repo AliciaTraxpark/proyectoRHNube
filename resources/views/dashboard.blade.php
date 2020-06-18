@@ -95,8 +95,9 @@
 <script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.min.js') }}"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-<script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
 @endsection
 @section('script-bottom')
 <!-- init js -->

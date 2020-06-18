@@ -1,3 +1,15 @@
+$.notifyDefaults({
+    target: '_blank',
+    newest_on_top: true,
+    element: 'body',
+    delay: 4000,
+    template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert" style="background-color: #fcf8e3;" role="alert">' +
+		'<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+		'<span data-notify="icon"></span> ' +
+		'<span data-notify="title">{1}</span> ' +
+		'<span data-notify="message">{2}</span>' +
+	'</div>' 
+});
 //AREA
 $.ajax({
     url: "totalA",
@@ -8,7 +20,7 @@ $.ajax({
     success: function (data) {
         var nombre = [];
         var total = [];
-        var color = ['#21bf73','#ffd31d','#eb4559'];
+        var color = ['#21bf73', '#ffd31d', '#eb4559'];
         var suma = 0;
         var totalP = 0;
         if (data[0].area.length != 0) {
@@ -17,7 +29,7 @@ $.ajax({
                 nombre.push(data[0].area[i].area_descripcion);
                 total.push(data[0].area[i].Total);
             }
-            var promedio = (suma*100)/data[0].empleado[0].totalE;
+            var promedio = (suma * 100) / data[0].empleado[0].totalE;
             totalP = Math.round(promedio);
             console.log(totalP);
             var chartdata = {
@@ -67,23 +79,11 @@ $.ajax({
             });
         } else {
             $('#divarea').hide();
-            $.notify(" Aún no has asignado empleados a una área.", {
-                align: "right",
-                verticalAlign: "top",
-                type: "warning",
-                icon: "warning",
-                delay: 3000
-            });
+            $.notify(" Aún no has asignado empleados a una área.");
         }
     },
     error: function (data) {
-        $.notify(" Aún no has asignado empleados a una área.", {
-            align: "right",
-            verticalAlign: "top",
-            type: "warning",
-            icon: "warning",
-            delay: 3000
-        });
+        $.notify(" Aún no has asignado empleados a una área.");
     }
 });
 //NIVEL
@@ -96,7 +96,7 @@ $.ajax({
     success: function (data) {
         var nombre = [];
         var total = [];
-        var color = ['#21bf73','#ffd31d','#eb4559'];
+        var color = ['#21bf73', '#ffd31d', '#eb4559'];
         var suma = 0;
         var totalP = 0;
         if (data[0].nivel.length != 0) {
@@ -105,7 +105,7 @@ $.ajax({
                 total.push(data[0].nivel[i].Total);
                 suma += data[0].nivel[i].Total;
             }
-            var promedio = (suma*100)/data[0].empleado[0].totalE;
+            var promedio = (suma * 100) / data[0].empleado[0].totalE;
             totalP = Math.round(promedio);
             var chartdata = {
                 labels: nombre,
@@ -154,23 +154,11 @@ $.ajax({
             });
         } else {
             $('#divnivel').hide();
-            $.notify(" Aún no has asignado empleados a un nivel.", {
-                align: "right",
-                verticalAlign: "top",
-                type: "warning",
-                icon: "warning",
-                delay: 3000
-            });
+            $.notify(" Aún no has asignado empleados a un nivel.");
         }
     },
     error: function (data) {
-        $.notify(" Aún no has asignado empleados a un nivel.", {
-            align: "right",
-            verticalAlign: "top",
-            type: "warning",
-            icon: "warning",
-            delay: 3000
-        });
+        $.notify(" Aún no has asignado empleados a un nivel.");
     }
 });
 //CONTRATO
@@ -183,7 +171,7 @@ $.ajax({
     success: function (data) {
         var nombre = [];
         var total = [];
-        var color = ['#21bf73','#ffd31d','#eb4559'];
+        var color = ['#21bf73', '#ffd31d', '#eb4559'];
         var suma = 0;
         var totalP = 0;
         if (data[0].contrato.length != 0) {
@@ -192,7 +180,7 @@ $.ajax({
                 total.push(data[0].contrato[i].Total);
                 suma += data[0].contrato[i].Total;
             }
-            var promedio = (suma*100)/data[0].empleado[0].totalE;
+            var promedio = (suma * 100) / data[0].empleado[0].totalE;
             totalP = Math.round(promedio);
             var chartdata = {
                 labels: nombre,
@@ -241,23 +229,11 @@ $.ajax({
             });
         } else {
             $('#divcontrato').hide();
-            $.notify(" Aún no has asignado empleados a un tipo de contrato.", {
-                align: "right",
-                verticalAlign: "top",
-                type: "warning",
-                icon: "warning",
-                delay: 3000
-            });
+            $.notify(" Aún no has asignado empleados a un tipo de contrato.");
         }
     },
     error: function (data) {
-        $.notify(" Aún no has asignado empleados a un tipo de contrato.", {
-            align: "right",
-            verticalAlign: "top",
-            type: "warning",
-            icon: "warning",
-            delay: 3000
-        });
+        $.notify(" Aún no has asignado empleados a un tipo de contrato.");
     }
 });
 //CENTRO
@@ -270,7 +246,7 @@ $.ajax({
     success: function (data) {
         var nombre = [];
         var total = [];
-        var color = ['#21bf73','#ffd31d','#eb4559'];
+        var color = ['#21bf73', '#ffd31d', '#eb4559'];
         var suma = 0;
         if (data[0].centro.length != 0) {
             for (var i = 0; i < data[0].centro.length; i++) {
@@ -278,7 +254,7 @@ $.ajax({
                 total.push(data[0].centro[i].Total);
                 suma += data[0].centro[i].Total;
             }
-            var promedio = (suma*100)/data[0].empleado[0].totalE;
+            var promedio = (suma * 100) / data[0].empleado[0].totalE;
             totalP = Math.round(promedio);
             var chartdata = {
                 labels: nombre,
@@ -327,23 +303,11 @@ $.ajax({
             });
         } else {
             $('#divcentro').hide();
-            $.notify(" Aún no has asignado empleados a un tipo de centro costo.", {
-                align: "right",
-                verticalAlign: "top",
-                type: "warning",
-                icon: "warning",
-                delay: 3000
-            });
+            $.notify(" Aún no has asignado empleados a un tipo de centro costo.");
         }
     },
     error: function (data) {
-        $.notify(" Aún no has asignado empleados a un tipo de centro costo.", {
-            align: "right",
-            verticalAlign: "top",
-            type: "warning",
-            icon: "warning",
-            delay: 3000
-        });
+        $.notify(" Aún no has asignado empleados a un tipo de centro costo.");
     }
 });
 //LOCAL
@@ -356,7 +320,7 @@ $.ajax({
     success: function (data) {
         var nombre = [];
         var total = [];
-        var color = ['#21bf73','#ffd31d','#eb4559'];
+        var color = ['#21bf73', '#ffd31d', '#eb4559'];
         var suma = 0;
         var totalP = 0;
         if (data[0].local.length != 0) {
@@ -365,7 +329,7 @@ $.ajax({
                 total.push(data[0].local[i].Total);
                 suma += data[0].local[i].Total;
             }
-            var promedio = (suma*100)/data[0].empleado[0].totalE;
+            var promedio = (suma * 100) / data[0].empleado[0].totalE;
             totalP = Math.round(promedio);
             var chartdata = {
                 labels: nombre,
@@ -414,23 +378,11 @@ $.ajax({
             });
         } else {
             $('#divlocal').hide();
-            $.notify(" Aún no has asignado empleados a un local.", {
-                align: "right",
-                verticalAlign: "top",
-                type: "warning",
-                icon: "warning",
-                delay: 3000
-            });
+            $.notify(" Aún no has asignado empleados a un local.");
         }
     },
     error: function (data) {
-        $.notify(" Aún no has asignado empleados a un local.", {
-            align: "right",
-            verticalAlign: "top",
-            type: "warning",
-            icon: "warning",
-            delay: 3000
-        });
+        $.notify(" Aún no has asignado empleados a un local.");
     }
 });
 //EDAD
@@ -443,7 +395,7 @@ $.ajax({
     success: function (data) {
         var nombre = [];
         var total = [];
-        var color = ['#21bf73','#ff9c71','#ffd31d','#eb4559'];
+        var color = ['#21bf73', '#ff9c71', '#ffd31d', '#eb4559'];
         var suma = 0;
         var totalP = 0;
         if (data[0].edad.length != 0) {
@@ -452,7 +404,7 @@ $.ajax({
                 total.push(data[0].edad[i].total);
                 suma += data[0].edad[i].total;
             }
-            var promedio = (suma*100)/data[0].empleado[0].totalE;
+            var promedio = (suma * 100) / data[0].empleado[0].totalE;
             totalP = Math.round(promedio);
             var chartdata = {
                 labels: nombre,
@@ -501,22 +453,10 @@ $.ajax({
             });
         } else {
             $('#divedades').hide();
-            $.notify(" Aún no has asignado empleados a un local.", {
-                align: "right",
-                verticalAlign: "top",
-                type: "warning",
-                icon: "warning",
-                delay: 3000
-            });
+            $.notify(" Aún no has asignado empleados a un local.");
         }
     },
     error: function (data) {
-        $.notify(" Aún no has asignado empleados a un local.", {
-            align: "right",
-            verticalAlign: "top",
-            type: "warning",
-            icon: "warning",
-            delay: 3000
-        });
+        $.notify(" Aún no has asignado empleados a un local.");
     }
 });
