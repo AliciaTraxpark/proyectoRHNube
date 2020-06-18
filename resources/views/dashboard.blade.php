@@ -64,11 +64,26 @@
 @else
 @section('content')
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4" id="divarea">
         <canvas id="area" height="180"></canvas>
     </div>
+    <div class="col-md-4" id="divnivel">
+        <canvas id="nivel" height="180"></canvas>
+    </div>
+    <div class="col-md-4" id="divcontrato">
+        <canvas id="contrato" height="180"></canvas>
+    </div>
+    <br><br><br>
+    <div class="col-md-4" id="divcentro">
+        <canvas id="centro" height="180"></canvas>
+    </div>
+    <div class="col-md-4" id="divlocal">
+        <canvas id="local" height="180"></canvas>
+    </div>
+    <div class="col-md-4" id="divedades">
+        <canvas id="edades" height="180"></canvas>
+    </div>
 </div>
-
 @endsection
 @endif
 @section('script')
