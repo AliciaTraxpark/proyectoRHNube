@@ -136,7 +136,7 @@ class apiController extends Controller
         return response()->json($idEnvio, 200);
     }
 
-    public function controlCaptura(Request $request)
+    public function control(Request $request)
     {
         $idEnvio = $request['idEnvio'];
         $control = new control();
@@ -153,6 +153,12 @@ class apiController extends Controller
             $control->Actividad_Activi_id = $request->get('Actividad_Activi_id');
         }
         $control->save();
+        return response()->json($control, 200);
+    }
+
+    public function captura(Request $request)
+    {
+        $idEnvio = $request['idEnvio'];
         $captura = new captura();
         $captura->idEnvio = $idEnvio;
         $captura->estado = $request->get('estado');
@@ -162,7 +168,6 @@ class apiController extends Controller
         $captura->save();
         return response()->json($captura, 200);
     }
-
     public function selectProyecto(Request $request)
     {
         $empleado = $request->get('emple_id');
