@@ -1,15 +1,12 @@
 $.notifyDefaults({
     icon_type: 'image',
-    target: '_blank',
     newest_on_top: true,
-    element: 'body',
     delay: 5000,
-    mouse_over: 'pausar',
     template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
 		'<span data-notify="title">{1}</span> ' +
-		'<span data-notify="message">{2}</span>' +
+		'<span style="color:#8a6d3b" data-notify="message">{2}</span>' +
 	'</div><br>' 
 });
 //AREA
@@ -81,7 +78,7 @@ $.ajax({
             });
         } else {
             $('#divarea').hide();
-            $.notify({message:"Aún no has asignado empleados a una área.",icon: 'admin/images/warning.svg'});
+            $.notify({message:" Aún no has asignado empleados a una área.",icon: 'admin/images/warning.svg'});
         }
     },
     error: function (data) {
