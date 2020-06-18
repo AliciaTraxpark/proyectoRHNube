@@ -1,14 +1,16 @@
 $.notifyDefaults({
+    icon_type: 'image',
     target: '_blank',
     newest_on_top: true,
     element: 'body',
-    delay: 4000,
-    template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert" style="background-color: #fcf8e3;" role="alert">' +
-		'<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-		'<span data-notify="icon"></span> ' +
+    delay: 5000,
+    mouse_over: 'pausar',
+    template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
 		'<span data-notify="title">{1}</span> ' +
 		'<span data-notify="message">{2}</span>' +
-	'</div>' 
+	'</div><br>' 
 });
 //AREA
 $.ajax({
@@ -79,7 +81,7 @@ $.ajax({
             });
         } else {
             $('#divarea').hide();
-            $.notify(" Aún no has asignado empleados a una área.");
+            $.notify({message:"Aún no has asignado empleados a una área.",icon: 'admin/images/warning.svg'});
         }
     },
     error: function (data) {
@@ -154,7 +156,7 @@ $.ajax({
             });
         } else {
             $('#divnivel').hide();
-            $.notify(" Aún no has asignado empleados a un nivel.");
+            $.notify({message:" Aún no has asignado empleados a un nivel.",icon: 'admin/images/warning.svg'});
         }
     },
     error: function (data) {
@@ -229,7 +231,7 @@ $.ajax({
             });
         } else {
             $('#divcontrato').hide();
-            $.notify(" Aún no has asignado empleados a un tipo de contrato.");
+            $.notify({message:" Aún no has asignado empleados a un tipo de contrato.",icon: 'admin/images/warning.svg'});
         }
     },
     error: function (data) {
@@ -303,7 +305,7 @@ $.ajax({
             });
         } else {
             $('#divcentro').hide();
-            $.notify(" Aún no has asignado empleados a un tipo de centro costo.");
+            $.notify({message:" Aún no has asignado empleados a un tipo de centro costo.",icon: 'admin/images/warning.svg'});
         }
     },
     error: function (data) {
@@ -378,7 +380,7 @@ $.ajax({
             });
         } else {
             $('#divlocal').hide();
-            $.notify(" Aún no has asignado empleados a un local.");
+            $.notify({message:" Aún no has asignado empleados a un local.",icon: 'admin/images/warning.svg'});
         }
     },
     error: function (data) {
@@ -453,7 +455,7 @@ $.ajax({
             });
         } else {
             $('#divedades').hide();
-            $.notify(" Aún no has asignado empleados a un local.");
+            $.notify({message:" Aún no has asignado empleados a un local.",icon: 'admin/images/warning.svg'});
         }
     },
     error: function (data) {
