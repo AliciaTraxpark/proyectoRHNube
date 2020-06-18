@@ -27,6 +27,26 @@
 @endsection
 @if ($variable==0)
 @section('content')
+<!--<style>
+    .chartjs-tooltip {
+      left: 0;
+      top: 0;
+      font-family:  Arial, sans-serif;
+      font-style: normal;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      position: absolute;
+      z-index: 0;
+      height: 100%;
+      padding: 0;
+      opacity: 1 !important;
+      align-items: center;
+      color: gray;
+      font-size: 40px !important;
+      font-weight: 800 !important;
+    }
+</style>-->
 <div class="row">
     <div class="col-md-12  text-center">
         <a href="{{route('calendario')}}"><button class="boton btn btn-default mr-1"><span
@@ -66,6 +86,9 @@
 <div class="row">
     <div class="col-md-4" id="divarea">
         <canvas id="area" height="180"></canvas>
+        <!--<div id="chartjs-tooltip">
+            <div><p>100%</p></div>
+          </div>-->
     </div>
     <div class="col-md-4" id="divnivel">
         <canvas id="nivel" height="180"></canvas>

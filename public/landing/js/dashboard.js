@@ -1,3 +1,59 @@
+/*function sumOfDataVal(dataArray) {
+    return dataArray['datasets'][0]['data'].reduce(function (sum, value) {
+        return sum + value;
+    }, 0);
+}
+var chartdata;
+Chart.defaults.global.tooltips.custom = function (tooltip) {
+    // Tooltip Element
+
+
+    var tooltipEl = document.getElementById('chartjs-tooltip');
+
+    // Hide if no tooltip
+    if (tooltip.opacity === 0) {
+        tooltipEl.style.color = "#464950";
+        $("#chartjs-tooltip div p").text("100%");
+
+        tooltipEl.style.opacity = 0;
+        return;
+    }
+
+
+    // Set caret Position
+    tooltipEl.classList.remove('above', 'below', 'no-transform');
+    if (tooltip.yAlign) {
+        tooltipEl.classList.add(tooltip.yAlign);
+    } else {
+        tooltipEl.classList.add('no-transform');
+    }
+
+    function getBody(bodyItem) {
+        return bodyItem.lines;
+    }
+
+    // Set Text
+    if (tooltip.body) {
+        var bodyLines = tooltip.body.map(getBody);
+        var innerHtml = '<p>';
+        bodyLines.forEach(function (body, i) {
+            var dataNumber = body[i].split(":");
+            var dataValNum = parseInt(dataNumber[1].trim());
+            var dataToPercent = (dataValNum / sumOfDataVal(chartdata) * 100).toFixed(2) + '%';
+            innerHtml += dataToPercent;
+        });
+
+        innerHtml += '</p>';
+
+        var tableRoot = tooltipEl.querySelector('div');
+        tableRoot.innerHTML = innerHtml;
+    }
+
+
+    tooltipEl.style.opacity = 1;
+    tooltipEl.style.color = "#FFF";
+};*/
+//NOTIFICACION
 $.notifyDefaults({
     icon_type: 'image',
     newest_on_top: true,
@@ -49,6 +105,13 @@ $.ajax({
                     legend: {
                         display: false
                     },
+                    tooltips: {
+                        enabled: false
+                    },
+                    animation: {
+                        animateRotate: false,
+                        animateScale: true
+                    },
                     plugins: {
                         datalabels: {
                             formatter: function (value, context) {
@@ -73,7 +136,7 @@ $.ajax({
                             fontFamily: 'Arial', //Default Arial
                             sidePadding: 20,
                         }
-                    }
+                    },
                 }
             });
         } else {
