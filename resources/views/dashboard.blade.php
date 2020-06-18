@@ -74,7 +74,15 @@
         <canvas id="contrato" height="180"></canvas>
     </div>
 </div>
-
+<br><br><br>
+<div class="row">
+    <div class="col-md-4">
+        <canvas id="centro" height="180"></canvas>
+    </div>
+    <div class="col-md-4">
+        <canvas id="local" height="180"></canvas>
+    </div>
+</div>
 @endsection
 @endif
 @section('script')

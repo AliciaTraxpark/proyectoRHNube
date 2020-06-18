@@ -39,4 +39,24 @@ class dashboardController extends Controller
 
         return response()->json($contrato, 200);
     }
+
+    public function centro()
+    {
+        $centro = DB::table('empleado as e')
+            ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+            ->select('cc.centroC_descripcion', DB::raw('COUNT(cc.centroC_descripcion) as Total'))
+            ->groupBy('cc.centroC_id')
+            ->get();
+        return response()->json($centro, 200);
+    }
+
+    public function local()
+    {
+        $local = DB::table('empleado as e')
+            ->join('local as l', 'e.emple_local', '=', 'l.local_id')
+            ->select('l.local_descripcion', DB::raw('COUNT(l.local_descripcion) as Total'))
+            ->groupBy('l.local_id')
+            ->get();
+        return response()->json($local, 200);
+    }
 }
