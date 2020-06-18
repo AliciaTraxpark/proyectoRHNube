@@ -17,4 +17,15 @@ class dashboardController extends Controller
 
         return response()->json($area, 200);
     }
+
+    public function nivel()
+    {
+        $nivel = DB::table('empleado as e')
+            ->join('nivel as n', 'e.emple_nivel', '=', 'n.nivel_id')
+            ->select('n.nivel_descripcion', DB::raw('COUNT(n.nivel_descripcion) as Total'))
+            ->groupBy('n.nivel_id')
+            ->get();
+
+        return response()->json($nivel, 200);
+    }
 }
