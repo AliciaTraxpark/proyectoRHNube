@@ -59,4 +59,14 @@ class dashboardController extends Controller
             ->get();
         return response()->json($local, 200);
     }
+
+    public function edad()
+    {
+        $edad = DB::table('empleado as e')
+            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+            ->select(DB::raw('YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento) as edad'), DB::raw('COUNT(YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento)) as total'))
+            ->groupBy('edad')
+            ->get();
+        return response()->json($edad, 200);
+    }
 }

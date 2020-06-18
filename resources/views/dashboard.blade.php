@@ -82,6 +82,9 @@
     <div class="col-md-4">
         <canvas id="local" height="180"></canvas>
     </div>
+    <div class="col-md-4">
+        <canvas id="edades" height="180"></canvas>
+    </div>
 </div>
 @endsection
 @endif
