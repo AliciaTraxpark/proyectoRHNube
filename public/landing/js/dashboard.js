@@ -1,58 +1,3 @@
-/*function sumOfDataVal(dataArray) {
-    return dataArray['datasets'][0]['data'].reduce(function (sum, value) {
-        return sum + value;
-    }, 0);
-}
-var chartdata;
-Chart.defaults.global.tooltips.custom = function (tooltip) {
-    // Tooltip Element
-
-
-    var tooltipEl = document.getElementById('chartjs-tooltip');
-
-    // Hide if no tooltip
-    if (tooltip.opacity === 0) {
-        tooltipEl.style.color = "#464950";
-        $("#chartjs-tooltip div p").text("100%");
-
-        tooltipEl.style.opacity = 0;
-        return;
-    }
-
-
-    // Set caret Position
-    tooltipEl.classList.remove('above', 'below', 'no-transform');
-    if (tooltip.yAlign) {
-        tooltipEl.classList.add(tooltip.yAlign);
-    } else {
-        tooltipEl.classList.add('no-transform');
-    }
-
-    function getBody(bodyItem) {
-        return bodyItem.lines;
-    }
-
-    // Set Text
-    if (tooltip.body) {
-        var bodyLines = tooltip.body.map(getBody);
-        var innerHtml = '<p>';
-        bodyLines.forEach(function (body, i) {
-            var dataNumber = body[i].split(":");
-            var dataValNum = parseInt(dataNumber[1].trim());
-            var dataToPercent = (dataValNum / sumOfDataVal(chartdata) * 100).toFixed(2) + '%';
-            innerHtml += dataToPercent;
-        });
-
-        innerHtml += '</p>';
-
-        var tableRoot = tooltipEl.querySelector('div');
-        tableRoot.innerHTML = innerHtml;
-    }
-
-
-    tooltipEl.style.opacity = 1;
-    tooltipEl.style.color = "#FFF";
-};*/
 //NOTIFICACION
 $.notifyDefaults({
     icon_type: 'image',
@@ -84,7 +29,7 @@ $.ajax({
     success: function (data) {
         var nombre = [];
         var total = [];
-        var color = ['#21bf73','#ffd31d', '#eb4559'];
+        var color = ['#21bf73', '#ffd31d', '#eb4559'];
         var suma = 0;
         var totalP = 0;
         if (data[0].area.length != 0) {
@@ -93,7 +38,7 @@ $.ajax({
                 nombre.push(data[0].area[i].area_descripcion);
                 total.push(data[0].area[i].Total);
             }
-            for(var j=3; j<data[0].area.length; j++){
+            for (var j = 3; j < data[0].area.length; j++) {
                 color.push(getRandomColor());
             }
             var promedio = (suma * 100) / data[0].empleado[0].totalE;
@@ -117,13 +62,7 @@ $.ajax({
                     legend: {
                         display: false
                     },
-                    tooltips: {
-                        enabled: false
-                    },
-                    animation: {
-                        animateRotate: false,
-                        animateScale: true
-                    },
+
                     plugins: {
                         datalabels: {
                             formatter: function (value, context) {
@@ -138,6 +77,16 @@ $.ajax({
                             font: {
                                 weight: 'bold',
                                 fontSize: 20
+                            }
+                        }
+                    },
+                    tooltips: {
+                        callbacks: {
+                            afterLabel: function (tooltipItem, data) {
+                                var dataset = data["datasets"][0];
+                                var percent = Math.round((dataset["data"][tooltipItem["index"]] /
+                                    dataset["_meta"][0]["total"]) * 100);
+                                grafico.options.elements.center.text = percent + "%empleados";
                             }
                         }
                     },
@@ -182,7 +131,7 @@ $.ajax({
                 total.push(data[0].nivel[i].Total);
                 suma += data[0].nivel[i].Total;
             }
-            for(var j=3; j<data[0].nivel.length; j++){
+            for (var j = 3; j < data[0].nivel.length; j++) {
                 color.push(getRandomColor());
             }
             var promedio = (suma * 100) / data[0].empleado[0].totalE;
@@ -229,7 +178,7 @@ $.ajax({
                             fontFamily: 'Arial', //Default Arial
                             sidePadding: 20,
                         }
-                    }
+                    },
                 }
             });
         } else {
@@ -263,7 +212,7 @@ $.ajax({
                 total.push(data[0].contrato[i].Total);
                 suma += data[0].contrato[i].Total;
             }
-            for(var j=3; j<data[0].contrato.length; j++){
+            for (var j = 3; j < data[0].contrato.length; j++) {
                 color.push(getRandomColor());
             }
             var promedio = (suma * 100) / data[0].empleado[0].totalE;
@@ -343,7 +292,7 @@ $.ajax({
                 total.push(data[0].centro[i].Total);
                 suma += data[0].centro[i].Total;
             }
-            for(var j=3; j<data[0].centro.length; j++){
+            for (var j = 3; j < data[0].centro.length; j++) {
                 color.push(getRandomColor());
             }
             var promedio = (suma * 100) / data[0].empleado[0].totalE;
@@ -424,7 +373,7 @@ $.ajax({
                 total.push(data[0].local[i].Total);
                 suma += data[0].local[i].Total;
             }
-            for(var j=3; j<data[0].local.length; j++){
+            for (var j = 3; j < data[0].local.length; j++) {
                 color.push(getRandomColor());
             }
             var promedio = (suma * 100) / data[0].empleado[0].totalE;
@@ -505,7 +454,7 @@ $.ajax({
                 total.push(data[0].edad[i].total);
                 suma += data[0].edad[i].total;
             }
-            for(var j=3; j<data[0].edad.length; j++){
+            for (var j = 3; j < data[0].edad.length; j++) {
                 color.push(getRandomColor());
             }
             var promedio = (suma * 100) / data[0].empleado[0].totalE;
