@@ -56,8 +56,15 @@ var chart = new Chart(ctx, {
 
     // Configuration options go here
     options: {
+        layout: {
+            padding: {
+                bottom: 40,
+                top: 40
+            }
+        },
         responsive: true,
-        cutoutPercentage: 70,
+        maintainAspectRatio: false,
+        cutoutPercentage: 80,
         tooltips: {
             enabled: false
         },
@@ -70,14 +77,15 @@ var chart = new Chart(ctx, {
                     var label = context.chart.data.labels[context.dataIndex];
                     var mostrar = [];
                     mostrar.push(label);
+                    console.log(mostrar);
                     return mostrar;
                 },
                 color: '#323232',
-                anchor: 'center',
-                align: 'center',
+                anchor: 'end',
+                align: 'end',
                 font: {
                     weight: 'bold',
-                    fontSize: 20
+                    fontSize: 24
                 }
             }
         },
@@ -108,8 +116,15 @@ var chart = new Chart(ctx, {
 
     // Configuration options go here
     options: {
+        layout: {
+            padding: {
+                bottom: 40,
+                top: 40,
+            }
+        },
         responsive: true,
-        cutoutPercentage: 70,
+        maintainAspectRatio: false,
+        cutoutPercentage: 80,
         tooltips: {
             enabled: false
         },
@@ -122,14 +137,15 @@ var chart = new Chart(ctx, {
                     var label = context.chart.data.labels[context.dataIndex];
                     var mostrar = [];
                     mostrar.push(label);
+                    console.log(mostrar);
                     return mostrar;
                 },
                 color: '#323232',
-                anchor: 'center',
-                align: 'center',
+                anchor: 'end',
+                align: 'end',
                 font: {
                     weight: 'bold',
-                    fontSize: 20
+                    fontSize: 24
                 }
             }
         },
@@ -160,8 +176,15 @@ var chart = new Chart(ctx, {
 
     // Configuration options go here
     options: {
+        layout: {
+            padding: {
+                bottom: 40,
+                top: 40,
+            }
+        },
         responsive: true,
-        cutoutPercentage: 70,
+        maintainAspectRatio: false,
+        cutoutPercentage: 80,
         tooltips: {
             enabled: false
         },
@@ -174,11 +197,12 @@ var chart = new Chart(ctx, {
                     var label = context.chart.data.labels[context.dataIndex];
                     var mostrar = [];
                     mostrar.push(label);
+                    console.log(mostrar);
                     return mostrar;
                 },
                 color: '#323232',
-                anchor: 'center',
-                align: 'center',
+                anchor: 'end',
+                align: 'end',
                 font: {
                     weight: 'bold',
                     fontSize: 24
@@ -213,8 +237,15 @@ var chart = new Chart(ctx, {
 
     // Configuration options go here
     options: {
+        layout: {
+            padding: {
+                bottom: 40,
+                top: 40,
+            }
+        },
         responsive: true,
-        cutoutPercentage: 70,
+        maintainAspectRatio: false,
+        cutoutPercentage: 80,
         tooltips: {
             enabled: false
         },
@@ -227,14 +258,15 @@ var chart = new Chart(ctx, {
                     var label = context.chart.data.labels[context.dataIndex];
                     var mostrar = [];
                     mostrar.push(label);
+                    console.log(mostrar);
                     return mostrar;
                 },
                 color: '#323232',
-                anchor: 'center',
-                align: 'center',
+                anchor: 'end',
+                align: 'end',
                 font: {
                     weight: 'bold',
-                    fontSize: 20
+                    fontSize: 24
                 }
             }
         },
@@ -265,8 +297,15 @@ var chart = new Chart(ctx, {
 
     // Configuration options go here
     options: {
+        layout: {
+            padding: {
+                bottom: 40,
+                top: 40,
+            }
+        },
         responsive: true,
-        cutoutPercentage: 70,
+        maintainAspectRatio: false,
+        cutoutPercentage: 80,
         tooltips: {
             enabled: false
         },
@@ -279,14 +318,15 @@ var chart = new Chart(ctx, {
                     var label = context.chart.data.labels[context.dataIndex];
                     var mostrar = [];
                     mostrar.push(label);
+                    console.log(mostrar);
                     return mostrar;
                 },
                 color: '#323232',
-                anchor: 'center',
-                align: 'center',
+                anchor: 'end',
+                align: 'end',
                 font: {
                     weight: 'bold',
-                    fontSize: 20
+                    fontSize: 24
                 }
             }
         },
@@ -318,8 +358,15 @@ var chart = new Chart(ctx, {
 
     // Configuration options go here
     options: {
+        layout: {
+            padding: {
+                bottom: 40,
+                top: 40,
+            }
+        },
         responsive: true,
-        cutoutPercentage: 70,
+        maintainAspectRatio: false,
+        cutoutPercentage: 80,
         tooltips: {
             enabled: false
         },
@@ -332,14 +379,15 @@ var chart = new Chart(ctx, {
                     var label = context.chart.data.labels[context.dataIndex];
                     var mostrar = [];
                     mostrar.push(label);
+                    console.log(mostrar);
                     return mostrar;
                 },
                 color: '#323232',
-                anchor: 'center',
-                align: 'center',
+                anchor: 'end',
+                align: 'end',
                 font: {
                     weight: 'bold',
-                    fontSize: 20
+                    fontSize: 24
                 }
             }
         },

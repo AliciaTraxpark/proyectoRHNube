@@ -27,26 +27,7 @@
 @endsection
 @if ($variable==0)
 @section('content')
-<!--<style>
-    .chartjs-tooltip {
-      left: 0;
-      top: 0;
-      font-family:  Arial, sans-serif;
-      font-style: normal;
-      right: 0;
-      display: flex;
-      justify-content: center;
-      position: absolute;
-      z-index: 0;
-      height: 100%;
-      padding: 0;
-      opacity: 1 !important;
-      align-items: center;
-      color: gray;
-      font-size: 40px !important;
-      font-weight: 800 !important;
-    }
-</style>-->
+</style>
 <div class="row">
     <div class="col-md-12  text-center">
         <a href="{{route('calendario')}}"><button class="boton btn btn-default mr-1"><span
@@ -57,54 +38,58 @@
 <br><br><br>
 <div class="row" style="opacity: 0.3;">
     <div class="col-md-4">
-        <canvas id="areaD" height="180"></canvas>
+        <canvas id="areaD" height="250" width="250"></canvas>
     </div>
     <div class="col-md-4">
-        <canvas id="nivelD" height="180"></canvas>
+        <canvas id="nivelD" height="250" width="250"></canvas>
     </div>
     <div class="col-md-4">
-        <canvas id="contratoD" height="180"></canvas>
+        <canvas id="contratoD" height="250" width="250"></canvas>
     </div>
 </div>
 <br><br><br>
 <div class="row" style="opacity: 0.3;">
     <div class="col-md-4">
-        <canvas id="centroD" height="180"></canvas>
+        <canvas id="centroD" height="250" width="250"></canvas>
     </div>
     <div class="col-md-4">
-        <canvas id="localD" height="180"></canvas>
+        <canvas id="localD" height="250" width="250"></canvas>
     </div>
     <div class="col-md-4">
-        <canvas id="edadD" height="180"></canvas>
+        <canvas id="edadD" height="250" width="250"></canvas>
     </div>
 </div>
-<br><br>
 <!-- end row -->
+@endsection
+@section('script')
+<script src="{{ URL::asset('admin/assets/libs/chart/Chart.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/chart/Chart.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.min.js') }}"></script>
+<!--<script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-piechart-outlabels.js') }}"></script>-->
+<script src="{{asset('landing/js/dashboardD.js')}}"></script>
 @endsection
 @else
 @section('content')
 <div class="row">
     <div class="col-md-4" id="divarea">
-        <canvas id="area" height="180"></canvas>
-        <!--<div id="chartjs-tooltip">
-            <div><p>100%</p></div>
-          </div>-->
+        <canvas id="area" height="250" width="250"></canvas>
     </div>
     <div class="col-md-4" id="divnivel">
-        <canvas id="nivel" height="180"></canvas>
+        <canvas id="nivel" height="250" width="250"></canvas>
     </div>
     <div class="col-md-4" id="divcontrato">
-        <canvas id="contrato" height="180"></canvas>
+        <canvas id="contrato" height="250" width="250"></canvas>
     </div>
     <br><br><br>
     <div class="col-md-4" id="divcentro">
-        <canvas id="centro" height="180"></canvas>
+        <canvas id="centro" height="250" width="250"></canvas>
     </div>
     <div class="col-md-4" id="divlocal">
-        <canvas id="local" height="180"></canvas>
+        <canvas id="local" height="250" width="250"></canvas>
     </div>
     <div class="col-md-4" id="divedades">
-        <canvas id="edades" height="180"></canvas>
+        <canvas id="edades" height="250" width="250"></canvas>
     </div>
 </div>
 @endsection
@@ -113,10 +98,11 @@
 <!-- optional plugins -->
 <script src="{{ URL::asset('admin/assets/libs/moment/moment.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/chart/Chart.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/chart/Chart.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/chart/Chart.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.min.js') }}"></script>
+<!--<script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-piechart-outlabels.js') }}"></script>-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
@@ -124,6 +110,5 @@
 @endsection
 @section('script-bottom')
 <!-- init js -->
-<script src="{{asset('landing/js/dashboardD.js')}}"></script>
 <script src="{{asset('landing/js/dashboard.js')}}"></script>
 @endsection
