@@ -1,5 +1,6 @@
 $(document).ready(function() {
     $('#form-ver').hide();
+
     leertabla();
 });
 function leertabla() {
@@ -273,7 +274,7 @@ $('#btnasignar').on('click', function(e) {
         console.log(info.event.id);
         console.log(info.event.title);
         //var event = calendar.getEventById(id);
-        info.event.remove();
+       // elimina//info.event.remove();
       },
       editable: false,
       eventLimit: true,
@@ -405,7 +406,7 @@ document.addEventListener('DOMContentLoaded',calendario1);
 //////////////////////
 
 $('#guardarTodoHorario').click(function(){
-
+    $('#guardarTodoHorario').prop('disabled',true);
     idemps=$('#nombreEmpleado').val();
     if(idemps==''){
         alert('Seleccione empleado');
@@ -427,8 +428,9 @@ $.ajax({
     },
     success:function(data){
         leertabla();
-        $('#asignarHorario').modal('toggle');
         $("#formulario")[0].reset();
+        $('#guardarTodoHorario').prop('disabled',false);
+        $('#asignarHorario').modal('toggle');
 
         },
     error:function(){ alert("Hay un error");}
