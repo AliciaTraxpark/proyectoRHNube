@@ -128,18 +128,22 @@ $.ajax({
                         },
                     },
                     plugins: {
-                        legend: false,
-                        outlabels: {
-                            text: '%l',
-                            color: 'white',
-                            stretch: 25,
-                            position: 'outside',
+                        datalabels: {
+                            formatter: function (value, context) {
+                                var label = context.chart.data.labels[context.dataIndex];
+                                var mostrar = [];
+                                mostrar.push(label);
+                                console.log(mostrar);
+                                return mostrar;
+                            },
+                            color: '#323232',
+                            anchor: 'end',
+                            align: 'end',
                             font: {
-                                resizable: true,
-                                minSize: 12,
-                                maxSize: 18
+                                weight: 'bold',
+                                fontSize: 24
                             }
-                        },
+                        }
                     }
                 },
             });
@@ -205,15 +209,20 @@ $.ajax({
                         display: false
                     },
                     plugins: {
-                        legend: false,
-                        outlabels: {
-                            text: '%l',
-                            color: 'white',
-                            stretch: 25,
+                        datalabels: {
+                            formatter: function (value, context) {
+                                var label = context.chart.data.labels[context.dataIndex];
+                                var mostrar = [];
+                                mostrar.push(label);
+                                console.log(mostrar);
+                                return mostrar;
+                            },
+                            color: '#323232',
+                            anchor: 'end',
+                            align: 'end',
                             font: {
-                                resizable: true,
-                                minSize: 12,
-                                maxSize: 18
+                                weight: 'bold',
+                                fontSize: 24
                             }
                         }
                     },
@@ -299,15 +308,20 @@ $.ajax({
                         display: false
                     },
                     plugins: {
-                        legend: false,
-                        outlabels: {
-                            text: '%l',
-                            color: 'white',
-                            stretch: 25,
+                        datalabels: {
+                            formatter: function (value, context) {
+                                var label = context.chart.data.labels[context.dataIndex];
+                                var mostrar = [];
+                                mostrar.push(label);
+                                console.log(mostrar);
+                                return mostrar;
+                            },
+                            color: '#323232',
+                            anchor: 'end',
+                            align: 'end',
                             font: {
-                                resizable: true,
-                                minSize: 12,
-                                maxSize: 18
+                                weight: 'bold',
+                                fontSize: 24
                             }
                         }
                     },
@@ -391,15 +405,20 @@ $.ajax({
                         display: false
                     },
                     plugins: {
-                        legend: false,
-                        outlabels: {
-                            text: '%l',
-                            color: 'white',
-                            stretch: 25,
+                        datalabels: {
+                            formatter: function (value, context) {
+                                var label = context.chart.data.labels[context.dataIndex];
+                                var mostrar = [];
+                                mostrar.push(label);
+                                console.log(mostrar);
+                                return mostrar;
+                            },
+                            color: '#323232',
+                            anchor: 'end',
+                            align: 'end',
                             font: {
-                                resizable: true,
-                                minSize: 12,
-                                maxSize: 18
+                                weight: 'bold',
+                                fontSize: 24
                             }
                         }
                     },
@@ -484,15 +503,20 @@ $.ajax({
                         display: false
                     },
                     plugins: {
-                        legend: false,
-                        outlabels: {
-                            text: '%l',
-                            color: 'white',
-                            stretch: 25,
+                        datalabels: {
+                            formatter: function (value, context) {
+                                var label = context.chart.data.labels[context.dataIndex];
+                                var mostrar = [];
+                                mostrar.push(label);
+                                console.log(mostrar);
+                                return mostrar;
+                            },
+                            color: '#323232',
+                            anchor: 'end',
+                            align: 'end',
                             font: {
-                                resizable: true,
-                                minSize: 12,
-                                maxSize: 18
+                                weight: 'bold',
+                                fontSize: 24
                             }
                         }
                     },
@@ -577,15 +601,20 @@ $.ajax({
                         display: false
                     },
                     plugins: {
-                        legend: false,
-                        outlabels: {
-                            text: '%l',
-                            color: 'white',
-                            stretch: 25,
+                        datalabels: {
+                            formatter: function (value, context) {
+                                var label = context.chart.data.labels[context.dataIndex];
+                                var mostrar = [];
+                                mostrar.push(label);
+                                console.log(mostrar);
+                                return mostrar;
+                            },
+                            color: '#323232',
+                            anchor: 'end',
+                            align: 'end',
                             font: {
-                                resizable: true,
-                                minSize: 12,
-                                maxSize: 18
+                                weight: 'bold',
+                                fontSize: 24
                             }
                         }
                     },
