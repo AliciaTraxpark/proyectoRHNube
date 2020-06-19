@@ -38,37 +38,25 @@
 <br><br><br>
 <div class="row" style="opacity: 0.3;">
     <div class="col-md-4">
-        <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
-            <canvas id="areaD"></canvas>
-        </div>
+        <canvas id="areaD" height="250" width="250"></canvas>
     </div>
     <div class="col-md-4">
-        <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
-            <canvas id="nivelD"></canvas>
-        </div>
+        <canvas id="nivelD" height="250" width="250"></canvas>
     </div>
     <div class="col-md-4">
-        <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
-            <canvas id="contratoD"></canvas>
-        </div>
+        <canvas id="contratoD" height="250" width="250"></canvas>
     </div>
 </div>
 <br><br><br>
 <div class="row" style="opacity: 0.3;">
     <div class="col-md-4">
-        <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
-            <canvas id="centroD"></canvas>
-        </div>
+        <canvas id="centroD" height="250" width="250"></canvas>
     </div>
     <div class="col-md-4">
-        <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
-            <canvas id="localD"></canvas>
-        </div>
+        <canvas id="localD" height="250" width="250"></canvas>
     </div>
     <div class="col-md-4">
-        <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
-            <canvas id="edadD"></canvas>
-        </div>
+        <canvas id="edadD" height="250" width="250"></canvas>
     </div>
 </div>
 <!-- end row -->
@@ -76,9 +64,9 @@
 @section('script')
 <script src="{{ URL::asset('admin/assets/libs/chart/Chart.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/chart/Chart.js') }}"></script>
-<!--<script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.min.js') }}"></script>-->
-<script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-piechart-outlabels.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.min.js') }}"></script>
+<!--<script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-piechart-outlabels.js') }}"></script>-->
 <script src="{{asset('landing/js/dashboardD.js')}}"></script>
 @endsection
 @else
