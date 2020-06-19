@@ -105,6 +105,7 @@ $('#horaF').flatpickr({
 });
 $('#btnasignar').on('click', function(e) {
     $('#nombreEmpleado').load(location.href+" #nombreEmpleado>*");
+    $('#asignarHorario').modal('toggle');
 
     var allVals = [];
     $(".sub_chk:checked").each(function() {
@@ -160,7 +161,7 @@ $('#btnasignar').on('click', function(e) {
 
         });
         }
-        $('#asignarHorario').modal('toggle');
+
 
 });
 //CALENDARIO//
