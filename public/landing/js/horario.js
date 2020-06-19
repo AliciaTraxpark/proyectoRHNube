@@ -105,12 +105,12 @@ $('#horaF').flatpickr({
 });
 $('#btnasignar').on('click', function(e) {
     $('#nombreEmpleado').load(location.href+" #nombreEmpleado>*");
-    calendario();
+
     var allVals = [];
     $(".sub_chk:checked").each(function() {
         allVals.push($(this).attr('data-id'));
     });
-    $('#asignarHorario').modal('toggle');
+
     if(allVals.length<=0){
         $.ajax({
             type:"post",
@@ -160,6 +160,7 @@ $('#btnasignar').on('click', function(e) {
 
         });
         }
+        $('#asignarHorario').modal('toggle');
 
 });
 //CALENDARIO//
@@ -431,6 +432,7 @@ $.ajax({
         $("#formulario")[0].reset();
         $('#guardarTodoHorario').prop('disabled',false);
         $('#asignarHorario').modal('toggle');
+        calendario();
 
         },
     error:function(){ alert("Hay un error");}
