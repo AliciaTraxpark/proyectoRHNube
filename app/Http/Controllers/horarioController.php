@@ -38,7 +38,9 @@ class horarioController extends Controller
     public function verTodEmpleado(Request $request){
         $empleados = DB::table('empleado as e')
         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-        ->select('p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','e.emple_nDoc','p.perso_id','e.emple_id')
+        ->select('p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','e.emple_nDoc','p.perso_id','e.emple_id','he.empleado_emple_id')
+        ->leftJoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+        ->whereNull('he.empleado_emple_id')
         ->get();
         return $empleados;
 
