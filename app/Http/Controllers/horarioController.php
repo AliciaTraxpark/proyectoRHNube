@@ -151,8 +151,55 @@ class horarioController extends Controller
 
         }
 
+        public function tablaHorario(){
+            $tabla_empleado1 = DB::table('empleado as e')
+                ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                ->leftJoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+                ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+                ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+                ->select('p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','c.cargo_descripcion',
+                'a.area_descripcion','cc.centroC_descripcion','e.emple_id','he.horario_horario_id')
+                ->distinct('e.emple_id')
+                ->get();
+                //dd($tabla_empleado);
+            return view('horarios.tablaEmpleado',['tabla_empleado'=> $tabla_empleado1]);
+        }
 
+        public function verDataEmpleado(Request $request){
+        $idsEm=$request->ids;
+        $empleado = DB::table('empleado as e')
+        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+        ->select('p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','e.emple_nDoc','p.perso_id','e.emple_id','hd.paises_id','hd.ubigeo_peru_departments_id',
+        'hor.horario_sobretiempo','hor.horario_tipo','hor.horario_descripcion','hor.horario_tolerancia')
+        ->join('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+        ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+        ->join('horario as hor', 'he.horario_horario_id', '=', 'hor.horario_id')
+        ->distinct('e.emple_id')
+        ->where('emple_id','=',$idsEm)->get();
 
+        return $empleado;
+    }
+    public function empleadoHorario(Request $request){
+        $idEm=$request->ids;
+        $eventos=DB::table('eventos')->select(['id','title' ,'color', 'textColor', 'start','end']);
+
+        $eventos_usuario = DB::table('eventos_usuario')
+        ->select(['id','title' ,'color', 'textColor', 'start','end'])
+             ->where('Users_id','=',Auth::user()->id)
+             ->where('evento_departamento','=',null)
+             ->where('evento_pais','=',173)
+                ->union($eventos);
+
+        $horario_empleado=DB::table('horario_empleado as he')->select(['id','title' ,'color', 'textColor', 'start','end'])
+        ->where('users_id','=',Auth::user()->id)
+        ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+        ->where('he.empleado_emple_id','=',$idEm)
+        ->union($eventos_usuario)
+        ->get();
+
+        return response()->json($horario_empleado);
+    }
 
     }
 

@@ -93,6 +93,10 @@
     text-transform: uppercase;
     font-weight: 500;
     }
+    .custom-select:disabled {
+    color: #3f3a3a;
+    background-color: #fcfcfc;
+    }
 </style>
 <div id="preloader">
     <div id="status">
@@ -141,7 +145,8 @@
                         </div> <!-- end card body-->
                     </div> <!-- end card -->
                     <div id="asignarHorario" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-                        <div class="modal-dialog  modal-xl" style="margin-top: 5px">
+                        <div class="modal-dialog  modal-xl d-flex justify-content-center" style="margin-top: 5px">
+
                         <div class="modal-content">
                            <div class="modal-header" style="background-color:#163552;">
                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Asignar horario</h5>
@@ -277,6 +282,130 @@
                        </div><!-- /.modal-content -->
                      </div><!-- /.modal-dialog -->
                     </div><!-- /.modal -->
+
+                    <div id="verhorarioEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                        <div class="modal-dialog  modal-xl d-flex justify-content-center" style="margin-top: 5px">
+
+                        <div class="modal-content">
+                           <div class="modal-header" style="background-color:#163552;">
+                               <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Horario de empleado</h5>
+                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                   <span aria-hidden="true">&times;</span>
+                               </button>
+                           </div>
+                           <div class="modal-body">
+                               <div class="row">
+
+                                   <div class="col-md-6">
+
+                                       <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                               <label for="">Empleado:</label>
+                                               {{-- <input type="text" class="form-control form-control-sm" id="nombreEmpleado"> --}}
+                                               <input type="text" class="form-control form-control-sm" id="idEmHorario" disabled>
+                                            </div>
+                                         </div>
+                                         <div class="col-md-12">
+                                            <label for="">Calendario:</label>
+                                         </div>
+                                        <div class="col-md-6 ">
+                                            <label for="">Pais:</label>
+                                            <select  class="form-control custom-select custom-select-sm" placeholder="pais" name="paisHorario" id="paisHorario" disabled>
+                                                <option value="">PAIS</option>
+                                                    @foreach ($pais as $paises)
+                                                        @if($paises->id==173)
+                                                            <option class="" selected="true" value="{{$paises->id}}" >{{$paises->nombre}}</option>
+                                                        @else
+                                                            <option class="" value="{{$paises->id}}">{{$paises->nombre}}</option>
+                                                        @endif
+                                                    @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="">Departamento:</label>
+                                            <select  class="form-control custom-select custom-select-sm" placeholder="Departamento" name="departamentoHorario" id="departamentoHorario" style="display: flex;" disabled>
+                                                <option >Ninguno</option>
+                                                 @foreach ($departamento as $departamentos)
+                                                <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
+                                                 @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-12"><br></div>
+                                        <div class="col-md-6"><label for=""><br></label>
+                                            <div class="form-check">
+
+                                              <input type="checkbox" class="form-check-input" id="exampleCheck2" >
+                                              <label class="form-check-label" for="exampleCheck2">Sobretiempo</label>
+                                            </div>
+                                         </div>
+                                         <div class="col-md-6">
+                                           <div class="form-group">
+                                              <label for="">Tipo de horario:</label>
+                                              <select class="form-control custom-select custom-select-sm" id="tipHorarioEmpleado" disabled>
+                                                <option>Normal</option>
+                                                <option>Guardía</option>
+                                                <option>Nocturno</option>
+                                              </select>
+                                           </div>
+                                         </div>
+                                         <div class="col-md-6">
+                                            <div class="form-group">
+                                               <label for="">Descripcion:</label>
+                                               <input type="text" class="form-control form-control-sm" id="descripcionCaHorario" disabled>
+                                            </div>
+                                         </div>
+
+                                         <div class="col-md-6">
+                                            <div class="form-group">
+                                               <label for="">Tolerancia(Min):</label>
+                                               <input type="number"  class="form-control form-control-sm" id="toleranciaHorario" disabled>
+                                            </div>
+                                         </div>
+
+
+                                       </div>
+                                   </div>
+
+                                    <div class="col-md-6" >
+                                     <div class="row">
+
+                                      </div>
+                                      <div class="col-md-12 text-right" id="DatoscalendarH" style=" max-width: 100%;">
+                                       
+                                        <div id="calendarHorario">
+                                        </div>
+                                      </div>
+                                      <input type="hidden" id="horarioEndH">
+                                      <input type="hidden" id="horarioStartH">
+
+                                      <div class="col-md-12 text-right" id="DatoscalendarH1" style=" max-width: 96%;">
+                                        <div id="calendar1Horario">
+                                        </div>
+                                      </div>
+
+
+                                    </div>
+
+                               </div>
+
+                           </div>
+                           <div class="modal-footer">
+                               <div class="col-md-12">
+                                   <div class="row">
+                                       <div class="col-md-12 text-right" >
+                                        <button type="button" id="" class="btn btn-light " data-dismiss="modal">Cancelar</button>
+                                        <button type="button" id="" name="" style="background-color: #163552;" class="btn ">Guardar</button>
+
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div><!-- /.modal-content -->
+                     </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
                 </div>
             </div>
         <footer class="border-top">
@@ -296,7 +425,6 @@
     <script src="{{asset('admin/assets/libs/smartwizard/jquery.smartWizard.min.js') }}"></script>
     <script src="{{asset('admin/assets/js/pages/form-wizard.init.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
-    <script src="{{asset('landing/js/tabla.js')}}"></script>
     <script src="{{asset('landing/js/horario.js')}}"></script>
     <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
