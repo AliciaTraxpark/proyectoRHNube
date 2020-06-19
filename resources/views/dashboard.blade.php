@@ -73,37 +73,45 @@
 </div>
 <!-- end row -->
 @endsection
+@section('script')
+<script src="{{ URL::asset('admin/assets/libs/chart/Chart.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/chart/Chart.js') }}"></script>
+<!--<script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.min.js') }}"></script>-->
+<script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-piechart-outlabels.js') }}"></script>
+<script src="{{asset('landing/js/dashboardD.js')}}"></script>
+@endsection
 @else
 @section('content')
 <div class="row">
     <div class="col-md-4" id="divarea">
-        <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
+        <div class="chart-container" style="position: relative; height:32vh; width:32vw;">
             <canvas id="area"></canvas>
         </div>
     </div>
     <div class="col-md-4" id="divnivel">
-        <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
+        <div class="chart-container" style="position: relative; height:32vh; width:32vw;">
             <canvas id="nivel"></canvas>
         </div>
     </div>
     <div class="col-md-4" id="divcontrato">
-        <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
+        <div class="chart-container" style="position: relative; height:32vh; width:32vw;">
             <canvas id="contrato"></canvas>
         </div>
     </div>
     <br><br><br>
     <div class="col-md-4" id="divcentro">
-        <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
+        <div class="chart-container" style="position: relative; height:32vh; width:32vw;">
             <canvas id="centro"></canvas>
         </div>
     </div>
     <div class="col-md-4" id="divlocal">
-        <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
+        <div class="chart-container" style="position: relative; height:32vh; width:32vw;">
             <canvas id="local"></canvas>
         </div>
     </div>
     <div class="col-md-4" id="divedades">
-        <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
+        <div class="chart-container" style="position: relative; height:32vh; width:32vw;">
             <canvas id="edades"></canvas>
         </div>
     </div>
@@ -126,6 +134,5 @@
 @endsection
 @section('script-bottom')
 <!-- init js -->
-<script src="{{asset('landing/js/dashboardD.js')}}"></script>
 <script src="{{asset('landing/js/dashboard.js')}}"></script>
 @endsection

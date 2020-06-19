@@ -97,7 +97,14 @@ $.ajax({
                 type: 'doughnut',
                 data: chartdata,
                 options: {
+                    layout:{
+                        padding:{
+                            bottom:40,
+                            top:40,
+                        }
+                    },
                     responsive: true,
+                    maintainAspectRatio:false,
                     cutoutPercentage: 80,
                     legend: {
                         display: false
@@ -185,7 +192,14 @@ $.ajax({
                 type: 'doughnut',
                 data: chartdata,
                 options: {
+                    layout:{
+                        padding:{
+                            bottom:40,
+                            top:40
+                        }
+                    },
                     responsive: true,
+                    maintainAspectRatio:false,
                     cutoutPercentage: 80,
                     legend: {
                         display: false
@@ -272,8 +286,15 @@ $.ajax({
                 type: 'doughnut',
                 data: chartdata,
                 options: {
+                    layout:{
+                        padding:{
+                            bottom:40,
+                            top:40
+                        }
+                    },
                     responsive: true,
                     cutoutPercentage: 80,
+                    maintainAspectRatio:false,
                     legend: {
                         display: false
                     },
@@ -357,8 +378,15 @@ $.ajax({
                 type: 'doughnut',
                 data: chartdata,
                 options: {
+                    layout:{
+                        padding:{
+                            bottom:40,
+                            top:40
+                        }
+                    },
                     responsive: true,
                     cutoutPercentage: 80,
+                    maintainAspectRatio:false,
                     legend: {
                         display: false
                     },
@@ -443,8 +471,15 @@ $.ajax({
                 type: 'doughnut',
                 data: chartdata,
                 options: {
+                    layout:{
+                        padding:{
+                            bottom:40,
+                            top:40
+                        }
+                    },
                     responsive: true,
                     cutoutPercentage: 80,
+                    maintainAspectRatio:false,
                     legend: {
                         display: false
                     },
@@ -529,8 +564,15 @@ $.ajax({
                 type: 'doughnut',
                 data: chartdata,
                 options: {
+                    layout:{
+                        padding:{
+                            bottom:40,
+                            top:40
+                        }
+                    },
                     responsive: true,
                     cutoutPercentage: 80,
+                    maintainAspectRatio:false,
                     legend: {
                         display: false
                     },
