@@ -57,7 +57,7 @@ var chart = new Chart(ctx, {
     // Configuration options go here
     options: {
         responsive: true,
-        cutoutPercentage: 70,
+        cutoutPercentage: 80,
         tooltips: {
             enabled: false
         },
@@ -65,19 +65,15 @@ var chart = new Chart(ctx, {
             display: false
         },
         plugins: {
-            datalabels: {
-                formatter: function (value, context) {
-                    var label = context.chart.data.labels[context.dataIndex];
-                    var mostrar = [];
-                    mostrar.push(label);
-                    return mostrar;
-                },
-                color: '#323232',
-                anchor: 'center',
-                align: 'center',
+            legend: false,
+            outlabels: {
+                text: '%l',
+                color: 'white',
+                stretch: 25,
                 font: {
-                    weight: 'bold',
-                    fontSize: 20
+                    resizable: true,
+                    minSize: 12,
+                    maxSize: 18
                 }
             }
         },
@@ -109,7 +105,7 @@ var chart = new Chart(ctx, {
     // Configuration options go here
     options: {
         responsive: true,
-        cutoutPercentage: 70,
+        cutoutPercentage: 80,
         tooltips: {
             enabled: false
         },
@@ -117,19 +113,15 @@ var chart = new Chart(ctx, {
             display: false
         },
         plugins: {
-            datalabels: {
-                formatter: function (value, context) {
-                    var label = context.chart.data.labels[context.dataIndex];
-                    var mostrar = [];
-                    mostrar.push(label);
-                    return mostrar;
-                },
-                color: '#323232',
-                anchor: 'center',
-                align: 'center',
+            legend: false,
+            outlabels: {
+                text: '%l',
+                color: 'white',
+                stretch: 25,
                 font: {
-                    weight: 'bold',
-                    fontSize: 20
+                    resizable: true,
+                    minSize: 12,
+                    maxSize: 18
                 }
             }
         },
@@ -161,7 +153,7 @@ var chart = new Chart(ctx, {
     // Configuration options go here
     options: {
         responsive: true,
-        cutoutPercentage: 70,
+        cutoutPercentage: 80,
         tooltips: {
             enabled: false
         },
@@ -169,19 +161,15 @@ var chart = new Chart(ctx, {
             display: false
         },
         plugins: {
-            datalabels: {
-                formatter: function (value, context) {
-                    var label = context.chart.data.labels[context.dataIndex];
-                    var mostrar = [];
-                    mostrar.push(label);
-                    return mostrar;
-                },
-                color: '#323232',
-                anchor: 'center',
-                align: 'center',
+            legend: false,
+            outlabels: {
+                text: '%l',
+                color: 'white',
+                stretch: 25,
                 font: {
-                    weight: 'bold',
-                    fontSize: 24
+                    resizable: true,
+                    minSize: 12,
+                    maxSize: 18
                 }
             }
         },
@@ -214,7 +202,7 @@ var chart = new Chart(ctx, {
     // Configuration options go here
     options: {
         responsive: true,
-        cutoutPercentage: 70,
+        cutoutPercentage: 80,
         tooltips: {
             enabled: false
         },
@@ -222,19 +210,15 @@ var chart = new Chart(ctx, {
             display: false
         },
         plugins: {
-            datalabels: {
-                formatter: function (value, context) {
-                    var label = context.chart.data.labels[context.dataIndex];
-                    var mostrar = [];
-                    mostrar.push(label);
-                    return mostrar;
-                },
-                color: '#323232',
-                anchor: 'center',
-                align: 'center',
+            legend: false,
+            outlabels: {
+                text: '%l',
+                color: 'white',
+                stretch: 25,
                 font: {
-                    weight: 'bold',
-                    fontSize: 20
+                    resizable: true,
+                    minSize: 12,
+                    maxSize: 18
                 }
             }
         },
@@ -266,7 +250,7 @@ var chart = new Chart(ctx, {
     // Configuration options go here
     options: {
         responsive: true,
-        cutoutPercentage: 70,
+        cutoutPercentage: 80,
         tooltips: {
             enabled: false
         },
@@ -274,19 +258,15 @@ var chart = new Chart(ctx, {
             display: false
         },
         plugins: {
-            datalabels: {
-                formatter: function (value, context) {
-                    var label = context.chart.data.labels[context.dataIndex];
-                    var mostrar = [];
-                    mostrar.push(label);
-                    return mostrar;
-                },
-                color: '#323232',
-                anchor: 'center',
-                align: 'center',
+            legend: false,
+            outlabels: {
+                text: '%l',
+                color: 'white',
+                stretch: 25,
                 font: {
-                    weight: 'bold',
-                    fontSize: 20
+                    resizable: true,
+                    minSize: 12,
+                    maxSize: 18
                 }
             }
         },
@@ -319,7 +299,7 @@ var chart = new Chart(ctx, {
     // Configuration options go here
     options: {
         responsive: true,
-        cutoutPercentage: 70,
+        cutoutPercentage: 80,
         tooltips: {
             enabled: false
         },
@@ -327,19 +307,15 @@ var chart = new Chart(ctx, {
             display: false
         },
         plugins: {
-            datalabels: {
-                formatter: function (value, context) {
-                    var label = context.chart.data.labels[context.dataIndex];
-                    var mostrar = [];
-                    mostrar.push(label);
-                    return mostrar;
-                },
-                color: '#323232',
-                anchor: 'center',
-                align: 'center',
+            legend: false,
+            outlabels: {
+                text: '%l',
+                color: 'white',
+                stretch: 25,
                 font: {
-                    weight: 'bold',
-                    fontSize: 20
+                    resizable: true,
+                    minSize: 12,
+                    maxSize: 18
                 }
             }
         },

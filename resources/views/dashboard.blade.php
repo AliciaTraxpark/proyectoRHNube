@@ -38,28 +38,39 @@
 <br><br><br>
 <div class="row" style="opacity: 0.3;">
     <div class="col-md-4">
-        <canvas id="areaD" height="180"></canvas>
+        <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
+            <canvas id="areaD"></canvas>
+        </div>
     </div>
     <div class="col-md-4">
-        <canvas id="nivelD" height="180"></canvas>
+        <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
+            <canvas id="nivelD"></canvas>
+        </div>
     </div>
     <div class="col-md-4">
-        <canvas id="contratoD" height="180"></canvas>
+        <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
+            <canvas id="contratoD"></canvas>
+        </div>
     </div>
 </div>
 <br><br><br>
 <div class="row" style="opacity: 0.3;">
     <div class="col-md-4">
-        <canvas id="centroD" height="180"></canvas>
+        <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
+            <canvas id="centroD"></canvas>
+        </div>
     </div>
     <div class="col-md-4">
-        <canvas id="localD" height="180"></canvas>
+        <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
+            <canvas id="localD"></canvas>
+        </div>
     </div>
     <div class="col-md-4">
-        <canvas id="edadD" height="180"></canvas>
+        <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
+            <canvas id="edadD"></canvas>
+        </div>
     </div>
 </div>
-<br><br>
 <!-- end row -->
 @endsection
 @else
@@ -72,28 +83,28 @@
     </div>
     <div class="col-md-4" id="divnivel">
         <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
-            <canvas id="nivel" height="180"></canvas>
+            <canvas id="nivel"></canvas>
         </div>
     </div>
     <div class="col-md-4" id="divcontrato">
         <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
-            <canvas id="contrato" height="180"></canvas>
+            <canvas id="contrato"></canvas>
         </div>
     </div>
     <br><br><br>
     <div class="col-md-4" id="divcentro">
         <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
-            <canvas id="centro" height="180"></canvas>
+            <canvas id="centro"></canvas>
         </div>
     </div>
     <div class="col-md-4" id="divlocal">
         <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
-            <canvas id="local" height="180"></canvas>
+            <canvas id="local"></canvas>
         </div>
     </div>
     <div class="col-md-4" id="divedades">
         <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
-            <canvas id="edades" height="180"></canvas>
+            <canvas id="edades"></canvas>
         </div>
     </div>
 </div>
