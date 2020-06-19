@@ -86,7 +86,7 @@ $.ajax({
                                 var dataset = data["datasets"][0];
                                 var percent = Math.round((dataset["data"][tooltipItem["index"]] /
                                     dataset["_meta"][0]["total"]) * 100);
-                                grafico.options.elements.center.text = percent + "%empleados";
+                                grafico.options.elements.center.text = percent + "%" + data["labels"][tooltipItem["index"]];
                             }
                         }
                     },
