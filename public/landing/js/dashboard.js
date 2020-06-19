@@ -97,14 +97,14 @@ $.ajax({
                 type: 'doughnut',
                 data: chartdata,
                 options: {
-                    layout:{
-                        padding:{
-                            bottom:40,
-                            top:40,
+                    layout: {
+                        padding: {
+                            bottom: 40,
+                            top: 40,
                         }
                     },
                     responsive: true,
-                    maintainAspectRatio:false,
+                    maintainAspectRatio: false,
                     cutoutPercentage: 80,
                     legend: {
                         display: false
@@ -121,7 +121,7 @@ $.ajax({
                     },
                     elements: {
                         center: {
-                            text: suma +'\nempleados en área',
+                            text: suma + '\nempleados en área',
                             color: '#424874', //Default black
                             fontFamily: 'Arial', //Default Arial
                             sidePadding: 20,
@@ -192,14 +192,14 @@ $.ajax({
                 type: 'doughnut',
                 data: chartdata,
                 options: {
-                    layout:{
-                        padding:{
-                            bottom:40,
-                            top:40
+                    layout: {
+                        padding: {
+                            bottom: 40,
+                            top: 40
                         }
                     },
                     responsive: true,
-                    maintainAspectRatio:false,
+                    maintainAspectRatio: false,
                     cutoutPercentage: 80,
                     legend: {
                         display: false
@@ -229,7 +229,7 @@ $.ajax({
                     },
                     elements: {
                         center: {
-                            text: suma +'\nempleados en nivel',
+                            text: suma + '\nempleados en nivel',
                             color: '#424874', //Default black
                             fontFamily: 'Arial', //Default Arial
                             sidePadding: 20,
@@ -286,15 +286,15 @@ $.ajax({
                 type: 'doughnut',
                 data: chartdata,
                 options: {
-                    layout:{
-                        padding:{
-                            bottom:40,
-                            top:40
+                    layout: {
+                        padding: {
+                            bottom: 40,
+                            top: 40
                         }
                     },
                     responsive: true,
                     cutoutPercentage: 80,
-                    maintainAspectRatio:false,
+                    maintainAspectRatio: false,
                     legend: {
                         display: false
                     },
@@ -322,7 +322,7 @@ $.ajax({
                     },
                     elements: {
                         center: {
-                            text: suma +'\nempleados en contrato',
+                            text: suma + '\nempleados en contrato',
                             color: '#424874', //Default black
                             fontFamily: 'Arial', //Default Arial
                             sidePadding: 20,
@@ -378,15 +378,15 @@ $.ajax({
                 type: 'doughnut',
                 data: chartdata,
                 options: {
-                    layout:{
-                        padding:{
-                            bottom:40,
-                            top:40
+                    layout: {
+                        padding: {
+                            bottom: 40,
+                            top: 40
                         }
                     },
                     responsive: true,
                     cutoutPercentage: 80,
-                    maintainAspectRatio:false,
+                    maintainAspectRatio: false,
                     legend: {
                         display: false
                     },
@@ -414,7 +414,7 @@ $.ajax({
                     },
                     elements: {
                         center: {
-                            text: suma +'\nempleados en CC',
+                            text: suma + '\nempleados en CC',
                             color: '#424874', //Default black
                             fontFamily: 'Arial', //Default Arial
                             sidePadding: 20,
@@ -471,15 +471,15 @@ $.ajax({
                 type: 'doughnut',
                 data: chartdata,
                 options: {
-                    layout:{
-                        padding:{
-                            bottom:40,
-                            top:40
+                    layout: {
+                        padding: {
+                            bottom: 40,
+                            top: 40
                         }
                     },
                     responsive: true,
                     cutoutPercentage: 80,
-                    maintainAspectRatio:false,
+                    maintainAspectRatio: false,
                     legend: {
                         display: false
                     },
@@ -507,7 +507,7 @@ $.ajax({
                     },
                     elements: {
                         center: {
-                            text: suma +'\nempleados en local',
+                            text: suma + '\nempleados en local',
                             color: '#424874', //Default black
                             fontFamily: 'Arial', //Default Arial
                             sidePadding: 20,
@@ -564,15 +564,15 @@ $.ajax({
                 type: 'doughnut',
                 data: chartdata,
                 options: {
-                    layout:{
-                        padding:{
-                            bottom:40,
-                            top:40
+                    layout: {
+                        padding: {
+                            bottom: 40,
+                            top: 40
                         }
                     },
                     responsive: true,
                     cutoutPercentage: 80,
-                    maintainAspectRatio:false,
+                    maintainAspectRatio: false,
                     legend: {
                         display: false
                     },
@@ -600,7 +600,7 @@ $.ajax({
                     },
                     elements: {
                         center: {
-                            text: suma +'\nempleados por rango',
+                            text: suma + '\nempleados por rango',
                             color: '#424874', //Default black
                             fontFamily: 'Arial', //Default Arial
                             sidePadding: 20,

@@ -85,35 +85,23 @@
 @section('content')
 <div class="row">
     <div class="col-md-4" id="divarea">
-        <div class="chart-container" style="position: relative; height:32vh; width:32vw;">
-            <canvas id="area"></canvas>
-        </div>
+        <canvas id="area" height="250" width="250"></canvas>
     </div>
     <div class="col-md-4" id="divnivel">
-        <div class="chart-container" style="position: relative; height:32vh; width:32vw;">
-            <canvas id="nivel"></canvas>
-        </div>
+        <canvas id="nivel" height="250" width="250"></canvas>
     </div>
     <div class="col-md-4" id="divcontrato">
-        <div class="chart-container" style="position: relative; height:32vh; width:32vw;">
-            <canvas id="contrato"></canvas>
-        </div>
+        <canvas id="contrato" height="250" width="250"></canvas>
     </div>
     <br><br><br>
     <div class="col-md-4" id="divcentro">
-        <div class="chart-container" style="position: relative; height:32vh; width:32vw;">
-            <canvas id="centro"></canvas>
-        </div>
+        <canvas id="centro" height="250" width="250"></canvas>
     </div>
     <div class="col-md-4" id="divlocal">
-        <div class="chart-container" style="position: relative; height:32vh; width:32vw;">
-            <canvas id="local"></canvas>
-        </div>
+        <canvas id="local" height="250" width="250"></canvas>
     </div>
     <div class="col-md-4" id="divedades">
-        <div class="chart-container" style="position: relative; height:32vh; width:32vw;">
-            <canvas id="edades"></canvas>
-        </div>
+        <canvas id="edades" height="250" width="250"></canvas>
     </div>
 </div>
 @endsection
