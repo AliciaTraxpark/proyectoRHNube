@@ -1,3 +1,96 @@
+$(document).ready(function() {
+    $('#form-ver').hide();
+
+    leertabla();
+});
+function leertabla() {
+    $.get("tablahorario/ver", {}, function (data, status) {
+        $('#tabladiv').html(data);
+
+    });
+}
+function verhorarioEmpleado(idempleado){
+    $('#verhorarioEmpleado').modal('toggle');
+
+    $.ajax({
+        type:"post",
+        url:"/verDataEmpleado",
+        data:'ids='+idempleado,
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        success: function (data) {
+            $('#idEmHorario').val(data[0].perso_nombre+' '+data[0].perso_apPaterno +' '+data[0].perso_apMaterno);
+            $('#paisHorario').val(data[0].paises_id);
+            if(data[0].ubigeo_peru_departments_id==null){
+                $('#departamentoHorario').val('Ninguno');
+            }
+            if(data[0].horario_sobretiempo==1){
+                $('#exampleCheck2').prop('checked',true);
+            }
+            $('#tipHorarioEmpleado').val(data[0].horario_tipo);
+            $('#descripcionCaHorario').val(data[0].horario_descripcion);
+            $('#toleranciaHorario').val(data[0].horario_tolerancia);
+
+            $.ajax({
+                type:"post",
+                url:"/empleadoHorario",
+                data:'ids='+idempleado,
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                success: function (data) {
+                    calendarioHorario(data);
+                },
+                error: function (data) {
+                    alert('Ocurrio un error');
+                }
+            });
+
+
+
+
+        },
+        error: function (data) {
+            alert('Ocurrio un error');
+        }
+
+    });
+
+}
+//CALENDARIO HORARIO
+function calendarioHorario(eventosEmpleado) {
+    var calendarElH = document.getElementById('calendarHorario');
+    calendarElH.innerHTML="";
+
+    var fecha = new Date();
+    var ano = fecha. getFullYear();
+    var id;
+
+    var configuracionCalendarioH = {
+        locale: 'es',
+        defaultDate: ano+'-01-01',
+         height:  "auto",
+         contentHeight: 430,
+         fixedWeekCount:false,
+        plugins: [ 'dayGrid','interaction','timeGrid'],
+
+        selectable: true,
+        selectMirror: true,
+
+      editable: false,
+      eventLimit: true,
+        header:{
+          left:'prev,next today',
+          center:'title',
+          right:''
+        },
+
+        events:eventosEmpleado,
+      }
+    var calendar = new FullCalendar.Calendar(calendarElH,configuracionCalendarioH);
+    calendar.setOption('locale',"Es");
+    ////
+    calendar.render();
+
+}
+document.addEventListener('DOMContentLoaded',calendarioHorario);
  $('#horaI').flatpickr({
     enableTime: true,
     noCalendar: true,
@@ -11,12 +104,14 @@ $('#horaF').flatpickr({
     time_24hr: true
 });
 $('#btnasignar').on('click', function(e) {
-    $('#nombreEmpleado').load(location.href+" #nombreEmpleado>*");
+    $('#nombreEmpleado').empty();
+    $('#asignarHorario').modal('toggle');
+
     var allVals = [];
     $(".sub_chk:checked").each(function() {
         allVals.push($(this).attr('data-id'));
     });
-    $('#asignarHorario').modal('toggle');
+
     if(allVals.length<=0){
         $.ajax({
             type:"post",
@@ -66,6 +161,7 @@ $('#btnasignar').on('click', function(e) {
 
         });
         }
+
 
 });
 //CALENDARIO//
@@ -180,7 +276,7 @@ $('#btnasignar').on('click', function(e) {
         console.log(info.event.id);
         console.log(info.event.title);
         //var event = calendar.getEventById(id);
-        info.event.remove();
+       // elimina//info.event.remove();
       },
       editable: false,
       eventLimit: true,
@@ -312,7 +408,12 @@ document.addEventListener('DOMContentLoaded',calendario1);
 //////////////////////
 
 $('#guardarTodoHorario').click(function(){
+    $('#guardarTodoHorario').prop('disabled',true);
     idemps=$('#nombreEmpleado').val();
+    if(idemps==''){
+        alert('Seleccione empleado');
+        return false;
+    }
     if( $('#exampleCheck1').prop('checked') ) {
        sobretiempo=1;
     } else { sobretiempo=0;}
@@ -328,6 +429,11 @@ $.ajax({
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     success:function(data){
+        leertabla();
+       $("#formulario")[0].reset();
+        $('#guardarTodoHorario').prop('disabled',false);
+        $('#asignarHorario').modal('toggle');
+        calendario();
 
         },
     error:function(){ alert("Hay un error");}
