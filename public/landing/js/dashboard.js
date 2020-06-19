@@ -57,7 +57,8 @@ $.ajax({
                 data: chartdata,
                 options: {
                     responsive: true,
-                    cutoutPercentage: 70,
+                    cutoutPercentage: 80,
+                    maintainAspectRatio: false,
                     legend: {
                         display: false
                     },
@@ -85,6 +86,7 @@ $.ajax({
                             text: '%l',
                             color: 'white',
                             stretch: 25,
+                            position: 'outside',
                             font: {
                                 resizable: true,
                                 minSize: 12,
@@ -144,7 +146,8 @@ $.ajax({
                 data: chartdata,
                 options: {
                     responsive: true,
-                    cutoutPercentage: 70,
+                    cutoutPercentage: 80,
+                    maintainAspectRatio: false,
                     legend: {
                         display: false
                     },
@@ -231,7 +234,8 @@ $.ajax({
                 data: chartdata,
                 options: {
                     responsive: true,
-                    cutoutPercentage: 70,
+                    cutoutPercentage: 80,
+                    maintainAspectRatio: false,
                     legend: {
                         display: false
                     },
@@ -316,7 +320,8 @@ $.ajax({
                 data: chartdata,
                 options: {
                     responsive: true,
-                    cutoutPercentage: 70,
+                    cutoutPercentage: 80,
+                    maintainAspectRatio: false,
                     legend: {
                         display: false
                     },
@@ -402,7 +407,8 @@ $.ajax({
                 data: chartdata,
                 options: {
                     responsive: true,
-                    cutoutPercentage: 70,
+                    cutoutPercentage: 80,
+                    maintainAspectRatio: false,
                     legend: {
                         display: false
                     },
@@ -488,7 +494,8 @@ $.ajax({
                 data: chartdata,
                 options: {
                     responsive: true,
-                    cutoutPercentage: 70,
+                    cutoutPercentage: 80,
+                    maintainAspectRatio: false,
                     legend: {
                         display: false
                     },

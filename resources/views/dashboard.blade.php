@@ -27,6 +27,7 @@
 @endsection
 @if ($variable==0)
 @section('content')
+</style>
 <div class="row">
     <div class="col-md-12  text-center">
         <a href="{{route('calendario')}}"><button class="boton btn btn-default mr-1"><span
@@ -65,23 +66,35 @@
 @section('content')
 <div class="row">
     <div class="col-md-4" id="divarea">
-        <canvas id="area" height="180"></canvas>
+        <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
+            <canvas id="area"></canvas>
+        </div>
     </div>
     <div class="col-md-4" id="divnivel">
-        <canvas id="nivel" height="180"></canvas>
+        <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
+            <canvas id="nivel" height="180"></canvas>
+        </div>
     </div>
     <div class="col-md-4" id="divcontrato">
-        <canvas id="contrato" height="180"></canvas>
+        <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
+            <canvas id="contrato" height="180"></canvas>
+        </div>
     </div>
     <br><br><br>
     <div class="col-md-4" id="divcentro">
-        <canvas id="centro" height="180"></canvas>
+        <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
+            <canvas id="centro" height="180"></canvas>
+        </div>
     </div>
     <div class="col-md-4" id="divlocal">
-        <canvas id="local" height="180"></canvas>
+        <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
+            <canvas id="local" height="180"></canvas>
+        </div>
     </div>
     <div class="col-md-4" id="divedades">
-        <canvas id="edades" height="180"></canvas>
+        <div class="chart-container" style="position: relative; height:30vh; width:30vw;">
+            <canvas id="edades" height="180"></canvas>
+        </div>
     </div>
 </div>
 @endsection
