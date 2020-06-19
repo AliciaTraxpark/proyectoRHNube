@@ -110,7 +110,8 @@
 @section('script-bottom')
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{asset('landing/js/tareas.js')}}"></script>
 @endsection

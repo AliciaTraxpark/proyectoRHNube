@@ -1,3 +1,14 @@
+var notify = $.notifyDefaults({
+    icon_type: 'image',
+    newest_on_top: true,
+    delay: 4000,
+    template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+		'<span data-notify="title">{1}</span> ' +
+		'<span style="color:#8a6d3b" data-notify="message">{2}</span>' +
+	'</div><br>' 
+});
 //FECHA
 $('#fecha').flatpickr({
     locale: "es",
@@ -28,6 +39,7 @@ function onMostrarPantallas() {
         },
         success: function (data) {
             if (data.length != 0) {
+                $.notifyClose();
                 var container = $('#card');
                 var horaDelGrupo = parseInt(data[0].hora_ini.split(":")[0]);
                 var labelDelGrupo = horaDelGrupo + ":00:00" + " - " + (horaDelGrupo + 1) + ":00:00";
@@ -154,13 +166,7 @@ function onMostrarPantallas() {
                     grupo = `<span style="font-weight: bold;color:#507394;">${labelDelGrupo}</span><br><br><div class="row">`;
                 }
             } else {
-                $.notify("Falta elegir campos o No se encontrado capturas.", {
-                    align: "right",
-                    verticalAlign: "top",
-                    type: "warning",
-                    icon: "warning",
-                    delay: 1000
-                });
+                $.notify({message:"Falta elegir campos o No se encontrado capturas.",icon:'admin/images/warning.svg'});
             }
         },
         error: function (data) {

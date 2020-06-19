@@ -1,3 +1,79 @@
+/*function sumOfDataVal(dataArray) {
+    return dataArray['datasets'][0]['data'].reduce(function (sum, value) {
+        return sum + value;
+    }, 0);
+}
+var chartdata;
+Chart.defaults.global.tooltips.custom = function (tooltip) {
+    // Tooltip Element
+
+
+    var tooltipEl = document.getElementById('chartjs-tooltip');
+
+    // Hide if no tooltip
+    if (tooltip.opacity === 0) {
+        tooltipEl.style.color = "#464950";
+        $("#chartjs-tooltip div p").text("100%");
+
+        tooltipEl.style.opacity = 0;
+        return;
+    }
+
+
+    // Set caret Position
+    tooltipEl.classList.remove('above', 'below', 'no-transform');
+    if (tooltip.yAlign) {
+        tooltipEl.classList.add(tooltip.yAlign);
+    } else {
+        tooltipEl.classList.add('no-transform');
+    }
+
+    function getBody(bodyItem) {
+        return bodyItem.lines;
+    }
+
+    // Set Text
+    if (tooltip.body) {
+        var bodyLines = tooltip.body.map(getBody);
+        var innerHtml = '<p>';
+        bodyLines.forEach(function (body, i) {
+            var dataNumber = body[i].split(":");
+            var dataValNum = parseInt(dataNumber[1].trim());
+            var dataToPercent = (dataValNum / sumOfDataVal(chartdata) * 100).toFixed(2) + '%';
+            innerHtml += dataToPercent;
+        });
+
+        innerHtml += '</p>';
+
+        var tableRoot = tooltipEl.querySelector('div');
+        tableRoot.innerHTML = innerHtml;
+    }
+
+
+    tooltipEl.style.opacity = 1;
+    tooltipEl.style.color = "#FFF";
+};*/
+//NOTIFICACION
+$.notifyDefaults({
+    icon_type: 'image',
+    newest_on_top: true,
+    delay: 5000,
+    template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+        '<span data-notify="title">{1}</span> ' +
+        '<span style="color:#8a6d3b" data-notify="message">{2}</span>' +
+        '</div><br>'
+});
+//COLORES
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
 //AREA
 $.ajax({
     url: "totalA",
@@ -8,7 +84,7 @@ $.ajax({
     success: function (data) {
         var nombre = [];
         var total = [];
-        var color = ['#21bf73','#ffd31d','#eb4559'];
+        var color = ['#21bf73','#ffd31d', '#eb4559'];
         var suma = 0;
         var totalP = 0;
         if (data[0].area.length != 0) {
@@ -17,7 +93,10 @@ $.ajax({
                 nombre.push(data[0].area[i].area_descripcion);
                 total.push(data[0].area[i].Total);
             }
-            var promedio = (suma*100)/data[0].empleado[0].totalE;
+            for(var j=3; j<data[0].area.length; j++){
+                color.push(getRandomColor());
+            }
+            var promedio = (suma * 100) / data[0].empleado[0].totalE;
             totalP = Math.round(promedio);
             console.log(totalP);
             var chartdata = {
@@ -37,6 +116,13 @@ $.ajax({
                     cutoutPercentage: 70,
                     legend: {
                         display: false
+                    },
+                    tooltips: {
+                        enabled: false
+                    },
+                    animation: {
+                        animateRotate: false,
+                        animateScale: true
                     },
                     plugins: {
                         datalabels: {
@@ -62,28 +148,19 @@ $.ajax({
                             fontFamily: 'Arial', //Default Arial
                             sidePadding: 20,
                         }
-                    }
+                    },
                 }
             });
         } else {
             $('#divarea').hide();
-            $.notify(" Aún no has asignado empleados a una área.", {
-                align: "right",
-                verticalAlign: "top",
-                type: "warning",
-                icon: "warning",
-                delay: 3000
+            $.notify({
+                message: " Aún no has asignado empleados a una área.",
+                icon: 'admin/images/warning.svg'
             });
         }
     },
     error: function (data) {
-        $.notify(" Aún no has asignado empleados a una área.", {
-            align: "right",
-            verticalAlign: "top",
-            type: "warning",
-            icon: "warning",
-            delay: 3000
-        });
+        $.notify(" Aún no has asignado empleados a una área.");
     }
 });
 //NIVEL
@@ -96,7 +173,7 @@ $.ajax({
     success: function (data) {
         var nombre = [];
         var total = [];
-        var color = ['#21bf73','#ffd31d','#eb4559'];
+        var color = ['#21bf73', '#ffd31d', '#eb4559'];
         var suma = 0;
         var totalP = 0;
         if (data[0].nivel.length != 0) {
@@ -105,7 +182,10 @@ $.ajax({
                 total.push(data[0].nivel[i].Total);
                 suma += data[0].nivel[i].Total;
             }
-            var promedio = (suma*100)/data[0].empleado[0].totalE;
+            for(var j=3; j<data[0].nivel.length; j++){
+                color.push(getRandomColor());
+            }
+            var promedio = (suma * 100) / data[0].empleado[0].totalE;
             totalP = Math.round(promedio);
             var chartdata = {
                 labels: nombre,
@@ -154,23 +234,14 @@ $.ajax({
             });
         } else {
             $('#divnivel').hide();
-            $.notify(" Aún no has asignado empleados a un nivel.", {
-                align: "right",
-                verticalAlign: "top",
-                type: "warning",
-                icon: "warning",
-                delay: 3000
+            $.notify({
+                message: " Aún no has asignado empleados a un nivel.",
+                icon: 'admin/images/warning.svg'
             });
         }
     },
     error: function (data) {
-        $.notify(" Aún no has asignado empleados a un nivel.", {
-            align: "right",
-            verticalAlign: "top",
-            type: "warning",
-            icon: "warning",
-            delay: 3000
-        });
+        $.notify(" Aún no has asignado empleados a un nivel.");
     }
 });
 //CONTRATO
@@ -183,7 +254,7 @@ $.ajax({
     success: function (data) {
         var nombre = [];
         var total = [];
-        var color = ['#21bf73','#ffd31d','#eb4559'];
+        var color = ['#21bf73', '#ffd31d', '#eb4559'];
         var suma = 0;
         var totalP = 0;
         if (data[0].contrato.length != 0) {
@@ -192,7 +263,10 @@ $.ajax({
                 total.push(data[0].contrato[i].Total);
                 suma += data[0].contrato[i].Total;
             }
-            var promedio = (suma*100)/data[0].empleado[0].totalE;
+            for(var j=3; j<data[0].contrato.length; j++){
+                color.push(getRandomColor());
+            }
+            var promedio = (suma * 100) / data[0].empleado[0].totalE;
             totalP = Math.round(promedio);
             var chartdata = {
                 labels: nombre,
@@ -241,23 +315,14 @@ $.ajax({
             });
         } else {
             $('#divcontrato').hide();
-            $.notify(" Aún no has asignado empleados a un tipo de contrato.", {
-                align: "right",
-                verticalAlign: "top",
-                type: "warning",
-                icon: "warning",
-                delay: 3000
+            $.notify({
+                message: " Aún no has asignado empleados a un tipo de contrato.",
+                icon: 'admin/images/warning.svg'
             });
         }
     },
     error: function (data) {
-        $.notify(" Aún no has asignado empleados a un tipo de contrato.", {
-            align: "right",
-            verticalAlign: "top",
-            type: "warning",
-            icon: "warning",
-            delay: 3000
-        });
+        $.notify(" Aún no has asignado empleados a un tipo de contrato.");
     }
 });
 //CENTRO
@@ -270,7 +335,7 @@ $.ajax({
     success: function (data) {
         var nombre = [];
         var total = [];
-        var color = ['#21bf73','#ffd31d','#eb4559'];
+        var color = ['#21bf73', '#ffd31d', '#eb4559'];
         var suma = 0;
         if (data[0].centro.length != 0) {
             for (var i = 0; i < data[0].centro.length; i++) {
@@ -278,7 +343,10 @@ $.ajax({
                 total.push(data[0].centro[i].Total);
                 suma += data[0].centro[i].Total;
             }
-            var promedio = (suma*100)/data[0].empleado[0].totalE;
+            for(var j=3; j<data[0].centro.length; j++){
+                color.push(getRandomColor());
+            }
+            var promedio = (suma * 100) / data[0].empleado[0].totalE;
             totalP = Math.round(promedio);
             var chartdata = {
                 labels: nombre,
@@ -327,23 +395,14 @@ $.ajax({
             });
         } else {
             $('#divcentro').hide();
-            $.notify(" Aún no has asignado empleados a un tipo de centro costo.", {
-                align: "right",
-                verticalAlign: "top",
-                type: "warning",
-                icon: "warning",
-                delay: 3000
+            $.notify({
+                message: " Aún no has asignado empleados a un tipo de centro costo.",
+                icon: 'admin/images/warning.svg'
             });
         }
     },
     error: function (data) {
-        $.notify(" Aún no has asignado empleados a un tipo de centro costo.", {
-            align: "right",
-            verticalAlign: "top",
-            type: "warning",
-            icon: "warning",
-            delay: 3000
-        });
+        $.notify(" Aún no has asignado empleados a un tipo de centro costo.");
     }
 });
 //LOCAL
@@ -356,7 +415,7 @@ $.ajax({
     success: function (data) {
         var nombre = [];
         var total = [];
-        var color = ['#21bf73','#ffd31d','#eb4559'];
+        var color = ['#21bf73', '#ffd31d', '#eb4559'];
         var suma = 0;
         var totalP = 0;
         if (data[0].local.length != 0) {
@@ -365,7 +424,10 @@ $.ajax({
                 total.push(data[0].local[i].Total);
                 suma += data[0].local[i].Total;
             }
-            var promedio = (suma*100)/data[0].empleado[0].totalE;
+            for(var j=3; j<data[0].local.length; j++){
+                color.push(getRandomColor());
+            }
+            var promedio = (suma * 100) / data[0].empleado[0].totalE;
             totalP = Math.round(promedio);
             var chartdata = {
                 labels: nombre,
@@ -414,23 +476,14 @@ $.ajax({
             });
         } else {
             $('#divlocal').hide();
-            $.notify(" Aún no has asignado empleados a un local.", {
-                align: "right",
-                verticalAlign: "top",
-                type: "warning",
-                icon: "warning",
-                delay: 3000
+            $.notify({
+                message: " Aún no has asignado empleados a un local.",
+                icon: 'admin/images/warning.svg'
             });
         }
     },
     error: function (data) {
-        $.notify(" Aún no has asignado empleados a un local.", {
-            align: "right",
-            verticalAlign: "top",
-            type: "warning",
-            icon: "warning",
-            delay: 3000
-        });
+        $.notify(" Aún no has asignado empleados a un local.");
     }
 });
 //EDAD
@@ -443,7 +496,7 @@ $.ajax({
     success: function (data) {
         var nombre = [];
         var total = [];
-        var color = ['#21bf73','#ff9c71','#ffd31d','#eb4559'];
+        var color = ['#21bf73', '#ffd31d', '#eb4559'];
         var suma = 0;
         var totalP = 0;
         if (data[0].edad.length != 0) {
@@ -452,7 +505,10 @@ $.ajax({
                 total.push(data[0].edad[i].total);
                 suma += data[0].edad[i].total;
             }
-            var promedio = (suma*100)/data[0].empleado[0].totalE;
+            for(var j=3; j<data[0].edad.length; j++){
+                color.push(getRandomColor());
+            }
+            var promedio = (suma * 100) / data[0].empleado[0].totalE;
             totalP = Math.round(promedio);
             var chartdata = {
                 labels: nombre,
@@ -501,22 +557,13 @@ $.ajax({
             });
         } else {
             $('#divedades').hide();
-            $.notify(" Aún no has asignado empleados a un local.", {
-                align: "right",
-                verticalAlign: "top",
-                type: "warning",
-                icon: "warning",
-                delay: 3000
+            $.notify({
+                message: " Aún no has asignado empleados a un local.",
+                icon: 'admin/images/warning.svg'
             });
         }
     },
     error: function (data) {
-        $.notify(" Aún no has asignado empleados a un local.", {
-            align: "right",
-            verticalAlign: "top",
-            type: "warning",
-            icon: "warning",
-            delay: 3000
-        });
+        $.notify(" Aún no has asignado empleados a un local.");
     }
 });
