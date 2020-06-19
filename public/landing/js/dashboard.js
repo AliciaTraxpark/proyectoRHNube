@@ -43,7 +43,6 @@ $.ajax({
             }
             var promedio = (suma * 100) / data[0].empleado[0].totalE;
             totalP = Math.round(promedio);
-            console.log(totalP);
             var chartdata = {
                 labels: nombre,
                 datasets: [{
@@ -62,30 +61,12 @@ $.ajax({
                     legend: {
                         display: false
                     },
-
-                    plugins: {
-                        datalabels: {
-                            formatter: function (value, context) {
-                                var label = context.chart.data.labels[context.dataIndex];
-                                var mostrar = [];
-                                mostrar.push(label);
-                                return mostrar;
-                            },
-                            color: '#323232',
-                            anchor: 'center',
-                            align: 'center',
-                            font: {
-                                weight: 'bold',
-                                fontSize: 20
-                            }
-                        }
-                    },
                     tooltips: {
                         callbacks: {
                             afterLabel: function (tooltipItem, data) {
                                 var dataset = data["datasets"][0];
-                                var percent = Math.round((dataset["data"][tooltipItem["index"]] /
-                                    dataset["_meta"][0]["total"]) * 100);
+                                var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 /
+                                    suma));
                                 grafico.options.elements.center.text = percent + "%" + data["labels"][tooltipItem["index"]];
                             }
                         }
@@ -98,7 +79,20 @@ $.ajax({
                             sidePadding: 20,
                         }
                     },
-                }
+                    plugins: {
+                        legend: false,
+                        outlabels: {
+                            text: '%l',
+                            color: 'white',
+                            stretch: 25,
+                            font: {
+                                resizable: true,
+                                minSize: 12,
+                                maxSize: 18
+                            }
+                        }
+                    }
+                },
             });
         } else {
             $('#divarea').hide();
@@ -155,19 +149,25 @@ $.ajax({
                         display: false
                     },
                     plugins: {
-                        datalabels: {
-                            formatter: function (value, context) {
-                                var label = context.chart.data.labels[context.dataIndex];
-                                var mostrar = [];
-                                mostrar.push(label);
-                                return mostrar;
-                            },
-                            color: '#323232',
-                            anchor: 'center',
-                            align: 'center',
+                        legend: false,
+                        outlabels: {
+                            text: '%l',
+                            color: 'white',
+                            stretch: 25,
                             font: {
-                                weight: 'bold',
-                                fontSize: 20
+                                resizable: true,
+                                minSize: 12,
+                                maxSize: 18
+                            }
+                        }
+                    },
+                    tooltips: {
+                        intersect: false,
+                        callbacks: {
+                            afterLabel: function (tooltipItem, data) {
+                                var dataset = data["datasets"][0];
+                                var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 / suma));
+                                grafico.options.elements.center.text = percent + "%" + data["labels"][tooltipItem["index"]];
                             }
                         }
                     },
@@ -236,19 +236,24 @@ $.ajax({
                         display: false
                     },
                     plugins: {
-                        datalabels: {
-                            formatter: function (value, context) {
-                                var label = context.chart.data.labels[context.dataIndex];
-                                var mostrar = [];
-                                mostrar.push(label);
-                                return mostrar;
-                            },
-                            color: '#323232',
-                            anchor: 'center',
-                            align: 'center',
+                        legend: false,
+                        outlabels: {
+                            text: '%l',
+                            color: 'white',
+                            stretch: 25,
                             font: {
-                                weight: 'bold',
-                                fontSize: 20
+                                resizable: true,
+                                minSize: 12,
+                                maxSize: 18
+                            }
+                        }
+                    },
+                    tooltips: {
+                        callbacks: {
+                            afterLabel: function (tooltipItem, data) {
+                                var dataset = data["datasets"][0];
+                                var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 / suma));
+                                grafico.options.elements.center.text = percent + "%" + data["labels"][tooltipItem["index"]];
                             }
                         }
                     },
@@ -316,19 +321,24 @@ $.ajax({
                         display: false
                     },
                     plugins: {
-                        datalabels: {
-                            formatter: function (value, context) {
-                                var label = context.chart.data.labels[context.dataIndex];
-                                var mostrar = [];
-                                mostrar.push(label);
-                                return mostrar;
-                            },
-                            color: '#323232',
-                            anchor: 'center',
-                            align: 'center',
+                        legend: false,
+                        outlabels: {
+                            text: '%l',
+                            color: 'white',
+                            stretch: 25,
                             font: {
-                                weight: 'bold',
-                                fontSize: 20
+                                resizable: true,
+                                minSize: 12,
+                                maxSize: 18
+                            }
+                        }
+                    },
+                    tooltips: {
+                        callbacks: {
+                            afterLabel: function (tooltipItem, data) {
+                                var dataset = data["datasets"][0];
+                                var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 / suma));
+                                grafico.options.elements.center.text = percent + "%" + data["labels"][tooltipItem["index"]];
                             }
                         }
                     },
@@ -397,19 +407,24 @@ $.ajax({
                         display: false
                     },
                     plugins: {
-                        datalabels: {
-                            formatter: function (value, context) {
-                                var label = context.chart.data.labels[context.dataIndex];
-                                var mostrar = [];
-                                mostrar.push(label);
-                                return mostrar;
-                            },
-                            color: '#323232',
-                            anchor: 'center',
-                            align: 'center',
+                        legend: false,
+                        outlabels: {
+                            text: '%l',
+                            color: 'white',
+                            stretch: 25,
                             font: {
-                                weight: 'bold',
-                                fontSize: 20
+                                resizable: true,
+                                minSize: 12,
+                                maxSize: 18
+                            }
+                        }
+                    },
+                    tooltips: {
+                        callbacks: {
+                            afterLabel: function (tooltipItem, data) {
+                                var dataset = data["datasets"][0];
+                                var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 / suma));
+                                grafico.options.elements.center.text = percent + "%" + data["labels"][tooltipItem["index"]];
                             }
                         }
                     },
@@ -478,19 +493,24 @@ $.ajax({
                         display: false
                     },
                     plugins: {
-                        datalabels: {
-                            formatter: function (value, context) {
-                                var label = context.chart.data.labels[context.dataIndex];
-                                var mostrar = [];
-                                mostrar.push(label);
-                                return mostrar;
-                            },
-                            color: '#323232',
-                            anchor: 'center',
-                            align: 'center',
+                        legend: false,
+                        outlabels: {
+                            text: '%l',
+                            color: 'white',
+                            stretch: 25,
                             font: {
-                                weight: 'bold',
-                                fontSize: 20
+                                resizable: true,
+                                minSize: 12,
+                                maxSize: 18
+                            }
+                        }
+                    },
+                    tooltips: {
+                        callbacks: {
+                            afterLabel: function (tooltipItem, data) {
+                                var dataset = data["datasets"][0];
+                                var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 / suma));
+                                grafico.options.elements.center.text = percent + "%" + data["labels"][tooltipItem["index"]];
                             }
                         }
                     },
