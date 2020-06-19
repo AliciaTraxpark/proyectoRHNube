@@ -104,7 +104,7 @@ $('#horaF').flatpickr({
     time_24hr: true
 });
 $('#btnasignar').on('click', function(e) {
-    $('#nombreEmpleado').load(location.href+" #nombreEmpleado>*");
+    //$('#nombreEmpleado').load(location.href+" #nombreEmpleado>*");
     $('#asignarHorario').modal('toggle');
 
     var allVals = [];
