@@ -430,7 +430,7 @@ $.ajax({
     },
     success:function(data){
         leertabla();
-        //$("#formulario")[0].reset();
+       $("#formulario")[0].reset();
         $('#guardarTodoHorario').prop('disabled',false);
         $('#asignarHorario').modal('toggle');
         calendario();
