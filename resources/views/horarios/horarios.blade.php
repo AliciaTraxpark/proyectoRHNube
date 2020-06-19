@@ -374,7 +374,7 @@
 
                                       </div>
                                       <div class="col-md-12 text-right" id="DatoscalendarH" style=" max-width: 100%;">
-                                       
+
                                         <div id="calendarHorario">
                                         </div>
                                       </div>
@@ -396,8 +396,8 @@
                                <div class="col-md-12">
                                    <div class="row">
                                        <div class="col-md-12 text-right" >
-                                        <button type="button" id="" class="btn btn-light " data-dismiss="modal">Cancelar</button>
-                                        <button type="button" id="" name="" style="background-color: #163552;" class="btn ">Guardar</button>
+                                        {{-- <button type="button" id="" class="btn btn-light " data-dismiss="modal">Cancelar</button> --}}
+                                        <button type="button" id="" name="" data-dismiss="modal" style="background-color: #163552;" class="btn ">Cerrar</button>
 
                                        </div>
                                    </div>
@@ -422,23 +422,18 @@
     <script src="{{asset('admin/assets/js/app.min.js')}}"></script>
     <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
-    <script src="{{asset('admin/assets/libs/smartwizard/jquery.smartWizard.min.js') }}"></script>
-    <script src="{{asset('admin/assets/js/pages/form-wizard.init.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
     <script src="{{asset('landing/js/horario.js')}}"></script>
     <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
-    <script src="{{asset('landing/js/smartwizard.js')}}"></script>
     <script src="{{asset('admin/assets/libs/moment/moment.min.js')}}"></script>
     <script src="{{asset('admin/packages/core/main.js')}}"></script>
     <script src="{{asset('admin/packages/core/locales/es.js')}}"></script>
-
     <script src="{{asset('admin/packages/daygrid/main.js')}}"></script>
     <script src="{{asset('admin/packages/timegrid/main.js')}}"></script>
     <script src="{{asset('admin/packages/interaction/main.js')}}"></script>
-{{--     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"></script> --}}
     <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
 
 </body>

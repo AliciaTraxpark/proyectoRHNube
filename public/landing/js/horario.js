@@ -428,7 +428,7 @@ $.ajax({
     success:function(data){
         leertabla();
         $('#asignarHorario').modal('toggle');
-        
+        $("#formulario")[0].reset();
 
         },
     error:function(){ alert("Hay un error");}
