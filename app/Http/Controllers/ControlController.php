@@ -130,13 +130,14 @@ class ControlController extends Controller
                 ->join('control as c', 'c.Proyecto_Proye_id', '=', 'p.Proye_id')
                 ->join('envio as en', 'en.idEnvio', '=', 'c.idEnvio')
                 ->join('captura as cp', 'cp.idEnvio', '=', 'en.idEnvio')
-                ->select('P.Proye_id', 'P.Proye_Nombre', 'c.hora_ini', 'c.hora_fin', 'cp.imagen', 'cp.promedio', 'en.hora_Envio', 'c.Fecha_fin', 'en.Total_Envio')
+                ->select('P.Proye_id', 'P.Proye_Nombre', 'cp.imagen', 'cp.promedio', 'en.hora_Envio', 'c.Fecha_fin', 'en.Total_Envio',DB::raw('TIME(cp.fecha_hora) as hora_ini'))
                 ->where('e.emple_id', '=', $idempleado)
                 ->where('en.idEmpleado', '=', $idempleado)
                 ->where('c.Fecha_fin', '=', $fecha)
                 ->Where('P.Proye_id', '=', $proyecto)
                 ->orderBy('c.Fecha_fin', 'asc')
                 ->orderBy('c.hora_ini', 'asc')
+                ->orderBy('cp.fecha_hora','desc')->limit(1)
                 ->get();
             return response()->json($control, 200);
         }
