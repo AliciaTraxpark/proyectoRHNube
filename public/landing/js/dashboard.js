@@ -112,6 +112,7 @@ $.ajax({
                     tooltips: {
                         callbacks: {
                             afterLabel: function (tooltipItem, data) {
+                                console.log(tooltipItem);
                                 var dataset = data["datasets"][0];
                                 var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 /
                                     suma));
@@ -133,7 +134,6 @@ $.ajax({
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
                                 mostrar.push(label);
-                                console.log(mostrar);
                                 return mostrar;
                             },
                             color: '#323232',
@@ -214,7 +214,6 @@ $.ajax({
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
                                 mostrar.push(label);
-                                console.log(mostrar);
                                 return mostrar;
                             },
                             color: '#323232',
@@ -233,7 +232,7 @@ $.ajax({
                                 var dataset = data["datasets"][0];
                                 var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 / suma));
                                 grafico.options.elements.center.text = percent + "%" + data["labels"][tooltipItem["index"]];
-                            }
+                            },
                         }
                     },
                     elements: {
@@ -313,7 +312,6 @@ $.ajax({
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
                                 mostrar.push(label);
-                                console.log(mostrar);
                                 return mostrar;
                             },
                             color: '#323232',
@@ -410,7 +408,6 @@ $.ajax({
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
                                 mostrar.push(label);
-                                console.log(mostrar);
                                 return mostrar;
                             },
                             color: '#323232',
@@ -508,7 +505,6 @@ $.ajax({
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
                                 mostrar.push(label);
-                                console.log(mostrar);
                                 return mostrar;
                             },
                             color: '#323232',
@@ -606,7 +602,6 @@ $.ajax({
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
                                 mostrar.push(label);
-                                console.log(mostrar);
                                 return mostrar;
                             },
                             color: '#323232',
