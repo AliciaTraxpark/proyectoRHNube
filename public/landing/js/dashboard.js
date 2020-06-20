@@ -112,6 +112,7 @@ $.ajax({
                     tooltips: {
                         callbacks: {
                             afterLabel: function (tooltipItem, data) {
+                                console.log(tooltipItem);
                                 var dataset = data["datasets"][0];
                                 var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 /
                                     suma));
@@ -133,7 +134,6 @@ $.ajax({
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
                                 mostrar.push(label);
-                                console.log(mostrar);
                                 return mostrar;
                             },
                             color: '#323232',
@@ -214,7 +214,6 @@ $.ajax({
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
                                 mostrar.push(label);
-                                console.log(mostrar);
                                 return mostrar;
                             },
                             color: '#323232',
@@ -233,7 +232,7 @@ $.ajax({
                                 var dataset = data["datasets"][0];
                                 var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 / suma));
                                 grafico.options.elements.center.text = percent + "%" + data["labels"][tooltipItem["index"]];
-                            }
+                            },
                         }
                     },
                     elements: {
@@ -313,7 +312,6 @@ $.ajax({
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
                                 mostrar.push(label);
-                                console.log(mostrar);
                                 return mostrar;
                             },
                             color: '#323232',
@@ -410,7 +408,6 @@ $.ajax({
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
                                 mostrar.push(label);
-                                console.log(mostrar);
                                 return mostrar;
                             },
                             color: '#323232',
@@ -508,7 +505,6 @@ $.ajax({
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
                                 mostrar.push(label);
-                                console.log(mostrar);
                                 return mostrar;
                             },
                             color: '#323232',
@@ -552,7 +548,7 @@ $.ajax({
     }
 });
 //EDAD
-$.ajax({
+/*$.ajax({
     url: "totalE",
     method: "GET",
     headers: {
@@ -606,7 +602,6 @@ $.ajax({
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
                                 mostrar.push(label);
-                                console.log(mostrar);
                                 return mostrar;
                             },
                             color: '#323232',
@@ -647,5 +642,102 @@ $.ajax({
     },
     error: function (data) {
         $.notify(" Aún no has asignado empleados a un local.");
+    }
+});*/
+//RANGO DE EDAD
+$.ajax({
+    url: "totalRE",
+    method: "GET",
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function (data) {
+        var nombre = [];
+        var total = [];
+        var color = ['#21bf73', '#ffd31d', '#eb4559'];
+        var suma = 0;
+        var totalP = 0;
+        if (data[0].edad.length != 0) {
+            for (var i = 0; i < data[0].edad.length; i++) {
+                nombre.push(data[0].edad[i].rango);
+                total.push(data[0].edad[i].total);
+                suma += data[0].edad[i].total;
+            }
+            for (var j = 3; j < data[0].edad.length; j++) {
+                color.push(getRandomColor());
+            }
+            var promedio = (suma * 100) / data[0].empleado[0].totalE;
+            totalP = Math.round(promedio);
+            var chartdata = {
+                labels: nombre,
+                datasets: [{
+                    data: total,
+                    backgroundColor: color,
+                    borderWidth: 0
+                }]
+            };
+            var mostrar = $('#edades');
+            var grafico = new Chart(mostrar, {
+                type: 'doughnut',
+                data: chartdata,
+                options: {
+                    layout: {
+                        padding: {
+                            bottom: 40,
+                            top: 40
+                        }
+                    },
+                    responsive: true,
+                    cutoutPercentage: 80,
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: false
+                    },
+                    plugins: {
+                        datalabels: {
+                            formatter: function (value, context) {
+                                var label = context.chart.data.labels[context.dataIndex];
+                                var mostrar = [];
+                                mostrar.push(label);
+                                return mostrar;
+                            },
+                            color: '#323232',
+                            anchor: 'end',
+                            align: 'end',
+                            font: {
+                                weight: 'bold',
+                                fontSize: 24
+                            }
+                        }
+                    },
+                    tooltips: {
+                        callbacks: {
+                            afterLabel: function (tooltipItem, data) {
+                                var dataset = data["datasets"][0];
+                                var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 / suma));
+                                grafico.options.elements.center.text = percent + "%" + data["labels"][tooltipItem["index"]];
+                            }
+                        }
+                    },
+                    elements: {
+                        center: {
+                            text: suma + '\nempleados por rango',
+                            color: '#424874', //Default black
+                            fontFamily: 'Arial', //Default Arial
+                            sidePadding: 20,
+                        }
+                    }
+                }
+            });
+        } else {
+            $('#divedades').hide();
+            $.notify({
+                message: " Aún no has asignado empleados a un local.",
+                icon: 'admin/images/warning.svg'
+            });
+        }
+    },
+    error: function (data) {
+        $.notify(" Aún no has asignado empleados a un edad error.");
     }
 });

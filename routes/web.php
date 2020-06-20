@@ -136,3 +136,4 @@ Route::get('/totalC', 'dashboardController@contrato');
 Route::get('/totalCC', 'dashboardController@centro');
 Route::get('/totalL', 'dashboardController@local');
 Route::get('/totalE', 'dashboardController@edad');
+Route::get('/totalRE', 'dashboardController@rangoE');

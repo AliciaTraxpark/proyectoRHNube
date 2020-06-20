@@ -108,4 +108,22 @@ class dashboardController extends Controller
         array_push($datos, array("empleado" => $empleado, "edad" => $edad));
         return response()->json($datos, 200);
     }
+
+    public function rangoE()
+    {
+        $datos = [];
+        $empleado = DB::table('empleado as e')
+            ->select(DB::raw('COUNT(e.emple_id) as totalE'))
+            ->get();
+        $edad = DB::table('empleado as e')
+            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+            ->select(DB::raw(
+                'CASE WHEN(YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento) BETWEEN 18 AND 24) THEN "Menores de 24" ELSE CASE WHEN(YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento) BETWEEN 25 AND 30) THEN "De 25 a 30" ELSE CASE WHEN(YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento) BETWEEN 31 AND 40) THEN "De 31 a 40" ELSE CASE WHEN(YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento) BETWEEN 41 AND 50) THEN "De 41 a 50" ELSE CASE WHEN(YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento) > 50) THEN "De 50 a más "END END END END END as rango'),
+                DB::raw('COUNT(*) as total')
+            )
+            ->groupBy('rango')
+            ->get();
+        array_push($datos, array("empleado" => $empleado, "edad" => $edad));
+        return response()->json($datos, 200);
+    }
 }
