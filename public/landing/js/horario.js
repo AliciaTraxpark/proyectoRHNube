@@ -104,8 +104,13 @@ $('#horaF').flatpickr({
     time_24hr: true
 });
 $('#btnasignar').on('click', function(e) {
+    $("#formulario")[0].reset();
+    $.get("/vaciartemporal", {}, function (data, status) {
+
+    });
     $('#nombreEmpleado').empty();
     $('#asignarHorario').modal('toggle');
+    calendario();
 
     var allVals = [];
     $(".sub_chk:checked").each(function() {
@@ -336,7 +341,10 @@ $( document ).ready(function() {
              success:function(dataA){
                 if (dataA==1)
                 {
-                    alert('ya esta creado');
+                    //alert('ya esta creado');
+                } else{
+                    alert('No existe calendario');
+                    return false;
                 }
 
                  },
@@ -376,8 +384,64 @@ function calendario1(data,fechas) {
         selectable: true,
         selectMirror: true,
         select: function(arg) {
-        console.log(arg);
-      },
+            console.log(arg);
+            $('#horarioEnd').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
+            $('#horarioStart').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
+            f1= $('#horarioStart').val();
+            f2= $('#horarioEnd').val();
+            inicio=$('#horaI').val();
+            fin=$('#horaF').val();
+            if(inicio=='' || fin=='' ){
+            alert('Indique hora de inicio y fin');}else{
+                agregarHoras();
+            }
+            function agregarHoras() {
+              //sacar dias entre fecha
+              var diasEntreFechas = function(desde, hasta) {
+                var dia_actual = desde;
+              var fechas = [];
+                while (dia_actual.isSameOrBefore(hasta)) {
+                  fechas.push(dia_actual.format('YYYY-MM-DD'));
+                     dia_actual.add(1, 'days');
+                }
+                return fechas;
+              };
+             desde=moment(f1);
+             hasta=moment(f2);
+             var results = diasEntreFechas(desde, hasta);
+            results.pop();
+            //console.log(results);
+            var fechasArray =[];
+            var fechastart=[];
+            var objeto = [
+            ];
+            $.each( results, function( key, value ) {
+                //alert( value );
+                fechasArray.push(inicio+'-'+fin
+                );
+                fechastart.push(value
+                );
+                objeto.push({"title": inicio+'-'+fin, "start":value});
+
+            });
+            console.log(fechasArray);
+            idpais=$('#pais').val();
+            iddepartamento=$('#departamento').val();
+            $.ajax({
+                type:"post",
+                url:"/guardarEventos",
+                data:{fechasArray:fechastart,hora:inicio+'-'+fin,pais:idpais,departamento:iddepartamento,inicio:inicio,fin:fin},
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                success: function (data) {
+                    calendar1.refetchEvents();
+                },
+                error: function (data) {
+                    alert('Ocurrio un error');
+                }
+
+            });
+              };
+          },
       eventClick:function(info){
 
         id1 = info.event.id;

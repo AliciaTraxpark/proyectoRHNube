@@ -202,6 +202,8 @@ class horarioController extends Controller
 
         return response()->json($horario_empleado);
     }
-
+    public function vaciartemporal(){
+        DB::table('temporal_eventos')->where('users_id','=',Auth::user()->id)->delete();
+    }
     }
 
