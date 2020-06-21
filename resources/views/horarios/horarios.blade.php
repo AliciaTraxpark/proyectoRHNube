@@ -257,7 +257,7 @@
                                       <input type="hidden" id="horarioEnd">
                                       <input type="hidden" id="horarioStart">
 
-                                      <div class="col-md-12 text-right" id="Datoscalendar1" style=" max-width: 96%;">
+                                      <div class="col-md-12 text-right" id="Datoscalendar1" style=" max-width: 100%;">
                                         <div id="calendar1">
                                         </div>
                                       </div>

@@ -205,5 +205,62 @@ class horarioController extends Controller
     public function vaciartemporal(){
         DB::table('temporal_eventos')->where('users_id','=',Auth::user()->id)->delete();
     }
+    public function confirmarDepartamento(Request $request){
+        $pais=$request->get('pais');
+        $depa=$request->get('departamento');
+        $existencia = DB::table('calendario')
+        ->select('users_id','calen_departamento')
+        ->where('users_id', '=',Auth::user()->id)
+        ->where('calen_departamento','=',$depa)
+        ->where('calen_pais','=',$pais)
+        ->get();
+        $exist=1;
+
+        ///
+        $eventos=DB::table('eventos')->select(['id','title' ,'color', 'textColor', 'start','end']);
+
+        $eventos_usuario = DB::table('eventos_usuario')
+        ->select(['id','title' ,'color', 'textColor', 'start','end'])
+             ->where('Users_id','=',Auth::user()->id)
+             ->where('evento_departamento','=', $depa)
+             ->where('evento_pais','=',173)
+
+                ->union($eventos);
+
+        $temporal_eventos=DB::table('temporal_eventos')->select(['id','title' ,'color', 'textColor', 'start','end'])
+        ->where('users_id','=',Auth::user()->id)
+        ->union($eventos_usuario)
+        ->get();
+        //
+       $json= response()->json($temporal_eventos);
+
+                if(count($existencia) >= 1) {
+
+                    return [$exist,$temporal_eventos];
+                }
+
     }
+    public function eventosDep(request $request){
+        $iddepart=$request->iddepart;
+        $eventos=DB::table('eventos')->select(['id','title' ,'color', 'textColor', 'start','end']);
+
+        $eventos_usuario = DB::table('eventos_usuario')
+        ->select(['id','title' ,'color', 'textColor', 'start','end'])
+             ->where('Users_id','=',Auth::user()->id)
+             ->where('evento_departamento','=', $iddepart)
+             ->where('evento_pais','=',173)
+
+                ->union($eventos);
+
+        $temporal_eventos=DB::table('temporal_eventos')->select(['id','title' ,'color', 'textColor', 'start','end'])
+        ->where('users_id','=',Auth::user()->id)
+        ->union($eventos_usuario)
+        ->get();
+
+        return response()->json($temporal_eventos);
+    }
+
+    }
+
+
 

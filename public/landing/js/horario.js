@@ -314,68 +314,53 @@ $( document ).ready(function() {
  $('#nuevoCalendario').click(function(){
      var departamento= $('#departamento').val();
      var pais= $('#pais').val();
+     if(pais==173 && departamento==''){
+        $('#Datoscalendar').show();
+        $('#Datoscalendar1').hide();
+        return false;
+    }
 
+    $.ajax(
+        {
+        type:"post",
+        url:"/horario/confirmarDepartamento",
+        data:{departamento:departamento,pais:pais},
+        headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+        success:function(dataA){
+           if (dataA[0]==1)
+           {
+            $('#Datoscalendar').hide();
+            $('#Datoscalendar1').show();
 
-     $.ajax(
-       {
+               //alert('ya esta creado');
+           } else{
+               $('#Datoscalendar').hide();
+               $('#Datoscalendar1').hide();
+               alert('No existe calendario');
+               return false;
+           }
+           calendario1(dataA[1])
 
-       //url:"/calendario/store",
-       url:"/calendario/showDep/",
-       data:{departamento:departamento,pais:pais},
-       headers: {
-     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
- },
-       success:function(data){
-         $('#Datoscalendar').hide();
-         $('#Datoscalendar1').show();
+            },
+        error:function(){ alert("Hay un error");}
+        }
+    );
 
-         $.ajax(
-             {
-
-             //url:"/calendario/store",
-             url:"/calendario/showDep/confirmar",
-             data:{departamento:departamento,pais:pais},
-             headers: {
-             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-         },
-             success:function(dataA){
-                if (dataA==1)
-                {
-                    //alert('ya esta creado');
-                } else{
-                    alert('No existe calendario');
-                    return false;
-                }
-
-                 },
-             error:function(){ alert("Hay un error");}
-             }
-         );
-         var fecha = new Date();
-         var ano = fecha. getFullYear();
-         fechas1=ano+'-01-02';
-         var fechas=new Date(fechas1);
-
-         calendario1(data,fechas);
-
-         },
-       error:function(){ alert("Hay un error");}
-       }
-   );
  });
 //SEGUNDO CALENDAR
-function calendario1(data,fechas) {
+function calendario1(datadep) {
     var calendarEl1 = document.getElementById('calendar1');
     calendarEl1.innerHTML="";
     var fecha = new Date();
     var ano = fecha. getFullYear();
     var id1;
-    var data=data;
-    var fechas=fechas;
+    datadep=datadep;
 
     var configuracionCalendario1 = {
         locale: 'es',
-        defaultDate: fechas,
+        defaultDate: ano+'-01-01',
 
         plugins: [ 'dayGrid','interaction','timeGrid'],
         height:  "auto",
@@ -393,9 +378,9 @@ function calendario1(data,fechas) {
             fin=$('#horaF').val();
             if(inicio=='' || fin=='' ){
             alert('Indique hora de inicio y fin');}else{
-                agregarHoras();
+                agregarHoras2();
             }
-            function agregarHoras() {
+            function agregarHoras2() {
               //sacar dias entre fecha
               var diasEntreFechas = function(desde, hasta) {
                 var dia_actual = desde;
@@ -457,11 +442,8 @@ function calendario1(data,fechas) {
           center:'title',
           right:''
         },
-        footer:{
-          left:'Descanso',
-          right:'NoLaborales'
-        },
-        events:data,
+
+        events:datadep,
       }
     var calendar1 = new FullCalendar.Calendar(calendarEl1,configuracionCalendario1);
     calendar1.setOption('locale',"Es");
