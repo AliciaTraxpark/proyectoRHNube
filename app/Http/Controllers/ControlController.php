@@ -52,24 +52,16 @@ class ControlController extends Controller
             ->groupBy('e.emple_id')
             ->get();
 
-        $captura = DB::table('empleado as e')
-            ->join('proyecto_empleado as pe', 'pe.empleado_emple_id', '=', 'e.emple_id')
-            ->join('proyecto as p', 'p.Proye_id', '=', 'pe.Proyecto_Proye_id')
-            ->join('envio as en', 'en.idEmpleado', '=', 'e.emple_id')
-            ->join('captura as cp', 'cp.idEnvio', '=', 'en.idEnvio')
-            ->select('cp.idCaptura')
-            ->where(DB::raw('DATE(cp.fecha_hora)'), '<=', $fechaF[1])
-            ->where(DB::raw('DATE(cp.fecha_hora)'), '>=', $fechaF[0])
-            ->orderBy('cp.fecha_hora', 'desc')->limit(1)
-            ->get();
-        $sql = "if(DATEDIFF('" . $fechaF[1] . "',fecha) >= 0 , DATEDIFF('" . $fechaF[1] . "',fecha), DAY(fecha) ) as dia";
+        $sql = "if(DATEDIFF('" . $fechaF[1] . "',DATE(cp.fecha_hora)) >= 0 , DATEDIFF('" . $fechaF[1] . "',DATE(cp.fecha_hora)), DAY(DATE(cp.fecha_hora)) ) as dia";
         $horasTrabajadas = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->join('envio as en', 'en.idEmpleado', '=', 'e.emple_id')
             ->leftJoin('captura as cp', 'cp.idEnvio', '=', 'en.idEnvio')
-            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', DB::raw('DATE(cp.fecha_hora) as fecha'), DB::raw('TIME(cp.fecha_hora) as hora_ini'), DB::raw('MAX(en.Total_Envio) as Total_Envio'), DB::raw('MAX(cp.promedio) as promedio'), DB::raw($sql))
-            ->where('cp.idCaptura', '=', $captura)
-            ->groupBy('e.emple_id')
+            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', DB::raw('DATE(cp.fecha_hora) as fecha'), DB::raw('TIME(cp.fecha_hora) as hora_ini'), DB::raw('MAX(en.Total_Envio) as Total_Envio'), DB::raw('MAX(cp.promedio) as promedio'), DB::raw($sql),
+            DB::raw('DATE(cp.fecha_hora) as fecha_captura'))
+            ->where(DB::raw('DATE(cp.fecha_hora)'), '<=', $fechaF[1])
+            ->where(DB::raw('DATE(cp.fecha_hora)'), '>=', $fechaF[0])
+            ->groupBy('fecha_captura','e.emple_id')
             ->get();
 
         $respuesta = [];
