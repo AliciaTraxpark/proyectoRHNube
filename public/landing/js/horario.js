@@ -1,7 +1,9 @@
 $(document).ready(function () {
     $('#form-ver').hide();
+    $('#divFfin').hide();
 
     leertabla();
+
 });
 
 function leertabla() {
@@ -130,7 +132,13 @@ $('#horaF').flatpickr({
     dateFormat: "H:i",
     time_24hr: true
 });
-$('#btnasignar').on('click', function (e) {
+$('#horaInciden').flatpickr({
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i",
+    time_24hr: true
+});
+$('#btnasignar').on('click', function(e) {
     $("#formulario")[0].reset();
     $.get("/vaciartemporal", {}, function (data, status) {
 
@@ -557,7 +565,20 @@ $('#guardarTodoHorario').click(function () {
         }
     });
 })
-$('#btnasignarIncidencia').on('click', function (e) {
+
+     $('#customSwitch1').change(function (event) {
+        if( $('#customSwitch1').prop('checked') ){
+            $('#divFfin').show();
+            $('#divhora').hide();
+
+        }
+        else{
+            $('#divFfin').hide();
+            $('#divhora').show();
+        }
+    event.preventDefault();
+});
+$('#btnasignarIncidencia').on('click', function(e) {
     $("#frmIncidencia")[0].reset();
 
     $('#empIncidencia').empty();
@@ -565,15 +586,38 @@ $('#btnasignarIncidencia').on('click', function (e) {
     $.get("empleadoIncHorario", {}, function (data, status) {
         jsonIn = JSON.parse(JSON.stringify(data));
         for (var i in jsonIn) {
-            //allVals4.push(json[i].perso_nombre+" "+json[i].perso_apPaterno);
-            $('#empIncidencia').append('<option value="' + jsonIn[i].emple_id + '" >' + jsonIn[i].perso_nombre + " " + jsonIn[i].perso_apPaterno + '</option>');
+
+            $('#empIncidencia').append('<option value="'+jsonIn[i].emple_id+'" >'+jsonIn[i].perso_nombre+" "+jsonIn[i].perso_apPaterno+'</option>');
 
         }
 
     });
-
-
-
-
-
 });
+function registrarIncidencia(){
+    idempleadoI=$('#empIncidencia').val();
+     descripcionI=$('#descripcionInci').val();
+    var descuentoI;
+    if( $('#descuentoCheck').prop('checked') ) {
+        descuentoI=1;} else{descuentoI=0}
+    fechaI=$('#fechaI').val();
+     fechaF=$('#fechaF').val();
+
+    var horaIn;
+    if( $('#customSwitch1').prop('checked') ) {
+        horaIn=null;} else{horaIn=$('#horaInciden').val();}
+        $.ajax({
+            type:"post",
+            url:"/registrarInci",
+            data:{idempleadoI, descripcionI,descuentoI,fechaI,fechaF,horaIn},
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            success: function (data) {
+
+            },
+            error: function (data) {
+                alert('Ocurrio un error');
+            }
+        });
+
+
+    ;
+}

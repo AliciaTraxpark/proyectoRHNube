@@ -221,13 +221,13 @@
                                          </div>
                                          <div class="col-md-6">
                                             <div class="form-group">
-                                               <label for="">Hora de inicio:</label>
+                                               <label for="">Hora de inicio(24h):</label>
                                                <input type="text" id="horaI" class="form-control form-control-sm" required>
                                             </div>
                                          </div>
                                          <div class="col-md-6">
                                             <div class="form-group">
-                                               <label for="">Hora de fin:</label>
+                                               <label for="">Hora de fin(24h):</label>
                                                <input type="text" id="horaF" class="form-control form-control-sm" required>
                                             </div>
                                          </div>
@@ -421,7 +421,7 @@
                                <div class="row">
 
                                    <div class="col-md-12">
-                                    <form id="frmIncidencia" action="javascript:agregarHoras()">
+                                    <form id="frmIncidencia" action="javascript:registrarIncidencia()">
                                        <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
@@ -433,37 +433,49 @@
                                             </div>
                                          </div>
 
-                                        <div class="col-md-6">
+                                        <div class="col-md-5">
                                             <div class="form-group">
                                                <label for="">Descripcion:</label>
                                                <input type="text" class="form-control form-control-sm" id="descripcionInci" required>
                                             </div>
                                         </div>
-                                        <div class="col-md-6"><label for=""><br></label>
+                                        <div class="col-md-4"><label for=""><br></label>
                                             <div class="form-check">
                                               <input type="checkbox" class="form-check-input" id="descuentoCheck">
                                               <label class="form-check-label" for="descuentoCheck">Aplicar descuento</label>
                                             </div>
                                          </div>
+                                         <div class="col-md-4">
+                                            <label for=""><br></label>
+                                            <div class="custom-control custom-switch mb-2">
+                                                <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                                                <label class="custom-control-label" for="customSwitch1">Asignar mas de 1 dia</label>
+                                            </div>
+                                         </div>
 
-
-                                         <div class="col-md-6">
+                                         <div class="col-md-4">
                                             <div class="form-group">
                                                <label for="">Fecha inicio:</label>
                                                <input type="date" id="fechaI" class="form-control form-control-sm" required>
                                             </div>
                                          </div>
-                                         <div class="col-md-6">
+                                         <div class="col-md-4" id="divFfin">
                                             <div class="form-group">
                                                <label for="">fecha fin:</label>
-                                               <input type="date" id="fechaF" class="form-control form-control-sm" required>
+                                               <input type="date" id="fechaF" class="form-control form-control-sm" >
+                                            </div>
+                                         </div>
+                                         <div class="col-md-4" id="divhora">
+                                            <div class="form-group">
+                                               <label for="">Hora de salida(24h):</label>
+                                               <input type="text" id="horaInciden" class="form-control form-control-sm" >
                                             </div>
                                          </div>
 
 
 
                                        </div>
-                                     </form>
+
                                    </div>
 
 
@@ -475,9 +487,9 @@
                                <div class="col-md-12">
                                    <div class="row">
                                        <div class="col-md-12 text-right" >
-                                        <button type="button" id="" class="btn btn-light " data-dismiss="modal">Cancelar</button>
-                                        <button type="button" id="" name="" style="background-color: #163552;" class="btn ">Guardar</button>
-
+                                        <button type="button"  class="btn btn-light " data-dismiss="modal">Cancelar</button>
+                                        <button type="submit"  name="" style="background-color: #163552;" class="btn ">Guardar</button>
+                                    </form>
                                        </div>
                                    </div>
                                </div>
