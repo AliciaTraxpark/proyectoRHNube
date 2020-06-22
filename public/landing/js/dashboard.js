@@ -142,7 +142,8 @@ $.ajax({
                             font: {
                                 weight: 'bold',
                                 fontSize: 20
-                            }
+                            },
+                            padding: 0,
                         }
                     }
                 },
@@ -222,7 +223,8 @@ $.ajax({
                             font: {
                                 weight: 'bold',
                                 fontSize: 20
-                            }
+                            },
+                            padding: 0,
                         }
                     },
                     tooltips: {
@@ -320,7 +322,8 @@ $.ajax({
                             font: {
                                 weight: 'bold',
                                 fontSize: 20
-                            }
+                            },
+                            padding: 0,
                         }
                     },
                     tooltips: {
@@ -416,7 +419,8 @@ $.ajax({
                             font: {
                                 weight: 'bold',
                                 fontSize: 20
-                            }
+                            },
+                            padding: 0,
                         }
                     },
                     tooltips: {
@@ -513,7 +517,8 @@ $.ajax({
                             font: {
                                 weight: 'bold',
                                 fontSize: 20
-                            }
+                            },
+                            padding: 0,
                         }
                     },
                     tooltips: {
@@ -707,7 +712,8 @@ $.ajax({
                             font: {
                                 weight: 'bold',
                                 fontSize: 20
-                            }
+                            },
+                            padding: 0,
                         }
                     },
                     tooltips: {
@@ -804,7 +810,8 @@ $.ajax({
                             font: {
                                 weight: 'bold',
                                 fontSize: 20
-                            }
+                            },
+                            padding: 0,
                         }
                     },
                     tooltips: {
