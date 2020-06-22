@@ -99,8 +99,8 @@ $.ajax({
                 options: {
                     layout: {
                         padding: {
-                            bottom: 40,
-                            top: 40,
+                            bottom: 50,
+                            top: 50,
                         }
                     },
                     responsive: true,
@@ -198,8 +198,8 @@ $.ajax({
                 options: {
                     layout: {
                         padding: {
-                            bottom: 40,
-                            top: 40
+                            bottom: 50,
+                            top: 50
                         }
                     },
                     responsive: true,
@@ -296,8 +296,8 @@ $.ajax({
                 options: {
                     layout: {
                         padding: {
-                            bottom: 40,
-                            top: 40
+                            bottom: 50,
+                            top: 50
                         }
                     },
                     responsive: true,
@@ -392,8 +392,8 @@ $.ajax({
                 options: {
                     layout: {
                         padding: {
-                            bottom: 40,
-                            top: 40
+                            bottom: 50,
+                            top: 50
                         }
                     },
                     responsive: true,
@@ -489,8 +489,8 @@ $.ajax({
                 options: {
                     layout: {
                         padding: {
-                            bottom: 40,
-                            top: 40
+                            bottom: 50,
+                            top: 50
                         }
                     },
                     responsive: true,
@@ -683,8 +683,8 @@ $.ajax({
                 options: {
                     layout: {
                         padding: {
-                            bottom: 40,
-                            top: 40
+                            bottom: 50,
+                            top: 50
                         }
                     },
                     responsive: true,
@@ -780,8 +780,8 @@ $.ajax({
                 options: {
                     layout: {
                         padding: {
-                            bottom: 40,
-                            top: 40
+                            bottom: 50,
+                            top: 50
                         }
                     },
                     responsive: true,
