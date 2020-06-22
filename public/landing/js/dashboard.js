@@ -154,13 +154,13 @@ $.ajax({
         } else {
             $('#divarea').hide();
             $.notify({
-                message: " Aún no has asignado empleados a una área.",
+                message: "\nAún no has asignado empleados a una área.",
                 icon: 'admin/images/warning.svg'
             });
         }
     },
     error: function (data) {
-        $.notify(" Aún no has asignado empleados a una área.");
+        $.notify("\nEror en área.");
     }
 });
 //NIVEL
@@ -256,13 +256,13 @@ $.ajax({
         } else {
             $('#divnivel').hide();
             $.notify({
-                message: " Aún no has asignado empleados a un nivel.",
+                message: "\nAún no has asignado empleados a un nivel.",
                 icon: 'admin/images/warning.svg'
             });
         }
     },
     error: function (data) {
-        $.notify(" Aún no has asignado empleados a un nivel.");
+        $.notify("Error en nivel.");
     }
 });
 //CONTRATO
@@ -357,13 +357,13 @@ $.ajax({
         } else {
             $('#divcontrato').hide();
             $.notify({
-                message: " Aún no has asignado empleados a un tipo de contrato.",
+                message: "\nAún no has asignado empleados a un tipo de contrato.",
                 icon: 'admin/images/warning.svg'
             });
         }
     },
     error: function (data) {
-        $.notify(" Aún no has asignado empleados a un tipo de contrato.");
+        $.notify("Error en  tipo de contrato.");
     }
 });
 //CENTRO
@@ -457,13 +457,13 @@ $.ajax({
         } else {
             $('#divcentro').hide();
             $.notify({
-                message: " Aún no has asignado empleados a un tipo de centro costo.",
+                message: "\nAún no has asignado empleados a un tipo de centro costo.",
                 icon: 'admin/images/warning.svg'
             });
         }
     },
     error: function (data) {
-        $.notify(" Aún no has asignado empleados a un tipo de centro costo.");
+        $.notify("Error en tipo de centro costo.");
     }
 });
 //LOCAL
@@ -558,13 +558,13 @@ $.ajax({
         } else {
             $('#divlocal').hide();
             $.notify({
-                message: " Aún no has asignado empleados a un local.",
+                message: "\nAún no has asignado empleados a un local.",
                 icon: 'admin/images/warning.svg'
             });
         }
     },
     error: function (data) {
-        $.notify(" Aún no has asignado empleados a un local.");
+        $.notify("Error en local.");
     }
 });
 //EDAD
@@ -756,13 +756,13 @@ $.ajax({
         } else {
             $('#divdepartamento').hide();
             $.notify({
-                message: "Aún no has asignado empleados a una ciudad.",
+                message: "\nAún no has asignado empleados a una ciudad.",
                 icon: 'admin/images/warning.svg'
             });
         }
     },
     error: function (data) {
-        $.notify(" Aún no has asignado empleados a un edad error.");
+        $.notify("Error en edad.");
     }
 });
 //RANGO DE EDAD
@@ -857,12 +857,12 @@ $.ajax({
         } else {
             $('#divedades').hide();
             $.notify({
-                message: " Aún no has asignado empleados a un local.",
+                message: "\nAún no has asignado empleados a un local.",
                 icon: 'admin/images/warning.svg'
             });
         }
     },
     error: function (data) {
-        $.notify(" Aún no has asignado empleados a un edad error.");
+        $.notify("Error en local.");
     }
 });
