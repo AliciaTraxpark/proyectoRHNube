@@ -137,7 +137,7 @@
                                 </div>
                                 <div class=" col-md-6 col-xl-6 text-right">
                                     <button class="btn btn-sm btn-primary" id="btnasignar" style="background-color: #183b5d;border-color:#62778c">Asignar horarios</button>
-                                    <button class="btn btn-sm btn-primary" id="" style="background-color: #183b5d;border-color:#62778c">Asignar descansos</button>
+                                    <button class="btn btn-sm btn-primary" id="btnasignarIncidencia" style="background-color: #183b5d;border-color:#62778c">Asignar incidencias</button>
                                 </div>
                             </div>
                                 <div id="tabladiv">
@@ -406,6 +406,86 @@
                        </div><!-- /.modal-content -->
                      </div><!-- /.modal-dialog -->
                     </div><!-- /.modal -->
+
+                    <div id="asignarIncidencia" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                        <div class="modal-dialog  modal-lg d-flex justify-content-center" >
+
+                        <div class="modal-content">
+                           <div class="modal-header" style="background-color:#163552;">
+                               <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Asignar Incidencia</h5>
+                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                   <span aria-hidden="true">&times;</span>
+                               </button>
+                           </div>
+                           <div class="modal-body">
+                               <div class="row">
+
+                                   <div class="col-md-12">
+                                    <form id="frmIncidencia" action="javascript:agregarHoras()">
+                                       <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                               <label for="">Asignar empleado(s):</label>
+                                               {{-- <input type="text" class="form-control form-control-sm" id="nombreEmpleado"> --}}
+                                               <select class="form-control wide" data-plugin="customselect" multiple id="empIncidencia" >
+
+                                            </select>
+                                            </div>
+                                         </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                               <label for="">Descripcion:</label>
+                                               <input type="text" class="form-control form-control-sm" id="descripcionInci" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6"><label for=""><br></label>
+                                            <div class="form-check">
+                                              <input type="checkbox" class="form-check-input" id="descuentoCheck">
+                                              <label class="form-check-label" for="descuentoCheck">Aplicar descuento</label>
+                                            </div>
+                                         </div>
+
+
+                                         <div class="col-md-6">
+                                            <div class="form-group">
+                                               <label for="">Fecha inicio:</label>
+                                               <input type="date" id="fechaI" class="form-control form-control-sm" required>
+                                            </div>
+                                         </div>
+                                         <div class="col-md-6">
+                                            <div class="form-group">
+                                               <label for="">fecha fin:</label>
+                                               <input type="date" id="fechaF" class="form-control form-control-sm" required>
+                                            </div>
+                                         </div>
+
+
+
+                                       </div>
+                                     </form>
+                                   </div>
+
+
+
+                               </div>
+
+                           </div>
+                           <div class="modal-footer">
+                               <div class="col-md-12">
+                                   <div class="row">
+                                       <div class="col-md-12 text-right" >
+                                        <button type="button" id="" class="btn btn-light " data-dismiss="modal">Cancelar</button>
+                                        <button type="button" id="" name="" style="background-color: #163552;" class="btn ">Guardar</button>
+
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div><!-- /.modal-content -->
+                     </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+
                 </div>
             </div>
         <footer class="border-top">

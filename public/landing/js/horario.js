@@ -500,3 +500,23 @@ $.ajax({
     error:function(){ alert("Hay un error");}
     });
 })
+$('#btnasignarIncidencia').on('click', function(e) {
+    $("#frmIncidencia")[0].reset();
+
+    $('#empIncidencia').empty();
+    $('#asignarIncidencia').modal('toggle');
+    $.get("empleadoIncHorario", {}, function (data, status) {
+        jsonIn = JSON.parse(JSON.stringify(data));
+        for (var i in jsonIn) {
+            //allVals4.push(json[i].perso_nombre+" "+json[i].perso_apPaterno);
+            $('#empIncidencia').append('<option value="'+jsonIn[i].emple_id+'" >'+jsonIn[i].perso_nombre+" "+jsonIn[i].perso_apPaterno+'</option>');
+
+        }
+
+    });
+
+
+
+
+
+});

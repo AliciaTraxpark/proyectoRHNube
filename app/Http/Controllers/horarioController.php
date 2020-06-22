@@ -266,6 +266,16 @@ class horarioController extends Controller
         return response()->json($horario_empleado);
 
     }
+    public function empleadosIncidencia(Request $request){
+        $empleados = DB::table('empleado as e')
+        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+        ->select('p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','e.emple_nDoc','p.perso_id','e.emple_id','he.empleado_emple_id')
+        ->join('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+        ->distinct('e.emple_id')
+        ->get();
+        return $empleados;
+
+    }
 
     }
 
