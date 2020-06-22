@@ -12,6 +12,8 @@ use App\temporal_eventos;
 use App\horario_dias;
 use App\horario;
 use App\horario_empleado;
+use App\incidencias;
+use App\incidencia_dias;
 use Illuminate\Support\Facades\Auth;
 class horarioController extends Controller
 {
@@ -277,6 +279,26 @@ class horarioController extends Controller
 
     }
 
+    public function registrarIncidencia(Request $request){
+       $idempl=$request->idempleadoI;
+
+       $inc_dias=new incidencia_dias();
+       $inc_dias->inciden_dias_fechaI=$request->fechaI;
+       $inc_dias->inciden_dias_fechaF=$request->fechaF;
+       $inc_dias->inciden_dias_hora=$request->horaIn;
+       $inc_dias->save();
+
+       foreach($idempl as $idempls){
+           $incidencia=new incidencias();
+           $incidencia->inciden_descripcion=$request->descripcionI;
+           $incidencia->inciden_descuento=$request->descuentoI;
+           $incidencia->inciden_dias_id= $inc_dias->inciden_dias_id;
+           $incidencia->emple_id=$idempls;
+           $incidencia->save();
+
+       }
+
+    }
     }
 
 
