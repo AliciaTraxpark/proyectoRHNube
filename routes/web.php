@@ -127,7 +127,7 @@ Route::post('/verDataEmpleado', 'horarioController@verDataEmpleado');
 Route::post('/empleadoHorario', 'horarioController@empleadoHorario');
 Route::get('/vaciartemporal', 'horarioController@vaciartemporal');
 Route::post('/horario/confirmarDepartamento', 'horarioController@confirmarDepartamento');
-Route::post('/eventosHorarioDep', 'horarioController@eventosDep');
+Route::post('/empleadoHorarioDep', 'horarioController@empleadoHorarioDep');
 
 //DASHBOARD
 Route::get('/totalA', 'dashboardController@area');
