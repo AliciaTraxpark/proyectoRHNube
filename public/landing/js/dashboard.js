@@ -143,7 +143,7 @@ $.ajax({
                                 weight: 'bold',
                                 fontSize: 20
                             },
-                            padding: 0,
+                            padding: 5,
                         }
                     }
                 },
@@ -227,7 +227,7 @@ $.ajax({
                                 weight: 'bold',
                                 fontSize: 20
                             },
-                            padding: 0,
+                            padding: 5,
                         }
                     },
                     tooltips: {
@@ -329,7 +329,7 @@ $.ajax({
                                 weight: 'bold',
                                 fontSize: 20
                             },
-                            padding: 0,
+                            padding: 5,
                         }
                     },
                     tooltips: {
@@ -429,7 +429,7 @@ $.ajax({
                                 weight: 'bold',
                                 fontSize: 20
                             },
-                            padding: 0,
+                            padding: 5,
                         }
                     },
                     tooltips: {
@@ -530,7 +530,7 @@ $.ajax({
                                 weight: 'bold',
                                 fontSize: 20
                             },
-                            padding: 0,
+                            padding: 5,
                         }
                     },
                     tooltips: {
@@ -728,7 +728,7 @@ $.ajax({
                                 weight: 'bold',
                                 fontSize: 20
                             },
-                            padding: 0,
+                            padding: 5,
                         }
                     },
                     tooltips: {
@@ -829,7 +829,7 @@ $.ajax({
                                 weight: 'bold',
                                 fontSize: 20
                             },
-                            padding: 0,
+                            padding: 5,
                         }
                     },
                     tooltips: {
