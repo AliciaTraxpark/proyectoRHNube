@@ -99,8 +99,8 @@ $.ajax({
                 options: {
                     layout: {
                         padding: {
-                            bottom: 40,
-                            top: 40,
+                            bottom: 50,
+                            top: 50,
                         }
                     },
                     responsive: true,
@@ -141,11 +141,15 @@ $.ajax({
                             align: 'end',
                             font: {
                                 weight: 'bold',
-                                fontSize: 24
-                            }
+                                fontSize: 20
+                            },
+                            padding: 0,
                         }
                     }
                 },
+            });
+            mostrar.mouseout(function(e){
+                grafico.options.elements.center.text = suma + '\nempleados en área';
             });
         } else {
             $('#divarea').hide();
@@ -198,8 +202,8 @@ $.ajax({
                 options: {
                     layout: {
                         padding: {
-                            bottom: 40,
-                            top: 40
+                            bottom: 50,
+                            top: 50
                         }
                     },
                     responsive: true,
@@ -221,8 +225,9 @@ $.ajax({
                             align: 'end',
                             font: {
                                 weight: 'bold',
-                                fontSize: 24
-                            }
+                                fontSize: 20
+                            },
+                            padding: 0,
                         }
                     },
                     tooltips: {
@@ -244,6 +249,9 @@ $.ajax({
                         }
                     },
                 }
+            });
+            mostrar.mouseout(function(e){
+                grafico.options.elements.center.text = suma + '\nempleados en nivel';
             });
         } else {
             $('#divnivel').hide();
@@ -296,8 +304,8 @@ $.ajax({
                 options: {
                     layout: {
                         padding: {
-                            bottom: 40,
-                            top: 40
+                            bottom: 50,
+                            top: 50
                         }
                     },
                     responsive: true,
@@ -319,8 +327,9 @@ $.ajax({
                             align: 'end',
                             font: {
                                 weight: 'bold',
-                                fontSize: 24
-                            }
+                                fontSize: 20
+                            },
+                            padding: 0,
                         }
                     },
                     tooltips: {
@@ -341,6 +350,9 @@ $.ajax({
                         }
                     }
                 }
+            });
+            mostrar.mouseout(function(e){
+                grafico.options.elements.center.text = suma + '\nempleados en contrato';
             });
         } else {
             $('#divcontrato').hide();
@@ -392,8 +404,8 @@ $.ajax({
                 options: {
                     layout: {
                         padding: {
-                            bottom: 40,
-                            top: 40
+                            bottom: 50,
+                            top: 50
                         }
                     },
                     responsive: true,
@@ -415,8 +427,9 @@ $.ajax({
                             align: 'end',
                             font: {
                                 weight: 'bold',
-                                fontSize: 24
-                            }
+                                fontSize: 20
+                            },
+                            padding: 0,
                         }
                     },
                     tooltips: {
@@ -437,6 +450,9 @@ $.ajax({
                         }
                     }
                 }
+            });
+            mostrar.mouseout(function(e){
+                grafico.options.elements.center.text = suma + '\nempleados en CC';
             });
         } else {
             $('#divcentro').hide();
@@ -489,8 +505,8 @@ $.ajax({
                 options: {
                     layout: {
                         padding: {
-                            bottom: 40,
-                            top: 40
+                            bottom: 50,
+                            top: 50
                         }
                     },
                     responsive: true,
@@ -512,8 +528,9 @@ $.ajax({
                             align: 'end',
                             font: {
                                 weight: 'bold',
-                                fontSize: 24
-                            }
+                                fontSize: 20
+                            },
+                            padding: 0,
                         }
                     },
                     tooltips: {
@@ -534,6 +551,9 @@ $.ajax({
                         }
                     }
                 }
+            });
+            mostrar.mouseout(function(e){
+                grafico.options.elements.center.text = suma + '\nempleados en local';
             });
         } else {
             $('#divlocal').hide();
@@ -683,8 +703,8 @@ $.ajax({
                 options: {
                     layout: {
                         padding: {
-                            bottom: 40,
-                            top: 40
+                            bottom: 50,
+                            top: 50
                         }
                     },
                     responsive: true,
@@ -706,8 +726,9 @@ $.ajax({
                             align: 'end',
                             font: {
                                 weight: 'bold',
-                                fontSize: 24
-                            }
+                                fontSize: 20
+                            },
+                            padding: 0,
                         }
                     },
                     tooltips: {
@@ -728,6 +749,9 @@ $.ajax({
                         }
                     }
                 }
+            });
+            mostrar.mouseout(function(e){
+                grafico.options.elements.center.text = suma + '\nempleados en ciudad';
             });
         } else {
             $('#divdepartamento').hide();
@@ -780,8 +804,8 @@ $.ajax({
                 options: {
                     layout: {
                         padding: {
-                            bottom: 40,
-                            top: 40
+                            bottom: 50,
+                            top: 50
                         }
                     },
                     responsive: true,
@@ -803,8 +827,9 @@ $.ajax({
                             align: 'end',
                             font: {
                                 weight: 'bold',
-                                fontSize: 24
-                            }
+                                fontSize: 20
+                            },
+                            padding: 0,
                         }
                     },
                     tooltips: {
@@ -825,6 +850,9 @@ $.ajax({
                         }
                     }
                 }
+            });
+            mostrar.mouseout(function(e){
+                grafico.options.elements.center.text = suma + '\nempleados por rango';
             });
         } else {
             $('#divedades').hide();
