@@ -38,6 +38,7 @@ function onMostrarPantallas() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
+            data = data.reverse();
             if (data.length != 0) {
                 $.notifyClose();
                 var container = $('#card');
