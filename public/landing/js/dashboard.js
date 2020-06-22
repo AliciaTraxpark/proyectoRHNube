@@ -137,7 +137,7 @@ $.ajax({
                                 return mostrar;
                             },
                             color: '#323232',
-                            anchor: 'end',
+                            anchor: 'center',
                             align: 'end',
                             font: {
                                 weight: 'bold',
@@ -217,7 +217,7 @@ $.ajax({
                                 return mostrar;
                             },
                             color: '#323232',
-                            anchor: 'end',
+                            anchor: 'center',
                             align: 'end',
                             font: {
                                 weight: 'bold',
@@ -315,7 +315,7 @@ $.ajax({
                                 return mostrar;
                             },
                             color: '#323232',
-                            anchor: 'end',
+                            anchor: 'center',
                             align: 'end',
                             font: {
                                 weight: 'bold',
@@ -411,7 +411,7 @@ $.ajax({
                                 return mostrar;
                             },
                             color: '#323232',
-                            anchor: 'end',
+                            anchor: 'center',
                             align: 'end',
                             font: {
                                 weight: 'bold',
@@ -508,7 +508,7 @@ $.ajax({
                                 return mostrar;
                             },
                             color: '#323232',
-                            anchor: 'end',
+                            anchor: 'center',
                             align: 'end',
                             font: {
                                 weight: 'bold',
@@ -702,7 +702,7 @@ $.ajax({
                                 return mostrar;
                             },
                             color: '#323232',
-                            anchor: 'end',
+                            anchor: 'center',
                             align: 'end',
                             font: {
                                 weight: 'bold',
@@ -799,7 +799,7 @@ $.ajax({
                                 return mostrar;
                             },
                             color: '#323232',
-                            anchor: 'end',
+                            anchor: 'center',
                             align: 'end',
                             font: {
                                 weight: 'bold',
