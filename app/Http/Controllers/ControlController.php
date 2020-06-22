@@ -128,8 +128,9 @@ class ControlController extends Controller
                 ->where('e.emple_id', '=', $idempleado)
                 ->where(DB::raw('DATE(cp.fecha_hora)'), '=', $fecha)
                 ->Where('P.Proye_id', '=', $proyecto)
-                ->orderBy('cp.fecha_hora', 'desc')->limit(1)
-                ->get();
+                ->orderBy('cp.fecha_hora', 'desc')
+                ->get()
+                ->unique();
             return response()->json($control, 200);
         }
         $control = DB::table('empleado as e')
@@ -141,8 +142,9 @@ class ControlController extends Controller
             ->where('e.emple_id', '=', $idempleado)
             ->where('en.idEmpleado', '=', $idempleado)
             ->where(DB::raw('DATE(cp.fecha_hora)'), '=', $fecha)
-            ->orderBy('cp.fecha_hora', 'desc')->limit(1)
-            ->get();
+            ->orderBy('cp.fecha_hora', 'desc')
+            ->get()
+            ->unique();
         return response()->json($control, 200);
     }
 }
