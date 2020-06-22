@@ -20,9 +20,35 @@ function verhorarioEmpleado(idempleado){
         success: function (data) {
             $('#idEmHorario').val(data[0].perso_nombre+' '+data[0].perso_apPaterno +' '+data[0].perso_apMaterno);
             $('#paisHorario').val(data[0].paises_id);
-            if(data[0].ubigeo_peru_departments_id==null){
+            depart=data[0].ubigeo_peru_departments_id;
+            if(depart==null){
                 $('#departamentoHorario').val('Ninguno');
-            }
+                $.ajax({
+                    type:"post",
+                    url:"/empleadoHorario",
+                    data:'ids='+idempleado,
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    success: function (data) {
+                        calendarioHorario(data);
+                    },
+                    error: function (data) {
+                        alert('Ocurrio un error');
+                    }
+                });
+            } else {
+                $.ajax({
+                    type:"post",
+                    url:"/empleadoHorarioDep",
+                    data:{ids:idempleado, iddepart:depart},
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    success: function (data) {
+                        calendarioHorario(data);
+                    },
+                    error: function (data) {
+                        alert('Ocurrio un error');
+                    }
+                });
+                 $('#departamentoHorario').val(depart);}
             if(data[0].horario_sobretiempo==1){
                 $('#exampleCheck2').prop('checked',true);
             }
@@ -30,18 +56,7 @@ function verhorarioEmpleado(idempleado){
             $('#descripcionCaHorario').val(data[0].horario_descripcion);
             $('#toleranciaHorario').val(data[0].horario_tolerancia);
 
-            $.ajax({
-                type:"post",
-                url:"/empleadoHorario",
-                data:'ids='+idempleado,
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                success: function (data) {
-                    calendarioHorario(data);
-                },
-                error: function (data) {
-                    alert('Ocurrio un error');
-                }
-            });
+
 
 
 

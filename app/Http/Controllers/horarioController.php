@@ -244,24 +244,27 @@ class horarioController extends Controller
                 }
 
     }
-    public function eventosDep(request $request){
-       // $iddepart=$request->iddepart;
+    public function empleadoHorarioDep(request $request){
+        $iddepart=$request->iddepart;
+        $idEm=$request->ids;
         $eventos=DB::table('eventos')->select(['id','title' ,'color', 'textColor', 'start','end']);
 
         $eventos_usuario = DB::table('eventos_usuario')
         ->select(['id','title' ,'color', 'textColor', 'start','end'])
              ->where('Users_id','=',Auth::user()->id)
-             ->where('evento_departamento','=', 13)
+             ->where('evento_departamento','=',$iddepart)
              ->where('evento_pais','=',173)
-
                 ->union($eventos);
 
-        $temporal_eventos=DB::table('temporal_eventos')->select(['id','title' ,'color', 'textColor', 'start','end'])
+        $horario_empleado=DB::table('horario_empleado as he')->select(['id','title' ,'color', 'textColor', 'start','end'])
         ->where('users_id','=',Auth::user()->id)
+        ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+        ->where('he.empleado_emple_id','=',$idEm)
         ->union($eventos_usuario)
         ->get();
 
-        return response()->json($temporal_eventos);
+        return response()->json($horario_empleado);
+
     }
 
     }
