@@ -341,7 +341,7 @@ $( document ).ready(function() {
                alert('No existe calendario');
                return false;
            }
-           calendario1(dataA[1])
+           calendario1(dataA[1]);
 
             },
         error:function(){ alert("Hay un error");}
