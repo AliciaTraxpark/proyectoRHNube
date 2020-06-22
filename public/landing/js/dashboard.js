@@ -148,6 +148,9 @@ $.ajax({
                     }
                 },
             });
+            mostrar.mouseout(function(e){
+                grafico.options.elements.center.text = suma + '\nempleados en área';
+            });
         } else {
             $('#divarea').hide();
             $.notify({
@@ -247,6 +250,9 @@ $.ajax({
                     },
                 }
             });
+            mostrar.mouseout(function(e){
+                grafico.options.elements.center.text = suma + '\nempleados en nivel';
+            });
         } else {
             $('#divnivel').hide();
             $.notify({
@@ -345,6 +351,9 @@ $.ajax({
                     }
                 }
             });
+            mostrar.mouseout(function(e){
+                grafico.options.elements.center.text = suma + '\nempleados en contrato';
+            });
         } else {
             $('#divcontrato').hide();
             $.notify({
@@ -441,6 +450,9 @@ $.ajax({
                         }
                     }
                 }
+            });
+            mostrar.mouseout(function(e){
+                grafico.options.elements.center.text = suma + '\nempleados en CC';
             });
         } else {
             $('#divcentro').hide();
@@ -539,6 +551,9 @@ $.ajax({
                         }
                     }
                 }
+            });
+            mostrar.mouseout(function(e){
+                grafico.options.elements.center.text = suma + '\nempleados en local';
             });
         } else {
             $('#divlocal').hide();
@@ -735,6 +750,9 @@ $.ajax({
                     }
                 }
             });
+            mostrar.mouseout(function(e){
+                grafico.options.elements.center.text = suma + '\nempleados en ciudad';
+            });
         } else {
             $('#divdepartamento').hide();
             $.notify({
@@ -832,6 +850,9 @@ $.ajax({
                         }
                     }
                 }
+            });
+            mostrar.mouseout(function(e){
+                grafico.options.elements.center.text = suma + '\nempleados por rango';
             });
         } else {
             $('#divedades').hide();
