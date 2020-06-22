@@ -418,7 +418,7 @@ function calendario1(datadep) {
                 data:{fechasArray:fechastart,hora:inicio+'-'+fin,pais:idpais,departamento:iddepartamento,inicio:inicio,fin:fin},
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 success: function (data) {
-                    calendar1.refetchEvents();
+                    calendar1.addEventSource(data);
                 },
                 error: function (data) {
                     alert('Ocurrio un error');
