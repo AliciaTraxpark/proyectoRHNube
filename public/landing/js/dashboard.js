@@ -137,11 +137,11 @@ $.ajax({
                                 return mostrar;
                             },
                             color: '#323232',
-                            anchor: 'center',
+                            anchor: 'end',
                             align: 'end',
                             font: {
                                 weight: 'bold',
-                                fontSize: 24
+                                fontSize: 20
                             }
                         }
                     }
@@ -217,11 +217,11 @@ $.ajax({
                                 return mostrar;
                             },
                             color: '#323232',
-                            anchor: 'center',
+                            anchor: 'end',
                             align: 'end',
                             font: {
                                 weight: 'bold',
-                                fontSize: 24
+                                fontSize: 20
                             }
                         }
                     },
@@ -315,11 +315,11 @@ $.ajax({
                                 return mostrar;
                             },
                             color: '#323232',
-                            anchor: 'center',
+                            anchor: 'end',
                             align: 'end',
                             font: {
                                 weight: 'bold',
-                                fontSize: 24
+                                fontSize: 20
                             }
                         }
                     },
@@ -411,11 +411,11 @@ $.ajax({
                                 return mostrar;
                             },
                             color: '#323232',
-                            anchor: 'center',
+                            anchor: 'end',
                             align: 'end',
                             font: {
                                 weight: 'bold',
-                                fontSize: 24
+                                fontSize: 20
                             }
                         }
                     },
@@ -508,11 +508,11 @@ $.ajax({
                                 return mostrar;
                             },
                             color: '#323232',
-                            anchor: 'center',
+                            anchor: 'end',
                             align: 'end',
                             font: {
                                 weight: 'bold',
-                                fontSize: 24
+                                fontSize: 20
                             }
                         }
                     },
@@ -702,11 +702,11 @@ $.ajax({
                                 return mostrar;
                             },
                             color: '#323232',
-                            anchor: 'center',
+                            anchor: 'end',
                             align: 'end',
                             font: {
                                 weight: 'bold',
-                                fontSize: 24
+                                fontSize: 20
                             }
                         }
                     },
@@ -799,11 +799,11 @@ $.ajax({
                                 return mostrar;
                             },
                             color: '#323232',
-                            anchor: 'center',
+                            anchor: 'end',
                             align: 'end',
                             font: {
                                 weight: 'bold',
-                                fontSize: 24
+                                fontSize: 20
                             }
                         }
                     },
