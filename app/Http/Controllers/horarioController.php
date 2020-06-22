@@ -52,6 +52,7 @@ class horarioController extends Controller
         $horas=$request->hora;
         $inicio=$request->inicio;
         $fin=$request->fin;
+        $arrayeve = collect();
         foreach($datafecha as $datafechas){
         $temporal_eventos=new temporal_eventos();
         $temporal_eventos->title=$horas;
@@ -64,7 +65,9 @@ class horarioController extends Controller
         $temporal_eventos->temp_horaI=$inicio;
         $temporal_eventos->temp_horaF=$fin;
         $temporal_eventos->save();
+        $arrayeve->push($temporal_eventos);
         }
+        return  response()->json($arrayeve);
 
     }
     public function eventos(){
@@ -229,6 +232,7 @@ class horarioController extends Controller
 
         $temporal_eventos=DB::table('temporal_eventos')->select(['id','title' ,'color', 'textColor', 'start','end'])
         ->where('users_id','=',Auth::user()->id)
+        ->where('ubigeo_peru_departments_id','=', $depa)
         ->union($eventos_usuario)
         ->get();
         //
@@ -241,13 +245,13 @@ class horarioController extends Controller
 
     }
     public function eventosDep(request $request){
-        $iddepart=$request->iddepart;
+       // $iddepart=$request->iddepart;
         $eventos=DB::table('eventos')->select(['id','title' ,'color', 'textColor', 'start','end']);
 
         $eventos_usuario = DB::table('eventos_usuario')
         ->select(['id','title' ,'color', 'textColor', 'start','end'])
              ->where('Users_id','=',Auth::user()->id)
-             ->where('evento_departamento','=', $iddepart)
+             ->where('evento_departamento','=', 13)
              ->where('evento_pais','=',173)
 
                 ->union($eventos);

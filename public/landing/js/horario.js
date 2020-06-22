@@ -341,7 +341,7 @@ $( document ).ready(function() {
                alert('No existe calendario');
                return false;
            }
-           calendario1(dataA[1])
+           calendario1(dataA[1]);
 
             },
         error:function(){ alert("Hay un error");}
@@ -418,7 +418,7 @@ function calendario1(datadep) {
                 data:{fechasArray:fechastart,hora:inicio+'-'+fin,pais:idpais,departamento:iddepartamento,inicio:inicio,fin:fin},
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 success: function (data) {
-                    calendar1.refetchEvents();
+                    calendar1.addEventSource(data);
                 },
                 error: function (data) {
                     alert('Ocurrio un error');
