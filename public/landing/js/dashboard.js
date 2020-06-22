@@ -48,8 +48,8 @@ $.notifyDefaults({
         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
         '<span data-notify="title">{1}</span> ' +
-        '<span style="color:#8a6d3b" data-notify="message">{2}</span>' +
-        '</div><br>'
+        '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+        '</div><br><br>'
 });
 //COLORES
 function getRandomColor() {
@@ -644,6 +644,103 @@ $.ajax({
         $.notify(" Aún no has asignado empleados a un local.");
     }
 });*/
+//DEPARTAMENTO
+$.ajax({
+    url: "totalDepartamento",
+    method: "GET",
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function (data) {
+        var nombre = [];
+        var total = [];
+        var color = ['#21bf73', '#ffd31d', '#eb4559'];
+        var suma = 0;
+        var totalP = 0;
+        if (data[0].departamento.length != 0) {
+            for (var i = 0; i < data[0].departamento.length; i++) {
+                nombre.push(data[0].departamento[i].name);
+                total.push(data[0].departamento[i].total);
+                suma += data[0].departamento[i].total;
+            }
+            for (var j = 3; j < data[0].departamento.length; j++) {
+                color.push(getRandomColor());
+            }
+            var promedio = (suma * 100) / data[0].empleado[0].totalE;
+            totalP = Math.round(promedio);
+            var chartdata = {
+                labels: nombre,
+                datasets: [{
+                    data: total,
+                    backgroundColor: color,
+                    borderWidth: 0
+                }]
+            };
+            var mostrar = $('#departamento');
+            var grafico = new Chart(mostrar, {
+                type: 'doughnut',
+                data: chartdata,
+                options: {
+                    layout: {
+                        padding: {
+                            bottom: 40,
+                            top: 40
+                        }
+                    },
+                    responsive: true,
+                    cutoutPercentage: 80,
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: false
+                    },
+                    plugins: {
+                        datalabels: {
+                            formatter: function (value, context) {
+                                var label = context.chart.data.labels[context.dataIndex];
+                                var mostrar = [];
+                                mostrar.push(label);
+                                return mostrar;
+                            },
+                            color: '#323232',
+                            anchor: 'end',
+                            align: 'end',
+                            font: {
+                                weight: 'bold',
+                                fontSize: 24
+                            }
+                        }
+                    },
+                    tooltips: {
+                        callbacks: {
+                            afterLabel: function (tooltipItem, data) {
+                                var dataset = data["datasets"][0];
+                                var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 / suma));
+                                grafico.options.elements.center.text = percent + "%" + data["labels"][tooltipItem["index"]];
+                            }
+                        }
+                    },
+                    elements: {
+                        center: {
+                            text: suma + '\nempleados en ciudad',
+                            color: '#424874', //Default black
+                            fontFamily: 'Arial', //Default Arial
+                            sidePadding: 20,
+                        }
+                    }
+                }
+            });
+        } else {
+            $('#divdepartamento').hide();
+            $.notify({
+                message: "Aún no has asignado empleados a una ciudad.",
+                icon: 'admin/images/warning.svg'
+            });
+        }
+    },
+    error: function (data) {
+        $.notify(" Aún no has asignado empleados a un edad error.");
+    }
+});
 //RANGO DE EDAD
 $.ajax({
     url: "totalRE",

@@ -92,6 +92,22 @@ class dashboardController extends Controller
         return response()->json($datos, 200);
     }
 
+    public function departamento()
+    {
+        $datos = [];
+        $empleado = DB::table('empleado as e')
+            ->select(DB::raw('COUNT(e.emple_id) as totalE'))
+            ->get();
+        $departamento = DB::table('empleado as e')
+            ->join('ubigeo_peru_departments as d', 'd.id', '=', 'e.emple_departamento')
+            ->select('d.name', DB::raw('COUNT(d.name) as total'))
+            ->groupBy('d.id')
+            ->get();
+
+        array_push($datos, array("empleado" => $empleado, "departamento" => $departamento));
+        return response()->json($datos, 200);
+    }
+
     public function edad()
     {
         $datos = [];
@@ -117,8 +133,10 @@ class dashboardController extends Controller
             ->get();
         $edad = DB::table('empleado as e')
             ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-            ->select(DB::raw(
-                'CASE WHEN(YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento) BETWEEN 18 AND 24) THEN "Menores de 24" ELSE CASE WHEN(YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento) BETWEEN 25 AND 30) THEN "De 25 a 30" ELSE CASE WHEN(YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento) BETWEEN 31 AND 40) THEN "De 31 a 40" ELSE CASE WHEN(YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento) BETWEEN 41 AND 50) THEN "De 41 a 50" ELSE CASE WHEN(YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento) > 50) THEN "De 50 a más "END END END END END as rango'),
+            ->select(
+                DB::raw(
+                    'CASE WHEN(YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento) BETWEEN 18 AND 24) THEN "Menores de 24" ELSE CASE WHEN(YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento) BETWEEN 25 AND 30) THEN "De 25 a 30" ELSE CASE WHEN(YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento) BETWEEN 31 AND 40) THEN "De 31 a 40" ELSE CASE WHEN(YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento) BETWEEN 41 AND 50) THEN "De 41 a 50" ELSE CASE WHEN(YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento) > 50) THEN "De 50 a más "END END END END END as rango'
+                ),
                 DB::raw('COUNT(*) as total')
             )
             ->groupBy('rango')

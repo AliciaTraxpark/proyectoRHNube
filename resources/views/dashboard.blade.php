@@ -88,6 +88,10 @@
     <div class="col-md-4" id="divlocal">
         <canvas id="local" height="250" width="250"></canvas>
     </div>
+    <div class="col-md-4" id="divdepartamento">
+        <canvas id="departamento" height="250" width="250"></canvas>
+    </div>
+    <br><br><br>
     <div class="col-md-4" id="divedades">
         <canvas id="edades" height="250" width="250"></canvas>
     </div>
