@@ -692,55 +692,55 @@
                                                     <input style="display: none;" name="v_id" id="v_id">
                                                     <div class="form-group">
                                                         <label for="sw-default">Tipo Documento</label>
-                                                        <input type="text" class="form-control" name="v_tipoDoc" id="v_tipoDoc" disabled style="background-color: #fcfcfc;">
+                                                        <input type="text" class="form-control" name="v_tipoDoc" id="v_tipoDoc" disabled style="background-color: #fcfcfc;" tabindex="1">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Apellido Paterno</label>
-                                                        <input type="text" class="form-control" name="v_apPaterno" id="v_apPaterno" required>
+                                                        <input type="text" class="form-control" name="v_apPaterno" id="v_apPaterno" tabindex="4" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Correo Electronico</label>
-                                                        <input type="email" class="form-control" id="v_email" name="email">
+                                                        <input type="email" class="form-control" id="v_email" name="email" tabindex="7">
                                                     </div>
                                                 </div> <!-- end col -->
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Num. Documento</label>
-                                                        <input type="text" class="form-control" name="v_numDocumento" id="v_numDocumento" required disabled style="background-color: #fcfcfc;">
+                                                        <input type="text" class="form-control" name="v_numDocumento" id="v_numDocumento" required disabled style="background-color: #fcfcfc;" tabindex="2">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Apellido Materno</label>
-                                                        <input type="text" class="form-control" name="v_apMaterno" id="v_apMaterno" required>
+                                                        <input type="text" class="form-control" name="v_apMaterno" id="v_apMaterno" tabindex="5" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Celular</label>
-                                                        <input type="text" class="form-control" name="v_celular" id="v_celular">
+                                                        <input type="text" class="form-control" name="v_celular" id="v_celular" tabindex="8">
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Fecha Nacimiento</label>
-                                                        <input type="text" data-custom-class="form-control" id="v_fechaN" data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date">
+                                                        <input type="text" data-custom-class="form-control" id="v_fechaN" data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date" tabindex="3">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Nombres</label>
-                                                        <input type="text" class="form-control" name="v_nombres" id="v_nombres" required>
+                                                        <input type="text" class="form-control" name="v_nombres" id="v_nombres" tabindex="6" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Telefono</label>
-                                                        <input type="text" class="form-control" name="v_telefono" id="v_telefono">
+                                                        <input type="text" class="form-control" name="v_telefono" id="v_telefono" tabindex="9">
                                                     </div>
                                                 </div>
                                                 <div class="col-12">
                                                     <div class="form-group">
                                                         <label for="sw-default">Dirección</label>
-                                                        <input type="text" class="form-control" name="v_direccion" id="v_direccion" required>
+                                                        <input type="text" class="form-control" name="v_direccion" id="v_direccion" tabindex="10" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Dirección Domiciliara</label>
-                                                        <select  class="form-control" placeholder="Departamento" name="v_dep" id="v_dep" required>
+                                                        <select  class="form-control" placeholder="Departamento" name="v_dep" id="v_dep" tabindex="11" required>
                                                             <option value="">Departamento</option>
                                                             @foreach ($departamento as $departamentos)
                                                             <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
@@ -749,7 +749,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Lugar Nacimiento</label>
-                                                        <select  class="form-control" placeholder="Departamento" name="v_departamento" id="v_departamento">
+                                                        <select  class="form-control" placeholder="Departamento" name="v_departamento" id="v_departamento" tabindex="14">
                                                             <option value="">Departamento</option>
                                                             @foreach ($departamento as $departamentos)
                                                             <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
@@ -767,7 +767,7 @@
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default"><br></label>
-                                                        <select  class="form-control " placeholder="Provincia " name="v_prov" id="v_prov" required>
+                                                        <select  class="form-control " placeholder="Provincia " name="v_prov" id="v_prov" tabindex="12" required>
                                                             <option value="">Provincia</option>
                                                             @foreach ($provincia as $provincias)
                                                             <option class="" value="{{$provincias->id}}">{{$provincias->name}}</option>
@@ -776,7 +776,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default"><br></label>
-                                                        <select  class="form-control " placeholder="Provincia " name="v_provincia" id="v_provincia">
+                                                        <select  class="form-control " placeholder="Provincia " name="v_provincia" id="v_provincia" tabindex="15">
                                                             <option value="">Provincia</option>
                                                             @foreach ($provincia as $provincias)
                                                             <option class="" value="{{$provincias->id}}">{{$provincias->name}}</option>
@@ -794,7 +794,7 @@
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default"><br></label>
-                                                        <select  class="form-control " placeholder="Distrito " name="v_dist" id="v_dist" required>
+                                                        <select  class="form-control " placeholder="Distrito " name="v_dist" id="v_dist" tabindex="13" required>
                                                             <option value="">Distrito</option>
                                                             @foreach ($distrito as $distritos)
                                                             <option class="" value="{{$distritos->id}}">{{$distritos->name}}</option>
@@ -803,7 +803,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default"><br></label>
-                                                        <select  class="form-control " placeholder="Distrito " name="v_distrito" id="v_distrito">
+                                                        <select  class="form-control " placeholder="Distrito " name="v_distrito" id="v_distrito" tabindex="16">
                                                             <option value="">Distrito</option>
                                                             @foreach ($distrito as $distritos)
                                                             <option class="" value="{{$distritos->id}}">{{$distritos->name}}</option>
@@ -825,7 +825,7 @@
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Cargo <a  href="#cargomodal" data-toggle="modal" data-target="#cargomodal"><i class="uil uil-plus"></i></a></label>
-                                                        <select  class="form-control" name="v_cargo" id="v_cargo" required>
+                                                        <select  class="form-control" name="v_cargo" id="v_cargo" tabindex="1" required>
                                                             <option value="">Seleccionar</option>
 
                                                             @foreach ($cargo as $cargos)
@@ -835,7 +835,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Contrato <a  href="#contratomodal" data-toggle="modal" data-target="#contratomodal"><i class="uil uil-plus"></i></a></label>
-                                                        <select  class="form-control" name="v_contrato" id="v_contrato" required>
+                                                        <select  class="form-control" name="v_contrato" id="v_contrato" tabindex="4" required>
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($tipo_cont as $tipo_conts)
                                                             <option class="" value="{{$tipo_conts->contrato_id}}">{{$tipo_conts->contrato_descripcion}}</option>
@@ -850,7 +850,7 @@
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Área <a href="#areamodal" data-toggle="modal" data-target="#areamodal"><i class="uil uil-plus"></i></a></label>
-                                                        <select  class="form-control" name="v_area" id="v_area" required>
+                                                        <select  class="form-control" name="v_area" id="v_area" tabindex="2" required>
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($area as $areas)
                                                             <option class="" value="{{$areas->area_id}}">{{$areas->area_descripcion}}</option>
@@ -859,7 +859,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Nivel <a  href="#nivelmodal" data-toggle="modal" data-target="#nivelmodal"><i class="uil uil-plus"></i></a></label>
-                                                        <select  class="form-control" name="v_nivel" id="v_nivel">
+                                                        <select  class="form-control" name="v_nivel" id="v_nivel" tabindex="5">
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($nivel as $niveles)
                                                             <option class="" value="{{$niveles->nivel_id}}">{{$niveles->nivel_descripcion}}</option>
@@ -870,7 +870,7 @@
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Centro Costo <a  href="#centrocmodal" data-toggle="modal" data-target="#centrocmodal"><i class="uil uil-plus"></i></a></label>
-                                                        <select  class="form-control" name="v_centroc" id="v_centroc" required>
+                                                        <select  class="form-control" name="v_centroc" id="v_centroc" tabindex="3" required>
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($centro_costo as $centro_costos)
                                                             <option class="" value="{{$centro_costos->centroC_id}}">{{$centro_costos->centroC_descripcion}}</option>
@@ -879,7 +879,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Local <a  href="#localmodal" data-toggle="modal" data-target="#localmodal"><i class="uil uil-plus"></i></a></label>
-                                                        <select  class="form-control" name="v_local" id="v_local">
+                                                        <select  class="form-control" name="v_local" id="v_local" tabindex="6">
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($local as $locales)
                                                             <option class="" value="{{$locales->local_id}}">{{$locales->local_descripcion}}</option>
