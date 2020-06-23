@@ -25,17 +25,13 @@ class horarioController extends Controller
     public function index(){
         $paises=paises::all();
         $departamento=ubigeo_peru_departments::all();
-
-        return view('horarios.horarios',['pais'=>$paises,'departamento'=>$departamento]);
-    }
-    public function verEmpleado(Request $request){
-        $idsEm=$request->ids;
         $empleado = DB::table('empleado as e')
         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
         ->select('p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','e.emple_nDoc','p.perso_id','e.emple_id')
-        ->whereIn('emple_id',explode(",",$idsEm))->get();
+        ->where('e.users_id','=',Auth::user()->id)
+        ->get();
 
-        return $empleado;
+        return view('horarios.horarios',['pais'=>$paises,'departamento'=>$departamento,'empleado'=>$empleado]);
     }
     public function verTodEmpleado(Request $request){
         $empleados = DB::table('empleado as e')
@@ -43,6 +39,7 @@ class horarioController extends Controller
         ->select('p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','e.emple_nDoc','p.perso_id','e.emple_id','he.empleado_emple_id')
         ->leftJoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
         ->whereNull('he.empleado_emple_id')
+        ->where('e.users_id','=',Auth::user()->id)
         ->get();
         return $empleados;
 

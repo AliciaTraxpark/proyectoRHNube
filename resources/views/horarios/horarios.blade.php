@@ -165,7 +165,9 @@
                                                <label for="">Asignar empleado(s):</label>
                                                {{-- <input type="text" class="form-control form-control-sm" id="nombreEmpleado"> --}}
                                                <select class="form-control wide" data-plugin="customselect" multiple id="nombreEmpleado" >
-
+                                               {{--  @foreach ($empleado as $empleados)
+                                                    <option class="" value="{{$empleados->emple_id}}">{{$paises->nombre}}</option>
+                                            @endforeach --}}
                                             </select>
                                             </div>
                                          </div>
