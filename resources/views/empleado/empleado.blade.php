@@ -432,7 +432,7 @@
                         <div class="modal-content">
                             <div class="modal-header" style="background: #163552;">
                                 <h4 class="header-title mt-0 " style="color: #f0f0f0"></i>Datos de empleado</h4>
-                                <button type="button" class="close" id="cerrar" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close" id="cerrarMoadalEmpleado" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>

@@ -573,7 +573,7 @@ $('#documento').on('change', function () {
 });
 $("#form-registrar :input").prop('disabled', true);
 $('#documento').attr('disabled', false);
-$('#cerrar').attr('disabled', false);
+$('#cerrarMoadalEmpleado').attr('disabled', false);
 $('#cerrarE').attr('disabled', false);
 $('#cerrarEd').attr('disabled', false);
 $('#documento').on('change', function () {
@@ -600,9 +600,9 @@ $('#cerrarEd').click(function () {
     $('#formNuevoEd').hide();
     $('#formNuevoEl').hide();
 });
-$('#cerrar').click(function () {
-    $('#form-registrar').modal('toggle');
+$('#cerrarMoadalEmpleado').click(function () {
     console.log("ingreso");
+    $('#form-registrar').modal('toggle');
     leertabla();
     $('#formNuevoEd').hide();
     $('#formNuevoEl').hide();
@@ -615,4 +615,5 @@ $('#cerrar').click(function () {
     $('select').val("");
     $("#form-registrar :input").prop('disabled', true);
     $('#documento').attr('disabled', false);
+    $('#cerrarMoadalEmpleado').attr('disabled', false);
 });
