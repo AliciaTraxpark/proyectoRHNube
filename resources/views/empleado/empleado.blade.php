@@ -432,6 +432,9 @@
                         <div class="modal-content">
                             <div class="modal-header" style="background: #163552;">
                                 <h4 class="header-title mt-0 " style="color: #f0f0f0"></i>Datos de empleado</h4>
+                                <button type="button" class="close" id="cerrar" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
                             <div class="modal-body" style="padding: 0px">
                                 <div class="setup-panel" id="smartwizard" style="background: #ffffff; color:#3d3d3d;">
@@ -657,9 +660,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" id="cerrar" class="btn btn-light" data-dismiss="modal" style="background: #183857; color: white;">Cerrar</button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -668,6 +668,9 @@
                         <div class="modal-content">
                             <div class="modal-header" style="background: #163552;">
                                 <h4 class="header-title mt-0 " style="color: #f0f0f0">Datos de empleado</h4><br>
+                                <button type="button" class="close" id="cerrarEd" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
                             <div class="modal-body" style="padding: 0px;">
                                 <div id="smartwizard1" style="background: #ffffff; color:#3d3d3d;">
@@ -907,9 +910,6 @@
                                     </div>
 
                                 </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" id="cerrarEd" class="btn btn-light" data-dismiss="modal" style="background:#183857; color: white;">Cerrar</button>
                             </div>
                         </div>
                     </div>
