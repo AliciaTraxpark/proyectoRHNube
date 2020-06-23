@@ -147,7 +147,7 @@ $.ajax({
                                 weight: 'bold',
                                 fontSize: 20
                             },
-                            padding: 5,
+                            padding: 10,
                         }
                     }
                 },
@@ -859,7 +859,7 @@ $.ajax({
                                 weight: 'bold',
                                 fontSize: 20
                             },
-                            padding: 5,
+                            padding: 10,
                         }
                     },
                     tooltips: {
