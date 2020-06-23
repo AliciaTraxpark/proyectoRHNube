@@ -581,6 +581,7 @@ $('#documento').on('change', function () {
 });
 $('#formNuevoE').click(function () {
     $('#form-registrar').modal();
+    $('#cerrarMoadalEmpleado').attr('disabled', false);
 });
 $('#formNuevoEd').click(function () {
     $('#form-ver').modal();
