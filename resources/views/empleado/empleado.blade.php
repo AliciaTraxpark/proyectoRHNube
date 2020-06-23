@@ -863,6 +863,17 @@
                                         </div>
                                         <div id="sw-default-step-2" class="setup-content">
                                             <div class="row">
+                                                <div class="col-4"><br></div>
+                                                <div class="col-4 text-center">
+                                                    <div class="form-group">
+                                                        <label for="sw-default">Codigo Empleado</label>
+                                                        <input type="text" class="form-control" name="codigoEmpleado"
+                                                            id="codigoEmpleado" tabindex="1" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4"><br></div>
+                                            </div>
+                                            <div class="row">
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Cargo <a
@@ -871,7 +882,7 @@
                                                                 data-target="#cargomodal"><i
                                                                     class="uil uil-plus"></i></a></label>
                                                         <select class="form-control" name="cargo" id="cargo"
-                                                            tabindex="1">
+                                                            tabindex="2">
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($cargo as $cargos)
                                                             <option class="" value="{{$cargos->cargo_id}}">
@@ -886,7 +897,7 @@
                                                                 data-target="#contratomodal"><i
                                                                     class="uil uil-plus"></i></a></label>
                                                         <select class="form-control" name="contrato" id="contrato"
-                                                            tabindex="4" required>
+                                                            tabindex="5" required>
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($tipo_cont as $tipo_conts)
                                                             <option class="" value="{{$tipo_conts->contrato_id}}">
@@ -908,7 +919,7 @@
                                                                 href="#areamodal" data-toggle="modal"
                                                                 data-target="#areamodal"><i
                                                                     class="uil uil-plus"></i></a></label>
-                                                        <select class="form-control" name="area" id="area" tabindex="2">
+                                                        <select class="form-control" name="area" id="area" tabindex="3">
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($area as $areas)
                                                             <option class="" value="{{$areas->area_id}}">
@@ -923,7 +934,7 @@
                                                                 data-target="#nivelmodal"><i
                                                                     class="uil uil-plus"></i></a></label>
                                                         <select class="form-control" name="nivel" id="nivel"
-                                                            tabindex="5">
+                                                            tabindex="6">
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($nivel as $niveles)
                                                             <option class="" value="{{$niveles->nivel_id}}">
@@ -940,7 +951,7 @@
                                                                 data-target="#centrocmodal"><i
                                                                     class="uil uil-plus"></i></a></label>
                                                         <select class="form-control" name="centroc" id="centroc"
-                                                            tabindex="3">
+                                                            tabindex="4">
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($centro_costo as $centro_costos)
                                                             <option class="" value="{{$centro_costos->centroC_id}}">
@@ -955,7 +966,7 @@
                                                                 data-target="#localmodal"><i
                                                                     class="uil uil-plus"></i></a></label>
                                                         <select class="form-control" name="local" id="local"
-                                                            tabindex="6">
+                                                            tabindex="7">
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($local as $locales)
                                                             <option class="" value="{{$locales->local_id}}">
@@ -1179,6 +1190,17 @@
                                         </div>
                                         <div id="sw-default-step-2">
                                             <div class="row">
+                                                <div class="col-4"><br></div>
+                                                <div class="col-4 text-center">
+                                                    <div class="form-group">
+                                                        <label for="sw-default">Codigo Empleado</label>
+                                                        <input type="text" class="form-control" name="v_codigoEmpleado"
+                                                            id="v_codigoEmpleado" tabindex="1" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4"><br></div>
+                                            </div>
+                                            <div class="row">
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Cargo <a
@@ -1186,7 +1208,7 @@
                                                                 data-toggle="modal"><i class="uil uil-plus"
                                                                     style="color: darkblue;cursor: pointer;"></i></a></label>
                                                         <select class="form-control" name="v_cargo" id="v_cargo"
-                                                            tabindex="1" required>
+                                                            tabindex="2" required>
                                                             <option value="">Seleccionar</option>
 
                                                             @foreach ($cargo as $cargos)
@@ -1201,7 +1223,7 @@
                                                                 data-toggle="modal"><i class="uil uil-plus"
                                                                     style="color: darkblue;cursor: pointer;"></i></a></label>
                                                         <select class="form-control" name="v_contrato" id="v_contrato"
-                                                            tabindex="4" required>
+                                                            tabindex="5" required>
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($tipo_cont as $tipo_conts)
                                                             <option class="" value="{{$tipo_conts->contrato_id}}">
@@ -1223,7 +1245,7 @@
                                                                 data-toggle="modal"><i class="uil uil-plus"
                                                                     style="color: darkblue;cursor: pointer;"></i></a></label>
                                                         <select class="form-control" name="v_area" id="v_area"
-                                                            tabindex="2" required>
+                                                            tabindex="3" required>
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($area as $areas)
                                                             <option class="" value="{{$areas->area_id}}">
@@ -1237,7 +1259,7 @@
                                                                 data-toggle="modal"><i class="uil uil-plus"
                                                                     style="color: darkblue;cursor: pointer;"></i></a></label>
                                                         <select class="form-control" name="v_nivel" id="v_nivel"
-                                                            tabindex="5">
+                                                            tabindex="6">
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($nivel as $niveles)
                                                             <option class="" value="{{$niveles->nivel_id}}">
@@ -1253,7 +1275,7 @@
                                                                 data-toggle="modal"><i class="uil uil-plus"
                                                                     style="color: darkblue;cursor: pointer;"></i></a></label>
                                                         <select class="form-control" name="v_centroc" id="v_centroc"
-                                                            tabindex="3" required>
+                                                            tabindex="4" required>
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($centro_costo as $centro_costos)
                                                             <option class="" value="{{$centro_costos->centroC_id}}">
@@ -1267,7 +1289,7 @@
                                                                 data-toggle="modal"><i class="uil uil-plus"
                                                                     style="color: darkblue;cursor: pointer;"></i></a></label>
                                                         <select class="form-control" name="v_local" id="v_local"
-                                                            tabindex="6">
+                                                            tabindex="7">
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($local as $locales)
                                                             <option class="" value="{{$locales->local_id}}">
