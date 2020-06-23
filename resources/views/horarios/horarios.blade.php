@@ -296,7 +296,7 @@
                            <div class="modal-body">
                                <div class="row">
 
-                                   <div class="col-md-6">
+                                   <div class="col-md-5">
 
                                        <div class="row">
                                         <div class="col-md-12">
@@ -369,7 +369,7 @@
                                        </div>
                                    </div>
 
-                                    <div class="col-md-6" >
+                                    <div class="col-md-7" >
                                      <div class="row">
 
                                       </div>
@@ -427,8 +427,8 @@
                                             <div class="form-group">
                                                <label for="">Asignar empleado(s):</label>
                                                {{-- <input type="text" class="form-control form-control-sm" id="nombreEmpleado"> --}}
-                                               <select class="form-control wide" data-plugin="customselect" multiple id="empIncidencia" >
-
+                                               <select class="form-control wide" data-plugin="customselect" multiple id="empIncidencia" required>
+                                                 {{-- <option value="">hj</option> --}}
                                             </select>
                                             </div>
                                          </div>
