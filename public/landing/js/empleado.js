@@ -414,6 +414,8 @@ function enviarEmpleado(accion, objEmpleado) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (msg) {
+            $('#formNuevoEd').hide();
+            $('#formNuevoEl').hide();
             $('#smartwizard').smartWizard("reset");
             $('input[type="text"]').val("");
             $('input:radio[name=tipo]:checked').prop('checked', false);
@@ -566,24 +568,12 @@ function cargarFile2() {
     })
 }
 //********************** */
-$('#cerrar').click(function () {
-    $('#smartwizard').smartWizard("reset");
-    $('input[type="text"]').val("");
-    $('input:radio[name=tipo]:checked').prop('checked', false);
-    $('input[type="date"]').val("");
-    $('input[type="file"]').val("");
-    $('input[type="email"]').val("");
-    $('select').val("");
-    $("#form-registrar :input").prop('disabled', true);
-    $('#documento').attr('disabled', false);
-    $('#cerrar').attr('disabled', false);
-    $('#documento').on('change', function () {
-        $("#form-registrar :input").attr('disabled', false);
-    });
+$('#documento').on('change', function () {
+    $("#form-registrar :input").attr('disabled', false);
 });
 $("#form-registrar :input").prop('disabled', true);
 $('#documento').attr('disabled', false);
-$('#cerrar').attr('disabled', false);
+$('#cerrarMoadalEmpleado').attr('disabled', false);
 $('#cerrarE').attr('disabled', false);
 $('#cerrarEd').attr('disabled', false);
 $('#documento').on('change', function () {
@@ -591,6 +581,7 @@ $('#documento').on('change', function () {
 });
 $('#formNuevoE').click(function () {
     $('#form-registrar').modal();
+    $('#cerrarMoadalEmpleado').attr('disabled', false);
 });
 $('#formNuevoEd').click(function () {
     $('#form-ver').modal();
@@ -609,4 +600,21 @@ $('#cerrarEd').click(function () {
     $('#smartwizard1').smartWizard("reset");
     $('#formNuevoEd').hide();
     $('#formNuevoEl').hide();
+});
+$('#cerrarMoadalEmpleado').click(function () {
+    console.log("ingreso");
+    $('#form-registrar').modal('toggle');
+    leertabla();
+    $('#formNuevoEd').hide();
+    $('#formNuevoEl').hide();
+    $('#smartwizard').smartWizard("reset");
+    $('input[type="text"]').val("");
+    $('input:radio[name=tipo]:checked').prop('checked', false);
+    $('input[type="date"]').val("");
+    $('input[type="file"]').val("");
+    $('input[type="email"]').val("");
+    $('select').val("");
+    $("#form-registrar :input").prop('disabled', true);
+    $('#documento').attr('disabled', false);
+    $('#cerrarMoadalEmpleado').attr('disabled', false);
 });
