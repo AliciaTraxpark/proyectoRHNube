@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use App\actividad;
 use Illuminate\Support\Facades\Hash;
 use App\empleado;
@@ -68,6 +68,7 @@ class EmpleadoController extends Controller
             ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
             ->select('p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','c.cargo_descripcion',
             'a.area_descripcion','cc.centroC_descripcion')
+            ->where('e.users_id','=',Auth::user()->id)
             ->get();
             //dd($tabla_empleado);
         return view('empleado.empleado',['departamento'=>$departamento,'provincia'=>$provincia,'distrito'=>$distrito,
@@ -121,11 +122,12 @@ class EmpleadoController extends Controller
             ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
             ->select('p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','c.cargo_descripcion',
             'a.area_descripcion','cc.centroC_descripcion','e.emple_id')
+            ->where('e.users_id','=',Auth::user()->id)
             ->get();
             //dd($tabla_empleado);
         return view('empleado.tablaEmpleado',['tabla_empleado'=> $tabla_empleado1]);
     }
-    
+
     public function create()
     {
 
@@ -201,7 +203,7 @@ class EmpleadoController extends Controller
             $file->move($path,$fileName);
             $empleado->emple_foto=$fileName;
         }
-
+        $empleado->users_id=Auth::user()->id;;
         $empleado->save();
 
         return json_encode(array('status'=>true));
@@ -240,7 +242,8 @@ class EmpleadoController extends Controller
             'distN.name as distN','e.emple_id','c.cargo_id','a.area_id', 'cc.centroC_id','e.emple_tipoContrato',
             'e.emple_local','e.emple_nivel','e.emple_departamento','e.emple_provincia','e.emple_distrito','e.emple_foto as foto',
             'e.emple_celular','e.emple_telefono','e.emple_fechaIC','e.emple_fechaFC','e.emple_Correo')
-            ->where('emple_id','=',$idempleado)
+            ->where('e.emple_id','=',$idempleado)
+            ->where('e.users_id','=',Auth::user()->id)
             ->get();
         return $empleado;
         //
@@ -385,7 +388,7 @@ class EmpleadoController extends Controller
         $persona->each->delete();
         //$persona= persona::where('perso_id','=',$empleado->emple_persona);
         //dd($empleado->emple_persona);
-       
+
     }
 
 
