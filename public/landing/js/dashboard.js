@@ -132,9 +132,7 @@ $.ajax({
                         },
                     },
                     plugins: {
-                        display: true,
                         responsive: true,
-                        rotation: 20,
                         datalabels: {
                             formatter: function (value, context) {
                                 var label = context.chart.data.labels[context.dataIndex];
@@ -220,9 +218,7 @@ $.ajax({
                         display: false
                     },
                     plugins: {
-                        display: true,
                         responsive: true,
-                        rotation: 20,
                         datalabels: {
                             formatter: function (value, context) {
                                 var label = context.chart.data.labels[context.dataIndex];
@@ -331,9 +327,6 @@ $.ajax({
                     },
                     plugins: {
                         datalabels: {
-                            display: true,
-                            responsive: true,
-                            rotation: 20,
                             formatter: function (value, context) {
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
@@ -439,9 +432,6 @@ $.ajax({
                     },
                     plugins: {
                         datalabels: {
-                            display: true,
-                            responsive: true,
-                            rotation: 20,
                             formatter: function (value, context) {
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
@@ -548,9 +538,6 @@ $.ajax({
                     },
                     plugins: {
                         datalabels: {
-                            display: true,
-                            responsive: true,
-                            rotation: 20,
                             formatter: function (value, context) {
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
@@ -754,9 +741,6 @@ $.ajax({
                     },
                     plugins: {
                         datalabels: {
-                            display: true,
-                            responsive: true,
-                            rotation: 20,
                             formatter: function (value, context) {
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
@@ -864,8 +848,6 @@ $.ajax({
                     plugins: {
                         display: true,
                         datalabels: {
-                            responsive: true,
-                            rotation: 20,
                             formatter: function (value, context) {
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
