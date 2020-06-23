@@ -569,9 +569,9 @@ function cargarFile2() {
 }
 //********************** */
 $('#cerrar').click(function () {
-    leertabla();
     $('#formNuevoEd').hide();
     $('#formNuevoEl').hide();
+    leertabla();
     $('#smartwizard').smartWizard("reset");
     $('input[type="text"]').val("");
     $('input:radio[name=tipo]:checked').prop('checked', false);
