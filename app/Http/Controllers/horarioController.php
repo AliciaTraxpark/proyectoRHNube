@@ -167,6 +167,7 @@ class horarioController extends Controller
                 ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                 ->select('p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','c.cargo_descripcion',
                 'a.area_descripcion','cc.centroC_descripcion','e.emple_id','he.horario_horario_id')
+                ->where('e.users_id','=',Auth::user()->id)
                 ->distinct('e.emple_id')
                 ->get();
                 //dd($tabla_empleado);
