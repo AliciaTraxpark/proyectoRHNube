@@ -568,21 +568,6 @@ function cargarFile2() {
     })
 }
 //********************** */
-$('#cerrar').click(function () {
-    $('#form-registrar').modal('toggle');
-    $('#formNuevoEd').hide();
-    $('#formNuevoEl').hide();
-    leertabla();
-    $('#smartwizard').smartWizard("reset");
-    $('input[type="text"]').val("");
-    $('input:radio[name=tipo]:checked').prop('checked', false);
-    $('input[type="date"]').val("");
-    $('input[type="file"]').val("");
-    $('input[type="email"]').val("");
-    $('select').val("");
-    $("#form-registrar :input").prop('disabled', true);
-    $('#documento').attr('disabled', false);
-});
 $('#documento').on('change', function () {
     $("#form-registrar :input").attr('disabled', false);
 });
@@ -614,4 +599,20 @@ $('#cerrarEd').click(function () {
     $('#smartwizard1').smartWizard("reset");
     $('#formNuevoEd').hide();
     $('#formNuevoEl').hide();
+});
+$('#cerrar').click(function () {
+    $('#form-registrar').modal('toggle');
+    console.log("ingreso");
+    leertabla();
+    $('#formNuevoEd').hide();
+    $('#formNuevoEl').hide();
+    $('#smartwizard').smartWizard("reset");
+    $('input[type="text"]').val("");
+    $('input:radio[name=tipo]:checked').prop('checked', false);
+    $('input[type="date"]').val("");
+    $('input[type="file"]').val("");
+    $('input[type="email"]').val("");
+    $('select').val("");
+    $("#form-registrar :input").prop('disabled', true);
+    $('#documento').attr('disabled', false);
 });
