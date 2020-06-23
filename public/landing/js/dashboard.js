@@ -148,6 +148,7 @@ $.ajax({
                                 fontSize: 20
                             },
                             padding: 10,
+                            clamp:true
                         }
                     }
                 },
@@ -233,6 +234,7 @@ $.ajax({
                                 fontSize: 20
                             },
                             padding: 5,
+                            clamp:true
                         }
                     },
                     tooltips: {
@@ -340,6 +342,7 @@ $.ajax({
                                 fontSize: 20
                             },
                             padding: 5,
+                            clamp:true
                         }
                     },
                     tooltips: {
@@ -445,6 +448,7 @@ $.ajax({
                                 fontSize: 20
                             },
                             padding: 5,
+                            clamp:true
                         }
                     },
                     tooltips: {
@@ -551,6 +555,7 @@ $.ajax({
                                 fontSize: 20
                             },
                             padding: 5,
+                            clamp:true
                         }
                     },
                     tooltips: {
@@ -754,6 +759,7 @@ $.ajax({
                                 fontSize: 20
                             },
                             padding: 5,
+                            clamp:true
                         }
                     },
                     tooltips: {
@@ -860,6 +866,7 @@ $.ajax({
                                 fontSize: 20
                             },
                             padding: 10,
+                            clamp:true
                         }
                     },
                     tooltips: {
