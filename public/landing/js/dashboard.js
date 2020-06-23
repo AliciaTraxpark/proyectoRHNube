@@ -111,8 +111,11 @@ $.ajax({
                     },
                     tooltips: {
                         callbacks: {
+                            afterTitle: function (tooltipItem, data) {
+                                var label = 'Cantidad de Empleados';
+                                return label;
+                            },
                             afterLabel: function (tooltipItem, data) {
-                                console.log(tooltipItem);
                                 var dataset = data["datasets"][0];
                                 var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 /
                                     suma));
@@ -129,6 +132,7 @@ $.ajax({
                         },
                     },
                     plugins: {
+                        responsive: true,
                         datalabels: {
                             formatter: function (value, context) {
                                 var label = context.chart.data.labels[context.dataIndex];
@@ -143,12 +147,13 @@ $.ajax({
                                 weight: 'bold',
                                 fontSize: 20
                             },
-                            padding: 5,
+                            padding: 10,
+                            clamp: true
                         }
                     }
                 },
             });
-            mostrar.mouseout(function(e){
+            mostrar.mouseout(function (e) {
                 grafico.options.elements.center.text = suma + '\nempleados en área';
             });
         } else {
@@ -213,6 +218,7 @@ $.ajax({
                         display: false
                     },
                     plugins: {
+                        responsive: true,
                         datalabels: {
                             formatter: function (value, context) {
                                 var label = context.chart.data.labels[context.dataIndex];
@@ -228,11 +234,16 @@ $.ajax({
                                 fontSize: 20
                             },
                             padding: 5,
+                            clamp: true
                         }
                     },
                     tooltips: {
                         intersect: false,
                         callbacks: {
+                            afterTitle: function (tooltipItem, data) {
+                                var label = 'Cantidad de Empleados';
+                                return label;
+                            },
                             afterLabel: function (tooltipItem, data) {
                                 var dataset = data["datasets"][0];
                                 var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 / suma));
@@ -250,7 +261,7 @@ $.ajax({
                     },
                 }
             });
-            mostrar.mouseout(function(e){
+            mostrar.mouseout(function (e) {
                 grafico.options.elements.center.text = suma + '\nempleados en nivel';
             });
         } else {
@@ -330,10 +341,15 @@ $.ajax({
                                 fontSize: 20
                             },
                             padding: 5,
+                            clamp: true
                         }
                     },
                     tooltips: {
                         callbacks: {
+                            afterTitle: function (tooltipItem, data) {
+                                var label = 'Cantidad de Empleados';
+                                return label;
+                            },
                             afterLabel: function (tooltipItem, data) {
                                 var dataset = data["datasets"][0];
                                 var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 / suma));
@@ -351,7 +367,7 @@ $.ajax({
                     }
                 }
             });
-            mostrar.mouseout(function(e){
+            mostrar.mouseout(function (e) {
                 grafico.options.elements.center.text = suma + '\nempleados en contrato';
             });
         } else {
@@ -430,10 +446,15 @@ $.ajax({
                                 fontSize: 20
                             },
                             padding: 5,
+                            clamp: true
                         }
                     },
                     tooltips: {
                         callbacks: {
+                            afterTitle: function (tooltipItem, data) {
+                                var label = 'Cantidad de Empleados';
+                                return label;
+                            },
                             afterLabel: function (tooltipItem, data) {
                                 var dataset = data["datasets"][0];
                                 var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 / suma));
@@ -451,7 +472,7 @@ $.ajax({
                     }
                 }
             });
-            mostrar.mouseout(function(e){
+            mostrar.mouseout(function (e) {
                 grafico.options.elements.center.text = suma + '\nempleados en CC';
             });
         } else {
@@ -531,10 +552,15 @@ $.ajax({
                                 fontSize: 20
                             },
                             padding: 5,
+                            clamp: true
                         }
                     },
                     tooltips: {
                         callbacks: {
+                            afterTitle: function (tooltipItem, data) {
+                                var label = 'Cantidad de Empleados';
+                                return label;
+                            },
                             afterLabel: function (tooltipItem, data) {
                                 var dataset = data["datasets"][0];
                                 var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 / suma));
@@ -552,7 +578,7 @@ $.ajax({
                     }
                 }
             });
-            mostrar.mouseout(function(e){
+            mostrar.mouseout(function (e) {
                 grafico.options.elements.center.text = suma + '\nempleados en local';
             });
         } else {
@@ -729,10 +755,15 @@ $.ajax({
                                 fontSize: 20
                             },
                             padding: 5,
+                            clamp: true
                         }
                     },
                     tooltips: {
                         callbacks: {
+                            afterTitle: function (tooltipItem, data) {
+                                var label = 'Cantidad de Empleados';
+                                return label;
+                            },
                             afterLabel: function (tooltipItem, data) {
                                 var dataset = data["datasets"][0];
                                 var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 / suma));
@@ -750,7 +781,7 @@ $.ajax({
                     }
                 }
             });
-            mostrar.mouseout(function(e){
+            mostrar.mouseout(function (e) {
                 grafico.options.elements.center.text = suma + '\nempleados en ciudad';
             });
         } else {
@@ -815,6 +846,7 @@ $.ajax({
                         display: false
                     },
                     plugins: {
+                        display: true,
                         datalabels: {
                             formatter: function (value, context) {
                                 var label = context.chart.data.labels[context.dataIndex];
@@ -829,11 +861,16 @@ $.ajax({
                                 weight: 'bold',
                                 fontSize: 20
                             },
-                            padding: 5,
+                            padding: 10,
+                            clamp: true
                         }
                     },
                     tooltips: {
                         callbacks: {
+                            afterTitle: function (tooltipItem, data) {
+                                var label = 'Cantidad de Empleados';
+                                return label;
+                            },
                             afterLabel: function (tooltipItem, data) {
                                 var dataset = data["datasets"][0];
                                 var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 / suma));
@@ -851,7 +888,7 @@ $.ajax({
                     }
                 }
             });
-            mostrar.mouseout(function(e){
+            mostrar.mouseout(function (e) {
                 grafico.options.elements.center.text = suma + '\nempleados por rango';
             });
         } else {

@@ -432,6 +432,9 @@
                         <div class="modal-content">
                             <div class="modal-header" style="background: #163552;">
                                 <h4 class="header-title mt-0 " style="color: #f0f0f0"></i>Datos de empleado</h4>
+                                <button type="button" class="close" id="cerrar" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
                             <div class="modal-body" style="padding: 0px">
                                 <div class="setup-panel" id="smartwizard" style="background: #ffffff; color:#3d3d3d;">
@@ -446,7 +449,7 @@
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Tipo Documento</label>
-                                                        <select  class="form-control" placeholder="Tipo Documento " name="documento" id="documento" required>
+                                                        <select  class="form-control" placeholder="Tipo Documento " name="documento" id="documento" tabindex="1" required>
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($tipo_doc as $tipo_docs)
                                                             <option class="" value="{{$tipo_docs->tipoDoc_id}}">{{$tipo_docs->tipoDoc_descripcion}}</option>
@@ -455,51 +458,51 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Apellido Paterno</label>
-                                                        <input type="text" class="form-control" name="apPaterno" id="apPaterno" required>
+                                                        <input type="text" class="form-control" name="apPaterno" id="apPaterno" tabindex="4" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Correo Electronico</label>
-                                                        <input type="email" class="form-control" id="email" name="email">
+                                                        <input type="email" class="form-control" id="email" name="email" tabindex="7">
                                                     </div>
                                                 </div> <!-- end col -->
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Num. Documento</label>
-                                                        <input type="text" class="form-control" name="numDocumento" id="numDocumento" required>
+                                                        <input type="text" class="form-control" name="numDocumento" id="numDocumento" tabindex="2" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Apellido Materno</label>
-                                                        <input type="text" class="form-control" name="apMaterno" id="apMaterno" required>
+                                                        <input type="text" class="form-control" name="apMaterno" id="apMaterno" tabindex="5" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Celular</label>
-                                                        <input type="text" class="form-control" name="celular" id="celular">
+                                                        <input type="text" class="form-control" name="celular" id="celular" tabindex="8">
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Fecha Nacimiento</label>
-                                                        <input type="text" data-custom-class="form-control" id="fechaN" data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date">
+                                                        <input type="text" data-custom-class="form-control" id="fechaN" tabindex="3" data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Nombres</label>
-                                                        <input type="text" class="form-control" name="nombres" id="nombres" required>
+                                                        <input type="text" class="form-control" name="nombres" id="nombres" tabindex="6" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Telefono</label>
-                                                        <input type="text" class="form-control" name="telefono" id="telefono">
+                                                        <input type="text" class="form-control" name="telefono" id="telefono" tabindex="9">
                                                     </div>
                                                 </div>
                                                 <div class="col-12">
                                                     <div class="form-group">
                                                         <label for="sw-default">Dirección</label>
-                                                        <input type="text" class="form-control" name="direccion" id="direccion" required>
+                                                        <input type="text" class="form-control" name="direccion" id="direccion" tabindex="10" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Dirección Domiciliara</label>
-                                                        <select  class="form-control" placeholder="Departamento" name="departamento" id="dep" required>
+                                                        <select  class="form-control" placeholder="Departamento" name="departamento" id="dep" tabindex="11" required>
                                                             <option value="">Departamento</option>
                                                             @foreach ($departamento as $departamentos)
                                                               <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
@@ -508,7 +511,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Lugar Nacimiento</label>
-                                                        <select  class="form-control" placeholder="Departamento" name="departamento" id="departamento" required>
+                                                        <select  class="form-control" placeholder="Departamento" name="departamento" id="departamento" tabindex="14" required>
                                                             <option value="">Departamento</option>
                                                             @foreach ($departamento as $departamentos)
                                                               <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
@@ -526,13 +529,13 @@
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default"><br></label>
-                                                        <select  class="form-control " placeholder="Provincia " name="provincia" id="prov" required>
+                                                        <select  class="form-control " placeholder="Provincia " name="provincia" id="prov" tabindex="12" required>
                                                             <option value="">Provincia</option>
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default"><br></label>
-                                                        <select  class="form-control " placeholder="Provincia " name="provincia" id="provincia" required>
+                                                        <select  class="form-control " placeholder="Provincia " name="provincia" id="provincia" tabindex="15" required>
                                                             <option value="">Provincia</option>
                                                         </select>
                                                     </div>
@@ -547,13 +550,13 @@
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default"><br></label>
-                                                        <select  class="form-control " placeholder="Distrito " name="distrito" id="dist" required>
+                                                        <select  class="form-control " placeholder="Distrito " name="distrito" id="dist" tabindex="13" required>
                                                             <option value="">Distrito</option>
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default"><br></label>
-                                                        <select  class="form-control " placeholder="Distrito " name="distrito" id="distrito" required>
+                                                        <select  class="form-control " placeholder="Distrito " name="distrito" id="distrito" tabindex="16" required>
                                                             <option value="">Distrito</option>
                                                         </select>
                                                     </div>
@@ -574,7 +577,7 @@
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Cargo <a onclick="$('#form-registrar').modal('hide');" href="#cargomodal" data-toggle="modal" data-target="#cargomodal"><i class="uil uil-plus"></i></a></label>
-                                                        <select  class="form-control" name="cargo" id="cargo">
+                                                        <select  class="form-control" name="cargo" id="cargo" tabindex="1">
                                                             <option value="">Seleccionar</option>
                                                               @foreach ($cargo as $cargos)
                                                               <option class="" value="{{$cargos->cargo_id}}">{{$cargos->cargo_descripcion}}</option>
@@ -583,7 +586,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Contrato <a onclick="$('#form-registrar').modal('hide');" href="#contratomodal" data-toggle="modal" data-target="#contratomodal"><i class="uil uil-plus"></i></a></label>
-                                                        <select  class="form-control" name="contrato" id="contrato" required>
+                                                        <select  class="form-control" name="contrato" id="contrato" tabindex="4" required>
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($tipo_cont as $tipo_conts)
                                                             <option class="" value="{{$tipo_conts->contrato_id}}">{{$tipo_conts->contrato_descripcion}}</option>
@@ -598,7 +601,7 @@
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Área <a onclick="$('#form-registrar').modal('hide');" href="#areamodal" data-toggle="modal" data-target="#areamodal"><i class="uil uil-plus"></i></a></label>
-                                                        <select  class="form-control" name="area" id="area">
+                                                        <select  class="form-control" name="area" id="area" tabindex="2">
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($area as $areas)
                                                             <option class="" value="{{$areas->area_id}}">{{$areas->area_descripcion}}</option>
@@ -607,7 +610,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Nivel <a onclick="$('#form-registrar').modal('hide');" href="#nivelmodal" data-toggle="modal" data-target="#nivelmodal"><i class="uil uil-plus"></i></a></label>
-                                                        <select  class="form-control" name="nivel" id="nivel">
+                                                        <select  class="form-control" name="nivel" id="nivel" tabindex="5">
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($nivel as $niveles)
                                                             <option class="" value="{{$niveles->nivel_id}}">{{$niveles->nivel_descripcion}}</option>
@@ -618,7 +621,7 @@
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Centro Costo <a onclick="$('#form-registrar').modal('hide');" href="#centrocmodal" data-toggle="modal" data-target="#centrocmodal"><i class="uil uil-plus"></i></a></label>
-                                                        <select  class="form-control" name="centroc" id="centroc">
+                                                        <select  class="form-control" name="centroc" id="centroc" tabindex="3">
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($centro_costo as $centro_costos)
                                                             <option class="" value="{{$centro_costos->centroC_id}}">{{$centro_costos->centroC_descripcion}}</option>
@@ -627,7 +630,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Local <a onclick="$('#form-registrar').modal('hide');" href="#localmodal" data-toggle="modal" data-target="#localmodal"><i class="uil uil-plus"></i></a></label>
-                                                        <select  class="form-control" name="local" id="local">
+                                                        <select  class="form-control" name="local" id="local" tabindex="6">
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($local as $locales)
                                                             <option class="" value="{{$locales->local_id}}">{{$locales->local_descripcion}}</option>
@@ -657,9 +660,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" id="cerrar" class="btn btn-light" data-dismiss="modal" style="background: #183857; color: white;">Cerrar</button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -668,6 +668,9 @@
                         <div class="modal-content">
                             <div class="modal-header" style="background: #163552;">
                                 <h4 class="header-title mt-0 " style="color: #f0f0f0">Datos de empleado</h4><br>
+                                <button type="button" class="close" id="cerrarEd" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
                             <div class="modal-body" style="padding: 0px;">
                                 <div id="smartwizard1" style="background: #ffffff; color:#3d3d3d;">
@@ -907,9 +910,6 @@
                                     </div>
 
                                 </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" id="cerrarEd" class="btn btn-light" data-dismiss="modal" style="background:#183857; color: white;">Cerrar</button>
                             </div>
                         </div>
                     </div>
