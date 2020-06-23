@@ -569,6 +569,7 @@ function cargarFile2() {
 }
 //********************** */
 $('#cerrar').click(function () {
+    $('#form-registrar').modal('toggle');
     $('#formNuevoEd').hide();
     $('#formNuevoEl').hide();
     leertabla();
@@ -581,10 +582,9 @@ $('#cerrar').click(function () {
     $('select').val("");
     $("#form-registrar :input").prop('disabled', true);
     $('#documento').attr('disabled', false);
-    $('#cerrar').attr('disabled', false);
-    $('#documento').on('change', function () {
-        $("#form-registrar :input").attr('disabled', false);
-    });
+});
+$('#documento').on('change', function () {
+    $("#form-registrar :input").attr('disabled', false);
 });
 $("#form-registrar :input").prop('disabled', true);
 $('#documento').attr('disabled', false);
