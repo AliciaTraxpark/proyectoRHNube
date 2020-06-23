@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\empleado;
 use App\envio;
 use DateTime;
+use Illuminate\Support\Facades\Auth;
 
 class ControlController extends Controller
 {
@@ -18,6 +19,7 @@ class ControlController extends Controller
             ->join('proyecto_empleado as pe', 'pe.empleado_emple_id', '=', 'e.emple_id')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+            ->where('e.users_id', '=', Auth::user()->id)
             ->groupBy('p.perso_id')
             ->get();
         return view('tareas.tareas', ['empleado' => $empleado]);
@@ -29,12 +31,11 @@ class ControlController extends Controller
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->join('proyecto_empleado as pe', 'pe.empleado_emple_id', '=', 'e.emple_id')
             ->join('proyecto as pr', 'pr.Proye_id', '=', 'pe.Proyecto_Proye_id')
-            ->leftJoin('control as c', 'c.Proyecto_Proye_id', '=', 'pr.Proye_id')
             ->leftJoin('envio as en', function ($join) {
-                $join->on('en.idEnvio', '=', 'c.idEnvio')
-                    ->on('en.idEmpleado', '=', 'e.emple_id');
+                $join->on('en.idEmpleado', '=', 'e.emple_id');
             })
-            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'en.Total_Envio', 'c.Fecha_fin')
+            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'en.Total_Envio')
+            ->where('e.users_id', '=', Auth::user()->id)
             ->groupBy('e.emple_id')
             ->get();
         return view('tareas.reporteSemanal', ['empleado' => $empleado]);
@@ -49,6 +50,7 @@ class ControlController extends Controller
             ->join('proyecto_empleado as pe', 'pe.empleado_emple_id', '=', 'e.emple_id')
             ->join('proyecto as pr', 'pr.Proye_id', '=', 'pe.Proyecto_Proye_id')
             ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+            ->where('e.users_id', '=', Auth::user()->id)
             ->groupBy('e.emple_id')
             ->get();
 
@@ -71,6 +73,7 @@ class ControlController extends Controller
             )
             ->where(DB::raw('DATE(cp.fecha_hora)'), '<=', $fechaF[1])
             ->where(DB::raw('DATE(cp.fecha_hora)'), '>=', $fechaF[0])
+            ->where('e.users_id', '=', Auth::user()->id)
             ->groupBy('fecha_captura', 'e.emple_id')
             ->get();
 
@@ -118,6 +121,7 @@ class ControlController extends Controller
             ->join('proyecto_empleado as pe', 'pe.empleado_emple_id', '=', 'e.emple_id')
             ->join('proyecto as p', 'p.Proye_id', '=', 'pe.Proyecto_Proye_id')
             ->select('P.Proye_id', 'P.Proye_Nombre')
+            ->where('e.users_id', '=', Auth::user()->id)
             ->where('e.emple_id', '=', $idempleado)
             ->get();
         return response()->json($proyecto, 200);
@@ -163,6 +167,7 @@ class ControlController extends Controller
                 ->where('e.emple_id', '=', $idempleado)
                 ->where(DB::raw('DATE(cp.fecha_hora)'), '=', $fecha)
                 ->Where('P.Proye_id', '=', $proyecto)
+                ->where('e.users_id', '=', Auth::user()->id)
                 ->orderBy('cp.fecha_hora', 'desc')
                 ->get();
             $control = my_array_unique($control);
@@ -176,6 +181,7 @@ class ControlController extends Controller
             ->select('P.Proye_id', 'P.Proye_Nombre', 'en.idEnvio', 'cp.imagen', 'cp.promedio', 'en.hora_Envio', 'cp.fecha_hora', 'en.Total_Envio', DB::raw('DATE(cp.fecha_hora) as fecha'), DB::raw('TIME(cp.fecha_hora) as hora_ini'))
             ->where('e.emple_id', '=', $idempleado)
             ->where(DB::raw('DATE(cp.fecha_hora)'), '=', $fecha)
+            ->where('e.users_id', '=', Auth::user()->id)
             ->orderBy('cp.fecha_hora', 'desc')
             ->get();
         $control = my_array_unique($control);

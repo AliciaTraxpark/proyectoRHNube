@@ -1,9 +1,9 @@
-
 <style>
     .left-side-menu {
         background: #fafafa;
     }
-    #sidebar-menu > ul > li > a{
+
+    #sidebar-menu>ul>li>a {
         padding: 9px 30px;
         font-size: 14px;
     }
@@ -36,7 +36,7 @@
 
         <a href="javascript: void(0);">
             <i data-feather="activity"></i>
-            <span>Modulo 1: Tareas</span>
+            <span>Modulo 1: Actividades</span>
             <span class="menu-arrow"></span>
         </a>
 
@@ -44,13 +44,15 @@
             <li>
                 <a href="/tareas">Actividad de Captura de Pantalla</a>
             </li>
-            <li>
-                <a href="/reporteSemanal">Reporte</a>
-            </li>
-
         </ul>
     </li>
 
+    <li>
+        <a href="/reporteSemanal">
+            <img src="{{asset('admin/images/growth (2).svg')}}" height="25" class="mr-1" >
+            <span>Horas trabajadas</span>
+        </a>
+    </li>
     <li>
         <a href="/proyecto">
             <i data-feather="briefcase"></i>
