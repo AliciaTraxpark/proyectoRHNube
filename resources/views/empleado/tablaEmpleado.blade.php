@@ -200,6 +200,7 @@
             "searching": true,
             "lengthChange": false,
             "scrollX": true,
+            "pageLength": 30,
             language :
             {
                 "sProcessing":     "Procesando...",

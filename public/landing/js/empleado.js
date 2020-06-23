@@ -414,6 +414,8 @@ function enviarEmpleado(accion, objEmpleado) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (msg) {
+            $('#formNuevoEd').hide();
+            $('#formNuevoEl').hide();
             $('#smartwizard').smartWizard("reset");
             $('input[type="text"]').val("");
             $('input:radio[name=tipo]:checked').prop('checked', false);
@@ -567,6 +569,9 @@ function cargarFile2() {
 }
 //********************** */
 $('#cerrar').click(function () {
+    leertabla();
+    $('#formNuevoEd').hide();
+    $('#formNuevoEl').hide();
     $('#smartwizard').smartWizard("reset");
     $('input[type="text"]').val("");
     $('input:radio[name=tipo]:checked').prop('checked', false);
