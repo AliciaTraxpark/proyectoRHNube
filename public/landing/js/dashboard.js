@@ -133,6 +133,8 @@ $.ajax({
                     },
                     plugins: {
                         display: true,
+                        responsive: true,
+                        rotation: 20,
                         datalabels: {
                             formatter: function (value, context) {
                                 var label = context.chart.data.labels[context.dataIndex];
@@ -148,7 +150,7 @@ $.ajax({
                                 fontSize: 20
                             },
                             padding: 10,
-                            clamp:true
+                            clamp: true
                         }
                     }
                 },
@@ -219,6 +221,8 @@ $.ajax({
                     },
                     plugins: {
                         display: true,
+                        responsive: true,
+                        rotation: 20,
                         datalabels: {
                             formatter: function (value, context) {
                                 var label = context.chart.data.labels[context.dataIndex];
@@ -234,7 +238,7 @@ $.ajax({
                                 fontSize: 20
                             },
                             padding: 5,
-                            clamp:true
+                            clamp: true
                         }
                     },
                     tooltips: {
@@ -328,6 +332,8 @@ $.ajax({
                     plugins: {
                         datalabels: {
                             display: true,
+                            responsive: true,
+                            rotation: 20,
                             formatter: function (value, context) {
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
@@ -342,7 +348,7 @@ $.ajax({
                                 fontSize: 20
                             },
                             padding: 5,
-                            clamp:true
+                            clamp: true
                         }
                     },
                     tooltips: {
@@ -434,6 +440,8 @@ $.ajax({
                     plugins: {
                         datalabels: {
                             display: true,
+                            responsive: true,
+                            rotation: 20,
                             formatter: function (value, context) {
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
@@ -448,7 +456,7 @@ $.ajax({
                                 fontSize: 20
                             },
                             padding: 5,
-                            clamp:true
+                            clamp: true
                         }
                     },
                     tooltips: {
@@ -541,6 +549,8 @@ $.ajax({
                     plugins: {
                         datalabels: {
                             display: true,
+                            responsive: true,
+                            rotation: 20,
                             formatter: function (value, context) {
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
@@ -555,7 +565,7 @@ $.ajax({
                                 fontSize: 20
                             },
                             padding: 5,
-                            clamp:true
+                            clamp: true
                         }
                     },
                     tooltips: {
@@ -745,6 +755,8 @@ $.ajax({
                     plugins: {
                         datalabels: {
                             display: true,
+                            responsive: true,
+                            rotation: 20,
                             formatter: function (value, context) {
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
@@ -759,7 +771,7 @@ $.ajax({
                                 fontSize: 20
                             },
                             padding: 5,
-                            clamp:true
+                            clamp: true
                         }
                     },
                     tooltips: {
@@ -852,6 +864,8 @@ $.ajax({
                     plugins: {
                         display: true,
                         datalabels: {
+                            responsive: true,
+                            rotation: 20,
                             formatter: function (value, context) {
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
@@ -866,7 +880,7 @@ $.ajax({
                                 fontSize: 20
                             },
                             padding: 10,
-                            clamp:true
+                            clamp: true
                         }
                     },
                     tooltips: {
