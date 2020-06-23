@@ -203,7 +203,8 @@ class EmpleadoController extends Controller
             $file->move($path,$fileName);
             $empleado->emple_foto=$fileName;
         }
-        $empleado->users_id=Auth::user()->id;;
+        $empleado->emple_pasword=Hash::make($objEmpleado['numDocumento']);
+        $empleado->users_id=Auth::user()->id;
         $empleado->save();
 
         return json_encode(array('status'=>true));
