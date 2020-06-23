@@ -34,7 +34,7 @@ class ControlController extends Controller
             ->leftJoin('envio as en', function ($join) {
                 $join->on('en.idEmpleado', '=', 'e.emple_id');
             })
-            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'en.Total_Envio', 'c.Fecha_fin')
+            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'en.Total_Envio')
             ->where('e.users_id', '=', Auth::user()->id)
             ->groupBy('e.emple_id')
             ->get();
