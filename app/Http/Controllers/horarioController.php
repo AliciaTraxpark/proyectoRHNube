@@ -184,29 +184,31 @@ class horarioController extends Controller
         ->join('horario as hor', 'he.horario_horario_id', '=', 'hor.horario_id')
         ->distinct('e.emple_id')
         ->where('emple_id','=',$idsEm)->get();
-
-        return $empleado;
-    }
-    public function empleadoHorario(Request $request){
-        $idEm=$request->ids;
-        $eventos=DB::table('eventos')->select(['id','title' ,'color', 'textColor', 'start','end']);
+        //
+        $iddepar=$empleado[0]->ubigeo_peru_departments_id;
+         //
+         $eventos=DB::table('eventos')->select(['id','title' ,'color', 'textColor', 'start','end']);
 
         $eventos_usuario = DB::table('eventos_usuario')
         ->select(['id','title' ,'color', 'textColor', 'start','end'])
              ->where('Users_id','=',Auth::user()->id)
-             ->where('evento_departamento','=',null)
+             ->where('evento_departamento','=',$iddepar)
              ->where('evento_pais','=',173)
                 ->union($eventos);
 
         $horario_empleado=DB::table('horario_empleado as he')->select(['id','title' ,'color', 'textColor', 'start','end'])
         ->where('users_id','=',Auth::user()->id)
         ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
-        ->where('he.empleado_emple_id','=',$idEm)
+        ->where('he.empleado_emple_id','=',$idsEm)
         ->union($eventos_usuario)
         ->get();
 
-        return response()->json($horario_empleado);
+
+        return [$empleado,$horario_empleado];
+
+
     }
+
     public function vaciartemporal(){
         DB::table('temporal_eventos')->where('users_id','=',Auth::user()->id)->delete();
     }
@@ -244,28 +246,6 @@ class horarioController extends Controller
 
                     return [$exist,$temporal_eventos];
                 }
-
-    }
-    public function empleadoHorarioDep(request $request){
-        $iddepart=$request->iddepart;
-        $idEm=$request->ids;
-        $eventos=DB::table('eventos')->select(['id','title' ,'color', 'textColor', 'start','end']);
-
-        $eventos_usuario = DB::table('eventos_usuario')
-        ->select(['id','title' ,'color', 'textColor', 'start','end'])
-             ->where('Users_id','=',Auth::user()->id)
-             ->where('evento_departamento','=',$iddepart)
-             ->where('evento_pais','=',173)
-                ->union($eventos);
-
-        $horario_empleado=DB::table('horario_empleado as he')->select(['id','title' ,'color', 'textColor', 'start','end'])
-        ->where('users_id','=',Auth::user()->id)
-        ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
-        ->where('he.empleado_emple_id','=',$idEm)
-        ->union($eventos_usuario)
-        ->get();
-
-        return response()->json($horario_empleado);
 
     }
     public function empleadosIncidencia(Request $request){

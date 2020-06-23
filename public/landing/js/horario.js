@@ -3,6 +3,13 @@ $(document).ready(function () {
     $('#divFfin').hide();
 
     leertabla();
+    $('#Datoscalendar1').css("display", "none");
+    $('#aplicarHorario').prop('disabled', true);
+
+    $('.flatpickr-input[readonly]').on('focus', function () {
+        $(this).blur()
+    })
+    $('.flatpickr-input[readonly]').prop('readonly', false)
 
 });
 
@@ -15,7 +22,6 @@ function leertabla() {
 
 function verhorarioEmpleado(idempleado) {
     $('#verhorarioEmpleado').modal('toggle');
-
     $.ajax({
         type: "post",
         url: "/verDataEmpleado",
@@ -24,64 +30,27 @@ function verhorarioEmpleado(idempleado) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-            $('#idEmHorario').val(data[0].perso_nombre + ' ' + data[0].perso_apPaterno + ' ' + data[0].perso_apMaterno);
-            $('#paisHorario').val(data[0].paises_id);
-            depart = data[0].ubigeo_peru_departments_id;
+            calendarioHorario(data[1]);
+            $('#idEmHorario').val(data[0][0].perso_nombre + ' ' + data[0][0].perso_apPaterno + ' ' + data[0][0].perso_apMaterno);
+            $('#paisHorario').val(data[0][0].paises_id);
+            depart = data[0][0].ubigeo_peru_departments_id;
             if (depart == null) {
                 $('#departamentoHorario').val('Ninguno');
-                $.ajax({
-                    type: "post",
-                    url: "/empleadoHorario",
-                    data: 'ids=' + idempleado,
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function (data) {
-                        calendarioHorario(data);
-                    },
-                    error: function (data) {
-                        alert('Ocurrio un error');
-                    }
-                });
             } else {
-                $.ajax({
-                    type: "post",
-                    url: "/empleadoHorarioDep",
-                    data: {
-                        ids: idempleado,
-                        iddepart: depart
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function (data) {
-                        calendarioHorario(data);
-                    },
-                    error: function (data) {
-                        alert('Ocurrio un error');
-                    }
-                });
                 $('#departamentoHorario').val(depart);
             }
-            if (data[0].horario_sobretiempo == 1) {
+            if (data[0][0].horario_sobretiempo == 1) {
                 $('#exampleCheck2').prop('checked', true);
             }
-            $('#tipHorarioEmpleado').val(data[0].horario_tipo);
-            $('#descripcionCaHorario').val(data[0].horario_descripcion);
-            $('#toleranciaHorario').val(data[0].horario_tolerancia);
-
-
-
-
-
-
+            $('#tipHorarioEmpleado').val(data[0][0].horario_tipo);
+            $('#descripcionCaHorario').val(data[0][0].horario_descripcion);
+            $('#toleranciaHorario').val(data[0][0].horario_tolerancia);
         },
         error: function (data) {
             alert('Ocurrio un error');
         }
 
     });
-
 }
 //CALENDARIO HORARIO
 function calendarioHorario(eventosEmpleado) {
@@ -146,7 +115,6 @@ $('#btnasignar').on('click', function(e) {
     $('#nombreEmpleado').empty();
     $('#asignarHorario').modal('toggle');
     calendario();
-
     var allVals = [];
     $(".sub_chk:checked").each(function () {
         allVals.push($(this).attr('data-id'));
@@ -271,27 +239,13 @@ function calendario() {
                     fechasArray.push(inicio + '-' + fin);
                     fechastart.push(value);
 
-
                     objeto.push({
                         "title": inicio + '-' + fin,
                         "start": value
                     });
-
-                    /*             calendar.addEvent({
-                                    title: inicio+'-'+fin,
-                                    start: value,
-                                    //end:f2,
-                                    color:'#ffffff',
-                                    textColor:' #000000',
-                                    allDay: true
-                                }) */
-
-                    //
-
                 });
                 console.log(fechasArray);
-                //alert(fechasArray);
-                //alert(fechastart);
+
                 idpais = $('#pais').val();
                 iddepartamento = $('#departamento').val();
 
@@ -359,15 +313,7 @@ function calendario() {
 document.addEventListener('DOMContentLoaded', calendario);
 
 ///////////////////////////////
-$(document).ready(function () {
-    $('#Datoscalendar1').css("display", "none");
-    $('#aplicarHorario').prop('disabled', true);
 
-    $('.flatpickr-input[readonly]').on('focus', function () {
-        $(this).blur()
-    })
-    $('.flatpickr-input[readonly]').prop('readonly', false)
-});
 $('#nuevoCalendario').click(function () {
     var departamento = $('#departamento').val();
     var pais = $('#pais').val();
@@ -604,7 +550,10 @@ function registrarIncidencia(){
 
     var horaIn;
     if( $('#customSwitch1').prop('checked') ) {
-        horaIn=null;} else{horaIn=$('#horaInciden').val();}
+        horaIn=null;} else{
+            horaIn=$('#horaInciden').val();
+            fechaF=null;
+          }
         $.ajax({
             type:"post",
             url:"/registrarInci",

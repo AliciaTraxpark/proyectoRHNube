@@ -427,8 +427,8 @@
                                             <div class="form-group">
                                                <label for="">Asignar empleado(s):</label>
                                                {{-- <input type="text" class="form-control form-control-sm" id="nombreEmpleado"> --}}
-                                               <select class="form-control wide" data-plugin="customselect" multiple id="empIncidencia" >
-
+                                               <select class="form-control wide" data-plugin="customselect" multiple id="empIncidencia" required>
+                                                 {{-- <option value="">hj</option> --}}
                                             </select>
                                             </div>
                                          </div>
