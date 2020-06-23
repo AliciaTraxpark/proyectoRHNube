@@ -30,7 +30,6 @@ $('#v_fechaN').combodate({
     minYear: 1900,
     yearDescending: false,
 });
-console.log('fechaN');
 //AREA
 function agregarArea() {
     objArea = datosArea("POST");
