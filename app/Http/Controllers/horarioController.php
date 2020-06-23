@@ -200,11 +200,16 @@ class horarioController extends Controller
         ->where('users_id','=',Auth::user()->id)
         ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
         ->where('he.empleado_emple_id','=',$idsEm)
-        ->union($eventos_usuario)
+        ->union($eventos_usuario);
+
+
+        $incidencias=DB::table('incidencias as i')
+        ->select(['i.emple_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color','idi.inciden_dias_hora as textColor','idi.inciden_dias_fechaI as start','idi.inciden_dias_fechaF as end'])
+        ->join('incidencia_dias as idi', 'i.inciden_dias_id', '=', 'idi.inciden_dias_id')
+        ->where('i.emple_id','=',$idsEm)
+        ->union($horario_empleado)
         ->get();
-
-
-        return [$empleado,$horario_empleado];
+        return [$empleado,$incidencias];
 
 
     }

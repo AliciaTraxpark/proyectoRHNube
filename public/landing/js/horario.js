@@ -560,7 +560,7 @@ function registrarIncidencia(){
             data:{idempleadoI, descripcionI,descuentoI,fechaI,fechaF,horaIn},
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             success: function (data) {
-
+                $('#asignarIncidencia').hide();
             },
             error: function (data) {
                 alert('Ocurrio un error');
