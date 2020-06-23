@@ -117,7 +117,6 @@ Route::post('/subirfoto', 'CargaMasivaFotoController@subirfoto');
 
 //HORARIO
 Route::get('/horario', 'horarioController@index');
-Route::post('/horarioVerEmp', 'horarioController@verEmpleado');
 Route::post('/horarioVerTodEmp', 'horarioController@verTodEmpleado');
 Route::post('/guardarEventos', 'horarioController@guardarEventos');
 Route::get('/eventosHorario', 'horarioController@eventos');
