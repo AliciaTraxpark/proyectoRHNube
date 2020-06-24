@@ -49,7 +49,8 @@ $.notifyDefaults({
         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
         '<span data-notify="title">{1}</span> ' +
         '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
-        '</div><br><br>'
+        '</div>',
+    spacing: 35
 });
 //COLORES
 function getRandomColor() {
