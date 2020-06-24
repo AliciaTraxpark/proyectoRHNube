@@ -56,7 +56,7 @@
             <th>Cargo</th>
             <th>Área</th>
             <th>Centro de Costo</th>
-            <th></th>
+            <th>&nbsp;<input type="checkbox" name="" id="selectT"></th>
 
         </tr>
     </thead>
@@ -71,7 +71,7 @@
             <td>{{$tabla_empleados->cargo_descripcion}}</td>
             <td>{{$tabla_empleados->area_descripcion}}</td>
             <td>{{$tabla_empleados->centroC_descripcion}} </td>
-            <td><input type="checkbox" id="tdC" class="form-check-input sub_chk"
+            <td><input type="checkbox" id="tdC" style="margin-left:5.5px!important" class="form-check-input sub_chk"
                     data-id="{{$tabla_empleados->emple_id}}"> </td>
         </tr>
 
@@ -80,7 +80,24 @@
     </tbody>
 </table>
 
+<script>
+    $(document).ready(function() {
+  var $selecTodo = $('#selectT');
+  var $table = $('#tablaEmpleado');
+  var $tdCheckbox = $table.find('tbody input:checkbox');
+  var tdCheckboxChecked = 0;
 
+  $selecTodo.on('click', function () {
+    $tdCheckbox.prop('checked', this.checked);
+  });
+
+
+  $tdCheckbox.on('change', function(e){
+    tdCheckboxChecked = $table.find('tbody input:checkbox:checked').length;
+    $selecTodo.prop('checked', (tdCheckboxChecked === $tdCheckbox.length));
+  })
+});
+</script>
 <script>
     $("#tablaEmpleado tbody tr").click(function () {
         $('#smartwizard1').smartWizard("reset");
