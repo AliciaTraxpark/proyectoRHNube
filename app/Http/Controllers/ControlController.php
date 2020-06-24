@@ -132,39 +132,19 @@ class ControlController extends Controller
 
         function controlAJson($array)
         {
-            $duplicate_keys = array();
-            $tmp = array();
-            $tmpkey = array();
-            $capturas = array();
+            $resultado = array();
 
-            foreach ($array as $key => $val) {
-                if (!in_array($val->idEnvio, $tmp)) {
-                    $tmp[] = $val->idEnvio;
-                    $tmpkey[] = $key;
-                    $capturas[$val->idEnvio] = array();
-                    array_push($capturas[$val->idEnvio], $val->imagen);
-                } else {
-                    $duplicate_keys[] = $key;
+            foreach($array as $captura){
+                $horaCaptura = explode(":",$captura->hora_ini);
+                if(!isset($resultado[$horaCaptura[0]])){
+                    $resultado[$horaCaptura[0]] = array();
                 }
-            }
-
-            foreach($tmp as $key => $value){
-                foreach($duplicate_keys as $key2){
-                    if($array[$tmpkey[$key]]->idEnvio == $array[$key2]->idEnvio){
-                        array_push($capturas[$value], $array[$key2]->imagen);
-                    }
+                if(!isset($resultado[$horaCaptura[0]][$horaCaptura[1][0]])){
+                    $resultado[$horaCaptura[0]][$horaCaptura[1][0]] = array();
                 }
-                $array[$tmpkey[$key]]->capturas = $capturas[$value];
+                array_push($resultado[$horaCaptura[0]][$horaCaptura[1][0]],$captura);
             }
-            foreach ($duplicate_keys as $key) {
-                unset($array[$key]);
-            }
-            $response = array();
-
-            foreach ($array as $key => $val) {
-                array_push($response, $val);
-            }
-            return $response;
+            return $resultado;
         }
 
         $idempleado = $request->get('value');
@@ -181,7 +161,7 @@ class ControlController extends Controller
                 ->where(DB::raw('DATE(cp.fecha_hora)'), '=', $fecha)
                 ->Where('P.Proye_id', '=', $proyecto)
                 ->where('e.users_id', '=', Auth::user()->id)
-                ->orderBy('cp.fecha_hora', 'desc')
+                ->orderBy('cp.fecha_hora', 'asc')
                 ->get();
             $control = controlAJson($control);
             return response()->json($control, 200);
@@ -195,7 +175,7 @@ class ControlController extends Controller
             ->where('e.emple_id', '=', $idempleado)
             ->where(DB::raw('DATE(cp.fecha_hora)'), '=', $fecha)
             ->where('e.users_id', '=', Auth::user()->id)
-            ->orderBy('cp.fecha_hora', 'desc')
+            ->orderBy('cp.fecha_hora', 'asc')
             ->get();
         $control = controlAJson($control);
         return response()->json($control, 200);

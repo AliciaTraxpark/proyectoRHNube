@@ -24,7 +24,8 @@ Auth::routes(['verify' => true]);
 /* Route::get('/', 'HomeController@principal')->name('principal'); */
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 //MENU
-Route::name('dashboard')->get('dashboard', 'HomeController@index')->middleware('verified');
+//Route::name('dashboard')->get('dashboard', 'HomeController@index')->middleware('verified');
+Route::name('dashboard')->get('dashboard', 'HomeController@index')->middleware('auth');
 //CALENDARIO
 Route::name('calendario')->get('calendario', 'calendarioController@index');
 Route::post('/calendario/store', 'calendarioController@store');
