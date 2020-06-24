@@ -472,6 +472,7 @@ function datosPersonaA(method) {
         correo_v: $('#v_email').val(),
         fechaI_v: $('#v_fechaIC').text(),
         fechaF_v: $('#v_fechaFC').text(),
+        codigoEmpleado_v:$('#v_codigoEmpleado').val(),
         '_method': method
     }
     return (nuevoEmpleadoA);

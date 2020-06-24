@@ -333,7 +333,8 @@ class EmpleadoController extends Controller
                 'e.emple_telefono',
                 'e.emple_fechaIC',
                 'e.emple_fechaFC',
-                'e.emple_Correo'
+                'e.emple_Correo',
+                'e.emple_codigo'
             )
             ->where('e.emple_id', '=', $idempleado)
             ->where('e.users_id', '=', Auth::user()->id)
@@ -401,6 +402,7 @@ class EmpleadoController extends Controller
         $empleado->emple_Correo = $objEmpleado['correo_v'];
         $empleado->emple_fechaIC = $objEmpleado['fechaI_v'];
         $empleado->emple_fechaFC = $objEmpleado['fechaF_v'];
+        $empleado->emple_codigo = $objEmpleado['codigoEmpleado_v'];
         if ($request->hasfile('file')) {
             $file = $request->file('file');
             $path = public_path() . '/fotosEmpleado';
