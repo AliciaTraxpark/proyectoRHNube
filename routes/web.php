@@ -18,13 +18,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'Auth\LoginController@principal', function () {
     return view('welcome');
 })->name('principal');
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 
 /* Route::get('/', 'HomeController@principal')->name('principal'); */
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 //MENU
-Route::name('dashboard')->get('dashboard', 'HomeController@index')->middleware('auth');
+Route::name('dashboard')->get('dashboard', 'HomeController@index')->middleware('verified');
 //CALENDARIO
 Route::name('calendario')->get('calendario', 'calendarioController@index');
 Route::post('/calendario/store', 'calendarioController@store');
