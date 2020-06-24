@@ -47,8 +47,8 @@
              <th style="border-top: 1px solid #fdfdfd;">&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR" id="i3"></th>
              <th style="border-top: 1px solid #fdfdfd;" >&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR" id="i4"></th>
              <th style="border-top: 1px solid #fdfdfd;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR" id="i5"></th>
-             <th style="border-top: 1px solid #fdfdfd;">ccccccccccccc</th>
-             <th style="border-top: 1px solid #fdfdfd;text-align: left"> &nbsp;<input type="checkbox" name="" id=""></th>
+             <th style="border-top: 1px solid #fdfdfd;"></th>
+             <th style="border-top: 1px solid #fdfdfd;"> </th>
          </tr>
         <tr>
             <th>#</th>
@@ -58,7 +58,7 @@
             <th>Área</th>
             <th>Centro de Costo</th>
             <th>Horario</th>
-           <th></th>
+           <th>&nbsp;<input type="checkbox" name="" id="selectT"></th>
 
         </tr>
     </thead>
@@ -77,8 +77,8 @@
                  @else
                 <button class="btnhora btn btn-soft-dark btn-sm" id="verDataHorario" onclick="verhorarioEmpleado({{$tabla_empleados->emple_id}})">Ver horario</button>
                  @endif </td>
-            <td style="text-align: center!important"> @if ($tabla_empleados->horario_horario_id==null)
-                <input type="checkbox" id="tdC" class="form-check-input sub_chk" data-id="{{$tabla_empleados->emple_id}}" >
+            <td > @if ($tabla_empleados->horario_horario_id==null)
+                <input type="checkbox" style="margin-left:5.5px!important" id="tdC" class="form-check-input sub_chk" data-id="{{$tabla_empleados->emple_id}}" >
                 @endif
              </td>
         </tr>
@@ -88,7 +88,24 @@
     </tbody>
 </table>
 
+<script>
+    $(document).ready(function() {
+  var $selecTodo = $('#selectT');
+  var $table = $('#tablaEmpleado');
+  var $tdCheckbox = $table.find('tbody input:checkbox');
+  var tdCheckboxChecked = 0;
 
+  $selecTodo.on('click', function () {
+    $tdCheckbox.prop('checked', this.checked);
+  });
+
+
+  $tdCheckbox.on('change', function(e){
+    tdCheckboxChecked = $table.find('tbody input:checkbox:checked').length;
+    $selecTodo.prop('checked', (tdCheckboxChecked === $tdCheckbox.length));
+  })
+});
+</script>
 <script>
  function filterGlobal () {
     $('#tablaEmpleado').DataTable().search(
@@ -137,6 +154,7 @@
             $('#col'+i+'_filter').val(),
 
         ).draw();
+        $('#i'+i).prop('checked',true);
     }
 
     $(document).ready(function() {
