@@ -208,6 +208,7 @@
         }).column(i).search(
             $('#col' + i + '_filter').val(),
         ).draw();
+        $('#i'+i).prop('checked',true);
     }
 
     $(document).ready(function () {
