@@ -269,6 +269,7 @@ function calendario() {
             Descanso: {
                 text: "Asignar días de Descanso",
                 click: function () {
+                    alert('seleccione dias');
                 }
             }
         },
@@ -530,7 +531,7 @@ function registrarIncidencia(){
             data:{idempleadoI, descripcionI,descuentoI,fechaI,fechaF,horaIn},
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             success: function (data) {
-                $('#asignarIncidencia').hide();
+                $('#asignarIncidencia').modal('hide');
             },
             error: function (data) {
                 alert('Ocurrio un error');

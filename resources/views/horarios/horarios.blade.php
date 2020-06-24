@@ -29,6 +29,10 @@
 </head>
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100" style="background-color: #fdfdfd;">
 <style>
+    .fc-event, .fc-event-dot {
+    background-color: #d1c3c3;
+
+}
 .fc-toolbar.fc-header-toolbar{
     zoom:80%;
 }
@@ -366,6 +370,60 @@
                                                <input type="number"  class="form-control form-control-sm" id="toleranciaHorario" disabled>
                                             </div>
                                          </div>
+                                         <div class="col-md-12">
+                                             
+                                            {{-- <table  class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Incidencia</th>
+                                                        <th>Fecha y/o hora</th>
+                                                        <th>Descuento</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>Incidencia1</td>
+                                                        <td>12/12/2000</td>
+                                                        <td><input type="checkbox"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>Incidencia1</td>
+                                                        <td>12/12/2000</td>
+                                                        <td><input type="checkbox"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>Incidencia1</td>
+                                                        <td>12/12/2000</td>
+                                                        <td><input type="checkbox"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>Incidencia1</td>
+                                                        <td>12/12/2000</td>
+                                                        <td><input type="checkbox"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>Incidencia1</td>
+                                                        <td>12/12/2000</td>
+                                                        <td><input type="checkbox"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>Incidencia1</td>
+                                                        <td>12/12/2000</td>
+                                                        <td><input type="checkbox"></td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table> --}}
+                                        </div>
+
+
 
 
                                        </div>
@@ -473,7 +531,6 @@
                                                <input type="text" id="horaInciden" class="form-control form-control-sm" >
                                             </div>
                                          </div>
-
 
 
                                        </div>
