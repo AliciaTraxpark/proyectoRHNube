@@ -59,6 +59,16 @@ function onMostrarPantallas() {
                             else if (promedio > 35) nivel = "#f3c623";
                             else nivel = "red";
                             if (parseInt(data[i].hora_ini.split(":")[1].charAt(0)) < 5) {
+                                var capturas = "";
+                                for (let index = 1; index < data[i].capturas.length; index++) {
+                                    capturas += `<div class = "carousel-item">
+                                    <img src="data:image/jpeg;base64,${data[i].capturas[index]}" height="120" width="120" class="img-responsive">
+                                    <div class="overlay">
+                                    <a class="info" onclick="zoom('${data[i].capturas[index]}')" style="color:#fdfdfd">
+                                    <i class="fa fa-eye"></i> Colección</a>
+                                    </div>
+                                </div>`;
+                                }
                                 card = `<div class="col-2" style="margin-left: 0px!important;">
                                         <div class="mb-0 text-center" style="padding-left: 0px;">
                                             <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
@@ -73,21 +83,22 @@ function onMostrarPantallas() {
                                                     </div>  <br>
                                                     <div class="col-md-12 col-sm-6" style="padding-left: 0px;">
                                                     <div class="hovereffect">
-                                                        <div  id="myCarousel" class = "carousel carousel-fade" data-ride = "carousel">
+                                                        <div  id="myCarousel${i}" class = "carousel carousel-fade" data-ride = "carousel">
                                                             <div class = "carousel-inner">
                                                                 <div class = "carousel-item active">
-                                                                    <img src="data:image/jpeg;base64,${data[i].imagen}" height="120" width="120" class="img-responsive">
+                                                                    <img src="data:image/jpeg;base64,${data[i].capturas[0]}" height="120" width="120" class="img-responsive">
                                                                     <div class="overlay">
-                                                                    <a class="info" onclick="zoom('${data[i].imagen}')" style="color:#fdfdfd">
+                                                                    <a class="info" onclick="zoom('${data[i].capturas[0]}')" style="color:#fdfdfd">
                                                                     <i class="fa fa-eye"></i> Colección</a>
                                                                     </div>
                                                                 </div>
+                                                                ${capturas}
                                                             </div>
-                                                            <a class = "carousel-control-prev" href = "#myCarousel" role = "button" data-slide = "prev">
+                                                            <a class = "carousel-control-prev" href = "#myCarousel${i}" role = "button" data-slide = "prev">
                                                                 <span class = "carousel-control-prev-icon" aria-hidden = "true"></span>
                                                                 <span class = "sr-only">Previous</span>
                                                             </a>
-                                                            <a class = "carousel-control-next" href = "#myCarousel" role = "button" data-slide = "next">
+                                                            <a class = "carousel-control-next" href = "#myCarousel${i}" role = "button" data-slide = "next">
                                                                 <span class = "carousel-control-next-icon" aria-hidden = "true"></span>
                                                                 <span class = "sr-only">Next</span>
                                                             </a>
@@ -109,6 +120,16 @@ function onMostrarPantallas() {
                                         </div>
                                     </div>`
                             } else {
+                                var capturas = "";
+                                for (let index = 1; index < data[i].capturas.length; index++) {
+                                    capturas += `<div class = "carousel-item">
+                                    <img src="data:image/jpeg;base64,${data[i].capturas[index]}" height="120" width="120" class="img-responsive">
+                                    <div class="overlay">
+                                    <a class="info" onclick="zoom('${data[i].capturas[index]}')" style="color:#fdfdfd">
+                                    <i class="fa fa-eye"></i> Colección</a>
+                                    </div>
+                                </div>`;
+                                }
                                 card = `<div class="col-2" style="margin-left: 0px!important;">
                                             <div class="mb-0 text-center" style="padding-left: 0px;">
                                                 <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
@@ -124,15 +145,16 @@ function onMostrarPantallas() {
                                                         </div>  <br>
                                                         <div class="col-md-12 col-sm-6" style="padding-left: 0px;">
                                                         <div class="hovereffect">
-                                                        <div  id="myCarousel" class = "carousel carousel-fade" data-ride = "carousel">
+                                                        <div  id="myCarousel${i}" class = "carousel carousel-fade" data-ride = "carousel">
                                                             <div class = "carousel-inner">
                                                                 <div class = "carousel-item active">
-                                                                    <img src="data:image/jpeg;base64,${data[i].imagen}" height="120" width="120" class="img-responsive">
+                                                                    <img src="data:image/jpeg;base64,${data[i].capturas[0]}" height="120" width="120" class="img-responsive">
                                                                     <div class="overlay">
-                                                                    <a class="info" onclick="zoom('${data[i].imagen}')" style="color:#fdfdfd">
+                                                                    <a class="info" onclick="zoom('${data[i].capturas[0]}')" style="color:#fdfdfd">
                                                                     <i class="fa fa-eye"></i> Colección</a>
                                                                     </div>
                                                                 </div>
+                                                                ${capturas}
                                                             </div>
                                                             <a class = "carousel-control-prev" href = "#myCarousel" role = "button" data-slide = "prev">
                                                                 <span class = "carousel-control-prev-icon" aria-hidden = "true"></span>
