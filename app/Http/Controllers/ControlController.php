@@ -130,19 +130,32 @@ class ControlController extends Controller
     public function show(Request $request)
     {
 
-        function my_array_unique($array)
+        function controlAJson($array)
         {
             $duplicate_keys = array();
             $tmp = array();
+            $tmpkey = array();
+            $capturas = array();
 
             foreach ($array as $key => $val) {
                 if (!in_array($val->idEnvio, $tmp)) {
                     $tmp[] = $val->idEnvio;
+                    $tmpkey[] = $key;
+                    $capturas[$val->idEnvio] = array();
+                    array_push($capturas[$val->idEnvio], $val->imagen);
                 } else {
                     $duplicate_keys[] = $key;
                 }
             }
 
+            foreach($tmp as $key => $value){
+                foreach($duplicate_keys as $key2){
+                    if($array[$tmpkey[$key]]->idEnvio == $array[$key2]->idEnvio){
+                        array_push($capturas[$value], $array[$key2]->imagen);
+                    }
+                }
+                $array[$tmpkey[$key]]->capturas = $capturas[$value];
+            }
             foreach ($duplicate_keys as $key) {
                 unset($array[$key]);
             }
@@ -170,7 +183,7 @@ class ControlController extends Controller
                 ->where('e.users_id', '=', Auth::user()->id)
                 ->orderBy('cp.fecha_hora', 'desc')
                 ->get();
-            $control = my_array_unique($control);
+            $control = controlAJson($control);
             return response()->json($control, 200);
         }
         $control = DB::table('empleado as e')
@@ -184,7 +197,7 @@ class ControlController extends Controller
             ->where('e.users_id', '=', Auth::user()->id)
             ->orderBy('cp.fecha_hora', 'desc')
             ->get();
-        $control = my_array_unique($control);
+        $control = controlAJson($control);
         return response()->json($control, 200);
     }
 }

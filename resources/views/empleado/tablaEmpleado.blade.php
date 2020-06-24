@@ -138,6 +138,7 @@
                 $('#v_fechaIC').text(data[0].emple_fechaIC);
                 $('#v_fechaFC').text(data[0].emple_fechaFC);
                 $('#v_email').val(data[0].emple_Correo);
+                $('#v_codigoEmpleado').val(data[0].emple_codigo);
                 if (data[0].foto != "") {
                     urlFoto = data[0].foto;
                     hayFoto = true;
@@ -207,6 +208,7 @@
         }).column(i).search(
             $('#col' + i + '_filter').val(),
         ).draw();
+        $('#i'+i).prop('checked',true);
     }
 
     $(document).ready(function () {

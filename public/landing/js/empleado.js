@@ -30,7 +30,6 @@ $('#v_fechaN').combodate({
     minYear: 1900,
     yearDescending: false,
 });
-console.log('fechaN');
 //AREA
 function agregarArea() {
     objArea = datosArea("POST");
@@ -392,6 +391,7 @@ function datosPersona(method) {
         fechaI: $('#c_fechaI').text(),
         fechaF: $('#c_fechaF').text(),
         correo: $('#email').val(),
+        codigoEmpleado:$('#codigoEmpleado').val(),
         '_method': method
     }
     return (nuevoEmpleado);
@@ -472,6 +472,7 @@ function datosPersonaA(method) {
         correo_v: $('#v_email').val(),
         fechaI_v: $('#v_fechaIC').text(),
         fechaF_v: $('#v_fechaFC').text(),
+        codigoEmpleado_v:$('#v_codigoEmpleado').val(),
         '_method': method
     }
     return (nuevoEmpleadoA);
