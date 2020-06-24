@@ -269,6 +269,7 @@ function calendario() {
             Descanso: {
                 text: "Asignar días de Descanso",
                 click: function () {
+                    alert('seleccione dias');
                 }
             }
         },
@@ -472,6 +473,7 @@ $('#guardarTodoHorario').click(function () {
             leertabla();
             $("#formulario")[0].reset();
             $('#guardarTodoHorario').prop('disabled', false);
+
             $('#asignarHorario').modal('toggle');
             calendario();
 
@@ -496,7 +498,8 @@ $('#guardarTodoHorario').click(function () {
 });
 $('#btnasignarIncidencia').on('click', function(e) {
     $("#frmIncidencia")[0].reset();
-
+    $('#divFfin').hide();
+    $('#divhora').show();
     $('#empIncidencia').empty();
     $('#asignarIncidencia').modal('toggle');
     $.get("empleadoIncHorario", {}, function (data, status) {
@@ -516,7 +519,9 @@ function registrarIncidencia(){
     if( $('#descuentoCheck').prop('checked') ) {
         descuentoI=1;} else{descuentoI=0}
     fechaI=$('#fechaI').val();
-     fechaF=$('#fechaF').val();
+     fechaFin=$('#fechaF').val();
+     fechaMoment = moment(fechaFin).add(1, 'day');
+     fechaF= fechaMoment.format('YYYY-MM-DD');
 
     var horaIn;
     if( $('#customSwitch1').prop('checked') ) {
@@ -530,7 +535,7 @@ function registrarIncidencia(){
             data:{idempleadoI, descripcionI,descuentoI,fechaI,fechaF,horaIn},
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             success: function (data) {
-                $('#asignarIncidencia').hide();
+                $('#asignarIncidencia').modal('hide');
             },
             error: function (data) {
                 alert('Ocurrio un error');
