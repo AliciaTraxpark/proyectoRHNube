@@ -78,7 +78,8 @@ function onMostrarPantallas() {
                                                                 <div class = "carousel-item active">
                                                                     <img src="data:image/jpeg;base64,${data[i].imagen}" height="120" width="120" class="img-responsive">
                                                                     <div class="overlay">
-                                                                    <a class="info" onclick="zoom('${data[i].imagen}')" style="color:#fdfdfd">Zoom</a>
+                                                                    <a class="info" onclick="zoom('${data[i].imagen}')" style="color:#fdfdfd">
+                                                                    <i class="fa fa-eye"></i> Colección</a>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -128,7 +129,8 @@ function onMostrarPantallas() {
                                                                 <div class = "carousel-item active">
                                                                     <img src="data:image/jpeg;base64,${data[i].imagen}" height="120" width="120" class="img-responsive">
                                                                     <div class="overlay">
-                                                                    <a class="info" onclick="zoom('${data[i].imagen}')" style="color:#fdfdfd">Zoom</a>
+                                                                    <a class="info" onclick="zoom('${data[i].imagen}')" style="color:#fdfdfd">
+                                                                    <i class="fa fa-eye"></i> Colección</a>
                                                                     </div>
                                                                 </div>
                                                             </div>
