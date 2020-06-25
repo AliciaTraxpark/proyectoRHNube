@@ -40,7 +40,8 @@
                 <div class="row">
                 <input type="hidden" name="iduser" id="iduser" value="{{$userid}}">
                     <div class="col-md-4">
-                     <input  class="form-control " placeholder="RUC o ID" name="ruc" id="ruc">
+                     <input type="number" maxlength = "11" min = "1" max = ""  class="form-control " placeholder="RUC o ID" name="ruc" id="ruc" onkeypress="return isNumeric(event)"
+                     oninput="maxLengthCheck(this)">
                     </div>
                     <div class="col-md-5">
                      <input  class="form-control" placeholder="Razón social " name="razonSocial" id="razonSocial" required>
@@ -150,6 +151,23 @@
 
     </div>
   </div>
+  <script>
+    function maxLengthCheck(object) {
+      if (object.value.length > object.maxLength)
+        object.value = object.value.slice(0, object.maxLength)
+    }
+
+    function isNumeric (evt) {
+      var theEvent = evt || window.event;
+      var key = theEvent.keyCode || theEvent.which;
+      key = String.fromCharCode (key);
+      var regex = /[0-9]|\./;
+      if ( !regex.test(key) ) {
+        theEvent.returnValue = false;
+        if(theEvent.preventDefault) theEvent.preventDefault();
+      }
+    }
+  </script>
   <script src="{{asset('landing/vendors/jquery/jquery.min.js')}}"></script>
   <script src="{{asset('landing/vendors/bootstrap/bootstrap.min.js')}}"></script>
   <script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>
