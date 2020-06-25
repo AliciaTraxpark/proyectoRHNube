@@ -49,9 +49,6 @@ class registroPController extends Controller
     $User->confirmation_code = $data['confirmation_code'];
     $User->save();
     $user1= $User->id;
-    Mail::send('mails.confirmation_code',$data, function($message) use ($request){
-        $message->to($request->get('email'),$request->get('nombres'))->subject('Por favor confirma tu correo');
-    });
     return $user1;
 
 
