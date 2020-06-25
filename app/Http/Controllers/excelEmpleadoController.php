@@ -20,8 +20,10 @@ class excelEmpleadoController extends Controller
         $import =new  EmpleadoImport();//del userimpor
         Excel::import($import,request()->file('file'));
         $filas=$import->getRowCount();
+        $empleados=$import->dniE();
+        //dd($dni);
         //$parameters =  ['numRows'=>$import->getRowCount(),'alert'=>$import->errors()];
         //return back()->with(['numRows'=>$import->getRowCount(),'alert'=>$import->errors()]);
-        return back()->with('filas',$filas);
+        return back()->with(['filas'=>$filas,'empleados'=>$empleados]);
     }
 }
