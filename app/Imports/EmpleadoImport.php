@@ -27,6 +27,7 @@ use Maatwebsite\Excel\Concerns\Importable;
 class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, WithBatchInserts, SkipsOnError
 {    use Importable, SkipsErrors;
     private $numRows = 0;
+    public $dnias=[];
     /**
     * @param array $row
     *
@@ -42,10 +43,16 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                 $value
             );
         }
+
         foreach ($rows as $row)
         {
             if($row['numero_documento']!= ""){
                $filaA= $this->numRows;
+               $din=[$row['tipo_documento'],$row['numero_documento'],$row['nombres'],$row['apellido_paterno'],$row['apellido_materno'],$row['direccion'],$row['departamento'],
+                      $row['provincia'],$row['distrito'],$row['cargo'],$row['area'],$row['centro_costo'],$row['fecha_nacimiento'],$row['departamento_nacimiento'],$row['provincia_nacimiento'],
+                      $row['distrito_nacimiento'], $row['sexo'],$row['tipo_contrato'],$row['local'],$row['nivel']];
+               array_push($this->dnias,$din);
+               //$this->dnias=$row['numero_documento'];
                $filas= $filaA+2;
                 //tipo_doc
                 $tipoDoc = tipo_documento::where("tipoDoc_descripcion", "like", "%". escape_like($row['tipo_documento'])."%")->first();
@@ -171,7 +178,9 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                 $idDN = ubigeo_peru_districts::where("name", "like", "%".escape_like($cadDistN)."%")->where("province_id", "=",$proviN->id)->first();
                 if($idDN!=null){
                     $row['iddistrito_nacimiento'] = $idDN->id;
+
                 }
+
                 else{return redirect()->back()->with('alert', 'No se encontro el distrito:'.$row['distrito_nacimiento'].'.  El proceso se interrumpio en la fila:'.$filas); $row['iddistrito_nacimiento']=null;}
                 } else{$row['iddistrito_nacimiento'] = null; }
 
@@ -216,6 +225,7 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                  } else{ $row['idnivel']=null; }
 
                 ++$this->numRows;
+
                 $personaId =persona::create([
 
                     'perso_nombre'     => $row['nombres'] ,
@@ -292,6 +302,11 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
     {
         return $this->numRows;
     }
+    public function dniE()
+    {
+        return $this->dnias;
+    }
+
     public function onError(\Throwable $e)
     {
         // Handle the exception how you'd like.

@@ -173,52 +173,39 @@
                                         <th>Provincia Nac.</th>
                                         <th>Distrito Nac.</th>
                                         <th>Sexo</th>
+                                        <th>Contrato</th>
+                                        <th>Local</th>
+                                        <th>Nivel</th>
                                     </tr>
                                 </thead>
                                 <tbody style="background:#f7f7f7;color: #2c2c2c;">
-                                    @php
-                                    $empleado = DB::table('empleado as e')
-                                    ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                                    ->leftJoin('tipo_documento as tipoD', 'e.emple_tipoDoc', '=', 'tipoD.tipoDoc_id')
-                                    ->leftJoin('ubigeo_peru_departments as depar', 'e.emple_departamento', '=', 'depar.id')
-                                    ->leftJoin('ubigeo_peru_provinces as provi', 'e.emple_provincia', '=', 'provi.id')
-                                    ->leftJoin('ubigeo_peru_districts as dist', 'e.emple_distrito', '=', 'dist.id')
-                                    ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                                    ->leftJoin('ubigeo_peru_departments as para', 'e.emple_departamentoN', '=', 'para.id')
-                                    ->leftJoin('ubigeo_peru_provinces as proviN', 'e.emple_provinciaN', '=', 'proviN.id')
-                                    ->leftJoin('ubigeo_peru_districts as distN', 'e.emple_distritoN', '=', 'distN.id')
-                                    ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                                    ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
-                                    ->select('e.emple_id','p.perso_id','p.perso_nombre','tipoD.tipoDoc_descripcion','e.emple_nDoc','p.perso_apPaterno',
-                                    'p.perso_apMaterno', 'p.perso_fechaNacimiento' ,'p.perso_direccion','p.perso_sexo',
-                                    'depar.id as depar','depar.name as deparNom','provi.id as proviId','provi.name as provi','dist.id as distId','dist.name as distNo',
-                                    'c.cargo_descripcion', 'a.area_descripcion','cc.centroC_descripcion','para.id as iddepaN',
-                                    'para.name as depaN','proviN.id as idproviN','proviN.name as proviN','distN.id as iddistN',
-                                    'distN.name as distN','e.emple_id','c.cargo_id','a.area_id', 'cc.centroC_id','e.emple_tipoContrato',
-                                    'e.emple_local','e.emple_nivel','e.emple_departamento','e.emple_provincia','e.emple_distrito','e.emple_foto as foto',
-                                    'e.emple_celular','e.emple_telefono','e.emple_fechaIC','e.emple_fechaFC','e.emple_Correo')
-                                    ->get();
-                                    @endphp
-                                    @if(isset($empleado))
-                                      @foreach ($empleado as $empleados)
+
+                                    @if (session('empleados'))
+                                    @foreach (session('empleados') as $item)
                                       <tr>
-                                        <td>{{$empleados->tipoDoc_descripcion}}</td>
-                                        <td>{{$empleados->emple_nDoc}}</td>
-                                        <td>{{$empleados->perso_nombre}}</td>
-                                        <td>{{$empleados->perso_apPaterno}}</td>
-                                        <td>{{$empleados->perso_apMaterno}}</td>
-                                        <td>{{$empleados->perso_direccion}}</td>
-                                        <td>{{$empleados->deparNom}}</td>
-                                        <td>{{$empleados->provi}}</td>
-                                        <td>{{$empleados->distNo}}</td>
-                                        <td>{{$empleados->cargo_descripcion}}</td>
-                                        <td>{{$empleados->area_descripcion}}</td>
-                                        <td>{{$empleados->centroC_descripcion}}</td>
-                                        <td>{{$empleados->perso_fechaNacimiento}}</td>
-                                        <td>{{$empleados->depaN}}</td>
-                                        <td>{{$empleados->proviN}}</td>
-                                        <td>{{$empleados->distN}}</td>
-                                        <td>{{$empleados->perso_sexo}}</td>
+                                        <td>{{$item[0]}}</td>
+                                        <td>{{$item[1]}}</td>
+                                        <td>{{$item[2]}}</td>
+                                        <td>{{$item[3]}}</td>
+                                        <td>{{$item[4]}}</td>
+                                        <td>{{$item[5]}}</td>
+                                        <td>{{$item[6]}}</td>
+                                        <td>{{$item[7]}}</td>
+                                        <td>{{$item[8]}}</td>
+                                        <td>{{$item[9]}}</td>
+                                        <td>{{$item[10]}}</td>
+                                        <td>{{$item[11]}}</td>
+                                        <td>{{$item[12]}}</td>
+                                        <td>{{$item[13]}}</td>
+                                        <td>{{$item[14]}}</td>
+                                        <td>{{$item[15]}}</td>
+                                        <td>{{$item[16]}}</td>
+                                        <td>{{$item[17]}}</td>
+                                        <td>{{$item[18]}}</td>
+                                        <td>{{$item[19]}}</td>
+
+
+
                                       </tr>
                                       @endforeach
                                      @endif
