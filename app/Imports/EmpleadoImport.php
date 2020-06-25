@@ -15,6 +15,7 @@ use App\tipo_contrato;
 use App\local;
 use App\nivel;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
@@ -267,6 +268,7 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                     'emple_nivel'  =>$row['idnivel'],
 
                     'emple_foto' =>'',
+                    'users_id'=> Auth::user()->id,
 
 
 
