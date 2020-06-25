@@ -24,8 +24,8 @@ Auth::routes(['verify' => true]);
 /* Route::get('/', 'HomeController@principal')->name('principal'); */
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 //MENU
-//Route::name('dashboard')->get('dashboard', 'HomeController@index')->middleware('verified');
-Route::name('dashboard')->get('dashboard', 'HomeController@index')->middleware('auth');
+Route::name('dashboard')->get('dashboard', 'HomeController@index')->middleware('verified');
+//Route::name('dashboard')->get('dashboard', 'HomeController@index')->middleware('auth');
 //CALENDARIO
 Route::name('calendario')->get('calendario', 'calendarioController@index');
 Route::post('/calendario/store', 'calendarioController@store');
@@ -43,7 +43,8 @@ Route::get('registro/persona', 'registroPController@index')->name('registroPerso
 Route::post('/persona/store', 'registroPController@registrarDatos')->name('persona');
 Route::POST('persona/create', 'RegistroPController@create')->name('registerPersona');
 Route::get('/persona/comprobar', 'registroPController@comprobar');
-
+//
+Route::get('/register/verify/{code}', 'GuestController@verify');
 
 //ORGANIZACION
 

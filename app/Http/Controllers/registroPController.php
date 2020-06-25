@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\user;
 use App\persona;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+
 class registroPController extends Controller
 {
     public function index(){
@@ -35,15 +38,17 @@ class registroPController extends Controller
     $persona->save();
     $user_persona= $persona->perso_id ;
 
+    $data['confirmation_code'] = STR::random(25);
+
     $User=new User();
 
     $User->email= $request->get('email');
     $User->rol_id= 1;
     $User->perso_id= $user_persona;
     $User->password= Hash::make($request->get('password'));
+    $User->confirmation_code = $data['confirmation_code'];
     $User->save();
     $user1= $User->id;
-
     return $user1;
 
 
