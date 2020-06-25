@@ -48,19 +48,16 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
         {
             if($row['numero_documento']!= ""){
                $filaA= $this->numRows;
-               $din=[$row['tipo_documento'],$row['numero_documento'],$row['nombres'],$row['apellido_paterno'],$row['apellido_materno'],$row['direccion'],$row['departamento'],
-                      $row['provincia'],$row['distrito'],$row['cargo'],$row['area'],$row['centro_costo'],$row['fecha_nacimiento'],$row['departamento_nacimiento'],$row['provincia_nacimiento'],
-                      $row['distrito_nacimiento'], $row['sexo'],$row['tipo_contrato'],$row['local'],$row['nivel']];
-               array_push($this->dnias,$din);
+
                //$this->dnias=$row['numero_documento'];
                $filas= $filaA+2;
                 //tipo_doc
                 $tipoDoc = tipo_documento::where("tipoDoc_descripcion", "like", "%". escape_like($row['tipo_documento'])."%")->first();
                 if($row['tipo_documento']!=null){
                     if($tipoDoc!=null){
-                          $row['tipo_doc'] =  $tipoDoc->tipoDoc_id;
+                          $row['tipo_doc'] =  $tipoDoc->tipoDoc_id;  $row['tipo_docArray'] =  $tipoDoc->tipoDoc_descripcion;
                     }  else{return redirect()->back()->with('alert', 'No se encontro el tipo de documento:'.$row['tipo_documento'].'.  El proceso se interrumpio en la fila:'.$filas); $row['tipo_doc']=null;}
-                   } else{ $row['tipo_doc']=null; }
+                   } else{ $row['tipo_docArray']=null; }
 
                 //departamento
                 $cadDep=$row['departamento'];
@@ -71,10 +68,10 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                 if($row['departamento']!=null){
                     $dep = ubigeo_peru_departments::where('name', 'like', "%".escape_like($cadDep)."%")->first();
                     if($dep!=null){
-                    $row['iddep'] = $dep->id; }
+                    $row['iddep'] = $dep->id;  $row['name_depArray'] = $dep->name; }
                     else{return redirect()->back()->with('alert', 'No se encontro el departamento:'.$row['departamento'].'.  El proceso se interrumpio en la fila:'.$filas); $row['iddep']=null;}
                 }
-                    else{ $row['iddep']=null; }
+                    else{ $row['name_depArray']=null; }
 
 
                 //provincia
@@ -85,9 +82,9 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                 if($row['provincia']!=null){
                     $provi = ubigeo_peru_provinces::where("name", "like", "%".escape_like($cadProv)."%")->first();
                     if( $provi!=null){
-                        $row['idprov'] = $provi->id; }
+                        $row['idprov'] = $provi->id;  $row['provArray'] = $provi->name; }
                         else{return redirect()->back()->with('alert', 'No se encontro la provincia:'.$row['provincia'].'.  El proceso se interrumpio en la fila:'.$filas); $row['idprov']=null;}
-                } else{ $row['idprov']=null; }
+                } else{ $row['provArray']=null; }
 
 
                //distrito
@@ -98,49 +95,38 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                 if($row['distrito']!=null){
                     $idD = ubigeo_peru_districts::where("name", "like", "%".escape_like($cadDist)."%")->where("province_id", "=",$provi->id)->first();
                      if($idD!=null){
-                        $row['id'] = $idD->id;
+                        $row['id'] = $idD->id;   $row['distArray'] = $idD->name;
                      }
                      else{return redirect()->back()->with('alert', 'No se encontro el distrito:'.$row['distrito'].'.  El proceso se interrumpio en la fila:'.$filas); $row['id']=null;}
-                    } else{$row['id'] = null; }
+                    } else{$row['distArray'] = null; }
 
                 //cargo
                 $cargo = cargo::where("cargo_descripcion", "like", "%".$row['cargo']."%")->first();
                 if($row['cargo']!=null){
                     if($cargo!=null){
-                     $row['idcargo'] = $cargo->cargo_id;
-                    } else{
-                        $cargorow=new cargo();
-                        $cargorow->cargo_descripcion=$row['cargo'];
-                        $cargorow->save();
-                        $row['idcargo']=$cargorow->cargo_id;
-                    }
-                 } else{ $row['idcargo']=null; }
+                     $row['idcargo'] = $cargo->cargo_id;    $row['cargoArray'] = $cargo->cargo_descripcion;
+                    } else{$row['cargoArray']=$row['cargo'];}
+                 } else{ $row['cargoArray']=null; }
 
                 //area
                 $area = area::where("area_descripcion", "like", "%".$row['area']."%")->first();
                 if($row['area']!=null){
                     if($area!=null){
-                     $row['idarea'] = $area->area_id;
+                     $row['idarea'] = $area->area_id;  $row['areaArray'] = $area->area_descripcion;
                     } else{
-                        $arearow = new area();
-                        $arearow->area_descripcion=$row['area'];
-                        $arearow->save();
-                        $row['idarea']= $arearow->area_id;
+                        $row['areaArray']=$row['area'];
                     }
-                 } else{ $row['idarea']=null; }
+                 } else{ $row['areaArray']=null;  }
 
                 //centro_costo
                 $centro_costo = centro_costo::where("centroC_descripcion", "like", "%".$row['centro_costo']."%")->first();
                 if($row['centro_costo']!=null){
                     if($centro_costo!=null){
-                     $row['idcentro_costo'] = $centro_costo->centroC_id;
+                     $row['idcentro_costo'] = $centro_costo->centroC_id;  $row['centro_costoArray'] = $centro_costo->centroC_descripcion;
                     } else{
-                        $centrorow = new centro_costo();
-                        $centrorow->centroC_descripcion=$row['centro_costo'];
-                        $centrorow->save();
-                        $row['idcentro_costo']= $centrorow->centroC_id;
+                        $row['centro_costoArray']=$row['centro_costo'];
                     }
-                } else{ $row['idcentro_costo']=null; }
+                } else{ $row['centro_costoArray']=null; }
 
                 //departamentoNac
                 $cadDepN=$row['departamento_nacimiento'];
@@ -151,10 +137,10 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                 if($row['departamento_nacimiento']!=null){
                 $depN = ubigeo_peru_departments::where("name", "like", "%".escape_like($cadDepN)."%")->first();
                 if($depN!=null){
-                    $row['iddepartamento_nacimiento'] = $depN->id;
+                    $row['iddepartamento_nacimiento'] = $depN->id; $row['name_depNArray'] = $depN->name;
                 }
                 else{return redirect()->back()->with('alert', 'No se encontro el departamento:'.$row['departamento_nacimiento'].'.  El proceso se interrumpio en la fila:'.$filas); $row['iddepartamento_nacimiento']=null;}
-                } else{ $row['iddepartamento_nacimiento']=null; }
+                } else{ $row['name_depNArray']=null; }
 
                 //provinciaNac
                 $cadProvN=$row['provincia_nacimiento'];
@@ -164,10 +150,10 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                 if($row['provincia_nacimiento']!=null){
                 $proviN = ubigeo_peru_provinces::where("name", "like", "%".escape_like($cadProvN)."%")->first();
                 if($proviN!=null){
-                    $row['idprovincia_nacimiento'] = $proviN->id;
+                    $row['idprovincia_nacimiento'] = $proviN->id; $row['provNArray'] = $proviN->name;
                 }
                 else{return redirect()->back()->with('alert', 'No se encontro la provincia:'.$row['provincia_nacimiento'].'.  El proceso se interrumpio en la fila:'.$filas); $row['idprovincia_nacimiento']=null;}
-                 } else{ $row['idprovincia_nacimiento']=null; }
+                 } else{ $row['provNArray']=null; }
 
                //distritoNac
                $cadDistN=$row['distrito_nacimiento'];
@@ -177,113 +163,54 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                 if($row['distrito_nacimiento']!=null){
                 $idDN = ubigeo_peru_districts::where("name", "like", "%".escape_like($cadDistN)."%")->where("province_id", "=",$proviN->id)->first();
                 if($idDN!=null){
-                    $row['iddistrito_nacimiento'] = $idDN->id;
+                    $row['iddistrito_nacimiento'] = $idDN->id;  $row['distNArray'] = $idDN->name;
 
                 }
 
                 else{return redirect()->back()->with('alert', 'No se encontro el distrito:'.$row['distrito_nacimiento'].'.  El proceso se interrumpio en la fila:'.$filas); $row['iddistrito_nacimiento']=null;}
-                } else{$row['iddistrito_nacimiento'] = null; }
+                } else{$row['distNArray'] = null; }
 
                 //tipo_contrato
                 $tipo_contrato = tipo_contrato::where("contrato_descripcion", "like", "%".$row['tipo_contrato']."%")->first();
                 if($row['tipo_contrato']!=null){
                     if($tipo_contrato!=null){
-                        $row['idtipo_contrato'] = $tipo_contrato->contrato_id;
+                        $row['idtipo_contrato'] = $tipo_contrato->contrato_id;  $row['tipo_contratoArray'] = $tipo_contrato->contrato_descripcion;
                     } else{
-                        $tipoCrow = new tipo_contrato();
-                        $tipoCrow->contrato_descripcion=$row['tipo_contrato'];
-                        $tipoCrow->save();
-                        $row['idtipo_contrato']= $tipoCrow->contrato_id;
+                        $row['tipo_contratoArray']=$row['tipo_contrato'];
                     }
-                 } else{ $row['idtipo_contrato']=null; }
+                 } else{ $row['tipo_contratoArray']=null; }
 
                 //local
                 $local = local::where("local_descripcion", "like", "%".$row['local']."%")->first();
                 if($row['local']!=null){
                     if ($local!=null){
-                        $row['idlocal'] = $local->local_id;
+                        $row['idlocal'] = $local->local_id;  $row['localArray'] = $local->local_descripcion;
                     } else{
-                        $localrow = new local();
-                        $localrow->local_descripcion=$row['local'];
-                        $localrow->save();
-                        $row['idlocal'] = $localrow->local_id;
 
+                        $row['localArray'] =$row['local'];
                     }
-                 } else{ $row['idlocal']=null; }
+                 } else{ $row['localArray']=null; }
 
                 //nivel
                 $nivel = nivel::where("nivel_descripcion", "like", "%".$row['nivel']."%")->first();
                 if($row['nivel']!=null){
                     if ($nivel!=null){
-                    $row['idnivel'] = $nivel->nivel_id;
+                    $row['idnivel'] = $nivel->nivel_id;  $row['nivelArray'] = $nivel->nivel_descripcion;
                     } else{
-                        $nivelrow = new nivel();
-                        $nivelrow->nivel_descripcion=$row['nivel'];
-                        $nivelrow->save();
-                       $row['idnivel'] =  $nivelrow->nivel_id;
+                        $row['nivelArray'] = $row['nivel'];
                    }
-                 } else{ $row['idnivel']=null; }
+                 } else{ $row['nivelArray']=null; }
+
+                 //////////MANDA DATOS A VISTA
+                 $din=[$row['tipo_docArray'],$row['numero_documento'],$row['nombres'],$row['apellido_paterno'],$row['apellido_materno'],$row['direccion'],$row['name_depArray'],
+                 $row['provArray'],$row['distArray'], $row['cargoArray'],$row['areaArray'],$row['centro_costoArray'],$row['fecha_nacimiento'],$row['name_depNArray'],$row['provNArray'],
+                 $row['distNArray'], $row['sexo'],$row['tipo_contratoArray'],$row['localArray'],$row['nivelArray']];
+                  array_push($this->dnias,$din);
+
 
                 ++$this->numRows;
 
-                $personaId =persona::create([
 
-                    'perso_nombre'     => $row['nombres'] ,
-                    'perso_apPaterno'  => $row['apellido_paterno'] ,
-                    'perso_apMaterno'  => $row['apellido_materno'] ,
-                    'perso_direccion'  => $row['direccion'] ,
-                    'perso_fechaNacimiento' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['fecha_nacimiento']),
-                    'perso_sexo'  => $row['sexo'] ,
-                   /*  $porciones = explode(" ", $row['apellido_paterno']),
-                    'perso_apPaterno'  => $porciones[0]  , */
-
-                    //
-                ]);
-
-
-                empleado::create([
-                    'emple_persona'    => $personaId->perso_id,
-
-
-                    'emple_tipoDoc'    => $row['tipo_doc'],
-
-                    'emple_nDoc'       =>$row['numero_documento']
-                    ,
-
-                    'emple_departamento'=> $row['iddep'],
-
-
-                    'emple_provincia'  => $row['idprov'],
-
-
-                    'emple_distrito'   =>  $row['id'],
-
-
-                    'emple_cargo'      =>  $row['idcargo'],
-
-                    'emple_area'       => $row['idarea'],
-
-                    'emple_centCosto'  => $row['idcentro_costo'],
-
-                    'emple_departamentoN' => $row['iddepartamento_nacimiento'],
-
-                    'emple_provinciaN'  => $row['idprovincia_nacimiento'],
-
-                    'emple_distritoN'   => $row['iddistrito_nacimiento'],
-
-                    'emple_tipoContrato' => $row['idtipo_contrato'],
-
-                    'emple_local' => $row['idlocal'],
-
-                    'emple_nivel'  =>$row['idnivel'],
-
-                    'emple_foto' =>'',
-                    'users_id'=> Auth::user()->id,
-                    'emple_pasword'=>Hash::make($row['numero_documento']),
-
-
-                    //
-                ]);
             }
         }
     }
