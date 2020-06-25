@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Imports;
-
+use Illuminate\Support\Facades\Hash;
 use App\empleado;
 use App\persona;
 use App\ubigeo_peru_districts;
@@ -269,7 +269,7 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
 
                     'emple_foto' =>'',
                     'users_id'=> Auth::user()->id,
-
+                    'emple_pasword'=>Hash::make($row['numero_documento']),
 
 
                     //
