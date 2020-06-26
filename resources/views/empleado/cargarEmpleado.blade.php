@@ -20,7 +20,8 @@
     <link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
 
     <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-
+    <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
 
 </head>
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
@@ -49,13 +50,11 @@
           <h5 style="color: #ffffff">Gestión de empleados</h5>
           <label for="" class="blanco">Validaremos los datos antes de cargarlos  :)</label>
         </div>
-        <div class="col-md-4 text-right" style="margin-left: 12%" >
+        <div class="col-md-6 text-right" style="margin-left: 14%" >
 
             <a href="{{'/export'}}"> <button id="export" style="background-color: #155E5B;border-color: #155E5B"  class="btn btn-sm  btn-primary "> <img src="{{asset('admin/images/excel.svg')}}" height="25" ></i>  Descargar plantilla</button></a>
         </div>
-        <div class="col-md-2 text-right" style="margin-left: 3%">
-            <a href="{{('/empleado')}}"><button class="boton btn " > > empleados </button></a>
-        </div>
+
 
 
 
@@ -147,11 +146,11 @@
                                             <button class="btn btn-sm" type="submit" style="background-color: #e1eae5; color: #61886c;"><img src="{{ URL::asset('admin/assets/images/users/importar.png') }}" height="20" class=" mr-2" alt="" />Importar empleados</button>
                                         </div>
                                     </form>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 text-right">
 
                                             @if (session('empleados'))
 
-                                            <button type="button" onclick="agregar()">registrar</button>
+                                            <button type="button" id="btnRegistraBD" class="boton btn-sm" onclick="agregar()">Validar y registrar</button>
                                             @endif
 
                                         </div>
@@ -220,8 +219,32 @@
                                       @endforeach
                                      @endif
                                     </tbody>
-                            </table>
+                            </table><br>
+                            <div class="col-md-12 text-right" style="padding-right: 0px;">
+                                <a href="{{('/empleado')}}"><button  class="boton btn btn-default mr-1" > < Continuar </button></a>
+                            </div>
                         </div> <!-- end card body-->
+
+                        <div id="cargar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                            <div class="modal-dialog  modal-dialog-centered" >
+
+                            <div class="modal-content" style="background: #f1f2f3;">
+
+                               <div class="modal-body" style="padding-top: 0px;  padding-bottom: 0px;">
+                                   <div class="text-center">
+
+                                   <div id="contenido">
+                                       <h4>Cargando empleados a la base de datos.</h4>
+                                    <img src="{{asset('landing/images/load.gif')}}" height="120" >
+                                   </div>
+
+                                   </div>
+
+                               </div>
+                           </div><!-- /.modal-content -->
+                         </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+
                     </div> <!-- end card -->
                 </div>
 
@@ -247,6 +270,9 @@
 
     <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 
 
 <script>
@@ -255,13 +281,13 @@
         "scrollX": true
     } );
 } );
-
 $('#export').click('change',function(){
     $('#modalInformacion').modal('show');
 });
 function agregar(){
+       $('#cargar').modal('show');
+    $('#contenido').show();
     /* var cuotaNo = [];
-
     $('#basic-datatable1 tbody tr').each(function () {
         var $dentro=[]
    cuotaNo.push($(this).find('td').eq(0).html());
@@ -269,40 +295,38 @@ function agregar(){
     var abonoCapital = $(this).find('td').eq(2).html();
     var valorCuota = $(this).find('td').eq(3).html();
     var saldoCapital = $(this).find('td').eq(4).html();
-
-
    });  console.log(cuotaNo); */
    @if(session()->has('empleados'))
    var zoektermen_json;
-   var waypts=[];
+   var emplead=[];
    zoektermen_json = {!! json_encode(session()->get('empleados'),JSON_FORCE_OBJECT) !!};
                   for(var property in zoektermen_json) {
-                    waypts.push({location:zoektermen_json[property],stopover:false});
+                    emplead.push({location:zoektermen_json[property],stopover:false});
                     }
     // empleados =JSON.parse(JSON.stringify());
     $.ajax({
             type:"post",
             url:"/importBDExcel",
-            data:{waypts:waypts},
+            data:{emplead:emplead},
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             success: function (data) {
+                $('#cargar').modal('hide');
+                $('#btnRegistraBD').prop('disabled', true);
+                $.notify("Empleados registrados", {
+                align: "right",
+                verticalAlign: "top",
+                type: "success",
+                icon: "check"
+            });
 
             },
             error: function (data) {
                 alert('Ocurrio un error');
             }
         });
-    
-
 
 @endif
 }
-function agregarBD(empleados){
-//alert(empleados);
-}
-
-
-
 
 </script>
 

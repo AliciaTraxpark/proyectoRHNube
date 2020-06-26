@@ -20,6 +20,7 @@ $(function () {
     $('#fecha').on('change', onMostrarPantallas);
     $('#proyecto').on('change', onMostrarPantallas);
 });
+var datos;
 
 function onMostrarPantallas() {
     var value = $('#empleado').val();
@@ -39,6 +40,7 @@ function onMostrarPantallas() {
         },
         success: function (data) {
             //data = data.reverse();
+            datos = data;
             if (data.length != 0) {
                 var container = $('#card');
                 $.notifyClose();
@@ -63,7 +65,7 @@ function onMostrarPantallas() {
                                     capturas += `<div class = "carousel-item">
                                     <img src="data:image/jpeg;base64,${data[hora][j][index].imagen}" height="120" width="120" class="img-responsive">
                                     <div class="overlay">
-                                    <a class="info" onclick="zoom('${data[hora][j][index].imagen}')" style="color:#fdfdfd">
+                                    <a class="info" onclick="zoom('${hora + "," + j}')" style="color:#fdfdfd">
                                     <i class="fa fa-eye"></i> Colección</a>
                                     </div>
                                 </div>`;
@@ -87,7 +89,7 @@ function onMostrarPantallas() {
                                                                 <div class = "carousel-item active">
                                                                     <img src="data:image/jpeg;base64,${data[hora][j][0].imagen}" height="120" width="120" class="img-responsive">
                                                                     <div class="overlay">
-                                                                    <a class="info" onclick="zoom('${data[hora][j][0].imagen}')" style="color:#fdfdfd">
+                                                                    <a class="info" onclick="zoom('${hora + "," + j}')" style="color:#fdfdfd">
                                                                     <i class="fa fa-eye"></i> Colección</a>
                                                                     </div>
                                                                 </div>
@@ -137,7 +139,7 @@ function onMostrarPantallas() {
                                                                 <div class = "carousel-item active">
                                                                     <img src="data:image/jpeg;base64,${data[hora][j][0].imagen}" height="120" width="120" class="img-responsive">
                                                                     <div class="overlay">
-                                                                    <a class="info" onclick="zoom('${data[hora][j][0].imagen}')" style="color:#fdfdfd">
+                                                                    <a class="info" onclick="zoom('${hora + "," + j}')" style="color:#fdfdfd">
                                                                     <i class="fa fa-eye"></i> Colección</a>
                                                                     </div>
                                                                 </div>
@@ -231,14 +233,39 @@ function onMostrarProyecto() {
     })
 }
 
-function zoom(img) {
-    $('#imagenZoom').attr("src", `data:image/jpeg;base64,${img}`);
-    $('#zoom').zoom({
-        on: 'click'
+function zoom(horayJ) {
+    var hora = horayJ.split(",")[0];
+    var j = horayJ.split(",")[1];
+    capturas = datos[hora][j];
+
+    var carusel = `<div id="carouselExampleControls" class ="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="zoom carousel-item active">
+                            <img src="data:image/jpeg;base64,${capturas[0].imagen}" height="500" widht="500" class="zoom img-responsive">
+                                </div>`;
+    //$('#imagenZoom').attr("src", `data:image/jpeg;base64,${img}`);
+    for (let index = 1; index < capturas.length; index++) {
+        const element = capturas[index];
+        carusel += `<div class="zoom carousel-item">
+        <img src="data:image/jpeg;base64,${element.imagen}" height="500" widht="500" class="img-responsive">
+            </div>`
+    }
+    carusel += `</div>
+    <a class = "carousel-control-prev" href = "#carouselExampleControls" role = "button" data-slide = "prev">
+        <span class = "carousel-control-prev-icon" style="color:red;" aria-hidden = "true"></span>
+        <span class = "sr-only">Previous</span>
+    </a>
+    <a class = "carousel-control-next" href = "#carouselExampleControls" role = "button" data-slide = "next">
+        <span class = "carousel-control-next-icon" style="color:red;" aria-hidden = "true"></span>
+        <span class = "sr-only">Next</span>
+    </a></div>`;
+    document.getElementById("zoom").innerHTML = carusel;
+    $(".zoom").zoom({
+        on: "click"
     });
     $('#modalZoom').modal();
     $('.close').on('click', function () {
-        $('#zoom').trigger('zoom.destroy');
+        $('.zoom').trigger('zoom.destroy');
     });
 }
 $("#myCarousel").carousel({

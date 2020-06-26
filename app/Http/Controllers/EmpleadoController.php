@@ -259,7 +259,7 @@ class EmpleadoController extends Controller
             $empleado->emple_foto = $fileName;
         }
         $empleado->emple_pasword = Hash::make($objEmpleado['numDocumento']);
-        $empleado->emple_estado = '0';
+        $empleado->emple_estado = '1';
         $empleado->emple_codigo = $objEmpleado['codigoEmpleado'];
         $empleado->users_id = Auth::user()->id;
         $empleado->save();
