@@ -6,6 +6,7 @@ use App\Mail\CorreoMail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use App\organizacion;
+use App\persona;
 use App\ubigeo_peru_departments;
 use App\ubigeo_peru_provinces;
 use App\ubigeo_peru_districts;
@@ -66,14 +67,22 @@ class registroEmpresaController extends Controller
             ->select('u.email', 'u.email_verified_at', 'confirmation_code')
             ->where('u.id', '=', $request->get('iduser'))
             ->get();
+        $idPersona = DB::table('users as u')
+            ->join('persona as p', 'u.perso_id', 'p.perso_id')
+            ->select('p.perso_id')
+            ->where('u.id', '=', $request->get('iduser'))
+            ->get();
         $datos = [];
+        $persona = [];
+        $persona["id"]= $idPersona[0]->perso_id;
         $datos["email"] = $data[0]->email;
         $datos["email_verified_at"] = $data[0]->email_verified_at;
         $datos["confirmation_code"] = $data[0]->confirmation_code;
+        $persona = persona::find($persona["id"]);
         $users = User::find($request->get('iduser'));
         $correo = array($datos['email']);
-        
-        Mail::to($correo)->queue(new CorreoMail($users));
+
+        Mail::to($correo)->queue(new CorreoMail($users, $persona));
 
         return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado!
         Te hemos enviado un correo de verificación.");
