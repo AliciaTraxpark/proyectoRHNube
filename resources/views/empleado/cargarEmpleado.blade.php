@@ -136,18 +136,28 @@
                                             <div class="alert alert-sucess" style="padding-left: 0px; padding-top: 0px; margin-bottom: 0px;">
                                                 Se importaron  {{ session('filas') }} registros.
                                             </div>
+
                                         @endif
                                         </div>
 
                                         <div class="col-md-6">
                                             <input type="file" name="file" class="form-control">
                                         </div>
-                                        <div class="col-md-6">
-                                            <button class="btn btn-sm" style="background-color: #e1eae5; color: #61886c;"><img src="{{ URL::asset('admin/assets/images/users/importar.png') }}" height="20" class=" mr-2" alt="" />Importar empleados</button>
+                                        <div class="col-md-3">
+                                            <button class="btn btn-sm" type="submit" style="background-color: #e1eae5; color: #61886c;"><img src="{{ URL::asset('admin/assets/images/users/importar.png') }}" height="20" class=" mr-2" alt="" />Importar empleados</button>
+                                        </div>
+                                    </form>
+                                        <div class="col-md-3">
+
+                                            @if (session('empleados'))
+
+                                            <button type="button" onclick="agregar()">registrar</button>
+                                            @endif
+
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+
                         </div>
                         <div class="card-body" style="padding-top: 20px;color: #1b1b1b;">
 
@@ -249,6 +259,50 @@
 $('#export').click('change',function(){
     $('#modalInformacion').modal('show');
 });
+function agregar(){
+    /* var cuotaNo = [];
+
+    $('#basic-datatable1 tbody tr').each(function () {
+        var $dentro=[]
+   cuotaNo.push($(this).find('td').eq(0).html());
+    var interes = $(this).find('td').eq(1).html();
+    var abonoCapital = $(this).find('td').eq(2).html();
+    var valorCuota = $(this).find('td').eq(3).html();
+    var saldoCapital = $(this).find('td').eq(4).html();
+
+
+   });  console.log(cuotaNo); */
+   @if(session()->has('empleados'))
+   var zoektermen_json;
+   var waypts=[];
+   zoektermen_json = {!! json_encode(session()->get('empleados'),JSON_FORCE_OBJECT) !!};
+                  for(var property in zoektermen_json) {
+                    waypts.push({location:zoektermen_json[property],stopover:false});
+                    }
+    // empleados =JSON.parse(JSON.stringify());
+    $.ajax({
+            type:"post",
+            url:"/importBDExcel",
+            data:{waypts:waypts},
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            success: function (data) {
+
+            },
+            error: function (data) {
+                alert('Ocurrio un error');
+            }
+        });
+    
+
+
+@endif
+}
+function agregarBD(empleados){
+//alert(empleados);
+}
+
+
+
 
 </script>
 

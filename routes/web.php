@@ -107,7 +107,8 @@ Route::get('importExportView', 'MyController@importExportView');
 Route::post('import', 'MyController@import')->name('import');
 
 //EXCEL EMPLEADO
-Route::post('importEmpleado', 'excelEmpleadoController@import')->name('importEmpleado');
+Route::post('/importEmpleado', 'excelEmpleadoController@import')->name('importEmpleado');
+Route::post('/importBDExcel', 'excelEmpleadoController@guardarBD');
 //PROYECTO
 Route::get('/proyecto', 'ProyectoController@index');
 Route::post('/proyecto/registrar', 'ProyectoController@store');

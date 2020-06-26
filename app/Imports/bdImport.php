@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Imports;
 use Illuminate\Support\Facades\Hash;
 use App\empleado;
 use App\persona;
@@ -14,47 +14,26 @@ use App\centro_costo;
 use App\tipo_contrato;
 use App\local;
 use App\nivel;
+use Maatwebsite\Excel\Concerns\ToModel;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
-use App\Imports\EmpleadoImport;
-use Maatwebsite\Excel\Facades\Excel;
-class excelEmpleadoController extends Controller
-{
-    //
-
-    //
-    public function import(request $request)
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithValidation;
+use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithBatchInserts;
+use Maatwebsite\Excel\Concerns\SkipsErrors;
+use Maatwebsite\Excel\Concerns\SkipsOnError;
+use Maatwebsite\Excel\Concerns\Importable;
+class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, WithBatchInserts, SkipsOnError
+{    use Importable, SkipsErrors;
+    private $numRows = 0;
+    /**
+    * @param array $row
+    *
+    * @return \Illuminate\Database\Eloquent\Model|null
+    */
+    public function collection(Collection $rows)
     {
-        $file = $request->file('file');
-
-
-
-           if ($file == null) {
-
-        return back()->with('alertE', 'No se ha cargado ningún archivo excel');
-
-           }
-
-
-        $import =new  EmpleadoImport();//del userimpor
-        Excel::import($import,request()->file('file'));
-        $filas=$import->getRowCount();
-        $empleados=$import->dniE();
-        //dd($dni);
-        //$parameters =  ['numRows'=>$import->getRowCount(),'alert'=>$import->errors()];
-        //return back()->with(['numRows'=>$import->getRowCount(),'alert'=>$import->errors()]);
-       /*  $path = public_path() . '/files';
-        $fileName =$file->getClientOriginalName();
-        $file->move($path, $fileName); */
-
-        return back()->with(['filas'=>$filas,'empleados'=>$empleados]);
-    }
-     public function guardarBD(request $request){
-        $rows=$request->waypts;
-        return($rows);
-     }
-    public function guardarBD1(request $request){
-
         function escape_like(string $value, string $char = '\\')
         {
             return str_replace(
@@ -297,7 +276,25 @@ class excelEmpleadoController extends Controller
                 ]);
             }
         }
+    }
+    public function rules(): array
+    {
+        return [
 
+
+        ];
+    }
+    public function batchSize(): int
+    {
+        return 2000;
+    }
+    public function getRowCount(): int
+    {
+        return $this->numRows;
+    }
+    public function onError(\Throwable $e)
+    {
+        // Handle the exception how you'd like.
     }
 
 }
