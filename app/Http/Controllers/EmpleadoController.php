@@ -37,7 +37,7 @@ class EmpleadoController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except('provincias', 'distritos', 'fechas', 'api', 'logueoEmpleado', 'apiTarea', 'apiActividad', 'editarApiTarea');
+        $this->middleware(['auth','verified'])->except('provincias', 'distritos', 'fechas');
     }
     public function fechas($id)
     {

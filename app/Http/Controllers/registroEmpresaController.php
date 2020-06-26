@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\CorreoMail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use App\organizacion;
@@ -11,12 +12,14 @@ use App\ubigeo_peru_districts;
 use App\User;
 use App\usuario_organizacion;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\Queue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class registroEmpresaController extends Controller
 {
+
     public function provincias($id)
     {
         return ubigeo_peru_provinces::where('departamento_id', $id)->get();
@@ -60,16 +63,17 @@ class registroEmpresaController extends Controller
         $usuario_organizacion->save();
 
         $data = DB::table('users as u')
-        ->select('u.email','u.email_verified_at','confirmation_code')
-        ->where('u.id','=',$request->get('iduser'))
-        ->get();
+            ->select('u.email', 'u.email_verified_at', 'confirmation_code')
+            ->where('u.id', '=', $request->get('iduser'))
+            ->get();
         $datos = [];
         $datos["email"] = $data[0]->email;
         $datos["email_verified_at"] = $data[0]->email_verified_at;
         $datos["confirmation_code"] = $data[0]->confirmation_code;
-        Mail::send('mails.confirmation_code', $datos, function ($message) use ($datos) {
-            $message->to($datos['email'])->subject('Por favor confirma tu correo');
-        });
+        $users = User::find($request->get('iduser'));
+        $correo = User::pluck('email');
+        
+        Mail::to($correo)->queue(new CorreoMail($users));
 
         return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado!
         Te hemos enviado un correo de verificación.");

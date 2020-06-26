@@ -4,11 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{{asset('landing/vendors/owl-carousel/css/owl.carousel.min.css')}}">
-    <link rel="stylesheet" href="{{asset('landing/vendors/owl-carousel/css/owl.theme.default.css')}}">
-    <link rel="stylesheet" href="{{asset('landing/vendors/mdi/css/materialdesignicons.min.css')}}">
-    <link rel="stylesheet" href="{{asset('landing/vendors/aos/css/aos.css')}}">
-    <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
+    
 </head>
 
 <body>
@@ -37,7 +33,7 @@
                 </div>
                 <div>
                     <div class="col-md-12"> <br><br>
-                        <a href="{{ url('/register/verify/' . $confirmation_code) }}"><button
+                        <a href="{{ url('/register/verify/' . $datos->confirmation_code) }}"><button
                                 class="btn btn-opacity-primary mr-1">
                                 VERIFICA TU CORREO ELECTRONICO </button></a>
                     </div>
