@@ -7,6 +7,10 @@ use App\tipo_contrato;
 
 class contratoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+    }
     public function store(Request $request){
         $tipoC=new tipo_contrato();
         $tipoC->contrato_descripcion=$request->get('contrato_descripcion');

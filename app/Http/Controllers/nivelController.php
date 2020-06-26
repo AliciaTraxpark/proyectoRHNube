@@ -9,11 +9,12 @@ class nivelController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'verified']);
     }
-    public function store(Request $request){
-        $nivel= new nivel();
-        $nivel->nivel_descripcion=$request->get('nivel_descripcion');
+    public function store(Request $request)
+    {
+        $nivel = new nivel();
+        $nivel->nivel_descripcion = $request->get('nivel_descripcion');
         $nivel->save();
         return  $nivel;
     }

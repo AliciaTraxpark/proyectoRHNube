@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Auth;
 
 class ControlController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
     public function index()
     {
         $empleado = DB::table('empleado as e')
@@ -134,15 +138,15 @@ class ControlController extends Controller
         {
             $resultado = array();
 
-            foreach($array as $captura){
-                $horaCaptura = explode(":",$captura->hora_ini);
-                if(!isset($resultado[$horaCaptura[0]])){
+            foreach ($array as $captura) {
+                $horaCaptura = explode(":", $captura->hora_ini);
+                if (!isset($resultado[$horaCaptura[0]])) {
                     $resultado[$horaCaptura[0]] = array();
                 }
-                if(!isset($resultado[$horaCaptura[0]][$horaCaptura[1][0]])){
+                if (!isset($resultado[$horaCaptura[0]][$horaCaptura[1][0]])) {
                     $resultado[$horaCaptura[0]][$horaCaptura[1][0]] = array();
                 }
-                array_push($resultado[$horaCaptura[0]][$horaCaptura[1][0]],$captura);
+                array_push($resultado[$horaCaptura[0]][$horaCaptura[1][0]], $captura);
             }
             return $resultado;
         }
