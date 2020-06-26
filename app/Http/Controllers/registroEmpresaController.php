@@ -71,7 +71,7 @@ class registroEmpresaController extends Controller
         $datos["email_verified_at"] = $data[0]->email_verified_at;
         $datos["confirmation_code"] = $data[0]->confirmation_code;
         $users = User::find($request->get('iduser'));
-        $correo = User::pluck('email');
+        $correo = array($datos['email']);
         
         Mail::to($correo)->queue(new CorreoMail($users));
 

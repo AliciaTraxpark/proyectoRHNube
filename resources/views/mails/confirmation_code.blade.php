@@ -33,7 +33,7 @@
                 </div>
                 <div>
                     <div class="col-md-12"> <br><br>
-                        <a href="{{ url('/register/verify/' . $datos->confirmation_code) }}"><button
+                        <a href="{{'http://127.0.0.1:8000/register/verify/' . $datos->confirmation_code}}"><button
                                 class="btn btn-opacity-primary mr-1">
                                 VERIFICA TU CORREO ELECTRONICO </button></a>
                     </div>

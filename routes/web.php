@@ -44,7 +44,7 @@ Route::post('/persona/store', 'registroPController@registrarDatos')->name('perso
 Route::POST('persona/create', 'RegistroPController@create')->name('registerPersona');
 Route::get('/persona/comprobar', 'registroPController@comprobar');
 //
-Route::get('/register/verify/{code}', 'GuestController@verify');
+Route::get('register/verify/{code}', 'GuestController@verify');
 
 //ORGANIZACION
 
