@@ -241,13 +241,13 @@ function zoom(horayJ) {
     var carusel = `<div id="carouselExampleControls" class ="carousel slide" data-ride="carousel">
                         <div class="carousel-inner">
                             <div class="zoom carousel-item active">
-                            <img src="data:image/jpeg;base64,${capturas[0].imagen}" height="120" widht="120" class="zoom img-responsive">
+                            <img src="data:image/jpeg;base64,${capturas[0].imagen}" height="500" widht="500" class="zoom img-responsive">
                                 </div>`;
     //$('#imagenZoom').attr("src", `data:image/jpeg;base64,${img}`);
     for (let index = 1; index < capturas.length; index++) {
         const element = capturas[index];
         carusel += `<div class="zoom carousel-item">
-        <img src="data:image/jpeg;base64,${element.imagen}" height="120" widht="120" class="img-responsive">
+        <img src="data:image/jpeg;base64,${element.imagen}" height="500" widht="500" class="img-responsive">
             </div>`
     }
     carusel += `</div>
