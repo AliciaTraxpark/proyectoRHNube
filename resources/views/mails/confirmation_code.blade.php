@@ -12,7 +12,7 @@
         <div>
             <div class="col-md-5">
                 <div style="background-color: #163552;padding-top: 10px;padding-right: 25px;padding-left: 25px;">
-                    <img src="{{'http://127.0.0.1:8000/landing/images/logo.png'}}" width="30%" height="30%">
+                    <img src="{{'https://ibb.co/hyxrDF0'}}" width="30%" height="30%">
                 </div>
             </div>
         </div>
@@ -24,7 +24,8 @@
             background-color: #163552;
             border: 2px solid #163552;
         }
-        .btn:hover{
+
+        .btn:hover {
             cursor: pointer;
             color: #163552;
             background-color: #fff;

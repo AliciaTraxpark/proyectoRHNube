@@ -41,11 +41,16 @@ class VerifyMailController extends Controller
         $datos["email"] = $data[0]->email;
         $datos["email_verified_at"] = $data[0]->email_verified_at;
         $datos["confirmation_code"] = $data[0]->confirmation_code;
-        $persona = persona::find($persona["id"]);
-        $users = User::find(Auth::user()->id);
-        $correo = array($datos['email']);
+        if ($datos["confirmation_code"] != NULL) {
+            $persona = persona::find($persona["id"]);
+            $users = User::find(Auth::user()->id);
+            $correo = array($datos['email']);
 
-        Mail::to($correo)->queue(new CorreoMail($users, $persona));
+            Mail::to($correo)->queue(new CorreoMail($users, $persona));
+        } else {
+            return redirect('/');
+        }
+
         return redirect('/dashboard')->with('notification', 'Has confirmado correctamente tu correo!');
     }
 }
