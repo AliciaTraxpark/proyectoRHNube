@@ -77,9 +77,9 @@
                  @else
                 <button class="btnhora btn btn-soft-dark btn-sm" id="verDataHorario" onclick="verhorarioEmpleado({{$tabla_empleados->emple_id}})">Ver horario</button>
                  @endif </td>
-            <td > @if ($tabla_empleados->horario_horario_id==null)
+            <td >{{--  @if ($tabla_empleados->horario_horario_id==null) --}}
                 <input type="checkbox" style="margin-left:5.5px!important" id="tdC" class="form-check-input sub_chk" data-id="{{$tabla_empleados->emple_id}}" >
-                @endif
+             {{--    @endif --}}
              </td>
         </tr>
 
