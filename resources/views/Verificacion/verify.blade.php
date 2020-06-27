@@ -56,7 +56,7 @@
                         {{$usuario[0]->email}}</label>
                 </div>
                 <div class="dropdown align-self-center profile-dropdown-menu">
-                    <a class="dropdown-toggle mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
+                    <a style="color: #ffffff;" class="dropdown-toggle mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
                         aria-expanded="false">
                         <span data-feather="chevron-down"></span>
                     </a>
