@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+</head>
+
 <body>
     <header>
         <div>
@@ -46,12 +48,12 @@
                         antes de continuar en nustra plataforma.
                     </span>
                 </div>
-            </div>
-            <div>
-                <div style="padding-bottom: 15px;"> <br><br>
-                    <a href="{{'http://127.0.0.1:8000/register/verify/' . $datos->confirmation_code}}"><button
-                            class="btn">
-                            Verificar</button></a>
+                <div>
+                    <div class="col-md-12"> <br><br>
+                        <a href="{{'http://3.208.88.131:8000/register/verify/' . $datos->confirmation_code}}"><button
+                                class="btn btn-opacity-primary mr-1">
+                                VERIFICA TU CORREO ELECTRONICO </button></a>
+                    </div>
                 </div>
             </div>
         </div>
