@@ -12,7 +12,7 @@
         <div>
             <div class="col-md-5">
                 <div style="background-color: #163552;padding-top: 10px;padding-right: 25px;padding-left: 25px;">
-                    <img src="{{'https://ibb.co/hyxrDF0'}}" width="30%" height="30%">
+                    <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Frhsolution.com.pe%2F&psig=AOvVaw2LgZPx0H2YNVD09elO7e-E&ust=1593357711900000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCKDMy5qmouoCFQAAAAAdAAAAABAD" width="10%" height="10%">
                 </div>
             </div>
         </div>
