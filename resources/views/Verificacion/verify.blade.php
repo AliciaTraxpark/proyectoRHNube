@@ -20,7 +20,7 @@
     </script>
 </head>
 
-<body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
+<body id="body" data-spy="scroll" data-target=".navbar" data-offset="100" style=" background: #f7f8fa;">
     <style>
         .btn-group-sm>.btn,
         .btn-sm {
@@ -43,14 +43,14 @@
             <div class="container">
                 <div class="col-md-2">
                     <div class="navbar-brand-wrapper d-flex w-100">
-                        <img src="{{asset('landing/images/logo.png')}}" height="100">
+                        <img src="{{asset('landing/images/logo.png')}}" height="80">
                     </div>
                 </div>
                 <div class="col-md-4 text-left">
-                    <h5 style="color: #ffffff">Por favor verifica tu cuenta para poder empezar.</h5>
+                    <h5 style="color: #ffffff;font-size: 15px!important">Por favor verifica tu cuenta para poder empezar.</h5>
                 </div>
                 <div class="col-md-5 text-right">
-                    <label class="pro-user-name mt-0 mb-0" style="color: #ffffff;font-size: 8;">
+                    <label class="pro-user-name mt-0 mb-0" style="color: #ffffff;font-size: 14px!important;">
                         <img src="{{ URL::asset('admin/assets//images/users/avatar-7.png') }}"
                             class="avatar-sm rounded-circle mr-2" height="35" alt="Shreyu" />
                         {{$usuario[0]->email}}</label>
@@ -88,7 +88,7 @@
         </nav>
     </header>
     <div class="container" style="padding-top: 60px;padding-left: 400px;"> <br>
-        <div class="row" style="background-color:#f7f8fa ;padding-top: 15px;padding-bottom: 15px;width: 400px;">
+        <div class="row" style="background-color:#f5f5f5 ;padding-top: 15px;padding-bottom: 15px;width: 400px;border: 1px solid #eae3e3;">
             <div class="col-md-12 text-center" style="padding-bottom: 15px;">
                 <span>Solicitar el reenvio de la verificación.
                 </span>
