@@ -1,3 +1,7 @@
+@php
+  use App\persona;
+
+@endphp
 <!-- ========== Left Sidebar Start ========== -->
 <div class="left-side-menu">
     <div class="media user-profile mt-2 mb-2">
@@ -7,8 +11,9 @@
         <div class="media-body">
             @php
             $usuario=Auth::user();
+            $persona=persona::where('perso_id','=',$usuario->perso_id)->first();
             @endphp
-            <h6 class="pro-user-name mt-0 mb-0">{{$usuario->email}}</h6>
+            <h6 class="pro-user-name mt-0 mb-0">{{$persona->perso_nombre}} {{$persona->perso_apPaterno}}</h6>
             <span class="pro-user-desc">Administrator</span>
         </div>
         <div class="dropdown align-self-center profile-dropdown-menu">
