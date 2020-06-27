@@ -24,9 +24,29 @@
 @endsection
 
 @section('breadcrumb')
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="circle1"></div>
+            <div class="circle2"></div>
+            <div class="circle3"></div>
+        </div>
+    </div>
+</div>
 <div class="row page-title">
-    <div class="col-md-12">
+    <div class="col-md-3">
         <h5 class="header-title mt-0 ">Empleados</h5>
+    </div>
+    <div class=" col-md-2 col-xl-2">
+        <a href="{{('/empleado/cargar')}}"> <button class="btn btn-outline-secondary"
+                style=""><img
+                    src="{{asset('admin/images/subir.ico')}}" height="25" class="mr-1">Carga
+                masiva</button></a>
+    </div>
+    <div class=" col-md-3 col-xl-3">
+        <button class="btn btn-outline-secondary" style=""
+            id="cargaMasivaF"><img src="{{asset('admin/images/image.ico')}}" height="25" class="mr-1">Carga
+            masiva fotos</button>
     </div>
 </div>
 @endsection
