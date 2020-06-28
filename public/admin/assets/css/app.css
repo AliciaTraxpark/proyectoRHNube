@@ -2967,12 +2967,12 @@ table.dataTable {
 
 table.dataTable tbody > tr.selected,
 table.dataTable tbody > tr > .selected {
-  background-color: #5369f8;
+  background-color: #e3eaef69;
 }
 
 table.dataTable tbody > tr.selected td,
 table.dataTable tbody > tr > .selected td {
-  border-color: #5369f8;
+  border-color:#e3eaef69;
 }
 
 table.dataTable tbody td:focus {

@@ -33,19 +33,31 @@
         </div>
     </div>
 </div>
-<div class="row page-title">
-    <div class="col-md-3">
-        <h5 class="header-title mt-0 ">Empleados</h5>
+<style>
+    .page-item.active .page-link{
+        background-color: #e3eaef;
+    border-color: #e3eaef;
+    color:#3d3d3d;
+    }
+    .btn-outline-secondary{
+        border-color: #e3eaef;
+    background: #e3eaef75;
+    }
+</style>
+<div class="row page-title" style="padding-right: 20px;">
+    <div class="col-md-8">
+
+        <h4 class="mb-1 mt-0">Empleados</h4>
     </div>
-    <div class=" col-md-2 col-xl-2">
-        <a href="{{('/empleado/cargar')}}"> <button class="btn btn-outline-secondary"
-                style=""><img
-                    src="{{asset('admin/images/subir.ico')}}" height="25" class="mr-1">Carga
+    <div class=" col-md-2 col-xl-2 text-right">
+        <a href="{{('/empleado/cargar')}}"> <button class="btn btn-outline-secondary btn-sm"
+                ><img
+                    src="{{asset('admin/images/subir.ico')}}" height="20" class="mr-1">Carga
                 masiva</button></a>
     </div>
-    <div class=" col-md-3 col-xl-3">
-        <button class="btn btn-outline-secondary" style=""
-            id="cargaMasivaF"><img src="{{asset('admin/images/image.ico')}}" height="25" class="mr-1">Carga
+    <div class=" col-md-2 col-xl-2 text-right">
+        <button class="btn btn-outline-secondary btn-sm" style=""
+            id="cargaMasivaF"><img src="{{asset('admin/images/image.ico')}}" height="20" class="mr-1">Carga
             masiva fotos</button>
     </div>
 </div>
@@ -55,30 +67,28 @@
 <div class="row ">
     <div class="col-md-12 col-xl-12">
         <div class="card">
-            <div class="card-body" style="padding-top: 0px; background: #fdfdfd; font-size: 12.8px;
+            <div class="card-body" style="padding-top: 0px; background: #ffffff; font-size: 12.8px;
             color: #222222;   padding-left: 0px;  ">
                 <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                 <div class="row">
                     <div class="col-md-6">
-                        <h4 class="mb-1 mt-0 "></i>Búsqueda de empleado</h4>
+
+                        <h4 class=" " style="font-size: 15px">Búsqueda de empleado</h4>
                     </div>
                     <div class=" col-md-6 col-xl-6 text-right">
-
-                        <button id="formNuevoEl" style="background-color: #183b5d;border-color:#62778c"
+                      <br>
+                        <button id="formNuevoEl" style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
                             class="btn btn-sm btn-primary delete_all" data-url="">Eliminar seleccion
                         </button>
                         <button class="btn btn-sm btn-primary" id="formNuevoEd"
-                            style="background-color: #183b5d;border-color:#62778c">Editar</button>
+                        style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d">Editar</button>
                         <button class="btn btn-sm btn-primary" id="formNuevoE"
-                            style="background-color: #183b5d;border-color:#62778c">Nuevo</button>
+                            style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d">+ Nuevo</button>
                     </div>
                 </div>
                 <div id="tabladiv">
                 </div>
-                <div class="text-right"><br><br>
-                    <a href="{{('/horario')}}"><button
-                            class="boton btn btn-default mr-1">CONTINUAR</button></a>
-                </div>
+
             </div> <!-- end card body-->
         </div> <!-- end card -->
     </div>
@@ -617,7 +627,7 @@
                 </div>
                 <div class="modal-body" style="padding: 0px">
                     <div class="setup-panel" id="smartwizard" style="background: #ffffff; color:#3d3d3d;">
-                        <ul style="background: #fdfdfd!important;">
+                        <ul style="background: #ffffff!important;">
                             <li><a href="#sw-default-step-1">Personales</a></li>
                             <li><a href="#sw-default-step-2">Empresarial</a></li>
                             <li><a href="#sw-default-step-3">Foto</a></li>
@@ -928,7 +938,7 @@
                 </div>
                 <div class="modal-body" style="padding: 0px;">
                     <div id="smartwizard1" style="background: #ffffff; color:#3d3d3d;">
-                        <ul style="background: #fdfdfd!important;">
+                        <ul style="background: #ffffff!important;">
                             <li><a href="#persona-step-1">Personales</a></li>
                             <li><a href="#sw-default-step-2">Empresarial</a></li>
                             <li><a href="#sw-default-step-3">Foto</a></li>

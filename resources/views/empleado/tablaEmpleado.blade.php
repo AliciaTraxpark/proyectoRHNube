@@ -9,34 +9,34 @@
 
     <div class="col-md-6" id="filter_global">
 
-        <td align="center"><input type="text" class="global_filter form-control" id="global_filter"></td>
+        <td align="center"><input type="text" class="global_filter form-control form-control-sm" id="global_filter"></td>
     </div>
     <div class="col-md-6" id="filter_col1" data-column="1">
         <label for="">Nombre:</label>
-        <td align="center"><input type="text" class="column_filter form-control" id="col1_filter"></td>
+        <td align="center"><input type="text" class="column_filter form-control form-control-sm" id="col1_filter"></td>
     </div>
     <div class="col-md-6" id="filter_col2" data-column="2">
         <label>Apellidos</label>
-        <td align="center"><input type="text" class="column_filter form-control" id="col2_filter"></td>
+        <td align="center"><input type="text" class="column_filter form-control form-control-sm" id="col2_filter"></td>
     </div>
     <div class="col-md-6" id="filter_col3" data-column="3">
         <label for="">Cargo</label>
-        <td align="center"><input type="text" class="column_filter form-control" id="col3_filter"></td>
+        <td align="center"><input type="text" class="column_filter form-control form-control-sm" id="col3_filter"></td>
     </div>
     <div class="col-md-6" id="filter_col4" data-column="4">
         <label for="">Área</label>
-        <td align="center"><input type="text" class="column_filter form-control" id="col4_filter"></td>
+        <td align="center"><input type="text" class="column_filter form-control form-control-sm" id="col4_filter"></td>
     </div>
     <div class="col-md-6" id="filter_col5" data-column="5">
         <label for="">Costo</label>
-        <td align="center"><input type="text" class="column_filter form-control" id="col5_filter"></td>
+        <td align="center"><input type="text" class="column_filter form-control form-control-sm" id="col5_filter"></td>
     </div>
 
 </div>
 
-<table id="tablaEmpleado" class="table nowrap" style="font-size: 12.5px; width: 100%">
-    <thead style=" background: #5a6f82;color: white;">
-        <tr style="background: #fdfdfd">
+<table id="tablaEmpleado" class="table nowrap" style="font-size: 12px; width: 100%">
+    <thead style=" background: #e3eaef;color: #6c757d;">
+        <tr style="background: #ffffff">
             <th style="border-top: 1px solid #fdfdfd;"></th>
             <th style="border-top: 1px solid #fdfdfd;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="inputR"
                     id="i1"></th>
@@ -60,7 +60,7 @@
 
         </tr>
     </thead>
-    <tbody style="background:#fdfdfd;color: #2c2c2c;">
+    <tbody style="background:#ffffff;color: #2c2c2c;">
         @foreach ($tabla_empleado as $tabla_empleados)
         <tr class="" id="{{$tabla_empleados->emple_id}}" value="{{$tabla_empleados->emple_id}}">
 
