@@ -53,7 +53,7 @@
                     <div class="col-md-12"> <br><br>
                         <a href="{{url('register/verify/' . $datos->confirmation_code)}}"><button
                                 class="btn btn-opacity-primary mr-1">
-                                VERIFICA TU CORREO ELECTRONICO </button></a>
+                                VERIFICAR </button></a>
                     </div>
                 </div>
             </div>
