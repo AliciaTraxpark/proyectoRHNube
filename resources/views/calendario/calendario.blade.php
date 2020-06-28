@@ -29,6 +29,14 @@
     .fc-time{
         display: none;
     }
+    .fc-Descanso-button{
+    color: #fff;
+    background-color: #162029;
+    }
+    .fc-NoLaborales-button{
+    color: #fff;
+    background-color: #162029;
+    }
 </style>
 
   <header id="header-section">

@@ -484,4 +484,40 @@ class EmpleadoController extends Controller
         //dd($empleado->emple_persona);
 
     }
+    public function indexMenu(){
+        $departamento = ubigeo_peru_departments::all();
+        $provincia = ubigeo_peru_provinces::all();
+        $distrito = ubigeo_peru_districts::all();
+        $tipo_doc = tipo_documento::all();
+        $tipo_cont = tipo_contrato::all();
+        $area = area::all();
+        $cargo = cargo::all();
+        $centro_costo = centro_costo::all();
+        $nivel = nivel::all();
+        $local = local::all();
+        $empleado = empleado::all();
+        $tabla_empleado = DB::table('empleado as e')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->join('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+            ->join('area as a', 'e.emple_area', '=', 'a.area_id')
+            ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+            ->select(
+                'p.perso_nombre',
+                'p.perso_apPaterno',
+                'p.perso_apMaterno',
+                'c.cargo_descripcion',
+                'a.area_descripcion',
+                'cc.centroC_descripcion',
+                'e.emple_id'
+            )
+            ->where('e.users_id', '=', Auth::user()->id)
+            ->get();
+        //dd($tabla_empleado);
+        return view('empleado.empleadoMenu', [
+            'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
+            'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
+            'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado
+        ]);
+
+    }
 }

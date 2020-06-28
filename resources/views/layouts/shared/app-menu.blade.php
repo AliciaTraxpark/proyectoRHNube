@@ -1,3 +1,9 @@
+@php
+    use Illuminate\Support\Facades\Auth;
+    use App\eventos;
+    use App\calendario;
+@endphp
+
 <style>
     .left-side-menu {
         background: #fafafa;
@@ -20,10 +26,30 @@
         </a>
     </li>
     <li>
+        @php
+             $calendario=calendario::where('users_id','=',Auth::user()->id)->get();
+        //dd($calendario);
+        if ($calendario->first()) {
+            $variable=1;
+         }
+
+         else{
+            $variable=0;
+        }
+        @endphp
+        @if ($variable==0)
         <a href="/empleado">
             <i data-feather="list"></i>
             <span>Gestión de empleado</span>
         </a>
+
+        @else
+        <a href="/empleados">
+            <i data-feather="list"></i>
+            <span>Gestión de empleado</span>
+        </a>
+        @endif
+
     </li>
 
     <li>

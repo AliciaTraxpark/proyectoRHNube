@@ -38,7 +38,8 @@ class horarioController extends Controller
         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
         ->select('p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','e.emple_nDoc','p.perso_id','e.emple_id','he.empleado_emple_id')
         ->leftJoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
-        ->whereNull('he.empleado_emple_id')
+        // ->whereNull('he.empleado_emple_id')
+        ->distinct('e.emple_id')
         ->where('e.users_id','=',Auth::user()->id)
         ->get();
         return $empleados;
@@ -165,7 +166,8 @@ class horarioController extends Controller
                 ->select('p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','c.cargo_descripcion',
                 'a.area_descripcion','cc.centroC_descripcion','e.emple_id','he.horario_horario_id')
                 ->where('e.users_id','=',Auth::user()->id)
-                ->distinct('e.emple_id')
+
+                ->groupBy('he.empleado_emple_id')
                 ->get();
                 //dd($tabla_empleado);
             return view('horarios.tablaEmpleado',['tabla_empleado'=> $tabla_empleado1]);
