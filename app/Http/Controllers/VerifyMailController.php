@@ -47,8 +47,6 @@ class VerifyMailController extends Controller
             $correo = array($datos['email']);
 
             Mail::to($correo)->queue(new CorreoMail($users, $persona));
-        } else {
-            return redirect('/');
         }
 
         return redirect('/dashboard')->with('notification', 'Has confirmado correctamente tu correo!');
