@@ -25,15 +25,8 @@
             <span> Dashboard </span>
         </a>
     </li>
-    <li>
-        <a href="/calendario">
-            <i data-feather="calendar"></i>
-            <span> Calendarios </span>
-        </a>
-    </li>
-    <li>
-        @php
-             $calendario=calendario::where('users_id','=',Auth::user()->id)->get();
+    @php
+    $calendario=calendario::where('users_id','=',Auth::user()->id)->get();
         //dd($calendario);
         if ($calendario->first()) {
             $variable=1;
@@ -43,6 +36,16 @@
             $variable=0;
         }
         @endphp
+    <li>
+        @if ($variable==0)
+        <a href="/calendario"> @else <a href="/calendarios"> @endif
+            <i data-feather="calendar"></i>
+            <span> Calendarios </span>
+        </a>
+
+    </li>
+    <li>
+
         @if ($variable==0)
         <a href="/empleado">
             <i data-feather="list"></i>

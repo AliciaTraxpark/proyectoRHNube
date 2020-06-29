@@ -19,25 +19,25 @@
         <td align="center"><input type="text" class="global_filter form-control form-control-sm" id="global_filter">
         </td>
     </div>
-    <div class="col-md-6" id="filter_col1" data-column="1">
-        <label for="">Nombre:</label>
-        <td align="center"><input type="text" class="column_filter form-control form-control-sm" id="col1_filter"></td>
-    </div>
     <div class="col-md-6" id="filter_col2" data-column="2">
-        <label>Apellidos</label>
+        <label for="">Nombre:</label>
         <td align="center"><input type="text" class="column_filter form-control form-control-sm" id="col2_filter"></td>
     </div>
     <div class="col-md-6" id="filter_col3" data-column="3">
-        <label for="">Cargo</label>
+        <label>Apellidos</label>
         <td align="center"><input type="text" class="column_filter form-control form-control-sm" id="col3_filter"></td>
     </div>
     <div class="col-md-6" id="filter_col4" data-column="4">
-        <label for="">Área</label>
+        <label for="">Cargo</label>
         <td align="center"><input type="text" class="column_filter form-control form-control-sm" id="col4_filter"></td>
     </div>
     <div class="col-md-6" id="filter_col5" data-column="5">
-        <label for="">Costo</label>
+        <label for="">Área</label>
         <td align="center"><input type="text" class="column_filter form-control form-control-sm" id="col5_filter"></td>
+    </div>
+    <div class="col-md-6" id="filter_col6" data-column="6">
+        <label for="">Costo</label>
+        <td align="center"><input type="text" class="column_filter form-control form-control-sm" id="col6_filter"></td>
     </div>
 
 </div>
@@ -48,14 +48,14 @@
             <th style="border-top: 1px solid #fdfdfd;"></th>
             <th style="border-top: 1px solid #fdfdfd;"></th>
             <th style="border-top: 1px solid #fdfdfd;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="inputR"
-                    id="i1"></th>
+                    id="i2"></th>
             <th style="border-top: 1px solid #fdfdfd;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"
-                    name="inputR" id="i2"></th>
+                    name="inputR" id="i3"></th>
             <th style="border-top: 1px solid #fdfdfd;">&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR"
-                    id="i3"></th>
-            <th style="border-top: 1px solid #fdfdfd;">&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR" id="i4"></th>
+                    id="i4"></th>
+            <th style="border-top: 1px solid #fdfdfd;">&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR" id="i5"></th>
             <th style="border-top: 1px solid #fdfdfd;">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR" id="i5">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR" id="i6">
             </th>
         </tr>
         <tr>
@@ -94,11 +94,11 @@
 
 <script>
     $(document).ready(function() {
-         $('#filter_col1').hide();
-        $('#filter_col2').hide();
+         $('#filter_col2').hide();
         $('#filter_col3').hide();
         $('#filter_col4').hide();
         $('#filter_col5').hide();
+        $('#filter_col6').hide();
   var $selecTodo = $('#selectT');
   var $table = $('#tablaEmpleado');
   var $tdCheckbox = $table.find('tbody input:checkbox');
@@ -239,6 +239,7 @@
 
 
         }).column(i).search(
+
             $('#col' + i + '_filter').val(),
         ).draw();
         $('#i'+i).prop('checked',true);
@@ -294,25 +295,6 @@
         });
 
 
-        $("#i1").click(function () {
-            if ($("#i1").is(':checked')) {
-                table
-                    .search('')
-                    .columns().search('')
-                    .draw();
-                $('#i1').prop('checked', true);
-                $('#filter_global').hide()
-                $('#filter_col1').show();
-                $('#filter_col2').hide();
-                $('#filter_col3').hide();
-                $('#filter_col4').hide();
-                $('#filter_col5').hide();
-
-            } else {
-                alert("No está activado");
-            }
-        });
-
         $("#i2").click(function () {
             if ($("#i2").is(':checked')) {
                 table
@@ -321,12 +303,11 @@
                     .draw();
                 $('#i2').prop('checked', true);
                 $('#filter_global').hide()
-                $('#filter_col1').hide();
                 $('#filter_col2').show();
                 $('#filter_col3').hide();
                 $('#filter_col4').hide();
                 $('#filter_col5').hide();
-
+                $('#filter_col6').hide();
 
             } else {
                 alert("No está activado");
@@ -341,16 +322,18 @@
                     .draw();
                 $('#i3').prop('checked', true);
                 $('#filter_global').hide()
-                $('#filter_col1').hide();
                 $('#filter_col2').hide();
                 $('#filter_col3').show();
                 $('#filter_col4').hide();
                 $('#filter_col5').hide();
+                $('#filter_col6').hide();
+
 
             } else {
                 alert("No está activado");
             }
         });
+
         $("#i4").click(function () {
             if ($("#i4").is(':checked')) {
                 table
@@ -359,11 +342,11 @@
                     .draw();
                 $('#i4').prop('checked', true);
                 $('#filter_global').hide()
-                $('#filter_col1').hide();
                 $('#filter_col2').hide();
                 $('#filter_col3').hide();
                 $('#filter_col4').show();
                 $('#filter_col5').hide();
+                $('#filter_col6').hide();
 
             } else {
                 alert("No está activado");
@@ -376,13 +359,31 @@
                     .columns().search('')
                     .draw();
                 $('#i5').prop('checked', true);
-                table.columns([1, 2, 3, 4]).deselect();
                 $('#filter_global').hide()
-                $('#filter_col1').hide();
                 $('#filter_col2').hide();
                 $('#filter_col3').hide();
                 $('#filter_col4').hide();
                 $('#filter_col5').show();
+                $('#filter_col6').hide();
+
+            } else {
+                alert("No está activado");
+            }
+        });
+        $("#i6").click(function () {
+            if ($("#i6").is(':checked')) {
+                table
+                    .search('')
+                    .columns().search('')
+                    .draw();
+                $('#i6').prop('checked', true);
+                table.columns([1, 2, 3, 4,5]).deselect();
+                $('#filter_global').hide()
+                $('#filter_col2').hide();
+                $('#filter_col3').hide();
+                $('#filter_col4').hide();
+                $('#filter_col5').hide();
+                $('#filter_col6').show();
 
             } else {
                 alert("No está activado");
