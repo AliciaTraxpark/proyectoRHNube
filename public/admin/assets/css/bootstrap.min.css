@@ -622,7 +622,7 @@ pre code {
 
 .container-fluid {
   width: 100%;
-  padding-right: 12px;
+  padding-right: 4px;
   padding-left: 12px;
   margin-right: auto;
   margin-left: auto;
@@ -10701,9 +10701,9 @@ a.text-dark:focus {
 }
 
 .alert-info {
-  color: #fff;
-  background-color: #25c2e3;
-  border-color: #25c2e3;
+  color: #4c9dee;
+  background-color: #abdaff7d;
+  border-color: #ccf2ff;
 }
 
 .alert-info hr {
@@ -10716,7 +10716,7 @@ a.text-dark:focus {
 
 .alert-info .close,
 .alert-info .alert-link {
-  color: #fff;
+  color:  #4c9dee;
 }
 
 .alert-warning {

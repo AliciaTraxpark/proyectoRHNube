@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="admin/assets/images/favicon.ico">
+    <link rel="shortcut icon" href="https://rhsolution.com.pe/wp-content/uploads/2019/06/small-logo-rh-solution-64x64.png" sizes="32x32">
 
     <!-- App css -->
     <link href="admin/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />

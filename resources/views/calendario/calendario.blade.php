@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- App favicon -->
-  <link rel="shortcut icon" href="{{asset('admin/assets/images/favicon.ico')}}">
+  <link rel="shortcut icon" href="https://rhsolution.com.pe/wp-content/uploads/2019/06/small-logo-rh-solution-64x64.png" sizes="32x32">
 
   <!-- Plugin css  CALENDAR-->
   <link href="{{asset('admin/packages/core/main.css')}}" rel="stylesheet" />

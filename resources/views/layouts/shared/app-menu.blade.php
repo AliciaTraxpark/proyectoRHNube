@@ -26,6 +26,12 @@
         </a>
     </li>
     <li>
+        <a href="/calendario">
+            <i data-feather="calendar"></i>
+            <span> Calendarios </span>
+        </a>
+    </li>
+    <li>
         @php
              $calendario=calendario::where('users_id','=',Auth::user()->id)->get();
         //dd($calendario);
@@ -52,12 +58,7 @@
 
     </li>
 
-    <li>
-        <a href="/calendario">
-            <i data-feather="calendar"></i>
-            <span> Calendarios </span>
-        </a>
-    </li>
+
     <li>
 
         <a href="javascript: void(0);">

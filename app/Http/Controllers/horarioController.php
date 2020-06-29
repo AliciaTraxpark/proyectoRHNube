@@ -167,7 +167,8 @@ class horarioController extends Controller
                 'a.area_descripcion','cc.centroC_descripcion','e.emple_id','he.horario_horario_id')
                 ->where('e.users_id','=',Auth::user()->id)
 
-                ->groupBy('he.empleado_emple_id')
+                ->groupBy('e.emple_id')
+                //->havingRaw("COUNT(e.emple_id) > 1")
                 ->get();
                 //dd($tabla_empleado);
             return view('horarios.tablaEmpleado',['tabla_empleado'=> $tabla_empleado1]);
