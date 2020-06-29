@@ -317,22 +317,12 @@ function enviarContratoA(accion, objContrato) {
     });
 }
 //FECHAS
-$(function () {
-    $('#contrato_v').on('change', onSelectFecha);
-});
 
-function onSelectFecha() {
-    $('#form-ver').modal('hide');
-    $('#fechasmodalE').modal('show');
-}
-
-function agregarFechas() {
+function agregarFechasA() {
     fechaI = $('#m_fechaIE').val();
     fechaF = $('#m_fechaFE').val();
     $('#c_fechaI').text(fechaI);
     $('#c_fechaF').text(fechaF);
-    $('#fechasmodalE').modal('toggle');
-    $('#form-ver').modal('show');
     $('#m_fechaIE').combodate("clearValue");
     $('#m_fechaFE').combodate("clearValue");
 }

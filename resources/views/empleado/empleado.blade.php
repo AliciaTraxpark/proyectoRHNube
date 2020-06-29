@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- App favicon -->
-    <link rel="shortcut icon" href="https://rhsolution.com.pe/wp-content/uploads/2019/06/small-logo-rh-solution-64x64.png" sizes="32x32">
+    <link rel="shortcut icon"
+        href="https://rhsolution.com.pe/wp-content/uploads/2019/06/small-logo-rh-solution-64x64.png" sizes="32x32">
 
     <!-- App css -->
     <link href="{{asset('admin/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
@@ -168,7 +169,7 @@
                     </div> <!-- end card -->
                 </div>
                 <div id="modalInformacionF" class="modal fade" tabindex="-1" role="dialog"
-                    aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                    aria-labelledby="modalInformacionF" aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
@@ -222,8 +223,8 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-                <div id="modalMasivaFoto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                    aria-hidden="true" data-backdrop="static">
+                <div id="modalMasivaFoto" class="modal fade" tabindex="-1" role="dialog"
+                    aria-labelledby="modalMasivaFoto" aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog modal-dialog-scrollable modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -258,7 +259,7 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-                <div id="modalEliminar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                <div id="modalEliminar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalEliminar"
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -319,7 +320,7 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-                <div id="cargomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal"
+                <div id="cargomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cargomodal"
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -346,7 +347,7 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-                <div id="centrocmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal"
+                <div id="centrocmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="centrocmodal"
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -429,7 +430,7 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div>
-                <div id="contratomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal"
+                <div id="contratomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="contratomodal"
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -482,7 +483,7 @@
                             <div class="modal-footer">
                                 <button type="button" onclick="$('#form-registrar').modal('show');"
                                     class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" id="guardarFechas"
+                                <button type="submit"
                                     onclick="$('#fechasmodal').modal('hide');$('#form-registrar').modal('show');"
                                     class="btn btn-primary">Guardar</button>
                             </div>
@@ -492,7 +493,7 @@
                 </div><!-- /.modal -->
                 <!-- /.modal -->
                 <!-----Modales Editar-->
-                <div id="areamodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal"
+                <div id="areamodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodalE"
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -520,7 +521,7 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-                <div id="cargomodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal"
+                <div id="cargomodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cargomodalE"
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -547,7 +548,7 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-                <div id="centrocmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal"
+                <div id="centrocmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="centrocmodalE"
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -574,7 +575,7 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-                <div id="localmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="localmodal"
+                <div id="localmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="localmodalE"
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -602,7 +603,7 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-                <div id="nivelmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="nivelmodal"
+                <div id="nivelmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="nivelmodalE"
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -630,7 +631,7 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div>
-                <div id="contratomodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal"
+                <div id="contratomodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="contratomodalE"
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
