@@ -10,6 +10,7 @@
     .dataTables_scrollHeadInner {
         width: 100% !important;
     }
+
 </style>
 <input type="hidden" id="csrf_token" name="_token" value="{{ csrf_token() }}">
 <div class="row">
@@ -66,7 +67,7 @@
             <th>Cargo</th>
             <th>Área</th>
             <th>Centro de Costo</th>
-            <th>&nbsp;<input type="checkbox" name="" id="selectT"></th>
+            <!--<th>&nbsp;<input type="checkbox" name="" id="selectT"></th>-->
 
         </tr>
     </thead>
@@ -74,8 +75,8 @@
         @foreach ($tabla_empleado as $tabla_empleados)
         <tr class="" id="{{$tabla_empleados->emple_id}}" value="{{$tabla_empleados->emple_id}}">
 
-            <td><button class="btn btn-sm btn-primary" id="formNuevoEd" onclick="$('#form-ver').modal();"
-                    style="background-color: #183b5d;border-color:#62778c">Editar</button></td>
+            <td><a id="formNuevoEd" onclick="$('#form-ver').modal();"
+                    ><img src="{{asset('admin/images/user (3).svg')}}" height="23"></a></td>
             <td> <input type="hidden" value="{{$tabla_empleados->emple_id}}"><img
                     src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class=" mr-2" alt="" /></td>
             <td>{{$tabla_empleados->perso_nombre}}</td>
@@ -83,8 +84,8 @@
             <td>{{$tabla_empleados->cargo_descripcion}}</td>
             <td>{{$tabla_empleados->area_descripcion}}</td>
             <td>{{$tabla_empleados->centroC_descripcion}} </td>
-            <td><input type="checkbox" id="tdC" style="margin-left:5.5px!important" class="form-check-input sub_chk"
-                    data-id="{{$tabla_empleados->emple_id}}"> </td>
+            <!--<td><input type="checkbox" id="tdC" style="margin-left:5.5px!important" class="form-check-input sub_chk"
+                    data-id="{{$tabla_empleados->emple_id}}"> </td>-->
         </tr>
 
         @endforeach
@@ -93,27 +94,28 @@
 </table>
 
 <script>
-    $(document).ready(function() {
-         $('#filter_col2').hide();
+    $(document).ready(function () {
+        $('#filter_col2').hide();
         $('#filter_col3').hide();
         $('#filter_col4').hide();
         $('#filter_col5').hide();
         $('#filter_col6').hide();
-  var $selecTodo = $('#selectT');
-  var $table = $('#tablaEmpleado');
-  var $tdCheckbox = $table.find('tbody input:checkbox');
-  var tdCheckboxChecked = 0;
+        var $selecTodo = $('#selectT');
+        var $table = $('#tablaEmpleado');
+        var $tdCheckbox = $table.find('tbody input:checkbox');
+        var tdCheckboxChecked = 0;
 
-  $selecTodo.on('click', function () {
-    $tdCheckbox.prop('checked', this.checked);
-  });
+        $selecTodo.on('click', function () {
+            $tdCheckbox.prop('checked', this.checked);
+        });
 
 
-  $tdCheckbox.on('change', function(e){
-    tdCheckboxChecked = $table.find('tbody input:checkbox:checked').length;
-    $selecTodo.prop('checked', (tdCheckboxChecked === $tdCheckbox.length));
-  })
-});
+        $tdCheckbox.on('change', function (e) {
+            tdCheckboxChecked = $table.find('tbody input:checkbox:checked').length;
+            $selecTodo.prop('checked', (tdCheckboxChecked === $tdCheckbox.length));
+        })
+    });
+
 </script>
 <script>
     $("#tablaEmpleado tbody tr").click(function () {
@@ -206,7 +208,10 @@
         $("#tablaEmpleado").DataTable({
             "searching": true,
             "scrollX": true,
-            retrieve: true,
+            columnDefs: [{
+                targets: [1],
+                sortable: false
+            }],
 
             language: {
                 "sProcessing": "Procesando...",
@@ -242,7 +247,7 @@
 
             $('#col' + i + '_filter').val(),
         ).draw();
-        $('#i'+i).prop('checked',true);
+        $('#i' + i).prop('checked', true);
     }
 
     $(document).ready(function () {
@@ -252,6 +257,10 @@
             "lengthChange": false,
             "scrollX": true,
             "pageLength": 30,
+            columnDefs: [{
+                targets: [1],
+                sortable: false
+            }],
             language: {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
@@ -377,7 +386,7 @@
                     .columns().search('')
                     .draw();
                 $('#i6').prop('checked', true);
-                table.columns([1, 2, 3, 4,5]).deselect();
+                table.columns([1, 2, 3, 4, 5]).deselect();
                 $('#filter_global').hide()
                 $('#filter_col2').hide();
                 $('#filter_col3').hide();

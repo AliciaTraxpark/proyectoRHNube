@@ -1036,7 +1036,7 @@
                                         <div class="col-md-4 text-left" id="navActualizar" style="display: flex;
                                         align-items: center;">
                                             <a style="color: #3d3d3d;" id="actualizarEmpleado">
-                                                <img src="{{asset('admin/images/eliminar-e.svg')}}" height="18">
+                                                <img src="{{asset('admin/images/user.svg')}}" height="18">
                                                 <span>Actualizar</span></i></a>
                                     </ul>
                                     <div class="p-3" id="form-registrar">
