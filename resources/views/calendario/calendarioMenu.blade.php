@@ -173,9 +173,6 @@
               </button>
           </div>
           <div class="modal-body">
-
-
-
                       <form class="form-horizontal">
                         <h5 class="modal-title" id="myModalLabel">¿Desea eliminar días descanso?</h5>
                       </form>

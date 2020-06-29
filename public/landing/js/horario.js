@@ -138,6 +138,40 @@ $('#btnasignar').on('click', function(e) {
                     $("#nombreEmpleado option[value='"+ value +"']").attr("selected",true);
                 });
 
+                if(allVals.length==1){
+                    idemps = $('#nombreEmpleado').val();
+                    $.ajax({
+                        type: "post",
+                        url: "/verDataEmpleado",
+                        data: 'ids=' + idemps,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function (data) {
+                            calendarioHorario(data[1]);
+                            $('#idEmHorario').val(data[0][0].perso_nombre + ' ' + data[0][0].perso_apPaterno + ' ' + data[0][0].perso_apMaterno);
+                            $('#paisHorario').val(data[0][0].paises_id);
+                            depart = data[0][0].ubigeo_peru_departments_id;
+                            if (depart == null) {
+                                $('#departamentoHorario').val('Ninguno');
+                            } else {
+                                $('#departamentoHorario').val(depart);
+                            }
+                            if (data[0][0].horario_sobretiempo == 1) {
+                                $('#exampleCheck2').prop('checked', true);
+                            }
+                            $('#tipHorarioEmpleado').val(data[0][0].horario_tipo);
+                            $('#descripcionCaHorario').val(data[0][0].horario_descripcion);
+                            $('#toleranciaHorario').val(data[0][0].horario_tolerancia);
+                        },
+                        error: function (data) {
+                            alert('Ocurrio un error');
+                        }
+
+                    });
+
+                }
+
             }
 
         },
