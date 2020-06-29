@@ -52,6 +52,7 @@ $(document).ready(function () {
             console.log(isStepValid)
         }
         return isStepValid;
+
     }
 
     function validateSteps1(stepnumber) {
@@ -90,21 +91,35 @@ $(document).ready(function () {
     $('#smartwizard').smartWizard({
         selected: 0,
         showStepURLhash: false,
-        lang: { // Language variables
-            next: 'Siguiente',
-            previous: 'Anterior'
+        toolbarSettings: {
+            showNextButton: false,
+            showPreviousButton: false
         },
         leaveStep: function () {
-            alert("aaa");
             return true;
+        },
+        justified: true,
+        anchorSettings: {
+            anchorClickable: true, // Enable/Disable anchor navigation
+            enableAllAnchors: true,
+            markDoneStep: true,
+            enableAllAnchorOnDoneStep: true
         }
+
     });
     $('#smartwizard1').smartWizard({
         selected: 0,
         showStepURLhash: false,
-        lang: { // Language variables
-            next: 'Siguiente',
-            previous: 'Anterior'
+        toolbarSettings: {
+            showNextButton: false,
+            showPreviousButton: false
+        },
+        justified: true,
+        anchorSettings: {
+            anchorClickable: true, // Enable/Disable anchor navigation
+            enableAllAnchors: true,
+            markDoneStep: true,
+            enableAllAnchorOnDoneStep: true
         },
         leaveStep: function () {
             alert("aaa");
@@ -113,7 +128,6 @@ $(document).ready(function () {
     });
     //************Validacion********//
     $('#smartwizard').on("leaveStep", function leaveAStepCallback(event, obj, indice) {
-        console.log(indice);
         return validateSteps(indice);
     });
     $('#smartwizard1').on("leaveStep", function leaveAStepCallback(event, obj, indice) {

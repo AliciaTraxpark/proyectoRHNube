@@ -99,7 +99,6 @@
         body {
             background-color: #f8f8f8;
         }
-
     </style>
     <div id="preloader">
         <div id="status">
@@ -863,7 +862,6 @@
                                         </div>
                                         <div id="sw-default-step-2" class="setup-content">
                                             <div class="row">
-                                                <div class="col-4"><br></div>
                                                 <div class="col-4 text-center">
                                                     <div class="form-group">
                                                         <label for="sw-default">Codigo Empleado</label>
@@ -871,6 +869,7 @@
                                                             id="codigoEmpleado" tabindex="1" required>
                                                     </div>
                                                 </div>
+                                                <div class="col-4"><br></div>
                                                 <div class="col-4"><br></div>
                                             </div>
                                             <div class="row">
