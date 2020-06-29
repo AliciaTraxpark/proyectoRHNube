@@ -482,8 +482,8 @@ function actualizarEmpleado(accion, objEmpleadoA) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (msg) {
-            leertabla();
             $('#form-ver').modal('toggle');
+            leertabla();
             $('#smartwizard').smartWizard("reset");
             $('input[type="file"]').val("");
             $('#formNuevoEd').hide();
@@ -588,6 +588,7 @@ $('#cerrarEd').click(function () {
     $('#smartwizard1').smartWizard("reset");
     $('#formNuevoEd').hide();
     $('#formNuevoEl').hide();
+    $('#navActualizar').hide();
 });
 $('#cerrarMoadalEmpleado').click(function () {
     leertabla();

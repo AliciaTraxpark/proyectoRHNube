@@ -9,6 +9,77 @@ $('#m_fechaFE').combodate({
     maxYear: moment().format('YYYY') + 1,
     yearDescending: false,
 });
+//SHOW DE BOTON DE ACTUALIZAR
+$('#navActualizar').hide();
+$('#v_apPaterno').on("focus", function () {
+    $('#navActualizar').show();
+});
+$('#v_apMaterno').on("focus", function () {
+    $('#navActualizar').show();
+});
+$('#v_email').on("focus", function () {
+    $('#navActualizar').show();
+});
+$('#v_celular').on("focus", function () {
+    $('#navActualizar').show();
+});
+$('#v_fechaN').on("focus", function () {
+    $('#navActualizar').show();
+});
+$('#v_nombres').on("focus", function () {
+    $('#navActualizar').show();
+});
+$('#v_telefono').on("focus", function () {
+    $('#navActualizar').show();
+});
+$('#v_direccion').on("focus", function () {
+    $('#navActualizar').show();
+});
+$('#v_dep').on("focus", function () {
+    $('#navActualizar').show();
+});
+$('#v_departamento').on("focus", function () {
+    $('#navActualizar').show();
+});
+$('#v_tipo').on("focus", function () {
+    $('#navActualizar').show();
+});
+$('#v_prov').on("focus", function () {
+    $('#navActualizar').show();
+});
+$('#v_provincia').on("focus", function () {
+    $('#navActualizar').show();
+});
+$('#v_dist').on("focus", function () {
+    $('#navActualizar').show();
+});
+$('#v_distrito').on("focus", function () {
+    $('#navActualizar').show();
+});
+$('#v_codigoEmpleado').on("focus", function () {
+    $('#navActualizar').show();
+});
+$('#v_cargo').on("focus", function () {
+    $('#navActualizar').show();
+});
+$('#v_contrato').on("focus", function () {
+    $('#navActualizar').show();
+});
+$('#v_area').on("focus", function () {
+    $('#navActualizar').show();
+});
+$('#v_nivel').on("focus", function () {
+    $('#navActualizar').show();
+});
+$('#v_centroc').on("focus", function () {
+    $('#navActualizar').show();
+});
+$('#v_local').on("focus",function(){
+    $('#navActualizar').show();
+});
+$('#file2').on("click",function(){
+    $('#navActualizar').show();
+});
 //AREA
 function agregarAreaA() {
     objArea = datosAreaA("POST");

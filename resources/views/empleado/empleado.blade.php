@@ -1033,12 +1033,11 @@
                                         <li><a href="#persona-step-1">Personales</a></li>
                                         <li><a href="#sw-default-step-2">Empresarial</a></li>
                                         <li><a href="#sw-default-step-3">Foto</a></li>
-                                        <!--<div class="col-md-2"></div>
-                                        &nbsp; &nbsp; &nbsp;
-                                        <div class="col-md-4 text-right" style="display: flex;
+                                        <div class="col-md-4 text-left" id="navActualizar" style="display: flex;
                                         align-items: center;">
-                                        &nbsp; &nbsp; &nbsp; &nbsp;   &nbsp; &nbsp;<a style="color: #ebebec;"  href="#modalEliminar" data-toggle="modal" data-target="#modalEliminar"><img src="{{asset('admin/images/eliminar-e.svg')}}" height="18" > <span>Eliminar</span></i></a>
-                                        &nbsp;  &nbsp; &nbsp; <a type="button" href="javascript:abrirnuevo()" style="color: #ebebec;" href=""><img src="{{asset('admin/images/agregar.svg')}}" height="17" > <span>+Nuevo</span></a></div>-->
+                                            <a style="color: #3d3d3d;" id="actualizarEmpleado">
+                                                <img src="{{asset('admin/images/eliminar-e.svg')}}" height="18">
+                                                <span>Actualizar</span></i></a>
                                     </ul>
                                     <div class="p-3" id="form-registrar">
                                         <div id="persona-step-1">
@@ -1327,12 +1326,6 @@
                                                 </div> <!-- end col -->
                                             </div> <!-- end row -->
                                             <br>
-                                            <div class="row">
-                                                <div class="col-md-12  text-center">
-                                                    <button type="button" id="actualizarEmpleado"
-                                                        class="btn btn-success">Actualizar</button>
-                                                </div>
-                                            </div>
                                             <br>
                                         </div>
                                     </div>
