@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Simple landing page</title>
+    <title>Cargar Empleados</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{asset('admin/assets/images/favicon.ico')}}">
+    <link rel="shortcut icon" href="https://rhsolution.com.pe/wp-content/uploads/2019/06/small-logo-rh-solution-64x64.png" sizes="32x32">
 
     <!-- App css -->
     <link href="{{asset('admin/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
@@ -20,8 +20,7 @@
     <link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
 
     <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
+
 
 </head>
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
@@ -99,7 +98,7 @@
          </div><!-- /.modal -->
             <div class="row " >
                 <div class="col-xl-12">
-                    <div class="card" style="background:#f7f6f6;">
+                    <div class="card" style="background:#ffffff;">
                         @if ( $errors->any() )
 
                         <div class="alert alert-danger">
@@ -132,10 +131,14 @@
                                         </div>
                                         <div class="col-md-12">
                                             @if (session('filas'))
-                                            <div class="alert alert-sucess" style="padding-left: 0px; padding-top: 0px; margin-bottom: 0px;">
-                                                Se importaron  {{ session('filas') }} registros.
-                                            </div>
 
+                                            <div class="alert alert-info alert-dismissible fade show" role="alert" >
+                                                Se importaron  {{ session('filas') }} empleados.
+                                                <button type="button" class="close" data-dismiss="alert"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
                                         @endif
                                         </div>
 
@@ -220,13 +223,11 @@
                                      @endif
                                     </tbody>
                             </table><br>
-                            <div class="col-md-12 text-right" style="padding-right: 0px;">
-                                <a href="{{('/empleado')}}"><button  class="boton btn btn-default mr-1" > < Continuar </button></a>
-                            </div>
+
                         </div> <!-- end card body-->
 
                         <div id="cargar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-                            <div class="modal-dialog  modal-dialog-centered" >
+                            <div class="modal-dialog  modal-dialog" style="margin-top: 130px">
 
                             <div class="modal-content" style="background: #f1f2f3;">
 
@@ -235,7 +236,11 @@
 
                                    <div id="contenido">
                                        <h4>Cargando empleados a la base de datos.</h4>
-                                    <img src="{{asset('landing/images/load.gif')}}" height="120" >
+                                    <img src="{{asset('landing/images/load.gif')}}" height="100" >
+                                   </div>
+                                   <div id="cargaCompleta" style="display: none"><br>
+                                    <h4><img src="{{asset('landing/images/exito.svg')}}" height="22" >&nbsp;Carga de empleados exitosa!</h4>
+                                    <a href="{{('/empleados')}}"><button class="boton btn btn-default mr-1">&nbsp; OK &nbsp;</button></a> <br><br>
                                    </div>
 
                                    </div>
@@ -310,14 +315,10 @@ function agregar(){
             data:{emplead:emplead},
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             success: function (data) {
-                $('#cargar').modal('hide');
+                $('#contenido').hide();
+                $('#cargaCompleta').show();
                 $('#btnRegistraBD').prop('disabled', true);
-                $.notify("Empleados registrados", {
-                align: "right",
-                verticalAlign: "top",
-                type: "success",
-                icon: "check"
-            });
+
 
             },
             error: function (data) {

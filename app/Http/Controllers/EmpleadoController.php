@@ -90,6 +90,7 @@ class EmpleadoController extends Controller
     }
     public function cargarDatos()
     {   //DATOS DE TABLA PARA CARGAR EXCEL
+        
         $empleado = DB::table('empleado as e')
             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->leftJoin('tipo_documento as tipoD', 'e.emple_tipoDoc', '=', 'tipoD.tipoDoc_id')

@@ -131,4 +131,31 @@ class calendarioController extends Controller
         eventos_usuario::destroy($id);
         return response()->json($id);
     }
+    public function indexMenu(){
+        if (Auth::check()) {
+            $paises=paises::all();
+            $departamento=ubigeo_peru_departments::all();
+            $calendario=calendario::where('users_id','=',Auth::user()->id)->get();
+            if($calendario->first() )  {}
+            else{
+            //copiar tabla
+            $evento=eventos::all();
+
+
+            foreach($evento as $eventos)
+            {   $calendarioR=new calendario();
+                $calendarioR->users_id=Auth::user()->id;
+                $calendarioR->eventos_id=$eventos->id;
+                $calendarioR->calen_pais=173;
+                $calendarioR->save();
+            }}
+            //FUNCIONA OK
+
+
+            return view ('calendario.calendarioMenu',['pais'=>$paises,'departamento'=>$departamento]);
+        }
+        else{
+            return redirect(route('principal'));
+        }
+    }
 }
