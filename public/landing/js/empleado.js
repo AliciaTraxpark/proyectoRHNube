@@ -333,6 +333,8 @@ function enviarContrato(accion, objContrato) {
 }
 //FECHAS
 function agregarFechas() {
+    $('#fechasmodal').modal('toggle');
+    $('#form-registrar').modal('show');
     fechaI = $('#m_fechaI').val();
     fechaF = $('#m_fechaF').val();
     $('#c_fechaI').text(fechaI);

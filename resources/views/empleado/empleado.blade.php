@@ -299,7 +299,8 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="myModalLabel">Agregar área</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                    onclick="$('#form-registrar').modal('show');">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -326,7 +327,8 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="myModalLabel">Agregar Cargo</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                    onclick="$('#form-registrar').modal('show');">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -353,7 +355,8 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="myModalLabel">Agregar Centro Costo</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                    onclick="$('#form-registrar').modal('show');">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -380,7 +383,8 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="myModalLabel">Agregar Local</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                    onclick="$('#form-registrar').modal('show');">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -408,7 +412,8 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="myModalLabel">Agregar Nivel</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                    onclick="$('#form-registrar').modal('show');">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -436,7 +441,8 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="myModalLabel">Agregar Contrato</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                    onclick="$('#form-registrar').modal('show');">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -464,7 +470,8 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="myModalLabel">Indicar fechas de Contrato</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                    onclick="$('#form-registrar').modal('show');">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -483,9 +490,7 @@
                             <div class="modal-footer">
                                 <button type="button" onclick="$('#form-registrar').modal('show');"
                                     class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="submit"
-                                    onclick="$('#fechasmodal').modal('hide');$('#form-registrar').modal('show');"
-                                    class="btn btn-primary">Guardar</button>
+                                <button type="submit" class="btn btn-primary">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -499,7 +504,8 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="myModalLabel">Agregar área</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                    onclick="$('#form-ver').modal('show');">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -527,7 +533,8 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="myModalLabel">Agregar Cargo</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                    onclick="$('#form-ver').modal('show');">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -554,7 +561,8 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="myModalLabel">Agregar Centro Costo</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                    onclick="$('#form-ver').modal('show');">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -581,7 +589,8 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="myModalLabel">Agregar Local</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                    onclick="$('#form-ver').modal('show');">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -609,7 +618,8 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="myModalLabel">Agregar Nivel</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                    onclick="$('#form-ver').modal('show');">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -637,7 +647,8 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="myModalLabel">Agregar Contrato</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                    onclick="$('#form-ver').modal('show');">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -665,7 +676,8 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="myModalLabel">Indicar fechas de Contrato</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                    onclick="$('#form-ver').modal('show');">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -684,7 +696,7 @@
                             <div class="modal-footer">
                                 <button type="button" onclick="$('#form-ver').modal('show');" class="btn btn-light"
                                     data-dismiss="modal">Cerrar</button>
-                                <button type="submit" onclick="$('#fechasmodalE').modal('hide');$('#form-ver').modal('show');" class="btn btn-primary">Guardar</button>
+                                <button type="submit" class="btn btn-primary">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->

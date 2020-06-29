@@ -314,6 +314,8 @@ function enviarContratoA(accion, objContrato) {
 //FECHAS
 
 function agregarFechasA() {
+    $('#fechasmodalE').modal('toggle');
+    $('#form-ver').modal('show');
     fechaI = $('#m_fechaIE').val();
     fechaF = $('#m_fechaFE').val();
     $('#v_fechaIC').text(fechaI);
@@ -322,7 +324,7 @@ function agregarFechasA() {
     $('#m_fechaFE').combodate("clearValue");
 }
 
-$('#btnCerrar').on("click",function(){
+$('#btnCerrar').on("click", function () {
     $('#form-ver').modal('show');
     console.log('ingreso');
 })
