@@ -17,7 +17,7 @@ function agregarAreaA() {
 
 function datosAreaA(method) {
     nuevoArea = {
-        area_descripcion: $('#textAreaE').val(),
+        area_descripcion: $('#textAreaE').val().toUpperCase(),
         '_method': method
     }
     return (nuevoArea);
@@ -69,7 +69,7 @@ function agregarcargoA() {
 
 function datosCargoA(method) {
     nuevoCargo = {
-        cargo_descripcion: $('#textCargoE').val(),
+        cargo_descripcion: $('#textCargoE').val().toUpperCase(),
         '_method': method
     }
     return (nuevoCargo);
@@ -120,7 +120,7 @@ function agregarcentroA() {
 
 function datosCentroA(method) {
     nuevoCentro = {
-        centroC_descripcion: $('#textCentroE').val(),
+        centroC_descripcion: $('#textCentroE').val().toUpperCase(),
         '_method': method
     }
     return (nuevoCentro);
@@ -170,7 +170,7 @@ function agregarlocalA() {
 
 function datosLocalA(method) {
     nuevoLocal = {
-        local_descripcion: $('#textLocalE').val(),
+        local_descripcion: $('#textLocalE').val().toUpperCase(),
         '_method': method
     }
     return (nuevoLocal);
@@ -221,7 +221,7 @@ function agregarnivelA() {
 
 function datosNivelA(method) {
     nuevoNivel = {
-        nivel_descripcion: $('#textNivelE').val(),
+        nivel_descripcion: $('#textNivelE').val().toUpperCase(),
         '_method': method
     }
     return (nuevoNivel);
@@ -273,7 +273,7 @@ function agregarContratoA() {
 
 function datosContratoA(method) {
     nuevoContrato = {
-        contrato_descripcion: $('#textContratoE').val(),
+        contrato_descripcion: $('#textContratoE').val().toUpperCase(),
         '_method': method
     }
     return (nuevoContrato);

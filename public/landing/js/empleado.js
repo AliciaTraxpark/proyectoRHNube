@@ -38,7 +38,7 @@ function agregarArea() {
 
 function datosArea(method) {
     nuevoArea = {
-        area_descripcion: $('#textArea').val(),
+        area_descripcion: $('#textArea').val().toUpperCase(),
         '_method': method
     }
     return (nuevoArea);
@@ -90,7 +90,7 @@ function agregarcargo() {
 
 function datosCargo(method) {
     nuevoCargo = {
-        cargo_descripcion: $('#textCargo').val(),
+        cargo_descripcion: $('#textCargo').val().toUpperCase(),
         '_method': method
     }
     return (nuevoCargo);
@@ -141,7 +141,7 @@ function agregarcentro() {
 
 function datosCentro(method) {
     nuevoCentro = {
-        centroC_descripcion: $('#textCentro').val(),
+        centroC_descripcion: $('#textCentro').val().toUpperCase(),
         '_method': method
     }
     return (nuevoCentro);
@@ -191,7 +191,7 @@ function agregarlocal() {
 
 function datosLocal(method) {
     nuevoLocal = {
-        local_descripcion: $('#textLocal').val(),
+        local_descripcion: $('#textLocal').val().toUpperCase(),
         '_method': method
     }
     return (nuevoLocal);
@@ -242,7 +242,7 @@ function agregarnivel() {
 
 function datosNivel(method) {
     nuevoNivel = {
-        nivel_descripcion: $('#textNivel').val(),
+        nivel_descripcion: $('#textNivel').val().toUpperCase(),
         '_method': method
     }
     return (nuevoNivel);
