@@ -294,7 +294,7 @@ function agregarContrato() {
 
 function datosContrato(method) {
     nuevoContrato = {
-        contrato_descripcion: $('#textContrato').val(),
+        contrato_descripcion: $('#textContrato').val().toUpperCase(),
         '_method': method
     }
     return (nuevoContrato);
@@ -338,22 +338,11 @@ function enviarContrato(accion, objContrato) {
     });
 }
 //FECHAS
-$(function () {
-    $('#contrato').on('change', onSelectFecha);
-});
-
-function onSelectFecha() {
-    $('#form-registrar').modal('hide');
-    $('#fechasmodal').modal('show');
-}
-
 function agregarFechas() {
     fechaI = $('#m_fechaI').val();
     fechaF = $('#m_fechaF').val();
     $('#c_fechaI').text(fechaI);
     $('#c_fechaF').text(fechaF);
-    $('#fechasmodal').modal('toggle');
-    $('#form-registrar').modal('show');
     $('#m_fechaI').combodate("clearValue");
     $('#m_fechaF').combodate("clearValue");
 }
@@ -391,7 +380,7 @@ function datosPersona(method) {
         fechaI: $('#c_fechaI').text(),
         fechaF: $('#c_fechaF').text(),
         correo: $('#email').val(),
-        codigoEmpleado:$('#codigoEmpleado').val(),
+        codigoEmpleado: $('#codigoEmpleado').val(),
         '_method': method
     }
     return (nuevoEmpleado);
@@ -474,7 +463,7 @@ function datosPersonaA(method) {
         correo_v: $('#v_email').val(),
         fechaI_v: $('#v_fechaIC').text(),
         fechaF_v: $('#v_fechaFC').text(),
-        codigoEmpleado_v:$('#v_codigoEmpleado').val(),
+        codigoEmpleado_v: $('#v_codigoEmpleado').val(),
         '_method': method
     }
     return (nuevoEmpleadoA);

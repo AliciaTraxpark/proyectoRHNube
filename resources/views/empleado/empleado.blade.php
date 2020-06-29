@@ -457,7 +457,7 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div>
-                <div id="fechasmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal"
+                <div id="fechasmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fechasmodal"
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -482,7 +482,9 @@
                             <div class="modal-footer">
                                 <button type="button" onclick="$('#form-registrar').modal('show');"
                                     class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" id="guardarFechas" class="btn btn-primary">Guardar</button>
+                                <button type="submit" id="guardarFechas"
+                                    onclick="$('#fechasmodal').modal('hide');$('#form-registrar').modal('show');"
+                                    class="btn btn-primary">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -656,8 +658,8 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div>
-                <div id="fechasmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal"
-                    aria-hidden="true" data-backdrop="static">
+                <div id="fechasmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fechasmodalE"
+                    aria-hidden=" true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -690,7 +692,7 @@
                 <!-- /.modal -->
                 <!---->
                 <div class="modal fade" style="font-size: 13px" id="form-registrar" tabindex="-1" role="dialog"
-                    aria-labelledby="areamodal" aria-hidden="true" data-backdrop="static">
+                    aria-labelledby="form-registrar" aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog modal-dialog-scrollable modal-lg">
                         <div class="modal-content">
                             <div class="modal-header" style="background: #163552;">
@@ -896,10 +898,11 @@
                                                                 data-target="#contratomodal"><i
                                                                     class="uil uil-plus"></i></a></label>
                                                         <select class="form-control" name="contrato" id="contrato"
+                                                            onchange="$('#form-registrar').modal('hide');$('#fechasmodal').modal('show');"
                                                             tabindex="5" required>
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($tipo_cont as $tipo_conts)
-                                                            <option class="" value="{{$tipo_conts->contrato_id}}">
+                                                            <option value="{{$tipo_conts->contrato_id}}">
                                                                 {{$tipo_conts->contrato_descripcion}}</option>
                                                             @endforeach
                                                         </select>

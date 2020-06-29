@@ -9,13 +9,12 @@ class contratoController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth','verified']);
+        $this->middleware(['auth', 'verified']);
     }
-    public function store(Request $request){
-        $tipoC=new tipo_contrato();
-        $tipoC->contrato_descripcion=$request->get('contrato_descripcion');
-        $tipoC->contrato_fechaI=$request->get('contrato_fechaI');
-        $tipoC->contrato_fechaF=$request->get('contrato_fechaF');
+    public function store(Request $request)
+    {
+        $tipoC = new tipo_contrato();
+        $tipoC->contrato_descripcion = $request->get('contrato_descripcion');
         $tipoC->save();
         return  $tipoC;
     }
