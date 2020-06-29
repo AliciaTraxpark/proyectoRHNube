@@ -2,20 +2,22 @@
     div.dataTables_wrapper div.dataTables_filter {
         display: none;
     }
-    .table{
-        width: 100%!important;
-    }
-    .dataTables_scrollHeadInner{
-        width: 100%!important;
+
+    .table {
+        width: 100% !important;
     }
 
+    .dataTables_scrollHeadInner {
+        width: 100% !important;
+    }
 </style>
 <input type="hidden" id="csrf_token" name="_token" value="{{ csrf_token() }}">
 <div class="row">
 
     <div class="col-md-6" id="filter_global">
 
-        <td align="center"><input type="text" class="global_filter form-control form-control-sm" id="global_filter"></td>
+        <td align="center"><input type="text" class="global_filter form-control form-control-sm" id="global_filter">
+        </td>
     </div>
     <div class="col-md-6" id="filter_col1" data-column="1">
         <label for="">Nombre:</label>
@@ -40,9 +42,10 @@
 
 </div>
 
- <table id="tablaEmpleado" class="table dt-responsive nowrap">
+<table id="tablaEmpleado" class="table dt-responsive nowrap">
     <thead style=" background: #e3eaef;color: #6c757d;">
         <tr style="background: #ffffff">
+            <th style="border-top: 1px solid #fdfdfd;"></th>
             <th style="border-top: 1px solid #fdfdfd;"></th>
             <th style="border-top: 1px solid #fdfdfd;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="inputR"
                     id="i1"></th>
@@ -56,6 +59,7 @@
             </th>
         </tr>
         <tr>
+            <th></th>
             <th>#</th>
             <th>Nombres</th>
             <th>Apellidos</th>
@@ -70,6 +74,8 @@
         @foreach ($tabla_empleado as $tabla_empleados)
         <tr class="" id="{{$tabla_empleados->emple_id}}" value="{{$tabla_empleados->emple_id}}">
 
+            <td><button class="btn btn-sm btn-primary" id="formNuevoEd" onclick="$('#form-ver').modal();"
+                    style="background-color: #183b5d;border-color:#62778c">Editar</button></td>
             <td> <input type="hidden" value="{{$tabla_empleados->emple_id}}"><img
                     src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class=" mr-2" alt="" /></td>
             <td>{{$tabla_empleados->perso_nombre}}</td>
@@ -114,7 +120,6 @@
         $('#smartwizard1').smartWizard("reset");
         $(this).addClass('selected').siblings().removeClass('selected');
         var value = $(this).find('input[type=hidden]').val();
-        $('#formNuevoEd').show();
         $('#formNuevoEl').show();
         $.ajax({
             type: "get",
