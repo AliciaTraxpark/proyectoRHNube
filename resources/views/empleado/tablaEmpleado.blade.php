@@ -2,6 +2,12 @@
     div.dataTables_wrapper div.dataTables_filter {
         display: none;
     }
+    .table{
+        width: 100%!important;
+    }
+    .dataTables_scrollHeadInner{
+        width: 100%!important;
+    }
 
 </style>
 <input type="hidden" id="csrf_token" name="_token" value="{{ csrf_token() }}">
@@ -34,7 +40,7 @@
 
 </div>
 
-<table id="tablaEmpleado" class="table nowrap" style="font-size: 12px; width: 100%">
+ <table id="tablaEmpleado" class="table dt-responsive nowrap">
     <thead style=" background: #e3eaef;color: #6c757d;">
         <tr style="background: #ffffff">
             <th style="border-top: 1px solid #fdfdfd;"></th>

@@ -1262,25 +1262,23 @@
 </script>
 
 
-<!-- Vendor js -->
-{{-- <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script> --}}
-<script src="{{asset('admin/assets/js/vendor.min.js')}}"></script>
+{{-- <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script>
 <!-- App js -->
-<script src="{{asset('admin/assets/js/app.min.js')}}"></script>
+<script src="{{asset('admin/assets/js/app.min.js')}}"></script> --}}
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <script src="{{asset('admin/assets/libs/smartwizard/jquery.smartWizard.min.js') }}"></script>
 
-<script src="{{asset('admin/assets/libs/bootstrap-fileinput/piexif.min.js')}}"></script>
-<script src="{{asset('admin/assets/libs/bootstrap-fileinput/sortable.min.js')}}"></script>
-<script src="{{asset('admin/assets/libs/bootstrap-fileinput/purify.min.js')}}"></script>
-<script src="{{asset('admin/assets/libs/bootstrap-fileinput/fileinput.min.js')}}"></script>
-<script src="{{asset('admin/assets/libs/bootstrap-fileinput/theme.js')}}"></script>
-<script src="{{asset('admin/assets/libs/bootstrap-fileinput/es.js')}}"></script>
-<script src="{{asset('admin/assets/libs/combodate-1.0.7/combodate.js')}}"></script>
-<script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
-<script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
+<script src="{{asset('admin/assets/libs/bootstrap-fileinput/piexif.min.js')}} " ></script>
+<script src="{{asset('admin/assets/libs/bootstrap-fileinput/sortable.min.js')}}" ></script>
+<script src="{{asset('admin/assets/libs/bootstrap-fileinput/purify.min.js')}}" ></script>
+<script src="{{asset('admin/assets/libs/bootstrap-fileinput/fileinput.min.js')}}" ></script>
+<script src="{{asset('admin/assets/libs/bootstrap-fileinput/theme.js')}}" ></script>
+<script src="{{asset('admin/assets/libs/bootstrap-fileinput/es.js')}}" ></script>
+<script src="{{asset('admin/assets/libs/combodate-1.0.7/combodate.js')}}" ></script>
+<script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}" ></script>
+<script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}" ></script>
 
 <script src="{{asset('admin/assets/js/pages/form-wizard.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>

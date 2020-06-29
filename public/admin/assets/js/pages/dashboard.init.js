@@ -116,7 +116,7 @@ File: Dashboard init js
       this.$chatInput.focus();
       return false;
     } else {
-      $('<li class="clearfix odd"><div class="chat-avatar"><img src="assets/images/users/avatar-7.jpg" alt="male"><i>' + chatTime + '</i></div><div class="conversation-text"><div class="ctext-wrap"><i>Shreyu</i><p>' + chatText + '</p></div></div></li>').appendTo('.conversation-list');
+      $('<li class="clearfix odd"><div class="chat-avatar"><i>' + chatTime + '</i></div><div class="conversation-text"><div class="ctext-wrap"><i>Shreyu</i><p>' + chatText + '</p></div></div></li>').appendTo('.conversation-list');
       this.$chatInput.focus();
       this.$chatList.animate({
         scrollTop: this.$chatList.prop("scrollHeight")
@@ -127,7 +127,7 @@ File: Dashboard init js
 
 
   ChatApp.prototype.init = function () {
-    var $this = this; //binding keypress event on chat input box - on enter we are adding the chat into chat list - 
+    var $this = this; //binding keypress event on chat input box - on enter we are adding the chat into chat list -
 
     $this.$chatInput.keypress(function (ev) {
       var p = ev.which;
@@ -173,7 +173,7 @@ File: Dashboard init js
           show: false
         }
       }
-    }; // 
+    }; //
     // Stats
     //
 

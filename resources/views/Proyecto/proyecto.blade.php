@@ -103,7 +103,7 @@
                                             <div class="form-group col-lg-12 row">
                                                 <label class="col-lg-4 col-form-label" for="simpleinput">Miembros de proyecto</label>
                                                 <div class="col-lg-8">
-                      
+
                                                     <select class="form-control wide" data-plugin="customselect" multiple id="idempleado" >
 
                                                         @foreach ($empleado as $empleados)
