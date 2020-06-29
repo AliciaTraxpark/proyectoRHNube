@@ -684,7 +684,7 @@
                             <div class="modal-footer">
                                 <button type="button" onclick="$('#form-ver').modal('show');" class="btn btn-light"
                                     data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="submit" onclick="$('#fechasmodalE').modal('hide');$('#form-ver').modal('show');" class="btn btn-primary">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -1005,7 +1005,7 @@
                     </div>
                 </div>
                 <div class="modal fade" id="form-ver" style="font-size: 13px" tabindex="-1" role="dialog"
-                    aria-labelledby="areamodal" aria-hidden="true" data-backdrop="static">
+                    aria-labelledby="form-ver" aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog modal-dialog-scrollable modal-lg">
                         <div class="modal-content">
                             <div class="modal-header" style="background: #163552;">
@@ -1226,6 +1226,7 @@
                                                                 data-toggle="modal"><i class="uil uil-plus"
                                                                     style="color: darkblue;cursor: pointer;"></i></a></label>
                                                         <select class="form-control" name="v_contrato" id="v_contrato"
+                                                            onchange="$('#form-ver').modal('hide');$('#fechasmodalE').modal('show');"
                                                             tabindex="5" required>
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($tipo_cont as $tipo_conts)

@@ -288,11 +288,6 @@ function enviarContratoA(accion, objContrato) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-            $('#contrato').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                value: data.contrato_id,
-                text: data.contrato_descripcion,
-                selected: true
-            }));
             $('#v_contrato').append($('<option>', { //agrego los valores que obtengo de una base de datos
                 value: data.contrato_id,
                 text: data.contrato_descripcion,

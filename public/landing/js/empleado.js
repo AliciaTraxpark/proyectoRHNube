@@ -314,13 +314,7 @@ function enviarContrato(accion, objContrato) {
                 text: data.contrato_descripcion,
                 selected: true
             }));
-            $('#v_contrato').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                value: data.contrato_id,
-                text: data.contrato_descripcion,
-                selected: true
-            }));
             $('#contrato').val(data.contrato_id).trigger("change"); //lo selecciona
-            $('#v_contrato').val(data.contrato_id).trigger("change");
             $('#textcontrato').val('');
             $('#contratomodal').modal('toggle');
             $('#form-registrar').modal('show');
