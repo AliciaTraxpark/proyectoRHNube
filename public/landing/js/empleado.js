@@ -414,6 +414,7 @@ function enviarEmpleado(accion, objEmpleado) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (msg) {
+            leertabla();
             $('#formNuevoEd').hide();
             $('#formNuevoEl').hide();
             $('#smartwizard').smartWizard("reset");
@@ -423,8 +424,9 @@ function enviarEmpleado(accion, objEmpleado) {
             $('input[type="file"]').val("");
             $('input[type="email"]').val("");
             $('select').val("");
+
+
             $('#form-registrar').modal('hide');
-            leertabla();
             $.notify("Empleado registrado", {
                 align: "right",
                 verticalAlign: "top",
@@ -603,9 +605,10 @@ $('#cerrarEd').click(function () {
     $('#formNuevoEl').hide();
 });
 $('#cerrarMoadalEmpleado').click(function () {
+    leertabla();
     console.log("ingreso");
     $('#form-registrar').modal('toggle');
-    leertabla();
+
     $('#formNuevoEd').hide();
     $('#formNuevoEl').hide();
     $('#smartwizard').smartWizard("reset");

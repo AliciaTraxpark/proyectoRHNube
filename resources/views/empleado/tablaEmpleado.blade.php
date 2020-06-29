@@ -88,6 +88,11 @@
 
 <script>
     $(document).ready(function() {
+         $('#filter_col1').hide();
+        $('#filter_col2').hide();
+        $('#filter_col3').hide();
+        $('#filter_col4').hide();
+        $('#filter_col5').hide();
   var $selecTodo = $('#selectT');
   var $table = $('#tablaEmpleado');
   var $tdCheckbox = $table.find('tbody input:checkbox');
@@ -235,6 +240,7 @@
     }
 
     $(document).ready(function () {
+
         var table = $("#tablaEmpleado").DataTable({
             "searching": true,
             "lengthChange": false,
@@ -377,11 +383,7 @@
                 alert("No está activado");
             }
         });
-        $('#filter_col1').hide();
-        $('#filter_col2').hide();
-        $('#filter_col3').hide();
-        $('#filter_col4').hide();
-        $('#filter_col5').hide();
+
 
         $('input.global_filter').on('keyup click', function () {
             filterGlobal();
