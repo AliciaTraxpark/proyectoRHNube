@@ -316,8 +316,8 @@ function enviarContratoA(accion, objContrato) {
 function agregarFechasA() {
     fechaI = $('#m_fechaIE').val();
     fechaF = $('#m_fechaFE').val();
-    $('#c_fechaI').text(fechaI);
-    $('#c_fechaF').text(fechaF);
+    $('#v_fechaIC').text(fechaI);
+    $('#v_fechaFC').text(fechaF);
     $('#m_fechaIE').combodate("clearValue");
     $('#m_fechaFE').combodate("clearValue");
 }
