@@ -17,10 +17,12 @@ use App\tipo_documento;
 use App\tipo_contrato;
 use App\nivel;
 use App\local;
+use App\modo;
 use App\persona;
 use App\proyecto;
 use App\proyecto_empleado;
 use App\tarea;
+use App\tipo_dispositivo;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTFactory;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -37,7 +39,7 @@ class EmpleadoController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth','verified'])->except('provincias', 'distritos', 'fechas');
+        $this->middleware(['auth', 'verified'])->except('provincias', 'distritos', 'fechas');
     }
     public function fechas($id)
     {
@@ -65,6 +67,7 @@ class EmpleadoController extends Controller
         $nivel = nivel::all();
         $local = local::all();
         $empleado = empleado::all();
+        $dispositivo = tipo_dispositivo::all();
         $tabla_empleado = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->join('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
@@ -85,12 +88,12 @@ class EmpleadoController extends Controller
         return view('empleado.empleado', [
             'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
             'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
-            'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado
+            'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo
         ]);
     }
     public function cargarDatos()
     {   //DATOS DE TABLA PARA CARGAR EXCEL
-        
+
         $empleado = DB::table('empleado as e')
             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->leftJoin('tipo_documento as tipoD', 'e.emple_tipoDoc', '=', 'tipoD.tipoDoc_id')
@@ -264,6 +267,18 @@ class EmpleadoController extends Controller
         $empleado->emple_codigo = $objEmpleado['codigoEmpleado'];
         $empleado->users_id = Auth::user()->id;
         $empleado->save();
+        $idempleado = $empleado->emple_id;
+        if ($request->get('disp') != '') {
+            $disp = $request->get('disp');
+            foreach ($disp as $dispositivo) {
+                $modo = new modo();
+                $modo->idEmpleado = $idempleado;
+                $modo->idTipoModo = 1;
+                $modo->idTipoDispositivo = $dispositivo;
+                $modo->save();
+            }
+        }
+
 
         return json_encode(array('status' => true));
     }
@@ -485,7 +500,8 @@ class EmpleadoController extends Controller
         //dd($empleado->emple_persona);
 
     }
-    public function indexMenu(){
+    public function indexMenu()
+    {
         $departamento = ubigeo_peru_departments::all();
         $provincia = ubigeo_peru_provinces::all();
         $distrito = ubigeo_peru_districts::all();
@@ -519,6 +535,5 @@ class EmpleadoController extends Controller
             'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
             'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado
         ]);
-
     }
 }

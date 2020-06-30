@@ -100,7 +100,6 @@
         body {
             background-color: #f8f8f8;
         }
-
     </style>
     <div id="preloader">
         <div id="status">
@@ -730,7 +729,8 @@
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Tipo Documento</label>
-                                                        <span id="validDocumento" style="color: red;">*Campo Obligatorio</span>
+                                                        <span id="validDocumento" style="color: red;">*Campo
+                                                            Obligatorio</span>
                                                         <select class="form-control" placeholder="Tipo Documento "
                                                             name="documento" id="documento" tabindex="1" required>
                                                             <option value="">Seleccionar</option>
@@ -742,7 +742,8 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Apellido Paterno</label>
-                                                        <span id="validApPaterno" style="color: red;">*Campo Obligatorio</span>
+                                                        <span id="validApPaterno" style="color: red;">*Campo
+                                                            Obligatorio</span>
                                                         <input type="text" class="form-control" name="apPaterno"
                                                             id="apPaterno" tabindex="4" required>
                                                     </div>
@@ -755,13 +756,15 @@
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Num. Documento</label>
-                                                        <span id="validNumDocumento" style="color: red;">*Campo Obligatorio</span>
+                                                        <span id="validNumDocumento" style="color: red;">*Campo
+                                                            Obligatorio</span>
                                                         <input type="text" class="form-control" name="numDocumento"
                                                             id="numDocumento" tabindex="2" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Apellido Materno</label>
-                                                        <span id="validApMaterno" style="color: red;">*Campo Obligatorio</span>
+                                                        <span id="validApMaterno" style="color: red;">*Campo
+                                                            Obligatorio</span>
                                                         <input type="text" class="form-control" name="apMaterno"
                                                             id="apMaterno" tabindex="5" required>
                                                     </div>
@@ -774,14 +777,16 @@
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Fecha Nacimiento</label>
-                                                        <span id="validFechaN" style="color: red;">*Campo Obligatorio</span>
+                                                        <span id="validFechaN" style="color: red;">*Campo
+                                                            Obligatorio</span>
                                                         <input type="text" data-custom-class="form-control" id="fechaN"
                                                             tabindex="3" data-format="YYYY-MM-DD"
                                                             data-template="D MMM YYYY" name="date">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Nombres</label>
-                                                        <span id="validNombres" style="color: red;">*Campo Obligatorio</span>
+                                                        <span id="validNombres" style="color: red;">*Campo
+                                                            Obligatorio</span>
                                                         <input type="text" class="form-control" name="nombres"
                                                             id="nombres" tabindex="6" required>
                                                     </div>
@@ -824,7 +829,8 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="normal" for="">Genero</label>
-                                                        <span id="validGenero" style="color: red;">*Campo Obligatorio</span>
+                                                        <span id="validGenero" style="color: red;">*Campo
+                                                            Obligatorio</span>
                                                         <label class="custom-control custom-radio">
                                                             <input type="radio" name="tipo" id="tipo" value="Femenino"
                                                                 required>
@@ -1010,6 +1016,22 @@
                                                     </div>
                                                 </div> <!-- end col -->
                                             </div> <!-- end row -->
+                                        </div>
+                                        <div id="sw-default-step-4" class="setup-content">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <h4 class="header-title mt-0" style="color: #163552;"></i>Eligir
+                                                        plataforma del empleado</h4>
+                                                </div>
+                                                @foreach($dispositivo as $disp)
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <input type="checkbox"
+                                                            value="{{$disp->id}}" name="disp" id="disp"> {{$disp->dispositivo_descripcion}}<br>
+                                                    </div>
+                                                </div>
+                                                @endforeach
+                                            </div>
                                             <br>
                                             <div class="row">
                                                 <div class="col-md-12  text-center">
@@ -1061,7 +1083,8 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Apellido Paterno</label>
-                                                        <span id="v_validApPaterno" style="color: red;">*Campo Obligatorio</span>
+                                                        <span id="v_validApPaterno" style="color: red;">*Campo
+                                                            Obligatorio</span>
                                                         <input type="text" class="form-control" name="v_apPaterno"
                                                             id="v_apPaterno" tabindex="4" required>
                                                     </div>
@@ -1074,14 +1097,16 @@
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Num. Documento</label>
-                                                        <span id="v_validNumDocumento" style="color: red;">*Campo Obligatorio</span>
+                                                        <span id="v_validNumDocumento" style="color: red;">*Campo
+                                                            Obligatorio</span>
                                                         <input type="text" class="form-control" name="v_numDocumento"
                                                             id="v_numDocumento" required disabled
                                                             style="background-color: #fcfcfc;" tabindex="2">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Apellido Materno</label>
-                                                        <span id="v_validApMaterno" style="color: red;">*Campo Obligatorio</span>
+                                                        <span id="v_validApMaterno" style="color: red;">*Campo
+                                                            Obligatorio</span>
                                                         <input type="text" class="form-control" name="v_apMaterno"
                                                             id="v_apMaterno" tabindex="5" required>
                                                     </div>
@@ -1094,14 +1119,16 @@
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Fecha Nacimiento</label>
-                                                        <span id="v_validFechaN" style="color: red;">*Campo Obligatorio</span>
+                                                        <span id="v_validFechaN" style="color: red;">*Campo
+                                                            Obligatorio</span>
                                                         <input type="text" data-custom-class="form-control"
                                                             id="v_fechaN" data-format="YYYY-MM-DD"
                                                             data-template="D MMM YYYY" name="date" tabindex="3">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Nombres</label>
-                                                        <span id="v_validNombres" style="color: red;">*Campo Obligatorio</span>
+                                                        <span id="v_validNombres" style="color: red;">*Campo
+                                                            Obligatorio</span>
                                                         <input type="text" class="form-control" name="v_nombres"
                                                             id="v_nombres" tabindex="6" required>
                                                     </div>

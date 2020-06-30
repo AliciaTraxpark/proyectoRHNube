@@ -67,7 +67,7 @@
             <th>Cargo</th>
             <th>Área</th>
             <th>Centro de Costo</th>
-            <!--<th>&nbsp;<input type="checkbox" name="" id="selectT"></th>-->
+            <th>&nbsp;<input type="checkbox" name="" id="selectT"></th>
 
         </tr>
     </thead>
@@ -84,8 +84,8 @@
             <td>{{$tabla_empleados->cargo_descripcion}}</td>
             <td>{{$tabla_empleados->area_descripcion}}</td>
             <td>{{$tabla_empleados->centroC_descripcion}} </td>
-            <!--<td><input type="checkbox" id="tdC" style="margin-left:5.5px!important" class="form-check-input sub_chk"
-                    data-id="{{$tabla_empleados->emple_id}}"> </td>-->
+            <td><input type="checkbox" id="tdC" style="margin-left:5.5px!important" class="form-check-input sub_chk"
+                    data-id="{{$tabla_empleados->emple_id}}"> </td>
         </tr>
 
         @endforeach

@@ -385,6 +385,13 @@ function datosPersona(method) {
 function enviarEmpleado(accion, objEmpleado) {
 
     var formData = new FormData();
+    var disp = [];
+    $("input[name='disp']:checked").each(function () {
+        disp.push(this.value);
+    });
+    for (let i = 0; i < disp.length; i++) {
+        formData.append('disp[' + i + ']', disp[i]);
+    }
     formData.append('file', $('#file').prop('files')[0]);
     formData.append('objEmpleado', JSON.stringify(objEmpleado));
     $.ajax({
@@ -400,9 +407,10 @@ function enviarEmpleado(accion, objEmpleado) {
         },
         success: function (msg) {
             leertabla();
+            $('#smartwizard').smartWizard("reset");
+            $('#form-registrar').modal('toggle');
             $('#formNuevoEd').hide();
             $('#formNuevoEl').hide();
-            $('#smartwizard').smartWizard("reset");
             $('input[type="text"]').val("");
             $('input:radio[name=tipo]:checked').prop('checked', false);
             $('input[type="date"]').val("");
@@ -411,7 +419,6 @@ function enviarEmpleado(accion, objEmpleado) {
             $('select').val("");
 
 
-            $('#form-registrar').modal('hide');
             $.notify("Empleado registrado", {
                 align: "right",
                 verticalAlign: "top",
