@@ -68,6 +68,30 @@ $(document).ready(function () {
             } else {
                 $('#validGenero').hide();
             }
+            if ($("#email").val() != "") {
+                //VALIDAR CORREO
+                var email = $('#email').val();
+                $.ajax({
+                    async: false,
+                    type: "GET",
+                    url: "email",
+                    data: {
+                        email: email
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        if (data == 1) {
+                            $('#emailR').show();
+                            isStepValid = false;
+                            return false;
+                        } else {
+                            $('#emailR').hide();
+                        }
+                    }
+                });
+            }
             console.log(isStepValid)
         }
         return isStepValid;
@@ -108,6 +132,30 @@ $(document).ready(function () {
                 $('#v_validFechaN').show();
             } else {
                 $('#v_validFechaN').hide();
+            }
+            if ($("#v_email").val() != "") {
+                //VALIDAR CORREO
+                var email = $('#v_email').val();
+                $.ajax({
+                    async: false,
+                    type: "GET",
+                    url: "email",
+                    data: {
+                        email: email
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        if (data == 1) {
+                            $('#v_emailR').show();
+                            isStepValid = false;
+                            return false;
+                        } else {
+                            $('#v_emailR').hide();
+                        }
+                    }
+                });
             }
             console.log(isStepValid)
         }

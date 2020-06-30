@@ -749,6 +749,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Correo Electronico</label>
+                                                        <span id="emailR" style="color: red;">*Correo registrado</span>
                                                         <input type="email" class="form-control" id="email" name="email"
                                                             tabindex="7">
                                                     </div>
@@ -1092,6 +1093,8 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Correo Electronico</label>
+                                                        <span id="v_emailR" style="color: red;">*Correo
+                                                            registrado</span>
                                                         <input type="email" class="form-control" id="v_email"
                                                             name="email" tabindex="7">
                                                     </div>

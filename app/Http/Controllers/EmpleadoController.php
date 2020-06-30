@@ -612,4 +612,13 @@ class EmpleadoController extends Controller
             return 1;
         }
     }
+
+    public function comprobarCorreo(Request $request)
+    {
+        $email = $request->get('email');
+        $empleado = empleado::where('emple_Correo', '=', $email)->first();
+        if ($empleado != null) {
+            return 1;
+        }
+    }
 }

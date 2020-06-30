@@ -624,7 +624,8 @@ $('#cerrarMoadalEmpleado').click(function () {
 });
 //*********************/
 $('#numR').hide();
-$('#v_numR').hide();
+$('#emailR').hide();
+$('#v_emailR').hide();
 $('#validDocumento').hide();
 $('#validApPaterno').hide();
 $('#validNumDocumento').hide();
