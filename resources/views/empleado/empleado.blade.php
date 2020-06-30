@@ -1066,7 +1066,7 @@
                                         <li><a href="#sw-default-step-3">Foto</a></li>
                                         <li><a href="#sw-default-step-4">Dispositivos</a></li>
                                         <div class="col-md-4 text-left" id="navActualizar" style="display: flex;
-                                        align-items: center;"><a style="color: #3d3d3d;" id="actualizarEmpleado">
+                                        align-items: center;cursor: pointer;"><a style="color: #3d3d3d;" id="actualizarEmpleado">
                                                 <img src="{{asset('admin/images/user.svg')}}" height="18">
                                                 <span>Actualizar</span></i></a>
                                     </ul>

@@ -118,13 +118,13 @@
             <td>{{$tabla_empleados->cargo_descripcion}}</td>
             <td>{{$tabla_empleados->area_descripcion}}</td>
             <td>{{$tabla_empleados->centroC_descripcion}} </td>
-            @if($tabla_empleados->idD != 1)
+            @if(!in_array("1",$tabla_empleados->dispositivos))
             <td></td>
             @else
             <td><a id="formNuevoEd" onclick="$('#modalCorreo').modal();" style="cursor: pointer"><img
                         src="{{asset('admin/images/message.svg')}}" height="40"></a></td>
             @endif
-            @if($tabla_empleados->idD != 2)
+            @if(!in_array("2",$tabla_empleados->dispositivos))
             <td></td>
             @else
             <td><a id="formNuevoEd" onclick="$('#modalCorreo').modal();" style="cursor: pointer"><img

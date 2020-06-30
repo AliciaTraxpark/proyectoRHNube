@@ -475,6 +475,13 @@ function datosPersonaA(method) {
 function actualizarEmpleado(accion, objEmpleadoA) {
 
     var formDataA = new FormData();
+    var disp = [];
+    $("input[name='v_disp']:checked").each(function () {
+        disp.push(this.value);
+    });
+    for (let i = 0; i < disp.length; i++) {
+        formDataA.append('disp[' + i + ']', disp[i]);
+    }
     formDataA.append('file', $('#file2').prop('files')[0]);
     formDataA.append('objEmpleadoA', JSON.stringify(objEmpleadoA));
     $.ajax({
