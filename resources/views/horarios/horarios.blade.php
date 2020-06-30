@@ -371,57 +371,104 @@
                                             </div>
                                          </div>
                                          <div class="col-md-12">
+                                            <div class="accordion custom-accordionwitharrow" id="accordionExample">
 
-                                            {{-- <table  class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Incidencia</th>
-                                                        <th>Fecha y/o hora</th>
-                                                        <th>Descuento</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>Incidencia1</td>
-                                                        <td>12/12/2000</td>
-                                                        <td><input type="checkbox"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>Incidencia1</td>
-                                                        <td>12/12/2000</td>
-                                                        <td><input type="checkbox"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>Incidencia1</td>
-                                                        <td>12/12/2000</td>
-                                                        <td><input type="checkbox"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>Incidencia1</td>
-                                                        <td>12/12/2000</td>
-                                                        <td><input type="checkbox"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>Incidencia1</td>
-                                                        <td>12/12/2000</td>
-                                                        <td><input type="checkbox"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>Incidencia1</td>
-                                                        <td>12/12/2000</td>
-                                                        <td><input type="checkbox"></td>
-                                                    </tr>
+                                                <div class="card mb-1 shadow-none border">
+                                                    <a href="" class="text-dark collapsed" data-toggle="collapse"
+                                                        data-target="#collapseTwo" aria-expanded="false"
+                                                        aria-controls="collapseTwo">
+                                                        <div class="card-header" id="headingTwo">
+                                                            <label for="" style="font-weight: 600">
+                                                                Asignar horario <i
+                                                                    class="uil uil-angle-down float-right accordion-arrow"></i>
+                                                            </label>
+                                                        </div>
+                                                    </a>
 
-                                                </tbody>
-                                            </table> --}}
-                                        </div>
+                                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                                        data-parent="#accordionExample">
+                                                        <div class="card-body text-muted" style="padding-top: 0px; padding-bottom: 20px;">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                       <label for="">Hora de inicio(24h):</label>
+                                                                       <input type="text" id="horaIhorario" class="form-control form-control-sm" required>
+                                                                    </div>
+                                                                 </div>
+                                                                 <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                       <label for="">Hora de fin(24h):</label>
+                                                                       <input type="text" id="horaFhorario" class="form-control form-control-sm" required>
+                                                                    </div>
+                                                                 </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {{-- <div class="card mb-0 shadow-none border">
+
+                                                    <a href="" class="text-dark collapsed" data-toggle="collapse"
+                                                        data-target="#collapseThree" aria-expanded="false"
+                                                        aria-controls="collapseThree">
+                                                        <div class="card-header" id="headingThree">
+                                                            <label for="" style="font-weight: 600">
+                                                                Asignar incidencia <i
+                                                                    class="uil uil-angle-down float-right accordion-arrow"></i>
+                                                            </label>
+                                                        </div>
+                                                    </a>
+
+                                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                                                        data-parent="#accordionExample">
+                                                        <div class="card-body text-muted" style="padding-top: 0px; padding-bottom: 20px;">
+                                                            <div class="row">
+                                                                <div class="col-md-5">
+                                                                    <div class="form-group">
+                                                                       <label for="">Descripcion:</label>
+                                                                       <input type="text" class="form-control form-control-sm" id="descripcionInci" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4"><label for=""><br></label>
+                                                                    <div class="form-check">
+                                                                      <input type="checkbox" class="form-check-input" id="descuentoCheck">
+                                                                      <label class="form-check-label" for="descuentoCheck">Aplicar descuento</label>
+                                                                    </div>
+                                                                 </div>
+                                                                 <div class="col-md-4">
+                                                                    <label for=""><br></label>
+                                                                    <div class="custom-control custom-switch mb-2">
+                                                                        <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                                                                        <label class="custom-control-label" for="customSwitch1">Asignar mas de 1 dia</label>
+                                                                    </div>
+                                                                 </div>
+
+                                                                 <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                       <label for="">Fecha inicio:</label>
+                                                                       <input type="date" id="fechaI" class="form-control form-control-sm" required>
+                                                                    </div>
+                                                                 </div>
+                                                                 <div class="col-md-4" id="divFfin">
+                                                                    <div class="form-group">
+                                                                       <label for="">fecha fin:</label>
+                                                                       <input type="date" id="fechaF" class="form-control form-control-sm" >
+                                                                    </div>
+                                                                 </div>
+                                                                 <div class="col-md-4" id="divhora">
+                                                                    <div class="form-group">
+                                                                       <label for="">Hora de salida(24h):</label>
+                                                                       <input type="text" id="horaInciden" class="form-control form-control-sm" >
+                                                                    </div>
+                                                                 </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> --}}
+                                            </div>
+                                         </div>
+
+
 
 
 
@@ -457,8 +504,8 @@
                                    <div class="row">
                                        <div class="col-md-12 text-right" >
                                         {{-- <button type="button" id="" class="btn btn-light " data-dismiss="modal">Cancelar</button> --}}
-                                        <button type="button" id="" name="" data-dismiss="modal" style="background-color: #163552;" class="btn ">Cerrar</button>
-
+                                        <button type="button" id="" name="" data-dismiss="modal" style="background-color: #d9dee2;color: #171413;" class="btn ">Cerrar</button>
+                                        <button type="button" id="guardarHorarioEventos" name="guardarHorarioEventos"  style="background-color: #163552; display: none;" class="btn ">Guardar</button>
                                        </div>
                                    </div>
                                </div>

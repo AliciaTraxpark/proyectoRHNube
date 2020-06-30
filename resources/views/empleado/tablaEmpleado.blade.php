@@ -179,7 +179,7 @@
                 $('#v_codigoEmpleado').val(data[0].emple_codigo);
                 if (data[0].idD != null) {
                     $id = data[0].idD;
-                    
+
                 }
                 if (data[0].foto != "") {
                     urlFoto = data[0].foto;
@@ -213,6 +213,7 @@
 
     function filterColumn(i) {
         $("#tablaEmpleado").DataTable({
+            retrieve: true,
             "searching": true,
             "scrollX": true,
             columnDefs: [{
@@ -260,6 +261,7 @@
     $(document).ready(function () {
 
         var table = $("#tablaEmpleado").DataTable({
+            retrieve: true,
             "searching": true,
             "lengthChange": false,
             "scrollX": true,
