@@ -608,3 +608,17 @@ $('#cerrarMoadalEmpleado').click(function () {
     $('#documento').attr('disabled', false);
     $('#cerrarMoadalEmpleado').attr('disabled', false);
 });
+//*********************/
+$('#validDocumento').hide();
+$('#validApPaterno').hide();
+$('#validNumDocumento').hide();
+$('#validApMaterno').hide();
+$('#validFechaN').hide();
+$('#validNombres').hide();
+$('#validGenero').hide();
+//************* */
+$('#v_validApPaterno').hide();
+$('#v_validNumDocumento').hide();
+$('#v_validApMaterno').hide();
+$('#v_validNombres').hide();
+$('#v_validFechaN').hide();

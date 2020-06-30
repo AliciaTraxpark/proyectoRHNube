@@ -6,48 +6,45 @@ $(document).ready(function () {
             console.log("validar primer paso");
             if ($('#documento').val() == "") {
                 isStepValid = false;
-                $('#documento').addClass("is-invalid");
+                $('#validDocumento').show();
             } else {
-                $('#documento').removeClass("is-invalid");
+                $('#validDocumento').hide();
             }
             if ($('#apPaterno').val() == "") {
                 isStepValid = false;
-                $('#apPaterno').addClass("is-invalid");
+                $('#validApPaterno').show();
             } else {
-                $('#apPaterno').removeClass("is-invalid");
+                $('#validApPaterno').hide();
             }
             if ($('#numDocumento').val() == "") {
                 isStepValid = false;
-                $('#numDocumento').addClass("is-invalid");
+                $('#validNumDocumento').show();
             } else {
-                $('#numDocumento').removeClass("is-invalid");
+                $('#validNumDocumento').hide();
             }
             if ($('#apMaterno').val() == "") {
                 isStepValid = false;
-                $('#apMaterno').addClass("is-invalid");
+                $('#validApMaterno').show();
             } else {
-                $('#apMaterno').removeClass("is-invalid");
+                $('#validApMaterno').hide();
             }
             if ($('#fechaN').val() == "") {
                 isStepValid = false;
-                $('.day').addClass("is-invalid");
-                $('.month').addClass("is-invalid");
-                $('.year').addClass("is-invalid");
+                $('#validFechaN').show();
             } else {
-                $('.day').removeClass("is-invalid");
-                $('.month').removeClass("is-invalid");
-                $('.year').removeClass("is-invalid");
+                $('#validFechaN').hide();
             }
             if ($('#nombres').val() == "") {
                 isStepValid = false;
-                $('#nombres').addClass("is-invalid");
+                $('#validNombres').show();
             } else {
-                $('#nombres').removeClass("is-invalid");
+                $('#validNombres').hide();
             }
             if ($("input[type=radio]:checked").length == 0) {
                 isStepValid = false;
+                $('#validGenero').show();
             } else {
-
+                $('#validGenero').hide();
             }
             console.log(isStepValid)
         }
@@ -62,27 +59,33 @@ $(document).ready(function () {
             console.log("validar primer paso");
             if ($('#v_apPaterno').val() == "") {
                 isStepValid = false;
-                $('#v_apPaterno').addClass("is-invalid");
+                $('#v_validApPaterno').show();
             } else {
-                $('#v_apPaterno').removeClass("is-invalid");
+                $('#v_validApPaterno').hide();
             }
             if ($('#v_numDocumento').val() == "") {
                 isStepValid = false;
-                $('#v_numDocumento').addClass("is-invalid");
+                $('#v_validNumDocumento').show();
             } else {
-                $('#v_numDocumento').removeClass("is-invalid");
+                $('#v_validNumDocumento').hide();
             }
             if ($('#v_apMaterno').val() == "") {
                 isStepValid = false;
-                $('#v_apMaterno').addClass("is-invalid");
+                $('#v_validApMaterno').show();
             } else {
-                $('#v_apMaterno').removeClass("is-invalid");
+                $('#v_validApMaterno').hide();
             }
             if ($('#v_nombres').val() == "") {
                 isStepValid = false;
-                $('#v_nombres').addClass("is-invalid");
+                $('#v_validNombres').show();
             } else {
-                $('#v_nombres').removeClass("is-invalid");
+                $('#v_validNombres').hide();
+            }
+            if ($('#fechaN').val() == "") {
+                isStepValid = false;
+                $('#v_validFechaN').show();
+            } else {
+                $('#v_validFechaN').hide();
             }
             console.log(isStepValid)
         }
