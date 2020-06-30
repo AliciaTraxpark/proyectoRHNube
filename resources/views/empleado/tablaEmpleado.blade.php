@@ -59,13 +59,15 @@
             </th>
         </tr>
         <tr>
-            <th></th>
+            <th>Editar</th>
             <th>#</th>
             <th>Nombres</th>
             <th>Apellidos</th>
             <th>Cargo</th>
             <th>Área</th>
             <th>Centro de Costo</th>
+            <th>Windows</th>
+            <th>Android</th>
             <th>&nbsp;<input type="checkbox" name="" id="selectT"></th>
 
         </tr>
@@ -83,6 +85,8 @@
             <td>{{$tabla_empleados->cargo_descripcion}}</td>
             <td>{{$tabla_empleados->area_descripcion}}</td>
             <td>{{$tabla_empleados->centroC_descripcion}} </td>
+            <td></td>
+            <td></td>
             <td><input type="checkbox" id="tdC" style="margin-left:5.5px!important" class="form-check-input sub_chk"
                     data-id="{{$tabla_empleados->emple_id}}"> </td>
         </tr>
@@ -212,7 +216,7 @@
             "searching": true,
             "scrollX": true,
             columnDefs: [{
-                targets: [1],
+                targets: [1,7,8,9],
                 sortable: false
             }],
 
@@ -261,7 +265,7 @@
             "scrollX": true,
             "pageLength": 30,
             columnDefs: [{
-                targets: [1],
+                targets: [1,7,8,9],
                 sortable: false
             }],
             language: {
