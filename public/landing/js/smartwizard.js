@@ -8,6 +8,27 @@ $(document).ready(function () {
                 isStepValid = false;
                 $('#validDocumento').show();
             } else {
+                //VALIDAR NUMERO DOCUMENTO
+                var numeroD = $('#documento').val();
+                $.ajax({
+                    type: "GET",
+                    url: "numDoc",
+                    data: {
+                        numeroD: numeroD
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        if (data == 1) {
+                            $('#numR').show();
+                            isStepValid = false;
+                            return false;
+                        } else {
+                            $('#numR').hide();
+                        }
+                    }
+                });
                 $('#validDocumento').hide();
             }
             if ($('#apPaterno').val() == "") {

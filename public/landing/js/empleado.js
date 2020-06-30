@@ -623,6 +623,7 @@ $('#cerrarMoadalEmpleado').click(function () {
     $('#cerrarMoadalEmpleado').attr('disabled', false);
 });
 //*********************/
+$('#numR').hide();
 $('#validDocumento').hide();
 $('#validApPaterno').hide();
 $('#validNumDocumento').hide();

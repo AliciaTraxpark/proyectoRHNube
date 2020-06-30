@@ -606,7 +606,7 @@ class EmpleadoController extends Controller
     public function comprobarNumD(Request $request)
     {
         $numeroD = $request->get('numeroD');
-        $empleado = empleado::where('emple_nroDocumento', '=', $numeroD)->first();
+        $empleado = empleado::where('emple_nDoc', '=', $numeroD)->first();
 
         if ($empleado != null) {
             return 1;
