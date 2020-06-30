@@ -758,8 +758,7 @@
                                                         <label for="sw-default">Num. Documento</label>
                                                         <span id="validNumDocumento" style="color: red;">*Campo
                                                             Obligatorio</span>
-                                                        <span id="numR" style="color: red;">*Documento ya
-                                                            registrado</span>
+                                                        <span id="numR" style="color: red;">*Num. registrado</span>
                                                         <input type="text" class="form-control" name="numDocumento"
                                                             id="numDocumento" tabindex="2" required>
                                                     </div>

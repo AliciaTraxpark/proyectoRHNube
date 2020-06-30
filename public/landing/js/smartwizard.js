@@ -4,13 +4,14 @@ $(document).ready(function () {
         // validate step 1
         if (stepnumber == 0) {
             console.log("validar primer paso");
-            if ($('#documento').val() == "") {
+            if ($('#numDocumento').val() == "") {
                 isStepValid = false;
                 $('#validDocumento').show();
             } else {
                 //VALIDAR NUMERO DOCUMENTO
-                var numeroD = $('#documento').val();
+                var numeroD = $('#numDocumento').val();
                 $.ajax({
+                    async: false,
                     type: "GET",
                     url: "numDoc",
                     data: {
