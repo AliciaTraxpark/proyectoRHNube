@@ -19,7 +19,32 @@ function leertabla() {
 
     });
 }
+$('#nombreEmpleado').change(function () {
+    ide=$('#nombreEmpleado').val();
+    num=$('#nombreEmpleado').val().length;
+    if(num==1){
+        $.ajax({
+            type: "post",
+            url: "/verDataEmpleado",
+            data: 'ids=' + ide,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+               calendario(data[1]);
+            },
+            error: function (data) {
+                alert('Ocurrio un error');
+            }
 
+        });
+    }
+    else{     $.get("/eventosHorario", {}, function (data, status) {
+        calendario(data);
+
+    });  }
+
+});
 function verhorarioEmpleado(idempleado) {
     $('#verhorarioEmpleado').modal('toggle');
     $.ajax({
@@ -71,7 +96,94 @@ function calendarioHorario(eventosEmpleado) {
 
         selectable: true,
         selectMirror: true,
+        select: function (arg) {
+            if($("#collapseTwo").is(':visible')){
+                $('#horarioEndH').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
+                $('#horarioStartH').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
+                f1 = $('#horarioStartH').val();
+                f2 = $('#horarioEndH').val();
+                inicioHorario=$('#horaIhorario').val();
+                finHorario=$('#horaFhorario').val();
+                if (inicioHorario == '' || finHorario == '') {
+                    alert('Indique hora de inicio y fin');
+                } else {
+                    agregarHorasHorario();
+                }
+                function agregarHorasHorario() {
+                    //sacar dias entre fecha
+                    var diasEntreFechas = function (desde, hasta) {
+                        var dia_actual = desde;
+                        var fechas = [];
+                        while (dia_actual.isSameOrBefore(hasta)) {
+                            fechas.push(dia_actual.format('YYYY-MM-DD'));
+                            dia_actual.add(1, 'days');
+                        }
+                        return fechas;
+                    };
 
+                    desde = moment(f1);
+                    hasta = moment(f2);
+                    var results = diasEntreFechas(desde, hasta);
+                    results.pop();
+                    //console.log(results);
+                    var fechasArray = [];
+                    var fechastart = [];
+
+                    var objeto = [
+
+                    ];
+                    $.each(results, function (key, value) {
+                        //alert( value );
+                        fechasArray.push(inicioHorario + '-' + finHorario);
+                        fechastart.push(value);
+
+                        objeto.push({
+                            "title": inicioHorario + '-' + finHorario,
+                            "start": value
+                        });
+                    });
+                    console.log(fechasArray);
+
+                   idpais = $('#paisHorario').val();
+                    iddepartamento = $('#departamentoHorario').val();
+                    if(iddepartamento=='Ninguno'){
+                        iddepartamento=null;
+                    }
+
+                    $.ajax({
+                        type: "post",
+                        url: "/guardarEventos",
+                        data: {
+                            fechasArray: fechastart,
+                            hora: inicioHorario + '-' + finHorario,
+                            pais: idpais,
+                            departamento: iddepartamento,
+                            inicio: inicioHorario,
+                            fin: finHorario
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function (data) {
+                            //alert(fechastart);
+                            $.each( fechastart, function( key, value ) {
+                            calendar.addEvent(
+                                { title: inicioHorario + '-' + finHorario, color: "#ffffff", textColor: "000000", start: value, end: null}
+                            ) });
+                            $('#guardarHorarioEventos').show();
+                        },
+                        error: function (data) {
+                            alert('Ocurrio un error');
+                        }
+
+
+                    });
+
+
+
+                };
+            }
+            },
         editable: false,
         eventLimit: true,
         header: {
@@ -95,7 +207,19 @@ $('#horaI').flatpickr({
     dateFormat: "H:i",
     time_24hr: true
 });
+$('#horaIhorario').flatpickr({
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i",
+    time_24hr: true
+});
 $('#horaF').flatpickr({
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i",
+    time_24hr: true
+});
+$('#horaFhorario').flatpickr({
     enableTime: true,
     noCalendar: true,
     dateFormat: "H:i",
@@ -148,21 +272,7 @@ $('#btnasignar').on('click', function(e) {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         success: function (data) {
-                            calendarioHorario(data[1]);
-                            $('#idEmHorario').val(data[0][0].perso_nombre + ' ' + data[0][0].perso_apPaterno + ' ' + data[0][0].perso_apMaterno);
-                            $('#paisHorario').val(data[0][0].paises_id);
-                            depart = data[0][0].ubigeo_peru_departments_id;
-                            if (depart == null) {
-                                $('#departamentoHorario').val('Ninguno');
-                            } else {
-                                $('#departamentoHorario').val(depart);
-                            }
-                            if (data[0][0].horario_sobretiempo == 1) {
-                                $('#exampleCheck2').prop('checked', true);
-                            }
-                            $('#tipHorarioEmpleado').val(data[0][0].horario_tipo);
-                            $('#descripcionCaHorario').val(data[0][0].horario_descripcion);
-                            $('#toleranciaHorario').val(data[0][0].horario_tolerancia);
+                           calendario(data[1]);
                         },
                         error: function (data) {
                             alert('Ocurrio un error');
@@ -170,7 +280,10 @@ $('#btnasignar').on('click', function(e) {
 
                     });
 
-                }
+                } else{     $.get("/eventosHorario", {}, function (data, status) {
+                    calendario(data);
+
+                });  }
 
             }
 
@@ -182,7 +295,7 @@ $('#btnasignar').on('click', function(e) {
 });
 //CALENDARIO//
 
-function calendario() {
+function calendario(data) {
     var calendarEl = document.getElementById('calendar');
     calendarEl.innerHTML = "";
 
@@ -268,7 +381,24 @@ function calendario() {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function (data) {
-                        calendar.refetchEvents();
+                        //alert(fechastart);
+                        $.each( fechastart, function( key, value ) {
+                        calendar.addEvent(
+                            { title: inicio + '-' + fin, color: "#ffffff", textColor: "000000", start: value, end: null}
+                        ) });
+                     /*    $.each( fechasArray, function( key, value ) {
+                            //alert( value );
+                            calendar.addEvent({
+                                title: inicio+'-'+fin,
+                                color:'#ffffff',
+                                textColor:' #000000',
+                                start: value,
+                                end:null,
+
+
+                              })
+
+                          }); */
 
                     },
                     error: function (data) {
@@ -307,7 +437,7 @@ function calendario() {
                 }
             }
         },
-        events: "/eventosHorario",
+        events: data,
     }
     var calendar = new FullCalendar.Calendar(calendarEl, configuracionCalendario);
     calendar.setOption('locale', "Es");
@@ -473,7 +603,34 @@ function calendario1(datadep) {
 }
 document.addEventListener('DOMContentLoaded', calendario1);
 //////////////////////
+$('#guardarHorarioEventos').click(function () {
+    $('#guardarHorarioEventos').prop('disabled', true);
+    idemps = $('#idEmHorario').val();
+    alert(idemps);
 
+    $.ajax({
+        type: "post",
+        url: "/guardarEventosBD",
+        data: {
+            idemps,
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+
+            $('#guardarHorarioEventos').prop('disabled', false);
+
+            $('#verhorarioEmpleado').modal('toggle');
+            calendario();
+
+        },
+        error: function () {
+            alert("Hay un error");
+        }
+    });
+});
+////////////
 $('#guardarTodoHorario').click(function () {
     $('#guardarTodoHorario').prop('disabled', true);
     idemps = $('#nombreEmpleado').val();

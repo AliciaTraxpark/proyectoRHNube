@@ -222,6 +222,7 @@
 
     function filterColumn(i) {
         $("#tablaEmpleado").DataTable({
+            retrieve: true,
             "searching": true,
             "scrollX": true,
 
@@ -265,6 +266,7 @@
     $(document).ready(function () {
 
         var table = $("#tablaEmpleado").DataTable({
+            retrieve: true,
             "searching": true,
             "lengthChange": false,
             "scrollX": true,
