@@ -1026,8 +1026,8 @@
                                                 @foreach($dispositivo as $disp)
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <input type="checkbox"
-                                                            value="{{$disp->id}}" name="disp" id="disp"> {{$disp->dispositivo_descripcion}}<br>
+                                                        <input type="checkbox" value="{{$disp->id}}" name="disp"
+                                                            id="disp"> {{$disp->dispositivo_descripcion}}<br>
                                                     </div>
                                                 </div>
                                                 @endforeach
@@ -1368,6 +1368,22 @@
                                             </div> <!-- end row -->
                                             <br>
                                             <br>
+                                        </div>
+                                        <div id="sw-default-step-4">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <h4 class="header-title mt-0" style="color: #163552;"></i>Eligir
+                                                        plataforma del empleado</h4>
+                                                </div>
+                                                @foreach($dispositivo as $disp)
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <input type="checkbox" value="{{$disp->id}}" id="v_disp"
+                                                            name="v_disp"> {{$disp->dispositivo_descripcion}}<br>
+                                                    </div>
+                                                </div>
+                                                @endforeach
+                                            </div>
                                         </div>
                                     </div>
 

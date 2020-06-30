@@ -81,7 +81,7 @@ $(document).ready(function () {
             } else {
                 $('#v_validNombres').hide();
             }
-            if ($('#fechaN').val() == "") {
+            if ($('#v_fechaN').val() == "") {
                 isStepValid = false;
                 $('#v_validFechaN').show();
             } else {

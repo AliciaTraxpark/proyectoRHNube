@@ -10,7 +10,6 @@
     .dataTables_scrollHeadInner {
         width: 100% !important;
     }
-
 </style>
 <input type="hidden" id="csrf_token" name="_token" value="{{ csrf_token() }}">
 <div class="row">
@@ -75,8 +74,8 @@
         @foreach ($tabla_empleado as $tabla_empleados)
         <tr class="" id="{{$tabla_empleados->emple_id}}" value="{{$tabla_empleados->emple_id}}">
 
-            <td><a id="formNuevoEd" onclick="$('#form-ver').modal();"
-                    ><img src="{{asset('admin/images/user (3).svg')}}" height="23"></a></td>
+            <td><a id="formNuevoEd" onclick="$('#form-ver').modal();" style="cursor: pointer"><img
+                        src="{{asset('admin/images/user (3).svg')}}" height="23"></a></td>
             <td> <input type="hidden" value="{{$tabla_empleados->emple_id}}"><img
                     src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class=" mr-2" alt="" /></td>
             <td>{{$tabla_empleados->perso_nombre}}</td>
@@ -174,6 +173,10 @@
                 $('#v_fechaFC').text(data[0].emple_fechaFC);
                 $('#v_email').val(data[0].emple_Correo);
                 $('#v_codigoEmpleado').val(data[0].emple_codigo);
+                if (data[0].idD != null) {
+                    $id = data[0].idD;
+                    
+                }
                 if (data[0].foto != "") {
                     urlFoto = data[0].foto;
                     hayFoto = true;
