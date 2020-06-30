@@ -1066,9 +1066,10 @@
                                         <li><a href="#sw-default-step-3">Foto</a></li>
                                         <li><a href="#sw-default-step-4">Dispositivos</a></li>
                                         <div class="col-md-4 text-left" id="navActualizar" style="display: flex;
-                                        align-items: center;cursor: pointer;"><a style="color: #3d3d3d;" id="actualizarEmpleado">
-                                                <img src="{{asset('admin/images/user.svg')}}" height="18">
-                                                <span>Actualizar</span></i></a>
+                                        align-items: center;cursor: pointer;"><a style="color: #3d3d3d;"
+                                                id="actualizarEmpleado">
+                                                <img src="{{asset('admin/images/processing.svg')}}" height="18">
+                                                <span style="font-weight: 600">Actualizar Empleado</span></i></a>
                                     </ul>
                                     <div class="p-3" id="form-registrar">
                                         <div id="persona-step-1">
@@ -1378,8 +1379,9 @@
                                                 @foreach($dispositivo as $disp)
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <input type="checkbox" value="{{$disp->id}}" id="v_disp{{$disp->id}}"
-                                                            name="v_disp"> {{$disp->dispositivo_descripcion}}<br>
+                                                        <input type="checkbox" value="{{$disp->id}}"
+                                                            id="v_disp{{$disp->id}}" name="v_disp">
+                                                        {{$disp->dispositivo_descripcion}}<br>
                                                     </div>
                                                 </div>
                                                 @endforeach

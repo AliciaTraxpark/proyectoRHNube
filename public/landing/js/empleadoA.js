@@ -80,6 +80,9 @@ $('#v_local').on("focus",function(){
 $('#file2').on("click",function(){
     $('#navActualizar').show();
 });
+$('input[name=v_disp]').on("click",function(){
+    $('#navActualizar').show();
+});
 //AREA
 function agregarAreaA() {
     objArea = datosAreaA("POST");

@@ -110,7 +110,7 @@
         <tr class="" id="{{$tabla_empleados->emple_id}}" value="{{$tabla_empleados->emple_id}}">
 
             <td><a id="formNuevoEd" onclick="$('#form-ver').modal();" style="cursor: pointer"><img
-                        src="{{asset('admin/images/user (3).svg')}}" height="30"></a></td>
+                        src="{{asset('admin/images/user (3).svg')}}" height="28"></a></td>
             <td> <input type="hidden" value="{{$tabla_empleados->emple_id}}"><img
                     src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class=" mr-2" alt="" /></td>
             <td>{{$tabla_empleados->perso_nombre}}</td>
@@ -122,13 +122,13 @@
             <td></td>
             @else
             <td><a id="formNuevoEd" onclick="$('#modalCorreo').modal();" style="cursor: pointer"><img
-                        src="{{asset('admin/images/message.svg')}}" height="40"></a></td>
+                        src="{{asset('admin/images/email.svg')}}" height="28"></a></td>
             @endif
             @if(!in_array("2",$tabla_empleados->dispositivos))
             <td></td>
             @else
             <td><a id="formNuevoEd" onclick="$('#modalCorreo').modal();" style="cursor: pointer"><img
-                        src="{{asset('admin/images/message.svg')}}" height="40"></a></td>
+                        src="{{asset('admin/images/email.svg')}}" height="28"></a></td>
             @endif
             <td><input type="checkbox" id="tdC" style="margin-left:5.5px!important" class="form-check-input sub_chk"
                     data-id="{{$tabla_empleados->emple_id}}"> </td>
