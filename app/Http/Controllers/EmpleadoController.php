@@ -173,6 +173,8 @@ class EmpleadoController extends Controller
             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
             ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+            ->leftJoin('modo as md', 'md.idEmpleado', '=', 'e.emple_id')
+            ->leftJoin('tipo_dispositivo as td', 'td.id', '=', 'md.idTipoDispositivo')
             ->select(
                 'p.perso_nombre',
                 'p.perso_apPaterno',
@@ -180,7 +182,8 @@ class EmpleadoController extends Controller
                 'c.cargo_descripcion',
                 'a.area_descripcion',
                 'cc.centroC_descripcion',
-                'e.emple_id'
+                'e.emple_id',
+                'md.idTipoDispositivo as idD'
             )
             ->where('e.users_id', '=', Auth::user()->id)
             ->get();

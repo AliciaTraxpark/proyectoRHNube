@@ -85,8 +85,18 @@
             <td>{{$tabla_empleados->cargo_descripcion}}</td>
             <td>{{$tabla_empleados->area_descripcion}}</td>
             <td>{{$tabla_empleados->centroC_descripcion}} </td>
+            @if($tabla_empleados->idD != 1)
             <td></td>
+            @else
+            <td><a id="formNuevoEd" onclick="$('#form-ver').modal();" style="cursor: pointer"><img
+                        src="{{asset('admin/images/message.svg')}}" height="30"></a></td>
+            @endif
+            @if($tabla_empleados->idD != 2)
             <td></td>
+            @else 
+            <td><a id="formNuevoEd" onclick="$('#form-ver').modal();" style="cursor: pointer"><img
+                src="{{asset('admin/images/message.svg')}}" height="30"></a></td>
+            @endif
             <td><input type="checkbox" id="tdC" style="margin-left:5.5px!important" class="form-check-input sub_chk"
                     data-id="{{$tabla_empleados->emple_id}}"> </td>
         </tr>
@@ -179,7 +189,6 @@
                 $('#v_codigoEmpleado').val(data[0].emple_codigo);
                 if (data[0].idD != null) {
                     $id = data[0].idD;
-                    
                 }
                 if (data[0].foto != "") {
                     urlFoto = data[0].foto;
@@ -215,10 +224,6 @@
         $("#tablaEmpleado").DataTable({
             "searching": true,
             "scrollX": true,
-            columnDefs: [{
-                targets: [1,7,8,9],
-                sortable: false
-            }],
 
             language: {
                 "sProcessing": "Procesando...",
@@ -264,10 +269,6 @@
             "lengthChange": false,
             "scrollX": true,
             "pageLength": 30,
-            columnDefs: [{
-                targets: [1,7,8,9],
-                sortable: false
-            }],
             language: {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
