@@ -472,9 +472,9 @@ class EmpleadoController extends Controller
             $valor = $request->get('disp');
             foreach ($idDispositivo as $idD) {
                 $aux = true;
-                foreach ($valor as $val) {
+                foreach ($valor as $index => $val) {
                     if ($idD->idD == $val) {
-                        unset($val);
+                        unset($valor[$index]);
                         $aux = false;
                     }
                 }
@@ -483,18 +483,29 @@ class EmpleadoController extends Controller
                         ->join('modo as md', 'md.idEmpleado', '=', 'e.emple_id')
                         ->select('md.id')
                         ->where('md.idEmpleado', '=', $idE)
-                        ->where('md.idTipoDispositivo', '=', $idD)
+                        ->where('md.idTipoDispositivo', '=', $idD->idD)
                         ->get();
-                    $modo = modo::where('id', $idModo)->get()->first();
+                    $modo = modo::where('id', $idModo[0]->id)->get()->first();
                     $modo->delete();
                 }
-                foreach ($valor as $val1) {
-                    $modoI = new modo();
-                    $modoI->idEmpleado = $idE;
-                    $modoI->idTipoModo = 1;
-                    $modoI->idTipoDispositivo = $val1;
-                    $modoI->save();
-                }
+            }
+            foreach ($valor as $val1) {
+                $modoI = new modo();
+                $modoI->idEmpleado = $idE;
+                $modoI->idTipoModo = 1;
+                $modoI->idTipoDispositivo = $val1;
+                $modoI->save();
+            }
+        } else {
+            foreach ($idDispositivo as $idD) {
+                $idModo = DB::table('empleado as e')
+                    ->join('modo as md', 'md.idEmpleado', '=', 'e.emple_id')
+                    ->select('md.id')
+                    ->where('md.idEmpleado', '=', $idE)
+                    ->where('md.idTipoDispositivo', '=', $idD->idD)
+                    ->get();
+                $modo = modo::where('id', $idModo[0]->id)->get()->first();
+                $modo->delete();
             }
         }
         return json_encode(array('status' => true));
@@ -590,5 +601,15 @@ class EmpleadoController extends Controller
             'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
             'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado
         ]);
+    }
+
+    public function comprobarNumD(Request $request)
+    {
+        $numeroD = $request->get('numeroD');
+        $empleado = empleado::where('emple_nroDocumento', '=', $numeroD)->first();
+
+        if ($empleado != null) {
+            return 1;
+        }
     }
 }
