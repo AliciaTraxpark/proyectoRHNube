@@ -355,11 +355,6 @@ class EmpleadoController extends Controller
             ->where('e.emple_id', '=', $idempleado)
             ->where('e.users_id', '=', Auth::user()->id)
             ->get();
-        $dispositivo = DB::table('empleado as e')
-        ->leftJoin('modo as md', 'md.idEmpleado', '=', 'e.emple_id')
-            ->leftJoin('tipo_dispositivo as td', 'td.id', '=', 'md.idTipoDispositivo')
-            ->select('td.id as idD')
-            ->get();
         return $empleado;
         //
 
