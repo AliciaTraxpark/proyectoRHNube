@@ -353,7 +353,8 @@ class EmpleadoController extends Controller
                 'e.emple_fechaIC',
                 'e.emple_fechaFC',
                 'e.emple_Correo',
-                'e.emple_codigo'
+                'e.emple_codigo',
+                'md.idTipoDispositivo as dispositivo'
             )
             ->where('e.emple_id', '=', $idempleado)
             ->where('e.users_id', '=', Auth::user()->id)

@@ -1378,7 +1378,7 @@
                                                 @foreach($dispositivo as $disp)
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <input type="checkbox" value="{{$disp->id}}" id="v_disp"
+                                                        <input type="checkbox" value="{{$disp->id}}" id="v_disp{{$disp->id}}"
                                                             name="v_disp"> {{$disp->dispositivo_descripcion}}<br>
                                                     </div>
                                                 </div>

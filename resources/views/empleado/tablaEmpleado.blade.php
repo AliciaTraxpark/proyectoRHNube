@@ -11,6 +11,39 @@
         width: 100% !important;
     }
 </style>
+<div id="modalCorreo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCorreo" aria-hidden="true"
+    data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a empleado
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <h5 class="modal-title" id="myModalLabel" style="font-size: 15px">¿Desea enviar correo al empleado
+                        empleado?</h5>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-7 text-right">
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
+                        </div>
+                        <div class="col-md-5 text-right" style="padding-right: 38px;  ">
+                            <button type="button" id="enviarCorreo" name="enviarCorreo"
+                                style="background-color: #163552;" class="btn btn-sm ">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <input type="hidden" id="csrf_token" name="_token" value="{{ csrf_token() }}">
 <div class="row">
 
@@ -77,7 +110,7 @@
         <tr class="" id="{{$tabla_empleados->emple_id}}" value="{{$tabla_empleados->emple_id}}">
 
             <td><a id="formNuevoEd" onclick="$('#form-ver').modal();" style="cursor: pointer"><img
-                        src="{{asset('admin/images/user (3).svg')}}" height="23"></a></td>
+                        src="{{asset('admin/images/user (3).svg')}}" height="30"></a></td>
             <td> <input type="hidden" value="{{$tabla_empleados->emple_id}}"><img
                     src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class=" mr-2" alt="" /></td>
             <td>{{$tabla_empleados->perso_nombre}}</td>
@@ -88,14 +121,14 @@
             @if($tabla_empleados->idD != 1)
             <td></td>
             @else
-            <td><a id="formNuevoEd" onclick="$('#form-ver').modal();" style="cursor: pointer"><img
-                        src="{{asset('admin/images/message.svg')}}" height="30"></a></td>
+            <td><a id="formNuevoEd" onclick="$('#modalCorreo').modal();" style="cursor: pointer"><img
+                        src="{{asset('admin/images/message.svg')}}" height="40"></a></td>
             @endif
             @if($tabla_empleados->idD != 2)
             <td></td>
-            @else 
-            <td><a id="formNuevoEd" onclick="$('#form-ver').modal();" style="cursor: pointer"><img
-                src="{{asset('admin/images/message.svg')}}" height="30"></a></td>
+            @else
+            <td><a id="formNuevoEd" onclick="$('#modalCorreo').modal();" style="cursor: pointer"><img
+                        src="{{asset('admin/images/message.svg')}}" height="40"></a></td>
             @endif
             <td><input type="checkbox" id="tdC" style="margin-left:5.5px!important" class="form-check-input sub_chk"
                     data-id="{{$tabla_empleados->emple_id}}"> </td>
@@ -187,8 +220,13 @@
                 $('#v_fechaFC').text(data[0].emple_fechaFC);
                 $('#v_email').val(data[0].emple_Correo);
                 $('#v_codigoEmpleado').val(data[0].emple_codigo);
-                if (data[0].idD != null) {
-                    $id = data[0].idD;
+                $('input[name=v_disp]').each(function(){
+                    $(this).prop('checked',false);
+                });
+                if (data[0].dispositivo != null) {
+                    for(let i=0; i<data.length; i++){
+                        $('#v_disp' + data[i].dispositivo).prop('checked',true);
+                    }
                 }
                 if (data[0].foto != "") {
                     urlFoto = data[0].foto;
