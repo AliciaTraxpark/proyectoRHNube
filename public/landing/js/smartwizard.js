@@ -4,10 +4,32 @@ $(document).ready(function () {
         // validate step 1
         if (stepnumber == 0) {
             console.log("validar primer paso");
-            if ($('#documento').val() == "") {
+            if ($('#numDocumento').val() == "") {
                 isStepValid = false;
                 $('#validDocumento').show();
             } else {
+                //VALIDAR NUMERO DOCUMENTO
+                var numeroD = $('#numDocumento').val();
+                $.ajax({
+                    async: false,
+                    type: "GET",
+                    url: "numDoc",
+                    data: {
+                        numeroD: numeroD
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        if (data == 1) {
+                            $('#numR').show();
+                            isStepValid = false;
+                            return false;
+                        } else {
+                            $('#numR').hide();
+                        }
+                    }
+                });
                 $('#validDocumento').hide();
             }
             if ($('#apPaterno').val() == "") {
@@ -45,6 +67,30 @@ $(document).ready(function () {
                 $('#validGenero').show();
             } else {
                 $('#validGenero').hide();
+            }
+            if ($("#email").val() != "") {
+                //VALIDAR CORREO
+                var email = $('#email').val();
+                $.ajax({
+                    async: false,
+                    type: "GET",
+                    url: "email",
+                    data: {
+                        email: email
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        if (data == 1) {
+                            $('#emailR').show();
+                            isStepValid = false;
+                            return false;
+                        } else {
+                            $('#emailR').hide();
+                        }
+                    }
+                });
             }
             console.log(isStepValid)
         }
@@ -86,6 +132,30 @@ $(document).ready(function () {
                 $('#v_validFechaN').show();
             } else {
                 $('#v_validFechaN').hide();
+            }
+            if ($("#v_email").val() != "") {
+                //VALIDAR CORREO
+                var email = $('#v_email').val();
+                $.ajax({
+                    async: false,
+                    type: "GET",
+                    url: "email",
+                    data: {
+                        email: email
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        if (data == 1) {
+                            $('#v_emailR').show();
+                            isStepValid = false;
+                            return false;
+                        } else {
+                            $('#v_emailR').hide();
+                        }
+                    }
+                });
             }
             console.log(isStepValid)
         }

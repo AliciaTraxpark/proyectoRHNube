@@ -749,6 +749,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Correo Electronico</label>
+                                                        <span id="emailR" style="color: red;">*Correo registrado</span>
                                                         <input type="email" class="form-control" id="email" name="email"
                                                             tabindex="7">
                                                     </div>
@@ -758,6 +759,7 @@
                                                         <label for="sw-default">Num. Documento</label>
                                                         <span id="validNumDocumento" style="color: red;">*Campo
                                                             Obligatorio</span>
+                                                        <span id="numR" style="color: red;">*Num. registrado</span>
                                                         <input type="text" class="form-control" name="numDocumento"
                                                             id="numDocumento" tabindex="2" required>
                                                     </div>
@@ -1066,9 +1068,10 @@
                                         <li><a href="#sw-default-step-3">Foto</a></li>
                                         <li><a href="#sw-default-step-4">Dispositivos</a></li>
                                         <div class="col-md-4 text-left" id="navActualizar" style="display: flex;
-                                        align-items: center;"><a style="color: #3d3d3d;" id="actualizarEmpleado">
-                                                <img src="{{asset('admin/images/user.svg')}}" height="18">
-                                                <span>Actualizar</span></i></a>
+                                        align-items: center;cursor: pointer;"><a style="color: #3d3d3d;"
+                                                id="actualizarEmpleado">
+                                                <img src="{{asset('admin/images/processing.svg')}}" height="18">
+                                                <span style="font-weight: 600">Actualizar Empleado</span></i></a>
                                     </ul>
                                     <div class="p-3" id="form-registrar">
                                         <div id="persona-step-1">
@@ -1090,6 +1093,8 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Correo Electronico</label>
+                                                        <span id="v_emailR" style="color: red;">*Correo
+                                                            registrado</span>
                                                         <input type="email" class="form-control" id="v_email"
                                                             name="email" tabindex="7">
                                                     </div>
@@ -1378,8 +1383,9 @@
                                                 @foreach($dispositivo as $disp)
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <input type="checkbox" value="{{$disp->id}}" id="v_disp"
-                                                            name="v_disp"> {{$disp->dispositivo_descripcion}}<br>
+                                                        <input type="checkbox" value="{{$disp->id}}"
+                                                            id="v_disp{{$disp->id}}" name="v_disp">
+                                                        {{$disp->dispositivo_descripcion}}<br>
                                                     </div>
                                                 </div>
                                                 @endforeach

@@ -168,11 +168,28 @@ class EmpleadoController extends Controller
      */
     public function tabla()
     {
+        function agruparEmpleados($array)
+        {
+            $resultado = array();
+
+            foreach ($array as $empleado) {
+                if (!isset($resultado[$empleado->emple_id])) {
+                    $resultado[$empleado->emple_id] = $empleado;
+                }
+                if (!isset($resultado[$empleado->emple_id]->dispositivos)) {
+                    $resultado[$empleado->emple_id]->dispositivos = array();
+                }
+                array_push($resultado[$empleado->emple_id]->dispositivos, $empleado->dispositivo);
+            }
+            return $resultado;
+        }
         $tabla_empleado1 = DB::table('empleado as e')
             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
             ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+            ->leftJoin('modo as md', 'md.idEmpleado', '=', 'e.emple_id')
+            ->leftJoin('tipo_dispositivo as td', 'td.id', '=', 'md.idTipoDispositivo')
             ->select(
                 'p.perso_nombre',
                 'p.perso_apPaterno',
@@ -180,12 +197,13 @@ class EmpleadoController extends Controller
                 'c.cargo_descripcion',
                 'a.area_descripcion',
                 'cc.centroC_descripcion',
-                'e.emple_id'
+                'e.emple_id',
+                'md.idTipoDispositivo as dispositivo'
             )
             ->where('e.users_id', '=', Auth::user()->id)
             ->get();
-        //dd($tabla_empleado);
-        return view('empleado.tablaEmpleado', ['tabla_empleado' => $tabla_empleado1]);
+        $result = agruparEmpleados($tabla_empleado1);
+        return view('empleado.tablaEmpleado', ['tabla_empleado' => $result]);
     }
 
     public function create()
@@ -350,7 +368,8 @@ class EmpleadoController extends Controller
                 'e.emple_fechaIC',
                 'e.emple_fechaFC',
                 'e.emple_Correo',
-                'e.emple_codigo'
+                'e.emple_codigo',
+                'md.idTipoDispositivo as dispositivo'
             )
             ->where('e.emple_id', '=', $idempleado)
             ->where('e.users_id', '=', Auth::user()->id)
@@ -442,6 +461,53 @@ class EmpleadoController extends Controller
         $persona->perso_fechaNacimiento = $objEmpleado['fechaN_v'];
         $persona->perso_sexo = $objEmpleado['tipo_v'];
         $persona->save();
+
+        $idDispositivo = DB::table('empleado as e')
+            ->join('modo as md', 'md.idEmpleado', '=', 'e.emple_id')
+            ->join('tipo_dispositivo as td', 'td.id', '=', 'md.idTipoDispositivo')
+            ->select('md.idTipoDispositivo as idD')
+            ->where('md.idEmpleado', '=', $idE)
+            ->get();
+        if ($request->get('disp') != '') {
+            $valor = $request->get('disp');
+            foreach ($idDispositivo as $idD) {
+                $aux = true;
+                foreach ($valor as $index => $val) {
+                    if ($idD->idD == $val) {
+                        unset($valor[$index]);
+                        $aux = false;
+                    }
+                }
+                if ($aux) {
+                    $idModo = DB::table('empleado as e')
+                        ->join('modo as md', 'md.idEmpleado', '=', 'e.emple_id')
+                        ->select('md.id')
+                        ->where('md.idEmpleado', '=', $idE)
+                        ->where('md.idTipoDispositivo', '=', $idD->idD)
+                        ->get();
+                    $modo = modo::where('id', $idModo[0]->id)->get()->first();
+                    $modo->delete();
+                }
+            }
+            foreach ($valor as $val1) {
+                $modoI = new modo();
+                $modoI->idEmpleado = $idE;
+                $modoI->idTipoModo = 1;
+                $modoI->idTipoDispositivo = $val1;
+                $modoI->save();
+            }
+        } else {
+            foreach ($idDispositivo as $idD) {
+                $idModo = DB::table('empleado as e')
+                    ->join('modo as md', 'md.idEmpleado', '=', 'e.emple_id')
+                    ->select('md.id')
+                    ->where('md.idEmpleado', '=', $idE)
+                    ->where('md.idTipoDispositivo', '=', $idD->idD)
+                    ->get();
+                $modo = modo::where('id', $idModo[0]->id)->get()->first();
+                $modo->delete();
+            }
+        }
         return json_encode(array('status' => true));
     }
 
@@ -535,5 +601,24 @@ class EmpleadoController extends Controller
             'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
             'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado
         ]);
+    }
+
+    public function comprobarNumD(Request $request)
+    {
+        $numeroD = $request->get('numeroD');
+        $empleado = empleado::where('emple_nDoc', '=', $numeroD)->first();
+
+        if ($empleado != null) {
+            return 1;
+        }
+    }
+
+    public function comprobarCorreo(Request $request)
+    {
+        $email = $request->get('email');
+        $empleado = empleado::where('emple_Correo', '=', $email)->first();
+        if ($empleado != null) {
+            return 1;
+        }
     }
 }
