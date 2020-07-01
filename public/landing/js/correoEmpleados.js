@@ -14,6 +14,7 @@ function enviar() {
         spacing: 35
     });
     $.ajax({
+        async: false,
         type: "get",
         url: "empleadoCorreo",
         data: {

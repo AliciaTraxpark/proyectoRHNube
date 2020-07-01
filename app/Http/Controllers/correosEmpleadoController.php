@@ -25,10 +25,12 @@ class correosEmpleadoController extends Controller
             ->get();
         if ($codigoEmpleado != '') {
             $codigoHash = $codigoEmpresa[0]->organi_id . $idEmpleado . $codigoEmpleado[0]->emple_codigo;
-            $encode = rtrim(strtr(base64_encode($codigoHash), '+/', '-_'));
+            //$encode = rtrim(strtr(base64_encode($codigoHash), '+/', '-_'));
+            $encode = intval($codigoHash, 36);
         } else {
             $codigoHash = $codigoEmpresa[0]->organi_id . $idEmpleado;
-            $encode = rtrim(strtr(base64_encode($codigoHash), '+/', '-_'));
+            //$encode = rtrim(strtr(base64_encode($codigoHash), '+/', '-_'));
+            $encode = intval($codigoHash, 36);
         }
 
         $vinculacion = new vinculacion();
