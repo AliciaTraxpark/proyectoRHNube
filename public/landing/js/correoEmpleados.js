@@ -1,5 +1,5 @@
 function enviar() {
-    var idEmpleado = $('#codE').val();
+    var idEmpleado = $('#v_id').val();
     //NOTIFICACION
     $.notifyDefaults({
         icon_type: 'image',
@@ -31,8 +31,9 @@ function enviar() {
             $('#modalCorreo').modal('toggle');
         },
         error: function () {
+            $('#modalCorreo').modal('toggle');
             $.notify({
-                message: "\nError.",
+                message: "\nAún no ha registrado correo a empleado.",
                 icon: 'admin/images/warning.svg'
             });
         }
