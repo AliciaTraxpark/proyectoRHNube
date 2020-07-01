@@ -107,12 +107,12 @@
 
         </tr>
     </thead>
-    <tbody style="background:#ffffff;color: #2c2c2c;">
+    <tbody style="background:#ffffff;color: #2c2c2c;" id="tbodyr">
         @foreach ($tabla_empleado as $tabla_empleados)
         <tr class="" id="{{$tabla_empleados->emple_id}}" value="{{$tabla_empleados->emple_id}}">
 
             <td><a id="formNuevoEd" onclick="$('#form-ver').modal();" style="cursor: pointer"><img
-                        src="{{asset('admin/images/edit.svg')}}" height="15"></a>&nbsp;<a  style="cursor: pointer"><img
+                        src="{{asset('admin/images/edit.svg')}}" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a onclick="marcareliminar({{$tabla_empleados->emple_id}})" style="cursor: pointer"><img
                             src="{{asset('admin/images/delete.svg')}}" height="15"></a></td>
             <td class="text-center">&nbsp; <input type="hidden" id="codE" value="{{$tabla_empleados->emple_id}}"><img
                     src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class=" " alt="" /></td>
@@ -133,7 +133,7 @@
             <td><a id="formNuevoEd" onclick="$('#modalCorreo').modal();" style="cursor: pointer"><img
                         src="{{asset('admin/images/email.svg')}}" height="28"></a></td>
             @endif
-            <td><input type="checkbox" id="tdC" style="margin-left:5.5px!important" class="form-check-input sub_chk"
+            <td><input type="checkbox" id="tdC" style="margin-left:5.5px!important" class="form-check-input sub_chk" data-id="{{$tabla_empleados->emple_id}}"
                 $(this)$(this)$(this)> </td>
         </tr>
 
@@ -478,14 +478,15 @@
             $('#confirmarE').click(function () {
 
                 var join_selected_values = allVals.join(",");
-                $.notify(" Empleado eliminado", {
+               /*  $.notify(" Empleado eliminado", {
                     align: "right",
                     verticalAlign: "top",
                     type: "danger",
                     icon: "bell",
                     autoHide: true
-                });
-                $.ajax({
+                }); */
+                var table = $('#tablaEmpleado').DataTable();
+                 $.ajax({
                     url: "/eliminarEmpleados",
                     type: 'DELETE',
                     headers: {
@@ -495,9 +496,18 @@
                     success: function (data) {
 
                         $(".sub_chk:checked").each(function () {
-                            $(this).parents("tr").remove();
+                            //$(this).parents("tr").remove();
+
+
                         });
                         $('#modalEliminar').modal('hide');
+                        //$('#tablaEmpleado').DataTable().destroy();
+                        $.get("tablaempleado/ver", {}, function (data, status) {
+                        $('#tabladiv').html(data);
+                        $('#tabladiv').show();
+
+    });
+
                     },
                     error: function (data) {
                         alert(data.responseText);
@@ -507,7 +517,14 @@
         }
 
     });
+    function marcareliminar(data){
+    $('input:checkbox').attr('checked', false);
 
+    $('input:checkbox[data-id='+data+']').attr('checked', true);
+    $('.delete_all').click();
+
+
+}
 </script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
