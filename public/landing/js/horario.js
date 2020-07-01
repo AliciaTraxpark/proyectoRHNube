@@ -46,6 +46,8 @@ $('#nombreEmpleado').change(function () {
 
 });
 function verhorarioEmpleado(idempleado) {
+    $('#horaIhorario').val('');
+    $('#horaFhorario').val('');
     $('#verhorarioEmpleado').modal('toggle');
     $.ajax({
         type: "post",
@@ -58,6 +60,7 @@ function verhorarioEmpleado(idempleado) {
             calendarioHorario(data[1]);
             $('#idEmHorario').val(data[0][0].perso_nombre + ' ' + data[0][0].perso_apPaterno + ' ' + data[0][0].perso_apMaterno);
             $('#paisHorario').val(data[0][0].paises_id);
+            $('#idobtenidoE').val(idempleado);
             depart = data[0][0].ubigeo_peru_departments_id;
             if (depart == null) {
                 $('#departamentoHorario').val('Ninguno');
@@ -238,7 +241,31 @@ $('#btnasignar').on('click', function(e) {
     });
     $('#nombreEmpleado').empty();
     $('#asignarHorario').modal('toggle');
-    calendario();
+    num=$('#nombreEmpleado').val().length;
+    idemplesH = $('#nombreEmpleado').val();
+                    var ideHor=[];
+                    ideHor.push(idemplesH);
+    if(num==1){
+        $.ajax({
+            type: "post",
+            url: "/verDataEmpleado",
+            data: 'ids=' + ideHor,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+               calendario(data[1]);
+            },
+            error: function (data) {
+                alert('Ocurrio un error');
+            }
+
+        });
+    }
+    else{     $.get("/eventosHorario", {}, function (data, status) {
+        calendario(data);
+
+    });  }
     var allVals = [];
     $(".sub_chk:checked").each(function () {
         allVals.push($(this).attr('data-id'));
@@ -256,14 +283,18 @@ $('#btnasignar').on('click', function(e) {
 
             $('#nombreEmpleado').append('<option value="' + json1[i].emple_id + '" >' + json1[i].perso_nombre + " " + json1[i].perso_apPaterno + '</option>');
              }
+
+
              if (allVals.length > 0) {
 
                 $.each( allVals, function( index, value ){
                     $("#nombreEmpleado option[value='"+ value +"']").attr("selected",true);
                 });
-
-                if(allVals.length==1){
+                num2=$('#nombreEmpleado').val().length;
+                if(num2==1){
                     idemps = $('#nombreEmpleado').val();
+
+
                     $.ajax({
                         type: "post",
                         url: "/verDataEmpleado",
@@ -605,14 +636,16 @@ document.addEventListener('DOMContentLoaded', calendario1);
 //////////////////////
 $('#guardarHorarioEventos').click(function () {
     $('#guardarHorarioEventos').prop('disabled', true);
-    idemps = $('#idEmHorario').val();
-    alert(idemps);
+    var idemps=[];
+    idempleads = $('#idobtenidoE').val();
+    idemps.push(idempleads);
+    descripcion=$('#descripcionCaHorario').val();
 
     $.ajax({
         type: "post",
         url: "/guardarEventosBD",
         data: {
-            idemps,
+            idemps,descripcion
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -735,4 +768,10 @@ function registrarIncidencia(){
 
 
     ;
+}
+function marcarAsignacion(data){
+    $('input:checkbox').attr('checked', false);
+
+    $('input:checkbox[data-id='+data+']').attr('checked', true);
+    $('#btnasignar').click();
 }

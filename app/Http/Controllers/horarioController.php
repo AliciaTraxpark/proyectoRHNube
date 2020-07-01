@@ -185,32 +185,48 @@ class horarioController extends Controller
         ->join('horario as hor', 'he.horario_horario_id', '=', 'hor.horario_id')
         ->distinct('e.emple_id')
         ->where('emple_id','=',$idsEm)->get();
-        //
-        $iddepar=$empleado[0]->ubigeo_peru_departments_id;
-         //
-         $eventos=DB::table('eventos')->select(['id','title' ,'color', 'textColor', 'start','end']);
+        if(count($empleado) >= 1) {
 
-        $eventos_usuario = DB::table('eventos_usuario')
-        ->select(['id','title' ,'color', 'textColor', 'start','end'])
-             ->where('Users_id','=',Auth::user()->id)
-             ->where('evento_departamento','=',$iddepar)
-             ->where('evento_pais','=',173)
-                ->union($eventos);
+            $iddepar=$empleado[0]->ubigeo_peru_departments_id;
+            //
+            $eventos=DB::table('eventos')->select(['id','title' ,'color', 'textColor', 'start','end']);
 
-        $horario_empleado=DB::table('horario_empleado as he')->select(['id','title' ,'color', 'textColor', 'start','end'])
-        ->where('users_id','=',Auth::user()->id)
-        ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
-        ->where('he.empleado_emple_id','=',$idsEm)
-        ->union($eventos_usuario);
+           $eventos_usuario = DB::table('eventos_usuario')
+           ->select(['id','title' ,'color', 'textColor', 'start','end'])
+                ->where('Users_id','=',Auth::user()->id)
+                ->where('evento_departamento','=',$iddepar)
+                ->where('evento_pais','=',173)
+                   ->union($eventos);
+
+           $horario_empleado=DB::table('horario_empleado as he')->select(['id','title' ,'color', 'textColor', 'start','end'])
+           ->where('users_id','=',Auth::user()->id)
+           ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+           ->where('he.empleado_emple_id','=',$idsEm)
+           ->union($eventos_usuario);
 
 
-        $incidencias=DB::table('incidencias as i')
-        ->select(['i.emple_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color','idi.inciden_dias_hora as textColor','idi.inciden_dias_fechaI as start','idi.inciden_dias_fechaF as end'])
-        ->join('incidencia_dias as idi', 'i.inciden_dias_id', '=', 'idi.inciden_dias_id')
-        ->where('i.emple_id','=',$idsEm)
-        ->union($horario_empleado)
-        ->get();
-        return [$empleado,$incidencias];
+           $incidencias=DB::table('incidencias as i')
+           ->select(['i.emple_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color','idi.inciden_dias_hora as textColor','idi.inciden_dias_fechaI as start','idi.inciden_dias_fechaF as end'])
+           ->join('incidencia_dias as idi', 'i.inciden_dias_id', '=', 'idi.inciden_dias_id')
+           ->where('i.emple_id','=',$idsEm)
+           ->union($horario_empleado)
+           ->get();
+           return [$empleado,$incidencias];
+
+        }
+        else{
+            $eventos1=DB::table('eventos')->select(['id','title' ,'color', 'textColor', 'start','end']);
+
+            $eventos_usuario1 = DB::table('eventos_usuario')
+            ->select(['id','title' ,'color', 'textColor', 'start','end'])
+                 ->where('Users_id','=',Auth::user()->id)
+                 ->where('evento_departamento','=',null)
+                 ->where('evento_pais','=',173)
+                    ->union($eventos1)
+                    ->get();
+           return [$eventos_usuario1,$eventos_usuario1];
+        }
+
 
 
     }

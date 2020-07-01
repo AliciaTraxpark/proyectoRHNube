@@ -73,12 +73,12 @@
             <td>{{$tabla_empleados->area_descripcion}}</td>
             <td>{{$tabla_empleados->centroC_descripcion}} </td>
             <td>@if ($tabla_empleados->horario_horario_id==null)
-                 no tiene horario
+                <button class="btnhora btn  btn-sm btn-rounded" id="btnmarcarA" style="color: #548ec7;border-color: #e7edf3; padding-left: 4px; padding-right: 4px;" onclick="marcarAsignacion({{$tabla_empleados->emple_id}})"> <img src="{{asset('landing/images/seleccionar.svg')}}" height="16" > asignar</button>
                  @else
-                <button class="btnhora btn btn-soft-dark btn-sm" id="verDataHorario" onclick="verhorarioEmpleado({{$tabla_empleados->emple_id}})">Ver horario</button>
+                <button class="btnhora btn  btn-sm btn-rounded" style="color: #548ec7;border-color: #e7edf3; padding-left: 4px; padding-right: 4px;" id="verDataHorario" onclick="verhorarioEmpleado({{$tabla_empleados->emple_id}})"> <img src="{{asset('landing/images/ver.svg')}}" height="14" > ver</button>
                  @endif </td>
             <td >{{--  @if ($tabla_empleados->horario_horario_id==null) --}}
-                <input type="checkbox" style="margin-left:5.5px!important" id="tdC" class="form-check-input sub_chk" data-id="{{$tabla_empleados->emple_id}}" >
+                <input type="checkbox" style="margin-left:5.5px!important" id="tdC" name="tdC" class="form-check-input sub_chk" data-id="{{$tabla_empleados->emple_id}}" >
              {{--    @endif --}}
              </td>
         </tr>

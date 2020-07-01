@@ -133,7 +133,7 @@
                         src="{{asset('admin/images/email.svg')}}" height="28"></a></td>
             @endif
             <td><input type="checkbox" id="tdC" style="margin-left:5.5px!important" class="form-check-input sub_chk"
-                    data-id="{{$tabla_empleados->emple_id}}"> </td>
+                $(this)$(this)$(this)> </td>
         </tr>
 
         @endforeach
