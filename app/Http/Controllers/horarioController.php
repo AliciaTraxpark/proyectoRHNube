@@ -301,6 +301,18 @@ class horarioController extends Controller
        }
 
     }
+    public function indexMenu(){
+        $paises=paises::all();
+        $departamento=ubigeo_peru_departments::all();
+        $empleado = DB::table('empleado as e')
+        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+        ->select('p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','e.emple_nDoc','p.perso_id','e.emple_id')
+        ->where('e.users_id','=',Auth::user()->id)
+        ->get();
+
+        return view('horarios.horarioMenu',['pais'=>$paises,'departamento'=>$departamento,'empleado'=>$empleado]);
+
+    }
     }
 
 
