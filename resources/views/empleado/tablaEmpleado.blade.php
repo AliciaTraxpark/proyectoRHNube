@@ -527,11 +527,7 @@
                         });
                         $('#modalEliminar').modal('hide');
                         //$('#tablaEmpleado').DataTable().destroy();
-                        $.get("tablaempleado/ver", {}, function (data, status) {
-                        $('#tabladiv').html(data);
-                        $('#tabladiv').show();
-
-    });
+                        leertabla();
 
                     },
                     error: function (data) {
@@ -543,9 +539,9 @@
 
     });
     function marcareliminar(data){
-    $('input:checkbox').attr('checked', false);
+    $('input:checkbox').prop('checked', false);
 
-    $('input:checkbox[data-id='+data+']').attr('checked', true);
+    $('input:checkbox[data-id='+data+']').prop('checked', true);
     $('.delete_all').click();
 
 
