@@ -6,6 +6,7 @@ use App\empleado;
 use App\Mail\CorreoEmpleadoMail;
 use App\persona;
 use App\vinculacion;
+use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +30,7 @@ class correosEmpleadoController extends Controller
                 ->get()->first();
             if ($codV) {
                 $vinculacion = vinculacion::findOrFail($codV->id);
-                $vinculacion->reenvio = time();
+                $vinculacion->reenvio = Carbon::now();
                 $vinculacion->save();
                 $datos = [];
                 $datos["correo"] = $correoE[0]->emple_Correo;
@@ -74,7 +75,7 @@ class correosEmpleadoController extends Controller
                 $vinculacion->idEmpleado = $idEmpleado;
                 $vinculacion->hash = $encode;
                 $vinculacion->estado = 'd';
-                $vinculacion->envio = time();
+                $vinculacion->envio = Carbon::now();
                 $vinculacion->save();
 
                 $datos = [];
