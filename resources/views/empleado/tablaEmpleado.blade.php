@@ -94,8 +94,8 @@
             </th>
         </tr>
         <tr>
-            <th>Editar</th>
-            <th>#</th>
+            <th></th>
+            <th class="text-center"></th>
             <th>Nombres</th>
             <th>Apellidos</th>
             <th>Cargo</th>
@@ -112,9 +112,10 @@
         <tr class="" id="{{$tabla_empleados->emple_id}}" value="{{$tabla_empleados->emple_id}}">
 
             <td><a id="formNuevoEd" onclick="$('#form-ver').modal();" style="cursor: pointer"><img
-                        src="{{asset('admin/images/user (3).svg')}}" height="28"></a></td>
-            <td> <input type="hidden" id="codE" value="{{$tabla_empleados->emple_id}}"><img
-                    src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class=" mr-2" alt="" /></td>
+                        src="{{asset('admin/images/edit.svg')}}" height="15"></a>&nbsp;<a  style="cursor: pointer"><img
+                            src="{{asset('admin/images/delete.svg')}}" height="15"></a></td>
+            <td class="text-center">&nbsp; <input type="hidden" id="codE" value="{{$tabla_empleados->emple_id}}"><img
+                    src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class=" " alt="" /></td>
             <td>{{$tabla_empleados->perso_nombre}}</td>
             <td>{{$tabla_empleados->perso_apPaterno}} {{$tabla_empleados->perso_apMaterno}}</td>
             <td>{{$tabla_empleados->cargo_descripcion}}</td>
