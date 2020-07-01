@@ -190,6 +190,7 @@ class EmpleadoController extends Controller
             ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
             ->leftJoin('modo as md', 'md.idEmpleado', '=', 'e.emple_id')
             ->leftJoin('tipo_dispositivo as td', 'td.id', '=', 'md.idTipoDispositivo')
+            ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
             ->select(
                 'p.perso_nombre',
                 'p.perso_apPaterno',
@@ -198,7 +199,9 @@ class EmpleadoController extends Controller
                 'a.area_descripcion',
                 'cc.centroC_descripcion',
                 'e.emple_id',
-                'md.idTipoDispositivo as dispositivo'
+                'md.idTipoDispositivo as dispositivo',
+                'v.envio',
+                'v.reenvio'
             )
             ->where('e.users_id', '=', Auth::user()->id)
             ->get();

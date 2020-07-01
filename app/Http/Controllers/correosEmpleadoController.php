@@ -6,10 +6,12 @@ use App\empleado;
 use App\Mail\CorreoEmpleadoMail;
 use App\persona;
 use App\vinculacion;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Tymon\JWTAuth\Claims\DatetimeTrait;
 
 class correosEmpleadoController extends Controller
 {
@@ -22,11 +24,25 @@ class correosEmpleadoController extends Controller
             ->get();
         if ($correoE) {
             $codV = DB::table('vinculacion as v')
-                ->select('v.reenvio')
+                ->select('v.id')
                 ->where('v.idEmpleado', '=', $idEmpleado)
                 ->get()->first();
             if ($codV) {
-                $codV[0]->reenvio = time();
+                $vinculacion = vinculacion::findOrFail($codV->id);
+                $vinculacion->reenvio = time();
+                $vinculacion->save();
+                $datos = [];
+                $datos["correo"] = $correoE[0]->emple_Correo;
+                $email = array($datos["correo"]);
+                $codigoP = DB::table('empleado as e')
+                    ->select('emple_persona')
+                    ->where('e.emple_id', '=', $idEmpleado)
+                    ->get();
+                $codP = [];
+                $codP["id"] = $codigoP[0]->emple_persona;
+                $persona = persona::find($codP["id"]);
+                Mail::to($email)->queue(new CorreoEmpleadoMail($vinculacion, $persona));
+                return json_encode(array("result" => true));
             } else {
                 $codigoEmpresa = DB::table('users as u')
                     ->join('usuario_organizacion as uo', 'uo.user_id', '=', 'u.id')
@@ -69,5 +85,19 @@ class correosEmpleadoController extends Controller
             }
         }
         return response()->json(null, 403);
+    }
+
+    public function reenvio(Request $request)
+    {
+        $idEmpleado = $request->get('idEmpleado');
+
+        $reenvio = DB::table('vinculacion as v')
+            ->select('v.reenvio')
+            ->where('v.idEmpleado', '=', $idEmpleado)
+            ->get();
+
+        if ($reenvio[0]->reenvio != null) {
+            return 1;
+        }
     }
 }

@@ -28,6 +28,7 @@ function enviar() {
                 spacing: 35
             });
             $('#modalCorreo').modal('toggle');
+            leertabla();
         },
         error: function () {
             $('#modalCorreo').modal('toggle');

@@ -12,7 +12,6 @@
     .dataTables_scrollHeadInner {
         width: 100% !important;
     }
-
 </style>
 <div id="modalCorreo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCorreo" aria-hidden="true"
     data-backdrop="static">
@@ -113,8 +112,9 @@
         <tr class="" id="{{$tabla_empleados->emple_id}}" value="{{$tabla_empleados->emple_id}}">
 
             <td><a id="formNuevoEd" onclick="$('#form-ver').modal();" style="cursor: pointer"><img
-                        src="{{asset('admin/images/edit.svg')}}" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a onclick="marcareliminar({{$tabla_empleados->emple_id}})" style="cursor: pointer"><img
-                            src="{{asset('admin/images/delete.svg')}}" height="15"></a></td>
+                        src="{{asset('admin/images/edit.svg')}}" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+                    onclick="marcareliminar({{$tabla_empleados->emple_id}})" style="cursor: pointer"><img
+                        src="{{asset('admin/images/delete.svg')}}" height="15"></a></td>
             <td class="text-center">&nbsp; <input type="hidden" id="codE" value="{{$tabla_empleados->emple_id}}"><img
                     src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class=" " alt="" /></td>
             <td>{{$tabla_empleados->perso_nombre}}</td>
@@ -125,17 +125,41 @@
             @if(!in_array("1",$tabla_empleados->dispositivos))
             <td></td>
             @else
-            <td><a id="formNuevoEd" onclick="$('#modalCorreo').modal();" style="cursor: pointer"><img
-                        src="{{asset('admin/images/email.svg')}}" height="28"></a></td>
+            @if ($tabla_empleados->envio != null)
+            @if($tabla_empleados->reenvio == null)
+            <td><button id="reenviar" type="button" class="btn btn-secondary  btn-sm"
+                    onclick="$('#modalCorreo').modal();"
+                    style="background:#f0f4fd; border-color:#f0f4fd; color:#a0add3">Reenviar @</button></td>
+            @else
+            <td><button id="reenviar" type="button" class="btn btn-secondary  btn-sm"
+                    onclick="$('#modalCorreo').modal();" style="background:#eae7d9; border-color:#eae7d9; color:#6c757d"
+                    disabled>Reenviar @</button></td>
+            @endif
+            @else
+            <td><button type="button" class="btn btn-secondary  btn-sm" onclick="$('#modalCorreo').modal();"
+                    style="background:#f0f4fd; border-color:#f0f4fd; color:#a0add3">Enviar @</button></td>
+            @endif
             @endif
             @if(!in_array("2",$tabla_empleados->dispositivos))
             <td></td>
             @else
-            <td><a id="formNuevoEd" onclick="$('#modalCorreo').modal();" style="cursor: pointer"><img
-                        src="{{asset('admin/images/email.svg')}}" height="28"></a></td>
+            @if ($tabla_empleados->envio != null)
+            @if($tabla_empleados->reenvio == null)
+            <td><button id="reenviar" type="button" class="btn btn-secondary  btn-sm"
+                    onclick="$('#modalCorreo').modal();"
+                    style="background:#f0f4fd; border-color:#f0f4fd; color:#a0add3">Reenviar @</button></td>
+            @else
+            <td><button id="reenviar" type="button" class="btn btn-secondary  btn-sm"
+                    onclick="$('#modalCorreo').modal();" style="background:#eae7d9; border-color:#eae7d9; color:#6c757d"
+                    disabled>Reenviar @</button></td>
             @endif
-            <td><input type="checkbox" id="tdC" style="margin-left:5.5px!important" class="form-check-input sub_chk" data-id="{{$tabla_empleados->emple_id}}"
-                $(this)$(this)$(this)> </td>
+            @else
+            <td><button type="button" class="btn btn-secondary  btn-sm" onclick="$('#modalCorreo').modal();"
+                    style="background:#f0f4fd; border-color:#f0f4fd; color:#a0add3">Enviar @</button></td>
+            @endif
+            @endif
+            <td><input type="checkbox" id="tdC" style="margin-left:5.5px!important" class="form-check-input sub_chk"
+                    data-id="{{$tabla_empleados->emple_id}}" $(this)$(this)$(this)> </td>
         </tr>
 
         @endforeach
