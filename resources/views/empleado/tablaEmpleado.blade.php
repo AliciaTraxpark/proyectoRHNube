@@ -12,6 +12,7 @@
     .dataTables_scrollHeadInner {
         width: 100% !important;
     }
+
 </style>
 <div id="modalCorreo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCorreo" aria-hidden="true"
     data-backdrop="static">
@@ -223,12 +224,12 @@
                 $('#v_fechaFC').text(data[0].emple_fechaFC);
                 $('#v_email').val(data[0].emple_Correo);
                 $('#v_codigoEmpleado').val(data[0].emple_codigo);
-                $('input[name=v_disp]').each(function(){
-                    $(this).prop('checked',false);
+                $('input[name=v_disp]').each(function () {
+                    $(this).prop('checked', false);
                 });
                 if (data[0].dispositivo != null) {
-                    for(let i=0; i<data.length; i++){
-                        $('#v_disp' + data[i].dispositivo).prop('checked',true);
+                    for (let i = 0; i < data.length; i++) {
+                        $('#v_disp' + data[i].dispositivo).prop('checked', true);
                     }
                 }
                 if (data[0].foto != "") {
