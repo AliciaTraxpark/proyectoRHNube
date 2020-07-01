@@ -252,7 +252,11 @@ class EmpleadoController extends Controller
 
         if ($objEmpleado['dep'] != '') {
             $empleado->emple_departamento = $objEmpleado['dep'];
+        }
+        if ($objEmpleado['prov'] != '') {
             $empleado->emple_provincia = $objEmpleado['prov'];
+        }
+        if ($objEmpleado['dist'] != '') {
             $empleado->emple_distrito = $objEmpleado['dist'];
         }
         if ($objEmpleado['contrato'] != '') {
@@ -422,7 +426,11 @@ class EmpleadoController extends Controller
         }
         if ($objEmpleado['dep_v'] != '') {
             $empleado->emple_departamento = $objEmpleado['dep_v'];
+        }
+        if ($objEmpleado['prov_v'] != '') {
             $empleado->emple_provincia = $objEmpleado['prov_v'];
+        }
+        if ($objEmpleado['dist_v'] != '') {
             $empleado->emple_distrito = $objEmpleado['dist_v'];
         }
         if ($objEmpleado['contrato_v'] != '') {

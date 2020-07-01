@@ -499,6 +499,7 @@ function actualizarEmpleado(accion, objEmpleadoA) {
             $('#form-ver').modal('toggle');
             leertabla();
             $('#smartwizard').smartWizard("reset");
+            $('#navActualizar').hide();
             $('input[type="file"]').val("");
             $('#formNuevoEd').hide();
             $('#formNuevoEl').hide();
