@@ -44,7 +44,7 @@
 
   </div>
 
-<table id="tablaEmpleado" class="table dt-responsive nowrap" style="font-size: 12.5px; width: 100%">
+<table id="tablaEmpleado" class="table dt-responsive nowrap" style="font-size: 12.8px;">
     <thead style=" background: #5a6f82;color: white;">
         <tr style="background: #ffffff">
             <th style="border-top: 1px solid #fdfdfd;"></th>

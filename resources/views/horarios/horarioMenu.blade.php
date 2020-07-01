@@ -29,8 +29,11 @@
     </div>
 </div>
 @endsection
+
+
+@section('content')
 <style>
-    
+
     .fc-event, .fc-event-dot {
     background-color: #d1c3c3;
     font-size: 11.2px!important
@@ -40,10 +43,7 @@
     zoom:80%;
 }
 
-    .container{
-        margin-left: 40px;
-    margin-right: 28px;
-    }
+
     .fc-time{
         display: none;
     }
@@ -80,7 +80,7 @@
     }
 
     body{
-        background-color: #f8f8f8;
+        background-color: #ffffff;
     }
     .flatpickr-calendar{
         width: 240px!important;
@@ -109,8 +109,6 @@
     background-color: #fcfcfc;
     }
 </style>
-
-@section('content')
 <div class="row row-divided">
     <div class="col-md-12 col-xl-12">
         <div class="card">
@@ -127,7 +125,7 @@
                     </div>
                 </div>
                     <div id="tabladiv">
-                    </div>
+                    </div><br><br><br><br>
             </div> <!-- end card body-->
         </div> <!-- end card -->
         <div id="asignarHorario" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
@@ -592,13 +590,12 @@
 @endsection
 @section('script')
 <!-- Plugins Js -->
-<script src="{{ URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
 
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 <script src="{{asset('landing/js/horario.js')}}"></script>
-<script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
+
 <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
