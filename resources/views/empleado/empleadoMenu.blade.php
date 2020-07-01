@@ -56,7 +56,7 @@
                 masiva</button></a>
     </div>
     <div class=" col-md-2 col-xl-2 text-right">
-        <button class="btn btn-outline-secondary btn-sm" style=""
+        <button class="btn btn-outline-secondary btn-sm"
             id="cargaMasivaF"><img src="{{asset('admin/images/image.ico')}}" height="20" class="mr-1">Carga
             masiva fotos</button>
     </div>

@@ -133,7 +133,7 @@ $(document).ready(function () {
             } else {
                 $('#v_validFechaN').hide();
             }
-            if ($("#v_email").val() != "") {
+            /*if ($("#v_email").val() != "") {
                 //VALIDAR CORREO
                 var email = $('#v_email').val();
                 $.ajax({
@@ -156,7 +156,7 @@ $(document).ready(function () {
                         }
                     }
                 });
-            }
+            }*/
             console.log(isStepValid)
         }
         return isStepValid;

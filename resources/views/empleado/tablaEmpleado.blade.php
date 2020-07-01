@@ -1,3 +1,5 @@
+<link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
 <style>
     div.dataTables_wrapper div.dataTables_filter {
         display: none;
@@ -111,7 +113,7 @@
 
             <td><a id="formNuevoEd" onclick="$('#form-ver').modal();" style="cursor: pointer"><img
                         src="{{asset('admin/images/user (3).svg')}}" height="28"></a></td>
-            <td> <input type="hidden" value="{{$tabla_empleados->emple_id}}"><img
+            <td> <input type="hidden" id="codE" value="{{$tabla_empleados->emple_id}}"><img
                     src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class=" mr-2" alt="" /></td>
             <td>{{$tabla_empleados->perso_nombre}}</td>
             <td>{{$tabla_empleados->perso_apPaterno}} {{$tabla_empleados->perso_apMaterno}}</td>
@@ -506,3 +508,6 @@
     });
 
 </script>
+<script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
+<script src="{{asset('landing/js/correoEmpleados.js')}}"></script>

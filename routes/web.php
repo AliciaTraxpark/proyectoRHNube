@@ -151,3 +151,6 @@ Route::get('/totalRE', 'dashboardController@rangoE');
 Route::get('/empleados', 'EmpleadoController@indexMenu');
 Route::get('/calendarios', 'calendarioController@indexMenu');
 Route::get('/horarios', 'horarioController@indexMenu');
+
+//CORREO EMPLEADO
+Route::get('empleadoCorreo', 'correosEmpleadoController@encode');
