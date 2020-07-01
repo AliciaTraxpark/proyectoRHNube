@@ -60,6 +60,22 @@
         @endif
 
     </li>
+    <li>
+
+        @if ($variable==0)
+        <a href="/horario">
+            <i data-feather="clipboard"></i>
+            <span>Horarios</span>
+        </a>
+
+        @else
+        <a href="/horarios">
+            <i data-feather="clipboard"></i>
+            <span>Horarios</span>
+        </a>
+        @endif
+
+    </li>
 
 
     <li>
