@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\CorreoEmpleadoMail;
+use App\vinculacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class correosEmpleadoController extends Controller
 {
@@ -21,8 +24,27 @@ class correosEmpleadoController extends Controller
             ->where('e.emple_id', '=', $idEmpleado)
             ->get();
         if ($codigoEmpleado != '') {
-            $codigoHash = $codigoEmpresa + $idEmpleado + $codigoEmpleado;
+            $codigoHash = $codigoEmpresa[0]->organi_id . $idEmpleado . $codigoEmpleado[0]->emple_codigo;
+            $encode = rtrim(strtr(base64_encode($codigoHash), '+/', '-_'));
+        } else {
+            $codigoHash = $codigoEmpresa[0]->organi_id . $idEmpleado;
             $encode = rtrim(strtr(base64_encode($codigoHash), '+/', '-_'));
         }
+
+        $vinculacion = new vinculacion();
+        $vinculacion->idEmpleado = $idEmpleado;
+        $vinculacion->hash = $encode;
+        $vinculacion->estado = 'd';
+        $vinculacion->save();
+
+        $correoE = DB::table('empleado as e')
+            ->select('e.emple_Correo')
+            ->where('e.emple_id', '=', $idEmpleado)
+            ->get();
+        $datos = [];
+        $datos["correo"] = $correoE[0]->emple_Correo;
+        $email = array($datos["correo"]);
+        Mail::to($email)->queue(new CorreoEmpleadoMail($vinculacion));
+        return json_encode(array("result" => true));
     }
 }

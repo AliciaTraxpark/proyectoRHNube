@@ -150,3 +150,6 @@ Route::get('/totalRE', 'dashboardController@rangoE');
 //MENU
 Route::get('/empleados', 'EmpleadoController@indexMenu');
 Route::get('/calendarios', 'calendarioController@indexMenu');
+
+//CORREO EMPLEADO
+Route::get('empleadoCorreo', 'correosEmpleadoController@encode');
