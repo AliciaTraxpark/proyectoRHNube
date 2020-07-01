@@ -55,23 +55,23 @@
         <td align="center"><input type="text" class="global_filter form-control form-control-sm" id="global_filter">
         </td>
     </div>
-    <div class="col-md-6" id="filter_col2" data-column="2">
+    <div class="col-md-6" id="filter_col2" data-column="2" style="display: none">
         <label for="">Nombre:</label>
         <td align="center"><input type="text" class="column_filter form-control form-control-sm" id="col2_filter"></td>
     </div>
-    <div class="col-md-6" id="filter_col3" data-column="3">
+    <div class="col-md-6" id="filter_col3" data-column="3" style="display: none">
         <label>Apellidos</label>
         <td align="center"><input type="text" class="column_filter form-control form-control-sm" id="col3_filter"></td>
     </div>
-    <div class="col-md-6" id="filter_col4" data-column="4">
+    <div class="col-md-6" id="filter_col4" data-column="4" style="display: none">
         <label for="">Cargo</label>
         <td align="center"><input type="text" class="column_filter form-control form-control-sm" id="col4_filter"></td>
     </div>
-    <div class="col-md-6" id="filter_col5" data-column="5">
+    <div class="col-md-6" id="filter_col5" data-column="5" style="display: none">
         <label for="">Área</label>
         <td align="center"><input type="text" class="column_filter form-control form-control-sm" id="col5_filter"></td>
     </div>
-    <div class="col-md-6" id="filter_col6" data-column="6">
+    <div class="col-md-6" id="filter_col6" data-column="6" style="display: none">
         <label for="">Costo</label>
         <td align="center"><input type="text" class="column_filter form-control form-control-sm" id="col6_filter"></td>
     </div>
