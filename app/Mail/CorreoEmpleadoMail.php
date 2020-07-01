@@ -2,6 +2,8 @@
 
 namespace App\Mail;
 
+use App\empleado;
+use App\persona;
 use App\vinculacion;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -18,10 +20,12 @@ class CorreoEmpleadoMail extends Mailable
      * @return void
      */
 
-     public $vinculacion;
-    public function __construct(vinculacion $vinculacion)
+    public $vinculacion;
+    public $persona;
+    public function __construct(vinculacion $vinculacion, persona $persona)
     {
         $this->vinculacion = $vinculacion;
+        $this->persona = $persona;
     }
 
     /**

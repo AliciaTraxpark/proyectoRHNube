@@ -39,20 +39,22 @@
         <div style="padding-bottom: 10px;padding-top: 15px">
             <h4
                 style="font-family: Poppins,sans-serif;color: black;text-align: center;font-weight: 600;text-transform: uppercase;">
-                HOLA</h4>
-            <span style="font-family: Poppins,sans-serif;color: black;text-align: center">Creaste una cuenta con RH
+                HOLA {{$persona->perso_nombre}} {{$persona->perso_apPaterno}} {{$persona->perso_apMaterno}}</h4>
+            <span style="font-family: Poppins,sans-serif;color: black;text-align: center">Te damos la Bienvenida RH
                 SOLUTION</span>
-            <span style="font-family: Poppins,sans-serif;color: black;text-align: center;font-weight: 600;">¡Gracias por
-                registrarte!</span>
             <div>
-                <div style="font-family: Poppins,sans-serif;color: black;text-align: center;">
-                    <span>Para mayor seguridad necesitamos que verifiques tu correo electornico
-                        antes de continuar en nustra plataforma.
+                <div style="font-family: Poppins,sans-serif;color: black;text-align: center;padding-bottom: 10px;">
+                    <span>Para empezar usar nuestra plataforma, necesitamos que descargue nuestra aplicación que se
+                        encuentra disponible en el siguiente enlace.
                     </span>
                 </div>
-                <div style="font-family: Poppins,sans-serif;color: black;text-align: center;">
-                    <span>Codigo {{$vinculacion->hash}}
+                <div style="font-family: Poppins,sans-serif;color: black;text-align: center;padding-bottom: 10px;">
+                    <span> Y no olvides GUARDAR tu código de seguridad.
                     </span>
+                </div>
+                <div style="font-family: Poppins,sans-serif;color: black;text-align: center; padding-bottom: 10px;">
+                    <span style="text-transform: uppercase;">Codigo </span><span
+                        style="background-color: #b7efcd; padding: 5px;">{{$vinculacion->hash}}</span>
                 </div>
             </div>
         </div>

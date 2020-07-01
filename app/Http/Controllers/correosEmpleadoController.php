@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\empleado;
 use App\Mail\CorreoEmpleadoMail;
+use App\persona;
 use App\vinculacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,6 +30,13 @@ class correosEmpleadoController extends Controller
                 ->select('e.emple_codigo')
                 ->where('e.emple_id', '=', $idEmpleado)
                 ->get();
+            $codigoP = DB::table('empleado as e')
+                ->select('emple_persona')
+                ->where('e.emple_id', '=', $idEmpleado)
+                ->get();
+            $codP = [];
+            $codP["id"] = $codigoP[0]->emple_persona;
+            $persona = persona::find($codP["id"]);
             if ($codigoEmpleado != '') {
                 $codigoHash = $codigoEmpresa[0]->organi_id . $idEmpleado . $codigoEmpleado[0]->emple_codigo;
                 //$encode = rtrim(strtr(base64_encode($codigoHash), '+/', '-_'));
@@ -47,7 +56,7 @@ class correosEmpleadoController extends Controller
             $datos = [];
             $datos["correo"] = $correoE[0]->emple_Correo;
             $email = array($datos["correo"]);
-            Mail::to($email)->queue(new CorreoEmpleadoMail($vinculacion));
+            Mail::to($email)->queue(new CorreoEmpleadoMail($vinculacion, $persona));
             return json_encode(array("result" => true));
         }
         return response()->json(null, 403);
