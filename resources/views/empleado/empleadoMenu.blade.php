@@ -86,6 +86,10 @@
                             style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d">+ Nuevo</button>
                     </div>
                 </div>
+                <div id="espera" class="text-center" style="display: none">
+
+                    <img src="{{asset('landing/images/loading.gif')}}" height="100" >
+                </div>
                 <div id="tabladiv">
                 </div>
 

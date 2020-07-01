@@ -770,8 +770,8 @@ function registrarIncidencia(){
     ;
 }
 function marcarAsignacion(data){
-    $('input:checkbox').attr('checked', false);
+    $('input:checkbox').prop('checked', false);
 
-    $('input:checkbox[data-id='+data+']').attr('checked', true);
+    $('input:checkbox[data-id='+data+']').prop('checked', true);
     $('#btnasignar').click();
 }

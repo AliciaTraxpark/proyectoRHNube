@@ -126,13 +126,13 @@
             <td></td>
             @else
             <td><a id="formNuevoEd" onclick="$('#modalCorreo').modal();" style="cursor: pointer"><img
-                        src="{{asset('admin/images/email.svg')}}" height="28"></a></td>
+                        src="{{asset('admin/images/email.svg')}}" height="20"></a></td>
             @endif
             @if(!in_array("2",$tabla_empleados->dispositivos))
             <td></td>
             @else
             <td><a id="formNuevoEd" onclick="$('#modalCorreo').modal();" style="cursor: pointer"><img
-                        src="{{asset('admin/images/email.svg')}}" height="28"></a></td>
+                        src="{{asset('admin/images/email.svg')}}" height="20"></a></td>
             @endif
             <td><input type="checkbox" id="tdC" style="margin-left:5.5px!important" class="form-check-input sub_chk" data-id="{{$tabla_empleados->emple_id}}"
                 $(this)$(this)$(this)> </td>
@@ -503,11 +503,7 @@
                         });
                         $('#modalEliminar').modal('hide');
                         //$('#tablaEmpleado').DataTable().destroy();
-                        $.get("tablaempleado/ver", {}, function (data, status) {
-                        $('#tabladiv').html(data);
-                        $('#tabladiv').show();
-
-    });
+                        leertabla();
 
                     },
                     error: function (data) {
@@ -519,9 +515,9 @@
 
     });
     function marcareliminar(data){
-    $('input:checkbox').attr('checked', false);
+    $('input:checkbox').prop('checked', false);
 
-    $('input:checkbox[data-id='+data+']').attr('checked', true);
+    $('input:checkbox[data-id='+data+']').prop('checked', true);
     $('.delete_all').click();
 
 
