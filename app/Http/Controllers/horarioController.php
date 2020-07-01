@@ -213,7 +213,19 @@ class horarioController extends Controller
            ->get();
            return [$empleado,$incidencias];
 
-        } 
+        }
+        else{
+            $eventos1=DB::table('eventos')->select(['id','title' ,'color', 'textColor', 'start','end']);
+
+            $eventos_usuario1 = DB::table('eventos_usuario')
+            ->select(['id','title' ,'color', 'textColor', 'start','end'])
+                 ->where('Users_id','=',Auth::user()->id)
+                 ->where('evento_departamento','=',null)
+                 ->where('evento_pais','=',173)
+                    ->union($eventos1)
+                    ->get();
+           return [$eventos_usuario1,$eventos_usuario1];
+        }
 
 
 
