@@ -31,6 +31,7 @@
 <style>
     .fc-event, .fc-event-dot {
     background-color: #d1c3c3;
+    font-size: 11.2px!important
 
 }
 .fc-toolbar.fc-header-toolbar{
@@ -158,7 +159,7 @@
                                    <span aria-hidden="true">&times;</span>
                                </button>
                            </div>
-                           <div class="modal-body">
+                           <div class="modal-body" style="font-size: 13.5px!important">
                                <div class="row">
 
                                    <div class="col-md-6">
@@ -310,6 +311,7 @@
                                                <label for="">Empleado:</label>
                                                {{-- <input type="text" class="form-control form-control-sm" id="nombreEmpleado"> --}}
                                                <input type="text" class="form-control form-control-sm" id="idEmHorario" disabled>
+                                               <input type="hidden" id="idobtenidoE">
                                             </div>
                                          </div>
                                          <div class="col-md-12">
