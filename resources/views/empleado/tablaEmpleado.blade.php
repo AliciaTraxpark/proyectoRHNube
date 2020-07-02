@@ -92,7 +92,7 @@
             <th style="border-top: 1px solid #fdfdfd;">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR" id="i6">
             </th>
-            <th style="border-top: 1px solid #fdfdfd;" id="masivoC"> <button type="button"
+            <th style="border-top: 1px solid #fdfdfd;" id="enviarCorreosMasivos"> <button type="button"
                     class="btn btn-secondary  btn-sm" onclick="$('#modalCorreo').modal();"
                     style="background:#f0f4fd; border-color:#f0f4fd; color:#a0add3">Envio Masivo @</button></th>
         </tr>
@@ -169,32 +169,7 @@
 
     </tbody>
 </table>
-
-<script>
-    $(document).ready(function () {
-        $('#masivoC').hide();
-        $('#filter_col2').hide();
-        $('#filter_col3').hide();
-        $('#filter_col4').hide();
-        $('#filter_col5').hide();
-        $('#filter_col6').hide();
-        var $selecTodo = $('#selectT');
-        var $table = $('#tablaEmpleado');
-        var $tdCheckbox = $table.find('tbody input:checkbox');
-        var tdCheckboxChecked = 0;
-
-        $selecTodo.on('click', function () {
-            $tdCheckbox.prop('checked', this.checked);
-        });
-
-
-        $tdCheckbox.on('change', function (e) {
-            tdCheckboxChecked = $table.find('tbody input:checkbox:checked').length;
-            $selecTodo.prop('checked', (tdCheckboxChecked === $tdCheckbox.length));
-        })
-    });
-
-</script>
+<script src="{{asset('landing/js/checkB.js')}}"></script>
 <script>
     $("#tablaEmpleado tbody tr").click(function () {
         $('#smartwizard1').smartWizard("reset");
@@ -556,4 +531,3 @@
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
 <script src="{{asset('landing/js/correoEmpleados.js')}}"></script>
-<script src="{{asset('landing/js/correoMasivo.js')}}"></script>
