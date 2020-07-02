@@ -408,7 +408,6 @@ function enviarEmpleado(accion, objEmpleado) {
         success: function (msg) {
             leertabla();
             $('#smartwizard').smartWizard("reset");
-            $('#form-registrar').modal('toggle');
             $('#formNuevoEd').hide();
             $('#formNuevoEl').hide();
             $('input[type="text"]').val("");
@@ -417,8 +416,10 @@ function enviarEmpleado(accion, objEmpleado) {
             $('input[type="file"]').val("");
             $('input[type="email"]').val("");
             $('select').val("");
-
-
+            $("#form-registrar :input").prop('disabled', true);
+            $('#documento').attr('disabled', false);
+            $('#cerrarMoadalEmpleado').attr('disabled', false);
+            $('#form-registrar').modal('toggle');
             $.notify({
                 message: "\nEmpleado Registrado.",
                 icon: 'admin/images/checked.svg'
