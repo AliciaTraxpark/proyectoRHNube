@@ -201,16 +201,6 @@
         //$(this).addClass('selected').siblings().removeClass('selected');
         var value = $(this).find('input[type=hidden]').val();
         $('#formNuevoEl').show();
-        //****//
-        var allVals = [];
-        $(".sub_chk:checked").each(function () {
-            allVals.push($(this).attr('data-id'));
-        });
-        if(allVals.length >0){
-            $('#masivoC').show();
-        }else{
-            $('#masivoC').hide();
-        }
         $.ajax({
             type: "get",
             url: "empleado/show",
@@ -351,7 +341,7 @@
             "lengthChange": false,
             "scrollX": true,
             "pageLength": 30,
-           
+
             language: {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
@@ -564,3 +554,4 @@
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
 <script src="{{asset('landing/js/correoEmpleados.js')}}"></script>
+<script src="{{asset('landing/js/correoMasivo.js')}}"></script>
