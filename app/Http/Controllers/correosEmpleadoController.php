@@ -91,7 +91,12 @@ class correosEmpleadoController extends Controller
     {
         $idEmpleados = $request->ids;
         $idEmp = explode(",", $idEmpleados);
+        $resultado = [];
+        $c = true;
+        $r = true;
         foreach ($idEmp as $idEm) {
+            $empleado = empleado::where('emple_id', '=', $idEm)->get()->first();
+            $persona = persona::where('perso_id', '=', $empleado->emple_persona)->get()->first();
             $correoE = DB::table('empleado as e')
                 ->select('e.emple_Correo')
                 ->where('e.emple_id', '=', $idEm)
@@ -103,20 +108,25 @@ class correosEmpleadoController extends Controller
                     ->get()->first();
                 if ($codV) {
                     $vinculacion = vinculacion::findOrFail($codV->id);
-                    $vinculacion->reenvio = Carbon::now();
-                    $vinculacion->save();
-                    $datos = [];
-                    $datos["correo"] = $correoE[0]->emple_Correo;
-                    $email = array($datos["correo"]);
-                    $codigoP = DB::table('empleado as e')
-                        ->select('emple_persona')
-                        ->where('e.emple_id', '=', $idEm)
-                        ->get();
-                    $codP = [];
-                    $codP["id"] = $codigoP[0]->emple_persona;
-                    $persona = persona::find($codP["id"]);
-                    Mail::to($email)->queue(new CorreoEmpleadoMail($vinculacion, $persona));
-                    return json_encode(array("result" => true));
+                    if ($vinculacion->reenvio == null) {
+                        $vinculacion->reenvio = Carbon::now();
+                        $vinculacion->save();
+                        $datos = [];
+                        $datos["correo"] = $correoE->emple_Correo;
+                        $email = array($datos["correo"]);
+                        $codigoP = DB::table('empleado as e')
+                            ->select('emple_persona')
+                            ->where('e.emple_id', '=', $idEm)
+                            ->get();
+                        $codP = [];
+                        $codP["id"] = $codigoP[0]->emple_persona;
+                        $persona = persona::find($codP["id"]);
+                        Mail::to($email)->queue(new CorreoEmpleadoMail($vinculacion, $persona));
+                        array_push($resultado, array("Persona" => $persona, "Correo" => $c, "Reenvio" => $r));
+                    } else {
+                        $r = false;
+                        array_push($resultado, array("Persona" => $persona, "Correo" => $c, "Reenvio" => $r));
+                    }
                 } else {
                     $codigoEmpresa = DB::table('users as u')
                         ->join('usuario_organizacion as uo', 'uo.user_id', '=', 'u.id')
@@ -154,12 +164,14 @@ class correosEmpleadoController extends Controller
                     $datos["correo"] = $correoE->emple_Correo;
                     $email = array($datos["correo"]);
                     Mail::to($email)->queue(new CorreoEmpleadoMail($vinculacion, $persona));
+                    array_push($resultado, array("Persona" => $persona, "Correo" => $c, "Reenvio" => $r));
                 }
             } else {
-                return response()->json(null, 403);
+                $c = false;
+                array_push($resultado, array("Persona" => $persona, "Correo" => $c, "Reenvio" => $r));
             }
         }
-        return json_encode(array("result" => true));
+        return response()->json($resultado, 200);
     }
     public function reenvio(Request $request)
     {

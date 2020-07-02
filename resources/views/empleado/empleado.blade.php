@@ -100,6 +100,7 @@
         body {
             background-color: #f8f8f8;
         }
+
     </style>
     <div id="preloader">
         <div id="status">
@@ -161,7 +162,7 @@
                             </div>
                             <div id="espera" class="text-center" style="display: none">
 
-                                <img src="{{asset('landing/images/loading.gif')}}" height="100" >
+                                <img src="{{asset('landing/images/loading.gif')}}" height="100">
                             </div>
                             <div id="tabladiv">
                             </div>
