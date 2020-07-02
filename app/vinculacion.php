@@ -9,6 +9,6 @@ class vinculacion extends Model
     //
     protected $table = 'vinculacion';
     protected $primaryKey = 'id';
-    protected $fillable = ['id', 'hash', 'estado', 'envio', 'reenvio'];
+    protected $fillable = ['id','idEmpleado', 'hash', 'descarga', 'envio', 'reenvio','pc_mac'];
     public $timestamps = false;
 }
