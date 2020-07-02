@@ -92,6 +92,9 @@
             <th style="border-top: 1px solid #fdfdfd;">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR" id="i6">
             </th>
+            <th style="border-top: 1px solid #fdfdfd;" id="masivoC"> <button type="button"
+                    class="btn btn-secondary  btn-sm" onclick="$('#modalCorreo').modal();"
+                    style="background:#f0f4fd; border-color:#f0f4fd; color:#a0add3">Envio Masivo @</button></th>
         </tr>
         <tr>
             <th></th>
@@ -169,6 +172,7 @@
 
 <script>
     $(document).ready(function () {
+        $('#masivoC').hide();
         $('#filter_col2').hide();
         $('#filter_col3').hide();
         $('#filter_col4').hide();
@@ -197,6 +201,16 @@
         $(this).addClass('selected').siblings().removeClass('selected');
         var value = $(this).find('input[type=hidden]').val();
         $('#formNuevoEl').show();
+        //****//
+        var allVals = [];
+        $(".sub_chk:checked").each(function () {
+            allVals.push($(this).attr('data-id'));
+        });
+        if(allVals.length >0){
+            $('#masivoC').show();
+        }else{
+            $('#masivoC').hide();
+        }
         $.ajax({
             type: "get",
             url: "empleado/show",
