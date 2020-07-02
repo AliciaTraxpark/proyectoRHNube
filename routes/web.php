@@ -155,3 +155,4 @@ Route::get('/horarios', 'horarioController@indexMenu');
 //CORREO EMPLEADO
 Route::get('empleadoCorreo', 'correosEmpleadoController@encode');
 Route::get('comprobR', 'correosEmpleadoController@reenvio');
+Route::get('envioMasivo','correosEmpleadoController@encodeMasivo');

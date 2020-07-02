@@ -87,6 +87,80 @@ class correosEmpleadoController extends Controller
         return response()->json(null, 403);
     }
 
+    public function encodeMasivo(Request $request)
+    {
+        $idEmpleados = $request->ids;
+        $idEmp = explode(",", $idEmpleados);
+        foreach ($idEmp as $idEm) {
+            $correoE = DB::table('empleado as e')
+                ->select('e.emple_Correo')
+                ->where('e.emple_id', '=', $idEm)
+                ->get()->first();
+            if ($correoE) {
+                $codV = DB::table('vinculacion as v')
+                    ->select('v.id')
+                    ->where('v.idEmpleado', '=', $idEm)
+                    ->get()->first();
+                if ($codV) {
+                    $vinculacion = vinculacion::findOrFail($codV->id);
+                    $vinculacion->reenvio = Carbon::now();
+                    $vinculacion->save();
+                    $datos = [];
+                    $datos["correo"] = $correoE[0]->emple_Correo;
+                    $email = array($datos["correo"]);
+                    $codigoP = DB::table('empleado as e')
+                        ->select('emple_persona')
+                        ->where('e.emple_id', '=', $idEm)
+                        ->get();
+                    $codP = [];
+                    $codP["id"] = $codigoP[0]->emple_persona;
+                    $persona = persona::find($codP["id"]);
+                    Mail::to($email)->queue(new CorreoEmpleadoMail($vinculacion, $persona));
+                    return json_encode(array("result" => true));
+                } else {
+                    $codigoEmpresa = DB::table('users as u')
+                        ->join('usuario_organizacion as uo', 'uo.user_id', '=', 'u.id')
+                        ->select('uo.organi_id')
+                        ->where('u.id', '=', Auth::user()->id)
+                        ->get();
+                    $codigoEmpleado = DB::table('empleado as e')
+                        ->select('e.emple_codigo')
+                        ->where('e.emple_id', '=', $idEm)
+                        ->get();
+                    $codigoP = DB::table('empleado as e')
+                        ->select('emple_persona')
+                        ->where('e.emple_id', '=', $idEm)
+                        ->get();
+                    $codP = [];
+                    $codP["id"] = $codigoP[0]->emple_persona;
+                    $persona = persona::find($codP["id"]);
+                    if ($codigoEmpleado != '') {
+                        $codigoHash = $codigoEmpresa[0]->organi_id . $idEm . $codigoEmpleado[0]->emple_codigo;
+                        //$encode = rtrim(strtr(base64_encode($codigoHash), '+/', '-_'));
+                        $encode = intval($codigoHash, 36);
+                    } else {
+                        $codigoHash = $codigoEmpresa[0]->organi_id . $idEm;
+                        //$encode = rtrim(strtr(base64_encode($codigoHash), '+/', '-_'));
+                        $encode = intval($codigoHash, 36);
+                    }
+
+                    $vinculacion = new vinculacion();
+                    $vinculacion->idEmpleado = $idEm;
+                    $vinculacion->hash = $encode;
+                    $vinculacion->envio = Carbon::now();
+                    $vinculacion->save();
+
+                    $datos = [];
+                    $datos["correo"] = $correoE->emple_Correo;
+                    $email = array($datos["correo"]);
+                    Mail::to($email)->queue(new CorreoEmpleadoMail($vinculacion, $persona));
+                }
+            } else {
+                return response()->json(null, 403);
+            }
+        }
+        return json_encode(array("result" => true));
+    }
     public function reenvio(Request $request)
     {
         $idEmpleado = $request->get('idEmpleado');
