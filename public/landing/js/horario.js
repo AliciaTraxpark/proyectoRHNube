@@ -46,6 +46,9 @@ $('#nombreEmpleado').change(function () {
 
 });
 function verhorarioEmpleado(idempleado) {
+     $.get("/vaciartemporal", {}, function (data, status) {
+
+    });
     $('#horaIhorario').val('');
     $('#horaFhorario').val('');
     $('#verhorarioEmpleado').modal('toggle');
@@ -101,8 +104,33 @@ function calendarioHorario(eventosEmpleado) {
             console.log(info);
             console.log(info.event.id);
             console.log(info.event.title);
-            //var event = calendar.getEventById(id);
-            // elimina//info.event.remove();
+           var event = calendar.getEventById(id);
+           if(info.event.textColor=='000000'){
+            var r = confirm("Desea eliminar la  hora: ("+info.event.title+ ") del horario");
+            if (r == true) {
+                $.ajax({
+                    type: "post",
+                    url: "/eliminarHora",
+                    data: {
+                        idHora: info.event.id,
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                    info.event.remove();
+                    },
+                    error: function (data) {
+                        alert('Ocurrio un error');
+                    }
+
+
+                });
+
+            }
+           }
+
+           //info.event.remove();
         },
         selectable: true,
         selectMirror: true,
@@ -176,10 +204,11 @@ function calendarioHorario(eventosEmpleado) {
                         },
                         success: function (data) {
                             //alert(fechastart);
-                            $.each( fechastart, function( key, value ) {
+                           /*  $.each( fechastart, function( key, value ) {
                             calendar.addEvent(
                                 { title: inicioHorario + '-' + finHorario, color: "#ffffff", textColor: "000000", start: value, end: null}
-                            ) });
+                            ) }); */
+                            calendar.addEventSource(data);
                             $('#guardarHorarioEventos').show();
                         },
                         error: function (data) {
