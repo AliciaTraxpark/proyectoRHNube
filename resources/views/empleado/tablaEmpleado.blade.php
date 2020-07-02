@@ -528,8 +528,8 @@
 
 
                         });
+                        $('#modalEliminar').modal('hide');
                         leertabla();
-                        $('#modalEliminar').modal('toggle');
                         //$('#tablaEmpleado').DataTable().destroy();
                     },
                     error: function (data) {
