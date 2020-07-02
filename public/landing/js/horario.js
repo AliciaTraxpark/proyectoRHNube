@@ -96,7 +96,14 @@ function calendarioHorario(eventosEmpleado) {
         contentHeight: 490,
         fixedWeekCount: false,
         plugins: ['dayGrid', 'interaction', 'timeGrid'],
-
+        eventClick: function (info) {
+            id = info.event.id;
+            console.log(info);
+            console.log(info.event.id);
+            console.log(info.event.title);
+            //var event = calendar.getEventById(id);
+            // elimina//info.event.remove();
+        },
         selectable: true,
         selectMirror: true,
         select: function (arg) {

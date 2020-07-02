@@ -31,7 +31,8 @@
 <style>
     .fc-event, .fc-event-dot {
     background-color: #d1c3c3;
-    font-size: 11.2px!important
+    font-size: 11.2px!important;
+    cursor: pointer; 
 
 }
 .fc-toolbar.fc-header-toolbar{
