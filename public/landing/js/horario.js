@@ -93,7 +93,7 @@ function calendarioHorario(eventosEmpleado) {
         locale: 'es',
         defaultDate: ano + '-01-01',
         height: "auto",
-        contentHeight: 430,
+        contentHeight: 490,
         fixedWeekCount: false,
         plugins: ['dayGrid', 'interaction', 'timeGrid'],
 
@@ -338,7 +338,7 @@ function calendario(data) {
         locale: 'es',
         defaultDate: ano + '-01-01',
         height: "auto",
-        contentHeight: 430,
+        contentHeight: 490,
         fixedWeekCount: false,
         plugins: ['dayGrid', 'interaction', 'timeGrid'],
 
