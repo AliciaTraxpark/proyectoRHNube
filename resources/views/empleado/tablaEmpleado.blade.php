@@ -574,7 +574,6 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (data) {
-                console.log(data);
                 for(var i = 0; i < data.length; i++){
                     if(data[i].Correo == true && data[i].Reenvio == true){
                         $.notify({
