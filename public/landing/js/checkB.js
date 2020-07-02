@@ -22,4 +22,4 @@ CheckBoxs.on('change', function (e) {
         $('#enviarCorreosMasivos').hide();
     }
     seleccionarTodos.prop('checked', (CheckBoxMarcados === CheckBoxs.length));
-})
+});
