@@ -611,20 +611,20 @@ $('#formNuevoEd').click(function () {
 $('#formNuevoEd').hide();
 $('#formNuevoEl').hide();
 $('#cerrarE').click(function () {
-    leertabla();
+    //leertabla();
     $('#smartwizard1').smartWizard("reset");
     $('#formNuevoEd').hide();
     $('#formNuevoEl').hide();
 });
 $('#cerrarEd').click(function () {
-    leertabla();
+    //leertabla();
     $('#smartwizard1').smartWizard("reset");
     $('#formNuevoEd').hide();
     $('#formNuevoEl').hide();
     $('#navActualizar').hide();
 });
 $('#cerrarMoadalEmpleado').click(function () {
-    leertabla();
+    //leertabla();
     console.log("ingreso");
     $('#form-registrar').modal('toggle');
 

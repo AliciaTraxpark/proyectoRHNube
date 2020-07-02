@@ -173,7 +173,7 @@
 <script>
     $("#tablaEmpleado tbody tr").click(function () {
         $('#smartwizard1').smartWizard("reset");
-        $(this).addClass('selected').siblings().removeClass('selected');
+        //$(this).addClass('selected').siblings().removeClass('selected');
         var value = $(this).find('input[type=hidden]').val();
         $('#formNuevoEl').show();
         $.ajax({
@@ -316,9 +316,7 @@
             "lengthChange": false,
             "scrollX": true,
             "pageLength": 30,
-            select: {
-                style: 'multi'
-            },
+
             language: {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
