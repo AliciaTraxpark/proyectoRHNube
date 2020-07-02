@@ -627,8 +627,11 @@ class EmpleadoController extends Controller
     public function comprobarNumD(Request $request)
     {
         $numeroD = $request->get('numeroD');
-        $empleado = empleado::where('emple_nDoc', '=', $numeroD)->first();
-
+        //$empleado = empleado::where('emple_nDoc', '=', $numeroD)->first();
+        $empleado = DB::table('empleado as e')
+            ->where('e.emple_nDoc', '=', $numeroD)
+            ->where('e.users_id', '=', Auth::user()->id)
+            ->get()->first();
         if ($empleado != null) {
             return 1;
         }
@@ -637,7 +640,11 @@ class EmpleadoController extends Controller
     public function comprobarCorreo(Request $request)
     {
         $email = $request->get('email');
-        $empleado = empleado::where('emple_Correo', '=', $email)->first();
+        //$empleado = empleado::where('emple_Correo', '=', $email)->first();
+        $empleado = DB::table('empleado as e')
+            ->where('emple_Correo', '=', $email)
+            ->where('e.users_id', '=', Auth::user()->id)
+            ->get()->first();
         if ($empleado != null) {
             return 1;
         }

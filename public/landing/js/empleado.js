@@ -622,12 +622,18 @@ $('#cerrarEd').click(function () {
     $('#formNuevoEd').hide();
     $('#formNuevoEl').hide();
     $('#navActualizar').hide();
+    //************* */
+    $('#v_validApPaterno').hide();
+    $('#v_validNumDocumento').hide();
+    $('#v_validApMaterno').hide();
+    $('#v_validNombres').hide();
+    $('#v_validFechaN').hide();
+
 });
 $('#cerrarMoadalEmpleado').click(function () {
     //leertabla();
-    console.log("ingreso");
-    $('#form-registrar').modal('toggle');
 
+    //************ */
     $('#formNuevoEd').hide();
     $('#formNuevoEl').hide();
     $('#smartwizard').smartWizard("reset");
@@ -640,6 +646,16 @@ $('#cerrarMoadalEmpleado').click(function () {
     $("#form-registrar :input").prop('disabled', true);
     $('#documento').attr('disabled', false);
     $('#cerrarMoadalEmpleado').attr('disabled', false);
+    //********** */
+    $('#v_emailR').hide();
+    $('#validDocumento').hide();
+    $('#validApPaterno').hide();
+    $('#validNumDocumento').hide();
+    $('#validApMaterno').hide();
+    $('#validFechaN').hide();
+    $('#validNombres').hide();
+    $('#validGenero').hide();
+    $('#form-registrar').modal('toggle');
 });
 //*********************/
 $('#numR').hide();

@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\actividad;
 use App\captura;
 use App\control;
+use App\empleado;
 use App\envio;
 use App\proyecto;
 use App\proyecto_empleado;
 use App\tarea;
+use App\vinculacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -227,5 +229,39 @@ class apiController extends Controller
             return response()->json($respuesta, 200);
         }
         return response()->json(null, 400);
+    }
+
+    public function verificacion(Request $request)
+    {
+        $nroD = $request->get('nroDocumento');
+        $empleado = empleado::where('emple_nDoc', '=', $nroD)->get()->first();
+        if ($empleado) {
+            $vinculacion = vinculacion::where('idEmpleado', '=', $empleado->emple_id)->get()->first();
+            if ($vinculacion) {
+                if ($vinculacion->hash == $request->get('codigo')) {
+                    if ($vinculacion->pc_mac !=  null) {
+                        if ($vinculacion->pc_mac == $request->get('pc_mac')) {
+                            $proyectoE = proyecto_empleado::where('empleado_emple_id', '=', $empleado->emple_id)->get()->first();
+                            if ($proyectoE) {
+                                $proyecto = proyecto::where('Proye_id', '=', $proyectoE->Proyecto_Proye_id);
+                                return response()->json($proyecto->Proye_Nombre, 200);
+                            }
+                            return response()->json("Empleado sin actividades asignadas", 200);
+                        } else {
+                            return response()->json("Pc no coinciden", 400);
+                        }
+                    } else {
+                        $vinculacion->pc_mac = $request->get('pc_mac');
+                        $vinculacion->save();
+                        $proyectoE = proyecto_empleado::where('empleado_emple_id', '=', $empleado->emple_id)->get()->first();
+                        $proyecto = proyecto::where('Proye_id', '=', $proyectoE->Proyecto_Proye_id);
+                        return response()->json($proyecto->Proye_Nombre, 200);
+                    }
+                }
+                return response()->json("Código erróneo", 400);
+            }
+            return response()->json("Aún no a enviado correo empleado.", 400);
+        }
+        return response()->json("Empleado no registrado", 400);
     }
 }

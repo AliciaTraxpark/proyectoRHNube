@@ -74,7 +74,6 @@ class correosEmpleadoController extends Controller
                 $vinculacion = new vinculacion();
                 $vinculacion->idEmpleado = $idEmpleado;
                 $vinculacion->hash = $encode;
-                $vinculacion->estado = 'd';
                 $vinculacion->envio = Carbon::now();
                 $vinculacion->save();
 
