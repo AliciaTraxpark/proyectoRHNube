@@ -337,6 +337,9 @@
             "lengthChange": false,
             "scrollX": true,
             "pageLength": 30,
+            select: {
+                style: 'multi'
+            },
             language: {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
@@ -525,10 +528,9 @@
 
 
                         });
-                        $('#modalEliminar').modal('hide');
-                        //$('#tablaEmpleado').DataTable().destroy();
                         leertabla();
-
+                        $('#modalEliminar').modal('toggle');
+                        //$('#tablaEmpleado').DataTable().destroy();
                     },
                     error: function (data) {
                         alert(data.responseText);

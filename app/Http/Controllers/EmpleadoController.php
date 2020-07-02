@@ -23,6 +23,7 @@ use App\proyecto;
 use App\proyecto_empleado;
 use App\tarea;
 use App\tipo_dispositivo;
+use App\vinculacion;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTFactory;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -572,8 +573,12 @@ class EmpleadoController extends Controller
         }
         $idem = implode(',', $array);
 
-        //dd($idem);
 
+        //dd($idem);
+        $modo = modo::whereIn('idEmpleado', explode(",", $ids))->get();
+        $modo->each->delete();
+        $vinculacion = vinculacion::whereIn('idEmpleado', explode(",", $ids))->get();
+        $vinculacion->each->delete();
         $empleado->each->delete();
         $persona = persona::whereIn('perso_id', explode(",", $idem))->get();
         $persona->each->delete();
