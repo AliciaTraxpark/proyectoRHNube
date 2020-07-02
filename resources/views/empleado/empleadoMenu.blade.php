@@ -97,7 +97,7 @@
         </div> <!-- end card -->
     </div>
     <div id="modalInformacionF" class="modal fade" tabindex="-1" role="dialog"
-        aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+        aria-labelledby="modalInformacionF" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -151,8 +151,8 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <div id="modalMasivaFoto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-        aria-hidden="true" data-backdrop="static">
+    <div id="modalMasivaFoto" class="modal fade" tabindex="-1" role="dialog"
+        aria-labelledby="modalMasivaFoto" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog modal-dialog-scrollable modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -187,7 +187,7 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <div id="modalEliminar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    <div id="modalEliminar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalEliminar"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -227,7 +227,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="myModalLabel">Agregar área</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-registrar').modal('show');">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -248,13 +249,14 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <div id="cargomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal"
+    <div id="cargomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cargomodal"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="myModalLabel">Agregar Cargo</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-registrar').modal('show');">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -275,13 +277,14 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <div id="centrocmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal"
+    <div id="centrocmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="centrocmodal"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="myModalLabel">Agregar Centro Costo</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-registrar').modal('show');">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -308,7 +311,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="myModalLabel">Agregar Local</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-registrar').modal('show');">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -336,7 +340,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="myModalLabel">Agregar Nivel</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-registrar').modal('show');">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -358,13 +363,14 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div>
-    <div id="contratomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal"
+    <div id="contratomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="contratomodal"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="myModalLabel">Agregar Contrato</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-registrar').modal('show');">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -386,13 +392,14 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div>
-    <div id="fechasmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal"
+    <div id="fechasmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fechasmodal"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="myModalLabel">Indicar fechas de Contrato</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-registrar').modal('show');">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -411,7 +418,7 @@
                 <div class="modal-footer">
                     <button type="button" onclick="$('#form-registrar').modal('show');"
                         class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" id="guardarFechas" class="btn btn-primary">Guardar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
                 </form>
             </div><!-- /.modal-content -->
@@ -419,13 +426,14 @@
     </div><!-- /.modal -->
     <!-- /.modal -->
     <!-----Modales Editar-->
-    <div id="areamodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal"
+    <div id="areamodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodalE"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="myModalLabel">Agregar área</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-ver').modal('show');">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -447,13 +455,14 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <div id="cargomodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal"
+    <div id="cargomodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cargomodalE"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="myModalLabel">Agregar Cargo</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-ver').modal('show');">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -474,13 +483,14 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <div id="centrocmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal"
+    <div id="centrocmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="centrocmodalE"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="myModalLabel">Agregar Centro Costo</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-ver').modal('show');">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -501,13 +511,14 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <div id="localmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="localmodal"
+    <div id="localmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="localmodalE"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="myModalLabel">Agregar Local</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-ver').modal('show');">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -529,13 +540,14 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <div id="nivelmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="nivelmodal"
+    <div id="nivelmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="nivelmodalE"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="myModalLabel">Agregar Nivel</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-ver').modal('show');">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -557,13 +569,14 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div>
-    <div id="contratomodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal"
+    <div id="contratomodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="contratomodalE"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="myModalLabel">Agregar Contrato</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-ver').modal('show');">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -585,13 +598,14 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div>
-    <div id="fechasmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal"
-        aria-hidden="true" data-backdrop="static">
+    <div id="fechasmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fechasmodalE"
+        aria-hidden=" true" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="myModalLabel">Indicar fechas de Contrato</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-ver').modal('show');">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -619,7 +633,7 @@
     <!-- /.modal -->
     <!---->
     <div class="modal fade" style="font-size: 13px" id="form-registrar" tabindex="-1" role="dialog"
-        aria-labelledby="areamodal" aria-hidden="true" data-backdrop="static">
+        aria-labelledby="form-registrar" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog modal-dialog-scrollable modal-lg">
             <div class="modal-content">
                 <div class="modal-header" style="background: #163552;">
@@ -631,10 +645,11 @@
                 </div>
                 <div class="modal-body" style="padding: 0px">
                     <div class="setup-panel" id="smartwizard" style="background: #ffffff; color:#3d3d3d;">
-                        <ul style="background: #ffffff!important;">
+                        <ul style="background: #fdfdfd!important;">
                             <li><a href="#sw-default-step-1">Personales</a></li>
                             <li><a href="#sw-default-step-2">Empresarial</a></li>
                             <li><a href="#sw-default-step-3">Foto</a></li>
+                            <li><a href="#sw-default-step-4">Dispositivos</a></li>
                         </ul>
                         <div class="p-3">
                             <div id="sw-default-step-1" class="setup-content">
@@ -642,6 +657,8 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="sw-default">Tipo Documento</label>
+                                            <span id="validDocumento" style="color: red;">*Campo
+                                                Obligatorio</span>
                                             <select class="form-control" placeholder="Tipo Documento "
                                                 name="documento" id="documento" tabindex="1" required>
                                                 <option value="">Seleccionar</option>
@@ -653,11 +670,14 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Apellido Paterno</label>
+                                            <span id="validApPaterno" style="color: red;">*Campo
+                                                Obligatorio</span>
                                             <input type="text" class="form-control" name="apPaterno"
                                                 id="apPaterno" tabindex="4" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Correo Electronico</label>
+                                            <span id="emailR" style="color: red;">*Correo registrado</span>
                                             <input type="email" class="form-control" id="email" name="email"
                                                 tabindex="7">
                                         </div>
@@ -665,11 +685,16 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="sw-default">Num. Documento</label>
+                                            <span id="validNumDocumento" style="color: red;">*Campo
+                                                Obligatorio</span>
+                                            <span id="numR" style="color: red;">*Num. registrado</span>
                                             <input type="text" class="form-control" name="numDocumento"
                                                 id="numDocumento" tabindex="2" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Apellido Materno</label>
+                                            <span id="validApMaterno" style="color: red;">*Campo
+                                                Obligatorio</span>
                                             <input type="text" class="form-control" name="apMaterno"
                                                 id="apMaterno" tabindex="5" required>
                                         </div>
@@ -682,12 +707,16 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="sw-default">Fecha Nacimiento</label>
+                                            <span id="validFechaN" style="color: red;">*Campo
+                                                Obligatorio</span>
                                             <input type="text" data-custom-class="form-control" id="fechaN"
                                                 tabindex="3" data-format="YYYY-MM-DD"
                                                 data-template="D MMM YYYY" name="date">
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Nombres</label>
+                                            <span id="validNombres" style="color: red;">*Campo
+                                                Obligatorio</span>
                                             <input type="text" class="form-control" name="nombres"
                                                 id="nombres" tabindex="6" required>
                                         </div>
@@ -730,6 +759,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="normal" for="">Genero</label>
+                                            <span id="validGenero" style="color: red;">*Campo
+                                                Obligatorio</span>
                                             <label class="custom-control custom-radio">
                                                 <input type="radio" name="tipo" id="tipo" value="Femenino"
                                                     required>
@@ -791,7 +822,6 @@
                             </div>
                             <div id="sw-default-step-2" class="setup-content">
                                 <div class="row">
-                                    <div class="col-4"><br></div>
                                     <div class="col-4 text-center">
                                         <div class="form-group">
                                             <label for="sw-default">Codigo Empleado</label>
@@ -799,6 +829,7 @@
                                                 id="codigoEmpleado" tabindex="1" required>
                                         </div>
                                     </div>
+                                    <div class="col-4"><br></div>
                                     <div class="col-4"><br></div>
                                 </div>
                                 <div class="row">
@@ -825,10 +856,11 @@
                                                     data-target="#contratomodal"><i
                                                         class="uil uil-plus"></i></a></label>
                                             <select class="form-control" name="contrato" id="contrato"
+                                                onchange="$('#form-registrar').modal('hide');$('#fechasmodal').modal('show');"
                                                 tabindex="5" required>
                                                 <option value="">Seleccionar</option>
                                                 @foreach ($tipo_cont as $tipo_conts)
-                                                <option class="" value="{{$tipo_conts->contrato_id}}">
+                                                <option value="{{$tipo_conts->contrato_id}}">
                                                     {{$tipo_conts->contrato_descripcion}}</option>
                                                 @endforeach
                                             </select>
@@ -914,6 +946,22 @@
                                         </div>
                                     </div> <!-- end col -->
                                 </div> <!-- end row -->
+                            </div>
+                            <div id="sw-default-step-4" class="setup-content">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h4 class="header-title mt-0" style="color: #163552;"></i>Eligir
+                                            plataforma del empleado</h4>
+                                    </div>
+                                    @foreach($dispositivo as $disp)
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="checkbox" value="{{$disp->id}}" name="disp"
+                                                id="disp"> {{$disp->dispositivo_descripcion}}<br>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                </div>
                                 <br>
                                 <div class="row">
                                     <div class="col-md-12  text-center">
@@ -930,7 +978,7 @@
         </div>
     </div>
     <div class="modal fade" id="form-ver" style="font-size: 13px" tabindex="-1" role="dialog"
-        aria-labelledby="areamodal" aria-hidden="true" data-backdrop="static">
+        aria-labelledby="form-ver" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog modal-dialog-scrollable modal-lg">
             <div class="modal-content">
                 <div class="modal-header" style="background: #163552;">
@@ -946,12 +994,12 @@
                             <li><a href="#persona-step-1">Personales</a></li>
                             <li><a href="#sw-default-step-2">Empresarial</a></li>
                             <li><a href="#sw-default-step-3">Foto</a></li>
-                            <!--<div class="col-md-2"></div>
-                            &nbsp; &nbsp; &nbsp;
-                            <div class="col-md-4 text-right" style="display: flex;
-                            align-items: center;">
-                            &nbsp; &nbsp; &nbsp; &nbsp;   &nbsp; &nbsp;<a style="color: #ebebec;"  href="#modalEliminar" data-toggle="modal" data-target="#modalEliminar"><img src="{{asset('admin/images/eliminar-e.svg')}}" height="18" > <span>Eliminar</span></i></a>
-                            &nbsp;  &nbsp; &nbsp; <a type="button" href="javascript:abrirnuevo()" style="color: #ebebec;" href=""><img src="{{asset('admin/images/agregar.svg')}}" height="17" > <span>+Nuevo</span></a></div>-->
+                            <li><a href="#sw-default-step-4">Dispositivos</a></li>
+                            <div class="col-md-4 text-left" id="navActualizar" style="display: flex;
+                            align-items: center;cursor: pointer;"><a style="color: #3d3d3d;"
+                                    id="actualizarEmpleado">
+                                    <img src="{{asset('admin/images/processing.svg')}}" height="18">
+                                    <span style="font-weight: 600">Actualizar Empleado</span></i></a>
                         </ul>
                         <div class="p-3" id="form-registrar">
                             <div id="persona-step-1">
@@ -966,11 +1014,15 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Apellido Paterno</label>
+                                            <span id="v_validApPaterno" style="color: red;">*Campo
+                                                Obligatorio</span>
                                             <input type="text" class="form-control" name="v_apPaterno"
                                                 id="v_apPaterno" tabindex="4" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Correo Electronico</label>
+                                            <span id="v_emailR" style="color: red;">*Correo
+                                                registrado</span>
                                             <input type="email" class="form-control" id="v_email"
                                                 name="email" tabindex="7">
                                         </div>
@@ -978,12 +1030,16 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="sw-default">Num. Documento</label>
+                                            <span id="v_validNumDocumento" style="color: red;">*Campo
+                                                Obligatorio</span>
                                             <input type="text" class="form-control" name="v_numDocumento"
                                                 id="v_numDocumento" required disabled
                                                 style="background-color: #fcfcfc;" tabindex="2">
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Apellido Materno</label>
+                                            <span id="v_validApMaterno" style="color: red;">*Campo
+                                                Obligatorio</span>
                                             <input type="text" class="form-control" name="v_apMaterno"
                                                 id="v_apMaterno" tabindex="5" required>
                                         </div>
@@ -996,12 +1052,16 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="sw-default">Fecha Nacimiento</label>
+                                            <span id="v_validFechaN" style="color: red;">*Campo
+                                                Obligatorio</span>
                                             <input type="text" data-custom-class="form-control"
                                                 id="v_fechaN" data-format="YYYY-MM-DD"
                                                 data-template="D MMM YYYY" name="date" tabindex="3">
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Nombres</label>
+                                            <span id="v_validNombres" style="color: red;">*Campo
+                                                Obligatorio</span>
                                             <input type="text" class="form-control" name="v_nombres"
                                                 id="v_nombres" tabindex="6" required>
                                         </div>
@@ -1151,6 +1211,7 @@
                                                     data-toggle="modal"><i class="uil uil-plus"
                                                         style="color: darkblue;cursor: pointer;"></i></a></label>
                                             <select class="form-control" name="v_contrato" id="v_contrato"
+                                                onchange="$('#form-ver').modal('hide');$('#fechasmodalE').modal('show');"
                                                 tabindex="5" required>
                                                 <option value="">Seleccionar</option>
                                                 @foreach ($tipo_cont as $tipo_conts)
@@ -1239,13 +1300,24 @@
                                     </div> <!-- end col -->
                                 </div> <!-- end row -->
                                 <br>
-                                <div class="row">
-                                    <div class="col-md-12  text-center">
-                                        <button type="button" id="actualizarEmpleado"
-                                            class="btn btn-success">Actualizar</button>
-                                    </div>
-                                </div>
                                 <br>
+                            </div>
+                            <div id="sw-default-step-4">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h4 class="header-title mt-0" style="color: #163552;"></i>Eligir
+                                            plataforma del empleado</h4>
+                                    </div>
+                                    @foreach($dispositivo as $disp)
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="checkbox" value="{{$disp->id}}"
+                                                id="v_disp{{$disp->id}}" name="v_disp">
+                                            {{$disp->dispositivo_descripcion}}<br>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
 

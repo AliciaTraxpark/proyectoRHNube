@@ -599,6 +599,7 @@ class EmpleadoController extends Controller
         $nivel = nivel::all();
         $local = local::all();
         $empleado = empleado::all();
+        $dispositivo = tipo_dispositivo::all();
         $tabla_empleado = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->join('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
@@ -619,7 +620,7 @@ class EmpleadoController extends Controller
         return view('empleado.empleadoMenu', [
             'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
             'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
-            'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado
+            'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo
         ]);
     }
 
