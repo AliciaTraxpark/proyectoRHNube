@@ -375,7 +375,7 @@
                                          <div class="col-md-12">
                                             <div class="accordion custom-accordionwitharrow" id="accordionExample">
 
-                                                <div class="card mb-1 shadow-none border">
+                                                <div class="card mb-1 shadow-none border" style="1px solid #b0bdcd !important;background-color: #f7f8f9;">
                                                     <a href="" class="text-dark collapsed" data-toggle="collapse"
                                                         data-target="#collapseTwo" aria-expanded="false"
                                                         aria-controls="collapseTwo">

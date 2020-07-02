@@ -92,6 +92,10 @@
         color: #fdfdfd;
     }
     tr:first-child > td > .fc-day-grid-event{
+        margin-top: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
         margin-left: 2px;
         margin-right: 2px;
     }
@@ -107,6 +111,9 @@
     .custom-select:disabled {
     color: #3f3a3a;
     background-color: #fcfcfc;
+    }
+    .select2-container--default .select2-results__option[aria-selected=true]{
+        background: #ced0d3;
     }
 </style>
 <div class="row row-divided">
@@ -354,7 +361,7 @@
                              <div class="col-md-12">
                                 <div class="accordion custom-accordionwitharrow" id="accordionExample">
 
-                                    <div class="card mb-1 shadow-none border">
+                                    <div class="card mb-1 shadow-none border" style="1px solid #b0bdcd !important;background-color: #f7f8f9;">
                                         <a href="" class="text-dark collapsed" data-toggle="collapse"
                                             data-target="#collapseTwo" aria-expanded="false"
                                             aria-controls="collapseTwo">
