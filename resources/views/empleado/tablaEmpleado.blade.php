@@ -46,6 +46,39 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<div id="modalCorreoM" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCorreo" aria-hidden="true"
+    data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a empleado
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <h5 class="modal-title" id="myModalLabel" style="font-size: 15px">¿Desea enviar correo al empleado
+                        empleado?</h5>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-7 text-right">
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
+                        </div>
+                        <div class="col-md-5 text-right" style="padding-right: 38px;  ">
+                            <button type="button" id="enviarCorreoM" name="enviarCorreo"
+                                style="background-color: #163552;" class="btn btn-sm ">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <input type="hidden" id="csrf_token" name="_token" value="{{ csrf_token() }}">
 <div class="row">
 
@@ -93,7 +126,7 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR" id="i6">
             </th>
             <th style="border-top: 1px solid #fdfdfd;" id="enviarCorreosMasivos"> <button type="button"
-                    class="btn btn-secondary  btn-sm" onclick="$('#modalCorreo').modal();"
+                    class="btn btn-secondary  btn-sm" onclick="$('#modalCorreoM').modal();"
                     style="background:#f0f4fd; border-color:#f0f4fd; color:#a0add3">Envio Masivo @</button></th>
         </tr>
         <tr>
@@ -522,9 +555,86 @@
 
     $('input:checkbox[data-id='+data+']').prop('checked', true);
     $('.delete_all').click();
-
-
 }
+</script>
+{{-- CORREO MASIVO--}}
+<script>
+    function CorreosMasivos(){
+        var correoEmpleado = [];
+        $(".sub_chk:checked").each(function () {
+            correoEmpleado.push($(this).attr('data-id'));
+        });
+        var join_selected_values = correoEmpleado.join(",");
+        $.ajax({
+            async: false,
+            type:"get",
+            url:"envioMasivo",
+            data: 'ids=' + join_selected_values,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                for(var i = 0; i < data.length; i++){
+                    if(data[i].Correo == true && data[i].Reenvio == true){
+                        $.notify({
+                            message: "\nCorreo enviado a" + data[i].Persona.perso_nombre +" " + data[i].Persona.perso_apPaterno + " "+ data[i].Persona.perso_apMaterno ,
+                            icon: 'admin/images/checked.svg'
+                        }, {
+                            icon_type: 'image',
+                            newest_on_top: true,
+                            delay: 5000,
+                            template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                '</div>',
+                            spacing: 35
+                        });
+                    }else{
+                        if(data[i].Correo != true){
+                            $.notify({
+                                message: "\nAún no ha registrado correo a" + data[i].Persona.perso_nombre +" " + data[i].Persona.perso_apPaterno + " "+ data[i].Persona.perso_apMaterno ,
+                                icon: 'admin/images/warning.svg'
+                            }, {
+                                icon_type: 'image',
+                                newest_on_top: true,
+                                delay: 5000,
+                                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                    '</div>',
+                                spacing: 35
+                            });
+                        }else{
+                            if(data[0].Reenvio[i] != true){
+                                $.notify({
+                                message: data[i].Persona.perso_nombre +" " + data[i].Persona.perso_apPaterno+ " " + data[i].Persona.perso_apMaterno +"\nllego al limite de envio de correo",
+                                icon: 'admin/images/warning.svg'
+                                }, {
+                                    icon_type: 'image',
+                                    newest_on_top: true,
+                                    delay: 5000,
+                                    template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                        '<span data-notify="title">{1}</span> ' +
+                                        '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                        '</div>',
+                                    spacing: 35
+                                });
+                            }
+                        }
+                    }
+                }
+            $('#modalCorreoM').modal('toggle');
+            leertabla();
+            }
+        });
+    }
+    $('#enviarCorreoM').on("click",CorreosMasivos);
 </script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
