@@ -36,7 +36,13 @@
 
     .fc-event, .fc-event-dot {
     background-color: #d1c3c3;
-    font-size: 11.2px!important
+    font-size: 11.2px!important;
+    margin: 2px 2px;
+    cursor:url("//3.208.88.131:8000/landing/images/eliminar.png"), auto;
+
+
+
+
 
 }
 .fc-toolbar.fc-header-toolbar{
@@ -99,6 +105,7 @@
         margin-left: 2px;
         margin-right: 2px;
     }
+
     .fc th.fc-widget-header{
         background: #dfe6f2;
     font-size: 13px;
@@ -373,7 +380,7 @@
                                             </div>
                                         </a>
 
-                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                        <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
                                             data-parent="#accordionExample">
                                             <div class="card-body text-muted" style="padding-top: 0px; padding-bottom: 20px;">
                                                 <div class="row">
@@ -487,7 +494,7 @@
                    </div>
 
                </div>
-               <div class="modal-footer">
+               <div class="modal-footer" style="padding-top: 4px;padding-bottom: 4px">
                    <div class="col-md-12">
                        <div class="row">
                            <div class="col-md-12 text-right" >
