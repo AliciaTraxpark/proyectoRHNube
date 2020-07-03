@@ -12,6 +12,9 @@
     .dataTables_scrollHeadInner {
         width: 100% !important;
     }
+    .table th, .table td{
+        padding: 0.4rem;
+    }
 </style>
 <div id="modalCorreo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCorreo" aria-hidden="true"
     data-backdrop="static">
@@ -111,7 +114,7 @@
 </div>
 
 <table id="tablaEmpleado" class="table dt-responsive nowrap">
-    <thead style=" background: #e3eaef;color: #6c757d;">
+    <thead style=" background: #edf0f1;color: #6c757d;">
         <tr style="background: #ffffff">
             <th style="border-top: 1px solid #fdfdfd;"></th>
             <th style="border-top: 1px solid #fdfdfd;"></th>
@@ -127,7 +130,7 @@
             </th>
             <th style="border-top: 1px solid #fdfdfd;" id="enviarCorreosMasivos"> <button type="button"
                     class="btn btn-secondary  btn-sm" onclick="$('#modalCorreoM').modal();"
-                    style="background:#f0f4fd; border-color:#f0f4fd; color:#a0add3">Envio Masivo @</button></th>
+                    style="background:#fafbff; border-color:#a4b3c1; color:#5e6f80">Envio Masivo @</button></th>
         </tr>
         <tr>
             <th></th>
@@ -143,7 +146,7 @@
 
         </tr>
     </thead>
-    <tbody style="background:#ffffff;color: #2c2c2c;" id="tbodyr">
+    <tbody style="background:#ffffff;color: #585858;font-size: 12.5px" id="tbodyr">
         @foreach ($tabla_empleado as $tabla_empleados)
         <tr class="" id="{{$tabla_empleados->emple_id}}" value="{{$tabla_empleados->emple_id}}">
 
@@ -165,16 +168,16 @@
             @if($tabla_empleados->reenvio == null)
             <td class="text-center"><button id="reenviar" type="button" class="btn btn-secondary  btn-sm"
                     onclick="$('#modalCorreo').modal();"
-                    style="background:#f0f4fd; border-color:#f0f4fd; color:#a0add3">Reenviar @</button></td>
+                    style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;">Reenviar @</button></td>
             @else
             <td class="text-center"><button id="reenviar" type="button" class="btn btn-secondary  btn-sm"
-                    onclick="$('#modalCorreo').modal();" style="background:#eae7d9; border-color:#eae7d9; color:#6c757d"
+                    onclick="$('#modalCorreo').modal();"  style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;"
                     disabled>Reenviar @</button></td>
             @endif
             @else
             <td class="text-center"><button type="button" class="btn btn-secondary  btn-sm"
                     onclick="$('#modalCorreo').modal();"
-                    style="background:#f0f4fd; border-color:#f0f4fd; color:#a0add3">Enviar @</button></td>
+                    style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;">Enviar @</button></td>
             @endif
             @endif
             @if(!in_array("2",$tabla_empleados->dispositivos))
@@ -184,16 +187,16 @@
             @if($tabla_empleados->reenvio == null)
             <td class="text-center"><button id="reenviar" type="button" class="btn btn-secondary  btn-sm"
                     onclick="$('#modalCorreo').modal();"
-                    style="background:#f0f4fd; border-color:#f0f4fd; color:#a0add3">Reenviar @</button></td>
+                    style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;">Reenviar @</button></td>
             @else
             <td class="text-center"><button id="reenviar" type="button" class="btn btn-secondary  btn-sm"
-                    onclick="$('#modalCorreo').modal();" style="background:#eae7d9; border-color:#eae7d9; color:#6c757d"
+                    onclick="$('#modalCorreo').modal();"  style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;"
                     disabled>Reenviar @</button></td>
             @endif
             @else
             <td class="text-center"><button type="button" class="btn btn-secondary  btn-sm"
                     onclick="$('#modalCorreo').modal();"
-                    style="background:#f0f4fd; border-color:#f0f4fd; color:#a0add3">Enviar @</button></td>
+                    style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;">Enviar @</button></td>
             @endif
             @endif
             <td class="text-center"><input type="checkbox" id="tdC" style="margin-left:5.5px!important"

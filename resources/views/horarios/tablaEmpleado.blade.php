@@ -13,6 +13,9 @@
     .dataTables_scrollHeadInner{
         width: 100%!important;
     }
+    .table th, .table td{
+        padding: 0.4rem;
+    }
 </style>
 <input type="hidden" id="csrf_token" name="_token" value="{{ csrf_token() }}">
    <div class="row">
@@ -45,7 +48,7 @@
   </div>
 
 <table id="tablaEmpleado" class="table dt-responsive nowrap" style="font-size: 12.8px;">
-    <thead style=" background: #5a6f82;color: white;">
+    <thead style=" background: #edf0f1;color: #6c757d;">
         <tr style="background: #ffffff">
             <th style="border-top: 1px solid #fdfdfd;"></th>
             <th style="border-top: 1px solid #fdfdfd;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="inputR" id="i1"></th>
@@ -68,7 +71,7 @@
 
         </tr>
     </thead>
-    <tbody style="background:#ffffff;color: #2c2c2c;">
+    <tbody style="background:#ffffff;color: #585858;font-size: 12.5px">
         @foreach ($tabla_empleado as  $tabla_empleados)
     <tr class="" id="{{$tabla_empleados->emple_id}}" value= "{{$tabla_empleados->emple_id}}">
 
