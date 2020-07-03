@@ -899,7 +899,7 @@
                                         </div>
                                         <div id="sw-default-step-2" class="setup-content">
                                             <div class="row">
-                                                <div class="col-4 text-center">
+                                                <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Codigo Empleado</label>
                                                         <input type="text" class="form-control" name="codigoEmpleado"
@@ -1255,8 +1255,8 @@
                                         </div>
                                         <div id="sw-default-step-2">
                                             <div class="row">
-                                                <div class="col-4"><br></div>
-                                                <div class="col-4 text-center">
+
+                                                <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Codigo Empleado</label>
                                                         <input type="text" class="form-control" name="v_codigoEmpleado"
