@@ -58,7 +58,7 @@ class horarioController extends Controller
         $temporal_eventos->title=$horas;
         $temporal_eventos->start=$datafechas;
         $temporal_eventos->color='#ffffff';
-        $temporal_eventos->textColor='000000';
+        $temporal_eventos->textColor='111111';
         $temporal_eventos->users_id=Auth::user()->id;
         $temporal_eventos->paises_id=$pais;
         $temporal_eventos->ubigeo_peru_departments_id=$departamento;
@@ -100,7 +100,7 @@ class horarioController extends Controller
             $horario_dias->title=$temporal_eventos->title;
             $horario_dias->start=$temporal_eventos->start;
             $horario_dias->color=$temporal_eventos->color;
-            $horario_dias->textColor=$temporal_eventos->textColor;
+            $horario_dias->textColor='000000';
             $horario_dias->users_id=$temporal_eventos->users_id;
             $horario_dias->paises_id=$temporal_eventos->paises_id;
             $horario_dias->ubigeo_peru_departments_id=$temporal_eventos->ubigeo_peru_departments_id;
@@ -316,9 +316,14 @@ class horarioController extends Controller
 
     public function eliminarHora(Request $request){
         $idHora=$request->idHora;
+        $textcolor=$request->textcolor;
+        //$horario_empleado=DB::table ('horario_empleado')->where('horario_dias_id','=',$idHora)->get();
+        //dd($horario_empleado[0]->horario_dias_id);
+        if($textcolor=='000000'){
+            $horario_empleado=horario_empleado::where('horario_dias_id','=',$idHora)->delete();
+        } else{ $temporal_evento=temporal_eventos::where('id','=',$idHora)->delete();}
+        //$horario_empleado=horario_empleado::where('horario_dias_id','=',$idHora)->delete();
 
-        $horario_empleado=horario_empleado::where('horario_dias_id','=',$idHora)->delete();
-        
         //$horario_dias = horario_dias::where('id', '=',  $idHora)->delete();
     }
     }

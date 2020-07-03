@@ -51,6 +51,7 @@ function verhorarioEmpleado(idempleado) {
     });
     $('#horaIhorario').val('');
     $('#horaFhorario').val('');
+    $('#nuevaTolerancia').val('');
     $('#verhorarioEmpleado').modal('toggle');
     $.ajax({
         type: "post",
@@ -105,14 +106,14 @@ function calendarioHorario(eventosEmpleado) {
             console.log(info.event.id);
             console.log(info.event.title);
            var event = calendar.getEventById(id);
-           if(info.event.textColor=='000000'){
+           if(info.event.textColor=='000000' ||info.event.textColor=='111111' ){
             var r = confirm("Desea eliminar la  hora: ("+info.event.title+ ") del horario");
             if (r == true) {
                 $.ajax({
                     type: "post",
                     url: "/eliminarHora",
                     data: {
-                        idHora: info.event.id,
+                        idHora: info.event.id,textcolor:info.event.textColor
                     },
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -142,6 +143,7 @@ function calendarioHorario(eventosEmpleado) {
                 f2 = $('#horarioEndH').val();
                 inicioHorario=$('#horaIhorario').val();
                 finHorario=$('#horaFhorario').val();
+
                 if (inicioHorario == '' || finHorario == '') {
                     alert('Indique hora de inicio y fin');
                 } else {
@@ -449,10 +451,7 @@ function calendario(data) {
                     },
                     success: function (data) {
                         //alert(fechastart);
-                        $.each( fechastart, function( key, value ) {
-                        calendar.addEvent(
-                            { title: inicio + '-' + fin, color: "#ffffff", textColor: "000000", start: value, end: null}
-                        ) });
+                        calendar.addEventSource(data)
                      /*    $.each( fechasArray, function( key, value ) {
                             //alert( value );
                             calendar.addEvent({
@@ -486,8 +485,33 @@ function calendario(data) {
             console.log(info);
             console.log(info.event.id);
             console.log(info.event.title);
-            //var event = calendar.getEventById(id);
-            // elimina//info.event.remove();
+           var event = calendar.getEventById(id);
+           if(info.event.textColor=='000000' ||info.event.textColor=='111111' ){
+            var r = confirm("Desea eliminar la  hora: ("+info.event.title+ ") del horario");
+            if (r == true) {
+                $.ajax({
+                    type: "post",
+                    url: "/eliminarHora",
+                    data: {
+                        idHora: info.event.id,textcolor:info.event.textColor
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                    info.event.remove();
+                    },
+                    error: function (data) {
+                        alert('Ocurrio un error');
+                    }
+
+
+                });
+
+            }
+           }
+
+           //info.event.remove();
         },
         editable: false,
         eventLimit: true,
@@ -646,12 +670,37 @@ function calendario1(datadep) {
             };
         },
         eventClick: function (info) {
-
-            id1 = info.event.id;
+            id = info.event.id;
             console.log(info);
             console.log(info.event.id);
             console.log(info.event.title);
+           var event = calendar.getEventById(id);
+           if(info.event.textColor=='000000' ||info.event.textColor=='111111' ){
+            var r = confirm("Desea eliminar la  hora: ("+info.event.title+ ") del horario");
+            if (r == true) {
+                $.ajax({
+                    type: "post",
+                    url: "/eliminarHora",
+                    data: {
+                        idHora: info.event.id,textcolor:info.event.textColor
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                    info.event.remove();
+                    },
+                    error: function (data) {
+                        alert('Ocurrio un error');
+                    }
 
+
+                });
+
+            }
+           }
+
+           //info.event.remove();
         },
         editable: false,
         eventLimit: true,
@@ -676,12 +725,12 @@ $('#guardarHorarioEventos').click(function () {
     idempleads = $('#idobtenidoE').val();
     idemps.push(idempleads);
     descripcion=$('#descripcionCaHorario').val();
-
+    nuevaTolerancia=$('#nuevaTolerancia').val();
     $.ajax({
         type: "post",
         url: "/guardarEventosBD",
         data: {
-            idemps,descripcion
+            idemps,descripcion,toleranciaH:nuevaTolerancia
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -689,7 +738,7 @@ $('#guardarHorarioEventos').click(function () {
         success: function (data) {
 
             $('#guardarHorarioEventos').prop('disabled', false);
-
+            leertabla();
             $('#verhorarioEmpleado').modal('toggle');
             calendario();
 
@@ -811,3 +860,7 @@ function marcarAsignacion(data){
     $('input:checkbox[data-id='+data+']').prop('checked', true);
     $('#btnasignar').click();
 }
+$('#cerrarHorario').click(function () {
+    leertabla();
+    $('#verhorarioEmpleado').modal('toggle');
+});
