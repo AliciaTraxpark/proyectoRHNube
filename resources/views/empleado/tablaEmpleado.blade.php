@@ -594,42 +594,40 @@
                                 '</div>',
                             spacing: 35
                         });
-                    }else{
-                        if(data[i].Correo != true){
-                            $.notify({
-                                message: "\nAún no ha registrado correo a" + data[i].Persona.perso_nombre +" " + data[i].Persona.perso_apPaterno + " "+ data[i].Persona.perso_apMaterno ,
-                                icon: 'admin/images/warning.svg'
-                            }, {
-                                icon_type: 'image',
-                                newest_on_top: true,
-                                delay: 5000,
-                                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
-                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                                    '<span data-notify="title">{1}</span> ' +
-                                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
-                                    '</div>',
-                                spacing: 35
-                            });
-                        }else{
-                            if(data[0].Reenvio[i] != true){
-                                $.notify({
-                                message: data[i].Persona.perso_nombre +" " + data[i].Persona.perso_apPaterno+ " " + data[i].Persona.perso_apMaterno +"\nllego al limite de envio de correo",
-                                icon: 'admin/images/warning.svg'
-                                }, {
-                                    icon_type: 'image',
-                                    newest_on_top: true,
-                                    delay: 5000,
-                                    template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
-                                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                                        '<span data-notify="title">{1}</span> ' +
-                                        '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
-                                        '</div>',
-                                    spacing: 35
-                                });
-                            }
-                        }
+                    }
+                    if(data[i].Correo != true){
+                        $.notify({
+                            message: "\nAún no ha registrado correo a" + data[i].Persona.perso_nombre +" " + data[i].Persona.perso_apPaterno + " "+ data[i].Persona.perso_apMaterno ,
+                            icon: 'admin/images/warning.svg'
+                        }, {
+                            icon_type: 'image',
+                            newest_on_top: true,
+                            delay: 5000,
+                            template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                '</div>',
+                            spacing: 35
+                        });
+                    }
+                    if(data[0].Reenvio[i] != true){
+                        $.notify({
+                        message: data[i].Persona.perso_nombre +" " + data[i].Persona.perso_apPaterno+ " " + data[i].Persona.perso_apMaterno +"\nllego al limite de envio de correo",
+                        icon: 'admin/images/warning.svg'
+                        }, {
+                            icon_type: 'image',
+                            newest_on_top: true,
+                            delay: 5000,
+                            template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                '</div>',
+                            spacing: 35
+                        });
                     }
                 }
             $('#modalCorreoM').modal('toggle');
