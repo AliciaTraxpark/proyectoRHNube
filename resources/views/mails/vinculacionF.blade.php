@@ -298,7 +298,7 @@
                                                                         class="adapt-img"
                                                                         src="https://i.ibb.co/8jsJv52/logo.png" alt
                                                                         style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
-                                                                        width="183"></td>
+                                                                        width="30%" height="30%"></td>
                                                             </tr>
                                                         </table>
                                                     </td>
@@ -406,15 +406,7 @@
                                                                         &nbsp;{{$licencia_empleado->licencia}}</p>
                                                                 </td>
                                                             </tr>
-                                                            <tr style="border-collapse:collapse">
-                                                                <td align="left"
-                                                                    style="padding:0;Margin:0;padding-right:35px;padding-left:40px">
-                                                                    <p
-                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center">
-                                                                        Y no olvides GUARDAR tu código de seguridad. .
-                                                                    </p>
-                                                                </td>
-                                                            </tr>
+
                                                             <tr style="border-collapse:collapse">
                                                                 <td align="center"
                                                                     style="padding:0;Margin:0;padding-top:25px;padding-left:40px;padding-right:40px;padding-bottom:40px">
@@ -424,6 +416,15 @@
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center">
                                                                         &nbsp;{{$vinculacion->hash}}</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="border-collapse:collapse">
+                                                                <td align="center"
+                                                                    style="padding:0;Margin:0;padding-right:35px;padding-left:40px;padding-bottom:40px">
+                                                                    <strong
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color: #163552;text-align:center">
+                                                                        Y no olvides GUARDAR tu código de seguridad. .
+                                                                    </strong>
                                                                 </td>
                                                             </tr>
                                                         </table>
