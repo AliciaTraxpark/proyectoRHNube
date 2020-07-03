@@ -32,5 +32,6 @@ class downloadController extends Controller
             $vinculacion->fecha_descarga = Carbon::now();
             $vinculacion->save();
         }
+        return view('Verificacion.link');
     }
 }

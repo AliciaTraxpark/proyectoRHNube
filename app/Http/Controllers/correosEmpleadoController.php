@@ -32,6 +32,7 @@ class correosEmpleadoController extends Controller
             if ($codV) {
                 $vinculacion = vinculacion::findOrFail($codV->id);
                 $vinculacion->reenvio = Carbon::now();
+                $vinculacion->descarga = STR::random(25);
                 $vinculacion->save();
                 $datos = [];
                 $datos["correo"] = $correoE[0]->emple_Correo;
