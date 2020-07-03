@@ -48,6 +48,11 @@
                         encuentra disponible en el siguiente enlace.
                     </span>
                 </div>
+                <div class="col-md-12"> <br><br>
+                    <a href="{{url('download/' . $vinculacion->descarga)}}"><button
+                            class="btn btn-opacity-primary mr-1">
+                            Descargar </button></a>
+                </div>
                 <div style="font-family: Poppins,sans-serif;color: black;text-align: center;padding-bottom: 10px;">
                     <span> Y no olvides GUARDAR tu código de seguridad.
                     </span>

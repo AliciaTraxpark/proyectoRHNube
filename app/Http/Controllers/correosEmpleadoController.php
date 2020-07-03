@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Tymon\JWTAuth\Claims\DatetimeTrait;
 
 class correosEmpleadoController extends Controller
@@ -75,6 +76,7 @@ class correosEmpleadoController extends Controller
                 $vinculacion->idEmpleado = $idEmpleado;
                 $vinculacion->hash = $encode;
                 $vinculacion->envio = Carbon::now();
+                $vinculacion->descarga = STR::random(25);
                 $vinculacion->save();
 
                 $datos = [];
@@ -109,6 +111,7 @@ class correosEmpleadoController extends Controller
                 if ($codV) {
                     $vinculacion = vinculacion::findOrFail($codV->id);
                     if ($vinculacion->reenvio == null) {
+                        $vinculacion->descarga = STR::random(25);
                         $vinculacion->reenvio = Carbon::now();
                         $vinculacion->save();
                         $datos = [];
@@ -158,6 +161,7 @@ class correosEmpleadoController extends Controller
                     $vinculacion->idEmpleado = $idEm;
                     $vinculacion->hash = $encode;
                     $vinculacion->envio = Carbon::now();
+                    $vinculacion->descarga = STR::random(25);
                     $vinculacion->save();
 
                     $datos = [];
