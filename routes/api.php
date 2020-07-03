@@ -37,3 +37,6 @@ Route::post("proyecto", "apiController@selectProyecto");
 
 ///LOGUEO CON CORREO
 Route::post("logueoV", "apiController@verificacion");
+
+//LICENCIA
+Route::post("licencia", "apiController@licenciaProducto");

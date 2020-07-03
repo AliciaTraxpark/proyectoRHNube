@@ -7,6 +7,7 @@ use App\captura;
 use App\control;
 use App\empleado;
 use App\envio;
+use App\licencia_empleado;
 use App\proyecto;
 use App\proyecto_empleado;
 use App\tarea;
@@ -263,5 +264,20 @@ class apiController extends Controller
             return response()->json("Aún no a enviado correo empleado.", 400);
         }
         return response()->json("Empleado no registrado", 400);
+    }
+
+    public function licenciaProducto(Request $request)
+    {
+        $licencia = $request->get('licencia');
+        $licencia_empleado = licencia_empleado::where('licencia', '=', $licencia)->get()->first();
+        if ($licencia_empleado) {
+            if ($licencia_empleado->disponible == 1) {
+                $licencia_empleado->disponible = 0;
+                $licencia_empleado->save();
+                return response()->json("Licencia Correcta", 200);
+            }
+            return response()->json("Licencia no disponible", 400);
+        }
+        return response()->json("Licencia incorrecta", 400);
     }
 }
