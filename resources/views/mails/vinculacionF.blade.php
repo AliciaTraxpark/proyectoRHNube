@@ -294,12 +294,11 @@
                                                             style="border-collapse:collapse;border-spacing:0px">
                                                             <tr style="border-collapse:collapse">
                                                                 <td class="es-m-p0l es-m-txt-c" align="left"
-                                                                    style="padding:0;Margin:0;font-size:0px"><a
-                                                                        href="https://viewstripo.email" target="_blank"
-                                                                        style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;font-size:14px;text-decoration:none;color:#163552"><img
-                                                                            src="https://i.ibb.co/8jsJv52/logo.png" alt
-                                                                            style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
-                                                                            width="183"></a></td>
+                                                                    style="padding:0;Margin:0;font-size:0px"><img
+                                                                        class="adapt-img"
+                                                                        src="https://i.ibb.co/8jsJv52/logo.png" alt
+                                                                        style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
+                                                                        width="183"></td>
                                                             </tr>
                                                         </table>
                                                     </td>
@@ -347,8 +346,8 @@
                                                             <tr style="border-collapse:collapse">
                                                                 <td align="center"
                                                                     style="padding:0;Margin:0;padding-top:5px;padding-bottom:5px;font-size:0px">
-                                                                    <img src="https://i.ibb.co/8D6W1Vp/enterprise.png"
-                                                                        alt
+                                                                    <img class="adapt-img"
+                                                                        src="https://i.ibb.co/W0Z6grm/teamwork.png" alt
                                                                         style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
                                                                         width="175"></td>
                                                             </tr>
@@ -357,20 +356,22 @@
                                                                     style="padding:0;Margin:0;padding-top:15px;padding-bottom:15px">
                                                                     <h1
                                                                         style="Margin:0;line-height:24px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333">
-                                                                        <strong>TE DAMOS LA BIENVENIDA</strong></h1>
+                                                                        <strong style="color: #163552;">TE DAMOS LA
+                                                                            BIENVENIDA</strong></h1>
                                                                     <h1
                                                                         style="Margin:0;line-height:24px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333">
-                                                                        <strong>&nbsp;RH SOLUTION</strong></h1>
+                                                                        <strong style="color: #163552;">&nbsp;RH
+                                                                            SOLUTION</strong></h1>
                                                                 </td>
                                                             </tr>
                                                             <tr style="border-collapse:collapse">
                                                                 <td align="left"
                                                                     style="padding:0;Margin:0;padding-left:40px;padding-right:40px">
-                                                                    <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center;text-transform:
+                                                                    <strong style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center;text-transform:
                                                                         uppercase;">
                                                                         Hola,&nbsp;{{$persona->perso_nombre}}
                                                                         &nbsp;{{$persona->perso_apPaterno}}&nbsp;
-                                                                        {{$persona->perso_apMaterno}}</p>
+                                                                        {{$persona->perso_apMaterno}}</strong>
                                                                 </td>
                                                             </tr>
                                                             <tr style="border-collapse:collapse">
@@ -400,7 +401,9 @@
                                                                     <strong
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666">
                                                                         Licencia de Producto</strong>
-                                                                    <span>&nbsp;{{$licencia_empleado->licencia}}</span>
+                                                                    <p
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center">
+                                                                        &nbsp;{{$licencia_empleado->licencia}}</p>
                                                                 </td>
                                                             </tr>
                                                             <tr style="border-collapse:collapse">
@@ -409,7 +412,9 @@
                                                                     <strong
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666">
                                                                         Código</strong>
-                                                                    <span>&nbsp;{{$vinculacion->hash}}</span>
+                                                                    <p
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center">
+                                                                        &nbsp;{{$vinculacion->hash}}</p>
                                                                 </td>
                                                             </tr>
                                                         </table>

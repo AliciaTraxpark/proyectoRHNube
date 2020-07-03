@@ -59,7 +59,8 @@ class correosEmpleadoController extends Controller
                     ->where('u.id', '=', Auth::user()->id)
                     ->get();
                 $codigoEmpleado = DB::table('empleado as e')
-                    ->select('e.emple_codigo', 'e.created_at')
+                    ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                    ->select('e.emple_codigo', 'p.perso_apPaterno', 'e.created_at')
                     ->where('e.emple_id', '=', $idEmpleado)
                     ->get();
                 $codigoP = DB::table('empleado as e')
@@ -75,7 +76,7 @@ class correosEmpleadoController extends Controller
                     $codigoLicencia = $idEmpleado . '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id;
                     $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
                 } else {
-                    $codigoHash = $codigoEmpresa[0]->organi_id . $idEmpleado;
+                    $codigoHash = $codigoEmpresa[0]->organi_id . $idEmpleado . $codigoEmpleado[0]->perso_apPaterno;
                     $encode = intval($codigoHash, 36);
                     $codigoLicencia = $idEmpleado + '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id;
                     $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
@@ -155,7 +156,8 @@ class correosEmpleadoController extends Controller
                         ->where('u.id', '=', Auth::user()->id)
                         ->get();
                     $codigoEmpleado = DB::table('empleado as e')
-                        ->select('e.emple_codigo', 'e.created_at')
+                        ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->select('e.emple_codigo', 'p.perso_apPaterno', 'e.created_at')
                         ->where('e.emple_id', '=', $idEm)
                         ->get();
                     $codigoP = DB::table('empleado as e')
@@ -171,7 +173,7 @@ class correosEmpleadoController extends Controller
                         $codigoLicencia = $idEm . '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id;
                         $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
                     } else {
-                        $codigoHash = $codigoEmpresa[0]->organi_id . $idEm;
+                        $codigoHash = $codigoEmpresa[0]->organi_id . $idEm . $codigoEmpleado[0]->perso_apPaterno;
                         $encode = intval($codigoHash, 36);
                         $codigoLicencia = $idEm . '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id;
                         $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
