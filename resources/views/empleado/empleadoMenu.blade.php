@@ -41,13 +41,13 @@
     }
     .btn-outline-secondary{
         border-color: #e3eaef;
-    background: #e3eaef75;
+    background: #ffffff;
     }
 </style>
 <div class="row page-title" style="padding-right: 20px;">
     <div class="col-md-8">
 
-        <h4 class="mb-1 mt-0">Empleados</h4>
+        <h4 class="header-title mt-0 "></i>Empleados</h4>
     </div>
     <div class=" col-md-2 col-xl-2 text-right">
         <a href="{{('/empleado/cargar')}}"> <button class="btn btn-outline-secondary btn-sm"
@@ -73,10 +73,10 @@
                 <div class="row">
                     <div class="col-md-6">
 
-                        <h4 class=" " style="font-size: 15px">Búsqueda de empleado</h4>
+                        <h4 style="font-weight: 500" class="header-title mt-0 ">Búsqueda de empleado</h4>
                     </div>
                     <div class=" col-md-6 col-xl-6 text-right">
-                      <br>
+                      
                         <button id="formNuevoEl" style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
                             class="btn btn-sm btn-primary delete_all" data-url="">Eliminar seleccion
                         </button>
