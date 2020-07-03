@@ -32,7 +32,7 @@
     .fc-event, .fc-event-dot {
     background-color: #d1c3c3;
     font-size: 11.2px!important;
-    cursor: pointer; 
+    cursor:url("../landing/images/cruz1.svg"), auto;
 
 }
 .fc-toolbar.fc-header-toolbar{
@@ -204,6 +204,16 @@
                                            <button  id="nuevoCalendario" class="btn btn-light btn-sm" type="button" style="padding-top: 5px; padding-bottom:5px;background: #d1e1ef;color:#1b4165;border: none;" >cambiar de calendario &nbsp; </button>
                                         </div>
                                         <div class="col-md-12"><br></div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                               <label for="">Tipo de horario:</label>
+                                               <select class="form-control custom-select custom-select-sm" id="tipHorario">
+                                                 <option>Normal</option>
+                                                 <option>Guardía</option>
+                                                 <option>Nocturno</option>
+                                               </select>
+                                            </div>
+                                          </div>
                                         <div class="col-md-6"><label for=""><br></label>
                                             <div class="form-check">
 
@@ -211,16 +221,7 @@
                                               <label class="form-check-label" for="exampleCheck1">Aplicar sobretiempo</label>
                                             </div>
                                          </div>
-                                         <div class="col-md-6">
-                                           <div class="form-group">
-                                              <label for="">Tipo de horario:</label>
-                                              <select class="form-control custom-select custom-select-sm" id="tipHorario">
-                                                <option>Normal</option>
-                                                <option>Guardía</option>
-                                                <option>Nocturno</option>
-                                              </select>
-                                           </div>
-                                         </div>
+
                                          <div class="col-md-6">
                                             <div class="form-group">
                                                <label for="">Descripcion:</label>
@@ -343,6 +344,16 @@
                                         </div>
 
                                         <div class="col-md-12"><br></div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                               <label for="">Tipo de horario:</label>
+                                               <select class="form-control custom-select custom-select-sm" id="tipHorarioEmpleado" disabled>
+                                                 <option>Normal</option>
+                                                 <option>Guardía</option>
+                                                 <option>Nocturno</option>
+                                               </select>
+                                            </div>
+                                          </div>
                                         <div class="col-md-6"><label for=""><br></label>
                                             <div class="form-check">
 
@@ -350,16 +361,7 @@
                                               <label class="form-check-label" for="exampleCheck2">Sobretiempo</label>
                                             </div>
                                          </div>
-                                         <div class="col-md-6">
-                                           <div class="form-group">
-                                              <label for="">Tipo de horario:</label>
-                                              <select class="form-control custom-select custom-select-sm" id="tipHorarioEmpleado" disabled>
-                                                <option>Normal</option>
-                                                <option>Guardía</option>
-                                                <option>Nocturno</option>
-                                              </select>
-                                           </div>
-                                         </div>
+
                                          <div class="col-md-6">
                                             <div class="form-group">
                                                <label for="">Descripcion:</label>
@@ -402,6 +404,12 @@
                                                                     <div class="form-group">
                                                                        <label for="">Hora de fin(24h):</label>
                                                                        <input type="text" id="horaFhorario" class="form-control form-control-sm" required>
+                                                                    </div>
+                                                                 </div>
+                                                                 <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                       <label for="">Tolerancia(Min):</label>
+                                                                       <input type="number"  class="form-control form-control-sm" id="nuevaTolerancia" >
                                                                     </div>
                                                                  </div>
                                                             </div>
@@ -507,7 +515,7 @@
                                    <div class="row">
                                        <div class="col-md-12 text-right" >
                                         {{-- <button type="button" id="" class="btn btn-light " data-dismiss="modal">Cancelar</button> --}}
-                                        <button type="button" id="" name="" data-dismiss="modal" style="background-color: #d9dee2;color: #171413;" class="btn ">Cerrar</button>
+                                        <button type="button" id="cerrarHorario" name="" style="background-color: #d9dee2;color: #171413;" class="btn ">Cerrar</button>
                                         <button type="button" id="guardarHorarioEventos" name="guardarHorarioEventos"  style="background-color: #163552; display: none;" class="btn ">Guardar</button>
                                        </div>
                                    </div>
