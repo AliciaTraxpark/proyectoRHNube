@@ -313,6 +313,14 @@ class horarioController extends Controller
         return view('horarios.horarioMenu',['pais'=>$paises,'departamento'=>$departamento,'empleado'=>$empleado]);
 
     }
+
+    public function eliminarHora(Request $request){
+        $idHora=$request->idHora;
+
+        $horario_empleado=horario_empleado::where('horario_dias_id','=',$idHora)->delete();
+        
+        //$horario_dias = horario_dias::where('id', '=',  $idHora)->delete();
+    }
     }
 
 

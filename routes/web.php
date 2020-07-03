@@ -136,6 +136,8 @@ Route::get('/vaciartemporal', 'horarioController@vaciartemporal');
 Route::post('/horario/confirmarDepartamento', 'horarioController@confirmarDepartamento');
 Route::get('/empleadoIncHorario', 'horarioController@empleadosIncidencia');
 Route::post('/registrarInci', 'horarioController@registrarIncidencia');
+Route::post('/eliminarHora', 'horarioController@eliminarHora');
+
 
 //DASHBOARD
 Route::get('/totalA', 'dashboardController@area');

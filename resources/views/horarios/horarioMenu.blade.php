@@ -38,7 +38,7 @@
     background-color: #d1c3c3;
     font-size: 11.2px!important;
     margin: 2px 2px;
-    cursor:url("//3.208.88.131:8000/landing/images/oval.png"), auto;
+    cursor:url("//3.208.88.131:8000/landing/images/cruz1.svg"), auto;
 
 
 
