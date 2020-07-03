@@ -407,6 +407,15 @@
                                                                 </td>
                                                             </tr>
                                                             <tr style="border-collapse:collapse">
+                                                                <td align="left"
+                                                                    style="padding:0;Margin:0;padding-right:35px;padding-left:40px">
+                                                                    <p
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center">
+                                                                        Y no olvides GUARDAR tu código de seguridad. .
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="border-collapse:collapse">
                                                                 <td align="center"
                                                                     style="padding:0;Margin:0;padding-top:25px;padding-left:40px;padding-right:40px;padding-bottom:40px">
                                                                     <strong
