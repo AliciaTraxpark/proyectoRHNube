@@ -70,7 +70,7 @@ class correosEmpleadoController extends Controller
                 $codP = [];
                 $codP["id"] = $codigoP[0]->emple_persona;
                 $persona = persona::find($codP["id"]);
-                if ($codigoEmpleado != '') {
+                if ($codigoEmpleado[0]->emple_codigo != '') {
                     $codigoHash = $codigoEmpresa[0]->organi_id . $idEmpleado . $codigoEmpleado[0]->emple_codigo;
                     $encode = intval($codigoHash, 36);
                     $codigoLicencia = $idEmpleado . '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id;
@@ -78,7 +78,7 @@ class correosEmpleadoController extends Controller
                 } else {
                     $codigoHash = $codigoEmpresa[0]->organi_id . $idEmpleado . $codigoEmpleado[0]->perso_apPaterno . $codigoEmpleado[0]->perso_apMaterno . $codigoEmpleado[0]->perso_nombre;
                     $encode = intval($codigoHash, 36);
-                    $codigoLicencia = $idEmpleado + '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id;
+                    $codigoLicencia = $idEmpleado . '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id;
                     $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
                 }
 
@@ -167,7 +167,7 @@ class correosEmpleadoController extends Controller
                     $codP = [];
                     $codP["id"] = $codigoP[0]->emple_persona;
                     $persona = persona::find($codP["id"]);
-                    if ($codigoEmpleado != '') {
+                    if ($codigoEmpleado[0]->emple_codigo != '') {
                         $codigoHash = $codigoEmpresa[0]->organi_id . $idEm . $codigoEmpleado[0]->emple_codigo;
                         $encode = intval($codigoHash, 36);
                         $codigoLicencia = $idEm . '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id;
