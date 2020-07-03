@@ -59,7 +59,7 @@ class correosEmpleadoController extends Controller
                     ->where('u.id', '=', Auth::user()->id)
                     ->get();
                 $codigoEmpleado = DB::table('empleado as e')
-                    ->select('e.emple_codigo', 'e.created_at')
+                    ->select('e.emple_codigo', 'e.emple_persona', 'e.created_at')
                     ->where('e.emple_id', '=', $idEmpleado)
                     ->get();
                 $codigoP = DB::table('empleado as e')
@@ -69,15 +69,15 @@ class correosEmpleadoController extends Controller
                 $codP = [];
                 $codP["id"] = $codigoP[0]->emple_persona;
                 $persona = persona::find($codP["id"]);
-                if ($codigoEmpleado != '') {
+                if ($codigoEmpleado[0]->emple_codigo != '') {
                     $codigoHash = $codigoEmpresa[0]->organi_id . $idEmpleado . $codigoEmpleado[0]->emple_codigo;
                     $encode = intval($codigoHash, 36);
                     $codigoLicencia = $idEmpleado . '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id;
                     $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
                 } else {
-                    $codigoHash = $codigoEmpresa[0]->organi_id . $idEmpleado;
+                    $codigoHash = $codigoEmpresa[0]->organi_id . $idEmpleado . $codigoEmpleado[0]->emple_persona;
                     $encode = intval($codigoHash, 36);
-                    $codigoLicencia = $idEmpleado + '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id;
+                    $codigoLicencia = $idEmpleado . '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id;
                     $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
                 }
 
@@ -155,7 +155,7 @@ class correosEmpleadoController extends Controller
                         ->where('u.id', '=', Auth::user()->id)
                         ->get();
                     $codigoEmpleado = DB::table('empleado as e')
-                        ->select('e.emple_codigo', 'e.created_at')
+                        ->select('e.emple_codigo', 'e.emple_persona', 'e.created_at')
                         ->where('e.emple_id', '=', $idEm)
                         ->get();
                     $codigoP = DB::table('empleado as e')
@@ -165,13 +165,13 @@ class correosEmpleadoController extends Controller
                     $codP = [];
                     $codP["id"] = $codigoP[0]->emple_persona;
                     $persona = persona::find($codP["id"]);
-                    if ($codigoEmpleado != '') {
+                    if ($codigoEmpleado[0]->emple_codigo != '') {
                         $codigoHash = $codigoEmpresa[0]->organi_id . $idEm . $codigoEmpleado[0]->emple_codigo;
                         $encode = intval($codigoHash, 36);
                         $codigoLicencia = $idEm . '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id;
                         $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
                     } else {
-                        $codigoHash = $codigoEmpresa[0]->organi_id . $idEm;
+                        $codigoHash = $codigoEmpresa[0]->organi_id . $idEm . $codigoEmpleado[0]->emple_persona;
                         $encode = intval($codigoHash, 36);
                         $codigoLicencia = $idEm . '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id;
                         $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
