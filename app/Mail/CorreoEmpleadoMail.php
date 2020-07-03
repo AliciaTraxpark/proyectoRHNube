@@ -22,12 +22,12 @@ class CorreoEmpleadoMail extends Mailable
 
     public $vinculacion;
     public $persona;
-    public $licencia;
+    public $licencia_empleado;
     public function __construct(vinculacion $vinculacion, persona $persona, licencia_empleado $licencia_empleado)
     {
         $this->vinculacion = $vinculacion;
         $this->persona = $persona;
-        $this->licencia = $licencia_empleado;
+        $this->licencia_empleado = $licencia_empleado;
     }
 
     /**

@@ -155,7 +155,7 @@ class correosEmpleadoController extends Controller
                         ->where('u.id', '=', Auth::user()->id)
                         ->get();
                     $codigoEmpleado = DB::table('empleado as e')
-                        ->select('e.emple_codigo')
+                        ->select('e.emple_codigo', 'e.created_at')
                         ->where('e.emple_id', '=', $idEm)
                         ->get();
                     $codigoP = DB::table('empleado as e')
