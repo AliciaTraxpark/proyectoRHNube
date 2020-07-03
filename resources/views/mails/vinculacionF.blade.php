@@ -298,7 +298,7 @@
                                                                         class="adapt-img"
                                                                         src="https://i.ibb.co/8jsJv52/logo.png" alt
                                                                         style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
-                                                                        width="60%" height="60%"></td>
+                                                                        width="30%" height="30%"></td>
                                                             </tr>
                                                         </table>
                                                     </td>
