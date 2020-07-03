@@ -137,8 +137,8 @@
             <th>Cargo</th>
             <th>Área</th>
             <th>Centro de Costo</th>
-            <th>Windows</th>
-            <th>Android</th>
+            <th class="text-center">Windows</th>
+            <th class="text-center">Android</th>
             <th>&nbsp;<input type="checkbox" name="" id="selectT"></th>
 
         </tr>
@@ -163,16 +163,17 @@
             @else
             @if ($tabla_empleados->envio != null)
             @if($tabla_empleados->reenvio == null)
-            <td><button id="reenviar" type="button" class="btn btn-secondary  btn-sm"
+            <td class="text-center"><button id="reenviar" type="button" class="btn btn-secondary  btn-sm"
                     onclick="$('#modalCorreo').modal();"
                     style="background:#f0f4fd; border-color:#f0f4fd; color:#a0add3">Reenviar @</button></td>
             @else
-            <td><button id="reenviar" type="button" class="btn btn-secondary  btn-sm"
+            <td class="text-center"><button id="reenviar" type="button" class="btn btn-secondary  btn-sm"
                     onclick="$('#modalCorreo').modal();" style="background:#eae7d9; border-color:#eae7d9; color:#6c757d"
                     disabled>Reenviar @</button></td>
             @endif
             @else
-            <td><button type="button" class="btn btn-secondary  btn-sm" onclick="$('#modalCorreo').modal();"
+            <td class="text-center"><button type="button" class="btn btn-secondary  btn-sm"
+                    onclick="$('#modalCorreo').modal();"
                     style="background:#f0f4fd; border-color:#f0f4fd; color:#a0add3">Enviar @</button></td>
             @endif
             @endif
@@ -181,21 +182,23 @@
             @else
             @if ($tabla_empleados->envio != null)
             @if($tabla_empleados->reenvio == null)
-            <td><button id="reenviar" type="button" class="btn btn-secondary  btn-sm"
+            <td class="text-center"><button id="reenviar" type="button" class="btn btn-secondary  btn-sm"
                     onclick="$('#modalCorreo').modal();"
                     style="background:#f0f4fd; border-color:#f0f4fd; color:#a0add3">Reenviar @</button></td>
             @else
-            <td><button id="reenviar" type="button" class="btn btn-secondary  btn-sm"
+            <td class="text-center"><button id="reenviar" type="button" class="btn btn-secondary  btn-sm"
                     onclick="$('#modalCorreo').modal();" style="background:#eae7d9; border-color:#eae7d9; color:#6c757d"
                     disabled>Reenviar @</button></td>
             @endif
             @else
-            <td><button type="button" class="btn btn-secondary  btn-sm" onclick="$('#modalCorreo').modal();"
+            <td class="text-center"><button type="button" class="btn btn-secondary  btn-sm"
+                    onclick="$('#modalCorreo').modal();"
                     style="background:#f0f4fd; border-color:#f0f4fd; color:#a0add3">Enviar @</button></td>
             @endif
             @endif
-            <td><input type="checkbox" id="tdC" style="margin-left:5.5px!important" class="form-check-input sub_chk"
-                    data-id="{{$tabla_empleados->emple_id}}" $(this)$(this)$(this)> </td>
+            <td class="text-center"><input type="checkbox" id="tdC" style="margin-left:5.5px!important"
+                    class="form-check-input sub_chk" data-id="{{$tabla_empleados->emple_id}}" $(this)$(this)$(this)>
+            </td>
         </tr>
 
         @endforeach
