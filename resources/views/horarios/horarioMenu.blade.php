@@ -55,12 +55,6 @@
         display: none;
     }
 
-    .table th, .table td{
-        padding: 0.55rem;
-
-    border-top: 1px solid #c9c9c9;
-
-    }
 
     .sw-theme-default > ul.step-anchor > li.active > a{
         color: #1c68b1 !important;
@@ -69,15 +63,6 @@
         color: #0b1b29!important;
     }
 
-    .day{
-        max-width: 25%;
-    }
-    .month{
-        max-width: 35%;
-    }
-    .year{
-        max-width: 40%;
-    }
     .btn-group{
         width: 100%;
         justify-content: space-between;

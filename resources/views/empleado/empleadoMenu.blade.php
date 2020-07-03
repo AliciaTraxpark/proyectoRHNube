@@ -44,6 +44,64 @@
     background: #ffffff;
     }
 </style>
+<style>
+    .container {
+        margin-left: 40px;
+        margin-right: 28px;
+    }
+
+    .fc-time {
+        display: none;
+    }
+
+    .v-divider {
+        border-right: 5px solid #4C5D73;
+    }
+
+
+
+    .sw-theme-default>ul.step-anchor>li.active>a {
+        color: #1c68b1 !important;
+    }
+
+    .sw-theme-default>ul.step-anchor>li.done>a,
+    .sw-theme-default>ul.step-anchor>li>a {
+        color: #0b1b29 !important;
+    }
+
+    .combodate {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .day {
+        max-width: 30%;
+    }
+
+    .month {
+        max-width: 35%;
+    }
+
+    .year {
+        max-width: 40%;
+    }
+
+    .btn-group {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .btn-secondary {
+        max-width: 9em;
+    }
+
+    .form-control:disabled {
+        background-color: #fcfcfc;
+    }
+
+
+
+</style>
 <div class="row page-title" style="padding-right: 20px;">
     <div class="col-md-8">
 
@@ -76,7 +134,7 @@
                         <h4 style="font-weight: 500" class="header-title mt-0 ">Búsqueda de empleado</h4>
                     </div>
                     <div class=" col-md-6 col-xl-6 text-right">
-                      
+
                         <button id="formNuevoEl" style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
                             class="btn btn-sm btn-primary delete_all" data-url="">Eliminar seleccion
                         </button>
@@ -822,7 +880,7 @@
                             </div>
                             <div id="sw-default-step-2" class="setup-content">
                                 <div class="row">
-                                    <div class="col-4 text-center">
+                                    <div class="col-4">
                                         <div class="form-group">
                                             <label for="sw-default">Codigo Empleado</label>
                                             <input type="text" class="form-control" name="codigoEmpleado"
@@ -1178,8 +1236,8 @@
                             </div>
                             <div id="sw-default-step-2">
                                 <div class="row">
-                                    <div class="col-4"><br></div>
-                                    <div class="col-4 text-center">
+
+                                    <div class="col-4">
                                         <div class="form-group">
                                             <label for="sw-default">Codigo Empleado</label>
                                             <input type="text" class="form-control" name="v_codigoEmpleado"
