@@ -37,6 +37,6 @@ class CorreoEmpleadoMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.vinculacion');
+        return $this->view('mails.vinculacionF');
     }
 }
