@@ -27,10 +27,11 @@ class downloadController extends Controller
     {
         $vinculacion = vinculacion::where('descarga', '=', $code)->first();
         if ($vinculacion) {
-            $this->downloadArchivo(app_path() . "/file/Debug.rar");
+            //$this->downloadArchivo(app_path() . "/file/Debug.rar");
             $vinculacion->descarga = null;
             $vinculacion->fecha_descarga = Carbon::now();
             $vinculacion->save();
+            return response()->download(app_path() . "/file/Debug.rar");
         }
         return view('Verificacion.link');
     }

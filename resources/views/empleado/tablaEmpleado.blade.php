@@ -12,7 +12,9 @@
     .dataTables_scrollHeadInner {
         width: 100% !important;
     }
-    .table th, .table td{
+
+    .table th,
+    .table td {
         padding: 0.4rem;
     }
 </style>
@@ -82,6 +84,73 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<!-- Modal Android-->
+<div id="modalAndroid" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalAndroid" aria-hidden="true"
+    data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a empleado
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <h5 class="modal-title" id="myModalLabel" style="font-size: 15px">¿Desea enviar correo al empleado
+                        empleado?</h5>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-7 text-right">
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
+                        </div>
+                        <div class="col-md-5 text-right" style="padding-right: 38px;  ">
+                            <button type="button" id="enviarAndroid" name="enviarCorreo"
+                                style="background-color: #163552;" class="btn btn-sm ">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div id="modalAndroidMasivo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalAndroidMasivo"
+    aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a empleado
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <h5 class="modal-title" id="myModalLabel" style="font-size: 15px">¿Desea enviar correo al empleado
+                        empleado?</h5>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-7 text-right">
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
+                        </div>
+                        <div class="col-md-5 text-right" style="padding-right: 38px;  ">
+                            <button type="button" id="enviarAndroidMasivo" name="enviarAndroidMasivo"
+                                style="background-color: #163552;" class="btn btn-sm ">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <input type="hidden" id="csrf_token" name="_token" value="{{ csrf_token() }}">
 <div class="row">
 
@@ -131,6 +200,9 @@
             <th style="border-top: 1px solid #fdfdfd;" id="enviarCorreosMasivos"> <button type="button"
                     class="btn btn-secondary  btn-sm" onclick="$('#modalCorreoM').modal();"
                     style="background:#fafbff; border-color:#a4b3c1; color:#5e6f80">Envio Masivo @</button></th>
+            <th style="border-top: 1px solid #fdfdfd;" id="enviarAndroidMasivos"> <button type="button"
+                    class="btn btn-secondary  btn-sm" onclick="$('#modalAndroidMasivo').modal();"
+                    style="background:#fafbff; border-color:#a4b3c1; color:#5e6f80">Envio Masivo @</button></th>
         </tr>
         <tr>
             <th></th>
@@ -168,36 +240,28 @@
             @if($tabla_empleados->reenvio == null)
             <td class="text-center"><button id="reenviar" type="button" class="btn btn-secondary  btn-sm"
                     onclick="$('#modalCorreo').modal();"
-                    style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;">Reenviar @</button></td>
+                    style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;">Reenviar
+                    @</button></td>
             @else
             <td class="text-center"><button id="reenviar" type="button" class="btn btn-secondary  btn-sm"
-                    onclick="$('#modalCorreo').modal();"  style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;"
+                    onclick="$('#modalCorreo').modal();"
+                    style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;"
                     disabled>Reenviar @</button></td>
             @endif
             @else
             <td class="text-center"><button type="button" class="btn btn-secondary  btn-sm"
                     onclick="$('#modalCorreo').modal();"
-                    style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;">Enviar @</button></td>
+                    style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;">Enviar
+                    @</button></td>
             @endif
             @endif
             @if(!in_array("2",$tabla_empleados->dispositivos))
             <td></td>
             @else
-            @if ($tabla_empleados->envio != null)
-            @if($tabla_empleados->reenvio == null)
-            <td class="text-center"><button id="reenviar" type="button" class="btn btn-secondary  btn-sm"
-                    onclick="$('#modalCorreo').modal();"
-                    style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;">Reenviar @</button></td>
-            @else
-            <td class="text-center"><button id="reenviar" type="button" class="btn btn-secondary  btn-sm"
-                    onclick="$('#modalCorreo').modal();"  style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;"
-                    disabled>Reenviar @</button></td>
-            @endif
-            @else
             <td class="text-center"><button type="button" class="btn btn-secondary  btn-sm"
-                    onclick="$('#modalCorreo').modal();"
-                    style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;">Enviar @</button></td>
-            @endif
+                    onclick="$('#modalAndroid').modal();"
+                    style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;">Enviar
+                    @</button></td>
             @endif
             <td class="text-center"><input type="checkbox" id="tdC" style="margin-left:5.5px!important"
                     class="form-check-input sub_chk" data-id="{{$tabla_empleados->emple_id}}" $(this)$(this)$(this)>
@@ -580,6 +644,8 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (data) {
+                $('#modalCorreoM').modal('toggle');
+                leertabla();
                 for(var i = 0; i < data.length; i++){
                     if(data[i].Correo == true && data[i].Reenvio == true){
                         $.notify({
@@ -633,13 +699,73 @@
                         });
                     }
                 }
-            $('#modalCorreoM').modal('toggle');
-            leertabla();
+            
             }
         });
     }
     $('#enviarCorreoM').on("click",CorreosMasivos);
 </script>
+{{-- ANDROID MASIVO--}}
+<script>
+    function androidMasivos(){
+        var correoEmpleado = [];
+        $(".sub_chk:checked").each(function () {
+            correoEmpleado.push($(this).attr('data-id'));
+        });
+        var join_selected_values = correoEmpleado.join(",");
+        $.ajax({
+            async: false,
+            type:"get",
+            url:"empleadoAndroidMasivo",
+            data: 'ids=' + join_selected_values,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                $('#modalAndroidMasivo').modal('toggle');
+                leertabla();
+                for(var i = 0; i < data.length; i++){
+                    if(data[i].Correo == true){
+                        $.notify({
+                            message: "\nCorreo enviado a" + data[i].Persona.perso_nombre +" " + data[i].Persona.perso_apPaterno + " "+ data[i].Persona.perso_apMaterno ,
+                            icon: 'admin/images/checked.svg'
+                        }, {
+                            icon_type: 'image',
+                            newest_on_top: true,
+                            delay: 5000,
+                            template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                '</div>',
+                            spacing: 35
+                        });
+                    }
+                    if(data[i].Correo != true){
+                        $.notify({
+                            message: "\nAún no ha registrado correo a" + data[i].Persona.perso_nombre +" " + data[i].Persona.perso_apPaterno + " "+ data[i].Persona.perso_apMaterno ,
+                            icon: 'admin/images/warning.svg'
+                        }, {
+                            icon_type: 'image',
+                            newest_on_top: true,
+                            delay: 5000,
+                            template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                '</div>',
+                            spacing: 35
+                        });
+                    }
+                }
+            }
+        });
+    }
+    $('#enviarAndroidMasivo').on("click",androidMasivos);
+</script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
 <script src="{{asset('landing/js/correoEmpleados.js')}}"></script>
+<script src="{{asset('landing/js/correoAndroid.js')}}"></script>

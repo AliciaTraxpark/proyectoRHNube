@@ -415,6 +415,7 @@ function enviarEmpleado(accion, objEmpleado) {
             $('input[type="date"]').val("");
             $('input[type="file"]').val("");
             $('input[type="email"]').val("");
+            $('input[typt="checkbox"]').val("");
             $('select').val("");
             $("#form-registrar :input").prop('disabled', true);
             $('#documento').attr('disabled', false);
@@ -506,13 +507,14 @@ function actualizarEmpleado(accion, objEmpleadoA) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (msg) {
-            $('#form-ver').modal('toggle');
             leertabla();
             $('#smartwizard').smartWizard("reset");
             $('#navActualizar').hide();
             $('input[type="file"]').val("");
+            $('input[typt="checkbox"]').val("");
             $('#formNuevoEd').hide();
             $('#formNuevoEl').hide();
+            $('#form-ver').modal('toggle');
             $.notify({
                 message: "\nEmpleado Actualizado.",
                 icon: 'admin/images/checked.svg'

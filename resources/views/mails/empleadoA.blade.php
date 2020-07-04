@@ -298,7 +298,7 @@
                                                                         class="adapt-img"
                                                                         src="https://i.ibb.co/8jsJv52/logo.png" alt
                                                                         style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
-                                                                        width="40%" height="40%"></td>
+                                                                        width="30%" height="30%"></td>
                                                             </tr>
                                                         </table>
                                                     </td>
@@ -347,7 +347,7 @@
                                                                 <td align="center"
                                                                     style="padding:0;Margin:0;padding-top:5px;padding-bottom:5px;font-size:0px">
                                                                     <img class="adapt-img"
-                                                                        src="https://i.ibb.co/CJ7vkm6/team.png" alt
+                                                                        src="https://i.ibb.co/W0Z6grm/teamwork.png" alt
                                                                         style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
                                                                         width="175"></td>
                                                             </tr>
@@ -356,8 +356,8 @@
                                                                     style="padding:0;Margin:0;padding-top:15px;padding-bottom:15px">
                                                                     <h1
                                                                         style="Margin:0;line-height:24px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333">
-                                                                        <strong style="color: #163552;">CREASTE UNA
-                                                                            CUENTA</strong></h1>
+                                                                        <strong style="color: #163552;">TE DAMOS LA
+                                                                            BIENVENIDA</strong></h1>
                                                                     <h1
                                                                         style="Margin:0;line-height:24px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333">
                                                                         <strong style="color: #163552;">&nbsp;RH
@@ -379,18 +379,9 @@
                                                                     style="padding:0;Margin:0;padding-right:35px;padding-left:40px">
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center">
-                                                                        ¡Gracias por
-                                                                        registrarte!</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr style="border-collapse:collapse">
-                                                                <td align="left"
-                                                                    style="padding:0;Margin:0;padding-right:35px;padding-left:40px">
-                                                                    <p
-                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center">
-                                                                        Para mayor seguridad necesitamos que verifiques
-                                                                        tu correo electronico
-                                                                        antes de continuar en nuestra plataforma.</p>
+                                                                        Para empezar usar nuestra plataforma android,
+                                                                        descarga nuestra aplicación que se
+                                                                        encuentra disponible en el siguiente enlace.</p>
                                                                 </td>
                                                             </tr>
                                                             <tr style="border-collapse:collapse">
@@ -398,10 +389,10 @@
                                                                     style="Margin:0;padding-left:10px;padding-right:10px;padding-top:40px;padding-bottom:40px">
                                                                     <span class="es-button-border"
                                                                         style="border-style:solid;border-color:#163552;background:#FFFFFF;border-width:2px;display:inline-block;border-radius:10px;width:auto"><a
-                                                                            href="{{url('register/verify/' . $datos->confirmation_code)}}"
+                                                                            href="https://play.google.com/store/apps/details?id=pe.trax.park&hl=es"
                                                                             class="es-button" target="_blank"
                                                                             style="text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:14px;color:#163552;border-style:solid;border-color:#FFFFFF;border-width:15px 20px 15px 20px;display:inline-block;background:#FFFFFF;border-radius:10px;font-weight:bold;font-style:normal;line-height:17px;width:auto;text-align:center">
-                                                                            VERIFICAR</a></span></td>
+                                                                            ANDROID</a></span></td>
                                                             </tr>
                                                         </table>
                                                     </td>

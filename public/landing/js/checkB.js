@@ -1,4 +1,5 @@
 $('#enviarCorreosMasivos').hide();
+$('#enviarAndroidMasivos').hide();
 $('#filter_col2').hide();
 $('#filter_col3').hide();
 $('#filter_col4').hide();
@@ -18,8 +19,10 @@ CheckBoxs.on('change', function (e) {
     CheckBoxMarcados = table.find('tbody input:checkbox:checked').length;
     if (CheckBoxMarcados > 0) {
         $('#enviarCorreosMasivos').show();
+        $('#enviarAndroidMasivos').show();
     } else {
         $('#enviarCorreosMasivos').hide();
+        $('#enviarAndroidMasivos').hide();
     }
     seleccionarTodos.prop('checked', (CheckBoxMarcados === CheckBoxs.length));
 });
