@@ -159,7 +159,7 @@ class EmpleadoController extends Controller
 
             $usuario=DB::table('users')
             ->where('id','=',Auth::user()->id)->get();
-         
+
         return view('empleado.cargarEmpleado', ['empleado' => $empleado,'usuario'=>$usuario[0]->user_estado]);
     }
 
@@ -577,6 +577,8 @@ class EmpleadoController extends Controller
 
 
         //dd($idem);
+        $modo = modo::whereIn('idEmpleado', explode(",", $ids))->get();
+        $modo->each->delete();
         $modo = modo::whereIn('idEmpleado', explode(",", $ids))->get();
         $modo->each->delete();
         $vinculacion = vinculacion::whereIn('idEmpleado', explode(",", $ids))->get();
