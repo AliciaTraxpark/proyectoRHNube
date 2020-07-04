@@ -23,6 +23,7 @@ use App\proyecto;
 use App\proyecto_empleado;
 use App\tarea;
 use App\tipo_dispositivo;
+use App\User;
 use App\vinculacion;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTFactory;
@@ -156,9 +157,10 @@ class EmpleadoController extends Controller
 
             ->get();
 
-        //
-
-        return view('empleado.cargarEmpleado', ['empleado' => $empleado]);
+            $usuario=DB::table('users')
+            ->where('id','=',Auth::user()->id)->get();
+         
+        return view('empleado.cargarEmpleado', ['empleado' => $empleado,'usuario'=>$usuario[0]->user_estado]);
     }
 
 

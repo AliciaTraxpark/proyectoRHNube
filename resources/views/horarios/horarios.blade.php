@@ -121,10 +121,14 @@
                 <img src="{{asset('landing/images/logo.png')}}" height="100" >
               </div>
         </div>
-        <div class="col-md-9 col-xl-9">
+        <div class="col-md-8 col-xl-8">
           <h5 style="color: #ffffff">Gestión de empleados</h5>
           <label for="" class="blanco font-italic">Asignemos los turnos y horarios
         </label>
+
+        </div>
+        <div class="col-md-2 text-right">
+            <button class="btn btn-sm btn-primary" onclick="finalizar()" style="background-color: #183b5d;border-color:#62778c">Finalizar</button>
         </div>
     </div>
     </nav>
@@ -644,6 +648,24 @@
     <script src="{{asset('admin/packages/timegrid/main.js')}}"></script>
     <script src="{{asset('admin/packages/interaction/main.js')}}"></script>
     <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
+    <script>
+        function finalizar(){
+            $.ajax({
+            type: "post",
+            url: "/cambiarEstado",
 
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                alert('cambio');
+            },
+            error: function (data) {
+                alert('Ocurrio un error');
+            }
+
+        });
+        }
+    </script>
 </body>
 </html>

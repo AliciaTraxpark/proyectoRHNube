@@ -14,6 +14,7 @@ use App\horario;
 use App\horario_empleado;
 use App\incidencias;
 use App\incidencia_dias;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 class horarioController extends Controller
 {
@@ -325,6 +326,12 @@ class horarioController extends Controller
         //$horario_empleado=horario_empleado::where('horario_dias_id','=',$idHora)->delete();
 
         //$horario_dias = horario_dias::where('id', '=',  $idHora)->delete();
+    }
+    public function cambiarEstado(Request $request){
+        
+        $user=User::where('id', '=',Auth::user()->id)
+          ->update(['user_estado' => 1]);
+
     }
     }
 

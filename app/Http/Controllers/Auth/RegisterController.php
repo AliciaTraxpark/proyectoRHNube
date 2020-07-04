@@ -80,6 +80,7 @@ class RegisterController extends Controller
             'perso_id' => $user_persona,
 
             'password' => Hash::make($data['password']),
+            'user_estado'=>0,
         ]);
 
 }

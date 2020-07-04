@@ -1,3 +1,7 @@
+@php
+    use Illuminate\Support\Facades\Auth;
+    use App\User;
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -114,7 +118,7 @@
                                 <div class="col-md-12" style="padding-left: 0px;">
                                     <div class="row">
 
-                                        <div class="col-md-4">
+                                           <div class="col-md-4">
                                             @if (session('alertE'))
                                             <div class="alert alert-danger" style="padding-top: 4px; padding-bottom: 4px;padding-left: 0px;font-size: 16px; font-weight: 700; color: #b23232;
                                             background-color: #f7f6f6;border-color: #f7f6f6;">
@@ -240,7 +244,13 @@
                                    </div>
                                    <div id="cargaCompleta" style="display: none"><br>
                                     <h4><img src="{{asset('landing/images/exito.svg')}}" height="22" >&nbsp;Carga de empleados exitosa!</h4>
-                                    <a href="{{('/empleados')}}"><button class="boton btn btn-default mr-1">&nbsp; OK &nbsp;</button></a> <br><br>
+
+                                      @if ($usuario==0)
+                                        <a href="{{('/empleado')}}">
+                                        @else
+                                        <a href="{{('/empleados')}}">
+                                        @endif
+                                         <button class="boton btn btn-default mr-1">&nbsp; OK &nbsp;</button></a> <br><br>
                                    </div>
 
                                    </div>
