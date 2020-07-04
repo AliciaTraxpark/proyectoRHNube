@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\empleado;
 use App\licencia_empleado;
+use App\Mail\AndroidMail;
 use App\Mail\CorreoEmpleadoMail;
 use App\persona;
 use App\vinculacion;
@@ -24,7 +25,7 @@ class correosEmpleadoController extends Controller
         $correoE = DB::table('empleado as e')
             ->select('e.emple_Correo')
             ->where('e.emple_id', '=', $idEmpleado)
-            ->get();
+            ->get()->first();
         if ($correoE) {
             $codV = DB::table('vinculacion as v')
                 ->select('v.id')
@@ -41,7 +42,7 @@ class correosEmpleadoController extends Controller
                 $vinculacion->save();
                 $licencia_empleado = licencia_empleado::findOrFail($codL->id);
                 $datos = [];
-                $datos["correo"] = $correoE[0]->emple_Correo;
+                $datos["correo"] = $correoE->emple_Correo;
                 $email = array($datos["correo"]);
                 $codigoP = DB::table('empleado as e')
                     ->select('emple_persona')
@@ -93,7 +94,7 @@ class correosEmpleadoController extends Controller
                 $licencia_empleado->licencia = $encodeLicencia;
                 $licencia_empleado->save();
                 $datos = [];
-                $datos["correo"] = $correoE[0]->emple_Correo;
+                $datos["correo"] = $correoE->emple_Correo;
                 $email = array($datos["correo"]);
                 Mail::to($email)->queue(new CorreoEmpleadoMail($vinculacion, $persona, $licencia_empleado));
                 return json_encode(array("result" => true));
@@ -214,5 +215,28 @@ class correosEmpleadoController extends Controller
         if ($reenvio[0]->reenvio != null) {
             return 1;
         }
+    }
+    public function envioA(Request $request)
+    {
+        $idEmpleado = $request->get('idEmpleado');
+        $correoE = DB::table('empleado as e')
+            ->select('e.emple_Correo')
+            ->where('e.emple_id', '=', $idEmpleado)
+            ->get()->first();
+        if ($correoE) {
+            $datos = [];
+            $datos["correo"] = $correoE->emple_Correo;
+            $email = array($datos["correo"]);
+            $codigoP = DB::table('empleado as e')
+                ->select('emple_persona')
+                ->where('e.emple_id', '=', $idEmpleado)
+                ->get()->first();
+            $codP = [];
+            $codP["id"] = $codigoP->emple_persona;
+            $persona = persona::find($codP["id"]);
+            Mail::to($email)->queue(new AndroidMail($persona));
+            return json_encode(array("result" => true));
+        }
+        return response()->json(null, 403);
     }
 }

@@ -158,5 +158,7 @@ Route::get('/horarios', 'horarioController@indexMenu');
 Route::get('empleadoCorreo', 'correosEmpleadoController@encode');
 Route::get('comprobR', 'correosEmpleadoController@reenvio');
 Route::get('envioMasivo', 'correosEmpleadoController@encodeMasivo');
+//ANDROID
+Route::get('empleadoAndroid', 'correosEmpleadoController@envioA');
 //DOWNLOAD
 Route::get('download/{code}', 'downloadController@download');
