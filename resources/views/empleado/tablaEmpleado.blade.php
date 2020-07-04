@@ -186,16 +186,16 @@
             @if ($tabla_empleados->envio != null)
             @if($tabla_empleados->reenvio == null)
             <td class="text-center"><button id="reenviar" type="button" class="btn btn-secondary  btn-sm"
-                    onclick="$('#modalCorreo').modal();"
+                    
                     style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;">Reenviar @</button></td>
             @else
             <td class="text-center"><button id="reenviar" type="button" class="btn btn-secondary  btn-sm"
-                    onclick="$('#modalCorreo').modal();"  style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;"
+                     style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;"
                     disabled>Reenviar @</button></td>
             @endif
             @else
             <td class="text-center"><button type="button" class="btn btn-secondary  btn-sm"
-                    onclick="$('#modalCorreo').modal();"
+                    
                     style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;">Enviar @</button></td>
             @endif
             @endif
