@@ -17,6 +17,7 @@
     .table td {
         padding: 0.4rem;
     }
+
 </style>
 <div id="modalCorreo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCorreo" aria-hidden="true"
     data-backdrop="static">
@@ -270,9 +271,38 @@
         @endforeach
     </tbody>
 </table>
-<script src="{{asset('landing/js/checkB.js')}}"></script>
+
 <script>
+    $('#enviarAndroidMasivos').hide();
     $('#enviarCorreosMasivos').hide();
+    $('#filter_col2').hide();
+    $('#filter_col3').hide();
+    $('#filter_col4').hide();
+    $('#filter_col5').hide();
+    $('#filter_col6').hide();
+    var seleccionarTodos = $('#selectT');
+    var table = $('#tablaEmpleado');
+    var CheckBoxs = table.find('tbody input:checkbox');
+    var CheckBoxMarcados = 0;
+
+    seleccionarTodos.on('click', function () {
+        if (seleccionarTodos.is(":checked")) CheckBoxs.prop('checked', true);
+        else CheckBoxs.prop('checked', false);
+
+    });
+
+
+    CheckBoxs.on('change', function (e) {
+        CheckBoxMarcados = table.find('tbody input:checkbox:checked').length;
+        if (CheckBoxMarcados > 0) {
+            $('#enviarCorreosMasivos').show();
+            $('#enviarAndroidMasivos').show();
+        } else {
+            $('#enviarCorreosMasivos').hide();
+            $('#enviarAndroidMasivos').hide();
+        }
+        seleccionarTodos.prop('checked', (CheckBoxMarcados === CheckBoxs.length));
+    });
     $("#tablaEmpleado tbody tr").click(function () {
         $('#smartwizard1').smartWizard("reset");
         //$(this).addClass('selected').siblings().removeClass('selected');
@@ -585,15 +615,15 @@
             $('#confirmarE').click(function () {
 
                 var join_selected_values = allVals.join(",");
-               /*  $.notify(" Empleado eliminado", {
-                    align: "right",
-                    verticalAlign: "top",
-                    type: "danger",
-                    icon: "bell",
-                    autoHide: true
-                }); */
+                /*  $.notify(" Empleado eliminado", {
+                     align: "right",
+                     verticalAlign: "top",
+                     type: "danger",
+                     icon: "bell",
+                     autoHide: true
+                 }); */
                 var table = $('#tablaEmpleado').DataTable();
-                 $.ajax({
+                $.ajax({
                     url: "/eliminarEmpleados",
                     type: 'DELETE',
                     headers: {
@@ -619,16 +649,18 @@
         }
 
     });
-    function marcareliminar(data){
-    $('input:checkbox').prop('checked', false);
 
-    $('input:checkbox[data-id='+data+']').prop('checked', true);
-    $('.delete_all').click();
-}
+    function marcareliminar(data) {
+        $('input:checkbox').prop('checked', false);
+
+        $('input:checkbox[data-id=' + data + ']').prop('checked', true);
+        $('.delete_all').click();
+    }
+
 </script>
 {{-- CORREO MASIVO--}}
 <script>
-    function CorreosMasivos(){
+    function CorreosMasivos() {
         var correoEmpleado = [];
         $(".sub_chk:checked").each(function () {
             correoEmpleado.push($(this).attr('data-id'));
@@ -636,19 +668,19 @@
         var join_selected_values = correoEmpleado.join(",");
         $.ajax({
             async: false,
-            type:"get",
-            url:"envioMasivo",
+            type: "get",
+            url: "envioMasivo",
             data: 'ids=' + join_selected_values,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (data) {
-                $('#modalCorreoM').modal('toggle');
-                leertabla();
-                for(var i = 0; i < data.length; i++){
-                    if(data[i].Correo == true && data[i].Reenvio == true){
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].Correo == true && data[i].Reenvio == true && data[i].Disp == true) {
                         $.notify({
-                            message: "\nCorreo enviado a" + data[i].Persona.perso_nombre +" " + data[i].Persona.perso_apPaterno + " "+ data[i].Persona.perso_apMaterno ,
+                            message: "\nCorreo enviado a" + data[i].Persona.perso_nombre + " " +
+                                data[i].Persona.perso_apPaterno + " " + data[i].Persona
+                                .perso_apMaterno,
                             icon: 'admin/images/checked.svg'
                         }, {
                             icon_type: 'image',
@@ -662,51 +694,78 @@
                                 '</div>',
                             spacing: 35
                         });
-                    }
-                    if(data[i].Correo != true){
-                        $.notify({
-                            message: "\nAún no ha registrado correo a" + data[i].Persona.perso_nombre +" " + data[i].Persona.perso_apPaterno + " "+ data[i].Persona.perso_apMaterno ,
-                            icon: 'admin/images/warning.svg'
-                        }, {
-                            icon_type: 'image',
-                            newest_on_top: true,
-                            delay: 5000,
-                            template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
-                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                                '<span data-notify="title">{1}</span> ' +
-                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
-                                '</div>',
-                            spacing: 35
-                        });
-                    }
-                    if(data[0].Reenvio[i] != true){
-                        $.notify({
-                        message: data[i].Persona.perso_nombre +" " + data[i].Persona.perso_apPaterno+ " " + data[i].Persona.perso_apMaterno +"\nllego al limite de envio de correo",
-                        icon: 'admin/images/warning.svg'
-                        }, {
-                            icon_type: 'image',
-                            newest_on_top: true,
-                            delay: 5000,
-                            template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
-                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                                '<span data-notify="title">{1}</span> ' +
-                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
-                                '</div>',
-                            spacing: 35
-                        });
+                    } else {
+                        if (data[i].Correo != true) {
+                            $.notify({
+                                message: "\nAún no ha registrado correo a" + data[i].Persona
+                                    .perso_nombre + " " + data[i].Persona.perso_apPaterno + " " +
+                                    data[
+                                        i].Persona.perso_apMaterno,
+                                icon: 'admin/images/warning.svg'
+                            }, {
+                                icon_type: 'image',
+                                newest_on_top: true,
+                                delay: 5000,
+                                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                    '</div>',
+                                spacing: 35
+                            });
+                        }
+                        if (data[i].Reenvio != true) {
+                            $.notify({
+                                message: data[i].Persona.perso_nombre + " " + data[i].Persona
+                                    .perso_apPaterno + " " + data[i].Persona.perso_apMaterno +
+                                    "\nllego al limite de envio de correo",
+                                icon: 'admin/images/warning.svg'
+                            }, {
+                                icon_type: 'image',
+                                newest_on_top: true,
+                                delay: 5000,
+                                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                    '</div>',
+                                spacing: 35
+                            });
+                        }
+                        if (data[i].Disp != true) {
+                            $.notify({
+                                message: data[i].Persona.perso_nombre + " " + data[i].Persona
+                                    .perso_apPaterno + " " + data[i].Persona.perso_apMaterno +
+                                    "\n no tiene plataforma asignada",
+                                icon: 'admin/images/warning.svg'
+                            }, {
+                                icon_type: 'image',
+                                newest_on_top: true,
+                                delay: 5000,
+                                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                    '</div>',
+                                spacing: 35
+                            });
+                        }
                     }
                 }
-            
+                $('#modalCorreoM').modal('toggle');
+                leertabla();
             }
         });
     }
-    $('#enviarCorreoM').on("click",CorreosMasivos);
+    $('#enviarCorreoM').on("click", CorreosMasivos);
+
 </script>
 {{-- ANDROID MASIVO--}}
 <script>
-    function androidMasivos(){
+    function androidMasivos() {
         var correoEmpleado = [];
         $(".sub_chk:checked").each(function () {
             correoEmpleado.push($(this).attr('data-id'));
@@ -714,19 +773,19 @@
         var join_selected_values = correoEmpleado.join(",");
         $.ajax({
             async: false,
-            type:"get",
-            url:"empleadoAndroidMasivo",
+            type: "get",
+            url: "empleadoAndroidMasivo",
             data: 'ids=' + join_selected_values,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (data) {
-                $('#modalAndroidMasivo').modal('toggle');
-                leertabla();
-                for(var i = 0; i < data.length; i++){
-                    if(data[i].Correo == true){
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].Correo == true && data[i].Disp == true) {
                         $.notify({
-                            message: "\nCorreo enviado a" + data[i].Persona.perso_nombre +" " + data[i].Persona.perso_apPaterno + " "+ data[i].Persona.perso_apMaterno ,
+                            message: "\nCorreo enviado a" + data[i].Persona.perso_nombre + " " +
+                                data[i].Persona.perso_apPaterno + " " + data[i].Persona
+                                .perso_apMaterno,
                             icon: 'admin/images/checked.svg'
                         }, {
                             icon_type: 'image',
@@ -740,29 +799,55 @@
                                 '</div>',
                             spacing: 35
                         });
-                    }
-                    if(data[i].Correo != true){
-                        $.notify({
-                            message: "\nAún no ha registrado correo a" + data[i].Persona.perso_nombre +" " + data[i].Persona.perso_apPaterno + " "+ data[i].Persona.perso_apMaterno ,
-                            icon: 'admin/images/warning.svg'
-                        }, {
-                            icon_type: 'image',
-                            newest_on_top: true,
-                            delay: 5000,
-                            template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
-                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                                '<span data-notify="title">{1}</span> ' +
-                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
-                                '</div>',
-                            spacing: 35
-                        });
+                    } else {
+                        if (data[i].Correo != true) {
+                            $.notify({
+                                message: "\nAún no ha registrado correo a" + data[i].Persona
+                                    .perso_nombre + " " + data[i].Persona.perso_apPaterno + " " +
+                                    data[
+                                        i].Persona.perso_apMaterno,
+                                icon: 'admin/images/warning.svg'
+                            }, {
+                                icon_type: 'image',
+                                newest_on_top: true,
+                                delay: 5000,
+                                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                    '</div>',
+                                spacing: 35
+                            });
+                        }
+                        if (data[i].Disp != true) {
+                            $.notify({
+                                message: data[i].Persona.perso_nombre + " " + data[i].Persona
+                                    .perso_apPaterno + " " + data[i].Persona.perso_apMaterno +
+                                    "\n no tiene plataforma asignada",
+                                icon: 'admin/images/warning.svg'
+                            }, {
+                                icon_type: 'image',
+                                newest_on_top: true,
+                                delay: 5000,
+                                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                    '</div>',
+                                spacing: 35
+                            });
+                        }
                     }
                 }
+                $('#modalAndroidMasivo').modal('toggle');
+                leertabla();
             }
         });
     }
-    $('#enviarAndroidMasivo').on("click",androidMasivos);
+    $('#enviarAndroidMasivo').on("click", androidMasivos);
+
 </script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
