@@ -23,7 +23,7 @@ class correosEmpleadoController extends Controller
     {
         $idEmpleado = $request->get('idEmpleado');
         $dispositivo = DB::table('modo as m')
-            ->where('m.	idTipoDispositivo', '=', 1)
+            ->where('m.idTipoDispositivo', '=', 1)
             ->where('m.idEmpleado', '=', $idEmpleado)
             ->get()->first();
         $correoE = DB::table('empleado as e')
