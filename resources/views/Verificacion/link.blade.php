@@ -15,6 +15,8 @@
     <link href="{{
         URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')
         }}" rel="stylesheet" />
+    <link rel="shortcut icon"
+        href="https://rhsolution.com.pe/wp-content/uploads/2019/06/small-logo-rh-solution-64x64.png" sizes="32x32">
 </head>
 
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100" style=" background: #f7f8fa;">
@@ -46,11 +48,24 @@
             </div>
         </nav>
     </header>
-    <div class="container"> <br>
-        <div class="row">
-            <div class="col-md-4 text-center" style="padding-top: 30px;padding-bottom: 10px;height: 150px;">
-                <span style="color:#163552;font-weight: 600;">Este link ya no se encuentra disponible. </span> <br><br>
-            </div>
+    <div class="container">
+        <br><br>
+        <div class="row justify-content-center">
+            <div class="col-xl-5 col-lg-6 col-md-8">
+                <div>
+                    <div>
+                        <div class="text-center">
+                            <br>
+                            <div class="mx-auto">
+                                <img src="{{asset('landing/images/link (1).svg')}}" alt="" height="80" />
+                            </div>
+                            <p class="text-muted mt-3 mb-3">Este link ya no se encuentra disponible.
+                            </p>
+                        </div>
+                    </div> <!-- end card-body -->
+                </div>
+                <!-- end card -->
+            </div> <!-- end col -->
         </div>
     </div>
     <script src="{{asset('landing/vendors/jquery/jquery.min.js')}}"></script>
