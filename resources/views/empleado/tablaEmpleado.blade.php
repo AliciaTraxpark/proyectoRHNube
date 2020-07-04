@@ -267,9 +267,7 @@
                     class="form-check-input sub_chk" data-id="{{$tabla_empleados->emple_id}}" $(this)$(this)$(this)>
             </td>
         </tr>
-
         @endforeach
-
     </tbody>
 </table>
 <script src="{{asset('landing/js/checkB.js')}}"></script>
