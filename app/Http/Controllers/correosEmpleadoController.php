@@ -239,4 +239,31 @@ class correosEmpleadoController extends Controller
         }
         return response()->json(null, 403);
     }
+
+    public function envioAndroidM(Request $request)
+    {
+        $idEmpleados = $request->ids;
+        $idEmp = explode(",", $idEmpleados);
+        $resultado = [];
+        $c = true;
+        foreach ($idEmp as $idEm) {
+            $empleado = empleado::where('emple_id', '=', $idEm)->get()->first();
+            $persona = persona::where('perso_id', '=', $empleado->emple_persona)->get()->first();
+            $correoE = DB::table('empleado as e')
+                ->select('e.emple_Correo')
+                ->where('e.emple_id', '=', $idEm)
+                ->get()->first();
+            if ($correoE) {
+                $datos = [];
+                $datos["correo"] = $correoE->emple_Correo;
+                $email = array($datos["correo"]);
+                Mail::to($email)->queue(new AndroidMail($persona));
+                array_push($resultado, array("Persona" => $persona, "Correo" => $c));
+            } else {
+                $c = false;
+                array_push($resultado, array("Persona" => $persona, "Correo" => $c));
+            }
+        }
+        return response()->json($resultado, 200);
+    }
 }

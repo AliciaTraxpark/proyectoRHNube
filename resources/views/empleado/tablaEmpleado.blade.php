@@ -200,6 +200,9 @@
             <th style="border-top: 1px solid #fdfdfd;" id="enviarCorreosMasivos"> <button type="button"
                     class="btn btn-secondary  btn-sm" onclick="$('#modalCorreoM').modal();"
                     style="background:#fafbff; border-color:#a4b3c1; color:#5e6f80">Envio Masivo @</button></th>
+            <th style="border-top: 1px solid #fdfdfd;" id="enviarAndroidMasivos"> <button type="button"
+                    class="btn btn-secondary  btn-sm" onclick="$('#modalAndroidMasivo').modal();"
+                    style="background:#fafbff; border-color:#a4b3c1; color:#5e6f80">Envio Masivo @</button></th>
         </tr>
         <tr>
             <th></th>
@@ -641,6 +644,8 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (data) {
+                $('#modalCorreoM').modal('toggle');
+                leertabla();
                 for(var i = 0; i < data.length; i++){
                     if(data[i].Correo == true && data[i].Reenvio == true){
                         $.notify({
@@ -694,12 +699,71 @@
                         });
                     }
                 }
-            $('#modalCorreoM').modal('toggle');
-            leertabla();
+            
             }
         });
     }
     $('#enviarCorreoM').on("click",CorreosMasivos);
+</script>
+{{-- ANDROID MASIVO--}}
+<script>
+    function androidMasivos(){
+        var correoEmpleado = [];
+        $(".sub_chk:checked").each(function () {
+            correoEmpleado.push($(this).attr('data-id'));
+        });
+        var join_selected_values = correoEmpleado.join(",");
+        $.ajax({
+            async: false,
+            type:"get",
+            url:"empleadoAndroidMasivo",
+            data: 'ids=' + join_selected_values,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                $('#modalAndroidMasivo').modal('toggle');
+                leertabla();
+                for(var i = 0; i < data.length; i++){
+                    if(data[i].Correo == true){
+                        $.notify({
+                            message: "\nCorreo enviado a" + data[i].Persona.perso_nombre +" " + data[i].Persona.perso_apPaterno + " "+ data[i].Persona.perso_apMaterno ,
+                            icon: 'admin/images/checked.svg'
+                        }, {
+                            icon_type: 'image',
+                            newest_on_top: true,
+                            delay: 5000,
+                            template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                '</div>',
+                            spacing: 35
+                        });
+                    }
+                    if(data[i].Correo != true){
+                        $.notify({
+                            message: "\nAún no ha registrado correo a" + data[i].Persona.perso_nombre +" " + data[i].Persona.perso_apPaterno + " "+ data[i].Persona.perso_apMaterno ,
+                            icon: 'admin/images/warning.svg'
+                        }, {
+                            icon_type: 'image',
+                            newest_on_top: true,
+                            delay: 5000,
+                            template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                '</div>',
+                            spacing: 35
+                        });
+                    }
+                }
+            }
+        });
+    }
+    $('#enviarAndroidMasivo').on("click",androidMasivos);
 </script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
