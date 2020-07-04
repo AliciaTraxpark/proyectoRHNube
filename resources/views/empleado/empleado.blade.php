@@ -151,7 +151,7 @@
                                 </div>
                                 <div class=" col-md-6 col-xl-6 text-right">
 
-                                    <button id="formNuevoEl" style="background-color: #183b5d;border-color:#62778c"
+                                    <button id="" style="background-color: #183b5d;border-color:#62778c"
                                         class="btn btn-sm btn-primary delete_all" data-url="">Eliminar seleccion
                                     </button>
                                     <button class="btn btn-sm btn-primary" id="formNuevoEd"
