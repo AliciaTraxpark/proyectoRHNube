@@ -22,83 +22,90 @@ class correosEmpleadoController extends Controller
     public function encode(Request $request)
     {
         $idEmpleado = $request->get('idEmpleado');
+        $dispositivo = DB::table('modo as m')
+            ->where('m.	idTipoDispositivo', '=', 1)
+            ->where('m.idEmpleado', '=', $idEmpleado)
+            ->get()->first();
         $correoE = DB::table('empleado as e')
             ->select('e.emple_Correo')
             ->where('e.emple_id', '=', $idEmpleado)
             ->get()->first();
-        if ($correoE) {
-            $codV = DB::table('vinculacion as v')
-                ->select('v.id')
-                ->where('v.idEmpleado', '=', $idEmpleado)
-                ->get()->first();
-            if ($codV) {
-                $codL = DB::table('licencia_empleado as le')
-                    ->select('le.id')
-                    ->where('le.idEmpleado', '=', $idEmpleado)
+        if ($dispositivo) {
+            if ($correoE) {
+                $codV = DB::table('vinculacion as v')
+                    ->select('v.id')
+                    ->where('v.idEmpleado', '=', $idEmpleado)
                     ->get()->first();
-                $vinculacion = vinculacion::findOrFail($codV->id);
-                $vinculacion->reenvio = Carbon::now();
-                $vinculacion->descarga = STR::random(25);
-                $vinculacion->save();
-                $licencia_empleado = licencia_empleado::findOrFail($codL->id);
-                $datos = [];
-                $datos["correo"] = $correoE->emple_Correo;
-                $email = array($datos["correo"]);
-                $codigoP = DB::table('empleado as e')
-                    ->select('emple_persona')
-                    ->where('e.emple_id', '=', $idEmpleado)
-                    ->get();
-                $codP = [];
-                $codP["id"] = $codigoP[0]->emple_persona;
-                $persona = persona::find($codP["id"]);
-                Mail::to($email)->queue(new CorreoEmpleadoMail($vinculacion, $persona, $licencia_empleado));
-                return json_encode(array("result" => true));
-            } else {
-                $codigoEmpresa = DB::table('users as u')
-                    ->join('usuario_organizacion as uo', 'uo.user_id', '=', 'u.id')
-                    ->select('uo.organi_id')
-                    ->where('u.id', '=', Auth::user()->id)
-                    ->get();
-                $codigoEmpleado = DB::table('empleado as e')
-                    ->select('e.emple_codigo', 'e.emple_persona', 'e.created_at')
-                    ->where('e.emple_id', '=', $idEmpleado)
-                    ->get();
-                $codigoP = DB::table('empleado as e')
-                    ->select('emple_persona')
-                    ->where('e.emple_id', '=', $idEmpleado)
-                    ->get();
-                $codP = [];
-                $codP["id"] = $codigoP[0]->emple_persona;
-                $persona = persona::find($codP["id"]);
-                if ($codigoEmpleado[0]->emple_codigo != '') {
-                    $codigoHash = $codigoEmpresa[0]->organi_id . $idEmpleado . $codigoEmpleado[0]->emple_codigo;
-                    $encode = intval($codigoHash, 36);
-                    $codigoLicencia = $idEmpleado . '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id;
-                    $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
+                if ($codV) {
+                    $codL = DB::table('licencia_empleado as le')
+                        ->select('le.id')
+                        ->where('le.idEmpleado', '=', $idEmpleado)
+                        ->get()->first();
+                    $vinculacion = vinculacion::findOrFail($codV->id);
+                    $vinculacion->reenvio = Carbon::now();
+                    $vinculacion->descarga = STR::random(25);
+                    $vinculacion->save();
+                    $licencia_empleado = licencia_empleado::findOrFail($codL->id);
+                    $datos = [];
+                    $datos["correo"] = $correoE->emple_Correo;
+                    $email = array($datos["correo"]);
+                    $codigoP = DB::table('empleado as e')
+                        ->select('emple_persona')
+                        ->where('e.emple_id', '=', $idEmpleado)
+                        ->get();
+                    $codP = [];
+                    $codP["id"] = $codigoP[0]->emple_persona;
+                    $persona = persona::find($codP["id"]);
+                    Mail::to($email)->queue(new CorreoEmpleadoMail($vinculacion, $persona, $licencia_empleado));
+                    return json_encode(array("result" => true));
                 } else {
-                    $codigoHash = $codigoEmpresa[0]->organi_id . $idEmpleado . $codigoEmpleado[0]->emple_persona;
-                    $encode = intval($codigoHash, 36);
-                    $codigoLicencia = $idEmpleado . '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id;
-                    $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
+                    $codigoEmpresa = DB::table('users as u')
+                        ->join('usuario_organizacion as uo', 'uo.user_id', '=', 'u.id')
+                        ->select('uo.organi_id')
+                        ->where('u.id', '=', Auth::user()->id)
+                        ->get();
+                    $codigoEmpleado = DB::table('empleado as e')
+                        ->select('e.emple_codigo', 'e.emple_persona', 'e.created_at')
+                        ->where('e.emple_id', '=', $idEmpleado)
+                        ->get();
+                    $codigoP = DB::table('empleado as e')
+                        ->select('emple_persona')
+                        ->where('e.emple_id', '=', $idEmpleado)
+                        ->get();
+                    $codP = [];
+                    $codP["id"] = $codigoP[0]->emple_persona;
+                    $persona = persona::find($codP["id"]);
+                    if ($codigoEmpleado[0]->emple_codigo != '') {
+                        $codigoHash = $codigoEmpresa[0]->organi_id . $idEmpleado . $codigoEmpleado[0]->emple_codigo;
+                        $encode = intval($codigoHash, 36);
+                        $codigoLicencia = $idEmpleado . '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id;
+                        $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
+                    } else {
+                        $codigoHash = $codigoEmpresa[0]->organi_id . $idEmpleado . $codigoEmpleado[0]->emple_persona;
+                        $encode = intval($codigoHash, 36);
+                        $codigoLicencia = $idEmpleado . '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id;
+                        $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
+                    }
+
+                    $vinculacion = new vinculacion();
+                    $vinculacion->idEmpleado = $idEmpleado;
+                    $vinculacion->hash = $encode;
+                    $vinculacion->envio = Carbon::now();
+                    $vinculacion->descarga = STR::random(25);
+                    $vinculacion->save();
+
+                    $licencia_empleado = new licencia_empleado();
+                    $licencia_empleado->idEmpleado = $idEmpleado;
+                    $licencia_empleado->licencia = $encodeLicencia;
+                    $licencia_empleado->save();
+                    $datos = [];
+                    $datos["correo"] = $correoE->emple_Correo;
+                    $email = array($datos["correo"]);
+                    Mail::to($email)->queue(new CorreoEmpleadoMail($vinculacion, $persona, $licencia_empleado));
+                    return json_encode(array("result" => true));
                 }
-
-                $vinculacion = new vinculacion();
-                $vinculacion->idEmpleado = $idEmpleado;
-                $vinculacion->hash = $encode;
-                $vinculacion->envio = Carbon::now();
-                $vinculacion->descarga = STR::random(25);
-                $vinculacion->save();
-
-                $licencia_empleado = new licencia_empleado();
-                $licencia_empleado->idEmpleado = $idEmpleado;
-                $licencia_empleado->licencia = $encodeLicencia;
-                $licencia_empleado->save();
-                $datos = [];
-                $datos["correo"] = $correoE->emple_Correo;
-                $email = array($datos["correo"]);
-                Mail::to($email)->queue(new CorreoEmpleadoMail($vinculacion, $persona, $licencia_empleado));
-                return json_encode(array("result" => true));
             }
+            return response()->json(null, 403);
         }
         return response()->json(null, 403);
     }
@@ -108,6 +115,7 @@ class correosEmpleadoController extends Controller
         $idEmpleados = $request->ids;
         $idEmp = explode(",", $idEmpleados);
         $resultado = [];
+        $d = true;
         $c = true;
         $r = true;
         foreach ($idEmp as $idEm) {
@@ -117,25 +125,53 @@ class correosEmpleadoController extends Controller
                 ->select('e.emple_Correo')
                 ->where('e.emple_id', '=', $idEm)
                 ->get()->first();
-            if ($correoE) {
-                $codV = DB::table('vinculacion as v')
-                    ->select('v.id')
-                    ->where('v.idEmpleado', '=', $idEm)
-                    ->get()->first();
-                if ($codV) {
-                    $vinculacion = vinculacion::findOrFail($codV->id);
-                    $codL = DB::table('licencia_empleado as le')
-                        ->select('le.id')
-                        ->where('le.idEmpleado', '=', $idEm)
+            $dispositivo = DB::table('modo as m')
+                ->where('m.idTipoDispositivo', '=', 1)
+                ->where('m.idEmpleado', '=', $idEm)
+                ->get()->first();
+            if ($dispositivo) {
+                if ($correoE) {
+                    $codV = DB::table('vinculacion as v')
+                        ->select('v.id')
+                        ->where('v.idEmpleado', '=', $idEm)
                         ->get()->first();
-                    $licencia_empleado = licencia_empleado::findOrFail($codL->id);
-                    if ($vinculacion->reenvio == null) {
-                        $vinculacion->descarga = STR::random(25);
-                        $vinculacion->reenvio = Carbon::now();
-                        $vinculacion->save();
-                        $datos = [];
-                        $datos["correo"] = $correoE->emple_Correo;
-                        $email = array($datos["correo"]);
+                    if ($codV) {
+                        $vinculacion = vinculacion::findOrFail($codV->id);
+                        $codL = DB::table('licencia_empleado as le')
+                            ->select('le.id')
+                            ->where('le.idEmpleado', '=', $idEm)
+                            ->get()->first();
+                        $licencia_empleado = licencia_empleado::findOrFail($codL->id);
+                        if ($vinculacion->reenvio == null) {
+                            $vinculacion->descarga = STR::random(25);
+                            $vinculacion->reenvio = Carbon::now();
+                            $vinculacion->save();
+                            $datos = [];
+                            $datos["correo"] = $correoE->emple_Correo;
+                            $email = array($datos["correo"]);
+                            $codigoP = DB::table('empleado as e')
+                                ->select('emple_persona')
+                                ->where('e.emple_id', '=', $idEm)
+                                ->get();
+                            $codP = [];
+                            $codP["id"] = $codigoP[0]->emple_persona;
+                            $persona = persona::find($codP["id"]);
+                            Mail::to($email)->queue(new CorreoEmpleadoMail($vinculacion, $persona, $licencia_empleado));
+                            array_push($resultado, array("Persona" => $persona, "Correo" => $c, "Reenvio" => $r));
+                        } else {
+                            $r = false;
+                            array_push($resultado, array("Persona" => $persona, "Correo" => $c, "Reenvio" => $r, "Disp" => $d));
+                        }
+                    } else {
+                        $codigoEmpresa = DB::table('users as u')
+                            ->join('usuario_organizacion as uo', 'uo.user_id', '=', 'u.id')
+                            ->select('uo.organi_id')
+                            ->where('u.id', '=', Auth::user()->id)
+                            ->get();
+                        $codigoEmpleado = DB::table('empleado as e')
+                            ->select('e.emple_codigo', 'e.emple_persona', 'e.created_at')
+                            ->where('e.emple_id', '=', $idEm)
+                            ->get();
                         $codigoP = DB::table('empleado as e')
                             ->select('emple_persona')
                             ->where('e.emple_id', '=', $idEm)
@@ -143,62 +179,43 @@ class correosEmpleadoController extends Controller
                         $codP = [];
                         $codP["id"] = $codigoP[0]->emple_persona;
                         $persona = persona::find($codP["id"]);
+                        if ($codigoEmpleado[0]->emple_codigo != '') {
+                            $codigoHash = $codigoEmpresa[0]->organi_id . $idEm . $codigoEmpleado[0]->emple_codigo;
+                            $encode = intval($codigoHash, 36);
+                            $codigoLicencia = $idEm . '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id;
+                            $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
+                        } else {
+                            $codigoHash = $codigoEmpresa[0]->organi_id . $idEm . $codigoEmpleado[0]->emple_persona;
+                            $encode = intval($codigoHash, 36);
+                            $codigoLicencia = $idEm . '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id;
+                            $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
+                        }
+
+                        $vinculacion = new vinculacion();
+                        $vinculacion->idEmpleado = $idEm;
+                        $vinculacion->hash = $encode;
+                        $vinculacion->envio = Carbon::now();
+                        $vinculacion->descarga = STR::random(25);
+                        $vinculacion->save();
+
+                        $licencia_empleado = new licencia_empleado();
+                        $licencia_empleado->idEmpleado = $idEm;
+                        $licencia_empleado->licencia = $encodeLicencia;
+                        $licencia_empleado->save();
+
+                        $datos = [];
+                        $datos["correo"] = $correoE->emple_Correo;
+                        $email = array($datos["correo"]);
                         Mail::to($email)->queue(new CorreoEmpleadoMail($vinculacion, $persona, $licencia_empleado));
-                        array_push($resultado, array("Persona" => $persona, "Correo" => $c, "Reenvio" => $r));
-                    } else {
-                        $r = false;
-                        array_push($resultado, array("Persona" => $persona, "Correo" => $c, "Reenvio" => $r));
+                        array_push($resultado, array("Persona" => $persona, "Correo" => $c, "Reenvio" => $r, "Disp" => $d));
                     }
                 } else {
-                    $codigoEmpresa = DB::table('users as u')
-                        ->join('usuario_organizacion as uo', 'uo.user_id', '=', 'u.id')
-                        ->select('uo.organi_id')
-                        ->where('u.id', '=', Auth::user()->id)
-                        ->get();
-                    $codigoEmpleado = DB::table('empleado as e')
-                        ->select('e.emple_codigo', 'e.emple_persona', 'e.created_at')
-                        ->where('e.emple_id', '=', $idEm)
-                        ->get();
-                    $codigoP = DB::table('empleado as e')
-                        ->select('emple_persona')
-                        ->where('e.emple_id', '=', $idEm)
-                        ->get();
-                    $codP = [];
-                    $codP["id"] = $codigoP[0]->emple_persona;
-                    $persona = persona::find($codP["id"]);
-                    if ($codigoEmpleado[0]->emple_codigo != '') {
-                        $codigoHash = $codigoEmpresa[0]->organi_id . $idEm . $codigoEmpleado[0]->emple_codigo;
-                        $encode = intval($codigoHash, 36);
-                        $codigoLicencia = $idEm . '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id;
-                        $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
-                    } else {
-                        $codigoHash = $codigoEmpresa[0]->organi_id . $idEm . $codigoEmpleado[0]->emple_persona;
-                        $encode = intval($codigoHash, 36);
-                        $codigoLicencia = $idEm . '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id;
-                        $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
-                    }
-
-                    $vinculacion = new vinculacion();
-                    $vinculacion->idEmpleado = $idEm;
-                    $vinculacion->hash = $encode;
-                    $vinculacion->envio = Carbon::now();
-                    $vinculacion->descarga = STR::random(25);
-                    $vinculacion->save();
-
-                    $licencia_empleado = new licencia_empleado();
-                    $licencia_empleado->idEmpleado = $idEm;
-                    $licencia_empleado->licencia = $encodeLicencia;
-                    $licencia_empleado->save();
-
-                    $datos = [];
-                    $datos["correo"] = $correoE->emple_Correo;
-                    $email = array($datos["correo"]);
-                    Mail::to($email)->queue(new CorreoEmpleadoMail($vinculacion, $persona, $licencia_empleado));
-                    array_push($resultado, array("Persona" => $persona, "Correo" => $c, "Reenvio" => $r));
+                    $c = false;
+                    array_push($resultado, array("Persona" => $persona, "Correo" => $c, "Reenvio" => $r, "Disp" => $d));
                 }
             } else {
-                $c = false;
-                array_push($resultado, array("Persona" => $persona, "Correo" => $c, "Reenvio" => $r));
+                $d = false;
+                array_push($resultado, array("Persona" => $persona, "Correo" => $c, "Reenvio" => $r, "Disp" => $d));
             }
         }
         return response()->json($resultado, 200);
@@ -246,22 +263,32 @@ class correosEmpleadoController extends Controller
         $idEmp = explode(",", $idEmpleados);
         $resultado = [];
         $c = true;
+        $d = true;
         foreach ($idEmp as $idEm) {
+            $dispositivo = DB::table('modo as m')
+                ->where('m.idTipoDispositivo', '=', 2)
+                ->where('m.idEmpleado', '=', $idEm)
+                ->get()->first();
             $empleado = empleado::where('emple_id', '=', $idEm)->get()->first();
             $persona = persona::where('perso_id', '=', $empleado->emple_persona)->get()->first();
             $correoE = DB::table('empleado as e')
                 ->select('e.emple_Correo')
                 ->where('e.emple_id', '=', $idEm)
                 ->get()->first();
-            if ($correoE) {
-                $datos = [];
-                $datos["correo"] = $correoE->emple_Correo;
-                $email = array($datos["correo"]);
-                Mail::to($email)->queue(new AndroidMail($persona));
-                array_push($resultado, array("Persona" => $persona, "Correo" => $c));
+            if ($dispositivo) {
+                if ($correoE) {
+                    $datos = [];
+                    $datos["correo"] = $correoE->emple_Correo;
+                    $email = array($datos["correo"]);
+                    Mail::to($email)->queue(new AndroidMail($persona));
+                    array_push($resultado, array("Persona" => $persona, "Correo" => $c, "Disp" => $d));
+                } else {
+                    $c = false;
+                    array_push($resultado, array("Persona" => $persona, "Correo" => $c, "Disp" => $d));
+                }
             } else {
-                $c = false;
-                array_push($resultado, array("Persona" => $persona, "Correo" => $c));
+                $d = false;
+                array_push($resultado, array("Persona" => $persona, "Correo" => $c, "Disp" => $d));
             }
         }
         return response()->json($resultado, 200);
