@@ -1,5 +1,5 @@
-$('#enviarCorreosMasivos').hide();
 $('#enviarAndroidMasivos').hide();
+$('#enviarCorreosMasivos').hide();
 $('#filter_col2').hide();
 $('#filter_col3').hide();
 $('#filter_col4').hide();
