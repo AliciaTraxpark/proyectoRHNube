@@ -281,7 +281,7 @@ class correosEmpleadoController extends Controller
                     $datos["correo"] = $correoE->emple_Correo;
                     $email = array($datos["correo"]);
                     Mail::to($email)->queue(new AndroidMail($persona));
-                    array_push($resultado, array("Persona" => $persona, "Correo" => $c));
+                    array_push($resultado, array("Persona" => $persona, "Correo" => $c, "Disp" => $d));
                 } else {
                     $c = false;
                     array_push($resultado, array("Persona" => $persona, "Correo" => $c, "Disp" => $d));

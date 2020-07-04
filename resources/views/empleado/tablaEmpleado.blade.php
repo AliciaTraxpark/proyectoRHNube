@@ -271,7 +271,6 @@
         @endforeach
     </tbody>
 </table>
-
 <script>
     $('#enviarAndroidMasivos').hide();
     $('#enviarCorreosMasivos').hide();
@@ -286,8 +285,15 @@
     var CheckBoxMarcados = 0;
 
     seleccionarTodos.on('click', function () {
-        if (seleccionarTodos.is(":checked")) CheckBoxs.prop('checked', true);
-        else CheckBoxs.prop('checked', false);
+        if (seleccionarTodos.is(":checked")) {
+            CheckBoxs.prop('checked', true);
+            $('#enviarCorreosMasivos').show();
+            $('#enviarAndroidMasivos').show();
+        } else {
+            CheckBoxs.prop('checked', false);
+            $('#enviarCorreosMasivos').hide();
+            $('#enviarAndroidMasivos').hide();
+        };
 
     });
 
@@ -303,6 +309,9 @@
         }
         seleccionarTodos.prop('checked', (CheckBoxMarcados === CheckBoxs.length));
     });
+
+</script>
+<script>
     $("#tablaEmpleado tbody tr").click(function () {
         $('#smartwizard1').smartWizard("reset");
         //$(this).addClass('selected').siblings().removeClass('selected');
@@ -665,6 +674,7 @@
         $(".sub_chk:checked").each(function () {
             correoEmpleado.push($(this).attr('data-id'));
         });
+        console.log(correoEmpleado);
         var join_selected_values = correoEmpleado.join(",");
         $.ajax({
             async: false,
@@ -675,6 +685,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (data) {
+                console.log(data);
                 for (var i = 0; i < data.length; i++) {
                     if (data[i].Correo == true && data[i].Reenvio == true && data[i].Disp == true) {
                         $.notify({
@@ -780,6 +791,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (data) {
+                console.log(data);
                 for (var i = 0; i < data.length; i++) {
                     if (data[i].Correo == true && data[i].Disp == true) {
                         $.notify({
