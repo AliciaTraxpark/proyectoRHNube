@@ -658,7 +658,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (data) {
-                alert('cambio');
+                $(location).attr('href','/');
             },
             error: function (data) {
                 alert('Ocurrio un error');
