@@ -1,7 +1,8 @@
 @php
     use Illuminate\Support\Facades\Auth;
-    use App\eventos;
-    use App\calendario;
+    use App\User;
+
+use Illuminate\Support\Facades\DB;
 @endphp
 
 <style>
@@ -26,18 +27,11 @@
         </a>
     </li>
     @php
-    $calendario=calendario::where('users_id','=',Auth::user()->id)->get();
-        //dd($calendario);
-        if ($calendario->first()) {
-            $variable=1;
-         }
-
-         else{
-            $variable=0;
-        }
+     $usuario=DB::table('users')
+            ->where('id','=',Auth::user()->id)->get();
         @endphp
     <li>
-        @if ($variable==0)
+        @if ($usuario[0]->user_estado==0)
         <a href="/calendario"> @else <a href="/calendarios"> @endif
             <i data-feather="calendar"></i>
             <span> Calendarios </span>
@@ -46,7 +40,7 @@
     </li>
     <li>
 
-        @if ($variable==0)
+        @if ($usuario[0]->user_estado==0)
         <a href="/empleado">
             <i data-feather="list"></i>
             <span>Gestión de empleado</span>
@@ -62,7 +56,7 @@
     </li>
     <li>
 
-        @if ($variable==0)
+        @if ($usuario[0]->user_estado==0)
         <a href="/horario">
             <i data-feather="clipboard"></i>
             <span>Horarios</span>
