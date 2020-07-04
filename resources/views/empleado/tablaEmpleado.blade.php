@@ -570,8 +570,12 @@
 </script>
 {{-- ELIMINAR VARIOS ELEMENTOS --}}
 <script>
-    $('.delete_all').on('click', function (e) {
+  /*   $('.delete_all').click(function(e) {
+        e.preventDefault();
         var allVals = [];
+        allVals = [];
+        console.log(allVals);
+
         $(".sub_chk:checked").each(function () {
             allVals.push($(this).attr('data-id'));
         });
@@ -582,43 +586,91 @@
         } else {
             $('#modalEliminar').modal();
 
-            $('#confirmarE').click(function () {
 
-                var join_selected_values = allVals.join(",");
-               /*  $.notify(" Empleado eliminado", {
-                    align: "right",
-                    verticalAlign: "top",
-                    type: "danger",
-                    icon: "bell",
-                    autoHide: true
-                }); */
-                var table = $('#tablaEmpleado').DataTable();
-                 $.ajax({
-                    url: "/eliminarEmpleados",
-                    type: 'DELETE',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: 'ids=' + join_selected_values,
-                    success: function (data) {
-
-                        $(".sub_chk:checked").each(function () {
-                            //$(this).parents("tr").remove();
-
-
-                        });
-                        $('#modalEliminar').modal('hide');
-                        leertabla();
-                        //$('#tablaEmpleado').DataTable().destroy();
-                    },
-                    error: function (data) {
-                        alert(data.responseText);
-                    }
-                });
-            });
         }
 
+
     });
+    $('#confirmarE').click(function (e) {
+            e.preventDefault();
+            var allVals = [];
+        allVals = [];
+        console.log(allVals);
+
+        $(".sub_chk:checked").each(function () {
+            allVals.push($(this).attr('data-id'));
+        });
+        var join_selected_values = allVals.join(",");
+        var table = $('#tablaEmpleado').DataTable();
+        $.ajax({
+            url: "/eliminarEmpleados",
+            type: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: 'ids=' + join_selected_values,
+            success: function (data) {
+
+                $('#modalEliminar').modal('hide');
+                leertabla();
+            },
+            error: function (data) {
+                alert(data.responseText);
+            }
+        });
+}); */
+function eliminarEmpleado(){
+    var allVals = [];
+        console.log(allVals);
+
+        $(".sub_chk:checked").each(function () {
+            allVals.push($(this).attr('data-id'));
+        });
+
+        if (allVals.length <= 0) {
+            alert("Por favor seleccione una fila.");
+            return false;
+        } else {
+            $('#modalEliminar').modal();
+
+
+        }
+
+}
+function confirmarEliminacion(){
+    var allVals = [];
+        console.log(allVals);
+
+        $(".sub_chk:checked").each(function () {
+            allVals.push($(this).attr('data-id'));
+        });
+        var join_selected_values = allVals.join(",");
+        var table = $('#tablaEmpleado').DataTable();
+        $.ajax({
+            url: "/eliminarEmpleados",
+            type: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: 'ids=' + join_selected_values,
+            success: function (data) {
+
+                $('#modalEliminar').modal('hide');
+                leertabla();
+                $.notify(" Empleado eliminado", {
+                     align: "right",
+                     verticalAlign: "top",
+                     type: "danger",
+                     icon: "bell",
+                     autoHide: true
+                 });
+            },
+            error: function (data) {
+                alert(data.responseText);
+            }
+        });
+
+}
     function marcareliminar(data){
     $('input:checkbox').prop('checked', false);
 
@@ -698,7 +750,7 @@
                         });
                     }
                 }
-            
+
             }
         });
     }

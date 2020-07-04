@@ -106,6 +106,7 @@ function calendarioHorario(eventosEmpleado) {
             console.log(info.event.id);
             console.log(info.event.title);
            var event = calendar.getEventById(id);
+           idempleadoEli=$('#idobtenidoE').val();
            if(info.event.textColor=='000000' ||info.event.textColor=='111111' ){
             var r = confirm("Desea eliminar la  hora: ("+info.event.title+ ") del horario");
             if (r == true) {
@@ -113,7 +114,7 @@ function calendarioHorario(eventosEmpleado) {
                     type: "post",
                     url: "/eliminarHora",
                     data: {
-                        idHora: info.event.id,textcolor:info.event.textColor
+                        idHora: info.event.id,textcolor:info.event.textColor,ide:idempleadoEli
                     },
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
