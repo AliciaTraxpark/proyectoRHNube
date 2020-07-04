@@ -73,27 +73,27 @@
 @section('content')
 <div class="row">
     <div class="col-md-4" id="divarea">
-        <canvas id="area" height="250" width="250"></canvas>
+        <canvas id="area" height="300" width="300"></canvas>
     </div>
     <div class="col-md-4" id="divnivel">
-        <canvas id="nivel" height="250" width="250"></canvas>
+        <canvas id="nivel" height="300" width="300"></canvas>
     </div>
     <div class="col-md-4" id="divcontrato">
-        <canvas id="contrato" height="250" width="250"></canvas>
+        <canvas id="contrato" height="300" width="300"></canvas>
     </div>
     <br><br><br>
     <div class="col-md-4" id="divcentro">
-        <canvas id="centro" height="250" width="250"></canvas>
+        <canvas id="centro" height="300" width="300"></canvas>
     </div>
     <div class="col-md-4" id="divlocal">
-        <canvas id="local" height="250" width="250"></canvas>
+        <canvas id="local" height="300" width="300"></canvas>
     </div>
     <div class="col-md-4" id="divdepartamento">
-        <canvas id="departamento" height="250" width="250"></canvas>
+        <canvas id="departamento" height="300" width="300"></canvas>
     </div>
     <br><br><br>
     <div class="col-md-4" id="divedades">
-        <canvas id="edades" height="250" width="250"></canvas>
+        <canvas id="edades" height="300" width="300"></canvas>
     </div>
 </div>
 @endsection

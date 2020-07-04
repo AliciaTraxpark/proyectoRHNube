@@ -104,18 +104,47 @@ $.ajax({
                             top: 50,
                         }
                     },
+                    title: {
+                        display: true,
+                        text: 'AREA',
+                        position: 'top'
+                    },
                     responsive: true,
                     maintainAspectRatio: false,
                     cutoutPercentage: 80,
                     legend: {
-                        display: false
+                        display: true,
+                        position: "left",
+                        labels: {
+                            padding: 10,
+                            fontSize: 12,
+                            color: '#323232',
+                        },
+                    },
+                    plugins: {
+                        datalabels: {
+                            display: false,
+                            /*formatter: function (value, context) {
+                                var label = context.chart.data.labels[context.dataIndex];
+                                var mostrar = [];
+                                mostrar.push(label);
+                                return mostrar;
+                            },
+                            color: '#323232',
+                            anchor: 'end',
+                            align: 'end',
+                            font: {
+                                weight: 'bold',
+                                fontSize: 20
+                            },
+                            padding: 10,
+                            clamp: true*/
+                        }
                     },
                     tooltips: {
+                        yAlign: 'bottom',
+                        xAlign: 'center',
                         callbacks: {
-                            afterTitle: function (tooltipItem, data) {
-                                var label = 'Cantidad de Empleados';
-                                return label;
-                            },
                             afterLabel: function (tooltipItem, data) {
                                 var dataset = data["datasets"][0];
                                 var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 /
@@ -132,26 +161,6 @@ $.ajax({
                             sidePadding: 20,
                         },
                     },
-                    plugins: {
-                        responsive: true,
-                        datalabels: {
-                            formatter: function (value, context) {
-                                var label = context.chart.data.labels[context.dataIndex];
-                                var mostrar = [];
-                                mostrar.push(label);
-                                return mostrar;
-                            },
-                            color: '#323232',
-                            anchor: 'end',
-                            align: 'end',
-                            font: {
-                                weight: 'bold',
-                                fontSize: 20
-                            },
-                            padding: 10,
-                            clamp: true
-                        }
-                    }
                 },
             });
             mostrar.mouseout(function (e) {
@@ -212,16 +221,27 @@ $.ajax({
                             top: 50
                         }
                     },
+                    title: {
+                        display: true,
+                        text: 'NIVEL',
+                        position: 'top'
+                    },
                     responsive: true,
                     maintainAspectRatio: false,
                     cutoutPercentage: 80,
                     legend: {
-                        display: false
+                        display: true,
+                        position: "left",
+                        labels: {
+                            padding: 10,
+                            fontSize: 12,
+                            color: '#323232',
+                        },
                     },
                     plugins: {
-                        responsive: true,
                         datalabels: {
-                            formatter: function (value, context) {
+                            display: false,
+                            /*formatter: function (value, context) {
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
                                 mostrar.push(label);
@@ -235,16 +255,13 @@ $.ajax({
                                 fontSize: 20
                             },
                             padding: 5,
-                            clamp: true
+                            clamp: true*/
                         }
                     },
                     tooltips: {
-                        intersect: false,
+                        yAlign: 'bottom',
+                        xAlign: 'center',
                         callbacks: {
-                            afterTitle: function (tooltipItem, data) {
-                                var label = 'Cantidad de Empleados';
-                                return label;
-                            },
                             afterLabel: function (tooltipItem, data) {
                                 var dataset = data["datasets"][0];
                                 var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 / suma));
@@ -320,15 +337,27 @@ $.ajax({
                             top: 50
                         }
                     },
+                    title: {
+                        display: true,
+                        text: 'CONTRATO',
+                        position: 'bottom',
+                    },
                     responsive: true,
                     cutoutPercentage: 80,
                     maintainAspectRatio: false,
                     legend: {
-                        display: false
+                        display: true,
+                        position: "left",
+                        labels: {
+                            padding: 10,
+                            fontSize: 12,
+                            color: '#323232',
+                        },
                     },
                     plugins: {
                         datalabels: {
-                            formatter: function (value, context) {
+                            display: false
+                            /*formatter: function (value, context) {
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
                                 mostrar.push(label);
@@ -342,15 +371,13 @@ $.ajax({
                                 fontSize: 20
                             },
                             padding: 5,
-                            clamp: true
+                            clamp: true*/
                         }
                     },
                     tooltips: {
+                        yAlign: 'bottom',
+                        xAlign: 'center',
                         callbacks: {
-                            afterTitle: function (tooltipItem, data) {
-                                var label = 'Cantidad de Empleados';
-                                return label;
-                            },
                             afterLabel: function (tooltipItem, data) {
                                 var dataset = data["datasets"][0];
                                 var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 / suma));
@@ -425,15 +452,27 @@ $.ajax({
                             top: 50
                         }
                     },
+                    title: {
+                        display: true,
+                        text: 'CENTRO COSTO',
+                        position: 'top'
+                    },
                     responsive: true,
                     cutoutPercentage: 80,
                     maintainAspectRatio: false,
                     legend: {
-                        display: false
+                        display: true,
+                        position: "left",
+                        labels: {
+                            padding: 10,
+                            fontSize: 12,
+                            color: '#323232',
+                        },
                     },
                     plugins: {
                         datalabels: {
-                            formatter: function (value, context) {
+                            display: false,
+                            /*formatter: function (value, context) {
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
                                 mostrar.push(label);
@@ -447,15 +486,13 @@ $.ajax({
                                 fontSize: 20
                             },
                             padding: 5,
-                            clamp: true
+                            clamp: true*/
                         }
                     },
                     tooltips: {
+                        yAlign: 'bottom',
+                        xAlign: 'center',
                         callbacks: {
-                            afterTitle: function (tooltipItem, data) {
-                                var label = 'Cantidad de Empleados';
-                                return label;
-                            },
                             afterLabel: function (tooltipItem, data) {
                                 var dataset = data["datasets"][0];
                                 var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 / suma));
@@ -531,15 +568,27 @@ $.ajax({
                             top: 50
                         }
                     },
+                    title: {
+                        display: true,
+                        text: 'LOCAL',
+                        position: 'top'
+                    },
                     responsive: true,
                     cutoutPercentage: 80,
                     maintainAspectRatio: false,
                     legend: {
-                        display: false
+                        display: true,
+                        position: "left",
+                        labels: {
+                            padding: 10,
+                            fontSize: 12,
+                            color: '#323232',
+                        },
                     },
                     plugins: {
                         datalabels: {
-                            formatter: function (value, context) {
+                            display: false,
+                            /*formatter: function (value, context) {
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
                                 mostrar.push(label);
@@ -553,15 +602,13 @@ $.ajax({
                                 fontSize: 20
                             },
                             padding: 5,
-                            clamp: true
+                            clamp: true*/
                         }
                     },
                     tooltips: {
+                        yAlign: 'bottom',
+                        xAlign: 'center',
                         callbacks: {
-                            afterTitle: function (tooltipItem, data) {
-                                var label = 'Cantidad de Empleados';
-                                return label;
-                            },
                             afterLabel: function (tooltipItem, data) {
                                 var dataset = data["datasets"][0];
                                 var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 / suma));
@@ -734,15 +781,27 @@ $.ajax({
                             top: 50
                         }
                     },
+                    title: {
+                        display: true,
+                        text: 'CIUDADES',
+                        position: 'top'
+                    },
                     responsive: true,
                     cutoutPercentage: 80,
                     maintainAspectRatio: false,
                     legend: {
-                        display: false
+                        display: true,
+                        position: "left",
+                        labels: {
+                            padding: 10,
+                            fontSize: 12,
+                            color: '#323232',
+                        },
                     },
                     plugins: {
                         datalabels: {
-                            formatter: function (value, context) {
+                            display: false,
+                            /*formatter: function (value, context) {
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
                                 mostrar.push(label);
@@ -756,15 +815,13 @@ $.ajax({
                                 fontSize: 20
                             },
                             padding: 5,
-                            clamp: true
+                            clamp: true*/
                         }
                     },
                     tooltips: {
+                        yAlign: 'bottom',
+                        xAlign: 'center',
                         callbacks: {
-                            afterTitle: function (tooltipItem, data) {
-                                var label = 'Cantidad de Empleados';
-                                return label;
-                            },
                             afterLabel: function (tooltipItem, data) {
                                 var dataset = data["datasets"][0];
                                 var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 / suma));
@@ -840,16 +897,27 @@ $.ajax({
                             top: 50
                         }
                     },
+                    title: {
+                        display: true,
+                        text: 'RANGO DE EDADES',
+                        position: 'top'
+                    },
                     responsive: true,
                     cutoutPercentage: 80,
                     maintainAspectRatio: false,
                     legend: {
-                        display: false
+                        display: true,
+                        position: "left",
+                        labels: {
+                            padding: 10,
+                            fontSize: 12,
+                            color: '#323232',
+                        },
                     },
                     plugins: {
-                        display: true,
                         datalabels: {
-                            formatter: function (value, context) {
+                            display: false,
+                            /*formatter: function (value, context) {
                                 var label = context.chart.data.labels[context.dataIndex];
                                 var mostrar = [];
                                 mostrar.push(label);
@@ -863,15 +931,13 @@ $.ajax({
                                 fontSize: 20
                             },
                             padding: 10,
-                            clamp: true
+                            clamp: true*/
                         }
                     },
                     tooltips: {
+                        yAlign: 'bottom',
+                        xAlign: 'center',
                         callbacks: {
-                            afterTitle: function (tooltipItem, data) {
-                                var label = 'Cantidad de Empleados';
-                                return label;
-                            },
                             afterLabel: function (tooltipItem, data) {
                                 var dataset = data["datasets"][0];
                                 var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 / suma));
