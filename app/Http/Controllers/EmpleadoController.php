@@ -157,10 +157,10 @@ class EmpleadoController extends Controller
 
             ->get();
 
-            $usuario=DB::table('users')
-            ->where('id','=',Auth::user()->id)->get();
+        $usuario = DB::table('users')
+            ->where('id', '=', Auth::user()->id)->get();
 
-        return view('empleado.cargarEmpleado', ['empleado' => $empleado,'usuario'=>$usuario[0]->user_estado]);
+        return view('empleado.cargarEmpleado', ['empleado' => $empleado, 'usuario' => $usuario[0]->user_estado]);
     }
 
 
@@ -424,7 +424,11 @@ class EmpleadoController extends Controller
         }
         if ($objEmpleado['departamento_v'] != '') {
             $empleado->emple_departamentoN = $objEmpleado['departamento_v'];
+        }
+        if ($objEmpleado['provincia_v'] != '') {
             $empleado->emple_provinciaN = $objEmpleado['provincia_v'];
+        }
+        if ($objEmpleado['distrito_v'] != '') {
             $empleado->emple_distritoN = $objEmpleado['distrito_v'];
         }
         if ($objEmpleado['centroc_v'] != '') {
