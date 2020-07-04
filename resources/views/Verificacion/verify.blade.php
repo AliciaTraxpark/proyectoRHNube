@@ -69,11 +69,13 @@
                         <div class="text-center">
                             <div class="mx-auto">
                                 <a href="index.html">
-                                    <img src="assets/images/logo.png" alt="" height="24" />
                                     <h3 class="d-inline align-middle ml-1 text-logo">RH SOLUTION</h3>
                                 </a>
                             </div>
-
+                            <br>
+                            <div class="mx-auto">
+                                <img src="{{asset('landing/images/login.svg')}}" alt="" height="80" />
+                            </div>
                             <h6 class="h5 mb-0 mt-5" style="text-transform: uppercase;">Confirma tu email
                                 {{$persona[0]->perso_nombre}}
                                 {{$persona[0]->perso_apPaterno}}</h6>
