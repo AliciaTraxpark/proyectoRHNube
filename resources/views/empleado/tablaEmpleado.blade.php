@@ -710,8 +710,6 @@ function confirmarEliminacion(){
         });
 
 }
-    function marcareliminar(data){
-    $('input:checkbox').prop('checked', false);
 
     function marcareliminar(data) {
         $('input:checkbox').prop('checked', false);
