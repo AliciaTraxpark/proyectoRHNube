@@ -318,17 +318,18 @@ class horarioController extends Controller
     public function eliminarHora(Request $request){
         $idHora=$request->idHora;
         $textcolor=$request->textcolor;
+        $ide=$request->ide;
         //$horario_empleado=DB::table ('horario_empleado')->where('horario_dias_id','=',$idHora)->get();
         //dd($horario_empleado[0]->horario_dias_id);
         if($textcolor=='000000'){
-            $horario_empleado=horario_empleado::where('horario_dias_id','=',$idHora)->delete();
+            $horario_empleado=horario_empleado::where('horario_dias_id','=',$idHora) ->where('empleado_emple_id','=',$ide)->delete();
         } else{ $temporal_evento=temporal_eventos::where('id','=',$idHora)->delete();}
         //$horario_empleado=horario_empleado::where('horario_dias_id','=',$idHora)->delete();
 
         //$horario_dias = horario_dias::where('id', '=',  $idHora)->delete();
     }
     public function cambiarEstado(Request $request){
-        
+
         $user=User::where('id', '=',Auth::user()->id)
           ->update(['user_estado' => 1]);
 
