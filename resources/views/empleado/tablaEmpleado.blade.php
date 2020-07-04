@@ -795,7 +795,7 @@
                 for (var i = 0; i < data.length; i++) {
                     if (data[i].Correo == true && data[i].Disp == true) {
                         $.notify({
-                            message: "\nCorreo enviado a" + data[i].Persona.perso_nombre + " " +
+                            message: "\nCorreo enviado a " + data[i].Persona.perso_nombre + " " +
                                 data[i].Persona.perso_apPaterno + " " + data[i].Persona
                                 .perso_apMaterno,
                             icon: 'admin/images/checked.svg'
@@ -814,14 +814,14 @@
                     } else {
                         if (data[i].Correo != true) {
                             $.notify({
-                                message: "\nAún no ha registrado correo a" + data[i].Persona
+                                message: "\nAún no ha registrado correo a " + data[i].Persona
                                     .perso_nombre + " " + data[i].Persona.perso_apPaterno + " " +
                                     data[
                                         i].Persona.perso_apMaterno,
                                 icon: 'admin/images/warning.svg'
                             }, {
                                 icon_type: 'image',
-                                newest_on_top: true,
+                                newest_on_top: true, 
                                 delay: 5000,
                                 template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
                                     '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
