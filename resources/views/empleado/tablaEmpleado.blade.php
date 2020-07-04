@@ -272,6 +272,7 @@
 </table>
 <script src="{{asset('landing/js/checkB.js')}}"></script>
 <script>
+    $('#enviarCorreosMasivos').hide();
     $("#tablaEmpleado tbody tr").click(function () {
         $('#smartwizard1').smartWizard("reset");
         //$(this).addClass('selected').siblings().removeClass('selected');
