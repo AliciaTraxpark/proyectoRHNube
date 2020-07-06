@@ -759,7 +759,8 @@
                                         <div class="form-group">
                                             <label for="sw-default">Celular</label>
                                             <input type="number" class="form-control" name="celular"
-                                                id="celular" tabindex="8">
+                                                id="celular" tabindex="8" maxlength = "9"  onkeypress="return isNumeric(event)"
+                                                oninput="maxLengthCheck(this)">
                                         </div>
                                     </div>
                                     <div class="col-4">
@@ -781,7 +782,8 @@
                                         <div class="form-group">
                                             <label for="sw-default">Telefono</label>
                                             <input type="number" class="form-control" name="telefono"
-                                                id="telefono" tabindex="9">
+                                                id="telefono" tabindex="9" maxlength = "9"  onkeypress="return isNumeric(event)"
+                                                oninput="maxLengthCheck(this)">
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -1086,7 +1088,8 @@
                                         <div class="form-group">
                                             <label for="sw-default">Celular</label>
                                             <input type="text" class="form-control" name="v_celular"
-                                                id="v_celular" tabindex="8">
+                                                id="v_celular" tabindex="8" maxlength = "9"  onkeypress="return isNumeric(event)"
+                                                oninput="maxLengthCheck(this)">
                                         </div>
                                     </div>
                                     <div class="col-4">
@@ -1108,7 +1111,8 @@
                                         <div class="form-group">
                                             <label for="sw-default">Telefono</label>
                                             <input type="text" class="form-control" name="v_telefono"
-                                                id="v_telefono" tabindex="9">
+                                                id="v_telefono" tabindex="9" maxlength = "9"  onkeypress="return isNumeric(event)"
+                                                oninput="maxLengthCheck(this)">
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -1369,7 +1373,23 @@
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <script src="{{asset('admin/assets/libs/smartwizard/jquery.smartWizard.min.js') }}"></script>
+<script>
+    function maxLengthCheck(object) {
+      if (object.value.length > object.maxLength)
+        object.value = object.value.slice(0, object.maxLength)
+    }
 
+    function isNumeric (evt) {
+      var theEvent = evt || window.event;
+      var key = theEvent.keyCode || theEvent.which;
+      key = String.fromCharCode (key);
+      var regex = /[0-9]|\./;
+      if ( !regex.test(key) ) {
+        theEvent.returnValue = false;
+        if(theEvent.preventDefault) theEvent.preventDefault();
+      }
+    }
+  </script>
 <script src="{{asset('admin/assets/libs/bootstrap-fileinput/piexif.min.js')}} " ></script>
 <script src="{{asset('admin/assets/libs/bootstrap-fileinput/sortable.min.js')}}" ></script>
 <script src="{{asset('admin/assets/libs/bootstrap-fileinput/purify.min.js')}}" ></script>
