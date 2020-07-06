@@ -17,7 +17,6 @@
     .table td {
         padding: 0.4rem;
     }
-
 </style>
 <div id="modalCorreo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCorreo" aria-hidden="true"
     data-backdrop="static">
@@ -609,7 +608,7 @@
 </script>
 {{-- ELIMINAR VARIOS ELEMENTOS --}}
 <script>
-  /*   $('.delete_all').click(function(e) {
+    /*   $('.delete_all').click(function(e) {
         e.preventDefault();
         var allVals = [];
         allVals = [];
@@ -739,7 +738,7 @@ function confirmarEliminacion(){
             success: function (data) {
                 console.log(data);
                 for (var i = 0; i < data.length; i++) {
-                    if (data[i].Correo == true && data[i].Reenvio == true && data[i].Disp == true) {
+                    if (data[i].Correo == true && data[i].Reenvio == true) {
                         $.notify({
                             message: "\nCorreo enviado a" + data[i].Persona.perso_nombre + " " +
                                 data[i].Persona.perso_apPaterno + " " + data[i].Persona
@@ -797,25 +796,6 @@ function confirmarEliminacion(){
                                 spacing: 35
                             });
                         }
-                        if (data[i].Disp != true) {
-                            $.notify({
-                                message: data[i].Persona.perso_nombre + " " + data[i].Persona
-                                    .perso_apPaterno + " " + data[i].Persona.perso_apMaterno +
-                                    "\n no tiene plataforma asignada",
-                                icon: 'admin/images/warning.svg'
-                            }, {
-                                icon_type: 'image',
-                                newest_on_top: true,
-                                delay: 5000,
-                                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
-                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                                    '<span data-notify="title">{1}</span> ' +
-                                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
-                                    '</div>',
-                                spacing: 35
-                            });
-                        }
                     }
                 }
                 $('#modalCorreoM').modal('toggle');
@@ -845,7 +825,7 @@ function confirmarEliminacion(){
             success: function (data) {
                 console.log(data);
                 for (var i = 0; i < data.length; i++) {
-                    if (data[i].Correo == true && data[i].Disp == true) {
+                    if (data[i].Correo == true) {
                         $.notify({
                             message: "\nCorreo enviado a " + data[i].Persona.perso_nombre + " " +
                                 data[i].Persona.perso_apPaterno + " " + data[i].Persona
@@ -870,25 +850,6 @@ function confirmarEliminacion(){
                                     .perso_nombre + " " + data[i].Persona.perso_apPaterno + " " +
                                     data[
                                         i].Persona.perso_apMaterno,
-                                icon: 'admin/images/warning.svg'
-                            }, {
-                                icon_type: 'image',
-                                newest_on_top: true,
-                                delay: 5000,
-                                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
-                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                                    '<span data-notify="title">{1}</span> ' +
-                                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
-                                    '</div>',
-                                spacing: 35
-                            });
-                        }
-                        if (data[i].Disp != true) {
-                            $.notify({
-                                message: data[i].Persona.perso_nombre + " " + data[i].Persona
-                                    .perso_apPaterno + " " + data[i].Persona.perso_apMaterno +
-                                    "\n no tiene plataforma asignada",
                                 icon: 'admin/images/warning.svg'
                             }, {
                                 icon_type: 'image',

@@ -12,6 +12,8 @@ function enviar() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
+            leertabla();
+            $('#modalCorreo').modal('toggle');
             $.notify({
                 message: "\nCorreo enviado.",
                 icon: 'admin/images/checked.svg'
@@ -27,8 +29,6 @@ function enviar() {
                     '</div>',
                 spacing: 35
             });
-            $('#modalCorreo').modal('toggle');
-            leertabla();
         },
         error: function () {
             $('#modalCorreo').modal('toggle');

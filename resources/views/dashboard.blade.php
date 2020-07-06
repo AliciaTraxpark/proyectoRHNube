@@ -71,29 +71,84 @@
 @endsection
 @else
 @section('content')
+<style>
+    .chart-legend li span {
+        display: inline-block;
+        width: 30px;
+        height: 12px;
+        margin-right: 3px;
+    }
+
+    .chart-legend ul {
+        list-style: none;
+    }
+
+    .chart-legend {
+        height: 250px;
+        overflow: auto;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+</style>
 <div class="row">
     <div class="col-md-4" id="divarea">
-        <canvas id="area" height="250" width="250"></canvas>
+        <div class="float-right" style="width:100%">
+            <div class="float-right" style="width:45%">
+                <canvas id="area" height="350" width="350"></canvas>
+            </div>
+            <div id="js-legendArea" class="chart-legend"></div>
+        </div>
     </div>
     <div class="col-md-4" id="divnivel">
-        <canvas id="nivel" height="250" width="250"></canvas>
+        <div class="float-right" style="width:100%">
+            <div class="float-right" style="width:45%">
+                <canvas id="nivel" height="350" width="350"></canvas>
+            </div>
+            <div id="js-legendNivel" class="chart-legend"></div>
+        </div>
     </div>
     <div class="col-md-4" id="divcontrato">
-        <canvas id="contrato" height="250" width="250"></canvas>
+        <div class="float-right" style="width:100%">
+            <div class="float-right" style="width:45%">
+                <canvas id="contrato" height="350" width="350"></canvas>
+            </div>
+            <div id="js-legendContrato" class="chart-legend"></div>
+        </div>
     </div>
     <br><br><br>
     <div class="col-md-4" id="divcentro">
-        <canvas id="centro" height="250" width="250"></canvas>
+        <div class="float-right" style="width:100%">
+            <div class="float-right" style="width:45%">
+                <canvas id="centro" height="350" width="350"></canvas>
+            </div>
+            <div id="js-legendCentro" class="chart-legend"></div>
+        </div>
     </div>
     <div class="col-md-4" id="divlocal">
-        <canvas id="local" height="250" width="250"></canvas>
+        <div class="float-right" style="width:100%">
+            <div class="float-right" style="width:45%">
+                <canvas id="local" height="350" width="350"></canvas>
+            </div>
+            <div id="js-legendLocal" class="chart-legend"></div>
+        </div>
     </div>
     <div class="col-md-4" id="divdepartamento">
-        <canvas id="departamento" height="250" width="250"></canvas>
+        <div class="float-right" style="width:100%">
+            <div class="float-right" style="width:45%">
+                <canvas id="departamento" height="350" width="350"></canvas>
+            </div>
+            <div id="js-legendDep" class="chart-legend"></div>
+        </div>
     </div>
     <br><br><br>
     <div class="col-md-4" id="divedades">
-        <canvas id="edades" height="250" width="250"></canvas>
+        <div class="float-right" style="width:100%">
+            <div class="float-right" style="width:45%">
+                <canvas id="edades" height="350" width="350"></canvas>
+            </div>
+            <div id="js-legendEdades" class="chart-legend"></div>
+        </div>
     </div>
 </div>
 @endsection

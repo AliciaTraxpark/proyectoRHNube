@@ -157,10 +157,10 @@ class EmpleadoController extends Controller
 
             ->get();
 
-            $usuario=DB::table('users')
-            ->where('id','=',Auth::user()->id)->get();
+        $usuario = DB::table('users')
+            ->where('id', '=', Auth::user()->id)->get();
 
-        return view('empleado.cargarEmpleado', ['empleado' => $empleado,'usuario'=>$usuario[0]->user_estado]);
+        return view('empleado.cargarEmpleado', ['empleado' => $empleado, 'usuario' => $usuario[0]->user_estado]);
     }
 
 
@@ -298,17 +298,17 @@ class EmpleadoController extends Controller
         $empleado->users_id = Auth::user()->id;
         $empleado->save();
         $idempleado = $empleado->emple_id;
-        if ($request->get('disp') != '') {
-            $disp = $request->get('disp');
-            foreach ($disp as $dispositivo) {
-                $modo = new modo();
-                $modo->idEmpleado = $idempleado;
-                $modo->idTipoModo = 1;
-                $modo->idTipoDispositivo = $dispositivo;
-                $modo->save();
-            }
-        }
+        $modo = new modo();
+        $modo->idEmpleado = $idempleado;
+        $modo->idTipoModo = 1;
+        $modo->idTipoDispositivo = 1;
+        $modo->save();
 
+        $modo = new modo();
+        $modo->idEmpleado = $idempleado;
+        $modo->idTipoModo = 1;
+        $modo->idTipoDispositivo = 2;
+        $modo->save();
 
         return json_encode(array('status' => true));
     }
@@ -424,7 +424,11 @@ class EmpleadoController extends Controller
         }
         if ($objEmpleado['departamento_v'] != '') {
             $empleado->emple_departamentoN = $objEmpleado['departamento_v'];
+        }
+        if ($objEmpleado['provincia_v'] != '') {
             $empleado->emple_provinciaN = $objEmpleado['provincia_v'];
+        }
+        if ($objEmpleado['distrito_v'] != '') {
             $empleado->emple_distritoN = $objEmpleado['distrito_v'];
         }
         if ($objEmpleado['centroc_v'] != '') {
@@ -450,9 +454,7 @@ class EmpleadoController extends Controller
         }
         $empleado->emple_celular = $objEmpleado['celular_v'];
         $empleado->emple_telefono = $objEmpleado['telefono_v'];
-        if ($objEmpleado['correo_v'] != '') {
-            $empleado->emple_Correo = $objEmpleado['correo_v'];
-        }
+        $empleado->emple_Correo = $objEmpleado['correo_v'];
         $empleado->emple_fechaIC = $objEmpleado['fechaI_v'];
         $empleado->emple_fechaFC = $objEmpleado['fechaF_v'];
         $empleado->emple_codigo = $objEmpleado['codigoEmpleado_v'];
@@ -479,53 +481,6 @@ class EmpleadoController extends Controller
         $persona->perso_fechaNacimiento = $objEmpleado['fechaN_v'];
         $persona->perso_sexo = $objEmpleado['tipo_v'];
         $persona->save();
-
-        $idDispositivo = DB::table('empleado as e')
-            ->join('modo as md', 'md.idEmpleado', '=', 'e.emple_id')
-            ->join('tipo_dispositivo as td', 'td.id', '=', 'md.idTipoDispositivo')
-            ->select('md.idTipoDispositivo as idD')
-            ->where('md.idEmpleado', '=', $idE)
-            ->get();
-        if ($request->get('disp') != '') {
-            $valor = $request->get('disp');
-            foreach ($idDispositivo as $idD) {
-                $aux = true;
-                foreach ($valor as $index => $val) {
-                    if ($idD->idD == $val) {
-                        unset($valor[$index]);
-                        $aux = false;
-                    }
-                }
-                if ($aux) {
-                    $idModo = DB::table('empleado as e')
-                        ->join('modo as md', 'md.idEmpleado', '=', 'e.emple_id')
-                        ->select('md.id')
-                        ->where('md.idEmpleado', '=', $idE)
-                        ->where('md.idTipoDispositivo', '=', $idD->idD)
-                        ->get();
-                    $modo = modo::where('id', $idModo[0]->id)->get()->first();
-                    $modo->delete();
-                }
-            }
-            foreach ($valor as $val1) {
-                $modoI = new modo();
-                $modoI->idEmpleado = $idE;
-                $modoI->idTipoModo = 1;
-                $modoI->idTipoDispositivo = $val1;
-                $modoI->save();
-            }
-        } else {
-            foreach ($idDispositivo as $idD) {
-                $idModo = DB::table('empleado as e')
-                    ->join('modo as md', 'md.idEmpleado', '=', 'e.emple_id')
-                    ->select('md.id')
-                    ->where('md.idEmpleado', '=', $idE)
-                    ->where('md.idTipoDispositivo', '=', $idD->idD)
-                    ->get();
-                $modo = modo::where('id', $idModo[0]->id)->get()->first();
-                $modo->delete();
-            }
-        }
         return json_encode(array('status' => true));
     }
 
