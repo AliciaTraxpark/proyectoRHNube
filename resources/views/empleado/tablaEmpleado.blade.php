@@ -17,6 +17,11 @@
     .table td {
         padding: 0.4rem;
     }
+
+    .tooltip-arrow,
+    .red-tooltip+.tooltip>.tooltip-inner {
+        background-color: rgb(0, 0, 0);
+    }
 </style>
 <div id="modalCorreo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCorreo" aria-hidden="true"
     data-backdrop="static">
@@ -44,6 +49,40 @@
                         <div class="col-md-5 text-right" style="padding-right: 38px;  ">
                             <button type="button" id="enviarCorreo" name="enviarCorreo"
                                 style="background-color: #163552;" class="btn btn-sm ">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--NUEVO ESCRITORIO-->
+<div id="modalNuevoE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalNuevoE" aria-hidden="true"
+    data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a empleado
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <h5 class="modal-title" id="myModalLabel" style="font-size: 15px">¿Desea agregar nuevo escritorio
+                        empleado?</h5>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-7 text-right">
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
+                        </div>
+                        <div class="col-md-5 text-right" style="padding-right: 38px;  ">
+                            <button type="button" id="agregarEscritorio" name="agregarEscritorio"
+                                style="background-color: #163552;" class="btn btn-sm ">Agregar</button>
                         </div>
                     </div>
                 </div>
@@ -239,20 +278,29 @@
             @if ($tabla_empleados->envio != null)
             @if($tabla_empleados->reenvio == null)
             <td class="text-center"><button id="reenviar" type="button" class="btn btn-secondary  btn-sm"
-                    onclick="$('#modalCorreo').modal();"
-                    style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;">Reenviar
-                    @</button></td>
+                    onclick="$('#modalCorreo').modal();" data-toggle="tooltip" data-placement="right"
+                    title="Enviar correo empleado." data-original-title="Enviar correo empleado."
+                    style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;">Reenviar</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a data-toggle="tooltip" data-placement="right" title="Asignar nueva PC."
+                    data-original-title="Enviar correo empleado." style="cursor: pointer"
+                    onclick="$('#modalNuevoE').modal();">
+                    <img src="{{asset('landing/images/add (1).svg')}}" height="15"></a></td>
             @else
             <td class="text-center"><button id="reenviar" type="button" class="btn btn-secondary  btn-sm"
                     onclick="$('#modalCorreo').modal();"
                     style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;"
-                    disabled>Reenviar @</button></td>
+                    disabled>Reenviar</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="tooltip"
+                    data-placement="right" title="Asignar nueva PC." data-original-title="Enviar correo empleado."
+                    style="cursor: pointer" onclick="$('#modalNuevoE').modal();"><img
+                        src="{{asset('landing/images/add (1).svg')}}" height="15"></a></td>
             @endif
             @else
             <td class="text-center"><button type="button" class="btn btn-secondary  btn-sm"
                     onclick="$('#modalCorreo').modal();"
-                    style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;">Enviar
-                    @</button></td>
+                    style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;"
+                    data-toggle="tooltip" data-placement="right" title="Enviar correo empleado."
+                    data-original-title="Enviar correo empleado.">Enviar</td>
             @endif
             @endif
             @if(!in_array("2",$tabla_empleados->dispositivos))
@@ -260,8 +308,9 @@
             @else
             <td class="text-center"><button type="button" class="btn btn-secondary  btn-sm"
                     onclick="$('#modalAndroid').modal();"
-                    style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;">Enviar
-                    @</button></td>
+                    style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;"
+                    data-toggle="tooltip" data-placement="right" title="Enviar correo empleado."
+                    data-original-title="Enviar correo empleado.">Enviar</button></td>
             @endif
             <td class="text-center"><input type="checkbox" id="tdC" style="margin-left:5.5px!important"
                     class="form-check-input sub_chk" data-id="{{$tabla_empleados->emple_id}}" $(this)$(this)$(this)>
@@ -271,6 +320,7 @@
     </tbody>
 </table>
 <script>
+    $('[data-toggle="tooltip"]').tooltip();
     $('#enviarAndroidMasivos').hide();
     $('#enviarCorreosMasivos').hide();
     $('#filter_col2').hide();
