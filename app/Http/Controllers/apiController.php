@@ -174,7 +174,6 @@ class apiController extends Controller
     public function selectProyecto(Request $request)
     {
         $empleado = $request->get('emple_id');
-        $proyecto = $request->get('Proye_id');
 
         $proyecto_empleado = DB::table('proyecto_empleado as pe')
             ->where('Proye_empleado_id', $empleado)
@@ -194,7 +193,7 @@ class apiController extends Controller
 
             $respuesta = [];
 
-            foreach ($datos as $dato) {
+            /*foreach ($datos as $dato) {
                 //TAREAS
                 $tareas = DB::table('empleado as e')
                     ->join('proyecto_empleado as pe', 'pe.empleado_emple_id', '=', 'e.emple_id')
@@ -226,7 +225,8 @@ class apiController extends Controller
                     array_push($elementoA, array("idActividad" => $activ->Activi_id, "Actividad" => $activ->Activi_Nombre, "Tarea_id" => $activ->Tarea_id));
                 }
                 array_push($respuesta, array("Proye_id" => $dato->Proye_id, "Proye_Nombre" => $dato->Proye_Nombre, "Tareas" => $elemento, "Actividades" => $elementoA));
-            }
+            }*/
+            array_push($respuesta, array("Activi_id" => $datos->Proye_id, "Activi_Nombre" => $datos->Proye_Nombre));
             return response()->json($respuesta, 200);
         }
         return response()->json(null, 400);
