@@ -244,7 +244,7 @@ class apiController extends Controller
                         if ($vinculacion->pc_mac == $request->get('pc_mac')) {
                             $proyectoE = proyecto_empleado::where('empleado_emple_id', '=', $empleado->emple_id)->get()->first();
                             if ($proyectoE) {
-                                $proyecto = proyecto::where('Proye_id', '=', $proyectoE->Proyecto_Proye_id);
+                                $proyecto = proyecto::where('Proye_id', '=', $proyectoE->Proyecto_Proye_id)->get()->first();
                                 return response()->json($proyecto->Proye_Nombre, 200);
                             }
                             return response()->json("Empleado sin actividades asignadas", 200);
