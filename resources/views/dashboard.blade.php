@@ -71,6 +71,27 @@
 @endsection
 @else
 @section('content')
+<style>
+    .chart-legend li span {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        margin-right: 2px;
+    }
+
+    .chart-legend ul {
+        list-style: none;
+    }
+
+    .chart-legend {
+        height: 250px;
+        width: 130px;
+        overflow: auto;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+</style>
 <div class="row">
     <div class="col-md-4" id="divarea">
         <canvas id="area" height="300" width="300"></canvas>
@@ -79,7 +100,12 @@
         <canvas id="nivel" height="300" width="300"></canvas>
     </div>
     <div class="col-md-4" id="divcontrato">
-        <canvas id="contrato" height="300" width="300"></canvas>
+        <div class="float-right" style="width:100%">
+            <div class="float-right" style="width:60%">
+                <canvas id="contrato" height="300" width="300"></canvas>
+            </div>
+            <div id="js-legend" class="chart-legend"></div>
+        </div>
     </div>
     <br><br><br>
     <div class="col-md-4" id="divcentro">

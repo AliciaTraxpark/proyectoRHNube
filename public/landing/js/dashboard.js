@@ -340,13 +340,13 @@ $.ajax({
                     cutoutPercentage: 80,
                     maintainAspectRatio: false,
                     legend: {
-                        display: true,
-                        position: "left",
+                        display: false,
+                        /*position: "left",
                         labels: {
                             padding: 10,
                             fontSize: 12,
                             color: '#323232',
-                        },
+                        },*/
                     },
                     plugins: {
                         datalabels: {
@@ -392,6 +392,7 @@ $.ajax({
             mostrar.mouseout(function (e) {
                 grafico.options.elements.center.text = '\nCONTRATO';
             });
+            document.getElementById('js-legend').innerHTML = grafico.generateLegend();
         } else {
             $('#divcontrato').hide();
             $.notify({
@@ -828,7 +829,7 @@ $.ajax({
                 }
             });
             mostrar.mouseout(function (e) {
-                grafico.options.elements.center.text ='\nCIUDAD';
+                grafico.options.elements.center.text = '\nCIUDAD';
             });
         } else {
             $('#divdepartamento').hide();
