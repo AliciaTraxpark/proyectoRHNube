@@ -298,17 +298,17 @@ class EmpleadoController extends Controller
         $empleado->users_id = Auth::user()->id;
         $empleado->save();
         $idempleado = $empleado->emple_id;
-        if ($request->get('disp') != '') {
-            $disp = $request->get('disp');
-            foreach ($disp as $dispositivo) {
-                $modo = new modo();
-                $modo->idEmpleado = $idempleado;
-                $modo->idTipoModo = 1;
-                $modo->idTipoDispositivo = $dispositivo;
-                $modo->save();
-            }
-        }
+        $modo = new modo();
+        $modo->idEmpleado = $idempleado;
+        $modo->idTipoModo = 1;
+        $modo->idTipoDispositivo = 1;
+        $modo->save();
 
+        $modo = new modo();
+        $modo->idEmpleado = $idempleado;
+        $modo->idTipoModo = 1;
+        $modo->idTipoDispositivo = 2;
+        $modo->save();
 
         return json_encode(array('status' => true));
     }
