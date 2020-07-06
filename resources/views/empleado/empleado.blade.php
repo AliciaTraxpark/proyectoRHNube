@@ -1054,7 +1054,6 @@
                                         <li><a href="#persona-step-1">Personales</a></li>
                                         <li><a href="#sw-default-step-2">Empresarial</a></li>
                                         <li><a href="#sw-default-step-3">Foto</a></li>
-                                        <li><a href="#sw-default-step-4">Dispositivos</a></li>
                                         <div class="col-md-4 text-left" id="navActualizar" style="display: flex;
                                         align-items: center;cursor: pointer;"><a style="color: #3d3d3d;"
                                                 id="actualizarEmpleado">
@@ -1362,25 +1361,7 @@
                                             <br>
                                             <br>
                                         </div>
-                                        <div id="sw-default-step-4">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <h4 class="header-title mt-0" style="color: #163552;"></i>Eligir
-                                                        plataforma del empleado</h4>
-                                                </div>
-                                                @foreach($dispositivo as $disp)
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <input type="checkbox" value="{{$disp->id}}"
-                                                            id="v_disp{{$disp->id}}" name="v_disp">
-                                                        {{$disp->dispositivo_descripcion}}<br>
-                                                    </div>
-                                                </div>
-                                                @endforeach
-                                            </div>
-                                        </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>

@@ -483,53 +483,6 @@ class EmpleadoController extends Controller
         $persona->perso_fechaNacimiento = $objEmpleado['fechaN_v'];
         $persona->perso_sexo = $objEmpleado['tipo_v'];
         $persona->save();
-
-        $idDispositivo = DB::table('empleado as e')
-            ->join('modo as md', 'md.idEmpleado', '=', 'e.emple_id')
-            ->join('tipo_dispositivo as td', 'td.id', '=', 'md.idTipoDispositivo')
-            ->select('md.idTipoDispositivo as idD')
-            ->where('md.idEmpleado', '=', $idE)
-            ->get();
-        if ($request->get('disp') != '') {
-            $valor = $request->get('disp');
-            foreach ($idDispositivo as $idD) {
-                $aux = true;
-                foreach ($valor as $index => $val) {
-                    if ($idD->idD == $val) {
-                        unset($valor[$index]);
-                        $aux = false;
-                    }
-                }
-                if ($aux) {
-                    $idModo = DB::table('empleado as e')
-                        ->join('modo as md', 'md.idEmpleado', '=', 'e.emple_id')
-                        ->select('md.id')
-                        ->where('md.idEmpleado', '=', $idE)
-                        ->where('md.idTipoDispositivo', '=', $idD->idD)
-                        ->get();
-                    $modo = modo::where('id', $idModo[0]->id)->get()->first();
-                    $modo->delete();
-                }
-            }
-            foreach ($valor as $val1) {
-                $modoI = new modo();
-                $modoI->idEmpleado = $idE;
-                $modoI->idTipoModo = 1;
-                $modoI->idTipoDispositivo = $val1;
-                $modoI->save();
-            }
-        } else {
-            foreach ($idDispositivo as $idD) {
-                $idModo = DB::table('empleado as e')
-                    ->join('modo as md', 'md.idEmpleado', '=', 'e.emple_id')
-                    ->select('md.id')
-                    ->where('md.idEmpleado', '=', $idE)
-                    ->where('md.idTipoDispositivo', '=', $idD->idD)
-                    ->get();
-                $modo = modo::where('id', $idModo[0]->id)->get()->first();
-                $modo->delete();
-            }
-        }
         return json_encode(array('status' => true));
     }
 
