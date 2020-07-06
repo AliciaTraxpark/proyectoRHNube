@@ -74,9 +74,9 @@
 <style>
     .chart-legend li span {
         display: inline-block;
-        width: 12px;
+        width: 23px;
         height: 12px;
-        margin-right: 2px;
+        margin-right: 3px;
     }
 
     .chart-legend ul {
@@ -85,7 +85,6 @@
 
     .chart-legend {
         height: 250px;
-        width: 130px;
         overflow: auto;
         margin-top: 15px;
         margin-bottom: 15px;
@@ -95,24 +94,24 @@
 <div class="row">
     <div class="col-md-4" id="divarea">
         <div class="float-right" style="width:100%">
-            <div class="float-right" style="width:60%">
-                <canvas id="area" height="300" width="300"></canvas>
+            <div class="float-right" style="width:50%">
+                <canvas id="area" height="350" width="350"></canvas>
             </div>
             <div id="js-legendArea" class="chart-legend"></div>
         </div>
     </div>
     <div class="col-md-4" id="divnivel">
         <div class="float-right" style="width:100%">
-            <div class="float-right" style="width:60%">
-                <canvas id="nivel" height="300" width="300"></canvas>
+            <div class="float-right" style="width:50%">
+                <canvas id="nivel" height="350" width="350"></canvas>
             </div>
             <div id="js-legendNivel" class="chart-legend"></div>
         </div>
     </div>
     <div class="col-md-4" id="divcontrato">
         <div class="float-right" style="width:100%">
-            <div class="float-right" style="width:60%">
-                <canvas id="contrato" height="300" width="300"></canvas>
+            <div class="float-right" style="width:50%">
+                <canvas id="contrato" height="350" width="350"></canvas>
             </div>
             <div id="js-legendContrato" class="chart-legend"></div>
         </div>
@@ -120,24 +119,24 @@
     <br><br><br>
     <div class="col-md-4" id="divcentro">
         <div class="float-right" style="width:100%">
-            <div class="float-right" style="width:60%">
-                <canvas id="centro" height="300" width="300"></canvas>
+            <div class="float-right" style="width:50%">
+                <canvas id="centro" height="350" width="350"></canvas>
             </div>
             <div id="js-legendCentro" class="chart-legend"></div>
         </div>
     </div>
     <div class="col-md-4" id="divlocal">
         <div class="float-right" style="width:100%">
-            <div class="float-right" style="width:60%">
-                <canvas id="local" height="300" width="300"></canvas>
+            <div class="float-right" style="width:50%">
+                <canvas id="local" height="350" width="350"></canvas>
             </div>
             <div id="js-legendLocal" class="chart-legend"></div>
         </div>
     </div>
     <div class="col-md-4" id="divdepartamento">
         <div class="float-right" style="width:100%">
-            <div class="float-right" style="width:60%">
-                <canvas id="departamento" height="300" width="300"></canvas>
+            <div class="float-right" style="width:50%">
+                <canvas id="departamento" height="350" width="350"></canvas>
             </div>
             <div id="js-legendDep" class="chart-legend"></div>
         </div>
@@ -145,8 +144,8 @@
     <br><br><br>
     <div class="col-md-4" id="divedades">
         <div class="float-right" style="width:100%">
-            <div class="float-right" style="width:60%">
-                <canvas id="edades" height="300" width="300"></canvas>
+            <div class="float-right" style="width:50%">
+                <canvas id="edades" height="350" width="350"></canvas>
             </div>
             <div id="js-legendEdades" class="chart-legend"></div>
         </div>
