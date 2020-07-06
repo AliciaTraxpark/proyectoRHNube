@@ -74,7 +74,7 @@
                     <div class="col-md-12">
                         <label style="font-weight: 700">Búsqueda por fecha</label>
                     </div>
-                    <div class="col-md-2"></div>
+
                     <div class="col-md-4">
                         <label><br> </label>
                         <div class="input-group col-md-10" style="padding-left: 0px;">

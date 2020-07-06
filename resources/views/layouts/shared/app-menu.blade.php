@@ -96,7 +96,7 @@ use Illuminate\Support\Facades\DB;
     <li>
         <a href="/proyecto">
             <i data-feather="briefcase"></i>
-            <span>Asignar Proyecto</span>
+            <span>Asignar tarea</span>
         </a>
     </li>
 

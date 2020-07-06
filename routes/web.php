@@ -120,7 +120,7 @@ Route::post('/proyecto/registrar', 'ProyectoController@store');
 Route::post('/proyecto/proyectoV', 'ProyectoController@proyectoV');
 Route::post('/proyecto/registrarPrEm', 'ProyectoController@registrarPrEm');
 Route::post('/proyecto/selectValidar', 'ProyectoController@selectValidar');
-
+Route::post('/proyecto/eliminar', 'ProyectoController@eliminar');
 //carga masiva de fotos
 Route::post('/subirfoto', 'CargaMasivaFotoController@subirfoto');
 
