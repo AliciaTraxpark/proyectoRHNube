@@ -778,7 +778,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Celular</label>
-                                                        <input type="text" class="form-control" name="celular"
+                                                        <input type="number" class="form-control" name="celular"
                                                             id="celular" tabindex="8">
                                                     </div>
                                                 </div>
@@ -800,7 +800,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Telefono</label>
-                                                        <input type="text" class="form-control" name="telefono"
+                                                        <input type="number" class="form-control" name="telefono"
                                                             id="telefono" tabindex="9">
                                                     </div>
                                                 </div>
