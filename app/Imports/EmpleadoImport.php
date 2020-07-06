@@ -24,6 +24,7 @@ use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Maatwebsite\Excel\Concerns\Importable;
+use Illuminate\Support\Facades\DB;
 class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, WithBatchInserts, SkipsOnError
 {    use Importable, SkipsErrors;
     private $numRows = 0;
@@ -58,7 +59,10 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                           $row['tipo_doc'] =  $tipoDoc->tipoDoc_id;  $row['tipo_docArray'] =  $tipoDoc->tipoDoc_descripcion;
                     }  else{return redirect()->back()->with('alert', 'No se encontro el tipo de documento:'.$row['tipo_documento'].'.  El proceso se interrumpio en la fila:'.$filas); $row['tipo_doc']=null;}
                    } else{ $row['tipo_docArray']=null; }
-
+                   $empleadoAntiguo=DB::table('empleado')->where('emple_nDoc','=',$row['numero_documento'])->where('empleado.users_id', '=', Auth::user()->id)->first();
+                   if($empleadoAntiguo!=null){
+                       return redirect()->back()->with('alert', 'numero de documento ya registrado: '.$row['numero_documento'].' El proceso se interrumpio en la fila: '.$filas.' de excel');
+                   };
                 //departamento
                 $cadDep=$row['departamento'];
                 if(strlen($cadDep)>3){

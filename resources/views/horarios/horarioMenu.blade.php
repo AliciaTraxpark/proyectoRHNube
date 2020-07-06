@@ -108,6 +108,17 @@
     .select2-container--default .select2-results__option[aria-selected=true]{
         background: #ced0d3;
     }
+    body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-footer > button.btn.btn-light.bootbox-cancel{
+        background: #e2e1e1;
+        color: #000000;
+        border-color:#e2e1e1;
+        zoom: 85%;
+    }
+    body > div.bootbox.modal.fade.bootbox-alert.show > div > div > div.modal-footer > button,body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-footer > button.btn.btn-success.bootbox-accept{
+        background-color: #163552;
+        border-color: #163552;
+        zoom: 85%;
+    }
 </style>
 <div class="row row-divided">
     <div class="col-md-12 col-xl-12">
@@ -602,6 +613,7 @@
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
 <script src="{{asset('landing/js/horario.js')}}"></script>
 
 <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
