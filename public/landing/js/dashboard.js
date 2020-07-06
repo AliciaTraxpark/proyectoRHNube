@@ -111,13 +111,7 @@ $.ajax({
                     maintainAspectRatio: false,
                     cutoutPercentage: 80,
                     legend: {
-                        display: true,
-                        position: "left",
-                        labels: {
-                            padding: 10,
-                            fontSize: 12,
-                            color: '#323232',
-                        },
+                        display: false
                     },
                     plugins: {
                         datalabels: {
@@ -164,6 +158,7 @@ $.ajax({
             mostrar.mouseout(function (e) {
                 grafico.options.elements.center.text = '\nÁREA';
             });
+            document.getElementById('js-legendArea').innerHTML = grafico.generateLegend();
         } else {
             $('#divarea').hide();
             $.notify({
@@ -226,13 +221,7 @@ $.ajax({
                     maintainAspectRatio: false,
                     cutoutPercentage: 80,
                     legend: {
-                        display: true,
-                        position: "left",
-                        labels: {
-                            padding: 10,
-                            fontSize: 12,
-                            color: '#323232',
-                        },
+                        display: false
                     },
                     plugins: {
                         datalabels: {
@@ -278,6 +267,7 @@ $.ajax({
             mostrar.mouseout(function (e) {
                 grafico.options.elements.center.text = '\nNIVEL';
             });
+            document.getElementById('js-legendNivel').innerHTML = grafico.generateLegend();
         } else {
             $('#divnivel').hide();
             $.notify({
@@ -341,12 +331,6 @@ $.ajax({
                     maintainAspectRatio: false,
                     legend: {
                         display: false,
-                        /*position: "left",
-                        labels: {
-                            padding: 10,
-                            fontSize: 12,
-                            color: '#323232',
-                        },*/
                     },
                     plugins: {
                         datalabels: {
@@ -392,7 +376,7 @@ $.ajax({
             mostrar.mouseout(function (e) {
                 grafico.options.elements.center.text = '\nCONTRATO';
             });
-            document.getElementById('js-legend').innerHTML = grafico.generateLegend();
+            document.getElementById('js-legendContrato').innerHTML = grafico.generateLegend();
         } else {
             $('#divcontrato').hide();
             $.notify({
@@ -454,13 +438,7 @@ $.ajax({
                     cutoutPercentage: 80,
                     maintainAspectRatio: false,
                     legend: {
-                        display: true,
-                        position: "left",
-                        labels: {
-                            padding: 10,
-                            fontSize: 12,
-                            color: '#323232',
-                        },
+                        display: false
                     },
                     plugins: {
                         datalabels: {
@@ -506,6 +484,7 @@ $.ajax({
             mostrar.mouseout(function (e) {
                 grafico.options.elements.center.text = '\nCENTRO COSTO';
             });
+            document.getElementById('js-legendCentro').innerHTML = grafico.generateLegend();
         } else {
             $('#divcentro').hide();
             $.notify({
@@ -568,13 +547,7 @@ $.ajax({
                     cutoutPercentage: 80,
                     maintainAspectRatio: false,
                     legend: {
-                        display: true,
-                        position: "left",
-                        labels: {
-                            padding: 10,
-                            fontSize: 12,
-                            color: '#323232',
-                        },
+                        display: false
                     },
                     plugins: {
                         datalabels: {
@@ -620,6 +593,7 @@ $.ajax({
             mostrar.mouseout(function (e) {
                 grafico.options.elements.center.text = '\nLOCAL';
             });
+            document.getElementById('js-legendLocal').innerHTML = grafico.generateLegend();
         } else {
             $('#divlocal').hide();
             $.notify({
@@ -779,13 +753,7 @@ $.ajax({
                     cutoutPercentage: 80,
                     maintainAspectRatio: false,
                     legend: {
-                        display: true,
-                        position: "left",
-                        labels: {
-                            padding: 10,
-                            fontSize: 12,
-                            color: '#323232',
-                        },
+                        display: false
                     },
                     plugins: {
                         datalabels: {
@@ -831,6 +799,7 @@ $.ajax({
             mostrar.mouseout(function (e) {
                 grafico.options.elements.center.text = '\nCIUDAD';
             });
+            document.getElementById('js-legendDep').innerHTML = grafico.generateLegend();
         } else {
             $('#divdepartamento').hide();
             $.notify({
@@ -893,13 +862,7 @@ $.ajax({
                     cutoutPercentage: 80,
                     maintainAspectRatio: false,
                     legend: {
-                        display: true,
-                        position: "left",
-                        labels: {
-                            padding: 10,
-                            fontSize: 12,
-                            color: '#323232',
-                        },
+                        display: false
                     },
                     plugins: {
                         datalabels: {
@@ -945,6 +908,7 @@ $.ajax({
             mostrar.mouseout(function (e) {
                 grafico.options.elements.center.text = '\nRANGO DE EDADES';
             });
+            document.getElementById('js-legendEdades').innerHTML = grafico.generateLegend();
         } else {
             $('#divedades').hide();
             $.notify({
