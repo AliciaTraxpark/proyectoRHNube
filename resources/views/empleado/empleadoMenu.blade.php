@@ -135,7 +135,7 @@
                     </div>
                     <div class=" col-md-6 col-xl-6 text-right">
 
-                        <button onclick="eliminarEmpleado()" id="formNuevoEl" style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
+                        <button onclick="eliminarEmpleado()" id="" style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
                             class="btn btn-sm btn-primary delete_all" data-url="">Eliminar seleccion
                         </button>
                         <button class="btn btn-sm btn-primary" id="formNuevoEd"

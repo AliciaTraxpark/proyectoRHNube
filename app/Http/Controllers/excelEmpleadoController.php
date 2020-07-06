@@ -14,6 +14,7 @@ use App\centro_costo;
 use App\tipo_contrato;
 use App\local;
 use App\nivel;
+use App\modo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Imports\EmpleadoImport;
@@ -244,7 +245,7 @@ class excelEmpleadoController extends Controller
 
                 //
             ]);
-            empleado::create([
+            $empleadoId=empleado::create([
                 'emple_persona'    => $personaId->perso_id,
                 'emple_tipoDoc'    =>  $row['tipo_doc'],
                 'emple_nDoc'       =>$emp[1],
@@ -276,6 +277,18 @@ class excelEmpleadoController extends Controller
 
 
                 //
+            ]);
+            modo::create([
+                'idEmpleado'    => $empleadoId->emple_id,
+                'idTipoModo'    => 1,
+                'idTipoDispositivo'       =>1,
+
+            ]);
+            modo::create([
+                'idEmpleado'    => $empleadoId->emple_id,
+                'idTipoModo'    => 1,
+                'idTipoDispositivo'       =>2,
+
             ]);
             }
         }
@@ -516,6 +529,7 @@ class excelEmpleadoController extends Controller
 
                     //
                 ]);
+
             }
         }
 
