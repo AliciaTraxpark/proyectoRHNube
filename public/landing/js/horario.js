@@ -102,35 +102,52 @@ function calendarioHorario(eventosEmpleado) {
         plugins: ['dayGrid', 'interaction', 'timeGrid'],
         eventClick: function (info) {
             id = info.event.id;
-            console.log(info);
+
             console.log(info.event.id);
-            console.log(info.event.title);
+
            var event = calendar.getEventById(id);
            idempleadoEli=$('#idobtenidoE').val();
-           if(info.event.textColor=='000000' ||info.event.textColor=='111111' ){
-            var r = confirm("Desea eliminar la  hora: ("+info.event.title+ ") del horario");
-            if (r == true) {
-                $.ajax({
-                    type: "post",
-                    url: "/eliminarHora",
-                    data: {
-                        idHora: info.event.id,textcolor:info.event.textColor,ide:idempleadoEli
+           if(info.event.textColor=='000000' ||info.event.textColor=='111111'  || info.event.textColor=='#3f51b5'){
+            bootbox.confirm({
+                message: "¿Desea eliminar: "+info.event.title+" del horario?",
+                buttons: {
+                    confirm: {
+                        label: 'Aceptar',
+                        className: 'btn-success'
                     },
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function (data) {
-                    info.event.remove();
-                    },
-                    error: function (data) {
-                        alert('Ocurrio un error');
+                    cancel: {
+                        label: 'Cancelar',
+                        className: 'btn-light'
                     }
+                },
+                callback: function (result) {
+                    if (result == true) {
+                        $.ajax({
+                            type: "post",
+                            url: "/eliminarHora",
+                            data: {
+                                idHora: info.event.id,textcolor:info.event.textColor,ide:idempleadoEli
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function (data) {
+                            info.event.remove();
+                            },
+                            error: function (data) {
+                                alert('Ocurrio un error');
+                            }
 
 
-                });
+                        });}
+                }
+            });
 
-            }
-           }
+
+           } else{bootbox.alert({
+            message: "No se puede eliminar, evento pertenece a calendario general",
+
+        })};
 
            //info.event.remove();
         },
@@ -279,6 +296,8 @@ $('#btnasignar').on('click', function(e) {
 
     });
     $('#nombreEmpleado').empty();
+    $('#Datoscalendar').show();
+    $('#Datoscalendar1').hide();
     $('#asignarHorario').modal('toggle');
     num=$('#nombreEmpleado').val().length;
     idemplesH = $('#nombreEmpleado').val();
@@ -392,6 +411,53 @@ function calendario(data) {
             f2 = $('#horarioEnd').val();
             inicio = $('#horaI').val();
             fin = $('#horaF').val();
+            if ($("#calendar > div.fc-toolbar.fc-header-toolbar > div.fc-right > button").is(":focus"))
+            {
+           //alert('entre yo');
+           /* calendar.addEvent({
+            title: 'Descanso',
+            start:  moment(arg.start).format('YYYY-MM-DD HH:mm:ss'),
+            end:moment(arg.end).format('YYYY-MM-DD HH:mm:ss'),
+
+          }) */
+          idpaisDescanso = $('#pais').val();
+          iddepartamentoDescanso = $('#departamento').val();
+          $.ajax({
+            type: "post",
+            url: "/storeDescanso",
+            data: {
+                start: moment(arg.start).format('YYYY-MM-DD HH:mm:ss'),
+                title: 'Descanso Emp.',
+                pais: idpaisDescanso,
+                departamento: iddepartamentoDescanso,
+                end: moment(arg.end).format('YYYY-MM-DD HH:mm:ss')
+
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                //alert(fechastart);
+                calendar.addEventSource(data);
+                calendar.addEvent({
+                    title: 'Descanso Emp.',
+                    id:data.id,
+                    color:'#e5e5e5',
+                    textColor:'#3f51b5',
+                    start:  moment(arg.start).format('YYYY-MM-DD HH:mm:ss'),
+                    end:moment(arg.end).format('YYYY-MM-DD HH:mm:ss'),
+
+                  })
+            },
+            error: function (data) {
+                alert('Ocurrio un error');
+            }
+
+
+        });
+          $('#calendar > div.fc-toolbar.fc-header-toolbar > div.fc-right > button').blur();
+           return false;
+            };
             if (inicio == '' || fin == '') {
                 alert('Indique hora de inicio y fin');
             } else {
@@ -452,7 +518,7 @@ function calendario(data) {
                     },
                     success: function (data) {
                         //alert(fechastart);
-                        calendar.addEventSource(data)
+                        calendar.addEventSource(data);
                      /*    $.each( fechasArray, function( key, value ) {
                             //alert( value );
                             calendar.addEvent({
@@ -487,30 +553,47 @@ function calendario(data) {
             console.log(info.event.id);
             console.log(info.event.title);
            var event = calendar.getEventById(id);
-           if(info.event.textColor=='000000' ||info.event.textColor=='111111' ){
-            var r = confirm("Desea eliminar la  hora: ("+info.event.title+ ") del horario");
-            if (r == true) {
-                $.ajax({
-                    type: "post",
-                    url: "/eliminarHora",
-                    data: {
-                        idHora: info.event.id,textcolor:info.event.textColor
+           if(info.event.textColor=='000000' ||info.event.textColor=='111111' || info.event.textColor=='#3f51b5' ){
+            bootbox.confirm({
+                message: "¿Desea eliminar: "+info.event.title+" del horario?",
+                buttons: {
+                    confirm: {
+                        label: 'Aceptar',
+                        className: 'btn-success'
                     },
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function (data) {
-                    info.event.remove();
-                    },
-                    error: function (data) {
-                        alert('Ocurrio un error');
+                    cancel: {
+                        label: 'Cancelar',
+                        className: 'btn-light'
                     }
+                },
+                callback: function (result) {
+                    if (result == true) {
+                        $.ajax({
+                            type: "post",
+                            url: "/eliminarHora",
+                            data: {
+                                idHora: info.event.id,textcolor:info.event.textColor
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function (data) {
+                            info.event.remove();
+                            },
+                            error: function (data) {
+                                alert('Ocurrio un error');
+                            }
 
 
-                });
+                        });
+                        }
+                }
+            });
 
-            }
-           }
+           } else{bootbox.alert({
+            message: "No se puede eliminar, evento pertenece a calendario general",
+
+        })};
 
            //info.event.remove();
         },
@@ -524,9 +607,16 @@ function calendario(data) {
         customButtons: {
             Descanso: {
                 text: "Asignar días de Descanso",
-                click: function () {
-                    alert('seleccione dias');
+                click:function(){
+                    $.notify("Seleccione Dias", {
+                        align: "right",
+                        verticalAlign: "top",
+                        type: "info"
+
+                    });
+
                 }
+
             }
         },
         events: data,
@@ -675,31 +765,48 @@ function calendario1(datadep) {
             console.log(info);
             console.log(info.event.id);
             console.log(info.event.title);
-           var event = calendar.getEventById(id);
-           if(info.event.textColor=='000000' ||info.event.textColor=='111111' ){
-            var r = confirm("Desea eliminar la  hora: ("+info.event.title+ ") del horario");
-            if (r == true) {
-                $.ajax({
-                    type: "post",
-                    url: "/eliminarHora",
-                    data: {
-                        idHora: info.event.id,textcolor:info.event.textColor
+           var event = calendar1.getEventById(id);
+           if(info.event.textColor=='000000' ||info.event.textColor=='111111' || info.event.textColor=='#3f51b5' ){
+            bootbox.confirm({
+                message: "¿Desea eliminar: "+info.event.title+" del horario?",
+                buttons: {
+                    confirm: {
+                        label: 'Aceptar',
+                        className: 'btn-success'
                     },
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function (data) {
-                    info.event.remove();
-                    },
-                    error: function (data) {
-                        alert('Ocurrio un error');
+                    cancel: {
+                        label: 'Cancelar',
+                        className: 'btn-light'
                     }
+                },
+                callback: function (result) {
+                    if (result == true) {
+                        $.ajax({
+                            type: "post",
+                            url: "/eliminarHora",
+                            data: {
+                                idHora: info.event.id,textcolor:info.event.textColor
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function (data) {
+                            info.event.remove();
+                            },
+                            error: function (data) {
+                                alert('Ocurrio un error');
+                            }
 
 
-                });
+                        });
+                        }
+                }
+            });
 
-            }
-           }
+           } else{bootbox.alert({
+            message: "No se puede eliminar, evento pertenece a calendario general",
+
+        })};
 
            //info.event.remove();
         },

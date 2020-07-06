@@ -707,7 +707,7 @@
                             <li><a href="#sw-default-step-1">Personales</a></li>
                             <li><a href="#sw-default-step-2">Empresarial</a></li>
                             <li><a href="#sw-default-step-3">Foto</a></li>
-                            <li><a href="#sw-default-step-4">Dispositivos</a></li>
+
                         </ul>
                         <div class="p-3">
                             <div id="sw-default-step-1" class="setup-content">
@@ -758,8 +758,9 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Celular</label>
-                                            <input type="text" class="form-control" name="celular"
-                                                id="celular" tabindex="8">
+                                            <input type="number" class="form-control" name="celular"
+                                                id="celular" tabindex="8" maxlength = "9"  onkeypress="return isNumeric(event)"
+                                                oninput="maxLengthCheck(this)">
                                         </div>
                                     </div>
                                     <div class="col-4">
@@ -780,8 +781,9 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Telefono</label>
-                                            <input type="text" class="form-control" name="telefono"
-                                                id="telefono" tabindex="9">
+                                            <input type="number" class="form-control" name="telefono"
+                                                id="telefono" tabindex="9" maxlength = "9"  onkeypress="return isNumeric(event)"
+                                                oninput="maxLengthCheck(this)">
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -1004,31 +1006,14 @@
                                         </div>
                                     </div> <!-- end col -->
                                 </div> <!-- end row -->
-                            </div>
-                            <div id="sw-default-step-4" class="setup-content">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h4 class="header-title mt-0" style="color: #163552;"></i>Eligir
-                                            plataforma del empleado</h4>
-                                    </div>
-                                    @foreach($dispositivo as $disp)
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="checkbox" value="{{$disp->id}}" name="disp"
-                                                id="disp"> {{$disp->dispositivo_descripcion}}<br>
-                                        </div>
-                                    </div>
-                                    @endforeach
-                                </div>
-                                <br>
                                 <div class="row">
                                     <div class="col-md-12  text-center">
                                         <button type="button" id="guardarEmpleado"
                                             class="btn btn-primary">Guardar</button>
                                     </div>
                                 </div>
-                                <br>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -1052,7 +1037,6 @@
                             <li><a href="#persona-step-1">Personales</a></li>
                             <li><a href="#sw-default-step-2">Empresarial</a></li>
                             <li><a href="#sw-default-step-3">Foto</a></li>
-                            <li><a href="#sw-default-step-4">Dispositivos</a></li>
                             <div class="col-md-4 text-left" id="navActualizar" style="display: flex;
                             align-items: center;cursor: pointer;"><a style="color: #3d3d3d;"
                                     id="actualizarEmpleado">
@@ -1104,7 +1088,8 @@
                                         <div class="form-group">
                                             <label for="sw-default">Celular</label>
                                             <input type="text" class="form-control" name="v_celular"
-                                                id="v_celular" tabindex="8">
+                                                id="v_celular" tabindex="8" maxlength = "9"  onkeypress="return isNumeric(event)"
+                                                oninput="maxLengthCheck(this)">
                                         </div>
                                     </div>
                                     <div class="col-4">
@@ -1126,7 +1111,8 @@
                                         <div class="form-group">
                                             <label for="sw-default">Telefono</label>
                                             <input type="text" class="form-control" name="v_telefono"
-                                                id="v_telefono" tabindex="9">
+                                                id="v_telefono" tabindex="9" maxlength = "9"  onkeypress="return isNumeric(event)"
+                                                oninput="maxLengthCheck(this)">
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -1360,23 +1346,7 @@
                                 <br>
                                 <br>
                             </div>
-                            <div id="sw-default-step-4">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h4 class="header-title mt-0" style="color: #163552;"></i>Eligir
-                                            plataforma del empleado</h4>
-                                    </div>
-                                    @foreach($dispositivo as $disp)
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="checkbox" value="{{$disp->id}}"
-                                                id="v_disp{{$disp->id}}" name="v_disp">
-                                            {{$disp->dispositivo_descripcion}}<br>
-                                        </div>
-                                    </div>
-                                    @endforeach
-                                </div>
-                            </div>
+
                         </div>
 
                     </div>
@@ -1403,7 +1373,23 @@
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <script src="{{asset('admin/assets/libs/smartwizard/jquery.smartWizard.min.js') }}"></script>
+<script>
+    function maxLengthCheck(object) {
+      if (object.value.length > object.maxLength)
+        object.value = object.value.slice(0, object.maxLength)
+    }
 
+    function isNumeric (evt) {
+      var theEvent = evt || window.event;
+      var key = theEvent.keyCode || theEvent.which;
+      key = String.fromCharCode (key);
+      var regex = /[0-9]|\./;
+      if ( !regex.test(key) ) {
+        theEvent.returnValue = false;
+        if(theEvent.preventDefault) theEvent.preventDefault();
+      }
+    }
+  </script>
 <script src="{{asset('admin/assets/libs/bootstrap-fileinput/piexif.min.js')}} " ></script>
 <script src="{{asset('admin/assets/libs/bootstrap-fileinput/sortable.min.js')}}" ></script>
 <script src="{{asset('admin/assets/libs/bootstrap-fileinput/purify.min.js')}}" ></script>

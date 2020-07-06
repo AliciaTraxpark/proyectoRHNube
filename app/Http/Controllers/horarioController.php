@@ -100,8 +100,9 @@ class horarioController extends Controller
         {   $horario_dias=new horario_dias();
             $horario_dias->title=$temporal_eventos->title;
             $horario_dias->start=$temporal_eventos->start;
+            $horario_dias->end=$temporal_eventos->end;
             $horario_dias->color=$temporal_eventos->color;
-            $horario_dias->textColor='000000';
+            $horario_dias->textColor=$temporal_eventos->textColor;
             $horario_dias->users_id=$temporal_eventos->users_id;
             $horario_dias->paises_id=$temporal_eventos->paises_id;
             $horario_dias->ubigeo_peru_departments_id=$temporal_eventos->ubigeo_peru_departments_id;
@@ -332,6 +333,23 @@ class horarioController extends Controller
 
         $user=User::where('id', '=',Auth::user()->id)
           ->update(['user_estado' => 1]);
+
+    }
+
+    public function storeDescanso(Request $request)
+    {
+        //
+        $temporal_eventos=new temporal_eventos();
+        $temporal_eventos->title= $request->get('title');
+        $temporal_eventos->color= '#e5e5e5';
+        $temporal_eventos->textColor='#3f51b5';
+        $temporal_eventos->start= $request->get('start');
+        $temporal_eventos->end= $request->get('end');
+        $temporal_eventos->paises_id= $request->get('pais');
+        $temporal_eventos->ubigeo_peru_departments_id= $request->get('departamento');
+        $temporal_eventos->users_id=Auth::user()->id;
+        $temporal_eventos->save();
+        return  response()->json($temporal_eventos);
 
     }
     }

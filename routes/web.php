@@ -138,6 +138,7 @@ Route::get('/empleadoIncHorario', 'horarioController@empleadosIncidencia');
 Route::post('/registrarInci', 'horarioController@registrarIncidencia');
 Route::post('/eliminarHora', 'horarioController@eliminarHora');
 Route::post('/cambiarEstado', 'horarioController@cambiarEstado');
+Route::post('/storeDescanso', 'horarioController@storeDescanso');
 
 
 
