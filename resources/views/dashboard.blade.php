@@ -74,7 +74,7 @@
 <style>
     .chart-legend li span {
         display: inline-block;
-        width: 23px;
+        width: 30px;
         height: 12px;
         margin-right: 3px;
     }
