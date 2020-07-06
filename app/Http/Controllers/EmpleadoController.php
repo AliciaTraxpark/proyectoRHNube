@@ -454,9 +454,7 @@ class EmpleadoController extends Controller
         }
         $empleado->emple_celular = $objEmpleado['celular_v'];
         $empleado->emple_telefono = $objEmpleado['telefono_v'];
-        if ($objEmpleado['correo_v'] != '') {
-            $empleado->emple_Correo = $objEmpleado['correo_v'];
-        }
+        $empleado->emple_Correo = $objEmpleado['correo_v'];
         $empleado->emple_fechaIC = $objEmpleado['fechaI_v'];
         $empleado->emple_fechaFC = $objEmpleado['fechaF_v'];
         $empleado->emple_codigo = $objEmpleado['codigoEmpleado_v'];
