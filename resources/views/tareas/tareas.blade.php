@@ -1,7 +1,8 @@
 @extends('layouts.vertical')
 
 @section('css')
-<link rel="shortcut icon"href="https://rhsolution.com.pe/wp-content/uploads/2019/06/small-logo-rh-solution-64x64.png" sizes="32x32">
+<link rel="shortcut icon" href="https://rhsolution.com.pe/wp-content/uploads/2019/06/small-logo-rh-solution-64x64.png"
+    sizes="32x32">
 <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.css') }}" rel="stylesheet" />
 <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
@@ -27,11 +28,24 @@
 @section('content')
 <style>
     .carousel-control-prev-icon {
-        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='403555' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E")!important;
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='403555' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
     }
-    .carousel-control-next-icon{
+
+    .carousel-control-next-icon {
         background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='403555' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
     }
+
+    .album {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-column: 1em;
+    }
+
+    .foto {
+        width: 10em;
+        height: 10em;
+    }
+
 </style>
 <div id="modalZoom" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
     data-backdrop="static">
@@ -45,7 +59,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div id="zoom" class="col-xl-12 text-center">
+                    <div id="zoom" class="col-xl-12 text-center album">
                     </div>
                 </div>
             </div>
@@ -54,12 +68,13 @@
 </div><!-- /.modal -->
 <div class="row">
     <div class="col-lg-12">
-        <div class="card">
-            <div class="card-body">
+        <div>
+            <div>
                 <div class="row">
                     <div class="col-md-12">
                         <label style="font-weight: 700">Búsqueda por fecha</label>
                     </div>
+                    <div class="col-md-2"></div>
                     <div class="col-md-4">
                         <label><br> </label>
                         <div class="input-group col-md-10" style="padding-left: 0px;">
@@ -81,14 +96,15 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-2"></div>
+                    <!--<div class="col-md-4">
                         <div class="form-group  col-md-10">
                             <label>Proyecto</label>
                             <select data-plugin="customselect" class="form-control" id="proyecto">
                                 <option value="">Seleccionar</option>
                             </select>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
                 <div class="col-xl-12" id="card">
                 </div>
