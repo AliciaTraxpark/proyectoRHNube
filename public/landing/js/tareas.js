@@ -237,30 +237,12 @@ function zoom(horayJ) {
     var hora = horayJ.split(",")[0];
     var j = horayJ.split(",")[1];
     capturas = datos[hora][j];
-
-    /*var carusel = `<div id="carouselExampleControls" class ="carousel slide" data-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="zoom carousel-item active">
-                            <img src="data:image/jpeg;base64,${capturas[0].imagen}" height="500" widht="500" class="zoom img-responsive">
-                                </div>`;*/
     var carusel = `<p class="imglist" style="max-width: 1000px;">`;
-    //$('#imagenZoom').attr("src", `data:image/jpeg;base64,${img}`);
     for (let index = 0; index < capturas.length; index++) {
         const element = capturas[index];
-        /*carusel += `<div class="zoom carousel-item">
-        <img src="data:image/jpeg;base64,${element.imagen}" height="500" widht="500" class="img-responsive">
-            </div>`*/
         carusel += `<a href="data:image/jpeg;base64,${element.imagen}" data-fancybox="images" data-caption="Collección de capturas" data-width="760" data-height="760"><img src="data:image/jpeg;base64,${element.imagen}" width="240" height="240"></a>`
     }
     carusel += `</p>`
-    /*<a class = "carousel-control-prev" href = "#carouselExampleControls" role = "button" data-slide = "prev">
-        <span class = "carousel-control-prev-icon" style="color:red;" aria-hidden = "true"></span>
-        <span class = "sr-only">Previous</span>
-    </a>
-    <a class = "carousel-control-next" href = "#carouselExampleControls" role = "button" data-slide = "next">
-        <span class = "carousel-control-next-icon" style="color:red;" aria-hidden = "true"></span>
-        <span class = "sr-only">Next</span>
-    </a></div>`;*/
     document.getElementById("zoom").innerHTML = carusel;
     $('#modalZoom').modal();
 }
