@@ -22,13 +22,15 @@
     .red-tooltip+.tooltip>.tooltip-inner {
         background-color: rgb(0, 0, 0);
     }
+
 </style>
 <div id="modalCorreo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCorreo" aria-hidden="true"
     data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a empleado
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
+                    empleado
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -36,7 +38,8 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
-                    <h5 class="modal-title" id="myModalLabel" style="font-size: 15px">¿Desea enviar correo al empleado
+                    <h5 class="modal-title" id="myModalLabel" style="font-size:
+                        15px">¿Desea enviar correo al empleado
                         empleado?</h5>
                 </form>
             </div>
@@ -46,9 +49,11 @@
                         <div class="col-md-7 text-right">
                             <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
                         </div>
-                        <div class="col-md-5 text-right" style="padding-right: 38px;  ">
+                        <div class="col-md-5 text-right" style="padding-right:
+                            38px;">
                             <button type="button" id="enviarCorreo" name="enviarCorreo"
-                                style="background-color: #163552;" class="btn btn-sm ">Enviar</button>
+                                style="background-color: #163552;" class="btn
+                                btn-sm">Enviar</button>
                         </div>
                     </div>
                 </div>
@@ -62,7 +67,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a empleado
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
+                    empleado
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -70,7 +76,8 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
-                    <h5 class="modal-title" id="myModalLabel" style="font-size: 15px">¿Desea agregar nuevo escritorio
+                    <h5 class="modal-title" id="myModalLabel" style="font-size:
+                        15px">¿Desea agregar nuevo escritorio
                         empleado?</h5>
                 </form>
             </div>
@@ -80,9 +87,11 @@
                         <div class="col-md-7 text-right">
                             <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
                         </div>
-                        <div class="col-md-5 text-right" style="padding-right: 38px;  ">
+                        <div class="col-md-5 text-right" style="padding-right:
+                            38px;">
                             <button type="button" id="agregarEscritorio" name="agregarEscritorio"
-                                style="background-color: #163552;" class="btn btn-sm ">Agregar</button>
+                                style="background-color: #163552;" class="btn
+                                btn-sm">Agregar</button>
                         </div>
                     </div>
                 </div>
@@ -95,7 +104,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a empleado
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
+                    empleado
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -103,7 +113,8 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
-                    <h5 class="modal-title" id="myModalLabel" style="font-size: 15px">¿Desea enviar correo al empleado
+                    <h5 class="modal-title" id="myModalLabel" style="font-size:
+                        15px">¿Desea enviar correo al empleado
                         empleado?</h5>
                 </form>
             </div>
@@ -113,9 +124,11 @@
                         <div class="col-md-7 text-right">
                             <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
                         </div>
-                        <div class="col-md-5 text-right" style="padding-right: 38px;  ">
+                        <div class="col-md-5 text-right" style="padding-right:
+                            38px;">
                             <button type="button" id="enviarCorreoM" name="enviarCorreo"
-                                style="background-color: #163552;" class="btn btn-sm ">Enviar</button>
+                                style="background-color: #163552;" class="btn
+                                btn-sm">Enviar</button>
                         </div>
                     </div>
                 </div>
@@ -129,7 +142,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a empleado
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
+                    empleado
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -137,7 +151,8 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
-                    <h5 class="modal-title" id="myModalLabel" style="font-size: 15px">¿Desea enviar correo al empleado
+                    <h5 class="modal-title" id="myModalLabel" style="font-size:
+                        15px">¿Desea enviar correo al empleado
                         empleado?</h5>
                 </form>
             </div>
@@ -147,9 +162,11 @@
                         <div class="col-md-7 text-right">
                             <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
                         </div>
-                        <div class="col-md-5 text-right" style="padding-right: 38px;  ">
+                        <div class="col-md-5 text-right" style="padding-right:
+                            38px;">
                             <button type="button" id="enviarAndroid" name="enviarCorreo"
-                                style="background-color: #163552;" class="btn btn-sm ">Enviar</button>
+                                style="background-color: #163552;" class="btn
+                                btn-sm">Enviar</button>
                         </div>
                     </div>
                 </div>
@@ -162,7 +179,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a empleado
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
+                    empleado
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -170,7 +188,8 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
-                    <h5 class="modal-title" id="myModalLabel" style="font-size: 15px">¿Desea enviar correo al empleado
+                    <h5 class="modal-title" id="myModalLabel" style="font-size:
+                        15px">¿Desea enviar correo al empleado
                         empleado?</h5>
                 </form>
             </div>
@@ -180,9 +199,11 @@
                         <div class="col-md-7 text-right">
                             <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
                         </div>
-                        <div class="col-md-5 text-right" style="padding-right: 38px;  ">
+                        <div class="col-md-5 text-right" style="padding-right:
+                            38px;">
                             <button type="button" id="enviarAndroidMasivo" name="enviarAndroidMasivo"
-                                style="background-color: #163552;" class="btn btn-sm ">Enviar</button>
+                                style="background-color: #163552;" class="btn
+                                btn-sm">Enviar</button>
                         </div>
                     </div>
                 </div>
@@ -195,39 +216,50 @@
 
     <div class="col-md-6" id="filter_global">
 
-        <td align="center"><input type="text" class="global_filter form-control form-control-sm" id="global_filter">
+        <td align="center"><input type="text" class="global_filter form-control
+                form-control-sm" id="global_filter">
         </td>
     </div>
-    <div class="col-md-6" id="filter_col2" data-column="2" style="display: none">
+    <div class="col-md-6" id="filter_col2" data-column="2" style="display:
+        none">
         <label for="">Nombre:</label>
-        <td align="center"><input type="text" class="column_filter form-control form-control-sm" id="col2_filter"></td>
+        <td align="center"><input type="text" class="column_filter form-control
+                form-control-sm" id="col2_filter"></td>
     </div>
-    <div class="col-md-6" id="filter_col3" data-column="3" style="display: none">
+    <div class="col-md-6" id="filter_col3" data-column="3" style="display:
+        none">
         <label>Apellidos</label>
-        <td align="center"><input type="text" class="column_filter form-control form-control-sm" id="col3_filter"></td>
+        <td align="center"><input type="text" class="column_filter form-control
+                form-control-sm" id="col3_filter"></td>
     </div>
-    <div class="col-md-6" id="filter_col4" data-column="4" style="display: none">
+    <div class="col-md-6" id="filter_col4" data-column="4" style="display:
+        none">
         <label for="">Cargo</label>
-        <td align="center"><input type="text" class="column_filter form-control form-control-sm" id="col4_filter"></td>
+        <td align="center"><input type="text" class="column_filter form-control
+                form-control-sm" id="col4_filter"></td>
     </div>
-    <div class="col-md-6" id="filter_col5" data-column="5" style="display: none">
+    <div class="col-md-6" id="filter_col5" data-column="5" style="display:
+        none">
         <label for="">Área</label>
-        <td align="center"><input type="text" class="column_filter form-control form-control-sm" id="col5_filter"></td>
+        <td align="center"><input type="text" class="column_filter form-control
+                form-control-sm" id="col5_filter"></td>
     </div>
-    <div class="col-md-6" id="filter_col6" data-column="6" style="display: none">
+    <div class="col-md-6" id="filter_col6" data-column="6" style="display:
+        none">
         <label for="">Costo</label>
-        <td align="center"><input type="text" class="column_filter form-control form-control-sm" id="col6_filter"></td>
+        <td align="center"><input type="text" class="column_filter form-control
+                form-control-sm" id="col6_filter"></td>
     </div>
 
 </div>
 
 <table id="tablaEmpleado" class="table dt-responsive nowrap">
-    <thead style=" background: #edf0f1;color: #6c757d;">
+    <thead style="background: #edf0f1;color: #6c757d;">
         <tr style="background: #ffffff">
             <th style="border-top: 1px solid #fdfdfd;"></th>
             <th style="border-top: 1px solid #fdfdfd;"></th>
-            <th style="border-top: 1px solid #fdfdfd;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="inputR"
-                    id="i2"></th>
+            <th style="border-top: 1px solid #fdfdfd;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="inputR" id="i2"></th>
             <th style="border-top: 1px solid #fdfdfd;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"
                     name="inputR" id="i3"></th>
             <th style="border-top: 1px solid #fdfdfd;">&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR"
@@ -237,15 +269,13 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR" id="i6">
             </th>
             <th class="text-center" style="border-top: 1px solid #fdfdfd;" id="enviarCorreosMasivos">
-                <button type="button" class="btn btn-secondary  btn-sm" onclick="$('#modalCorreoM').modal();"
-                    style="background:#fafbff; border-color:#a4b3c1; color:#5e6f80" data-toggle="tooltip"
-                    data-placement="right" title="Enviar a todos los empleados seleccionados."
-                    data-original-title="">Enviar a todos</button></th>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="$('#modalCorreoM').modal();" style="background:#fafbff; border-color:#a4b3c1;
+                    color:#5e6f80" data-toggle="tooltip" data-placement="right" title="Enviar a todos los empleados
+                    seleccionados." data-original-title="">Enviar a todos</button></th>
             <th class="text-center" style="border-top: 1px solid #fdfdfd;" id="enviarAndroidMasivos"> <button
-                    type="button" class="btn btn-secondary  btn-sm" onclick="$('#modalAndroidMasivo').modal();"
-                    style="background:#fafbff; border-color:#a4b3c1; color:#5e6f80" data-toggle="tooltip"
-                    data-placement="right" title="Enviar a todos los empleados seleccionados."
-                    data-original-title="">Enviar a todos</button></th>
+                    type="button" class="btn btn-secondary btn-sm" onclick="$('#modalAndroidMasivo').modal();" style="background:#fafbff; border-color:#a4b3c1;
+                    color:#5e6f80" data-toggle="tooltip" data-placement="right" title="Enviar a todos los empleados
+                    seleccionados." data-original-title="">Enviar a todos</button></th>
         </tr>
         <tr>
             <th></th>
@@ -270,7 +300,8 @@
                     onclick="marcareliminar({{$tabla_empleados->emple_id}})" style="cursor: pointer"><img
                         src="{{asset('admin/images/delete.svg')}}" height="15"></a></td>
             <td class="text-center">&nbsp; <input type="hidden" id="codE" value="{{$tabla_empleados->emple_id}}"><img
-                    src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class=" " alt="" /></td>
+                    src="{{ URL::asset('admin/assets/images/users/empleado.png')
+                    }}" class="" alt="" /></td>
             <td>{{$tabla_empleados->perso_nombre}}</td>
             <td>{{$tabla_empleados->perso_apPaterno}} {{$tabla_empleados->perso_apMaterno}}</td>
             <td>{{$tabla_empleados->cargo_descripcion}}</td>
@@ -281,40 +312,45 @@
             @else
             @if ($tabla_empleados->envio != null)
             @if($tabla_empleados->reenvio == null)
-            <td class="text-center"><button id="reenviar" type="button" class="btn btn-secondary  btn-sm"
+            <td class="text-center"><button id="reenviar" type="button" class="btn  btn-sm btn-rounded"
                     onclick="$('#modalCorreo').modal();" data-toggle="tooltip" data-placement="right"
-                    title="Enviar correo empleado." data-original-title="Reenviar correo empleado."
-                    style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;">Reenviar</button>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a data-toggle="tooltip" data-placement="right" title="Asignar nueva PC."
-                    data-original-title="Enviar correo empleado." style="cursor: pointer"
-                    onclick="$('#modalNuevoE').modal();">
-                    <img src="{{asset('landing/images/add (1).svg')}}" height="15"></a></td>
+                    title="Reenviar correo empleado." data-original-title="Reenviar correo empleado."
+                    style="color: #548ec7;border-color: #e7edf3; padding-left: 4px; padding-right: 4px;"><img
+                        src="{{asset('landing/images/refresh.svg')}}" height="20">&nbsp;&nbsp;correo</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a data-toggle="tooltip" data-placement="right" title="Asignar
+                    nueva PC." data-original-title="Enviar correo empleado." style="cursor:
+                    pointer" onclick="$('#modalNuevoE').modal();">
+                    <img src="{{asset('landing/images/plus.svg')}}" height="15"></a></td>
             @else
-            <td class="text-center"><button id="reenviar" type="button" class="btn btn-secondary  btn-sm"
+            <td class="text-center"><button id="reenviar" type="button" class="btn  btn-sm btn-rounded"
                     onclick="$('#modalCorreo').modal();"
-                    style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;"
-                    disabled>Reenviar</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="tooltip"
-                    data-placement="right" title="Asignar nueva PC." data-original-title="Enviar correo empleado."
-                    style="cursor: pointer" onclick="$('#modalNuevoE').modal();"><img
-                        src="{{asset('landing/images/add (1).svg')}}" height="15"></a></td>
+                    style="color: #548ec7;border-color: #e7edf3; padding-left: 4px; padding-right: 4px;" disabled><img
+                        src="{{asset('landing/images/refresh.svg')}}"
+                        height="20">&nbsp;&nbsp;correo</button>&nbsp;&nbsp;&nbsp;&nbsp;<a
+                    data-toggle="tooltip" data-placement="right" title="Asignar nueva PC."
+                    data-original-title="Enviar correo empleado." style="cursor: pointer"
+                    onclick="$('#modalNuevoE').modal();"><img src="{{asset('landing/images/plus.svg')}}"
+                        height="15"></a></td>
             @endif
             @else
-            <td class="text-center"><button type="button" class="btn btn-secondary  btn-sm"
+            <td class="text-center"><button type="button" class="btn  btn-sm btn-rounded"
                     onclick="$('#modalCorreo').modal();"
-                    style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;"
-                    data-toggle="tooltip" data-placement="right" title="Enviar correo empleado."
-                    data-original-title="Enviar correo empleado.">Enviar</td>
+                    style="color: #548ec7;border-color: #e7edf3; padding-left: 4px; padding-right: 4px;"
+                    data-toggle="tooltip" data-placement="right" title="Enviar
+                    correo empleado." data-original-title="Enviar correo empleado."><img
+                        src="{{asset('landing/images/note.svg')}}" height="20">&nbsp;&nbsp;correo</button></td>
             @endif
             @endif
             @if(!in_array("2",$tabla_empleados->dispositivos))
             <td></td>
             @else
-            <td class="text-center"><button type="button" class="btn btn-secondary  btn-sm"
+            <td class="text-center"><button type="button" class="btn  btn-sm btn-rounded"
                     onclick="$('#modalAndroid').modal();"
-                    style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;"
+                    style="color: #548ec7;border-color: #e7edf3; padding-left: 4px; padding-right: 4px;"
                     data-toggle="tooltip" data-placement="right" title="Enviar correo empleado."
-                    data-original-title="Enviar correo empleado.">Enviar</button></td>
+                    data-original-title="Enviar correo empleado."><img src="{{asset('landing/images/note.svg')}}"
+                        height="20">&nbsp;&nbsp;correo</button></td>
             @endif
             <td class="text-center"><input type="checkbox" id="tdC" style="margin-left:5.5px!important"
                     class="form-check-input sub_chk" data-id="{{$tabla_empleados->emple_id}}" $(this)$(this)$(this)>
@@ -711,8 +747,8 @@
             }
         });
 }); */
-function eliminarEmpleado(){
-    var allVals = [];
+    function eliminarEmpleado() {
+        var allVals = [];
         console.log(allVals);
 
         $(".sub_chk:checked").each(function () {
@@ -728,9 +764,10 @@ function eliminarEmpleado(){
 
         }
 
-}
-function confirmarEliminacion(){
-    var allVals = [];
+    }
+
+    function confirmarEliminacion() {
+        var allVals = [];
         console.log(allVals);
 
         $(".sub_chk:checked").each(function () {
@@ -750,19 +787,19 @@ function confirmarEliminacion(){
                 $('#modalEliminar').modal('hide');
                 leertabla();
                 $.notify(" Empleado eliminado", {
-                     align: "right",
-                     verticalAlign: "top",
-                     type: "danger",
-                     icon: "bell",
-                     autoHide: true
-                 });
+                    align: "right",
+                    verticalAlign: "top",
+                    type: "danger",
+                    icon: "bell",
+                    autoHide: true
+                });
             },
             error: function (data) {
                 alert(data.responseText);
             }
         });
 
-}
+    }
 
     function marcareliminar(data) {
         $('input:checkbox').prop('checked', false);
@@ -928,7 +965,11 @@ function confirmarEliminacion(){
     $('#enviarAndroidMasivo').on("click", androidMasivos);
 
 </script>
-<script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
+<script src="{{
+        URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js')
+        }}"></script>
+<script src="{{
+        URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')
+        }}"></script>
 <script src="{{asset('landing/js/correoEmpleados.js')}}"></script>
 <script src="{{asset('landing/js/correoAndroid.js')}}"></script>
