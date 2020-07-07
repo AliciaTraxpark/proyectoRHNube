@@ -13,6 +13,7 @@ use App\area;
 use App\centro_costo;
 use App\tipo_contrato;
 use App\local;
+use Illuminate\Support\Arr;
 use App\nivel;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Illuminate\Support\Facades\Auth;
@@ -29,6 +30,7 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
 {    use Importable, SkipsErrors;
     private $numRows = 0;
     public $dnias=[];
+    public $Ndoc=[];
     /**
     * @param array $row
     *
@@ -61,8 +63,50 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                    } else{ $row['tipo_docArray']=null; }
                    $empleadoAntiguo=DB::table('empleado')->where('emple_nDoc','=',$row['numero_documento'])->where('empleado.users_id', '=', Auth::user()->id)->first();
                    if($empleadoAntiguo!=null){
-                       return redirect()->back()->with('alert', 'numero de documento ya registrado: '.$row['numero_documento'].' El proceso se interrumpio en la fila: '.$filas.' de excel');
+                       return redirect()->back()->with('alert', 'numero de documento ya registrado en otro empleado: '.$row['numero_documento'].' El proceso se interrumpio en la fila: '.$filas.' de excel');
                    };
+                   $capturaD=[$row['numero_documento']];
+                    array_push($this->Ndoc,$capturaD);
+
+
+
+                    $lineal=Arr::flatten($this->Ndoc);
+                    $clave2=array_splice($lineal,0,$filaA);
+                    $clave = array_search($row['numero_documento'],$clave2);
+
+                    //dd($clave2,$clave);
+                    if($clave!==false){
+                        //dd($clave2,$clave,$filaA);
+                        return redirect()->back()->with('alert', 'numero de documento duplicado en la importacion: '.$row['numero_documento'].' .El proceso se interrumpio en la fila '.$filas.' de excel');
+
+                       }
+
+
+
+                        //dd($arraysimple);
+
+
+                       /*    $busca=$this->Ndoc;
+                          $arraysimples=Arr::flatten($busca);
+ */
+
+
+
+
+                   /*      if($clave!=false){
+
+                        } else{return redirect()->back()->with('alert', 'numero de documento2 ya registrado: '.$clave.' El proceso se interrumpio en la fila:de excel');} */
+                 /* if($busca[1]==12345679){
+                    dd('1',$busca);
+                 } */
+
+                   /* f($busque==0){
+                    //dd($busca, $busque);
+                    return redirect()->back()->with('alert', 'numero de documento2 ya registrado: '.$busque.' El proceso se interrumpio en la fila:de excel');
+
+                   } */
+
+                  //dd($busque, $busca[0]);
                 //departamento
                 $cadDep=$row['departamento'];
                 if(strlen($cadDep)>3){
