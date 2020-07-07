@@ -236,12 +236,11 @@
             <th style="border-top: 1px solid #fdfdfd;">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR" id="i6">
             </th>
-            <th style="border-top: 1px solid #fdfdfd;" id="enviarCorreosMasivos"> <button type="button"
-                    class="btn btn-secondary  btn-sm" onclick="$('#modalCorreoM').modal();"
-                    style="background:#fafbff; border-color:#a4b3c1; color:#5e6f80">Envio Masivo @</button></th>
-            <th style="border-top: 1px solid #fdfdfd;" id="enviarAndroidMasivos"> <button type="button"
-                    class="btn btn-secondary  btn-sm" onclick="$('#modalAndroidMasivo').modal();"
-                    style="background:#fafbff; border-color:#a4b3c1; color:#5e6f80">Envio Masivo @</button></th>
+            <th class="text-center" style="border-top: 1px solid #fdfdfd;" id="enviarCorreosMasivos" colspan="2">
+                <button type="button" class="btn btn-secondary  btn-sm" onclick="$('#modalCorreoM').modal();"
+                    style="background:#fafbff; border-color:#a4b3c1; color:#5e6f80" data-toggle="tooltip"
+                    data-placement="right" title="Enviar a todos los empleados seleccionados."
+                    data-original-title="Reenviar correo empleado.">Enviar a todos</button></th>
         </tr>
         <tr>
             <th></th>
@@ -279,7 +278,7 @@
             @if($tabla_empleados->reenvio == null)
             <td class="text-center"><button id="reenviar" type="button" class="btn btn-secondary  btn-sm"
                     onclick="$('#modalCorreo').modal();" data-toggle="tooltip" data-placement="right"
-                    title="Enviar correo empleado." data-original-title="Enviar correo empleado."
+                    title="Enviar correo empleado." data-original-title="Reenviar correo empleado."
                     style="background:#fafbff; border-color:#e7ebfd; color:#a1bbd6;padding: 0.1rem 0.2rem;">Reenviar</button>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <a data-toggle="tooltip" data-placement="right" title="Asignar nueva PC."
@@ -321,7 +320,6 @@
 </table>
 <script>
     $('[data-toggle="tooltip"]').tooltip();
-    $('#enviarAndroidMasivos').hide();
     $('#enviarCorreosMasivos').hide();
     $('#filter_col2').hide();
     $('#filter_col3').hide();
@@ -790,7 +788,7 @@ function confirmarEliminacion(){
                 for (var i = 0; i < data.length; i++) {
                     if (data[i].Correo == true && data[i].Reenvio == true) {
                         $.notify({
-                            message: "\nCorreo enviado a" + data[i].Persona.perso_nombre + " " +
+                            message: "\nCorreo enviado a\n" + data[i].Persona.perso_nombre + " " +
                                 data[i].Persona.perso_apPaterno + " " + data[i].Persona
                                 .perso_apMaterno,
                             icon: 'admin/images/checked.svg'

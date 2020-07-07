@@ -6,6 +6,7 @@ use App\empleado;
 use App\licencia_empleado;
 use App\Mail\AndroidMail;
 use App\Mail\CorreoEmpleadoMail;
+use App\Mail\CorreoMasivoMail;
 use App\persona;
 use App\vinculacion;
 use Carbon\Carbon;
@@ -193,7 +194,7 @@ class correosEmpleadoController extends Controller
                     $datos = [];
                     $datos["correo"] = $correoE->emple_Correo;
                     $email = array($datos["correo"]);
-                    Mail::to($email)->queue(new CorreoEmpleadoMail($vinculacion, $persona, $licencia_empleado));
+                    Mail::to($email)->queue(new CorreoMasivoMail($vinculacion, $persona, $licencia_empleado));
                     array_push($resultado, array("Persona" => $persona, "Correo" => $c, "Reenvio" => $r));
                 }
             } else {
