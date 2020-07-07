@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\User;
+use Illuminate\Support\Facades\Auth;
 use App\empleado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +16,7 @@ class ProyectoController extends Controller
         $empleado = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->select('e.emple_id','p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno')
+            ->where('e.users_id','=',Auth::user()->id)
             ->get();
 
             return view('Proyecto.proyecto',['empleado'=> $empleado,'proyecto'=>$proyecto]);
@@ -67,6 +69,12 @@ class ProyectoController extends Controller
            return response()->json($empleadoSelect);
             // return $empleadoSelect;
 
+
+    }
+    public function eliminar(Request $request){
+        $idproyecto=$request->get('idproyecto');
+        $proyecto_empleado=proyecto_empleado::where('Proyecto_Proye_id','=',$idproyecto) ->delete();
+        $proyecto=proyecto::where('Proye_id','=',$idproyecto) ->delete();
 
     }
 

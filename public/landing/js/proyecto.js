@@ -119,7 +119,47 @@ function registrarPE(){
 
 
 
-}
+};
+function eliminarp(idproyecto){
+    bootbox.confirm({
+        message: "¿Desea eliminar esta tarea con todos sus integrantes?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-primary'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            if (result == true) {
+                $.ajax({
+                    type: "post",
+                    url: "/proyecto/eliminar",
+                    data: {
+                        idproyecto
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                    $('#tablaProyecto').load(location.href+" #tablaProyecto>*");
+                    },
+                    error: function (data) {
+                        bootbox.alert({
+                            message: "No se puede eliminar, tarea pertenece a una actividad.",
+
+                        })
+                    }
+
+
+                });}
+        }
+    });
+
+};
 $(document).ready(function(){
     $("#tablaProyecto").DataTable({
               "searching": true,
