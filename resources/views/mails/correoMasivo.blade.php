@@ -253,12 +253,6 @@
             border-color: #ffffff !important;
         }
 
-        .es-button-border:hover {
-            background: #ffffff !important;
-            border-style: solid solid solid solid !important;
-            border-color: #163552 #163552 #163552 #163552 !important;
-        }
-
     </style>
 </head>
 
@@ -387,54 +381,78 @@
                                                             </tr>
                                                             <tr style="border-collapse:collapse">
                                                                 <td align="left"
-                                                                    style="padding:0;Margin:0;padding-left:40px;padding-right:40px">
-                                                                    <strong style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:10px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center;text-transform:
-                                                                    uppercase;">ANDROID</strong>
-                                                                </td>
-                                                                <td align="left"
-                                                                    style="padding:0;Margin:0;padding-top:25px;padding-left:40px;padding-right:40px">
-                                                                    <span
-                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666">
-                                                                        PLAY STORE &nbsp;&nbsp;&nbsp;<a
-                                                                            href="https://play.google.com/store/apps/details?id=pe.trax.park&hl=es"
-                                                                            class="es-button" target="_blank"
-                                                                            style="text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:14px;color:#163552;border-style:solid;border-color:#FFFFFF;border-width:15px 20px 15px 20px;display:inline-block;background:#FFFFFF;border-radius:10px;font-weight:bold;font-style:normal;line-height:17px;width:auto;text-align:center">
-                                                                            Link </a></span>
+                                                                    style="padding:0;Margin:0;padding-left:10px;padding-right:10px;padding-top: 20px;">
+                                                                    <img src="https://i.ibb.co/cccbGKQ/computer.png"
+                                                                        alt="computer" border="0"
+                                                                        width="20">&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                    <strong style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:14px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:left;text-transform:
+                                                                    uppercase;color:#163552;">
+                                                                        WINDOWS</strong>
                                                                 </td>
                                                             </tr>
                                                             <tr style="border-collapse:collapse">
                                                                 <td align="left"
-                                                                    style="padding:0;Margin:0;padding-left:40px;padding-right:40px">
-                                                                    <strong style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:10px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center;text-transform:
-                                                                    uppercase;">WINDOWS</strong>
-                                                                </td>
-                                                                <td align="left"
-                                                                    style="padding:0;Margin:0;padding-top:25px;padding-left:40px;padding-right:40px">
+                                                                    style="Margin:0;padding-left:10px;padding-right:10px;padding-top:10px;padding-bottom:10px">
+                                                                    <strong
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:14px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666">
+                                                                        Link </strong>
+                                                                    &nbsp;&nbsp;&nbsp;
                                                                     <span class="es-button-border"
-                                                                        style="border-style:solid;border-color:#163552;background:#FFFFFF;border-width:2px;display:inline-block;border-radius:10px;width:auto"><a
+                                                                        style="display:inline-block;width:auto;font-size:14px;"><a
                                                                             href="{{url('download/' . $vinculacion->descarga)}}"
                                                                             class="es-button" target="_blank"
-                                                                            style="text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:14px;color:#163552;border-style:solid;border-color:#FFFFFF;border-width:15px 20px 15px 20px;display:inline-block;background:#FFFFFF;border-radius:10px;font-weight:bold;font-style:normal;line-height:17px;width:auto;text-align:center">
-                                                                            DESCARGAR</a></span>
+                                                                            style="text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-family:arial, 'helvetica neue', helvetica, sans-serif;
+                                                                            font-size:14px;color:#163552;display:inline-block;font-weight:bold;font-style:normal;line-height:17px;width:auto;text-align:center">
+                                                                            DESCARGAR</a></span></td>
+                                                            </tr>
+                                                            <tr style="border-collapse:collapse">
+                                                                <td align="left"
+                                                                    style="padding:0;Margin:0;padding-top:10px;padding-left:10px;padding-right:10px">
                                                                     <strong
-                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666">
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:14px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666">
                                                                         Licencia de Producto</strong>
                                                                     <p
-                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center">
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:14px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:left">
                                                                         &nbsp;{{$licencia_empleado->licencia}}</p>
                                                                 </td>
                                                             </tr>
 
                                                             <tr style="border-collapse:collapse">
                                                                 <td align="left"
-                                                                    style="padding:0;Margin:0;padding-top:25px;padding-left:40px;padding-right:40px;padding-bottom:40px">
+                                                                    style="padding:0;Margin:0;padding-top:10px;padding-left:10px;padding-right:10px">
                                                                     <strong
-                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666">
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:14px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666">
                                                                         Código</strong>
                                                                     <p
-                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center">
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:14px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:left">
                                                                         &nbsp;{{$vinculacion->hash}}</p>
                                                                 </td>
+                                                            </tr>
+                                                            <tr style="border-collapse:collapse">
+                                                                <td align="left"
+                                                                    style="padding:0;Margin:0;padding-left:10px;padding-right:10px;padding-top: 20px;">
+                                                                    <img src="https://i.ibb.co/r4TTcck/smartphone.png"
+                                                                        alt="smartphone" border="0"
+                                                                        width="20">&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                    <strong style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:14px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:left;text-transform:
+                                                                    uppercase;color:#163552;">
+                                                                        ANDROID</strong>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="border-collapse:collapse">
+                                                                <td align="left"
+                                                                    style="Margin:0;padding-left:10px;padding-right:10px;padding-top:10px;padding-bottom:10px">
+                                                                    <strong
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:14px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666">
+                                                                        Link </strong>
+                                                                    &nbsp;&nbsp;&nbsp;
+                                                                    <span class="es-button-border"
+                                                                        style="display:inline-block;width:auto;font-size:14px;"><a
+                                                                            href="https://play.google.com/store/apps/details?id=pe.trax.park&hl=es"
+                                                                            class="es-button" target="_blank"
+                                                                            style="text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-family:arial, 'helvetica neue', helvetica, sans-serif;
+                                                                            font-size:14px;color:#163552;display:inline-block;font-weight:bold;font-style:normal;line-height:17px;width:auto;text-align:center">
+                                                                            Play Store</a></span></td>
                                                             </tr>
                                                             <tr style="border-collapse:collapse">
                                                                 <td align="center"

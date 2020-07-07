@@ -236,11 +236,16 @@
             <th style="border-top: 1px solid #fdfdfd;">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR" id="i6">
             </th>
-            <th class="text-center" style="border-top: 1px solid #fdfdfd;" id="enviarCorreosMasivos" colspan="2">
+            <th class="text-center" style="border-top: 1px solid #fdfdfd;" id="enviarCorreosMasivos">
                 <button type="button" class="btn btn-secondary  btn-sm" onclick="$('#modalCorreoM').modal();"
                     style="background:#fafbff; border-color:#a4b3c1; color:#5e6f80" data-toggle="tooltip"
                     data-placement="right" title="Enviar a todos los empleados seleccionados."
-                    data-original-title="Reenviar correo empleado.">Enviar a todos</button></th>
+                    data-original-title="">Enviar a todos</button></th>
+            <th class="text-center" style="border-top: 1px solid #fdfdfd;" id="enviarAndroidMasivos"> <button
+                    type="button" class="btn btn-secondary  btn-sm" onclick="$('#modalAndroidMasivo').modal();"
+                    style="background:#fafbff; border-color:#a4b3c1; color:#5e6f80" data-toggle="tooltip"
+                    data-placement="right" title="Enviar a todos los empleados seleccionados."
+                    data-original-title="">Enviar a todos</button></th>
         </tr>
         <tr>
             <th></th>
@@ -321,6 +326,7 @@
 <script>
     $('[data-toggle="tooltip"]').tooltip();
     $('#enviarCorreosMasivos').hide();
+    $('#enviarAndroidMasivos').hide();
     $('#filter_col2').hide();
     $('#filter_col3').hide();
     $('#filter_col4').hide();
