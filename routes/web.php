@@ -162,6 +162,7 @@ Route::get('empleadoCorreo', 'correosEmpleadoController@encode');
 Route::get('comprobR', 'correosEmpleadoController@reenvio');
 Route::get('envioMasivo', 'correosEmpleadoController@encodeMasivo');
 Route::get('asignarEscritorio', 'correosEmpleadoController@nuevoEncode');
+Route::get('ambasPlataformas', 'correosEmpleadoController@ambasPlataformas');
 //ANDROID
 Route::get('empleadoAndroid', 'correosEmpleadoController@envioA');
 Route::get('empleadoAndroidMasivo', 'correosEmpleadoController@envioAndroidM');
