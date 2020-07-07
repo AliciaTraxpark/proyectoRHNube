@@ -140,7 +140,7 @@
             </div> <!-- end card body-->
         </div> <!-- end card -->
         <div id="asignarHorario" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog  modal-xl d-flex justify-content-center" style="margin-top: 5px;zoom:95%">
+            <div class="modal-dialog  modal-xl d-flex justify-content-center" style="margin-top: 5px;">
 
             <div class="modal-content">
                <div class="modal-header" style="background-color:#163552;">
@@ -282,7 +282,7 @@
         </div><!-- /.modal -->
 
         <div id="verhorarioEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog  modal-xl d-flex justify-content-center" style="margin-top: 5px;zoom:95%">
+            <div class="modal-dialog  modal-xl d-flex justify-content-center" style="margin-top: 5px;">
 
             <div class="modal-content">
                <div class="modal-header" style="background-color:#163552;">
