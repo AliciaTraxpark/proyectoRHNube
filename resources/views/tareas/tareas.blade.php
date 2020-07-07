@@ -13,6 +13,10 @@
 <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.css') }}" rel="stylesheet"
+    type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.min.css') }}" rel="stylesheet"
+    type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css') }}" rel="stylesheet"
     type="text/css" />
 @endsection
@@ -35,21 +39,6 @@
         background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='403555' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
     }
 
-    .album {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-column: 1em;
-    }
-
-    .foto {
-        width: 10em;
-        height: 10em;
-    }
-
-    .modal-lg {
-        max-width: 80vw !important;
-    }
-
 </style>
 <div id="modalZoom" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
     data-backdrop="static">
@@ -64,6 +53,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div id="zoom" class="col-xl-12 text-center album">
+                        <hr class="my-5" />
                     </div>
                 </div>
             </div>
@@ -126,8 +116,6 @@
 <script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/zoom/jquery.zoom.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/zoom/jquery.zoom.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js') }}"></script>
 @endsection
@@ -135,6 +123,8 @@
 @section('script-bottom')
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
