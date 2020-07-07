@@ -133,7 +133,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<!-- Modal Android-->
+<!-- Modal Ambas Plataformas-->
 <div id="modalCorreoAmbos" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCorreo"
     aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
@@ -160,7 +160,7 @@
                         </div>
                         <div class="col-md-5 text-right" style="padding-right:
                             38px;">
-                            <button type="button" id="enviarCorreoM" name="enviarCorreo"
+                            <button type="button" id="enviarAmbasP" name="enviarAmbasP"
                                 style="background-color: #163552;" class="btn
                                 btn-sm">Enviar</button>
                         </div>
@@ -1006,6 +1006,94 @@
         });
     }
     $('#enviarAndroidMasivo').on("click", androidMasivos);
+
+</script>
+{{-- AMBAS PLATAFORMAS--}}
+<script>
+    function ambasPlataformas() {
+        var correoEmpleado = [];
+        $(".sub_chk:checked").each(function () {
+            correoEmpleado.push($(this).attr('data-id'));
+        });
+        console.log(correoEmpleado);
+        var join_selected_values = correoEmpleado.join(",");
+        $.ajax({
+            async: false,
+            type: "get",
+            url: "ambasPlataformas",
+            data: 'ids=' + join_selected_values,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                console.log(data);
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].Correo == true && data[i].Reenvio == true) {
+                        $.notify({
+                            message: "\nCorreo enviado a\n" + data[i].Persona.perso_nombre + " " +
+                                data[i].Persona.perso_apPaterno + " " + data[i].Persona
+                                .perso_apMaterno,
+                            icon: 'admin/images/checked.svg'
+                        }, {
+                            icon_type: 'image',
+                            newest_on_top: true,
+                            delay: 5000,
+                            template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                '</div>',
+                            spacing: 35
+                        });
+                    } else {
+                        if (data[i].Correo != true) {
+                            $.notify({
+                                message: "\nAún no ha registrado correo a" + data[i].Persona
+                                    .perso_nombre + " " + data[i].Persona.perso_apPaterno + " " +
+                                    data[
+                                        i].Persona.perso_apMaterno,
+                                icon: 'admin/images/warning.svg'
+                            }, {
+                                icon_type: 'image',
+                                newest_on_top: true,
+                                delay: 5000,
+                                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                    '</div>',
+                                spacing: 35
+                            });
+                        }
+                        if (data[i].Reenvio != true) {
+                            $.notify({
+                                message: data[i].Persona.perso_nombre + " " + data[i].Persona
+                                    .perso_apPaterno + " " + data[i].Persona.perso_apMaterno +
+                                    "\nllego al limite de envio de correo",
+                                icon: 'admin/images/warning.svg'
+                            }, {
+                                icon_type: 'image',
+                                newest_on_top: true,
+                                delay: 5000,
+                                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                    '</div>',
+                                spacing: 35
+                            });
+                        }
+                    }
+                }
+                $('#modalCorreoAmbos').modal('toggle');
+                leertabla();
+            }
+        });
+    }
+    $('#enviarAmbasP').on("click", ambasPlataformas);
 
 </script>
 <script src="{{
