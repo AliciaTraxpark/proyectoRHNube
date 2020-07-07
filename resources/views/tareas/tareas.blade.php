@@ -108,7 +108,6 @@
 </div>
 <!-- end row -->
 @endsection
-
 @section('script')
 <!-- Plugins Js -->
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
@@ -119,7 +118,6 @@
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js') }}"></script>
 @endsection
-
 @section('script-bottom')
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
