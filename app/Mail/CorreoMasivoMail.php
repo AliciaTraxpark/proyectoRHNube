@@ -36,6 +36,6 @@ class CorreoMasivoMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.correoMasivo');
+        return $this->view('mails.correoMasivo')->subject('RH SOLUTION');
     }
 }

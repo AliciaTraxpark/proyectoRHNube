@@ -37,6 +37,6 @@ class CorreoEmpleadoMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.vinculacionF');
+        return $this->view('mails.vinculacionF')->subject('RH SOLUTION');
     }
 }
