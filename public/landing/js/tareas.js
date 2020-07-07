@@ -250,7 +250,7 @@ function zoom(horayJ) {
         /*carusel += `<div class="zoom carousel-item">
         <img src="data:image/jpeg;base64,${element.imagen}" height="500" widht="500" class="img-responsive">
             </div>`*/
-        carusel += `<img src="data:image/jpeg;base64,${element.imagen}" class="foto img-responsive">`
+        carusel += `<span class="zoom"><img src="data:image/jpeg;base64,${element.imagen}" class="foto img-responsive"></span>`
     }
     /*carusel += `</div>
     <a class = "carousel-control-prev" href = "#carouselExampleControls" role = "button" data-slide = "prev">

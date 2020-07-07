@@ -46,10 +46,14 @@
         height: 10em;
     }
 
+    .modal-lg {
+        max-width: 80vw !important;
+    }
+
 </style>
 <div id="modalZoom" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
     data-backdrop="static">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
                 <h5 class="modal-title" style="color:#ffffff;font-size:15px">Colección de Imagenes</h5>
@@ -74,7 +78,7 @@
                     <div class="col-md-12">
                         <label style="font-weight: 700">Búsqueda por fecha</label>
                     </div>
-
+                    <div class="col-md-2"></div>
                     <div class="col-md-4">
                         <label><br> </label>
                         <div class="input-group col-md-10" style="padding-left: 0px;">
