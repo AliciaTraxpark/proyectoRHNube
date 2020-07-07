@@ -25,6 +25,10 @@ use App\tarea;
 use App\tipo_dispositivo;
 use App\User;
 use App\vinculacion;
+use App\envio;
+use App\horario_empleado;
+use App\incidencias;
+use App\licencia_empleado;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTFactory;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -532,8 +536,29 @@ class EmpleadoController extends Controller
 
 
         //dd($idem);
-        $modo = modo::whereIn('idEmpleado', explode(",", $ids))->get();
-        $modo->each->delete();
+
+
+        $actividad = actividad::whereIn('empleado_emple_id', explode(",", $ids))->get();
+        $actividad->each->delete();
+
+        $envio = envio::whereIn('idEmpleado', explode(",", $ids))->get();
+        $envio->each->delete();
+
+        $horario_empleado = horario_empleado::whereIn('empleado_emple_id', explode(",", $ids))->get();
+        $horario_empleado->each->delete();
+
+        $incidencias = incidencias::whereIn('emple_id', explode(",", $ids))->get();
+        $incidencias->each->delete();
+
+        $licencia_empleado = licencia_empleado::whereIn('idEmpleado', explode(",", $ids))->get();
+        $licencia_empleado->each->delete();
+
+        $proyecto_empleado = proyecto_empleado::whereIn('empleado_emple_id', explode(",", $ids))->get();
+        $proyecto_empleado->each->delete();
+
+        $tarea = tarea::whereIn('empleado_emple_id', explode(",", $ids))->get();
+        $tarea->each->delete();
+
         $modo = modo::whereIn('idEmpleado', explode(",", $ids))->get();
         $modo->each->delete();
         $vinculacion = vinculacion::whereIn('idEmpleado', explode(",", $ids))->get();
