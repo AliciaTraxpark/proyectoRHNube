@@ -6,6 +6,8 @@ use App\empleado;
 use App\licencia_empleado;
 use App\Mail\AndroidMail;
 use App\Mail\CorreoEmpleadoMail;
+use App\Mail\CorreoMasivoMail;
+use App\modo;
 use App\persona;
 use App\vinculacion;
 use Carbon\Carbon;
@@ -269,6 +271,9 @@ class correosEmpleadoController extends Controller
 
     public function nuevoEncode(Request $request)
     {
+        $respuesta = [];
+        $c = true;
+        $l = true;
         $idEmpleado = $request->get('idEmpleado');
         $empleado = DB::table('empleado as e')
             ->select('e.emple_Correo')
@@ -290,27 +295,38 @@ class correosEmpleadoController extends Controller
             $codP = [];
             $codP["id"] = $codigoP[0]->emple_persona;
             $persona = persona::find($codP["id"]);
-            if ($codigoEmpleado[0]->emple_codigo != '') {
-                $nuevaLivencia = STR::random(8);
-                $codigoLicencia = $nuevaLivencia . '.' . $idEmpleado . '*';
-                $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
-            } else {
-                $nuevaLivencia = STR::random(8);
-                $codigoLicencia = $nuevaLivencia . '.' . $idEmpleado . '*';
-                $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
-            }
+            $cantidad = DB::table('licencia_empleado as le')
+                ->select(DB::raw('COUNT(le.id) as total'))
+                ->where('le.idEmpleado', '=', $idEmpleado)
+                ->get()->first();
+            if ($cantidad->total < 3) {
+                if ($codigoEmpleado[0]->emple_codigo != '') {
+                    $nuevaLivencia = STR::random(8);
+                    $codigoLicencia = $nuevaLivencia . '.' . $idEmpleado . '*';
+                    $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
+                } else {
+                    $nuevaLivencia = STR::random(8);
+                    $codigoLicencia = $nuevaLivencia . '.' . $idEmpleado . '*';
+                    $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
+                }
 
-            $licencia_empleado = new licencia_empleado();
-            $licencia_empleado->idEmpleado = $idEmpleado;
-            $licencia_empleado->licencia = $encodeLicencia;
-            $licencia_empleado->save();
-            $vinculacion = vinculacion::findOrFail($codV->id);
-            $datos = [];
-            $datos["correo"] = $empleado->emple_Correo;
-            $email = array($datos["correo"]);
-            Mail::to($email)->queue(new CorreoEmpleadoMail($vinculacion, $persona, $licencia_empleado));
-            return json_encode(array("result" => true));
+                $licencia_empleado = new licencia_empleado();
+                $licencia_empleado->idEmpleado = $idEmpleado;
+                $licencia_empleado->licencia = $encodeLicencia;
+                $licencia_empleado->save();
+                $vinculacion = vinculacion::findOrFail($codV->id);
+                $datos = [];
+                $datos["correo"] = $empleado->emple_Correo;
+                $email = array($datos["correo"]);
+                Mail::to($email)->queue(new CorreoEmpleadoMail($vinculacion, $persona, $licencia_empleado));
+                return json_encode(array("result" => true));
+            }
+            $l = false;
+            array_push($respuesta, array('limite' => $l, 'correo' => $c));
+            return response()->json($respuesta, 403);
         }
-        return response()->json(null, 403);
+        $c = false;
+        array_push($respuesta, array('limite' => $l, 'correo' => $c));
+        return response()->json($respuesta, 403);
     }
 }
