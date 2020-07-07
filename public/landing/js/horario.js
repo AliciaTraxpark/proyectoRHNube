@@ -154,6 +154,54 @@ function calendarioHorario(eventosEmpleado) {
         selectable: true,
         selectMirror: true,
         select: function (arg) {
+            if ($("#calendarHorario > div.fc-toolbar.fc-header-toolbar > div.fc-right > button").is(":focus"))
+            {
+           //alert('entre yo');
+           /* calendar.addEvent({
+            title: 'Descanso',
+            start:  moment(arg.start).format('YYYY-MM-DD HH:mm:ss'),
+            end:moment(arg.end).format('YYYY-MM-DD HH:mm:ss'),
+
+          }) */
+          idpaisDescanso = $('#pais').val();
+          iddepartamentoDescanso = $('#departamento').val();
+          $.ajax({
+            type: "post",
+            url: "/storeDescanso",
+            data: {
+                start: moment(arg.start).format('YYYY-MM-DD HH:mm:ss'),
+                title: 'Descanso Emp.',
+                pais: idpaisDescanso,
+                departamento: iddepartamentoDescanso,
+                end: moment(arg.end).format('YYYY-MM-DD HH:mm:ss')
+
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                //alert(fechastart);
+                calendar.addEventSource(data);
+                calendar.addEvent({
+                    title: 'Descanso Emp.',
+                    id:data.id,
+                    color:'#e5e5e5',
+                    textColor:'#3f51b5',
+                    start:  moment(arg.start).format('YYYY-MM-DD HH:mm:ss'),
+                    end:moment(arg.end).format('YYYY-MM-DD HH:mm:ss'),
+
+                  });
+                  $('#guardarHorarioEventos').show();
+            },
+            error: function (data) {
+                alert('Ocurrio un error');
+            }
+
+
+        });
+          $('#calendarHorario > div.fc-toolbar.fc-header-toolbar > div.fc-right > button').blur();
+           return false;
+            };
             if($("#collapseTwo").is(':visible')){
                 $('#horarioEndH').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
                 $('#horarioStartH').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
@@ -163,7 +211,11 @@ function calendarioHorario(eventosEmpleado) {
                 finHorario=$('#horaFhorario').val();
 
                 if (inicioHorario == '' || finHorario == '') {
-                    alert('Indique hora de inicio y fin');
+
+                    bootbox.alert({
+                        message: "Indique hora de inicio y fin",
+
+                    });
                 } else {
                     agregarHorasHorario();
                 }
@@ -243,12 +295,28 @@ function calendarioHorario(eventosEmpleado) {
                 };
             }
             },
+
         editable: false,
         eventLimit: true,
         header: {
             left: 'prev,next today',
             center: 'title',
-            right: ''
+            right: 'Descanso'
+        },
+        customButtons: {
+            Descanso: {
+                text: "Asignar días de Descanso",
+                click:function(){
+                    $.notify("Seleccione Dias", {
+                        align: "right",
+                        verticalAlign: "top",
+                        type: "info"
+
+                    });
+
+                }
+
+            }
         },
 
         events: eventosEmpleado,
@@ -413,13 +481,7 @@ function calendario(data) {
             fin = $('#horaF').val();
             if ($("#calendar > div.fc-toolbar.fc-header-toolbar > div.fc-right > button").is(":focus"))
             {
-           //alert('entre yo');
-           /* calendar.addEvent({
-            title: 'Descanso',
-            start:  moment(arg.start).format('YYYY-MM-DD HH:mm:ss'),
-            end:moment(arg.end).format('YYYY-MM-DD HH:mm:ss'),
 
-          }) */
           idpaisDescanso = $('#pais').val();
           iddepartamentoDescanso = $('#departamento').val();
           $.ajax({
@@ -459,7 +521,12 @@ function calendario(data) {
            return false;
             };
             if (inicio == '' || fin == '') {
-                alert('Indique hora de inicio y fin');
+
+                bootbox.alert({
+                    message: "Indique hora de inicio y fin",
+
+                });
+
             } else {
                 agregarHoras();
             }
@@ -659,7 +726,11 @@ $('#nuevoCalendario').click(function () {
             } else {
                 $('#Datoscalendar').hide();
                 $('#Datoscalendar1').hide();
-                alert('No existe calendario');
+
+                bootbox.alert({
+                    message: "No existe calendario",
+
+                });
                 return false;
             }
             calendario1(dataA[1]);
@@ -698,8 +769,53 @@ function calendario1(datadep) {
             f2 = $('#horarioEnd').val();
             inicio = $('#horaI').val();
             fin = $('#horaF').val();
+            if ($("#calendar1 > div.fc-toolbar.fc-header-toolbar > div.fc-right > button").is(":focus"))
+            {
+
+          idpaisDescanso = $('#pais').val();
+          iddepartamentoDescanso = $('#departamento').val();
+          $.ajax({
+            type: "post",
+            url: "/storeDescanso",
+            data: {
+                start: moment(arg.start).format('YYYY-MM-DD HH:mm:ss'),
+                title: 'Descanso Emp.',
+                pais: idpaisDescanso,
+                departamento: iddepartamentoDescanso,
+                end: moment(arg.end).format('YYYY-MM-DD HH:mm:ss')
+
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                //alert(fechastart);
+                calendar1.addEventSource(data);
+                calendar1.addEvent({
+                    title: 'Descanso Emp.',
+                    id:data.id,
+                    color:'#e5e5e5',
+                    textColor:'#3f51b5',
+                    start:  moment(arg.start).format('YYYY-MM-DD HH:mm:ss'),
+                    end:moment(arg.end).format('YYYY-MM-DD HH:mm:ss'),
+
+                  })
+            },
+            error: function (data) {
+                alert('Ocurrio un error');
+            }
+
+
+        });
+          $('#calendar1 > div.fc-toolbar.fc-header-toolbar > div.fc-right > button').blur();
+           return false;
+            };
             if (inicio == '' || fin == '') {
-                alert('Indique hora de inicio y fin');
+
+                bootbox.alert({
+                    message: "Indique hora de inicio y fin",
+
+                });
             } else {
                 agregarHoras2();
             }
@@ -815,7 +931,22 @@ function calendario1(datadep) {
         header: {
             left: 'prev,next today',
             center: 'title',
-            right: ''
+            right: 'Descanso'
+        },
+        customButtons: {
+            Descanso: {
+                text: "Asignar días de Descanso",
+                click:function(){
+                    $.notify("Seleccione Dias", {
+                        align: "right",
+                        verticalAlign: "top",
+                        type: "info"
+
+                    });
+
+                }
+
+            }
         },
 
         events: datadep,
@@ -861,7 +992,12 @@ $('#guardarTodoHorario').click(function () {
     $('#guardarTodoHorario').prop('disabled', true);
     idemps = $('#nombreEmpleado').val();
     if (idemps == '') {
-        alert('Seleccione empleado');
+
+        bootbox.alert({
+            message: "Seleccione empleado",
+
+        });
+        $('#guardarTodoHorario').prop('disabled', false);
         return false;
     }
     if ($('#exampleCheck1').prop('checked')) {

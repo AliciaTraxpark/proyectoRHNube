@@ -492,23 +492,18 @@
                             <div id="calendar1Horario">
                             </div>
                           </div>
+                          <div class="col-md-12 text-right" >
+                            <br>
+                         {{-- <button type="button" id="" class="btn btn-light " data-dismiss="modal">Cancelar</button> --}}
+                         <button type="button" id="cerrarHorario" name="" style="background-color: #d9dee2;color: #171413;" class="btn ">Cerrar</button>
+                         <button type="button" id="guardarHorarioEventos" name="guardarHorarioEventos"  style="background-color: #163552; display: none;" class="btn ">Guardar</button>
+                        </div>
 
 
                         </div>
 
                    </div>
 
-               </div>
-               <div class="modal-footer" style="padding-top: 4px;padding-bottom: 4px">
-                   <div class="col-md-12">
-                       <div class="row">
-                           <div class="col-md-12 text-right" >
-                            {{-- <button type="button" id="" class="btn btn-light " data-dismiss="modal">Cancelar</button> --}}
-                            <button type="button" id="cerrarHorario" name="" style="background-color: #d9dee2;color: #171413;" class="btn ">Cerrar</button>
-                            <button type="button" id="guardarHorarioEventos" name="guardarHorarioEventos"  style="background-color: #163552; display: none;" class="btn ">Guardar</button>
-                           </div>
-                       </div>
-                   </div>
                </div>
            </div><!-- /.modal-content -->
          </div><!-- /.modal-dialog -->
