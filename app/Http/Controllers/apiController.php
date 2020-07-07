@@ -245,9 +245,9 @@ class apiController extends Controller
                             $proyectoE = proyecto_empleado::where('empleado_emple_id', '=', $empleado->emple_id)->get()->first();
                             if ($proyectoE) {
                                 $proyecto = proyecto::where('Proye_id', '=', $proyectoE->Proyecto_Proye_id)->get()->first();
-                                return response()->json($proyecto->Proye_Nombre, 200);
+                                return response()->json($empleado->emple_id, 200);
                             }
-                            return response()->json("Empleado sin actividades asignadas", 200);
+                            return response()->json($empleado->emple_id, 200);
                         } else {
                             return response()->json("Pc no coinciden", 400);
                         }
