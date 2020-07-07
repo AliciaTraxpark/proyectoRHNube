@@ -38,8 +38,7 @@
             <div class="modal-body">
                 <form class="form-horizontal">
                     <h5 class="modal-title" id="myModalLabel" style="font-size:
-                        15px">¿Desea enviar correo al empleado
-                        empleado?</h5>
+                        15px">¿Desea enviar correo al empleado?</h5>
                 </form>
             </div>
             <div class="modal-footer">
@@ -113,8 +112,7 @@
             <div class="modal-body">
                 <form class="form-horizontal">
                     <h5 class="modal-title" id="myModalLabel" style="font-size:
-                        15px">¿Desea enviar correo al empleado
-                        empleado?</h5>
+                        15px">¿Desea enviar correo a los empleados seleccionados?</h5>
                 </form>
             </div>
             <div class="modal-footer">
@@ -151,8 +149,7 @@
             <div class="modal-body">
                 <form class="form-horizontal">
                     <h5 class="modal-title" id="myModalLabel" style="font-size:
-                        15px">¿Desea enviar correo al empleado
-                        empleado?</h5>
+                        15px">¿Desea enviar correo a los empleados seleccionados?</h5>
                 </form>
             </div>
             <div class="modal-footer">
@@ -189,8 +186,7 @@
             <div class="modal-body">
                 <form class="form-horizontal">
                     <h5 class="modal-title" id="myModalLabel" style="font-size:
-                        15px">¿Desea enviar correo al empleado
-                        empleado?</h5>
+                        15px">¿Desea enviar correo al empleado?</h5>
                 </form>
             </div>
             <div class="modal-footer">
@@ -226,8 +222,7 @@
             <div class="modal-body">
                 <form class="form-horizontal">
                     <h5 class="modal-title" id="myModalLabel" style="font-size:
-                        15px">¿Desea enviar correo al empleado
-                        empleado?</h5>
+                        15px">¿Desea enviar correo a los empleados seleccionados?</h5>
                 </form>
             </div>
             <div class="modal-footer">
