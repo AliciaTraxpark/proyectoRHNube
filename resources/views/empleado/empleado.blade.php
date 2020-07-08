@@ -233,9 +233,10 @@
                     aria-labelledby="modalMasivaFoto" aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog modal-dialog-scrollable modal-lg">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Foto
-                                    Empleado</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Carga
+                                    Masiva de Fotos a
+                                    Empleados</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -257,7 +258,8 @@
                                     <div class="row">
                                         <div class="col-md-12 text-center">
                                             <button type="button" id="cerrarMFotos" class="btn btn-light"
-                                                data-dismiss="modal">Cerrar</button>
+                                                data-dismiss="modal"
+                                                style="background-color:#163552;color:#ffffff;">Finalizar</button>
                                         </div>
                                     </div>
                                 </div>
@@ -779,7 +781,8 @@
                                                     <div class="form-group">
                                                         <label for="sw-default">Celular</label>
                                                         <input type="number" class="form-control" name="celular"
-                                                            id="celular" tabindex="8" maxlength = "9"  onkeypress="return isNumeric(event)"
+                                                            id="celular" tabindex="8" maxlength="9"
+                                                            onkeypress="return isNumeric(event)"
                                                             oninput="maxLengthCheck(this)">
                                                     </div>
                                                 </div>
@@ -802,7 +805,8 @@
                                                     <div class="form-group">
                                                         <label for="sw-default">Telefono</label>
                                                         <input type="number" class="form-control" name="telefono"
-                                                            id="telefono" tabindex="9" maxlength = "9"  onkeypress="return isNumeric(event)"
+                                                            id="telefono" tabindex="9" maxlength="9"
+                                                            onkeypress="return isNumeric(event)"
                                                             oninput="maxLengthCheck(this)">
                                                     </div>
                                                 </div>
@@ -1107,7 +1111,8 @@
                                                     <div class="form-group">
                                                         <label for="sw-default">Celular</label>
                                                         <input type="text" class="form-control" name="v_celular"
-                                                            id="v_celular" tabindex="8" maxlength = "9"  onkeypress="return isNumeric(event)"
+                                                            id="v_celular" tabindex="8" maxlength="9"
+                                                            onkeypress="return isNumeric(event)"
                                                             oninput="maxLengthCheck(this)">
                                                     </div>
                                                 </div>
@@ -1130,7 +1135,8 @@
                                                     <div class="form-group">
                                                         <label for="sw-default">Telefono</label>
                                                         <input type="text" class="form-control" name="v_telefono"
-                                                            id="v_telefono" tabindex="9" maxlength = "9"  onkeypress="return isNumeric(event)"
+                                                            id="v_telefono" tabindex="9" maxlength="9"
+                                                            onkeypress="return isNumeric(event)"
                                                             oninput="maxLengthCheck(this)">
                                                     </div>
                                                 </div>
@@ -1403,21 +1409,22 @@
     <script src="{{asset('admin/assets/libs/smartwizard/jquery.smartWizard.min.js') }}"></script>
     <script>
         function maxLengthCheck(object) {
-          if (object.value.length > object.maxLength)
-            object.value = object.value.slice(0, object.maxLength)
+            if (object.value.length > object.maxLength)
+                object.value = object.value.slice(0, object.maxLength)
         }
 
-        function isNumeric (evt) {
-          var theEvent = evt || window.event;
-          var key = theEvent.keyCode || theEvent.which;
-          key = String.fromCharCode (key);
-          var regex = /[0-9]|\./;
-          if ( !regex.test(key) ) {
-            theEvent.returnValue = false;
-            if(theEvent.preventDefault) theEvent.preventDefault();
-          }
+        function isNumeric(evt) {
+            var theEvent = evt || window.event;
+            var key = theEvent.keyCode || theEvent.which;
+            key = String.fromCharCode(key);
+            var regex = /[0-9]|\./;
+            if (!regex.test(key)) {
+                theEvent.returnValue = false;
+                if (theEvent.preventDefault) theEvent.preventDefault();
+            }
         }
-      </script>
+
+    </script>
     <script src="{{asset('admin/assets/libs/bootstrap-fileinput/piexif.min.js')}}"></script>
     <script src="{{asset('admin/assets/libs/bootstrap-fileinput/sortable.min.js')}}"></script>
     <script src="{{asset('admin/assets/libs/bootstrap-fileinput/purify.min.js')}}"></script>

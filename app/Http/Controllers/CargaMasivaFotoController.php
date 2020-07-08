@@ -23,6 +23,6 @@ class CargaMasivaFotoController extends Controller
             $empleado->save();
             return json_encode($persona->perso_nombre, 200);
         }
-        return response()->json('Empleado no encontrado', 400);
+        return response()->json("Empleado no encontrado", 400);
     }
 }
