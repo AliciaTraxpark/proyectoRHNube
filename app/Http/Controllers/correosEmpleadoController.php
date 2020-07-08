@@ -72,13 +72,14 @@ class correosEmpleadoController extends Controller
                 $codP = [];
                 $codP["id"] = $codigoP[0]->emple_persona;
                 $persona = persona::find($codP["id"]);
+                $codigoU = Auth::user()->id;
                 if ($codigoEmpleado[0]->emple_codigo != '') {
-                    $codigoHash = $codigoEmpresa[0]->organi_id . $idEmpleado . $codigoEmpleado[0]->emple_codigo;
+                    $codigoHash = $codigoU . "s" . $codigoEmpresa[0]->organi_id . $idEmpleado . $codigoEmpleado[0]->emple_codigo;
                     $encode = intval($codigoHash, 36);
                     $codigoLicencia = $idEmpleado . '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id;
                     $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
                 } else {
-                    $codigoHash = $codigoEmpresa[0]->organi_id . $idEmpleado . $codigoEmpleado[0]->emple_persona;
+                    $codigoHash = $codigoU . "s" . $codigoEmpresa[0]->organi_id . $idEmpleado . $codigoEmpleado[0]->emple_persona;
                     $encode = intval($codigoHash, 36);
                     $codigoLicencia = $idEmpleado . '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id;
                     $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));

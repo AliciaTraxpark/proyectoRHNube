@@ -235,7 +235,14 @@ class apiController extends Controller
     public function verificacion(Request $request)
     {
         $nroD = $request->get('nroDocumento');
-        $empleado = empleado::where('emple_nDoc', '=', $nroD)->get()->first();
+        $codigo = $request->get('codigo');
+        $decode = base_convert(intval($codigo), 10, 36);
+        $explode = explode("s", $decode);
+        //$empleado = empleado::where('emple_nDoc', '=', $nroD)->get()->first();
+        $empleado = DB::table('empleado as e')
+            ->where('emple_nDoc', '=', $nroD)
+            ->where('e.users_id', '=', $explode[0])
+            ->get()->first();
         if ($empleado) {
             $vinculacion = vinculacion::where('idEmpleado', '=', $empleado->emple_id)->get()->first();
             if ($vinculacion) {
@@ -245,16 +252,16 @@ class apiController extends Controller
                             $proyectoE = proyecto_empleado::where('empleado_emple_id', '=', $empleado->emple_id)->get()->first();
                             if ($proyectoE) {
                                 $proyecto = proyecto::where('Proye_id', '=', $proyectoE->Proyecto_Proye_id)->get()->first();
-                                return response()->json(array("idEmpleado"=>$empleado->emple_id),200);
+                                return response()->json(array("idEmpleado" => $empleado->emple_id), 200);
                             }
-                            return response()->json(array("idEmpleado"=>$empleado->emple_id),200);
+                            return response()->json(array("idEmpleado" => $empleado->emple_id), 200);
                         } else {
                             return response()->json("Pc no coinciden", 400);
                         }
                     } else {
                         $vinculacion->pc_mac = $request->get('pc_mac');
                         $vinculacion->save();
-                        return response()->json(array("idEmpleado"=>$empleado->emple_id),200);
+                        return response()->json(array("idEmpleado" => $empleado->emple_id), 200);
                     }
                 }
                 return response()->json("Código erróneo", 400);
