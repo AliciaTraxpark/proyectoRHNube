@@ -63,7 +63,7 @@ function onMostrarPantallas() {
                                 var capturas = "";
                                 for (let index = 1; index < data[hora][j].length; index++) {
                                     capturas += `<div class = "carousel-item">
-                                    <img src="data:image/jpeg;base64,${data[hora][j][index].imagen}" height="120" width="120" class="img-responsive">
+                                    <img src="data:image/jpeg;base64,${data[hora][j][index].imagen}" height="120" width="150" class="img-responsive">
                                     <div class="overlay">
                                     <a class="info" onclick="zoom('${hora + "," + j}')" style="color:#fdfdfd">
                                     <i class="fa fa-eye"></i> Colección</a>
@@ -87,7 +87,7 @@ function onMostrarPantallas() {
                                                         <div  id="myCarousel${hora + j}" class = "carousel carousel-fade" data-ride = "carousel">
                                                             <div class = "carousel-inner">
                                                                 <div class = "carousel-item active">
-                                                                    <img src="data:image/jpeg;base64,${data[hora][j][0].imagen}" height="120" width="120" class="img-responsive">
+                                                                    <img src="data:image/jpeg;base64,${data[hora][j][0].imagen}" height="120" width="150" class="img-responsive">
                                                                     <div class="overlay">
                                                                     <a class="info" onclick="zoom('${hora + "," + j}')" style="color:#fdfdfd">
                                                                     <i class="fa fa-eye"></i> Colección</a>
@@ -137,7 +137,7 @@ function onMostrarPantallas() {
                                                         <div  id="myCarousel${hora + j}" class = "carousel carousel-fade" data-ride = "carousel">
                                                             <div class = "carousel-inner">
                                                                 <div class = "carousel-item active">
-                                                                    <img src="data:image/jpeg;base64,${data[hora][j][0].imagen}" height="120" width="120" class="img-responsive">
+                                                                    <img src="data:image/jpeg;base64,${data[hora][j][0].imagen}" height="120" width="150" class="img-responsive">
                                                                     <div class="overlay">
                                                                     <a class="info" onclick="zoom('${hora + "," + j}')" style="color:#fdfdfd">
                                                                     <i class="fa fa-eye"></i> Colección</a>
