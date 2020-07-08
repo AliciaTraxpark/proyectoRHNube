@@ -102,7 +102,7 @@ class horarioController extends Controller
             $horario_dias->start=$temporal_eventos->start;
             $horario_dias->end=$temporal_eventos->end;
             $horario_dias->color=$temporal_eventos->color;
-            $horario_dias->textColor=$temporal_eventos->textColor;
+            $horario_dias->textColor='000000';
             $horario_dias->users_id=$temporal_eventos->users_id;
             $horario_dias->paises_id=$temporal_eventos->paises_id;
             $horario_dias->ubigeo_peru_departments_id=$temporal_eventos->ubigeo_peru_departments_id;
@@ -181,10 +181,16 @@ class horarioController extends Controller
         $empleado = DB::table('empleado as e')
         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
         ->select('p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno','e.emple_nDoc','p.perso_id','e.emple_id','hd.paises_id','hd.ubigeo_peru_departments_id',
-        'hor.horario_sobretiempo','hor.horario_tipo','hor.horario_descripcion','hor.horario_tolerancia')
+        'hor.horario_sobretiempo','hor.horario_tipo','hor.horario_descripcion','hor.horario_tolerancia','e.emple_nDoc','e.emple_Correo','e.emple_celular','a.area_descripcion',
+        'c.cargo_descripcion','cc.centroC_descripcion','lo.local_descripcion')
         ->join('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
         ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
         ->join('horario as hor', 'he.horario_horario_id', '=', 'hor.horario_id')
+        ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+        ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+        ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+        ->leftJoin('local as lo', 'e.emple_local', '=', 'lo.local_id')
+
         ->distinct('e.emple_id')
         ->where('emple_id','=',$idsEm)->get();
         if(count($empleado) >= 1) {
