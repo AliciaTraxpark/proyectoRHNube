@@ -40,7 +40,7 @@
     font-size: 12.2px!important;
     margin: 2px 2px;
     cursor:url("../landing/images/cruz1.svg"), auto;
-   
+    font-weight: 600;
 
 
 
