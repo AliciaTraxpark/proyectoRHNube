@@ -257,7 +257,7 @@ function zoom(horayJ) {
     var carusel = `<p class="imglist" style="max-width: 1000px;">`;
     for (let index = 0; index < capturas.length; index++) {
         const element = capturas[index];
-        carusel += `<a href="data:image/jpeg;base64,${element.imagen}" data-fancybox="images" data-caption="Collección de capturas" data-width="2048" data-height="1365" style="padding-right:10px"><img src="data:image/jpeg;base64,${element.imagen}" width="240" height="240"></a>`
+        carusel += `<a href="data:image/jpeg;base64,${element.imagen}" data-fancybox="images" data-caption="Collección de capturas" data-width="2048" data-height="1365"><img src="data:image/jpeg;base64,${element.imagen}" width="240" height="240" style="padding-right:10px;padding-bottom:10px"></a>`
     }
     carusel += `</p>`
     document.getElementById("zoom").innerHTML = carusel;
