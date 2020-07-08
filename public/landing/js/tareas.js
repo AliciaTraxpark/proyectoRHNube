@@ -82,7 +82,7 @@ function onMostrarPantallas() {
                                                     padding-bottom: 4px;">
                                                         <h5 class="m-0 font-size-16" style="color:#fafafa">${data[hora][j][0].Proye_Nombre} </h5>
                                                     </div>  <br>
-                                                    <div class="col-md-12 col-sm-6" style="padding-left: 0px;">
+                                                    <div class="col-md-12 col-sm-6" style="padding-left: 0px;;padding-right: 0px">
                                                     <div class="hovereffect">
                                                         <div  id="myCarousel${hora + j}" class = "carousel carousel-fade" data-ride = "carousel">
                                                             <div class = "carousel-inner">
@@ -132,7 +132,7 @@ function onMostrarPantallas() {
                                                         padding-bottom: 4px;">
                                                             <h5 class="m-0 font-size-16" style="color:#fafafa">${data[hora][j][0].Proye_Nombre} </h5>
                                                         </div>  <br>
-                                                        <div class="col-md-12 col-sm-6" style="padding-left: 0px;">
+                                                        <div class="col-md-12 col-sm-6" style="padding-left: 0px;padding-right: 0px">
                                                         <div class="hovereffect">
                                                         <div  id="myCarousel${hora + j}" class = "carousel carousel-fade" data-ride = "carousel">
                                                             <div class = "carousel-inner">
