@@ -1,126 +1,155 @@
-function agregarProyecto(){
+function agregarProyecto() {
 
-    var nombre=$('#nombreProyecto').val();
-    var descripcion=$('#detalleProyecto').val();
+    var nombre = $('#nombreProyecto').val();
+    var descripcion = $('#detalleProyecto').val();
     $.ajax({
-        type:"POST",
-        url:"/proyecto/registrar",
-        data:{nombre,descripcion},
-        headers:{
+        type: "POST",
+        url: "/proyecto/registrar",
+        data: {
+            nombre,
+            descripcion
+        },
+        headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        success:function(data){
+        success: function (data) {
             $('#nombreProyecto').val('');
             $('#detalleProyecto').val('');
             $('#myModal').modal('hide');
-            $('#tablaProyecto').load(location.href+" #tablaProyecto>*");
-            $.notify("proyecto registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
+            $('#tablaProyecto').load(location.href + " #tablaProyecto>*");
+            $.notify("Tarea registrado", {
+                align: "right",
+                verticalAlign: "top",
+                type: "success",
+                icon: "check"
+            });
 
         },
-        error:function(){ alert("Hay un error");}
+        error: function () {
+            alert("Hay un error");
+        }
     });
 }
 
 
-    function abrirM(id) {
-        $('#idempleado').load(location.href+" #idempleado>*");
-        $('#myModal1').modal('toggle');
-        $.ajax({
-            type:"POST",
-            url:"/proyecto/proyectoV",
-            data:{id},
-            headers:{
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success:function(data){
+function abrirM(id) {
+    $('#idempleado').load(location.href + " #idempleado>*");
+    $('#myModal1').modal('toggle');
+    $.ajax({
+        type: "POST",
+        url: "/proyecto/proyectoV",
+        data: {
+            id
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
 
 
 
-              $('#nombre1').val(data.Proye_Nombre);
-              $('#id1').val(data.Proye_id);
+            $('#nombre1').val(data.Proye_Nombre);
+            $('#id1').val(data.Proye_id);
 
 
-            },
-            error:function(){ alert("Hay un error");}
-        });
-         var $select=$('#idempleado').select2();
-       $.ajax({
+        },
+        error: function () {
+            alert("Hay un error");
+        }
+    });
+    var $select = $('#idempleado').select2();
+    $.ajax({
 
-            type:"POST",
-            url:"/proyecto/selectValidar",
-            data:{id},
-            headers:{
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success:function(data){
-                //$('#prue').val(null).trigger('change');
-                var array = [];
-               /*  $.each(data, function (i, json) {
-                    $select.append('<option value="' + json.emple_id + '">' + json.perso_nombre + '</option>');
-                  }); */
-                  $.each(data,function(i,json){
-                    array[json.empleado_emple_id]=(parseInt(json.empleado_emple_id));
+        type: "POST",
+        url: "/proyecto/selectValidar",
+        data: {
+            id
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            //$('#prue').val(null).trigger('change');
+            var array = [];
+            /*  $.each(data, function (i, json) {
+                 $select.append('<option value="' + json.emple_id + '">' + json.perso_nombre + '</option>');
+               }); */
+            $.each(data, function (i, json) {
+                array[json.empleado_emple_id] = (parseInt(json.empleado_emple_id));
 
-                       $('#idempleado').find('option[value="'+json.empleado_emple_id+'"]').remove();
-
-
-
-
-                  });
-                  $('#idempleado').select2({});;
-                 //alert(array);
-               /*    for(i=0;i<array.length;i++){
-                    if(array[i]!=undefined){
-                        $('#prue').val(null).trigger('change');
-                       //$("#prue option[value=" + i+  "]").hide();
-                       $('#prue').find('option[value="'+array[i]+'"]').hide();
-                     }
-                     if(array[i]==undefined){
-                        $('#prue').val(null).trigger('change');
-                        $("#prue option[value=" + i + "]").show();
-                     }
-                   } */
+                $('#idempleado').find('option[value="' + json.empleado_emple_id + '"]').remove();
 
 
 
-            },
-            error:function(){ alert("Hay un error");}
-        });
-        $('#idempleado').change(function() {
-        var selections = ( JSON.stringify($('#idempleado').select2('data')) );
+
+            });
+            $('#idempleado').select2({});;
+            //alert(array);
+            /*    for(i=0;i<array.length;i++){
+                 if(array[i]!=undefined){
+                     $('#prue').val(null).trigger('change');
+                    //$("#prue option[value=" + i+  "]").hide();
+                    $('#prue').find('option[value="'+array[i]+'"]').hide();
+                  }
+                  if(array[i]==undefined){
+                     $('#prue').val(null).trigger('change');
+                     $("#prue option[value=" + i + "]").show();
+                  }
+                } */
+
+
+
+        },
+        error: function () {
+            alert("Hay un error");
+        }
+    });
+    $('#idempleado').change(function () {
+        var selections = (JSON.stringify($('#idempleado').select2('data')));
         //console.log('Selected IDs: ' + ids);
         console.log('Selected options: ' + selections);
         //$('#selectedIDs').text(ids);
         //$('#selectedText').text(selections);
-        });
-    };
+    });
+};
 
-function registrarPE(){
+function registrarPE() {
 
-    var proyecto=$('#id1').val();
-    var empleado= $('#idempleado').val();
+    var proyecto = $('#id1').val();
+    var empleado = $('#idempleado').val();
 
 
     $.ajax({
-        type:"POST",
-        url:"/proyecto/registrarPrEm",
-        data:{proyecto,empleado},
-        headers:{
+        type: "POST",
+        url: "/proyecto/registrarPrEm",
+        data: {
+            proyecto,
+            empleado
+        },
+        headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        success:function(data){
+        success: function (data) {
             $('#myModal1').modal('toggle');
-            $('#tablaProyecto').load(location.href+" #tablaProyecto>*");
-            $.notify("empleado registrado", {align:"right", verticalAlign:"top",type: "success", icon:"check"});
+            $('#tablaProyecto').load(location.href + " #tablaProyecto>*");
+            $.notify("empleado registrado", {
+                align: "right",
+                verticalAlign: "top",
+                type: "success",
+                icon: "check"
+            });
 
         },
-        error:function(){ alert("Hay un error, Datos no validos");}
+        error: function () {
+            alert("Hay un error, Datos no validos");
+        }
     });
 
 
 
 };
-function eliminarp(idproyecto){
+
+function eliminarp(idproyecto) {
     bootbox.confirm({
         message: "¿Desea eliminar esta tarea con todos sus integrantes?",
         buttons: {
@@ -145,7 +174,7 @@ function eliminarp(idproyecto){
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function (data) {
-                    $('#tablaProyecto').load(location.href+" #tablaProyecto>*");
+                        $('#tablaProyecto').load(location.href + " #tablaProyecto>*");
                     },
                     error: function (data) {
                         bootbox.alert({
@@ -155,44 +184,44 @@ function eliminarp(idproyecto){
                     }
 
 
-                });}
+                });
+            }
         }
     });
 
 };
-$(document).ready(function(){
+$(document).ready(function () {
     $("#tablaProyecto").DataTable({
-              "searching": true,
-            responsive: true,
-            retrieve: true,
+        "searching": true,
+        responsive: true,
+        retrieve: true,
 
-            language :
-            {
-                "sProcessing":     "Procesando...",
-                "sLengthMenu":     "Mostrar _MENU_ registros",
-                "sZeroRecords":    "No se encontraron resultados",
-                "sEmptyTable":     "Ningún dato disponible en esta tabla",
-                "sInfo":           "Mostrando registros del _START_ al _END_ ",
-                "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-                "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-                "sInfoPostFix":    "",
-                "sSearch":         "Buscar:",
-                "sUrl":            "",
-                "sInfoThousands":  ",",
-                "sLoadingRecords": "Cargando...",
-                "oPaginate": {
-                    "sFirst":    "Primero",
-                    "sLast":     "Último",
-                    "sNext":     ">",
-                    "sPrevious": "<"
-                },
-                "oAria": {
-                    "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                },
-
+        language: {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando registros del _START_ al _END_ ",
+            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": ">",
+                "sPrevious": "<"
+            },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
             },
 
+        },
 
-        });
+
+    });
 });

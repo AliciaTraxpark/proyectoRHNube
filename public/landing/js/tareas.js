@@ -27,6 +27,7 @@ function onMostrarPantallas() {
     var fecha = $('#fecha').val();
     var proyecto = $('#proyecto').val();
     $('#card').empty();
+    $('#espera').show();
     $.ajax({
         url: "tareas/show",
         method: "GET",
@@ -40,8 +41,24 @@ function onMostrarPantallas() {
         },
         success: function (data) {
             //data = data.reverse();
+            $('#espera').hide();
             datos = data;
             if (data.length != 0) {
+                $.notify({
+                    message: "\nCapturas encontradas.",
+                    icon: 'admin/images/checked.svg'
+                }, {
+                    icon_type: 'image',
+                    newest_on_top: true,
+                    delay: 5000,
+                    template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
                 var container = $('#card');
                 $.notifyClose();
                 for (const hora in data) {
@@ -63,7 +80,7 @@ function onMostrarPantallas() {
                                 var capturas = "";
                                 for (let index = 1; index < data[hora][j].length; index++) {
                                     capturas += `<div class = "carousel-item">
-                                    <img src="data:image/jpeg;base64,${data[hora][j][index].imagen}" height="120" width="120" class="img-responsive">
+                                    <img src="data:image/jpeg;base64,${data[hora][j][index].imagen}" height="120" width="200" class="img-responsive">
                                     <div class="overlay">
                                     <a class="info" onclick="zoom('${hora + "," + j}')" style="color:#fdfdfd">
                                     <i class="fa fa-eye"></i> Colección</a>
@@ -82,12 +99,12 @@ function onMostrarPantallas() {
                                                     padding-bottom: 4px;">
                                                         <h5 class="m-0 font-size-16" style="color:#fafafa">${data[hora][j][0].Proye_Nombre} </h5>
                                                     </div>  <br>
-                                                    <div class="col-md-12 col-sm-6" style="padding-left: 0px;">
+                                                    <div class="col-md-12 col-sm-6" style="padding-left: 0px;;padding-right: 0px">
                                                     <div class="hovereffect">
                                                         <div  id="myCarousel${hora + j}" class = "carousel carousel-fade" data-ride = "carousel">
                                                             <div class = "carousel-inner">
                                                                 <div class = "carousel-item active">
-                                                                    <img src="data:image/jpeg;base64,${data[hora][j][0].imagen}" height="120" width="120" class="img-responsive">
+                                                                    <img src="data:image/jpeg;base64,${data[hora][j][0].imagen}" height="120" width="200" class="img-responsive">
                                                                     <div class="overlay">
                                                                     <a class="info" onclick="zoom('${hora + "," + j}')" style="color:#fdfdfd">
                                                                     <i class="fa fa-eye"></i> Colección</a>
@@ -132,12 +149,12 @@ function onMostrarPantallas() {
                                                         padding-bottom: 4px;">
                                                             <h5 class="m-0 font-size-16" style="color:#fafafa">${data[hora][j][0].Proye_Nombre} </h5>
                                                         </div>  <br>
-                                                        <div class="col-md-12 col-sm-6" style="padding-left: 0px;">
+                                                        <div class="col-md-12 col-sm-6" style="padding-left: 0px;padding-right: 0px">
                                                         <div class="hovereffect">
                                                         <div  id="myCarousel${hora + j}" class = "carousel carousel-fade" data-ride = "carousel">
                                                             <div class = "carousel-inner">
                                                                 <div class = "carousel-item active">
-                                                                    <img src="data:image/jpeg;base64,${data[hora][j][0].imagen}" height="120" width="120" class="img-responsive">
+                                                                    <img src="data:image/jpeg;base64,${data[hora][j][0].imagen}" height="120" width="200" class="img-responsive">
                                                                     <div class="overlay">
                                                                     <a class="info" onclick="zoom('${hora + "," + j}')" style="color:#fdfdfd">
                                                                     <i class="fa fa-eye"></i> Colección</a>
@@ -240,7 +257,7 @@ function zoom(horayJ) {
     var carusel = `<p class="imglist" style="max-width: 1000px;">`;
     for (let index = 0; index < capturas.length; index++) {
         const element = capturas[index];
-        carusel += `<a href="data:image/jpeg;base64,${element.imagen}" data-fancybox="images" data-caption="Collección de capturas" data-width="760" data-height="760"><img src="data:image/jpeg;base64,${element.imagen}" width="240" height="240"></a>`
+        carusel += `<a href="data:image/jpeg;base64,${element.imagen}" data-fancybox="images" data-caption="Collección de capturas" data-width="2048" data-height="1365"><img src="data:image/jpeg;base64,${element.imagen}" width="240" height="240" style="padding-right:10px;padding-bottom:10px"></a>`
     }
     carusel += `</p>`
     document.getElementById("zoom").innerHTML = carusel;

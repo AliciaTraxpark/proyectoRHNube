@@ -22,6 +22,7 @@
     .red-tooltip+.tooltip>.tooltip-inner {
         background-color: rgb(0, 0, 0);
     }
+
 </style>
 <div id="modalCorreo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCorreo" aria-hidden="true"
     data-backdrop="static">
@@ -435,9 +436,11 @@
         if (CheckBoxMarcados > 0) {
             $('#enviarCorreosMasivos').show();
             $('#enviarAndroidMasivos').show();
+            $('#enviarMasivo').show();
         } else {
             $('#enviarCorreosMasivos').hide();
             $('#enviarAndroidMasivos').hide();
+            $('#enviarMasivo').hide();
         }
         seleccionarTodos.prop('checked', (CheckBoxMarcados === CheckBoxs.length));
     });
