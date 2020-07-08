@@ -100,6 +100,9 @@
                         </div>
                     </div>-->
                 </div>
+                <div id="espera" class="text-center" style="display: none">
+                    <img src="{{asset('landing/images/loading.gif')}}" height="100">
+                </div>
                 <div class="col-xl-12" id="card">
                 </div>
             </div> <!-- end card-body-->

@@ -27,6 +27,7 @@ function onMostrarPantallas() {
     var fecha = $('#fecha').val();
     var proyecto = $('#proyecto').val();
     $('#card').empty();
+    $('#espera').show();
     $.ajax({
         url: "tareas/show",
         method: "GET",
@@ -40,6 +41,7 @@ function onMostrarPantallas() {
         },
         success: function (data) {
             //data = data.reverse();
+            $('#espera').hide();
             datos = data;
             if (data.length != 0) {
                 var container = $('#card');
