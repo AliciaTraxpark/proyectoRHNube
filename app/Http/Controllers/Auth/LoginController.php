@@ -56,7 +56,8 @@ class LoginController extends Controller
         }
         else{
             //return view('Welcome');
-            return redirect(route('login'));
+            return redirect()->route('login')
+                ->with('error','Correo electronico o contraseña incorrecta');
         }
 
     }

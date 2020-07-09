@@ -488,6 +488,24 @@
             </div>
         </div>
     </div>
+    @if (session('error'))
+    <div class="modal " id="modal1" role="dialog" style="display: block;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style=" padding-top: 8px; padding-bottom: 5px;">
+                    <h5 style="font-size: 14px" class="modal-title">Advertencia</h5>
+
+                </div>
+                <div class="modal-body">
+                    <p>{{ session('error') }}</p>
+                </div>
+                <div class="modal-footer" style=" padding-top: 8px; padding-bottom: 8px; ">
+                    <button type="button" onclick="cerrarModalAdvertencia()" class="btn btn-primary btn-sm" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+   @endif
     <script src="{{asset('landing/vendors/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('landing/vendors/bootstrap/bootstrap.min.js')}}"></script>
     <script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>
@@ -513,12 +531,18 @@
         </div>
     </div>
     <script>
+
         function cerrarModal() {
             document.getElementById("modal").style.display = "none";
         }
 
     </script>
     @endif
+    <script>
+        function cerrarModalAdvertencia(){
+            document.getElementById("modal1").style.display = "none";
+        }
+    </script>
 </body>
 
 </html>
