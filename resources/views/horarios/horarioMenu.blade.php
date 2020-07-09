@@ -37,9 +37,10 @@
 
     .fc-event, .fc-event-dot {
     background-color: #d1c3c3;
-    font-size: 11.2px!important;
+    font-size: 12.2px!important;
     margin: 2px 2px;
     cursor:url("../landing/images/cruz1.svg"), auto;
+    font-weight: 600;
 
 
 
@@ -99,7 +100,7 @@
     line-height: 20px;
     padding: 5px 0;
     text-transform: uppercase;
-    font-weight: 500;
+    font-weight: 600;
     }
     .custom-select:disabled {
     color: #3f3a3a;
@@ -303,6 +304,14 @@
                                    {{-- <input type="text" class="form-control form-control-sm" id="nombreEmpleado"> --}}
                                    <input type="text" class="form-control form-control-sm" id="idEmHorario" disabled>
                                    <input type="hidden" id="idobtenidoE">
+                                   <input type="hidden" id="docEmpleado">
+                                   <input type="hidden" id="correoEmpleado">
+                                   <input type="hidden" id="celEmpleado">
+                                   <input type="hidden" id="areaEmpleado">
+                                   <input type="hidden" id="cargoEmpleado">
+                                   <input type="hidden" id="ccEmpleado">
+                                   <input type="hidden" id="localEmpleado">
+
                                 </div>
                              </div>
                              <div class="col-md-12">
@@ -480,7 +489,7 @@
                          <div class="row">
 
                           </div>
-                          <div class="col-md-12 text-right" id="DatoscalendarH" style=" max-width: 100%;">
+                          <div class="col-md-12 text-right" id="DatoscalendarH">
 
                             <div id="calendarHorario">
                             </div>
@@ -492,11 +501,18 @@
                             <div id="calendar1Horario">
                             </div>
                           </div>
-                          <div class="col-md-12 text-right" >
-                            <br>
-                         {{-- <button type="button" id="" class="btn btn-light " data-dismiss="modal">Cancelar</button> --}}
-                         <button type="button" id="cerrarHorario" name="" style="background-color: #d9dee2;color: #171413;" class="btn ">Cerrar</button>
-                         <button type="button" id="guardarHorarioEventos" name="guardarHorarioEventos"  style="background-color: #163552; display: none;" class="btn ">Guardar</button>
+                          <div class="col-md-12" >
+                              <br>
+                              <div class="row" style="padding-left:2px;">
+                                <div class="col-md-6 text-left">
+                                    <button style="background-color: #dcc3c3; border-color: #ffffff; color: #44444c"  class="btn btn-sm  btn-primary" onclick="screenshot();"><img src="{{asset('admin/images/pdf2.svg')}}" height="24" ></i>  Descargar</button>
+                                  </div>
+                               {{-- <button type="button" id="" class="btn btn-light " data-dismiss="modal">Cancelar</button> --}}
+                                  <div class="col-md-6 text-right">
+                                      <button type="button" id="cerrarHorario" name="" style="background-color: #d9dee2;color: #171413;" class="btn ">Cerrar</button>
+                                      <button type="button" id="guardarHorarioEventos" name="guardarHorarioEventos"  style="background-color: #163552; display: none;" class="btn ">Guardar</button>
+                                  </div>
+                              </div>
                         </div>
 
 
@@ -620,7 +636,73 @@
 <script src="{{asset('admin/packages/daygrid/main.js')}}"></script>
 <script src="{{asset('admin/packages/timegrid/main.js')}}"></script>
 <script src="{{asset('admin/packages/interaction/main.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
 
+<script>
+    function screenshot(){
+        html2canvas(document.querySelector("#calendarHorario > div.fc-view-container > div > table"),{
+            useCORS: true,
+  allowTaint: true,
+  letterRendering: true,
+            onrendered: function(canvas) {
+            var ctx = canvas.getContext('2d');
+  ctx.webkitImageSmoothingEnabled = false;
+  ctx.mozImageSmoothingEnabled = false;
+  ctx.imageSmoothingEnabled = false;}
+        }).then(canvas => {
+    document.body.appendChild(canvas)
+});
+
+        console.log(html2canvas(document.querySelector('#calendarHorario > div.fc-view-container')));
+        html2canvas(document.querySelector('#calendarHorario > div.fc-view-container'), {
+          useCORS: true,
+  allowTaint: true,
+  letterRendering: true,
+            onrendered: function(canvas) {
+            var ctx = canvas.getContext('2d');
+  ctx.webkitImageSmoothingEnabled = false;
+  ctx.mozImageSmoothingEnabled = false;
+  ctx.imageSmoothingEnabled = false;
+            // console.log(canvas.toDataURL());
+              var image = canvas.toDataURL("image/jpg");
+              console.log("image => ",image); //image in base64
+              var pHtml = "<img src="+image+" />";
+             // $("#parent").append(pHtml); //you can append image tag anywhere
+            var doc = new jsPDF();
+            var specialElementHandlers = {
+      '#getPDF': function(element, renderer){
+        return true;
+      },
+      '.controls': function(element, renderer){
+        return true;
+      }
+    };
+
+    // All units are in the set measurement for the document
+    // This can be changed to "pt" (points), "mm" (Default), "cm", "in"
+    doc.setFontSize(11);
+    doc.setTextColor(48, 47, 44);
+    doc.text(80,10,'DATOS DE EMPLEADO')
+    doc.text(25,25, 'Num. Documento: ' + $('#docEmpleado').val());
+    doc.text(120,25, 'Área: ' + $('#areaEmpleado').val());
+    doc.text(25,30, 'Nombre: ' + $('#idEmHorario').val());
+    doc.text(120,30, 'Cargo: ' + $('#cargoEmpleado').val());
+    doc.text(25,35, 'Correo: ' + $('#correoEmpleado').val());
+    doc.text(120,35, 'Centro costo: ' + $('#ccEmpleado').val());
+    doc.text(25,40, 'Celular: ' + $('#celEmpleado').val());
+    doc.text(120,40, 'Local: ' + $('#localEmpleado').val());
+    doc.fromHTML($('#calendarHorario > div.fc-toolbar.fc-header-toolbar > div.fc-center').get(0), 85, 45, {
+      'width': 170,
+      'elementHandlers': specialElementHandlers
+    });
+
+                  doc.addImage(image, 'JPG',25,60);
+                  doc.save('horario.pdf');
+              }
+          });
+  }
+  </script>
 
 @endsection
 

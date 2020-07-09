@@ -63,6 +63,13 @@ function verhorarioEmpleado(idempleado) {
         success: function (data) {
             calendarioHorario(data[1]);
             $('#idEmHorario').val(data[0][0].perso_nombre + ' ' + data[0][0].perso_apPaterno + ' ' + data[0][0].perso_apMaterno);
+            $('#docEmpleado').val(data[0][0].emple_nDoc);
+            $('#correoEmpleado').val(data[0][0].emple_Correo);
+            $('#celEmpleado').val(data[0][0].emple_celular);
+            $('#areaEmpleado').val(data[0][0].area_descripcion);
+            $('#cargoEmpleado').val(data[0][0].cargo_descripcion);
+            $('#ccEmpleado').val(data[0][0].centroC_descripcion);
+            $('#localEmpleado').val(data[0][0].local_descripcion);
             $('#paisHorario').val(data[0][0].paises_id);
             $('#idobtenidoE').val(idempleado);
             depart = data[0][0].ubigeo_peru_departments_id;
