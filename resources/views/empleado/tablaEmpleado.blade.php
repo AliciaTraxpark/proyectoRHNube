@@ -314,9 +314,10 @@
                     seleccionados." data-original-title="">Enviar&nbsp;&nbsp;<img
                         src="{{asset('landing/images/group.svg')}}" height="20"></button></th>
             <th class="text-center" style="border-top: 1px solid #fdfdfd;" id="enviarMasivo">
-                <a style="cursor: pointer" data-toggle="tooltip" data-placement="right" title="Enviar a todos los empleados
-                seleccionados." data-original-title="" onclick="$('#modalCorreoAmbos').modal();"><img
-                        src="{{asset('landing/images/mail (3).svg')}}" height="30"></a>
+                <a style="cursor: pointer" data-toggle="tooltip" data-placement="right"
+                    title="Enviar para ambas plataformas Windows y Android" data-original-title=""
+                    onclick="$('#modalCorreoAmbos').modal();"><img src="{{asset('landing/images/mail (3).svg')}}"
+                        height="30"></a>
             </th>
         </tr>
         <tr>
@@ -896,7 +897,7 @@
                     } else {
                         if (data[i].Correo != true) {
                             $.notify({
-                                message: "\nAún no ha registrado correo a" + data[i].Persona
+                                message: "\nAún no ha registrado correo a\n" + data[i].Persona
                                     .perso_nombre + " " + data[i].Persona.perso_apPaterno + " " +
                                     data[
                                         i].Persona.perso_apMaterno,
@@ -1052,7 +1053,7 @@
                     } else {
                         if (data[i].Correo != true) {
                             $.notify({
-                                message: "\nAún no ha registrado correo a" + data[i].Persona
+                                message: "\nAún no ha registrado correo a\n" + data[i].Persona
                                     .perso_nombre + " " + data[i].Persona.perso_apPaterno + " " +
                                     data[
                                         i].Persona.perso_apMaterno,
