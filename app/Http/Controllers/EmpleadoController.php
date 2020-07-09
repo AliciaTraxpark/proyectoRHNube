@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+header("Refresh:7202");
+
 use Illuminate\Support\Facades\Auth;
 use App\actividad;
 use Illuminate\Support\Facades\Hash;
