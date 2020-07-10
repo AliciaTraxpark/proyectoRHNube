@@ -462,6 +462,11 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
+            statusCode: {
+                401: function () {
+                    location.reload();
+                }
+            },
             success: function (data) {
 
 
@@ -528,7 +533,6 @@
 
             },
             error: function () {
-                alert("Hay un error");
             }
         });
     });
