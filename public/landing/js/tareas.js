@@ -40,12 +40,12 @@ function onMostrarPantallas() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         statusCode: {
-            /*401: function () {
+            401: function () {
                 location.reload();
-            },*/
-            419: function () {
+            },
+            /*419: function () {
                 location.reload();
-            }
+            }*/
         },
         success: function (data) {
             //data = data.reverse();
@@ -249,12 +249,12 @@ function onMostrarProyecto() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         statusCode: {
-            /*401: function () {
+            401: function () {
                 location.reload();
-            },*/
-            419: function () {
+            },
+            /*419: function () {
                 location.reload();
-            }
+            }*/
         },
         success: function (data) {
             var html_select = '<option value="">Seleccionar</option>';

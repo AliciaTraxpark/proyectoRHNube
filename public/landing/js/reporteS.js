@@ -96,12 +96,12 @@ function onSelectFechas() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         statusCode: {
-            /*401: function () {
+            401: function () {
                 location.reload();
-            },*/
-            419: function () {
+            },
+            /*419: function () {
                 location.reload();
-            }
+            }*/
         },
         success: function (data) {
             var container = $('#empleado');
