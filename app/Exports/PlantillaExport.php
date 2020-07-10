@@ -68,12 +68,11 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 ];
 
                 $event->sheet->getStyle('A1:T1')->applyFromArray($styleArray);
-                $event->sheet->getColumnDimension('A')->setWidth(18);
                 $event->sheet->getDelegate()->setTitle("Empleado");
                 foreach (range('A', 'T') as $columnID) {
                     $event->sheet->getColumnDimension($columnID)->setAutoSize(false);
                     $event->sheet->getColumnDimension($columnID)
-                        ->setWidth(18);
+                        ->setWidth(25);
                 }
                 $departamentos = ubigeo_peru_departments::all();
                 $provincias = ubigeo_peru_provinces::all();
