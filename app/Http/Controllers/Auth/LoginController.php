@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+header("Refresh:7200");
+
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use App\organizacion;
+
 class LoginController extends Controller
 {
     /*
@@ -27,7 +30,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo ='/dashboard';
+    protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance.
@@ -38,44 +41,44 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-   public function showLoginForm(){
-    if (Auth::check()) {
-        return redirect(route('dashboard'));
+    public function showLoginForm()
+    {
+        if (Auth::check()) {
+            return redirect(route('dashboard'));
+        } else {
+            return view('Welcome');
+        }
     }
-       else{ return view ('Welcome');}
-
-    }
-    public function login(){
-        $credentials=$this->validate(request(),[
-            'email'=>'required|string',
-            'password'=>'required|string'
+    public function login()
+    {
+        $credentials = $this->validate(request(), [
+            'email' => 'required|string',
+            'password' => 'required|string'
         ]);
 
-        if(Auth::attempt($credentials)){
+        if (Auth::attempt($credentials)) {
             return redirect(route('dashboard'));
-        }
-        else{
+        } else {
             //return view('Welcome');
             return redirect()->route('login')
-                ->with('error','Correo electronico o contraseña incorrecta');
+                ->with('error', 'Correo electronico o contraseña incorrecta');
         }
-
     }
 
-    public function logout(){
-       Auth::logout();
-       /* return view ('welcome'); */
-       return redirect(route('principal'));
+    public function logout()
+    {
+        Auth::logout();
+        /* return view ('welcome'); */
+        return redirect(route('principal'));
     }
 
-    public function principal(){
+    public function principal()
+    {
 
         if (Auth::check()) {
             return redirect('/dashboard');
+        } else {
+            return view('welcome');
         }
-        else{
-            return view ('welcome');
-        }
-
-        }
+    }
 }
