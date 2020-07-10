@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-header("Refresh:7200");
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-header("Refresh:7202");
-
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
