@@ -249,14 +249,24 @@ class apiController extends Controller
                 if ($vinculacion->hash == $request->get('codigo')) {
                     if ($vinculacion->pc_mac !=  null) {
                         if ($vinculacion->pc_mac == $request->get('pc_mac')) {
-                            return response()->json(array("idEmpleado" => $empleado->emple_id), 200);
+                            $factory = JWTFactory::customClaims([
+                                'sub' => env('API_id'),
+                            ]);
+                            $payload = $factory->make();
+                            $token = JWTAuth::encode($payload);
+                            return response()->json(array("idEmpleado" => $empleado->emple_id, 'token' => $token->get()), 200);
                         } else {
                             return response()->json("Pc no coinciden", 400);
                         }
                     } else {
                         $vinculacion->pc_mac = $request->get('pc_mac');
                         $vinculacion->save();
-                        return response()->json(array("idEmpleado" => $empleado->emple_id), 200);
+                        $factory = JWTFactory::customClaims([
+                            'sub' => env('API_id'),
+                        ]);
+                        $payload = $factory->make();
+                        $token = JWTAuth::encode($payload);
+                        return response()->json(array("idEmpleado" => $empleado->emple_id, 'token' => $token->get()), 200);
                     }
                 }
                 return response()->json("Código erróneo", 400);
