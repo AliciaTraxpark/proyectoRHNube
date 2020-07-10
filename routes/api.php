@@ -32,7 +32,7 @@ Route::post("editarTarea", "apiController@editarApiTarea");
 Route::post("editarActividad", "apiController@editarApiActividad");
 Route::post("envio", "apiController@envio");
 Route::post("control", "apiController@control");
-Route::post("captura", "apiController@captura");
+Route::post("captura", "apiController@captura")->middleware('token');
 Route::post("proyecto", "apiController@selectProyecto");
 
 ///LOGUEO CON CORREO
