@@ -34,7 +34,15 @@
 
 @section('content')
 <style>
+  div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content.fc-sun{
 
+background-color: rgb(255, 239, 239) !important;
+}
+div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content.fc-mon, td.fc-day.fc-widget-content.fc-tue, td.fc-day.fc-widget-content.fc-wed,
+td.fc-day.fc-widget-content.fc-thu, td.fc-day.fc-widget-content.fc-fri, td.fc-day.fc-widget-content.fc-sat{
+
+background-color: #f9f9f9 !important;
+}
     .fc-event, .fc-event-dot {
     background-color: #d1c3c3;
     font-size: 12.2px!important;
