@@ -3,13 +3,14 @@
  $( document ).ready(function() {
     $('#calendar .fc-Descanso-button').prop('disabled', true);
     $('#calendar .fc-NoLaborales-button').prop('disabled', true);
+    $('#calendar .fc-Feriado-button').prop('disabled', true);
     $("#calendar .fc-left").on("click",myFuncion);
-
 
 
     function myFuncion(){
         $('#calendar .fc-Descanso-button').prop('disabled', true);
         $('#calendar .fc-NoLaborales-button').prop('disabled', true);
+        $('#calendar .fc-Feriado-button').prop('disabled', true);
         $("#calendar .fc-left").on("click",myFuncion);
     }
 
@@ -44,6 +45,7 @@ function calendario() {
           }) */
           $('#calendar .fc-Descanso-button').prop('disabled', false);
           $('#calendar .fc-NoLaborales-button').prop('disabled', false);
+          $('#calendar .fc-Feriado-button').prop('disabled', false);
           $('#pruebaEnd').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
           $('#pruebaStar').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
         console.log(arg);
@@ -53,10 +55,15 @@ function calendario() {
         console.log(info);
         console.log(info.event.id);
         console.log(info.event.title);
+        console.log(info.event.textColor);
         if(info.event.title == 'Descanso'){
           $('#myModalEliminarD').modal();
-        }else{
+        }
+        if(info.event.title == 'No laborable'){
           $('#myModalEliminarN').modal();
+        }
+        if(info.event.textColor=='#775555'){
+            $('#myModalEliminarFeriado').modal();
         }
       },
       editable: false,
@@ -68,6 +75,7 @@ function calendario() {
         },
         footer:{
           left:'Descanso',
+          center:'Feriado',
           right:'NoLaborales'
         },
 
@@ -84,6 +92,20 @@ function calendario() {
                 $('#myModal').modal('toggle');
             }
           },
+          Feriado:{
+            text:"Asignar dia Feriado",
+            click:function(){
+                var start=  $('#pruebaStar').val();
+                var end=  $('#pruebaEnd').val();
+                $('#startFeriado').val(start);
+                $('#endFeriado').val(end);
+                $('#nombreFeriado').val('');
+                $('#myModalFeriado').modal('toggle');
+                $('#calendar .fc-Descanso-button').prop('disabled', true);
+                $('#calendar .fc-NoLaborales-button').prop('disabled', true);
+                $('#calendar .fc-Feriado-button').prop('disabled', true);
+            }
+          },
           NoLaborales:{
             text:"Asignar días no Laborales",
             click:function(){
@@ -94,6 +116,7 @@ function calendario() {
                 $('#myModalFestivo').modal('toggle');
                 $('#calendar .fc-Descanso-button').prop('disabled', true);
                 $('#calendar .fc-NoLaborales-button').prop('disabled', true);
+                $('#calendar .fc-Feriado-button').prop('disabled', true);
 
             }
           }
@@ -160,10 +183,12 @@ function calendario() {
                   calendario1(data,fechas);
                   $('#calendar1 .fc-Descanso-button').prop('disabled', true);
                   $('#calendar1 .fc-NoLaborales-button').prop('disabled', true);
+                  $('#calendar1 .fc-Feriado-button').prop('disabled', true);
                   $("#calendar1 .fc-left").on("click",myFuncion1);
                   function myFuncion1(){
                   $('#calendar1 .fc-Descanso-button').prop('disabled', true);
                   $('#calendar1 .fc-NoLaborales-button').prop('disabled', true);
+                  $('#calendar1 .fc-Feriado-button').prop('disabled', true);
                   $("#calendar1 .fc-left").on("click",myFuncion1);
                   }
 
@@ -205,6 +230,11 @@ function calendario() {
       objEvento1=datos1("DELETE");
       EnviarNoLE('/'+id,objEvento1);
     });
+
+    $('#eliminarDiaferi').click(function(){
+        objEvento1=datos1("DELETE");
+        EnviarNoLE('/'+id,objEvento1);
+      });
     function datos1(method){
         nuevoEvento1={
           title: $('#titleN').val(),
@@ -251,10 +281,12 @@ function calendario() {
                   calendario1(data,fechas);
                 $('#calendar1 .fc-Descanso-button').prop('disabled', true);
                 $('#calendar1 .fc-NoLaborales-button').prop('disabled', true);
+                $('#calendar1 .fc-Feriado-button').prop('disabled', true);
                 $("#calendar1 .fc-left").on("click",myFuncion1);
                 function myFuncion1(){
                 $('#calendar1 .fc-Descanso-button').prop('disabled', true);
                 $('#calendar1 .fc-NoLaborales-button').prop('disabled', true);
+                $('#calendar1 .fc-Feriado-button').prop('disabled', true);
                 $("#calendar1 .fc-left").on("click",myFuncion1);
                 }
 
@@ -267,6 +299,8 @@ function calendario() {
             }
         );
     }
+    //
+
     function EnviarNoLE(accion,objEvento1){
       $.ajax(
           {
@@ -277,14 +311,96 @@ function calendario() {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
           success:function(msg){
-            $('#myModalEliminarN').modal('toggle');
+            $('#myModalEliminarN').modal('hide');
+            $('#myModalEliminarFeriado').modal('hide');
             calendar.refetchEvents();
             console.log(msg); },
-          error:function(){ alert("No puede eliminar dia feriado");}
+          error:function(){ alert("No puede eliminar dia ");}
           }
       );
   }
     ////
+
+    $('#guardarFeriado').click(function(){
+        nombre=$('#nombreFeriado').val();
+
+     if(nombre ==''){
+            alert('Dia feriado vacio');
+            return false;
+        }
+        objEventoFer=datosFeri("POST");
+        EnviarFeriado('',objEventoFer);
+      });
+
+
+      function datosFeri(method){
+        nuevoEvento1={
+          title: $('#nombreFeriado').val(),
+          color:'#e6bdbd',
+          textColor:'#775555',
+          start: $('#startFeriado').val(),
+          end: $('#endFeriado').val(),
+          tipo: 2,
+          pais:$('#pais').val(),
+          departamento:$('#departamento').val(),
+
+          '_method':method
+        }
+        return(nuevoEvento1);
+    }
+    function EnviarFeriado(accion,objEventoFer){
+        var departamento =$('#departamento').val();
+        var pais =$('#pais').val();
+        $.ajax(
+            {
+            type: "POST",
+            url:"/eventos_usuario/store" +accion,
+            data:objEventoFer,
+            headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+            success:function(msg){
+            $('#myModalFeriado').modal('toggle');
+              calendar.refetchEvents();
+
+
+              $.ajax(
+                {
+
+                //url:"/calendario/store",
+                url:"/calendario/showDep/",
+                data:{departamento:departamento,pais:pais},
+                headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+                success:function(data){
+                   var mesAg= $('#fechaDa').val();
+                    var d  =mesAg;
+                    var fechas=new Date(d);
+                 console.log(fechas);
+                  calendario1(data,fechas);
+                  $('#calendar1 .fc-Descanso-button').prop('disabled', true);
+                  $('#calendar1 .fc-NoLaborales-button').prop('disabled', true);
+                  $('#calendar1 .fc-Feriado-button').prop('disabled', true);
+                  $("#calendar1 .fc-left").on("click",myFuncion1);
+                  function myFuncion1(){
+                  $('#calendar1 .fc-Descanso-button').prop('disabled', true);
+                  $('#calendar1 .fc-NoLaborales-button').prop('disabled', true);
+                  $('#calendar1 .fc-Feriado-button').prop('disabled', true);
+                  $("#calendar1 .fc-left").on("click",myFuncion1);
+                  }
+
+                  },
+                error:function(){ alert("Hay un error");}
+                }
+            );
+            },
+            error:function(){ alert("Hay un error");}
+            }
+        );
+    }
+
+
     calendar.render();
 }
 document.addEventListener('DOMContentLoaded',calendario);
@@ -341,10 +457,12 @@ $( document ).ready(function() {
          calendario1(data,fechas);
          $('#calendar1 .fc-Descanso-button').prop('disabled', true);
          $('#calendar1 .fc-NoLaborales-button').prop('disabled', true);
+         $('#calendar1 .fc-Feriado-button').prop('disabled', true);
          $("#calendar1 .fc-left").on("click",myFuncion1);
          function myFuncion1(){
             $('#calendar1 .fc-Descanso-button').prop('disabled', true);
             $('#calendar1 .fc-NoLaborales-button').prop('disabled', true);
+            $('#calendar1 .fc-Feriado-button').prop('disabled', true);
             $("#calendar1 .fc-left").on("click",myFuncion1);
         }
 
@@ -383,6 +501,7 @@ $( document ).ready(function() {
            }) */
            $('#calendar1 .fc-Descanso-button').prop('disabled', false);
            $('#calendar1 .fc-NoLaborales-button').prop('disabled', false);
+           $('#calendar1 .fc-Feriado-button').prop('disabled', false);
            $('#pruebaEnd').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
            $('#pruebaStar').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
          console.log(arg);
@@ -394,10 +513,14 @@ $( document ).ready(function() {
          console.log(info.event.id);
          console.log(info.event.title);
          if(info.event.title == 'Descanso'){
-           $('#myModalEliminarDdep').modal();
-         }else{
-           $('#myModalEliminarNdep').modal();
-         }
+            $('#myModalEliminarDdep').modal();
+          }
+          if(info.event.title == 'No laborable'){
+            $('#myModalEliminarNdep').modal();
+          }
+          if(info.event.textColor=='#775555'){
+              $('#myModalEliminarFeriadoDep').modal();
+          }
        },
        editable: false,
        eventLimit: true,
@@ -408,7 +531,8 @@ $( document ).ready(function() {
          },
          footer:{
            left:'Descanso',
-           right:'NoLaborales'
+           right:'NoLaborales',
+           center:'Feriado'
          },
 
 
@@ -429,6 +553,20 @@ $( document ).ready(function() {
                  $('#myModal').modal('toggle');
              }
            },
+           Feriado:{
+            text:"Asignar dia Feriado",
+            click:function(){
+                var start=  $('#pruebaStar').val();
+                var end=  $('#pruebaEnd').val();
+                var date1 = calendar1.getDate();
+                $('#startFeriado').val(start);
+                $('#endFeriado').val(end);
+                $('#fechaDa').val(date1);
+                $('#nombreFeriado').val('');
+                $('#myModalFeriado').modal('toggle');
+
+            }
+          },
            NoLaborales:{
              text:"Asignar días no Laborales",
              click:function(){
@@ -497,6 +635,7 @@ $( document ).ready(function() {
        EliminarNola('/'+id1,objEvento2);
      });
 
+
      function EliminarNola(accion2,objEvento2){
 
          $.ajax(
@@ -508,8 +647,7 @@ $( document ).ready(function() {
          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
          },
              success:function(msg){
-             $('#myModalEliminarNdep').modal('toggle');
-
+             $('#myModalEliminarNdep').modal('hide');
             var event = calendar1.getEventById(id1);
             event.remove();
 
@@ -519,6 +657,32 @@ $( document ).ready(function() {
              }
          );
       }
+      $('#eliminarDiaferiDep').click(function(){
+        objEvento3=datos1("DELETE");
+        EliminarFer('/'+id1,objEvento3);
+      });
+      function EliminarFer(accion3,objEvento3){
+
+        $.ajax(
+            {
+            type: "DELETE",
+            url:"/calendario" +accion3,
+            data:objEvento3,
+            headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+            success:function(msg){
+
+            $('#myModalEliminarFeriadoDep').modal('hide');
+           var event = calendar1.getEventById(id1);
+           event.remove();
+
+
+            },
+
+            }
+        );
+     }
 
 
      ////
