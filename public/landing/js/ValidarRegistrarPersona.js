@@ -36,7 +36,7 @@ function agregarempleado() {
             from: "top",
             align: "center"
         },
-        animationType:"drop"
+        animationType: "drop"
     });
 
     //validar usuario
