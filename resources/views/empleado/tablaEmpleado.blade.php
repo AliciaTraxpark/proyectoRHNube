@@ -532,8 +532,7 @@
                 console.log(data)
 
             },
-            error: function () {
-            }
+            error: function () {}
         });
     });
 
@@ -832,6 +831,14 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                }
+            },
             data: 'ids=' + join_selected_values,
             success: function (data) {
 
@@ -885,6 +892,14 @@
             data: 'ids=' + join_selected_values,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                }
             },
             success: function (data) {
                 console.log(data);
@@ -973,6 +988,14 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                }
+            },
             success: function (data) {
                 console.log(data);
                 for (var i = 0; i < data.length; i++) {
@@ -1041,6 +1064,14 @@
             data: 'ids=' + join_selected_values,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                }
             },
             success: function (data) {
                 console.log(data);

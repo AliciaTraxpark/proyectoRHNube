@@ -12,6 +12,14 @@ function agregarProyecto() {
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
         success: function (data) {
             $('#nombreProyecto').val('');
             $('#detalleProyecto').val('');
@@ -25,9 +33,7 @@ function agregarProyecto() {
             });
 
         },
-        error: function () {
-            alert("Hay un error");
-        }
+        error: function () {}
     });
 }
 
@@ -44,6 +50,14 @@ function abrirM(id) {
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
         success: function (data) {
 
 
@@ -53,9 +67,7 @@ function abrirM(id) {
 
 
         },
-        error: function () {
-            alert("Hay un error");
-        }
+        error: function () {}
     });
     var $select = $('#idempleado').select2();
     $.ajax({
@@ -68,6 +80,14 @@ function abrirM(id) {
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
         success: function (data) {
             //$('#prue').val(null).trigger('change');
             var array = [];
@@ -78,9 +98,6 @@ function abrirM(id) {
                 array[json.empleado_emple_id] = (parseInt(json.empleado_emple_id));
 
                 $('#idempleado').find('option[value="' + json.empleado_emple_id + '"]').remove();
-
-
-
 
             });
             $('#idempleado').select2({});;
@@ -100,9 +117,7 @@ function abrirM(id) {
 
 
         },
-        error: function () {
-            alert("Hay un error");
-        }
+        error: function () {}
     });
     $('#idempleado').change(function () {
         var selections = (JSON.stringify($('#idempleado').select2('data')));
@@ -129,6 +144,14 @@ function registrarPE() {
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
         success: function (data) {
             $('#myModal1').modal('toggle');
             $('#tablaProyecto').load(location.href + " #tablaProyecto>*");
@@ -140,9 +163,7 @@ function registrarPE() {
             });
 
         },
-        error: function () {
-            alert("Hay un error, Datos no validos");
-        }
+        error: function () {}
     });
 
 
@@ -172,6 +193,14 @@ function eliminarp(idproyecto) {
                     },
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    statusCode: {
+                        /*401: function () {
+                            location.reload();
+                        },*/
+                        419: function () {
+                            location.reload();
+                        }
                     },
                     success: function (data) {
                         $('#tablaProyecto').load(location.href + " #tablaProyecto>*");
