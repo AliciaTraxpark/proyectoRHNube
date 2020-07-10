@@ -31,6 +31,15 @@
 </div>
 
 <style>
+     div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content.fc-sun{
+
+background-color: rgb(255, 239, 239) !important;
+}
+div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content.fc-mon, td.fc-day.fc-widget-content.fc-tue, td.fc-day.fc-widget-content.fc-wed,
+td.fc-day.fc-widget-content.fc-thu, td.fc-day.fc-widget-content.fc-fri, td.fc-day.fc-widget-content.fc-sat{
+
+background-color: #f9f9f9 !important;
+}
     .fc-time{
         display: none;
     }
@@ -39,6 +48,10 @@
     background-color: #162029;
     }
     .fc-NoLaborales-button{
+    color: #fff;
+    background-color: #162029;
+    }
+    .fc-Feriado-button{
     color: #fff;
     background-color: #162029;
     }
@@ -194,6 +207,47 @@
       </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<div id="myModalFeriado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar nuevo feriado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <div class="col-md-6">
+                            <label for="">Nombre de dia feriado:</label>
+                        </div>
+                         <div class="col-md-10">
+                            <input class="form-control" type="text" id="nombreFeriado">
+                         </div>
+
+                    </div>
+                </div>
+                <input type="hidden" name="startFeriado" class="form-control" id="startFeriado" readonly>
+
+                <input type="hidden" name="endFeriado" class="form-control" id="endFeriado" readonly>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-7 text-right">
+                            <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                        </div>
+                        <div class="col-md-5 text-right" style="padding-right: 38px; ">
+                            <button type="button" id="guardarFeriado" name="guardarFeriado"  class="btn btn-secondary">Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <div id="myModalEliminarN" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 <div class="modal-dialog">
     <div class="modal-content">
@@ -287,18 +341,91 @@
   </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<div id="myModalEliminarFeriado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Día feriado de usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <h5 class="modal-title" id="myModalLabel">¿Desea eliminar día feriado?</h5>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-7 text-right">
+                            <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                        </div>
+                        <div class="col-md-5 text-right" style="padding-right: 38px;  ">
+                            <button type="button" id="eliminarDiaferi" name="eliminarDiaferi" style="background-color: #163552;" class="btn ">Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div id="myModalEliminarFeriadoDep" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Día feriado de usuario</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <h5 class="modal-title" id="myModalLabel">¿Desea eliminar día feriado?</h5>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-7 text-right">
+                                <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                            </div>
+                            <div class="col-md-5 text-right" style="padding-right: 38px;  ">
+                                <button type="button" id="eliminarDiaferiDep" name="eliminarDiaferiDep" style="background-color: #163552;" class="btn ">Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
 <div class="row " >
 
     <div class="col-md-12 text-center">
       <div class="col-md-7" style="left: 10%;max-width: 80%; " id="Datoscalendar">
           <div class="card">
-              <div class="card-body">
+            <div class="card-body">
+                <div class="row">
+                   <div class="col-md-11" id="calendar">
 
-                  <div id="calendar">
+                   </div>
+                   <div class="col-md-1" style="top:86px">
+                       <div class="row">
+                           <div class="col-md-6" style="  background: #f9e9e9;
+                           height: 35px;"><h1>&nbsp;</h1></div>
+                           <div class="col-md-6"><label for="">Dias de Descanso</label></div>
+                       </div>
+                       <div class="row">
+                           <div class="col-md-6" style="  background: #f9f9f9;
+                           height: 35px;"><h1>&nbsp;</h1></div>
+                             <div class="col-md-6"><label for="">Dias laborables</label></div>
+                       </div>
 
-                  </div>
+                   </div>
+                </div>
 
-              </div> <!-- end card body-->
+
+             </div> <!-- end card body-->
               <div class="card-footer">
                 <div class="row">
                 </div>
@@ -308,9 +435,27 @@
       <div class="col-md-7" id="Datoscalendar1" style="left: 10%;max-width: 80%;">
         <div class="card">
             <div class="card-body">
-                <div id="calendar1"></div>
+                <div class="row">
+                   <div class="col-md-11" id="calendar1">
 
-            </div> <!-- end card body-->
+                   </div>
+                   <div class="col-md-1" style="top:86px">
+                       <div class="row">
+                           <div class="col-md-6" style="  background: #f9e9e9;
+                           height: 35px;"><h1>&nbsp;</h1></div>
+                           <div class="col-md-6"><label for="">Dias de Descanso</label></div>
+                       </div>
+                       <div class="row">
+                           <div class="col-md-6" style="  background: #f9f9f9;
+                           height: 35px;"><h1>&nbsp;</h1></div>
+                             <div class="col-md-6"><label for="">Dias laborables</label></div>
+                       </div>
+
+                   </div>
+                </div>
+
+
+             </div> <!-- end card body-->
             <div class="card-footer">
               <div class="row">
               </div>
