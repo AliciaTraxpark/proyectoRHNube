@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-header("Refresh:7202");
 
 use App\captura;
 use Illuminate\Http\Request;
