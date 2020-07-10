@@ -5,9 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="{{asset('landing/vendors/owl-carousel/css/owl.carousel.min.css')}}">
-  <link rel="stylesheet" href="{{asset('landing/vendors/owl-carousel/css/owl.theme.default.css')}}">
-  <link rel="stylesheet" href="{{asset('landing/vendors/mdi/css/materialdesignicons.min.css')}}">
   <link rel="stylesheet" href="{{asset('landing/vendors/aos/css/aos.css')}}">
   <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
   <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -22,7 +19,10 @@
   <link href="{{asset('admin/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
   <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
   <link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
+  <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
+
 </head>
+
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
 
 <style>
@@ -550,13 +550,13 @@ background-color: #f9f9f9 !important;
   <script src="{{asset('landing/js/SeleccionarPais.js')}}"></script>
 
   <!-- Vendor js -->
-  <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script>
+  {{-- <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script> --}}
 
   <!-- plugin js -->
   <script src="{{asset('admin/assets/libs/moment/moment.min.js')}}"></script>
   <script src="{{asset('admin/packages/core/main.js')}}"></script>
   <script src="{{asset('admin/packages/core/locales/es.js')}}"></script>
-
+  <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
   <script src="{{asset('admin/packages/daygrid/main.js')}}"></script>
   <script src="{{asset('admin/packages/timegrid/main.js')}}"></script>
   <script src="{{asset('admin/packages/interaction/main.js')}}"></script>
