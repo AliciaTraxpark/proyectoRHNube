@@ -23,11 +23,11 @@ use App\ubigeo_peru_districts;
 use App\tipo_documento;
 use App\tipo_contrato;
 
-class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
+class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
 {
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
 
     public function __construct($total)
     {
@@ -36,27 +36,26 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
 
     public function headings(): array
     {
-        return[
-            'tipo_documento','numero_documento','nombres','apellido_paterno',
-            'apellido_materno','direccion','departamento','provincia','distrito',
-            'cargo','area','centro_costo','fecha_nacimiento','departamento_nacimiento',
-            'provincia_nacimiento','distrito_nacimiento','sexo','tipo_contrato','local'
-            ,'nivel'
+        return [
+            'tipo_documento', 'numero_documento', 'nombres', 'apellido_paterno',
+            'apellido_materno', 'direccion', 'departamento', 'provincia', 'distrito',
+            'cargo', 'area', 'centro_costo', 'fecha_nacimiento', 'departamento_nacimiento',
+            'provincia_nacimiento', 'distrito_nacimiento', 'sexo', 'tipo_contrato', 'local', 'nivel'
         ];
     }
 
     public function registerEvents(): array
     {
-        return[
-            AfterSheet::class => function(AfterSheet $event){
+        return [
+            AfterSheet::class => function (AfterSheet $event) {
                 $styleArray = [
                     'font' => [
                         'bold' => true,
-                        'color'=>[
-                            'rgb'=> 'FFFFFF',
+                        'color' => [
+                            'rgb' => 'FFFFFF',
                         ]
                     ],
-                    'fill'=>[
+                    'fill' => [
                         'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
                         'startColor' => [
                             'rgb' => '0A0A2A',
@@ -69,8 +68,14 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
                 ];
 
                 $event->sheet->getStyle('A1:T1')->applyFromArray($styleArray);
+                $event->sheet->getColumnDimension('A')->setWidth(18);
                 $event->sheet->getDelegate()->setTitle("Empleado");
-                $departamentos=ubigeo_peru_departments::all();
+                foreach (range('A', 'T') as $columnID) {
+                    $event->sheet->getColumnDimension($columnID)->setAutoSize(false);
+                    $event->sheet->getColumnDimension($columnID)
+                        ->setWidth(18);
+                }
+                $departamentos = ubigeo_peru_departments::all();
                 $provincias = ubigeo_peru_provinces::all();
                 $tipoDocumento = tipo_documento::all();
                 $tipoContrato = tipo_contrato::all();
@@ -106,8 +111,8 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
                 $rowNivel = 1;
 
                 //TIPODOCUMENTO
-                foreach($tipoDocumento as $tipoDocumentos){
-                    $event->sheet->getDelegate()->setCellValue('BC'.$rowD++,$tipoDocumentos->tipoDoc_descripcion);
+                foreach ($tipoDocumento as $tipoDocumentos) {
+                    $event->sheet->getDelegate()->setCellValue('BC' . $rowD++, $tipoDocumentos->tipoDoc_descripcion);
                 }
 
                 $validationD = $event->sheet->getDelegate()->getCell("{$drop_columnD}2")->getDataValidation();
@@ -117,15 +122,15 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
                 $validationD->setShowInputMessage(true);
                 $validationD->setShowErrorMessage(true);
                 $validationD->setShowDropDown(true);
-                $validationD->setErrorTitle('Input Error');
-                $validationD->setError('Value is not in list.');
-                $validationD->setPromptTitle('Pick from list');
-                $validationD->setPrompt('Please value from');
+                $validationD->setErrorTitle('Error');
+                $validationD->setError('Tipo de Documento no se encuentra en la lista.');
+                $validationD->setPromptTitle('Tipo documento');
+                $validationD->setPrompt('Elegir una opción');
                 $validationD->setFormula1('Empleado!$BC$1:$BC$3');
 
                 //DEPARTAMENTO
-                foreach($departamentos as $departamento){
-                    $event->sheet->getDelegate()->setCellValue('BA'.$row++,$departamento->name);
+                foreach ($departamentos as $departamento) {
+                    $event->sheet->getDelegate()->setCellValue('BA' . $row++, $departamento->name);
                 }
 
                 $validation = $event->sheet->getDelegate()->getCell("{$drop_column}2")->getDataValidation();
@@ -135,15 +140,15 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
                 $validation->setShowInputMessage(true);
                 $validation->setShowErrorMessage(true);
                 $validation->setShowDropDown(true);
-                $validation->setErrorTitle('Input Error');
-                $validation->setError('Value is not in list.');
-                $validation->setPromptTitle('Pick from list');
-                $validation->setPrompt('Please value from');
+                $validation->setErrorTitle('Error');
+                $validation->setError('Departamento no se encuentra en la lista.');
+                $validation->setPromptTitle('Departamentos');
+                $validation->setPrompt('Elegir una opción');
                 $validation->setFormula1('Empleado!$BA$1:$BA$25');
 
                 //PROVINCIA
-                foreach($provincias as $provincia){
-                    $event->sheet->getDelegate()->setCellValue('BF'.$rowP++,$provincia->name);
+                foreach ($provincias as $provincia) {
+                    $event->sheet->getDelegate()->setCellValue('BF' . $rowP++, $provincia->name);
                 }
 
                 $validationP = $event->sheet->getDelegate()->getCell("{$drop_columnP}2")->getDataValidation();
@@ -153,15 +158,15 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
                 $validationP->setShowInputMessage(true);
                 $validationP->setShowErrorMessage(true);
                 $validationP->setShowDropDown(true);
-                $validationP->setErrorTitle('Input Error');
-                $validationP->setError('Value is not in list.');
-                $validationP->setPromptTitle('Pick from list');
-                $validationP->setPrompt('Please value from');
+                $validationP->setErrorTitle('Error');
+                $validationP->setError('Provincia no se encuentra en la lista.');
+                $validationP->setPromptTitle('Provincias');
+                $validationP->setPrompt('Elegir una opción');
                 $validationP->setFormula1('Empleado!$BF$1:$BF$193');
 
                 //TIPO CONTRATO
-                foreach($tipoContrato as $tipoContratos){
-                    $event->sheet->getDelegate()->setCellValue('BJ'.$rowC++,$tipoContratos->contrato_descripcion);
+                foreach ($tipoContrato as $tipoContratos) {
+                    $event->sheet->getDelegate()->setCellValue('BJ' . $rowC++, $tipoContratos->contrato_descripcion);
                 }
 
                 $validationC = $event->sheet->getDelegate()->getCell("{$drop_columnC}2")->getDataValidation();
@@ -171,15 +176,15 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
                 $validationC->setShowInputMessage(true);
                 $validationC->setShowErrorMessage(true);
                 $validationC->setShowDropDown(true);
-                $validationC->setErrorTitle('Input Error');
-                $validationC->setError('Value is not in list.');
-                $validationC->setPromptTitle('Pick from list');
-                $validationC->setPrompt('Please value from');
+                $validationC->setErrorTitle('Error');
+                $validationC->setError('tipo de Contrato no se encuentra en la lista.');
+                $validationC->setPromptTitle('Tipo de Documento');
+                $validationC->setPrompt('Elegir una opción');
                 $validationC->setFormula1('Empleado!$BJ$1:$BJ$2');
 
                 //CARGO
-                foreach($cargo as $cargos){
-                    $event->sheet->getDelegate()->setCellValue('BN'.$rowCargo++,$cargos->cargo_descripcion);
+                foreach ($cargo as $cargos) {
+                    $event->sheet->getDelegate()->setCellValue('BN' . $rowCargo++, $cargos->cargo_descripcion);
                 }
 
                 $validationCargo = $event->sheet->getDelegate()->getCell("{$drop_columnCargo}2")->getDataValidation();
@@ -189,15 +194,15 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
                 $validationCargo->setShowInputMessage(true);
                 $validationCargo->setShowErrorMessage(true);
                 $validationCargo->setShowDropDown(true);
-                $validationCargo->setErrorTitle('Input Error');
-                $validationCargo->setError('Value is not in list.');
-                $validationCargo->setPromptTitle('Pick from list');
-                $validationCargo->setPrompt('Please value from');
+                $validationCargo->setErrorTitle('Error');
+                $validationCargo->setError('Cargo no se encuentra en la lista.');
+                $validationCargo->setPromptTitle('Cargo');
+                $validationCargo->setPrompt('Elegir una opción');
                 $validationCargo->setFormula1('Empleado!$BN$1:$BN$8');
 
                 //AREA
-                foreach($area as $areas){
-                    $event->sheet->getDelegate()->setCellValue('BQ'.$rowArea++,$areas->area_descripcion);
+                foreach ($area as $areas) {
+                    $event->sheet->getDelegate()->setCellValue('BQ' . $rowArea++, $areas->area_descripcion);
                 }
 
                 $validationArea = $event->sheet->getDelegate()->getCell("{$drop_columnArea}2")->getDataValidation();
@@ -207,15 +212,15 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
                 $validationArea->setShowInputMessage(true);
                 $validationArea->setShowErrorMessage(true);
                 $validationArea->setShowDropDown(true);
-                $validationArea->setErrorTitle('Input Error');
-                $validationArea->setError('Value is not in list.');
-                $validationArea->setPromptTitle('Pick from list');
-                $validationArea->setPrompt('Please value from');
+                $validationArea->setErrorTitle('Error');
+                $validationArea->setError('Área no se encuentra en la lista.');
+                $validationArea->setPromptTitle('Área');
+                $validationArea->setPrompt('Elegir una opción');
                 $validationArea->setFormula1('Empleado!$BQ$1:$BQ$8');
 
                 //CENTRO
-                foreach($centroC as $centroCs){
-                    $event->sheet->getDelegate()->setCellValue('BT'.$rowCentro++,$centroCs->centroC_descripcion);
+                foreach ($centroC as $centroCs) {
+                    $event->sheet->getDelegate()->setCellValue('BT' . $rowCentro++, $centroCs->centroC_descripcion);
                 }
 
                 $validationCentro = $event->sheet->getDelegate()->getCell("{$drop_columnCentro}2")->getDataValidation();
@@ -225,15 +230,15 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
                 $validationCentro->setShowInputMessage(true);
                 $validationCentro->setShowErrorMessage(true);
                 $validationCentro->setShowDropDown(true);
-                $validationCentro->setErrorTitle('Input Error');
-                $validationCentro->setError('Value is not in list.');
-                $validationCentro->setPromptTitle('Pick from list');
-                $validationCentro->setPrompt('Please value from');
+                $validationCentro->setErrorTitle('Error');
+                $validationCentro->setError('Centro no se encuentra en la lista.');
+                $validationCentro->setPromptTitle('Centro');
+                $validationCentro->setPrompt('Elegir una opción');
                 $validationCentro->setFormula1('Empleado!$BT$1:$BT$8');
 
                 //LOCAL
-                foreach($local as $locals){
-                    $event->sheet->getDelegate()->setCellValue('CA'.$rowLocal++,$locals->local_descripcion);
+                foreach ($local as $locals) {
+                    $event->sheet->getDelegate()->setCellValue('CA' . $rowLocal++, $locals->local_descripcion);
                 }
 
                 $validationLocal = $event->sheet->getDelegate()->getCell("{$drop_columnLocal}2")->getDataValidation();
@@ -243,15 +248,15 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
                 $validationLocal->setShowInputMessage(true);
                 $validationLocal->setShowErrorMessage(true);
                 $validationLocal->setShowDropDown(true);
-                $validationLocal->setErrorTitle('Input Error');
-                $validationLocal->setError('Value is not in list.');
-                $validationLocal->setPromptTitle('Pick from list');
-                $validationLocal->setPrompt('Please value from');
+                $validationLocal->setErrorTitle('Error');
+                $validationLocal->setError('Local no se encuentra en la lista.');
+                $validationLocal->setPromptTitle('Local');
+                $validationLocal->setPrompt('Elegir una opción');
                 $validationLocal->setFormula1('Empleado!$CA$1:$CA$8');
 
                 //NIVEL
-                foreach($nivel as $nivels){
-                    $event->sheet->getDelegate()->setCellValue('CC'.$rowNivel++,$nivels->nivel_descripcion);
+                foreach ($nivel as $nivels) {
+                    $event->sheet->getDelegate()->setCellValue('CC' . $rowNivel++, $nivels->nivel_descripcion);
                 }
 
                 $validationNivel = $event->sheet->getDelegate()->getCell("{$drop_columnNivel}2")->getDataValidation();
@@ -261,10 +266,10 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
                 $validationNivel->setShowInputMessage(true);
                 $validationNivel->setShowErrorMessage(true);
                 $validationNivel->setShowDropDown(true);
-                $validationNivel->setErrorTitle('Input Error');
-                $validationNivel->setError('Value is not in list.');
-                $validationNivel->setPromptTitle('Pick from list');
-                $validationNivel->setPrompt('Please value from');
+                $validationNivel->setErrorTitle('Error');
+                $validationNivel->setError('Nivel no se encuentra en la lista.');
+                $validationNivel->setPromptTitle('Nivel');
+                $validationNivel->setPrompt('Elegir una opción');
                 $validationNivel->setFormula1('Empleado!$CC$1:$CC$8');
 
                 //Genero
@@ -276,10 +281,10 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
                 $validationGenero->setShowInputMessage(true);
                 $validationGenero->setShowErrorMessage(true);
                 $validationGenero->setShowDropDown(true);
-                $validationGenero->setErrorTitle('Input Error');
-                $validationGenero->setError('Value is not in list.');
-                $validationGenero->setPromptTitle('Pick from list');
-                $validationGenero->setPrompt('Please value from');
+                $validationGenero->setErrorTitle('Error');
+                $validationGenero->setError('Género no se encuentra en la lista.');
+                $validationGenero->setPromptTitle('Género');
+                $validationGenero->setPrompt('Elegir una opción');
                 $validationGenero->setFormula1('"Femenino,Masculino,Personalizado"');
 
                 for ($i = 2; $i <= $this->total; $i++) {
@@ -297,6 +302,15 @@ class PlantillaExport implements WithHeadings,ShouldAutoSize,WithEvents
                     $event->sheet->getCell("{$drop_columnGenero}{$i}")->setDataValidation(clone $validationGenero);
                     $event->sheet->getStyle("{$drop_columnFecha}{$i}")->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_YYYYMMDD);
                 }
+                $event->sheet->getColumnDimension('BC')->setVisible(false);
+                $event->sheet->getColumnDimension('BA')->setVisible(false);
+                $event->sheet->getColumnDimension('BF')->setVisible(false);
+                $event->sheet->getColumnDimension('BJ')->setVisible(false);
+                $event->sheet->getColumnDimension('BN')->setVisible(false);
+                $event->sheet->getColumnDimension('BQ')->setVisible(false);
+                $event->sheet->getColumnDimension('BT')->setVisible(false);
+                $event->sheet->getColumnDimension('CA')->setVisible(false);
+                $event->sheet->getColumnDimension('CC')->setVisible(false);
             }
         ];
     }
