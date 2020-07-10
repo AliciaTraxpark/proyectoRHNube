@@ -249,11 +249,6 @@ class apiController extends Controller
                 if ($vinculacion->hash == $request->get('codigo')) {
                     if ($vinculacion->pc_mac !=  null) {
                         if ($vinculacion->pc_mac == $request->get('pc_mac')) {
-                            $proyectoE = proyecto_empleado::where('empleado_emple_id', '=', $empleado->emple_id)->get()->first();
-                            if ($proyectoE) {
-                                $proyecto = proyecto::where('Proye_id', '=', $proyectoE->Proyecto_Proye_id)->get()->first();
-                                return response()->json(array("idEmpleado" => $empleado->emple_id), 200);
-                            }
                             return response()->json(array("idEmpleado" => $empleado->emple_id), 200);
                         } else {
                             return response()->json("Pc no coinciden", 400);

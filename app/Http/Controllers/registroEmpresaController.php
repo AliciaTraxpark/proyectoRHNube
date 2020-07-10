@@ -15,6 +15,7 @@ use App\usuario_organizacion;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\Queue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
@@ -32,10 +33,11 @@ class registroEmpresaController extends Controller
     public function index($user1)
     {
 
+        $users = Crypt::decrypt($user1);
         $departamento = ubigeo_peru_departments::all();
         $provincia = ubigeo_peru_provinces::all();
         $distrito = ubigeo_peru_districts::all();
-        return view('registro.registroEmpresa', ['departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito, 'userid' => $user1]);
+        return view('registro.registroEmpresa', ['departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito, 'userid' => $users]);
     }
 
     public function registrarDatos(Request $request)
@@ -74,7 +76,7 @@ class registroEmpresaController extends Controller
             ->get();
         $datos = [];
         $persona = [];
-        $persona["id"]= $idPersona[0]->perso_id;
+        $persona["id"] = $idPersona[0]->perso_id;
         $datos["email"] = $data[0]->email;
         $datos["email_verified_at"] = $data[0]->email_verified_at;
         $datos["confirmation_code"] = $data[0]->confirmation_code;

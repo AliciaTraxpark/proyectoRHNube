@@ -833,12 +833,21 @@
 
                 $('#modalEliminar').modal('hide');
                 leertabla();
-                $.notify(" Empleado eliminado", {
-                    align: "right",
-                    verticalAlign: "top",
-                    type: "danger",
-                    icon: "bell",
-                    autoHide: true
+                $.notify({
+                    message: '\nEmpleado eliminado',
+                    icon: 'landing/images/bell.svg',
+                }, {
+                    icon_type: 'image',
+                    allow_dismiss: true,
+                    newest_on_top: true,
+                    delay: 6000,
+                    template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
                 });
             },
             error: function (data) {
