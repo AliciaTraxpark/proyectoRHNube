@@ -18,17 +18,17 @@ class TokenVerificar
     {
         $token = $request->header('Authorization');
 
-        try{
+        try {
             JWTAuth::setToken($token); // setToken and check
-            if(!$claim = JWTAuth::getPayload()){
-                return response()->json(array('message' => 'user_not_found'),404);
+            if (!$claim = JWTAuth::getPayload()) {
+                return response()->json(array('message' => 'user_not_found'), 404);
             }
-        }catch(\Tymon\JWTAuth\Exceptions\TokenExpiredException $e){
-            return response()->json(array('message' => 'token_expired'),404);
-        }catch(\Tymon\JWTAuth\Exceptions\TokenInvalidException $e){
-            return response()->json(array('message' => 'token_invalid'),404);
-        }catch(\Tymon\JWTAuth\Exceptions\TokenException $e){
-            return response()->json(array('message' => 'token_absent'),404);
+        } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+            return response()->json(array('message' => 'token_expired'), 404);
+        } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+            return response()->json(array('message' => 'token_invalid'), 404);
+        } catch (\Tymon\JWTAuth\Exceptions\TokenException $e) {
+            return response()->json(array('message' => 'token_absent'), 404);
         }
         return $next($request);
     }
