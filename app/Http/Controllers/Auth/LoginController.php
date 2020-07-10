@@ -57,6 +57,7 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
+            Auth::logoutOtherDevices(request()->input('password'));
             return redirect(route('dashboard'));
         } else {
             //return view('Welcome');
