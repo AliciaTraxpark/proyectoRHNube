@@ -74,13 +74,13 @@ $('#v_nivel').on("focus", function () {
 $('#v_centroc').on("focus", function () {
     $('#navActualizar').show();
 });
-$('#v_local').on("focus",function(){
+$('#v_local').on("focus", function () {
     $('#navActualizar').show();
 });
-$('#file2').on("click",function(){
+$('#file2').on("click", function () {
     $('#navActualizar').show();
 });
-$('input[name=v_disp]').on("click",function(){
+$('input[name=v_disp]').on("click", function () {
     $('#navActualizar').show();
 });
 //AREA
@@ -104,6 +104,14 @@ function enviarAreaA(accion, objArea) {
         data: objArea,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
         },
         success: function (data) {
             $('#area').append($('<option>', { //agrego los valores que obtengo de una base de datos
@@ -129,9 +137,7 @@ function enviarAreaA(accion, objArea) {
             });
 
         },
-        error: function () {
-            alert("Hay un error");
-        }
+        error: function () {}
     });
 }
 
@@ -157,6 +163,14 @@ function enviarCargoA(accion, objCargo) {
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
         success: function (data) {
             $('#cargo').append($('<option>', { //agrego los valores que obtengo de una base de datos
                 value: data.cargo_id,
@@ -180,9 +194,7 @@ function enviarCargoA(accion, objCargo) {
                 icon: "check"
             });
         },
-        error: function () {
-            alert("Hay un error");
-        }
+        error: function () {}
     });
 }
 
@@ -208,6 +220,14 @@ function enviarCentroA(accion, objCentroC) {
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
         success: function (data) {
             $('#centroc').append($('<option>', { //agrego los valores que obtengo de una base de datos
                 value: data.centroC_id,
@@ -231,9 +251,7 @@ function enviarCentroA(accion, objCentroC) {
                 icon: "check"
             });
         },
-        error: function () {
-            alert("Hay un error");
-        }
+        error: function () {}
     });
 }
 //LOCAL
@@ -257,6 +275,14 @@ function enviarLocalA(accion, objLocal) {
         data: objLocal,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
         },
         success: function (data) {
             $('#local').append($('<option>', { //agrego los valores que obtengo de una base de datos
@@ -282,9 +308,7 @@ function enviarLocalA(accion, objLocal) {
             });
 
         },
-        error: function () {
-            alert("Hay un error");
-        }
+        error: function () {}
     });
 }
 //NIVEL
@@ -308,6 +332,14 @@ function enviarNivelA(accion, objNivel) {
         data: objNivel,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
         },
         success: function (data) {
             $('#nivel').append($('<option>', { //agrego los valores que obtengo de una base de datos
@@ -334,7 +366,6 @@ function enviarNivelA(accion, objNivel) {
 
         },
         error: function () {
-            alert("Hay un error");
         }
     });
 }
@@ -361,6 +392,14 @@ function enviarContratoA(accion, objContrato) {
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
         success: function (data) {
             $('#v_contrato').append($('<option>', { //agrego los valores que obtengo de una base de datos
                 value: data.contrato_id,
@@ -381,7 +420,6 @@ function enviarContratoA(accion, objContrato) {
 
         },
         error: function () {
-            alert("Hay un error");
         }
     });
 }
