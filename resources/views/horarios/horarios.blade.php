@@ -39,7 +39,15 @@
 .fc-toolbar.fc-header-toolbar{
     zoom:80%;
 }
+div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content.fc-sun{
 
+background-color: rgb(255, 239, 239) !important;
+}
+div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content.fc-mon, td.fc-day.fc-widget-content.fc-tue, td.fc-day.fc-widget-content.fc-wed,
+td.fc-day.fc-widget-content.fc-thu, td.fc-day.fc-widget-content.fc-fri, td.fc-day.fc-widget-content.fc-sat{
+
+background-color: #f9f9f9 !important;
+}
     .container{
         margin-left: 40px;
     margin-right: 28px;
