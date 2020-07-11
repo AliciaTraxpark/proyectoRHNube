@@ -40,7 +40,175 @@ class apiController extends Controller
         return $empleado;
     }
 
-    public function logueoEmpleado(Request $request)
+    public function licenciaProducto(Request $request)
+    {
+        $licencia = $request->get('licencia');
+        $licencia_empleado = licencia_empleado::where('licencia', '=', $licencia)->get()->first();
+        if ($licencia_empleado) {
+            if ($licencia_empleado->disponible == 1) {
+                $licencia_empleado->disponible = 0;
+                $licencia_empleado->save();
+                return response()->json("Licencia Correcta", 200);
+            }
+            return response()->json("Licencia no disponible", 400);
+        }
+        return response()->json("Licencia incorrecta", 400);
+    }
+
+    public function verificacion(Request $request)
+    {
+        $nroD = $request->get('nroDocumento');
+        $codigo = $request->get('codigo');
+        $decode = base_convert(intval($codigo), 10, 36);
+        $explode = explode("s", $decode);
+        $empleado = DB::table('empleado as e')
+            ->where('emple_nDoc', '=', $nroD)
+            ->where('e.users_id', '=', $explode[0])
+            ->get()->first();
+        $idUser = $explode[0];
+        if ($empleado) {
+            $vinculacion = vinculacion::where('idEmpleado', '=', $empleado->emple_id)->get()->first();
+            if ($vinculacion) {
+                if ($vinculacion->hash == $request->get('codigo')) {
+                    if ($vinculacion->pc_mac !=  null) {
+                        if ($vinculacion->pc_mac == $request->get('pc_mac')) {
+                            $factory = JWTFactory::customClaims([
+                                'sub' => env('API_id'),
+                            ]);
+                            $payload = $factory->make();
+                            $token = JWTAuth::encode($payload);
+                            return response()->json(array("idEmpleado" => $empleado->emple_id, 'idUser' => $idUser, 'token' => $token->get()), 200);
+                        } else {
+                            return response()->json("Pc no coinciden", 400);
+                        }
+                    } else {
+                        $vinculacion->pc_mac = $request->get('pc_mac');
+                        $vinculacion->save();
+                        $factory = JWTFactory::customClaims([
+                            'sub' => env('API_id'),
+                        ]);
+                        $payload = $factory->make();
+                        $token = JWTAuth::encode($payload);
+                        return response()->json(array("idEmpleado" => $empleado->emple_id, 'idUser' => $idUser, 'token' => $token->get()), 200);
+                    }
+                }
+                return response()->json("Código erróneo", 400);
+            }
+            return response()->json("Aún no a enviado correo empleado.", 400);
+        }
+        return response()->json("Empleado no registrado", 400);
+    }
+
+    public function selectProyecto(Request $request)
+    {
+        $empleado = $request->get('emple_id');
+
+        $proyecto_empleado = DB::table('proyecto_empleado as pe')
+            ->where('Proye_empleado_id', $empleado)
+            ->get();
+
+        if ($proyecto_empleado) {
+            //PROYECTO
+            $datos = DB::table('empleado as e')
+                ->join('proyecto_empleado as pe', 'pe.empleado_emple_id', '=', 'e.emple_id')
+                ->join('proyecto as pr', 'pr.Proye_id', '=', 'pe.Proyecto_Proye_id')
+                ->leftJoin('tarea as t', 't.Proyecto_Proye_id', '=', 'pr.Proye_id')
+                ->leftJoin('actividad as ac', 'ac.Tarea_Tarea_id', '=', 't.Tarea_id')
+                ->select('pr.Proye_id', 'pr.Proye_Nombre')
+                ->where('e.emple_id', '=', $empleado)
+                ->groupBy('pr.Proye_id')
+                ->get();
+
+            $respuesta = [];
+
+            /*foreach ($datos as $dato) {
+                //TAREAS
+                $tareas = DB::table('empleado as e')
+                    ->join('proyecto_empleado as pe', 'pe.empleado_emple_id', '=', 'e.emple_id')
+                    ->join('proyecto as pr', 'pr.Proye_id', '=', 'pe.Proyecto_Proye_id')
+                    ->leftJoin('tarea as t', 't.Proyecto_Proye_id', '=', 'pr.Proye_id')
+                    ->leftJoin('actividad as ac', 'ac.Tarea_Tarea_id', '=', 't.Tarea_id')
+                    ->select('t.Tarea_id', 't.Tarea_Nombre')
+                    ->where('e.emple_id', '=', $empleado)
+                    ->groupBy('t.Tarea_id')
+                    ->get();
+
+                $elemento = [];
+                foreach ($tareas as $tarea) {
+                    array_push($elemento, array("idTarea" => $tarea->Tarea_id, "Tarea" => $tarea->Tarea_Nombre));
+                }
+
+                //ACTIVIDAD
+                $actividad = DB::table('empleado as e')
+                    ->join('proyecto_empleado as pe', 'pe.empleado_emple_id', '=', 'e.emple_id')
+                    ->join('proyecto as pr', 'pr.Proye_id', '=', 'pe.Proyecto_Proye_id')
+                    ->leftJoin('tarea as t', 't.Proyecto_Proye_id', '=', 'pr.Proye_id')
+                    ->leftJoin('actividad as ac', 'ac.Tarea_Tarea_id', '=', 't.Tarea_id')
+                    ->select('ac.Activi_id', 'ac.Activi_Nombre', 't.Tarea_id')
+                    ->where('e.emple_id', '=', $empleado)
+                    ->get();
+
+                $elementoA = [];
+                foreach ($actividad as $activ) {
+                    array_push($elementoA, array("idActividad" => $activ->Activi_id, "Actividad" => $activ->Activi_Nombre, "Tarea_id" => $activ->Tarea_id));
+                }
+                array_push($respuesta, array("Proye_id" => $dato->Proye_id, "Proye_Nombre" => $dato->Proye_Nombre, "Tareas" => $elemento, "Actividades" => $elementoA));
+            }*/
+            array_push($respuesta, array("Tarea_id" => $datos->Proye_id, "Tarea_Nombre" => $datos->Proye_Nombre));
+            return response()->json($respuesta, 200);
+        }
+        return response()->json(null, 400);
+    }
+
+    public function agregarProyecto(Request $request)
+    {
+        $proyecto = new proyecto();
+        $proyecto->Proye_Nombre = $request->get('Proye_Nombre');
+        $proyecto->Proye_Detalle = $request->get('Proye_Detalle');
+        $proyecto->Proye_estado = 1;
+        $proyecto->idUser = $request->get('idUser');
+        $proyecto->save();
+
+        $idProyecto = $proyecto->Proye_id;
+
+        $proyectoE = new proyecto_empleado();
+        $proyectoE->Proyecto_Proye_id = $idProyecto;
+        $proyectoE->empleado_emple_id = $request->get('idEmpleado');
+        $proyectoE->Fecha_Ini = $request->get('Fecha_Ini');
+        $proyectoE->Fecha_Fin = $request->get('Fecha_Fin');
+        $proyectoE->save();
+
+        return response()->json($proyecto, 200);
+    }
+
+    public function editarProyecto(Request $request)
+    {
+        $proyecto = proyecto::where('Proye_id', $request->get('Proye_id'))->get()->first();
+        if ($proyecto) {
+            $proyecto->Proye_Nombre = $request->get('Proye_Nombre');
+            $proyecto->Proye_Detalle = $request->get('Proye_Detalle');
+            $proyecto->save();
+            return response()->json($proyecto, 200);
+        }
+        return response()->json("Proyecto no encontrado", 400);
+    }
+
+    public function eliminarProyecto(Request $request)
+    {
+        $proyectoEmpleado = DB::table('proyecto_empleado as pe')
+            ->select('pe.proye_empleado_id')
+            ->where('pe.Proyecto_Proye_id', '=', $request->get('idProyecto'))
+            ->where('pe.empleado_emple_id', '=', $request->get('idEmpleado'))
+            ->get()
+            ->first();
+        if ($proyectoEmpleado) {
+            $eliminar = proyecto_empleado::findOrFail($proyectoEmpleado->proye_empleado_id);
+            $eliminar->delete();
+            return response()->json($request->get('idEmpleado'), 200);
+        }
+        return response()->json("Proyecto no encontrado", 400);
+    }
+    /*public function logueoEmpleado(Request $request)
     {
         $pass = DB::table('empleado as e')
             ->select('e.emple_pasword')
@@ -48,7 +216,6 @@ class apiController extends Controller
             ->get();
 
         if (count($pass) == 0)  return response()->json(null, 404);
-        //if(password_verify($request->get("emple_pasword"),$pass[0]->emple_pasword)){
         if (Hash::check($request->get("emple_pasword"), $pass[0]->emple_pasword)) {
             $empleado = DB::table('empleado as e')
                 ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
@@ -66,7 +233,7 @@ class apiController extends Controller
         } else {
             return response()->json(null, 403);
         }
-    }
+    }*/
 
     public function apiTarea(Request $request)
     {
@@ -171,124 +338,4 @@ class apiController extends Controller
         $captura->save();
         return response()->json($captura, 200);
     }
-    public function selectProyecto(Request $request)
-    {
-        $empleado = $request->get('emple_id');
-
-        $proyecto_empleado = DB::table('proyecto_empleado as pe')
-            ->where('Proye_empleado_id', $empleado)
-            ->get();
-
-        if ($proyecto_empleado) {
-            //PROYECTO
-            $datos = DB::table('empleado as e')
-                ->join('proyecto_empleado as pe', 'pe.empleado_emple_id', '=', 'e.emple_id')
-                ->join('proyecto as pr', 'pr.Proye_id', '=', 'pe.Proyecto_Proye_id')
-                ->leftJoin('tarea as t', 't.Proyecto_Proye_id', '=', 'pr.Proye_id')
-                ->leftJoin('actividad as ac', 'ac.Tarea_Tarea_id', '=', 't.Tarea_id')
-                ->select('pr.Proye_id', 'pr.Proye_Nombre')
-                ->where('e.emple_id', '=', $empleado)
-                ->groupBy('pr.Proye_id')
-                ->get();
-
-            $respuesta = [];
-
-            /*foreach ($datos as $dato) {
-                //TAREAS
-                $tareas = DB::table('empleado as e')
-                    ->join('proyecto_empleado as pe', 'pe.empleado_emple_id', '=', 'e.emple_id')
-                    ->join('proyecto as pr', 'pr.Proye_id', '=', 'pe.Proyecto_Proye_id')
-                    ->leftJoin('tarea as t', 't.Proyecto_Proye_id', '=', 'pr.Proye_id')
-                    ->leftJoin('actividad as ac', 'ac.Tarea_Tarea_id', '=', 't.Tarea_id')
-                    ->select('t.Tarea_id', 't.Tarea_Nombre')
-                    ->where('e.emple_id', '=', $empleado)
-                    ->groupBy('t.Tarea_id')
-                    ->get();
-
-                $elemento = [];
-                foreach ($tareas as $tarea) {
-                    array_push($elemento, array("idTarea" => $tarea->Tarea_id, "Tarea" => $tarea->Tarea_Nombre));
-                }
-
-                //ACTIVIDAD
-                $actividad = DB::table('empleado as e')
-                    ->join('proyecto_empleado as pe', 'pe.empleado_emple_id', '=', 'e.emple_id')
-                    ->join('proyecto as pr', 'pr.Proye_id', '=', 'pe.Proyecto_Proye_id')
-                    ->leftJoin('tarea as t', 't.Proyecto_Proye_id', '=', 'pr.Proye_id')
-                    ->leftJoin('actividad as ac', 'ac.Tarea_Tarea_id', '=', 't.Tarea_id')
-                    ->select('ac.Activi_id', 'ac.Activi_Nombre', 't.Tarea_id')
-                    ->where('e.emple_id', '=', $empleado)
-                    ->get();
-
-                $elementoA = [];
-                foreach ($actividad as $activ) {
-                    array_push($elementoA, array("idActividad" => $activ->Activi_id, "Actividad" => $activ->Activi_Nombre, "Tarea_id" => $activ->Tarea_id));
-                }
-                array_push($respuesta, array("Proye_id" => $dato->Proye_id, "Proye_Nombre" => $dato->Proye_Nombre, "Tareas" => $elemento, "Actividades" => $elementoA));
-            }*/
-            array_push($respuesta, array("Activi_id" => $datos->Proye_id, "Activi_Nombre" => $datos->Proye_Nombre));
-            return response()->json($respuesta, 200);
-        }
-        return response()->json(null, 400);
-    }
-
-    public function verificacion(Request $request)
-    {
-        $nroD = $request->get('nroDocumento');
-        $codigo = $request->get('codigo');
-        $decode = base_convert(intval($codigo), 10, 36);
-        $explode = explode("s", $decode);
-        //$empleado = empleado::where('emple_nDoc', '=', $nroD)->get()->first();
-        $empleado = DB::table('empleado as e')
-            ->where('emple_nDoc', '=', $nroD)
-            ->where('e.users_id', '=', $explode[0])
-            ->get()->first();
-        if ($empleado) {
-            $vinculacion = vinculacion::where('idEmpleado', '=', $empleado->emple_id)->get()->first();
-            if ($vinculacion) {
-                if ($vinculacion->hash == $request->get('codigo')) {
-                    if ($vinculacion->pc_mac !=  null) {
-                        if ($vinculacion->pc_mac == $request->get('pc_mac')) {
-                            $factory = JWTFactory::customClaims([
-                                'sub' => env('API_id'),
-                            ]);
-                            $payload = $factory->make();
-                            $token = JWTAuth::encode($payload);
-                            return response()->json(array("idEmpleado" => $empleado->emple_id, 'token' => $token->get()), 200);
-                        } else {
-                            return response()->json("Pc no coinciden", 400);
-                        }
-                    } else {
-                        $vinculacion->pc_mac = $request->get('pc_mac');
-                        $vinculacion->save();
-                        $factory = JWTFactory::customClaims([
-                            'sub' => env('API_id'),
-                        ]);
-                        $payload = $factory->make();
-                        $token = JWTAuth::encode($payload);
-                        return response()->json(array("idEmpleado" => $empleado->emple_id, 'token' => $token->get()), 200);
-                    }
-                }
-                return response()->json("Código erróneo", 400);
-            }
-            return response()->json("Aún no a enviado correo empleado.", 400);
-        }
-        return response()->json("Empleado no registrado", 400);
-    }
-
-    public function licenciaProducto(Request $request)
-    {
-        $licencia = $request->get('licencia');
-        $licencia_empleado = licencia_empleado::where('licencia', '=', $licencia)->get()->first();
-        if ($licencia_empleado) {
-            if ($licencia_empleado->disponible == 1) {
-                $licencia_empleado->disponible = 0;
-                $licencia_empleado->save();
-                return response()->json("Licencia Correcta", 200);
-            }
-            return response()->json("Licencia no disponible", 400);
-        }
-        return response()->json("Licencia incorrecta", 400);
-    }
 }
-
