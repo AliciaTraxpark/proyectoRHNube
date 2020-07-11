@@ -291,3 +291,4 @@ class apiController extends Controller
         return response()->json("Licencia incorrecta", 400);
     }
 }
+
