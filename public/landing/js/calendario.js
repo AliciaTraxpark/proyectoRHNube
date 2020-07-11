@@ -427,6 +427,9 @@ $( document ).ready(function() {
      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
  },
        success:function(data){
+        $( ".hopscotch-bubble-arrow-border" ).remove();
+        $( ".hopscotch-bubble-container" ).remove();
+
          $('#Datoscalendar').hide();
          $('#Datoscalendar1').show();
 
