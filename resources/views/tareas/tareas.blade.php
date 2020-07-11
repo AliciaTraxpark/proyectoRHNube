@@ -68,26 +68,32 @@
                     <div class="col-md-12">
                         <label style="font-weight: 700">Búsqueda por fecha</label>
                     </div>
-                    <div class="col-md-2"></div>
-                    <div class="col-md-4">
-                        <label><br> </label>
-                        <div class="input-group col-md-10" style="padding-left: 0px;">
+
+                    <div class="col-md-6"> <label><br> </label>
+                        <div class="form-group row">
+                            <label class="col-lg-2 col-form-label">Fecha:</label>
+                            <div class="input-group col-md-7" style="padding-left: 0px;">
                             <input type="text" id="fecha" class="form-control">
                             <div class="input-group-prepend">
                                 <div class="input-group-text form-control "><i class="uil uil-calender"></i></div>
                             </div>
                         </div>
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group col-md-10">
-                            <label>Empleado</label>
-                            <select id="empleado" data-plugin="customselect" class="form-control">
-                                <option value="" disabled selected>Seleccionar</option>
-                                @foreach ($empleado as $empleados)
-                                <option class="" value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}}
-                                    {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</option>
-                                @endforeach
-                            </select>
+
+                    <div class="col-md-6">  <label><br> </label>
+                        <div class="form-group row">
+                            <label class="col-lg-2 col-form-label">Empleado:</label>
+                            <div class="col-lg-8">
+                                <select id="empleado" data-plugin="customselect" class="form-control">
+                                    <option value="" disabled selected>Seleccionar</option>
+                                    @foreach ($empleado as $empleados)
+                                    <option class="" value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}}
+                                        {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                         </div>
                     </div>
                     <div class="col-md-2"></div>
@@ -104,6 +110,9 @@
                     <img src="{{asset('landing/images/loading.gif')}}" height="100">
                 </div>
                 <div class="col-xl-12" id="card">
+                    <br>
+                    <img style="margin-left:28%" src="{{ URL::asset('admin/images/search-file.svg') }}"
+                                        class=" mr-2" height="220"  /> <br>  <label for="" style="margin-left:30%;color:#7d7d7d">Realize una búsqueda para ver Actividad</label>
                 </div>
             </div> <!-- end card-body-->
         </div> <!-- end card-->

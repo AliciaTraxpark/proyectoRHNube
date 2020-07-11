@@ -68,7 +68,9 @@ font-size: 14px;
 font-weight: 600;
 margin: -1px 1px 0 0;
 }
-
+div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-arrow-border{
+    border-right: 17px solid rgb(120, 143, 165);
+}
 
 </style>
 
@@ -574,7 +576,7 @@ margin: -1px 1px 0 0;
 
   <!-- plugin js -->
   <script src="{{asset('admin/assets/libs/moment/moment.min.js')}}"></script>
-  <script src="{{asset('admin/packages/core/main.js')}}"></script>
+  <script src="{{   asset('admin/packages/core/main.js')}}"></script>
   <script src="{{asset('admin/packages/core/locales/es.js')}}"></script>
   <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
   <script src="{{asset('admin/packages/daygrid/main.js')}}"></script>
@@ -583,7 +585,7 @@ margin: -1px 1px 0 0;
    <script src="{{asset('landing/js/calendario.js')}}"></script>
   <script>
   $(document).ready(function(){
-    
+
       hopscotch.startTour({
           id:"my-intro",
           i18n: {

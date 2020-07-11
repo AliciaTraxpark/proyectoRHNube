@@ -33,7 +33,8 @@
 
         <ul class="navbar-nav flex-row ml-auto d-flex list-unstyled topnav-menu float-right mb-0">
             <li class="dropdown notification-list" data-toggle="tooltip" data-placement="left" title="Organizacion">
-            <strong style="color: mintcream">{{$organizacion->organi_razonSocial}}</strong>
+           <span style="color: aliceblue;font-size: 12px";>Organizacion:</span>&nbsp; <strong style="color: rgb(255, 255, 255)">{{$organizacion->organi_razonSocial}} |</strong>
+           <span style="color: aliceblue;font-size: 12px";>RUC/ID:</span>&nbsp; <strong style="color: rgb(255, 255, 255)">{{$organizacion->organi_ruc}} </strong>
             </li>
 
 

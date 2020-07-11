@@ -27,6 +27,14 @@ $('#nombreEmpleado').change(function () {
             type: "post",
             url: "/verDataEmpleado",
             data: 'ids=' + ide,
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                }
+            },
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -57,6 +65,14 @@ function verhorarioEmpleado(idempleado) {
         type: "post",
         url: "/verDataEmpleado",
         data: 'ids=' + idempleado,
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -135,6 +151,14 @@ function calendarioHorario(eventosEmpleado) {
                             data: {
                                 idHora: info.event.id,textcolor:info.event.textColor,ide:idempleadoEli
                             },
+                            statusCode: {
+                                /*401: function () {
+                                    location.reload();
+                                },*/
+                                419: function () {
+                                    location.reload();
+                                }
+                            },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
@@ -182,6 +206,14 @@ function calendarioHorario(eventosEmpleado) {
                 departamento: iddepartamentoDescanso,
                 end: moment(arg.end).format('YYYY-MM-DD HH:mm:ss')
 
+            },
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                }
             },
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -277,6 +309,14 @@ function calendarioHorario(eventosEmpleado) {
                             departamento: iddepartamento,
                             inicio: inicioHorario,
                             fin: finHorario
+                        },
+                        statusCode: {
+                            /*401: function () {
+                                location.reload();
+                            },*/
+                            419: function () {
+                                location.reload();
+                            }
                         },
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -383,6 +423,14 @@ $('#btnasignar').on('click', function(e) {
             type: "post",
             url: "/verDataEmpleado",
             data: 'ids=' + ideHor,
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                }
+            },
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -406,6 +454,14 @@ $('#btnasignar').on('click', function(e) {
     $.ajax({
         type: "post",
         url: "/horarioVerTodEmp",
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -432,6 +488,14 @@ $('#btnasignar').on('click', function(e) {
                         type: "post",
                         url: "/verDataEmpleado",
                         data: 'ids=' + idemps,
+                        statusCode: {
+                            /*401: function () {
+                                location.reload();
+                            },*/
+                            419: function () {
+                                location.reload();
+                            }
+                        },
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
@@ -501,6 +565,14 @@ function calendario(data) {
                 departamento: iddepartamentoDescanso,
                 end: moment(arg.end).format('YYYY-MM-DD HH:mm:ss')
 
+            },
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                }
             },
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -587,6 +659,14 @@ function calendario(data) {
                         inicio: inicio,
                         fin: fin
                     },
+                    statusCode: {
+                        /*401: function () {
+                            location.reload();
+                        },*/
+                        419: function () {
+                            location.reload();
+                        }
+                    },
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
@@ -647,6 +727,14 @@ function calendario(data) {
                             url: "/eliminarHora",
                             data: {
                                 idHora: info.event.id,textcolor:info.event.textColor
+                            },
+                            statusCode: {
+                                /*401: function () {
+                                    location.reload();
+                                },*/
+                                419: function () {
+                                    location.reload();
+                                }
                             },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -721,6 +809,14 @@ $('#nuevoCalendario').click(function () {
             departamento: departamento,
             pais: pais
         },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -791,6 +887,14 @@ function calendario1(datadep) {
                 departamento: iddepartamentoDescanso,
                 end: moment(arg.end).format('YYYY-MM-DD HH:mm:ss')
 
+            },
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                }
             },
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -870,6 +974,14 @@ function calendario1(datadep) {
                         inicio: inicio,
                         fin: fin
                     },
+                    statusCode: {
+                        /*401: function () {
+                            location.reload();
+                        },*/
+                        419: function () {
+                            location.reload();
+                        }
+                    },
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
@@ -909,6 +1021,14 @@ function calendario1(datadep) {
                             url: "/eliminarHora",
                             data: {
                                 idHora: info.event.id,textcolor:info.event.textColor
+                            },
+                            statusCode: {
+                                /*401: function () {
+                                    location.reload();
+                                },*/
+                                419: function () {
+                                    location.reload();
+                                }
                             },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -978,6 +1098,14 @@ $('#guardarHorarioEventos').click(function () {
         data: {
             idemps,descripcion,toleranciaH:nuevaTolerancia
         },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -1025,6 +1153,14 @@ $('#guardarTodoHorario').click(function () {
             tipHorario,
             descripcion,
             toleranciaH
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1093,6 +1229,14 @@ function registrarIncidencia(){
             type:"post",
             url:"/registrarInci",
             data:{idempleadoI, descripcionI,descuentoI,fechaI,fechaF,horaIn},
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                }
+            },
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             success: function (data) {
                 $('#asignarIncidencia').modal('hide');
