@@ -20,7 +20,8 @@
   <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
   <link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
   <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
-
+  <script src="{{asset('admin/assets/hopscotch/hopscotch.min.js')}}"></script>
+  <link  href="{{asset('admin/assets/hopscotch/hopscotch.min.css')}}" rel="stylesheet" type="text/css">
 </head>
 
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
@@ -50,6 +51,27 @@ background-color: #f9f9f9 !important;
     color: #fff;
     background-color: #162029;
     }
+    div.hopscotch-bubble .hopscotch-bubble-number {
+    background: #575daf;
+    padding: 0;
+    border-radius: 50%;}
+    div.hopscotch-bubble {
+    border: 5px solid  #788fa5;
+    border-radius: 5px;
+}
+div.hopscotch-bubble .hopscotch-bubble-arrow-container.right .hopscotch-bubble-arrow-border{
+    border-left: 17px solid #788fa5;
+}
+div.hopscotch-bubble h3{
+
+font-size: 14px;
+font-weight: 600;
+margin: -1px 1px 0 0;
+}
+div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-arrow-border{
+    border-right: 17px solid rgb(120, 143, 165);
+}
+
 </style>
 
   <header id="header-section">
@@ -554,7 +576,7 @@ background-color: #f9f9f9 !important;
 
   <!-- plugin js -->
   <script src="{{asset('admin/assets/libs/moment/moment.min.js')}}"></script>
-  <script src="{{asset('admin/packages/core/main.js')}}"></script>
+  <script src="{{   asset('admin/packages/core/main.js')}}"></script>
   <script src="{{asset('admin/packages/core/locales/es.js')}}"></script>
   <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
   <script src="{{asset('admin/packages/daygrid/main.js')}}"></script>
@@ -562,8 +584,67 @@ background-color: #f9f9f9 !important;
   <script src="{{asset('admin/packages/interaction/main.js')}}"></script>
    <script src="{{asset('landing/js/calendario.js')}}"></script>
   <script>
+  $(document).ready(function(){
+
+      hopscotch.startTour({
+          id:"my-intro",
+          i18n: {
+          nextBtn: ">",
+          prevBtn: "<",
+          doneBtn:"Entendido"
+        },
+
+          steps:[
+          {target:".fc-view-container",
+          title: "Seleccione dia(s)",
+          placement:"left",
+          width:161,
+          yOffset:30},
+
+          {target:".fc-toolbar.fc-footer-toolbar",
+          title:"Selecione el tipo de dia",
+          placement:"right",
+          width:200,
+          yOffset:0,
+          xOffset:0,
+          arrowOffset:0
+
+        /*xOffset:130 */
+        },
+
+         ]
+          }
+          )
+
+        });
+
+  // Define the tour!
+ /*  var tour = {
+    id: "hello-hopscotch",
+    steps: [
+      {
+        title: "Seleccione dia(s)",
+        width:180,
+        padding:10,
+        target: ".fc-view-container",
+        placement: "left"
+
+      },
+     {
+        title: "Selecione el tipo de dia",
+        width:500,
+        target: ".fc-toolbar.fc-footer-toolbar",
+        placement: "top",
+        arrowOffset:130,
+        xOffset:130,
 
 
+      }
+    ]
+  };
+
+  // Start the tour!
+  hopscotch.startTour(tour); */
 
   </script>
 
