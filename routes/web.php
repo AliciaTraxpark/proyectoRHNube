@@ -71,8 +71,8 @@ Route::post('/empleado/store', 'EmpleadoController@store');
 Route::get('/empleado', 'EmpleadoController@index');
 Route::get('/empleado/cargar', 'EmpleadoController@cargarDatos');
 Route::post('/empleado/file', 'EmpleadoController@upload');
-Route::get('tablaempleado/ver', 'EmpleadoController@tabla');
-Route::get('empleado/show', 'EmpleadoController@show');
+Route::get('tablaempleado/ver', 'EmpleadoController@tabla')->middleware('auth');
+Route::get('empleado/show', 'EmpleadoController@show')->middleware('auth');
 Route::post('/empleadoA/{idE}', 'EmpleadoController@update');
 Route::post('/empleado/eliminar', 'EmpleadoController@destroy');
 Route::post('/eliminarFoto/{v_id}', 'EmpleadoController@eliminarFoto');
@@ -99,11 +99,11 @@ Route::post('/registrar/nivel', 'nivelController@store');
 Route::post('/registrar/contrato', 'contratoController@store');
 
 //TAREAS
-Route::get('/tareas', 'ControlController@index')->middleware('auth');
-Route::get('/tareas/show', 'ControlController@show')->middleware('auth');
-Route::get('/tareas/proyecto', 'ControlController@proyecto')->middleware('auth');
-Route::get('/reporteSemanal', 'ControlController@reporteS')->middleware('auth');
-Route::get('/reporte/empleado', 'ControlController@EmpleadoReporte')->middleware('auth');
+Route::get('/tareas', 'ControlController@index');
+Route::get('/tareas/show', 'ControlController@show');
+Route::get('/tareas/proyecto', 'ControlController@proyecto');
+Route::get('/reporteSemanal', 'ControlController@reporteS');
+Route::get('/reporte/empleado', 'ControlController@EmpleadoReporte');
 
 
 //probando excel

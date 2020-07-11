@@ -39,6 +39,14 @@ function onMostrarPantallas() {
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
         success: function (data) {
             //data = data.reverse();
             $('#espera').hide();
@@ -221,7 +229,6 @@ function onMostrarPantallas() {
             }
         },
         error: function (data) {
-            alert("Hay un error");
         }
     })
 }
@@ -240,6 +247,14 @@ function onMostrarProyecto() {
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
         },
         success: function (data) {
             var html_select = '<option value="">Seleccionar</option>';

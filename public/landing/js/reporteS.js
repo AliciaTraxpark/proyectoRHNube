@@ -95,6 +95,14 @@ function onSelectFechas() {
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
         success: function (data) {
             var container = $('#empleado');
             var containerD = $('#dias');
@@ -230,12 +238,6 @@ function onSelectFechas() {
             $('#myChartD').hide();
         },
         error: function (data) {
-            $.notify("Error", {
-                align: "right",
-                verticalAlign: "top",
-                type: "danger",
-                icon: "warning"
-            });
         }
     })
 }

@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-header("Refresh:7202");
-
 use App\eventos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +15,7 @@ class calendarioController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'verified']);
     }
     //
     public function index()

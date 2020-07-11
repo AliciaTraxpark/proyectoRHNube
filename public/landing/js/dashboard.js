@@ -68,6 +68,14 @@ $.ajax({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
+    statusCode: {
+        /*401: function () {
+            location.reload();
+        },*/
+        419: function () {
+            location.reload();
+        }
+    },
     success: function (data) {
         var nombre = [];
         var total = [];
@@ -167,9 +175,7 @@ $.ajax({
             });
         }
     },
-    error: function (data) {
-        $.notify("\nEror en área.");
-    }
+    error: function (data) {}
 });
 //NIVEL
 $.ajax({
@@ -177,6 +183,14 @@ $.ajax({
     method: "GET",
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    statusCode: {
+        /*401: function () {
+            location.reload();
+        },*/
+        419: function () {
+            location.reload();
+        }
     },
     success: function (data) {
         var nombre = [];
@@ -276,9 +290,7 @@ $.ajax({
             });
         }
     },
-    error: function (data) {
-        $.notify("Error en nivel.");
-    }
+    error: function (data) {}
 });
 //CONTRATO
 $.ajax({
@@ -286,6 +298,14 @@ $.ajax({
     method: "GET",
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    statusCode: {
+        /*401: function () {
+            location.reload();
+        },*/
+        419: function () {
+            location.reload();
+        }
     },
     success: function (data) {
         var nombre = [];
@@ -385,9 +405,7 @@ $.ajax({
             });
         }
     },
-    error: function (data) {
-        $.notify("Error en  tipo de contrato.");
-    }
+    error: function (data) {}
 });
 //CENTRO
 $.ajax({
@@ -395,6 +413,14 @@ $.ajax({
     method: "GET",
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    statusCode: {
+        /*401: function () {
+            location.reload();
+        },*/
+        419: function () {
+            location.reload();
+        }
     },
     success: function (data) {
         var nombre = [];
@@ -493,9 +519,7 @@ $.ajax({
             });
         }
     },
-    error: function (data) {
-        $.notify("Error en tipo de centro costo.");
-    }
+    error: function (data) {}
 });
 //LOCAL
 $.ajax({
@@ -503,6 +527,14 @@ $.ajax({
     method: "GET",
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    statusCode: {
+        /*401: function () {
+            location.reload();
+        },*/
+        419: function () {
+            location.reload();
+        }
     },
     success: function (data) {
         var nombre = [];
@@ -602,9 +634,7 @@ $.ajax({
             });
         }
     },
-    error: function (data) {
-        $.notify("Error en local.");
-    }
+    error: function (data) {}
 });
 //EDAD
 /*$.ajax({
@@ -710,6 +740,14 @@ $.ajax({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
+    statusCode: {
+        /*401: function () {
+            location.reload();
+        },*/
+        419: function () {
+            location.reload();
+        }
+    },
     success: function (data) {
         var nombre = [];
         var total = [];
@@ -809,7 +847,6 @@ $.ajax({
         }
     },
     error: function (data) {
-        $.notify("Error en edad.");
     }
 });
 //RANGO DE EDAD
@@ -818,6 +855,14 @@ $.ajax({
     method: "GET",
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    statusCode: {
+        /*401: function () {
+            location.reload();
+        },*/
+        419: function () {
+            location.reload();
+        }
     },
     success: function (data) {
         var nombre = [];
@@ -918,6 +963,5 @@ $.ajax({
         }
     },
     error: function (data) {
-        $.notify("Error en local.");
     }
 });
