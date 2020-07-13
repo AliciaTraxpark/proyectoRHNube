@@ -25,16 +25,18 @@ Route::get('/departamento/{id}/niveles', 'EmpleadoController@provincias');
 Route::get('/provincia/{id}/niveles', 'EmpleadoController@distritos');
 
 Route::get("empleado", "apiController@api");
-Route::post("tarea", "apiController@apiTarea");
-Route::post("actividad", "apiController@apiActividad");
+Route::post("tarea", "apiController@apiTarea")->middleware('token');
+Route::post("actividad", "apiController@apiActividad")->middleware('token');
 Route::post("logueo", "apiController@logueoEmpleado");
-Route::post("editarTarea", "apiController@editarApiTarea");
-Route::post("editarActividad", "apiController@editarApiActividad");
-Route::post("envio", "apiController@envio");
-Route::post("control", "apiController@control");
+Route::post("editarTarea", "apiController@editarApiTarea")->middleware('token');
+Route::post("editarActividad", "apiController@editarApiActividad")->middleware('token');
+Route::post("envio", "apiController@envio")->middleware('token');
+Route::post("control", "apiController@control")->middleware('token');
 Route::post("captura", "apiController@captura")->middleware('token');
-Route::post("proyecto", "apiController@selectProyecto");
-
+Route::post("proyecto", "apiController@selectProyecto")->middleware('token');
+Route::post("agregarProyecto", "apiController@agregarProyecto")->middleware('token');
+Route::post("editarProyecto", "apiController@editarProyecto")->middleware('token');
+Route::post("eliminarProyecto", "apiController@eliminarProyecto")->middleware('token');
 ///LOGUEO CON CORREO
 Route::post("logueoV", "apiController@verificacion");
 
