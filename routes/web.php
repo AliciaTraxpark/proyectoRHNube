@@ -172,3 +172,5 @@ Route::get('empleadoAndroid', 'correosEmpleadoController@envioA');
 Route::get('empleadoAndroidMasivo', 'correosEmpleadoController@envioAndroidM');
 //DOWNLOAD
 Route::get('download/{code}', 'downloadController@download');
+///verif
+Route::get('check-session', 'verificarUsuarioController@checkSession');

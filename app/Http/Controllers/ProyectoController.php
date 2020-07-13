@@ -10,9 +10,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\proyecto;
 use App\proyecto_empleado;
-
+use Illuminate\Support\Facades\Response;
 class ProyectoController extends Controller
-{
+{   public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
     public function index()
     {
         $proyecto = proyecto::where('idUser', '=', Auth::user()->id)->get();
@@ -118,4 +121,6 @@ class ProyectoController extends Controller
 
 
     }
+
+
 }

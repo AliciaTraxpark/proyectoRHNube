@@ -25,7 +25,20 @@
 </head>
 
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
-
+    <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <img src="{{asset('landing/images/notification.svg')}}" height="100" >
+                    <h4 class="text-danger mt-4">Su sesion expiró</h4>
+                    <p class="w-75 mx-auto text-muted">Por favor inicie sesion nuevamente.</p>
+                    <div class="mt-4">
+                        <a href="{{('/')}}" class="btn btn-outline-primary btn-rounded width-md"><i class="uil uil-arrow-right mr-1"></i> Iniciar sesion</a>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 <style>
    div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content.fc-sun{
 
@@ -618,35 +631,25 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
 
         });
 
-  // Define the tour!
- /*  var tour = {
-    id: "hello-hopscotch",
-    steps: [
-      {
-        title: "Seleccione dia(s)",
-        width:180,
-        padding:10,
-        target: ".fc-view-container",
-        placement: "left"
-
-      },
-     {
-        title: "Selecione el tipo de dia",
-        width:500,
-        target: ".fc-toolbar.fc-footer-toolbar",
-        placement: "top",
-        arrowOffset:130,
-        xOffset:130,
-
-
-      }
-    ]
-  };
-
-  // Start the tour!
-  hopscotch.startTour(tour); */
 
   </script>
+  @if (Auth::user())
+  <script>
+    $(function() {
+      setInterval(function checkSession() {
+        $.get('/check-session', function(data) {
 
+          // if session was expired
+          if (data.guest==false) {
+             $('#modal-error').modal('show');
+             $( ".hopscotch-bubble-arrow-border" ).remove();
+        $( ".hopscotch-bubble-container" ).remove();
+
+          }
+        });
+      },7202000); // every minute
+    });
+  </script>
+@endif
 </body>
 </html>
