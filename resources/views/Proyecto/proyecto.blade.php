@@ -23,6 +23,17 @@ use App\proyecto_empleado;
     .select2-container--default .select2-results__option[aria-selected=true] {
         background: #ced0d3;
     }
+    body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-footer > button.btn.btn-primary.bootbox-accept{
+        background-color: #163552;
+        border-color: #163552;
+        zoom: 85%;
+    }
+    body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-footer > button.btn.btn-light.bootbox-cancel{
+        background: #e2e1e1;
+        color: #000000;
+        border-color:#e2e1e1;
+        zoom: 85%;
+    }
 </style>
 <div class="row page-title">
     <div class="col-md-12">
@@ -40,8 +51,8 @@ use App\proyecto_empleado;
                     aria-hidden="true">
                     <div class="modal-dialog ">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Tarea nueva</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Tarea nueva</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -75,8 +86,8 @@ use App\proyecto_empleado;
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="" class="btn btn-primary">Guardar</button>
+                                <button type="button" style=" zoom: 90%;" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="" style="background-color: #163552; border-color: #163552;  zoom: 90%;" class="btn btn-primary">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -87,8 +98,8 @@ use App\proyecto_empleado;
                     aria-hidden="true">
                     <div class="modal-dialog " style="max-width: 550px;">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Agregar miembros</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar miembros</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -100,7 +111,7 @@ use App\proyecto_empleado;
                                         <div class="col-lg-12">
                                             <div class="form-group col-lg-12 row">
                                                 <label class="col-lg-6 col-form-label" for="simpleinput">Nombre de
-                                                    tarea</label>
+                                                    tarea:</label>
                                                 <div class="col-lg-6">
                                                     <input type="text" class="form-control-plaintext" id="nombre1"
                                                         disabled>
@@ -111,7 +122,7 @@ use App\proyecto_empleado;
                                         <div class="col-lg-12">
                                             <div class="form-group col-lg-12 row">
                                                 <label class="col-lg-4 col-form-label" for="simpleinput">Miembros de
-                                                    proyecto</label>
+                                                    proyecto:</label>
                                                 <div class="col-lg-8">
 
                                                     <select class="form-control wide" data-plugin="customselect"
@@ -138,8 +149,73 @@ use App\proyecto_empleado;
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="" class="btn btn-primary" onclick="registrarPE()">Guardar</button>
+                                <button type="button" class="btn btn-light" style="zoom:90%" data-dismiss="modal">Cerrar</button>
+                                <button type="" style="background-color: #163552; border-color: #163552;  zoom: 90%;" class="btn btn-primary" onclick="registrarPE()">Guardar</button>
+                            </div>
+
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+                <div id="myModal2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog " style="max-width: 550px;">
+                        <div class="modal-content">
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Editar Proyecto</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group col-lg-12 row">
+                                                <label class="col-lg-6 col-form-label" for="simpleinput">Nombre de
+                                                    tarea:</label>
+                                                <div class="col-lg-6">
+                                                    <input type="text" class="form-control form-control-sm" id="nombre1_e" >
+                                                    <input type="hidden" id="id1_e" name="id1_e">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group col-lg-12 row">
+                                                <label class="col-lg-6 col-form-label" for="simpleinput">Descripcion de
+                                                    tarea:</label>
+                                                <div class="col-lg-6">
+                                                    <textarea class="form-control" rows="3"
+                                                            id="detalleProyecto_e"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group col-lg-12 row">
+                                                <label class="col-lg-4 col-form-label" for="simpleinput">Miembros de
+                                                    proyecto:</label>
+                                                <div class="col-lg-10"><br>
+                                                   <table id="tablaProyectoE" class="table" border="1" style="
+                                                    border-collapse: collapse;border: #e2e7f1 1px solid;font-size: 12.5px;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="padding: 4px;">Nombre de empleado</th>
+                                                            <th style="padding: 4px;"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    </tbody>
+                                                   </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light" style="zoom: 90%" data-dismiss="modal">Cerrar</button>
+                                <button  type="" style="display: none;background-color: #163552; border-color: #163552;  zoom: 90%;" class="btn btn-primary" onclick="guardarEdicion()"  id="editarPro">Guardar</button>
                             </div>
 
                         </div><!-- /.modal-content -->
@@ -196,7 +272,8 @@ use App\proyecto_empleado;
                             </td>
                             <td><button style="background:#f0f4fd; border-color:#f0f4fd; color:#a0add3"
                                     class="btn btn-secondary btn-sm" onclick="abrirM({{$proyectos->Proye_id}})">+
-                                    Miembro </button>&nbsp;&nbsp;&nbsp;&nbsp;<a
+                                    Miembro </button>&nbsp;&nbsp;&nbsp;&nbsp; <a id="formNuevoEd" onclick="editarproyecto({{$proyectos->Proye_id}})" style="cursor: pointer"><img
+                                        src="{{asset('admin/images/edit.svg')}}" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp; <a
                                     onclick="eliminarp({{$proyectos->Proye_id}});" style="cursor: pointer"><img
                                         src="{{asset('admin/images/delete.svg')}}" height="15"></a></td>
                         </tr>
@@ -206,30 +283,6 @@ use App\proyecto_empleado;
             </div>
         </div>
     </div>
-    {{--   <div class="col-xl-8">
-        <div class="inbox-rightbar">
-            <div class="">
-                <ul class="message-list">
-                    @foreach ($empleado as  $empleados)
-                    <li class="unread">
-                        <div class="col-mail col-mail-1">
-
-                            <div class="checkbox-wrapper-mail">
-                                <input type="checkbox" id="chk1">
-                                <label for="chk1" class="toggle"></label>
-                            </div>
-                                <a class="title">{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}}
-    {{$empleados->perso_apMaterno}}</a>
-</div>
-<div class="col-mail col-mail-1">
-    <a class="subject badge badge-success">Proyecto 1</a>
-</div>
-</li>
-@endforeach
-</ul>
-</div>
-</div>
-</div> --}}
 </div>
 @endsection
 @section('script')

@@ -254,3 +254,156 @@ $(document).ready(function () {
 
     });
 });
+function editarproyecto(id){
+    $('#editarPro').hide();
+    $('#myModal2').modal('toggle');
+    $("#tablaProyectoE>tbody>tr").remove();
+    $.ajax({
+        type: "POST",
+        url: "/proyecto/tablaEmpleados",
+        data: {
+            id
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            $('#nombre1_e').val(data[0][0].Proye_Nombre);
+            $('#detalleProyecto_e').val(data[0][0].Proye_Detalle);
+            $('#id1_e').val(data[0][0].Proye_id);
+            $.each(data[1], function (key, item) {
+                $("#tablaProyectoE>tbody").append(
+                    "<tr  id='r"+item.proye_empleado_id+"'><td style='padding: 4px;'>"+item.perso_nombre+" "+item.perso_apPaterno+" "+item.perso_apMaterno+
+                    "</td> <td style='padding: 4px;'><a style='cursor: pointer' onclick='eliminarsoloEmp("+item.proye_empleado_id+")' ><img src='admin/images/delete.svg' height='15'></a> </td></tr>"
+                    );
+               });
+               $("#nombre1_e").bind("keyup change", function(){
+                tarea=$('#nombre1_e').val();
+                if(tarea!=data[0][0].Proye_Nombre){
+                    $('#editarPro').show();
+
+                } else{
+                    if($('#detalleProyecto_e').val()==data[0][0].Proye_Detalle){
+                     $('#editarPro').hide();
+                    }
+                  }
+               });
+               $("#detalleProyecto_e").bind("keyup change", function(){
+                tarea=$('#detalleProyecto_e').val();
+                if(tarea!=data[0][0].Proye_Detalle){
+                    $('#editarPro').show();
+
+                } else{
+                    if($('#nombre1_e').val()==data[0][0].Proye_Nombre){
+                        $('#editarPro').hide();
+                       }
+
+
+                  }
+               });
+
+        },
+        error: function () {
+            bootbox.alert({
+                message: "Ocurrio un error",
+
+            })
+        }
+    });
+
+}
+
+function eliminarsoloEmp(id){
+    bootbox.confirm({
+        message: "¿Desea eliminar el empleado de este proyecto?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-primary'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            if (result == true) {
+                $.ajax({
+                    type: "POST",
+                    url: "/proyecto/eliminarEmpleado",
+                    data: {
+                        id
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    statusCode: {
+                        419: function () {
+                            location.reload();
+                        }
+                    },
+                    success: function (data) {
+                        $('#r'+id).remove();
+                        $('#tablaProyecto').load(location.href + " #tablaProyecto>*");
+                        $.notify(" empleado eliminado", {
+                            align: "right",
+                            verticalAlign: "top",
+                            type: "success",
+                            icon: "check"
+                        });
+
+                    },
+                    error: function () {
+                        bootbox.alert({
+                            message: "Ocurrio un error",
+
+                        })
+                }});
+            }
+        }
+    });
+
+  }
+
+function guardarEdicion(){
+    var nombreP=$('#nombre1_e').val();
+    var detalleP=$('#detalleProyecto_e').val();
+    var idPr=$('#id1_e').val();
+
+     $.ajax({
+        type: "POST",
+        url: "/proyecto/editarPro",
+        data: {
+            nombreP,detalleP,idPr
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            $('#tablaProyecto').load(location.href + " #tablaProyecto>*");
+            $('#myModal2').modal('hide');
+            $.notify(" Proyecto editado", {
+                align: "right",
+                verticalAlign: "top",
+                type: "success",
+                icon: "check"
+            });
+
+        },
+        error: function () {
+            bootbox.alert({
+                message: "Ocurrio un error",
+
+            })
+    }});
+}

@@ -80,4 +80,42 @@ class ProyectoController extends Controller
         $proyecto_empleado = proyecto_empleado::where('Proyecto_Proye_id', '=', $idproyecto)->delete();
         $proyecto = proyecto::where('Proye_id', '=', $idproyecto)->delete();
     }
+
+    public function empleadosTabla(Request $request){
+        $proyecto = proyecto::where('Proye_id','=',$request->get('id'))->get();
+        foreach ($proyecto as $proyectos){
+            $proyectoEmp=DB::table('proyecto_empleado as pe')
+            ->join('empleado as e','pe.empleado_emple_id','=','e.emple_id')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->where('Proyecto_Proye_id','=',$proyectos->Proye_id)
+            ->get();
+
+        /* if(!$proyectoEmp->isEmpty()){
+            foreach ( $proyectoEmp as $proyectoEmps){
+            $empleadoTabE = DB::table('empleado as e')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->select('e.emple_id','p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno')
+            ->where('e.emple_id','=',$proyectoEmps->empleado_emple_id)
+            ->get();
+            return [$proyecto,$empleadoTabE];
+            }
+
+            } */
+
+        }  return [$proyecto,$proyectoEmp];
+
+
+
+    }
+
+    public function eliminarEmpleado(Request $request){
+    $id=$request->id;
+    $proyecto_empleado = proyecto_empleado::where('proye_empleado_id', '=', $id)->delete();
+    }
+    public function editarProyecto(Request $request){
+        $proyecto =proyecto::where('Proye_id', '=', $request->idPr)
+        ->update(['Proye_Nombre' =>  $request->nombreP,'Proye_Detalle' =>  $request->detalleP]);
+
+
+    }
 }

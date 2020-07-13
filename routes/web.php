@@ -121,6 +121,10 @@ Route::post('/proyecto/proyectoV', 'ProyectoController@proyectoV');
 Route::post('/proyecto/registrarPrEm', 'ProyectoController@registrarPrEm');
 Route::post('/proyecto/selectValidar', 'ProyectoController@selectValidar');
 Route::post('/proyecto/eliminar', 'ProyectoController@eliminar');
+Route::post('/proyecto/tablaEmpleados', 'ProyectoController@empleadosTabla');
+Route::post('/proyecto/eliminarEmpleado', 'ProyectoController@eliminarEmpleado');
+Route::post('/proyecto/editarPro', 'ProyectoController@editarProyecto');
+
 //carga masiva de fotos
 Route::post('/subirfoto', 'CargaMasivaFotoController@subirfoto');
 
