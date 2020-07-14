@@ -72,8 +72,7 @@ class VerifyMailController extends Controller
             $decode = base_convert(intval($codigo), 10, 36);
             $explode = explode("c", $decode);
             if (Auth::user()->id == $explode[0]) {
-                return response()->json("Licencia Correcta", 200);
-                //return redirect('/dashboard')->with('notification', 'Has confirmado correctamente tu correo!');
+                return redirect('/dashboard')->with('notification', 'Has confirmado correctamente tu correo!');
             }
             return view('Verificacion.smsVerificacion', ["usuario" => $usuario, "persona" => $persona]);
         }

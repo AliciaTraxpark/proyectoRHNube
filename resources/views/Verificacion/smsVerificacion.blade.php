@@ -86,7 +86,7 @@
                                 {{$persona[0]->perso_apPaterno}}
                             </h6>
                             <div class="mx-auto">
-                                <input id="codigo" class="form-control mt-3
+                                <input id="codigo" type="text" class="form-control mt-3
                                     text-center" name="codigo" required autofocus>
                             </div>
                             <br>
@@ -131,12 +131,9 @@
                         location.reload();
                     }
                 },
-                success: function (data) {
-                    window.location.replace(
-                        location.origin + "/dashboard"
-                    );
-                },
-                error: function () {
+                success: function (data) {},
+                error: function (data) {
+                    console.log(data);
                     alert("error");
                 }
             });
