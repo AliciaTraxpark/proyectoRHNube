@@ -33,7 +33,7 @@ Route::post("editarActividad", "apiController@editarApiActividad")->middleware('
 Route::post("envio", "apiController@envio")->middleware('token');
 Route::post("control", "apiController@control")->middleware('token');
 Route::post("captura", "apiController@captura")->middleware('token');
-Route::post("proyecto", "apiController@selectProyecto");
+Route::post("proyecto", "apiController@selectProyecto")->middleware('token');
 Route::post("agregarProyecto", "apiController@agregarProyecto")->middleware('token');
 Route::post("editarProyecto", "apiController@editarProyecto")->middleware('token');
 Route::post("eliminarProyecto", "apiController@eliminarProyecto")->middleware('token');
