@@ -54,6 +54,7 @@ Route::get('register/verify/{code}', 'GuestController@verify');
 Route::get('registro/organizacion/{user1}', 'registroEmpresaController@index')->name('registroorganizacion');
 Route::post('organizacion/store', 'registroEmpresaController@registrarDatos')->name('organizacion');
 Route::POST('organizacion/create', 'registroEmpresaController@create')->name('registerOrganizacion');
+Route::POST('/organizacion/busquedaRuc', 'registroEmpresaController@busquedaRuc');
 
 //calendario_usuario
 Route::post('eventos_usuario/store', 'EventosUsuarioController@store');

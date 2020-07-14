@@ -46,7 +46,11 @@ class registroEmpresaController extends Controller
     }
 
     public function create(Request $request)
-    {
+    {    $rucorganizacion = DB::table('organizacion as o')
+        ->where('o.organi_ruc', '=', $request->get('ruc'))
+        ->get()->first();
+
+    if ($rucorganizacion== null) {
         $organizacion = new organizacion();
         $organizacion->organi_ruc = $request->get('ruc');
         $organizacion->organi_razonSocial = $request->get('razonSocial');
@@ -88,5 +92,19 @@ class registroEmpresaController extends Controller
 
         return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado!
         Te hemos enviado un correo de verificación.");
+    } else{return redirect()->back()->with('errors', 'RUC/ID ya se encuentra registrado')->withInput();}
+
+    }
+    public function busquedaRuc(Request $request){
+     $rucEmpresa = $request->get('consulta');
+
+        $organizacion = DB::table('organizacion as o')
+            ->where('o.organi_ruc', '=',$rucEmpresa)
+            ->get()->first();
+
+        if ($organizacion== null) {
+            return 0;
+        } else{return 1;}
+ 
     }
 }
