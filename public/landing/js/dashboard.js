@@ -79,7 +79,7 @@ $.ajax({
     success: function (data) {
         var nombre = [];
         var total = [];
-        var color = ['#21bf73', '#ffd31d', '#eb4559'];
+        var color = ['#3C90DE', '#4A6DA1', '#1c5f9e'];
         var suma = 0;
         var totalP = 0;
         if (data[0].area.length != 0) {
@@ -158,7 +158,7 @@ $.ajax({
                             text: '\nÁREA',
                             color: '#424874', //Default black
                             fontFamily: 'Arial', //Default Arial
-                            sidePadding: 20,
+                            sidePadding: 30,
                         },
                     },
                 },
@@ -195,7 +195,7 @@ $.ajax({
     success: function (data) {
         var nombre = [];
         var total = [];
-        var color = ['#21bf73', '#ffd31d', '#eb4559'];
+        var color = ['#3C90DE', '#4A6DA1', '#1c5f9e'];
         var suma = 0;
         var totalP = 0;
         if (data[0].nivel.length != 0) {
@@ -310,7 +310,7 @@ $.ajax({
     success: function (data) {
         var nombre = [];
         var total = [];
-        var color = ['#21bf73', '#ffd31d', '#eb4559'];
+        var color = ['#3C90DE', '#4A6DA1', '#1c5f9e'];
         var suma = 0;
         var totalP = 0;
         if (data[0].contrato.length != 0) {
@@ -425,7 +425,7 @@ $.ajax({
     success: function (data) {
         var nombre = [];
         var total = [];
-        var color = ['#21bf73', '#ffd31d', '#eb4559'];
+        var color = ['#3C90DE', '#4A6DA1', '#1c5f9e'];
         var suma = 0;
         if (data[0].centro.length != 0) {
             for (var i = 0; i < data[0].centro.length; i++) {
@@ -539,7 +539,7 @@ $.ajax({
     success: function (data) {
         var nombre = [];
         var total = [];
-        var color = ['#21bf73', '#ffd31d', '#eb4559'];
+        var color = ['#3C90DE', '#4A6DA1', '#1c5f9e'];
         var suma = 0;
         var totalP = 0;
         if (data[0].local.length != 0) {
@@ -646,7 +646,7 @@ $.ajax({
     success: function (data) {
         var nombre = [];
         var total = [];
-        var color = ['#21bf73', '#ffd31d', '#eb4559'];
+        var color = ['#21bf73', '#5A7D9E', '#eb4559'];
         var suma = 0;
         var totalP = 0;
         if (data[0].edad.length != 0) {
@@ -751,7 +751,7 @@ $.ajax({
     success: function (data) {
         var nombre = [];
         var total = [];
-        var color = ['#21bf73', '#ffd31d', '#eb4559'];
+        var color = ['#3C90DE', '#4A6DA1', '#1c5f9e'];
         var suma = 0;
         var totalP = 0;
         if (data[0].departamento.length != 0) {
@@ -867,7 +867,7 @@ $.ajax({
     success: function (data) {
         var nombre = [];
         var total = [];
-        var color = ['#21bf73', '#ffd31d', '#eb4559'];
+        var color = ['#3C90DE', '#4A6DA1', '#1c5f9e'];
         var suma = 0;
         var totalP = 0;
         if (data[0].edad.length != 0) {
