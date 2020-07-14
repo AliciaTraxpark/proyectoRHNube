@@ -29,6 +29,7 @@ Route::name('dashboard')->get('dashboard', 'HomeController@index')->middleware('
 //VERIFICACION
 Route::name('verification.notice')->get('email/verify', 'VerifyMailController@index');
 Route::get('reenvioCorreo', 'VerifyMailController@verificarReenvio')->name('reenvioCorreo');
+Route::get('comprobarCodigo', 'VerifyMailController@comprobar');
 //CALENDARIO
 Route::name('calendario')->get('calendario', 'calendarioController@index');
 Route::post('/calendario/store', 'calendarioController@store');

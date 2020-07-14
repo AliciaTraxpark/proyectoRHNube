@@ -105,7 +105,7 @@ class apiController extends Controller
 
         $proyecto_empleado = DB::table('proyecto_empleado as pe')
             ->where('Proye_empleado_id', $empleado)
-            ->get();
+            ->get()->first();
 
         if ($proyecto_empleado) {
             //PROYECTO
@@ -117,7 +117,7 @@ class apiController extends Controller
                 ->select('pr.Proye_id', 'pr.Proye_Nombre')
                 ->where('e.emple_id', '=', $empleado)
                 ->groupBy('pr.Proye_id')
-                ->get();
+                ->get()->first();
 
             $respuesta = [];
 
