@@ -17,7 +17,9 @@ use Illuminate\Contracts\Queue\Queue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Twilio\Rest\Client;
 
 class registroEmpresaController extends Controller
 {
@@ -45,6 +47,15 @@ class registroEmpresaController extends Controller
         organizacion::insert($request->except(["_token"]));
     }
 
+    private function sendMessage($message, $recipients)
+    {
+        $account_sid = config('services.twilio.account_sid');
+        $auth_token = config('services.twilio.password');
+        $twilio_number = config('services.twilio.from');
+        $client = new Client($account_sid, $auth_token);
+        $client->messages->create($recipients, ['body' => $message, 'from' => $twilio_number]);
+    }
+
     public function create(Request $request)
     {
         $organizacion = new organizacion();
@@ -70,7 +81,7 @@ class registroEmpresaController extends Controller
             ->where('u.id', '=', $request->get('iduser'))
             ->get();
         $idPersona = DB::table('users as u')
-            ->join('persona as p', 'u.perso_id', 'p.perso_id')
+            ->join('persona as p', 'u.perso_id', 'p.perso_id', 'p.')
             ->select('p.perso_id')
             ->where('u.id', '=', $request->get('iduser'))
             ->get();
@@ -83,10 +94,18 @@ class registroEmpresaController extends Controller
         $persona = persona::find($persona["id"]);
         $users = User::find($request->get('iduser'));
         $correo = array($datos['email']);
+        $datoNuevo = explode("@", $data[0]->email);
 
-        Mail::to($correo)->queue(new CorreoMail($users, $persona));
-
-        return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado!
+        if (sizeof($datoNuevo) != 2) {
+            $codigo = $request->get('iduser') . "c" . $idPersona[0]->perso_id;
+            $codigoI = intval($codigo, 36);
+            $mensaje = "RH SOLUTION \nCodigo de validacion\n" . $codigoI;
+            $this->sendMessage($mensaje, $data[0]->email);
+            return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado.!");
+        } else {
+            Mail::to($correo)->queue(new CorreoMail($users, $persona));
+            return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado!
         Te hemos enviado un correo de verificación.");
+        }
     }
 }

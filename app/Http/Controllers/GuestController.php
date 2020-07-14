@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class GuestController extends Controller
@@ -14,7 +15,7 @@ class GuestController extends Controller
         if (!$user)
             return redirect('/');
 
-        $user->email_verified_at = time();
+        $user->email_verified_at = Carbon::now();
         $user->confirmation_code = null;
         $user->save();
 
