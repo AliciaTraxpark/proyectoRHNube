@@ -58,54 +58,75 @@ class registroEmpresaController extends Controller
 
     public function create(Request $request)
     {
-        $organizacion = new organizacion();
-        $organizacion->organi_ruc = $request->get('ruc');
-        $organizacion->organi_razonSocial = $request->get('razonSocial');
-        $organizacion->organi_direccion = $request->get('direccion');
-        $organizacion->organi_departamento = $request->get('departamento');
-        $organizacion->organi_provincia = $request->get('provincia');
-        $organizacion->organi_distrito = $request->get('distrito');
-        $organizacion->organi_nempleados = $request->get('nempleados');
-        $organizacion->organi_pagWeb = $request->get('pagWeb');
-        $organizacion->organi_tipo = $request->get('tipo');
-        $organizacion->save();
-        $idorgani = $organizacion->organi_id;
+        $rucorganizacion = DB::table('organizacion as o')
+            ->where('o.organi_ruc', '=', $request->get('ruc'))
+            ->get()->first();
 
-        $usuario_organizacion = new usuario_organizacion();
-        $usuario_organizacion->user_id = $request->get('iduser');
-        $usuario_organizacion->organi_id = $idorgani;
-        $usuario_organizacion->save();
+        if ($rucorganizacion == null) {
+            $organizacion = new organizacion();
+            $organizacion->organi_ruc = $request->get('ruc');
+            $organizacion->organi_razonSocial = $request->get('razonSocial');
+            $organizacion->organi_direccion = $request->get('direccion');
+            $organizacion->organi_departamento = $request->get('departamento');
+            $organizacion->organi_provincia = $request->get('provincia');
+            $organizacion->organi_distrito = $request->get('distrito');
+            $organizacion->organi_nempleados = $request->get('nempleados');
+            $organizacion->organi_pagWeb = $request->get('pagWeb');
+            $organizacion->organi_tipo = $request->get('tipo');
+            $organizacion->save();
+            $idorgani = $organizacion->organi_id;
 
-        $data = DB::table('users as u')
-            ->select('u.email', 'u.email_verified_at', 'confirmation_code')
-            ->where('u.id', '=', $request->get('iduser'))
-            ->get();
-        $idPersona = DB::table('users as u')
-            ->join('persona as p', 'u.perso_id', 'p.perso_id', 'p.')
-            ->select('p.perso_id')
-            ->where('u.id', '=', $request->get('iduser'))
-            ->get();
-        $datos = [];
-        $persona = [];
-        $persona["id"] = $idPersona[0]->perso_id;
-        $datos["email"] = $data[0]->email;
-        $datos["email_verified_at"] = $data[0]->email_verified_at;
-        $datos["confirmation_code"] = $data[0]->confirmation_code;
-        $persona = persona::find($persona["id"]);
-        $users = User::find($request->get('iduser'));
-        $correo = array($datos['email']);
-        $datoNuevo = explode("@", $data[0]->email);
+            $usuario_organizacion = new usuario_organizacion();
+            $usuario_organizacion->user_id = $request->get('iduser');
+            $usuario_organizacion->organi_id = $idorgani;
+            $usuario_organizacion->save();
 
-        if (sizeof($datoNuevo) != 2) {
-            $codigo = $request->get('iduser') . "c" . $idPersona[0]->perso_id;
-            $codigoI = intval($codigo, 36);
-            $mensaje = "RH SOLUTION \nCodigo de validacion\n" . $codigoI;
-            $this->sendMessage($mensaje, $data[0]->email);
-            return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado.!");
+            $data = DB::table('users as u')
+                ->select('u.email', 'u.email_verified_at', 'confirmation_code')
+                ->where('u.id', '=', $request->get('iduser'))
+                ->get();
+            $idPersona = DB::table('users as u')
+                ->join('persona as p', 'u.perso_id', 'p.perso_id', 'p.')
+                ->select('p.perso_id')
+                ->where('u.id', '=', $request->get('iduser'))
+                ->get();
+            $datos = [];
+            $persona = [];
+            $persona["id"] = $idPersona[0]->perso_id;
+            $datos["email"] = $data[0]->email;
+            $datos["email_verified_at"] = $data[0]->email_verified_at;
+            $datos["confirmation_code"] = $data[0]->confirmation_code;
+            $persona = persona::find($persona["id"]);
+            $users = User::find($request->get('iduser'));
+            $correo = array($datos['email']);
+            $datoNuevo = explode("@", $data[0]->email);
+
+            if (sizeof($datoNuevo) != 2) {
+                $codigo = $request->get('iduser') . "c" . $idPersona[0]->perso_id;
+                $codigoI = intval($codigo, 36);
+                $mensaje = "RH SOLUTION \nCodigo de validacion\n" . $codigoI;
+                $this->sendMessage($mensaje, $data[0]->email);
+                return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado.!");
+            } else {
+                Mail::to($correo)->queue(new CorreoMail($users, $persona));
+                return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado! Te hemos enviado un correo de verificación.");
+            }
         } else {
-            Mail::to($correo)->queue(new CorreoMail($users, $persona));
-            return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado!
-        Te hemos enviado un correo de verificación.");
+            return redirect()->back()->with('errors', 'RUC/ID ya se encuentra registrado')->withInput();
+        }
+    }
+    public function busquedaRuc(Request $request)
+    {
+        $rucEmpresa = $request->get('consulta');
+
+        $organizacion = DB::table('organizacion as o')
+            ->where('o.organi_ruc', '=', $rucEmpresa)
+            ->get()->first();
+
+        if ($organizacion == null) {
+            return 0;
+        } else {
+            return 1;
         }
     }
 }

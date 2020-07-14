@@ -11,12 +11,21 @@
     <link rel="stylesheet" href="{{asset('landing/vendors/mdi/css/materialdesignicons.min.css')}}">
     <link rel="stylesheet" href="{{asset('landing/vendors/aos/css/aos.css')}}">
     <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon"
         href="https://rhsolution.com.pe/wp-content/uploads/2019/06/small-logo-rh-solution-64x64.png" sizes="32x32">
 </head>
 
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
+<style>
+    input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
+input[type=number] { -moz-appearance:textfield; }
+</style>
     <header id="header-section">
         <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
             <div class="container">
@@ -36,24 +45,34 @@
 
     <div class="content-wrapper">
         <div class="container">
+            @if (session('errors'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-size: 14px!important;
+            padding-top: 8px; padding-bottom: 8px;" >
+             {{ session('errors') }}
+                <button type="button" class="close" data-dismiss="alert"aria-label="Close" style="padding-top: 8px;  padding-bottom: 8px;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @endif
             <section class="features-overview" id="features-section">
                 <form method="POST" action="{{route('registerOrganizacion')}}">
                     @csrf
                     <div class="row">
                         <div class="col-md-9">
+                            <label for="" style="color:rgb(204, 5, 5);font-size:14px;font-weight: 600;display:none" id="errorRUC">Ruc o ID ya registrado!</label>
                             <div class="row">
                                 <input type="hidden" name="iduser" id="iduser" value="{{$userid}}">
                                 <div class="col-md-4">
-                                    <input type="number" maxlength="11" min="1" max="" class="form-control "
-                                        placeholder="RUC o ID" name="ruc" id="ruc" onkeypress="return isNumeric(event)"
+                                    <input type="number" maxlength="11" min="1" max="" class="form-control "required
+                                        placeholder="RUC o ID" name="ruc" id="ruc" value="{{ old('ruc') }}"  onkeypress="return isNumeric(event)"
                                         oninput="maxLengthCheck(this)">
                                 </div>
                                 <div class="col-md-5">
-                                    <input class="form-control" placeholder="Razón social " name="razonSocial"
+                                    <input class="form-control" placeholder="Razón social " value="{{ old('razonSocial') }}" name="razonSocial"
                                         id="razonSocial" required>
                                 </div> <br><br>
                                 <div class="col-md-9">
-                                    <input class="form-control " placeholder="Direccion legal " name="direccion"
+                                    <input class="form-control " placeholder="Direccion legal " name="direccion"  value="{{ old('direccion') }}"
                                         id="direccion" required>
                                 </div><br><br>
                             </div>
@@ -86,13 +105,13 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <input class="form-control" type="number" placeholder="Num de empleados"
-                                        name="nempleados" id="nempleados" required>
+                                        name="nempleados" id="nempleados" value="{{ old('nempleados') }}" required>
                                 </div>
                             </div><br>
                             <div class="row">
                                 <div class="col-md-9">
-                                    <input class="form-control " placeholder="Página web o dominio(opcional)"
-                                        name="pagWeb" id="pagWeb">
+                                    <input class="form-control "  placeholder="Página web o dominio(opcional)"
+                                        name="pagWeb" id="pagWeb" value="{{ old('pagWeb') }}">
                                 </div>
                             </div><br>
                             <div class="row">
@@ -183,6 +202,7 @@
             }
         }
 
+
     </script>
     <script src="{{asset('landing/vendors/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('landing/vendors/bootstrap/bootstrap.min.js')}}"></script>
@@ -190,7 +210,42 @@
     <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
     <script src="{{asset('landing/js/landingpage.js')}}"></script>
     <script src="{{asset('landing/js/seleccionarDepProv.js')}}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+        $('#ruc').focus();
 
+        /* $('#ruc').on("change keyup paste click",function() { */
+       /*  $('#ruc').mouseleave(function(){ */
+        $('#ruc').on("blur",function() {
+        consulta = $('#ruc').val();
+
+         $.ajax({
+            type: "post",
+            url: "/organizacion/busquedaRuc",
+            data: {"_token": "{{ csrf_token() }}",
+                consulta
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+
+            success: function (data) {
+                if(data==1){
+                    $('#errorRUC').show();
+                } else{$('#errorRUC').hide();}
+            },
+            error: function (data) {
+                alert('Error');
+            }
+                });
+
+
+
+
+});
+})
+    </script>
 </body>
 
 </html>
