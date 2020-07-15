@@ -7,14 +7,18 @@ use App\captura;
 use App\control;
 use App\empleado;
 use App\envio;
+use App\horario_dias;
+use App\horario_empleado;
 use App\licencia_empleado;
 use App\proyecto;
 use App\proyecto_empleado;
 use App\tarea;
 use App\vinculacion;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use phpDocumentor\Reflection\Types\True_;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Facades\JWTFactory;
 
@@ -208,32 +212,54 @@ class apiController extends Controller
         }
         return response()->json("Proyecto no encontrado", 400);
     }
-    /*public function logueoEmpleado(Request $request)
-    {
-        $pass = DB::table('empleado as e')
-            ->select('e.emple_pasword')
-            ->where('e.emple_nDoc', '=', $request->get('emple_nDoc'))
-            ->get();
 
-        if (count($pass) == 0)  return response()->json(null, 404);
-        if (Hash::check($request->get("emple_pasword"), $pass[0]->emple_pasword)) {
-            $empleado = DB::table('empleado as e')
-                ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                ->leftJoin('proyecto_empleado as pe', 'pe.empleado_emple_id', '=', 'e.emple_id')
-                ->leftJoin('proyecto as pr', 'pr.Proye_id', '=', 'pe.Proyecto_Proye_id')
-                ->select('e.emple_id', DB::raw('CONCAT(p.perso_nombre ," ", p.perso_apPaterno, " ", p.perso_apMaterno) AS nombre'), 'pr.Proye_id', 'e.emple_estado')
-                ->where('e.emple_nDoc', '=', $request->get('emple_nDoc'))
+    public function horario(Request $request)
+    {
+        $respuesta = [];
+        $horario_empleado = DB::table('horario_empleado as he')
+            ->select('he.horario_horario_id', 'he.horario_dias_id')
+            ->where('empleado_emple_id', '=', $request->get('idEmpleado'))
+            ->get()
+            ->first();
+        if ($horario_empleado) {
+            $horario = DB::table('horario_empleado as he')
+                ->select('he.horario_dias_id', 'he.horario_horario_id')
+                ->where('empleado_emple_id', '=', $request->get('idEmpleado'))
                 ->get();
-            $factory = JWTFactory::customClaims([
-                'sub' => env('API_ID'),
-            ]);
-            $payload = $factory->make();
-            $token = JWTAuth::encode($payload);
-            return response()->json(array('data' => $empleado, 'token' => $token->get()), 200);
-        } else {
-            return response()->json(null, 403);
+
+            foreach ($horario as $resp) {
+                $horario_dias = DB::table('horario_dias  as hd')
+                    ->select('hd.start')
+                    ->where('hd.id', '=', $resp->horario_dias_id)
+                    ->get()->first();
+                $horario = DB::table('horario as h')
+                    ->select('h.horario_id', 'h.horario_descripcion')
+                    ->where('h.horario_id', '=', $resp->horario_horario_id)
+                    ->get()->first();
+                $fecha = Carbon::now();
+                $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
+                if ($horario_dias->start == $fechaHoy) {
+                    $estado = true;
+                    $horario->estado = $estado;
+                    array_push($respuesta, array($horario));
+                } else {
+                    $estado = false;
+                    $horario->estado = $estado;
+                    array_push($respuesta, array($horario));
+                }
+            }
+            /*if ($horario_dias) {
+                $fecha = Carbon::now();
+                $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
+                if ($horario_dias->start == $fechaHoy) {
+                    return response()->json($fecha, 200);
+                }
+                return response()->json($respuesta, 200);
+            }*/
+            return response()->json($respuesta, 200);
         }
-    }*/
+        return response()->json("Empleado no encontrado", 400);
+    }
 
     public function apiTarea(Request $request)
     {
