@@ -3,6 +3,10 @@ $(document).ready(function () {
         var isStepValid = true;
         // validate step 1
         if (stepnumber == 0) {
+            if ($('button.sw-btn-prev').hasClass('disabled')) {
+                console.log('disabled');
+                $('button.sw-btn-prev').hide();
+            }
             console.log("validar primer paso");
             if ($('#numDocumento').val() == "") {
                 isStepValid = false;
@@ -180,9 +184,9 @@ $(document).ready(function () {
     $('#smartwizard').smartWizard({
         selected: 0,
         showStepURLhash: false,
-        toolbarSettings: {
-            showNextButton: false,
-            showPreviousButton: false
+        lang: { // Language variables
+            next: 'Siguiente',
+            previous: 'Anterior'
         },
         leaveStep: function () {
             return true;
@@ -199,9 +203,9 @@ $(document).ready(function () {
     $('#smartwizard1').smartWizard({
         selected: 0,
         showStepURLhash: false,
-        toolbarSettings: {
-            showNextButton: false,
-            showPreviousButton: false
+        lang: { // Language variables
+            next: 'Siguiente',
+            previous: 'Anterior'
         },
         justified: true,
         anchorSettings: {
@@ -211,7 +215,6 @@ $(document).ready(function () {
             enableAllAnchorOnDoneStep: true
         },
         leaveStep: function () {
-            alert("aaa");
             return true;
         }
     });
