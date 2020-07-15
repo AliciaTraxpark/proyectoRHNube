@@ -229,7 +229,7 @@ class apiController extends Controller
 
             foreach ($horario as $resp) {
                 $horario_dias = DB::table('horario_dias  as hd')
-                    ->select('hd.start')
+                    ->select('hd.start', 'hd.horaI', 'hd.horaF')
                     ->where('hd.id', '=', $resp->horario_dias_id)
                     ->get()->first();
                 $horario = DB::table('horario as h')
@@ -240,10 +240,14 @@ class apiController extends Controller
                 $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
                 if ($horario_dias->start == $fechaHoy) {
                     $estado = true;
+                    $horario->horaI = $horario_dias->horaI;
+                    $horario->horaF = $horario_dias->horaF;
                     $horario->estado = $estado;
                     array_push($respuesta, array($horario));
                 } else {
                     $estado = false;
+                    $horario->horaI = $horario_dias->horaI;
+                    $horario->horaF = $horario_dias->horaF;
                     $horario->estado = $estado;
                     array_push($respuesta, array($horario));
                 }
