@@ -1331,10 +1331,19 @@
                                                         <label for="sw-default">Contrato <a
                                                                 onclick="$('#form-ver').modal('hide');$('#contratomodalE').modal('show');"
                                                                 data-toggle="modal"><i class="uil uil-plus"
-                                                                    style="color: darkblue;cursor: pointer;"></i></a></label>
+                                                                    style="color: darkblue;cursor: pointer;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <a id="detalleContratoE"
+                                                                onclick="$('#form-ver').modal('hide');"
+                                                                href="#fechasmodalE" data-toggle="modal"
+                                                                data-target="#fechasmodalE" data-toggle="tooltip"
+                                                                data-placement="right" title="Detalle de Contrato."
+                                                                data-original-title="Detalle de Contrato."
+                                                                style="cursor: pointer;"><img
+                                                                    src="{{asset('landing/images/adaptive.svg')}}"
+                                                                    height="18"></a></label>
                                                         <select class="form-control" name="v_contrato" id="v_contrato"
-                                                            onchange="$('#form-ver').modal('hide');$('#fechasmodalE').modal('show');"
-                                                            tabindex="5" required>
+                                                            onchange="$('#detalleContratoE').show();" tabindex="5"
+                                                            required>
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($tipo_cont as $tipo_conts)
                                                             <option class="" value="{{$tipo_conts->contrato_id}}">
