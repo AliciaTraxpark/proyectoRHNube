@@ -66,6 +66,8 @@ class apiController extends Controller
         $decode = base_convert(intval($codigo), 10, 36);
         $explode = explode("s", $decode);
         $empleado = DB::table('empleado as e')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
             ->where('emple_nDoc', '=', $nroD)
             ->where('e.users_id', '=', $explode[0])
             ->get()->first();
@@ -81,7 +83,7 @@ class apiController extends Controller
                             ]);
                             $payload = $factory->make();
                             $token = JWTAuth::encode($payload);
-                            return response()->json(array("idEmpleado" => $empleado->emple_id, 'idUser' => $idUser, 'token' => $token->get()), 200);
+                            return response()->json(array("idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno, 'idUser' => $idUser, 'token' => $token->get()), 200);
                         } else {
                             return response()->json("Pc no coinciden", 400);
                         }
@@ -93,7 +95,7 @@ class apiController extends Controller
                         ]);
                         $payload = $factory->make();
                         $token = JWTAuth::encode($payload);
-                        return response()->json(array("idEmpleado" => $empleado->emple_id, 'idUser' => $idUser, 'token' => $token->get()), 200);
+                        return response()->json(array("idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno, 'idUser' => $idUser, 'token' => $token->get()), 200);
                     }
                 }
                 return response()->json("Código erróneo", 400);
