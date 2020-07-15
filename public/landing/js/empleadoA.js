@@ -1,3 +1,13 @@
+$("#checkboxFechaIE").on("click", function () {
+    if ($("#checkboxFechaIE").is(':checked')) {
+        $('#ocultarFechaE > .combodate').hide();
+        $('#ocultarFechaE').hide();
+        $('#m_fechaFE').combodate("clearValue");
+    } else {
+        $('#ocultarFechaE').show();
+        $('#ocultarFechaE > .combodate').show();
+    }
+});
 $('#m_fechaIE').combodate({
     value: new Date(),
     minYear: 2000,
@@ -365,8 +375,7 @@ function enviarNivelA(accion, objNivel) {
             });
 
         },
-        error: function () {
-        }
+        error: function () {}
     });
 }
 
@@ -419,8 +428,7 @@ function enviarContratoA(accion, objContrato) {
             });
 
         },
-        error: function () {
-        }
+        error: function () {}
     });
 }
 //FECHAS
@@ -430,10 +438,6 @@ function agregarFechasA() {
     $('#form-ver').modal('show');
     fechaI = $('#m_fechaIE').val();
     fechaF = $('#m_fechaFE').val();
-    $('#v_fechaIC').text(fechaI);
-    $('#v_fechaFC').text(fechaF);
-    $('#m_fechaIE').combodate("clearValue");
-    $('#m_fechaFE').combodate("clearValue");
 }
 
 $('#btnCerrar').on("click", function () {

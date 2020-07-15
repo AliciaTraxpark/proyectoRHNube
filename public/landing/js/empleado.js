@@ -1,3 +1,15 @@
+//************* */
+$("#checkboxFechaI").on("click", function () {
+    if ($("#checkboxFechaI").is(':checked')) {
+        $('#ocultarFecha > .combodate').hide();
+        $('#labelfechaF').hide();
+        $('#m_fechaF').combodate("clearValue");
+    } else {
+        $('#labelfechaF').show();
+        $('#ocultarFecha > .combodate').show();
+    }
+});
+////////////////
 $("#file").fileinput({
     allowedFileExtensions: ['jpg', 'jpeg', 'png'],
     uploadAsync: false,
@@ -369,14 +381,12 @@ function enviarContrato(accion, objContrato) {
 }
 //FECHAS
 function agregarFechas() {
-    $('#fechasmodal').modal('toggle');
     $('#form-registrar').modal('show');
     fechaI = $('#m_fechaI').val();
     fechaF = $('#m_fechaF').val();
     $('#c_fechaI').text(fechaI);
     $('#c_fechaF').text(fechaF);
-    $('#m_fechaI').combodate("clearValue");
-    $('#m_fechaF').combodate("clearValue");
+    $('#fechasmodal').modal('toggle');
 }
 //EMPLEADO
 $('#guardarEmpleado').click(function () {
@@ -409,8 +419,8 @@ function datosPersona(method) {
         local: $('#local').val(),
         celular: $('#celular').val(),
         telefono: $('#telefono').val(),
-        fechaI: $('#c_fechaI').text(),
-        fechaF: $('#c_fechaF').text(),
+        fechaI: $('#m_fechaI').val(),
+        fechaF: $('#m_fechaF').val(),
         correo: $('#email').val(),
         codigoEmpleado: $('#codigoEmpleado').val(),
         '_method': method
@@ -456,6 +466,10 @@ function enviarEmpleado(accion, objEmpleado) {
             $("#form-registrar :input").prop('disabled', true);
             $('#documento').attr('disabled', false);
             $('#cerrarMoadalEmpleado').attr('disabled', false);
+            $('#m_fechaI').combodate("clearValue");
+            $('#m_fechaF').combodate("clearValue");
+            $('#detalleContrato').hide();
+            $('#checkboxFechaI').prop('checked', false);
             $('#form-registrar').modal('toggle');
             $.notify({
                 message: "\nEmpleado Registrado.",
@@ -508,8 +522,8 @@ function datosPersonaA(method) {
         celular_v: $('#v_celular').val(),
         telefono_v: $('#v_telefono').val(),
         correo_v: $('#v_email').val(),
-        fechaI_v: $('#v_fechaIC').text(),
-        fechaF_v: $('#v_fechaFC').text(),
+        fechaI_v: $('#m_fechaIE').val(),
+        fechaF_v: $('#m_fechaFE').val(),
         codigoEmpleado_v: $('#v_codigoEmpleado').val(),
         '_method': method
     }
@@ -548,6 +562,7 @@ function actualizarEmpleado(accion, objEmpleadoA) {
             $('input[typt="checkbox"]').val("");
             $('#formNuevoEd').hide();
             $('#formNuevoEl').hide();
+            $('#checkboxFechaIE').prop('checked', false);
             $('#form-ver').modal('toggle');
             $.notify({
                 message: "\nEmpleado Actualizado.",
@@ -657,15 +672,18 @@ $('#cerrarEd').click(function () {
     $('#formNuevoEd').hide();
     $('#formNuevoEl').hide();
     $('#navActualizar').hide();
+    $('#m_fechaIE').combodate("clearValue");
+    $('#m_fechaFE').combodate("clearValue");
     //************* */
     $('#v_validApPaterno').hide();
     $('#v_validNumDocumento').hide();
     $('#v_validApMaterno').hide();
     $('#v_validNombres').hide();
     $('#v_validFechaN').hide();
+    $('#detalleContratoE').hide();
 
 });
-$('#cerrarMoadalEmpleado').click(function () {
+$('#cerrarModalEmpleado').click(function () {
     //leertabla();
 
     //************ */
@@ -690,6 +708,7 @@ $('#cerrarMoadalEmpleado').click(function () {
     $('#validFechaN').hide();
     $('#validNombres').hide();
     $('#validGenero').hide();
+    $('#detalleContrato').hide();
     $('#form-registrar').modal('toggle');
 });
 //*********************/
@@ -710,4 +729,3 @@ $('#v_validApMaterno').hide();
 $('#v_validNombres').hide();
 $('#v_validFechaN').hide();
 $('#detalleContrato').hide();
-$('#detalleContratoE').hide();

@@ -505,8 +505,8 @@
                 $('#v_local').val(data[0].emple_local);
                 $('#v_celular').val(data[0].emple_celular);
                 $('#v_telefono').val(data[0].emple_telefono);
-                $('#v_fechaIC').text(data[0].emple_fechaIC);
-                $('#v_fechaFC').text(data[0].emple_fechaFC);
+                $('#m_fechaIE').combodate('setValue', data[0].emple_fechaIC);
+                $('#m_fechaFE').combodate('setValue', data[0].emple_fechaFC);
                 $('#v_email').val(data[0].emple_Correo);
                 $('#v_codigoEmpleado').val(data[0].emple_codigo);
                 $('input[name=v_disp]').each(function () {

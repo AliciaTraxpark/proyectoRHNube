@@ -520,9 +520,16 @@
                                         <label for="">Fecha Inicial</label>
                                         <input type="text" data-custom-class="form-control" id="m_fechaI"
                                             data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date" required>
-                                        <label for="">Fecha Final</label>
-                                        <input type="text" data-custom-class="form-control" id="m_fechaF"
-                                            data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date" required>
+                                        <br>
+                                        <div class="form-group">
+                                            <label for="">Fecha Indifinida</label>
+                                            <input type="checkbox" id="checkboxFechaI" name="FechaI">
+                                        </div>
+                                        <div id="ocultarFecha">
+                                            <label id="labelfechaF">Fecha Final</label>
+                                            <input type="text" data-custom-class="form-control" id="m_fechaF"
+                                                data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date">
+                                        </div>
                                     </div>
                             </div>
                             <div class="modal-footer">
@@ -740,9 +747,17 @@
                                         <label for="">Fecha Inicial</label>
                                         <input type="text" data-custom-class="form-control" id="m_fechaIE"
                                             data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date" required>
-                                        <label for="">Fecha Final</label>
-                                        <input type="text" data-custom-class="form-control" id="m_fechaFE"
-                                            data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date" required>
+                                        <br>
+                                        <div class="form-group">
+                                            <label for="">Fecha Indifinida</label>
+                                            <input type="checkbox" id="checkboxFechaIE" name="FechaIE">
+                                        </div>
+                                        <div id="ocultarFechaE">
+                                            <label for="">Fecha Final</label>
+                                            <input type="text" data-custom-class="form-control" id="m_fechaFE"
+                                                data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date"
+                                                required>
+                                        </div>
                                     </div>
                             </div>
                             <div class="modal-footer">
@@ -763,7 +778,7 @@
                         <div class="modal-content">
                             <div class="modal-header" style="background: #163552;">
                                 <h4 class="header-title mt-0 " style="color: #f0f0f0"></i>Datos de empleado</h4>
-                                <button type="button" class="close" id="cerrarMoadalEmpleado" data-dismiss="modal"
+                                <button type="button" class="close" id="cerrarModalEmpleado" data-dismiss="modal"
                                     aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -1002,12 +1017,12 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="form-group">
+                                                    <!--<div class="form-group">
                                                         <label for="sw-default" style="color: darkblue;">Fecha Inicio
                                                             <label for="sw-default" id="c_fechaI"></label></label>
                                                         <label for="sw-default" style="color: red;">Fecha Final <label
                                                                 for="sw-default" id="c_fechaF"></label></label>
-                                                    </div>
+                                                    </div>-->
                                                 </div> <!-- end col -->
                                                 <div class="col-4">
                                                     <div class="form-group">
