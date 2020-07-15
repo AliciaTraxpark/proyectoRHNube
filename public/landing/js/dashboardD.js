@@ -77,7 +77,6 @@ var chart = new Chart(ctx, {
                     var label = context.chart.data.labels[context.dataIndex];
                     var mostrar = [];
                     mostrar.push(label);
-                    console.log(mostrar);
                     return mostrar;
                 },
                 color: '#323232',
@@ -137,7 +136,6 @@ var chart = new Chart(ctx, {
                     var label = context.chart.data.labels[context.dataIndex];
                     var mostrar = [];
                     mostrar.push(label);
-                    console.log(mostrar);
                     return mostrar;
                 },
                 color: '#323232',
@@ -197,7 +195,6 @@ var chart = new Chart(ctx, {
                     var label = context.chart.data.labels[context.dataIndex];
                     var mostrar = [];
                     mostrar.push(label);
-                    console.log(mostrar);
                     return mostrar;
                 },
                 color: '#323232',
@@ -258,7 +255,6 @@ var chart = new Chart(ctx, {
                     var label = context.chart.data.labels[context.dataIndex];
                     var mostrar = [];
                     mostrar.push(label);
-                    console.log(mostrar);
                     return mostrar;
                 },
                 color: '#323232',
@@ -318,7 +314,6 @@ var chart = new Chart(ctx, {
                     var label = context.chart.data.labels[context.dataIndex];
                     var mostrar = [];
                     mostrar.push(label);
-                    console.log(mostrar);
                     return mostrar;
                 },
                 color: '#323232',
@@ -379,7 +374,6 @@ var chart = new Chart(ctx, {
                     var label = context.chart.data.labels[context.dataIndex];
                     var mostrar = [];
                     mostrar.push(label);
-                    console.log(mostrar);
                     return mostrar;
                 },
                 color: '#323232',
