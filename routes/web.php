@@ -149,6 +149,7 @@ Route::post('/storeDescanso', 'horarioController@storeDescanso');
 
 
 //DASHBOARD
+Route::get('/eventosU', 'dashboardController@eventosUsuario');
 Route::get('/totalA', 'dashboardController@area');
 Route::get('/totalN', 'dashboardController@nivel');
 Route::get('/totalC', 'dashboardController@contrato');

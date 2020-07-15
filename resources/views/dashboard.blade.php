@@ -171,7 +171,9 @@
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
+<script src="{{asset('landing/js/notificacionesCalendario.js')}}"></script>
 <script src="{{asset('landing/js/dashboard.js')}}"></script>
+<script src="{{asset('landing/js/notificacionesHorario.js')}}"></script>
 @endsection
 @section('script-bottom')
 <!-- init js -->
