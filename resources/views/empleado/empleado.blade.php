@@ -36,15 +36,17 @@
 </head>
 
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100" style="background-color: #fdfdfd;">
-    <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel"
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body text-center">
-                    <img src="{{asset('landing/images/notification.svg')}}" height="100" >
+                    <img src="{{asset('landing/images/notification.svg')}}" height="100">
                     <h4 class="text-danger mt-4">Su sesion expiró</h4>
                     <p class="w-75 mx-auto text-muted">Por favor inicie sesion nuevamente.</p>
                     <div class="mt-4">
-                        <a href="{{('/')}}" class="btn btn-outline-primary btn-rounded width-md"><i class="uil uil-arrow-right mr-1"></i> Iniciar sesion</a>
+                        <a href="{{('/')}}" class="btn btn-outline-primary btn-rounded width-md"><i
+                                class="uil uil-arrow-right mr-1"></i> Iniciar sesion</a>
                     </div>
                 </div>
             </div><!-- /.modal-content -->
@@ -320,8 +322,9 @@
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Agregar área</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                    área</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-registrar').modal('show');">
                                     <span aria-hidden="true">&times;</span>
@@ -337,8 +340,9 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" onclick="$('#form-registrar').modal('show');"
-                                    class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" id="guardarArea" class="btn btn-primary">Guardar</button>
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" id="guardarArea" class="btn btn-sm"
+                                    style="background-color: #163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -348,8 +352,9 @@
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Agregar Cargo</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                    Cargo</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-registrar').modal('show');">
                                     <span aria-hidden="true">&times;</span>
@@ -365,8 +370,9 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" onclick="$('#form-registrar').modal('show');"
-                                    class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary" id="guardarCargo">Guardar</button>
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-sm" id="guardarCargo"
+                                    style="background-color:#163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -376,8 +382,9 @@
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Agregar Centro Costo</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                    Centro Costo</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-registrar').modal('show');">
                                     <span aria-hidden="true">&times;</span>
@@ -393,8 +400,9 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" onclick="$('#form-registrar').modal('show');"
-                                    class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary" id="guardarCentro">Guardar</button>
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-sm" id="guardarCentro"
+                                    style="background-color:#163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -404,8 +412,9 @@
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Agregar Local</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                    Local</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-registrar').modal('show');">
                                     <span aria-hidden="true">&times;</span>
@@ -422,8 +431,9 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" onclick="$('#form-registrar').modal('show');"
-                                    class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" id="guardarLocal" class="btn btn-primary">Guardar</button>
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" id="guardarLocal" class="btn btn-sm"
+                                    style="background-color:#163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -433,8 +443,9 @@
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Agregar Nivel</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                    Nivel</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-registrar').modal('show');">
                                     <span aria-hidden="true">&times;</span>
@@ -451,8 +462,9 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" onclick="$('#form-registrar').modal('show');"
-                                    class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" id="guardarNivel" class="btn btn-primary">Guardar</button>
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" id="guardarNivel" class="btn btn-sm"
+                                    style="background-color:#163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -462,8 +474,9 @@
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Agregar Contrato</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                    Contrato</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-registrar').modal('show');">
                                     <span aria-hidden="true">&times;</span>
@@ -480,8 +493,9 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" onclick="$('#form-registrar').modal('show');"
-                                    class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" id="guardarContrato" class="btn btn-primary">Guardar</button>
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" id="guardarContrato" class="btn btn-sm"
+                                    style="background-color:#163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -491,8 +505,9 @@
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Indicar fechas de Contrato</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Indicar
+                                    fechas de Contrato</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-registrar').modal('show');">
                                     <span aria-hidden="true">&times;</span>
@@ -512,8 +527,9 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" onclick="$('#form-registrar').modal('show');"
-                                    class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-sm"
+                                    style="background-color:#163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -525,8 +541,9 @@
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Agregar área</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                    área</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-ver').modal('show');">
                                     <span aria-hidden="true">&times;</span>
@@ -542,9 +559,10 @@
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" onclick="$('#form-ver').modal('show');" class="btn btn-light"
-                                    data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="button" onclick="$('#form-ver').modal('show');"
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-sm"
+                                    style="background-color:#163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -554,8 +572,9 @@
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Agregar Cargo</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                    Cargo</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-ver').modal('show');">
                                     <span aria-hidden="true">&times;</span>
@@ -570,9 +589,10 @@
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" onclick="$('#form-ver').modal('show');" class="btn btn-light"
-                                    data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="button" onclick="$('#form-ver').modal('show');"
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-sm"
+                                    style="background-color:#163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -582,8 +602,9 @@
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Agregar Centro Costo</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                    Centro Costo</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-ver').modal('show');">
                                     <span aria-hidden="true">&times;</span>
@@ -598,9 +619,10 @@
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" onclick="$('#form-ver').modal('show');" class="btn btn-light"
-                                    data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="button" onclick="$('#form-ver').modal('show');"
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-sm"
+                                    style="background-color:#163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -610,8 +632,9 @@
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Agregar Local</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                    Local</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-ver').modal('show');">
                                     <span aria-hidden="true">&times;</span>
@@ -627,9 +650,10 @@
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" onclick="$('#form-ver').modal('show');" class="btn btn-light"
-                                    data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="button" onclick="$('#form-ver').modal('show');"
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-sm"
+                                    style="background-color:#163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -639,8 +663,9 @@
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Agregar Nivel</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                    Nivel</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-ver').modal('show');">
                                     <span aria-hidden="true">&times;</span>
@@ -656,9 +681,10 @@
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" onclick="$('#form-ver').modal('show');" class="btn btn-light"
-                                    data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="button" onclick="$('#form-ver').modal('show');"
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-sm"
+                                    style="background-color:#163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -668,8 +694,9 @@
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Agregar Contrato</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                    Contrato</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-ver').modal('show');">
                                     <span aria-hidden="true">&times;</span>
@@ -685,9 +712,10 @@
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" onclick="$('#form-ver').modal('show');" class="btn btn-light"
-                                    data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="button" onclick="$('#form-ver').modal('show');"
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-sm"
+                                    style="background-color:#163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -697,8 +725,9 @@
                     aria-hidden=" true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Indicar fechas de Contrato</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Indicar
+                                    fechas de Contrato</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-ver').modal('show');">
                                     <span aria-hidden="true">&times;</span>
@@ -717,9 +746,10 @@
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" onclick="$('#form-ver').modal('show');" class="btn btn-light"
-                                    data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="button" onclick="$('#form-ver').modal('show');"
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-sm"
+                                    style="background-color:#163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -952,10 +982,19 @@
                                                                 onclick="$('#form-registrar').modal('hide');"
                                                                 href="#contratomodal" data-toggle="modal"
                                                                 data-target="#contratomodal"><i
-                                                                    class="uil uil-plus"></i></a></label>
+                                                                    class="uil uil-plus"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <a id="detalleContrato"
+                                                                onclick="$('#form-registrar').modal('hide');"
+                                                                href="#fechasmodal" data-toggle="modal"
+                                                                data-target="#fechasmodal" data-toggle="tooltip"
+                                                                data-placement="right" title="Detalle de Contrato."
+                                                                data-original-title="Detalle de Contrato."
+                                                                style="cursor: pointer;"><img
+                                                                    src="{{asset('landing/images/adaptive.svg')}}"
+                                                                    height="18"></a></label>
                                                         <select class="form-control" name="contrato" id="contrato"
-                                                            onchange="$('#form-registrar').modal('hide');$('#fechasmodal').modal('show');"
-                                                            tabindex="5" required>
+                                                            tabindex="5" onchange="$('#detalleContrato').show();"
+                                                            required>
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($tipo_cont as $tipo_conts)
                                                             <option value="{{$tipo_conts->contrato_id}}">
@@ -1460,21 +1499,22 @@
     <script src="{{asset('landing/js/cargaMasivaF.js')}}"></script>
     <script src="{{asset('landing/js/empleado.js')}}"></script>
     <script src="{{asset('landing/js/empleadoA.js')}}"></script>
-@if (Auth::user())
-<script>
-  $(function() {
-    setInterval(function checkSession() {
-      $.get('/check-session', function(data) {
-        // if session was expired
-        if (data.guest==false) {
-           $('#modal-error').modal('show');
+    @if (Auth::user())
+    <script>
+        $(function () {
+            setInterval(function checkSession() {
+                $.get('/check-session', function (data) {
+                    // if session was expired
+                    if (data.guest == false) {
+                        $('#modal-error').modal('show');
 
-        }
-      });
-    },7202000);
-  });
-</script>
-@endif
+                    }
+                });
+            }, 7202000);
+        });
+
+    </script>
+    @endif
 </body>
 
 </html>

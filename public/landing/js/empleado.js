@@ -709,3 +709,4 @@ $('#v_validNumDocumento').hide();
 $('#v_validApMaterno').hide();
 $('#v_validNombres').hide();
 $('#v_validFechaN').hide();
+$('#detalleContrato').hide();
