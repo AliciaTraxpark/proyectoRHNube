@@ -86,12 +86,14 @@
                                 {{$persona[0]->perso_apPaterno}}
                             </h6>
                             <div class="mx-auto">
-                                <input id="codigo" type="text" class="form-control mt-3
+                                <span class="mt-1" id="errorC" style="color: red;">*Código erróneo.</span>
+                                <span class="mt-1" id="error" style="color: red;">*Ingrese código.</span>
+                                <input id="codigoV" type="text" class="form-control mt-3
                                     text-center" name="codigo" required autofocus>
                             </div>
                             <br>
                             <a id="ComprobarC" class="text-primary
-                                font-weight-bold ml-1">Verificar</a>
+                                font-weight-bold ml-1" style="cursor: pointer;">Verificar</a>
                         </div>
                     </div> <!-- end card-body -->
                 </div>
@@ -111,33 +113,5 @@
     <script src="{{asset('landing/vendors/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('landing/vendors/bootstrap/bootstrap.min.js')}}"></script>
     <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
-    <script>
-        $('#ComprobarC').click(function () {
-            var codigo = $('#codigo').val();
-            $.ajax({
-                type: "GET",
-                url: "comprobarCodigo",
-                data: {
-                    codigo: codigo
-                },
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                statusCode: {
-                    /*401: function () {
-                        location.reload();
-                    },*/
-                    419: function () {
-                        location.reload();
-                    }
-                },
-                success: function (data) {},
-                error: function (data) {
-                    console.log(data);
-                    alert("error");
-                }
-            });
-        });
-
-    </script>
+    <script src="{{asset('landing/js/codigoSms.js')}}"></script>
 </body>
