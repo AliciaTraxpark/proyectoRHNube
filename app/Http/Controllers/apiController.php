@@ -71,7 +71,7 @@ class apiController extends Controller
             ->where('emple_nDoc', '=', $nroD)
             ->where('e.users_id', '=', $explode[0])
             ->get()->first();
-            
+
         $idUser = $explode[0];
 
         if ($empleado) {
@@ -85,15 +85,16 @@ class apiController extends Controller
                             ]);
                             $payload = $factory->make();
                             $token = JWTAuth::encode($payload);
+                            $respuesta = [];
                             $horario_empleado = DB::table('horario_empleado as he')
                                 ->select('he.horario_horario_id', 'he.horario_dias_id')
-                                ->where('empleado_emple_id', '=', $empleado->emple_id)
+                                ->where('he.empleado_emple_id', '=', $empleado->emple_id)
                                 ->get()
                                 ->first();
                             if ($horario_empleado) {
                                 $horarioE = DB::table('horario_empleado as he')
                                     ->select('he.horario_dias_id', 'he.horario_horario_id')
-                                    ->where('empleado_emple_id', '=', $empleado->emple_id)
+                                    ->where('he.empleado_emple_id', '=', $empleado->emple_id)
                                     ->get();
 
                                 foreach ($horarioE as $resp) {
@@ -101,26 +102,34 @@ class apiController extends Controller
                                         ->select('hd.start')
                                         ->where('hd.id', '=', $resp->horario_dias_id)
                                         ->get()->first();
+                                    $horario = DB::table('horario as h')
+                                        ->select('h.horario_id', 'h.horario_descripcion', 'h.horaI', 'h.horaF')
+                                        ->where('h.horario_id', '=', $resp->horario_horario_id)
+                                        ->get()->first();
                                     $fecha = Carbon::now();
                                     $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
-                                    $horario = [];
                                     if ($horario_dias->start == $fechaHoy) {
-                                        $horario = DB::table('horario as h')
-                                            ->select('h.horario_id', 'h.horario_descripcion', 'h.horaI', 'h.horaF')
-                                            ->where('h.horario_id', '=', $resp->horario_horario_id)
-                                            ->get()->first();
+                                        $estado = true;
                                         $horario->horaI = $horario->horaI;
                                         $horario->horaF = $horario->horaF;
+                                        $horario->estado = $estado;
+                                        array_push($respuesta, $horario);
+                                    } else {
+                                        $estado = false;
+                                        $horario->horaI = $horario->horaI;
+                                        $horario->horaF = $horario->horaF;
+                                        $horario->estado = $estado;
+                                        array_push($respuesta, $horario);
                                     }
                                 }
                                 return response()->json(array(
                                     "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
-                                    'idUser' => $idUser, "horario" => $horario, 'token' => $token->get()
+                                    'idUser' => $idUser, "horario" => $respuesta, 'token' => $token->get()
                                 ), 200);
                             }
                             return response()->json(array(
                                 "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
-                                'idUser' => $idUser, 'token' => $token->get()
+                                'idUser' => $idUser, "horario" => $respuesta, 'token' => $token->get()
                             ), 200);
                         } else {
                             return response()->json("Pc no coinciden", 400);
@@ -133,15 +142,16 @@ class apiController extends Controller
                         ]);
                         $payload = $factory->make();
                         $token = JWTAuth::encode($payload);
+                        $respuesta = [];
                         $horario_empleado = DB::table('horario_empleado as he')
                             ->select('he.horario_horario_id', 'he.horario_dias_id')
-                            ->where('empleado_emple_id', '=', $empleado->emple_id)
+                            ->where('he.empleado_emple_id', '=', $empleado->emple_id)
                             ->get()
                             ->first();
                         if ($horario_empleado) {
                             $horarioE = DB::table('horario_empleado as he')
                                 ->select('he.horario_dias_id', 'he.horario_horario_id')
-                                ->where('empleado_emple_id', '=', $empleado->emple_id)
+                                ->where('he.empleado_emple_id', '=', $empleado->emple_id)
                                 ->get();
 
                             foreach ($horarioE as $resp) {
@@ -149,26 +159,34 @@ class apiController extends Controller
                                     ->select('hd.start')
                                     ->where('hd.id', '=', $resp->horario_dias_id)
                                     ->get()->first();
+                                $horario = DB::table('horario as h')
+                                    ->select('h.horario_id', 'h.horario_descripcion', 'h.horaI', 'h.horaF')
+                                    ->where('h.horario_id', '=', $resp->horario_horario_id)
+                                    ->get()->first();
                                 $fecha = Carbon::now();
                                 $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
-                                $horario = [];
                                 if ($horario_dias->start == $fechaHoy) {
-                                    $horario = DB::table('horario as h')
-                                        ->select('h.horario_id', 'h.horario_descripcion', 'h.horaI', 'h.horaF')
-                                        ->where('h.horario_id', '=', $resp->horario_horario_id)
-                                        ->get()->first();
+                                    $estado = true;
                                     $horario->horaI = $horario->horaI;
                                     $horario->horaF = $horario->horaF;
+                                    $horario->estado = $estado;
+                                    array_push($respuesta, $horario);
+                                } else {
+                                    $estado = false;
+                                    $horario->horaI = $horario->horaI;
+                                    $horario->horaF = $horario->horaF;
+                                    $horario->estado = $estado;
+                                    array_push($respuesta, $horario);
                                 }
                             }
                             return response()->json(array(
                                 "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
-                                'idUser' => $idUser, 'horario' => $horario, 'token' => $token->get()
+                                'idUser' => $idUser, 'horario' => $respuesta, 'token' => $token->get()
                             ), 200);
                         }
                         return response()->json(array(
                             "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
-                            'idUser' => $idUser,  'token' => $token->get()
+                            'idUser' => $idUser, 'horario' => $respuesta, 'token' => $token->get()
                         ), 200);
                     }
                 }
@@ -322,8 +340,8 @@ class apiController extends Controller
                     array_push($respuesta, array($horario));
                 } else {
                     $estado = false;
-                    $horario->horaI = $horario_dias->horaI;
-                    $horario->horaF = $horario_dias->horaF;
+                    $horario->horaI = $horario->horaI;
+                    $horario->horaF = $horario->horaF;
                     $horario->estado = $estado;
                     array_push($respuesta, array($horario));
                 }
