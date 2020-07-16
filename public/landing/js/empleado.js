@@ -158,7 +158,7 @@ function enviarArea(accion, objArea) {
                 $('#areamodal').modal('toggle');
                 $('#form-registrar').modal('show');
                 $.notify({
-                    message: "\nÁrea Registrada\n",
+                    message: "\nÁrea Modificada\n",
                     icon: 'admin/images/checked.svg'
                 }, {
                     element: $('#form-registrar'),
@@ -295,7 +295,7 @@ function enviarCargo(accion, objCargo) {
                 $('#cargomodal').modal('toggle');
                 $('#form-registrar').modal('show');
                 $.notify({
-                    message: "\nCargo Registrado\n",
+                    message: "\nCargo Modificado\n",
                     icon: 'admin/images/checked.svg'
                 }, {
                     element: $('#form-registrar'),
@@ -431,7 +431,7 @@ function enviarCentro(accion, objCentroC) {
                 $('#centrocmodal').modal('toggle');
                 $('#form-registrar').modal('show');
                 $.notify({
-                    message: "\nCentro Costo Registrado\n",
+                    message: "\nCentro Costo Modificado\n",
                     icon: 'admin/images/checked.svg'
                 }, {
                     element: $('#form-registrar'),
@@ -567,7 +567,7 @@ function enviarLocal(accion, objLocal) {
                 $('#localmodal').modal('toggle');
                 $('#form-registrar').modal('show');
                 $.notify({
-                    message: "\nLocal Registrado\n",
+                    message: "\nLocal Modificado\n",
                     icon: 'admin/images/checked.svg'
                 }, {
                     element: $('#form-registrar'),
@@ -704,7 +704,7 @@ function enviarNivel(accion, objNivel) {
                 $('#nivelmodal').modal('toggle');
                 $('#form-registrar').modal('show');
                 $.notify({
-                    message: "\nNivel Registrado\n",
+                    message: "\nNivel Modificado\n",
                     icon: 'admin/images/checked.svg'
                 }, {
                     element: $('#form-registrar'),
@@ -842,7 +842,7 @@ function enviarContrato(accion, objContrato) {
                 $('#contratomodal').modal('toggle');
                 $('#form-registrar').modal('show');
                 $.notify({
-                    message: "\nContrato Registrado\n",
+                    message: "\nContrato Modificado\n",
                     icon: 'admin/images/checked.svg'
                 }, {
                     element: $('#form-registrar'),
@@ -1234,6 +1234,12 @@ $('#editarCentro').hide();
 $('#editarLocal').hide();
 $('#editarNivel').hide();
 $('#editarContrato').hide();
+$('#editarAreaA').hide();
+$('#editarCargoA').hide();
+$('#editarCentroA').hide();
+$('#editarLocalA').hide();
+$('#editarNivelA').hide();
+$('#editarContratoA').hide();
 //************************Editar en los modal de agregar */
 //*******AREA***/
 $('#buscarArea').on("click", function () {
