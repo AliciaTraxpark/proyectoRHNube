@@ -656,7 +656,7 @@ $('#documento').on('change', function () {
 });
 $("#form-registrar :input").prop('disabled', true);
 $('#documento').attr('disabled', false);
-$('#cerrarMoadalEmpleado').attr('disabled', false);
+$('#cerrarModalEmpleado').attr('disabled', false);
 $('#cerrarE').attr('disabled', false);
 $('#cerrarEd').attr('disabled', false);
 $('#documento').on('change', function () {
@@ -664,7 +664,7 @@ $('#documento').on('change', function () {
 });
 $('#formNuevoE').click(function () {
     $('#form-registrar').modal();
-    $('#cerrarMoadalEmpleado').attr('disabled', false);
+    $('#cerrarModalEmpleado').attr('disabled', false);
 });
 $('#formNuevoEd').click(function () {
     $('#form-ver').modal();
