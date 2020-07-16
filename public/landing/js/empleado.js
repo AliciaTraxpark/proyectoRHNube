@@ -131,12 +131,26 @@ function enviarArea(accion, objArea) {
                 }
             },
             success: function (data) {
-                console.log(data);
-                $('#area').append($(`<option>`, { //agrego los valores que obtengo de una base de datos
-                    value: data.area_id,
-                    text: data.area_descripcion,
-                    selected: true
-                }, `</option>`));
+                $('#area').empty();
+                $('#v_area').empty();
+                var select = "";
+                $.ajax({
+                    async: false,
+                    type: "GET",
+                    url: "/area",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        select += `<option value="">Seleccionar</option>`;
+                        for (var i = 0; i < data.length; i++) {
+                            select += `<option class="" value="${data[i].area_id}">${data[i].area_descripcion}</option>`;
+                        }
+                        $('#area').append(select);
+                        $('#v_area').append(select);
+                    },
+                    error: function () {}
+                });
                 $('#area').val(data.area_id).trigger("change"); //lo selecciona
                 $('#v_area').val(data.area_id).trigger("change");
                 $('#textArea').val('');
