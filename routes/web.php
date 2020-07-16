@@ -187,3 +187,19 @@ Route::post('editarArea', 'editarAtributosController@editarArea');
 Route::get('cargo', 'editarAtributosController@cargo');
 Route::get('buscarCargo', 'editarAtributosController@buscarCargo');
 Route::post('editarCargo', 'editarAtributosController@editarCargo');
+//******CENTRO***/
+Route::get('centro', 'editarAtributosController@centro');
+Route::get('buscarCentro', 'editarAtributosController@buscarCentro');
+Route::post('editarCentro', 'editarAtributosController@editarCentro');
+//******LOCAL***/
+Route::get('local', 'editarAtributosController@local');
+Route::get('buscarLocal', 'editarAtributosController@buscarLocal');
+Route::post('editarLocal', 'editarAtributosController@editarLocal');
+//******NIVEL***/
+Route::get('nivel', 'editarAtributosController@nivel');
+Route::get('buscarNivel', 'editarAtributosController@buscarNivel');
+Route::post('editarNivel', 'editarAtributosController@editarNivel');
+//******CONTRATO***/
+Route::get('contrato', 'editarAtributosController@contrato');
+Route::get('buscarContrato', 'editarAtributosController@buscarContrato');
+Route::post('editarContrato', 'editarAtributosController@editarContrato');

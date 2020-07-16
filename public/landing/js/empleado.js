@@ -330,46 +330,126 @@ function datosCentro(method) {
 }
 
 function enviarCentro(accion, objCentroC) {
-    $.ajax({
-        type: "POST",
-        url: "/registrar/centro" + accion,
-        data: objCentroC,
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        statusCode: {
-            /*401: function () {
-                location.reload();
-            },*/
-            419: function () {
-                location.reload();
+    var id = $('#editarCC').val();
+    if (id == '') {
+        $.ajax({
+            type: "POST",
+            url: "/registrar/centro" + accion,
+            data: objCentroC,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                }
+            },
+            success: function (data) {
+                $('#centroc').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                    value: data.centroC_id,
+                    text: data.centroC_descripcion,
+                    selected: true
+                }));
+                $('#v_centroc').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                    value: data.centroC_id,
+                    text: data.centroC_descripcion,
+                    selected: true
+                }));
+                $('#centroc').val(data.centroC_id).trigger("change"); //lo selecciona
+                $('#v_centroc').val(data.centroC_id).trigger("change"); //lo selecciona
+                $('#textCentro').val('');
+                $('#editarCentro').hide();
+                $('#centrocmodal').modal('toggle');
+                $('#form-registrar').modal('show');
+                $.notify({
+                    message: "\nCentro Costo Registrado\n",
+                    icon: 'admin/images/checked.svg'
+                }, {
+                    element: $('#form-registrar'),
+                    position: 'fixed',
+                    icon_type: 'image',
+                    newest_on_top: true,
+                    delay: 5000,
+                    template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            },
+            error: function () {}
+        });
+    } else {
+        $.ajax({
+            type: "POST",
+            url: "/editarCentro" + accion,
+            data: {
+                id: id,
+                objCentroC
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                }
+            },
+            success: function (data) {
+                $('#centroc').empty();
+                $('#v_centroc').empty();
+                var select = "";
+                $.ajax({
+                    async: false,
+                    type: "GET",
+                    url: "/centro",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        select += `<option value="">Seleccionar</option>`;
+                        for (var i = 0; i < data.length; i++) {
+                            select += `<option class="" value="${data[i].centroC_id}">${data[i].centroC_descripcion}</option>`;
+                        }
+                        $('#centroc').append(select);
+                        $('#v_centroc').append(select);
+                    },
+                    error: function () {}
+                });
+                $('#centroc').val(data.centroC_id).trigger("change"); //lo selecciona
+                $('#v_centroc').val(data.centroC_id).trigger("change"); //lo selecciona
+                $('#textCentro').val('');
+                $('#editarCentro').hide();
+                $('#centrocmodal').modal('toggle');
+                $('#form-registrar').modal('show');
+                $.notify({
+                    message: "\nCentro Costo Registrado\n",
+                    icon: 'admin/images/checked.svg'
+                }, {
+                    element: $('#form-registrar'),
+                    position: 'fixed',
+                    icon_type: 'image',
+                    newest_on_top: true,
+                    delay: 5000,
+                    template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
             }
-        },
-        success: function (data) {
-            $('#centroc').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                value: data.centroC_id,
-                text: data.centroC_descripcion,
-                selected: true
-            }));
-            $('#v_centroc').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                value: data.centroC_id,
-                text: data.centroC_descripcion,
-                selected: true
-            }));
-            $('#centroc').val(data.centroC_id).trigger("change"); //lo selecciona
-            $('#v_centroc').val(data.centroC_id).trigger("change"); //lo selecciona
-            $('#textCentro').val('');
-            $('#centrocmodal').modal('toggle');
-            $('#form-registrar').modal('show');
-            $.notify("Centro de costo registrado", {
-                align: "right",
-                verticalAlign: "top",
-                type: "success",
-                icon: "check"
-            });
-        },
-        error: function () {}
-    });
+        });
+    }
 }
 //LOCAL
 function agregarlocal() {
@@ -386,47 +466,126 @@ function datosLocal(method) {
 }
 
 function enviarLocal(accion, objLocal) {
-    $.ajax({
-        type: "POST",
-        url: "/registrar/local" + accion,
-        data: objLocal,
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        statusCode: {
-            /*401: function () {
-                location.reload();
-            },*/
-            419: function () {
-                location.reload();
+    var id = $('#editarL').val();
+    if (id == '') {
+        $.ajax({
+            type: "POST",
+            url: "/registrar/local" + accion,
+            data: objLocal,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                }
+            },
+            success: function (data) {
+                $('#local').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                    value: data.local_id,
+                    text: data.local_descripcion,
+                    selected: true
+                }));
+                $('#v_local').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                    value: data.local_id,
+                    text: data.local_descripcion,
+                    selected: true
+                }));
+                $('#local').val(data.local_id).trigger("change"); //lo selecciona
+                $('#v_local').val(data.local_id).trigger("change"); //lo selecciona
+                $('#textLocal').val('');
+                $('#editarLocal').hide();
+                $('#localmodal').modal('toggle');
+                $('#form-registrar').modal('show');
+                $.notify({
+                    message: "\nLocal Registrado\n",
+                    icon: 'admin/images/checked.svg'
+                }, {
+                    element: $('#form-registrar'),
+                    position: 'fixed',
+                    icon_type: 'image',
+                    newest_on_top: true,
+                    delay: 5000,
+                    template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            },
+            error: function () {}
+        });
+    } else {
+        $.ajax({
+            type: "POST",
+            url: "/editarLocal" + accion,
+            data: {
+                id: id,
+                objLocal
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                }
+            },
+            success: function (data) {
+                $('#local').empty();
+                $('#v_local').empty();
+                var select = "";
+                $.ajax({
+                    async: false,
+                    type: "GET",
+                    url: "/local",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        select += `<option value="">Seleccionar</option>`;
+                        for (var i = 0; i < data.length; i++) {
+                            select += `<option class="" value="${data[i].local_id}">${data[i].local_descripcion}</option>`;
+                        }
+                        $('#local').append(select);
+                        $('#v_local').append(select);
+                    },
+                    error: function () {}
+                });
+                $('#local').val(data.local_id).trigger("change"); //lo selecciona
+                $('#v_local').val(data.local_id).trigger("change"); //lo selecciona
+                $('#textLocal').val('');
+                $('#editarLocal').hide();
+                $('#localmodal').modal('toggle');
+                $('#form-registrar').modal('show');
+                $.notify({
+                    message: "\nLocal Registrado\n",
+                    icon: 'admin/images/checked.svg'
+                }, {
+                    element: $('#form-registrar'),
+                    position: 'fixed',
+                    icon_type: 'image',
+                    newest_on_top: true,
+                    delay: 5000,
+                    template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
             }
-        },
-        success: function (data) {
-            $('#local').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                value: data.local_id,
-                text: data.local_descripcion,
-                selected: true
-            }));
-            $('#v_local').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                value: data.local_id,
-                text: data.local_descripcion,
-                selected: true
-            }));
-            $('#local').val(data.local_id).trigger("change"); //lo selecciona
-            $('#v_local').val(data.local_id).trigger("change"); //lo selecciona
-            $('#textLocal').val('');
-            $('#localmodal').modal('toggle');
-            $('#form-registrar').modal('show');
-            $.notify("local registrado", {
-                align: "right",
-                verticalAlign: "top",
-                type: "success",
-                icon: "check"
-            });
-
-        },
-        error: function () {}
-    });
+        });
+    }
 }
 //NIVEL
 function agregarnivel() {
@@ -443,47 +602,127 @@ function datosNivel(method) {
 }
 
 function enviarNivel(accion, objNivel) {
-    $.ajax({
-        type: "POST",
-        url: "/registrar/nivel" + accion,
-        data: objNivel,
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        statusCode: {
-            /*401: function () {
-                location.reload();
-            },*/
-            419: function () {
-                location.reload();
-            }
-        },
-        success: function (data) {
-            $('#nivel').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                value: data.nivel_id,
-                text: data.nivel_descripcion,
-                selected: true
-            }));
-            $('#v_nivel').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                value: data.nivel_id,
-                text: data.nivel_descripcion,
-                selected: true
-            }));
-            $('#nivel').val(data.nivel_id).trigger("change"); //lo selecciona
-            $('#v_nivel').val(data.nivel_id).trigger("change"); //lo selecciona
-            $('#textNivel').val('');
-            $('#nivelmodal').modal('toggle');
-            $('#form-registrar').modal('show');
-            $.notify("nivel registrado", {
-                align: "right",
-                verticalAlign: "top",
-                type: "success",
-                icon: "check"
-            });
+    var id = $('#editarN').val();
+    if (id == '') {
+        $.ajax({
+            type: "POST",
+            url: "/registrar/nivel" + accion,
+            data: objNivel,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                }
+            },
+            success: function (data) {
+                $('#nivel').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                    value: data.nivel_id,
+                    text: data.nivel_descripcion,
+                    selected: true
+                }));
+                $('#v_nivel').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                    value: data.nivel_id,
+                    text: data.nivel_descripcion,
+                    selected: true
+                }));
+                $('#nivel').val(data.nivel_id).trigger("change"); //lo selecciona
+                $('#v_nivel').val(data.nivel_id).trigger("change"); //lo selecciona
+                $('#textNivel').val('');
+                $('#editarNivel').hide();
+                $('#nivelmodal').modal('toggle');
+                $('#form-registrar').modal('show');
+                $.notify({
+                    message: "\nNivel Registrado\n",
+                    icon: 'admin/images/checked.svg'
+                }, {
+                    element: $('#form-registrar'),
+                    position: 'fixed',
+                    icon_type: 'image',
+                    newest_on_top: true,
+                    delay: 5000,
+                    template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
 
-        },
-        error: function () {}
-    });
+            },
+            error: function () {}
+        });
+    } else {
+        $.ajax({
+            type: "POST",
+            url: "/editarNivel" + accion,
+            data: {
+                id: id,
+                objNivel
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                }
+            },
+            success: function (data) {
+                $('#nivel').empty();
+                $('#v_nivel').empty();
+                var select = "";
+                $.ajax({
+                    async: false,
+                    type: "GET",
+                    url: "/nivel",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        select += `<option value="">Seleccionar</option>`;
+                        for (var i = 0; i < data.length; i++) {
+                            select += `<option class="" value="${data[i].nivel_id}">${data[i].nivel_descripcion}</option>`;
+                        }
+                        $('#nivel').append(select);
+                        $('#v_nivel').append(select);
+                    },
+                    error: function () {}
+                });
+                $('#nivel').val(data.nivel_id).trigger("change"); //lo selecciona
+                $('#v_nivel').val(data.nivel_id).trigger("change"); //lo selecciona
+                $('#textNivel').val('');
+                $('#editarNivel').hide();
+                $('#nivelmodal').modal('toggle');
+                $('#form-registrar').modal('show');
+                $.notify({
+                    message: "\nNivel Registrado\n",
+                    icon: 'admin/images/checked.svg'
+                }, {
+                    element: $('#form-registrar'),
+                    position: 'fixed',
+                    icon_type: 'image',
+                    newest_on_top: true,
+                    delay: 5000,
+                    template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            }
+        });
+    }
 }
 
 //CONTRATO
@@ -501,41 +740,127 @@ function datosContrato(method) {
 }
 
 function enviarContrato(accion, objContrato) {
-    $.ajax({
-        type: "POST",
-        url: "/registrar/contrato" + accion,
-        data: objContrato,
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        statusCode: {
-            /*401: function () {
-                location.reload();
-            },*/
-            419: function () {
-                location.reload();
-            }
-        },
-        success: function (data) {
-            $('#contrato').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                value: data.contrato_id,
-                text: data.contrato_descripcion,
-                selected: true
-            }));
-            $('#contrato').val(data.contrato_id).trigger("change"); //lo selecciona
-            $('#textcontrato').val('');
-            $('#contratomodal').modal('toggle');
-            $('#form-registrar').modal('show');
-            $.notify("Contrato registrado", {
-                align: "right",
-                verticalAlign: "top",
-                type: "success",
-                icon: "check"
-            });
+    var id = $('#editarCO').val();
+    if (id == '') {
+        $.ajax({
+            type: "POST",
+            url: "/registrar/contrato" + accion,
+            data: objContrato,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                }
+            },
+            success: function (data) {
+                $('#contrato').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                    value: data.contrato_id,
+                    text: data.contrato_descripcion,
+                    selected: true
+                }));
+                $('#v_contrato').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                    value: data.contrato_id,
+                    text: data.contrato_descripcion,
+                    selected: true
+                }));
+                $('#contrato').val(data.contrato_id).trigger("change"); //lo selecciona
+                $('#v_contrato').val(data.contrato_id).trigger("change"); //lo selecciona
+                $('#textcontrato').val('');
+                $('#editarContrato').hide();
+                $('#contratomodal').modal('toggle');
+                $('#form-registrar').modal('show');
+                $.notify({
+                    message: "\nContrato Registrado\n",
+                    icon: 'admin/images/checked.svg'
+                }, {
+                    element: $('#form-registrar'),
+                    position: 'fixed',
+                    icon_type: 'image',
+                    newest_on_top: true,
+                    delay: 5000,
+                    template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
 
-        },
-        error: function () {}
-    });
+            },
+            error: function () {}
+        });
+    } else {
+        $.ajax({
+            type: "POST",
+            url: "/editarContrato" + accion,
+            data: {
+                id: id,
+                objContrato
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                }
+            },
+            success: function (data) {
+                $('#contrato').empty();
+                $('#v_contrato').empty();
+                var select = "";
+                $.ajax({
+                    async: false,
+                    type: "GET",
+                    url: "/contrato",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        select += `<option value="">Seleccionar</option>`;
+                        for (var i = 0; i < data.length; i++) {
+                            select += `<option class="" value="${data[i].contrato_id}">${data[i].contrato_descripcion}</option>`;
+                        }
+                        $('#contrato').append(select);
+                        $('#v_contrato').append(select);
+                    },
+                    error: function () {}
+                });
+                $('#contrato').val(data.contrato_id).trigger("change"); //lo selecciona
+                $('#v_contrato').val(data.contrato_id).trigger("change"); //lo selecciona
+                $('#textcontrato').val('');
+                $('#editarContrato').hide();
+                $('#contratomodal').modal('toggle');
+                $('#form-registrar').modal('show');
+                $.notify({
+                    message: "\nContrato Registrado\n",
+                    icon: 'admin/images/checked.svg'
+                }, {
+                    element: $('#form-registrar'),
+                    position: 'fixed',
+                    icon_type: 'image',
+                    newest_on_top: true,
+                    delay: 5000,
+                    template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            }
+        });
+    }
 }
 //FECHAS
 function agregarFechas() {
@@ -851,6 +1176,7 @@ $('#cerrarEd').click(function () {
     $('#v_validApMaterno').hide();
     $('#v_validNombres').hide();
     $('#v_validFechaN').hide();
+    limpiar();
 
 });
 $('#cerrarModalEmpleado').click(function () {
@@ -882,6 +1208,7 @@ $('#cerrarModalEmpleado').click(function () {
     $('#detalleContrato').hide();
     $('#editarArea').hide();
     $('#form-registrar').modal('toggle');
+    limpiar();
 });
 //*********************/
 $('#numR').hide();
@@ -903,6 +1230,10 @@ $('#v_validFechaN').hide();
 $('#detalleContrato').hide();
 $('#editarArea').hide();
 $('#editarCargo').hide();
+$('#editarCentro').hide();
+$('#editarLocal').hide();
+$('#editarNivel').hide();
+$('#editarContrato').hide();
 //************************Editar en los modal de agregar */
 //*******AREA***/
 $('#buscarArea').on("click", function () {
@@ -990,3 +1321,190 @@ $('#buscarCargo').on("click", function () {
     });
     $('#editarCargo').show();
 });
+//******CENTRO***/
+$('#buscarCentro').on("click", function () {
+    $('#editarCentro').empty();
+    var container = $('#editarCentro');
+    var select = "";
+    $.ajax({
+        type: "GET",
+        url: "/centro",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            select += `<select class="form-control" name="centro" id="editarCC">
+            <option value="">Seleccionar</option>`;
+            for (var i = 0; i < data.length; i++) {
+                select += `<option class="" value="${data[i].centroC_id}">${data[i].centroC_descripcion}</option>`;
+            }
+            select += `</select>`;
+            container.append(select);
+            $('#editarCC').on("change", function () {
+                var id = $('#editarCC').val();
+                $.ajax({
+                    type: "GET",
+                    url: "/buscarCentro",
+                    data: {
+                        id: id
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        $('#textCentro').val(data);
+                    },
+                    error: function () {
+                        $('#textCentro').val("");
+                    }
+                })
+            });
+        },
+        error: function () {}
+    });
+    $('#editarCentro').show();
+});
+//******LOCAL***/
+$('#buscarLocal').on("click", function () {
+    $('#editarLocal').empty();
+    var container = $('#editarLocal');
+    var select = "";
+    $.ajax({
+        type: "GET",
+        url: "/local",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            select += `<select class="form-control" name="Local" id="editarL">
+            <option value="">Seleccionar</option>`;
+            for (var i = 0; i < data.length; i++) {
+                select += `<option class="" value="${data[i].local_id}">${data[i].local_descripcion}</option>`;
+            }
+            select += `</select>`;
+            container.append(select);
+            $('#editarL').on("change", function () {
+                var id = $('#editarL').val();
+                $.ajax({
+                    type: "GET",
+                    url: "/buscarLocal",
+                    data: {
+                        id: id
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        $('#textLocal').val(data);
+                    },
+                    error: function () {
+                        $('#textLocal').val("");
+                    }
+                })
+            });
+        },
+        error: function () {}
+    });
+    $('#editarLocal').show();
+});
+//******NIVEL***/
+$('#buscarNivel').on("click", function () {
+    $('#editarNivel').empty();
+    var container = $('#editarNivel');
+    var select = "";
+    $.ajax({
+        type: "GET",
+        url: "/nivel",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            select += `<select class="form-control" name="nivel" id="editarN">
+            <option value="">Seleccionar</option>`;
+            for (var i = 0; i < data.length; i++) {
+                select += `<option class="" value="${data[i].nivel_id}">${data[i].nivel_descripcion}</option>`;
+            }
+            select += `</select>`;
+            container.append(select);
+            $('#editarN').on("change", function () {
+                var id = $('#editarN').val();
+                $.ajax({
+                    type: "GET",
+                    url: "/buscarNivel",
+                    data: {
+                        id: id
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        $('#textNivel').val(data);
+                    },
+                    error: function () {
+                        $('#textNivel').val("");
+                    }
+                })
+            });
+        },
+        error: function () {}
+    });
+    $('#editarNivel').show();
+});
+//******CONTRATO***/
+$('#buscarContrato').on("click", function () {
+    $('#editarContrato').empty();
+    var container = $('#editarContrato');
+    var select = "";
+    $.ajax({
+        type: "GET",
+        url: "/contrato",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            select += `<select class="form-control" name="contrato" id="editarCO">
+            <option value="">Seleccionar</option>`;
+            for (var i = 0; i < data.length; i++) {
+                select += `<option class="" value="${data[i].contrato_id}">${data[i].contrato_descripcion}</option>`;
+            }
+            select += `</select>`;
+            container.append(select);
+            $('#editarCO').on("change", function () {
+                var id = $('#editarCO').val();
+                $.ajax({
+                    type: "GET",
+                    url: "/buscarContrato",
+                    data: {
+                        id: id
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        $('#textContrato').val(data);
+                    },
+                    error: function () {
+                        $('#textContrato').val("");
+                    }
+                })
+            });
+        },
+        error: function () {}
+    });
+    $('#editarContrato').show();
+});
+//*****LIMPIAR***/
+function limpiar() {
+    $('#editarArea').hide();
+    $('#editarCargo').hide();
+    $('#editarCentro').hide();
+    $('#editarLocal').hide();
+    $('#editarNivel').hide();
+    $('#editarContrato').hide();
+    $('#textArea').val("");
+    $('#textCargo').val("");
+    $('#textCentro').val("");
+    $('#textLocal').val("");
+    $('#textNivel').val("");
+    $('#textContrato').val("");
+}
