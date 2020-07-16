@@ -83,7 +83,43 @@ class apiController extends Controller
                             ]);
                             $payload = $factory->make();
                             $token = JWTAuth::encode($payload);
-                            return response()->json(array("idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno, 'idUser' => $idUser, 'token' => $token->get()), 200);
+                            $horario_empleado = DB::table('horario_empleado as he')
+                                ->select('he.horario_horario_id', 'he.horario_dias_id')
+                                ->where('empleado_emple_id', '=', $empleado->emple_id)
+                                ->get()
+                                ->first();
+                            if ($horario_empleado) {
+                                $horarioE = DB::table('horario_empleado as he')
+                                    ->select('he.horario_dias_id', 'he.horario_horario_id')
+                                    ->where('empleado_emple_id', '=', $empleado->emple_id)
+                                    ->get();
+
+                                foreach ($horarioE as $resp) {
+                                    $horario_dias = DB::table('horario_dias  as hd')
+                                        ->select('hd.start')
+                                        ->where('hd.id', '=', $resp->horario_dias_id)
+                                        ->get()->first();
+                                    $fecha = Carbon::now();
+                                    $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
+                                    $horario = [];
+                                    if ($horario_dias->start == $fechaHoy) {
+                                        $horario = DB::table('horario as h')
+                                            ->select('h.horario_id', 'h.horario_descripcion', 'h.horaI', 'h.horaF')
+                                            ->where('h.horario_id', '=', $resp->horario_horario_id)
+                                            ->get()->first();
+                                        $horario->horaI = $horario->horaI;
+                                        $horario->horaF = $horario->horaF;
+                                    }
+                                }
+                                return response()->json(array(
+                                    "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                                    'idUser' => $idUser, "horario" => $horario, 'token' => $token->get()
+                                ), 200);
+                            }
+                            return response()->json(array(
+                                "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                                'idUser' => $idUser, 'token' => $token->get()
+                            ), 200);
                         } else {
                             return response()->json("Pc no coinciden", 400);
                         }
@@ -95,7 +131,43 @@ class apiController extends Controller
                         ]);
                         $payload = $factory->make();
                         $token = JWTAuth::encode($payload);
-                        return response()->json(array("idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno, 'idUser' => $idUser, 'token' => $token->get()), 200);
+                        $horario_empleado = DB::table('horario_empleado as he')
+                            ->select('he.horario_horario_id', 'he.horario_dias_id')
+                            ->where('empleado_emple_id', '=', $empleado->emple_id)
+                            ->get()
+                            ->first();
+                        if ($horario_empleado) {
+                            $horarioE = DB::table('horario_empleado as he')
+                                ->select('he.horario_dias_id', 'he.horario_horario_id')
+                                ->where('empleado_emple_id', '=', $empleado->emple_id)
+                                ->get();
+
+                            foreach ($horarioE as $resp) {
+                                $horario_dias = DB::table('horario_dias  as hd')
+                                    ->select('hd.start')
+                                    ->where('hd.id', '=', $resp->horario_dias_id)
+                                    ->get()->first();
+                                $fecha = Carbon::now();
+                                $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
+                                $horario = [];
+                                if ($horario_dias->start == $fechaHoy) {
+                                    $horario = DB::table('horario as h')
+                                        ->select('h.horario_id', 'h.horario_descripcion', 'h.horaI', 'h.horaF')
+                                        ->where('h.horario_id', '=', $resp->horario_horario_id)
+                                        ->get()->first();
+                                    $horario->horaI = $horario->horaI;
+                                    $horario->horaF = $horario->horaF;
+                                }
+                            }
+                            return response()->json(array(
+                                "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                                'idUser' => $idUser, 'horario' => $horario, 'token' => $token->get()
+                            ), 200);
+                        }
+                        return response()->json(array(
+                            "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                            'idUser' => $idUser,  'token' => $token->get()
+                        ), 200);
                     }
                 }
                 return response()->json("Código erróneo", 400);
@@ -254,14 +326,6 @@ class apiController extends Controller
                     array_push($respuesta, array($horario));
                 }
             }
-            /*if ($horario_dias) {
-                $fecha = Carbon::now();
-                $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
-                if ($horario_dias->start == $fechaHoy) {
-                    return response()->json($fecha, 200);
-                }
-                return response()->json($respuesta, 200);
-            }*/
             return response()->json($respuesta, 200);
         }
         return response()->json("Empleado no encontrado", 400);
