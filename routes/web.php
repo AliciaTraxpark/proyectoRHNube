@@ -179,6 +179,11 @@ Route::get('download/{code}', 'downloadController@download');
 Route::get('check-session', 'verificarUsuarioController@checkSession');
 
 //EDITAR ATRIBUTOS
+//*****AREA */
 Route::get('area', 'editarAtributosController@area');
 Route::get('buscarArea', 'editarAtributosController@buscarArea');
 Route::post('editarArea', 'editarAtributosController@editarArea');
+//*****CARGO */
+Route::get('cargo', 'editarAtributosController@cargo');
+Route::get('buscarCargo', 'editarAtributosController@buscarCargo');
+Route::post('editarCargo', 'editarAtributosController@editarCargo');

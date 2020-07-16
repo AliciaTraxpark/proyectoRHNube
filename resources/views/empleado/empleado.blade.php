@@ -341,8 +341,7 @@
                                             <div id="editarArea" class="col-md-6"></div>
                                             <div class="col-md-4">
                                                 <a id="buscarArea" data-toggle="tooltip" data-placement="right"
-                                                    title="Detalle de Contrato."
-                                                    data-original-title="Detalle de Contrato."
+                                                    title="Editar Área." data-original-title="Editar Área."
                                                     style="cursor: pointer;"><img
                                                         src="{{asset('landing/images/adaptive.svg')}}" height="18">
                                                 </a>
@@ -380,7 +379,22 @@
                                 <form action="javascript:agregarcargo()">
                                     {{ csrf_field() }}
                                     <div class="col-md-12">
-                                        <label for="">Cargo</label>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label for="">Cargo</label>
+                                            </div>
+                                            <div id="editarCargo" class="col-md-6"></div>
+                                            <div class="col-md-4">
+                                                <a id="buscarCargo" data-toggle="tooltip" data-placement="right"
+                                                    title="Editar Cargo." data-original-title="Editar Cargo."
+                                                    style="cursor: pointer;"><img
+                                                        src="{{asset('landing/images/adaptive.svg')}}" height="18">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="col-md-12">
                                         <input type="text" class="form-control" id="textCargo" required>
                                     </div>
                             </div>

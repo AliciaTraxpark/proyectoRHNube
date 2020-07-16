@@ -158,7 +158,7 @@ function enviarArea(accion, objArea) {
                 $('#areamodal').modal('toggle');
                 $('#form-registrar').modal('show');
                 $.notify({
-                    message: "\nÁrea Registradaa\n",
+                    message: "\nÁrea Registrada\n",
                     icon: 'admin/images/checked.svg'
                 }, {
                     element: $('#form-registrar'),
@@ -193,48 +193,128 @@ function datosCargo(method) {
 }
 
 function enviarCargo(accion, objCargo) {
-    $.ajax({
-        type: "POST",
-        url: "/registrar/cargo" + accion,
-        data: objCargo,
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        statusCode: {
-            /*401: function () {
-                location.reload();
-            },*/
-            419: function () {
-                location.reload();
+    var id = $('#editarC').val();
+    if (id == '') {
+        $.ajax({
+            type: "POST",
+            url: "/registrar/cargo" + accion,
+            data: objCargo,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                }
+            },
+            success: function (data) {
+                $('#cargo').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                    value: data.cargo_id,
+                    text: data.cargo_descripcion,
+                    selected: true
+                }));
+                $('#v_cargo').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                    value: data.cargo_id,
+                    text: data.cargo_descripcion,
+                    selected: true
+                }));
+                $('#cargo').val(data.cargo_id).trigger("change"); //lo selecciona
+                $('#v_cargo').val(data.cargo_id).trigger("change"); //lo selecciona
+                $('#textCargo').val('');
+                $('#editarCargo').hide();
+                $('#cargomodal').modal('toggle');
+                $('#form-registrar').modal('show');
+                $.notify({
+                    message: "\nCargo Registrado\n",
+                    icon: 'admin/images/checked.svg'
+                }, {
+                    element: $('#form-registrar'),
+                    position: 'fixed',
+                    icon_type: 'image',
+                    newest_on_top: true,
+                    delay: 5000,
+                    template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            },
+            error: function () {}
+        });
+    } else {
+        $.ajax({
+            type: "POST",
+            url: "/editarCargo" + accion,
+            data: {
+                id: id,
+                objCargo
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                }
+            },
+            success: function (data) {
+                $('#cargo').empty();
+                $('#v_cargo').empty();
+                var select = "";
+                $.ajax({
+                    async: false,
+                    type: "GET",
+                    url: "/cargo",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        select += `<option value="">Seleccionar</option>`;
+                        for (var i = 0; i < data.length; i++) {
+                            select += `<option class="" value="${data[i].cargo_id}">${data[i].cargo_descripcion}</option>`;
+                        }
+                        $('#cargo').append(select);
+                        $('#v_cargo').append(select);
+                    },
+                    error: function () {}
+                });
+                $('#cargo').val(data.cargo_id).trigger("change"); //lo selecciona
+                $('#v_cargo').val(data.cargo_id).trigger("change");
+                $('#textCargo').val('');
+                $('#editarCargo').hide();
+                $('#cargomodal').modal('toggle');
+                $('#form-registrar').modal('show');
+                $.notify({
+                    message: "\nCargo Registrado\n",
+                    icon: 'admin/images/checked.svg'
+                }, {
+                    element: $('#form-registrar'),
+                    position: 'fixed',
+                    icon_type: 'image',
+                    newest_on_top: true,
+                    delay: 5000,
+                    template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
             }
-        },
-        success: function (data) {
-            $('#cargo').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                value: data.cargo_id,
-                text: data.cargo_descripcion,
-                selected: true
-            }));
-            $('#v_cargo').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                value: data.cargo_id,
-                text: data.cargo_descripcion,
-                selected: true
-            }));
-            $('#cargo').val(data.cargo_id).trigger("change"); //lo selecciona
-            $('#v_cargo').val(data.cargo_id).trigger("change"); //lo selecciona
-            $('#textCargo').val('');
-            $('#cargomodal').modal('toggle');
-            $('#form-registrar').modal('show');
-            $.notify("Cargo registrado", {
-                align: "right",
-                verticalAlign: "top",
-                type: "success",
-                icon: "check"
-            });
-        },
-        error: function () {}
-    });
+        });
+    }
 }
-
 //centro costo
 function agregarcentro() {
     objCentroC = datosCentro("POST");
@@ -822,7 +902,9 @@ $('#v_validNombres').hide();
 $('#v_validFechaN').hide();
 $('#detalleContrato').hide();
 $('#editarArea').hide();
+$('#editarCargo').hide();
 //************************Editar en los modal de agregar */
+//*******AREA***/
 $('#buscarArea').on("click", function () {
     $('#editarArea').empty();
     var container = $('#editarArea');
@@ -834,7 +916,6 @@ $('#buscarArea').on("click", function () {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-            console.log(data);
             select += `<select class="form-control" name="area" id="editarA">
             <option value="">Seleccionar</option>`;
             for (var i = 0; i < data.length; i++) {
@@ -865,4 +946,47 @@ $('#buscarArea').on("click", function () {
         error: function () {}
     });
     $('#editarArea').show();
+});
+//******CARGO*****/
+$('#buscarCargo').on("click", function () {
+    $('#editarCargo').empty();
+    var container = $('#editarCargo');
+    var select = "";
+    $.ajax({
+        type: "GET",
+        url: "/cargo",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            select += `<select class="form-control" name="cargo" id="editarC">
+            <option value="">Seleccionar</option>`;
+            for (var i = 0; i < data.length; i++) {
+                select += `<option class="" value="${data[i].cargo_id}">${data[i].cargo_descripcion}</option>`;
+            }
+            select += `</select>`;
+            container.append(select);
+            $('#editarC').on("change", function () {
+                var id = $('#editarC').val();
+                $.ajax({
+                    type: "GET",
+                    url: "/buscarCargo",
+                    data: {
+                        id: id
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        $('#textCargo').val(data);
+                    },
+                    error: function () {
+                        $('#textCargo').val("");
+                    }
+                })
+            });
+        },
+        error: function () {}
+    });
+    $('#editarCargo').show();
 });
