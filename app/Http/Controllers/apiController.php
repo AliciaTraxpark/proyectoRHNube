@@ -71,7 +71,9 @@ class apiController extends Controller
             ->where('emple_nDoc', '=', $nroD)
             ->where('e.users_id', '=', $explode[0])
             ->get()->first();
+            
         $idUser = $explode[0];
+
         if ($empleado) {
             $vinculacion = vinculacion::where('idEmpleado', '=', $empleado->emple_id)->get()->first();
             if ($vinculacion) {
