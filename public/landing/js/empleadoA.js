@@ -1,13 +1,3 @@
-$("#checkboxFechaIE").on("click", function () {
-    if ($("#checkboxFechaIE").is(':checked')) {
-        $('#ocultarFechaE > .combodate').hide();
-        $('#ocultarFechaE').hide();
-        $('#m_fechaFE').combodate("clearValue");
-    } else {
-        $('#ocultarFechaE').show();
-        $('#ocultarFechaE > .combodate').show();
-    }
-});
 $('#m_fechaIE').combodate({
     value: new Date(),
     minYear: 2000,
@@ -442,5 +432,4 @@ function agregarFechasA() {
 
 $('#btnCerrar').on("click", function () {
     $('#form-ver').modal('show');
-    console.log('ingreso');
 })

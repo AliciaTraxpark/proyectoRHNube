@@ -492,6 +492,16 @@ function enviarEmpleado(accion, objEmpleado) {
 }
 
 //EMPLEADO ACTUALIZAR
+$("#checkboxFechaIE").on("click", function () {
+    if ($("#checkboxFechaIE").is(':checked')) {
+        $('#m_fechaFE').combodate("clearValue");
+        $('#ocultarFechaE > .combodate').hide();
+        $('#ocultarFechaE').hide();
+    } else {
+        $('#ocultarFechaE').show();
+        $('#ocultarFechaE > .combodate').show();
+    }
+});
 $('#actualizarEmpleado').click(function () {
     idE = $('#v_id').val();
     objEmpleadoA = datosPersonaA("PUT");
@@ -500,6 +510,7 @@ $('#actualizarEmpleado').click(function () {
 
 
 function datosPersonaA(method) {
+    console.log($('#m_fechaFE').val());
     nuevoEmpleadoA = {
         nombres_v: $('#v_nombres').val(),
         apPaterno_v: $('#v_apPaterno').val(),
@@ -535,6 +546,7 @@ function actualizarEmpleado(accion, objEmpleadoA) {
     var formDataA = new FormData();
     formDataA.append('file', $('#file2').prop('files')[0]);
     formDataA.append('objEmpleadoA', JSON.stringify(objEmpleadoA));
+    console.log(objEmpleadoA);
     $.ajax({
 
         type: "POST",
@@ -674,13 +686,13 @@ $('#cerrarEd').click(function () {
     $('#navActualizar').hide();
     $('#m_fechaIE').combodate("clearValue");
     $('#m_fechaFE').combodate("clearValue");
+    $('#checkboxFechaIE').prop('checked', false);
     //************* */
     $('#v_validApPaterno').hide();
     $('#v_validNumDocumento').hide();
     $('#v_validApMaterno').hide();
     $('#v_validNombres').hide();
     $('#v_validFechaN').hide();
-    $('#detalleContratoE').hide();
 
 });
 $('#cerrarModalEmpleado').click(function () {
@@ -699,6 +711,7 @@ $('#cerrarModalEmpleado').click(function () {
     $("#form-registrar :input").prop('disabled', true);
     $('#documento').attr('disabled', false);
     $('#cerrarMoadalEmpleado').attr('disabled', false);
+    $('#checkboxFechaI').prop('checked', false);
     //********** */
     $('#v_emailR').hide();
     $('#validDocumento').hide();

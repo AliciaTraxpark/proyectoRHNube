@@ -506,17 +506,15 @@
                 $('#v_celular').val(data[0].emple_celular);
                 $('#v_telefono').val(data[0].emple_telefono);
                 $('#m_fechaIE').combodate('setValue', data[0].emple_fechaIC);
+                if (data[0].emple_fechaFC == null) {
+                    $("#checkboxFechaIE").prop('checked', true);
+                    $('#ocultarFechaE > .combodate').hide();
+                    $('#ocultarFechaE').hide();
+                }
+                $('#m_fechaFE').combodate('setValue', data[0].emple_fechaFC);
                 $('#m_fechaFE').combodate('setValue', data[0].emple_fechaFC);
                 $('#v_email').val(data[0].emple_Correo);
                 $('#v_codigoEmpleado').val(data[0].emple_codigo);
-                $('input[name=v_disp]').each(function () {
-                    $(this).prop('checked', false);
-                });
-                if (data[0].dispositivo != null) {
-                    for (let i = 0; i < data.length; i++) {
-                        $('#v_disp' + data[i].dispositivo).prop('checked', true);
-                    }
-                }
                 if (data[0].foto != "") {
                     urlFoto = data[0].foto;
                     hayFoto = true;
