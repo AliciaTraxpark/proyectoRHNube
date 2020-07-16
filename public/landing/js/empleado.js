@@ -57,49 +57,113 @@ function datosArea(method) {
 }
 
 function enviarArea(accion, objArea) {
-    $.ajax({
-        type: "POST",
-        url: "/registrar/area" + accion,
-        data: objArea,
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        statusCode: {
-            /*401: function () {
-                location.reload();
-            },*/
-            419: function () {
-                location.reload();
+    var id = $('#editarA').val();
+    if (id == '') {
+        $.ajax({
+            type: "POST",
+            url: "/registrar/area" + accion,
+            data: objArea,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                }
+            },
+            success: function (data) {
+                $('#area').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                    value: data.area_id,
+                    text: data.area_descripcion,
+                    selected: true
+                }));
+                $('#v_area').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                    value: data.area_id,
+                    text: data.area_descripcion,
+                    selected: true
+                }));
+                $('#area').val(data.area_id).trigger("change"); //lo selecciona
+                $('#v_area').val(data.area_id).trigger("change");
+                $('#textArea').val('');
+                $('#editarArea').hide();
+                $('#areamodal').modal('toggle');
+                $('#form-registrar').modal('show');
+                $.notify({
+                    message: "\nÁrea Registrada\n",
+                    icon: 'admin/images/checked.svg'
+                }, {
+                    element: $('#form-registrar'),
+                    position: 'fixed',
+                    icon_type: 'image',
+                    newest_on_top: true,
+                    delay: 5000,
+                    template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            },
+            error: function () {}
+        });
+    } else {
+        $.ajax({
+            type: "POST",
+            url: "/editarArea" + accion,
+            data: {
+                id: id,
+                objArea
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                }
+            },
+            success: function (data) {
+                console.log(data);
+                $('#area').append($(`<option>`, { //agrego los valores que obtengo de una base de datos
+                    value: data.area_id,
+                    text: data.area_descripcion,
+                    selected: true
+                }, `</option>`));
+                $('#area').val(data.area_id).trigger("change"); //lo selecciona
+                $('#v_area').val(data.area_id).trigger("change");
+                $('#textArea').val('');
+                $('#editarArea').hide();
+                $('#areamodal').modal('toggle');
+                $('#form-registrar').modal('show');
+                $.notify({
+                    message: "\nÁrea Registradaa\n",
+                    icon: 'admin/images/checked.svg'
+                }, {
+                    element: $('#form-registrar'),
+                    position: 'fixed',
+                    icon_type: 'image',
+                    newest_on_top: true,
+                    delay: 5000,
+                    template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
             }
-        },
-        success: function (data) {
-            $('#area').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                value: data.area_id,
-                text: data.area_descripcion,
-                selected: true
-            }));
-            $('#v_area').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                value: data.area_id,
-                text: data.area_descripcion,
-                selected: true
-            }));
-            $('#area').val(data.area_id).trigger("change"); //lo selecciona
-            $('#v_area').val(data.area_id).trigger("change");
-            $('#textArea').val('');
-            $('#areamodal').modal('toggle');
-            $('#form-registrar').modal('show');
-            $.notify("Área registrada", {
-                align: "right",
-                verticalAlign: "top",
-                type: "success",
-                icon: "check"
-            });
-
-        },
-        error: function () {}
-    });
+        });
+    }
 }
-
 ///CARGO
 function agregarcargo() {
     objCargo = datosCargo("POST");
@@ -722,6 +786,7 @@ $('#cerrarModalEmpleado').click(function () {
     $('#validNombres').hide();
     $('#validGenero').hide();
     $('#detalleContrato').hide();
+    $('#editarArea').hide();
     $('#form-registrar').modal('toggle');
 });
 //*********************/
@@ -742,3 +807,48 @@ $('#v_validApMaterno').hide();
 $('#v_validNombres').hide();
 $('#v_validFechaN').hide();
 $('#detalleContrato').hide();
+$('#editarArea').hide();
+//************************Editar en los modal de agregar */
+$('#buscarArea').on("click", function () {
+    $('#editarArea').empty();
+    var container = $('#editarArea');
+    var select = "";
+    $.ajax({
+        type: "GET",
+        url: "/area",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            console.log(data);
+            select += `<select class="form-control" name="area" id="editarA">
+            <option value="">Seleccionar</option>`;
+            for (var i = 0; i < data.length; i++) {
+                select += `<option class="" value="${data[i].area_id}">${data[i].area_descripcion}</option>`;
+            }
+            select += `</select>`;
+            container.append(select);
+            $('#editarA').on("change", function () {
+                var id = $('#editarA').val();
+                $.ajax({
+                    type: "GET",
+                    url: "/buscarArea",
+                    data: {
+                        id: id
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        $('#textArea').val(data);
+                    },
+                    error: function () {
+                        $('#textArea').val("");
+                    }
+                })
+            });
+        },
+        error: function () {}
+    });
+    $('#editarArea').show();
+});

@@ -177,3 +177,8 @@ Route::get('empleadoAndroidMasivo', 'correosEmpleadoController@envioAndroidM');
 Route::get('download/{code}', 'downloadController@download');
 ///verif
 Route::get('check-session', 'verificarUsuarioController@checkSession');
+
+//EDITAR ATRIBUTOS
+Route::get('area', 'editarAtributosController@area');
+Route::get('buscarArea', 'editarAtributosController@buscarArea');
+Route::post('editarArea', 'editarAtributosController@editarArea');

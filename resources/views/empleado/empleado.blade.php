@@ -334,7 +334,23 @@
                                 <form action="javascript:agregarArea()">
                                     {{ csrf_field() }}
                                     <div class="col-md-12">
-                                        <label for="">Área</label>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label for="">Área</label>
+                                            </div>
+                                            <div id="editarArea" class="col-md-6"></div>
+                                            <div class="col-md-4">
+                                                <a id="buscarArea" data-toggle="tooltip" data-placement="right"
+                                                    title="Detalle de Contrato."
+                                                    data-original-title="Detalle de Contrato."
+                                                    style="cursor: pointer;"><img
+                                                        src="{{asset('landing/images/adaptive.svg')}}" height="18">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="col-md-12">
                                         <input type="text" class="form-control" name="textArea" id="textArea" required>
                                     </div>
                             </div>
