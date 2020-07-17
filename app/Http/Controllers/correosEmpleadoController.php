@@ -325,11 +325,11 @@ class correosEmpleadoController extends Controller
             }
             $l = false;
             array_push($respuesta, array('limite' => $l, 'correo' => $c));
-            return response()->json($respuesta, 403);
+            return response()->json($respuesta, 200);
         }
         $c = false;
         array_push($respuesta, array('limite' => $l, 'correo' => $c));
-        return response()->json($respuesta, 403);
+        return response()->json($respuesta, 200);
     }
 
     public function ambasPlataformas(Request $request)

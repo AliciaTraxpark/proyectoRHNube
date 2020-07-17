@@ -393,6 +393,20 @@ class EmpleadoController extends Controller
             ->where('e.emple_id', '=', $idempleado)
             ->where('e.users_id', '=', Auth::user()->id)
             ->get();
+        $cantidad = DB::table('licencia_empleado as le')
+            ->select(DB::raw('COUNT(le.id) as total'), 'le.licencia')
+            ->where('le.idEmpleado', '=', $idempleado)
+            ->get();
+        $licenciaE = DB::table('licencia_empleado as le')
+            ->select('le.licencia', 'le.id', 'le.disponible')
+            ->where('le.idEmpleado', '=', $idempleado)
+            ->get();
+        $licencia = [];
+        foreach ($licenciaE as $lic) {
+            array_push($licencia, array("id" => $lic->id, "licencia" => $lic->licencia, "disponible" => $lic->disponible));
+        }
+        $empleado[0]->total = $cantidad[0]->total;
+        $empleado[0]->licencia = $licencia;
         return $empleado;
         //
 
