@@ -43,6 +43,8 @@ class correosEmpleadoController extends Controller
                 $vinculacion->descarga = STR::random(25);
                 $vinculacion->save();
                 $licencia_empleado = licencia_empleado::findOrFail($codL->id);
+                $licencia_empleado->disponible = 1;
+                $licencia_empleado->save();
                 $datos = [];
                 $datos["correo"] = $empleado->emple_Correo;
                 $email = array($datos["correo"]);
