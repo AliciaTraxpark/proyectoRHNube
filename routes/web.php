@@ -203,3 +203,6 @@ Route::post('editarNivel', 'editarAtributosController@editarNivel');
 Route::get('contrato', 'editarAtributosController@contrato');
 Route::get('buscarContrato', 'editarAtributosController@buscarContrato');
 Route::post('editarContrato', 'editarAtributosController@editarContrato');
+//*************************************************************************/
+//ESTADO LICENCIA
+Route::get('cambiarEstadoLicencia', 'detallesActivacionController@cambiarEstadoLicencia');

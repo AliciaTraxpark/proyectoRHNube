@@ -92,9 +92,12 @@ class correosEmpleadoController extends Controller
                 $vinculacion->descarga = STR::random(25);
                 $vinculacion->save();
 
+                $idVinculacion = $vinculacion->id;
+
                 $licencia_empleado = new licencia_empleado();
                 $licencia_empleado->idEmpleado = $idEmpleado;
                 $licencia_empleado->licencia = $encodeLicencia;
+                $licencia_empleado->idVinculacion = $idVinculacion;
                 $licencia_empleado->save();
                 $datos = [];
                 $datos["correo"] = $empleado->emple_Correo;
@@ -189,9 +192,12 @@ class correosEmpleadoController extends Controller
                     $vinculacion->descarga = STR::random(25);
                     $vinculacion->save();
 
+                    $idVinculacion = $vinculacion->id;
+
                     $licencia_empleado = new licencia_empleado();
                     $licencia_empleado->idEmpleado = $idEm;
                     $licencia_empleado->licencia = $encodeLicencia;
+                    $licencia_empleado->idVinculacion = $idVinculacion;
                     $licencia_empleado->save();
 
                     $datos = [];
@@ -315,6 +321,7 @@ class correosEmpleadoController extends Controller
                 $licencia_empleado = new licencia_empleado();
                 $licencia_empleado->idEmpleado = $idEmpleado;
                 $licencia_empleado->licencia = $encodeLicencia;
+                $licencia_empleado->idVinculacion = $codV->id;
                 $licencia_empleado->save();
                 $vinculacion = vinculacion::findOrFail($codV->id);
                 $datos = [];
@@ -414,9 +421,12 @@ class correosEmpleadoController extends Controller
                     $vinculacion->descarga = STR::random(25);
                     $vinculacion->save();
 
+                    $idVinculacion = $vinculacion->id;
+
                     $licencia_empleado = new licencia_empleado();
                     $licencia_empleado->idEmpleado = $idEm;
                     $licencia_empleado->licencia = $encodeLicencia;
+                    $licencia_empleado->idVinculacion = $idVinculacion;
                     $licencia_empleado->save();
 
                     $datos = [];

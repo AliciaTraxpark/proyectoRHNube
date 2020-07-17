@@ -330,6 +330,134 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<!--ANDROID-->
+<div id="detallesAndroid" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="detallesAndroid"
+    aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#163552;">
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="background-color:#fafafa">
+                <div class="row">
+                    <input style="display: none;" name="idDetalleA" id="idDetalleA">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body p-0">
+                                <h6 class="card-title border-bottom p-3 mb-0 header-title">Detalle de Plataforma Android
+                                </h6>
+                                <div class="row py-1">
+                                    <div class="col-xl-6 col-sm-12">
+                                        <!-- stat 1 -->
+                                        <div class="media p-4">
+                                            <div class="media-body">
+                                                <img src="{{ URL::asset('admin/assets/images/users/empleado.png')}}"
+                                                    class="mr-2" alt="" height="20" />
+                                                <span class="text-muted" id="colaboradorA"
+                                                    style="text-transform:uppercase;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-sm-12">
+                                        <!-- stat 2 -->
+                                        <div class="media p-3">
+                                            <div class="media-body">
+                                                <img src="{{asset('landing/images/laptop.svg')}}" height="20"
+                                                    class="mr-2" alt="" />
+                                                <span class="text-muted" id="totalPC"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- details-->
+                <div class="row" id="rowDetalles">
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="mt-0 header-title">DETALLES DE LA APLICACIÓN</h6>
+
+                                <div class="row">
+                                    <div class="col-lg-8 col-md-6">
+                                        <div class="mt-3">
+                                            <p class="mb-2">Enlace Play Store</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="mt-3">
+                                            <a href="javascript:getlink();" data-toggle="tooltip" data-placement="right"
+                                                title="copiar enlace" data-original-title="">
+                                                <img src="{{asset('landing/images/document.svg')}}" height="30">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end card -->
+                    </div>
+                </div>
+                <!-- end row -->
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-7 text-right">
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                style="background-color: #163552;color: #ffffff;">Cerrar</button>
+                        </div>
+                        <div class="col-md-5 text-right" style="padding-right:
+                            38px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!------------CAMBIAR ESTADO LICENCIA-->
+<div id="estadoLicenciaC" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="estadoLicenciaC"
+    aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Cambiar Estado de
+                    Activacion de Dispositivo
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <h5 class="modal-title" id="myModalLabel" style="font-size:
+                        15px">¿Desea cambiar estado de Licencia?</h5>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-7 text-right">
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
+                        </div>
+                        <div class="col-md-5 text-right" style="padding-right:
+                            38px;">
+                            <button type="button" id="CambiarEstadoL" name="CambiarEstadoL"
+                                style="background-color: #163552;" class="btn
+                                btn-sm">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <input type="hidden" id="csrf_token" name="_token" value="{{ csrf_token() }}">
 <div class="row">
 
@@ -453,7 +581,7 @@
                     <img src="{{asset('landing/images/plus.svg')}}" height="15">
                 </a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a class="detalle" data-toggle="tooltip" data-placement="right" title="Ver Detalles"
+                <a class="detalleW" data-toggle="tooltip" data-placement="right" title="Ver Detalles"
                     data-original-title="Ver Detalles" style="cursor:
                     pointer">
                     <img src="{{asset('landing/images/see.svg')}}" height="20">
@@ -470,7 +598,7 @@
                     onclick="$('#modalNuevoE').modal();"><img src="{{asset('landing/images/plus.svg')}}" height="15">
                 </a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a class="detalle" data-toggle="tooltip" data-placement="right" title="Ver Detalles"
+                <a class="detalleW" data-toggle="tooltip" data-placement="right" title="Ver Detalles"
                     data-original-title="Ver Detalles" style="cursor: pointer"><img
                         src="{{asset('landing/images/see.svg')}}" height="20">
                 </a>
@@ -483,7 +611,7 @@
                         src="{{asset('landing/images/note.svg')}}" height="20">
                 </a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a class="detalle" data-toggle="tooltip" data-placement="right" title="Ver Detalles"
+                <a class="detalleW" data-toggle="tooltip" data-placement="right" title="Ver Detalles"
                     data-original-title="Ver Detalles" style="cursor: pointer"><img
                         src="{{asset('landing/images/see.svg')}}" height="20">
                 </a>
@@ -497,6 +625,12 @@
                 <a onclick="$('#modalAndroid').modal();" data-toggle="tooltip" data-placement="right"
                     title="Enviar correo empleado" data-original-title="Enviar correo empleado"
                     style="cursor: pointer"><img src="{{asset('landing/images/note.svg')}}" height="20">
+                </a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="detalleA" data-toggle="tooltip" data-placement="right" title="Ver Detalles"
+                    data-original-title="Ver Detalles" style="cursor:
+                    pointer">
+                    <img src="{{asset('landing/images/see.svg')}}" height="20">
                 </a>
             </td>
             @endif
@@ -636,7 +770,10 @@
                 }
                 //DETALLES DE PLATAFORMAS
                 $('#idDetalle').val(data[0].emple_id);
+                $('#idDetalleA').val(data[0].emple_id);
                 $('#colaborador').text(data[0].perso_apPaterno + ' ' + data[0].perso_apMaterno +
+                    ' ' + data[0].perso_nombre);
+                $('#colaboradorA').text(data[0].perso_apPaterno + ' ' + data[0].perso_apMaterno +
                     ' ' + data[0].perso_nombre);
                 $('#totalPC').text(data[0].total);
                 $('#licencia').text(data[0].licencia);
@@ -661,8 +798,8 @@
                                             <h5 class="font-size-16"><a class="badge badge-soft-primary mr-2">Disponible</a></h5>`;
                         } else {
                             disponible +=
-                                `<p class="mb-2"><i class="uil-calendar-slash text-danger"></i>Estado</p>
-                                            <h5 class="font-size-16"><a id="" class="badge badge-soft-danger mr-2">Disponible</a></h5>`;
+                                `<input style="display: none;" id="idLicenciaND${data[0].emple_id}" value="${data[0].licencia[i].id}"><p class="mb-2"><i class="uil-calendar-slash text-danger"></i>Estado</p>
+                                            <h5 class="font-size-16"><a onclick="$('#estadoLicenciaC').modal()" style="cursor: pointer" class="badge badge-soft-danger mr-2">No Disponible</a></h5>`;
                         }
                     }
                     container.append(detalle);
