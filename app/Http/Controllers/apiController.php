@@ -353,6 +353,8 @@ class apiController extends Controller
         if ($request->get('Actividad_Activi_id') != '') {
             $control->Actividad_Activi_id = $request->get('Actividad_Activi_id');
         }
+        $control->idHorario_dias = $request->get('idHorario');
+        $control->acumulado = $request->get('acumulado');
         $control->save();
         return response()->json($control, 200);
     }
