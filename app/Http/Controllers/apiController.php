@@ -133,13 +133,14 @@ class apiController extends Controller
                 ->select('pr.Proye_id', 'pr.Proye_Nombre')
                 ->where('e.emple_id', '=', $empleado)
                 ->groupBy('pr.Proye_id')
-                ->get()->first();
+                ->get();
 
             $respuesta = [];
 
-            /*foreach ($datos as $dato) {
+            foreach ($datos as $dato) {
+                array_push($respuesta, array("Tarea_id" => $dato->Proye_id, "Tarea_Nombre" => $dato->Proye_Nombre));
                 //TAREAS
-                $tareas = DB::table('empleado as e')
+                /*$tareas = DB::table('empleado as e')
                     ->join('proyecto_empleado as pe', 'pe.empleado_emple_id', '=', 'e.emple_id')
                     ->join('proyecto as pr', 'pr.Proye_id', '=', 'pe.Proyecto_Proye_id')
                     ->leftJoin('tarea as t', 't.Proyecto_Proye_id', '=', 'pr.Proye_id')
@@ -168,9 +169,8 @@ class apiController extends Controller
                 foreach ($actividad as $activ) {
                     array_push($elementoA, array("idActividad" => $activ->Activi_id, "Actividad" => $activ->Activi_Nombre, "Tarea_id" => $activ->Tarea_id));
                 }
-                array_push($respuesta, array("Proye_id" => $dato->Proye_id, "Proye_Nombre" => $dato->Proye_Nombre, "Tareas" => $elemento, "Actividades" => $elementoA));
-            }*/
-            array_push($respuesta, array("Tarea_id" => $datos->Proye_id, "Tarea_Nombre" => $datos->Proye_Nombre));
+                array_push($respuesta, array("Proye_id" => $dato->Proye_id, "Proye_Nombre" => $dato->Proye_Nombre, "Tareas" => $elemento, "Actividades" => $elementoA));*/
+            }
             return response()->json($respuesta, 200);
         }
         return response()->json(null, 400);
