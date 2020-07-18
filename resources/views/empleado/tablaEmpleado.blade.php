@@ -80,8 +80,8 @@
                             <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
                         </div>
                         <div class="col-md-8 text-center">
-                            <h5 class="modal-title" id="myModalLabel" style="font-size:
-                        15px">Esta opción se usa para asignar nueva PC en lo cual el empleado trabajara en más de una
+                            <h5 class="modal-title" id="myModalLabel" style="font-size:15px">Esta opción se usa para
+                                asignar nueva PC en lo cual el empleado trabajara en más de una
                                 PC.
                             </h5>
                         </div>

@@ -871,6 +871,12 @@ function agregarFechas() {
     $('#c_fechaF').text(fechaF);
     $('#fechasmodal').modal('toggle');
 }
+//CODIGO EMPLEADO
+function valorCodigoEmpleado() {
+    var numDocumento = $('#numDocumento').val();
+    $('#codigoEmpleado').val(numDocumento);
+
+}
 //EMPLEADO
 $('#guardarEmpleado').click(function () {
     objEmpleado = datosPersona("POST");

@@ -1131,7 +1131,11 @@
                                                     <div class="form-group">
                                                         <label for="sw-default">Codigo Empleado</label>
                                                         <input type="text" class="form-control" name="codigoEmpleado"
-                                                            id="codigoEmpleado" tabindex="1" required>
+                                                            id="codigoEmpleado" tabindex="1"
+                                                            onfocus="javascript:valorCodigoEmpleado()"
+                                                            data-toggle="tooltip" data-placement="right"
+                                                            title="Número de documento por defecto o Ingrese un código interno"
+                                                            data-original-title="Número de documento por defecto o Ingrese un código interno">
                                                     </div>
                                                 </div>
                                                 <div class="col-4"><br></div>
