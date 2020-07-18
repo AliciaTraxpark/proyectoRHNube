@@ -13,6 +13,7 @@ use App\licencia_empleado;
 use App\proyecto;
 use App\proyecto_empleado;
 use App\tarea;
+use App\User;
 use App\vinculacion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -85,8 +86,9 @@ class apiController extends Controller
                             ]);
                             $payload = $factory->make();
                             $token = JWTAuth::encode($payload);
+                            $user = User::where('id', '=', $idUser)->get()->first();
                             return response()->json(array(
-                                "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                                "corte" => $user->corteCaptura, "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
                                 'idUser' => $idUser, 'token' => $token->get()
                             ), 200);
                         } else {
@@ -239,25 +241,22 @@ class apiController extends Controller
 
             foreach ($horario as $resp) {
                 $horario_dias = DB::table('horario_dias  as hd')
-                    ->select('hd.start')
+                    ->select('hd.start', 'hd.id')
                     ->where('hd.id', '=', $resp->horario_dias_id)
                     ->get()->first();
                 $horario = DB::table('horario as h')
                     ->select('h.horario_id', 'h.horario_descripcion', 'h.horaI', 'h.horaF')
                     ->where('h.horario_id', '=', $resp->horario_horario_id)
                     ->get()->first();
+                $horario->idHorario_dias = $horario_dias->id;
                 $fecha = Carbon::now();
                 $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
                 if ($horario_dias->start == $fechaHoy) {
                     $estado = true;
-                    $horario->horaI = $horario->horaI;
-                    $horario->horaF = $horario->horaF;
                     $horario->estado = $estado;
                     array_push($respuesta, $horario);
                 } else {
                     $estado = false;
-                    $horario->horaI = $horario->horaI;
-                    $horario->horaF = $horario->horaF;
                     $horario->estado = $estado;
                     array_push($respuesta, $horario);
                 }
