@@ -1,10 +1,31 @@
 function getlink() {
-    var aux = document.createElement("input");
-    aux.setAttribute("value", "https://play.google.com/store/apps/details?id=pe.trax.park&hl=es");
+    var link = "https://play.google.com/store/apps/details?id=pe.trax.park&hl=es";
+    var aux = document.createElement("div");
+    aux.setAttribute("contentEditable", true);
+    aux.innerHTML = link;
+    aux.setAttribute("onfocus", "document.execCommand('selectAll',false,null)");
     document.body.appendChild(aux);
-    aux.select();
+    aux.focus();
     document.execCommand("copy");
     document.body.removeChild(aux);
+    $.notify({
+        message: 'Enlace copiado',
+        icon: 'admin/images/checked.svg'
+    }, {
+        element: $('#detallesAndroid'),
+        position: 'fixed',
+        icon_type: 'image',
+        allow_dismiss: true,
+        newest_on_top: true,
+        delay: 2000,
+        template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+            '<span data-notify="title">{1}</span> ' +
+            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+            '</div>',
+        spacing: 35
+    });
 }
 $('.detalleW').on('click', function () {
     $('#detallesWindows').modal();
