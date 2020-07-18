@@ -75,22 +75,30 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
-                    <h5 class="modal-title" id="myModalLabel" style="font-size:
-                        15px">¿Desea agregar nuevo escritorio
-                        empleado?</h5>
+                    <div class="row">
+                        <div class="col-md-2 text-center">
+                            <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
+                        </div>
+                        <div class="col-md-8 text-center">
+                            <h5 class="modal-title" id="myModalLabel" style="font-size:
+                        15px">Esta opción se usa para asignar nueva PC en lo cual el empleado trabajara en más de una
+                                PC.
+                            </h5>
+                        </div>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-7 text-right">
+                        <div class="col-md-6 text-center">
                             <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
                         </div>
-                        <div class="col-md-5 text-right" style="padding-right:
+                        <div class="col-md-6 text-center" style="padding-right:
                             38px;">
                             <button type="button" id="agregarEscritorio" name="agregarEscritorio"
                                 style="background-color: #163552;" class="btn
-                                btn-sm">Agregar</button>
+                                btn-sm">Enviar</button>
                         </div>
                     </div>
                 </div>
@@ -575,8 +583,8 @@
                     style="cursor: pointer"><img src="{{asset('landing/images/refresh.svg')}}" height="20">
                 </a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a data-toggle="tooltip" data-placement="right" title="Nueva PC" data-original-title="Nueva PC" style="cursor:pointer"
-                    onclick="$('#modalNuevoE').modal();">
+                <a data-toggle="tooltip" data-placement="right" title="Nueva PC" data-original-title="Nueva PC"
+                    style="cursor:pointer" onclick="$('#modalNuevoE').modal();">
                     <img src="{{asset('landing/images/plus.svg')}}" height="15">
                 </a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -592,9 +600,9 @@
                         src="{{asset('landing/images/refresh.svg')}}" height="20">
                 </a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a data-toggle="tooltip" data-placement="right" title="Nueva PC"
-                    data-original-title="Nueva PC" style="cursor: pointer"
-                    onclick="$('#modalNuevoE').modal();"><img src="{{asset('landing/images/plus.svg')}}" height="15">
+                <a data-toggle="tooltip" data-placement="right" title="Nueva PC" data-original-title="Nueva PC"
+                    style="cursor: pointer" onclick="$('#modalNuevoE').modal();"><img
+                        src="{{asset('landing/images/plus.svg')}}" height="15">
                 </a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <a class="detalleW" data-toggle="tooltip" data-placement="right" title="Ver Detalles"
