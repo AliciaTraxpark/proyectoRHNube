@@ -30,7 +30,7 @@ $.ajax({
     success: function (data) {
         if (data == false) {
             $.notify({
-                message: "\n\nAún no has personalizado tu calendario. <br><a id=\"calendario\" target=\"_blank\" style=\"cursor: pointer;\" class=\"spinner-grow spinner-grow-sm\"></a>",
+                message: "\n\nAún no has personalizado tu calendario. <br><a id=\"calendario\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></a>",
                 icon: 'admin/images/warning.svg',
             }, {
                 mouse_over: "pause"

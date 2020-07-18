@@ -170,7 +170,7 @@ $.ajax({
         } else {
             $('#divarea').hide();
             $.notify({
-                message: "\n\nAún no has asignado empleados a una área.<br><a id=\"empleadoA\" target=\"_blank\" style=\"cursor: pointer;\" class=\"spinner-grow spinner-grow-sm\"></a>",
+                message: "\n\nAún no has asignado empleados a una área.<br><a id=\"empleadoA\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></a>",
                 icon: 'admin/images/warning.svg',
             }, {
                 mouse_over: "pause"
@@ -292,7 +292,7 @@ $.ajax({
         } else {
             $('#divnivel').hide();
             $.notify({
-                message: "\n\nAún no has asignado empleados a un nivel.<br><a id=\"empleadoN\" target=\"_blank\" style=\"cursor: pointer;\" class=\"spinner-grow spinner-grow-sm\"></a>",
+                message: "\n\nAún no has asignado empleados a un nivel.<br><a id=\"empleadoN\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></a>",
                 icon: 'admin/images/warning.svg'
             }, {
                 mouse_over: "pause"
@@ -414,7 +414,7 @@ $.ajax({
         } else {
             $('#divcontrato').hide();
             $.notify({
-                message: "\n\nAún no has asignado empleados a un tipo de contrato.<br><a id=\"empleadoC\" target=\"_blank\" style=\"cursor: pointer;\" class=\"spinner-grow spinner-grow-sm\"></a>",
+                message: "\n\nAún no has asignado empleados a un tipo de contrato.<br><a id=\"empleadoC\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></a>",
                 icon: 'admin/images/warning.svg'
             }, {
                 mouse_over: "pause"
@@ -535,7 +535,7 @@ $.ajax({
         } else {
             $('#divcentro').hide();
             $.notify({
-                message: "\n\nAún no has asignado empleados a un tipo de centro costo.<br><a id=\"empleadoCe\" target=\"_blank\" style=\"cursor: pointer;\"class=\"spinner-grow spinner-grow-sm\"></a>",
+                message: "\n\nAún no has asignado empleados a un tipo de centro costo.<br><a id=\"empleadoCe\" target=\"_blank\" style=\"cursor: pointer;\><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></a>",
                 icon: 'admin/images/warning.svg'
             }, {
                 mouse_over: "pause"
@@ -657,7 +657,7 @@ $.ajax({
         } else {
             $('#divlocal').hide();
             $.notify({
-                message: "\n\nAún no has asignado empleados a un local.<br><a id=\"empleadoL\" target=\"_blank\" style=\"cursor: pointer;\" class=\"spinner-grow spinner-grow-sm\"></a>",
+                message: "\n\nAún no has asignado empleados a un local.<br><a id=\"empleadoL\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></a>",
                 icon: 'admin/images/warning.svg'
             }, {
                 mouse_over: "pause"
@@ -876,7 +876,7 @@ $.ajax({
         } else {
             $('#divdepartamento').hide();
             $.notify({
-                message: "\n\nAún no has asignado empleados a una ciudad.<br><a id=\"empleadoD\" target=\"_blank\" style=\"cursor: pointer;\"class=\"spinner-grow spinner-grow-sm\"></a>",
+                message: "\n\nAún no has asignado empleados a una ciudad.<br><a id=\"empleadoD\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></a>",
                 icon: 'admin/images/warning.svg'
             }, {
                 mouse_over: "pause"
@@ -998,7 +998,7 @@ $.ajax({
         } else {
             $('#divedades').hide();
             $.notify({
-                message: "\n\nAún no has asignado empleados a un local.<br><a id=\"empleadoRE\" target=\"_blank\" style=\"cursor: pointer;\"class=\"spinner-grow spinner-grow-sm\"></a>",
+                message: "\n\nAún no has asignado empleados a un local.<br><a id=\"empleadoRE\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></a>",
                 icon: 'admin/images/warning.svg'
             }, {
                 mouse_over: "pause"
