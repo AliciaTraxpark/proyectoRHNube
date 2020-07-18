@@ -978,6 +978,8 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Correo Electronico</label>
+                                                        <span id="validCorreo" style="color: red;">*Campo
+                                                            Obligatorio</span>
                                                         <span id="emailR" style="color: red;">*Correo registrado</span>
                                                         <input type="email" class="form-control" id="email" name="email"
                                                             tabindex="7">
@@ -1010,8 +1012,6 @@
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Fecha Nacimiento</label>
-                                                        <span id="validFechaN" style="color: red;">*Campo
-                                                            Obligatorio</span>
                                                         <input type="text" data-custom-class="form-control" id="fechaN"
                                                             tabindex="3" data-format="YYYY-MM-DD"
                                                             data-template="D MMM YYYY" name="date">
@@ -1316,6 +1316,8 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Correo Electronico</label>
+                                                        <span id="v_validCorreo" style="color: red;">*Campo
+                                                            Obligatorio</span>
                                                         <span id="v_emailR" style="color: red;">*Correo
                                                             registrado</span>
                                                         <input type="email" class="form-control" id="v_email"
@@ -1349,8 +1351,6 @@
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Fecha Nacimiento</label>
-                                                        <span id="v_validFechaN" style="color: red;">*Campo
-                                                            Obligatorio</span>
                                                         <input type="text" data-custom-class="form-control"
                                                             id="v_fechaN" data-format="YYYY-MM-DD"
                                                             data-template="D MMM YYYY" name="date" tabindex="3">

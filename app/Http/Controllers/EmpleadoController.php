@@ -650,4 +650,18 @@ class EmpleadoController extends Controller
             return 1;
         }
     }
+
+    public function comprobarCorreoEditar(Request $request)
+    {
+        $email = $request->get('email');
+        $empleado = $request->get('idE');
+        $empleado = DB::table('empleado as e')
+            ->where('emple_Correo', '=', $email)
+            ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_id', '!=', $empleado)
+            ->get()->first();
+        if ($empleado != null) {
+            return 1;
+        }
+    }
 }

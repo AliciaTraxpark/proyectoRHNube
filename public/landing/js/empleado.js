@@ -1175,7 +1175,8 @@ $('#cerrarEd').click(function () {
     $('#v_validNumDocumento').hide();
     $('#v_validApMaterno').hide();
     $('#v_validNombres').hide();
-    $('#v_validFechaN').hide();
+    $('#v_validCorreo').hide();
+    $('#v_emailR').hide();
     limpiar();
 
 });
@@ -1218,7 +1219,7 @@ $('#validDocumento').hide();
 $('#validApPaterno').hide();
 $('#validNumDocumento').hide();
 $('#validApMaterno').hide();
-$('#validFechaN').hide();
+$('#validCorreo').hide();
 $('#validNombres').hide();
 $('#validGenero').hide();
 //************* */
@@ -1226,7 +1227,7 @@ $('#v_validApPaterno').hide();
 $('#v_validNumDocumento').hide();
 $('#v_validApMaterno').hide();
 $('#v_validNombres').hide();
-$('#v_validFechaN').hide();
+$('#v_validCorreo').hide();
 $('#detalleContrato').hide();
 $('#editarArea').hide();
 $('#editarCargo').hide();

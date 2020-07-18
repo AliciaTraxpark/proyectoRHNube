@@ -377,7 +377,7 @@
                     </div>
                 </div>
                 <!-- details-->
-                <div class="row" id="rowDetalles">
+                <div class="row">
                     <div class="col-xl-12">
                         <div class="card">
                             <div class="card-body">

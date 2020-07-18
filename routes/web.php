@@ -81,6 +81,7 @@ Route::post('/eliminarFoto/{v_id}', 'EmpleadoController@eliminarFoto');
 Route::delete('/eliminarEmpleados', 'EmpleadoController@deleteAll');
 Route::get('numDoc', 'EmpleadoController@comprobarNumD');
 Route::get('email', 'EmpleadoController@comprobarCorreo');
+Route::get('emailE', 'EmpleadoController@comprobarCorreoEditar');
 
 //AREA
 Route::post('/registrar/area', 'areaController@store');

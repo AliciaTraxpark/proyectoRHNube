@@ -3,11 +3,6 @@ $(document).ready(function () {
         var isStepValid = true;
         // validate step 1
         if (stepnumber == 0) {
-            if ($('button.sw-btn-prev').hasClass('disabled')) {
-                console.log('disabled');
-                $('button.sw-btn-prev').hide();
-            }
-            console.log("validar primer paso");
             if ($('#numDocumento').val() == "") {
                 isStepValid = false;
                 $('#validDocumento').show();
@@ -62,12 +57,6 @@ $(document).ready(function () {
             } else {
                 $('#validApMaterno').hide();
             }
-            if ($('#fechaN').val() == "") {
-                isStepValid = false;
-                $('#validFechaN').show();
-            } else {
-                $('#validFechaN').hide();
-            }
             if ($('#nombres').val() == "") {
                 isStepValid = false;
                 $('#validNombres').show();
@@ -83,6 +72,7 @@ $(document).ready(function () {
             if ($("#email").val() != "") {
                 //VALIDAR CORREO
                 var email = $('#email').val();
+                $('#validCorreo').hide();
                 $.ajax({
                     async: false,
                     type: "GET",
@@ -111,6 +101,9 @@ $(document).ready(function () {
                         }
                     }
                 });
+            } else {
+                $('#validCorreo').show();
+                isStepValid = false;
             }
             console.log(isStepValid)
         }
@@ -147,21 +140,18 @@ $(document).ready(function () {
             } else {
                 $('#v_validNombres').hide();
             }
-            if ($('#v_fechaN').val() == "") {
-                isStepValid = false;
-                $('#v_validFechaN').show();
-            } else {
-                $('#v_validFechaN').hide();
-            }
-            /*if ($("#v_email").val() != "") {
+            if ($("#v_email").val() != "") {
                 //VALIDAR CORREO
                 var email = $('#v_email').val();
+                var idE = $('#v_id').val();
+                $('#v_validCorreo').hide();
                 $.ajax({
                     async: false,
                     type: "GET",
-                    url: "email",
+                    url: "emailE",
                     data: {
-                        email: email
+                        email: email,
+                        idE: idE
                     },
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -176,7 +166,10 @@ $(document).ready(function () {
                         }
                     }
                 });
-            }*/
+            } else {
+                $('#v_validCorreo').show();
+                isStepValid = false;
+            }
             console.log(isStepValid)
         }
         return isStepValid;
