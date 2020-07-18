@@ -30,7 +30,7 @@ $.ajax({
     success: function (data) {
         if (data == false) {
             $.notify({
-                message: "\n\nAún no has personalizado tu horarios a tus colaboradores. <br><a id=\"horario\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></a>",
+                message: "\n\nAún no has personalizado tu horarios a tus colaboradores. <br><a id=\"horario\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></button></a>",
                 icon: 'admin/images/warning.svg',
             }, {
                 mouse_over: "pause"

@@ -535,7 +535,7 @@ $.ajax({
         } else {
             $('#divcentro').hide();
             $.notify({
-                message: "\n\nAún no has asignado empleados a un tipo de centro costo.<br><a id=\"empleadoCe\" target=\"_blank\" style=\"cursor: pointer;\><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></a>",
+                message: "\n\nAún no has asignado empleados a un tipo de centro costo.<br><a id=\"empleadoCe\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></a>",
                 icon: 'admin/images/warning.svg'
             }, {
                 mouse_over: "pause"
