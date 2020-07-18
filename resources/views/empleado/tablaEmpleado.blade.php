@@ -575,9 +575,8 @@
                     style="cursor: pointer"><img src="{{asset('landing/images/refresh.svg')}}" height="20">
                 </a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a data-toggle="tooltip" data-placement="right" title="Asignar
-                    nueva PC" data-original-title="Enviar correo empleado" style="cursor:
-                    pointer" onclick="$('#modalNuevoE').modal();">
+                <a data-toggle="tooltip" data-placement="right" title="Nueva PC" data-original-title="Nueva PC" style="cursor:pointer"
+                    onclick="$('#modalNuevoE').modal();">
                     <img src="{{asset('landing/images/plus.svg')}}" height="15">
                 </a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -593,8 +592,8 @@
                         src="{{asset('landing/images/refresh.svg')}}" height="20">
                 </a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a data-toggle="tooltip" data-placement="right" title="Asignar nueva PC"
-                    data-original-title="Asignar nueva PC" style="cursor: pointer"
+                <a data-toggle="tooltip" data-placement="right" title="Nueva PC"
+                    data-original-title="Nueva PC" style="cursor: pointer"
                     onclick="$('#modalNuevoE').modal();"><img src="{{asset('landing/images/plus.svg')}}" height="15">
                 </a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
