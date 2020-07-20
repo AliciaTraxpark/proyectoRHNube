@@ -32,9 +32,10 @@
         @endphp
 
         <ul class="navbar-nav flex-row ml-auto d-flex list-unstyled topnav-menu float-right mb-0">
-            <li class="dropdown notification-list" data-toggle="tooltip" data-placement="left" title="Organizacion">
+            <li class="dropdown notification-list" >
            <span style="color: aliceblue;font-size: 12px";>Organizacion:</span>&nbsp; <strong style="color: rgb(255, 255, 255)">{{$organizacion->organi_razonSocial}} |</strong>
-           <span style="color: aliceblue;font-size: 12px";>RUC/ID:</span>&nbsp; <strong style="color: rgb(255, 255, 255)">{{$organizacion->organi_ruc}} </strong>
+           <span style="color: aliceblue;font-size: 12px";>RUC/ID:</span>&nbsp; <strong style="color: rgb(255, 255, 255)">{{$organizacion->organi_ruc}} </strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <a data-toggle="tooltip" data-placement="left" title="Cerrar sesión" href="{{ route('logout') }}"><img src="{{asset('landing/images/salida.svg')}}" alt="" height="23" /></a>
             </li>
 
 
