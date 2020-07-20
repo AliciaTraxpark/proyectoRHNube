@@ -3,7 +3,6 @@ $(document).ready(function () {
         var isStepValid = true;
         // validate step 1
         if (stepnumber == 0) {
-            console.log("validar primer paso");
             if ($('#numDocumento').val() == "") {
                 isStepValid = false;
                 $('#validDocumento').show();
@@ -58,12 +57,6 @@ $(document).ready(function () {
             } else {
                 $('#validApMaterno').hide();
             }
-            if ($('#fechaN').val() == "") {
-                isStepValid = false;
-                $('#validFechaN').show();
-            } else {
-                $('#validFechaN').hide();
-            }
             if ($('#nombres').val() == "") {
                 isStepValid = false;
                 $('#validNombres').show();
@@ -79,6 +72,7 @@ $(document).ready(function () {
             if ($("#email").val() != "") {
                 //VALIDAR CORREO
                 var email = $('#email').val();
+                $('#validCorreo').hide();
                 $.ajax({
                     async: false,
                     type: "GET",
@@ -107,6 +101,9 @@ $(document).ready(function () {
                         }
                     }
                 });
+            } else {
+                $('#validCorreo').show();
+                isStepValid = false;
             }
             console.log(isStepValid)
         }
@@ -143,21 +140,18 @@ $(document).ready(function () {
             } else {
                 $('#v_validNombres').hide();
             }
-            if ($('#v_fechaN').val() == "") {
-                isStepValid = false;
-                $('#v_validFechaN').show();
-            } else {
-                $('#v_validFechaN').hide();
-            }
-            /*if ($("#v_email").val() != "") {
+            if ($("#v_email").val() != "") {
                 //VALIDAR CORREO
                 var email = $('#v_email').val();
+                var idE = $('#v_id').val();
+                $('#v_validCorreo').hide();
                 $.ajax({
                     async: false,
                     type: "GET",
-                    url: "email",
+                    url: "emailE",
                     data: {
-                        email: email
+                        email: email,
+                        idE: idE
                     },
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -172,7 +166,10 @@ $(document).ready(function () {
                         }
                     }
                 });
-            }*/
+            } else {
+                $('#v_validCorreo').show();
+                isStepValid = false;
+            }
             console.log(isStepValid)
         }
         return isStepValid;
@@ -180,9 +177,9 @@ $(document).ready(function () {
     $('#smartwizard').smartWizard({
         selected: 0,
         showStepURLhash: false,
-        toolbarSettings: {
-            showNextButton: false,
-            showPreviousButton: false
+        lang: { // Language variables
+            next: 'Siguiente',
+            previous: 'Anterior'
         },
         leaveStep: function () {
             return true;
@@ -199,9 +196,9 @@ $(document).ready(function () {
     $('#smartwizard1').smartWizard({
         selected: 0,
         showStepURLhash: false,
-        toolbarSettings: {
-            showNextButton: false,
-            showPreviousButton: false
+        lang: { // Language variables
+            next: 'Siguiente',
+            previous: 'Anterior'
         },
         justified: true,
         anchorSettings: {
@@ -211,7 +208,6 @@ $(document).ready(function () {
             enableAllAnchorOnDoneStep: true
         },
         leaveStep: function () {
-            alert("aaa");
             return true;
         }
     });

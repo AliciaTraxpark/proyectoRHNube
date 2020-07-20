@@ -7,14 +7,19 @@ use App\captura;
 use App\control;
 use App\empleado;
 use App\envio;
+use App\horario_dias;
+use App\horario_empleado;
 use App\licencia_empleado;
 use App\proyecto;
 use App\proyecto_empleado;
 use App\tarea;
+use App\User;
 use App\vinculacion;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use phpDocumentor\Reflection\Types\True_;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Facades\JWTFactory;
 
@@ -62,10 +67,14 @@ class apiController extends Controller
         $decode = base_convert(intval($codigo), 10, 36);
         $explode = explode("s", $decode);
         $empleado = DB::table('empleado as e')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
             ->where('emple_nDoc', '=', $nroD)
             ->where('e.users_id', '=', $explode[0])
             ->get()->first();
+
         $idUser = $explode[0];
+
         if ($empleado) {
             $vinculacion = vinculacion::where('idEmpleado', '=', $empleado->emple_id)->get()->first();
             if ($vinculacion) {
@@ -77,7 +86,11 @@ class apiController extends Controller
                             ]);
                             $payload = $factory->make();
                             $token = JWTAuth::encode($payload);
-                            return response()->json(array("idEmpleado" => $empleado->emple_id, 'idUser' => $idUser, 'token' => $token->get()), 200);
+                            $user = User::where('id', '=', $idUser)->get()->first();
+                            return response()->json(array(
+                                "corte" => $user->corteCaptura, "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                                'idUser' => $idUser, 'token' => $token->get()
+                            ), 200);
                         } else {
                             return response()->json("Pc no coinciden", 400);
                         }
@@ -89,7 +102,10 @@ class apiController extends Controller
                         ]);
                         $payload = $factory->make();
                         $token = JWTAuth::encode($payload);
-                        return response()->json(array("idEmpleado" => $empleado->emple_id, 'idUser' => $idUser, 'token' => $token->get()), 200);
+                        return response()->json(array(
+                            "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                            'idUser' => $idUser, 'token' => $token->get()
+                        ), 200);
                     }
                 }
                 return response()->json("Código erróneo", 400);
@@ -117,13 +133,14 @@ class apiController extends Controller
                 ->select('pr.Proye_id', 'pr.Proye_Nombre')
                 ->where('e.emple_id', '=', $empleado)
                 ->groupBy('pr.Proye_id')
-                ->get()->first();
+                ->get();
 
             $respuesta = [];
 
-            /*foreach ($datos as $dato) {
+            foreach ($datos as $dato) {
+                array_push($respuesta, array("Tarea_id" => $dato->Proye_id, "Tarea_Nombre" => $dato->Proye_Nombre));
                 //TAREAS
-                $tareas = DB::table('empleado as e')
+                /*$tareas = DB::table('empleado as e')
                     ->join('proyecto_empleado as pe', 'pe.empleado_emple_id', '=', 'e.emple_id')
                     ->join('proyecto as pr', 'pr.Proye_id', '=', 'pe.Proyecto_Proye_id')
                     ->leftJoin('tarea as t', 't.Proyecto_Proye_id', '=', 'pr.Proye_id')
@@ -152,9 +169,8 @@ class apiController extends Controller
                 foreach ($actividad as $activ) {
                     array_push($elementoA, array("idActividad" => $activ->Activi_id, "Actividad" => $activ->Activi_Nombre, "Tarea_id" => $activ->Tarea_id));
                 }
-                array_push($respuesta, array("Proye_id" => $dato->Proye_id, "Proye_Nombre" => $dato->Proye_Nombre, "Tareas" => $elemento, "Actividades" => $elementoA));
-            }*/
-            array_push($respuesta, array("Tarea_id" => $datos->Proye_id, "Tarea_Nombre" => $datos->Proye_Nombre));
+                array_push($respuesta, array("Proye_id" => $dato->Proye_id, "Proye_Nombre" => $dato->Proye_Nombre, "Tareas" => $elemento, "Actividades" => $elementoA));*/
+            }
             return response()->json($respuesta, 200);
         }
         return response()->json(null, 400);
@@ -178,7 +194,7 @@ class apiController extends Controller
         $proyectoE->Fecha_Fin = $request->get('Fecha_Fin');
         $proyectoE->save();
 
-        return response()->json($proyecto, 200);
+        return response()->json(array($idProyecto, $proyecto), 200);
     }
 
     public function editarProyecto(Request $request)
@@ -208,32 +224,47 @@ class apiController extends Controller
         }
         return response()->json("Proyecto no encontrado", 400);
     }
-    /*public function logueoEmpleado(Request $request)
-    {
-        $pass = DB::table('empleado as e')
-            ->select('e.emple_pasword')
-            ->where('e.emple_nDoc', '=', $request->get('emple_nDoc'))
-            ->get();
 
-        if (count($pass) == 0)  return response()->json(null, 404);
-        if (Hash::check($request->get("emple_pasword"), $pass[0]->emple_pasword)) {
-            $empleado = DB::table('empleado as e')
-                ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                ->leftJoin('proyecto_empleado as pe', 'pe.empleado_emple_id', '=', 'e.emple_id')
-                ->leftJoin('proyecto as pr', 'pr.Proye_id', '=', 'pe.Proyecto_Proye_id')
-                ->select('e.emple_id', DB::raw('CONCAT(p.perso_nombre ," ", p.perso_apPaterno, " ", p.perso_apMaterno) AS nombre'), 'pr.Proye_id', 'e.emple_estado')
-                ->where('e.emple_nDoc', '=', $request->get('emple_nDoc'))
+    public function horario(Request $request)
+    {
+        $respuesta = [];
+        $horario_empleado = DB::table('horario_empleado as he')
+            ->select('he.horario_horario_id', 'he.horario_dias_id')
+            ->where('empleado_emple_id', '=', $request->get('idEmpleado'))
+            ->get()
+            ->first();
+        if ($horario_empleado) {
+            $horario = DB::table('horario_empleado as he')
+                ->select('he.horario_dias_id', 'he.horario_horario_id')
+                ->where('empleado_emple_id', '=', $request->get('idEmpleado'))
                 ->get();
-            $factory = JWTFactory::customClaims([
-                'sub' => env('API_ID'),
-            ]);
-            $payload = $factory->make();
-            $token = JWTAuth::encode($payload);
-            return response()->json(array('data' => $empleado, 'token' => $token->get()), 200);
-        } else {
-            return response()->json(null, 403);
+
+            foreach ($horario as $resp) {
+                $horario_dias = DB::table('horario_dias  as hd')
+                    ->select('hd.start', 'hd.id')
+                    ->where('hd.id', '=', $resp->horario_dias_id)
+                    ->get()->first();
+                $horario = DB::table('horario as h')
+                    ->select('h.horario_id', 'h.horario_descripcion', 'h.horaI', 'h.horaF')
+                    ->where('h.horario_id', '=', $resp->horario_horario_id)
+                    ->get()->first();
+                $horario->idHorario_dias = $horario_dias->id;
+                $fecha = Carbon::now();
+                $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
+                if ($horario_dias->start == $fechaHoy) {
+                    $estado = true;
+                    $horario->estado = $estado;
+                    array_push($respuesta, $horario);
+                } else {
+                    $estado = false;
+                    $horario->estado = $estado;
+                    array_push($respuesta, $horario);
+                }
+            }
+            return response()->json($respuesta, 200);
         }
-    }*/
+        return response()->json("Empleado no encontrado", 400);
+    }
 
     public function apiTarea(Request $request)
     {

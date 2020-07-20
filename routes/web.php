@@ -29,7 +29,7 @@ Route::name('dashboard')->get('dashboard', 'HomeController@index')->middleware('
 //VERIFICACION
 Route::name('verification.notice')->get('email/verify', 'VerifyMailController@index');
 Route::get('reenvioCorreo', 'VerifyMailController@verificarReenvio')->name('reenvioCorreo');
-Route::get('comprobarCodigo', 'VerifyMailController@comprobar');
+Route::get('comprobarCodigo', 'ComprobarSmsController@comprobar');
 //CALENDARIO
 Route::name('calendario')->get('calendario', 'calendarioController@index');
 Route::post('/calendario/store', 'calendarioController@store');
@@ -81,6 +81,7 @@ Route::post('/eliminarFoto/{v_id}', 'EmpleadoController@eliminarFoto');
 Route::delete('/eliminarEmpleados', 'EmpleadoController@deleteAll');
 Route::get('numDoc', 'EmpleadoController@comprobarNumD');
 Route::get('email', 'EmpleadoController@comprobarCorreo');
+Route::get('emailE', 'EmpleadoController@comprobarCorreoEditar');
 
 //AREA
 Route::post('/registrar/area', 'areaController@store');
@@ -159,6 +160,7 @@ Route::post('/storeLaborHorarioBD', 'horarioController@storeLaborHorarioBD');
 Route::post('/storeNoLaborHorarioBD', 'horarioController@storeNoLaborHorarioBD');
 
 //DASHBOARD
+Route::get('/eventosU', 'dashboardController@eventosUsuario');
 Route::get('/totalA', 'dashboardController@area');
 Route::get('/totalN', 'dashboardController@nivel');
 Route::get('/totalC', 'dashboardController@contrato');
@@ -186,3 +188,32 @@ Route::get('empleadoAndroidMasivo', 'correosEmpleadoController@envioAndroidM');
 Route::get('download/{code}', 'downloadController@download');
 ///verif
 Route::get('check-session', 'verificarUsuarioController@checkSession');
+
+//EDITAR ATRIBUTOS
+//*****AREA */
+Route::get('area', 'editarAtributosController@area');
+Route::get('buscarArea', 'editarAtributosController@buscarArea');
+Route::post('editarArea', 'editarAtributosController@editarArea');
+//*****CARGO */
+Route::get('cargo', 'editarAtributosController@cargo');
+Route::get('buscarCargo', 'editarAtributosController@buscarCargo');
+Route::post('editarCargo', 'editarAtributosController@editarCargo');
+//******CENTRO***/
+Route::get('centro', 'editarAtributosController@centro');
+Route::get('buscarCentro', 'editarAtributosController@buscarCentro');
+Route::post('editarCentro', 'editarAtributosController@editarCentro');
+//******LOCAL***/
+Route::get('local', 'editarAtributosController@local');
+Route::get('buscarLocal', 'editarAtributosController@buscarLocal');
+Route::post('editarLocal', 'editarAtributosController@editarLocal');
+//******NIVEL***/
+Route::get('nivel', 'editarAtributosController@nivel');
+Route::get('buscarNivel', 'editarAtributosController@buscarNivel');
+Route::post('editarNivel', 'editarAtributosController@editarNivel');
+//******CONTRATO***/
+Route::get('contrato', 'editarAtributosController@contrato');
+Route::get('buscarContrato', 'editarAtributosController@buscarContrato');
+Route::post('editarContrato', 'editarAtributosController@editarContrato');
+//*************************************************************************/
+//ESTADO LICENCIA
+Route::get('cambiarEstadoLicencia', 'detallesActivacionController@cambiarEstadoLicencia');

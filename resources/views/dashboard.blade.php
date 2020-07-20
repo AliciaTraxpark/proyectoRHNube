@@ -89,10 +89,12 @@
         margin-top: 15px;
         margin-bottom: 15px;
     }
-    #wrapper > div.content-page > div.content > div{
+
+    #wrapper>div.content-page>div.content>div {
         padding-left: 0px;
-    padding-right: 45px;
+        padding-right: 45px;
     }
+
 </style>
 <div class="row">
     <div class="col-md-4" id="divarea">
@@ -169,8 +171,10 @@
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
+<script src="{{asset('landing/js/notificacionesCalendario.js')}}"></script>
+<script src="{{asset('landing/js/dashboard.js')}}"></script>
+<script src="{{asset('landing/js/notificacionesHorario.js')}}"></script>
 @endsection
 @section('script-bottom')
 <!-- init js -->
-<script src="{{asset('landing/js/dashboard.js')}}"></script>
 @endsection

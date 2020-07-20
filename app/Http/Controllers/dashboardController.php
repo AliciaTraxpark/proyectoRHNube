@@ -12,6 +12,22 @@ class dashboardController extends Controller
     {
         $this->middleware(['auth', 'verified']);
     }
+
+    public function eventosUsuario()
+    {
+        $respuesta = false;
+        $eventos = DB::table('eventos_usuario as eu')
+            ->where('eu.users_id', '=', Auth::user()->id)
+            ->get()
+            ->first();
+
+        if ($eventos) {
+            $respuesta = true;
+            return response()->json($respuesta, 200);
+        }
+        return response()->json($respuesta, 200);
+    }
+
     public function area()
     {
         $datos = [];
@@ -168,5 +184,20 @@ class dashboardController extends Controller
             ->get();
         array_push($datos, array("empleado" => $empleado, "edad" => $edad));
         return response()->json($datos, 200);
+    }
+
+    public function horarioDias()
+    {
+        $respuesta = false;
+        $horario = DB::table('horario_dias as hd')
+            ->where('hd.users_id', '=', Auth::user()->id)
+            ->get()
+            ->first();
+
+        if ($horario) {
+            $respuesta = true;
+            return response()->json($respuesta, 200);
+        }
+        return response()->json($respuesta, 200);
     }
 }

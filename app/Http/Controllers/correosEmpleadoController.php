@@ -43,6 +43,8 @@ class correosEmpleadoController extends Controller
                 $vinculacion->descarga = STR::random(25);
                 $vinculacion->save();
                 $licencia_empleado = licencia_empleado::findOrFail($codL->id);
+                $licencia_empleado->disponible = 1;
+                $licencia_empleado->save();
                 $datos = [];
                 $datos["correo"] = $empleado->emple_Correo;
                 $email = array($datos["correo"]);
@@ -92,9 +94,12 @@ class correosEmpleadoController extends Controller
                 $vinculacion->descarga = STR::random(25);
                 $vinculacion->save();
 
+                $idVinculacion = $vinculacion->id;
+
                 $licencia_empleado = new licencia_empleado();
                 $licencia_empleado->idEmpleado = $idEmpleado;
                 $licencia_empleado->licencia = $encodeLicencia;
+                $licencia_empleado->idVinculacion = $idVinculacion;
                 $licencia_empleado->save();
                 $datos = [];
                 $datos["correo"] = $empleado->emple_Correo;
@@ -189,9 +194,12 @@ class correosEmpleadoController extends Controller
                     $vinculacion->descarga = STR::random(25);
                     $vinculacion->save();
 
+                    $idVinculacion = $vinculacion->id;
+
                     $licencia_empleado = new licencia_empleado();
                     $licencia_empleado->idEmpleado = $idEm;
                     $licencia_empleado->licencia = $encodeLicencia;
+                    $licencia_empleado->idVinculacion = $idVinculacion;
                     $licencia_empleado->save();
 
                     $datos = [];
@@ -315,6 +323,7 @@ class correosEmpleadoController extends Controller
                 $licencia_empleado = new licencia_empleado();
                 $licencia_empleado->idEmpleado = $idEmpleado;
                 $licencia_empleado->licencia = $encodeLicencia;
+                $licencia_empleado->idVinculacion = $codV->id;
                 $licencia_empleado->save();
                 $vinculacion = vinculacion::findOrFail($codV->id);
                 $datos = [];
@@ -325,11 +334,11 @@ class correosEmpleadoController extends Controller
             }
             $l = false;
             array_push($respuesta, array('limite' => $l, 'correo' => $c));
-            return response()->json($respuesta, 403);
+            return response()->json($respuesta, 200);
         }
         $c = false;
         array_push($respuesta, array('limite' => $l, 'correo' => $c));
-        return response()->json($respuesta, 403);
+        return response()->json($respuesta, 200);
     }
 
     public function ambasPlataformas(Request $request)
@@ -414,9 +423,12 @@ class correosEmpleadoController extends Controller
                     $vinculacion->descarga = STR::random(25);
                     $vinculacion->save();
 
+                    $idVinculacion = $vinculacion->id;
+
                     $licencia_empleado = new licencia_empleado();
                     $licencia_empleado->idEmpleado = $idEm;
                     $licencia_empleado->licencia = $encodeLicencia;
+                    $licencia_empleado->idVinculacion = $idVinculacion;
                     $licencia_empleado->save();
 
                     $datos = [];

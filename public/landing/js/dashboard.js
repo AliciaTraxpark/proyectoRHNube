@@ -42,8 +42,8 @@ Chart.pluginService.register({
 //NOTIFICACION
 $.notifyDefaults({
     icon_type: 'image',
-    newest_on_top: true,
-    delay: 5000,
+    delay: 12000,
+    timer: 10000,
     template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
@@ -170,8 +170,15 @@ $.ajax({
         } else {
             $('#divarea').hide();
             $.notify({
-                message: "\nAún no has asignado empleados a una área.",
-                icon: 'admin/images/warning.svg'
+                message: "\n\nAún no has asignado empleados a una área.<br><a id=\"empleadoA\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></a>",
+                icon: 'admin/images/warning.svg',
+            }, {
+                mouse_over: "pause"
+            });
+            $('#empleadoA').click(function () {
+                window.location.replace(
+                    location.origin + "/empleado"
+                );
             });
         }
     },
@@ -285,8 +292,15 @@ $.ajax({
         } else {
             $('#divnivel').hide();
             $.notify({
-                message: "\nAún no has asignado empleados a un nivel.",
+                message: "\n\nAún no has asignado empleados a un nivel.<br><a id=\"empleadoN\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></a>",
                 icon: 'admin/images/warning.svg'
+            }, {
+                mouse_over: "pause"
+            });
+            $('#empleadoN').click(function () {
+                window.location.replace(
+                    location.origin + "/empleado"
+                );
             });
         }
     },
@@ -400,8 +414,15 @@ $.ajax({
         } else {
             $('#divcontrato').hide();
             $.notify({
-                message: "\nAún no has asignado empleados a un tipo de contrato.",
+                message: "\n\nAún no has asignado empleados a un tipo de contrato.<br><a id=\"empleadoC\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></a>",
                 icon: 'admin/images/warning.svg'
+            }, {
+                mouse_over: "pause"
+            });
+            $('#empleadoC').click(function () {
+                window.location.replace(
+                    location.origin + "/empleado"
+                );
             });
         }
     },
@@ -514,8 +535,15 @@ $.ajax({
         } else {
             $('#divcentro').hide();
             $.notify({
-                message: "\nAún no has asignado empleados a un tipo de centro costo.",
+                message: "\n\nAún no has asignado empleados a un tipo de centro costo.<br><a id=\"empleadoCe\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></a>",
                 icon: 'admin/images/warning.svg'
+            }, {
+                mouse_over: "pause"
+            });
+            $('#empleadoCe').click(function () {
+                window.location.replace(
+                    location.origin + "/empleado"
+                );
             });
         }
     },
@@ -629,8 +657,15 @@ $.ajax({
         } else {
             $('#divlocal').hide();
             $.notify({
-                message: "\nAún no has asignado empleados a un local.",
+                message: "\n\nAún no has asignado empleados a un local.<br><a id=\"empleadoL\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></a>",
                 icon: 'admin/images/warning.svg'
+            }, {
+                mouse_over: "pause"
+            });
+            $('#empleadoL').click(function () {
+                window.location.replace(
+                    location.origin + "/empleado"
+                );
             });
         }
     },
@@ -841,13 +876,19 @@ $.ajax({
         } else {
             $('#divdepartamento').hide();
             $.notify({
-                message: "\nAún no has asignado empleados a una ciudad.",
+                message: "\n\nAún no has asignado empleados a una ciudad.<br><a id=\"empleadoD\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></a>",
                 icon: 'admin/images/warning.svg'
+            }, {
+                mouse_over: "pause"
+            });
+            $('#empleado').click(function () {
+                window.location.replace(
+                    location.origin + "/empleadoD"
+                );
             });
         }
     },
-    error: function (data) {
-    }
+    error: function (data) {}
 });
 //RANGO DE EDAD
 $.ajax({
@@ -957,11 +998,17 @@ $.ajax({
         } else {
             $('#divedades').hide();
             $.notify({
-                message: "\nAún no has asignado empleados a un local.",
+                message: "\n\nAún no has asignado empleados a un local.<br><a id=\"empleadoRE\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></a>",
                 icon: 'admin/images/warning.svg'
+            }, {
+                mouse_over: "pause"
+            });
+            $('#empleadoRE').click(function () {
+                window.location.replace(
+                    location.origin + "/empleado"
+                );
             });
         }
     },
-    error: function (data) {
-    }
+    error: function (data) {}
 });

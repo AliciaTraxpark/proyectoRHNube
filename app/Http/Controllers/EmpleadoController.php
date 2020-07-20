@@ -281,8 +281,10 @@ class EmpleadoController extends Controller
         }
         $empleado->emple_celular = $objEmpleado['celular'];
         $empleado->emple_telefono = $objEmpleado['telefono'];
-        if ($objEmpleado['fechaI'] != '' && $objEmpleado['fechaF'] != '') {
+        if ($objEmpleado['fechaI'] != '') {
             $empleado->emple_fechaIC = $objEmpleado['fechaI'];
+        }
+        if ($objEmpleado['fechaF'] != '') {
             $empleado->emple_fechaFC = $objEmpleado['fechaF'];
         }
         if ($objEmpleado['correo'] != '') {
@@ -391,6 +393,20 @@ class EmpleadoController extends Controller
             ->where('e.emple_id', '=', $idempleado)
             ->where('e.users_id', '=', Auth::user()->id)
             ->get();
+        $cantidad = DB::table('licencia_empleado as le')
+            ->select(DB::raw('COUNT(le.id) as total'), 'le.licencia')
+            ->where('le.idEmpleado', '=', $idempleado)
+            ->get();
+        $licenciaE = DB::table('licencia_empleado as le')
+            ->select('le.licencia', 'le.id', 'le.disponible')
+            ->where('le.idEmpleado', '=', $idempleado)
+            ->get();
+        $licencia = [];
+        foreach ($licenciaE as $lic) {
+            array_push($licencia, array("id" => $lic->id, "licencia" => $lic->licencia, "disponible" => $lic->disponible));
+        }
+        $empleado[0]->total = $cantidad[0]->total;
+        $empleado[0]->licencia = $licencia;
         return $empleado;
         //
 
@@ -629,6 +645,20 @@ class EmpleadoController extends Controller
         $empleado = DB::table('empleado as e')
             ->where('emple_Correo', '=', $email)
             ->where('e.users_id', '=', Auth::user()->id)
+            ->get()->first();
+        if ($empleado != null) {
+            return 1;
+        }
+    }
+
+    public function comprobarCorreoEditar(Request $request)
+    {
+        $email = $request->get('email');
+        $empleado = $request->get('idE');
+        $empleado = DB::table('empleado as e')
+            ->where('emple_Correo', '=', $email)
+            ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_id', '!=', $empleado)
             ->get()->first();
         if ($empleado != null) {
             return 1;

@@ -56,26 +56,4 @@ class VerifyMailController extends Controller
 
         return redirect('/dashboard')->with('notification', 'Has confirmado correctamente tu correo!');
     }
-
-    public function comprobar(Request $request)
-    {
-        $usuario = DB::table('users as u')
-            ->where('u.id', '=', Auth::user()->id)
-            ->get();
-        $persona = DB::table('users as u')
-            ->join('persona as p', 'u.perso_id', '=', 'p.perso_id')
-            ->where('u.id', '=', Auth::user()->id)
-            ->get();
-        if ($request->get('codigo') != null) {
-            dd($request->get('codigo'));
-            $codigo = $request->get('codigo');
-            $decode = base_convert(intval($codigo), 10, 36);
-            $explode = explode("c", $decode);
-            if (Auth::user()->id == $explode[0]) {
-                return redirect('/dashboard')->with('notification', 'Has confirmado correctamente tu correo!');
-            }
-            return view('Verificacion.smsVerificacion', ["usuario" => $usuario, "persona" => $persona]);
-        }
-        return view('Verificacion.smsVerificacion', ["usuario" => $usuario, "persona" => $persona]);
-    }
 }

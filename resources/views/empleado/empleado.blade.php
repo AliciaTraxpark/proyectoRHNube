@@ -36,15 +36,17 @@
 </head>
 
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100" style="background-color: #fdfdfd;">
-    <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel"
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body text-center">
-                    <img src="{{asset('landing/images/notification.svg')}}" height="100" >
+                    <img src="{{asset('landing/images/notification.svg')}}" height="100">
                     <h4 class="text-danger mt-4">Su sesion expiró</h4>
                     <p class="w-75 mx-auto text-muted">Por favor inicie sesion nuevamente.</p>
                     <div class="mt-4">
-                        <a href="{{('/')}}" class="btn btn-outline-primary btn-rounded width-md"><i class="uil uil-arrow-right mr-1"></i> Iniciar sesion</a>
+                        <a href="{{('/')}}" class="btn btn-outline-primary btn-rounded width-md"><i
+                                class="uil uil-arrow-right mr-1"></i> Iniciar sesion</a>
                     </div>
                 </div>
             </div><!-- /.modal-content -->
@@ -320,10 +322,11 @@
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Agregar área</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                    área</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                                    onclick="$('#form-registrar').modal('show');">
+                                    onclick="$('#form-registrar').modal('show');javascript:limpiar()">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -331,14 +334,30 @@
                                 <form action="javascript:agregarArea()">
                                     {{ csrf_field() }}
                                     <div class="col-md-12">
-                                        <label for="">Área</label>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label for="">Área</label>
+                                            </div>
+                                            <div id="editarArea" class="col-md-6"></div>
+                                            <div class="col-md-4">
+                                                <a id="buscarArea" data-toggle="tooltip" data-placement="right"
+                                                    title="Editar Área." data-original-title="Editar Área."
+                                                    style="cursor: pointer;"><img
+                                                        src="{{asset('landing/images/search.svg')}}" height="18">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="col-md-12">
                                         <input type="text" class="form-control" name="textArea" id="textArea" required>
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" onclick="$('#form-registrar').modal('show');"
-                                    class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" id="guardarArea" class="btn btn-primary">Guardar</button>
+                                <button type="button" onclick="$('#form-registrar').modal('show');javascript:limpiar()"
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" id="guardarArea" class="btn btn-sm"
+                                    style="background-color: #163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -348,10 +367,11 @@
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Agregar Cargo</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                    Cargo</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                                    onclick="$('#form-registrar').modal('show');">
+                                    onclick="$('#form-registrar').modal('show');javascript:limpiar()">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -359,14 +379,30 @@
                                 <form action="javascript:agregarcargo()">
                                     {{ csrf_field() }}
                                     <div class="col-md-12">
-                                        <label for="">Cargo</label>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label for="">Cargo</label>
+                                            </div>
+                                            <div id="editarCargo" class="col-md-6"></div>
+                                            <div class="col-md-4">
+                                                <a id="buscarCargo" data-toggle="tooltip" data-placement="right"
+                                                    title="Editar Cargo." data-original-title="Editar Cargo."
+                                                    style="cursor: pointer;"><img
+                                                        src="{{asset('landing/images/search.svg')}}" height="18">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="col-md-12">
                                         <input type="text" class="form-control" id="textCargo" required>
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" onclick="$('#form-registrar').modal('show');"
-                                    class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary" id="guardarCargo">Guardar</button>
+                                <button type="button" onclick="$('#form-registrar').modal('show');javascript:limpiar()"
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-sm" id="guardarCargo"
+                                    style="background-color:#163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -376,10 +412,11 @@
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Agregar Centro Costo</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                    Centro Costo</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                                    onclick="$('#form-registrar').modal('show');">
+                                    onclick="$('#form-registrar').modal('show');javascript:limpiar()">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -387,14 +424,31 @@
                                 <form action="javascript:agregarcentro()">
                                     {{ csrf_field() }}
                                     <div class="col-md-12">
-                                        <label for="">Centro Costo</label>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label for="">Centro Costo</label>
+                                            </div>
+                                            <div id="editarCentro" class="col-md-6"></div>
+                                            <div class="col-md-3">
+                                                <a id="buscarCentro" data-toggle="tooltip" data-placement="right"
+                                                    title="Editar Centro Costo."
+                                                    data-original-title="Editar Centro Costo."
+                                                    style="cursor: pointer;"><img
+                                                        src="{{asset('landing/images/search.svg')}}" height="18">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="col-md-12">
                                         <input type="text" class="form-control" id="textCentro" required>
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" onclick="$('#form-registrar').modal('show');"
-                                    class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary" id="guardarCentro">Guardar</button>
+                                <button type="button" onclick="$('#form-registrar').modal('show');javascript:limpiar()"
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-sm" id="guardarCentro"
+                                    style="background-color:#163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -404,26 +458,41 @@
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Agregar Local</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                    Local</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                                    onclick="$('#form-registrar').modal('show');">
+                                    onclick="$('#form-registrar').modal('show');javascript:limpiar()">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
                                 <form action="javascript:agregarlocal()">
                                     {{ csrf_field() }}
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label for="">Local</label>
+                                        </div>
+                                        <div id="editarLocal" class="col-md-6"></div>
+                                        <div class="col-md-4">
+                                            <a id="buscarLocal" data-toggle="tooltip" data-placement="right"
+                                                title="Editar Local." data-original-title="Editar Local."
+                                                style="cursor: pointer;"><img
+                                                    src="{{asset('landing/images/search.svg')}}" height="18">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <br>
                                     <div class="col-md-12">
-                                        <label for="">Local</label>
                                         <input type="text" class="form-control" name="textLocal" id="textLocal"
                                             required>
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" onclick="$('#form-registrar').modal('show');"
-                                    class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" id="guardarLocal" class="btn btn-primary">Guardar</button>
+                                <button type="button" onclick="$('#form-registrar').modal('show');javascript:limpiar()"
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" id="guardarLocal" class="btn btn-sm"
+                                    style="background-color:#163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -433,26 +502,41 @@
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Agregar Nivel</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                    Nivel</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                                    onclick="$('#form-registrar').modal('show');">
+                                    onclick="$('#form-registrar').modal('show');javascript:limpiar()">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
                                 <form action="javascript:agregarnivel()">
                                     {{ csrf_field() }}
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label for="">Nivel</label>
+                                        </div>
+                                        <div id="editarNivel" class="col-md-6"></div>
+                                        <div class="col-md-4">
+                                            <a id="buscarNivel" data-toggle="tooltip" data-placement="right"
+                                                title="Editar Nivel." data-original-title="Editar Nivel."
+                                                style="cursor: pointer;"><img
+                                                    src="{{asset('landing/images/search.svg')}}" height="18">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <br>
                                     <div class="col-md-12">
-                                        <label for="">Nivel</label>
                                         <input type="text" class="form-control" name="textNivel" id="textNivel"
                                             required>
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" onclick="$('#form-registrar').modal('show');"
-                                    class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" id="guardarNivel" class="btn btn-primary">Guardar</button>
+                                <button type="button" onclick="$('#form-registrar').modal('show');javascript:limpiar()"
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" id="guardarNivel" class="btn btn-sm"
+                                    style="background-color:#163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -462,26 +546,41 @@
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Agregar Contrato</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                    Contrato</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                                    onclick="$('#form-registrar').modal('show');">
+                                    onclick="$('#form-registrar').modal('show');javascript:limpiar()">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
                                 <form action="javascript:agregarContrato()">
                                     {{ csrf_field() }}
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label for="">Contrato</label>
+                                        </div>
+                                        <div id="editarContrato" class="col-md-6"></div>
+                                        <div class="col-md-4">
+                                            <a id="buscarContrato" data-toggle="tooltip" data-placement="right"
+                                                title="Editar Contrato." data-original-title="Editar Contrato."
+                                                style="cursor: pointer;"><img
+                                                    src="{{asset('landing/images/search.svg')}}" height="18">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <br>
                                     <div class="col-md-12">
-                                        <label for="">Contrato</label>
-                                        <input type="text" class="form-control" name="textArea" id="textContrato"
+                                        <input type="text" class="form-control" name="textContrato" id="textContrato"
                                             required>
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" onclick="$('#form-registrar').modal('show');"
-                                    class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" id="guardarContrato" class="btn btn-primary">Guardar</button>
+                                <button type="button" onclick="$('#form-registrar').modal('show');javascript:limpiar()"
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" id="guardarContrato" class="btn btn-sm"
+                                    style="background-color:#163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -491,8 +590,9 @@
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Indicar fechas de Contrato</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Indicar
+                                    fechas de Contrato</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-registrar').modal('show');">
                                     <span aria-hidden="true">&times;</span>
@@ -505,15 +605,23 @@
                                         <label for="">Fecha Inicial</label>
                                         <input type="text" data-custom-class="form-control" id="m_fechaI"
                                             data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date" required>
-                                        <label for="">Fecha Final</label>
-                                        <input type="text" data-custom-class="form-control" id="m_fechaF"
-                                            data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date" required>
+                                        <br>
+                                        <div class="form-group">
+                                            <label for="">Fecha Indifinida</label>
+                                            <input type="checkbox" id="checkboxFechaI" name="FechaI">
+                                        </div>
+                                        <div id="ocultarFecha">
+                                            <label id="labelfechaF">Fecha Final</label>
+                                            <input type="text" data-custom-class="form-control" id="m_fechaF"
+                                                data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date">
+                                        </div>
                                     </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" onclick="$('#form-registrar').modal('show');"
-                                    class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-sm"
+                                    style="background-color:#163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -525,26 +633,41 @@
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Agregar área</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                    área</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                                    onclick="$('#form-ver').modal('show');">
+                                    onclick="$('#form-ver').modal('show');javascript:limpiarEditar()">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
                                 <form action="javascript:agregarAreaA()">
                                     {{ csrf_field() }}
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label for="">Área</label>
+                                        </div>
+                                        <div id="editarAreaA" class="col-md-6"></div>
+                                        <div class="col-md-4">
+                                            <a id="buscarAreaA" data-toggle="tooltip" data-placement="right"
+                                                title="Editar Area." data-original-title="Editar Area."
+                                                style="cursor: pointer;"><img
+                                                    src="{{asset('landing/images/search.svg')}}" height="18">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <br>
                                     <div class="col-md-12">
-                                        <label for="">Área</label>
                                         <input type="text" class="form-control" name="textAreaE" id="textAreaE"
                                             required>
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" onclick="$('#form-ver').modal('show');" class="btn btn-light"
-                                    data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="button" onclick="$('#form-ver').modal('show');javascript:limpiarEditar()"
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-sm"
+                                    style="background-color:#163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -554,25 +677,40 @@
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Agregar Cargo</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                    Cargo</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                                    onclick="$('#form-ver').modal('show');">
+                                    onclick="$('#form-ver').modal('show');javascript:limpiarEditar()">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
                                 <form action="javascript:agregarcargoA()">
                                     {{ csrf_field() }}
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label for="">Cargo</label>
+                                        </div>
+                                        <div id="editarCargoA" class="col-md-6"></div>
+                                        <div class="col-md-4">
+                                            <a id="buscarCargoA" data-toggle="tooltip" data-placement="right"
+                                                title="Editar Cargo." data-original-title="Editar Cargo."
+                                                style="cursor: pointer;"><img
+                                                    src="{{asset('landing/images/search.svg')}}" height="18">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <br>
                                     <div class="col-md-12">
-                                        <label for="">Cargo</label>
                                         <input type="text" class="form-control" id="textCargoE" required>
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" onclick="$('#form-ver').modal('show');" class="btn btn-light"
-                                    data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="button" onclick="$('#form-ver').modal('show');javascript:limpiarEditar()"
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-sm"
+                                    style="background-color:#163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -582,25 +720,40 @@
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Agregar Centro Costo</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                    Centro Costo</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                                    onclick="$('#form-ver').modal('show');">
+                                    onclick="$('#form-ver').modal('show');javascript:limpiarEditar()">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
                                 <form action="javascript:agregarcentroA()">
                                     {{ csrf_field() }}
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="">Centro Costo</label>
+                                        </div>
+                                        <div id="editarCentroA" class="col-md-6"></div>
+                                        <div class="col-md-3">
+                                            <a id="buscarCentroA" data-toggle="tooltip" data-placement="right"
+                                                title="Editar Centro Costo." data-original-title="Editar Centro Costo."
+                                                style="cursor: pointer;"><img
+                                                    src="{{asset('landing/images/search.svg')}}" height="18">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <br>
                                     <div class="col-md-12">
-                                        <label for="">Centro Costo</label>
                                         <input type="text" class="form-control" id="textCentroE" required>
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" onclick="$('#form-ver').modal('show');" class="btn btn-light"
-                                    data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="button" onclick="$('#form-ver').modal('show');javascript:limpiarEditar()"
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-sm"
+                                    style="background-color:#163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -610,26 +763,41 @@
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Agregar Local</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                    Local</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                                    onclick="$('#form-ver').modal('show');">
+                                    onclick="$('#form-ver').modal('show');javascript:limpiarEditar()">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
                                 <form action="javascript:agregarlocalA()">
                                     {{ csrf_field() }}
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label for="">Local</label>
+                                        </div>
+                                        <div id="editarLocalA" class="col-md-6"></div>
+                                        <div class="col-md-4">
+                                            <a id="buscarLocalA" data-toggle="tooltip" data-placement="right"
+                                                title="Editar Local." data-original-title="Editar Local."
+                                                style="cursor: pointer;"><img
+                                                    src="{{asset('landing/images/search.svg')}}" height="18">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <br>
                                     <div class="col-md-12">
-                                        <label for="">Local</label>
                                         <input type="text" class="form-control" name="textLocalE" id="textLocalE"
                                             required>
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" onclick="$('#form-ver').modal('show');" class="btn btn-light"
-                                    data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="button" onclick="$('#form-ver').modal('show');javascript:limpiarEditar()"
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-sm"
+                                    style="background-color:#163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -639,26 +807,40 @@
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Agregar Nivel</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                    Nivel</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                                    onclick="$('#form-ver').modal('show');">
+                                    onclick="$('#form-ver').modal('show');javascript:limpiarEditar()">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
                                 <form action="javascript:agregarnivelA()">
                                     {{ csrf_field() }}
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label for="">Nivel</label></div>
+                                        <div id="editarNivelA" class="col-md-6"></div>
+                                        <div class="col-md-4">
+                                            <a id="buscarNivelA" data-toggle="tooltip" data-placement="right"
+                                                title="Editar Nivel." data-original-title="Editar Nivel."
+                                                style="cursor: pointer;"><img
+                                                    src="{{asset('landing/images/search.svg')}}" height="18">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <br>
                                     <div class="col-md-12">
-                                        <label for="">Nivel</label>
                                         <input type="text" class="form-control" name="textNivelE" id="textNivelE"
                                             required>
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" onclick="$('#form-ver').modal('show');" class="btn btn-light"
-                                    data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="button" onclick="$('#form-ver').modal('show');javascript:limpiarEditar()"
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-sm"
+                                    style="background-color:#163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -668,26 +850,41 @@
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Agregar Contrato</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                    Contrato</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                                    onclick="$('#form-ver').modal('show');">
+                                    onclick="$('#form-ver').modal('show');javascript:limpiarEditar()">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
                                 <form action="javascript:agregarContratoA()">
                                     {{ csrf_field() }}
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label for="">Contrato</label>
+                                        </div>
+                                        <div id="editarContratoA" class="col-md-6"></div>
+                                        <div class="col-md-4">
+                                            <a id="buscarContratoA" data-toggle="tooltip" data-placement="right"
+                                                title="Editar Contrato." data-original-title="Editar Contrato."
+                                                style="cursor: pointer;"><img
+                                                    src="{{asset('landing/images/search.svg')}}" height="18">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <br>
                                     <div class="col-md-12">
-                                        <label for="">Contrato</label>
                                         <input type="text" class="form-control" name="textAreaE" id="textContratoE"
                                             required>
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" onclick="$('#form-ver').modal('show');" class="btn btn-light"
-                                    data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="button" onclick="$('#form-ver').modal('show');javascript:limpiarEditar()"
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-sm"
+                                    style="background-color:#163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -697,8 +894,9 @@
                     aria-hidden=" true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Indicar fechas de Contrato</h5>
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Indicar
+                                    fechas de Contrato</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-ver').modal('show');">
                                     <span aria-hidden="true">&times;</span>
@@ -711,15 +909,24 @@
                                         <label for="">Fecha Inicial</label>
                                         <input type="text" data-custom-class="form-control" id="m_fechaIE"
                                             data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date" required>
-                                        <label for="">Fecha Final</label>
-                                        <input type="text" data-custom-class="form-control" id="m_fechaFE"
-                                            data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date" required>
+                                        <br>
+                                        <div class="form-group">
+                                            <label for="">Fecha Indifinida</label>
+                                            <input type="checkbox" id="checkboxFechaIE" name="FechaIE">
+                                        </div>
+                                        <div id="ocultarFechaE">
+                                            <label for="">Fecha Final</label>
+                                            <input type="text" data-custom-class="form-control" id="m_fechaFE"
+                                                data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date"
+                                                required>
+                                        </div>
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" onclick="$('#form-ver').modal('show');" class="btn btn-light"
-                                    data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="button" onclick="$('#form-ver').modal('show');"
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-sm"
+                                    style="background-color:#163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -733,7 +940,7 @@
                         <div class="modal-content">
                             <div class="modal-header" style="background: #163552;">
                                 <h4 class="header-title mt-0 " style="color: #f0f0f0"></i>Datos de empleado</h4>
-                                <button type="button" class="close" id="cerrarMoadalEmpleado" data-dismiss="modal"
+                                <button type="button" class="close" id="cerrarModalEmpleado" data-dismiss="modal"
                                     aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -771,6 +978,8 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Correo Electronico</label>
+                                                        <span id="validCorreo" style="color: red;">*Campo
+                                                            Obligatorio</span>
                                                         <span id="emailR" style="color: red;">*Correo registrado</span>
                                                         <input type="email" class="form-control" id="email" name="email"
                                                             tabindex="7">
@@ -803,8 +1012,6 @@
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Fecha Nacimiento</label>
-                                                        <span id="validFechaN" style="color: red;">*Campo
-                                                            Obligatorio</span>
                                                         <input type="text" data-custom-class="form-control" id="fechaN"
                                                             tabindex="3" data-format="YYYY-MM-DD"
                                                             data-template="D MMM YYYY" name="date">
@@ -924,7 +1131,11 @@
                                                     <div class="form-group">
                                                         <label for="sw-default">Codigo Empleado</label>
                                                         <input type="text" class="form-control" name="codigoEmpleado"
-                                                            id="codigoEmpleado" tabindex="1" required>
+                                                            id="codigoEmpleado" tabindex="1"
+                                                            onfocus="javascript:valorCodigoEmpleado()"
+                                                            data-toggle="tooltip" data-placement="right"
+                                                            title="Número de documento por defecto o Ingrese un código interno"
+                                                            data-original-title="Número de documento por defecto o Ingrese un código interno">
                                                     </div>
                                                 </div>
                                                 <div class="col-4"><br></div>
@@ -952,10 +1163,19 @@
                                                                 onclick="$('#form-registrar').modal('hide');"
                                                                 href="#contratomodal" data-toggle="modal"
                                                                 data-target="#contratomodal"><i
-                                                                    class="uil uil-plus"></i></a></label>
+                                                                    class="uil uil-plus"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <a id="detalleContrato"
+                                                                onclick="$('#form-registrar').modal('hide');"
+                                                                href="#fechasmodal" data-toggle="modal"
+                                                                data-target="#fechasmodal" data-toggle="tooltip"
+                                                                data-placement="right" title="Detalle de Contrato."
+                                                                data-original-title="Detalle de Contrato."
+                                                                style="cursor: pointer;"><img
+                                                                    src="{{asset('landing/images/adaptive.svg')}}"
+                                                                    height="18"></a></label>
                                                         <select class="form-control" name="contrato" id="contrato"
-                                                            onchange="$('#form-registrar').modal('hide');$('#fechasmodal').modal('show');"
-                                                            tabindex="5" required>
+                                                            tabindex="5" onchange="$('#detalleContrato').show();"
+                                                            required>
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($tipo_cont as $tipo_conts)
                                                             <option value="{{$tipo_conts->contrato_id}}">
@@ -963,12 +1183,12 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="form-group">
+                                                    <!--<div class="form-group">
                                                         <label for="sw-default" style="color: darkblue;">Fecha Inicio
                                                             <label for="sw-default" id="c_fechaI"></label></label>
                                                         <label for="sw-default" style="color: red;">Fecha Final <label
                                                                 for="sw-default" id="c_fechaF"></label></label>
-                                                    </div>
+                                                    </div>-->
                                                 </div> <!-- end col -->
                                                 <div class="col-4">
                                                     <div class="form-group">
@@ -1100,6 +1320,8 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Correo Electronico</label>
+                                                        <span id="v_validCorreo" style="color: red;">*Campo
+                                                            Obligatorio</span>
                                                         <span id="v_emailR" style="color: red;">*Correo
                                                             registrado</span>
                                                         <input type="email" class="form-control" id="v_email"
@@ -1133,8 +1355,6 @@
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Fecha Nacimiento</label>
-                                                        <span id="v_validFechaN" style="color: red;">*Campo
-                                                            Obligatorio</span>
                                                         <input type="text" data-custom-class="form-control"
                                                             id="v_fechaN" data-format="YYYY-MM-DD"
                                                             data-template="D MMM YYYY" name="date" tabindex="3">
@@ -1292,10 +1512,19 @@
                                                         <label for="sw-default">Contrato <a
                                                                 onclick="$('#form-ver').modal('hide');$('#contratomodalE').modal('show');"
                                                                 data-toggle="modal"><i class="uil uil-plus"
-                                                                    style="color: darkblue;cursor: pointer;"></i></a></label>
+                                                                    style="color: darkblue;cursor: pointer;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <a id="detalleContratoE"
+                                                                onclick="$('#form-ver').modal('hide');"
+                                                                href="#fechasmodalE" data-toggle="modal"
+                                                                data-target="#fechasmodalE" data-toggle="tooltip"
+                                                                data-placement="right" title="Detalle de Contrato."
+                                                                data-original-title="Detalle de Contrato."
+                                                                style="cursor: pointer;"><img
+                                                                    src="{{asset('landing/images/adaptive.svg')}}"
+                                                                    height="18"></a></label>
                                                         <select class="form-control" name="v_contrato" id="v_contrato"
-                                                            onchange="$('#form-ver').modal('hide');$('#fechasmodalE').modal('show');"
-                                                            tabindex="5" required>
+                                                            onchange="$('#detalleContratoE').show();" tabindex="5"
+                                                            required>
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($tipo_cont as $tipo_conts)
                                                             <option class="" value="{{$tipo_conts->contrato_id}}">
@@ -1460,21 +1689,22 @@
     <script src="{{asset('landing/js/cargaMasivaF.js')}}"></script>
     <script src="{{asset('landing/js/empleado.js')}}"></script>
     <script src="{{asset('landing/js/empleadoA.js')}}"></script>
-@if (Auth::user())
-<script>
-  $(function() {
-    setInterval(function checkSession() {
-      $.get('/check-session', function(data) {
-        // if session was expired
-        if (data.guest==false) {
-           $('#modal-error').modal('show');
+    @if (Auth::user())
+    <script>
+        $(function () {
+            setInterval(function checkSession() {
+                $.get('/check-session', function (data) {
+                    // if session was expired
+                    if (data.guest == false) {
+                        $('#modal-error').modal('show');
 
-        }
-      });
-    },7202000);
-  });
-</script>
-@endif
+                    }
+                });
+            }, 7202000);
+        });
+
+    </script>
+    @endif
 </body>
 
 </html>
