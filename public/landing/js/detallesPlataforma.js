@@ -12,7 +12,7 @@ function getlink() {
         message: 'Enlace copiado',
         icon: 'admin/images/checked.svg'
     }, {
-        element: $('#detallesAndroid'),
+        element: $('#notifEnlace'),
         position: 'fixed',
         icon_type: 'image',
         allow_dismiss: true,
