@@ -154,23 +154,6 @@ class ControlController extends Controller
 
         $idempleado = $request->get('value');
         $fecha = $request->get('fecha');
-        $proyecto = $request->get('proyecto');
-        if ($proyecto != '') {
-            $control = DB::table('empleado as e')
-                ->join('proyecto_empleado as pe', 'pe.empleado_emple_id', '=', 'e.emple_id')
-                ->join('proyecto as p', 'p.Proye_id', '=', 'pe.Proyecto_Proye_id')
-                ->join('envio as en', 'en.idEmpleado', '=', 'e.emple_id')
-                ->join('captura as cp', 'cp.idEnvio', '=', 'en.idEnvio')
-                ->select('P.Proye_id', 'P.Proye_Nombre', 'en.idEnvio', 'cp.imagen', 'cp.promedio', 'cp.fecha_hora', 'en.hora_Envio', 'en.Total_Envio', DB::raw('DATE(cp.fecha_hora) as fecha'), DB::raw('TIME(cp.fecha_hora) as hora_ini'))
-                ->where('e.emple_id', '=', $idempleado)
-                ->where(DB::raw('DATE(cp.fecha_hora)'), '=', $fecha)
-                ->Where('P.Proye_id', '=', $proyecto)
-                ->where('e.users_id', '=', Auth::user()->id)
-                ->orderBy('cp.fecha_hora', 'asc')
-                ->get();
-            $control = controlAJson($control);
-            return response()->json($control, 200);
-        }
         /*$control = DB::table('empleado as e')
             ->join('proyecto_empleado as pe', 'pe.empleado_emple_id', '=', 'e.emple_id')
             ->join('proyecto as p', 'p.Proye_id', '=', 'pe.Proyecto_Proye_id')
@@ -182,19 +165,49 @@ class ControlController extends Controller
             ->where('e.users_id', '=', Auth::user()->id)
             ->orderBy('cp.fecha_hora', 'asc')
             ->get();*/
-        $control = DB::table('empleado as e')
+        $cont = DB::table('empleado as e')
             ->join('envio as en', 'en.idEmpleado', '=', 'e.emple_id')
             ->join('captura as cp', 'cp.idEnvio', '=', 'en.idEnvio')
             ->join('control as c', 'c.idEnvio', '=', 'en.IdEnvio')
             ->join('horario_dias as hd', 'hd.id', '=', 'c.idHorario_dias')
             ->join('proyecto as p', 'p.Proye_id', '=', 'c.Proyecto_Proye_id')
             ->select('P.Proye_id', 'P.Proye_Nombre', 'en.idEnvio', 'cp.imagen', 'cp.promedio', 'en.hora_Envio', 'cp.fecha_hora', 'en.Total_Envio', DB::raw('DATE(cp.fecha_hora) as fecha'), DB::raw('TIME(cp.fecha_hora) as hora_ini'))
+            ->where('hd.id', '!=', null)
             ->where('e.emple_id', '=', $idempleado)
             ->where('hd.start', '=', $fecha)
             ->where('e.users_id', '=', Auth::user()->id)
             ->orderBy('cp.idCaptura', 'asc')
-            ->get();
-        $control = controlAJson($control);
-        return response()->json($control, 200);
+            ->get()->first();
+        if ($cont) {
+            $control = DB::table('empleado as e')
+                ->join('envio as en', 'en.idEmpleado', '=', 'e.emple_id')
+                ->join('captura as cp', 'cp.idEnvio', '=', 'en.idEnvio')
+                ->join('control as c', 'c.idEnvio', '=', 'en.IdEnvio')
+                ->join('horario_dias as hd', 'hd.id', '=', 'c.idHorario_dias')
+                ->join('proyecto as p', 'p.Proye_id', '=', 'c.Proyecto_Proye_id')
+                ->select('P.Proye_id', 'P.Proye_Nombre', 'en.idEnvio', 'cp.imagen', 'cp.promedio', 'en.hora_Envio', 'cp.fecha_hora', 'en.Total_Envio', DB::raw('DATE(cp.fecha_hora) as fecha'), DB::raw('TIME(cp.fecha_hora) as hora_ini'))
+                ->where('hd.id', '!=', null)
+                ->where('e.emple_id', '=', $idempleado)
+                ->where('hd.start', '=', $fecha)
+                ->where('e.users_id', '=', Auth::user()->id)
+                ->orderBy('cp.idCaptura', 'asc')
+                ->get();
+            $control = controlAJson($control);
+            return response()->json($control, 200);
+        } else {
+            $control = DB::table('empleado as e')
+                ->join('envio as en', 'en.idEmpleado', '=', 'e.emple_id')
+                ->join('captura as cp', 'cp.idEnvio', '=', 'en.idEnvio')
+                ->join('control as c', 'c.idEnvio', '=', 'en.IdEnvio')
+                ->join('proyecto as p', 'p.Proye_id', '=', 'c.Proyecto_Proye_id')
+                ->select('P.Proye_id', 'P.Proye_Nombre', 'en.idEnvio', 'cp.imagen', 'cp.promedio', 'en.hora_Envio', 'cp.fecha_hora', 'en.Total_Envio', DB::raw('DATE(cp.fecha_hora) as fecha'), DB::raw('TIME(cp.fecha_hora) as hora_ini'))
+                ->where('e.emple_id', '=', $idempleado)
+                ->where(DB::raw('DATE(cp.fecha_hora)'), '=', $fecha)
+                ->where('e.users_id', '=', Auth::user()->id)
+                ->orderBy('cp.fecha_hora', 'asc')
+                ->get();
+            $control = controlAJson($control);
+            return response()->json($control, 200);
+        }
     }
 }
