@@ -1532,7 +1532,7 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="form-group">
+                                                    <div class="form-group" style="display: none;">
                                                         <label for="sw-default" style="color: darkblue;">Fecha Inicio
                                                             <label for="sw-default" id="v_fechaIC"></label></label>
                                                         <label for="sw-default" style="color: red;">Fecha Final <label
