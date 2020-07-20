@@ -75,6 +75,7 @@ function onMostrarPantallas() {
                     var grupo = `<span style="font-weight: bold;color:#507394;">${labelDelGrupo}</span><br><br><div class="row">`;
                     for (var j = 0; j < 6; j++) {
                         if (data[hora][j] != undefined) {
+                            console.log(data[hora][j][data[hora][j].length - 1].promedio);
                             var horaP = data[hora][j][data[hora][j].length - 1].promedio.split(":");
                             var segundos = parseInt(horaP[0]) * 3600 + parseInt(horaP[1]) * 60 + parseInt(horaP[2]);
                             var totalE = data[hora][j][data[hora][j].length - 1].Total_Envio.split(":");

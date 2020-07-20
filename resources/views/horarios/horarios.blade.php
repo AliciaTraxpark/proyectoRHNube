@@ -882,7 +882,7 @@ background-color: #ffffff !important;
   ctx.mozImageSmoothingEnabled = false;
   ctx.imageSmoothingEnabled = false;}
         }).then(canvas => {
-    document.body.appendChild(canvas)
+    //document.body.appendChild(canvas)
 });
 
         console.log(html2canvas(document.querySelector('#calendarHorario > div.fc-view-container')));
@@ -928,7 +928,7 @@ background-color: #ffffff !important;
       'elementHandlers': specialElementHandlers
     });
 
-                  doc.addImage(image, 'JPG',25,60);
+                  doc.addImage(image, 'JPG',2,60);
                   doc.save('horario.pdf');
               }
           });
