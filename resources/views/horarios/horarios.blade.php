@@ -177,7 +177,7 @@ background-color: #ffffff !important;
                                 </div>
                                 <div class=" col-md-6 col-xl-6 text-right">
                                     <button class="btn btn-sm btn-primary" id="btnasignar" style="background-color: #183b5d;border-color:#62778c">Asignar horarios</button>
-                                    <button class="btn btn-sm btn-primary" id="btnasignarIncidencia" style="background-color: #183b5d;border-color:#62778c">Asignar incidencias</button>
+                                   {{--  <button class="btn btn-sm btn-primary" id="btnasignarIncidencia" style="background-color: #183b5d;border-color:#62778c">Asignar incidencias</button> --}}
                                 </div>
                             </div>
                                 <div id="tabladiv">
