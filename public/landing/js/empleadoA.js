@@ -900,13 +900,26 @@ function enviarContratoA(accion, objContrato) {
         });
     }
 }
+//EMPLEADO ACTUALIZAR
+$("#checkboxFechaIE").on("click", function () {
+    if ($("#checkboxFechaIE").is(':checked')) {
+        $('#m_fechaFE').val("null");
+        console.log($('#m_fechaFE').val());
+        $('#ocultarFechaE > .combodate').hide();
+        $('#ocultarFechaE').hide();
+    } else {
+        $('#ocultarFechaE').show();
+        $('#ocultarFechaE > .combodate').show();
+    }
+});
 //FECHAS
-
 function agregarFechasA() {
-    $('#fechasmodalE').modal('toggle');
     $('#form-ver').modal('show');
     fechaI = $('#m_fechaIE').val();
     fechaF = $('#m_fechaFE').val();
+    //$('#v_fechaFC').text(fechaF);
+    //console.log($('#m_fechaFE').val());
+    $('#fechasmodalE').modal('toggle');
 }
 
 $('#btnCerrar').on("click", function () {

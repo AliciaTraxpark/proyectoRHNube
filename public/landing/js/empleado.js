@@ -1,14 +1,3 @@
-//************* */
-$("#checkboxFechaI").on("click", function () {
-    if ($("#checkboxFechaI").is(':checked')) {
-        $('#ocultarFecha > .combodate').hide();
-        $('#labelfechaF').hide();
-        $('#m_fechaF').combodate("clearValue");
-    } else {
-        $('#labelfechaF').show();
-        $('#ocultarFecha > .combodate').show();
-    }
-});
 ////////////////
 $("#file").fileinput({
     allowedFileExtensions: ['jpg', 'jpeg', 'png'],
@@ -867,8 +856,8 @@ function agregarFechas() {
     $('#form-registrar').modal('show');
     fechaI = $('#m_fechaI').val();
     fechaF = $('#m_fechaF').val();
-    $('#c_fechaI').text(fechaI);
-    $('#c_fechaF').text(fechaF);
+    //$('#c_fechaI').text(fechaI);
+    //$('#c_fechaF').text(fechaF);
     $('#fechasmodal').modal('toggle');
 }
 //CODIGO EMPLEADO
@@ -979,20 +968,9 @@ function enviarEmpleado(accion, objEmpleado) {
         error: function (data, errorThrown) {}
     });
 }
-
-//EMPLEADO ACTUALIZAR
-$("#checkboxFechaIE").on("click", function () {
-    if ($("#checkboxFechaIE").is(':checked')) {
-        $('#m_fechaFE').combodate("clearValue");
-        $('#ocultarFechaE > .combodate').hide();
-        $('#ocultarFechaE').hide();
-    } else {
-        $('#ocultarFechaE').show();
-        $('#ocultarFechaE > .combodate').show();
-    }
-});
 $('#actualizarEmpleado').click(function () {
     idE = $('#v_id').val();
+    console.log($('#v_fechaFC').text());
     objEmpleadoA = datosPersonaA("PUT");
     actualizarEmpleado('/' + idE, objEmpleadoA);
 });
