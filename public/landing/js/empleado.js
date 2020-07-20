@@ -856,8 +856,8 @@ function agregarFechas() {
     $('#form-registrar').modal('show');
     fechaI = $('#m_fechaI').val();
     fechaF = $('#m_fechaF').val();
-    $('#c_fechaI').text(fechaI);
-    $('#c_fechaF').text(fechaF);
+    //$('#c_fechaI').text(fechaI);
+    //$('#c_fechaF').text(fechaF);
     $('#fechasmodal').modal('toggle');
 }
 //CODIGO EMPLEADO

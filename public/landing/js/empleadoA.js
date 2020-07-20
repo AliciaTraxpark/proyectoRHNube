@@ -917,8 +917,8 @@ function agregarFechasA() {
     $('#form-ver').modal('show');
     fechaI = $('#m_fechaIE').val();
     fechaF = $('#m_fechaFE').val();
-    $('#v_fechaFC').text(fechaF);
-    console.log($('#m_fechaFE').val());
+    //$('#v_fechaFC').text(fechaF);
+    //console.log($('#m_fechaFE').val());
     $('#fechasmodalE').modal('toggle');
 }
 
