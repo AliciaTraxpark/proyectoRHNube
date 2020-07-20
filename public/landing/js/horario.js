@@ -307,10 +307,14 @@ $('#btnasignar').on('click', function(e) {
                     var ideHor=[];
                     ideHor.push(idemplesH);
 
-    $.get("/eventosHorario", {}, function (data, status) {
-
-
-        var fechac = new Date();
+    $.ajax({
+        type: "GET",
+        url: "/eventosHorario",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            var fechac = new Date();
          var ano = fechac. getFullYear();
          var mesc=fechac.getMonth()+1;
          fechas1=ano+'-'+mesc+'-01';
@@ -318,8 +322,10 @@ $('#btnasignar').on('click', function(e) {
          var fechasM=new Date(fechas1);
 
         calendario(data,fechasM);
-
+        },
+        error: function (data) {}
     });
+
     var allVals = [];
     $(".sub_chk:checked").each(function () {
         allVals.push($(this).attr('data-id'));
