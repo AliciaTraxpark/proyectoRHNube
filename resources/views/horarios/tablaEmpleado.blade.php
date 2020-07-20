@@ -81,7 +81,7 @@
             <td>{{$tabla_empleados->cargo_descripcion}}</td>
             <td>{{$tabla_empleados->area_descripcion}}</td>
             <td>{{$tabla_empleados->centroC_descripcion}} </td>
-            <td>@if ($tabla_empleados->horario_horario_id==null)
+            <td>@if ($tabla_empleados->horario_horario_id==null && $tabla_empleados->evEmpleado_id==null && $tabla_empleados->inciden_id==null )
                 <button class="btnhora btn  btn-sm btn-rounded" id="btnmarcarA" style="color: #548ec7;border-color: #e7edf3; padding-left: 4px; padding-right: 4px;" onclick="marcarAsignacion({{$tabla_empleados->emple_id}})"> <img src="{{asset('landing/images/seleccionar.svg')}}" height="16" > asignar</button>
                  @else
                 <button class="btnhora btn  btn-sm btn-rounded" style="color: #548ec7;border-color: #e7edf3; padding-left: 4px; padding-right: 4px;" id="verDataHorario" onclick="verhorarioEmpleado({{$tabla_empleados->emple_id}})"> <img src="{{asset('landing/images/ver.svg')}}" height="14" > ver</button>

@@ -73,13 +73,15 @@ function verhorarioEmpleado(idempleado) {
             $('#tipHorarioEmpleado').val(data[0][0].horario_tipo);
             $('#descripcionCaHorario').val(data[0][0].horario_descripcion);
             $('#toleranciaHorario').val(data[0][0].horario_tolerancia);
+            if(data[2]!=0){
+                $.each(data[2], function (key, item) {
+                    $("#tablahorarios>tbody").append(
+                        "<tr ><td style='padding: 4px;'>"+item.title+
+                        "</td> <td style='padding: 4px;'>"+item.horaI+"</td><td style='padding: 4px;'>"+item.horaF+"</td></tr>"
+                        );
+                   });
+            }
 
-            $.each(data[2], function (key, item) {
-                $("#tablahorarios>tbody").append(
-                    "<tr ><td style='padding: 4px;'>"+item.title+
-                    "</td> <td style='padding: 4px;'>"+item.horaI+"</td><td style='padding: 4px;'>"+item.horaF+"</td></tr>"
-                    );
-               });
         },
         error: function (data) {
             alert('Ocurrio un error');
@@ -305,10 +307,14 @@ $('#btnasignar').on('click', function(e) {
                     var ideHor=[];
                     ideHor.push(idemplesH);
 
-    $.get("/eventosHorario", {}, function (data, status) {
-
-
-        var fechac = new Date();
+    $.ajax({
+        type: "GET",
+        url: "/eventosHorario",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            var fechac = new Date();
          var ano = fechac. getFullYear();
          var mesc=fechac.getMonth()+1;
          fechas1=ano+'-'+mesc+'-01';
@@ -316,8 +322,10 @@ $('#btnasignar').on('click', function(e) {
          var fechasM=new Date(fechas1);
 
         calendario(data,fechasM);
-
+        },
+        error: function (data) {}
     });
+
     var allVals = [];
     $(".sub_chk:checked").each(function () {
         allVals.push($(this).attr('data-id'));
@@ -1151,6 +1159,11 @@ function registrarHorario(){
                 text: data.horario_descripcion,
                 selected: true
             }));
+            $('#selectHorarioen').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                value: data.horario_id,
+                text: data.horario_descripcion
+
+            }));
         },
         error: function () {
             alert("Hay un error");
@@ -1250,7 +1263,35 @@ function registrarHorarioen(){
                     var fechasMh=new Date(d2);
                     calendarioHorario(data,fechasMh);
                     $('#horarioAgregaren').modal('hide');
+                    $.ajax({
+                        type: "post",
+                        url: "/verDataEmpleado",
+                        data: 'ids=' + idempl,
+                        statusCode: {
+                            /*401: function () {
+                                location.reload();
+                            },*/
+                            419: function () {
+                                location.reload();
+                            }
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function (data) {
+                            $("#tablahorarios>tbody>tr").remove();
+                            $.each(data[2], function (key, item) {
+                                $("#tablahorarios>tbody").append(
+                                    "<tr ><td style='padding: 4px;'>"+item.title+
+                                    "</td> <td style='padding: 4px;'>"+item.horaI+"</td><td style='padding: 4px;'>"+item.horaF+"</td></tr>"
+                                    );
+                               });
+                        },
+                        error: function (data) {
+                            alert('Ocurrio un error');
+                        }
 
+                    });
 
                 },
                 error: function (data) {
@@ -1265,6 +1306,11 @@ function registrarHorarioen(){
                 value: data.horario_id,
                 text: data.horario_descripcion,
                 selected: true
+            }));
+            $('#selectHorario').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                value: data.horario_id,
+                text: data.horario_descripcion
+
             }));
         },
         error: function () {
@@ -1774,7 +1820,35 @@ $('#selectHorarioen').change(function(e){
             var d2  =mesAg2;
             var fechasMh=new Date(d2);
             calendarioHorario(data,fechasMh);
-           
+            $.ajax({
+                type: "post",
+                url: "/verDataEmpleado",
+                data: 'ids=' + idempl,
+                statusCode: {
+                    /*401: function () {
+                        location.reload();
+                    },*/
+                    419: function () {
+                        location.reload();
+                    }
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data) {
+                    $("#tablahorarios>tbody>tr").remove();
+                    $.each(data[2], function (key, item) {
+                        $("#tablahorarios>tbody").append(
+                            "<tr ><td style='padding: 4px;'>"+item.title+
+                            "</td> <td style='padding: 4px;'>"+item.horaI+"</td><td style='padding: 4px;'>"+item.horaF+"</td></tr>"
+                            );
+                       });
+                },
+                error: function (data) {
+                    alert('Ocurrio un error');
+                }
+
+            });
 
 
         },
@@ -1792,3 +1866,15 @@ $('#selectHorarioen').change(function(e){
     })
 }
      })
+/* function asignardomingo(){
+
+    $( "div.fc-bg > table > tbody > tr > td" ).addClass( "fc-highlight" );
+    $('#horarioEnd').val(moment(2020-07-05.end).format('YYYY-MM-DD HH:mm:ss'));
+            $('#horarioStart').val(moment(2020-07-09.start).format('YYYY-MM-DD HH:mm:ss'));
+            f1 = $('#horarioStart').val();
+            f2 = $('#horarioEnd').val();
+            inicio = $('#horaI').val();
+            fin = $('#horaF').val();
+
+}
+ */

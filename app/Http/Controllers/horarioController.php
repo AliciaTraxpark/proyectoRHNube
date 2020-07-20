@@ -124,6 +124,8 @@ class horarioController extends Controller
             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
             ->leftJoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+            ->leftJoin('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
+            ->leftJoin('incidencias as in', 'e.emple_id', '=', 'in.emple_id')
             ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
             ->select(
                 'p.perso_nombre',
@@ -132,7 +134,7 @@ class horarioController extends Controller
                 'c.cargo_descripcion',
                 'a.area_descripcion',
                 'cc.centroC_descripcion',
-                'e.emple_id',
+                'e.emple_id','eve.evEmpleado_id','in.inciden_id',
                 'he.horario_horario_id'
             )
             ->where('e.users_id', '=', Auth::user()->id)
@@ -170,9 +172,9 @@ class horarioController extends Controller
                 'cc.centroC_descripcion',
                 'lo.local_descripcion'
             )
-            ->join('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
-            ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
-            ->join('horario as hor', 'he.horario_horario_id', '=', 'hor.horario_id')
+            ->leftJoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+            ->leftJoin('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+            ->leftJoin('horario as hor', 'he.horario_horario_id', '=', 'hor.horario_id')
             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
             ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
@@ -189,7 +191,7 @@ class horarioController extends Controller
             ->where('id_empleado', '=', $idsEm);
 
             $horario_empleado = DB::table('horario_empleado as he')->select(['id', 'title', 'color', 'textColor', 'start', 'end'])
-                ->where('users_id', '=', Auth::user()->id)
+               /*  ->where('users_id', '=', Auth::user()->id) */
                 ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
                 ->where('he.empleado_emple_id', '=', $idsEm)
                 ->union($eventos_empleado);
@@ -212,7 +214,11 @@ class horarioController extends Controller
                 ->where('he.empleado_emple_id', '=', $idsEm)
                 ->groupBy('h.horario_id')
                 ->get();
-            return [$empleado, $incidencias,$horarioEmpleado];
+                if($horarioEmpleado){
+                    return [$empleado, $incidencias,$horarioEmpleado];
+                }
+                else{return [$empleado, $incidencias,0];}
+
         } /* else {
             $eventos1 = DB::table('eventos')->select(['id', 'title', 'color', 'textColor', 'start', 'end']);
 

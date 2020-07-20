@@ -177,7 +177,7 @@ background-color: #ffffff !important;
                                 </div>
                                 <div class=" col-md-6 col-xl-6 text-right">
                                     <button class="btn btn-sm btn-primary" id="btnasignar" style="background-color: #183b5d;border-color:#62778c">Asignar horarios</button>
-                                    <button class="btn btn-sm btn-primary" id="btnasignarIncidencia" style="background-color: #183b5d;border-color:#62778c">Asignar incidencias</button>
+                                   {{--  <button class="btn btn-sm btn-primary" id="btnasignarIncidencia" style="background-color: #183b5d;border-color:#62778c">Asignar incidencias</button> --}}
                                 </div>
                             </div>
                                 <div id="tabladiv">
@@ -882,7 +882,7 @@ background-color: #ffffff !important;
   ctx.mozImageSmoothingEnabled = false;
   ctx.imageSmoothingEnabled = false;}
         }).then(canvas => {
-    document.body.appendChild(canvas)
+    //document.body.appendChild(canvas)
 });
 
         console.log(html2canvas(document.querySelector('#calendarHorario > div.fc-view-container')));
@@ -928,7 +928,7 @@ background-color: #ffffff !important;
       'elementHandlers': specialElementHandlers
     });
 
-                  doc.addImage(image, 'JPG',25,60);
+                  doc.addImage(image, 'JPG',2,60);
                   doc.save('horario.pdf');
               }
           });

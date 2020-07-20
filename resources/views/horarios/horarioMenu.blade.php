@@ -150,7 +150,7 @@ td.fc-day.fc-widget-content.fc-thu, td.fc-day.fc-widget-content.fc-fri, td.fc-da
                     </div>
                     <div class=" col-md-6 col-xl-6 text-right">
                         <button class="btn btn-sm btn-primary" id="btnasignar" style="background-color: #183b5d;border-color:#62778c">Asignar horarios</button>
-                        <button class="btn btn-sm btn-primary" id="btnasignarIncidencia" style="background-color: #183b5d;border-color:#62778c">Asignar incidencias</button>
+                       {{--  <button class="btn btn-sm btn-primary" id="btnasignarIncidencia" style="background-color: #183b5d;border-color:#62778c">Asignar incidencias</button> --}}
                     </div>
                 </div>
                     <div id="tabladiv">
@@ -231,7 +231,7 @@ td.fc-day.fc-widget-content.fc-thu, td.fc-day.fc-widget-content.fc-fri, td.fc-da
                                          @foreach ($departamento as $departamentos)
                                         <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
                                          @endforeach
-                                    </select>
+                                    </select>{{--  <button onclick="asignardomingo()">dom</button> --}}
                                 </div>
                             </div>
                             <div id="calendar" style="">
@@ -848,7 +848,7 @@ td.fc-day.fc-widget-content.fc-thu, td.fc-day.fc-widget-content.fc-fri, td.fc-da
   ctx.mozImageSmoothingEnabled = false;
   ctx.imageSmoothingEnabled = false;}
         }).then(canvas => {
-    document.body.appendChild(canvas)
+    //document.body.appendChild(canvas)
 });
 
         console.log(html2canvas(document.querySelector('#calendarHorario > div.fc-view-container')));
@@ -894,7 +894,7 @@ td.fc-day.fc-widget-content.fc-thu, td.fc-day.fc-widget-content.fc-fri, td.fc-da
       'elementHandlers': specialElementHandlers
     });
 
-                  doc.addImage(image, 'JPG',25,60);
+                  doc.addImage(image, 'JPG',2,60);
                   doc.save('horario.pdf');
               }
           });
