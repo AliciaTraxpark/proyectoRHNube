@@ -136,18 +136,28 @@ Route::get('/horario', 'horarioController@index');
 Route::post('/horarioVerTodEmp', 'horarioController@verTodEmpleado');
 Route::post('/guardarEventos', 'horarioController@guardarEventos');
 Route::get('/eventosHorario', 'horarioController@eventos');
-Route::post('/guardarEventosBD', 'horarioController@guardarEventosBD');
+Route::post('/guardarHorario', 'horarioController@guardarHorarioBD');
 Route::get('tablahorario/ver', 'horarioController@tablaHorario');
 Route::post('/verDataEmpleado', 'horarioController@verDataEmpleado');
 Route::get('/vaciartemporal', 'horarioController@vaciartemporal');
+Route::get('/copiarEventos', 'horarioController@copiarEventos');
 Route::post('/horario/confirmarDepartamento', 'horarioController@confirmarDepartamento');
 Route::get('/empleadoIncHorario', 'horarioController@empleadosIncidencia');
 Route::post('/registrarInci', 'horarioController@registrarIncidencia');
 Route::post('/eliminarHora', 'horarioController@eliminarHora');
 Route::post('/cambiarEstado', 'horarioController@cambiarEstado');
 Route::post('/storeDescanso', 'horarioController@storeDescanso');
-
-
+Route::post('/storeLaborable', 'horarioController@storeLabor');
+Route::post('/storeNoLaborable', 'horarioController@storeNoLabor');
+Route::post('/storeIncidencia', 'horarioController@storeIncidencia');
+Route::get('/vaciarhor', 'horarioController@vaciarhor');
+Route::post('/guardarHorarioC', 'horarioController@guardarHorarioC');
+Route::post('/eliminarHorarBD', 'horarioController@eliminarHorarBD');
+Route::post('/eliminarIncidBD', 'horarioController@eliminarIncidBD');
+Route::post('/storeIncidenciaEmpleado', 'horarioController@storeIncidenciaEmpleado');
+Route::post('/storeHorarioEmBD', 'horarioController@storeHorarioEmBD');
+Route::post('/storeLaborHorarioBD', 'horarioController@storeLaborHorarioBD');
+Route::post('/storeNoLaborHorarioBD', 'horarioController@storeNoLaborHorarioBD');
 
 //DASHBOARD
 Route::get('/eventosU', 'dashboardController@eventosUsuario');
