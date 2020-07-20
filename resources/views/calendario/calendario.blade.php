@@ -47,7 +47,7 @@ background-color: rgb(255, 239, 239) !important;
 div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content.fc-mon, td.fc-day.fc-widget-content.fc-tue, td.fc-day.fc-widget-content.fc-wed,
 td.fc-day.fc-widget-content.fc-thu, td.fc-day.fc-widget-content.fc-fri, td.fc-day.fc-widget-content.fc-sat{
 
-background-color: #f9f9f9 !important;
+background-color: #ffffff !important;
 }
     .fc-time{
         display: none;
@@ -515,8 +515,8 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
                                         <div class="col-md-6"><label for="">Dias de Descanso</label></div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6" style="  background: #f9f9f9;
-                                        height: 35px;"><h1>&nbsp;</h1></div>
+                                        <div class="col-md-6" style="  background: #ffffff;
+                                        height: 35px;border: 1px solid #d4d4d4;"><h1>&nbsp;</h1></div>
                                           <div class="col-md-6"><label for="">Dias laborables</label></div>
                                     </div>
 
@@ -545,8 +545,8 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
                                        <div class="col-md-6"><label for="">Dias de Descanso</label></div>
                                    </div>
                                    <div class="row">
-                                       <div class="col-md-6" style="  background: #f9f9f9;
-                                       height: 35px;"><h1>&nbsp;</h1></div>
+                                       <div class="col-md-6" style="  background: #ffffff;
+                                       height: 35px;border: 1px solid #d4d4d4;"><h1>&nbsp;</h1></div>
                                          <div class="col-md-6"><label for="">Dias laborables</label></div>
                                    </div>
 
