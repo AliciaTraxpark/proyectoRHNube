@@ -252,6 +252,10 @@ class apiController extends Controller
                 $horario->idHorario_dias = $horario_dias->id;
                 $fecha = Carbon::now();
                 $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
+                $explode = explode(":", $horario->horaI);
+                $explode1 = explode(":", $horario->horaF);
+                $horario->horarioInicio = $explode;
+                $horario->horarioFin = $explode1;
                 if ($horario_dias->start == $fechaHoy) {
                     $estado = true;
                     $horario->estado = $estado;
