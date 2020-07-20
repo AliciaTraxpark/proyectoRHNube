@@ -10,6 +10,7 @@ use App\envio;
 use App\horario_dias;
 use App\horario_empleado;
 use App\licencia_empleado;
+use App\promedio_captura;
 use App\proyecto;
 use App\proyecto_empleado;
 use App\tarea;
@@ -251,6 +252,10 @@ class apiController extends Controller
                 $horario->idHorario_dias = $horario_dias->id;
                 $fecha = Carbon::now();
                 $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
+                $explode = explode(":", $horario->horaI);
+                $explode1 = explode(":", $horario->horaF);
+                $horario->horarioInicio = $explode;
+                $horario->horarioFin = $explode1;
                 if ($horario_dias->start == $fechaHoy) {
                     $estado = true;
                     $horario->estado = $estado;
@@ -369,6 +374,62 @@ class apiController extends Controller
         $captura->imagen = $request->get('imagen');
         $captura->promedio = $request->get('promedio');
         $captura->save();
+
+        $idCaptura = $captura->idCaptura;
+
+        $control = control::where('idEnvio', '=', $idEnvio)->get()->first();
+        if ($control) {
+            $idHorario_dias = $control->idHorario_dias;
+            $busquedaUltimoControl = DB::table('control as c')
+                ->select('c.idEnvio', DB::raw('COUNT(c.idHorario_dias) as total'))
+                ->where('c.idHorario_dias', '=', $idHorario_dias)
+                ->orderBy('c.Cont_id', 'desc')
+                ->get()
+                ->first();
+            if ($busquedaUltimoControl->total != 1) {
+                $capturaBusqueda = captura::where('idEnvio', '=', $busquedaUltimoControl->idEnvio)->get();
+                foreach ($capturaBusqueda as $cb) {
+                    $promedio = DB::table('captura as c')
+                        ->select('c.promedio', 'c.fecha_hora')
+                        ->where('c.idCaptura', '=', $cb->idCaptura)
+                        ->get()
+                        ->first();
+                    if ($promedio) {
+                        //RESTA DE PROMEDIOS DE CAPTURAS
+                        $capturaRegistrada = captura::where('idCaptura', '=', $idCaptura)->get()->first();
+                        $explode1 = explode(":", $capturaRegistrada->promedio);
+                        $calSeg = $explode1[0] * 3600 + $explode1[1] * 60 + $explode1[2];
+                        $explode2 = explode(":", $promedio->promedio);
+                        $calSeg2 = $explode2[0] * 3600 + $explode2[1] * 60 + $explode2[2];
+                        $totalP = $calSeg - $calSeg2;
+                        //RESTA POR FECHA HORA DE   CAPTURAS
+                        $fecha = Carbon::create($capturaRegistrada->fecha_hora)->format('H:i:s');
+                        $explo1 = explode(":", $fecha);
+                        $calSegund = $explo1[0] * 3600 + $explo1[1] * 60 + $explo1[2];
+                        $fecha1 = Carbon::create($promedio->fecha_hora)->format('H:i:s');
+                        $explo2 = explode(":", $fecha1);
+                        $calSegund2 = $explo2[0] * 3600 + $explo2[1] * 60 + $explo2[2];
+                        $totalP1 = $calSegund - $calSegund2;
+                        //PROMEDIO
+                        $promedio = floatval($totalP / $totalP1);
+                        $round = round($promedio, 2);
+                        //TABLA PROMEDIO_CAPTURA
+                        $promedio_captura = new promedio_captura();
+                        $promedio_captura->idCaptura = $idCaptura;
+                        $promedio_captura->idHorario = $idHorario_dias;
+                        $promedio_captura->promedio = $round;
+                        $promedio_captura->save();
+                    }
+                }
+            } else {
+                $promedio_captura = new promedio_captura();
+                $promedio_captura->idCaptura = $idCaptura;
+                $promedio_captura->idHorario = $idHorario_dias;
+                $promedio_captura->promedio = 0;
+                $promedio_captura->save();
+            }
+        }
+
         return response()->json($captura, 200);
     }
 }
