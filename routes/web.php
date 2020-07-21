@@ -162,6 +162,8 @@ Route::post('/storeLaborHorarioBD', 'horarioController@storeLaborHorarioBD');
 Route::post('/storeNoLaborHorarioBD', 'horarioController@storeNoLaborHorarioBD');
 Route::get('/horario/incidenciatemporal', 'horarioController@incidenciatemporal');
 Route::post('/eliminarinctempotal', 'horarioController@eliminarinctempotal');
+Route::post('/verDatahorario', 'horarioController@verDatahorario');
+Route::post('/horario/actualizarhorario', 'horarioController@actualizarhorarioed');
 
 //DASHBOARD
 Route::get('/eventosU', 'dashboardController@eventosUsuario');

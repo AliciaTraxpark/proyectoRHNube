@@ -116,7 +116,6 @@
         body {
             background-color: #f8f8f8;
         }
-
     </style>
     <div id="preloader">
         <div id="status">
@@ -1003,10 +1002,22 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Celular</label>
-                                                        <input type="number" class="form-control" name="celular"
-                                                            id="celular" tabindex="8" maxlength="9"
-                                                            onkeypress="return isNumeric(event)"
-                                                            oninput="maxLengthCheck(this)">
+                                                        <span id="validCel" style="color: red;">*Número
+                                                            incorrecto.</span>
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <select class="form-control" id="codigoCelular">
+                                                                    <option value="+51" selected>+51</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                <input type="number" class="form-control" name="celular"
+                                                                    id="celular" tabindex="8" maxlength="9"
+                                                                    onkeypress="return isNumeric(event)"
+                                                                    oninput="maxLengthCheck(this)"
+                                                                    pattern="/^9{1}|[0-9]{8,8}+">
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
@@ -1206,7 +1217,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="sw-default">Nivel <a
+                                                        <label for="sw-default">Nivel del Colaborador<a
                                                                 onclick="$('#form-registrar').modal('hide');"
                                                                 href="#nivelmodal" data-toggle="modal"
                                                                 data-target="#nivelmodal"><i
@@ -1294,11 +1305,11 @@
                                         <li><a href="#persona-step-1">Personales</a></li>
                                         <li><a href="#sw-default-step-2">Empresarial</a></li>
                                         <li><a href="#sw-default-step-3">Foto</a></li>
-                                        <div class="col-md-4 text-left" id="navActualizar" style="display: flex;
+                                        <!--<div class="col-md-4 text-left" id="navActualizar" style="display: flex;
                                         align-items: center;cursor: pointer;"><a style="color: #3d3d3d;"
                                                 id="actualizarEmpleado">
                                                 <img src="{{asset('admin/images/processing.svg')}}" height="18">
-                                                <span style="font-weight: 600">Actualizar Empleado</span></i></a>
+                                                <span style="font-weight: 600">Actualizar Empleado</span></i></a>-->
                                     </ul>
                                     <div class="p-3" id="form-registrar">
                                         <div id="persona-step-1">
@@ -1346,10 +1357,19 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Celular</label>
-                                                        <input type="text" class="form-control" name="v_celular"
-                                                            id="v_celular" tabindex="8" maxlength="9"
-                                                            onkeypress="return isNumeric(event)"
-                                                            oninput="maxLengthCheck(this)">
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <select class="form-control" id="v_codigoCelular">
+                                                                    <option value="+51" selected>+51</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                <input type="text" class="form-control" name="v_celular"
+                                                                    id="v_celular" tabindex="8" maxlength="9"
+                                                                    onkeypress="return isNumeric(event)"
+                                                                    oninput="maxLengthCheck(this)">
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
@@ -1555,7 +1575,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="sw-default">Nivel <a
+                                                        <label for="sw-default">Nivel del Colaborador<a
                                                                 onclick="$('#form-ver').modal('hide');$('#nivelmodalE').modal('show');"
                                                                 data-toggle="modal"><i class="uil uil-plus"
                                                                     style="color: darkblue;cursor: pointer;"></i></a></label>
@@ -1611,6 +1631,14 @@
                                                     </div>
                                                 </div> <!-- end col -->
                                             </div> <!-- end row -->
+                                            <br>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-12 text-center">
+                                                    <button type="button" id="actualizarEmpleado"
+                                                        class="btn btn-success">Actualizar</button>
+                                                </div>
+                                            </div>
                                             <br>
                                             <br>
                                         </div>
