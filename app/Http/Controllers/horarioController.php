@@ -877,6 +877,10 @@ class horarioController extends Controller
         ->update(['horario_sobretiempo' => $sobretiempo,'horario_tipo' => $tiped,
         'horario_descripcion' =>$descried,'horario_tolerancia' =>$toleed,'horaI' => $horaIed,
         'horaF' => $horaFed]);
+
+        $horariotemporal_up = temporal_eventos::where('id_horario', '=',$idhorario)
+        ->where('users_id', '=', Auth::user()->id)
+        ->update(['title' =>$descried]);
         $horariot=horario::where('user_id', '=', Auth::user()->id)
        ->get();
        $horarion=DB::table('horario as h')
@@ -884,8 +888,8 @@ class horarioController extends Controller
         ->where('h.user_id', '=', Auth::user()->id)
         ->whereNull('he.horario_horario_id')
         ->get();
-
-        return[$horariot,$horarion];
+        $temporal_evento=temporal_eventos::where('users_id', '=', Auth::user()->id)->get();
+        return[$horariot,$horarion,$temporal_evento];
 
     }
 }

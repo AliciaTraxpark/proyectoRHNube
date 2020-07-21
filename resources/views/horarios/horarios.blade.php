@@ -863,88 +863,6 @@ background-color: #ffffff !important;
                        </div><!-- /.modal-content -->
                      </div><!-- /.modal-dialog -->
                     </div><!-- /.modal -->
-
-                    <div id="horarioAgregaren" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-                        <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 550px;" >
-
-                        <div class="modal-content">
-                           <div class="modal-header" style="background-color:#163552;">
-                               <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Asignar horario</h5>
-                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                   <span aria-hidden="true">&times;</span>
-                               </button>
-                           </div>
-                           <div class="modal-body" style="font-size:12px!important">
-                               <div class="row">
-
-                                   <div class="col-md-12">
-                                    <form id="frmHoren" action="javascript:registrarHorarioen()">
-                                       <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                               <label for="">Tipo de horario:</label>
-                                               <select class="form-control custom-select custom-select-sm" id="tipHorarioen">
-                                                 <option>Normal</option>
-                                                 <option>Guardía</option>
-                                                 <option>Nocturno</option>
-                                               </select>
-                                            </div>
-                                          </div>
-                                        <div class="col-md-6"><label for=""><br></label>
-                                            <div class="form-check">
-
-                                              <input type="checkbox" class="form-check-input" id="exampleCheck1en">
-                                              <label class="form-check-label" for="exampleCheck1en">Aplicar sobretiempo</label>
-                                            </div>
-                                         </div>
-
-                                         <div class="col-md-6">
-                                            <div class="form-group">
-                                               <label for="">Descripcion:</label>
-                                               <input type="text" class="form-control form-control-sm" id="descripcionCaen" required>
-                                            </div>
-                                         </div>
-                                         <div class="col-md-6">
-                                            <div class="form-group">
-                                               <label for="">Tolerancia(Min):</label>
-                                               <input type="number" value="0" class="form-control form-control-sm" min="0" id="toleranciaHen" required>
-                                            </div>
-                                         </div>
-                                         <div class="col-md-6">
-                                            <div class="form-group">
-                                               <label for="">Hora de inicio(24h):</label>
-                                               <input type="text" id="horaIen" class="form-control form-control-sm" required>
-                                            </div>
-                                         </div>
-                                         <div class="col-md-6">
-                                            <div class="form-group">
-                                               <label for="">Hora de fin(24h):</label>
-                                               <input type="text" id="horaFen" class="form-control form-control-sm" required>
-                                            </div>
-                                         </div>
-
-                                       </div>
-
-                                   </div>
-
-                               </div>
-
-                           </div>
-                           <div class="modal-footer">
-                               <div class="col-md-12">
-                                   <div class="row">
-                                       <div class="col-md-12 text-right" >
-                                        <button type="button"  class="btn btn-light btn-sm " data-dismiss="modal">Cancelar</button>
-                                        <button type="submit"  name="" style="background-color: #163552;" class="btn btn-sm ">Guardar</button>
-                                    </form>
-                                       </div>
-                                   </div>
-                               </div>
-                           </div>
-                       </div><!-- /.modal-content -->
-                     </div><!-- /.modal-dialog -->
-                    </div><!-- /.modal -->
-
                     <div id="borrarincide" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                         <div class="modal-dialog  d-flex justify-content-center" >
 
@@ -982,6 +900,91 @@ background-color: #ffffff !important;
                                        <div class="col-md-12 text-right" >
                                         <button type="button"  class="btn btn-light btn-sm" data-dismiss="modal">Cerrar</button>
 
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div><!-- /.modal-content -->
+                     </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+
+                    <div id="horarioEditar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                        <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 550px;" >
+
+                        <div class="modal-content">
+                           <div class="modal-header" style="background-color:#163552;">
+                               <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Editar horario</h5>
+                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                   <span aria-hidden="true">&times;</span>
+                               </button>
+                           </div>
+                           <div class="modal-body" style="font-size:12px!important">
+                               <div class="row">
+
+                                   <div class="col-md-12">
+                                    <form id="frmHorEditar" action="javascript:editarHorario()">
+                                       <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="hidden" id="idhorario_ed">
+                                               <label for="">Tipo de horario:</label>
+                                               <select class="form-control custom-select custom-select-sm" id="tipHorario_ed">
+                                                 <option>Normal</option>
+                                                 <option>Guardía</option>
+                                                 <option>Nocturno</option>
+                                               </select>
+                                            </div>
+                                          </div>
+                                        <div class="col-md-6"><label for=""><br></label>
+                                            <div class="form-check">
+
+                                              <input type="checkbox" class="form-check-input" id="exampleCheck1_ed">
+                                              <label class="form-check-label" for="exampleCheck1_ed">Aplicar sobretiempo</label>
+                                            </div>
+                                         </div>
+
+                                         <div class="col-md-6">
+                                            <div class="form-group">
+                                               <label for="">Descripcion:</label>
+                                               <input type="text" class="form-control form-control-sm" id="descripcionCa_ed" required>
+                                            </div>
+                                         </div>
+                                         <div class="col-md-6">
+                                            <div class="form-group">
+                                               <label for="">Tolerancia(Min):</label>
+                                               <input type="number" value="0" class="form-control form-control-sm" min="0" id="toleranciaH_ed" required>
+                                            </div>
+                                         </div>
+                                         <div class="col-md-6">
+                                            <div class="form-group">
+                                               <label for="">Hora de inicio(24h):</label>
+                                               <input type="text" id="horaI_ed" class="form-control form-control-sm" required>
+                                            </div>
+                                         </div>
+                                         <div class="col-md-6">
+                                            <div class="form-group">
+                                               <label for="">Hora de fin(24h):</label>
+                                               <input type="text" id="horaF_ed" class="form-control form-control-sm" required>
+                                            </div>
+                                         </div>
+
+
+                                       </div>
+
+                                   </div>
+
+
+
+                               </div>
+
+                           </div>
+                           <div class="modal-footer">
+                               <div class="col-md-12">
+                                   <div class="row">
+                                       <div class="col-md-12 text-right" >
+                                        <button type="button"  class="btn btn-light btn-sm " data-dismiss="modal">Cancelar</button>
+                                        <button type="submit"  name="" style="background-color: #163552;" class="btn btn-sm ">Guardar</button>
+                                    </form>
                                        </div>
                                    </div>
                                </div>
