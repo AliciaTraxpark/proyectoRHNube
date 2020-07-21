@@ -1069,7 +1069,11 @@
                 $('#v_contrato').val(data[0].emple_tipoContrato);
                 $('#v_nivel').val(data[0].emple_nivel);
                 $('#v_local').val(data[0].emple_local);
-                $('#v_celular').val(data[0].emple_celular);
+                if(data[0].emple_celular != '' || data[0].emple_celular != null){
+                    celularSplit = data[0].emple_celular.split("+51");
+                    console.log(celularSplit);
+                    $('#v_celular').val(celularSplit[1]);
+                }
                 $('#v_telefono').val(data[0].emple_telefono);
                 $('#m_fechaIE').combodate('setValue', data[0].emple_fechaIC);
                 if (data[0].emple_fechaFC == null || data[0].emple_fechaFC == "0000-00-00") {
