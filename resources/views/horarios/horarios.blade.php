@@ -923,12 +923,9 @@ background-color: #ffffff !important;
                                             </div>
                                          </div>
 
-
                                        </div>
 
                                    </div>
-
-
 
                                </div>
 
@@ -947,7 +944,7 @@ background-color: #ffffff !important;
                        </div><!-- /.modal-content -->
                      </div><!-- /.modal-dialog -->
                     </div><!-- /.modal -->
-                    
+
                     <div id="borrarincide" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                         <div class="modal-dialog  d-flex justify-content-center" >
 
