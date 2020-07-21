@@ -757,12 +757,11 @@
                 $('#v_celular').val(data[0].emple_celular);
                 $('#v_telefono').val(data[0].emple_telefono);
                 $('#m_fechaIE').combodate('setValue', data[0].emple_fechaIC);
-                if (data[0].emple_fechaFC == null) {
+                if (data[0].emple_fechaFC == null || data[0].emple_fechaFC == "0000-00-00") {
                     $("#checkboxFechaIE").prop('checked', true);
                     $('#ocultarFechaE > .combodate').hide();
                     $('#ocultarFechaE').hide();
                 }
-                $('#m_fechaFE').combodate('setValue', data[0].emple_fechaFC);
                 $('#m_fechaFE').combodate('setValue', data[0].emple_fechaFC);
                 $('#v_email').val(data[0].emple_Correo);
                 $('#v_codigoEmpleado').val(data[0].emple_codigo);
