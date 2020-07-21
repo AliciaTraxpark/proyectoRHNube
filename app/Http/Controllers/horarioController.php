@@ -38,8 +38,13 @@ class horarioController extends Controller
             ->where('e.users_id', '=', Auth::user()->id)
             ->get();
         $horario=horario::where('user_id', '=', Auth::user()->id)->get();
+        $horarion=DB::table('horario as h')
+        ->leftJoin('horario_empleado as he','h.horario_id','=','he.horario_horario_id')
+        ->where('h.user_id', '=', Auth::user()->id)
+        ->whereNull('he.horario_horario_id')
+        ->get();
 
-        return view('horarios.horarios', ['pais' => $paises, 'departamento' => $departamento, 'empleado' => $empleado,'horario'=>$horario]);
+        return view('horarios.horarios', ['pais' => $paises, 'departamento' => $departamento, 'empleado' => $empleado,'horario'=>$horario,'horarion'=>$horarion]);
     }
     public function verTodEmpleado(Request $request)
     {
@@ -275,7 +280,7 @@ class horarioController extends Controller
         $pais = $request->get('pais');
         $depa = $request->get('departamento');
 
-      
+
         $eventos_usuario = eventos_usuario::where('users_id', '=', Auth::user()->id)
         ->where('evento_pais', '=', 173)
         ->where('evento_departamento', '=', $depa)->get();
@@ -369,7 +374,12 @@ class horarioController extends Controller
             ->where('e.users_id', '=', Auth::user()->id)
             ->get();
             $horario=horario::where('user_id', '=', Auth::user()->id)->get();
-        return view('horarios.horarioMenu', ['pais' => $paises, 'departamento' => $departamento, 'empleado' => $empleado,'horario'=>$horario]);
+            $horarion=DB::table('horario as h')
+        ->leftJoin('horario_empleado as he','h.horario_id','=','he.horario_horario_id')
+        ->where('h.user_id', '=', Auth::user()->id)
+        ->whereNull('he.horario_horario_id')
+        ->get();
+        return view('horarios.horarioMenu', ['pais' => $paises, 'departamento' => $departamento, 'empleado' => $empleado,'horario'=>$horario,'horarion'=>$horarion]);
     }
 
     public function eliminarHora(Request $request)
@@ -843,6 +853,39 @@ class horarioController extends Controller
         $temporal=  temporal_eventos::where('users_id', '=', Auth::user()->id)
         ->get();
         return($temporal);
+
+    }
+
+    public function verDatahorario(Request $request){
+        $idsedit=$request->idsedit;
+    $horario=horario::where('user_id', '=', Auth::user()->id)
+    ->where('horario_id', '=',$idsedit)
+    ->get();
+    return $horario;
+    }
+
+    public function actualizarhorarioed(Request $request){
+        $idhorario=$request->idhorario;
+        $tiped=$request->tiped;
+        $sobretiempo=$request->sobretiempo;
+        $descried=$request->descried;
+        $toleed=$request->toleed;
+        $horaIed=$request->horaIed;
+        $horaFed=$request->horaFed;
+
+        $horario = horario::where('horario_id', '=',$idhorario)
+        ->update(['horario_sobretiempo' => $sobretiempo,'horario_tipo' => $tiped,
+        'horario_descripcion' =>$descried,'horario_tolerancia' =>$toleed,'horaI' => $horaIed,
+        'horaF' => $horaFed]);
+        $horariot=horario::where('user_id', '=', Auth::user()->id)
+       ->get();
+       $horarion=DB::table('horario as h')
+        ->leftJoin('horario_empleado as he','h.horario_id','=','he.horario_horario_id')
+        ->where('h.user_id', '=', Auth::user()->id)
+        ->whereNull('he.horario_horario_id')
+        ->get();
+
+        return[$horariot,$horarion];
 
     }
 }
