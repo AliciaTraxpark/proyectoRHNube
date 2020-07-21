@@ -875,7 +875,6 @@ $('#guardarEmpleado').click(function () {
 
 function datosPersona(method) {
     var celularC = $('#codigoCelular').val() + $('#celular').val();
-    console.log(celularC);
     nuevoEmpleado = {
         nombres: $('#nombres').val(),
         apPaterno: $('#apPaterno').val(),
@@ -979,6 +978,7 @@ $('#actualizarEmpleado').click(function () {
 
 
 function datosPersonaA(method) {
+    var celularC = $('#v_codigoCelular').val() + $('#v_celular').val();
     nuevoEmpleadoA = {
         nombres_v: $('#v_nombres').val(),
         apPaterno_v: $('#v_apPaterno').val(),
@@ -998,7 +998,7 @@ function datosPersonaA(method) {
         direccion_v: $('#v_direccion').val(),
         nivel_v: $('#v_nivel').val(),
         local_v: $('#v_local').val(),
-        celular_v: $('#v_celular').val(),
+        celular_v: celularC,
         telefono_v: $('#v_telefono').val(),
         correo_v: $('#v_email').val(),
         fechaI_v: $('#m_fechaIE').val(),

@@ -1355,10 +1355,19 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Celular</label>
-                                                        <input type="text" class="form-control" name="v_celular"
-                                                            id="v_celular" tabindex="8" maxlength="9"
-                                                            onkeypress="return isNumeric(event)"
-                                                            oninput="maxLengthCheck(this)">
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <select class="form-control" id="v_codigoCelular">
+                                                                    <option value="+51" selected>+51</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                <input type="text" class="form-control" name="v_celular"
+                                                                    id="v_celular" tabindex="8" maxlength="9"
+                                                                    onkeypress="return isNumeric(event)"
+                                                                    oninput="maxLengthCheck(this)">
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
