@@ -271,11 +271,11 @@ class horarioController extends Controller
 
     }
     public function confirmarDepartamento(Request $request)
-    {
+    {    DB::table('temporal_eventos')->where('users_id', '=', Auth::user()->id)->delete();
         $pais = $request->get('pais');
         $depa = $request->get('departamento');
 
-        DB::table('temporal_eventos')->where('users_id', '=', Auth::user()->id)->delete();
+      
         $eventos_usuario = eventos_usuario::where('users_id', '=', Auth::user()->id)
         ->where('evento_pais', '=', 173)
         ->where('evento_departamento', '=', $depa)->get();
@@ -611,7 +611,19 @@ class horarioController extends Controller
     public function vaciarhor(){
         DB::table('temporal_eventos')->where('users_id', '=', Auth::user()->id)
         ->where('id_horario', '!=', null)->where('temp_horaF', '=', null)->delete();
-        $temporal_evento=temporal_eventos::all();
+        $temporal_evento=temporal_eventos::where('users_id', '=', Auth::user()->id)->get();
+        return $temporal_evento;
+    }
+    public function vaciardl(){
+        DB::table('temporal_eventos')->where('users_id', '=', Auth::user()->id)
+        ->where('color', '=', '#dfe6f2')->where('textColor', '=', '#0b1b29')->delete();
+        $temporal_evento=temporal_eventos::where('users_id', '=', Auth::user()->id)->get();
+        return $temporal_evento;
+    }
+    public function vaciarndl(){
+        DB::table('temporal_eventos')->where('users_id', '=', Auth::user()->id)
+        ->where('color', '=','#a34141')->delete();
+        $temporal_evento=temporal_eventos::where('users_id', '=', Auth::user()->id)->get();
         return $temporal_evento;
     }
 
@@ -815,6 +827,22 @@ class horarioController extends Controller
             ->union($horario_empleado)
             ->get();
             return($incidencias);
+
+    }
+
+    public function incidenciatemporal(){
+        $incidencias=  temporal_eventos::where('users_id', '=', Auth::user()->id)
+        ->where('temp_horaF', '!=', null)->get();
+        return($incidencias);
+
+    }
+    public function eliminarinctempotal(Request $request){
+        $idinc = $request->idinc;
+
+        $temporal_evento = temporal_eventos::where('id', '=', $idinc)->delete();
+        $temporal=  temporal_eventos::where('users_id', '=', Auth::user()->id)
+        ->get();
+        return($temporal);
 
     }
 }
