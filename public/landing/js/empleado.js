@@ -874,6 +874,7 @@ $('#guardarEmpleado').click(function () {
 
 
 function datosPersona(method) {
+    var celularC = $('#codigoCelular').val() + $('#celular').val();
     nuevoEmpleado = {
         nombres: $('#nombres').val(),
         apPaterno: $('#apPaterno').val(),
@@ -895,7 +896,7 @@ function datosPersona(method) {
         direccion: $('#direccion').val(),
         nivel: $('#nivel').val(),
         local: $('#local').val(),
-        celular: $('#celular').val(),
+        celular: celularC,
         telefono: $('#telefono').val(),
         fechaI: $('#m_fechaI').val(),
         fechaF: $('#m_fechaF').val(),
@@ -977,7 +978,7 @@ $('#actualizarEmpleado').click(function () {
 
 
 function datosPersonaA(method) {
-    console.log($('#m_fechaFE').val());
+    var celularC = $('#v_codigoCelular').val() + $('#v_celular').val();
     nuevoEmpleadoA = {
         nombres_v: $('#v_nombres').val(),
         apPaterno_v: $('#v_apPaterno').val(),
@@ -997,7 +998,7 @@ function datosPersonaA(method) {
         direccion_v: $('#v_direccion').val(),
         nivel_v: $('#v_nivel').val(),
         local_v: $('#v_local').val(),
-        celular_v: $('#v_celular').val(),
+        celular_v: celularC,
         telefono_v: $('#v_telefono').val(),
         correo_v: $('#v_email').val(),
         fechaI_v: $('#m_fechaIE').val(),
@@ -1117,7 +1118,7 @@ function cargarFile2() {
         },
     })
 }
-//********************** */
+//********************** */  
 $('#documento').on('change', function () {
     $("#form-registrar :input").attr('disabled', false);
 });
@@ -1176,11 +1177,13 @@ $('#cerrarModalEmpleado').click(function () {
     $('input[type="date"]').val("");
     $('input[type="file"]').val("");
     $('input[type="email"]').val("");
+    $('input[type="number"]').val("");
     $('select').val("");
     $("#form-registrar :input").prop('disabled', true);
     $('#documento').attr('disabled', false);
     $('#cerrarMoadalEmpleado').attr('disabled', false);
     $('#checkboxFechaI').prop('checked', false);
+    $('#codigoCelular').val("+51");
     //********** */
     $('#v_emailR').hide();
     $('#validDocumento').hide();
@@ -1225,6 +1228,17 @@ $('#editarCentroA').hide();
 $('#editarLocalA').hide();
 $('#editarNivelA').hide();
 $('#editarContratoA').hide();
+$('#validCel').hide();
+//*********** */
+/*$('#celular').on("change", function () {
+    var pattern = "/^9{1}|[0-9]{8,8}";
+    var valor = $('#celular').val().addMethod(pattern) ? true : false;
+    if (valor == false) {
+        $('#validCel').show();
+    }
+    console.log(valor);
+    $('#validCel').hide();
+});*/
 //************************Editar en los modal de agregar */
 //*******AREA***/
 $('#buscarArea').on("click", function () {
@@ -1499,3 +1513,4 @@ function limpiar() {
     $('#textNivel').val("");
     $('#textContrato').val("");
 }
+//************************************** */

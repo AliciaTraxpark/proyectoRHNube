@@ -937,9 +937,22 @@ use App\proyecto_empleado;
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Celular</label>
-                                            <input type="number" class="form-control" name="celular" id="celular"
-                                                tabindex="8" maxlength="9" onkeypress="return isNumeric(event)"
-                                                oninput="maxLengthCheck(this)">
+                                            <span id="validCel" style="color: red;">*Número
+                                                incorrecto.</span>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <select class="form-control" id="codigoCelular">
+                                                        <option value="+51" selected>+51</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-8">
+                                                    <input type="number" class="form-control" name="celular"
+                                                        id="celular" tabindex="8" maxlength="9"
+                                                        onkeypress="return isNumeric(event)"
+                                                        oninput="maxLengthCheck(this)"
+                                                        pattern="/^9{1}|[0-9]{8,8}+">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-4">
@@ -1260,9 +1273,19 @@ use App\proyecto_empleado;
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Celular</label>
-                                            <input type="text" class="form-control" name="v_celular" id="v_celular"
-                                                tabindex="8" maxlength="9" onkeypress="return isNumeric(event)"
-                                                oninput="maxLengthCheck(this)">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <select class="form-control" id="v_codigoCelular">
+                                                        <option value="+51" selected>+51</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-8">
+                                                    <input type="text" class="form-control" name="v_celular"
+                                                        id="v_celular" tabindex="8" maxlength="9"
+                                                        onkeypress="return isNumeric(event)"
+                                                        oninput="maxLengthCheck(this)">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-4">

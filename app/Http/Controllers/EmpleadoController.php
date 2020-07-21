@@ -342,6 +342,9 @@ class EmpleadoController extends Controller
             ->leftJoin('ubigeo_peru_districts as distN', 'e.emple_distritoN', '=', 'distN.id')
             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
             ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+            ->leftJoin('tipo_contrato as tp', 'e.emple_tipoContrato', '=', 'tp.contrato_id')
+            ->leftJoin('nivel as n', 'e.emple_nivel', '=', 'n.nivel_id')
+            ->leftJoin('local as l', 'e.emple_local', '=', 'l.local_id')
             ->leftJoin('modo as md', 'md.idEmpleado', '=', 'e.emple_id')
             ->leftJoin('tipo_dispositivo as td', 'td.id', '=', 'md.idTipoDispositivo')
 
@@ -388,6 +391,9 @@ class EmpleadoController extends Controller
                 'e.emple_fechaFC',
                 'e.emple_Correo',
                 'e.emple_codigo',
+                'tp.contrato_descripcion',
+                'n.nivel_descripcion',
+                'l.local_descripcion',
                 'md.idTipoDispositivo as dispositivo'
             )
             ->where('e.emple_id', '=', $idempleado)
