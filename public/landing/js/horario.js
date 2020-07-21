@@ -24,11 +24,8 @@ function leertabla() {
 function verhorarioEmpleado(idempleado) {
     $("*").removeClass("fc-highlight");
      $.get("/vaciartemporal", {}, function (data, status) {
-
-    });
-
-    $('#verhorarioEmpleado').modal('toggle');
-    $.ajax({
+     $('#verhorarioEmpleado').modal('toggle');
+     $.ajax({
         type: "post",
         url: "/verDataEmpleado",
         data: 'ids=' + idempleado,
@@ -88,6 +85,11 @@ function verhorarioEmpleado(idempleado) {
         }
 
     });
+
+    });
+
+
+
 }
 //CALENDARIO HORARIO
 function calendarioHorario(eventosEmpleado,fechasMh) {
@@ -614,9 +616,12 @@ $('#departamento').change(function(){
                 });
                 return false;
             }
-            var mesAg= $('#fechaDa').val();
-        var d  =mesAg;
-        var fechasM=new Date(d);
+      
+        var fechah = new Date();
+            var ano3 = fechah. getFullYear();
+            var mes3=fechah.getMonth()+1;
+             var fechas1=ano3+'-'+mes3+'-01';
+            var fechasM=new Date(fechas1);
             calendario(dataA[1],fechasM);
 
         },
@@ -1747,6 +1752,146 @@ function vaciarhor(){
     });
 
 }
+function vaciardl(){
+    bootbox.confirm({
+        message: "¿Esta seguro que desea eliminar dias laborables del calendario?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            if (result == true) {
+                $.get("/vaciardl", {}, function (data, status) {
+                    var mesAg= $('#fechaDa').val();
+                    var d  =mesAg;
+                    var fechasM=new Date(d);
+                    calendario(data,fechasM);
+                });
+
+            }
+        }
+    });
+
+}
+function vaciarndl(){
+    bootbox.confirm({
+        message: "¿Esta seguro que desea eliminar dias no laborables del calendario?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            if (result == true) {
+                $.get("/vaciarndl", {}, function (data, status) {
+                    var mesAg= $('#fechaDa').val();
+                    var d  =mesAg;
+                    var fechasM=new Date(d);
+                    calendario(data,fechasM);
+                });
+
+            }
+        }
+    });
+
+}
+function vaciarinH(){
+    $.ajax({
+        type: "get",
+        url: "/horario/incidenciatemporal",
+
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            $("#tablaBorrarI>tbody>tr").remove();
+            if(data!=''){
+                $.each(data, function (key, item) {
+                    if(item.temp_horaF==0){
+                      $("#tablaBorrarI>tbody").append(
+                        "<tr id='r"+item.id+"'><td style='padding: 4px;'>"+item.title+
+                         " </td><td style='padding: 4px;'>Sin descuento</td><td style='padding: 4px;'><a style='cursor: pointer' onclick='eliminarinctemporal("+item.id+")' ><img src='admin/images/delete.svg' height='15'></a> </td></tr>"
+                        );
+                    } else{
+                        $("#tablaBorrarI>tbody").append(
+                            "<tr id='r"+item.id+"'><td style='padding: 4px;'>"+item.title+
+                            " </td><td style='padding: 4px;'>Con descuento</td><td style='padding: 4px;'><a style='cursor: pointer' onclick='eliminarinctemporal("+item.id+")' ><img src='admin/images/delete.svg' height='15'></a> </td></tr>"
+                            );
+                    }
+
+                   });
+            } else{
+                $("#tablaBorrarI>tbody").append(
+                    "<tr><td style='padding: 4px;'>No hay incidencias  asignadas.<td></tr>"
+                    );
+            }
+
+        },
+        error: function (data) {
+            alert('Ocurrio un error');
+        }
+
+    });
+    $('#borrarincide').modal('show');
+
+
+
+
+}
+
+function eliminarinctemporal(idinc){
+
+    idinc=idinc;
+    $.ajax({
+        type: "post",
+        url: "/eliminarinctempotal",
+        data: {idinc},
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+
+            $('#r'+idinc).remove();
+            var mesAg= $('#fechaDa').val();
+            var d  =mesAg;
+            var fechasM=new Date(d);
+                calendario(data,fechasM);
+
+        },
+        error: function (data) {
+            alert('Ocurrio un error');
+        }
+
+    });
+}
+
 // change select horariocalendario
 
 $('#selectHorarioen').change(function(e){

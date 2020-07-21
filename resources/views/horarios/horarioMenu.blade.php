@@ -55,6 +55,11 @@ td.fc-day.fc-widget-content.fc-thu, td.fc-day.fc-widget-content.fc-fri, td.fc-da
 
 
 }
+a:not([href]):not([tabindex]){
+    color: #000;
+    cursor: pointer;
+    font-size: 12px;
+}
 .fc-toolbar.fc-header-toolbar{
     zoom:80%;
 }
@@ -173,7 +178,6 @@ td.fc-day.fc-widget-content.fc-thu, td.fc-day.fc-widget-content.fc-fri, td.fc-da
                 <input type="hidden" id="horario1">
                 <input type="hidden" id="horario2">
                    <div class="row">
-
                        <div class="col-md-10">
                         <form id="formulario" action="javascript:agregarHoras()">
                            <div class="row">
@@ -287,11 +291,23 @@ td.fc-day.fc-widget-content.fc-thu, td.fc-day.fc-widget-content.fc-fri, td.fc-da
                             </div>
                             <br>
                             <div class="row">
-                             <div class="col-6" style="padding-left: 0px;">
-                                <button style="background-color: #ffffff; border-color: #ffffff; color: #44444c;" onclick="vaciarhor()"  class="btn btn-sm  btn-primary" ><img src="{{asset('admin/images/borrador.svg')}}" height="18" ></button>
-                            </div>
+
+
                             <div class="col-md-6" style="padding-left: 0px;">
-                            <label style="font-size: 12px" for="">borrar horario(s)</label>
+                                <div class="btn-group mt-2 mr-1">
+                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" style="color: #fff;
+                                    background-color: #1c3763;
+                                    border-color: #1c3763;"
+                                        data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false"><img src="{{asset('admin/images/borrador.svg')}}" height="15" > Borrar <i class="icon"><span data-feather="chevron-down"></span></i></button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" onclick="vaciarhor()">Horarios</a>
+                                        <a class="dropdown-item"  onclick="vaciardl()" >D. laborables</a>
+                                        <a class="dropdown-item" onclick="vaciarndl()">D. no laborables</a>
+                                        <a class="dropdown-item" onclick="vaciarinH()">Incidencia</a>
+
+                                    </div>
+                                </div><!-- /btn-group -->
                             </div>
                             </div>
 
@@ -812,6 +828,50 @@ td.fc-day.fc-widget-content.fc-thu, td.fc-day.fc-widget-content.fc-fri, td.fc-da
          </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
+        <div id="borrarincide" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog  d-flex justify-content-center" >
+
+            <div class="modal-content">
+               <div class="modal-header" style="background-color:#163552;">
+                   <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Incidencias</h5>
+                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                   </button>
+               </div>
+               <div class="modal-body">
+                   <div class="row">
+                    <div class="col-md-12">
+                        <table id="tablaBorrarI" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre de incidencia</th>
+                                    <th>Descuento</th>
+                                    <th>*</th>
+                                </tr>
+                            </thead>
+                            <tbody style="font-size: 12px">
+
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                   </div>
+
+               </div>
+               <div class="modal-footer" style="padding-top: 6px;padding-bottom: 6px;">
+                   <div class="col-md-12">
+                       <div class="row">
+                           <div class="col-md-12 text-right" >
+                            <button type="button"  class="btn btn-light btn-sm" data-dismiss="modal">Cerrar</button>
+
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div><!-- /.modal-content -->
+         </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
     </div>
 </div>
 @endsection

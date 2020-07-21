@@ -151,6 +151,8 @@ Route::post('/storeLaborable', 'horarioController@storeLabor');
 Route::post('/storeNoLaborable', 'horarioController@storeNoLabor');
 Route::post('/storeIncidencia', 'horarioController@storeIncidencia');
 Route::get('/vaciarhor', 'horarioController@vaciarhor');
+Route::get('/vaciardl', 'horarioController@vaciardl');
+Route::get('/vaciarndl', 'horarioController@vaciarndl');
 Route::post('/guardarHorarioC', 'horarioController@guardarHorarioC');
 Route::post('/eliminarHorarBD', 'horarioController@eliminarHorarBD');
 Route::post('/eliminarIncidBD', 'horarioController@eliminarIncidBD');
@@ -158,6 +160,8 @@ Route::post('/storeIncidenciaEmpleado', 'horarioController@storeIncidenciaEmplea
 Route::post('/storeHorarioEmBD', 'horarioController@storeHorarioEmBD');
 Route::post('/storeLaborHorarioBD', 'horarioController@storeLaborHorarioBD');
 Route::post('/storeNoLaborHorarioBD', 'horarioController@storeNoLaborHorarioBD');
+Route::get('/horario/incidenciatemporal', 'horarioController@incidenciatemporal');
+Route::post('/eliminarinctempotal', 'horarioController@eliminarinctempotal');
 
 //DASHBOARD
 Route::get('/eventosU', 'dashboardController@eventosUsuario');
