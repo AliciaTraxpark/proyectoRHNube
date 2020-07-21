@@ -475,7 +475,8 @@ function calendario(data,fechasM) {
     }
 
     var calendar = new FullCalendar.Calendar(calendarEl, configuracionCalendario);
-
+    var date1 = calendar.getDate();
+    $('#fechaDa').val(date1);
 
     calendar.setOption('locale', "Es");
     ////
@@ -2024,6 +2025,7 @@ $('#selectHorarioen').change(function(e){
 }
  */
 $('#selectHorarioedit').change(function(e){
+
     var idsedit=$('#selectHorarioedit').val();
     $("#frmHorEditar")[0].reset();
     $.ajax({
@@ -2053,6 +2055,7 @@ $('#selectHorarioedit').change(function(e){
             $('#horaI_ed').val(data[0].horaI);
             $('#horaF_ed').val(data[0].horaF);
             $('#horarioEditar').modal('show');
+            $("#selectHorarioedit").val("seleccionar");
         },
         error: function (data) {
             alert('Ocurrio un error');
@@ -2127,7 +2130,10 @@ function editarHorario(){
                 text: "Asignar horario",
                 selected: true
             }));
-
+            var mesAg= $('#fechaDa').val();
+            var d  =mesAg;
+            var fechasM=new Date(d);
+                calendario(data[2],fechasM);
         $('#horarioEditar').modal('hide');
         },
         error: function (data) {
