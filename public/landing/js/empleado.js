@@ -874,6 +874,8 @@ $('#guardarEmpleado').click(function () {
 
 
 function datosPersona(method) {
+    var celularC = $('#codigoCelular').val() + $('#celular').val();
+    console.log(celularC);
     nuevoEmpleado = {
         nombres: $('#nombres').val(),
         apPaterno: $('#apPaterno').val(),
@@ -895,7 +897,7 @@ function datosPersona(method) {
         direccion: $('#direccion').val(),
         nivel: $('#nivel').val(),
         local: $('#local').val(),
-        celular: $('#celular').val(),
+        celular: celularC,
         telefono: $('#telefono').val(),
         fechaI: $('#m_fechaI').val(),
         fechaF: $('#m_fechaF').val(),
@@ -1180,6 +1182,7 @@ $('#cerrarModalEmpleado').click(function () {
     $('#documento').attr('disabled', false);
     $('#cerrarMoadalEmpleado').attr('disabled', false);
     $('#checkboxFechaI').prop('checked', false);
+    $('#codigoCelular').val("+51");
     //********** */
     $('#v_emailR').hide();
     $('#validDocumento').hide();

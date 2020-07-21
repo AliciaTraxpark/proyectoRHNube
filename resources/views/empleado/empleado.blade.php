@@ -116,7 +116,6 @@
         body {
             background-color: #f8f8f8;
         }
-
     </style>
     <div id="preloader">
         <div id="status">
@@ -1003,10 +1002,20 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Celular</label>
-                                                        <input type="number" class="form-control" name="celular"
-                                                            id="celular" tabindex="8" maxlength="9"
-                                                            onkeypress="return isNumeric(event)"
-                                                            oninput="maxLengthCheck(this)">
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <select class="form-control" id="codigoCelular">
+                                                                    <option value="+51" selected>+51</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                <input type="number" class="form-control" name="celular"
+                                                                    id="celular" tabindex="8" maxlength="9"
+                                                                    onkeypress="return isNumeric(event)"
+                                                                    oninput="maxLengthCheck(this)"
+                                                                    pattern="/^(9)|[0-9]+">
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
