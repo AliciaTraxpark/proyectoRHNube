@@ -977,7 +977,6 @@ $('#actualizarEmpleado').click(function () {
 
 
 function datosPersonaA(method) {
-    console.log($('#m_fechaFE').val());
     nuevoEmpleadoA = {
         nombres_v: $('#v_nombres').val(),
         apPaterno_v: $('#v_apPaterno').val(),
@@ -1117,7 +1116,7 @@ function cargarFile2() {
         },
     })
 }
-//********************** */
+//********************** */  
 $('#documento').on('change', function () {
     $("#form-registrar :input").attr('disabled', false);
 });
@@ -1499,3 +1498,4 @@ function limpiar() {
     $('#textNivel').val("");
     $('#textContrato').val("");
 }
+//************************************** */

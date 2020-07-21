@@ -1206,7 +1206,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="sw-default">Nivel <a
+                                                        <label for="sw-default">Nivel del Colaborador<a
                                                                 onclick="$('#form-registrar').modal('hide');"
                                                                 href="#nivelmodal" data-toggle="modal"
                                                                 data-target="#nivelmodal"><i
@@ -1555,7 +1555,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="sw-default">Nivel <a
+                                                        <label for="sw-default">Nivel del Colaborador<a
                                                                 onclick="$('#form-ver').modal('hide');$('#nivelmodalE').modal('show');"
                                                                 data-toggle="modal"><i class="uil uil-plus"
                                                                     style="color: darkblue;cursor: pointer;"></i></a></label>
