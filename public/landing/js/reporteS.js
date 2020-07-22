@@ -78,6 +78,24 @@ function sumarHora(a, b) {
     return resultado.join(":");
 }
 
+function calcularPromedio(a, b) {
+    if (!a) return b;
+    let resultado = [];
+    let acumulado = 0;
+    let promedio = 0;
+    if (a != 0) {
+        acumulado = acumulado + 1;
+    }
+    let suma = parseFloat(a) + parseFloat(b);
+    promedio = suma;
+    if (acumulado != 0) {
+        promedio = suma / acumulado;
+    }
+    resultado.push(promedio);
+    return resultado;
+}
+var grafico = {};
+
 function onSelectFechas() {
     var fecha = $('#fecha').val();
     if ($.fn.DataTable.isDataTable("#Reporte")) {
@@ -85,8 +103,11 @@ function onSelectFechas() {
     }
     $('#empleado').empty();
     $('#dias').empty();
-    $('#myChart').show();
+    $('#myChartD').empty();
+    $("#myChart").show();
+    if (grafico.config != undefined) grafico.destroy();
     $.ajax({
+        async: false,
         url: "reporte/empleado",
         method: "GET",
         data: {
@@ -104,8 +125,10 @@ function onSelectFechas() {
             }*/
         },
         success: function (data) {
-            var container = $('#empleado');
-            var containerD = $('#dias');
+            console.log(data);
+            //var container = $('#empleado');
+            //var containerD = $('#dias');
+            $('#myChartD').hide();
             var nombre = [];
             var horas = [];
             var prom = [];
@@ -119,30 +142,35 @@ function onSelectFechas() {
                 var total = data[i].horas.reduce(function (a, b) {
                     return sumarHora(a, b);
                 });
-                var promedio = data[i].promedio.reduce(function (a, b) {
+                /*var promedio = data[i].promedio.reduce(function (a, b) {
                     return sumarHora(a, b);
+                });*/
+                var promedio = data[i].promedio.reduce(function (a, b) {
+                    return calcularPromedio(a, b);
                 });
                 for (let j = 0; j < data[i].horas.length; j++) {
                     html_tr += '<td>' + data[i].horas[j] + '</td>';
                 }
-                var p1 = promedio.split(":");
-                var t1 = total.split(":");
-                var sumaT = parseInt(t1[0]) * 3600 + parseInt(t1[1]) * 60 + parseInt(t1[2]);
-                var sumaP = parseInt(p1[0]) * 3600 + parseInt(p1[1]) * 60 + parseInt(p1[2]);
-                var sumaTotalP = 0;
+                var p1 = promedio[0].toFixed(2);
+                var sumaP = p1;
+                /*var t1 = total.split(":");
+                var sumaT = parseInt(t1[0]) * 3600 + parseInt(t1[1]) * 60 + parseInt(t1[2]);*/
+                /*var sumaTotalP = 0;
                 if (sumaT != 0) {
                     sumaTotalP = Math.round((sumaP * 100) / sumaT);
                     prom.push(sumaTotalP);
                 } else {
                     sumaTotalP = 0;
                     prom.push(sumaTotalP);
-                }
+                }*/
                 html_tr += '<td>' + total + '</td>';
-                html_tr += '<td>' + sumaTotalP + '%' + '</td>';
-                var decimal = parseFloat(total.split(":")[0] + "." + total.split(":")[1] + total.split(":")[2]).toFixed(2);
+                html_tr += '<td>' + sumaP + '%' + '</td>';
+                var decimal = parseFloat(total.split(":")[0] + "." + total.split(":")[1] + total.split(":")[2]);
+                console.log(decimal);
                 horas.push(decimal);
                 html_tr += '</tr>';
             }
+            console.log(data[0].fechaF);
             for (var m = 0; m < data[0].fechaF.length; m++) {
                 var momentValue = moment(data[0].fechaF[m]);
                 momentValue.toDate();
@@ -217,7 +245,7 @@ function onSelectFechas() {
                 }]
             };
             var mostrar = $("#myChart");
-            var grafico = new Chart(mostrar, {
+            grafico = new Chart(mostrar, {
                 type: 'bar',
                 data: chartdata,
                 options: {
@@ -235,9 +263,7 @@ function onSelectFechas() {
                     }
                 }
             });
-            $('#myChartD').hide();
         },
-        error: function (data) {
-        }
+        error: function (data) {}
     })
 }

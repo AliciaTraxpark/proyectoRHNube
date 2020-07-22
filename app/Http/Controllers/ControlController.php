@@ -75,7 +75,7 @@ class ControlController extends Controller
                 DB::raw('IF(h.id is null, DATE(h.start), DATE(cp.fecha_hora)) as fecha'),
                 DB::raw('TIME(cp.fecha_hora) as hora_ini'),
                 DB::raw('MAX(en.Total_Envio) as Total_Envio'),
-                DB::raw('MAX(cp.promedio) as promedio'),
+                DB::raw('SUM(promedio.promedio) as promedio'),
                 DB::raw($sql),
                 DB::raw('DATE(cp.fecha_hora) as fecha_captura')
             )
@@ -97,7 +97,7 @@ class ControlController extends Controller
 
         for ($i = 0; $i <= $diff->days; $i++) {
             array_push($horas, "00:00:00");
-            array_push($promedio, "00:00:00");
+            array_push($promedio, "0.0");
             $dia = strtotime('+' . $i . 'day', strtotime($fechaF[0]));
 
             array_push($dias, date('Y-m-j', $dia));

@@ -22,7 +22,7 @@
 @section('breadcrumb')
 <div class="row page-title">
     <div class="col-md-12">
-        <h4 class="mb-1 mt-0">Reporte Semanal</h4>
+        <h4 class="mb-1 mt-0">Reporte Semanal - Búsqueda por fecha</h4>
     </div>
 </div>
 @endsection
@@ -44,9 +44,6 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-12">
-                        <label style="font-weight: 700">Búsqueda por fecha</label>
-                    </div>
                     <div class="col-md-8"><br></div>
                     <div class="col-md-4">
                         <div class="input-group col-md-12">
