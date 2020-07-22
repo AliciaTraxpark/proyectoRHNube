@@ -941,7 +941,7 @@
 
                 $('#v_tipoDoc').val(data[0].tipoDoc_descripcion);
                 $('#v_apPaterno').val(data[0].perso_apPaterno);
-                $('#v_departamento').val(data[0].depaN);
+                $('#v_departamento').val(data[0].iddepaN);
                 onSelectVDepartamento('#v_departamento').then(function () {
                     $('#v_provincia').val(data[0].idproviN);
                     onSelectVProvincia('#v_provincia').then((result) => $('#v_distrito')
@@ -949,7 +949,7 @@
                 });
 
 
-                $('#v_dep').val(data[0].deparNo);
+                $('#v_dep').val(data[0].depar);
                 onSelectVDepart('#v_dep').then(function () {
                     $('#v_prov').val(data[0].proviId);
                     onSelectVProv('#v_prov').then((result) => $('#v_dist').val(data[0]
@@ -1053,10 +1053,10 @@
                 $('#v_depV').val(data[0].deparNo);
                 $('#v_departamentoV').val(data[0].depaN);
                 $("[name=v_tipoV]").val([data[0].perso_sexo]);
-                $('#v_provV').val(data[0].proviId);
-                $('#v_provinciaV').val(data[0].idproviN);
-                $('#v_distV').val(data[0].distId)
-                $('#v_distritoV').val(data[0].iddistN)
+                $('#v_provV').val(data[0].provi);
+                $('#v_provinciaV').val(data[0].proviN);
+                $('#v_distV').val(data[0].distNo)
+                $('#v_distritoV').val(data[0].distN)
                 $('#v_cargoV').val(data[0].cargo_descripcion);
                 $('#v_areaV').val(data[0].area_descripcion);
                 $('#v_centrocV').val(data[0].centroC_descripcion);
