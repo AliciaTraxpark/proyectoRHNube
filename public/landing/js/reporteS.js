@@ -228,7 +228,10 @@ function onSelectFechas() {
                     autoFilter: false
                 }, {
                     extend: "pdfHtml5",
-                    text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar"
+                    text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
+                    orientation: 'landscape',
+                    pageSize: 'LEGAL',
+                    title: 'RH SOLUTION REPORTE SEMANAL'
                 }],
                 paging: true
             });
