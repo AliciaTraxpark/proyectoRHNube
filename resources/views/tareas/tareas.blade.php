@@ -1,23 +1,41 @@
 @extends('layouts.vertical')
 
 @section('css')
-<link rel="shortcut icon" href="https://rhsolution.com.pe/wp-content/uploads/2019/06/small-logo-rh-solution-64x64.png"
+<link rel="shortcut icon"
+    href="https://rhsolution.com.pe/wp-content/uploads/2019/06/small-logo-rh-solution-64x64.png"
     sizes="32x32">
-<link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.css') }}" rel="stylesheet" />
-<link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css') }}" rel="stylesheet"
+<link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet"
     type="text/css" />
-<link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.css') }}" rel="stylesheet"
+<link href="{{
+    URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.css')
+    }}" rel="stylesheet" />
+<link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}"
+    rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css')
+    }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}"
+    rel="stylesheet" type="text/css" />
+<link href="{{
+    URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')
+    }}" rel="stylesheet"
     type="text/css" />
-<link href="{{ URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.min.css') }}" rel="stylesheet"
+<link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet"
     type="text/css" />
-<link href="{{ URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css') }}" rel="stylesheet"
+<link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet"
+    type="text/css" />
+<link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet"
+    type="text/css" />
+<link href="{{
+    URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.css') }}"
+    rel="stylesheet"
+    type="text/css" />
+<link href="{{
+    URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.min.css') }}"
+    rel="stylesheet"
+    type="text/css" />
+<link href="{{
+    URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')
+    }}" rel="stylesheet"
     type="text/css" />
 @endsection
 
@@ -40,13 +58,16 @@
     }
 
 </style>
-<div id="modalZoom" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+<div id="modalZoom" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true"
     data-backdrop="static">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" style="color:#ffffff;font-size:15px">Colección de Imagenes</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title" style="color:#ffffff;font-size:15px">Colección
+                    de Imagenes</h5>
+                <button type="button" class="close" data-dismiss="modal"
+                    aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -72,24 +93,28 @@
                     <div class="col-md-6"> <label><br> </label>
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label">Fecha:</label>
-                            <div class="input-group col-md-7" style="padding-left: 0px;">
-                            <input type="text" id="fecha" class="form-control">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text form-control "><i class="uil uil-calender"></i></div>
+                            <div class="input-group col-md-7"
+                                style="padding-left: 0px;">
+                                <input type="text" id="fecha"
+                                    class="form-control">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text form-control"><i
+                                            class="uil uil-calender"></i></div>
+                                </div>
                             </div>
                         </div>
-                        </div>
                     </div>
-
-                    <div class="col-md-6">  <label><br> </label>
+                    <div class="col-md-6"> <label><br> </label>
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label">Empleado:</label>
                             <div class="col-lg-8">
-                                <select id="empleado" data-plugin="customselect" class="form-control">
+                                <select id="empleado" data-plugin="customselect"
+                                    class="form-control">
                                     <option value="" disabled selected>Seleccionar</option>
                                     @foreach ($empleado as $empleados)
                                     <option class="" value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}}
-                                        {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</option>
+                                        {{$empleados->perso_apPaterno}}
+                                        {{$empleados->perso_apMaterno}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -107,12 +132,16 @@
                     </div>-->
                 </div>
                 <div id="espera" class="text-center" style="display: none">
-                    <img src="{{asset('landing/images/loading.gif')}}" height="100">
+                    <img src="{{asset('landing/images/loading.gif')}}"
+                        height="100">
                 </div>
                 <div class="col-xl-12" id="card">
                     <br>
-                    <img style="margin-left:28%" src="{{ URL::asset('admin/images/search-file.svg') }}"
-                                        class=" mr-2" height="220"  /> <br>  <label for="" style="margin-left:30%;color:#7d7d7d">Realize una búsqueda para ver Actividad</label>
+                    <img id="VacioImg" style="margin-left:28%" src="{{
+                        URL::asset('admin/images/search-file.svg') }}"
+                        class="mr-2" height="220" /> <br> <label for=""
+                        style="margin-left:30%;color:#7d7d7d">Realize una
+                        búsqueda para ver Actividad</label>
                 </div>
             </div> <!-- end card-body-->
         </div> <!-- end card-->
@@ -122,21 +151,35 @@
 @endsection
 @section('script')
 <!-- Plugins Js -->
-<script src="{{ URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
+<script src="{{
+    URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js')
+    }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js')
+    }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js') }}"></script>
+<script src="{{
+    URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js')
+    }}"></script>
+<script src="{{
+    URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js')
+    }}"></script>
 @endsection
 @section('script-bottom')
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
+<script src="{{
+    URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.js') }}"></script>
+<script src="{{
+    URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.min.js') }}"></script>
+<script src="{{
+    URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js')
+    }}"></script>
+<script src="{{
+    URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')
+    }}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{asset('landing/js/tareas.js')}}"></script>
 @endsection
