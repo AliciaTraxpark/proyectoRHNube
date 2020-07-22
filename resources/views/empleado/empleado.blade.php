@@ -1639,8 +1639,6 @@
                                                         class="btn btn-success">Actualizar</button>
                                                 </div>
                                             </div>
-                                            <br>
-                                            <br>
                                         </div>
                                     </div>
                                 </div>
