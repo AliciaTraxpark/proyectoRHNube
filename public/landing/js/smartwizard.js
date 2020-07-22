@@ -238,3 +238,20 @@ $(document).ready(function () {
         }
     })
 });
+$('#smartwizardVer').smartWizard({
+    selected: 0,
+    showStepURLhash: false,
+    toolbarSettings: {
+        showNextButton: false,
+        showPreviousButton: false
+    },
+    justified: true,
+    anchorSettings: {
+        anchorClickable: true, // Enable/Disable anchor navigation
+        enableAllAnchors: true,
+        markDoneStep: true,
+        enableAllAnchorOnDoneStep: true
+    }
+
+});
+
