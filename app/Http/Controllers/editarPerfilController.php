@@ -78,4 +78,18 @@ class editarPerfilController extends Controller
         $organizacion->save();
         return response()->json($organizacion, 200);
     }
+    public function actualizarFoto(Request $request)
+    {
+        $userId = Auth::user();
+        $user = User::where('id', '=', $userId->id)->get()->first();
+        if ($request->hasfile('file')) {
+            $file = $request->file('file');
+            $path = public_path() . '/fotosUser';
+            $fileName = uniqid() . $file->getClientOriginalName();
+            $file->move($path, $fileName);
+            $user->foto = $fileName;
+            $user->save();
+            return json_encode(array('status' => true));
+        }
+    }
 }

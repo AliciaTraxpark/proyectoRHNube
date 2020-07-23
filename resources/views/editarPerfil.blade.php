@@ -56,7 +56,7 @@
             <div class="card-body">
                 <div class="text-center mt-3">
                     <input style="display: none;" name="nameFoto" id="nameFoto">
-                    <img src="https://placehold.it/80x80" id="preview" class="avatar-lg rounded-circle img-thumbnail">
+                    <img src="https://placehold.it/80x80" id="preview" class="avatar-xl rounded-circle img-thumbnail">
                     <input type="file" name="img[]" class="file" accept="image/*">
                     <div class="mr-3 ml-3 mt-1">
                         <a class="browse" style="cursor: pointer" data-toggle="tooltip" data-placement="right"
@@ -69,7 +69,8 @@
                             <img src="{{asset('landing/images/export.svg')}}" height="30">
                         </a>
                     </div>
-                    <h5 id="h5Nombres" class="mt-2 mb-0" style="text-transform: capitalize;">
+                    <h5 id="h5Nombres" class="mt-2 mb-0"
+                        style="text-transform: capitalize;color: #163552;font-weight: bold">
                         {{$persona->perso_nombre}}
                         {{$persona->perso_apPaterno}} {{$persona->perso_apMaterno}}</h5>
                     <h6 id="h6Empresa" class="text-muted font-weight-normal mt-2 mb-0">
@@ -87,7 +88,7 @@
     <div class="col-xl-12">
         <div class="card">
             <div class="card-body" id="disabledDatosP">
-                <h4 class="mb-3 header-title mt-0">DATOS PERSONALES
+                <h4 class="mb-3 header-title mt-0" style="color: #163552">DATOS PERSONALES
                     &nbsp;&nbsp;&nbsp;
                     <a id="editarDatosP" data-toggle="tooltip" data-placement="right" title="Editar Datos"
                         data-original-title="" style="cursor: pointer;">
@@ -168,7 +169,7 @@
     <div class="col-xl-12">
         <div class="card">
             <div class="card-body" id="disabledDatosE">
-                <h4 class="mb-3 header-title mt-0">DATOS DE LA EMPRESA
+                <h4 class="mb-3 header-title mt-0" style="color: #163552">DATOS DE LA EMPRESA
                     &nbsp;&nbsp;&nbsp;
                     <a id="editarDatosE" data-toggle="tooltip" data-placement="right" title="Editar Datos"
                         data-original-title="" style="cursor: pointer;">
