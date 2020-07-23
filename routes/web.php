@@ -26,6 +26,12 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 //MENU
 Route::name('dashboard')->get('dashboard', 'HomeController@index')->middleware('verified');
 //Route::name('dashboard')->get('dashboard', 'HomeController@index')->middleware('auth');
+//EDITAR PERFIL
+Route::get('perfil', 'editarPerfilController@index');
+Route::get('perfilMostrar', 'editarPerfilController@show');
+Route::post('editarUser', 'editarPerfilController@actualizarDP');
+Route::post('editarEmpresa', 'editarPerfilController@actualizarDE');
+Route::post('foto', 'editarPerfilController@actualizarFoto');
 //VERIFICACION
 Route::name('verification.notice')->get('email/verify', 'VerifyMailController@index');
 Route::get('reenvioCorreo', 'VerifyMailController@verificarReenvio')->name('reenvioCorreo');

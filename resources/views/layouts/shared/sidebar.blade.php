@@ -1,31 +1,41 @@
 @php
-  use App\persona;
+use App\persona;
 
 @endphp
 <!-- ========== Left Sidebar Start ========== -->
 <div class="left-side-menu">
     <div class="media user-profile mt-2 mb-2">
-        <img src="{{ URL::asset('admin/assets//images/users/avatar-7.png') }}" class="avatar-sm rounded-circle mr-2" alt="Shreyu" />
-        <img src="{{ URL::asset('admin/assets//images/users/avatar-7.png') }}" class="avatar-xs rounded-circle mr-2" alt="Shreyu" />
+        <img src="{{ URL::asset('admin/assets//images/users/avatar-7.png') }}"
+            class="avatar-sm rounded-circle mr-2" alt="Shreyu" />
+        <img src="{{ URL::asset('admin/assets//images/users/avatar-7.png') }}"
+            class="avatar-xs rounded-circle mr-2" alt="Shreyu" />
 
         <div class="media-body">
             @php
             $usuario=Auth::user();
             $persona=persona::where('perso_id','=',$usuario->perso_id)->first();
             @endphp
-            <h6 class="pro-user-name mt-0 mb-0">{{$persona->perso_nombre}} {{$persona->perso_apPaterno}}</h6>
+            <h6 class="pro-user-name mt-0 mb-0">{{$persona->perso_nombre}}
+                {{$persona->perso_apPaterno}}</h6>
             <span class="pro-user-desc">Administrador</span>
         </div>
         <div class="dropdown align-self-center profile-dropdown-menu">
-            <a class="dropdown-toggle mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
+            <a class="dropdown-toggle mr-0" data-toggle="dropdown" href="#"
+                role="button" aria-haspopup="false"
                 aria-expanded="false">
                 <span data-feather="chevron-down"></span>
             </a>
             <div class="dropdown-menu profile-dropdown">
-                <a href="{{ route('logout') }}" class="dropdown-item notify-item">
+                <a href="/perfil" class="dropdown-item
+                    notify-item">
+                    <i data-feather="edit" class="icon-dual icon-xs mr-2"></i>
+                    <span>Editar Perfil</span>
+                </a>
+                <!--<a href="{{ route('logout') }}" class="dropdown-item
+                    notify-item">
                     <i data-feather="log-out" class="icon-dual icon-xs mr-2"></i>
                     <span>Cerrar sesion</span>
-                </a>
+                </a>-->
             </div>
         </div>
     </div>

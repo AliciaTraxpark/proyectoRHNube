@@ -59,25 +59,28 @@ class ControlController extends Controller
             ->groupBy('e.emple_id')
             ->get();
 
-        $sql = "if(DATEDIFF('" . $fechaF[1] . "',DATE(cp.fecha_hora)) >= 0 , DATEDIFF('" . $fechaF[1] . "',DATE(cp.fecha_hora)), DAY(DATE(cp.fecha_hora)) ) as dia";
+        $sql = "IF(h.id is null,if(DATEDIFF('" . $fechaF[1] . "',DATE(cp.fecha_hora)) >= 0 , DATEDIFF('" . $fechaF[1] . "',DATE(cp.fecha_hora)), DAY(DATE(cp.fecha_hora)) ),
+        if(DATEDIFF('" . $fechaF[1] . "',DATE(h.start)) >= 0,DATEDIFF('" . $fechaF[1] . "',DATE(h.start)), DAY(DATE(h.start)) )) as dia";
         $horasTrabajadas = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->join('envio as en', 'en.idEmpleado', '=', 'e.emple_id')
             ->leftJoin('captura as cp', 'cp.idEnvio', '=', 'en.idEnvio')
+            ->leftJoin('promedio_captura as promedio', 'promedio.idCaptura', '=', 'cp.idCaptura')
+            ->leftJoin('horario_dias as h', 'h.id', '=', 'promedio.idHorario')
             ->select(
                 'e.emple_id',
                 'p.perso_nombre',
                 'p.perso_apPaterno',
                 'p.perso_apMaterno',
-                DB::raw('DATE(cp.fecha_hora) as fecha'),
+                DB::raw('IF(h.id is null, DATE(h.start), DATE(cp.fecha_hora)) as fecha'),
                 DB::raw('TIME(cp.fecha_hora) as hora_ini'),
                 DB::raw('MAX(en.Total_Envio) as Total_Envio'),
-                DB::raw('MAX(cp.promedio) as promedio'),
+                DB::raw('SUM(promedio.promedio) as promedio'),
                 DB::raw($sql),
                 DB::raw('DATE(cp.fecha_hora) as fecha_captura')
             )
-            ->where(DB::raw('DATE(cp.fecha_hora)'), '<=', $fechaF[1])
-            ->where(DB::raw('DATE(cp.fecha_hora)'), '>=', $fechaF[0])
+            ->where(DB::raw('IF(h.id is null, DATE(h.start),DATE(cp.fecha_hora))'), '>=', $fechaF[0])
+            ->where(DB::raw('IF(h.id is null, DATE(h.start),DATE(cp.fecha_hora))'), '<=', $fechaF[1])
             ->where('e.users_id', '=', Auth::user()->id)
             ->groupBy('fecha_captura', 'e.emple_id')
             ->get();
@@ -94,7 +97,7 @@ class ControlController extends Controller
 
         for ($i = 0; $i <= $diff->days; $i++) {
             array_push($horas, "00:00:00");
-            array_push($promedio, "00:00:00");
+            array_push($promedio, "0.0");
             $dia = strtotime('+' . $i . 'day', strtotime($fechaF[0]));
 
             array_push($dias, date('Y-m-j', $dia));
