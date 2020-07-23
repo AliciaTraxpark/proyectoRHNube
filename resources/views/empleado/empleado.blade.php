@@ -1662,7 +1662,8 @@
                     <ul style="background: #fdfdfd!important;">
                         <li><a href="#persona-step-1">Personales</a></li>
                         <li><a href="#sw-default-step-2">Empresarial</a></li>
-                        <div class="col-md-4 text-left" style="display: flex;
+                        <li><a href="#sw-default-step-3">Foto</a></li>
+                        <div class="col-md-4" style="display: flex;
                         align-items: center;cursor: pointer;">
                             <a style="color: #3d3d3d;"
                                 onclick="$('#verEmpleadoDetalles').modal('toggle');$('#form-ver').modal();">
@@ -1802,7 +1803,6 @@
                         </div>
                         <div id="sw-default-step-2">
                             <div class="row">
-
                                 <div class="col-4 text-center">
                                     <div class="form-group">
                                         <label for="sw-default">Codigo Empleado</label>
@@ -1850,6 +1850,20 @@
                                     </div>
                                 </div> <!-- end col -->
                             </div> <!-- end row -->
+                        </div>
+                        <div id="sw-default-step-3">
+                            <br><br>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group text-center">
+                                        <img  src="landing/images/png.svg" height="150" id="v_fotoV">
+                                        <br>
+                                        <h5 id="h5Ocultar" class="m-0 font-size-14" style="color:#8888">No se encontro imagen</h5>
+                                    </div>
+                                </div> <!-- end col -->
+                            </div> <!-- end row -->
+                            <br>
+                            <br>
                         </div>
                     </div>
                 </div>

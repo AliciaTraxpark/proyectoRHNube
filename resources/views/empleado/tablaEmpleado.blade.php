@@ -707,6 +707,7 @@
 <script>
     $("#tablaEmpleado tbody tr").click(function () {
         $('#smartwizard1').smartWizard("reset");
+        $('#h5Ocultar').show();
         //$(this).addClass('selected').siblings().removeClass('selected');
         var value = $(this).find('input[type=hidden]').val();
         $('#formNuevoEl').show();
@@ -853,6 +854,10 @@
                 $('#v_nivelV').val(data[0].nivel_descripcion);
                 $('#v_localV').val(data[0].local_descripcion);
                 $('#v_codigoEmpleadoV').val(data[0].emple_codigo);
+                if(data[0].foto != ''){
+                    $('#v_fotoV').attr("src", "fotosEmpleado/" + data[0].foto);
+                    $('#h5Ocultar').hide();
+                }
             },
             error: function () {}
         });
