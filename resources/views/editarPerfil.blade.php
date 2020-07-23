@@ -43,6 +43,11 @@
     .content-page {
         background-color: #edf0f1;
     }
+
+    .file {
+        visibility: hidden;
+        position: absolute;
+    }
 </style>
 <br><br>
 <div class="row">
@@ -50,8 +55,22 @@
         <div class="card">
             <div class="card-body">
                 <div class="text-center mt-3">
-                    <img src="assets/images/users/avatar-7.jpg" alt="" class="avatar-lg rounded-circle" />
-                    <h5 id="h5Nombres" class="mt-2 mb-0" style="text-transform: capitalize;">{{$persona->perso_nombre}}
+                    <input style="display: none;" name="nameFoto" id="nameFoto">
+                    <img src="https://placehold.it/80x80" id="preview" class="avatar-lg rounded-circle img-thumbnail">
+                    <input type="file" name="img[]" class="file" accept="image/*">
+                    <div class="mr-3 ml-3 mt-1">
+                        <a class="browse" style="cursor: pointer" data-toggle="tooltip" data-placement="right"
+                            title="Seleccionar una imagen" data-original-title="">
+                            <img src="{{asset('landing/images/ui.svg')}}" height="30">
+                        </a>
+                        &nbsp;&nbsp;
+                        <a id="guardarFoto" style="cursor: pointer" data-toggle="tooltip" data-placement="right"
+                            title="Seleccionar una imagen" data-original-title="">
+                            <img src="{{asset('landing/images/export.svg')}}" height="30">
+                        </a>
+                    </div>
+                    <h5 id="h5Nombres" class="mt-2 mb-0" style="text-transform: capitalize;">
+                        {{$persona->perso_nombre}}
                         {{$persona->perso_apPaterno}} {{$persona->perso_apMaterno}}</h5>
                     <h6 id="h6Empresa" class="text-muted font-weight-normal mt-2 mb-0">
                         {{$organizacion->organi_razonSocial}}
