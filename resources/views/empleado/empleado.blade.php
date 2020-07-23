@@ -1663,6 +1663,7 @@
                         <li><a href="#persona-step-1">Personales</a></li>
                         <li><a href="#sw-default-step-2">Empresarial</a></li>
                         <li><a href="#sw-default-step-3">Foto</a></li>
+                        <li><a href="#sw-default-step-4">Dispositivo</a></li>
                         <div class="col-md-4" style="display: flex;
                         align-items: center;cursor: pointer;">
                             <a style="color: #3d3d3d;"

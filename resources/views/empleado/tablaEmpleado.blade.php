@@ -707,6 +707,7 @@
 <script>
     $("#tablaEmpleado tbody tr").click(function () {
         $('#smartwizard1').smartWizard("reset");
+        $('#smartwizardVer').smartWizard("reset");
         $('#h5Ocultar').show();
         $('#v_fotoV').attr("src", "landing/images/png.svg");
         //$(this).addClass('selected').siblings().removeClass('selected');
