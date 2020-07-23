@@ -35,6 +35,7 @@ $('#fechaN').combodate({
     yearDescending: false,
 });
 $('[data-toggle="tooltip"]').tooltip();
+$('#guardarFoto').hide();
 $('#disabledDatosP :input').attr('disabled', true);
 $('#disabledDatosP button[type="button"]').hide();
 $('#editarDatosP').on("click", function () {
@@ -240,6 +241,7 @@ $('input[type="file"]').change(function (e) {
         document.getElementById("preview").src = e.target.result;
     };
     reader.readAsDataURL(this.files[0]);
+    $('#guardarFoto').show();
 });
 $('#guardarFoto').on("click", function () {
     console.log($('.file').prop('files')[0]);
