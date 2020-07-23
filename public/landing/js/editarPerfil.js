@@ -199,7 +199,9 @@ function enviarDatosE(accion, objDatosEmpresa) {
             var h6 = `${data.organi_razonSocial}`;
             actualizarDatos();
             $('#h6Empresa').empty();
+            $('#strongOrganizacion').empty();
             $('#h6Empresa').append(h6);
+            $('#strongOrganizacion').append(h6);
             $('#disabledDatosE :input').attr('disabled', true);
             $('#disabledDatosE button[type="button"]').hide();
             $.notify({

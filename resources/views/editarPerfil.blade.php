@@ -1,6 +1,4 @@
 @extends('layouts.vertical')
-
-
 @section('css')
 <link href="{{asset('admin/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
@@ -38,10 +36,6 @@
 
     .year {
         max-width: 42%;
-    }
-
-    .content-page {
-        background-color: #edf0f1;
     }
 
     .file {
