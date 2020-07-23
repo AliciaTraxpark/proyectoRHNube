@@ -150,6 +150,7 @@
 <!-- end row -->
 @endsection
 @section('script')
+<script src="{{asset('landing/js/editarPerfil.js')}}"></script>
 <!-- Plugins Js -->
 <script src="{{
     URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js')

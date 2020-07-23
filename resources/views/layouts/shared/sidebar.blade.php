@@ -5,9 +5,11 @@ use App\persona;
 <!-- ========== Left Sidebar Start ========== -->
 <div class="left-side-menu">
     <div class="media user-profile mt-2 mb-2">
-        <img src="{{ URL::asset('admin/assets//images/users/avatar-7.png') }}"
+        <img id="imgsm" src="{{
+            URL::asset('admin/assets//images/users/avatar-7.png') }}"
             class="avatar-sm rounded-circle mr-2" alt="Shreyu" />
-        <img src="{{ URL::asset('admin/assets//images/users/avatar-7.png') }}"
+        <img id="imgxs" src="{{
+            URL::asset('admin/assets//images/users/avatar-7.png') }}"
             class="avatar-xs rounded-circle mr-2" alt="Shreyu" />
 
         <div class="media-body">
@@ -15,7 +17,7 @@ use App\persona;
             $usuario=Auth::user();
             $persona=persona::where('perso_id','=',$usuario->perso_id)->first();
             @endphp
-            <h6 class="pro-user-name mt-0 mb-0">{{$persona->perso_nombre}}
+            <h6 class="pro-user-name mt-0 mb-0" id="h6Nombres">{{$persona->perso_nombre}}
                 {{$persona->perso_apPaterno}}</h6>
             <span class="pro-user-desc">Administrador</span>
         </div>
@@ -52,3 +54,6 @@ use App\persona;
 
 </div>
 <!-- Left Sidebar End -->
+@section('script')
+<script src="{{asset('landing/js/editarPerfil.js')}}"></script>
+@endsection

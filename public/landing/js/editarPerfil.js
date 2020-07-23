@@ -23,6 +23,8 @@ function actualizarDatos() {
             $('#organizacion').val(data.organi_tipo);
             if (data.foto != null) {
                 $('#preview').attr("src", "fotosUser/" + data.foto);
+                $('#imgsm').attr("src", "fotosUser/" + data.foto);
+                $('#imgxs').attr("src", "fotosUser/" + data.foto);
             }
         },
         error: function (data) {}
@@ -133,7 +135,9 @@ function enviarDatosP(accion, objDatosPersonales) {
             var h5 = `${data.perso_nombre} ${data.perso_apPaterno} ${data.perso_apMaterno}`;
             actualizarDatos();
             $('#h5Nombres').empty();
+            $('#h6Nombres').empty();
             $('#h5Nombres').append(h5);
+            $('#h6Nombres').append(h5);
             $('#disabledDatosP :input').attr('disabled', true);
             $('#disabledDatosP button[type="button"]').hide();
             $.notify({
@@ -253,6 +257,8 @@ $('#guardarFoto').on("click", function () {
         success: function (data) {
             console.log(data);
             $('#preview').attr("src", "fotosUser/" + data[0].foto);
+            $('#imgsm').attr("src", "fotosUser/" + data[0].foto);
+            $('#imgxs').attr("src", "fotosUser/" + data[0].foto);
             $.notify({
                 message: "\nPerfil Editado\n",
                 icon: 'admin/images/checked.svg'
