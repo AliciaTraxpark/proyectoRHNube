@@ -28,6 +28,7 @@ class editarPerfilController extends Controller
             ->join('organizacion as o', 'o.organi_id', '=', 'uo.organi_id')
             ->select(
                 'u.id',
+                'u.foto',
                 'p.perso_nombre',
                 'p.perso_apPaterno',
                 'p.perso_apMaterno',
@@ -89,7 +90,7 @@ class editarPerfilController extends Controller
             $file->move($path, $fileName);
             $user->foto = $fileName;
             $user->save();
-            return json_encode(array('status' => true));
+            return json_encode(array($user));
         }
     }
 }

@@ -21,6 +21,9 @@ function actualizarDatos() {
             $('#numE').val(data.organi_nempleados);
             $('#pagWeb').val(data.organi_pagWeb);
             $('#organizacion').val(data.organi_tipo);
+            if (data.foto != null) {
+                $('#preview').attr("src", "fotosUser/" + data.foto);
+            }
         },
         error: function (data) {}
     });
@@ -249,6 +252,7 @@ $('#guardarFoto').on("click", function () {
         },
         success: function (data) {
             console.log(data);
+            $('#preview').attr("src", "fotosUser/" + data[0].foto);
             $.notify({
                 message: "\nPerfil Editado\n",
                 icon: 'admin/images/checked.svg'
