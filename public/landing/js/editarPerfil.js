@@ -14,6 +14,12 @@ function actualizarDatos() {
             $('#direccion').val(data.perso_direccion);
             $('#apMaterno').val(data.perso_apMaterno);
             $('#genero').val(data.perso_sexo);
+            $('#idE').val(data.id);
+            $('#ruc').val(data.organi_ruc);
+            $('#razonS').val(data.organi_razonSocial);
+            $('#direccionE').val(data.organi_direccion);
+            $('#numE').val(data.organi_nempleados);
+            $('#pagWeb').val(data.organi_pagWeb);
         },
         error: function (data) {}
     });
@@ -28,6 +34,12 @@ $('#disabledDatosP button[type="button"]').hide();
 $('#editarDatosP').on("click", function () {
     $('#disabledDatosP :input').attr('disabled', false);
     $('#disabledDatosP button[type="button"]').show();
+});
+$('#disabledDatosE :input').attr('disabled', true);
+$('#disabledDatosE button[type="button"]').hide();
+$('#editarDatosE').on("click", function () {
+    $('#disabledDatosE :input').attr('disabled', false);
+    $('#disabledDatosE button[type="button"]').show();
 });
 
 function editarDatosPersonales() {

@@ -21,7 +21,6 @@
 <style>
     .form-control:disabled {
         background-color: #fcfcfc !important;
-        border: none;
     }
 
     .combodate {
@@ -30,15 +29,15 @@
     }
 
     .day {
-        max-width: 40%;
+        max-width: 30%;
     }
 
     .month {
-        max-width: 50%;
+        max-width: 38%;
     }
 
     .year {
-        max-width: 40%;
+        max-width: 42%;
     }
 
     .content-page {
@@ -85,7 +84,7 @@
                                 <input type="text" class="form-control" id="nombre" required>
                             </div>
                         </div>
-                        <div class="form-group row mb-3">
+                        <div class="form-group row mb-3 mr-1">
                             <label for="" class="col-5 col-form-label">Fecha
                                 Nacimiento</label>
                             <div class="col-7">
@@ -98,7 +97,7 @@
                         <div class="form-group row mb-3">
                             <label for="" class="col-5 col-form-label">Apellido
                                 paterno</label>
-                            <div class="col-5">
+                            <div class="col-7">
                                 <input type="text" id="apPaterno" class="form-control" required>
                             </div>
                         </div>
@@ -149,64 +148,65 @@
 <div class="row">
     <div class="col-xl-12">
         <div class="card">
-            <div class="card-body">
-                <h4 class="mb-3 header-title mt-0">DATOS DE LA EMPRESA</h4>
-                <form class="form-horizontal">
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="form-group row mb-3">
-                                <label for="" class="col-3 col-form-label">RUC</label>
-                                <div class="col-9">
-                                    <input type="text" class="form-control" value="{{$persona->perso_nombre}}" required>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-3">
-                                <label for="" class="col-3 col-form-label">Razón Social</label>
-                                <div class="col-9">
-                                    <input type="text" class="form-control" value="{{$persona->perso_apPaterno}}"
-                                        required>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-3">
-                                <label for="" class="col-3 col-form-label">Dirección</label>
-                                <div class="col-9">
-                                    <input type="text" class="form-control" value="{{$persona->perso_apMaterno}}"
-                                        required>
-                                </div>
+            <div class="card-body" id="disabledDatosE">
+                <h4 class="mb-3 header-title mt-0">DATOS DE LA EMPRESA
+                    &nbsp;&nbsp;&nbsp;
+                    <a id="editarDatosE" data-toggle="tooltip" data-placement="right" title="Editar Datos"
+                        data-original-title="" style="cursor: pointer;">
+                        <img src="{{asset('admin/images/edit.svg')}}" height="15">
+                    </a>
+                </h4>
+                <div class="row">
+                    <div class="col-xl-6">
+                        <input style="display: none;" name="idE" id="idE">
+                        <div class="form-group row mb-3">
+                            <label for="" class="col-3 col-form-label">RUC</label>
+                            <div class="col-9">
+                                <input type="text" class="form-control" id="ruc" required>
                             </div>
                         </div>
-                        <div class="col-xl-6">
-                            <div class="form-group row mb-3">
-                                <label for="" class="col-3 col-form-label">Número
-                                    de Empleados</label>
-                                <div class="col-9">
-                                    <input type="text" class="form-control" type="date"
-                                        value="{{$persona->perso_fechaNacimiento}}" disabled>
-                                </div>
+                        <div class="form-group row mb-3">
+                            <label for="" class="col-3 col-form-label">Razón Social</label>
+                            <div class="col-9">
+                                <input type="text" class="form-control" id="razonS" required>
                             </div>
-                            <div class="form-group row mb-3">
-                                <label for="" class="col-3 col-form-label">Página
-                                    Web</label>
-                                <div class="col-9">
-                                    <input type="text" class="form-control" type="text"
-                                        value="{{$persona->perso_direccion}}" disabled>
-                                </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label for="" class="col-3 col-form-label">Dirección</label>
+                            <div class="col-9">
+                                <input type="text" class="form-control" id="direccionE" required>
                             </div>
                         </div>
                     </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group mb-0
+                    <div class="col-xl-6">
+                        <div class="form-group row mb-3">
+                            <label for="" class="col-3 col-form-label">Número
+                                de Empleados</label>
+                            <div class="col-9">
+                                <input type="text" class="form-control" id="numE" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label for="" class="col-3 col-form-label">Página
+                                Web</label>
+                            <div class="col-9">
+                                <input type="text" class="form-control" type="text" id="pagWeb">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group mb-0
                                 justify-content-end row">
-                                <div class="col-12 text-right">
-                                    <button type="button" class="btn btn-light btn-sm"
-                                        style="background-color: #163552;color: #ffffff;">Actualizar</button>
-                                </div>
+                            <div class="col-12 text-right">
+                                <button type="button" class="btn btn-light btn-sm" id="actualizarDatosEmpresa"
+                                    style="background-color: #163552;color: #ffffff;">Actualizar</button>
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
             </div> <!-- end card-body -->
         </div> <!-- end card -->
     </div> <!-- end col -->
