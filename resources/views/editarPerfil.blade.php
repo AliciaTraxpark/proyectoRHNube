@@ -65,7 +65,7 @@
                         </a>
                         &nbsp;&nbsp;
                         <a id="guardarFoto" style="cursor: pointer" data-toggle="tooltip" data-placement="right"
-                            title="Seleccionar una imagen" data-original-title="">
+                            title="Subir imagen" data-original-title="">
                             <img src="{{asset('landing/images/export.svg')}}" height="30">
                         </a>
                     </div>

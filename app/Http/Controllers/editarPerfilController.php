@@ -45,6 +45,7 @@ class editarPerfilController extends Controller
                 'o.organi_pagWeb',
                 'o.organi_tipo'
             )
+            ->where('u.id', '=', Auth::user()->id)
             ->get()
             ->first();
         return response()->json($user, 200);
