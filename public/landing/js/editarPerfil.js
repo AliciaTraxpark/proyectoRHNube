@@ -36,12 +36,61 @@ $('#editarDatosP').on("click", function () {
     $('#disabledDatosP :input').attr('disabled', false);
     $('#disabledDatosP button[type="button"]').show();
 });
+$('#nombre').change(function () {
+    if ($('#nombre').val() == '') {
+        $('#actualizarDatosPersonales').attr('disabled', true);
+    } else {
+        $('#actualizarDatosPersonales').attr('disabled', false);
+    }
+});
+$('#fechaN').change(function () {
+    if ($('#fechaN').val() == '') {
+        $('#actualizarDatosPersonales').attr('disabled', true);
+    } else {
+        $('#actualizarDatosPersonales').attr('disabled', false);
+    }
+});
+$('#apPaterno').change(function () {
+    if ($('#apPaterno').val() == '') {
+        $('#actualizarDatosPersonales').attr('disabled', true);
+    } else {
+        $('#actualizarDatosPersonales').attr('disabled', false);
+    }
+});
+$('#direccion').change(function () {
+    if ($('#direccion').val() == '') {
+        $('#actualizarDatosPersonales').attr('disabled', true);
+    } else {
+        $('#actualizarDatosPersonales').attr('disabled', false);
+    }
+});
+$('#apMaterno').change(function () {
+    if ($('#apMaterno').val() == '') {
+        $('#actualizarDatosPersonales').attr('disabled', true);
+    } else {
+        $('#actualizarDatosPersonales').attr('disabled', false);
+    }
+});
 $('#disabledDatosE :input').attr('disabled', true);
 $('#disabledDatosE button[type="button"]').hide();
 $('#editarDatosE').on("click", function () {
     $('#disabledDatosE :input').attr('disabled', false);
     $('#ruc').attr('disabled', true);
     $('#disabledDatosE button[type="button"]').show();
+});
+$('#razonS').change(function () {
+    if ($('#razonS').val() == '') {
+        $('#actualizarDatosEmpresa').attr('disabled', true);
+    } else {
+        $('#actualizarDatosEmpresa').attr('disabled', false);
+    }
+});
+$('#numE').change(function () {
+    if ($('#numE').val() == '') {
+        $('#actualizarDatosEmpresa').attr('disabled', true);
+    } else {
+        $('#actualizarDatosEmpresa').attr('disabled', false);
+    }
 });
 
 function editarDatosPersonales() {
