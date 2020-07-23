@@ -63,4 +63,19 @@ class editarPerfilController extends Controller
         $persona->save();
         return response()->json($persona, 200);
     }
+
+    public function actualizarDE(Request $request)
+    {
+        $id = $request->get('id');
+        $user = User::where('id', '=', $id)->get()->first();
+        $usuarioOrg = usuario_organizacion::where('user_id', '=', $user->id)->get()->first();
+        $organizacion = organizacion::where('organi_id', '=', $usuarioOrg->organi_id)->get()->first();
+        $organizacion->organi_razonSocial = $request->get('objDatosEmpresa')['razonSocial'];
+        $organizacion->organi_direccion = $request->get('objDatosEmpresa')['direccion'];
+        $organizacion->organi_nempleados = $request->get('objDatosEmpresa')['nempleados'];
+        $organizacion->organi_pagWeb = $request->get('objDatosEmpresa')['pagWeb'];
+        $organizacion->organi_tipo = $request->get('objDatosEmpresa')['tipo'];
+        $organizacion->save();
+        return response()->json($organizacion, 200);
+    }
 }

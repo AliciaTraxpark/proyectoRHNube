@@ -53,7 +53,7 @@
                     <img src="assets/images/users/avatar-7.jpg" alt="" class="avatar-lg rounded-circle" />
                     <h5 id="h5Nombres" class="mt-2 mb-0" style="text-transform: capitalize;">{{$persona->perso_nombre}}
                         {{$persona->perso_apPaterno}} {{$persona->perso_apMaterno}}</h5>
-                    <h6 class="text-muted font-weight-normal mt-2 mb-0">
+                    <h6 id="h6Empresa" class="text-muted font-weight-normal mt-2 mb-0">
                         {{$organizacion->organi_razonSocial}}
                     </h6>
                     <h6 class="text-muted font-weight-normal mt-1 mb-4" style="text-transform: capitalize;">
