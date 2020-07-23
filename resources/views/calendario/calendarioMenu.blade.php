@@ -31,6 +31,14 @@
 </div>
 
 <style>
+    body > div.bootbox.modal.fade.show > div > div > div{
+        background: #131313;
+    color: #fbfbfb;
+    }
+    body > div.bootbox.modal.fade.show > div{
+        top: 100px;
+    left: 75px;
+    }
      div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content.fc-sun{
 
 background-color: rgb(255, 239, 239) !important;
@@ -38,7 +46,7 @@ background-color: rgb(255, 239, 239) !important;
 div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content.fc-mon, td.fc-day.fc-widget-content.fc-tue, td.fc-day.fc-widget-content.fc-wed,
 td.fc-day.fc-widget-content.fc-thu, td.fc-day.fc-widget-content.fc-fri, td.fc-day.fc-widget-content.fc-sat{
 
-background-color: #f9f9f9 !important;
+background-color: #ffffff !important;
 }
     .fc-time{
         display: none;
@@ -58,36 +66,29 @@ background-color: #f9f9f9 !important;
 </style>
 
 <div class="row page-title" style="padding-right: 20px;">
-    <div class="col-md-6">
+    <div class="col-md-4">
 
         <h4 class="mb-1 mt-0">Calendarios</h4>
     </div>
-    <div class="col-md-2 text-left">
-        <select  class="form-control" placeholder="pais" name="pais" id="pais">
-            <option value="">PAIS</option>
-                @foreach ($pais as $paises)
-                    @if($paises->id==173)
-                        <option class="" selected="true" value="{{$paises->id}}" >{{$paises->nombre}}</option>
-                    @else
-                        <option class="" value="{{$paises->id}}">{{$paises->nombre}}</option>
-                    @endif
-                @endforeach
-        </select>
-        </div>
-        <div class="col-md-2 text-left">
-            @if(!empty($eventos_usuario))
-                <h1>sdfg</h1>
-            @endif
-            <select  class="form-control" placeholder="Departamento " name="departamento" id="departamento" style="display: flex;">
-            <option value="">DEPARTAMENTO</option>
-            @foreach ($departamento as $departamentos)
-                <option class="" value="{{$departamentos->id}}">{{$departamentos->name}}</option>
+
+    <div class="col-md-3">
+        <select name="" id="selectCalendario" class="form-control">
+            @foreach ($calendario as $calendarios)
+                <option class="" value="{{$calendarios->calen_id}}">{{$calendarios->calendario_nombre}}</option>
             @endforeach
         </select>
-        </div>
+
+    </div>
+    <form action="javascript:agregarcalendario()"  class="col-md-5">
+        <div class="row">
+            <div class="col-md-8"> <input type="text" class="form-control" id="nombreCalen" placeholder="Nombre nuevo calendario" required></div>
+
         <div class=" col-md-2">
         <button  id="nuevoCalendario" type="submit"class="boton" style="font-size: 12px;padding: 4px" >Nuevo</button>
         </div>
+        </div>
+
+    </form>
 </div>
 @endsection
 
@@ -187,7 +188,8 @@ background-color: #f9f9f9 !important;
           </div>
           <div class="modal-body">
                       <form class="form-horizontal">
-                        <h5 class="modal-title" id="myModalLabel">¿Desea eliminar días descanso?</h5>
+                        <h5 style="font-size: 14px" class="modal-title" id="myModalLabel">¿Desea eliminar días descanso?</h5>
+                        <input type="hidden" id="idDescansoEl">
                       </form>
 
 
@@ -195,12 +197,11 @@ background-color: #f9f9f9 !important;
           <div class="modal-footer">
               <div class="col-md-12">
                   <div class="row">
-                      <div class="col-md-7 text-right">
-                          <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                      <div class="col-md-12 text-right">
+                          <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
+                          <button type="button" onclick="EnviarDescansoE()" style="background-color: #163552;" class="btn btn-sm">Eliminar</button>
                       </div>
-                      <div class="col-md-5 text-right" style="padding-right: 38px;  ">
-                          <button type="button" id="eliminarDescanso" name="eliminarDescanso" style="background-color: #163552;" class="btn ">Eliminar</button>
-                      </div>
+
                   </div>
               </div>
           </div>
@@ -223,7 +224,8 @@ background-color: #f9f9f9 !important;
                             <label for="">Nombre de dia feriado:</label>
                         </div>
                          <div class="col-md-10">
-                            <input class="form-control" type="text" id="nombreFeriado">
+                             <form action="javascript:registrarDferiado()">
+                            <input class="form-control" type="text" id="nombreFeriado" required>
                          </div>
 
                     </div>
@@ -239,7 +241,9 @@ background-color: #f9f9f9 !important;
                             <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
                         </div>
                         <div class="col-md-5 text-right" style="padding-right: 38px; ">
-                            <button type="button" id="guardarFeriado" name="guardarFeriado"  class="btn btn-secondary">Aceptar</button>
+                            <button type="submit"  class="btn btn-secondary">Aceptar</button>
+                        </form>
+
                         </div>
                     </div>
                 </div>
@@ -262,7 +266,8 @@ background-color: #f9f9f9 !important;
 
 
                     <form class="form-horizontal">
-                      <h5 class="modal-title" id="myModalLabel">¿Desea eliminar días no Laborales?</h5>
+                      <h5 style="font-size: 14px" class="modal-title" id="myModalLabel">¿Desea eliminar días no Laborales?</h5>
+                      <input type="hidden" id="idnolabEliminar">
                     </form>
 
 
@@ -270,77 +275,18 @@ background-color: #f9f9f9 !important;
         <div class="modal-footer">
             <div class="col-md-12">
                 <div class="row">
-                    <div class="col-md-7 text-right">
-                        <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                    <div class="col-md-12 text-right">
+                        <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
+                        <button type="button" onclick="eliminarEvNL()" style="background-color: #163552;" class="btn btn-sm">Eliminar</button>
                     </div>
-                    <div class="col-md-5 text-right" style="padding-right: 38px;  ">
-                        <button type="button" id="eliminarNLaboral" name="eliminarNLaboral" style="background-color: #163552;" class="btn ">Eliminar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><!-- /.modal-content -->
-</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<div id="myModalEliminarDdep" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header" style="background-color: #163552;">
-            <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Días de descanso</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-                    <form class="form-horizontal">
-                      <h5 class="modal-title" id="myModalLabel">¿Desea eliminar días descanso?</h5>
-                    </form>
 
-        </div>
-        <div class="modal-footer">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-7 text-right">
-                        <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
-                    </div>
-                    <div class="col-md-5 text-right" style="padding-right: 38px;  ">
-                        <button type="button"  style="background-color: #163552;" id="eliminarDescansodep" name="eliminarDescansodep" class="btn ">Eliminar</button>
-                    </div>
                 </div>
             </div>
         </div>
     </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div id="myModalEliminarNdep" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-<div class="modal-dialog">
-  <div class="modal-content">
-      <div class="modal-header" style="background-color: #163552;">
-          <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Días no Laborales</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-          </button>
-      </div>
-      <div class="modal-body">
-                  <form class="form-horizontal">
-                    <h5 class="modal-title" id="myModalLabel">¿Desea eliminar días no Laborales?</h5>
-                  </form>
-      </div>
-      <div class="modal-footer">
-          <div class="col-md-12">
-              <div class="row">
-                  <div class="col-md-7 text-right">
-                      <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
-                  </div>
-                  <div class="col-md-5 text-right" style="padding-right: 38px;  ">
-                      <button type="button" id="eliminarNLaboraldep" name="eliminarNLaboraldep" style="background-color: #163552;" class="btn ">Eliminar</button>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div><!-- /.modal-content -->
-</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+
 <div id="myModalEliminarFeriado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -352,59 +298,34 @@ background-color: #f9f9f9 !important;
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
-                    <h5 class="modal-title" id="myModalLabel">¿Desea eliminar día feriado?</h5>
+                    <h5 style="font-size: 14px" class="modal-title" id="myModalLabel">¿Desea eliminar día feriado?</h5>
+                    <input type="hidden" id="idFeriadoeliminar">
                 </form>
             </div>
             <div class="modal-footer">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-7 text-right">
-                            <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                        <div class="col-md-12 text-right">
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
+                            <button type="button" onclick="eliminarEvF()" style="background-color: #163552;" class="btn btn-sm">Eliminar</button>
                         </div>
-                        <div class="col-md-5 text-right" style="padding-right: 38px;  ">
-                            <button type="button" id="eliminarDiaferi" name="eliminarDiaferi" style="background-color: #163552;" class="btn ">Eliminar</button>
-                        </div>
+
                     </div>
                 </div>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <div id="myModalEliminarFeriadoDep" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #163552;">
-                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Día feriado de usuario</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal">
-                        <h5 class="modal-title" id="myModalLabel">¿Desea eliminar día feriado?</h5>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-7 text-right">
-                                <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
-                            </div>
-                            <div class="col-md-5 text-right" style="padding-right: 38px;  ">
-                                <button type="button" id="eliminarDiaferiDep" name="eliminarDiaferiDep" style="background-color: #163552;" class="btn ">Eliminar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+   
 <div class="row " >
 
     <div class="col-md-12 text-center">
       <div class="col-md-7" style="left: 10%;max-width: 80%; " id="Datoscalendar">
           <div class="card">
             <div class="card-body">
+                <div id="loading" style="display: none">
+                    <img src="{{asset('admin/images/loading.gif')}}" >
+                </div>
                 <div class="row">
                    <div class="col-md-11" id="calendar">
 
@@ -416,7 +337,7 @@ background-color: #f9f9f9 !important;
                            <div class="col-md-6"><label for="">Dias de Descanso</label></div>
                        </div>
                        <div class="row">
-                           <div class="col-md-6" style="  background: #f9f9f9;
+                           <div class="col-md-6" style="  background: #ffffff;border: 1px solid #d4d4d4;
                            height: 35px;"><h1>&nbsp;</h1></div>
                              <div class="col-md-6"><label for="">Dias laborables</label></div>
                        </div>
@@ -432,36 +353,44 @@ background-color: #f9f9f9 !important;
               </div>
           </div> <!-- end card -->
       </div>
-      <div class="col-md-7" id="Datoscalendar1" style="left: 10%;max-width: 80%;">
-        <div class="card">
-            <div class="card-body">
-                <div class="row">
-                   <div class="col-md-11" id="calendar1">
 
+    <div id="calendarioAsignar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 720px;  margin-top: 150px; left: 94px;" >
+
+        <div class="modal-content">
+           {{-- <div class="modal-header" style="background-color:#163552;">
+               <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Asignar</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+               </button>
+           </div> --}}
+           <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
+               <div class="row">
+                   <div class="col-md-4">
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="registrarDdescanso()" ><img src="{{asset('admin/images/dormir.svg')}}" height="20"> Dia de descanso</button>
                    </div>
-                   <div class="col-md-1" style="top:86px">
-                       <div class="row">
-                           <div class="col-md-6" style="  background: #f9e9e9;
-                           height: 35px;"><h1>&nbsp;</h1></div>
-                           <div class="col-md-6"><label for="">Dias de Descanso</label></div>
-                       </div>
-                       <div class="row">
-                           <div class="col-md-6" style="  background: #f9f9f9;
-                           height: 35px;"><h1>&nbsp;</h1></div>
-                             <div class="col-md-6"><label for="">Dias laborables</label></div>
-                       </div>
-
+                   <div class="col-md-4">
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="$('#nombreFeriado').val('');$('#calendarioAsignar').modal('hide'); $('#myModalFeriado').modal('show')" ><img src="{{asset('admin/images/calendario.svg')}}" height="20">  Dia feriado</button>
                    </div>
-                </div>
+                   <div class="col-md-4">
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="registrarDnlaborables()" ><img src="{{asset('admin/images/evento.svg')}}" height="20">  Dia no laborable</button>
+                   </div>
+               </div>
+           </div>
+           <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
+               <div class="col-md-12">
+                   <div class="row">
+                       <div class="col-md-12 text-right" >
+                        <button type="button"  class="btn btn-soft-primary btn-sm " data-dismiss="modal">Cancelar</button>
 
-
-             </div> <!-- end card body-->
-            <div class="card-footer">
-              <div class="row">
-              </div>
-            </div>
-        </div> <!-- end card -->
-    </div>
+                    </form>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div><!-- /.modal-content -->
+     </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
        <input type="hidden" id="pruebaStar">
        <input type="hidden" id="pruebaEnd">
     </div>
@@ -489,7 +418,7 @@ background-color: #f9f9f9 !important;
 <script src="{{asset('admin/packages/timegrid/main.js')}}"></script>
 <script src="{{asset('admin/packages/interaction/main.js')}}"></script>
  <script src="{{asset('landing/js/calendario.js')}}"></script>
-
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
 @endsection
 
 

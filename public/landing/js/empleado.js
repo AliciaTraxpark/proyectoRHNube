@@ -1,3 +1,59 @@
+
+
+function calendario() {
+    var calendarEl = document.getElementById('calendar');
+    calendarEl.innerHTML = "";
+
+    var fecha = new Date();
+    var ano = fecha.getFullYear();
+    var id;
+
+    var configuracionCalendario = {
+        locale: 'es',
+        defaultDate: ano + '-01-01',
+        height: 360,
+        fixedWeekCount: false,
+        plugins: ['dayGrid', 'interaction', 'timeGrid'],
+
+        selectable: true,
+        selectMirror: true,
+        select: function (arg) {
+
+            /*  calendar.addEvent({
+               title: 'title',
+               start: arg.start,
+               end: arg.end,
+               allDay: arg.allDay
+             }) */
+
+            console.log(arg);
+        },
+        eventClick: function (info) {
+
+        },
+        editable: false,
+        eventLimit: true,
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: ''
+        },
+        footer: {
+            left: 'Descanso',
+            center: 'Feriado',
+            right: 'NoLaborales'
+        },
+
+       /*  events: "calendario/show", */
+
+    }
+    var calendar = new FullCalendar.Calendar(calendarEl, configuracionCalendario);
+    calendar.setOption('locale', "Es");
+
+    calendar.render();
+}
+document.addEventListener('DOMContentLoaded', calendario);
+
 ////////////////
 $("#file").fileinput({
     allowedFileExtensions: ['jpg', 'jpeg', 'png'],
@@ -1118,7 +1174,7 @@ function cargarFile2() {
         },
     })
 }
-//********************** */  
+//********************** */
 $('#documento').on('change', function () {
     $("#form-registrar :input").attr('disabled', false);
 });

@@ -10,6 +10,10 @@ use App\proyecto_empleado;
 <link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{asset('admin/assets/libs/bootstrap-fileinput/fileinput.min.css')}}" rel="stylesheet" type="text/css" />
+ <!-- Plugin css  CALENDAR-->
+ <link href="{{asset('admin/packages/core/main.css')}}" rel="stylesheet" />
+ <link href="{{asset('admin/packages/daygrid/main.css')}}" rel="stylesheet" />
+ <link href="{{asset('admin/packages/timegrid/main.css')}}" rel="stylesheet" />
 
 <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{asset('admin/assets/libs/smartwizard/smart_wizard.min.css')}}" type="text/css" />
@@ -122,6 +126,7 @@ use App\proyecto_empleado;
 @section('content')
 <div class="row ">
     <div class="col-md-12 col-xl-12">
+
         <div class="card">
             <div class="card-body" style="padding-top: 0px; background: #ffffff; font-size: 12.8px;
             color: #222222;   padding-left: 0px;  ">
@@ -884,6 +889,8 @@ use App\proyecto_empleado;
                             <li><a href="#sw-default-step-1">Personales</a></li>
                             <li><a href="#sw-default-step-2">Empresarial</a></li>
                             <li><a href="#sw-default-step-3">Foto</a></li>
+                            <li><a href="#sw-default-step-4">Calendario</a></li>
+                            <li><a href="#sw-default-step-5">Horario</a></li>
 
                         </ul>
                         <div class="p-3">
@@ -1198,6 +1205,17 @@ use App\proyecto_empleado;
                                         <button type="button" id="guardarEmpleado"
                                             class="btn btn-primary">Guardar</button>
                                     </div>
+                                </div>
+                            </div>
+                            <div id="sw-default-step-4" class="setup-content">
+                                <div class="row">
+
+                                    <div class="col-md-12" id="calendar"></div>
+                                </div>
+                            </div>
+
+                            <div id="sw-default-step-5" class="setup-content">
+                                <div class="row">
                                 </div>
                             </div>
 
@@ -1597,6 +1615,12 @@ use App\proyecto_empleado;
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
 
+<script src="{{asset('admin/assets/libs/moment/moment.min.js')}}"></script>
+    <script src="{{asset('admin/packages/core/main.js')}}"></script>
+    <script src="{{asset('admin/packages/core/locales/es.js')}}"></script>
+    <script src="{{asset('admin/packages/daygrid/main.js')}}"></script>
+    <script src="{{asset('admin/packages/timegrid/main.js')}}"></script>
+    <script src="{{asset('admin/packages/interaction/main.js')}}"></script>
 <script src="{{asset('admin/assets/js/pages/form-wizard.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 <script src="{{asset('landing/js/tabla.js')}}"></script>
