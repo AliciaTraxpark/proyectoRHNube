@@ -1675,124 +1675,120 @@
                     <div class="p-3" id="form-registrar">
                         <div id="persona-step-1">
                             <div class="row">
-                                <div class="col-4 text-center">
+                                <div class="col-4">
                                     <input style="display: none;" name="v_idV" id="v_idV">
                                     <div class="form-group">
                                         <label for="sw-default">Tipo Documento</label>
-                                        <input type="text" class="form-control text-center" name="v_tipoDocV"
-                                            id="v_tipoDocV" style="background-color: #fcfcfc;border: none" tabindex="1"
+                                        <input type="text" class="form-control" name="v_tipoDocV"
+                                            id="v_tipoDocV" style="background-color: #fcfcfc;" tabindex="1"
                                             disabled>
                                     </div>
                                     <div class="form-group">
                                         <label for="sw-default">Apellido Paterno</label>
-                                        <input type="text" class="form-control text-center" name="v_apPaternoV"
-                                            id="v_apPaternoV" tabindex="4" style="border: none" disabled>
+                                        <input type="text" class="form-control" name="v_apPaternoV"
+                                            id="v_apPaternoV" tabindex="4" disabled>
                                     </div>
                                     <div class="form-group">
                                         <label for="sw-default">Correo Electronico</label>
-                                        <input type="email" class="form-control text-center" id="v_emailV"
-                                            name="v_emailV" tabindex="7" style="border: none" disabled>
+                                        <input type="email" class="form-control" id="v_emailV"
+                                            name="v_emailV" tabindex="7" disabled>
                                     </div>
                                 </div> <!-- end col -->
-                                <div class="col-4 text-center">
+                                <div class="col-4">
                                     <div class="form-group">
                                         <label for="sw-default">Num. Documento</label>
-                                        <input type="text" class="form-control text-center" name="v_numDocumentoV"
-                                            id="v_numDocumentoV" style="background-color: #fcfcfc;border: none"
+                                        <input type="text" class="form-control" name="v_numDocumentoV"
+                                            id="v_numDocumentoV" style="background-color: #fcfcfc;"
                                             tabindex="2" disabled>
                                     </div>
                                     <div class="form-group">
                                         <label for="sw-default">Apellido Materno</label>
-                                        <input type="text" class="form-control text-center" name="v_apMaternoV"
-                                            id="v_apMaternoV" tabindex="5" style="border: none" disabled>
+                                        <input type="text" class="form-control" name="v_apMaternoV"
+                                            id="v_apMaternoV" tabindex="5" disabled>
                                     </div>
                                     <div class="form-group">
                                         <label for="sw-default">Celular</label>
-                                        <input type="text" class="form-control text-center" name="v_celularV"
-                                            id="v_celularV" style="border: none" disabled>
+                                        <input type="text" class="form-control" name="v_celularV"
+                                            id="v_celularV"  disabled>
                                     </div>
                                 </div>
-                                <div class="col-4 text-center">
+                                <div class="col-4">
                                     <div class="form-group">
                                         <label for="sw-default">Fecha Nacimiento</label>
-                                        <input type="text" class="form-control text-center" id="v_fechaNV" name="date"
-                                            tabindex="3" style="border: none" disabled>
+                                        <input type="text" class="form-control" id="v_fechaNV" name="date"
+                                            tabindex="3" disabled>
                                     </div>
                                     <div class="form-group">
                                         <label for="sw-default">Nombres</label>
-                                        <input type="text" class="form-control text-center" name="v_nombresV"
-                                            id="v_nombresV" tabindex="6" style="border: none" disabled>
+                                        <input type="text" class="form-control" name="v_nombresV"
+                                            id="v_nombresV" tabindex="6" disabled>
                                     </div>
                                     <div class="form-group">
                                         <label for="sw-default">Telefono</label>
-                                        <input type="text" class="form-control text-center" name="v_telefonoV"
-                                            id="v_telefonoV" style="border: none" disabled>
+                                        <input type="text" class="form-control" name="v_telefonoV"
+                                            id="v_telefonoV" disabled>
                                     </div>
                                 </div>
-                                <div class="col-12 text-center">
+                                <div class="col-12">
                                     <div class="form-group">
                                         <label for="sw-default">Dirección</label>
-                                        <input type="text" class="form-control text-center" name="v_direccionV"
-                                            id="v_direccionV" tabindex="10" style="border: none" disabled>
+                                        <input type="text" class="form-control" name="v_direccionV"
+                                            id="v_direccionV" tabindex="10" disabled>
                                     </div>
                                 </div>
-                                <div class="col-4 text-center">
+                                <div class="col-4">
                                     <div class="form-group">
                                         <label for="sw-default">Dirección
                                             Domiciliara</label>
-                                        <input class="form-control text-center" placeholder="Departamento" name="v_depV"
-                                            id="v_depV" tabindex="11" style="border: none" disabled>
+                                        <input class="form-control" placeholder="Departamento" name="v_depV"
+                                            id="v_depV" tabindex="11" disabled>
                                     </div>
                                     <div class="form-group">
                                         <label for="sw-default">Lugar Nacimiento</label>
-                                        <input class="form-control text-center" placeholder="Departamento"
-                                            name="v_departamentoV" id="v_departamentoV" tabindex="14"
-                                            style="border: none" disabled>
+                                        <input class="form-control" placeholder="Departamento"
+                                            name="v_departamentoV" id="v_departamentoV" tabindex="14" disabled>
                                     </div>
                                     <div class="form-group">
                                         <label class="normal" for="">Genero</label>
-                                        <label class="custom-control custom-radio text-center">
+                                        <label class="custom-control custom-radio">
                                             <input type="radio" name="v_tipoV" id="v_tipoV" value="Femenino" disabled>
                                             Femenino
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-4 text-center">
+                                <div class="col-4">
                                     <div class="form-group">
                                         <label for="sw-default"><br></label>
-                                        <input class="form-control text-center" placeholder="Provincia " name="v_provV"
-                                            id="v_provV" tabindex="12" style="border: none" disabled>
+                                        <input class="form-control" placeholder="Provincia " name="v_provV"
+                                            id="v_provV" tabindex="12" disabled>
                                     </div>
                                     <div class="form-group">
                                         <label for="sw-default"><br></label>
-                                        <input class="form-control text-center" placeholder="Provincia "
-                                            name="v_provinciaV" id="v_provinciaV" tabindex="15" style="border: none"
-                                            disabled>
+                                        <input class="form-control" placeholder="Provincia "
+                                            name="v_provinciaV" id="v_provinciaV" tabindex="15" disabled>
                                     </div>
                                     <div class="form-group">
                                         <label class="normal" for=""><br></label>
-                                        <label class="custom-control custom-radio text-center">
-                                            <input type="radio" name="v_tipoV" id="v_tipoV" value="Masculino"
-                                                style="border: none" disabled>
+                                        <label class="custom-control custom-radio">
+                                            <input type="radio" name="v_tipoV" id="v_tipoV" value="Masculino" disabled>
                                             Masculino
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-4 text-center">
+                                <div class="col-4">
                                     <div class="form-group">
                                         <label for="sw-default"><br></label>
-                                        <input class="form-control text-center" placeholder="Distrito " name="v_distV"
-                                            id="v_distV" tabindex="13" style="border: none" disabled>
+                                        <input class="form-control" placeholder="Distrito " name="v_distV"
+                                            id="v_distV" tabindex="13"  disabled>
                                     </div>
                                     <div class="form-group">
                                         <label for="sw-default"><br></label>
-                                        <input class="form-control text-center" placeholder="Distrito "
-                                            name="v_distritoV" id="v_distritoV" tabindex="16" style="border: none"
-                                            disabled>
+                                        <input class="form-control" placeholder="Distrito "
+                                            name="v_distritoV" id="v_distritoV" tabindex="16" disabled>
                                     </div>
                                     <div class="form-group">
                                         <label class="normal" for=""><br></label>
-                                        <label class="custom-control custom-radio text-center">
+                                        <label class="custom-control custom-radio">
                                             <input type="radio" name="v_tipoV" id="v_tipoV" value="Personalizado"
                                                 disabled>
                                             Personalizado
@@ -1803,50 +1799,49 @@
                         </div>
                         <div id="sw-default-step-2">
                             <div class="row">
-                                <div class="col-4 text-center">
+                                <div class="col-4">
                                     <div class="form-group">
                                         <label for="sw-default">Codigo Empleado</label>
-                                        <input type="text" class="form-control text-center" name="v_codigoEmpleadoV"
-                                            id="v_codigoEmpleadoV" tabindex="1" style="border: none" disabled>
+                                        <input type="text" class="form-control" name="v_codigoEmpleadoV"
+                                            id="v_codigoEmpleadoV" tabindex="1" disabled>
                                     </div>
                                 </div>
                                 <div class="col-4"><br></div>
                             </div>
                             <div class="row">
-                                <div class="col-4 text-center">
+                                <div class="col-4">
                                     <div class="form-group">
                                         <label for="sw-default">Cargo</label>
-                                        <input class="form-control text-center" name="v_cargoV" id="v_cargoV"
-                                            tabindex="2" style="border: none" disabled>
+                                        <input class="form-control" name="v_cargoV" id="v_cargoV"
+                                            tabindex="2" disabled>
                                     </div>
                                     <div class="form-group">
                                         <label for="sw-default">Contrato</label>
-                                        <input class="form-control text-center" name="v_contratoV" id="v_contratoV"
-                                            tabindex="5" style="border: none" disabled>
+                                        <input class="form-control" name="v_contratoV" id="v_contratoV"
+                                            tabindex="5" disabled>
                                     </div>
                                 </div> <!-- end col -->
-                                <div class="col-4 text-center">
+                                <div class="col-4">
                                     <div class="form-group">
                                         <label for="sw-default">Área</label>
-                                        <input class="form-control text-center" name="v_areaV" id="v_areaV" tabindex="3"
-                                            style="border: none" disabled>
+                                        <input class="form-control" name="v_areaV" id="v_areaV" tabindex="3" disabled>
                                     </div>
                                     <div class="form-group">
                                         <label for="sw-default">Nivel del Colaborador</label>
-                                        <input class="form-control text-center" name="v_nivelV" id="v_nivelV"
-                                            tabindex="6" style="border: none" disabled>
+                                        <input class="form-control" name="v_nivelV" id="v_nivelV"
+                                            tabindex="6"  disabled>
                                     </div>
                                 </div> <!-- end col -->
-                                <div class="col-4 text-center">
+                                <div class="col-4">
                                     <div class="form-group">
                                         <label for="sw-default">Centro Costo</label>
-                                        <input class="form-control text-center" name="v_centrocV" id="v_centrocV"
-                                            tabindex="4" style="border: none" disabled>
+                                        <input class="form-control" name="v_centrocV" id="v_centrocV"
+                                            tabindex="4"  disabled>
                                     </div>
                                     <div class="form-group">
                                         <label for="sw-default">Local</label>
-                                        <input class="form-control text-center" name="v_localV" id="v_localV"
-                                            tabindex="7" style="border: none" disabled>
+                                        <input class="form-control" name="v_localV" id="v_localV"
+                                            tabindex="7" disabled>
                                     </div>
                                 </div> <!-- end col -->
                             </div> <!-- end row -->
@@ -1857,7 +1852,7 @@
                                 <div class="col-12">
                                     <div class="form-group text-center">
                                         <img  src="landing/images/png.svg" height="150" id="v_fotoV">
-                                        <br>
+                                        <br><br>
                                         <h5 id="h5Ocultar" class="m-0 font-size-14" style="color:#8888">No se encontro imagen</h5>
                                     </div>
                                 </div> <!-- end col -->
