@@ -21,6 +21,7 @@ $(function () {
     $('#proyecto').on('change', onMostrarPantallas);
 });
 var datos;
+var promedioHoras = 0;
 
 function onMostrarPantallas() {
     var value = $('#empleado').val();
@@ -49,6 +50,9 @@ function onMostrarPantallas() {
         },
         success: function (data) {
             //data = data.reverse();
+            var vacio = `<img id="VacioImg" style="margin-left:28%" src="admin/images/search-file.svg"
+                class="mr-2" height="220" /> <br> <label for=""
+                style="margin-left:30%;color:#7d7d7d">Realize una búsqueda para ver Actividad</label>`;
             $('#espera').hide();
             datos = data;
             if (data.length != 0) {
@@ -70,17 +74,19 @@ function onMostrarPantallas() {
                 var container = $('#card');
                 $.notifyClose();
                 for (const hora in data) {
+                    console.log(hora);
                     var horaDelGrupo = hora;
+                    var promedios = 0;
+                    var promedio = 0;
                     var labelDelGrupo = horaDelGrupo + ":00:00" + " - " + (parseInt(horaDelGrupo) + 1) + ":00:00";
-                    var grupo = `<span style="font-weight: bold;color:#507394;">${labelDelGrupo}</span><br><br><div class="row">`;
+                    var grupo = `<span style="font-weight: bold;color:#507394;"><img src="landing/images/clock (1).svg" height="20">&nbsp;${labelDelGrupo}</span>&nbsp;&nbsp;<img src="landing/images/punt.gif" height="70">&nbsp;&nbsp;<span style="font-weight: bold;color:#507394;" id="promHoras"></span><br><br><div class="row">`;
                     for (var j = 0; j < 6; j++) {
                         if (data[hora][j] != undefined) {
-                            console.log(data[hora][j][data[hora][j].length - 1].promedio);
-                            var horaP = data[hora][j][data[hora][j].length - 1].promedio.split(":");
+                            /*var horaP = data[hora][j][data[hora][j].length - 1].promedio.split(":");
                             var segundos = parseInt(horaP[0]) * 3600 + parseInt(horaP[1]) * 60 + parseInt(horaP[2]);
                             var totalE = data[hora][j][data[hora][j].length - 1].Total_Envio.split(":");
                             var segundosT = parseInt(totalE[0]) * 3600 + parseInt(totalE[1]) * 60 + parseInt(totalE[2]);
-                            var promedio = Math.round((segundos * 100) / segundosT);
+                            var promedio = Math.round((segundos * 100) / segundosT);*/
                             var nivel;
                             if (promedio >= 50) nivel = "green";
                             else if (promedio > 35) nivel = "#f3c623";
@@ -88,6 +94,7 @@ function onMostrarPantallas() {
                             if (j < 5) {
                                 var capturas = "";
                                 for (let index = 1; index < data[hora][j].length; index++) {
+                                    promedios += data[hora][j][index].prom;
                                     capturas += `<div class = "carousel-item">
                                     <img src="data:image/jpeg;base64,${data[hora][j][index].imagen}" height="120" width="200" class="img-responsive">
                                     <div class="overlay">
@@ -96,6 +103,7 @@ function onMostrarPantallas() {
                                     </div>
                                 </div>`;
                                 }
+                                promedio = (promedios / (data[hora][j].length - 1)).toFixed(2);
                                 card = `<div class="col-2" style="margin-left: 0px!important;">
                                         <div class="mb-0 text-center" style="padding-left: 0px;">
                                             <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
@@ -198,7 +206,7 @@ function onMostrarPantallas() {
                             grupo += card;
                         } else {
                             card = `<div class="col-2" style="margin-left: 0px!important;justify-content:center;!important">
-                        <br><br><br><br><br>
+                        <br><br><br>
                                 <div class="mb-0">
                                     <a href="" class="text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
                                         aria-expanded="true" aria-controls="customaccorcollapseOne">
@@ -207,9 +215,10 @@ function onMostrarPantallas() {
                                         data-parent="#customaccordion_exa">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class=" text-center col-md-12 col-sm-12" style="background:#888888; border-color:#888888;padding-top: 4px;
+                                            <div class=" text-center col-md-12 col-sm-12" style="padding-top: 1px;
                                             padding-bottom: 4px;">
-                                                <h5 class="m-0 font-size-14" style="color:#fafafa">Vacio</h5>
+                                            <img src="landing/images/png.svg" height="100">
+                                                <h5 class="m-0 font-size-14" style="color:#8888">Vacio</h5>
                                             </div>  <br>
                                         </div>
                                     </div>
@@ -221,16 +230,21 @@ function onMostrarPantallas() {
                     }
                     grupo += `</div><br>`;
                     container.append(grupo);
+                    promedioHoras = (promedio / 60).toFixed(5);
                 }
             } else {
+                $('#card').append(vacio);
                 $.notify({
                     message: "Falta elegir campos o No se encontrado capturas.",
                     icon: 'admin/images/warning.svg'
                 });
             }
+            var span = "";
+            span += `<img src="landing/images/graph.svg" height="20">&nbsp;${promedioHoras}%`;
+            $('#promHoras').append(span);
+            console.log(span);
         },
-        error: function (data) {
-        }
+        error: function (data) {}
     })
 }
 //PROYECTO
