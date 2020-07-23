@@ -29,7 +29,7 @@
     }
 
     .day {
-        max-width: 30%;
+        max-width: 32%;
     }
 
     .month {
@@ -81,7 +81,7 @@
                         <div class="form-group row mb-3">
                             <label for="" class="col-5 col-form-label">Nombre</label>
                             <div class="col-7">
-                                <input type="text" class="form-control" id="nombre" required>
+                                <input type="text" class="form-control text-center" id="nombre" required>
                             </div>
                         </div>
                         <div class="form-group row mb-3 mr-1">
@@ -98,13 +98,13 @@
                             <label for="" class="col-5 col-form-label">Apellido
                                 paterno</label>
                             <div class="col-7">
-                                <input type="text" id="apPaterno" class="form-control" required>
+                                <input type="text" id="apPaterno" class="form-control text-center" required>
                             </div>
                         </div>
                         <div class="form-group row mb-3">
                             <label for="" class="col-5 col-form-label">Dirección</label>
                             <div class="col-7">
-                                <input type="text" class="form-control" type="text" id="direccion" required>
+                                <input type="text" class="form-control text-center" type="text" id="direccion" required>
                             </div>
                         </div>
                     </div>
@@ -113,13 +113,13 @@
                             <label for="" class="col-5 col-form-label">Apellido
                                 Materno</label>
                             <div class="col-7">
-                                <input type="text" class="form-control" id="apMaterno" required>
+                                <input type="text" class="form-control text-center" id="apMaterno" required>
                             </div>
                         </div>
                         <div class="form-group row mb-3">
                             <label for="" class="col-5 col-form-label">Sexo</label>
                             <div class="col-7">
-                                <select class="form-control" name="genero" id="genero" required>
+                                <select class="form-control text-center" name="genero" id="genero" required>
                                     <option class="" value="Mujer">Mujer</option>
                                     <option class="" value="Hombre">Hombre</option>
                                     <option class="" value="Personalizado">Personalizado</option>
@@ -157,40 +157,54 @@
                     </a>
                 </h4>
                 <div class="row">
-                    <div class="col-xl-6">
+                    <div class="col-xl-4">
                         <input style="display: none;" name="idE" id="idE">
                         <div class="form-group row mb-3">
-                            <label for="" class="col-3 col-form-label">RUC</label>
-                            <div class="col-9">
-                                <input type="text" class="form-control" id="ruc" required>
+                            <label for="" class="col-5 col-form-label">RUC</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control text-center" id="ruc" required>
                             </div>
                         </div>
                         <div class="form-group row mb-3">
-                            <label for="" class="col-3 col-form-label">Razón Social</label>
-                            <div class="col-9">
-                                <input type="text" class="form-control" id="razonS" required>
-                            </div>
-                        </div>
-                        <div class="form-group row mb-3">
-                            <label for="" class="col-3 col-form-label">Dirección</label>
-                            <div class="col-9">
-                                <input type="text" class="form-control" id="direccionE" required>
+                            <label for="" class="col-5 col-form-label">Número
+                                de Empleados</label>
+                            <div class="col-7">
+                                <input type="number" class="form-control text-center" id="numE" disabled>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-6">
+                    <div class="col-xl-4">
                         <div class="form-group row mb-3">
-                            <label for="" class="col-3 col-form-label">Número
-                                de Empleados</label>
-                            <div class="col-9">
-                                <input type="text" class="form-control" id="numE" disabled>
+                            <label for="" class="col-5 col-form-label">Razón Social</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control text-center" id="razonS" required>
                             </div>
                         </div>
                         <div class="form-group row mb-3">
-                            <label for="" class="col-3 col-form-label">Página
+                            <label for="" class="col-5 col-form-label">Página
                                 Web</label>
-                            <div class="col-9">
-                                <input type="text" class="form-control" type="text" id="pagWeb">
+                            <div class="col-7">
+                                <input type="text" class="form-control text-center" type="text" id="pagWeb">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="form-group row mb-3">
+                            <label for="" class="col-5 col-form-label">Dirección</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control text-center" id="direccionE" required>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label for="" class="col-5 col-form-label">Tipo de organización</label>
+                            <div class="col-7">
+                                <select class="form-control" name="organizacion" id="organizacion" required>
+                                    <option class="" value="Empresa">Empresa</option>
+                                    <option class="" value="Gobierno">Gobierno</option>
+                                    <option class="" value="ONG">ONG</option>
+                                    <option class="" value="Asociación">Asociación</option>
+                                    <option class="" value="Otros">Otros</option>
+                                </select>
                             </div>
                         </div>
                     </div>

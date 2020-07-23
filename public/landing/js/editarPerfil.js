@@ -20,6 +20,7 @@ function actualizarDatos() {
             $('#direccionE').val(data.organi_direccion);
             $('#numE').val(data.organi_nempleados);
             $('#pagWeb').val(data.organi_pagWeb);
+            $('#organizacion').val(data.organi_tipo);
         },
         error: function (data) {}
     });
@@ -39,6 +40,7 @@ $('#disabledDatosE :input').attr('disabled', true);
 $('#disabledDatosE button[type="button"]').hide();
 $('#editarDatosE').on("click", function () {
     $('#disabledDatosE :input').attr('disabled', false);
+    $('#ruc').attr('disabled', true);
     $('#disabledDatosE button[type="button"]').show();
 });
 
