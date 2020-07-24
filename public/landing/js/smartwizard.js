@@ -105,6 +105,17 @@ $(document).ready(function () {
                 $('#validCorreo').show();
                 isStepValid = false;
             }
+            if ($('#celular').val() != '') {
+                var regex = RegExp("^9{1}[0-9]{8,8}");
+                if (regex.test($('#celular').val())) {
+                    console.log(regex.test($('#celular').val()));
+                    $('#validCel').hide();
+                } else {
+                    isStepValid = false;
+                    $('#validCel').show();
+                    console.log(regex.test($('#celular').val()));
+                }
+            }
             console.log(isStepValid)
         }
         return isStepValid;
@@ -169,6 +180,17 @@ $(document).ready(function () {
             } else {
                 $('#v_validCorreo').show();
                 isStepValid = false;
+            }
+            if ($('#v_celular').val() != '') {
+                var regex = RegExp("^9{1}[0-9]{8,8}");
+                if (regex.test($('#v_celular').val())) {
+                    console.log(regex.test($('#v_celular').val()));
+                    $('#v_validCel').hide();
+                } else {
+                    isStepValid = false;
+                    $('#v_validCel').show();
+                    console.log(regex.test($('#v_celular').val()));
+                }
             }
             console.log(isStepValid)
         }
@@ -254,4 +276,3 @@ $('#smartwizardVer').smartWizard({
     }
 
 });
-

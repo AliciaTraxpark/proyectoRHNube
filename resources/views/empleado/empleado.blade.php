@@ -1552,6 +1552,8 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Celular</label>
+                                                        <span id="v_validCel" style="color: red;">*Número
+                                                            incorrecto.</span>
                                                         <div class="row">
                                                             <div class="col-4">
                                                                 <select class="form-control" id="v_codigoCelular">
@@ -1831,7 +1833,8 @@
                                             <div class="row">
                                                 <div class="col-12 text-center">
                                                     <button type="button" id="actualizarEmpleado"
-                                                        class="btn btn-success">Actualizar</button>
+                                                        style="background-color: #163552;color: #ffffff;"
+                                                        class="btn btn-light btn-sm">Actualizar</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -2006,46 +2009,7 @@
                                             id="v_codigoEmpleadoV" tabindex="1" style="border: none" disabled>
                                     </div>
                                 </div>
-                                <div class="col-4"><br></div>
                             </div>
-                            <div class="row">
-                                <div class="col-4 text-center">
-                                    <div class="form-group">
-                                        <label for="sw-default">Cargo</label>
-                                        <input class="form-control text-center" name="v_cargoV" id="v_cargoV"
-                                            tabindex="2" style="border: none" disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Contrato</label>
-                                        <input class="form-control text-center" name="v_contratoV" id="v_contratoV"
-                                            tabindex="5" style="border: none" disabled>
-                                    </div>
-                                </div> <!-- end col -->
-                                <div class="col-4 text-center">
-                                    <div class="form-group">
-                                        <label for="sw-default">Área</label>
-                                        <input class="form-control text-center" name="v_areaV" id="v_areaV" tabindex="3"
-                                            style="border: none" disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Nivel del Colaborador</label>
-                                        <input class="form-control text-center" name="v_nivelV" id="v_nivelV"
-                                            tabindex="6" style="border: none" disabled>
-                                    </div>
-                                </div> <!-- end col -->
-                                <div class="col-4 text-center">
-                                    <div class="form-group">
-                                        <label for="sw-default">Centro Costo</label>
-                                        <input class="form-control text-center" name="v_centrocV" id="v_centrocV"
-                                            tabindex="4" style="border: none" disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Local</label>
-                                        <input class="form-control text-center" name="v_localV" id="v_localV"
-                                            tabindex="7" style="border: none" disabled>
-                                    </div>
-                                </div> <!-- end col -->
-                            </div> <!-- end row -->
                         </div>
                         <div id="sw-default-step-3">
                             <div class="row">
@@ -2120,25 +2084,17 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
             </div>
-
             <footer class="border-top">
                 <p class="text-center text-muted pt-4">© <?php echo date("Y"); ?> - RH Solution | Todos los derechos
                     reservados.</p>
             </footer>
         </div>
     </div>
-
-
-
-
     <script>
         var urlFoto = "";
         var hayFoto = false;
         var id_empleado = '';
-
     </script>
-
-
     <!-- Vendor js -->
     {{-- <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script> --}}
     <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script>

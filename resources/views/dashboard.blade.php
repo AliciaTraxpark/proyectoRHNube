@@ -159,6 +159,7 @@
 @endsection
 @endif
 @section('script')
+<script src="{{asset('landing/js/editarPerfil.js')}}"></script>
 <!-- optional plugins -->
 <script src="{{ URL::asset('admin/assets/libs/moment/moment.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
