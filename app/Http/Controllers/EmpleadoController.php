@@ -894,18 +894,23 @@ class EmpleadoController extends Controller
     }
 
     public function vercalendarioEmpl(Request $request){
-
-
-
-                $horario_empleado = DB::table('horario_empleado as he')->select(['id', 'title', 'color', 'textColor', 'start', 'end'])
+                $horario_empleado = DB::table('horario_empleado as he')
+                ->select(['id', 'title', 'color', 'textColor', 'start', 'end'])
                 /*  ->where('users_id', '=', Auth::user()->id) */
                  ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
                  ->where('he.empleado_emple_id', '=', $request->get('idempleado'));
 
-        $eventos_empleado= DB::table('eventos_empleado')
+                 $incidencias = DB::table('incidencias as i')
+                ->select(['idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_hora as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
+                ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
+                ->where('idi.id_empleado', '=', $request->get('idempleado'))
+                ->union($horario_empleado);
+
+
+                  $eventos_empleado= DB::table('eventos_empleado')
                 ->select(['evEmpleado_id as id','title','color','textColor','start','end'])
                 ->where('id_empleado','=',$request->get('idempleado'))
-                ->union($horario_empleado)
+                ->union($incidencias)
                 ->get();
 
                 return $eventos_empleado;

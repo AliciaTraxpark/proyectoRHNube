@@ -4,7 +4,18 @@ $('#horaIncidenCa').flatpickr({
     dateFormat: "H:i",
     time_24hr: true
 });
-
+$('#horaI').flatpickr({
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i",
+    time_24hr: true
+});
+$('#horaF').flatpickr({
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i",
+    time_24hr: true
+});
 function calendarioInv() {
     var calendarElInv = document.getElementById('calendarInv');
     calendarElInv.innerHTML = "";
@@ -1554,6 +1565,8 @@ function enviarEmpleado(accion, objEmpleado) {
             $('#detalleContrato').hide();
             $('#checkboxFechaI').prop('checked', false);
             $('#form-registrar').modal('toggle');
+            $('#selectCalendario').val("Asignar calendario");
+            $('#selectHorario').val("Seleccionar horario");
             $.notify({
                 message: "\nEmpleado Registrado.",
                 icon: 'admin/images/checked.svg'
@@ -1735,6 +1748,10 @@ $('#documento').on('change', function () {
     $("#form-registrar :input").attr('disabled', false);
 });
 $('#formNuevoE').click(function () {
+
+    calendarioInv();
+    $('#calendarInv').show();
+    $('#calendar').hide();
     $.get("/empleado/vaciarcalend", {}, function (data, status) {
     $('#form-registrar').modal();
     $('#cerrarModalEmpleado').attr('disabled', false);

@@ -26,6 +26,10 @@
         type="text/css" />
 
     <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+     <!-- Plugin css  CALENDAR-->
+ <link href="{{asset('admin/packages/core/main.css')}}" rel="stylesheet" />
+ <link href="{{asset('admin/packages/daygrid/main.css')}}" rel="stylesheet" />
+ <link href="{{asset('admin/packages/timegrid/main.css')}}" rel="stylesheet" />
 
     <link href="{{asset('admin/assets/libs/smartwizard/smart_wizard.min.css')}}" type="text/css" />
     <link href="{{asset('admin/assets/libs/smartwizard/smart_wizard_theme_arrows.min.css')}}" type="text/css" />
@@ -2171,7 +2175,12 @@
     <script src="{{asset('admin/assets/libs/combodate-1.0.7/combodate.js')}}"></script>
     <script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
     <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
-
+    <script src="{{asset('admin/assets/libs/moment/moment.min.js')}}"></script>
+    <script src="{{asset('admin/packages/core/main.js')}}"></script>
+    <script src="{{asset('admin/packages/core/locales/es.js')}}"></script>
+    <script src="{{asset('admin/packages/daygrid/main.js')}}"></script>
+    <script src="{{asset('admin/packages/timegrid/main.js')}}"></script>
+    <script src="{{asset('admin/packages/interaction/main.js')}}"></script>
     <script src="{{asset('admin/assets/js/pages/form-wizard.init.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
     <script src="{{asset('landing/js/tabla.js')}}"></script>
