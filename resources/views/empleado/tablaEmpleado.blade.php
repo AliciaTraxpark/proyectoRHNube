@@ -308,11 +308,11 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-8 col-md-6">
-                                        <div class="mt-3" id="detalleLicencia">
+                                        <div class="mt-2" id="detalleLicencia">
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6">
-                                        <div class="mt-3" id="estadoLicencia">
+                                        <div class="mt-2" id="estadoLicencia">
                                         </div>
                                     </div>
                                 </div>
@@ -825,21 +825,22 @@
                     for (var i = 0; i < data[0].licencia.length; i++) {
                         console.log(data[0].licencia[i]);
                         detalle +=
-                            `<p class="mb-2" style="color: #4B4B5A;font-weight: bold"><img src="{{asset('landing/images/laptop.svg')}}" height="20"
-                                                    class="mr-2" alt="" /> DISPOSITIVO  ${i+1}</p>
+                            `<p class="mb-2" style="color: #4B4B5A;font-weight: bold"> DISPOSITIVO  ${i+1} &nbsp;&nbsp;<img src="{{asset('landing/images/laptop (1).svg')}}" height="25"
+                                                    class="mr-2" alt="" /></p>
                             <h5 class="font-size-16" id="lic${data[0].licencia[i].id}">${data[0].licencia[i].licencia}</h5>`;
                         verDetalle += `<label for="sw-default">Activación Dispositivo</label>
                                         <input class="form-control" tabindex="4" value="${data[0].licencia[i].licencia}" disabled>`;
                         if (data[0].licencia[i].disponible == 1) {
                             disponible +=
-                                `<p class="mb-2"><i class="uil-calendar-slash text-danger"></i>Estado</p>
+                                `<p class="mb-2" style="color: #4B4B5A;font-weight: bold">Estado</p>
                                             <h5 class="font-size-16"><a class="badge badge-soft-primary mr-2">Disponible</a></h5>`;
                             verDetalleE += `<label for="sw-default">Estado</label>
                             <h5 class="font-size-16"><a class="badge badge-soft-primary mr-2">Disponible</a></h5>`;
                             
                         } else {
                             disponible +=
-                                `<input style="display: none;" id="idLicenciaND${data[0].emple_id}" value="${data[0].licencia[i].id}"><p class="mb-2"><i class="uil-calendar-slash text-danger"></i>Estado</p>
+                                `<input style="display: none;" id="idLicenciaND${data[0].emple_id}" value="${data[0].licencia[i].id}">
+                                <p class="mb-2"style="color: #4B4B5A;font-weight: bold">Estado</p>
                                             <h5 class="font-size-16"><a data-toggle="tooltip" data-placement="right"
                                             title=" Al cambiar el estado de la licencia toda información del empleado en su PC será borrada" data-original-title="" onclick="$('#estadoLicenciaC').modal()" style="cursor: pointer" class="badge badge-soft-danger mr-2">No Disponible</a></h5>`;
                             verDetalleE += `<label for="sw-default">Estado</label>
