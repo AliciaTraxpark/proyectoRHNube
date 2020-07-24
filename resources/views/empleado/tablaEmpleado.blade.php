@@ -276,8 +276,9 @@
                                         <!-- stat 1 -->
                                         <div class="media p-4">
                                             <div class="media-body">
-                                                <img src="{{ URL::asset('admin/assets/images/users/empleado.png')}}"
-                                                    class="mr-2" alt="" height="20" />
+                                                <img id="imgsmEmpleado"
+                                                    src="{{URL::asset('admin/assets//images/users/avatar-7.png') }}"
+                                                    class="avatar avatar-128 rounded-circle mr-2 img-thumbnail" />
                                                 <span class="text-muted" id="colaborador"
                                                     style="text-transform:uppercase;"></span>
                                             </div>
@@ -286,10 +287,12 @@
                                     <div class="col-xl-6 col-sm-12 text-center">
                                         <!-- stat 2 -->
                                         <div class="media p-4">
-                                            <div class="media-body">
-                                                <img src="{{asset('landing/images/laptop.svg')}}" height="20"
-                                                    class="mr-2" alt="" />
+                                            <div class="media-body mt-3">
+                                                <span class="text-muted" style="font-weight: 600">Total
+                                                    Dispositivos:</span>
                                                 <span class="text-muted" id="totalPC"></span>
+                                                <!--<img src="{{asset('landing/images/laptop.svg')}}" height="20"
+                                                    class="mr-2" alt="" />-->
                                             </div>
                                         </div>
                                     </div>
@@ -303,9 +306,6 @@
                     <div class="col-xl-12">
                         <div class="card">
                             <div class="card-body">
-                                <h6 class="mt-0 header-title" id="pcPrincipal" style="color: #163552;">DETALLES DE PC
-                                </h6>
-
                                 <div class="row">
                                     <div class="col-lg-8 col-md-6">
                                         <div class="mt-3" id="detalleLicencia">
@@ -814,6 +814,10 @@
                 var verDetalle = "";
                 var verContainerE = $('#divEstado');
                 var verDetalleE = "";
+                $('#imgsmEmpleado').attr("src", "admin/assets//images/users/avatar-7.png");
+                if (data[0].foto != "") {
+                    $('#imgsmEmpleado').attr("src", "fotosEmpleado/" + data[0].foto);
+                }
                 if (data[0].total == 0) {
                     $('#rowDetalles').hide();
                 } else {
@@ -821,8 +825,8 @@
                     for (var i = 0; i < data[0].licencia.length; i++) {
                         console.log(data[0].licencia[i]);
                         detalle +=
-                            `<p class="mb-2"><img src="{{asset('landing/images/laptop.svg')}}" height="20"
-                                                    class="mr-2" alt="" />  ${i+1}</p>
+                            `<p class="mb-2" style="color: #4B4B5A;font-weight: bold"><img src="{{asset('landing/images/laptop.svg')}}" height="20"
+                                                    class="mr-2" alt="" /> DISPOSITIVO  ${i+1}</p>
                             <h5 class="font-size-16" id="lic${data[0].licencia[i].id}">${data[0].licencia[i].licencia}</h5>`;
                         verDetalle += `<label for="sw-default">Activación Dispositivo</label>
                                         <input class="form-control" tabindex="4" value="${data[0].licencia[i].licencia}" disabled>`;
