@@ -121,7 +121,7 @@ class apiController extends Controller
         $empleado = $request->get('emple_id');
 
         $proyecto_empleado = DB::table('proyecto_empleado as pe')
-            ->where('Proye_empleado_id', $empleado)
+            ->where('empleado_emple_id', $empleado)
             ->get()->first();
 
         if ($proyecto_empleado) {

@@ -874,7 +874,10 @@ $('#guardarEmpleado').click(function () {
 
 
 function datosPersona(method) {
-    var celularC = $('#codigoCelular').val() + $('#celular').val();
+    var celularC = '';
+    if ($('#celular').val() != '') {
+        celularC = $('#codigoCelular').val() + $('#celular').val();
+    }
     nuevoEmpleado = {
         nombres: $('#nombres').val(),
         apPaterno: $('#apPaterno').val(),
@@ -978,7 +981,10 @@ $('#actualizarEmpleado').click(function () {
 
 
 function datosPersonaA(method) {
-    var celularC = $('#v_codigoCelular').val() + $('#v_celular').val();
+    var celularC = '';
+    if ($('#v_celular').val() != '') {
+        celularC = $('#v_codigoCelular').val() + $('#v_celular').val();
+    }
     nuevoEmpleadoA = {
         nombres_v: $('#v_nombres').val(),
         apPaterno_v: $('#v_apPaterno').val(),
@@ -1152,6 +1158,7 @@ $('#cerrarEd').click(function () {
     $('#formNuevoEd').hide();
     $('#formNuevoEl').hide();
     $('#navActualizar').hide();
+    $()
     $('#m_fechaIE').combodate("clearValue");
     $('#m_fechaFE').combodate("clearValue");
     $('#checkboxFechaIE').prop('checked', false);
@@ -1162,6 +1169,12 @@ $('#cerrarEd').click(function () {
     $('#v_validNombres').hide();
     $('#v_validCorreo').hide();
     $('#v_emailR').hide();
+    $('input[type="date"]').val("");
+    $('input[type="file"]').val("");
+    $('input[type="email"]').val("");
+    $('input[type="number"]').val("");
+    $('select').val("");
+    $('#codigoCelular').val("+51");
     limpiar();
 
 });
@@ -1229,16 +1242,7 @@ $('#editarLocalA').hide();
 $('#editarNivelA').hide();
 $('#editarContratoA').hide();
 $('#validCel').hide();
-//*********** */
-/*$('#celular').on("change", function () {
-    var pattern = "/^9{1}|[0-9]{8,8}";
-    var valor = $('#celular').val().addMethod(pattern) ? true : false;
-    if (valor == false) {
-        $('#validCel').show();
-    }
-    console.log(valor);
-    $('#validCel').hide();
-});*/
+$('#v_validCel').hide();
 //************************Editar en los modal de agregar */
 //*******AREA***/
 $('#buscarArea').on("click", function () {
@@ -1514,3 +1518,11 @@ function limpiar() {
     $('#textContrato').val("");
 }
 //************************************** */
+/*$('#celular').change(function () {
+    var regex = RegExp("^9{1}[0-9]{8,8}");
+    if (regex.test($('#celular').val())) {
+        console.log(regex.test($('#celular').val()));
+    } else {
+        console.log(regex.test($('#celular').val()));
+    }
+});*/

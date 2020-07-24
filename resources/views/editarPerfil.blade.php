@@ -53,6 +53,7 @@
                     <img src="https://placehold.it/80x80" id="preview" class="avatar-xl rounded-circle img-thumbnail">
                     <input type="file" name="img[]" class="file" accept="image/*">
                     <div class="mr-6 ml-6 mt-1">
+                        &nbsp;
                         <a class="browse" style="cursor: pointer" data-toggle="tooltip" data-placement="right"
                             title="Seleccionar una imagen" data-original-title="">
                             <img src="{{asset('landing/images/photograph.svg')}}" height="20">

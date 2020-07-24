@@ -276,8 +276,9 @@
                                         <!-- stat 1 -->
                                         <div class="media p-4">
                                             <div class="media-body">
-                                                <img src="{{ URL::asset('admin/assets/images/users/empleado.png')}}"
-                                                    class="mr-2" alt="" height="20" />
+                                                <img id="imgsmEmpleado"
+                                                    src="{{URL::asset('admin/assets//images/users/avatar-7.png') }}"
+                                                    class="avatar avatar-128 rounded-circle mr-2 img-thumbnail" />
                                                 <span class="text-muted" id="colaborador"
                                                     style="text-transform:uppercase;"></span>
                                             </div>
@@ -286,10 +287,12 @@
                                     <div class="col-xl-6 col-sm-12 text-center">
                                         <!-- stat 2 -->
                                         <div class="media p-4">
-                                            <div class="media-body">
-                                                <img src="{{asset('landing/images/laptop.svg')}}" height="20"
-                                                    class="mr-2" alt="" />
+                                            <div class="media-body mt-3">
+                                                <span class="text-muted" style="font-weight: 600">Total
+                                                    Dispositivos:</span>
                                                 <span class="text-muted" id="totalPC"></span>
+                                                <!--<img src="{{asset('landing/images/laptop.svg')}}" height="20"
+                                                    class="mr-2" alt="" />-->
                                             </div>
                                         </div>
                                     </div>
@@ -303,9 +306,6 @@
                     <div class="col-xl-12">
                         <div class="card">
                             <div class="card-body">
-                                <h6 class="mt-0 header-title" id="pcPrincipal" style="color: #163552;">DETALLES DE PC
-                                </h6>
-
                                 <div class="row">
                                     <div class="col-lg-8 col-md-6">
                                         <div class="mt-3" id="detalleLicencia">
@@ -568,8 +568,8 @@
                         src="{{asset('admin/images/edit.svg')}}" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
                     onclick="marcareliminar({{$tabla_empleados->emple_id}})" style="cursor: pointer"><img
                         src="{{asset('admin/images/delete.svg')}}" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a class="verEmpleado" onclick="$('#verEmpleadoDetalles').modal();" data-toggle="tooltip" data-placement="right" title="Ver Detalles"
-                    data-original-title="Ver Detalles" style="cursor:
+                <a class="verEmpleado" onclick="$('#verEmpleadoDetalles').modal();" data-toggle="tooltip"
+                    data-placement="right" title="Ver Detalles" data-original-title="Ver Detalles" style="cursor:
                         pointer">
                     <img src="{{asset('landing/images/see.svg')}}" height="20">
                 </a>
@@ -707,6 +707,9 @@
 <script>
     $("#tablaEmpleado tbody tr").click(function () {
         $('#smartwizard1').smartWizard("reset");
+        $('#smartwizardVer').smartWizard("reset");
+        $('#h5Ocultar').show();
+        $('#v_fotoV').attr("src", "landing/images/png.svg");
         //$(this).addClass('selected').siblings().removeClass('selected');
         var value = $(this).find('input[type=hidden]').val();
         $('#formNuevoEl').show();
@@ -761,6 +764,8 @@
                 $('#v_contrato').val(data[0].emple_tipoContrato);
                 $('#v_nivel').val(data[0].emple_nivel);
                 $('#v_local').val(data[0].emple_local);
+                $('#v_codigoCelular').val("+51");
+                $('#v_celular').val(data[0].emple_celular);
                 if(data[0].emple_celular != '' ){
                     celularSplit = data[0].emple_celular.split("+51");
                     console.log(celularSplit);
@@ -799,10 +804,20 @@
                 $('#licencia').text(data[0].licencia);
                 $('#detalleLicencia').empty();
                 $('#estadoLicencia').empty();
+                $('#divActvPC').empty();
+                $('#divEstado').empty();
                 var container = $('#detalleLicencia');
                 var detalle = "";
                 var containerDisponible = $('#estadoLicencia');
                 var disponible = "";
+                var verContainer = $('#divActvPC');
+                var verDetalle = "";
+                var verContainerE = $('#divEstado');
+                var verDetalleE = "";
+                $('#imgsmEmpleado').attr("src", "admin/assets//images/users/avatar-7.png");
+                if (data[0].foto != "") {
+                    $('#imgsmEmpleado').attr("src", "fotosEmpleado/" + data[0].foto);
+                }
                 if (data[0].total == 0) {
                     $('#rowDetalles').hide();
                 } else {
@@ -810,22 +825,31 @@
                     for (var i = 0; i < data[0].licencia.length; i++) {
                         console.log(data[0].licencia[i]);
                         detalle +=
-                            `<p class="mb-2"><img src="{{asset('landing/images/laptop.svg')}}" height="20"
-                                                    class="mr-2" alt="" />  ${i+1}</p>
+                            `<p class="mb-2" style="color: #4B4B5A;font-weight: bold"><img src="{{asset('landing/images/laptop.svg')}}" height="20"
+                                                    class="mr-2" alt="" /> DISPOSITIVO  ${i+1}</p>
                             <h5 class="font-size-16" id="lic${data[0].licencia[i].id}">${data[0].licencia[i].licencia}</h5>`;
+                        verDetalle += `<label for="sw-default">Activación Dispositivo</label>
+                                        <input class="form-control" tabindex="4" value="${data[0].licencia[i].licencia}" disabled>`;
                         if (data[0].licencia[i].disponible == 1) {
                             disponible +=
                                 `<p class="mb-2"><i class="uil-calendar-slash text-danger"></i>Estado</p>
                                             <h5 class="font-size-16"><a class="badge badge-soft-primary mr-2">Disponible</a></h5>`;
+                            verDetalleE += `<label for="sw-default">Estado</label>
+                            <h5 class="font-size-16"><a class="badge badge-soft-primary mr-2">Disponible</a></h5>`;
+                            
                         } else {
                             disponible +=
                                 `<input style="display: none;" id="idLicenciaND${data[0].emple_id}" value="${data[0].licencia[i].id}"><p class="mb-2"><i class="uil-calendar-slash text-danger"></i>Estado</p>
                                             <h5 class="font-size-16"><a data-toggle="tooltip" data-placement="right"
                                             title=" Al cambiar el estado de la licencia toda información del empleado en su PC será borrada" data-original-title="" onclick="$('#estadoLicenciaC').modal()" style="cursor: pointer" class="badge badge-soft-danger mr-2">No Disponible</a></h5>`;
+                            verDetalleE += `<label for="sw-default">Estado</label>
+                            <h5 class="font-size-16"><a class="badge badge-soft-danger mr-2">No Disponible</a></h5>`;
                         }
                     }
                     container.append(detalle);
                     containerDisponible.append(disponible);
+                    verContainer.append(verDetalle);
+                    verContainerE.append(verDetalleE);
                 }
 
                 $('#v_tipoDocV').val(data[0].tipoDoc_descripcion);
@@ -853,6 +877,11 @@
                 $('#v_nivelV').val(data[0].nivel_descripcion);
                 $('#v_localV').val(data[0].local_descripcion);
                 $('#v_codigoEmpleadoV').val(data[0].emple_codigo);
+                if(data[0].foto != ''){
+                    $('#v_fotoV').attr("src", "fotosEmpleado/" + data[0].foto);
+                    $('#h5Ocultar').hide();
+                }
+                $('#cantidadPC').val(data[0].total);
             },
             error: function () {}
         });
