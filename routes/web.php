@@ -84,6 +84,14 @@ Route::delete('/eliminarEmpleados', 'EmpleadoController@deleteAll');
 Route::get('numDoc', 'EmpleadoController@comprobarNumD');
 Route::get('email', 'EmpleadoController@comprobarCorreo');
 Route::get('emailE', 'EmpleadoController@comprobarCorreoEditar');
+Route::post('/empleado/calendarioEmpTemp', 'EmpleadoController@calendarioEmpTemp');
+Route::post('/empleado/storeCalendarioTem', 'EmpleadoController@storeCalendarioTem');
+Route::post('/empleado/storeIncidTem', 'EmpleadoController@storeIncidTem');
+Route::get('/empleado/vaciarcalend', 'EmpleadoController@vaciarcalend');
+Route::post('/empleado/vaciarcalendId', 'EmpleadoController@vaciarcalendId');
+Route::post('/empleado/registrarHorario', 'EmpleadoController@registrarHorario');
+Route::post('/empleado/guardarhorarioTem', 'EmpleadoController@guardarhorarioTem');
+Route::post('/empleado/vercalendario', 'EmpleadoController@vercalendarioEmpl');
 
 //AREA
 Route::post('/registrar/area', 'areaController@store');

@@ -709,6 +709,7 @@
         $('#smartwizard1').smartWizard("reset");
         //$(this).addClass('selected').siblings().removeClass('selected');
         var value = $(this).find('input[type=hidden]').val();
+        $('#idempleado').val(value);
         $('#formNuevoEl').show();
         $.ajax({
             async: false,
@@ -726,7 +727,7 @@
                 }
             },
             success: function (data) {
-
+                calendario3();
 
                 $('#v_tipoDoc').val(data[0].tipoDoc_descripcion);
                 $('#v_apPaterno').val(data[0].perso_apPaterno);
