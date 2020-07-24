@@ -1282,9 +1282,10 @@ use App\proyecto_empleado;
                                 </div>
                                 <div class="row">
                                     <br><br>
-                                    <div class="col-md-12  text-right">
+                                    <div class="col-md-11  text-right">
+                                        <br>
                                         <button type="button" id="guardarEmpleado"
-                                            class="btn btn-light">Guardar</button>
+                                            class="btn btn-dark">Guardar</button>
                                     </div>
                                 </div>
                                 <div id="horarioAsignar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
