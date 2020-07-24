@@ -105,6 +105,17 @@ $(document).ready(function () {
                 $('#validCorreo').show();
                 isStepValid = false;
             }
+            if ($('#celular').val() != '') {
+                var regex = RegExp("^9{1}[0-9]{8,8}");
+                if (regex.test($('#celular').val())) {
+                    console.log(regex.test($('#celular').val()));
+                    $('#validCel').hide();
+                } else {
+                    isStepValid = false;
+                    $('#validCel').show();
+                    console.log(regex.test($('#celular').val()));
+                }
+            }
             console.log(isStepValid)
         }
         return isStepValid;
@@ -254,4 +265,3 @@ $('#smartwizardVer').smartWizard({
     }
 
 });
-

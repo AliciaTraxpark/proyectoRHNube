@@ -1014,8 +1014,7 @@
                                                                 <input type="number" class="form-control" name="celular"
                                                                     id="celular" tabindex="8" maxlength="9"
                                                                     onkeypress="return isNumeric(event)"
-                                                                    oninput="maxLengthCheck(this)"
-                                                                    pattern="/^9{1}|[0-9]{8,8}+">
+                                                                    oninput="maxLengthCheck(this)">
                                                             </div>
                                                         </div>
                                                     </div>

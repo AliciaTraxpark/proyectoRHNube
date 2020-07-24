@@ -1514,3 +1514,11 @@ function limpiar() {
     $('#textContrato').val("");
 }
 //************************************** */
+/*$('#celular').change(function () {
+    var regex = RegExp("^9{1}[0-9]{8,8}");
+    if (regex.test($('#celular').val())) {
+        console.log(regex.test($('#celular').val()));
+    } else {
+        console.log(regex.test($('#celular').val()));
+    }
+});*/
