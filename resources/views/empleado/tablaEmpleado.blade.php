@@ -568,8 +568,8 @@
                         src="{{asset('admin/images/edit.svg')}}" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
                     onclick="marcareliminar({{$tabla_empleados->emple_id}})" style="cursor: pointer"><img
                         src="{{asset('admin/images/delete.svg')}}" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a class="verEmpleado" onclick="$('#verEmpleadoDetalles').modal();" data-toggle="tooltip" data-placement="right" title="Ver Detalles"
-                    data-original-title="Ver Detalles" style="cursor:
+                <a class="verEmpleado" onclick="$('#verEmpleadoDetalles').modal();" data-toggle="tooltip"
+                    data-placement="right" title="Ver Detalles" data-original-title="Ver Detalles" style="cursor:
                         pointer">
                     <img src="{{asset('landing/images/see.svg')}}" height="20">
                 </a>
@@ -802,10 +802,16 @@
                 $('#licencia').text(data[0].licencia);
                 $('#detalleLicencia').empty();
                 $('#estadoLicencia').empty();
+                $('#divActvPC').empty();
+                $('#divEstado').empty();
                 var container = $('#detalleLicencia');
                 var detalle = "";
                 var containerDisponible = $('#estadoLicencia');
                 var disponible = "";
+                var verContainer = $('#divActvPC');
+                var verDetalle = "";
+                var verContainerE = $('#divEstado');
+                var verDetalleE = "";
                 if (data[0].total == 0) {
                     $('#rowDetalles').hide();
                 } else {
@@ -816,19 +822,28 @@
                             `<p class="mb-2"><img src="{{asset('landing/images/laptop.svg')}}" height="20"
                                                     class="mr-2" alt="" />  ${i+1}</p>
                             <h5 class="font-size-16" id="lic${data[0].licencia[i].id}">${data[0].licencia[i].licencia}</h5>`;
+                        verDetalle += `<label for="sw-default">Activación PC</label>
+                                        <input class="form-control" tabindex="4" value="${data[0].licencia[i].licencia}" disabled>`;
                         if (data[0].licencia[i].disponible == 1) {
                             disponible +=
                                 `<p class="mb-2"><i class="uil-calendar-slash text-danger"></i>Estado</p>
                                             <h5 class="font-size-16"><a class="badge badge-soft-primary mr-2">Disponible</a></h5>`;
+                            verDetalleE += `<label for="sw-default">Estado</label>
+                            <h5 class="font-size-16"><a class="badge badge-soft-primary mr-2">Disponible</a></h5>`;
+                            
                         } else {
                             disponible +=
                                 `<input style="display: none;" id="idLicenciaND${data[0].emple_id}" value="${data[0].licencia[i].id}"><p class="mb-2"><i class="uil-calendar-slash text-danger"></i>Estado</p>
                                             <h5 class="font-size-16"><a data-toggle="tooltip" data-placement="right"
                                             title=" Al cambiar el estado de la licencia toda información del empleado en su PC será borrada" data-original-title="" onclick="$('#estadoLicenciaC').modal()" style="cursor: pointer" class="badge badge-soft-danger mr-2">No Disponible</a></h5>`;
+                            verDetalleE += `<label for="sw-default">Estado</label>
+                            <h5 class="font-size-16"><a class="badge badge-soft-danger mr-2">No Disponible</a></h5>`;
                         }
                     }
                     container.append(detalle);
                     containerDisponible.append(disponible);
+                    verContainer.append(verDetalle);
+                    verContainerE.append(verDetalleE);
                 }
 
                 $('#v_tipoDocV').val(data[0].tipoDoc_descripcion);
@@ -860,6 +875,7 @@
                     $('#v_fotoV').attr("src", "fotosEmpleado/" + data[0].foto);
                     $('#h5Ocultar').hide();
                 }
+                $('#cantidadPC').val(data[0].total);
             },
             error: function () {}
         });
