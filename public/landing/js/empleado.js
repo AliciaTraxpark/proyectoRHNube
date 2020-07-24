@@ -1229,16 +1229,7 @@ $('#editarLocalA').hide();
 $('#editarNivelA').hide();
 $('#editarContratoA').hide();
 $('#validCel').hide();
-//*********** */
-/*$('#celular').on("change", function () {
-    var pattern = "/^9{1}|[0-9]{8,8}";
-    var valor = $('#celular').val().addMethod(pattern) ? true : false;
-    if (valor == false) {
-        $('#validCel').show();
-    }
-    console.log(valor);
-    $('#validCel').hide();
-});*/
+$('#v_validCel').hide();
 //************************Editar en los modal de agregar */
 //*******AREA***/
 $('#buscarArea').on("click", function () {

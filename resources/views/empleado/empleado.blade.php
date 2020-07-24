@@ -1357,6 +1357,8 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Celular</label>
+                                                        <span id="v_validCel" style="color: red;">*Número
+                                                            incorrecto.</span>
                                                         <div class="row">
                                                             <div class="col-4">
                                                                 <select class="form-control" id="v_codigoCelular">
