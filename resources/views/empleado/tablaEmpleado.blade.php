@@ -824,7 +824,7 @@
                             `<p class="mb-2"><img src="{{asset('landing/images/laptop.svg')}}" height="20"
                                                     class="mr-2" alt="" />  ${i+1}</p>
                             <h5 class="font-size-16" id="lic${data[0].licencia[i].id}">${data[0].licencia[i].licencia}</h5>`;
-                        verDetalle += `<label for="sw-default">Activación PC</label>
+                        verDetalle += `<label for="sw-default">Activación Dispositivo</label>
                                         <input class="form-control" tabindex="4" value="${data[0].licencia[i].licencia}" disabled>`;
                         if (data[0].licencia[i].disponible == 1) {
                             disponible +=
