@@ -9,5 +9,5 @@ class eventos_usuario extends Model
     //
     protected $table = 'eventos_usuario';
     protected $primaryKey = 'id';
-    protected $fillable = ['id','title','color','textColor','start','end','tipo','user_id'];
+    protected $fillable = ['id','title','color','textColor','start','end','tipo','users_id','id_calendario'];
 }

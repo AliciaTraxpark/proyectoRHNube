@@ -29,28 +29,37 @@ class calendarioController extends Controller
                 //copiar tabla
                 $evento = eventos::all();
 
+                $calendarioR = new calendario();
+                $calendarioR->users_id = Auth::user()->id;
+                $calendarioR->calendario_nombre='Perú';
+                $calendarioR->save();
+                 foreach ($evento as $eventos) {
+                    $eventos_usuario = new eventos_usuario();
 
-                foreach ($evento as $eventos) {
-                    $calendarioR = new calendario();
-                    $calendarioR->users_id = Auth::user()->id;
-                    $calendarioR->eventos_id = $eventos->id;
-                    $calendarioR->calen_pais = 173;
-                    $calendarioR->save();
+                    $eventos_usuario->users_id = Auth::user()->id;
+                    $eventos_usuario->title =$eventos->title;
+                    $eventos_usuario->color =$eventos->color;
+                    $eventos_usuario->textColor =$eventos->textColor;
+                    $eventos_usuario->start =$eventos->start;
+                    $eventos_usuario->end =$eventos->end;
+                    $eventos_usuario->tipo =$eventos->tipo;
+                    $eventos_usuario->id_calendario =$calendarioR->calen_id;
+                    $eventos_usuario->save();
                 }
             }
+
+            $calendarioSel = calendario::where('users_id', '=', Auth::user()->id)->get();
             //FUNCIONA OK
 
 
-            return view('calendario.calendario', ['pais' => $paises, 'departamento' => $departamento]);
+            return view('calendario.calendario', ['pais' => $paises, 'calendario' => $calendarioSel]);
         } else {
             return redirect(route('principal'));
         }
     }
     public function store(Request $request)
     {
-        //para insertar a calendario general
-        /*   $datosEvento=request()->except(['_method']);
-      eventos::insert($datosEvento); */
+
         $evento = eventos::all();
         $calendario = calendario::all();
 
@@ -58,7 +67,6 @@ class calendarioController extends Controller
             $calendarioR = new calendario();
             $calendarioR->users_id = Auth::user()->id;
             $calendarioR->eventos_id = $eventos->id;
-            $calendarioR->calen_departamento = $request->get('departamento');
 
             $calendarioR->save();
         }
@@ -70,65 +78,15 @@ class calendarioController extends Controller
         $eventos_usuario = DB::table('eventos_usuario')
             ->select(['id', 'title', 'color', 'textColor', 'start', 'end', 'tipo'])
             ->where('Users_id', '=', Auth::user()->id)
-            ->where('evento_departamento', '=', null)
-            ->where('evento_pais', '=', 173)
+
             ->union($eventos)
             ->get();
         return response()->json($eventos_usuario);
     }
-    public function showDep(Request $request)
-    {
 
-        $pais = $request->get('pais');
-        $depa = $request->get('departamento');
 
-        if ($pais == 173) {
-            $eventos = DB::table('eventos')->select(['id', 'title', 'color', 'textColor', 'start', 'end', 'tipo']);
-
-            $eventos_usuario1 = DB::table('eventos_usuario')
-                ->select(['id', 'title', 'color', 'textColor', 'start', 'end', 'tipo'])
-                ->where('Users_id', '=', Auth::user()->id)
-                ->where('evento_departamento', '=', $depa)
-                ->where('evento_pais', '=', 173)
-                ->union($eventos)
-
-                ->get();
-            return response()->json($eventos_usuario1);
-        } else {
-            $eventos_usuario1 = DB::table('eventos_usuario')
-                ->select(['id', 'title', 'color', 'textColor', 'start', 'end', 'tipo'])
-                ->where('Users_id', '=', Auth::user()->id)
-                ->where('evento_pais', '=', $pais)
-
-                ->get();
-            return response()->json($eventos_usuario1);
-        }
-    }
-    public function showDepconfirmar(Request $request)
-    {
-        $pais = $request->get('pais');
-        $depa = $request->get('departamento');
-        $existencia = DB::table('calendario')
-            ->select('users_id', 'calen_departamento')
-            ->where('users_id', '=', Auth::user()->id)
-            ->where('calen_departamento', '=', $depa)
-            ->where('calen_pais', '=', $pais)
-
-            ->get();
-        if (count($existencia) >= 1) {
-
-            return (1);
-        } else {
-            $calendario = new calendario();
-            $calendario->users_id = Auth::user()->id;
-            $calendario->calen_departamento = $depa;
-            $calendario->calen_pais = $pais;
-            $calendario->save();
-        }
-    }
-
-    public function destroy($id)
-    {
+    public function destroy(Request $request)
+    {  $id=$request->id;
         //calendario::where('eventos_id',$id)->delete();
         $eventos_usuario = eventos_usuario::findOrFail($id);
         eventos_usuario::destroy($id);
@@ -145,21 +103,68 @@ class calendarioController extends Controller
                 //copiar tabla
                 $evento = eventos::all();
 
+                $calendarioR = new calendario();
+                $calendarioR->users_id = Auth::user()->id;
+                $calendarioR->calendario_nombre='Perú';
+                $calendarioR->save();
+                 foreach ($evento as $eventos) {
+                    $eventos_usuario = new eventos_usuario();
 
-                foreach ($evento as $eventos) {
-                    $calendarioR = new calendario();
-                    $calendarioR->users_id = Auth::user()->id;
-                    $calendarioR->eventos_id = $eventos->id;
-                    $calendarioR->calen_pais = 173;
-                    $calendarioR->save();
+                    $eventos_usuario->users_id = Auth::user()->id;
+                    $eventos_usuario->title =$eventos->title;
+                    $eventos_usuario->color =$eventos->color;
+                    $eventos_usuario->textColor =$eventos->textColor;
+                    $eventos_usuario->start =$eventos->start;
+                    $eventos_usuario->end =$eventos->end;
+                    $eventos_usuario->tipo =$eventos->tipo;
+                    $eventos_usuario->id_calendario =$calendarioR->calen_id;
+                    $eventos_usuario->save();
                 }
             }
+
+            $calendarioSel = calendario::where('users_id', '=', Auth::user()->id)->get();
             //FUNCIONA OK
 
 
-            return view('calendario.calendarioMenu', ['pais' => $paises, 'departamento' => $departamento]);
+            return view('calendario.calendarioMenu', ['pais' => $paises, 'calendario' => $calendarioSel]);
         } else {
             return redirect(route('principal'));
         }
+    }
+
+    public function registrarnuevo(Request $request){
+        $nombrecal=$request->nombrecal;
+
+        $evento = eventos::all();
+
+        $calendarioR = new calendario();
+        $calendarioR->users_id = Auth::user()->id;
+        $calendarioR->calendario_nombre=$nombrecal;
+        $calendarioR->save();
+
+            foreach ($evento as $eventos) {
+            $eventos_usuario = new eventos_usuario();
+
+            $eventos_usuario->users_id = Auth::user()->id;
+            $eventos_usuario->title =$eventos->title;
+            $eventos_usuario->color =$eventos->color;
+            $eventos_usuario->textColor =$eventos->textColor;
+            $eventos_usuario->start =$eventos->start;
+            $eventos_usuario->end =$eventos->end;
+            $eventos_usuario->tipo =$eventos->tipo;
+            $eventos_usuario->id_calendario =$calendarioR->calen_id;
+            $eventos_usuario->save();
+        }
+
+        return $calendarioR;
+
+    }
+
+    public function cargarcalendario(Request $request){
+        $idcalendario=$request->idcalendario;
+        $eventos_usuario=eventos_usuario::where('users_id','=',Auth::user()->id)
+        ->where('id_calendario','=',$idcalendario)
+        ->get();
+        return $eventos_usuario;
     }
 }
