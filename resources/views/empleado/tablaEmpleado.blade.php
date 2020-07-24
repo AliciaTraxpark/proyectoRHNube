@@ -363,31 +363,12 @@
                                         <!-- stat 1 -->
                                         <div class="media p-4">
                                             <div class="media-body">
-                                                <img src="{{ URL::asset('admin/assets/images/users/empleado.png')}}"
-                                                    class="mr-2" alt="" height="20" />
+                                                <img id="imgsmEmpleadoAndroid"
+                                                    src="{{URL::asset('admin/assets//images/users/avatar-7.png') }}"
+                                                    class="avatar avatar-128 rounded-circle mr-2 img-thumbnail" />
                                                 <span class="text-muted" id="colaboradorA"
                                                     style="text-transform:uppercase;"></span>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- details-->
-                <div class="row" id="notifEnlace">
-                    <div class="col-xl-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h6 class="mt-0 header-title">DETALLES DE LA APLICACIÓN</h6>
-
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6 text-center">
-                                        <div class="mt-4">
-                                            <img src="{{asset('landing/images/playstore.svg')}}" height="20"
-                                                class="mr-2" alt="" />
-                                            <p class="mb-2">Play Store</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 text-center">
@@ -401,9 +382,34 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- end card -->
                     </div>
                 </div>
+                <!-- details-->
+                <!--<div class="row" id="notifEnlace">
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 text-center">
+                                        <div class="mt-2">
+                                            <img src="{{asset('landing/images/playstore.svg')}}" height="20"
+                                                class="mr-2" alt="" />
+                                            <p class="mb-2">Play Store</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 text-center">
+                                        <div class="mt-2">
+                                            <a href="javascript:getlink();" data-toggle="tooltip" data-placement="right"
+                                                title="copiar enlace" data-original-title="">
+                                                <img src="{{asset('landing/images/document.svg')}}" height="30">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
                 <!-- end row -->
             </div>
             <div class="modal-footer">
@@ -815,8 +821,10 @@
                 var verContainerE = $('#divEstado');
                 var verDetalleE = "";
                 $('#imgsmEmpleado').attr("src", "admin/assets//images/users/avatar-7.png");
+                $('#imgsmEmpleadoAndroid').attr("src", "admin/assets//images/users/avatar-7.png");
                 if (data[0].foto != "") {
                     $('#imgsmEmpleado').attr("src", "fotosEmpleado/" + data[0].foto);
+                    $('#imgsmEmpleadoAndroid').attr("src", "fotosEmpleado/" + data[0].foto);
                 }
                 if (data[0].total == 0) {
                     $('#rowDetalles').hide();
