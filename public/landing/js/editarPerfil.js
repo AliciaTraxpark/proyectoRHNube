@@ -1,3 +1,4 @@
+$('#guardarFoto').hide();
 function actualizarDatos() {
     $.ajax({
         async: false,
@@ -35,7 +36,6 @@ $('#fechaN').combodate({
     yearDescending: false,
 });
 $('[data-toggle="tooltip"]').tooltip();
-$('#guardarFoto').hide();
 $('#disabledDatosP :input').attr('disabled', true);
 $('#disabledDatosP button[type="button"]').hide();
 $('#editarDatosP').on("click", function () {
