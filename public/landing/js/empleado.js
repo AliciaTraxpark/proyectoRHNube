@@ -981,7 +981,10 @@ $('#actualizarEmpleado').click(function () {
 
 
 function datosPersonaA(method) {
-    var celularC = $('#v_codigoCelular').val() + $('#v_celular').val();
+    var celularC = '';
+    if ($('#v_celular').val() != '') {
+        celularC = $('#v_codigoCelular').val() + $('#v_celular').val();
+    }
     nuevoEmpleadoA = {
         nombres_v: $('#v_nombres').val(),
         apPaterno_v: $('#v_apPaterno').val(),

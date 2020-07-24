@@ -482,10 +482,9 @@ class EmpleadoController extends Controller
         if ($objEmpleado['nivel_v'] != '') {
             $empleado->emple_nivel = $objEmpleado['nivel_v'];
         }
-        $empleado->emple_celular = '';
-        if ($empleado->emple_celular != '') {
-            $empleado->emple_celular = $objEmpleado['celular_v'];
-        }
+
+        $empleado->emple_celular = $objEmpleado['celular_v'];
+
         $empleado->emple_telefono = $objEmpleado['telefono_v'];
         $empleado->emple_Correo = $objEmpleado['correo_v'];
         $empleado->emple_fechaIC = $objEmpleado['fechaI_v'];
