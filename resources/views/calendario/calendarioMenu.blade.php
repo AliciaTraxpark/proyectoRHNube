@@ -390,23 +390,7 @@ background-color: #ffffff !important;
                         <div class="col-md-11" id="calendar1">
 
                         </div>
-                        <div class="col-md-1" style="top:86px">
-                            <div class="row">
-                                <div class="col-md-6" style="background:
-                                    #f9e9e9;
-                                    height: 35px;"><h1>&nbsp;</h1></div>
-                                <div class="col-md-6"><label for="">Dias de
-                                        Descanso</label></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6" style="background:
-                                    #f9f9f9;
-                                    height: 35px;"><h1>&nbsp;</h1></div>
-                                <div class="col-md-6"><label for="">Dias
-                                        laborables</label></div>
-                            </div>
-
-             </div> <!-- end card body-->
+                        
               <div class="card-footer">
                 <div class="row">
                 </div>
