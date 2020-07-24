@@ -1169,6 +1169,7 @@ $('#cerrarEd').click(function () {
     $('#v_validNombres').hide();
     $('#v_validCorreo').hide();
     $('#v_emailR').hide();
+    $('#v_validCel').hide();
     $('input[type="date"]').val("");
     $('input[type="file"]').val("");
     $('input[type="email"]').val("");
