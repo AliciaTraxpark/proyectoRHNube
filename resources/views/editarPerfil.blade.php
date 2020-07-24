@@ -52,19 +52,19 @@
                     <input style="display: none;" name="nameFoto" id="nameFoto">
                     <img src="https://placehold.it/80x80" id="preview" class="avatar-xl rounded-circle img-thumbnail">
                     <input type="file" name="img[]" class="file" accept="image/*">
-                    <div class="mr-3 ml-3 mt-1">
+                    <div class="mr-6 ml-6 mt-1">
                         <a class="browse" style="cursor: pointer" data-toggle="tooltip" data-placement="right"
                             title="Seleccionar una imagen" data-original-title="">
-                            <img src="{{asset('landing/images/ui.svg')}}" height="30">
+                            <img src="{{asset('landing/images/photograph.svg')}}" height="20">
                         </a>
                         &nbsp;&nbsp;
                         <a id="guardarFoto" style="cursor: pointer" data-toggle="tooltip" data-placement="right"
                             title="Subir imagen" data-original-title="">
-                            <img src="{{asset('landing/images/export.svg')}}" height="30">
+                            <img src="{{asset('landing/images/upload.svg')}}" height="20">
                         </a>
                     </div>
                     <h5 id="h5Nombres" class="mt-2 mb-0"
-                        style="text-transform: capitalize;color: #163552;font-weight: bold">
+                        style="text-transform: capitalize;color: #4B4B5A;font-weight: bold">
                         {{$persona->perso_nombre}}
                         {{$persona->perso_apPaterno}} {{$persona->perso_apMaterno}}</h5>
                     <h6 id="h6Empresa" class="text-muted font-weight-normal mt-2 mb-0">
@@ -82,7 +82,7 @@
     <div class="col-xl-12">
         <div class="card">
             <div class="card-body" id="disabledDatosP">
-                <h4 class="mb-3 header-title mt-0" style="color: #163552">DATOS PERSONALES
+                <h4 class="mb-3 header-title mt-0" style="color: #4B4B5A">DATOS PERSONALES
                     &nbsp;&nbsp;&nbsp;
                     <a id="editarDatosP" data-toggle="tooltip" data-placement="right" title="Editar Datos"
                         data-original-title="" style="cursor: pointer;">
@@ -163,7 +163,7 @@
     <div class="col-xl-12">
         <div class="card">
             <div class="card-body" id="disabledDatosE">
-                <h4 class="mb-3 header-title mt-0" style="color: #163552">DATOS DE LA EMPRESA
+                <h4 class="mb-3 header-title mt-0" style="color: #4B4B5A">DATOS DE LA EMPRESA
                     &nbsp;&nbsp;&nbsp;
                     <a id="editarDatosE" data-toggle="tooltip" data-placement="right" title="Editar Datos"
                         data-original-title="" style="cursor: pointer;">
