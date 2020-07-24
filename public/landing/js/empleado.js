@@ -874,7 +874,10 @@ $('#guardarEmpleado').click(function () {
 
 
 function datosPersona(method) {
-    var celularC = $('#codigoCelular').val() + $('#celular').val();
+    var celularC = '';
+    if ($('#celular').val() != '') {
+        celularC = $('#codigoCelular').val() + $('#celular').val();
+    }
     nuevoEmpleado = {
         nombres: $('#nombres').val(),
         apPaterno: $('#apPaterno').val(),
@@ -1152,6 +1155,7 @@ $('#cerrarEd').click(function () {
     $('#formNuevoEd').hide();
     $('#formNuevoEl').hide();
     $('#navActualizar').hide();
+    $()
     $('#m_fechaIE').combodate("clearValue");
     $('#m_fechaFE').combodate("clearValue");
     $('#checkboxFechaIE').prop('checked', false);
@@ -1162,6 +1166,12 @@ $('#cerrarEd').click(function () {
     $('#v_validNombres').hide();
     $('#v_validCorreo').hide();
     $('#v_emailR').hide();
+    $('input[type="date"]').val("");
+    $('input[type="file"]').val("");
+    $('input[type="email"]').val("");
+    $('input[type="number"]').val("");
+    $('select').val("");
+    $('#codigoCelular').val("+51");
     limpiar();
 
 });
