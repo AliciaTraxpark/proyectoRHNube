@@ -123,8 +123,8 @@ class horarioController extends Controller
     }
 
     public function tablaHorario()
-    {
-        $tabla_empleado1 = DB::table('empleado as e')
+    {   $horario=horario::where('user_id', '=', Auth::user()->id)->get();
+        /* $tabla_empleado1 = DB::table('empleado as e')
             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
             ->leftJoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
@@ -145,10 +145,11 @@ class horarioController extends Controller
             ->where('e.users_id', '=', Auth::user()->id)
 
             ->groupBy('e.emple_id')
-            //->havingRaw("COUNT(e.emple_id) > 1")
-            ->get();
+
+            ->get(); */
         //dd($tabla_empleado);
-        return view('horarios.tablaEmpleado', ['tabla_empleado' => $tabla_empleado1]);
+       /*  return view('horarios.tablaHorario', ['tabla_empleado' => $tabla_empleado1]); */
+       return view('horarios.tablaHorario',['horario'=>$horario]);
     }
 
     public function verDataEmpleado(Request $request)

@@ -718,6 +718,10 @@
         $('#v_fotoV').attr("src", "landing/images/png.svg");
         //$(this).addClass('selected').siblings().removeClass('selected');
         var value = $(this).find('input[type=hidden]').val();
+        $('#selectCalendario').val("Asignar calendario");
+        $('#selectHorario').val("Seleccionar horario");
+        $('#selectCalendario_ed').val("Asignar calendario");
+
         $('#idempleado').val(value);
         $('#formNuevoEl').show();
         $.ajax({
@@ -747,7 +751,33 @@
                         .val(data[0].iddistN))
                 });
 
+                $.ajax({
+                type:"POST",
+                url: "/empleado/calendarioEditar",
+                data: {
+                    idempleado:value
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                statusCode: {
+                    419: function () {
+                        location.reload();
+                    }
+                },
+                success: function (data) {
+                    if(data==1){
+                        $('#MostrarCa_e').show();
+                        $('#calendarInv_ed').show();
+                    }
+                    else{
 
+                    }
+
+
+                },
+                error: function () {}
+            });
                 $('#v_dep').val(data[0].depar);
                 onSelectVDepart('#v_dep').then(function () {
                     $('#v_prov').val(data[0].proviId);
@@ -845,7 +875,7 @@
                                             <h5 class="font-size-16"><a class="badge badge-soft-primary mr-2">Disponible</a></h5>`;
                             verDetalleE += `<label for="sw-default">Estado</label>
                             <h5 class="font-size-16"><a class="badge badge-soft-primary mr-2">Disponible</a></h5>`;
-                            
+
                         } else {
                             disponible +=
                                 `<input style="display: none;" id="idLicenciaND${data[0].emple_id}" value="${data[0].licencia[i].id}">
