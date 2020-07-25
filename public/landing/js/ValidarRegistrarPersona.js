@@ -129,11 +129,18 @@ function agregarempleado() {
 }
 
 function registerP() {
+    var emailCelular = $('#email').val().split("@");
+    var emailC;
+    if (emailCelular.length == 2) {
+        emailC = $('#email').val();
+    } else {
+        emailC = "+51" + $('#email').val();
+    }
     var nombres = $('#nombres').val();
     var apPaterno = $('#apPaterno').val();
     var apMaterno = $('#apMaterno').val();
     var direccion = $('#direccion').val();
-    var email = $('#email').val();
+    var email = emailC;
     var password = $('#password').val();
     var dia_fecha = $('#dia_fecha').val();
     var mes_fecha = $('#mes_fecha').val();
