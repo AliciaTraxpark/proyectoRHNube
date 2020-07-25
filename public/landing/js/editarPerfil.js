@@ -1,4 +1,5 @@
 $('#guardarFoto').hide();
+
 function actualizarDatos() {
     $.ajax({
         async: false,
@@ -27,6 +28,12 @@ function actualizarDatos() {
                 $('#imgsm').attr("src", "fotosUser/" + data.foto);
                 $('#imgxs').attr("src", "fotosUser/" + data.foto);
             }
+            $('#depE').val(data.organi_departamento);
+            onSelectDepartamentoOrgani('#depE').then(function () {
+                $('#provE').val(data.organi_provincia);
+                onSelectProvinciaOrgani('#provE').then((result) => $('#distE')
+                    .val(data.organi_distrito))
+            });
         },
         error: function (data) {}
     });
