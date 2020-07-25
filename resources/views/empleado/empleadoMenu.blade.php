@@ -41,7 +41,9 @@ use App\proyecto_empleado;
     #calendarInv>div.fc-view-container>div>table>tbody {
         background: #f4f4f4;
     }
-
+    #calendarInv_ed>div.fc-view-container>div>table>tbody {
+        background: #f4f4f4;
+    }
     .page-item.active .page-link {
         background-color: #e3eaef;
         border-color: #e3eaef;
@@ -117,6 +119,13 @@ use App\proyecto_empleado;
     .form-control:disabled {
         background-color: #fcfcfc;
     }
+    .fc-event, .fc-event-dot {
+   /*  background-color: #d1c3c3; */
+    font-size: 12.2px!important;
+    margin: 2px 2px;
+    cursor:url("../landing/images/cruz1.svg"), auto;
+    font-weight: 600;
+}
 </style>
 <div class="row page-title" style="padding-right: 20px;">
     <div class="col-md-8">
@@ -1217,6 +1226,15 @@ use App\proyecto_empleado;
                             <div id="sw-default-step-4" class="setup-content">
                                 <div class="row">
                                     <div class="col-md-12">
+                                        @if (count($calendario) === 0)
+                                        <div class="col-md-12 text-center">
+                                            <h5>No existe calendarios registrados</h5>
+                                        </div>
+                                        <div style="display: none"> <div class="col-md-10" id="calendarInv" style="display: none!important"></div></div>
+
+
+                                       </div>
+                                        @else
                                         <div class="form-group row">
                                             <label style="font-weight: 600;font-size: 14px;"
                                                 class="col-lg-5 col-form-label text-right" for="simpleinput">Calendario
@@ -1233,11 +1251,11 @@ use App\proyecto_empleado;
                                             </div>
                                         </div>
 
-
-
                                     </div>
                                     <div class="col-md-1"><br></div>
-                                    <div class="col-md-10" id="calendarInv"></div> <input type="hidden" id="pruebaEnd">
+                                    <div class="col-md-10" id="calendarInv"></div>
+                                    @endif
+                                     <input type="hidden" id="pruebaEnd">
                                     <input type="hidden" id="pruebaStar">
                                     <div class="col-md-10" id="calendar" style="display: none"></div>
                                     <div class="col-md-1"><br></div>
@@ -1385,19 +1403,8 @@ use App\proyecto_empleado;
                                                     <div class="col-md-12">
                                                         <form id="frmHor" action="javascript:registrarHorario()">
                                                             <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label for="">Tipo de horario:</label>
-                                                                        <select
-                                                                            class="form-control custom-select custom-select-sm"
-                                                                            id="tipHorario">
-                                                                            <option>Normal</option>
-                                                                            <option>Guardía</option>
-                                                                            <option>Nocturno</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6"><label for=""><br></label>
+
+                                                                <div class="col-md-12"><label for=""><br></label>
                                                                     <div class="form-check">
 
                                                                         <input type="checkbox" class="form-check-input"
@@ -1405,6 +1412,7 @@ use App\proyecto_empleado;
                                                                         <label class="form-check-label"
                                                                             for="exampleCheck1">Aplicar
                                                                             sobretiempo</label>
+                                                                        <br><br>
                                                                     </div>
                                                                 </div>
 
@@ -1456,7 +1464,7 @@ use App\proyecto_empleado;
                                                     <div class="row">
                                                         <div class="col-md-12 text-right">
                                                             <button type="button" class="btn btn-light btn-sm "
-                                                                data-dismiss="modal">Cancelar</button>
+                                                                onclick="$('#horarioAgregar').modal('hide')">Cancelar</button>
                                                             <button type="submit" name=""
                                                                 style="background-color: #163552;"
                                                                 class="btn btn-sm ">Guardar</button>
@@ -1492,6 +1500,7 @@ use App\proyecto_empleado;
                             <li><a href="#persona-step-1">Personales</a></li>
                             <li><a href="#sw-default-step-2">Empresarial</a></li>
                             <li><a href="#sw-default-step-3">Foto</a></li>
+                            <li><a href="#sw-default-step-4">Calendario</a></li>
                             <!--<div class="col-md-4 text-left" id="navActualizar" style="display: flex;
                             align-items: center;cursor: pointer;"><a style="color: #3d3d3d;" id="actualizarEmpleado">
                                     <img src="{{asset('admin/images/processing.svg')}}" height="18">
@@ -1816,6 +1825,34 @@ use App\proyecto_empleado;
                                             style="background-color: #163552;color: #ffffff;">Actualizar</button>
                                     </div>
                                 </div>
+                            </div>
+                            <div id="sw-default-step-4">
+                                <div class="row">
+                                    <div class="col-md-12" id="MostrarCa_e" style="display: none">
+                                        <div class="form-group row">
+                                            <label style="font-weight: 600;font-size: 14px;"
+                                                class="col-lg-5 col-form-label text-right" for="simpleinput">Calendario
+                                                de empleado:</label>
+                                            <div class="col-lg-5">
+                                                <select name="" id="selectCalendario_ed"
+                                                    class="form-control form-control-sm" style="margin-top: 4px;">
+                                                    <option hidden selected>Asignar calendario</option>
+                                                    @foreach ($calendario as $calendarios)
+                                                    <option class="" value="{{$calendarios->calen_id}}">
+                                                        {{$calendarios->calendario_nombre}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-1"><br></div>
+                                    <div class="col-md-10" id="calendarInv_ed" style="display:none"></div> <input type="hidden" id="pruebaEnd_ed">
+                                    <input type="hidden" id="pruebaStar_ed">
+                                    <div class="col-md-10" id="calendar_ed" style="display: none"></div>
+                                    <div class="col-md-1"><br></div>
+                                </div> <!-- end row -->
+
                             </div>
 
                         </div>

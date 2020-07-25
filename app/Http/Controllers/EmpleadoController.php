@@ -851,7 +851,7 @@ class EmpleadoController extends Controller
     }
     public function registrarHorario(Request $request){
         $sobretiempo = $request->sobretiempo;
-        $tipHorario = $request->tipHorario;
+        
         $descripcion = $request->descripcion;
         $toleranciaH = $request->toleranciaH;
         $inicio = $request->inicio;
@@ -859,7 +859,7 @@ class EmpleadoController extends Controller
 
         $horario = new horario();
         $horario->horario_sobretiempo = $sobretiempo;
-        $horario->horario_tipo = $tipHorario;
+
         $horario->horario_descripcion = $descripcion;
         $horario->horario_tolerancia = $toleranciaH;
         $horario->horaI = $inicio;
@@ -913,6 +913,42 @@ class EmpleadoController extends Controller
                 ->get();
 
                 return $eventos_empleado;
+
+    }
+
+    public function calendarioEditar(Request $request){
+
+        $horario_empleado = DB::table('horario_empleado as he')
+                ->select(['id', 'title', 'color', 'textColor', 'start', 'end'])
+                /*  ->where('users_id', '=', Auth::user()->id) */
+                 ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+                 ->where('he.empleado_emple_id', '=', $request->get('idempleado'));
+
+                 $incidencias = DB::table('incidencias as i')
+                ->select(['idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_hora as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
+                ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
+                ->where('idi.id_empleado', '=', $request->get('idempleado'))
+                ->union($horario_empleado);
+
+
+                  $eventos_empleado= DB::table('eventos_empleado')
+                ->select(['evEmpleado_id as id','title','color','textColor','start','end'])
+                ->where('id_empleado','=',$request->get('idempleado'))
+                ->union($incidencias)
+                ->get();
+
+                if($eventos_empleado->isEmpty()){
+                    return 1;
+                } else{
+                    return $eventos_empleado;
+                }
+
+
+    }
+
+    public function eliminarEte(Request $request){
+        $ideve = $request->ideve;
+        $eventos_empleado_temp = eventos_empleado_temp::where('evEmpleadoT_id', '=', $ideve)->delete();
 
     }
 }

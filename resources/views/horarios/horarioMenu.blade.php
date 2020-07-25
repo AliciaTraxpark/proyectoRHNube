@@ -49,11 +49,6 @@ td.fc-day.fc-widget-content.fc-thu, td.fc-day.fc-widget-content.fc-fri, td.fc-da
     margin: 2px 2px;
     cursor:url("../landing/images/cruz1.svg"), auto;
     font-weight: 600;
-
-
-
-
-
 }
 a:not([href]):not([tabindex]){
     color: #000;
@@ -151,7 +146,7 @@ a:not([href]):not([tabindex]){
                 <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                 <div class="row">
                     <div class="col-md-6">
-                        <h4 style="font-weight: 500" class="header-title mt-0 "></i>Búsqueda de empleado</h4>
+                       
                     </div>
                     <div class=" col-md-6 col-xl-6 text-right">
                         <button class="btn btn-sm btn-primary" id="btnasignar" style="background-color: #183b5d;border-color:#62778c">Asignar horarios</button>

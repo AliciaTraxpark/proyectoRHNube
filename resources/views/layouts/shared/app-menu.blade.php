@@ -54,23 +54,35 @@ use Illuminate\Support\Facades\DB;
         @endif
 
     </li>
+
+
     <li>
 
-        @if ($usuario[0]->user_estado==0)
-        <a href="/horario">
+        <a href="javascript: void(0);">
             <i data-feather="clipboard"></i>
             <span>Horarios</span>
+            <span class="menu-arrow"></span>
         </a>
 
-        @else
-        <a href="/horarios">
-            <i data-feather="clipboard"></i>
-            <span>Horarios</span>
-        </a>
-        @endif
+        <ul class="nav-second-level" aria-expanded="false">
+            <li>
 
+                @if ($usuario[0]->user_estado==0)
+                <a href="/horario">
+
+                    <span>Asignar horario</span>
+                </a>
+
+                @else
+                <a href="/horarios">
+                   
+                    <span>Asignar horario</span>
+                </a>
+                @endif
+
+            </li>
+        </ul>
     </li>
-
 
     <li>
 

@@ -72,6 +72,55 @@ function calendario() {
             $('#calendarioAsignar').modal('show');
         },
         eventClick: function (info) {
+            id = info.event.id;
+            console.log(info);
+            console.log(info.event.id);
+            console.log(info.event.title);
+           var event = calendar.getEventById(id);
+
+            bootbox.confirm({
+                message: "¿Desea eliminar: "+info.event.title+" del horario?",
+                buttons: {
+                    confirm: {
+                        label: 'Aceptar',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'Cancelar',
+                        className: 'btn-light'
+                    }
+                },
+                callback: function (result) {
+                    if (result == true) {
+                        $.ajax({
+                            type: "post",
+                            url: "/empleado/eliminarEte",
+                            data: {
+                                ideve: info.event.id
+                            },
+                            statusCode: {
+
+                                419: function () {
+                                    location.reload();
+                                }
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function (data) {
+                            info.event.remove();
+                            calendar2.refetchEvents();
+
+                            },
+                            error: function (data) {
+                                alert('Ocurrio un error');
+                            }
+
+
+                        });
+                        }
+                }
+            });
 
         },
         editable: false,
@@ -117,6 +166,77 @@ function calendario() {
     calendar.render();
 }
 document.addEventListener('DOMContentLoaded', calendario);
+///calendario e n edit
+function calendario_edit() {
+    var calendarEl = document.getElementById('calendar_ed');
+    calendarEl.innerHTML = "";
+
+    var fecha = new Date();
+    var ano = fecha.getFullYear();
+    var id;
+
+    var configuracionCalendario = {
+        locale: 'es',
+        defaultDate: ano + '-01-01',
+        height: 400,
+        fixedWeekCount: false,
+        plugins: ['dayGrid', 'interaction', 'timeGrid'],
+
+        selectable: true,
+        selectMirror: true,
+        select: function (arg) {
+            $('#pruebaEnd_ed').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
+            $('#pruebaStar_ed').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
+            console.log(arg);
+            //$('#calendarioAsignar').modal('show');
+        },
+        eventClick: function (info) {
+
+        },
+        editable: false,
+        eventLimit: true,
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: ''
+        },
+        events: function(info, successCallback, failureCallback) {
+            var idcalendario=$('#selectCalendario_ed').val();
+            var datoscal;
+            $.ajax({
+                type:"POST",
+                url: "/empleado/calendarioEmpTemp",
+                data: {
+                    idcalendario
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                statusCode: {
+                    419: function () {
+                        location.reload();
+                    }
+                },
+                success: function (data) {
+
+                    successCallback(data);
+
+                },
+                error: function () {}
+            });
+
+        },
+
+       /*  events: "calendario/show", */
+
+    }
+    calendarioedit = new FullCalendar.Calendar(calendarEl, configuracionCalendario);
+ calendarioedit.setOption('locale', "Es");
+
+    calendarioedit.render();
+}
+document.addEventListener('DOMContentLoaded', calendario_edit);
+/////////////
 function laborableTem()  {
     $('#calendarioAsignar').modal('hide');
 
@@ -273,7 +393,46 @@ $('#selectCalendario').change(function (){
 
 })
 
+///edit select
+$('#selectCalendario_ed').change(function (){
+    $( "#detallehorario" ).empty();
+    idca=$('#selectCalendario').val();
+    $.ajax({
+        type: "post",
+        url: "/empleado/vaciarcalendId",
+        data: {
+            idca
 
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+
+            $('#calendarInv_ed').hide();
+            $('#calendar_ed').show();
+            $('#mensajeOc').hide();
+            $('#calendar2').show();
+
+            calendario_edit()
+           calendario2();
+           $( "#detallehorario" ).append( "<label style='color:#163552'>Se muestra calendario de "+$('select[id="selectCalendario"] option:selected').text()+   "</label><br><label style='font-weight: 600'>Seleccione dias para asignar horarios</label>" );
+        },
+        error: function (data) {
+            alert('Ocurrio un error');
+        }
+    });
+
+    var dialog = bootbox.dialog({
+        message: "Ahora esta en el calendario de "+$('select[id="selectCalendario"] option:selected').text(),
+        closeButton: false
+    });
+    setTimeout(function(){
+        dialog.modal('hide')
+    }, 1400);
+
+})
+////////
 function calendario2() {
     var calendarEl = document.getElementById('calendar2');
     calendarEl.innerHTML = "";
@@ -298,6 +457,55 @@ function calendario2() {
             $('#horarioAsignar').modal('show');
         },
         eventClick: function (info) {
+            id = info.event.id;
+            console.log(info);
+            console.log(info.event.id);
+            console.log(info.event.title);
+           var event = calendar.getEventById(id);
+
+            bootbox.confirm({
+                message: "¿Desea eliminar: "+info.event.title+" del horario?",
+                buttons: {
+                    confirm: {
+                        label: 'Aceptar',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'Cancelar',
+                        className: 'btn-light'
+                    }
+                },
+                callback: function (result) {
+                    if (result == true) {
+                        $.ajax({
+                            type: "post",
+                            url: "/empleado/eliminarEte",
+                            data: {
+                                ideve: info.event.id
+                            },
+                            statusCode: {
+
+                                419: function () {
+                                    location.reload();
+                                }
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function (data) {
+                            info.event.remove();
+                            calendar.refetchEvents();
+
+                            },
+                            error: function (data) {
+                                alert('Ocurrio un error');
+                            }
+
+
+                        });
+                        }
+                }
+            });
 
         },
         editable: false,
@@ -353,7 +561,7 @@ function registrarHorario(){
     } else {
         sobretiempo = 0;
     }
-    var tipHorario = $('#tipHorario').val();
+
     var descripcion = $('#descripcionCa').val();
    var  toleranciaH = $('#toleranciaH').val();
    var  inicio = $('#horaI').val();
@@ -364,7 +572,7 @@ function registrarHorario(){
         url: "/empleado/registrarHorario",
         data: {
             sobretiempo,
-            tipHorario,
+           
             descripcion,
             toleranciaH,inicio,fin
         },
@@ -611,6 +819,40 @@ $('#selectHorario').change(function(e){
         calendar3.render();
     }
     document.addEventListener('DOMContentLoaded', calendario3);
+
+    ///inv
+    function calendarioInv_ed() {
+        var calendarElInv_ed = document.getElementById('calendarInv_ed');
+        calendarElInv_ed.innerHTML = "";
+
+        var fecha = new Date();
+        var ano = fecha.getFullYear();
+        var id;
+
+        var configuracionCalendario = {
+            locale: 'es',
+            defaultDate: ano + '-01-01',
+            height: 360,
+            fixedWeekCount: false,
+            plugins: ['dayGrid', 'interaction', 'timeGrid'],
+
+            selectable: false,
+            selectMirror: true,
+
+            editable: false,
+            eventLimit: true,
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: ''
+            },
+        }
+        var calendarInv_ed = new FullCalendar.Calendar(calendarElInv_ed, configuracionCalendario);
+        calendarInv_ed.setOption('locale', "Es");
+
+        calendarInv_ed.render();
+    }
+    document.addEventListener('DOMContentLoaded', calendarioInv_ed);
 ////////////////
 $("#file").fileinput({
     allowedFileExtensions: ['jpg', 'jpeg', 'png'],
@@ -1702,6 +1944,8 @@ function abrirnuevo() {
     $('input[type="file"]').val("");
     $('select').val("");
     $('#form-registrar').show();
+    $('#selectCalendario').val("Asignar calendario");
+    $('#selectHorario').val("Seleccionar horario");
 }
 
 //eliminar foto
@@ -1776,6 +2020,8 @@ $('#cerrarE').click(function () {
     $('#smartwizard1').smartWizard("reset");
     $('#formNuevoEd').hide();
     $('#formNuevoEl').hide();
+    $('#selectCalendario').val("Asignar calendario");
+    $('#selectHorario').val("Seleccionar horario");
 });
 $('#cerrarEd').click(function () {
     //leertabla();
@@ -1802,6 +2048,8 @@ $('#cerrarEd').click(function () {
     $('select').val("");
     $('#codigoCelular').val("+51");
     limpiar();
+    $('#selectCalendario').val("Asignar calendario");
+    $('#selectHorario').val("Seleccionar horario");
 
 });
 $('#cerrarModalEmpleado').click(function () {
@@ -1836,6 +2084,8 @@ $('#cerrarModalEmpleado').click(function () {
     $('#editarArea').hide();
     $('#form-registrar').modal('toggle');
     limpiar();
+    $('#selectCalendario').val("Asignar calendario");
+    $('#selectHorario').val("Seleccionar horario");
 });
 //*********************/
 $('#numR').hide();
