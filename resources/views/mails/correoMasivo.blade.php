@@ -436,7 +436,7 @@
                                                                     style="padding:0;Margin:0;padding-top:10px;padding-left:10px;padding-right:10px">
                                                                     <strong
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:14px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666">
-                                                                        Licencia de Producto</strong>
+                                                                        Activación de Dispositivo</strong>
                                                                     &nbsp;&nbsp;&nbsp;
                                                                     <span
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:14px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;">

@@ -38,7 +38,6 @@
             padding-right: 8px;
             text-align: center;
         }
-
     </style>
     <header id="header-section">
         <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
@@ -50,7 +49,8 @@
                 </div>
                 <div class="col-md-9 text-left">
                     <h5 style="color: #ffffff">Crear una cuenta</h5>
-                    <label for="" class="blanco font-italic">Tienes 2 minutos</label>
+                    <label for="" class="blanco font-italic">Tienes 2
+                        minutos</label>
 
                 </div>
             </div>
@@ -62,11 +62,12 @@
             <section class="features-overview" id="features-section">
                 <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                     aria-hidden="true">
-                    <div class="modal-dialog ">
+                    <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header"
-                                style="padding-bottom: 3px; padding-top: 10px;background: #ecebeb">
-                                <h5 class="" id="myModalLabel" style="font-size: 14px">Confirma tu fecha de nacimiento
+                            <div class="modal-header" style="padding-bottom: 3px; padding-top:
+                                    10px;background: #ecebeb">
+                                <h5 class="" id="myModalLabel" style="font-size: 14px">Confirma tu
+                                    fecha de nacimiento
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -76,18 +77,22 @@
                                 <form method="POST" action="javascript:registerP()">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <label class="col-lg-12 col-form-label" for="simpleinput">Naciste el<input
-                                                    type="text" id="diaN" class="inp col-md-1" disabled>de<input
-                                                    type="text" class="inp col-md-3" id="mesN" disabled>de<input
-                                                    type="text" id="anoN" class="inp col-md-2" disabled>?</label>
+                                            <label class="col-lg-12
+                                                    col-form-label" for="simpleinput">Naciste el<input type="text"
+                                                    id="diaN" class="inp col-md-1" disabled>de<input type="text" class="inp
+                                                        col-md-3" id="mesN" disabled>de<input type="text" id="anoN"
+                                                    class="inp col-md-2" disabled>?</label>
                                         </div>
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" style="background: #f0f0f0" class="btn  btn-sm"
-                                    data-dismiss="modal">&nbsp; &nbsp;No &nbsp; &nbsp;</button>
-                                <button type="submit" style="background: #302f56;color: #ecebeb" class="btn btn-sm"
-                                    id="confirmar"> &nbsp; &nbsp; Sí &nbsp; &nbsp; </button>
+                                <button type="button" style="background:
+                                            #f0f0f0" class="btn btn-sm" data-dismiss="modal">&nbsp; &nbsp;No
+                                    &nbsp; &nbsp;</button>
+                                <button type="submit" style="background:
+                                            #302f56;color: #ecebeb" class="btn
+                                            btn-sm" id="confirmar"> &nbsp; &nbsp; Sí
+                                    &nbsp; &nbsp; </button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -100,28 +105,34 @@
                         <div class="col-md-9">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <input class="form-control " placeholder="Nombres" name="nombres" id="nombres"
+                                    <input class="form-control" placeholder="Nombres" name="nombres" id="nombres"
                                         value="{{old ('nombres')}}" required>
                                     {{$errors->first('nombres')}}
                                 </div>
                                 <div class="col-md-3">
                                     <input class="form-control" placeholder="Apellido Paterno" name="apPaterno"
-                                        id="apPaterno" value="{{old ('apellidos')}}" required>
+                                        id="apPaterno" value="{{old
+                                            ('apellidos')}}" required>
                                     {{$errors->first('apellidos')}}
                                 </div>
                                 <div class="col-md-3">
                                     <input class="form-control" placeholder="Apellido Materno" name="apMaterno"
-                                        id="apMaterno" value="{{old ('apellidos')}}" required>
+                                        id="apMaterno" value="{{old
+                                            ('apellidos')}}" required>
                                     {{$errors->first('apellidos')}}
                                 </div> <br><br>
 
                                 <div class="col-md-9">
-                                    <input class="form-control " placeholder="Direccion" name="direccion" id="direccion"
+                                    <input class="form-control" placeholder="Direccion" name="direccion" id="direccion"
                                         value="{{old ('direccion')}}" required>
                                     {{$errors->first('direccion')}}
-                                </div><br><br>
+                                </div>
+                                <div class="col-md-9" id="validCelCorreo">
+                                    <br>
+                                    <span style="color:red;">*Número de celular incorrecto o Correo
+                                        electrónico incorrecto.</span><br></div><br><br>
                                 <div class="col-md-9">
-                                    <input class="form-control " placeholder="Número de celular o correo electrónico"
+                                    <input class="form-control" placeholder="Número de celular o correo electrónico"
                                         name="email" id="email" value="{{old ('email')}}" required>
                                     {{$errors->first('email')}}
                                 </div><br><br>
@@ -132,13 +143,20 @@
                                 </div><br><br>
                             </div>
                             <div class="row">
-                                <div class="col-md-12" style="color: #d03310; font-size: 14px;" id="Mensaje"></div>
+                                <div class="col-md-12" style="color:
+                                        #d03310; font-size: 14px;" id="Mensaje"></div>
                                 <div class="col-md-12 mt-2">
-                                    <label class="normal" for="">Fecha de nacimiento:</label>
+                                    <label class="normal" for="">Fecha de
+                                        nacimiento:</label>
                                 </div>
                                 <div class="col-md-9">
-                                    {{--  <div class="datepicker date input-group p-0 shadow-sm">
-                            <input type="text" placeholder="elegir fecha" class="form-control" id="fecha" name="fecha" value="{{old ('fecha')}}"
+                                    {{-- <div class="datepicker date
+                                            input-group p-0 shadow-sm">
+                                            <input type="text"
+                                                placeholder="elegir fecha"
+                                                class="form-control" id="fecha"
+                                                name="fecha" value="{{old
+                                                ('fecha')}}"
                                     required>
                                     {{$errors->first('fecha')}}
                                     <div class="input-group-append"><span class="input-group-text"><i
@@ -148,7 +166,7 @@
                                     <div class="col-md-3">
                                         <select class="form-control" name="dia_fecha" id="dia_fecha" required="">
                                             <option value="">Dia</option>
-                                            @for ($i = 1; $i < 32; $i++) <option class="" value="{{$i}}">{{$i}}</option>
+                                            @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">{{$i}}</option>
                                                 @endfor
                                         </select>
                                     </div>
@@ -172,7 +190,7 @@
                                     <div class="col-md-3">
                                         <select class="form-control" name="ano_fecha" id="ano_fecha" required="">
                                             <option value="">Año</option>
-                                            @for ($i = 1960; $i < 2011; $i++) <option class="" value="{{$i}}">{{$i}}
+                                            @for ($i = 1960; $i <2011; $i++) <option class="" value="{{$i}}">{{$i}}
                                                 </option>
                                                 @endfor
                                         </select>
@@ -203,7 +221,9 @@
                             <div class="col-md-3">
                                 <div class="control">
                                     <label class="radio normal" data-toggle="tooltip" data-placement="right" title=""
-                                        data-original-title="Puedes elegir personalizado si no deseas especificar tu sexo.">
+                                        data-original-title="Puedes
+                                                elegir personalizado si no
+                                                deseas especificar tu sexo.">
                                         <input type="radio" name="sexo" id="sexo" value="Personalizado" required>
                                         Personalizado
                                     </label>
@@ -221,7 +241,8 @@
                         <img src="{{asset('landing/images/career.gif')}}" alt="" class="img-fluid"><br><br><br><br>
                         <div class="col-md-12 text-center">
 
-                            <button type="submit" class="btn btn-opacity-primary mr-1">Registrarme</button>
+                            <button type="submit" class="btn
+                                        btn-opacity-primary mr-1">Registrarme</button>
                         </div> <br><br>
                     </div>
         </div>
@@ -231,7 +252,8 @@
 
 
         <footer class="border-top">
-            <p class="text-center text-muted pt-4">© <?php echo date("Y"); ?> - RH Solution | Todos los derechos
+            <p class="text-center text-muted pt-4">© <?php echo date("
+                            Y" ); ?> - RH Solution | Todos los derechos
                 reservados.</p>
         </footer>
 
@@ -244,15 +266,17 @@
     <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
     <script src="{{asset('landing/js/landingpage.js')}}"></script>
     <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script>
-    <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
-    <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
+    <script src="{{
+                URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js')
+                }}"></script>
+    <script src="{{
+                URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')
+                }}"></script>
     <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
     <!-- App js -->
     <script src="{{asset('admin/assets/js/app.min.js')}}"></script>
-
     <script src="{{asset('landing/js/ValidarRegistrarPersona.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js">
     </script>
     <script>
