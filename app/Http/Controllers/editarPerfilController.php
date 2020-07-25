@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\organizacion;
 use App\persona;
+use App\ubigeo_peru_departments;
 use App\User;
 use App\usuario_organizacion;
 use Illuminate\Http\Request;
@@ -18,7 +19,8 @@ class editarPerfilController extends Controller
         $persona = persona::where('perso_id', '=', $user->perso_id)->get()->first();
         $usuarioOrg = usuario_organizacion::where('user_id', '=', $user->id)->get()->first();
         $organizacion = organizacion::where('organi_id', '=', $usuarioOrg->organi_id)->get()->first();
-        return view('editarPerfil', ['persona' => $persona, 'organizacion' => $organizacion]);
+        $departamentoOrgani = ubigeo_peru_departments::all();
+        return view('editarPerfil', ['persona' => $persona, 'organizacion' => $organizacion, 'departamentoOrgani' => $departamentoOrgani]);
     }
     public function show()
     {
