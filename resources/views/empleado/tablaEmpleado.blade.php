@@ -849,7 +849,7 @@
                         } else {
                             disponible +=
                                 `<input style="display: none;" id="idLicenciaND${data[0].emple_id}" value="${data[0].licencia[i].id}">
-                                <p class="mb-2"style="color: #4B4B5A;font-weight: bold">Estado</p>
+                                <p class="mb-2"style="color: #4B4B5A;font-weight: bold">ESTADO</p>
                                             <h5 class="font-size-16"><a data-toggle="tooltip" data-placement="right"
                                             title=" Al cambiar el estado de la licencia toda información del empleado en su PC será borrada" data-original-title="" onclick="$('#estadoLicenciaC').modal()" style="cursor: pointer" class="badge badge-soft-danger mr-2">No Disponible</a></h5>`;
                             verDetalleE += `<label for="sw-default">Estado</label>
