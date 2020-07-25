@@ -105,6 +105,33 @@ $('#numE').change(function () {
         $('#actualizarDatosEmpresa').attr('disabled', false);
     }
 });
+$('#depE').change(function () {
+    if ($('#depE').val() == '') {
+        $('#provE').attr('disabled', true);
+        $('#distE').attr('disabled', true);
+        $('#actualizarDatosEmpresa').attr('disabled', true);
+    } else {
+        $('#provE').attr('disabled', false);
+        $('#distE').attr('disabled', false);
+        $('#actualizarDatosEmpresa').attr('disabled', false);
+    }
+});
+$('#provE').change(function () {
+    if ($('#provE').val() == '') {
+        $('#distE').attr('disabled', true);
+        $('#actualizarDatosEmpresa').attr('disabled', true);
+    } else {
+        $('#distE').attr('disabled', false);
+        $('#actualizarDatosEmpresa').attr('disabled', false);
+    }
+});
+$('#distE').change(function () {
+    if ($('#distE').val() == '') {
+        $('#actualizarDatosEmpresa').attr('disabled', true);
+    } else {
+        $('#actualizarDatosEmpresa').attr('disabled', false);
+    }
+});
 
 function editarDatosPersonales() {
     objDatosPersonales = datosPersonales("POST");
@@ -184,6 +211,9 @@ function datosEmpresa(method) {
         nempleados: $('#numE').val(),
         pagWeb: $('#pagWeb').val(),
         tipo: $('#organizacion').val(),
+        departamento: $('#depE').val(),
+        provincia: $('#provE').val(),
+        distrito: $('#distE').val(),
         '_method': method
     }
     return (nuevoDatos);
