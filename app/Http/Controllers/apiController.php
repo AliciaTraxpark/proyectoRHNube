@@ -195,7 +195,7 @@ class apiController extends Controller
         $proyectoE->Fecha_Fin = $request->get('Fecha_Fin');
         $proyectoE->save();
 
-        return response()->json(array($idProyecto, $proyecto), 200);
+        return response()->json($idProyecto, 200);
     }
 
     public function editarProyecto(Request $request)
@@ -383,6 +383,7 @@ class apiController extends Controller
             $busquedaUltimoControl = DB::table('control as c')
                 ->select('c.idEnvio', DB::raw('COUNT(c.idHorario_dias) as total'))
                 ->where('c.idHorario_dias', '=', $idHorario_dias)
+                ->where('c.idHorario_dias', '!=', null)
                 ->orderBy('c.Cont_id', 'desc')
                 ->get()
                 ->first();
@@ -425,6 +426,56 @@ class apiController extends Controller
                 $promedio_captura = new promedio_captura();
                 $promedio_captura->idCaptura = $idCaptura;
                 $promedio_captura->idHorario = $idHorario_dias;
+                $promedio_captura->promedio = 0;
+                $promedio_captura->save();
+            }
+
+            $busquedaUltimaCaptura = DB::table('control as c')
+                ->join('envio as en', 'en.idEnvio', '=', 'c.idEnvio')
+                ->join('captura as cp', 'cp.idEnvio', '=', 'en.idEnvio')
+                ->select('c.idEnvio', DB::raw('COUNT(DATE(cp.fecha_hora)) as total'))
+                ->where('c.idHorario_dias', '=', null)
+                ->groupBy(DB::raw('DATE(cp.fecha_hora)'))
+                ->orderBy('c.Cont_id', 'desc')
+                ->get()
+                ->first();
+            if ($busquedaUltimaCaptura->total != 1) {
+                $capturaBusqueda = captura::where('idEnvio', '=', $busquedaUltimaCaptura->idEnvio)->get();
+                foreach ($capturaBusqueda as $cb) {
+                    $promedio = DB::table('captura as c')
+                        ->select('c.promedio', 'c.fecha_hora')
+                        ->where('c.idCaptura', '=', $cb->idCaptura)
+                        ->get()
+                        ->first();
+                    if ($promedio) {
+                        //RESTA DE PROMEDIOS DE CAPTURAS
+                        $capturaRegistrada = captura::where('idCaptura', '=', $idCaptura)->get()->first();
+                        $explode1 = explode(":", $capturaRegistrada->promedio);
+                        $calSeg = $explode1[0] * 3600 + $explode1[1] * 60 + $explode1[2];
+                        $explode2 = explode(":", $promedio->promedio);
+                        $calSeg2 = $explode2[0] * 3600 + $explode2[1] * 60 + $explode2[2];
+                        $totalP = $calSeg - $calSeg2;
+                        //RESTA POR FECHA HORA DE   CAPTURAS
+                        $fecha = Carbon::create($capturaRegistrada->fecha_hora)->format('H:i:s');
+                        $explo1 = explode(":", $fecha);
+                        $calSegund = $explo1[0] * 3600 + $explo1[1] * 60 + $explo1[2];
+                        $fecha1 = Carbon::create($promedio->fecha_hora)->format('H:i:s');
+                        $explo2 = explode(":", $fecha1);
+                        $calSegund2 = $explo2[0] * 3600 + $explo2[1] * 60 + $explo2[2];
+                        $totalP1 = $calSegund - $calSegund2;
+                        //PROMEDIO
+                        $promedio = floatval($totalP / $totalP1);
+                        $round = round($promedio, 2);
+                        //TABLA PROMEDIO_CAPTURA
+                        $promedio_captura = new promedio_captura();
+                        $promedio_captura->idCaptura = $idCaptura;
+                        $promedio_captura->promedio = $round;
+                        $promedio_captura->save();
+                    }
+                }
+            } else {
+                $promedio_captura = new promedio_captura();
+                $promedio_captura->idCaptura = $idCaptura;
                 $promedio_captura->promedio = 0;
                 $promedio_captura->save();
             }
