@@ -15,6 +15,8 @@ async function onSelectDepartamentoOrgani(dep) {
         for (var i = 0; i < data.length; i++) {
             html_select += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
         }
+        $('#provE').empty();
+        $('#distE').empty();
         $('#provE').html(html_select);
         $('#distE').html(html_dist);
     });
@@ -28,6 +30,7 @@ async function onSelectProvinciaOrgani(prov) {
         for (var i = 0; i < data.length; i++) {
             html_select += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
         }
+        $('#distE').empty();
         $('#distE').html(html_select);
     });
 }
