@@ -1812,8 +1812,8 @@ use App\proyecto_empleado;
                                 <br>
                                 <div class="row">
                                     <div class="col-12 text-center">
-                                        <button type="button" id="actualizarEmpleado"
-                                            class="btn btn-success">Actualizar</button>
+                                        <button type="button" id="actualizarEmpleado" class="btn btn-light btn-sm"
+                                            style="background-color: #163552;color: #ffffff;">Actualizar</button>
                                     </div>
                                 </div>
                             </div>
