@@ -195,7 +195,7 @@ class apiController extends Controller
         $proyectoE->Fecha_Fin = $request->get('Fecha_Fin');
         $proyectoE->save();
 
-        return response()->json(array($idProyecto, $proyecto), 200);
+        return response()->json($idProyecto, 200);
     }
 
     public function editarProyecto(Request $request)
