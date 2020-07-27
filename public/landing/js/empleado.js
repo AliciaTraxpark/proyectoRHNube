@@ -16,6 +16,7 @@ $('#horaF').flatpickr({
     dateFormat: "H:i",
     time_24hr: true
 });
+
 function calendarioInv() {
     var calendarElInv = document.getElementById('calendarInv');
     calendarElInv.innerHTML = "";
@@ -48,6 +49,7 @@ function calendarioInv() {
     calendarInv.render();
 }
 document.addEventListener('DOMContentLoaded', calendarioInv);
+
 function calendario() {
     var calendarEl = document.getElementById('calendar');
     calendarEl.innerHTML = "";
@@ -76,10 +78,10 @@ function calendario() {
             console.log(info);
             console.log(info.event.id);
             console.log(info.event.title);
-           var event = calendar.getEventById(id);
+            var event = calendar.getEventById(id);
 
             bootbox.confirm({
-                message: "¿Desea eliminar: "+info.event.title+" del horario?",
+                message: "¿Desea eliminar: " + info.event.title + " del horario?",
                 buttons: {
                     confirm: {
                         label: 'Aceptar',
@@ -108,8 +110,8 @@ function calendario() {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
                             success: function (data) {
-                            info.event.remove();
-                            calendar2.refetchEvents();
+                                info.event.remove();
+                                calendar2.refetchEvents();
 
                             },
                             error: function (data) {
@@ -118,7 +120,7 @@ function calendario() {
 
 
                         });
-                        }
+                    }
                 }
             });
 
@@ -130,11 +132,11 @@ function calendario() {
             center: 'title',
             right: ''
         },
-        events: function(info, successCallback, failureCallback) {
-            var idcalendario=$('#selectCalendario').val();
+        events: function (info, successCallback, failureCallback) {
+            var idcalendario = $('#selectCalendario').val();
             var datoscal;
             $.ajax({
-                type:"POST",
+                type: "POST",
                 url: "/empleado/calendarioEmpTemp",
                 data: {
                     idcalendario
@@ -157,10 +159,10 @@ function calendario() {
 
         },
 
-       /*  events: "calendario/show", */
+        /*  events: "calendario/show", */
 
     }
- calendar = new FullCalendar.Calendar(calendarEl, configuracionCalendario);
+    calendar = new FullCalendar.Calendar(calendarEl, configuracionCalendario);
     calendar.setOption('locale', "Es");
 
     calendar.render();
@@ -228,11 +230,11 @@ function calendario_edit() {
 
         },
 
-       /*  events: "calendario/show", */
+        /*  events: "calendario/show", */
 
     }
     calendarioedit = new FullCalendar.Calendar(calendarEl, configuracionCalendario);
- calendarioedit.setOption('locale', "Es");
+    calendarioedit.setOption('locale', "Es");
 
     calendarioedit.render();
 }
@@ -557,18 +559,26 @@ function registrarHorario_ed(){
 function laborableTem()  {
     $('#calendarioAsignar').modal('hide');
 
-    title= 'Laborable';
-    color='#dfe6f2';
-    textColor= '#0b1b29';
-    start= $('#pruebaStar').val();
-    end= $('#pruebaEnd').val();
-    tipo= 3;
-    id_calendario=$('#selectCalendario').val();
+    title = 'Laborable';
+    color = '#dfe6f2';
+    textColor = '#0b1b29';
+    start = $('#pruebaStar').val();
+    end = $('#pruebaEnd').val();
+    tipo = 3;
+    id_calendario = $('#selectCalendario').val();
     //$('#myModal').modal('show');
     $.ajax({
         type: "POST",
         url: "/empleado/storeCalendarioTem",
-        data: {title,color,textColor,start,end,tipo,id_calendario},
+        data: {
+            title,
+            color,
+            textColor,
+            start,
+            end,
+            tipo,
+            id_calendario
+        },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -592,21 +602,30 @@ function laborableTem()  {
         error: function () {}
     });
 };
-function nolaborableTem()  {
+
+function nolaborableTem() {
     $('#calendarioAsignar').modal('hide');
 
-    title= 'No laborable';
-    color='#a34141';
-    textColor=' #ffffff ';
-    start= $('#pruebaStar').val();
-    end= $('#pruebaEnd').val();
-    tipo= 0;
-    id_calendario=$('#selectCalendario').val();
+    title = 'No laborable';
+    color = '#a34141';
+    textColor = ' #ffffff ';
+    start = $('#pruebaStar').val();
+    end = $('#pruebaEnd').val();
+    tipo = 0;
+    id_calendario = $('#selectCalendario').val();
     //$('#myModal').modal('show');
     $.ajax({
         type: "POST",
         url: "/empleado/storeCalendarioTem",
-        data: {title,color,textColor,start,end,tipo,id_calendario},
+        data: {
+            title,
+            color,
+            textColor,
+            start,
+            end,
+            tipo,
+            id_calendario
+        },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -630,30 +649,36 @@ function nolaborableTem()  {
         error: function () {}
     });
 };
-function agregarinciden(){
+
+function agregarinciden() {
     $('#calendarioAsignar').modal('hide');
     $("#frmIncidenciaCa")[0].reset();
     $('#modalIncidencia').modal('show');
 }
-function modalIncidencia(){
-    var id_calendario=$('#selectCalendario').val();
-    descripcionI=$('#descripcionInciCa').val();
-    var descuentoI;
-    if( $('#descuentoCheckCa').prop('checked') ) {
-        descuentoI=1;} else{descuentoI=0}
-    fechaI=$('#pruebaStar').val();
-     fechaFin=$('#pruebaEnd').val();
-     horaIn=$('#horaIncidenCa').val();
 
-     $.ajax({
+function modalIncidencia() {
+    var id_calendario = $('#selectCalendario').val();
+    descripcionI = $('#descripcionInciCa').val();
+    var descuentoI;
+    if ($('#descuentoCheckCa').prop('checked')) {
+        descuentoI = 1;
+    } else {
+        descuentoI = 0
+    }
+    fechaI = $('#pruebaStar').val();
+    fechaFin = $('#pruebaEnd').val();
+    horaIn = $('#horaIncidenCa').val();
+
+    $.ajax({
         type: "post",
         url: "/empleado/storeIncidTem",
         data: {
             start: fechaI,
             title: descripcionI,
-            descuentoI:descuentoI,
+            descuentoI: descuentoI,
             end: fechaFin,
-            horaIn,id_calendario
+            horaIn,
+            id_calendario
 
         },
         headers: {
@@ -671,9 +696,9 @@ function modalIncidencia(){
     });
 }
 
-$('#selectCalendario').change(function (){
-    $( "#detallehorario" ).empty();
-    idca=$('#selectCalendario').val();
+$('#selectCalendario').change(function () {
+    $("#detallehorario").empty();
+    idca = $('#selectCalendario').val();
     $.ajax({
         type: "post",
         url: "/empleado/vaciarcalendId",
@@ -691,9 +716,9 @@ $('#selectCalendario').change(function (){
             $('#mensajeOc').hide();
             $('#calendar2').show();
 
-           calendario();
-           calendario2();
-           $( "#detallehorario" ).append( "<label style='color:#163552'>Se muestra calendario de "+$('select[id="selectCalendario"] option:selected').text()+   "</label><br><label style='font-weight: 600'>Seleccione dias para asignar horarios</label>" );
+            calendario();
+            calendario2();
+            $("#detallehorario").append("<label style='color:#163552'>Se muestra calendario de " + $('select[id="selectCalendario"] option:selected').text() + "</label><br><label style='font-weight: 600'>Seleccione dias para asignar horarios</label>");
         },
         error: function (data) {
             alert('Ocurrio un error');
@@ -701,10 +726,10 @@ $('#selectCalendario').change(function (){
     });
 
     var dialog = bootbox.dialog({
-        message: "Ahora esta en el calendario de "+$('select[id="selectCalendario"] option:selected').text(),
+        message: "Ahora esta en el calendario de " + $('select[id="selectCalendario"] option:selected').text(),
         closeButton: false
     });
-    setTimeout(function(){
+    setTimeout(function () {
         dialog.modal('hide')
     }, 1400);
 
@@ -744,7 +769,7 @@ $('#selectCalendario_ed').change(function (){
         message: "Ahora esta en el calendario de "+$('select[id="selectCalendario_ed"] option:selected').text(),
         closeButton: false
     });
-    setTimeout(function(){
+    setTimeout(function () {
         dialog.modal('hide')
     }, 1400);
 
@@ -778,10 +803,10 @@ function calendario2() {
             console.log(info);
             console.log(info.event.id);
             console.log(info.event.title);
-           var event = calendar.getEventById(id);
+            var event = calendar.getEventById(id);
 
             bootbox.confirm({
-                message: "¿Desea eliminar: "+info.event.title+" del horario?",
+                message: "¿Desea eliminar: " + info.event.title + " del horario?",
                 buttons: {
                     confirm: {
                         label: 'Aceptar',
@@ -810,8 +835,8 @@ function calendario2() {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
                             success: function (data) {
-                            info.event.remove();
-                            calendar.refetchEvents();
+                                info.event.remove();
+                                calendar.refetchEvents();
 
                             },
                             error: function (data) {
@@ -820,7 +845,7 @@ function calendario2() {
 
 
                         });
-                        }
+                    }
                 }
             });
 
@@ -832,11 +857,11 @@ function calendario2() {
             center: 'title',
             right: ''
         },
-        events: function(info, successCallback, failureCallback) {
-            var idcalendario=$('#selectCalendario').val();
+        events: function (info, successCallback, failureCallback) {
+            var idcalendario = $('#selectCalendario').val();
             var datoscal;
             $.ajax({
-                type:"POST",
+                type: "POST",
                 url: "/empleado/calendarioEmpTemp",
                 data: {
                     idcalendario
@@ -859,20 +884,22 @@ function calendario2() {
 
         },
 
-       /*  events: "calendario/show", */
+        /*  events: "calendario/show", */
 
     }
- calendar2 = new FullCalendar.Calendar(calendarEl, configuracionCalendario);
+    calendar2 = new FullCalendar.Calendar(calendarEl, configuracionCalendario);
     calendar2.setOption('locale', "Es");
 
     calendar2.render();
 }
 document.addEventListener('DOMContentLoaded', calendario2);
-function abrirHorario(){
+
+function abrirHorario() {
     $("#frmHor")[0].reset();
     $('#horarioAgregar').modal('show');
 }
-function registrarHorario(){
+
+function registrarHorario() {
     if ($('#exampleCheck1').prop('checked')) {
         sobretiempo = 1;
     } else {
@@ -880,8 +907,8 @@ function registrarHorario(){
     }
 
     var descripcion = $('#descripcionCa').val();
-   var  toleranciaH = $('#toleranciaH').val();
-   var  inicio = $('#horaI').val();
+    var toleranciaH = $('#toleranciaH').val();
+    var inicio = $('#horaI').val();
     var fin = $('#horaF').val();
 
     $.ajax({
@@ -891,7 +918,9 @@ function registrarHorario(){
             sobretiempo,
 
             descripcion,
-            toleranciaH,inicio,fin
+            toleranciaH,
+            inicio,
+            fin
         },
         statusCode: {
             419: function () {
@@ -902,48 +931,49 @@ function registrarHorario(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-            H1=$('#pruebaStar').val();
-            H2=$('#pruebaEnd').val();
-            idhorar=data.horario_id;
-        textSelec=$('#descripcionCa').val();
-        idca=$('#selectCalendario').val();
-        var diasEntreFechas = function (desde, hasta) {
-            var dia_actual = desde;
-            var fechas = [];
-            while (dia_actual.isSameOrBefore(hasta)) {
-                fechas.push(dia_actual.format('YYYY-MM-DD'));
-                dia_actual.add(1, 'days');
-            }
-            return fechas;
-        };
+            H1 = $('#pruebaStar').val();
+            H2 = $('#pruebaEnd').val();
+            idhorar = data.horario_id;
+            textSelec = $('#descripcionCa').val();
+            idca = $('#selectCalendario').val();
+            var diasEntreFechas = function (desde, hasta) {
+                var dia_actual = desde;
+                var fechas = [];
+                while (dia_actual.isSameOrBefore(hasta)) {
+                    fechas.push(dia_actual.format('YYYY-MM-DD'));
+                    dia_actual.add(1, 'days');
+                }
+                return fechas;
+            };
 
-        desde = moment(H1);
-        hasta = moment(H2);
-        var results = diasEntreFechas(desde, hasta);
-        results.pop();
-        //console.log(results);
-        var fechasArray = [];
-        var fechastart = [];
-        var objeto = [  ];
+            desde = moment(H1);
+            hasta = moment(H2);
+            var results = diasEntreFechas(desde, hasta);
+            results.pop();
+            //console.log(results);
+            var fechasArray = [];
+            var fechastart = [];
+            var objeto = [];
 
-        $.each(results, function (key, value) {
-            //alert( value );
-            fechasArray.push(textSelec);
-            fechastart.push(value);
+            $.each(results, function (key, value) {
+                //alert( value );
+                fechasArray.push(textSelec);
+                fechastart.push(value);
 
-            objeto.push({
-                "title": textSelec,
-                "start": value
+                objeto.push({
+                    "title": textSelec,
+                    "start": value
+                });
             });
-        });
-        console.log(fechasArray);
+            console.log(fechasArray);
             $.ajax({
                 type: "post",
                 url: "/empleado/guardarhorarioTem",
                 data: {
                     fechasArray: fechastart,
                     hora: textSelec,
-                    idhorar:idhorar,idca
+                    idhorar: idhorar,
+                    idca
                 },
                 statusCode: {
 
@@ -987,12 +1017,12 @@ function registrarHorario(){
         }
     });
 }
-$('#selectHorario').change(function(e){
-   var  H1=$('#pruebaStar').val();
-      var  H2=$('#pruebaEnd').val();
-   var textSelec=$('select[name="selectHorario"] option:selected').text();
+$('#selectHorario').change(function (e) {
+    var H1 = $('#pruebaStar').val();
+    var H2 = $('#pruebaEnd').val();
+    var textSelec = $('select[name="selectHorario"] option:selected').text();
     var idhorar = $('#selectHorario').val();
-    var idca=$('#selectCalendario').val();
+    var idca = $('#selectCalendario').val();
     var diasEntreFechas = function (desde, hasta) {
         var dia_actual = desde;
         var fechas = [];
@@ -1035,7 +1065,8 @@ $('#selectHorario').change(function(e){
             fechasArray: fechastart,
             hora: textSelec,
 
-            idhorar:idhorar,idca
+            idhorar: idhorar,
+            idca
 
         },
         statusCode: {
@@ -1061,114 +1092,122 @@ $('#selectHorario').change(function(e){
 
     });
 
-     });
+});
 
 
 
-     //vercal
+//vercal
 
-     function calendario3() {
-        var calendarEl = document.getElementById('calendar3');
-        calendarEl.innerHTML = "";
+function calendario3() {
+    var calendarEl = document.getElementById('calendar3');
+    calendarEl.innerHTML = "";
 
-        var fecha = new Date();
-        var ano = fecha.getFullYear();
-        var id;
+    var fecha = new Date();
+    var ano = fecha.getFullYear();
+    var id;
 
-        var configuracionCalendario = {
-            locale: 'es',
-            defaultDate: ano + '-01-01',
-            height: 400,
-            fixedWeekCount: false,
-            plugins: ['dayGrid', 'interaction', 'timeGrid'],
+    var configuracionCalendario = {
+        locale: 'es',
+        defaultDate: ano + '-01-01',
+        height: 400,
+        fixedWeekCount: false,
+        plugins: ['dayGrid', 'interaction', 'timeGrid'],
 
-            selectable: true,
-            selectMirror: true,
-            /* select: function (arg) {
-                $('#pruebaEnd').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
-                $('#pruebaStar').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
-                console.log(arg);
-                $('#horarioAsignar').modal('show');
-            }, */
-            eventClick: function (info) {
+        selectable: true,
+        selectMirror: true,
+        /* select: function (arg) {
+            $('#pruebaEnd').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
+            $('#pruebaStar').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
+            console.log(arg);
+            $('#horarioAsignar').modal('show');
+        }, */
+        eventClick: function (info) {
 
-            },
-            editable: false,
-            eventLimit: true,
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: ''
-            },
-            events: function(info, successCallback, failureCallback) {
-                var idempleado =$('#idempleado').val();
-                var datoscal;
-                $.ajax({
-                    type:"POST",
-                    url: "/empleado/vercalendario",
-                    data: {
-                        idempleado
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    statusCode: {
-                        419: function () {
-                            location.reload();
-                        }
-                    },
-                    success: function (data) {
+        },
+        editable: false,
+        eventLimit: true,
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: ''
+        },
+        events: function (info, successCallback, failureCallback) {
+            var idempleado = $('#idempleado').val();
+            var datoscal;
+            $.ajax({
+                type: "POST",
+                url: "/empleado/vercalendario",
+                data: {
+                    idempleado
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                statusCode: {
+                    419: function () {
+                        location.reload();
+                    }
+                },
+                success: function (data) {
 
-                        successCallback(data);
+                    successCallback(data);
 
-                    },
-                    error: function () {}
-                });
+                },
+                error: function () {}
+            });
 
-            },
+        },
 
-           /*  events: "calendario/show", */
+        /*  events: "calendario/show", */
 
-        }
-     calendar3 = new FullCalendar.Calendar(calendarEl, configuracionCalendario);
-        calendar3.setOption('locale', "Es");
-
-        calendar3.render();
     }
-    document.addEventListener('DOMContentLoaded', calendario3);
+    calendar3 = new FullCalendar.Calendar(calendarEl, configuracionCalendario);
+    calendar3.setOption('locale', "Es");
 
-    ///inv
-    function calendarioInv_ed() {
-        var calendarElInv_ed = document.getElementById('calendarInv_ed');
-        calendarElInv_ed.innerHTML = "";
-
-        var fecha = new Date();
-        var ano = fecha.getFullYear();
-        var id;
-
-        var configuracionCalendario = {
-            locale: 'es',
-            defaultDate: ano + '-01-01',
-            height: 360,
-            fixedWeekCount: false,
-            plugins: ['dayGrid', 'interaction', 'timeGrid'],
-
-            selectable: false,
-            selectMirror: true,
-
-            editable: false,
-            eventLimit: true,
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: ''
-            },
-        }
-        var calendarInv_ed = new FullCalendar.Calendar(calendarElInv_ed, configuracionCalendario);
-        calendarInv_ed.setOption('locale', "Es");
-
-        calendarInv_ed.render();
+    calendar3.render();
+}
+document.addEventListener('DOMContentLoaded', calendario3);
+////////////////
+//************* */
+$("#checkboxFechaI").on("click", function () {
+    if ($("#checkboxFechaI").is(':checked')) {
+        $('#ocultarFecha > .combodate').hide();
+        $('#labelfechaF').hide();
+        $('#m_fechaF').combodate("clearValue");
+    } else {
+        $('#labelfechaF').show();
+        $('#ocultarFecha > .combodate').show();
     }
+});
+document.addEventListener('DOMContentLoaded', calendario3);
+
+///inv
+function calendarioInv_ed() {
+    var calendarElInv_ed = document.getElementById('calendarInv_ed');
+    calendarElInv_ed.innerHTML = "";
+
+    var fecha = new Date();
+    var ano = fecha.getFullYear();
+    var id;
+
+    var configuracionCalendario = {
+        locale: 'es',
+        defaultDate: ano + '-01-01',
+        height: 360,
+        fixedWeekCount: false,
+        plugins: ['dayGrid', 'interaction', 'timeGrid'],
+
+        selectable: false,
+        selectMirror: true,
+
+        editable: false,
+        eventLimit: true,
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: ''
+        },
+    }}
     document.addEventListener('DOMContentLoaded', calendarioInv_ed);
 ////////////////////////////
 function calendario2_ed() {
@@ -1339,7 +1378,7 @@ function datosArea(method) {
 
 function enviarArea(accion, objArea) {
     var id = $('#editarA').val();
-    if (id == '') {
+    if (id == '' || id == undefined) {
         $.ajax({
             type: "POST",
             url: "/registrar/area" + accion,
@@ -1475,7 +1514,7 @@ function datosCargo(method) {
 
 function enviarCargo(accion, objCargo) {
     var id = $('#editarC').val();
-    if (id == '') {
+    if (id == '' || id == undefined) {
         $.ajax({
             type: "POST",
             url: "/registrar/cargo" + accion,
@@ -1612,7 +1651,7 @@ function datosCentro(method) {
 
 function enviarCentro(accion, objCentroC) {
     var id = $('#editarCC').val();
-    if (id == '') {
+    if (id == '' || id == undefined) {
         $.ajax({
             type: "POST",
             url: "/registrar/centro" + accion,
@@ -1748,7 +1787,7 @@ function datosLocal(method) {
 
 function enviarLocal(accion, objLocal) {
     var id = $('#editarL').val();
-    if (id == '') {
+    if (id == '' || id == undefined) {
         $.ajax({
             type: "POST",
             url: "/registrar/local" + accion,
@@ -1884,7 +1923,7 @@ function datosNivel(method) {
 
 function enviarNivel(accion, objNivel) {
     var id = $('#editarN').val();
-    if (id == '') {
+    if (id == '' || id == undefined) {
         $.ajax({
             type: "POST",
             url: "/registrar/nivel" + accion,
@@ -2022,7 +2061,7 @@ function datosContrato(method) {
 
 function enviarContrato(accion, objContrato) {
     var id = $('#editarCO').val();
-    if (id == '') {
+    if (id == '' || id == undefined) {
         $.ajax({
             type: "POST",
             url: "/registrar/contrato" + accion,
@@ -2197,7 +2236,7 @@ function datosPersona(method) {
         fechaF: $('#m_fechaF').val(),
         correo: $('#email').val(),
         codigoEmpleado: $('#codigoEmpleado').val(),
-        idca:$('#selectCalendario').val(),
+        idca: $('#selectCalendario').val(),
         '_method': method
     }
     return (nuevoEmpleado);
@@ -2268,6 +2307,17 @@ function enviarEmpleado(accion, objEmpleado) {
         error: function (data, errorThrown) {}
     });
 }
+//EMPLEADO ACTUALIZAR
+$("#checkboxFechaIE").on("click", function () {
+    if ($("#checkboxFechaIE").is(':checked')) {
+        $('#m_fechaFE').combodate("clearValue");
+        $('#ocultarFechaE > .combodate').hide();
+        $('#ocultarFechaE').hide();
+    } else {
+        $('#ocultarFechaE').show();
+        $('#ocultarFechaE > .combodate').show();
+    }
+});
 $('#actualizarEmpleado').click(function () {
     idE = $('#v_id').val();
     console.log($('#v_fechaFC').text());
@@ -2440,8 +2490,8 @@ $('#formNuevoE').click(function () {
     $('#calendarInv').show();
     $('#calendar').hide();
     $.get("/empleado/vaciarcalend", {}, function (data, status) {
-    $('#form-registrar').modal();
-    $('#cerrarModalEmpleado').attr('disabled', false);
+        $('#form-registrar').modal();
+        $('#cerrarModalEmpleado').attr('disabled', false);
 
     });
 
@@ -2831,12 +2881,3 @@ function limpiar() {
     $('#textNivel').val("");
     $('#textContrato').val("");
 }
-//************************************** */
-/*$('#celular').change(function () {
-    var regex = RegExp("^9{1}[0-9]{8,8}");
-    if (regex.test($('#celular').val())) {
-        console.log(regex.test($('#celular').val()));
-    } else {
-        console.log(regex.test($('#celular').val()));
-    }
-});*/
