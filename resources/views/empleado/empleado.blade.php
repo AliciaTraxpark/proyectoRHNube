@@ -532,7 +532,7 @@
                                     {{ csrf_field() }}
                                     <div class="row">
                                         <div class="col-md-2">
-                                            <label for="">Nivel</label>
+                                            <label for="">Nivel del Colaborador</label>
                                         </div>
                                         <div id="editarNivel" class="col-md-6"></div>
                                         <div class="col-md-4">
