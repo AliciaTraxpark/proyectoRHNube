@@ -1,5 +1,7 @@
 $('#guardarFoto').hide();
-
+$('#fechaN').combodate({
+    yearDescending: false,
+});
 function actualizarDatos() {
     $.ajax({
         async: false,
@@ -11,7 +13,7 @@ function actualizarDatos() {
         success: function (data) {
             $('#id').val(data.id);
             $('#nombre').val(data.perso_nombre);
-            $('#fechaN').val(data.perso_fechaNacimiento);
+            $('#fechaN').combodate('setValue',data.perso_fechaNacimiento);
             $('#apPaterno').val(data.perso_apPaterno);
             $('#direccion').val(data.perso_direccion);
             $('#apMaterno').val(data.perso_apMaterno);
@@ -39,9 +41,6 @@ function actualizarDatos() {
     });
 }
 actualizarDatos();
-$('#fechaN').combodate({
-    yearDescending: false,
-});
 $('[data-toggle="tooltip"]').tooltip();
 $('#disabledDatosP :input').attr('disabled', true);
 $('#disabledDatosP button[type="button"]').hide();
