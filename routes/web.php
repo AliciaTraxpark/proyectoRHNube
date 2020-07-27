@@ -98,6 +98,8 @@ Route::post('/empleado/vaciarcalendId', 'EmpleadoController@vaciarcalendId');
 Route::post('/empleado/registrarHorario', 'EmpleadoController@registrarHorario');
 Route::post('/empleado/guardarhorarioTem', 'EmpleadoController@guardarhorarioTem');
 Route::post('/empleado/vercalendario', 'EmpleadoController@vercalendarioEmpl');
+Route::post('/empleado/calendarioEditar', 'EmpleadoController@calendarioEditar');
+Route::post('/empleado/eliminarEte', 'EmpleadoController@eliminarEte');
 
 //AREA
 Route::post('/registrar/area', 'areaController@store');

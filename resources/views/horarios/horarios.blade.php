@@ -177,7 +177,7 @@ background-color: #ffffff !important;
                             <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                             <div class="row">
                                 <div class="col-md-6">
-                                    <h4 class="header-title mt-0 "></i>Búsqueda de empleado</h4>
+                                   
                                 </div>
                                 <div class=" col-md-6 col-xl-6 text-right">
                                     <button class="btn btn-sm btn-primary" id="btnasignar" style="background-color: #183b5d;border-color:#62778c">Asignar horarios</button>

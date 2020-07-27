@@ -61,6 +61,16 @@
             margin-left: 40px;
             margin-right: 28px;
         }
+        #calendarInv_ed>div.fc-view-container>div>table>tbody {
+        background: #f4f4f4;
+    }
+    .fc-event, .fc-event-dot {
+   /*  background-color: #d1c3c3; */
+    font-size: 12.2px!important;
+    margin: 2px 2px;
+    cursor:url("../landing/images/cruz1.svg"), auto;
+    font-weight: 600;
+}
 
         #calendarInv>div.fc-view-container>div>table>tbody {
             background: #f4f4f4;
@@ -1301,14 +1311,22 @@
                                         <div id="sw-default-step-4" class="setup-content">
                                             <div class="row">
                                                 <div class="col-md-12">
+                                                    @if (count($calendario) === 0)
+                                                    <div class="col-md-12 text-center">
+                                                        <h5>No existe calendarios registrados</h5>
+                                                    </div>
+                                                    <div style="display: none"> <div class="col-md-10" id="calendarInv" style="display: none!important"></div></div>
+
+
+                                                   </div>
+                                                    @else
                                                     <div class="form-group row">
                                                         <label style="font-weight: 600;font-size: 14px;"
-                                                            class="col-lg-5 col-form-label text-right"
-                                                            for="simpleinput">Calendario de empleado:</label>
+                                                            class="col-lg-5 col-form-label text-right" for="simpleinput">Calendario
+                                                            de empleado:</label>
                                                         <div class="col-lg-5">
                                                             <select name="" id="selectCalendario"
-                                                                class="form-control form-control-sm"
-                                                                style="margin-top: 4px;">
+                                                                class="form-control form-control-sm" style="margin-top: 4px;">
                                                                 <option hidden selected>Asignar calendario</option>
                                                                 @foreach ($calendario as $calendarios)
                                                                 <option class="" value="{{$calendarios->calen_id}}">
@@ -1317,15 +1335,17 @@
                                                             </select>
                                                         </div>
                                                     </div>
+
                                                 </div>
                                                 <div class="col-md-1"><br></div>
-                                                <div class="col-md-10" id="calendarInv"></div> <input type="hidden"
-                                                    id="pruebaEnd"> <input type="hidden" id="pruebaStar">
+                                                <div class="col-md-10" id="calendarInv"></div>
+                                                @endif
+                                                 <input type="hidden" id="pruebaEnd">
+                                                <input type="hidden" id="pruebaStar">
                                                 <div class="col-md-10" id="calendar" style="display: none"></div>
                                                 <div class="col-md-1"><br></div>
-                                                <div id="calendarioAsignar" class="modal fade" tabindex="-1"
-                                                    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-                                                    data-backdrop="static">
+                                                <div id="calendarioAsignar" class="modal fade" tabindex="-1" role="dialog"
+                                                    aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                                                     <div class="modal-dialog  modal-lg d-flex justify-content-center "
                                                         style="width:580px;  margin-top: 150px; left: 30px;">
 
@@ -1349,8 +1369,7 @@
                                                                                 class="btn btn-secondary btn-sm"
                                                                                 onclick="nolaborableTem()"><img
                                                                                     src="{{asset('admin/images/evento.svg')}}"
-                                                                                    height="20"> Dia no
-                                                                                laborable</button>
+                                                                                    height="20"> Dia no laborable</button>
                                                                         </div>
                                                                         <div class="col-md-4 text-right">
                                                                             {{--  <button type="button" style=" max-width: 18em!important;" class="btn btn-secondary btn-sm " onclick="registrarDdescanso()" ><img src="{{asset('admin/images/calendarioInc.svg')}}"
@@ -1384,6 +1403,7 @@
                                                 </div><!-- /.modal -->
                                             </div>
                                         </div>
+
                                         <div id="sw-default-step-5" class="setup-content">
                                             <div class="row">
                                                 <div class="col-md-12 text-center" id="detallehorario"></div>
@@ -1451,112 +1471,98 @@
                                                 </div><!-- /.modal-dialog -->
                                             </div><!-- /.modal -->
                                             <div id="horarioAgregar" class="modal fade" tabindex="-1" role="dialog"
-                                                aria-labelledby="myModalLabel" aria-hidden="true"
-                                                data-backdrop="static">
-                                                <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                                    style="width: 550px;">
+                                    aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                                    <div class="modal-dialog  modal-lg d-flex justify-content-center "
+                                        style="width: 550px;">
 
-                                                    <div class="modal-content">
-                                                        <div class="modal-header" style="background-color:#163552;">
-                                                            <h5 class="modal-title" id="myModalLabel"
-                                                                style="color:#ffffff;font-size:15px">Asignar horario
-                                                            </h5>
-                                                            <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body" style="font-size:12px!important">
+                                        <div class="modal-content">
+                                            <div class="modal-header" style="background-color:#163552;">
+                                                <h5 class="modal-title" id="myModalLabel"
+                                                    style="color:#ffffff;font-size:15px">Asignar horario</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body" style="font-size:12px!important">
+                                                <div class="row">
+
+                                                    <div class="col-md-12">
+                                                        <form id="frmHor" action="javascript:registrarHorario()">
                                                             <div class="row">
 
-                                                                <div class="col-md-12">
-                                                                    <form id="frmHor"
-                                                                        action="javascript:registrarHorario()">
-                                                                        <div class="row">
-                                                                            <div class="col-md-6">
-                                                                                <div class="form-group">
-                                                                                    <label for="">Tipo de
-                                                                                        horario:</label>
-                                                                                    <select
-                                                                                        class="form-control custom-select custom-select-sm"
-                                                                                        id="tipHorario">
-                                                                                        <option>Normal</option>
-                                                                                        <option>Guardía</option>
-                                                                                        <option>Nocturno</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-md-6"><label
-                                                                                    for=""><br></label>
-                                                                                <div class="form-check">
+                                                                <div class="col-md-12"><label for=""><br></label>
+                                                                    <div class="form-check">
 
-                                                                                    <input type="checkbox"
-                                                                                        class="form-check-input"
-                                                                                        id="exampleCheck1">
-                                                                                    <label class="form-check-label"
-                                                                                        for="exampleCheck1">Aplicar
-                                                                                        sobretiempo</label>
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div class="col-md-6">
-                                                                                <div class="form-group">
-                                                                                    <label for="">Descripcion:</label>
-                                                                                    <input type="text"
-                                                                                        class="form-control form-control-sm"
-                                                                                        id="descripcionCa" required>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-md-6">
-                                                                                <div class="form-group">
-                                                                                    <label
-                                                                                        for="">Tolerancia(Min):</label>
-                                                                                    <input type="number" value="0"
-                                                                                        class="form-control form-control-sm"
-                                                                                        min="0" id="toleranciaH"
-                                                                                        required>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-md-6">
-                                                                                <div class="form-group">
-                                                                                    <label for="">Hora de
-                                                                                        inicio(24h):</label>
-                                                                                    <input type="text" id="horaI"
-                                                                                        class="form-control form-control-sm"
-                                                                                        required>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-md-6">
-                                                                                <div class="form-group">
-                                                                                    <label for="">Hora de
-                                                                                        fin(24h):</label>
-                                                                                    <input type="text" id="horaF"
-                                                                                        class="form-control form-control-sm"
-                                                                                        required>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <div class="col-md-12">
-                                                                <div class="row">
-                                                                    <div class="col-md-12 text-right">
-                                                                        <button type="button"
-                                                                            class="btn btn-light btn-sm "
-                                                                            data-dismiss="modal">Cancelar</button>
-                                                                        <button type="submit" name=""
-                                                                            style="background-color: #163552;"
-                                                                            class="btn btn-sm ">Guardar</button>
-                                                                        </form>
+                                                                        <input type="checkbox" class="form-check-input"
+                                                                            id="exampleCheck1">
+                                                                        <label class="form-check-label"
+                                                                            for="exampleCheck1">Aplicar
+                                                                            sobretiempo</label>
+                                                                        <br><br>
                                                                     </div>
                                                                 </div>
+
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="">Descripcion:</label>
+                                                                        <input type="text"
+                                                                            class="form-control form-control-sm"
+                                                                            id="descripcionCa" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="">Tolerancia(Min):</label>
+                                                                        <input type="number" value="0"
+                                                                            class="form-control form-control-sm" min="0"
+                                                                            id="toleranciaH" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="">Hora de inicio(24h):</label>
+                                                                        <input type="text" id="horaI"
+                                                                            class="form-control form-control-sm"
+                                                                            required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="">Hora de fin(24h):</label>
+                                                                        <input type="text" id="horaF"
+                                                                            class="form-control form-control-sm"
+                                                                            required>
+                                                                    </div>
+                                                                </div>
+
+
                                                             </div>
+
+                                                    </div>
+
+
+
+                                                </div>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-12 text-right">
+                                                            <button type="button" class="btn btn-light btn-sm "
+                                                                onclick="$('#horarioAgregar').modal('hide')">Cancelar</button>
+                                                            <button type="submit" name=""
+                                                                style="background-color: #163552;"
+                                                                class="btn btn-sm ">Guardar</button>
+                                                            </form>
                                                         </div>
-                                                    </div><!-- /.modal-content -->
-                                                </div><!-- /.modal-dialog -->
-                                            </div><!-- /.modal -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
                                         </div>
 
                                     </div>
@@ -1582,6 +1588,7 @@
                                         <li><a href="#persona-step-1">Personales</a></li>
                                         <li><a href="#sw-default-step-2">Empresarial</a></li>
                                         <li><a href="#sw-default-step-3">Foto</a></li>
+                                        <li><a href="#sw-default-step-4">Calendario</a></li>
                                         <!--<div class="col-md-4 text-left" id="navActualizar" style="display: flex;
                                         align-items: center;cursor: pointer;"><a style="color: #3d3d3d;"
                                                 id="actualizarEmpleado">
@@ -1919,6 +1926,34 @@
                                                         class="btn btn-light btn-sm">Actualizar</button>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div id="sw-default-step-4">
+                                            <div class="row">
+                                                <div class="col-md-12" id="MostrarCa_e" style="display: none">
+                                                    <div class="form-group row">
+                                                        <label style="font-weight: 600;font-size: 14px;"
+                                                            class="col-lg-5 col-form-label text-right" for="simpleinput">Calendario
+                                                            de empleado:</label>
+                                                        <div class="col-lg-5">
+                                                            <select name="" id="selectCalendario_ed"
+                                                                class="form-control form-control-sm" style="margin-top: 4px;">
+                                                                <option hidden selected>Asignar calendario</option>
+                                                                @foreach ($calendario as $calendarios)
+                                                                <option class="" value="{{$calendarios->calen_id}}">
+                                                                    {{$calendarios->calendario_nombre}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-md-1"><br></div>
+                                                <div class="col-md-10" id="calendarInv_ed" style="display:none"></div> <input type="hidden" id="pruebaEnd_ed">
+                                                <input type="hidden" id="pruebaStar_ed">
+                                                <div class="col-md-10" id="calendar_ed" style="display: none"></div>
+                                                <div class="col-md-1"><br></div>
+                                            </div> <!-- end row -->
+
                                         </div>
                                     </div>
                                 </div>
