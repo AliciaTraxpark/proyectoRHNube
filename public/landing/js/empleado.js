@@ -1234,6 +1234,10 @@ function calendarioInv_ed() {
             right: ''
         },
     }
+    var calendarInv_ed = new FullCalendar.Calendar(calendarElInv_ed, configuracionCalendario);
+    calendarInv_ed.setOption('locale', "Es");
+
+    calendarInv_ed.render();
 }
 document.addEventListener('DOMContentLoaded', calendarioInv_ed);
 ////////////////////////////
