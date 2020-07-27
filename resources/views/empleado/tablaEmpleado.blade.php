@@ -718,8 +718,12 @@
 </script>
 <script>
     $("#tablaEmpleado tbody tr").click(function () {
+        $( "#detallehorario_ed" ).empty();
         $('#smartwizard1').smartWizard("reset");
         $('#smartwizardVer').smartWizard("reset");
+        $('#MostrarCa_e').hide();
+        $('#calendarInv_ed').hide();
+        $('#calendar_ed').hide();
         $('#h5Ocultar').show();
         $('#v_fotoV').attr("src", "landing/images/png.svg");
         //$(this).addClass('selected').siblings().removeClass('selected');
@@ -777,6 +781,7 @@
                         $('#calendarInv_ed').show();
                     }
                     else{
+
 
                     }
 
