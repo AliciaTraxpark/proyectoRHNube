@@ -78,10 +78,10 @@ function calendario() {
             console.log(info);
             console.log(info.event.id);
             console.log(info.event.title);
-           var event = calendar.getEventById(id);
+            var event = calendar.getEventById(id);
 
             bootbox.confirm({
-                message: "¿Desea eliminar: "+info.event.title+" del horario?",
+                message: "¿Desea eliminar: " + info.event.title + " del horario?",
                 buttons: {
                     confirm: {
                         label: 'Aceptar',
@@ -110,8 +110,8 @@ function calendario() {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
                             success: function (data) {
-                            info.event.remove();
-                            calendar2.refetchEvents();
+                                info.event.remove();
+                                calendar2.refetchEvents();
 
                             },
                             error: function (data) {
@@ -120,7 +120,7 @@ function calendario() {
 
 
                         });
-                        }
+                    }
                 }
             });
 
@@ -202,11 +202,11 @@ function calendario_edit() {
             center: 'title',
             right: ''
         },
-        events: function(info, successCallback, failureCallback) {
-            var idcalendario=$('#selectCalendario_ed').val();
+        events: function (info, successCallback, failureCallback) {
+            var idcalendario = $('#selectCalendario_ed').val();
             var datoscal;
             $.ajax({
-                type:"POST",
+                type: "POST",
                 url: "/empleado/calendarioEmpTemp",
                 data: {
                     idcalendario
@@ -229,17 +229,17 @@ function calendario_edit() {
 
         },
 
-       /*  events: "calendario/show", */
+        /*  events: "calendario/show", */
 
     }
     calendarioedit = new FullCalendar.Calendar(calendarEl, configuracionCalendario);
- calendarioedit.setOption('locale', "Es");
+    calendarioedit.setOption('locale', "Es");
 
     calendarioedit.render();
 }
 document.addEventListener('DOMContentLoaded', calendario_edit);
 /////////////
-function laborableTem()  {
+function laborableTem() {
     $('#calendarioAsignar').modal('hide');
 
     title = 'Laborable';
@@ -419,9 +419,9 @@ $('#selectCalendario').change(function () {
 })
 
 ///edit select
-$('#selectCalendario_ed').change(function (){
-    $( "#detallehorario" ).empty();
-    idca=$('#selectCalendario').val();
+$('#selectCalendario_ed').change(function () {
+    $("#detallehorario").empty();
+    idca = $('#selectCalendario').val();
     $.ajax({
         type: "post",
         url: "/empleado/vaciarcalendId",
@@ -440,8 +440,8 @@ $('#selectCalendario_ed').change(function (){
             $('#calendar2').show();
 
             calendario_edit()
-           calendario2();
-           $( "#detallehorario" ).append( "<label style='color:#163552'>Se muestra calendario de "+$('select[id="selectCalendario"] option:selected').text()+   "</label><br><label style='font-weight: 600'>Seleccione dias para asignar horarios</label>" );
+            calendario2();
+            $("#detallehorario").append("<label style='color:#163552'>Se muestra calendario de " + $('select[id="selectCalendario"] option:selected').text() + "</label><br><label style='font-weight: 600'>Seleccione dias para asignar horarios</label>");
         },
         error: function (data) {
             alert('Ocurrio un error');
@@ -449,10 +449,10 @@ $('#selectCalendario_ed').change(function (){
     });
 
     var dialog = bootbox.dialog({
-        message: "Ahora esta en el calendario de "+$('select[id="selectCalendario"] option:selected').text(),
+        message: "Ahora esta en el calendario de " + $('select[id="selectCalendario"] option:selected').text(),
         closeButton: false
     });
-    setTimeout(function(){
+    setTimeout(function () {
         dialog.modal('hide')
     }, 1400);
 
@@ -486,10 +486,10 @@ function calendario2() {
             console.log(info);
             console.log(info.event.id);
             console.log(info.event.title);
-           var event = calendar.getEventById(id);
+            var event = calendar.getEventById(id);
 
             bootbox.confirm({
-                message: "¿Desea eliminar: "+info.event.title+" del horario?",
+                message: "¿Desea eliminar: " + info.event.title + " del horario?",
                 buttons: {
                     confirm: {
                         label: 'Aceptar',
@@ -518,8 +518,8 @@ function calendario2() {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
                             success: function (data) {
-                            info.event.remove();
-                            calendar.refetchEvents();
+                                info.event.remove();
+                                calendar.refetchEvents();
 
                             },
                             error: function (data) {
@@ -528,7 +528,7 @@ function calendario2() {
 
 
                         });
-                        }
+                    }
                 }
             });
 
@@ -599,7 +599,7 @@ function registrarHorario() {
         url: "/empleado/registrarHorario",
         data: {
             sobretiempo,
-           
+
             descripcion,
             toleranciaH,
             inicio,
@@ -861,41 +861,42 @@ $("#checkboxFechaI").on("click", function () {
         $('#labelfechaF').show();
         $('#ocultarFecha > .combodate').show();
     }
-    document.addEventListener('DOMContentLoaded', calendario3);
+});
+document.addEventListener('DOMContentLoaded', calendario3);
 
-    ///inv
-    function calendarioInv_ed() {
-        var calendarElInv_ed = document.getElementById('calendarInv_ed');
-        calendarElInv_ed.innerHTML = "";
+///inv
+function calendarioInv_ed() {
+    var calendarElInv_ed = document.getElementById('calendarInv_ed');
+    calendarElInv_ed.innerHTML = "";
 
-        var fecha = new Date();
-        var ano = fecha.getFullYear();
-        var id;
+    var fecha = new Date();
+    var ano = fecha.getFullYear();
+    var id;
 
-        var configuracionCalendario = {
-            locale: 'es',
-            defaultDate: ano + '-01-01',
-            height: 360,
-            fixedWeekCount: false,
-            plugins: ['dayGrid', 'interaction', 'timeGrid'],
+    var configuracionCalendario = {
+        locale: 'es',
+        defaultDate: ano + '-01-01',
+        height: 360,
+        fixedWeekCount: false,
+        plugins: ['dayGrid', 'interaction', 'timeGrid'],
 
-            selectable: false,
-            selectMirror: true,
+        selectable: false,
+        selectMirror: true,
 
-            editable: false,
-            eventLimit: true,
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: ''
-            },
-        }
-        var calendarInv_ed = new FullCalendar.Calendar(calendarElInv_ed, configuracionCalendario);
-        calendarInv_ed.setOption('locale', "Es");
-
-        calendarInv_ed.render();
+        editable: false,
+        eventLimit: true,
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: ''
+        },
     }
-    document.addEventListener('DOMContentLoaded', calendarioInv_ed);
+    var calendarInv_ed = new FullCalendar.Calendar(calendarElInv_ed, configuracionCalendario);
+    calendarInv_ed.setOption('locale', "Es");
+
+    calendarInv_ed.render();
+}
+document.addEventListener('DOMContentLoaded', calendarioInv_ed);
 ////////////////
 $("#file").fileinput({
     allowedFileExtensions: ['jpg', 'jpeg', 'png'],
