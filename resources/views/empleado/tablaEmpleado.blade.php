@@ -478,13 +478,25 @@
 <input type="hidden" id="csrf_token" name="_token" value="{{ csrf_token() }}">
 <div class="row">
 
-    <div class="col-md-6" id="filter_global">
+    <div class="col-md-4" id="filter_global">
 
         <td align="center"><input type="text" class="global_filter form-control
                 form-control-sm" id="global_filter">
         </td>
     </div>
-    <div class="col-md-6" id="filter_col2" data-column="2" style="display:
+    <div class="col-md-2">
+        <td align="center">
+            <select class="form-control" name="select" id="select">
+                <option value="">BUSCAR</option>
+                <option value="2">Nombre</option>
+                <option value="3">Apellidos</option>
+                <option value="4">Cargo</option>
+                <option value="5">Área</option>
+                <option value="6">Costo</option>
+            </select>
+        </td>
+    </div>
+    <!--<div class="col-md-6" id="filter_col2" data-column="2" style="display:
         none">
         <label for="">Nombre:</label>
         <td align="center"><input type="text" class="column_filter form-control
@@ -513,7 +525,7 @@
         <label for="">Costo</label>
         <td align="center"><input type="text" class="column_filter form-control
                 form-control-sm" id="col6_filter"></td>
-    </div>
+    </div>-->
 
 </div>
 
@@ -522,17 +534,11 @@
         <tr style="background: #ffffff">
             <th style="border-top: 1px solid #fdfdfd;"></th>
             <th style="border-top: 1px solid #fdfdfd;"></th>
-            <th style="border-top: 1px solid #fdfdfd;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" name="inputR" id="i2"></th>
-            <th style="border-top: 1px solid #fdfdfd;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"
-                    name="inputR" id="i3"></th>
-            <th style="border-top: 1px solid #fdfdfd;">&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR"
-                    id="i4"></th>
-            <th style="border-top: 1px solid #fdfdfd;">&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR" id="i5">
-            </th>
-            <th style="border-top: 1px solid #fdfdfd;">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="inputR" id="i6">
-            </th>
+            <th style="border-top: 1px solid #fdfdfd;"></th>
+            <th style="border-top: 1px solid #fdfdfd;"></th>
+            <th style="border-top: 1px solid #fdfdfd;"></th>
+            <th style="border-top: 1px solid #fdfdfd;"></th>
+            <th style="border-top: 1px solid #fdfdfd;"></th>
             <th class="text-center" style="border-top: 1px solid #fdfdfd;" id="enviarCorreosMasivos">
                 <button type="button" class="btn  btn-sm btn-rounded" onclick="$('#modalCorreoM').modal();"
                     style="color: #548ec7;border-color: #e7edf3; padding-left: 4px; padding-right: 4px;"
@@ -1016,8 +1022,36 @@
                     "colvis": "Visibilidad"
                 }
             },
+            /*initComplete: function(){
+                var i;
+                this.api().columns([2,3,4,5,6]).every(function(){
+                    var that = this;
+                    $('#select').on("keyup change clear", function(){
+                    i = $(this).val();
+                    var val = $('#global_filter').val();
+                    $('#tablaEmpleado').DataTable().search(val).draw();
+                    console.log(i);
+                    if(i != ''){
+                        if(that.column(i).search() !== this.value){
+                            that.column(this.value, false, true).search(val).draw();
+                        }
+                    }
+                });
+                });
+            }*/
 
-
+        });
+        table.columns().every(function(ev){
+            console.log(ev);
+            var that = this;
+                    $('#select').on("keyup change clear", function(){
+                    i = $(this).val();
+                    var val = $('#global_filter').val();
+                    console.log(i);
+                        if(that.column(i).search() !== this.value){
+                            that.column(this.value, false, true).search(val).draw();
+                        }
+                });
         });
         //$('#verf1').hide();
         //$('#tablaEmpleado tbody #tdC').css('display', 'none');
