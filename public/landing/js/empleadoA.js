@@ -25,7 +25,7 @@ function datosAreaA(method) {
 
 function enviarAreaA(accion, objArea) {
     var id = $('#editarA').val();
-    if (id == '') {
+    if (id == '' || id == undefined) {
         $.ajax({
             type: "POST",
             url: "/registrar/area" + accion,
@@ -162,7 +162,7 @@ function datosCargoA(method) {
 
 function enviarCargoA(accion, objCargo) {
     var id = $('#editarC').val();
-    if (id == '') {
+    if (id == '' || id == undefined) {
         $.ajax({
             type: "POST",
             url: "/registrar/cargo" + accion,
@@ -300,7 +300,7 @@ function datosCentroA(method) {
 
 function enviarCentroA(accion, objCentroC) {
     var id = $('#editarCC').val();
-    if (id == '') {
+    if (id == '' || id == undefined) {
         $.ajax({
             type: "POST",
             url: "/registrar/centro" + accion,
@@ -436,7 +436,7 @@ function datosLocalA(method) {
 
 function enviarLocalA(accion, objLocal) {
     var id = $('#editarL').val();
-    if (id == '') {
+    if (id == '' || id == undefined) {
         $.ajax({
             type: "POST",
             url: "/registrar/local" + accion,
@@ -573,7 +573,7 @@ function datosNivelA(method) {
 
 function enviarNivelA(accion, objNivel) {
     var id = $('#editarN').val();
-    if (id == '') {
+    if (id == '' || id == undefined) {
         $.ajax({
             type: "POST",
             url: "/registrar/nivel" + accion,
@@ -711,7 +711,7 @@ function datosContratoA(method) {
 
 function enviarContratoA(accion, objContrato) {
     var id = $('#editarCO').val();
-    if (id == '') {
+    if (id == '' || id == undefined) {
         $.ajax({
             type: "POST",
             url: "/registrar/contrato" + accion,
