@@ -297,6 +297,7 @@ $('#guardarFoto').on("click", function () {
         },
         success: function (data) {
             console.log(data);
+            $('#guardarFoto').hide();
             $('#preview').attr("src", "fotosUser/" + data[0].foto);
             $('#imgsm').attr("src", "fotosUser/" + data[0].foto);
             $('#imgxs').attr("src", "fotosUser/" + data[0].foto);
