@@ -2532,6 +2532,8 @@ $('#formNuevoE').click(function () {
     calendarioInv();
     $('#calendarInv').show();
     $('#calendar').hide();
+    $("#detallehorario").empty();
+    $('#calendar2').hide();
     $.get("/empleado/vaciarcalend", {}, function (data, status) {
         $('#form-registrar').modal();
         $('#cerrarModalEmpleado').attr('disabled', false);

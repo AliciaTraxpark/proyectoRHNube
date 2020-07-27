@@ -103,7 +103,7 @@ class horarioController extends Controller
     public function guardarHorarioBD(Request $request)
     {
         $sobretiempo = $request->sobretiempo;
-        $tipHorario = $request->tipHorario;
+
         $descripcion = $request->descripcion;
         $toleranciaH = $request->toleranciaH;
         $inicio = $request->inicio;
@@ -111,7 +111,7 @@ class horarioController extends Controller
 
         $horario = new horario();
         $horario->horario_sobretiempo = $sobretiempo;
-        $horario->horario_tipo = $tipHorario;
+       
         $horario->horario_descripcion = $descripcion;
         $horario->horario_tolerancia = $toleranciaH;
         $horario->horaI = $inicio;
