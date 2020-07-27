@@ -100,6 +100,11 @@ Route::post('/empleado/guardarhorarioTem', 'EmpleadoController@guardarhorarioTem
 Route::post('/empleado/vercalendario', 'EmpleadoController@vercalendarioEmpl');
 Route::post('/empleado/calendarioEditar', 'EmpleadoController@calendarioEditar');
 Route::post('/empleado/eliminarEte', 'EmpleadoController@eliminarEte');
+Route::post('/empleado/calendarioEmpleado', 'EmpleadoController@calendarioEmp');
+Route::post('/empleado/vaciarcalendempleado', 'EmpleadoController@vaciarcalendempleado');
+Route::post('/empleado/storeCalendarioempleado', 'EmpleadoController@storeCalendarioempleado');
+Route::post('/empleado/storeIncidempleado', 'EmpleadoController@storeIncidempleado');
+Route::post('/empleado/guardarhorarioempleado', 'EmpleadoController@guardarhorarioempleado');
 
 //AREA
 Route::post('/registrar/area', 'areaController@store');
