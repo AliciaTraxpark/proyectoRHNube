@@ -1035,15 +1035,10 @@ $('#cerrarHorario').click(function () {
     $('#verhorarioEmpleado').modal('toggle');
 });
 function abrirHorario(){
-    if($("*").hasClass("fc-highlight")){
+
     $("#frmHor")[0].reset();
     $('#horarioAgregar').modal('show');
-    } else{
-        bootbox.alert({
-            message: "Primero debe asignar dia(s) de calendario.",
 
-        })
-    }
 
 }
 function abrirHorarioen(){
@@ -1064,7 +1059,7 @@ function registrarHorario(){
     } else {
         sobretiempo = 0;
     }
-    tipHorario = $('#tipHorario').val();
+
     descripcion = $('#descripcionCa').val();
     toleranciaH = $('#toleranciaH').val();
     inicio = $('#horaI').val();
@@ -1075,7 +1070,7 @@ function registrarHorario(){
         url: "/guardarHorario",
         data: {
             sobretiempo,
-            tipHorario,
+
             descripcion,
             toleranciaH,inicio,fin
         },
@@ -1088,88 +1083,9 @@ function registrarHorario(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-            H1=$('#horario1').val();
-            H2=$('#horario2').val();
-            idhorar=data.horario_id;
-            idpais = $('#pais').val();
-            iddepartamento = $('#departamento').val();
-        textSelec=$('#descripcionCa').val();
-        var diasEntreFechas = function (desde, hasta) {
-            var dia_actual = desde;
-            var fechas = [];
-            while (dia_actual.isSameOrBefore(hasta)) {
-                fechas.push(dia_actual.format('YYYY-MM-DD'));
-                dia_actual.add(1, 'days');
-            }
-            return fechas;
-        };
+            leertabla();
+             $('#horarioAgregar').modal('hide');
 
-        desde = moment(H1);
-        hasta = moment(H2);
-        var results = diasEntreFechas(desde, hasta);
-        results.pop();
-        //console.log(results);
-        var fechasArray = [];
-        var fechastart = [];
-        var objeto = [  ];
-
-        $.each(results, function (key, value) {
-            //alert( value );
-            fechasArray.push(textSelec);
-            fechastart.push(value);
-
-            objeto.push({
-                "title": textSelec,
-                "start": value
-            });
-        });
-        console.log(fechasArray);
-            $.ajax({
-                type: "post",
-                url: "/guardarEventos",
-                data: {
-                    fechasArray: fechastart,
-                    hora: textSelec,
-                    pais: idpais,
-                    departamento: iddepartamento,
-                    idhorar:idhorar
-                },
-                statusCode: {
-
-                    419: function () {
-                        location.reload();
-                    }
-                },
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function (data) {
-                    $("#selectHorario").val("Asignar horario");
-                    var mesAg= $('#fechaDa').val();
-                    var d  =mesAg;
-                    var fechasM=new Date(d);
-                    calendario(data,fechasM);
-
-
-                },
-                error: function (data) {
-                    alert('Ocurrio un error');
-                }
-
-
-            });
-
-            $('#horarioAgregar').modal('hide');
-            $('#selectHorario').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                value: data.horario_id,
-                text: data.horario_descripcion,
-                selected: true
-            }));
-            $('#selectHorarioen').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                value: data.horario_id,
-                text: data.horario_descripcion
-
-            }));
         },
         error: function () {
             alert("Hay un error");
