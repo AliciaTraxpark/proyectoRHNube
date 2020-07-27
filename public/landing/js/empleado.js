@@ -736,14 +736,14 @@ $('#selectCalendario').change(function () {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-
+            calendar.refetchEvents();
+            calendario2();
             $('#calendarInv').hide();
             $('#calendar').show();
             $('#mensajeOc').hide();
             $('#calendar2').show();
 
-            calendario();
-            calendario2();
+
             $("#detallehorario").append("<label style='color:#163552'>Se muestra calendario de " + $('select[id="selectCalendario"] option:selected').text() + "</label><br><label style='font-weight: 600'>Seleccione dias para asignar horarios</label>");
         },
         error: function (data) {
