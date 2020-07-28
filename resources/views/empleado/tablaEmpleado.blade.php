@@ -487,7 +487,7 @@
     <div class="col-md-2">
         <td align="center">
             <select class="form-control" name="select" id="select">
-                <option value="">BUSCAR</option>
+                <option value="-1">BUSCAR</option>
                 <option value="2">Nombre</option>
                 <option value="3">Apellidos</option>
                 <option value="4">Cargo</option>
@@ -1029,34 +1029,49 @@
             },
             /*initComplete: function(){
                 var i;
-                this.api().columns([2,3,4,5,6]).every(function(){
+                this.api().columns().every(function(){
                     var that = this;
                     $('#select').on("keyup change clear", function(){
                     i = $(this).val();
                     var val = $('#global_filter').val();
-                    $('#tablaEmpleado').DataTable().search(val).draw();
-                    console.log(i);
-                    if(i != ''){
                         if(that.column(i).search() !== this.value){
-                            that.column(this.value, false, true).search(val).draw();
+                            that.column(this.value).search(val).draw();
                         }
-                    }
+                        if(i == "-1"){
+                            that.search(val).draw();
+                            console.log(that.cache('search').search(val).draw());
+                        }
+                    
+                    var val1 = this.value;
+                    $('#global_filter').on("keyup change clear",function(){
+                        val = $(this).val();
+                        if(that.column(i).search() !== val1){
+                            that.column(val1).search(val).draw();
+                        }
+                    });
                 });
                 });
             }*/
-
         });
-        table.columns().every(function(ev){
-            console.log(ev);
+        table.columns().each(function(){
             var that = this;
-                    $('#select').on("keyup change clear", function(){
-                    i = $(this).val();
-                    var val = $('#global_filter').val();
-                    console.log(i);
-                        if(that.column(i).search() !== this.value){
-                            that.column(this.value, false, true).search(val).draw();
-                        }
+            var i;
+            $('#select').on("keyup change", function(){
+                i = this.value;
+                console.log(i);
+                var val = $('#global_filter').val();
+                if(that.column(i).search() !== this.value){
+                    console.log(this.value);
+                    that.column(this.value).search(val).draw();
+                }
+                var val1 = this.value;
+                $('#global_filter').on("keyup change clear",function(){
+                    val = $(this).val();
+                    if(that.column(i).search() !== val1){
+                        that.column(val1).search(val).draw();
+                    }
                 });
+            });
         });
         //$('#verf1').hide();
         //$('#tablaEmpleado tbody #tdC').css('display', 'none');
