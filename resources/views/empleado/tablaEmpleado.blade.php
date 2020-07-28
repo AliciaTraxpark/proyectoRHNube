@@ -1002,6 +1002,7 @@
             "lengthChange": false,
             "scrollX": true,
             "pageLength": 30,
+            fixedHeader: true,
 
             language: {
                 "sProcessing": "Procesando...",
@@ -1037,14 +1038,13 @@
                     var i;
                     var val1;
                     $('#select').on("keyup change", function(){
-                        i = this.value;
+                        i = $.fn.dataTable.util.escapeRegex(this.value);
                         console.log(i);
                         var val = $('#global_filter').val();
                         if(that.column(i).search() !== this.value){
-                            console.log(this.value);
                             that.column(this.value).search(val).draw();
                         }
-                        val1 = this.value;
+                        val1 = $.fn.dataTable.util.escapeRegex(this.value);
                         $('#global_filter').on("keyup change clear",function(){
                             var val = $(this).val();
                             if(that.column(i).search() !== val1){
