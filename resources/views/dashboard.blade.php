@@ -62,7 +62,7 @@
 <!-- end row -->
 @endsection
 @section('script')
-<script src="{{asset('landing/js/editarPerfil.js')}}"></script>
+<script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/chart/Chart.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/chart/Chart.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.js') }}"></script>
@@ -160,7 +160,7 @@
 @endsection
 @endif
 @section('script')
-<script src="{{asset('landing/js/editarPerfil.js')}}"></script>
+<script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
 <!-- optional plugins -->
 <script src="{{ URL::asset('admin/assets/libs/moment/moment.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
