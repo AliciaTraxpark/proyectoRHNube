@@ -960,7 +960,7 @@ a:not([href]):not([tabindex]){
 </div>
 @endsection
 @section('script')
-<script src="{{asset('landing/js/editarPerfil.js')}}"></script>
+<script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
 <!-- Plugins Js -->
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
