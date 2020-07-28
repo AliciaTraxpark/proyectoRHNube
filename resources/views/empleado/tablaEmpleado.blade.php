@@ -1031,35 +1031,34 @@
                     "colvis": "Visibilidad"
                 }
             },
-            /*initComplete: function(){
-                var i;
+            initComplete: function(){
                 this.api().columns().every(function(){
                     var that = this;
-                    $('#select').on("keyup change clear", function(){
-                    i = $(this).val();
-                    var val = $('#global_filter').val();
+                    var i;
+                    var val1;
+                    $('#select').on("keyup change", function(){
+                        i = this.value;
+                        console.log(i);
+                        var val = $('#global_filter').val();
                         if(that.column(i).search() !== this.value){
+                            console.log(this.value);
                             that.column(this.value).search(val).draw();
                         }
-                        if(i == "-1"){
-                            that.search(val).draw();
-                            console.log(that.cache('search').search(val).draw());
-                        }
-                    
-                    var val1 = this.value;
-                    $('#global_filter').on("keyup change clear",function(){
-                        val = $(this).val();
-                        if(that.column(i).search() !== val1){
-                            that.column(val1).search(val).draw();
-                        }
+                        val1 = this.value;
+                        $('#global_filter').on("keyup change clear",function(){
+                            var val = $(this).val();
+                            if(that.column(i).search() !== val1){
+                                that.column(val1).search(val).draw();
+                            }
+                        });
                     });
                 });
-                });
-            }*/
+            }
         });
-        table.columns().each(function(){
+        /*table.columns().every(function(){
             var that = this;
             var i;
+            var val1;
             $('#select').on("keyup change", function(){
                 i = this.value;
                 console.log(i);
@@ -1068,15 +1067,15 @@
                     console.log(this.value);
                     that.column(this.value).search(val).draw();
                 }
-                var val1 = this.value;
+                val1 = this.value;
                 $('#global_filter').on("keyup change clear",function(){
-                    val = $(this).val();
+                    var val = $(this).val();
                     if(that.column(i).search() !== val1){
                         that.column(val1).search(val).draw();
                     }
                 });
             });
-        });
+        });*/
         //$('#verf1').hide();
         //$('#tablaEmpleado tbody #tdC').css('display', 'none');
 
