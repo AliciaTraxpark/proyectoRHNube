@@ -177,9 +177,10 @@ background-color: #ffffff !important;
                             <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                             <div class="row">
                                 <div class="col-md-6">
-                                   
+
                                 </div>
                                 <div class=" col-md-6 col-xl-6 text-right">
+                                    <button class="btn btn-sm btn-primary" onclick="abrirHorario()" id="btnNuevoHorario" style="background-color: #183b5d;border-color:#62778c">+ Nuevo Horario</button>
                                     <button class="btn btn-sm btn-primary" id="btnasignar" style="background-color: #183b5d;border-color:#62778c">Asignar horarios</button>
                                    {{--  <button class="btn btn-sm btn-primary" id="btnasignarIncidencia" style="background-color: #183b5d;border-color:#62778c">Asignar incidencias</button> --}}
                                 </div>
@@ -712,21 +713,12 @@ background-color: #ffffff !important;
                                    <div class="col-md-12">
                                     <form id="frmHor" action="javascript:registrarHorario()">
                                        <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                               <label for="">Tipo de horario:</label>
-                                               <select class="form-control custom-select custom-select-sm" id="tipHorario">
-                                                 <option>Normal</option>
-                                                 <option>Guardía</option>
-                                                 <option>Nocturno</option>
-                                               </select>
-                                            </div>
-                                          </div>
-                                        <div class="col-md-6"><label for=""><br></label>
+
+                                        <div class="col-md-12"><label for=""></label>
                                             <div class="form-check">
 
                                               <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                              <label class="form-check-label" for="exampleCheck1">Aplicar sobretiempo</label>
+                                              <label class="form-check-label" for="exampleCheck1">Aplicar sobretiempo</label><br><br>
                                             </div>
                                          </div>
 

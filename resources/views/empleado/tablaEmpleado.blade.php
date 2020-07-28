@@ -781,6 +781,10 @@
                         $('#calendarInv_ed').show();
                     }
                     else{
+                        $('#calendar_ed').show();
+                        $('#mensajeOc_ed').hide();
+                        $('#calendar2_ed').show();
+
 
 
                     }
