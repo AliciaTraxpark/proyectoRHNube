@@ -16,6 +16,7 @@
     .table th,
     .table td {
         padding: 0.4rem;
+        border-top: 1px solid #edf0f1;
     }
 
     .tooltip-arrow,
