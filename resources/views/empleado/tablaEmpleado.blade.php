@@ -955,8 +955,11 @@
         $("#tablaEmpleado").DataTable({
             retrieve: true,
             "searching": true,
+            "lengthChange": false,
             "scrollX": true,
-
+            "pageLength": 30,
+            fixedHeader: true,
+            "processing": true,
             language: {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
