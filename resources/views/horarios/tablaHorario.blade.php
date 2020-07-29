@@ -15,6 +15,7 @@
     }
     .table th, .table td{
         padding: 0.4rem;
+        border-top: 1px solid #edf0f1;
     }
 </style>
 <input type="hidden" id="csrf_token" name="_token" value="{{ csrf_token() }}">
@@ -28,23 +29,28 @@
             <th>Tolerancia</th>
             <th>Hora inicio</th>
             <th>Hora fin</th>
-           <th>&nbsp;<input type="checkbox" name="" id="selectT"></th>
+            <th></th>
+
 
         </tr>
     </thead>
     <tbody style="background:#ffffff;color: #585858;font-size: 12.5px">
         @foreach ($horario as  $horarios)
         <tr class="" >
+
             <td>{{$loop->index+1}}</td>
             <td>{{$horarios->horario_descripcion}}</td>
             <td>{{$horarios->horario_tolerancia}} min</td>
             <td>{{$horarios->horaI}}</td>
             <td>{{$horarios->horaF}} </td>
+            <td><a id="formNuevoEd" onclick="" style="cursor: pointer"><img
+                src="{{asset('admin/images/edit.svg')}}" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+            onclick="" style="cursor: pointer"><img
+                src="{{asset('admin/images/delete.svg')}}" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-            <td >{{--  @if ($tabla_empleados->horario_horario_id==null) --}}
-                <input type="checkbox" style="margin-left:5.5px!important" id="tdC" name="tdC" class="form-check-input sub_chk" data-id="{{$horarios->horario_id}}" >
-             {{--    @endif --}}
-             </td>
+            </td>
+
+
         </tr>
 
         @endforeach
