@@ -836,9 +836,24 @@ function registrarHorario(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-            H1=$('#horario1').val();
+
+            $('#horarioAgregar').modal('hide');
+            leertabla();
+            if($('#asignarHorario').is(':visible')){
+                registrarhDias(data.horario_id);
+            }
+         
+
+        },
+        error: function () {
+            alert("Hay un error");
+        }
+    });
+}
+function registrarhDias(idhorar){
+    H1=$('#horario1').val();
             H2=$('#horario2').val();
-            idhorar=data.horario_id;
+
             idpais = $('#pais').val();
             iddepartamento = $('#departamento').val();
         textSelec=$('#descripcionCa').val();
@@ -904,14 +919,6 @@ function registrarHorario(){
 
             });
 
-            $('#horarioAgregar').modal('hide');
-
-
-        },
-        error: function () {
-            alert("Hay un error");
-        }
-    });
 }
 function registrarHorarioen(){
     if ($('#exampleCheck1en').prop('checked')) {
