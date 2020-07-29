@@ -2580,6 +2580,7 @@ $('#cerrarEd').click(function () {
     $('input[type="email"]').val("");
     $('input[type="number"]').val("");
     $('select').val("");
+    $('#selectHorario_ed').val("Seleccionar horario");
     $('#codigoCelular').val("+51");
     limpiar();
     $('#selectCalendario').val("Asignar calendario");

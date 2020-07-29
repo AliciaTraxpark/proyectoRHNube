@@ -800,6 +800,8 @@
                 }
                 $('#m_fechaFE').combodate('setValue', data[0].emple_fechaFC);
                 $('#v_email').val(data[0].emple_Correo);
+                calendario_edit();
+                calendario2_ed();
                 $('#v_codigoEmpleado').val(data[0].emple_codigo);
                 if (data[0].foto != "") {
                     urlFoto = data[0].foto;
