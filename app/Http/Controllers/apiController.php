@@ -401,11 +401,9 @@ class apiController extends Controller
                     if ($promedio) {
                         //RESTA DE PROMEDIOS DE CAPTURAS
                         $capturaRegistrada = captura::where('idCaptura', '=', $idCaptura)->get()->first();
-                        $explode1 = explode(":", $capturaRegistrada->promedio);
-                        $calSeg = $explode1[0] * 3600 + $explode1[1] * 60 + $explode1[2];
                         $explode2 = explode(":", $promedio->promedio);
                         $calSeg2 = $explode2[0] * 3600 + $explode2[1] * 60 + $explode2[2];
-                        $totalP = $calSeg - $calSeg2;
+                        $totalP = $calSeg2;
                         //RESTA POR FECHA HORA DE   CAPTURAS
                         $fecha = Carbon::create($capturaRegistrada->fecha_hora)->format('H:i:s');
                         $explo1 = explode(":", $fecha);
