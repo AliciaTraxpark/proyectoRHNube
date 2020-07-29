@@ -187,6 +187,8 @@ Route::get('/horario/incidenciatemporal', 'horarioController@incidenciatemporal'
 Route::post('/eliminarinctempotal', 'horarioController@eliminarinctempotal');
 Route::post('/verDatahorario', 'horarioController@verDatahorario');
 Route::post('/horario/actualizarhorario', 'horarioController@actualizarhorarioed');
+Route::post('/horario/verificarID', 'horarioController@verificarID');
+Route::post('/horario/eliminarHorario', 'horarioController@eliminarHorario');
 
 //DASHBOARD
 Route::get('/eventosU', 'dashboardController@eventosUsuario');

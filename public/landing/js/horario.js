@@ -836,8 +836,76 @@ function registrarHorario(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-            leertabla();
-             $('#horarioAgregar').modal('hide');
+            H1=$('#horario1').val();
+            H2=$('#horario2').val();
+            idhorar=data.horario_id;
+            idpais = $('#pais').val();
+            iddepartamento = $('#departamento').val();
+        textSelec=$('#descripcionCa').val();
+        var diasEntreFechas = function (desde, hasta) {
+            var dia_actual = desde;
+            var fechas = [];
+            while (dia_actual.isSameOrBefore(hasta)) {
+                fechas.push(dia_actual.format('YYYY-MM-DD'));
+                dia_actual.add(1, 'days');
+            }
+            return fechas;
+        };
+
+        desde = moment(H1);
+        hasta = moment(H2);
+        var results = diasEntreFechas(desde, hasta);
+        results.pop();
+        //console.log(results);
+        var fechasArray = [];
+        var fechastart = [];
+        var objeto = [  ];
+
+        $.each(results, function (key, value) {
+            //alert( value );
+            fechasArray.push(textSelec);
+            fechastart.push(value);
+
+            objeto.push({
+                "title": textSelec,
+                "start": value
+            });
+        });
+        console.log(fechasArray);
+            $.ajax({
+                type: "post",
+                url: "/guardarEventos",
+                data: {
+                    fechasArray: fechastart,
+                    hora: textSelec,
+                    pais: idpais,
+                    departamento: iddepartamento,
+                    idhorar:idhorar
+                },
+                statusCode: {
+
+                    419: function () {
+                        location.reload();
+                    }
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data) {
+
+                    calendario();
+
+
+                },
+                error: function (data) {
+                    alert('Ocurrio un error');
+                }
+
+
+            });
+
+            $('#horarioAgregar').modal('hide');
+
 
         },
         error: function () {
@@ -1814,3 +1882,79 @@ function editarHorario(){
 
 
    }
+  function eliminarHorario(idhorario){
+
+    $.ajax({
+        type: "post",
+        url: "/horario/verificarID",
+        data: {idhorario},
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            if(data==1){
+                bootbox.alert({
+                    message: "No se puede eliminar horario, tiene empleados designados.",
+
+                });
+
+                return false;
+            }
+            else{
+                bootbox.confirm({
+                    message: "¿Desea eliminar el horario?",
+                    buttons: {
+                        confirm: {
+                            label: 'Aceptar',
+                            className: 'btn-success'
+                        },
+                        cancel: {
+                            label: 'Cancelar',
+                            className: 'btn-light'
+                        }
+                    },
+                    callback: function (result) {
+                        if (result == true) {
+                            $.ajax({
+                                type: "post",
+                                url: "/horario/eliminarHorario",
+                                data: {idhorario},
+                                statusCode: {
+
+                                    419: function () {
+                                        location.reload();
+                                    }
+                                },
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: function (data) {
+                               leertabla();
+                                },
+                                error: function (data) {
+                                    alert('Ocurrio un error');
+                                }
+
+
+                            });
+                            }
+                    }
+                });
+
+            }
+        },
+        error: function (data) {
+            alert('Ocurrio un error');
+        }
+
+    });
+
+  }

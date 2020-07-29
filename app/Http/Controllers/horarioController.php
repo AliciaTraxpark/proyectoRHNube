@@ -124,7 +124,7 @@ class horarioController extends Controller
 
     public function tablaHorario()
     {   $horario=horario::where('user_id', '=', Auth::user()->id)->get();
-       
+
        return view('horarios.tablaHorario',['horario'=>$horario]);
     }
 
@@ -448,8 +448,7 @@ class horarioController extends Controller
                 $horario_dias->color = $temporal_eventosH->color;
                 $horario_dias->textColor = $temporal_eventosH->textColor;
                 $horario_dias->users_id = $temporal_eventosH->users_id;
-                $horario_dias->paises_id = $temporal_eventosH->paises_id;
-                $horario_dias->ubigeo_peru_departments_id = $temporal_eventosH->ubigeo_peru_departments_id;
+
                 $horario_dias->save();
 
              foreach ($idemps as $idempleados) {
@@ -836,6 +835,27 @@ class horarioController extends Controller
         return[$horariot,$horarion,$temporal_evento];
 
     }
+
+    public function verificarID(Request $request){
+        $idhorario=$request->idhorario;
+        $horarion=DB::table('horario as h')
+        ->leftJoin('horario_empleado as he','h.horario_id','=','he.horario_horario_id')
+        ->where('h.user_id', '=', Auth::user()->id)
+        ->where('h.horario_id', '=', $idhorario)
+        ->get();
+        if($horarion[0]->horario_horario_id!=null){
+            return 1;
+        } else{return 0;}
+
+
+    }
+
+    public function eliminarHorario(Request $request){
+        $idhorario=$request->idhorario;
+        $horario = horario::where('horario_id', '=', $idhorario)->delete();
+
+    }
+
 }
 
 

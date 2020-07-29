@@ -189,7 +189,167 @@ background-color: #ffffff !important;
                                 </div>
                         </div> <!-- end card body-->
                     </div> <!-- end card -->
-                    
+                    <div id="asignarHorario" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" style="overflow-y: auto;">
+                        <div class="modal-dialog  modal-lg d-flex justify-content-center" style="margin-top: 15px;max-width:1000px!important;">
+
+                        <div class="modal-content" >
+                            <div class="modal-header" style="background-color:#163552;">
+                               <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Asignar horario</h5>
+                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                   <span aria-hidden="true">&times;</span>
+                               </button>
+                           </div>
+                           <div class="modal-body" style="font-size: 13.5px!important;padding-top: 8px;
+                           padding-bottom: 8px;">
+                            <input type="hidden" id="horario1">
+                            <input type="hidden" id="horario2">
+                               <div class="row">
+                                   <div class="col-md-10">
+                                    <form id="formulario" action="javascript:agregarHoras()">
+                                       <div class="row">
+                                        <div class="col-md-3">
+                                            <input type="hidden" id="fechaDa" name="fechaDa">
+                                            <label for="">Asignar empleado(s):</label>
+                                        </div>
+
+
+                                        <div class="col-md-9">
+                                               <select class="form-control wide" data-plugin="customselect" multiple id="nombreEmpleado" >
+                                            </select>
+
+                                         </div> </div> </div>
+
+                                   <div class="col-md-1"><label for="sdfgh"></label></div>
+                                    <div class="col-md-10" >
+                                     <div class="row">
+
+                                      </div>
+                                      <div class="col-md-12 text-center" id="Datoscalendar" style=" max-width: 100%;">
+                                        <div class="col-md-12 row" style="    margin-left: 59%;
+                                        top: 40px;">
+
+
+                                        </div>
+                                        <div id="calendar" style="">
+                                        </div>
+
+                                      </div>
+                                      <input type="hidden" id="horarioEnd">
+                                      <input type="hidden" id="horarioStart">
+
+                                      <div class="col-md-12 text-right" id="Datoscalendar1" style=" max-width: 100%;">
+                                        <div id="calendar1">
+                                        </div>
+
+                                      </div>
+
+
+                                    </div>
+                                    <div class="col-md-1" style="top: 100px;">
+                                        <div class="row">
+                                            <div class="col-md-6" style="  background: #f9e9e9;
+                                            height: 35px;"><h1>&nbsp;</h1></div>
+                                            <div class="col-md-6"><label for=""style="font-size: 12px">Dias de Descanso</label></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6" style="  background: #ffffff;
+                                            height: 35px;border: 1px solid #d4d4d4;"><h1>&nbsp;</h1></div>
+                                              <div class="col-md-6"><label for=""style="font-size: 12px">Dias laborables</label></div>
+                                        </div> <br><br><br>
+                                        <div class="row">
+                                         <div class="col-6" style="padding-left: 0px;">
+                                            <button style="background-color: #dddaee; border-color: #ffffff; color: #44444c;" onclick="vaciarcalendario()"  class="btn btn-xs btn-primary" ><img src="{{asset('admin/images/borrar.svg')}}" height="10" ></button>
+                                        </div>
+                                        <div class="col-md-6" style="padding-left: 0px;">
+                                        <label style="font-size: 12px" for="">vaciar calendario</label>
+                                        </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+
+
+                                        <div class="col-md-6" style="padding-left: 0px;">
+                                            <div class="btn-group mt-2 mr-1">
+                                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" style="color: #fff;
+                                                background-color: #1c3763;
+                                                border-color: #1c3763;"
+                                                    data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false"><img src="{{asset('admin/images/borrador.svg')}}" height="15" > Borrar <i class="icon"><span data-feather="chevron-down"></span></i></button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" onclick="vaciarhor()">Horarios</a>
+                                                    <a class="dropdown-item"  onclick="vaciardl()" >D. laborables</a>
+                                                    <a class="dropdown-item" onclick="vaciarndl()">D. no laborables</a>
+                                                    <a class="dropdown-item" onclick="vaciarinH()">Incidencia</a>
+
+                                                </div>
+                                            </div><!-- /btn-group -->
+                                        </div>
+                                        </div>
+
+
+
+                                    </div>
+
+                               </div>
+
+                           </div>
+                           <div class="modal-footer" style="padding-top: 8px;
+                           padding-bottom: 8px;">
+                               <div class="col-md-12">
+                                   <div class="row">
+
+                                       <div class="col-md-12 text-right" >
+                                        <button type="button" id="" class="btn btn-light " data-dismiss="modal">Cancelar</button>
+                                        <button type="button" id="guardarTodoHorario" name="" style="background-color: #163552;" class="btn ">Guardar</button>
+
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div><!-- /.modal-content -->
+                     </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal-->
+
+                    <div id="horarioAsignar_ed" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                    aria-hidden="true" data-backdrop="static">
+                    <div class="modal-dialog  modal-lg d-flex justify-content-center "
+                        style="width:330px;  margin-top: 150px; left: 30px;">
+
+                        <div class="modal-content">
+
+                            <div class="modal-body"
+                                style="font-size:12px!important;background: #f3f3f3;">
+                                <div class="col-md-12">
+
+                                        <select class="form-control custom-select custom-select-sm  col-md-10" name="selectHorario" id="selectHorario">
+                                            <option hidden selected>Asignar horario</option>
+                                            @foreach ($horario as $horarios)
+                                            <option class="" value="{{$horarios->horario_id}}">{{$horarios->horario_descripcion}}</option>
+                                             @endforeach
+                                        </select> &nbsp;
+                                        <button class="btn btn-primary btn-sm" style="background-color: #183b5d;border-color:#62778c" onclick="abrirHorario()">+</button>
+
+
+
+                                </div>
+
+                            </div>
+                            <div class="modal-footer"
+                                style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <button type="button" class="btn btn-soft-primary btn-sm "
+                                                onclick="$('#horarioAsignar_ed').modal('hide')">Cancelar</button>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
 
                     <div id="verhorarioEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" style="overflow-y: auto;">
                         <div class="modal-dialog  modal-xl d-flex justify-content-center" style="margin-top: 5px">

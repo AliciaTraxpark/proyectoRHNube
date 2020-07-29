@@ -46,7 +46,7 @@
             <td><a id="formNuevoEd" onclick="" style="cursor: pointer"><img
                 src="{{asset('admin/images/edit.svg')}}" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
             onclick="" style="cursor: pointer"><img
-                src="{{asset('admin/images/delete.svg')}}" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                src="{{asset('admin/images/delete.svg')}}" onclick="eliminarHorario({{$horarios->horario_id}})" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
             </td>
 
