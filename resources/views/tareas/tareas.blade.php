@@ -87,7 +87,6 @@
             <div>
                 <div class="row">
                     <div class="col-md-12">
-                        <label style="font-weight: 700">Búsqueda por fecha</label>
                     </div>
 
                     <div class="col-md-6"> <label><br> </label>

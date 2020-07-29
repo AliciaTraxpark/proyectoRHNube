@@ -79,7 +79,9 @@ function onMostrarPantallas() {
                     var promedios = 0;
                     var promedio = 0;
                     var labelDelGrupo = horaDelGrupo + ":00:00" + " - " + (parseInt(horaDelGrupo) + 1) + ":00:00";
-                    var grupo = `<span style="font-weight: bold;color:#507394;"><img src="landing/images/clock (1).svg" height="20">&nbsp;${labelDelGrupo}</span>&nbsp;&nbsp;<img src="landing/images/punt.gif" height="70">&nbsp;&nbsp;<span style="font-weight: bold;color:#507394;" id="promHoras"></span><br><br><div class="row">`;
+                    var grupo = `<span style="font-weight: bold;color:#6c757d;cursor:default">${labelDelGrupo}</span>&nbsp;&nbsp;<img src="landing/images/punt.gif" height="70">&nbsp;&nbsp;
+                    <span style="font-weight: bold;color:#6c757d;cursor:default" id="promHoras" data-toggle="tooltip" data-placement="right" title="Actividad por Hora"
+                    data-original-title=""></span><br><br><div class="row">`;
                     for (var j = 0; j < 6; j++) {
                         if (data[hora][j] != undefined) {
                             /*var horaP = data[hora][j][data[hora][j].length - 1].promedio.split(":");
@@ -146,7 +148,8 @@ function onMostrarPantallas() {
                                                     &nbsp;
                                                     <label style="font-size: 12px" for="">${hora + ":" + j + "0" + " - " + hora + 
                                                     ":" + (j+1) + "0"}</label>
-                                                    <div class="progress" style="background-color: #d4d4d4;">
+                                                    <div class="progress" style="background-color: #d4d4d4;" data-toggle="tooltip" data-placement="bottom" title="Actividad por Rango de Tiempo"
+                                                    data-original-title="">
                                                         <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:${nivel}" aria-valuenow=${promedio}
                                                             aria-valuemin="0" aria-valuemax="100">${promedio + "%"}</div>
                                                     </div>
@@ -244,9 +247,9 @@ function onMostrarPantallas() {
                 });
             }
             var span = "";
-            span += `<img src="landing/images/graph.svg" height="20">&nbsp;${promedioHoras}%`;
+            span += `${promedioHoras}%`;
             $('#promHoras').append(span);
-            console.log(span);
+            $('[data-toggle="tooltip"]').tooltip();
         },
         error: function (data) {}
     })
