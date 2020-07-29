@@ -486,7 +486,7 @@
     <div class="col-md-2">
         <td align="center">
             <select class="form-control" name="select" id="select">
-                <option value="-1">BUSCAR</option>
+                <option value="-1">PERSONALIZADO</option>
                 <option value="2">Nombre</option>
                 <option value="3">Apellidos</option>
                 <option value="4">Cargo</option>
