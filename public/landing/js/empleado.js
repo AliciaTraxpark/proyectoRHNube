@@ -2579,7 +2579,7 @@ $('#cerrarEd').click(function () {
     $('input[type="file"]').val("");
     $('input[type="email"]').val("");
     $('input[type="number"]').val("");
-    $('select').val("");
+    $('#form-ver :select').val("");
     $('#codigoCelular').val("+51");
     limpiar();
     $('#selectCalendario').val("Asignar calendario");
