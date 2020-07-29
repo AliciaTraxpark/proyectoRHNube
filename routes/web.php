@@ -105,7 +105,11 @@ Route::post('/empleado/vaciarcalendempleado', 'EmpleadoController@vaciarcalendem
 Route::post('/empleado/storeCalendarioempleado', 'EmpleadoController@storeCalendarioempleado');
 Route::post('/empleado/storeIncidempleado', 'EmpleadoController@storeIncidempleado');
 Route::post('/empleado/guardarhorarioempleado', 'EmpleadoController@guardarhorarioempleado');
-
+Route::get('/empleado/vaciardfTem', 'EmpleadoController@vaciardfTem');
+Route::get('/empleado/vaciardlabTem', 'EmpleadoController@vaciardlabTem');
+Route::get('/empleado/vaciardNlabTem', 'EmpleadoController@vaciardNlabTem');
+Route::get('/empleado/vaciardIncidTem', 'EmpleadoController@vaciardIncidTem');
+Route::post('/empleado/eliminareventBD', 'EmpleadoController@eliminareventBD');
 //AREA
 Route::post('/registrar/area', 'areaController@store');
 
