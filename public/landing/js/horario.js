@@ -92,7 +92,7 @@ function verhorarioEmpleado(idempleado) {
 
 }
 //CALENDARIO HORARIO
-function calendarioHorario(eventosEmpleado,fechasMh) {
+/* function calendarioHorario(eventosEmpleado,fechasMh) {
     var calendarElH = document.getElementById('calendarHorario');
     calendarElH.innerHTML = "";
     var fechasMh=fechasMh;
@@ -138,9 +138,7 @@ function calendarioHorario(eventosEmpleado,fechasMh) {
                                 idHora: info.event.id,textcolor:info.event.textColor,ide:idempleadoEli
                             },
                             statusCode: {
-                                /*401: function () {
-                                    location.reload();
-                                },*/
+
                                 419: function () {
                                     location.reload();
                                 }
@@ -182,10 +180,7 @@ function calendarioHorario(eventosEmpleado,fechasMh) {
                             data: {
                                 idHora: info.event.id,textcolor:info.event.textColor,ide:idempleadoEli
                             },
-                            statusCode: {
-                                /*401: function () {
-                                    location.reload();
-                                },*/
+
                                 419: function () {
                                     location.reload();
                                 }
@@ -228,19 +223,7 @@ function calendarioHorario(eventosEmpleado,fechasMh) {
             right: ''
         },
         customButtons: {
-            /* Descanso: {
-                text: "Asignar días de Descanso",
-                click:function(){
-                    $.notify("Seleccione Dias", {
-                        align: "right",
-                        verticalAlign: "top",
-                        type: "info"
 
-                    });
-
-                }
-
-            } */
         },
 
         events: eventosEmpleado,
@@ -251,7 +234,7 @@ function calendarioHorario(eventosEmpleado,fechasMh) {
     calendar.render();
 
 }
-document.addEventListener('DOMContentLoaded', calendarioHorario);
+document.addEventListener('DOMContentLoaded', calendarioHorario); */
 $('#horaI').flatpickr({
     enableTime: true,
     noCalendar: true,
@@ -295,38 +278,20 @@ $('#horaIncidenHoEm').flatpickr({
     time_24hr: true
 });
 $('#btnasignar').on('click', function(e) {
-    $("*").removeClass("fc-highlight");
-  /*   $("#formulario")[0].reset(); */
-    $.get("/copiarEventos", {}, function (data, status) {
-
-    });
-    $('#nombreEmpleado').empty();
+    $.get("/vaciartemporal", {}, function (data, status) {
+     calendar.refetchEvents();
+      $('#nombreEmpleado').empty();
     $('#Datoscalendar').show();
     $('#Datoscalendar1').hide();
     $('#asignarHorario').modal('toggle');
+
+    });
+  /*   $("#formulario")[0].reset(); */
+
     num=$('#nombreEmpleado').val().length;
     idemplesH = $('#nombreEmpleado').val();
-                    var ideHor=[];
-                    ideHor.push(idemplesH);
-
-    $.ajax({
-        type: "GET",
-        url: "/eventosHorario",
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function (data) {
-            var fechac = new Date();
-         var ano = fechac. getFullYear();
-         var mesc=fechac.getMonth()+1;
-         fechas1=ano+'-'+mesc+'-01';
-
-         var fechasM=new Date(fechas1);
-
-        calendario(data,fechasM);
-        },
-        error: function (data) {}
-    });
+    var ideHor=[];
+    ideHor.push(idemplesH);
 
     var allVals = [];
     $(".sub_chk:checked").each(function () {
@@ -372,7 +337,7 @@ $('#btnasignar').on('click', function(e) {
 });
 //CALENDARIO//
 
-function calendario(data,fechasM) {
+function calendario() {
     var calendarEl = document.getElementById('calendar');
     calendarEl.innerHTML = "";
     var fechasM=fechasM;
@@ -383,7 +348,7 @@ function calendario(data,fechasM) {
     var configuracionCalendario = {
         locale: 'es',
         //defaultDate: ano + '-01-01',
-        defaultDate: fechasM,
+        defaultDate: ano + '-01-01',
         height: "auto",
         contentHeight: 440,
         fixedWeekCount: false,
@@ -409,7 +374,7 @@ function calendario(data,fechasM) {
             $('#fechaDa').val(date1);
             $('#horario1').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
             $('#horario2').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
-
+            $('#horarioAsignar_ed').modal('show');
 
         },
         eventClick: function (info) {
@@ -471,10 +436,34 @@ function calendario(data,fechasM) {
             right: ''
         },
 
-        events: data,
+        events: function (info, successCallback, failureCallback) {
+
+            $.ajax({
+                type: "get",
+                url: "/eventosHorario",
+                data: {
+
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                statusCode: {
+                    419: function () {
+                        location.reload();
+                    }
+                },
+                success: function (data) {
+
+                    successCallback(data);
+
+                },
+                error: function () {}
+            });
+
+        },
     }
 
-    var calendar = new FullCalendar.Calendar(calendarEl, configuracionCalendario);
+   calendar = new FullCalendar.Calendar(calendarEl, configuracionCalendario);
     var date1 = calendar.getDate();
     $('#fechaDa').val(date1);
 
@@ -547,6 +536,7 @@ $('#selectHorario').change(function(e){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
+            $('#horarioAsignar_ed').modal('hide');
             $("#selectHorario").val("Asignar horario");
             var mesAg= $('#fechaDa').val();
         var d  =mesAg;
@@ -632,245 +622,7 @@ $('#departamento').change(function(){
     });
 
 });
-//SEGUNDO CALENDAR
-function calendario1(datadep) {
-    var calendarEl1 = document.getElementById('calendar1');
-    calendarEl1.innerHTML = "";
-    var fecha = new Date();
-    var ano = fecha.getFullYear();
-    var id1;
-    datadep = datadep;
 
-    var configuracionCalendario1 = {
-        locale: 'es',
-        defaultDate: ano + '-01-01',
-
-        plugins: ['dayGrid', 'interaction', 'timeGrid'],
-        height: "auto",
-        contentHeight: 450,
-        fixedWeekCount: false,
-        selectable: true,
-        selectMirror: true,
-        select: function (arg) {
-            console.log(arg);
-            $('#horarioEnd').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
-            $('#horarioStart').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
-            f1 = $('#horarioStart').val();
-            f2 = $('#horarioEnd').val();
-            inicio = $('#horaI').val();
-            fin = $('#horaF').val();
-            if ($("#calendar1 > div.fc-toolbar.fc-header-toolbar > div.fc-right > button").is(":focus"))
-            {
-
-          idpaisDescanso = $('#pais').val();
-          iddepartamentoDescanso = $('#departamento').val();
-          $.ajax({
-            type: "post",
-            url: "/storeDescanso",
-            data: {
-                start: moment(arg.start).format('YYYY-MM-DD HH:mm:ss'),
-                title: 'Descanso Emp.',
-                pais: idpaisDescanso,
-                departamento: iddepartamentoDescanso,
-                end: moment(arg.end).format('YYYY-MM-DD HH:mm:ss')
-
-            },
-            statusCode: {
-                /*401: function () {
-                    location.reload();
-                },*/
-                419: function () {
-                    location.reload();
-                }
-            },
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function (data) {
-                //alert(fechastart);
-                calendar1.addEventSource(data);
-                calendar1.addEvent({
-                    title: 'Descanso Emp.',
-                    id:data.id,
-                    color:'#e5e5e5',
-                    textColor:'#3f51b5',
-                    start:  moment(arg.start).format('YYYY-MM-DD HH:mm:ss'),
-                    end:moment(arg.end).format('YYYY-MM-DD HH:mm:ss'),
-
-                  })
-            },
-            error: function (data) {
-                alert('Ocurrio un error');
-            }
-
-
-        });
-          $('#calendar1 > div.fc-toolbar.fc-header-toolbar > div.fc-right > button').blur();
-           return false;
-            };
-            if (inicio == '' || fin == '') {
-
-                bootbox.alert({
-                    message: "Indique hora de inicio y fin",
-
-                });
-            } else {
-                agregarHoras2();
-            }
-
-            function agregarHoras2() {
-                //sacar dias entre fecha
-                var diasEntreFechas = function (desde, hasta) {
-                    var dia_actual = desde;
-                    var fechas = [];
-                    while (dia_actual.isSameOrBefore(hasta)) {
-                        fechas.push(dia_actual.format('YYYY-MM-DD'));
-                        dia_actual.add(1, 'days');
-                    }
-                    return fechas;
-                };
-                desde = moment(f1);
-                hasta = moment(f2);
-                var results = diasEntreFechas(desde, hasta);
-                results.pop();
-                //console.log(results);
-                var fechasArray = [];
-                var fechastart = [];
-                var objeto = [];
-                $.each(results, function (key, value) {
-                    //alert( value );
-                    fechasArray.push(inicio + '-' + fin);
-                    fechastart.push(value);
-                    objeto.push({
-                        "title": inicio + '-' + fin,
-                        "start": value
-                    });
-
-                });
-                console.log(fechasArray);
-                idpais = $('#pais').val();
-                iddepartamento = $('#departamento').val();
-                $.ajax({
-                    type: "post",
-                    url: "/guardarEventos",
-                    data: {
-                        fechasArray: fechastart,
-                        hora: inicio + '-' + fin,
-                        pais: idpais,
-                        departamento: iddepartamento,
-                        inicio: inicio,
-                        fin: fin
-                    },
-                    statusCode: {
-                        /*401: function () {
-                            location.reload();
-                        },*/
-                        419: function () {
-                            location.reload();
-                        }
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function (data) {
-                        calendar1.addEventSource(data);
-                    },
-                    error: function (data) {
-                        alert('Ocurrio un error');
-                    }
-
-                });
-            };
-        },
-        eventClick: function (info) {
-            id = info.event.id;
-            console.log(info);
-            console.log(info.event.id);
-            console.log(info.event.title);
-           var event = calendar1.getEventById(id);
-           if(info.event.textColor=='000000' ||info.event.textColor=='111111' || info.event.textColor=='#3f51b5' ){
-            bootbox.confirm({
-                message: "¿Desea eliminar: "+info.event.title+" del horario?",
-                buttons: {
-                    confirm: {
-                        label: 'Aceptar',
-                        className: 'btn-success'
-                    },
-                    cancel: {
-                        label: 'Cancelar',
-                        className: 'btn-light'
-                    }
-                },
-                callback: function (result) {
-                    if (result == true) {
-                        $.ajax({
-                            type: "post",
-                            url: "/eliminarHora",
-                            data: {
-                                idHora: info.event.id,textcolor:info.event.textColor
-                            },
-                            statusCode: {
-                                /*401: function () {
-                                    location.reload();
-                                },*/
-                                419: function () {
-                                    location.reload();
-                                }
-                            },
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            success: function (data) {
-                            info.event.remove();
-                            },
-                            error: function (data) {
-                                alert('Ocurrio un error');
-                            }
-
-
-                        });
-                        }
-                }
-            });
-
-           } else{bootbox.alert({
-            message: "No se puede eliminar, evento pertenece a calendario general",
-
-        })};
-
-           //info.event.remove();
-        },
-        editable: false,
-        eventLimit: true,
-        header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'Descanso'
-        },
-        customButtons: {
-            Descanso: {
-                text: "Asignar días de Descanso",
-                click:function(){
-                    $.notify("Seleccione Dias", {
-                        align: "right",
-                        verticalAlign: "top",
-                        type: "info"
-
-                    });
-
-                }
-
-            }
-        },
-
-        events: datadep,
-    }
-    var calendar1 = new FullCalendar.Calendar(calendarEl1, configuracionCalendario1);
-    calendar1.setOption('locale', "Es");
-    //DESCANSO
-    calendar1.render();
-}
-document.addEventListener('DOMContentLoaded', calendario1);
 //////////////////////
 $('#guardarHorarioEventos').click(function () {
     $('#guardarHorarioEventos').prop('disabled', true);
@@ -1037,6 +789,7 @@ $('#cerrarHorario').click(function () {
 function abrirHorario(){
 
     $("#frmHor")[0].reset();
+    $('#horarioAsignar_ed').modal('hide');
     $('#horarioAgregar').modal('show');
 
 
