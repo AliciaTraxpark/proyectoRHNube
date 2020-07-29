@@ -1002,6 +1002,7 @@
             "lengthChange": false,
             "scrollX": true,
             "pageLength": 30,
+            fixedHeader: true,
 
             language: {
                 "sProcessing": "Procesando...",
@@ -1037,14 +1038,13 @@
                     var i;
                     var val1;
                     $('#select').on("keyup change", function(){
-                        i = this.value;
+                        i = $.fn.dataTable.util.escapeRegex(this.value);
                         console.log(i);
                         var val = $('#global_filter').val();
                         if(that.column(i).search() !== this.value){
-                            console.log(this.value);
                             that.column(this.value).search(val).draw();
                         }
-                        val1 = this.value;
+                        val1 = $.fn.dataTable.util.escapeRegex(this.value);
                         $('#global_filter').on("keyup change clear",function(){
                             var val = $(this).val();
                             if(that.column(i).search() !== val1){
@@ -1086,104 +1086,6 @@
         }, function () {
 
         });
-
-
-        $("#i2").click(function () {
-            if ($("#i2").is(':checked')) {
-                table
-                    .search('')
-                    .columns().search('')
-                    .draw();
-                $('#i2').prop('checked', true);
-                $('#filter_global').hide()
-                $('#filter_col2').show();
-                $('#filter_col3').hide();
-                $('#filter_col4').hide();
-                $('#filter_col5').hide();
-                $('#filter_col6').hide();
-
-            } else {
-                alert("No está activado");
-            }
-        });
-
-        $("#i3").click(function () {
-            if ($("#i3").is(':checked')) {
-                table
-                    .search('')
-                    .columns().search('')
-                    .draw();
-                $('#i3').prop('checked', true);
-                $('#filter_global').hide()
-                $('#filter_col2').hide();
-                $('#filter_col3').show();
-                $('#filter_col4').hide();
-                $('#filter_col5').hide();
-                $('#filter_col6').hide();
-
-
-            } else {
-                alert("No está activado");
-            }
-        });
-
-        $("#i4").click(function () {
-            if ($("#i4").is(':checked')) {
-                table
-                    .search('')
-                    .columns().search('')
-                    .draw();
-                $('#i4').prop('checked', true);
-                $('#filter_global').hide()
-                $('#filter_col2').hide();
-                $('#filter_col3').hide();
-                $('#filter_col4').show();
-                $('#filter_col5').hide();
-                $('#filter_col6').hide();
-
-            } else {
-                alert("No está activado");
-            }
-        });
-        $("#i5").click(function () {
-            if ($("#i5").is(':checked')) {
-                table
-                    .search('')
-                    .columns().search('')
-                    .draw();
-                $('#i5').prop('checked', true);
-                $('#filter_global').hide()
-                $('#filter_col2').hide();
-                $('#filter_col3').hide();
-                $('#filter_col4').hide();
-                $('#filter_col5').show();
-                $('#filter_col6').hide();
-
-            } else {
-                alert("No está activado");
-            }
-        });
-        $("#i6").click(function () {
-            if ($("#i6").is(':checked')) {
-                table
-                    .search('')
-                    .columns().search('')
-                    .draw();
-                $('#i6').prop('checked', true);
-                table.columns([1, 2, 3, 4, 5]).deselect();
-                $('#filter_global').hide()
-                $('#filter_col2').hide();
-                $('#filter_col3').hide();
-                $('#filter_col4').hide();
-                $('#filter_col5').hide();
-                $('#filter_col6').show();
-
-            } else {
-                alert("No está activado");
-            }
-        });
-
-
         $('input.global_filter').on('keyup click', function () {
             filterGlobal();
         });
