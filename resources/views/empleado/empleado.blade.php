@@ -61,6 +61,14 @@
             margin-left: 40px;
             margin-right: 28px;
         }
+        tr:first-child > td > .fc-day-grid-event{
+        margin-top: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+        margin-left: 2px;
+        margin-right: 2px;
+    }
         #calendarInv_ed>div.fc-view-container>div>table>tbody {
         background: #f4f4f4;
     }

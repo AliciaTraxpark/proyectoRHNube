@@ -55,7 +55,14 @@ use App\proyecto_empleado;
         font-size: 12.2px !important;
         margin: 2px 2px;
     }
-
+    tr:first-child > td > .fc-day-grid-event{
+        margin-top: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+        margin-left: 2px;
+        margin-right: 2px;
+    }
     .flatpickr-calendar {
         width: 220px !important;
     }

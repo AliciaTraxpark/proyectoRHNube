@@ -43,7 +43,7 @@
             <td>{{$horarios->horario_tolerancia}} min</td>
             <td>{{$horarios->horaI}}</td>
             <td>{{$horarios->horaF}} </td>
-            <td><a id="formNuevoEd" onclick="" style="cursor: pointer"><img
+            <td><a onclick=" editarHorarioLista({{$horarios->horario_id}})" style="cursor: pointer"><img
                 src="{{asset('admin/images/edit.svg')}}" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
             onclick="" style="cursor: pointer"><img
                 src="{{asset('admin/images/delete.svg')}}" onclick="eliminarHorario({{$horarios->horario_id}})" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
