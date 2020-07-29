@@ -130,9 +130,25 @@ use App\proyecto_empleado;
    /*  background-color: #d1c3c3; */
     font-size: 12.2px!important;
     margin: 2px 2px;
-    cursor:url("../landing/images/cruz1.svg"), auto;
+    cursor:url("../landing/images/cruz1.svg"), auto!important;
     font-weight: 600;
 }
+a:not([href]):not([tabindex]){
+    color: #000;
+    cursor: pointer;
+    font-size: 12px;
+}
+body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-footer > button.btn.btn-light.bootbox-cancel{
+        background: #e2e1e1;
+        color: #000000;
+        border-color:#e2e1e1;
+        zoom: 85%;
+    }
+    body > div.bootbox.modal.fade.bootbox-alert.show > div > div > div.modal-footer > button,body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-footer > button.btn.btn-success.bootbox-accept{
+        background-color: #163552;
+        border-color: #163552;
+        zoom: 85%;
+    }
 </style>
 <div class="row page-title" style="padding-right: 20px;">
     <div class="col-md-8">
@@ -1235,7 +1251,7 @@ use App\proyecto_empleado;
                                         <div class="col-md-12 text-center">
                                             <h5>No existe calendarios registrados</h5>
                                         </div>
-                                        <div style="display: none"> <div class="col-md-10" id="calendarInv" style="display: none!important"></div></div>
+                                        <div style="display: none"> <div class="col-md-12" id="calendarInv" style="display: none!important"></div></div>
 
 
                                        </div>
@@ -1257,13 +1273,28 @@ use App\proyecto_empleado;
                                         </div>
 
                                     </div>
-                                    <div class="col-md-1"><br></div>
-                                    <div class="col-md-10" id="calendarInv"></div>
+
+                                    <div class="col-md-12" id="calendarInv"></div>
                                     @endif
                                      <input type="hidden" id="pruebaEnd">
                                     <input type="hidden" id="pruebaStar">
                                     <div class="col-md-10" id="calendar" style="display: none"></div>
-                                    <div class="col-md-1"><br></div>
+                                    <div class="col-md-2" id="opborrar" style="display: none">
+                                        <br><br><br><br><br>
+                                        <div class="btn-group mt-2 mr-1">
+                                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" style="color: #fff;
+                                            background-color: #4a5669;
+                                            border-color: #485263;"
+                                                data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false"><img src="{{asset('admin/images/borrador.svg')}}" height="15" > Borrar <i class="icon"><span data-feather="chevron-down"></span></i></button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" onclick="vaciardFeria()">Dias feriados</a>
+                                                <a class="dropdown-item"  onclick="vaciardlabTem()" >D. laborables</a>
+                                                <a class="dropdown-item" onclick="vaciardNlabTem()">D. no laborables</a>
+                                                <a class="dropdown-item" onclick="vaciardIncidTem()">Incidencia</a>
+
+                                            </div>
+                                        </div><!-- /btn-group --></div>
                                     <div id="calendarioAsignar" class="modal fade" tabindex="-1" role="dialog"
                                         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                                         <div class="modal-dialog  modal-lg d-flex justify-content-center "

@@ -193,6 +193,59 @@ function calendario_edit() {
             $('#calendarioAsignar_ed').modal('show');
         },
         eventClick: function (info) {
+            id = info.event.id;
+            console.log(info);
+            console.log(info.event.id);
+            console.log(info.event.title);
+            console.log(info.event.textColor);
+            var event = calendar.getEventById(id);
+           if(info.event.textColor=='111111' || info.event.textColor=='1' || info.event.textColor=='0'){
+
+            } else {
+               bootbox.confirm({
+                message: "¿Desea eliminar: " + info.event.title + " del horario?",
+                buttons: {
+                    confirm: {
+                        label: 'Aceptar',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'Cancelar',
+                        className: 'btn-light'
+                    }
+                },
+                callback: function (result) {
+                    if (result == true) {
+                        $.ajax({
+                            type: "post",
+                            url: "/empleado/eliminareventBD",
+                            data: {
+                                ideve: info.event.id
+                            },
+                            statusCode: {
+
+                                419: function () {
+                                    location.reload();
+                                }
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function (data) {
+                                info.event.remove();
+                                calendar2_ed.refetchEvents();
+
+                            },
+                            error: function (data) {
+                                alert('Ocurrio un error');
+                            }
+
+
+                        });
+                    }
+                }
+            });
+            }
 
 
         },
@@ -740,6 +793,7 @@ $('#selectCalendario').change(function () {
             calendario2();
             $('#calendarInv').hide();
             $('#calendar').show();
+            $('#opborrar').show()
             $('#mensajeOc').hide();
             $('#calendar2').show();
 
@@ -1271,49 +1325,7 @@ function calendario2_ed() {
             console.log(info.event.title);
             var event = calendar.getEventById(id);
 
-            bootbox.confirm({
-                message: "¿Desea eliminar: " + info.event.title + " del horario?",
-                buttons: {
-                    confirm: {
-                        label: 'Aceptar',
-                        className: 'btn-success'
-                    },
-                    cancel: {
-                        label: 'Cancelar',
-                        className: 'btn-light'
-                    }
-                },
-                callback: function (result) {
-                    if (result == true) {
-                        $.ajax({
-                            type: "post",
-                            url: "/empleado/eliminarEte",
-                            data: {
-                                ideve: info.event.id
-                            },
-                            statusCode: {
-
-                                419: function () {
-                                    location.reload();
-                                }
-                            },
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            success: function (data) {
-                                info.event.remove();
-                                calendar.refetchEvents();
-
-                            },
-                            error: function (data) {
-                                alert('Ocurrio un error');
-                            }
-
-
-                        });
-                    }
-                }
-            });
+           
 
         },
         editable: false,
@@ -2532,6 +2544,7 @@ $('#formNuevoE').click(function () {
     calendarioInv();
     $('#calendarInv').show();
     $('#calendar').hide();
+    $('#opborrar').hide();
     $("#detallehorario").empty();
     $('#calendar2').hide();
     $.get("/empleado/vaciarcalend", {}, function (data, status) {
@@ -2927,4 +2940,105 @@ function limpiar() {
     $('#textLocal').val("");
     $('#textNivel').val("");
     $('#textContrato').val("");
+}
+
+function vaciardFeria(){
+    bootbox.confirm({
+        message: "¿Esta seguro que desea eliminar dias feriados del calendario?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            if (result == true) {
+                $.get("/empleado/vaciardfTem", {}, function (data, status) {
+                    calendario();
+                    calendario2();
+                   ;
+                });
+
+            }
+        }
+    });
+}
+function vaciardlabTem(){
+    bootbox.confirm({
+        message: "¿Esta seguro que desea eliminar dias laborales del calendario?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            if (result == true) {
+                $.get("/empleado/vaciardlabTem", {}, function (data, status) {
+                    calendario();
+                    calendario2();
+                   ;
+                });
+
+            }
+        }
+    });
+}
+function vaciardNlabTem(){
+    bootbox.confirm({
+        message: "¿Esta seguro que desea eliminar dias no laborales del calendario?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            if (result == true) {
+                $.get("/empleado/vaciardNlabTem", {}, function (data, status) {
+                    calendario();
+                    calendario2();
+                   ;
+                });
+
+            }
+        }
+    });
+}
+function vaciardIncidTem(){
+    bootbox.confirm({
+        message: "¿Esta seguro que desea eliminar todas las incidencias del calendario?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            if (result == true) {
+                $.get("/empleado/vaciardIncidTem", {}, function (data, status) {
+                    calendario();
+                    calendario2();
+                   ;
+                });
+
+            }
+        }
+    });
 }

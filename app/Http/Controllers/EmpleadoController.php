@@ -900,7 +900,7 @@ class EmpleadoController extends Controller
                  ->where('he.empleado_emple_id', '=', $request->get('idempleado'));
 
                  $incidencias = DB::table('incidencias as i')
-                ->select(['idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_hora as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
+                ->select(['idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descuento as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
                 ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
                 ->where('idi.id_empleado', '=', $request->get('idempleado'))
                 ->union($horario_empleado);
@@ -925,7 +925,7 @@ class EmpleadoController extends Controller
                  ->where('he.empleado_emple_id', '=', $request->get('idempleado'));
 
                  $incidencias = DB::table('incidencias as i')
-                ->select(['idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_hora as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
+                ->select(['idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descuento as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
                 ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
                 ->where('idi.id_empleado', '=', $request->get('idempleado'))
                 ->union($horario_empleado);
@@ -987,7 +987,7 @@ class EmpleadoController extends Controller
              ->where('he.empleado_emple_id', '=', $idempleado);
 
              $incidencias = DB::table('incidencias as i')
-            ->select(['idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_hora as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
+            ->select(['idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descuento as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
             ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
             ->where('idi.id_empleado', '=', $idempleado)
             ->union($horario_empleado);
@@ -1067,4 +1067,34 @@ public function guardarhorarioempleado(Request $request)
 
 }
 
+public function vaciardfTem(){
+    DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
+    ->where('color', '=', '#e6bdbd')
+    ->where('textColor', '=','#945353')
+    ->delete();
+}
+
+public function vaciardlabTem(){
+    DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
+    ->where('color', '=', '#dfe6f2')
+    ->where('textColor', '=','#0b1b29')
+    ->delete();
+}
+public function vaciardNlabTem(){
+    DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
+    ->where('color', '=', '#a34141')
+    ->where('textColor', '=','#ffffff')
+    ->delete();
+}
+public function vaciardIncidTem(){
+    DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
+    ->where('color', '=', '#9E9E9E')
+    ->where('textColor', '=','#313131')
+    ->delete();
+}
+public function eliminareventBD(Request $request){
+    $ideve = $request->ideve;
+    $eventos_empleado = eventos_empleado::where('evEmpleado_id', '=', $ideve)->delete();
+
+}
 }
