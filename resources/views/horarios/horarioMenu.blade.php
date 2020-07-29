@@ -413,9 +413,9 @@ a:not([href]):not([tabindex]){
                                         aria-expanded="false"><img src="{{asset('admin/images/borrador.svg')}}" height="15" > Borrar <i class="icon"><span data-feather="chevron-down"></span></i></button>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" onclick="vaciarhor()">Horarios</a>
-                                        <a class="dropdown-item"  onclick="vaciardl()" >D. laborables</a>
+                                       {{--  <a class="dropdown-item"  onclick="vaciardl()" >D. laborables</a>
                                         <a class="dropdown-item" onclick="vaciarndl()">D. no laborables</a>
-                                        <a class="dropdown-item" onclick="vaciarinH()">Incidencia</a>
+                                        <a class="dropdown-item" onclick="vaciarinH()">Incidencia</a> --}}
 
                                     </div>
                                 </div><!-- /btn-group -->
@@ -1033,24 +1033,14 @@ a:not([href]):not([tabindex]){
 
                        <div class="col-md-12">
                         <form id="frmHorEditar" action="javascript:editarHorario()">
-                           <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="hidden" id="idhorario_ed">
-                                   <label for="">Tipo de horario:</label>
-                                   <select class="form-control custom-select custom-select-sm" id="tipHorario_ed">
-                                     <option>Normal</option>
-                                     <option>Guardía</option>
-                                     <option>Nocturno</option>
-                                   </select>
-                                </div>
-                              </div>
-                            <div class="col-md-6"><label for=""><br></label>
+                           <div class="row"><input type="hidden" id="idhorario_ed">
+
+                            <div class="col-md-12"><label for=""></label>
                                 <div class="form-check">
 
                                   <input type="checkbox" class="form-check-input" id="exampleCheck1_ed">
                                   <label class="form-check-label" for="exampleCheck1_ed">Aplicar sobretiempo</label>
-                                </div>
+                                </div><br>
                              </div>
 
                              <div class="col-md-6">

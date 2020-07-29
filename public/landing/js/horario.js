@@ -277,6 +277,18 @@ $('#horaIncidenHoEm').flatpickr({
     dateFormat: "H:i",
     time_24hr: true
 });
+$('#horaI_ed').flatpickr({
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i",
+    time_24hr: true
+});
+$('#horaF_ed').flatpickr({
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i",
+    time_24hr: true
+});
 $('#btnasignar').on('click', function(e) {
     $.get("/vaciartemporal", {}, function (data, status) {
      calendar.refetchEvents();
@@ -836,9 +848,24 @@ function registrarHorario(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-            H1=$('#horario1').val();
+
+            $('#horarioAgregar').modal('hide');
+            leertabla();
+            if($('#asignarHorario').is(':visible')){
+                registrarhDias(data.horario_id);
+            }
+
+
+        },
+        error: function () {
+            alert("Hay un error");
+        }
+    });
+}
+function registrarhDias(idhorar){
+    H1=$('#horario1').val();
             H2=$('#horario2').val();
-            idhorar=data.horario_id;
+
             idpais = $('#pais').val();
             iddepartamento = $('#departamento').val();
         textSelec=$('#descripcionCa').val();
@@ -904,14 +931,6 @@ function registrarHorario(){
 
             });
 
-            $('#horarioAgregar').modal('hide');
-
-
-        },
-        error: function () {
-            alert("Hay un error");
-        }
-    });
 }
 function registrarHorarioen(){
     if ($('#exampleCheck1en').prop('checked')) {
@@ -1761,9 +1780,9 @@ $('#selectHorarioen').change(function(e){
 
 }
  */
-$('#selectHorarioedit').change(function(e){
+function editarHorarioLista(idsedit){
 
-    var idsedit=$('#selectHorarioedit').val();
+
     $("#frmHorEditar")[0].reset();
     $.ajax({
         type: "post",
@@ -1782,7 +1801,7 @@ $('#selectHorarioedit').change(function(e){
         },
         success: function (data) {
             $('#idhorario_ed').val(data[0].horario_id);
-            $('#tipHorario_ed').val(data[0].horario_tipo);
+
             $('#descripcionCa_ed').val(data[0].horario_descripcion);
 
              if(data[0].horario_sobretiempo==1){
@@ -1792,7 +1811,7 @@ $('#selectHorarioedit').change(function(e){
             $('#horaI_ed').val(data[0].horaI);
             $('#horaF_ed').val(data[0].horaF);
             $('#horarioEditar').modal('show');
-            $("#selectHorarioedit").val("seleccionar");
+
         },
         error: function (data) {
             alert('Ocurrio un error');
@@ -1801,10 +1820,10 @@ $('#selectHorarioedit').change(function(e){
     });
 
 
-})
+}
 function editarHorario(){
     var idhorario=$('#idhorario_ed').val();
-    var tiped=  $('#tipHorario_ed').val();
+
     var sobretiempo
     if ($('#exampleCheck1_ed').prop('checked')) {
         sobretiempo = 1;
@@ -1819,7 +1838,7 @@ function editarHorario(){
     $.ajax({
         type: "post",
         url: "/horario/actualizarhorario",
-        data: {idhorario,tiped,sobretiempo,descried,toleed,horaIed,horaFed},
+        data: {idhorario,sobretiempo,descried,toleed,horaIed,horaFed},
         statusCode: {
             /*401: function () {
                 location.reload();
@@ -1832,41 +1851,24 @@ function editarHorario(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-            $('#selectHorarioedit').empty();
+            leertabla();
             $('#selectHorario').empty();
-            $('#selectHorarioen').empty();
-            $.each(data[1], function (key, item) {
-            $('#selectHorarioedit').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                value: item.horario_id,
-                text: item.horario_descripcion
 
-                 }));
-            });
-            $.each(data[0], function (key, item) {
+            $.each(data, function (key, item) {
                 $('#selectHorario').append($('<option>', { //agrego los valores que obtengo de una base de datos
                     value: item.horario_id,
                     text: item.horario_descripcion
 
                      }));
 
-                     $('#selectHorarioen').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                        value: item.horario_id,
-                        text: item.horario_descripcion
 
-                         }));
                 });
-        $("#selectHorarioedit").append($('<option >', { //agrego los valores que obtengo de una base de datos
-            text: "seleccionar",
-            selected: true
-             }));
+
         $("#selectHorario").append($('<option >', { //agrego los valores que obtengo de una base de dato
                 text: "Asignar horario",
                 selected: true
             }));
-            $("#selectHorarioen").append($('<option >', { //agrego los valores que obtengo de una base de dato
-                text: "Asignar horario",
-                selected: true
-            }));
+
             var mesAg= $('#fechaDa').val();
             var d  =mesAg;
             var fechasM=new Date(d);

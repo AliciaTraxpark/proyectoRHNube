@@ -809,7 +809,7 @@ class horarioController extends Controller
 
     public function actualizarhorarioed(Request $request){
         $idhorario=$request->idhorario;
-        $tiped=$request->tiped;
+
         $sobretiempo=$request->sobretiempo;
         $descried=$request->descried;
         $toleed=$request->toleed;
@@ -817,22 +817,17 @@ class horarioController extends Controller
         $horaFed=$request->horaFed;
 
         $horario = horario::where('horario_id', '=',$idhorario)
-        ->update(['horario_sobretiempo' => $sobretiempo,'horario_tipo' => $tiped,
+        ->update(['horario_sobretiempo' => $sobretiempo,
         'horario_descripcion' =>$descried,'horario_tolerancia' =>$toleed,'horaI' => $horaIed,
         'horaF' => $horaFed]);
 
-        $horariotemporal_up = temporal_eventos::where('id_horario', '=',$idhorario)
-        ->where('users_id', '=', Auth::user()->id)
-        ->update(['title' =>$descried]);
-        $horariot=horario::where('user_id', '=', Auth::user()->id)
-       ->get();
+
        $horarion=DB::table('horario as h')
         ->leftJoin('horario_empleado as he','h.horario_id','=','he.horario_horario_id')
         ->where('h.user_id', '=', Auth::user()->id)
-        ->whereNull('he.horario_horario_id')
         ->get();
-        $temporal_evento=temporal_eventos::where('users_id', '=', Auth::user()->id)->get();
-        return[$horariot,$horarion,$temporal_evento];
+
+        return($horarion);
 
     }
 
