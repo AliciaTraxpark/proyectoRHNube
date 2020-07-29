@@ -378,12 +378,15 @@ class apiController extends Controller
         $idCaptura = $captura->idCaptura;
 
         $control = control::where('idEnvio', '=', $idEnvio)->get()->first();
+        $envio = envio::where('idEnvio', '=', $idEnvio)->get()->first();
         if ($control) {
             $idHorario_dias = $control->idHorario_dias;
             $busquedaUltimoControl = DB::table('control as c')
+                ->join('envio as en', 'en.idEnvio', '=', 'c.idEnvio')
                 ->select('c.idEnvio', DB::raw('COUNT(c.idHorario_dias) as total'))
                 ->where('c.idHorario_dias', '=', $idHorario_dias)
                 ->where('c.idHorario_dias', '!=', null)
+                ->where('en.idEmpleado', '=', $envio->idEmpleado)
                 ->orderBy('c.Cont_id', 'desc')
                 ->get()
                 ->first();
@@ -435,6 +438,7 @@ class apiController extends Controller
                 ->join('captura as cp', 'cp.idEnvio', '=', 'en.idEnvio')
                 ->select('c.idEnvio', DB::raw('COUNT(DATE(cp.fecha_hora)) as total'))
                 ->where('c.idHorario_dias', '=', null)
+                ->where('en.idEmpleado', '=', $envio->idEmpleado)
                 ->groupBy(DB::raw('DATE(cp.fecha_hora)'))
                 ->orderBy('c.Cont_id', 'desc')
                 ->get()
