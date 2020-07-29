@@ -199,7 +199,8 @@ function onMostrarPantallas() {
                                                         &nbsp;
                                                         <label style="font-size: 12px" for="">${hora + ":" + j + "0" + " - " + (parseInt(hora)+1) + 
                                                         ":" + "00"}</label>
-                                                        <div class="progress" style="background-color: #d4d4d4;">
+                                                        <div class="progress" style="background-color: #d4d4d4;" data-toggle="tooltip" data-placement="bottom" title="Actividad por Rango de Tiempo"
+                                                        data-original-title="">
                                                             <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:${nivel}" aria-valuenow=${promedio}
                                                                 aria-valuemin="0" aria-valuemax="100">${promedio + "%"}</div>
                                                         </div>
@@ -224,7 +225,7 @@ function onMostrarPantallas() {
                                         <div class="col-md-12">
                                             <div class=" text-center col-md-12 col-sm-12" style="padding-top: 1px;
                                             padding-bottom: 4px;">
-                                            <img src="landing/images/png.svg" height="100">
+                                            <img src="landing/images/png (3).svg" height="100">
                                                 <h5 class="m-0 font-size-14" style="color:#8888">Vacio</h5>
                                             </div>  <br>
                                         </div>
