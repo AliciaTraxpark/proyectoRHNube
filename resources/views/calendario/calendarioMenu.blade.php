@@ -443,7 +443,7 @@ background-color: #ffffff !important;
 
 @endsection
 @section('script')
-<script src="{{asset('landing/js/editarPerfil.js')}}"></script>
+<script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
 <script src="{{asset('admin/assets/js/pages/form-wizard.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 <script src="{{asset('landing/js/SeleccionarPais.js')}}"></script>

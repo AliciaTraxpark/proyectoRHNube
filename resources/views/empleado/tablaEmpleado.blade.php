@@ -478,9 +478,7 @@
 <!---->
 <input type="hidden" id="csrf_token" name="_token" value="{{ csrf_token() }}">
 <div class="row">
-
     <div class="col-md-4" id="filter_global">
-
         <td align="center"><input type="text" class="global_filter form-control
                 form-control-sm" id="global_filter">
         </td>
@@ -488,7 +486,7 @@
     <div class="col-md-2">
         <td align="center">
             <select class="form-control" name="select" id="select">
-                <option value="">BUSCAR</option>
+                <option value="-1">BUSCAR</option>
                 <option value="2">Nombre</option>
                 <option value="3">Apellidos</option>
                 <option value="4">Cargo</option>
@@ -497,37 +495,6 @@
             </select>
         </td>
     </div>
-    <!--<div class="col-md-6" id="filter_col2" data-column="2" style="display:
-        none">
-        <label for="">Nombre:</label>
-        <td align="center"><input type="text" class="column_filter form-control
-                form-control-sm" id="col2_filter"></td>
-    </div>
-    <div class="col-md-6" id="filter_col3" data-column="3" style="display:
-        none">
-        <label>Apellidos</label>
-        <td align="center"><input type="text" class="column_filter form-control
-                form-control-sm" id="col3_filter"></td>
-    </div>
-    <div class="col-md-6" id="filter_col4" data-column="4" style="display:
-        none">
-        <label for="">Cargo</label>
-        <td align="center"><input type="text" class="column_filter form-control
-                form-control-sm" id="col4_filter"></td>
-    </div>
-    <div class="col-md-6" id="filter_col5" data-column="5" style="display:
-        none">
-        <label for="">Área</label>
-        <td align="center"><input type="text" class="column_filter form-control
-                form-control-sm" id="col5_filter"></td>
-    </div>
-    <div class="col-md-6" id="filter_col6" data-column="6" style="display:
-        none">
-        <label for="">Costo</label>
-        <td align="center"><input type="text" class="column_filter form-control
-                form-control-sm" id="col6_filter"></td>
-    </div>-->
-
 </div>
 
 <table id="tablaEmpleado" class="table dt-responsive nowrap">
@@ -956,8 +923,11 @@
         $("#tablaEmpleado").DataTable({
             retrieve: true,
             "searching": true,
+            "lengthChange": false,
             "scrollX": true,
-
+            "pageLength": 30,
+            fixedHeader: true,
+            "processing": true,
             language: {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
@@ -1003,7 +973,8 @@
             "lengthChange": false,
             "scrollX": true,
             "pageLength": 30,
-
+            fixedHeader: true,
+            "processing": true,
             language: {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
@@ -1032,37 +1003,50 @@
                     "colvis": "Visibilidad"
                 }
             },
-            /*initComplete: function(){
-                var i;
-                this.api().columns([2,3,4,5,6]).every(function(){
+            initComplete: function(){
+                this.api().columns().every(function(){
                     var that = this;
-                    $('#select').on("keyup change clear", function(){
-                    i = $(this).val();
-                    var val = $('#global_filter').val();
-                    $('#tablaEmpleado').DataTable().search(val).draw();
-                    console.log(i);
-                    if(i != ''){
+                    var i;
+                    var val1;
+                    $('#select').on("keyup change", function(){
+                        i = $.fn.dataTable.util.escapeRegex(this.value);
+                        console.log(i);
+                        var val = $('#global_filter').val();
                         if(that.column(i).search() !== this.value){
-                            that.column(this.value, false, true).search(val).draw();
+                            that.column(this.value).search(val).draw();
                         }
+                        val1 = $.fn.dataTable.util.escapeRegex(this.value);
+                        $('#global_filter').on("keyup change clear",function(){
+                            var val = $(this).val();
+                            if(that.column(i).search() !== val1){
+                                that.column(val1).search(val).draw();
+                            }
+                        });
+                    });
+                });
+            }
+        });
+        /*table.columns().every(function(){
+            var that = this;
+            var i;
+            var val1;
+            $('#select').on("keyup change", function(){
+                i = this.value;
+                console.log(i);
+                var val = $('#global_filter').val();
+                if(that.column(i).search() !== this.value){
+                    console.log(this.value);
+                    that.column(this.value).search(val).draw();
+                }
+                val1 = this.value;
+                $('#global_filter').on("keyup change clear",function(){
+                    var val = $(this).val();
+                    if(that.column(i).search() !== val1){
+                        that.column(val1).search(val).draw();
                     }
                 });
-                });
-            }*/
-
-        });
-        table.columns().every(function(ev){
-            console.log(ev);
-            var that = this;
-                    $('#select').on("keyup change clear", function(){
-                    i = $(this).val();
-                    var val = $('#global_filter').val();
-                    console.log(i);
-                        if(that.column(i).search() !== this.value){
-                            that.column(this.value, false, true).search(val).draw();
-                        }
-                });
-        });
+            });
+        });*/
         //$('#verf1').hide();
         //$('#tablaEmpleado tbody #tdC').css('display', 'none');
 
@@ -1073,104 +1057,6 @@
         }, function () {
 
         });
-
-
-        $("#i2").click(function () {
-            if ($("#i2").is(':checked')) {
-                table
-                    .search('')
-                    .columns().search('')
-                    .draw();
-                $('#i2').prop('checked', true);
-                $('#filter_global').hide()
-                $('#filter_col2').show();
-                $('#filter_col3').hide();
-                $('#filter_col4').hide();
-                $('#filter_col5').hide();
-                $('#filter_col6').hide();
-
-            } else {
-                alert("No está activado");
-            }
-        });
-
-        $("#i3").click(function () {
-            if ($("#i3").is(':checked')) {
-                table
-                    .search('')
-                    .columns().search('')
-                    .draw();
-                $('#i3').prop('checked', true);
-                $('#filter_global').hide()
-                $('#filter_col2').hide();
-                $('#filter_col3').show();
-                $('#filter_col4').hide();
-                $('#filter_col5').hide();
-                $('#filter_col6').hide();
-
-
-            } else {
-                alert("No está activado");
-            }
-        });
-
-        $("#i4").click(function () {
-            if ($("#i4").is(':checked')) {
-                table
-                    .search('')
-                    .columns().search('')
-                    .draw();
-                $('#i4').prop('checked', true);
-                $('#filter_global').hide()
-                $('#filter_col2').hide();
-                $('#filter_col3').hide();
-                $('#filter_col4').show();
-                $('#filter_col5').hide();
-                $('#filter_col6').hide();
-
-            } else {
-                alert("No está activado");
-            }
-        });
-        $("#i5").click(function () {
-            if ($("#i5").is(':checked')) {
-                table
-                    .search('')
-                    .columns().search('')
-                    .draw();
-                $('#i5').prop('checked', true);
-                $('#filter_global').hide()
-                $('#filter_col2').hide();
-                $('#filter_col3').hide();
-                $('#filter_col4').hide();
-                $('#filter_col5').show();
-                $('#filter_col6').hide();
-
-            } else {
-                alert("No está activado");
-            }
-        });
-        $("#i6").click(function () {
-            if ($("#i6").is(':checked')) {
-                table
-                    .search('')
-                    .columns().search('')
-                    .draw();
-                $('#i6').prop('checked', true);
-                table.columns([1, 2, 3, 4, 5]).deselect();
-                $('#filter_global').hide()
-                $('#filter_col2').hide();
-                $('#filter_col3').hide();
-                $('#filter_col4').hide();
-                $('#filter_col5').hide();
-                $('#filter_col6').show();
-
-            } else {
-                alert("No está activado");
-            }
-        });
-
-
         $('input.global_filter').on('keyup click', function () {
             filterGlobal();
         });

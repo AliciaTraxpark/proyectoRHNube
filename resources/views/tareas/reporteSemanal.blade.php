@@ -123,7 +123,7 @@
 <!-- end row -->
 @endsection
 @section('script')
-<script src="{{asset('landing/js/editarPerfil.js')}}"></script>
+<script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
 <script src="{{
     URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js')
     }}"></script>

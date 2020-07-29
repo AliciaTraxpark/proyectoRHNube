@@ -103,7 +103,11 @@ function onMostrarPantallas() {
                                     </div>
                                 </div>`;
                                 }
-                                promedio = (promedios / (data[hora][j].length - 1)).toFixed(2);
+                                if (promedios == 0) {
+                                    promedio = 0
+                                } else {
+                                    promedio = (promedios / (data[hora][j].length - 1)).toFixed(2);
+                                }
                                 card = `<div class="col-2" style="margin-left: 0px!important;">
                                         <div class="mb-0 text-center" style="padding-left: 0px;">
                                             <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"

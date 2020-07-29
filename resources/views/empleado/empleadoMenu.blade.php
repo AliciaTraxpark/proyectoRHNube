@@ -155,8 +155,6 @@ use App\proyecto_empleado;
                 <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                 <div class="row">
                     <div class="col-md-6">
-
-                        <h4 style="font-weight: 500" class="header-title mt-0 ">Búsqueda de empleado</h4>
                     </div>
                     <div class=" col-md-6 col-xl-6 text-right">
 
@@ -2458,7 +2456,7 @@ use App\proyecto_empleado;
     var id_empleado = '';
 
 </script>
-<script src="{{asset('landing/js/editarPerfil.js')}}"></script>
+<script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
