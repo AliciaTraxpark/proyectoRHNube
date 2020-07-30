@@ -123,10 +123,10 @@ function onMostrarPantallas() {
                                             <div class="collapse show" aria-labelledby="customaccorheadingOne" data-parent="#customaccordion_exa">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <div class=" text-center col-md-12 col-sm-6" style="background:#1f4068; border-color:#1f4068;padding-top: 4px;
+                                                    <div class=" text-center col-md-12 col-sm-6" style="padding-top: 4px;
                                                     padding-bottom: 4px;">
-                                                        <h5 class="m-0 font-size-16" style="color:#fafafa">${data[hora][j][0].Proye_Nombre} </h5>
-                                                    </div>  <br>
+                                                        <h5 class="m-0 font-size-16" style="color:#1f4068;font-weight:bold;"><img src="landing/images/2143150.png" class="mr-2" height="20"/>${data[hora][j][0].Proye_Nombre} </h5>
+                                                    </div><br>
                                                     <div class="col-md-12 col-sm-6" style="padding-left: 0px;;padding-right: 0px">
                                                     <div class="hovereffect">
                                                         <div  id="myCarousel${hora + j}" class = "carousel carousel-fade" data-ride = "carousel">
@@ -174,9 +174,8 @@ function onMostrarPantallas() {
                                                     data-parent="#customaccordion_exa">
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <div class=" text-center col-md-12 col-sm-6" style="background:#1f4068; border-color:#1f4068;padding-top: 4px;
-                                                        padding-bottom: 4px;">
-                                                            <h5 class="m-0 font-size-16" style="color:#fafafa">${data[hora][j][0].Proye_Nombre} </h5>
+                                                        <div class=" text-center col-md-12 col-sm-6" style="padding-top: 4px;padding-bottom: 4px;">
+                                                            <h5 class="m-0 font-size-16" style="color:#1f4068;"><img src="landing/images/2143150.png" class="mr-2" height="20"/>${data[hora][j][0].Proye_Nombre} </h5>
                                                         </div>  <br>
                                                         <div class="col-md-12 col-sm-6" style="padding-left: 0px;padding-right: 0px">
                                                         <div class="hovereffect">
@@ -230,7 +229,7 @@ function onMostrarPantallas() {
                                         <div class="col-md-12">
                                             <div class=" text-center col-md-12 col-sm-12" style="padding-top: 1px;
                                             padding-bottom: 4px;">
-                                            <img src="landing/images/png (3).svg" height="100">
+                                            <img src="landing/images/3155773.png" height="100">
                                                 <h5 class="m-0 font-size-14" style="color:#8888">Vacio</h5>
                                             </div>  <br>
                                         </div>
