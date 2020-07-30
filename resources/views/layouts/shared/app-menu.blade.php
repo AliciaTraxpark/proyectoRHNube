@@ -75,8 +75,12 @@ use Illuminate\Support\Facades\DB;
 
                 @else
                 <a href="/horarios">
-                   
+
                     <span>Asignar horario</span>
+                </a>
+                <a href="/dias/laborales">
+
+                    <span>Asignar dias laborales</span>
                 </a>
                 @endif
 

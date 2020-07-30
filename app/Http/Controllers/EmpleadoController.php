@@ -894,7 +894,7 @@ class EmpleadoController extends Controller
 
     public function vercalendarioEmpl(Request $request){
                 $horario_empleado = DB::table('horario_empleado as he')
-                ->select(['id', 'title', 'color', 'textColor', 'start', 'end'])
+                ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end'])
                 /*  ->where('users_id', '=', Auth::user()->id) */
                  ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
                  ->where('he.empleado_emple_id', '=', $request->get('idempleado'));
@@ -919,7 +919,7 @@ class EmpleadoController extends Controller
     public function calendarioEditar(Request $request){
 
         $horario_empleado = DB::table('horario_empleado as he')
-                ->select(['id', 'title', 'color', 'textColor', 'start', 'end'])
+                ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end'])
                 /*  ->where('users_id', '=', Auth::user()->id) */
                  ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
                  ->where('he.empleado_emple_id', '=', $request->get('idempleado'));
@@ -981,7 +981,7 @@ class EmpleadoController extends Controller
 
 
             $horario_empleado = DB::table('horario_empleado as he')
-            ->select(['id', 'title', 'color', 'textColor', 'start', 'end'])
+            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end'])
             /*  ->where('users_id', '=', Auth::user()->id) */
              ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
              ->where('he.empleado_emple_id', '=', $idempleado);
@@ -1095,6 +1095,17 @@ public function vaciardIncidTem(){
 public function eliminareventBD(Request $request){
     $ideve = $request->ideve;
     $eventos_empleado = eventos_empleado::where('evEmpleado_id', '=', $ideve)->delete();
+
+}
+
+public function eliminarHorariosEdit(Request $request){
+    $ideve = $request->ideve;
+    $horario_empleado1 = horario_empleado::where('horarioEmp_id', '=', $ideve)->delete();
+}
+public function eliminarInciEdit(Request $request){
+    $ideve = $request->ideve;
+    $incidencia_dias = incidencia_dias::where('inciden_dias_id', '=', $ideve)->delete();
+
 
 }
 }
