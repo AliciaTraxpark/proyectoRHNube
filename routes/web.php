@@ -109,6 +109,7 @@ Route::get('/empleado/vaciardfTem', 'EmpleadoController@vaciardfTem');
 Route::get('/empleado/vaciardlabTem', 'EmpleadoController@vaciardlabTem');
 Route::get('/empleado/vaciardNlabTem', 'EmpleadoController@vaciardNlabTem');
 Route::get('/empleado/vaciardIncidTem', 'EmpleadoController@vaciardIncidTem');
+Route::get('/empleado/vaciardescansoTem', 'EmpleadoController@vaciardescansoTem');
 Route::post('/empleado/eliminareventBD', 'EmpleadoController@eliminareventBD');
 Route::post('/empleado/eliminarHorariosEdit', 'EmpleadoController@eliminarHorariosEdit');
 Route::post('/empleado/eliminarInciEdit', 'EmpleadoController@eliminarInciEdit');

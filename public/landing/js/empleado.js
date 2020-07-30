@@ -3056,6 +3056,33 @@ function vaciardFeria(){
         }
     });
 }
+/////////////////
+function vaciarddescanso(){
+    bootbox.confirm({
+        message: "¿Esta seguro que desea eliminar dias de descanso del calendario?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            if (result == true) {
+                $.get("/empleado/vaciardescansoTem", {}, function (data, status) {
+                    calendario();
+                    calendario2();
+                   ;
+                });
+
+            }
+        }
+    });
+}
+//////////////
 function vaciardlabTem(){
     bootbox.confirm({
         message: "¿Esta seguro que desea eliminar dias laborales del calendario?",
