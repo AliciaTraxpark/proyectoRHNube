@@ -1105,7 +1105,12 @@ public function eliminarHorariosEdit(Request $request){
 public function eliminarInciEdit(Request $request){
     $ideve = $request->ideve;
     $incidencia_dias = incidencia_dias::where('inciden_dias_id', '=', $ideve)->delete();
+}
 
-
+public function vaciardescansoTem(){
+    DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
+    ->where('color', '=', '#4673a0')
+    ->where('textColor', '=','#ffffff')
+    ->delete();
 }
 }
