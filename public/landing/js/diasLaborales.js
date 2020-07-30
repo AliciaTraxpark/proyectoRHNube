@@ -3,6 +3,7 @@ $( "#idempleado" ).change(function() {
     $('#btnLabo').hide();
     $('#calendar_ed').show();
     $('#calendar_ed_bt').show();
+    $('#verinfo').show(); 
     calendario_edit();
   });
 

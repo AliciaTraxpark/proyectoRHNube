@@ -21,7 +21,7 @@ use App\persona;
                 {{$persona->perso_apPaterno}}</h6>
             <span class="pro-user-desc">Administrador</span>
         </div>
-        <div class="dropdown align-self-center profile-dropdown-menu">
+       {{--  <div class="dropdown align-self-center profile-dropdown-menu">
             <a class="dropdown-toggle mr-0" data-toggle="dropdown" href="#"
                 role="button" aria-haspopup="false"
                 aria-expanded="false">
@@ -33,13 +33,9 @@ use App\persona;
                     <i data-feather="edit" class="icon-dual icon-xs mr-2"></i>
                     <span>Editar Perfil</span>
                 </a>
-                <!--<a href="{{ route('logout') }}" class="dropdown-item
-                    notify-item">
-                    <i data-feather="log-out" class="icon-dual icon-xs mr-2"></i>
-                    <span>Cerrar sesion</span>
-                </a>-->
+
             </div>
-        </div>
+        </div> --}}
     </div>
     <div class="sidebar-content">
         <!--- Sidemenu -->

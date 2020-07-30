@@ -412,6 +412,7 @@ use App\proyecto_empleado;
 <script src="{{asset('landing/js/proyecto.js')}}"></script>
 <script
     src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+    <script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
 @endsection
 
 @section('script-bottom')
