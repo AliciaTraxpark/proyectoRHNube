@@ -199,141 +199,141 @@ function calendario_edit() {
             console.log(info.event.title);
             console.log(info.event.textColor);
             var event = calendarioedit.getEventById(id);
-           if(info.event.textColor=='111111' || info.event.textColor=='1' || info.event.textColor=='0'){
-              if(info.event.textColor=='111111'){
-                bootbox.confirm({
-                    message: "¿Desea eliminar: " + info.event.title + " del horario?",
-                    buttons: {
-                        confirm: {
-                            label: 'Aceptar',
-                            className: 'btn-success'
-                        },
-                        cancel: {
-                            label: 'Cancelar',
-                            className: 'btn-light'
-                        }
-                    },
-                    callback: function (result) {
-                        if (result == true) {
-                            $.ajax({
-                                type: "post",
-                                url: "/empleado/eliminarHorariosEdit",
-                                data: {
-                                    ideve: info.event.id
-                                },
-                                statusCode: {
-
-                                    419: function () {
-                                        location.reload();
-                                    }
-                                },
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                },
-                                success: function (data) {
-                                    info.event.remove();
-                                    calendar2_ed.refetchEvents();
-
-                                },
-                                error: function (data) {
-                                    alert('Ocurrio un error');
-                                }
-
-
-                            });
-                        }
-                    }
-                });
-              } else{
-                bootbox.confirm({
-                    message: "¿Desea eliminar: " + info.event.title + " del horario?",
-                    buttons: {
-                        confirm: {
-                            label: 'Aceptar',
-                            className: 'btn-success'
-                        },
-                        cancel: {
-                            label: 'Cancelar',
-                            className: 'btn-light'
-                        }
-                    },
-                    callback: function (result) {
-                        if (result == true) {
-                            $.ajax({
-                                type: "post",
-                                url: "/empleado/eliminarInciEdit",
-                                data: {
-                                    ideve: info.event.id
-                                },
-                                statusCode: {
-
-                                    419: function () {
-                                        location.reload();
-                                    }
-                                },
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                },
-                                success: function (data) {
-                                    info.event.remove();
-                                    calendar2_ed.refetchEvents();
-
-                                },
-                                error: function (data) {
-                                    alert('Ocurrio un error');
-                                }
-
-
-                            });
-                        }
-                    }
-                });
-
-              }
-            } else {
-               bootbox.confirm({
-                message: "¿Desea eliminar: " + info.event.title + " del horario?",
-                buttons: {
-                    confirm: {
-                        label: 'Aceptar',
-                        className: 'btn-success'
-                    },
-                    cancel: {
-                        label: 'Cancelar',
-                        className: 'btn-light'
-                    }
-                },
-                callback: function (result) {
-                    if (result == true) {
-                        $.ajax({
-                            type: "post",
-                            url: "/empleado/eliminareventBD",
-                            data: {
-                                ideve: info.event.id
+            if (info.event.textColor == '111111' || info.event.textColor == '1' || info.event.textColor == '0') {
+                if (info.event.textColor == '111111') {
+                    bootbox.confirm({
+                        message: "¿Desea eliminar: " + info.event.title + " del horario?",
+                        buttons: {
+                            confirm: {
+                                label: 'Aceptar',
+                                className: 'btn-success'
                             },
-                            statusCode: {
-
-                                419: function () {
-                                    location.reload();
-                                }
-                            },
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            success: function (data) {
-                                info.event.remove();
-                                calendar2_ed.refetchEvents();
-
-                            },
-                            error: function (data) {
-                                alert('Ocurrio un error');
+                            cancel: {
+                                label: 'Cancelar',
+                                className: 'btn-light'
                             }
+                        },
+                        callback: function (result) {
+                            if (result == true) {
+                                $.ajax({
+                                    type: "post",
+                                    url: "/empleado/eliminarHorariosEdit",
+                                    data: {
+                                        ideve: info.event.id
+                                    },
+                                    statusCode: {
+
+                                        419: function () {
+                                            location.reload();
+                                        }
+                                    },
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    success: function (data) {
+                                        info.event.remove();
+                                        calendar2_ed.refetchEvents();
+
+                                    },
+                                    error: function (data) {
+                                        alert('Ocurrio un error');
+                                    }
 
 
-                        });
-                    }
+                                });
+                            }
+                        }
+                    });
+                } else {
+                    bootbox.confirm({
+                        message: "¿Desea eliminar: " + info.event.title + " del horario?",
+                        buttons: {
+                            confirm: {
+                                label: 'Aceptar',
+                                className: 'btn-success'
+                            },
+                            cancel: {
+                                label: 'Cancelar',
+                                className: 'btn-light'
+                            }
+                        },
+                        callback: function (result) {
+                            if (result == true) {
+                                $.ajax({
+                                    type: "post",
+                                    url: "/empleado/eliminarInciEdit",
+                                    data: {
+                                        ideve: info.event.id
+                                    },
+                                    statusCode: {
+
+                                        419: function () {
+                                            location.reload();
+                                        }
+                                    },
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    success: function (data) {
+                                        info.event.remove();
+                                        calendar2_ed.refetchEvents();
+
+                                    },
+                                    error: function (data) {
+                                        alert('Ocurrio un error');
+                                    }
+
+
+                                });
+                            }
+                        }
+                    });
+
                 }
-            });
+            } else {
+                bootbox.confirm({
+                    message: "¿Desea eliminar: " + info.event.title + " del horario?",
+                    buttons: {
+                        confirm: {
+                            label: 'Aceptar',
+                            className: 'btn-success'
+                        },
+                        cancel: {
+                            label: 'Cancelar',
+                            className: 'btn-light'
+                        }
+                    },
+                    callback: function (result) {
+                        if (result == true) {
+                            $.ajax({
+                                type: "post",
+                                url: "/empleado/eliminareventBD",
+                                data: {
+                                    ideve: info.event.id
+                                },
+                                statusCode: {
+
+                                    419: function () {
+                                        location.reload();
+                                    }
+                                },
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: function (data) {
+                                    info.event.remove();
+                                    calendar2_ed.refetchEvents();
+
+                                },
+                                error: function (data) {
+                                    alert('Ocurrio un error');
+                                }
+
+
+                            });
+                        }
+                    }
+                });
             }
 
 
@@ -3031,7 +3031,7 @@ function limpiar() {
     $('#textContrato').val("");
 }
 
-function vaciardFeria(){
+function vaciardFeria() {
     bootbox.confirm({
         message: "¿Esta seguro que desea eliminar dias feriados del calendario?",
         buttons: {
@@ -3048,15 +3048,15 @@ function vaciardFeria(){
             if (result == true) {
                 $.get("/empleado/vaciardfTem", {}, function (data, status) {
                     calendario();
-                    calendario2();
-                   ;
+                    calendario2();;
                 });
 
             }
         }
     });
 }
-function vaciardlabTem(){
+
+function vaciardlabTem() {
     bootbox.confirm({
         message: "¿Esta seguro que desea eliminar dias laborales del calendario?",
         buttons: {
@@ -3073,15 +3073,15 @@ function vaciardlabTem(){
             if (result == true) {
                 $.get("/empleado/vaciardlabTem", {}, function (data, status) {
                     calendario();
-                    calendario2();
-                   ;
+                    calendario2();;
                 });
 
             }
         }
     });
 }
-function vaciardNlabTem(){
+
+function vaciardNlabTem() {
     bootbox.confirm({
         message: "¿Esta seguro que desea eliminar dias no laborales del calendario?",
         buttons: {
@@ -3098,15 +3098,15 @@ function vaciardNlabTem(){
             if (result == true) {
                 $.get("/empleado/vaciardNlabTem", {}, function (data, status) {
                     calendario();
-                    calendario2();
-                   ;
+                    calendario2();;
                 });
 
             }
         }
     });
 }
-function vaciardIncidTem(){
+
+function vaciardIncidTem() {
     bootbox.confirm({
         message: "¿Esta seguro que desea eliminar todas las incidencias del calendario?",
         buttons: {
@@ -3123,8 +3123,7 @@ function vaciardIncidTem(){
             if (result == true) {
                 $.get("/empleado/vaciardIncidTem", {}, function (data, status) {
                     calendario();
-                    calendario2();
-                   ;
+                    calendario2();;
                 });
 
             }
