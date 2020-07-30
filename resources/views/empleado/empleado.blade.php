@@ -1375,6 +1375,7 @@ body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-foote
                                                             aria-expanded="false"><img src="{{asset('admin/images/borrador.svg')}}" height="15" > Borrar <i class="icon"><span data-feather="chevron-down"></span></i></button>
                                                         <div class="dropdown-menu">
                                                             <a class="dropdown-item" onclick="vaciardFeria()">Dias feriados</a>
+                                                            <a class="dropdown-item" onclick="vaciarddescanso()">Dias descanso</a>
                                                             <a class="dropdown-item"  onclick="vaciardlabTem()" >D. laborables</a>
                                                             <a class="dropdown-item" onclick="vaciardNlabTem()">D. no laborables</a>
                                                             <a class="dropdown-item" onclick="vaciardIncidTem()">Incidencia</a>
