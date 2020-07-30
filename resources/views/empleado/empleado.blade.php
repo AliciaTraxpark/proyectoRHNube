@@ -2281,8 +2281,8 @@ body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-foote
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Fecha Nacimiento</label>
-                                                        <input type="text" class="form-control" id="v_fechaNV"
-                                                            name="date" disabled>
+                                                        <input type="text" class="form-control" id="v_fechaNV" data-custom-class="form-control" data-format="YYYY-MM-DD"
+                                                        data-template="D MMM YYYY" name="date" disabled>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Nombres</label>
@@ -2642,8 +2642,8 @@ body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-foote
     <script src="{{asset('admin/assets/libs/bootstrap-fileinput/es.js')}}"></script>
     <script src="{{asset('admin/assets/libs/combodate-1.0.7/combodate.js')}}"></script>
     <script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
-    <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
     <script src="{{asset('admin/assets/libs/moment/moment.min.js')}}"></script>
+    <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
     <script src="{{asset('admin/packages/core/main.js')}}"></script>
     <script src="{{asset('admin/packages/core/locales/es.js')}}"></script>
     <script src="{{asset('admin/packages/daygrid/main.js')}}"></script>

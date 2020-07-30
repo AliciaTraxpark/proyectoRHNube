@@ -881,7 +881,7 @@
                 $('#v_apPaternoV').val(data[0].perso_apPaterno);
                 $('#v_direccionV').val(data[0].perso_direccion);
                 $('#v_idV').val(data[0].emple_id);
-                $('#v_fechaNV').val(data[0].perso_fechaNacimiento);
+                $('#v_fechaNV').combodate('setValue',data[0].perso_fechaNacimiento);
                 $('#v_apMaternoV').val(data[0].perso_apMaterno);
                 $('#v_numDocumentoV').val(data[0].emple_nDoc);
                 $('#v_emailV').val(data[0].emple_Correo);
