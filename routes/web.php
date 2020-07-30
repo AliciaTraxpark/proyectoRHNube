@@ -110,6 +110,8 @@ Route::get('/empleado/vaciardlabTem', 'EmpleadoController@vaciardlabTem');
 Route::get('/empleado/vaciardNlabTem', 'EmpleadoController@vaciardNlabTem');
 Route::get('/empleado/vaciardIncidTem', 'EmpleadoController@vaciardIncidTem');
 Route::post('/empleado/eliminareventBD', 'EmpleadoController@eliminareventBD');
+Route::post('/empleado/eliminarHorariosEdit', 'EmpleadoController@eliminarHorariosEdit');
+Route::post('/empleado/eliminarInciEdit', 'EmpleadoController@eliminarInciEdit');
 //AREA
 Route::post('/registrar/area', 'areaController@store');
 
@@ -209,6 +211,7 @@ Route::get('/totalRE', 'dashboardController@rangoE');
 Route::get('/empleados', 'EmpleadoController@indexMenu');
 Route::get('/calendarios', 'calendarioController@indexMenu');
 Route::get('/horarios', 'horarioController@indexMenu');
+Route::get('/dias/laborales', 'diasLaborablesController@indexMenu');
 
 //CORREO EMPLEADO
 Route::get('empleadoCorreo', 'correosEmpleadoController@encode');
