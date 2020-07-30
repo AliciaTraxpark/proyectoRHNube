@@ -3,7 +3,7 @@ $('#fecha').datetimepicker({
     format: 'yyyy-mm-dd',
     minView: 2,
     pickTime: false,
-    pickerPosition: "bottom-center"
+    showButtonPanel: true
 });
 
 function acumular60(suma, acumulado) {
