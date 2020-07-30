@@ -1,15 +1,19 @@
 @extends('layouts.vertical')
 
 @section('css')
-<link rel="shortcut icon" href="https://rhsolution.com.pe/wp-content/uploads/2019/06/small-logo-rh-solution-64x64.png" sizes="32x32">
+<link rel="shortcut icon" href="https://rhsolution.com.pe/wp-content/uploads/2019/06/small-logo-rh-solution-64x64.png"
+    sizes="32x32">
 <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{
     URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.css')
     }}" rel="stylesheet" />
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <link href="{{
-    URL::asset('admin/assets/libs/daterangepicker-master/daterangepicker.css')
+    URL::asset('admin/assets/libs/bootstrap-datetimepicker-master/bootstrap-datetimepicker.css')
     }}" rel="stylesheet" type="text/css" />
+<link href="{{
+        URL::asset('admin/assets/libs/bootstrap-datetimepicker-master/bootstrap-datetimepicker.min.css')
+        }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/chart/Chart.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
@@ -38,6 +42,10 @@
     .drp-selected {
         display: none !important;
     }
+
+    .bootstrap-datetimepicker-widget .datepicker-days table tbody tr:hover {
+        background-color: #eee;
+    }
 </style>
 <div class="row">
     <div class="col-lg-12">
@@ -47,7 +55,7 @@
                     <div class="col-md-8"><br></div>
                     <div class="col-md-4">
                         <div class="input-group col-md-12">
-                            <input type="text" id="fecha" name="date_range" class="form-control">
+                            <input type="text" id="fecha" class="form-control">
                             <div class="input-group-prepend">
                                 <div class="input-group-text form-control"><i class="uil uil-calender"></i></div>
                             </div>
@@ -132,17 +140,13 @@
 <!-- App js -->
 {{-- <script src="{{asset('admin/assets/js/app.min.js')}}"></script> --}}
 <!-- datatable js -->
-<script src="{{
-    URL::asset('admin/assets/libs/daterangepicker-master/moment.min.js') }}"></script>
-<script src="{{
-    URL::asset('admin/assets/libs/daterangepicker-master/daterangepicker.js')
-    }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/chart/Chart.min.js') }}"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
-<script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
+<script src="{{asset('admin/assets/libs/bootstrap-datetimepicker-master/bootstrap-datetimepicker.min.js')}}"></script>
+<script src="{{asset('admin/assets/libs/bootstrap-datetimepicker-master/bootstrap-datetimepicker.es.js')}}"></script>
+<script src="{{asset('admin/assets/libs/bootstrap-datetimepicker-master/moment.js')}}"></script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js')
