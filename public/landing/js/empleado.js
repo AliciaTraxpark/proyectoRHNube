@@ -1506,6 +1506,10 @@ $('#v_fechaN').combodate({
     minYear: 1900,
     yearDescending: false,
 });
+$('#v_fechaNV').combodate({
+    minYear: 1900,
+    yearDescending: false,
+});
 //AREA
 function agregarArea() {
     objArea = datosArea("POST");
@@ -2620,6 +2624,7 @@ function cargarFile2() {
 $('#documento').on('change', function () {
     $("#form-registrar :input").attr('disabled', false);
 });
+$('#smartwizardVer :input').attr('disabled', true);
 $("#form-registrar :input").prop('disabled', true);
 $('#documento').attr('disabled', false);
 $('#cerrarModalEmpleado').attr('disabled', false);
