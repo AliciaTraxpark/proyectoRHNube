@@ -1,9 +1,8 @@
 $('#fecha').datetimepicker({
     language: 'es',
     format: 'yyyy-mm-dd',
-    minView: 2,
+    minView: 3,
     pickTime: false,
-    showButtonPanel: true
 });
 
 function acumular60(suma, acumulado) {
@@ -233,12 +232,12 @@ function onSelectFechas() {
         error: function (data) {}
     })
 }
+
 $(function () {
     $('#fecha').on('change.dp', function (e) {
         value = $('#fecha').val();
         firstDate = moment(value, 'YYYY-MM-DD').day(0).format('YYYY-MM-DD');
         lastDate = moment(value, 'YYYY-MM-DD').day(6).format('YYYY-MM-DD');
-        $('#fecha').datetimepicker('hide');
         $('#fecha').val(firstDate + "   a   " + lastDate);
         onSelectFechas();
     });
