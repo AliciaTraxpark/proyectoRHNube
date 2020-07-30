@@ -399,9 +399,9 @@ class apiController extends Controller
                         ->get()
                         ->first();
                     if ($promedio) {
-                        //RESTA DE PROMEDIOS DE CAPTURAS
                         $capturaRegistrada = captura::where('idCaptura', '=', $idCaptura)->get()->first();
-                        $explode2 = explode(":", $promedio->promedio);
+                        //PROMEDIOS DE CAPTURAS
+                        $explode2 = explode(":", $capturaRegistrada->promedio);
                         $calSeg2 = $explode2[0] * 3600 + $explode2[1] * 60 + $explode2[2];
                         $totalP = $calSeg2;
                         //RESTA POR FECHA HORA DE   CAPTURAS
@@ -452,7 +452,7 @@ class apiController extends Controller
                     if ($promedio) {
                         //RESTA DE PROMEDIOS DE CAPTURAS
                         $capturaRegistrada = captura::where('idCaptura', '=', $idCaptura)->get()->first();
-                        $explode2 = explode(":", $promedio->promedio);
+                        $explode2 = explode(":", $capturaRegistrada->promedio);
                         $calSeg2 = $explode2[0] * 3600 + $explode2[1] * 60 + $explode2[2];
                         $totalP = $calSeg2;
                         //RESTA POR FECHA HORA DE   CAPTURAS

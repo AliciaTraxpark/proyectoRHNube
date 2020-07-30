@@ -72,15 +72,15 @@ class ControlController extends Controller
                 'p.perso_nombre',
                 'p.perso_apPaterno',
                 'p.perso_apMaterno',
-                DB::raw('IF(h.id is null, DATE(h.start), DATE(cp.fecha_hora)) as fecha'),
+                DB::raw('IF(h.id is null, DATE(cp.fecha_hora), DATE(h.start)) as fecha'),
                 DB::raw('TIME(cp.fecha_hora) as hora_ini'),
                 DB::raw('MAX(en.Total_Envio) as Total_Envio'),
                 DB::raw('SUM(promedio.promedio) as promedio'),
                 DB::raw($sql),
                 DB::raw('DATE(cp.fecha_hora) as fecha_captura')
             )
-            ->where(DB::raw('IF(h.id is null, DATE(h.start),DATE(cp.fecha_hora))'), '>=', $fechaF[0])
-            ->where(DB::raw('IF(h.id is null, DATE(h.start),DATE(cp.fecha_hora))'), '<=', $fechaF[1])
+            ->where(DB::raw('IF(h.id is null, DATE(cp.fecha_hora), DATE(h.start))'), '>=', $fechaF[0])
+            ->where(DB::raw('IF(h.id is null, DATE(cp.fecha_hora), DATE(h.start))'), '<=', $fechaF[1])
             ->where('e.users_id', '=', Auth::user()->id)
             ->groupBy('fecha_captura', 'e.emple_id')
             ->get();
