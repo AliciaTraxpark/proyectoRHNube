@@ -1,46 +1,9 @@
-$('#fecha').daterangepicker({
-    "locale": {
-        "format": "YYYY-MM-DD",
-        "separator": " a ",
-        "applyLabel": "Aplicar",
-        "cancelLabel": "Cerrar",
-        "customRangeLabel": "Seleccionar Fechas",
-        "daysOfWeek": [
-            "Do",
-            "Lu",
-            "Ma",
-            "Mi",
-            "Ju",
-            "Vi",
-            "Sa"
-        ],
-        "monthNames": [
-            "Enero",
-            "Febrero",
-            "Marzo",
-            "Abril",
-            "Mayo",
-            "Junio",
-            "Julio",
-            "Agosto",
-            "Setiembre",
-            "Octubre",
-            "Noviembre",
-            "Diciembre"
-        ],
-    },
-    ranges: {
-        'Hace 1 día': [moment().subtract(1, 'days'), moment().add('days')],
-        'Hace 1 semana': [moment().subtract(6, 'days'), moment()],
-        'Hace 1 mes': [moment().subtract(29, 'days'), moment()],
-    }
-});
-$('#fecha').val('');
-$(function () {
-    $('#fecha').on('cancel.daterangepicker', function (ev, picker) {
-        $('#fecha').val('');
-    });
-    $("#fecha").on('apply.daterangepicker', onSelectFechas);
+$('#fecha').datetimepicker({
+    language: 'es',
+    format: 'yyyy-mm-dd',
+    minView: 2,
+    pickTime: false,
+    pickerPosition: "bottom-center"
 });
 
 function acumular60(suma, acumulado) {
@@ -270,3 +233,13 @@ function onSelectFechas() {
         error: function (data) {}
     })
 }
+$(function () {
+    $('#fecha').on('change.dp', function (e) {
+        value = $('#fecha').val();
+        firstDate = moment(value, 'YYYY-MM-DD').day(0).format('YYYY-MM-DD');
+        lastDate = moment(value, 'YYYY-MM-DD').day(6).format('YYYY-MM-DD');
+        $('#fecha').datetimepicker('hide');
+        $('#fecha').val(firstDate + "   a   " + lastDate);
+        onSelectFechas();
+    });
+});
