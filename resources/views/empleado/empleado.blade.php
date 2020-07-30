@@ -2280,8 +2280,8 @@ body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-foote
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Fecha Nacimiento</label>
-                                                        <input type="text" class="form-control" id="v_fechaNV"
-                                                            name="date" disabled>
+                                                        <input type="text" class="form-control" id="v_fechaNV" data-custom-class="form-control" data-format="YYYY-MM-DD"
+                                                        data-template="D MMM YYYY" name="date" disabled>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Nombres</label>
