@@ -198,9 +198,98 @@ function calendario_edit() {
             console.log(info.event.id);
             console.log(info.event.title);
             console.log(info.event.textColor);
-            var event = calendar.getEventById(id);
+            var event = calendarioedit.getEventById(id);
            if(info.event.textColor=='111111' || info.event.textColor=='1' || info.event.textColor=='0'){
+              if(info.event.textColor=='111111'){
+                bootbox.confirm({
+                    message: "¿Desea eliminar: " + info.event.title + " del horario?",
+                    buttons: {
+                        confirm: {
+                            label: 'Aceptar',
+                            className: 'btn-success'
+                        },
+                        cancel: {
+                            label: 'Cancelar',
+                            className: 'btn-light'
+                        }
+                    },
+                    callback: function (result) {
+                        if (result == true) {
+                            $.ajax({
+                                type: "post",
+                                url: "/empleado/eliminarHorariosEdit",
+                                data: {
+                                    ideve: info.event.id
+                                },
+                                statusCode: {
 
+                                    419: function () {
+                                        location.reload();
+                                    }
+                                },
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: function (data) {
+                                    info.event.remove();
+                                    calendar2_ed.refetchEvents();
+
+                                },
+                                error: function (data) {
+                                    alert('Ocurrio un error');
+                                }
+
+
+                            });
+                        }
+                    }
+                });
+              } else{
+                bootbox.confirm({
+                    message: "¿Desea eliminar: " + info.event.title + " del horario?",
+                    buttons: {
+                        confirm: {
+                            label: 'Aceptar',
+                            className: 'btn-success'
+                        },
+                        cancel: {
+                            label: 'Cancelar',
+                            className: 'btn-light'
+                        }
+                    },
+                    callback: function (result) {
+                        if (result == true) {
+                            $.ajax({
+                                type: "post",
+                                url: "/empleado/eliminarInciEdit",
+                                data: {
+                                    ideve: info.event.id
+                                },
+                                statusCode: {
+
+                                    419: function () {
+                                        location.reload();
+                                    }
+                                },
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: function (data) {
+                                    info.event.remove();
+                                    calendar2_ed.refetchEvents();
+
+                                },
+                                error: function (data) {
+                                    alert('Ocurrio un error');
+                                }
+
+
+                            });
+                        }
+                    }
+                });
+
+              }
             } else {
                bootbox.confirm({
                 message: "¿Desea eliminar: " + info.event.title + " del horario?",
@@ -883,7 +972,7 @@ function calendario2() {
             console.log(info);
             console.log(info.event.id);
             console.log(info.event.title);
-            var event = calendar.getEventById(id);
+            var event = calendar2.getEventById(id);
 
             bootbox.confirm({
                 message: "¿Desea eliminar: " + info.event.title + " del horario?",
@@ -1323,9 +1412,9 @@ function calendario2_ed() {
             console.log(info);
             console.log(info.event.id);
             console.log(info.event.title);
-            var event = calendar.getEventById(id);
+            var event = calendar2_ed.getEventById(id);
 
-           
+
 
         },
         editable: false,
