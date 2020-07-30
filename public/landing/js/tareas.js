@@ -49,6 +49,7 @@ function onMostrarPantallas() {
             }*/
         },
         success: function (data) {
+            console.log(data);
             //data = data.reverse();
             var vacio = `<img id="VacioImg" style="margin-left:28%" src="admin/images/search-file.svg"
                 class="mr-2" height="220" /> <br> <label for=""
@@ -95,6 +96,7 @@ function onMostrarPantallas() {
                             else nivel = "red";
                             if (j < 5) {
                                 var capturas = "";
+                                console.log(data[hora][j].length);
                                 for (let index = 1; index < data[hora][j].length; index++) {
                                     promedios += data[hora][j][index].prom;
                                     capturas += `<div class = "carousel-item">
@@ -105,10 +107,13 @@ function onMostrarPantallas() {
                                     </div>
                                 </div>`;
                                 }
-                                if (promedios == 0) {
-                                    promedio = 0
+                                if (data[hora][j].length == 1) {
+                                    promedio = data[hora][j][0].prom;
                                 } else {
                                     promedio = (promedios / (data[hora][j].length - 1)).toFixed(2);
+                                    if (promedios == 0) {
+                                        promedio = 0
+                                    }
                                 }
                                 card = `<div class="col-2" style="margin-left: 0px!important;">
                                         <div class="mb-0 text-center" style="padding-left: 0px;">
