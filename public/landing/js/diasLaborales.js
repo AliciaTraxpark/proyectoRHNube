@@ -1,9 +1,11 @@
 $( "#idempleado" ).change(function() {
+    num=$('#idempleado').val().length;
+    console.log(num);
     $('#imgV').hide();
     $('#btnLabo').hide();
     $('#calendar_ed').show();
     $('#calendar_ed_bt').show();
-    $('#verinfo').show(); 
+    $('#verinfo').show();
     calendario_edit();
   });
 
@@ -59,7 +61,7 @@ function calendario_edit() {
                     if (result == true) {
                         $.ajax({
                             type: "post",
-                            url: "/empleado/eliminareventBD",
+                            url: "/dias/delete",
                             data: {
                                 ideve: info.event.id
                             },
@@ -99,28 +101,37 @@ function calendario_edit() {
         events: function (info, successCallback, failureCallback) {
             var idcalendario = $('#selectCalendario_ed').val();
             var idempleado = $('#idempleado').val();
-            $.ajax({
-                type: "POST",
-                url: "/empleado/calendarioEmpleado",
-                data: {
-                    idcalendario,
-                    idempleado
-                },
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                statusCode: {
-                    419: function () {
-                        location.reload();
-                    }
-                },
-                success: function (data) {
+            num=$('#idempleado').val().length;
+            console.log(num);
+            if(num==1){
+                $.ajax({
+                    type: "POST",
+                    url: "/empleado/calendarioEmpleado",
+                    data: {
+                        idcalendario,
+                        idempleado
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    statusCode: {
+                        419: function () {
+                            location.reload();
+                        }
+                    },
+                    success: function (data) {
 
-                    successCallback(data);
+                        successCallback(data);
 
-                },
-                error: function () {}
-            });
+                    },
+                    error: function () {}
+                });
+            }
+            else{
+                successCallback([{}]);
+            }
+
+
 
         },
 
@@ -148,7 +159,7 @@ function laborable_ed() {
     //$('#myModal').modal('show');
     $.ajax({
         type: "POST",
-        url: "/empleado/storeCalendarioempleado",
+        url: "/dias/storeCalendario",
         data: {
             title,
             color,
@@ -169,14 +180,29 @@ function laborable_ed() {
                 location.reload();
             }
         },
-        success: function (msg) {
-            //var date = calendar1.getDate();
-            //alert("The current date of the calendar is " + date.toISOString());
+        success: function (data) {
+            num=$('#idempleado').val().length;
+            console.log(num);
+            if(num==1){
 
-            calendarioedit.refetchEvents();
+            calendarioedit.refetchEvents();}
+            else{
+
+             calendarioedit.addEvent({
+                 id:
+                 data,
+                title: 'Laborable',
+                start: $('#pruebaStar_ed').val(),
+                end: $('#pruebaEnd_ed').val(),
+                color : '#dfe6f2',
+                textColor:'#0b1b29'
+
+              });
+
+            }
 
 
-            console.log(msg);
+
         },
         error: function () {}
     });
@@ -186,7 +212,7 @@ function nolaborable_ed() {
     $('#btnLabo').hide();
     title = 'No laborable';
     color = '#a34141';
-    textColor = ' #ffffff ';
+    textColor = '#ffffff';
     start = $('#pruebaStar_ed').val();
     end = $('#pruebaEnd_ed').val();
     tipo = 0;
@@ -194,7 +220,7 @@ function nolaborable_ed() {
     //$('#myModal').modal('show');
     $.ajax({
         type: "POST",
-        url: "/empleado/storeCalendarioempleado",
+        url: "/dias/storeCalendario",
         data: {
             title,
             color,
@@ -215,13 +241,31 @@ function nolaborable_ed() {
                 location.reload();
             }
         },
-        success: function (msg) {
+        success: function (data) {
             //var date = calendar1.getDate();
             //alert("The current date of the calendar is " + date.toISOString());
 
-            calendarioedit.refetchEvents();
+            num=$('#idempleado').val().length;
+            console.log(num);
+            if(num==1){
 
-            console.log(msg);
+            calendarioedit.refetchEvents();}
+            else{
+
+             calendarioedit.addEvent({
+                 id:
+                 data,
+                title: 'No laborable',
+                start: $('#pruebaStar_ed').val(),
+                end: $('#pruebaEnd_ed').val(),
+                color : '#a34141',
+                textColor:'#ffffff'
+
+              });
+
+            }
+
+
         },
         error: function () {}
     });
