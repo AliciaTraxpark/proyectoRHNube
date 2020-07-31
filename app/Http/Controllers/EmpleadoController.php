@@ -97,16 +97,16 @@ class EmpleadoController extends Controller
             )
             ->where('e.users_id', '=', Auth::user()->id)
             ->get();
-            $calendario = DB::table('calendario as ca')
+        $calendario = DB::table('calendario as ca')
             ->where('ca.users_id', '=', Auth::user()->id)
             ->get();
-            $horario=horario::where('user_id', '=', Auth::user()->id)->get();
+        $horario = horario::where('user_id', '=', Auth::user()->id)->get();
         //dd($tabla_empleado);
         return view('empleado.empleado', [
             'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
             'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
             'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
-            'calendario'=>$calendario,'horario'=>$horario
+            'calendario' => $calendario, 'horario' => $horario
         ]);
     }
     public function cargarDatos()
@@ -332,55 +332,53 @@ class EmpleadoController extends Controller
         $modo->save();
         ///CALENDARIO
 
-        $eventos_empleado_tempEU= eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
-        ->where('id_horario', '=', null)->where('color', '!=', '#9E9E9E')
-        ->where('calendario_calen_id', '=', $objEmpleado['idca'])->get();
+        $eventos_empleado_tempEU = eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
+            ->where('id_horario', '=', null)->where('color', '!=', '#9E9E9E')
+            ->where('calendario_calen_id', '=', $objEmpleado['idca'])->get();
         foreach ($eventos_empleado_tempEU as $eventos_empleado_tempEUs) {
-            $eventos_empleado=new eventos_empleado();
-            $eventos_empleado->title=$eventos_empleado_tempEUs->title;
-            $eventos_empleado->color=$eventos_empleado_tempEUs->color;
-            $eventos_empleado->textColor=$eventos_empleado_tempEUs->textColor;
-            $eventos_empleado->start=$eventos_empleado_tempEUs->start;
-            $eventos_empleado->end=$eventos_empleado_tempEUs->end;
-            $eventos_empleado->id_empleado=$idempleado;
-            $eventos_empleado->tipo_ev=$eventos_empleado_tempEUs->tipo_ev;
+            $eventos_empleado = new eventos_empleado();
+            $eventos_empleado->title = $eventos_empleado_tempEUs->title;
+            $eventos_empleado->color = $eventos_empleado_tempEUs->color;
+            $eventos_empleado->textColor = $eventos_empleado_tempEUs->textColor;
+            $eventos_empleado->start = $eventos_empleado_tempEUs->start;
+            $eventos_empleado->end = $eventos_empleado_tempEUs->end;
+            $eventos_empleado->id_empleado = $idempleado;
+            $eventos_empleado->tipo_ev = $eventos_empleado_tempEUs->tipo_ev;
             $eventos_empleado->save();
         }
         //INIDENC
-        $eventos_empleado_tempInc= eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
-        ->where('id_horario', '=', null)->where('color', '=', '#9E9E9E')->where('textColor', '=', '#313131')
-        ->where('calendario_calen_id', '=', $objEmpleado['idca'])->get();
+        $eventos_empleado_tempInc = eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
+            ->where('id_horario', '=', null)->where('color', '=', '#9E9E9E')->where('textColor', '=', '#313131')
+            ->where('calendario_calen_id', '=', $objEmpleado['idca'])->get();
 
         foreach ($eventos_empleado_tempInc as $eventos_empleado_tempIncs) {
-            $incidenciadias_dias=new incidencia_dias();
-            $incidenciadias_dias->inciden_dias_fechaI=$eventos_empleado_tempIncs->start;
-            $incidenciadias_dias->inciden_dias_fechaF=$eventos_empleado_tempIncs->end;
-            $incidenciadias_dias->id_incidencia=$eventos_empleado_tempIncs->tipo_ev;
-            $incidenciadias_dias->id_empleado=$idempleado;
+            $incidenciadias_dias = new incidencia_dias();
+            $incidenciadias_dias->inciden_dias_fechaI = $eventos_empleado_tempIncs->start;
+            $incidenciadias_dias->inciden_dias_fechaF = $eventos_empleado_tempIncs->end;
+            $incidenciadias_dias->id_incidencia = $eventos_empleado_tempIncs->tipo_ev;
+            $incidenciadias_dias->id_empleado = $idempleado;
             $incidenciadias_dias->save();
         }
         //HORARIO
-        $eventos_empleado_tempHor= eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
-        ->where('id_horario', '!=', null)->where('color', '=', '#ffffff')->where('textColor', '=', '111111')
-        ->where('calendario_calen_id', '=', $objEmpleado['idca'])->get();
+        $eventos_empleado_tempHor = eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
+            ->where('id_horario', '!=', null)->where('color', '=', '#ffffff')->where('textColor', '=', '111111')
+            ->where('calendario_calen_id', '=', $objEmpleado['idca'])->get();
 
         foreach ($eventos_empleado_tempHor as $eventos_empleado_tempHors) {
-            $horario_dias=new horario_dias();
-            $horario_dias->title=$eventos_empleado_tempHors->title;
-            $horario_dias->color=$eventos_empleado_tempHors->color;
-            $horario_dias->textColor=$eventos_empleado_tempHors->textColor;
-            $horario_dias->start=$eventos_empleado_tempHors->start;
-            $horario_dias->end=$eventos_empleado_tempHors->end;
-            $horario_dias->users_id=Auth::user()->id;
+            $horario_dias = new horario_dias();
+            $horario_dias->title = $eventos_empleado_tempHors->title;
+            $horario_dias->color = $eventos_empleado_tempHors->color;
+            $horario_dias->textColor = $eventos_empleado_tempHors->textColor;
+            $horario_dias->start = $eventos_empleado_tempHors->start;
+            $horario_dias->end = $eventos_empleado_tempHors->end;
+            $horario_dias->users_id = Auth::user()->id;
             $horario_dias->save();
 
-            $horario_empleados=new horario_empleado();
-            $horario_empleados->horario_horario_id=$eventos_empleado_tempHors->id_horario;
-            $horario_empleados->empleado_emple_id=$idempleado;
-            $horario_empleados->horario_dias_id=$horario_dias->id;
+            $horario_empleados = new horario_empleado();
+            $horario_empleados->horario_horario_id = $eventos_empleado_tempHors->id_horario;
+            $horario_empleados->empleado_emple_id = $idempleado;
+            $horario_empleados->horario_dias_id = $horario_dias->id;
             $horario_empleados->save();
-
-
         }
 
 
@@ -477,12 +475,17 @@ class EmpleadoController extends Controller
             ->select('le.licencia', 'le.id', 'le.disponible')
             ->where('le.idEmpleado', '=', $idempleado)
             ->get();
+        $corteCaptura = DB::table('users as u')
+            ->select('u.corteCaptura')
+            ->where('u.id', '=', Auth::user()->id)
+            ->get();
         $licencia = [];
         foreach ($licenciaE as $lic) {
             array_push($licencia, array("id" => $lic->id, "licencia" => $lic->licencia, "disponible" => $lic->disponible));
         }
         $empleado[0]->total = $cantidad[0]->total;
         $empleado[0]->licencia = $licencia;
+        $empleado[0]->corteCaptura = $corteCaptura[0]->corteCaptura;
         return $empleado;
         //
 
@@ -697,16 +700,16 @@ class EmpleadoController extends Controller
             )
             ->where('e.users_id', '=', Auth::user()->id)
             ->get();
-            $calendario = DB::table('calendario as ca')
+        $calendario = DB::table('calendario as ca')
             ->where('ca.users_id', '=', Auth::user()->id)
             ->get();
-            $horario=horario::where('user_id', '=', Auth::user()->id)->get();
+        $horario = horario::where('user_id', '=', Auth::user()->id)->get();
         //dd($tabla_empleado);
         return view('empleado.empleadoMenu', [
             'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
             'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
             'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
-            'calendario'=>$calendario,'horario'=>$horario
+            'calendario' => $calendario, 'horario' => $horario
         ]);
     }
 
@@ -750,108 +753,112 @@ class EmpleadoController extends Controller
         }
     }
 
-    public function calendarioEmpTemp(Request $request){
-        $idcalendario=$request->idcalendario;
+    public function calendarioEmpTemp(Request $request)
+    {
+        $idcalendario = $request->idcalendario;
 
         $eventos_empleado_tempCop = eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
-        ->where('calendario_calen_id','=',$idcalendario) ->get();
-        if($eventos_empleado_tempCop->isEmpty()){
-          $eventos_usuario = eventos_usuario::where('users_id', '=', Auth::user()->id)
-        ->where('id_calendario','=',$idcalendario) ->get();
-        if($eventos_usuario){
-          foreach ($eventos_usuario as $eventos_usuarios) {
-            $eventos_empleado_tempSave = new eventos_empleado_temp();
-            $eventos_empleado_tempSave->users_id = Auth::user()->id;
-            $eventos_empleado_tempSave->title =$eventos_usuarios->title;
-            $eventos_empleado_tempSave->color =$eventos_usuarios->color;
-            $eventos_empleado_tempSave->textColor =$eventos_usuarios->textColor;
-            $eventos_empleado_tempSave->start =$eventos_usuarios->start;
-            $eventos_empleado_tempSave->end =$eventos_usuarios->end;
-            $eventos_empleado_tempSave->tipo_ev =$eventos_usuarios->tipo;
-             $eventos_empleado_tempSave->calendario_calen_id =$idcalendario;
-            $eventos_empleado_tempSave->save();
-        }
-        }
+            ->where('calendario_calen_id', '=', $idcalendario)->get();
+        if ($eventos_empleado_tempCop->isEmpty()) {
+            $eventos_usuario = eventos_usuario::where('users_id', '=', Auth::user()->id)
+                ->where('id_calendario', '=', $idcalendario)->get();
+            if ($eventos_usuario) {
+                foreach ($eventos_usuario as $eventos_usuarios) {
+                    $eventos_empleado_tempSave = new eventos_empleado_temp();
+                    $eventos_empleado_tempSave->users_id = Auth::user()->id;
+                    $eventos_empleado_tempSave->title = $eventos_usuarios->title;
+                    $eventos_empleado_tempSave->color = $eventos_usuarios->color;
+                    $eventos_empleado_tempSave->textColor = $eventos_usuarios->textColor;
+                    $eventos_empleado_tempSave->start = $eventos_usuarios->start;
+                    $eventos_empleado_tempSave->end = $eventos_usuarios->end;
+                    $eventos_empleado_tempSave->tipo_ev = $eventos_usuarios->tipo;
+                    $eventos_empleado_tempSave->calendario_calen_id = $idcalendario;
+                    $eventos_empleado_tempSave->save();
+                }
+            }
         }
 
 
         $eventos_empleado_temp = DB::table('eventos_empleado_temp as evt')
-                ->select(['evEmpleadoT_id as id','title','color','textColor','start','end','tipo_ev','users_id','calendario_calen_id'])
-                ->where('evt.users_id', '=', Auth::user()->id)
-                ->where('evt.calendario_calen_id','=',$idcalendario)
+            ->select(['evEmpleadoT_id as id', 'title', 'color', 'textColor', 'start', 'end', 'tipo_ev', 'users_id', 'calendario_calen_id'])
+            ->where('evt.users_id', '=', Auth::user()->id)
+            ->where('evt.calendario_calen_id', '=', $idcalendario)
 
-                ->get();
+            ->get();
 
         return $eventos_empleado_temp;
     }
-    public function storeCalendarioTem(Request $request){
+    public function storeCalendarioTem(Request $request)
+    {
         $eventos_empleado_tempSave = new eventos_empleado_temp();
         $eventos_empleado_tempSave->users_id = Auth::user()->id;
-        $eventos_empleado_tempSave->title =$request->get('title');
-        $eventos_empleado_tempSave->color =$request->get('color');
-        $eventos_empleado_tempSave->textColor =$request->get('textColor');
-        $eventos_empleado_tempSave->start =$request->get('start');
-        $eventos_empleado_tempSave->end =$request->get('end');
-        $eventos_empleado_tempSave->tipo_ev =$request->get('tipo');
-        $eventos_empleado_tempSave->calendario_calen_id =$request->get('id_calendario');
+        $eventos_empleado_tempSave->title = $request->get('title');
+        $eventos_empleado_tempSave->color = $request->get('color');
+        $eventos_empleado_tempSave->textColor = $request->get('textColor');
+        $eventos_empleado_tempSave->start = $request->get('start');
+        $eventos_empleado_tempSave->end = $request->get('end');
+        $eventos_empleado_tempSave->tipo_ev = $request->get('tipo');
+        $eventos_empleado_tempSave->calendario_calen_id = $request->get('id_calendario');
         $eventos_empleado_tempSave->save();
 
 
 
         $eventos_empleado_temp = DB::table('eventos_empleado_temp as evt')
-                ->select(['evEmpleadoT_id as id','title','color','textColor','start','end','tipo_ev','users_id','calendario_calen_id'])
-                ->where('evt.users_id', '=', Auth::user()->id)
-                ->where('evt.calendario_calen_id','=',$request->get('id_calendario'))
+            ->select(['evEmpleadoT_id as id', 'title', 'color', 'textColor', 'start', 'end', 'tipo_ev', 'users_id', 'calendario_calen_id'])
+            ->where('evt.users_id', '=', Auth::user()->id)
+            ->where('evt.calendario_calen_id', '=', $request->get('id_calendario'))
 
-                ->get();
+            ->get();
 
         return $eventos_empleado_temp;
-
     }
 
-    public function storeIncidTem(Request $request){
+    public function storeIncidTem(Request $request)
+    {
 
         $incidencia = new incidencias();
         $incidencia->inciden_descripcion =  $request->get('title');
-        $incidencia->inciden_descuento =$request->get('descuentoI');
+        $incidencia->inciden_descuento = $request->get('descuentoI');
         $incidencia->inciden_hora =  $request->get('horaIn');
         $incidencia->users_id = Auth::user()->id;
         $incidencia->save();
 
         $eventos_empleado_tempSave = new eventos_empleado_temp();
         $eventos_empleado_tempSave->users_id = Auth::user()->id;
-        $eventos_empleado_tempSave->title =$request->get('title');
-        $eventos_empleado_tempSave->color ='#9E9E9E';
-        $eventos_empleado_tempSave->textColor ='#313131';
-        $eventos_empleado_tempSave->start =$request->get('start');
-        $eventos_empleado_tempSave->end =$request->get('end');
+        $eventos_empleado_tempSave->title = $request->get('title');
+        $eventos_empleado_tempSave->color = '#9E9E9E';
+        $eventos_empleado_tempSave->textColor = '#313131';
+        $eventos_empleado_tempSave->start = $request->get('start');
+        $eventos_empleado_tempSave->end = $request->get('end');
         $eventos_empleado_tempSave->tipo_ev = $incidencia->inciden_id;
-        $eventos_empleado_tempSave->calendario_calen_id =$request->get('id_calendario');
+        $eventos_empleado_tempSave->calendario_calen_id = $request->get('id_calendario');
         $eventos_empleado_tempSave->save();
 
 
 
         $eventos_empleado_temp = DB::table('eventos_empleado_temp as evt')
-                ->select(['evEmpleadoT_id as id','title','color','textColor','start','end','tipo_ev','users_id','calendario_calen_id'])
-                ->where('evt.users_id', '=', Auth::user()->id)
-                ->where('evt.calendario_calen_id','=',$request->get('id_calendario'))
+            ->select(['evEmpleadoT_id as id', 'title', 'color', 'textColor', 'start', 'end', 'tipo_ev', 'users_id', 'calendario_calen_id'])
+            ->where('evt.users_id', '=', Auth::user()->id)
+            ->where('evt.calendario_calen_id', '=', $request->get('id_calendario'))
 
-                ->get();
+            ->get();
 
         return $eventos_empleado_temp;
-
     }
-    public function vaciarcalend(){
+    public function vaciarcalend()
+    {
         DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
-        ->delete();
+            ->delete();
     }
-    public function vaciarcalendId(Request $request){
+    public function vaciarcalendId(Request $request)
+    {
         DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
-        ->where('calendario_calen_id','=',$request->get('idca'))
+            ->where('calendario_calen_id', '=', $request->get('idca'))
 
-        ->delete();
+            ->delete();
     }
-    public function registrarHorario(Request $request){
+    public function registrarHorario(Request $request)
+    {
         $sobretiempo = $request->sobretiempo;
 
         $descripcion = $request->descripcion;
@@ -885,234 +892,238 @@ class EmpleadoController extends Controller
             $eventos_empleado_tempSave->color = '#ffffff';
             $eventos_empleado_tempSave->textColor = '111111';
             $eventos_empleado_tempSave->users_id = Auth::user()->id;
-            $eventos_empleado_tempSave->tipo_ev =5;
+            $eventos_empleado_tempSave->tipo_ev = 5;
             $eventos_empleado_tempSave->id_horario = $idhorar;
             $eventos_empleado_tempSave->calendario_calen_id = $idca;
             $eventos_empleado_tempSave->save();
             $arrayeve->push($eventos_empleado_tempSave);
         }
-
     }
 
-    public function vercalendarioEmpl(Request $request){
-                $horario_empleado = DB::table('horario_empleado as he')
-                ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end'])
-                /*  ->where('users_id', '=', Auth::user()->id) */
-                 ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
-                 ->where('he.empleado_emple_id', '=', $request->get('idempleado'));
-
-                 $incidencias = DB::table('incidencias as i')
-                ->select(['idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descuento as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
-                ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
-                ->where('idi.id_empleado', '=', $request->get('idempleado'))
-                ->union($horario_empleado);
-
-
-                  $eventos_empleado= DB::table('eventos_empleado')
-                ->select(['evEmpleado_id as id','title','color','textColor','start','end'])
-                ->where('id_empleado','=',$request->get('idempleado'))
-                ->union($incidencias)
-                ->get();
-
-                return $eventos_empleado;
-
-    }
-
-    public function calendarioEditar(Request $request){
-
+    public function vercalendarioEmpl(Request $request)
+    {
         $horario_empleado = DB::table('horario_empleado as he')
-                ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end'])
-                /*  ->where('users_id', '=', Auth::user()->id) */
-                 ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
-                 ->where('he.empleado_emple_id', '=', $request->get('idempleado'));
-
-                 $incidencias = DB::table('incidencias as i')
-                ->select(['idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descuento as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
-                ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
-                ->where('idi.id_empleado', '=', $request->get('idempleado'))
-                ->union($horario_empleado);
-
-
-                  $eventos_empleado= DB::table('eventos_empleado')
-                ->select(['evEmpleado_id as id','title','color','textColor','start','end'])
-                ->where('id_empleado','=',$request->get('idempleado'))
-                ->union($incidencias)
-                ->get();
-
-                if($eventos_empleado->isEmpty()){
-                    return 1;
-                } else{
-                    return $eventos_empleado;
-                }
-
-
-    }
-
-    public function eliminarEte(Request $request){
-        $ideve = $request->ideve;
-        $eventos_empleado_temp = eventos_empleado_temp::where('evEmpleadoT_id', '=', $ideve)->delete();
-
-    }
-
-//////////////////77
- public function calendarioEmp(Request $request){
-    $idcalendario=$request->idcalendario;
-    $idempleado=$request->idempleado;
-
-    $eventos_empleado = eventos_empleado::where('id_empleado', '=', $idempleado)
-    ->get();
-
-    if($eventos_empleado->isEmpty()){
-      $eventos_usuario = eventos_usuario::where('users_id', '=', Auth::user()->id)
-    ->where('id_calendario','=',$idcalendario) ->get();
-    if($eventos_usuario){
-      foreach ($eventos_usuario as $eventos_usuarios) {
-        $eventos_empleado_r = new eventos_empleado();
-        $eventos_empleado_r->id_empleado = $idempleado;
-        $eventos_empleado_r->title =$eventos_usuarios->title;
-        $eventos_empleado_r->color =$eventos_usuarios->color;
-        $eventos_empleado_r->textColor =$eventos_usuarios->textColor;
-        $eventos_empleado_r->start =$eventos_usuarios->start;
-        $eventos_empleado_r->end =$eventos_usuarios->end;
-        $eventos_empleado_r->tipo_ev =$eventos_usuarios->tipo;
-        $eventos_empleado_r->save();
-       }
-    }
-    }
-
-
-
-            $horario_empleado = DB::table('horario_empleado as he')
             ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end'])
             /*  ->where('users_id', '=', Auth::user()->id) */
-             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
-             ->where('he.empleado_emple_id', '=', $idempleado);
+            ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+            ->where('he.empleado_emple_id', '=', $request->get('idempleado'));
 
-             $incidencias = DB::table('incidencias as i')
+        $incidencias = DB::table('incidencias as i')
+            ->select(['idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descuento as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
+            ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
+            ->where('idi.id_empleado', '=', $request->get('idempleado'))
+            ->union($horario_empleado);
+
+
+        $eventos_empleado = DB::table('eventos_empleado')
+            ->select(['evEmpleado_id as id', 'title', 'color', 'textColor', 'start', 'end'])
+            ->where('id_empleado', '=', $request->get('idempleado'))
+            ->union($incidencias)
+            ->get();
+
+        return $eventos_empleado;
+    }
+
+    public function calendarioEditar(Request $request)
+    {
+
+        $horario_empleado = DB::table('horario_empleado as he')
+            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end'])
+            /*  ->where('users_id', '=', Auth::user()->id) */
+            ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+            ->where('he.empleado_emple_id', '=', $request->get('idempleado'));
+
+        $incidencias = DB::table('incidencias as i')
+            ->select(['idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descuento as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
+            ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
+            ->where('idi.id_empleado', '=', $request->get('idempleado'))
+            ->union($horario_empleado);
+
+
+        $eventos_empleado = DB::table('eventos_empleado')
+            ->select(['evEmpleado_id as id', 'title', 'color', 'textColor', 'start', 'end'])
+            ->where('id_empleado', '=', $request->get('idempleado'))
+            ->union($incidencias)
+            ->get();
+
+        if ($eventos_empleado->isEmpty()) {
+            return 1;
+        } else {
+            return $eventos_empleado;
+        }
+    }
+
+    public function eliminarEte(Request $request)
+    {
+        $ideve = $request->ideve;
+        $eventos_empleado_temp = eventos_empleado_temp::where('evEmpleadoT_id', '=', $ideve)->delete();
+    }
+
+    //////////////////77
+    public function calendarioEmp(Request $request)
+    {
+        $idcalendario = $request->idcalendario;
+        $idempleado = $request->idempleado;
+
+        $eventos_empleado = eventos_empleado::where('id_empleado', '=', $idempleado)
+            ->get();
+
+        if ($eventos_empleado->isEmpty()) {
+            $eventos_usuario = eventos_usuario::where('users_id', '=', Auth::user()->id)
+                ->where('id_calendario', '=', $idcalendario)->get();
+            if ($eventos_usuario) {
+                foreach ($eventos_usuario as $eventos_usuarios) {
+                    $eventos_empleado_r = new eventos_empleado();
+                    $eventos_empleado_r->id_empleado = $idempleado;
+                    $eventos_empleado_r->title = $eventos_usuarios->title;
+                    $eventos_empleado_r->color = $eventos_usuarios->color;
+                    $eventos_empleado_r->textColor = $eventos_usuarios->textColor;
+                    $eventos_empleado_r->start = $eventos_usuarios->start;
+                    $eventos_empleado_r->end = $eventos_usuarios->end;
+                    $eventos_empleado_r->tipo_ev = $eventos_usuarios->tipo;
+                    $eventos_empleado_r->save();
+                }
+            }
+        }
+
+
+
+        $horario_empleado = DB::table('horario_empleado as he')
+            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end'])
+            /*  ->where('users_id', '=', Auth::user()->id) */
+            ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+            ->where('he.empleado_emple_id', '=', $idempleado);
+
+        $incidencias = DB::table('incidencias as i')
             ->select(['idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descuento as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
             ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
             ->where('idi.id_empleado', '=', $idempleado)
             ->union($horario_empleado);
 
 
-              $eventos_empleado= DB::table('eventos_empleado')
-            ->select(['evEmpleado_id as id','title','color','textColor','start','end'])
-            ->where('id_empleado','=',$idempleado)
+        $eventos_empleado = DB::table('eventos_empleado')
+            ->select(['evEmpleado_id as id', 'title', 'color', 'textColor', 'start', 'end'])
+            ->where('id_empleado', '=', $idempleado)
             ->union($incidencias)
             ->get();
 
 
-    return $eventos_empleado;
- }
- public function vaciarcalendempleado(Request $request){
-    $idempleado=$request->idempleado;
-    DB::table('eventos_empleado')->where('id_empleado', '=', $idempleado)
-    ->delete();
-}
-
-public function storeCalendarioempleado(Request $request){
-    $eventos_empleado = new eventos_empleado();
-
-    $eventos_empleado->title =$request->get('title');
-    $eventos_empleado->color =$request->get('color');
-    $eventos_empleado->textColor =$request->get('textColor');
-    $eventos_empleado->start =$request->get('start');
-    $eventos_empleado->end =$request->get('end');
-    $eventos_empleado->tipo_ev =$request->get('tipo');
-    $eventos_empleado->id_empleado =$request->get('idempleado');
-    $eventos_empleado->save();
-
-
-}
-public function storeIncidempleado(Request $request){
-
-    $incidencia = new incidencias();
-    $incidencia->inciden_descripcion =  $request->get('title');
-    $incidencia->inciden_descuento =$request->get('descuentoI');
-    $incidencia->inciden_hora =  $request->get('horaIn');
-    $incidencia->users_id = Auth::user()->id;
-    $incidencia->save();
-
-    $incidencia_dias = new incidencia_dias();
-    $incidencia_dias->id_incidencia = $incidencia->inciden_id;
-    $incidencia_dias->inciden_dias_fechaI =$request->get('start');
-    $incidencia_dias->inciden_dias_fechaF =$request->get('end');
-    $incidencia_dias->id_empleado =$request->get('idempleado');
-
-    $incidencia_dias->save();
-
-
-}
-public function guardarhorarioempleado(Request $request)
-{
-    $datafecha = $request->fechasArray;
-    $horas = $request->hora;
-    $idhorar = $request->idhorar;
-    $idempleado = $request->idempleado;
-    $arrayeve = collect();
-    foreach ($datafecha as $datafechas) {
-        $horario_dias = new horario_dias();
-        $horario_dias->title = $horas;
-        $horario_dias->start = $datafechas;
-        $horario_dias->color = '#ffffff';
-        $horario_dias->textColor = '111111';
-        $horario_dias->users_id = Auth::user()->id;
-        $horario_dias->save();
-        $arrayeve->push($horario_dias);
-
-        $horario_empleados=new horario_empleado();
-        $horario_empleados->horario_horario_id=$idhorar;
-        $horario_empleados->empleado_emple_id=$idempleado;
-        $horario_empleados->horario_dias_id=$horario_dias->id;
-        $horario_empleados->save();
+        return $eventos_empleado;
+    }
+    public function vaciarcalendempleado(Request $request)
+    {
+        $idempleado = $request->idempleado;
+        DB::table('eventos_empleado')->where('id_empleado', '=', $idempleado)
+            ->delete();
     }
 
-}
+    public function storeCalendarioempleado(Request $request)
+    {
+        $eventos_empleado = new eventos_empleado();
 
-public function vaciardfTem(){
-    DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
-    ->where('color', '=', '#e6bdbd')
-    ->where('textColor', '=','#945353')
-    ->delete();
-}
+        $eventos_empleado->title = $request->get('title');
+        $eventos_empleado->color = $request->get('color');
+        $eventos_empleado->textColor = $request->get('textColor');
+        $eventos_empleado->start = $request->get('start');
+        $eventos_empleado->end = $request->get('end');
+        $eventos_empleado->tipo_ev = $request->get('tipo');
+        $eventos_empleado->id_empleado = $request->get('idempleado');
+        $eventos_empleado->save();
+    }
+    public function storeIncidempleado(Request $request)
+    {
 
-public function vaciardlabTem(){
-    DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
-    ->where('color', '=', '#dfe6f2')
-    ->where('textColor', '=','#0b1b29')
-    ->delete();
-}
-public function vaciardNlabTem(){
-    DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
-    ->where('color', '=', '#a34141')
-    ->where('textColor', '=','#ffffff')
-    ->delete();
-}
-public function vaciardIncidTem(){
-    DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
-    ->where('color', '=', '#9E9E9E')
-    ->where('textColor', '=','#313131')
-    ->delete();
-}
-public function eliminareventBD(Request $request){
-    $ideve = $request->ideve;
-    $eventos_empleado = eventos_empleado::where('evEmpleado_id', '=', $ideve)->delete();
+        $incidencia = new incidencias();
+        $incidencia->inciden_descripcion =  $request->get('title');
+        $incidencia->inciden_descuento = $request->get('descuentoI');
+        $incidencia->inciden_hora =  $request->get('horaIn');
+        $incidencia->users_id = Auth::user()->id;
+        $incidencia->save();
 
-}
+        $incidencia_dias = new incidencia_dias();
+        $incidencia_dias->id_incidencia = $incidencia->inciden_id;
+        $incidencia_dias->inciden_dias_fechaI = $request->get('start');
+        $incidencia_dias->inciden_dias_fechaF = $request->get('end');
+        $incidencia_dias->id_empleado = $request->get('idempleado');
 
-public function eliminarHorariosEdit(Request $request){
-    $ideve = $request->ideve;
-    $horario_empleado1 = horario_empleado::where('horarioEmp_id', '=', $ideve)->delete();
-}
-public function eliminarInciEdit(Request $request){
-    $ideve = $request->ideve;
-    $incidencia_dias = incidencia_dias::where('inciden_dias_id', '=', $ideve)->delete();
-}
+        $incidencia_dias->save();
+    }
+    public function guardarhorarioempleado(Request $request)
+    {
+        $datafecha = $request->fechasArray;
+        $horas = $request->hora;
+        $idhorar = $request->idhorar;
+        $idempleado = $request->idempleado;
+        $arrayeve = collect();
+        foreach ($datafecha as $datafechas) {
+            $horario_dias = new horario_dias();
+            $horario_dias->title = $horas;
+            $horario_dias->start = $datafechas;
+            $horario_dias->color = '#ffffff';
+            $horario_dias->textColor = '111111';
+            $horario_dias->users_id = Auth::user()->id;
+            $horario_dias->save();
+            $arrayeve->push($horario_dias);
 
-public function vaciardescansoTem(){
-    DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
-    ->where('color', '=', '#4673a0')
-    ->where('textColor', '=','#ffffff')
-    ->delete();
-}
+            $horario_empleados = new horario_empleado();
+            $horario_empleados->horario_horario_id = $idhorar;
+            $horario_empleados->empleado_emple_id = $idempleado;
+            $horario_empleados->horario_dias_id = $horario_dias->id;
+            $horario_empleados->save();
+        }
+    }
+
+    public function vaciardfTem()
+    {
+        DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
+            ->where('color', '=', '#e6bdbd')
+            ->where('textColor', '=', '#945353')
+            ->delete();
+    }
+
+    public function vaciardlabTem()
+    {
+        DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
+            ->where('color', '=', '#dfe6f2')
+            ->where('textColor', '=', '#0b1b29')
+            ->delete();
+    }
+    public function vaciardNlabTem()
+    {
+        DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
+            ->where('color', '=', '#a34141')
+            ->where('textColor', '=', '#ffffff')
+            ->delete();
+    }
+    public function vaciardIncidTem()
+    {
+        DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
+            ->where('color', '=', '#9E9E9E')
+            ->where('textColor', '=', '#313131')
+            ->delete();
+    }
+    public function eliminareventBD(Request $request)
+    {
+        $ideve = $request->ideve;
+        $eventos_empleado = eventos_empleado::where('evEmpleado_id', '=', $ideve)->delete();
+    }
+
+    public function eliminarHorariosEdit(Request $request)
+    {
+        $ideve = $request->ideve;
+        $horario_empleado1 = horario_empleado::where('horarioEmp_id', '=', $ideve)->delete();
+    }
+    public function eliminarInciEdit(Request $request)
+    {
+        $ideve = $request->ideve;
+        $incidencia_dias = incidencia_dias::where('inciden_dias_id', '=', $ideve)->delete();
+    }
+
+    public function vaciardescansoTem()
+    {
+        DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
+            ->where('color', '=', '#4673a0')
+            ->where('textColor', '=', '#ffffff')
+            ->delete();
+    }
 }
