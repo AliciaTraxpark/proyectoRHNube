@@ -2707,7 +2707,7 @@ $('#cerrarModalEmpleado').click(function () {
     $('input[type="file"]').val("");
     $('input[type="email"]').val("");
     $('input[type="number"]').val("");
-    $('select').val("");
+    $('#form-registrar :select').val("");
     $("#form-registrar :input").prop('disabled', true);
     $('#documento').attr('disabled', false);
     $('#cerrarMoadalEmpleado').attr('disabled', false);
