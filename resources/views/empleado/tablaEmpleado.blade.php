@@ -273,9 +273,9 @@
                                     Detalle de Plataforma Windows
                                 </h6>
                                 <div class="row py-1">
-                                    <div class="col-xl-6 col-sm-12 text-center">
+                                    <div class="col-xl-5 col-sm-12 text-center">
                                         <!-- stat 1 -->
-                                        <div class="media p-4">
+                                        <div class="media p-2">
                                             <div class="media-body">
                                                 <img id="imgsmEmpleado"
                                                     src="{{URL::asset('admin/assets//images/users/avatar-7.png') }}"
@@ -285,15 +285,22 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xl-6 col-sm-12 text-center">
+                                    <div class="col-xl-4 col-sm-12 text-center">
                                         <!-- stat 2 -->
-                                        <div class="media p-4">
+                                        <div class="media p-2">
                                             <div class="media-body mt-3">
                                                 <span class="text-muted" style="font-weight: 600">Total
                                                     Dispositivos:</span>
                                                 <span class="text-muted" id="totalPC"></span>
-                                                <!--<img src="{{asset('landing/images/laptop.svg')}}" height="20"
-                                                    class="mr-2" alt="" />-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-sm-12 text-center">
+                                        <!-- stat 2 -->
+                                        <div class="media p-2">
+                                            <div class="media-body mt-3">
+                                                <span class="text-muted" style="font-weight: 600">Captura(min):</span>
+                                                <span class="text-muted" id="totalCorteCap"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -876,7 +883,8 @@
                     verContainer.append(verDetalle);
                     verContainerE.append(verDetalleE);
                 }
-
+                $('#totalCorteCap').text(data[0].corteCaptura);
+                //VER
                 $('#v_tipoDocV').val(data[0].tipoDoc_descripcion);
                 $('#v_apPaternoV').val(data[0].perso_apPaterno);
                 $('#v_direccionV').val(data[0].perso_direccion);
