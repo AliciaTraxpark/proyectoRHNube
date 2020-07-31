@@ -390,7 +390,7 @@ background-color: #ffffff !important;
                         <div class="col-md-11" id="calendar1">
 
                         </div>
-                        
+
               <div class="card-footer">
                 <div class="row">
                 </div>
@@ -449,8 +449,8 @@ background-color: #ffffff !important;
 <script src="{{asset('landing/js/SeleccionarPais.js')}}"></script>
 
 <!-- Vendor js -->
-<script src="{{asset('admin/assets/js/vendor.min.js')}}"></script>
-
+{{-- <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script>
+ --}}
 <!-- plugin js -->
 <script src="{{asset('admin/assets/libs/moment/moment.min.js')}}"></script>
 <script src="{{asset('admin/packages/core/main.js')}}"></script>

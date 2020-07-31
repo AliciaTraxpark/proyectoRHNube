@@ -184,8 +184,8 @@
                     <input type="hidden" id="pruebaStar_ed">
                     <div class="col-xl-12">
                         <div class="row">
-
-                        <div id="calendar_ed" style="display: none" class="col-xl-10"></div>
+                            <div class="col-xl-12" id="verinfo" style="display: none"><br><label style="font-weight: 600;color: #03345f">Seleccione dias para asignar a dias laborables o no laborales:</label></div>
+                        <div id="calendar_ed" style="display: none" class="col-xl-10"> </div>
                         <div class="col-xl-2" id="calendar_ed_bt" style="display: none">
                             <div class="col-md-10" style="top:86px">
                                 <div class="row">
@@ -221,7 +221,7 @@
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
-
+<script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
 
 <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
@@ -232,6 +232,7 @@
 <script src="{{asset('admin/packages/daygrid/main.js')}}"></script>
 <script src="{{asset('admin/packages/timegrid/main.js')}}"></script>
 <script src="{{asset('admin/packages/interaction/main.js')}}"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
 <script src="{{asset('landing/js/diasLaborales.js')}}"></script>

@@ -22,9 +22,9 @@ function actualizarDatos() {
             $('#pagWeb').val(data.organi_pagWeb);
             $('#organizacion').val(data.organi_tipo);
             if (data.foto != null) {
-                $('#preview').attr("src", "fotosUser/" + data.foto);
-                $('#imgsm').attr("src", "fotosUser/" + data.foto);
-                $('#imgxs').attr("src", "fotosUser/" + data.foto);
+                $('#preview').attr("src", "/fotosUser/" + data.foto);
+                $('#imgsm').attr("src", "/fotosUser/" + data.foto);
+                $('#imgxs').attr("src", "/fotosUser/" + data.foto);
             }
             $('#depE').val(data.organi_departamento);
             onSelectDepartamentoOrgani('#depE').then(function () {
