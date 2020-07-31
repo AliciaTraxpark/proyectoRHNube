@@ -644,8 +644,10 @@ class EmpleadoController extends Controller
 
         $horario_empleado = horario_empleado::whereIn('empleado_emple_id', explode(",", $ids))->get();
         $horario_empleado->each->delete();
+        $horario_empleado = eventos_empleado::whereIn('id_empleado', explode(",", $ids))->get();
+        $horario_empleado->each->delete();
 
-        $incidencias = incidencias::whereIn('emple_id', explode(",", $ids))->get();
+        $incidencias = incidencia_dias::whereIn('id_empleado', explode(",", $ids))->get();
         $incidencias->each->delete();
 
         $licencia_empleado = licencia_empleado::whereIn('idEmpleado', explode(",", $ids))->get();
