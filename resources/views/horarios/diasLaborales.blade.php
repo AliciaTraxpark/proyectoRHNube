@@ -145,11 +145,11 @@
                 <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                 <div class="row">
 
-                    <div class="col-md-6">
-                        <div class="col-xl-8 col-sm-8">
+                    <div class="col-md-8">
+                        <div class="col-xl-12 col-sm-8">
                             <div class="form-group mt-3 mt-sm-0">
                                 <label>Empleado</label>
-                                <select id="idempleado" data-plugin="customselect" class="form-control form-control-sm" data-placeholder="Seleccione empleado">
+                                <select id="idempleado" data-plugin="customselect" multiple class="form-control form-control-sm" data-placeholder="Seleccione empleado">
                                     <option></option>
                                     @foreach ($empleado as  $empleados)
                                       <option value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</option>
@@ -158,7 +158,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 text-right" id="btnLabo" style="display: none"><br><br>
+                    <div class="col-md-4 text-right" id="btnLabo" style="display: none"><br><br>
                         <button type="button"
                         style=" max-width: 18em!important;"
                         class="btn btn-secondary btn-sm"

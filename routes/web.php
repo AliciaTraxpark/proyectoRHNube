@@ -256,3 +256,7 @@ Route::post('editarContrato', 'editarAtributosController@editarContrato');
 //*************************************************************************/
 //ESTADO LICENCIA
 Route::get('cambiarEstadoLicencia', 'detallesActivacionController@cambiarEstadoLicencia');
+
+//laborales
+Route::post('/dias/storeCalendario', 'diasLaborablesController@storeCalendario');
+Route::post('/dias/delete', 'diasLaborablesController@eliminarBD');
