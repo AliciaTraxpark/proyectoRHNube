@@ -2722,6 +2722,9 @@ $('#cerrarModalEmpleado').click(function () {
     $('#validFechaN').hide();
     $('#validNombres').hide();
     $('#validGenero').hide();
+    $('#validCel').hide();
+    $('#emailR').hide();
+    $('#validCorreo').hide();
     $('#detalleContrato').hide();
     $('#editarArea').hide();
     $('#form-registrar').modal('toggle');
@@ -3061,7 +3064,7 @@ function vaciardFeria() {
     });
 }
 /////////////////
-function vaciarddescanso(){
+function vaciarddescanso() {
     bootbox.confirm({
         message: "¿Esta seguro que desea eliminar dias de descanso del calendario?",
         buttons: {
@@ -3078,8 +3081,7 @@ function vaciarddescanso(){
             if (result == true) {
                 $.get("/empleado/vaciardescansoTem", {}, function (data, status) {
                     calendario();
-                    calendario2();
-                   ;
+                    calendario2();;
                 });
 
             }
@@ -3087,7 +3089,7 @@ function vaciarddescanso(){
     });
 }
 //////////////
-function vaciardlabTem(){
+function vaciardlabTem() {
     bootbox.confirm({
         message: "¿Esta seguro que desea eliminar dias laborales del calendario?",
         buttons: {
