@@ -3,7 +3,7 @@ $('#fecha').datetimepicker({
     format: 'yyyy-mm-dd',
     minView: 2,
     pickTime: false,
-    showButtonPanel: true
+    autoclose: true
 });
 
 function acumular60(suma, acumulado) {
@@ -192,7 +192,6 @@ function onSelectFechas() {
                 }, {
                     extend: "pdfHtml5",
                     text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
-                    orientation: 'landscape',
                     pageSize: 'LEGAL',
                     title: 'RH SOLUTION REPORTE SEMANAL'
                 }],
@@ -214,6 +213,7 @@ function onSelectFechas() {
             grafico = new Chart(mostrar, {
                 type: 'bar',
                 data: chartdata,
+                theme: "light2",
                 options: {
                     responsive: true,
                     scales: {
@@ -233,12 +233,12 @@ function onSelectFechas() {
         error: function (data) {}
     })
 }
+
 $(function () {
     $('#fecha').on('change.dp', function (e) {
         value = $('#fecha').val();
         firstDate = moment(value, 'YYYY-MM-DD').day(0).format('YYYY-MM-DD');
         lastDate = moment(value, 'YYYY-MM-DD').day(6).format('YYYY-MM-DD');
-        $('#fecha').datetimepicker('hide');
         $('#fecha').val(firstDate + "   a   " + lastDate);
         onSelectFechas();
     });

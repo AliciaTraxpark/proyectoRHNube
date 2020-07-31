@@ -12,8 +12,8 @@
     URL::asset('admin/assets/libs/bootstrap-datetimepicker-master/bootstrap-datetimepicker.css')
     }}" rel="stylesheet" type="text/css" />
 <link href="{{
-        URL::asset('admin/assets/libs/bootstrap-datetimepicker-master/bootstrap-datetimepicker.min.css')
-        }}" rel="stylesheet" type="text/css" />
+    URL::asset('admin/assets/libs/bootstrap-datetimepicker-master/bootstrap-datetimepicker.min.css')
+    }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/chart/Chart.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
@@ -43,8 +43,11 @@
         display: none !important;
     }
 
-    .bootstrap-datetimepicker-widget .datepicker-days table tbody tr:hover {
-        background-color: #eee;
+    .datepicker,
+    .table-condensed {
+        width: 300px !important;
+        height: 300px !important;
+        font-size: small !important;
     }
 </style>
 <div class="row">
