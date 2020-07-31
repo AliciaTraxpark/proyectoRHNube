@@ -1,4 +1,4 @@
-$('#guardarFoto').hide();
+$('#rowAlert').hide();
 actualizarDatos();
 $('#fechaN').combodate({
     yearDescending: false,
@@ -239,7 +239,7 @@ $('input[type="file"]').change(function (e) {
         document.getElementById("preview").src = e.target.result;
     };
     reader.readAsDataURL(this.files[0]);
-    $('#guardarFoto').show();
+    $('#rowAlert').show();
 });
 $('#guardarFoto').on("click", function () {
     console.log($('.file').prop('files')[0]);
@@ -258,7 +258,7 @@ $('#guardarFoto').on("click", function () {
         },
         success: function (data) {
             console.log(data);
-            $('#guardarFoto').hide();
+            $('#rowAlert').hide();
             $('#preview').attr("src", "fotosUser/" + data[0].foto);
             $('#imgsm').attr("src", "fotosUser/" + data[0].foto);
             $('#imgxs').attr("src", "fotosUser/" + data[0].foto);
