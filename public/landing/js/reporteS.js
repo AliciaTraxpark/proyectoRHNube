@@ -1,8 +1,9 @@
 $('#fecha').datetimepicker({
     language: 'es',
     format: 'yyyy-mm-dd',
-    minView: 3,
+    minView: 2,
     pickTime: false,
+    autoclose: true
 });
 
 function acumular60(suma, acumulado) {
@@ -213,6 +214,7 @@ function onSelectFechas() {
             grafico = new Chart(mostrar, {
                 type: 'bar',
                 data: chartdata,
+                theme: "light2",
                 options: {
                     responsive: true,
                     scales: {
