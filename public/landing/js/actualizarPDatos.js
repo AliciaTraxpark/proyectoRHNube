@@ -25,6 +25,7 @@ function actualizarDatos() {
                 $('#preview').attr("src", "/fotosUser/" + data.foto);
                 $('#imgsm').attr("src", "/fotosUser/" + data.foto);
                 $('#imgxs').attr("src", "/fotosUser/" + data.foto);
+                $('#imgxs2').attr("src", "/fotosUser/" + data.foto);
             }
             $('#depE').val(data.organi_departamento);
             onSelectDepartamentoOrgani('#depE').then(function () {
