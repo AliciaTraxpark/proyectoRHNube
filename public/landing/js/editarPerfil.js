@@ -262,6 +262,7 @@ $('#guardarFoto').on("click", function () {
             $('#preview').attr("src", "fotosUser/" + data[0].foto);
             $('#imgsm').attr("src", "fotosUser/" + data[0].foto);
             $('#imgxs').attr("src", "fotosUser/" + data[0].foto);
+            $('#imgxs2').attr("src", "fotosUser/" + data[0].foto);
             $.notify({
                 message: "\nPerfil Editado\n",
                 icon: 'admin/images/checked.svg'
