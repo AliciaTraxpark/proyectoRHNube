@@ -116,7 +116,37 @@ $(document).ready(function () {
                     console.log(regex.test($('#celular').val()));
                 }
             }
-            console.log(isStepValid)
+            if (isStepValid == true) {
+                objEmpleado = datosPersona("POST");
+                enviarEmpleado('', objEmpleado);
+            }
+        }
+        if (stepnumber == 1) {
+            if (isStepValid == true) {
+                idE = $('#idEmpleado').val();
+                objEmpleado = datosEmpresaEmpleado("POST");
+                enviarEmpresarialEmpleado('/' + idE, objEmpleado);
+            }
+        }
+        if (stepnumber == 2) {
+            if (isStepValid == true) {
+                idE = $('#idEmpleado').val();
+                enviarFotoEmpleado('/' + idE);
+            }
+        }
+        if (stepnumber == 3) {
+            if (isStepValid == true) {
+                idE = $('#idEmpleado').val();
+                objEmpleado = datosCalendarioEmpleado("POST");
+                enviarCalendarioEmpleado('/' + idE, objEmpleado);
+            }
+        }
+        if (stepnumber == 4) {
+            if (isStepValid == true) {
+                idE = $('#idEmpleado').val();
+                objEmpleado = datosHorarioEmpleado("POST");
+                enviarHorarioEmpleado('/' + idE, objEmpleado);
+            }
         }
         return isStepValid;
 
@@ -192,7 +222,6 @@ $(document).ready(function () {
                     console.log(regex.test($('#v_celular').val()));
                 }
             }
-            console.log(isStepValid)
         }
         return isStepValid;
     }
