@@ -1008,6 +1008,7 @@ body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-foote
                                         <div id="sw-default-step-1" class="setup-content">
                                             <div class="row">
                                                 <div class="col-4">
+                                                    <input style="display: none;" name="idEmpleado" id="idEmpleado">
                                                     <div class="form-group">
                                                         <label for="sw-default">Tipo Documento</label>
                                                         <span id="validDocumento" style="color: red;">*Campo

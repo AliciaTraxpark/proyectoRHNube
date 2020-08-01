@@ -9,10 +9,10 @@ function actualizarDatos() {
         success: function (data) {
             $('#id').val(data.id);
             $('#nombre').val(data.perso_nombre);
-            $('#fechaN').val(data.perso_fechaNacimiento);
-            $('#apPaterno').val(data.perso_apPaterno);
+            $('#fechaNacimiento').val(data.perso_fechaNacimiento);
+            $('#apPaternoP').val(data.perso_apPaterno);
             $('#direccion').val(data.perso_direccion);
-            $('#apMaterno').val(data.perso_apMaterno);
+            $('#apMaternoP').val(data.perso_apMaterno);
             $('#genero').val(data.perso_sexo);
             $('#idE').val(data.id);
             $('#ruc').val(data.organi_ruc);
