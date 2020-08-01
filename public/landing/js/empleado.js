@@ -2425,7 +2425,7 @@ function enviarEmpleado(accion, objEmpleado) {
             $('input[type="date"]').val("");
             $('input[type="file"]').val("");
             $('input[type="email"]').val("");
-            $('select').val("");
+            $('#form-registrar :input').val("");
             $("#form-registrar :input").prop('disabled', true);
             $('#documento').attr('disabled', false);
             $('#cerrarMoadalEmpleado').attr('disabled', false);
@@ -2686,7 +2686,7 @@ $('#cerrarEd').click(function () {
     $('input[type="file"]').val("");
     $('input[type="email"]').val("");
     $('input[type="number"]').val("");
-    $('#form-ver :select').val("");
+    $('#form-ver :input').val("");
     $('#selectHorario_ed').val("Seleccionar horario");
     $('#codigoCelular').val("+51");
     limpiar();
@@ -2707,7 +2707,7 @@ $('#cerrarModalEmpleado').click(function () {
     $('input[type="file"]').val("");
     $('input[type="email"]').val("");
     $('input[type="number"]').val("");
-    $('#form-registrar :select').val("");
+    $('#form-registrar :input').val("");
     $("#form-registrar :input").prop('disabled', true);
     $('#documento').attr('disabled', false);
     $('#cerrarMoadalEmpleado').attr('disabled', false);
