@@ -446,6 +446,7 @@ function agregarcalendario(){
         selected: true
     }));
     calendario();
+    $('#agregarCalendarioN').modal('hide');
     },
     error: function () {}
 });
@@ -471,3 +472,7 @@ $('#selectCalendario').change(function (){
     }, 1400);
 
 })
+//////////////////////////
+function abrirNcalendario(){
+    $('#agregarCalendarioN').modal('show');
+}
