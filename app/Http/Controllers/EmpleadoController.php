@@ -287,6 +287,47 @@ class EmpleadoController extends Controller
         return response()->json($idempleado, 200);
     }
 
+    public function storeEmpleado(Request $request, $idE)
+    {
+        $objEmpleado = json_decode($request->get('objEmpleado'), true);
+        $empleado = Empleado::findOrFail($idE);
+        $persona = persona::findOrFail($empleado->emple_persona);
+        $persona->perso_nombre = $objEmpleado['nombres'];
+        $persona->perso_apPaterno = $objEmpleado['apPaterno'];
+        $persona->perso_apMaterno = $objEmpleado['apMaterno'];
+        $persona->perso_direccion = $objEmpleado['direccion'];
+        $persona->perso_fechaNacimiento = $objEmpleado['fechaN'];
+        $persona->perso_sexo = $objEmpleado['tipo'];
+        $persona->save();
+        $empleado->emple_tipoDoc = $objEmpleado['documento'];
+        $empleado->emple_nDoc = $objEmpleado['numDocumento'];
+        if ($objEmpleado['departamento'] != '') {
+            $empleado->emple_departamentoN = $objEmpleado['departamento'];
+            $empleado->emple_provinciaN = $objEmpleado['provincia'];
+            $empleado->emple_distritoN = $objEmpleado['distrito'];
+        }
+        if ($objEmpleado['dep'] != '') {
+            $empleado->emple_departamento = $objEmpleado['dep'];
+        }
+        if ($objEmpleado['prov'] != '') {
+            $empleado->emple_provincia = $objEmpleado['prov'];
+        }
+        if ($objEmpleado['dist'] != '') {
+            $empleado->emple_distrito = $objEmpleado['dist'];
+        }
+        $empleado->emple_celular = '';
+        if ($objEmpleado['celular'] != '') {
+            $empleado->emple_celular = $objEmpleado['celular'];
+        }
+        $empleado->emple_telefono = $objEmpleado['telefono'];
+        if ($objEmpleado['correo'] != '') {
+            $empleado->emple_Correo = $objEmpleado['correo'];
+        }
+        $empleado->emple_pasword = Hash::make($objEmpleado['numDocumento']);
+        $empleado->save();
+        return json_encode(array('status' => true));
+    }
+
     public function storeEmpresarial(Request $request, $idE)
     {
         $objEmpleado = json_decode($request->get('objEmpleado'), true);
@@ -758,10 +799,22 @@ class EmpleadoController extends Controller
         }
     }
 
+    public function comprobarNumDocumentoStore(Request $request)
+    {
+        $numDoc = $request->get('numDoc');
+        $empleado = $request->get('idE');
+        $empleado = DB::table('empleado as e')
+            ->where('e.emple_nDoc', '=', $numDoc)
+            ->where('e.emple_id', '!=', $empleado)
+            ->get()->first();
+        if ($empleado != null) {
+            return 1;
+        }
+    }
+
     public function comprobarCorreo(Request $request)
     {
         $email = $request->get('email');
-        //$empleado = empleado::where('emple_Correo', '=', $email)->first();
         $empleado = DB::table('empleado as e')
             ->where('emple_Correo', '=', $email)
             ->where('e.users_id', '=', Auth::user()->id)

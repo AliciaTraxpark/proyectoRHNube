@@ -9,34 +9,64 @@ $(document).ready(function () {
             } else {
                 //VALIDAR NUMERO DOCUMENTO
                 var numeroD = $('#numDocumento').val();
-                $.ajax({
-                    async: false,
-                    type: "GET",
-                    url: "numDoc",
-                    data: {
-                        numeroD: numeroD
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    statusCode: {
-                        /*401: function () {
-                            location.reload();
-                        },*/
-                        419: function () {
-                            location.reload();
+                idE = $('#idEmpleado').val();
+                if (idE == '') {
+                    $.ajax({
+                        async: false,
+                        type: "GET",
+                        url: "numDoc",
+                        data: {
+                            numeroD: numeroD
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        statusCode: {
+                            /*401: function () {
+                                location.reload();
+                            },*/
+                            419: function () {
+                                location.reload();
+                            }
+                        },
+                        success: function (data) {
+                            if (data == 1) {
+                                $('#numR').show();
+                                isStepValid = false;
+                                return false;
+                            } else {
+                                $('#numR').hide();
+                            }
                         }
-                    },
-                    success: function (data) {
-                        if (data == 1) {
-                            $('#numR').show();
-                            isStepValid = false;
-                            return false;
-                        } else {
-                            $('#numR').hide();
+                    });
+                } else {
+                    $.ajax({
+                        async: false,
+                        type: "GET",
+                        url: "numDocStore",
+                        data: {
+                            numeroD: numeroD,
+                            idE: idE
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        statusCode: {
+                            419: function () {
+                                location.reload();
+                            }
+                        },
+                        success: function (data) {
+                            if (data == 1) {
+                                $('#numR').show();
+                                isStepValid = false;
+                                return false;
+                            } else {
+                                $('#numR').hide();
+                            }
                         }
-                    }
-                });
+                    });
+                }
                 $('#validDocumento').hide();
             }
             if ($('#apPaterno').val() == "") {
@@ -73,34 +103,59 @@ $(document).ready(function () {
                 //VALIDAR CORREO
                 var email = $('#email').val();
                 $('#validCorreo').hide();
-                $.ajax({
-                    async: false,
-                    type: "GET",
-                    url: "email",
-                    data: {
-                        email: email
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    statusCode: {
-                        /*401: function () {
-                            location.reload();
-                        },*/
-                        419: function () {
-                            location.reload();
+                idE = $('#idEmpleado').val();
+                if (idE == '') {
+                    $.ajax({
+                        async: false,
+                        type: "GET",
+                        url: "email",
+                        data: {
+                            email: email
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        statusCode: {
+                            /*401: function () {
+                                location.reload();
+                            },*/
+                            419: function () {
+                                location.reload();
+                            }
+                        },
+                        success: function (data) {
+                            if (data == 1) {
+                                $('#emailR').show();
+                                isStepValid = false;
+                                return false;
+                            } else {
+                                $('#emailR').hide();
+                            }
                         }
-                    },
-                    success: function (data) {
-                        if (data == 1) {
-                            $('#emailR').show();
-                            isStepValid = false;
-                            return false;
-                        } else {
-                            $('#emailR').hide();
+                    });
+                } else {
+                    $.ajax({
+                        async: false,
+                        type: "GET",
+                        url: "emailE",
+                        data: {
+                            email: email,
+                            idE: idE
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function (data) {
+                            if (data == 1) {
+                                $('#v_emailR').show();
+                                isStepValid = false;
+                                return false;
+                            } else {
+                                $('#v_emailR').hide();
+                            }
                         }
-                    }
-                });
+                    });
+                }
             } else {
                 $('#validCorreo').show();
                 isStepValid = false;
@@ -117,8 +172,14 @@ $(document).ready(function () {
                 }
             }
             if (isStepValid == true) {
-                objEmpleado = datosPersona("POST");
-                enviarEmpleado('', objEmpleado);
+                idE = $('#idEmpleado').val();
+                if (idE == '') {
+                    objEmpleado = datosPersona("POST");
+                    enviarEmpleado('', objEmpleado);
+                } else {
+                    objEmpleado = datosPersona("POST");
+                    enviarEmpleadoStore('/' + idE, objEmpleado);
+                }
             }
         }
         if (stepnumber == 1) {
@@ -300,6 +361,7 @@ $(document).ready(function () {
         return validateSteps1(indice);
     });
     $('#smartwizard').on("showStep", function (e, anchorObject, stepNumber, stepDirection) {
+        console.log("ingreso");
         console.log(stepNumber);
         if (stepNumber == 5) {
             $('button.sw-btn-prev').hide();

@@ -78,6 +78,7 @@ Route::get('/eventos_usuario/store', 'EventosUsuarioController@store');
 
 //EMPLEADOS
 Route::post('/empleado/store', 'EmpleadoController@store');
+Route::post('/empleado/storeEmpleado/{idE}', 'EmpleadoController@storeEmpleado');
 Route::post('/empleado/storeEmpresarial/{idE}', 'EmpleadoController@storeEmpresarial');
 Route::post('/empleado/storeFoto/{idE}', 'EmpleadoController@storeFoto');
 Route::post('/empleado/storeCalendario/{idE}', 'EmpleadoController@storeCalendario');
@@ -92,6 +93,7 @@ Route::post('/empleado/eliminar', 'EmpleadoController@destroy');
 Route::post('/eliminarFoto/{v_id}', 'EmpleadoController@eliminarFoto');
 Route::delete('/eliminarEmpleados', 'EmpleadoController@deleteAll');
 Route::get('numDoc', 'EmpleadoController@comprobarNumD');
+Route::get('numDocStore', 'EmpleadoController@comprobarNumDocumentoStore');
 Route::get('email', 'EmpleadoController@comprobarCorreo');
 Route::get('emailE', 'EmpleadoController@comprobarCorreoEditar');
 Route::post('/empleado/calendarioEmpTemp', 'EmpleadoController@calendarioEmpTemp');

@@ -2427,6 +2427,53 @@ function enviarEmpleado(accion, objEmpleado) {
         error: function (data, errorThrown) {}
     });
 }
+//GUARDAR CALENDARIO EN GUARDAR EMPLEADO
+function enviarEmpleadoStore(accion, objEmpleado) {
+
+    var formData = new FormData();
+    formData.append('objEmpleado', JSON.stringify(objEmpleado));
+
+    $.ajax({
+
+        type: "POST",
+        url: "/empleado/storeEmpleado" + accion,
+        data: formData,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            $.notify({
+                message: "\nDatos Modificados.",
+                icon: 'admin/images/checked.svg'
+            }, {
+                element: $('#form-registrar'),
+                position: 'fixed',
+                icon_type: 'image',
+                newest_on_top: true,
+                delay: 5000,
+                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+        },
+        error: function (data, errorThrown) {}
+    });
+}
 //GUARDAR DATOS EMPRESARIAL EN GUARDAR EMPLEADO
 function datosEmpresaEmpleado(method) {
     nuevoEmpresa = {
@@ -2467,6 +2514,7 @@ function enviarEmpresarialEmpleado(accion, objEmpleado) {
             }
         },
         success: function (msg) {
+            $.notifyClose();
             $.notify({
                 message: "\nDatos Guardados.",
                 icon: 'admin/images/checked.svg'
@@ -2514,6 +2562,7 @@ function enviarFotoEmpleado(accion) {
             }
         },
         success: function (data) {
+            $.notifyClose();
             $.notify({
                 message: "\nDatos Guardados.",
                 icon: 'admin/images/checked.svg'
@@ -2536,7 +2585,6 @@ function enviarFotoEmpleado(accion) {
     });
 }
 
-//GUARDAR CALENDARIO EN GUARDAR EMPLEADO
 function datosCalendarioEmpleado(method) {
     nuevoCalendario = {
         idca: $('#selectCalendario').val(),
@@ -2568,6 +2616,7 @@ function enviarCalendarioEmpleado(accion, objEmpleado) {
             }
         },
         success: function (data) {
+            $.notifyClose();
             $.notify({
                 message: "\nDatos Guardados.",
                 icon: 'admin/images/checked.svg'
@@ -2621,6 +2670,7 @@ function enviarHorarioEmpleado(accion, objEmpleado) {
             }
         },
         success: function (data) {
+            $.notifyClose();
             $.notify({
                 message: "\nDatos Guardados.",
                 icon: 'admin/images/checked.svg'
@@ -2642,6 +2692,8 @@ function enviarHorarioEmpleado(accion, objEmpleado) {
         error: function (data, errorThrown) {}
     });
 }
+//EMPLEADO STOREEMPLEADO
+
 
 //EMPLEADO ACTUALIZAR
 $("#checkboxFechaIE").on("click", function () {
