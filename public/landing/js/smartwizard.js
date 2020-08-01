@@ -241,8 +241,37 @@ $(document).ready(function () {
             enableAllAnchors: true,
             markDoneStep: true,
             enableAllAnchorOnDoneStep: true
-        }
-
+        },
+        toolbarSettings: {
+            toolbarPosition: 'bottom', // none, top, bottom, both
+            toolbarButtonPosition: 'right', // left, right, center
+            toolbarExtraButtons: [
+                $(`<button></button>`).text('Finalizar')
+                .addClass('btn btn-secondary sw-btn-finish')
+                .attr("id", "FinalizarEmpleado")
+                .on('click', function () {
+                    leertabla();
+                    $('#smartwizard').smartWizard("reset");
+                    $('input[type="text"]').val("");
+                    $('input:radio[name=tipo]:checked').prop('checked', false);
+                    $('input[type="date"]').val("");
+                    $('input[type="file"]').val("");
+                    $('input[type="email"]').val("");
+                    $('#form-registrar :input').val("");
+                    $('#codigoCelular').val("+51");
+                    $("#form-registrar :input").prop('disabled', true);
+                    $('#documento').attr('disabled', false);
+                    $('#cerrarMoadalEmpleado').attr('disabled', false);
+                    $('#m_fechaI').combodate("clearValue");
+                    $('#m_fechaF').combodate("clearValue");
+                    $('#detalleContrato').hide();
+                    $('#checkboxFechaI').prop('checked', false);
+                    $('#form-registrar').modal('toggle');
+                    $('#selectCalendario').val("Asignar calendario");
+                    $('#selectHorario').val("Seleccionar horario");
+                }),
+            ]
+        },
     });
     $('#smartwizard1').smartWizard({
         selected: 0,
@@ -271,12 +300,11 @@ $(document).ready(function () {
         return validateSteps1(indice);
     });
     $('#smartwizard').on("showStep", function (e, anchorObject, stepNumber, stepDirection) {
-        if ($('button.sw-btn-next').hasClass('disabled')) {
-            $('button.sw-btn-next').hide();
+        console.log(stepNumber);
+        if (stepNumber == 5) {
             $('button.sw-btn-prev').hide();
-        } else {
-            $('button.sw-btn-prev').show();
-            $('button.sw-btn-next').show();
+            $('button.sw-btn-next').hide();
+            $('#FinalizarEmpleado').show();
         }
     });
     $('#smartwizard1').on("showStep", function (e, anchorObject, stepNumber, stepDirection) {

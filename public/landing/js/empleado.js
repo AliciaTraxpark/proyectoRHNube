@@ -2406,7 +2406,6 @@ function enviarEmpleado(accion, objEmpleado) {
         },
         success: function (data) {
             $('#idEmpleado').val(data);
-            leertabla();
             $.notify({
                 message: "\nDatos Guardados.",
                 icon: 'admin/images/checked.svg'
@@ -2468,7 +2467,6 @@ function enviarEmpresarialEmpleado(accion, objEmpleado) {
             }
         },
         success: function (msg) {
-            leertabla();
             $.notify({
                 message: "\nDatos Guardados.",
                 icon: 'admin/images/checked.svg'
@@ -2516,7 +2514,6 @@ function enviarFotoEmpleado(accion) {
             }
         },
         success: function (data) {
-            leertabla();
             $.notify({
                 message: "\nDatos Guardados.",
                 icon: 'admin/images/checked.svg'
@@ -2571,7 +2568,6 @@ function enviarCalendarioEmpleado(accion, objEmpleado) {
             }
         },
         success: function (data) {
-            leertabla();
             $.notify({
                 message: "\nDatos Guardados.",
                 icon: 'admin/images/checked.svg'
@@ -2625,7 +2621,6 @@ function enviarHorarioEmpleado(accion, objEmpleado) {
             }
         },
         success: function (data) {
-            leertabla();
             $.notify({
                 message: "\nDatos Guardados.",
                 icon: 'admin/images/checked.svg'
@@ -2834,6 +2829,7 @@ $('#formNuevoE').click(function () {
     $('#opborrar').hide();
     $("#detallehorario").empty();
     $('#calendar2').hide();
+    $('#FinalizarEmpleado').hide();
     $.get("/empleado/vaciarcalend", {}, function (data, status) {
         $('#form-registrar').modal();
         $('#cerrarModalEmpleado').attr('disabled', false);

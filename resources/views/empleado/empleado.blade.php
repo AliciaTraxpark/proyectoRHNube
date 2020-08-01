@@ -165,6 +165,10 @@
             justify-content: space-between;
         }
 
+        .sw-btn-group-extra {
+            justify-content: flex-end !important;
+        }
+
         .btn-secondary {
             max-width: 9em;
         }
@@ -1474,14 +1478,6 @@
                                                     seleccionado un calendario en el paso anterior.</label></div>
                                             <div class="col-md-10" id="calendar2" style="display: none"></div>
                                             <div class="col-md-1"><br></div>
-                                        </div>
-                                        <div class="row">
-                                            <br><br>
-                                            <div class="col-md-11  text-right">
-                                                <br>
-                                                <button type="button" id="guardarEmpleado"
-                                                    class="btn btn-dark">Guardar</button>
-                                            </div>
                                         </div>
                                         <div id="horarioAsignar" class="modal fade" tabindex="-1" role="dialog"
                                             aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
