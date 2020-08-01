@@ -2346,10 +2346,10 @@ function valorCodigoEmpleado() {
 
 }
 //EMPLEADO
-$('#guardarEmpleado').click(function () {
+/*$('#guardarEmpleado').click(function () {
     objEmpleado = datosPersona("POST");
     enviarEmpleado('', objEmpleado);
-});
+});*/
 
 
 function datosPersona(method) {
@@ -2368,23 +2368,13 @@ function datosPersona(method) {
         departamento: $('#departamento').val(),
         provincia: $('#provincia').val(),
         distrito: $('#distrito').val(),
-        cargo: $('#cargo').val(),
-        area: $('#area').val(),
-        centroc: $('#centroc').val(),
         dep: $('#dep').val(),
         prov: $('#prov').val(),
         dist: $('#dist').val(),
-        contrato: $('#contrato').val(),
         direccion: $('#direccion').val(),
-        nivel: $('#nivel').val(),
-        local: $('#local').val(),
         celular: celularC,
         telefono: $('#telefono').val(),
-        fechaI: $('#m_fechaI').val(),
-        fechaF: $('#m_fechaF').val(),
         correo: $('#email').val(),
-        codigoEmpleado: $('#codigoEmpleado').val(),
-        idca: $('#selectCalendario').val(),
         '_method': method
     }
     return (nuevoEmpleado);
@@ -2393,7 +2383,6 @@ function datosPersona(method) {
 function enviarEmpleado(accion, objEmpleado) {
 
     var formData = new FormData();
-    formData.append('file', $('#file').prop('files')[0]);
     formData.append('objEmpleado', JSON.stringify(objEmpleado));
 
     $.ajax({
@@ -2415,31 +2404,15 @@ function enviarEmpleado(accion, objEmpleado) {
                 location.reload();
             }
         },
-        success: function (msg) {
+        success: function (data) {
+            $('#idEmpleado').val(data);
             leertabla();
-            $('#smartwizard').smartWizard("reset");
-            $('#formNuevoEd').hide();
-            $('#formNuevoEl').hide();
-            $('input[type="text"]').val("");
-            $('input:radio[name=tipo]:checked').prop('checked', false);
-            $('input[type="date"]').val("");
-            $('input[type="file"]').val("");
-            $('input[type="email"]').val("");
-            $('#form-registrar :input').val("");
-            $("#form-registrar :input").prop('disabled', true);
-            $('#documento').attr('disabled', false);
-            $('#cerrarMoadalEmpleado').attr('disabled', false);
-            $('#m_fechaI').combodate("clearValue");
-            $('#m_fechaF').combodate("clearValue");
-            $('#detalleContrato').hide();
-            $('#checkboxFechaI').prop('checked', false);
-            $('#form-registrar').modal('toggle');
-            $('#selectCalendario').val("Asignar calendario");
-            $('#selectHorario').val("Seleccionar horario");
             $.notify({
-                message: "\nEmpleado Registrado.",
+                message: "\nDatos Guardados.",
                 icon: 'admin/images/checked.svg'
             }, {
+                element: $('#form-registrar'),
+                position: 'fixed',
                 icon_type: 'image',
                 newest_on_top: true,
                 delay: 5000,
@@ -2455,6 +2428,226 @@ function enviarEmpleado(accion, objEmpleado) {
         error: function (data, errorThrown) {}
     });
 }
+//GUARDAR DATOS EMPRESARIAL EN GUARDAR EMPLEADO
+function datosEmpresaEmpleado(method) {
+    nuevoEmpresa = {
+        codigoEmpleado: $('#codigoEmpleado').val(),
+        cargo: $('#cargo').val(),
+        area: $('#area').val(),
+        centroc: $('#centroc').val(),
+        contrato: $('#contrato').val(),
+        fechaI: $('#m_fechaI').val(),
+        fechaF: $('#m_fechaF').val(),
+        nivel: $('#nivel').val(),
+        local: $('#local').val(),
+        '_method': method
+    }
+    return (nuevoEmpresa);
+}
+
+function enviarEmpresarialEmpleado(accion, objEmpleado) {
+    var formData = new FormData();
+    formData.append('objEmpleado', JSON.stringify(objEmpleado));
+    $.ajax({
+
+        type: "POST",
+        url: "/empleado/storeEmpresarial" + accion,
+        data: formData,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (msg) {
+            leertabla();
+            $.notify({
+                message: "\nDatos Guardados.",
+                icon: 'admin/images/checked.svg'
+            }, {
+                element: $('#form-registrar'),
+                position: 'fixed',
+                icon_type: 'image',
+                newest_on_top: true,
+                delay: 5000,
+                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+        },
+        error: function (data, errorThrown) {}
+    });
+}
+
+//GUARDAR FOTO EN GUARDAR EMPLEADO
+
+function enviarFotoEmpleado(accion) {
+    var formData = new FormData();
+    formData.append('file', $('#file').prop('files')[0]);
+    $.ajax({
+
+        type: "POST",
+        url: "/empleado/storeFoto" + accion,
+        data: formData,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            leertabla();
+            $.notify({
+                message: "\nDatos Guardados.",
+                icon: 'admin/images/checked.svg'
+            }, {
+                element: $('#form-registrar'),
+                position: 'fixed',
+                icon_type: 'image',
+                newest_on_top: true,
+                delay: 5000,
+                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+        },
+        error: function (data, errorThrown) {}
+    });
+}
+
+//GUARDAR CALENDARIO EN GUARDAR EMPLEADO
+function datosCalendarioEmpleado(method) {
+    nuevoCalendario = {
+        idca: $('#selectCalendario').val(),
+        '_method': method
+    }
+    return (nuevoCalendario);
+}
+
+function enviarCalendarioEmpleado(accion, objEmpleado) {
+    var formData = new FormData();
+    formData.append('objEmpleado', JSON.stringify(objEmpleado));
+    $.ajax({
+
+        type: "POST",
+        url: "/empleado/storeCalendario" + accion,
+        data: formData,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            leertabla();
+            $.notify({
+                message: "\nDatos Guardados.",
+                icon: 'admin/images/checked.svg'
+            }, {
+                element: $('#form-registrar'),
+                position: 'fixed',
+                icon_type: 'image',
+                newest_on_top: true,
+                delay: 5000,
+                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+        },
+        error: function (data, errorThrown) {}
+    });
+}
+//GUARDAR HORARIO EN GUARDAR EMPLEADO
+function datosHorarioEmpleado(method) {
+    nuevoHorario = {
+        idca: $('#selectCalendario').val(),
+        '_method': method
+    }
+    return (nuevoHorario);
+}
+
+function enviarHorarioEmpleado(accion, objEmpleado) {
+    var formData = new FormData();
+    formData.append('objEmpleado', JSON.stringify(objEmpleado));
+    $.ajax({
+
+        type: "POST",
+        url: "/empleado/storeHorario" + accion,
+        data: formData,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            leertabla();
+            $.notify({
+                message: "\nDatos Guardados.",
+                icon: 'admin/images/checked.svg'
+            }, {
+                element: $('#form-registrar'),
+                position: 'fixed',
+                icon_type: 'image',
+                newest_on_top: true,
+                delay: 5000,
+                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+        },
+        error: function (data, errorThrown) {}
+    });
+}
+
 //EMPLEADO ACTUALIZAR
 $("#checkboxFechaIE").on("click", function () {
     if ($("#checkboxFechaIE").is(':checked')) {

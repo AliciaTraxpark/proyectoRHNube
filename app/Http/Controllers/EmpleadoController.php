@@ -262,16 +262,6 @@ class EmpleadoController extends Controller
             $empleado->emple_provinciaN = $objEmpleado['provincia'];
             $empleado->emple_distritoN = $objEmpleado['distrito'];
         }
-        if ($objEmpleado['cargo'] != '') {
-            $empleado->emple_cargo = $objEmpleado['cargo'];
-        }
-        if ($objEmpleado['area'] != '') {
-            $empleado->emple_area = $objEmpleado['area'];
-        }
-        if ($objEmpleado['centroc'] != '') {
-            $empleado->emple_centCosto = $objEmpleado['centroc'];
-        }
-
         if ($objEmpleado['dep'] != '') {
             $empleado->emple_departamento = $objEmpleado['dep'];
         }
@@ -281,29 +271,58 @@ class EmpleadoController extends Controller
         if ($objEmpleado['dist'] != '') {
             $empleado->emple_distrito = $objEmpleado['dist'];
         }
-        if ($objEmpleado['contrato'] != '') {
-            $empleado->emple_tipoContrato = $objEmpleado['contrato'];
-        }
-        if ($objEmpleado['local'] != '') {
-            $empleado->emple_local = $objEmpleado['local'];
-        }
-        if ($objEmpleado['nivel'] != '') {
-            $empleado->emple_nivel = $objEmpleado['nivel'];
-        }
         $empleado->emple_celular = '';
         if ($objEmpleado['celular'] != '') {
             $empleado->emple_celular = $objEmpleado['celular'];
         }
         $empleado->emple_telefono = $objEmpleado['telefono'];
+        if ($objEmpleado['correo'] != '') {
+            $empleado->emple_Correo = $objEmpleado['correo'];
+        }
+        $empleado->emple_pasword = Hash::make($objEmpleado['numDocumento']);
+        $empleado->emple_estado = '1';
+        $empleado->users_id = Auth::user()->id;
+        $empleado->save();
+        $idempleado = $empleado->emple_id;
+        return response()->json($idempleado, 200);
+    }
+
+    public function storeEmpresarial(Request $request, $idE)
+    {
+        $objEmpleado = json_decode($request->get('objEmpleado'), true);
+        $empleado = Empleado::findOrFail($idE);
+        $empleado->emple_codigo = $objEmpleado['codigoEmpleado'];
+        if ($objEmpleado['cargo'] != '') {
+            $empleado->emple_cargo = $objEmpleado['cargo'];
+        }
+        if ($objEmpleado['area'] != '') {
+            $empleado->emple_area = $objEmpleado['area'];
+        }
+        if ($objEmpleado['centroc'] != '') {
+            $empleado->emple_centCosto = $objEmpleado['centroc'];
+        }
+        if ($objEmpleado['contrato'] != '') {
+            $empleado->emple_tipoContrato = $objEmpleado['contrato'];
+        }
         if ($objEmpleado['fechaI'] != '') {
             $empleado->emple_fechaIC = $objEmpleado['fechaI'];
         }
         if ($objEmpleado['fechaF'] != '') {
             $empleado->emple_fechaFC = $objEmpleado['fechaF'];
         }
-        if ($objEmpleado['correo'] != '') {
-            $empleado->emple_Correo = $objEmpleado['correo'];
+        if ($objEmpleado['nivel'] != '') {
+            $empleado->emple_nivel = $objEmpleado['nivel'];
         }
+        if ($objEmpleado['local'] != '') {
+            $empleado->emple_local = $objEmpleado['local'];
+        }
+        $empleado->save();
+        return json_encode(array('status' => true));
+    }
+
+    public function storeFoto(Request $request, $idE)
+    {
+        $empleado = Empleado::findOrFail($idE);
         $empleado->emple_foto = '';
 
         if ($request->hasFile('file')) {
@@ -313,23 +332,15 @@ class EmpleadoController extends Controller
             $file->move($path, $fileName);
             $empleado->emple_foto = $fileName;
         }
-        $empleado->emple_pasword = Hash::make($objEmpleado['numDocumento']);
-        $empleado->emple_estado = '1';
-        $empleado->emple_codigo = $objEmpleado['codigoEmpleado'];
-        $empleado->users_id = Auth::user()->id;
         $empleado->save();
-        $idempleado = $empleado->emple_id;
-        $modo = new modo();
-        $modo->idEmpleado = $idempleado;
-        $modo->idTipoModo = 1;
-        $modo->idTipoDispositivo = 1;
-        $modo->save();
+        return json_encode(array('status' => true));
+    }
 
-        $modo = new modo();
-        $modo->idEmpleado = $idempleado;
-        $modo->idTipoModo = 1;
-        $modo->idTipoDispositivo = 2;
-        $modo->save();
+    public function storeCalendario(Request $request, $idE)
+    {
+        $empleado = Empleado::findOrFail($idE);
+        $idempleado = $empleado->emple_id;
+        $objEmpleado = json_decode($request->get('objEmpleado'), true);
         ///CALENDARIO
 
         $eventos_empleado_tempEU = eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
@@ -359,6 +370,14 @@ class EmpleadoController extends Controller
             $incidenciadias_dias->id_empleado = $idempleado;
             $incidenciadias_dias->save();
         }
+        return json_encode(array('status' => true));
+    }
+
+    public function storeHorario(Request $request, $idE)
+    {
+        $empleado = Empleado::findOrFail($idE);
+        $idempleado = $empleado->emple_id;
+        $objEmpleado = json_decode($request->get('objEmpleado'), true);
         //HORARIO
         $eventos_empleado_tempHor = eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
             ->where('id_horario', '!=', null)->where('color', '=', '#ffffff')->where('textColor', '=', '111111')
@@ -380,14 +399,27 @@ class EmpleadoController extends Controller
             $horario_empleados->horario_dias_id = $horario_dias->id;
             $horario_empleados->save();
         }
-
-
-
         ///////////FIN CALENDARIO
-
         return json_encode(array('status' => true));
     }
 
+    public function storeModo(Request $request, $idE)
+    {
+        $empleado = Empleado::findOrFail($idE);
+        $idempleado = $empleado->emple_id;
+        $modo = new modo();
+        $modo->idEmpleado = $idempleado;
+        $modo->idTipoModo = 1;
+        $modo->idTipoDispositivo = 1;
+        $modo->save();
+
+        $modo = new modo();
+        $modo->idEmpleado = $idempleado;
+        $modo->idTipoModo = 1;
+        $modo->idTipoDispositivo = 2;
+        $modo->save();
+        return json_encode(array('status' => true));
+    }
     /**
      * Display the specified resource.
      *

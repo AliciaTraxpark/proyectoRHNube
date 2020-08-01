@@ -78,6 +78,10 @@ Route::get('/eventos_usuario/store', 'EventosUsuarioController@store');
 
 //EMPLEADOS
 Route::post('/empleado/store', 'EmpleadoController@store');
+Route::post('/empleado/storeEmpresarial/{idE}', 'EmpleadoController@storeEmpresarial');
+Route::post('/empleado/storeFoto/{idE}', 'EmpleadoController@storeFoto');
+Route::post('/empleado/storeCalendario/{idE}', 'EmpleadoController@storeCalendario');
+Route::post('/empleado/storeHorario/{idE}', 'EmpleadoController@storeHorario');
 Route::get('/empleado', 'EmpleadoController@index');
 Route::get('/empleado/cargar', 'EmpleadoController@cargarDatos');
 Route::post('/empleado/file', 'EmpleadoController@upload');
