@@ -228,9 +228,10 @@ class correosEmpleadoController extends Controller
             return 1;
         }
     }
-    public function envioA(Request $request)
+    public function envioAndroid(Request $request)
     {
         $idEmpleado = $request->get('idEmpleado');
+        $idVinculacion = $request->get('idVinculacion');
         $correoE = DB::table('empleado as e')
             ->select('e.emple_Correo')
             ->where('e.emple_id', '=', $idEmpleado)
@@ -247,9 +248,13 @@ class correosEmpleadoController extends Controller
             $codP["id"] = $codigoP->emple_persona;
             $persona = persona::find($codP["id"]);
             Mail::to($email)->queue(new AndroidMail($persona));
+            $vinculacion = vinculacion::where('id', '=', $idVinculacion)->get()->first();
+            $envio = $vinculacion->envio;
+            $suma = $envio + 1;
+            $vinculacion->envio = $suma;
             return json_encode(array("result" => true));
         }
-        return response()->json(null, 403);
+        return response()->json(null, 400);
     }
 
     public function envioAndroidM(Request $request)

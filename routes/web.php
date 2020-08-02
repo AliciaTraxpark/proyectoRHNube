@@ -219,7 +219,8 @@ Route::get('/empleados', 'EmpleadoController@indexMenu');
 Route::get('/calendarios', 'calendarioController@indexMenu');
 Route::get('/horarios', 'horarioController@indexMenu');
 Route::get('/dias/laborales', 'diasLaborablesController@indexMenu');
-
+//VINCULACION
+Route::get('vinculacionAndroid', 'vinculacionDispositivoController@vinculacionAndroid');
 //CORREO EMPLEADO
 Route::get('empleadoCorreo', 'correosEmpleadoController@encode');
 Route::get('comprobR', 'correosEmpleadoController@reenvio');
@@ -227,7 +228,7 @@ Route::get('envioMasivo', 'correosEmpleadoController@encodeMasivo');
 Route::get('asignarEscritorio', 'correosEmpleadoController@nuevoEncode');
 Route::get('ambasPlataformas', 'correosEmpleadoController@ambasPlataformas');
 //ANDROID
-Route::get('empleadoAndroid', 'correosEmpleadoController@envioA');
+Route::get('correoAndroid', 'correosEmpleadoController@envioAndroid');
 Route::get('empleadoAndroidMasivo', 'correosEmpleadoController@envioAndroidM');
 //DOWNLOAD
 Route::get('download/{code}', 'downloadController@download');

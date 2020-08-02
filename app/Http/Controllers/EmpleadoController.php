@@ -207,9 +207,9 @@ class EmpleadoController extends Controller
             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
             ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
-            ->leftJoin('modo as md', 'md.idEmpleado', '=', 'e.emple_id')
-            ->leftJoin('tipo_dispositivo as td', 'td.id', '=', 'md.idTipoDispositivo')
             ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
+            ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
+            ->leftJoin('tipo_dispositivo as td', 'td.id', '=', 'md.idTipoDispositivo')
             ->select(
                 'p.perso_nombre',
                 'p.perso_apPaterno',
@@ -218,9 +218,7 @@ class EmpleadoController extends Controller
                 'a.area_descripcion',
                 'cc.centroC_descripcion',
                 'e.emple_id',
-                'md.idTipoDispositivo as dispositivo',
-                'v.envio',
-                'v.reenvio'
+                'md.idTipoDispositivo as dispositivo'
             )
             ->where('e.users_id', '=', Auth::user()->id)
             ->get();
@@ -443,24 +441,6 @@ class EmpleadoController extends Controller
         ///////////FIN CALENDARIO
         return json_encode(array('status' => true));
     }
-
-    public function storeModo(Request $request, $idE)
-    {
-        $empleado = Empleado::findOrFail($idE);
-        $idempleado = $empleado->emple_id;
-        $modo = new modo();
-        $modo->idEmpleado = $idempleado;
-        $modo->idTipoModo = 1;
-        $modo->idTipoDispositivo = 1;
-        $modo->save();
-
-        $modo = new modo();
-        $modo->idEmpleado = $idempleado;
-        $modo->idTipoModo = 1;
-        $modo->idTipoDispositivo = 2;
-        $modo->save();
-        return json_encode(array('status' => true));
-    }
     /**
      * Display the specified resource.
      *
@@ -486,7 +466,8 @@ class EmpleadoController extends Controller
             ->leftJoin('tipo_contrato as tp', 'e.emple_tipoContrato', '=', 'tp.contrato_id')
             ->leftJoin('nivel as n', 'e.emple_nivel', '=', 'n.nivel_id')
             ->leftJoin('local as l', 'e.emple_local', '=', 'l.local_id')
-            ->leftJoin('modo as md', 'md.idEmpleado', '=', 'e.emple_id')
+            ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
+            ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
             ->leftJoin('tipo_dispositivo as td', 'td.id', '=', 'md.idTipoDispositivo')
 
             ->select(
@@ -724,6 +705,10 @@ class EmpleadoController extends Controller
         $incidencias->each->delete();
 
         $licencia_empleado = licencia_empleado::whereIn('idEmpleado', explode(",", $ids))->get();
+        $vinculacion = vinculacion::whereIn('idEmpleado', explode(",", $ids))->get();
+        $modo = modo::whereIn('idEmpleado', explode(",", $ids))->get();
+        $vinculacion->each->delete();
+        $modo->each->delete();
         $licencia_empleado->each->delete();
 
         $proyecto_empleado = proyecto_empleado::whereIn('empleado_emple_id', explode(",", $ids))->get();
@@ -732,10 +717,8 @@ class EmpleadoController extends Controller
         $tarea = tarea::whereIn('empleado_emple_id', explode(",", $ids))->get();
         $tarea->each->delete();
 
-        $modo = modo::whereIn('idEmpleado', explode(",", $ids))->get();
-        $modo->each->delete();
-        $vinculacion = vinculacion::whereIn('idEmpleado', explode(",", $ids))->get();
-        $vinculacion->each->delete();
+
+
         $empleado->each->delete();
         $persona = persona::whereIn('perso_id', explode(",", $idem))->get();
         $persona->each->delete();

@@ -572,43 +572,6 @@
             @if(!in_array("1",$tabla_empleados->dispositivos))
             <td></td>
             @else
-            @if ($tabla_empleados->envio != null)
-            @if($tabla_empleados->reenvio == null)
-            <td class="text-center">
-                <a id="reenviar" onclick="$('#modalCorreo').modal();" data-toggle="tooltip" data-placement="right"
-                    title="Reenviar correo empleado" data-original-title="Reenviar correo empleado"
-                    style="cursor: pointer"><img src="{{asset('landing/images/refresh.svg')}}" height="20">
-                </a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a data-toggle="tooltip" data-placement="right" title="Nueva PC" data-original-title="Nueva PC"
-                    style="cursor:pointer" onclick="$('#modalNuevoE').modal();">
-                    <img src="{{asset('landing/images/plus.svg')}}" height="15">
-                </a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a class="detalleW" data-toggle="tooltip" data-placement="right" title="Ver Detalles"
-                    data-original-title="Ver Detalles" style="cursor:
-                    pointer">
-                    <img src="{{asset('landing/images/see.svg')}}" height="20">
-                </a>
-            </td>
-            @else
-            <td class="text-center">
-                <a id="reenviar" onclick="$('#modalCorreo').modal();" disabled><img
-                        src="{{asset('landing/images/refresh.svg')}}" height="20">
-                </a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a data-toggle="tooltip" data-placement="right" title="Nueva PC" data-original-title="Nueva PC"
-                    style="cursor: pointer" onclick="$('#modalNuevoE').modal();"><img
-                        src="{{asset('landing/images/plus.svg')}}" height="15">
-                </a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a class="detalleW" data-toggle="tooltip" data-placement="right" title="Ver Detalles"
-                    data-original-title="Ver Detalles" style="cursor: pointer"><img
-                        src="{{asset('landing/images/see.svg')}}" height="20">
-                </a>
-            </td>
-            @endif
-            @else
             <td class="text-center">
                 <a onclick="$('#modalCorreo').modal();" data-toggle="tooltip" data-placement="right" title="Enviar
                     correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
@@ -620,7 +583,6 @@
                         src="{{asset('landing/images/see.svg')}}" height="20">
                 </a>
             </td>
-            @endif
             @endif
             @if(!in_array("2",$tabla_empleados->dispositivos))
             <td></td>
