@@ -252,190 +252,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<!--WINDOWS-->
-<div id="detallesWindows" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="detallesWindows"
-    aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#163552;">
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" style="background-color:#fafafa">
-                <div class="row">
-                    <input style="display: none;" name="idDetalle" id="idDetalle">
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-body p-0">
-                                <h6 class="card-title border-bottom p-3 mb-0 header-title" style="color: #163552;">
-                                    Detalle de Plataforma Windows
-                                </h6>
-                                <div class="row py-1">
-                                    <div class="col-xl-5 col-sm-12 text-center">
-                                        <!-- stat 1 -->
-                                        <div class="media p-2">
-                                            <div class="media-body">
-                                                <img id="imgsmEmpleado"
-                                                    src="{{URL::asset('admin/assets//images/users/avatar-7.png') }}"
-                                                    class="avatar avatar-128 rounded-circle mr-2 img-thumbnail" />
-                                                <span class="text-muted" id="colaborador"
-                                                    style="text-transform:uppercase;"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-4 col-sm-12 text-center">
-                                        <!-- stat 2 -->
-                                        <div class="media p-2">
-                                            <div class="media-body mt-3">
-                                                <span class="text-muted" style="font-weight: 600">Total
-                                                    Dispositivos:</span>
-                                                <span class="text-muted" id="totalPC"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-3 col-sm-12 text-center">
-                                        <!-- stat 2 -->
-                                        <div class="media p-2">
-                                            <div class="media-body mt-3">
-                                                <span class="text-muted" style="font-weight: 600">Captura(min):</span>
-                                                <span class="text-muted" id="totalCorteCap"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- details-->
-                <div class="row" id="rowDetalles">
-                    <div class="col-xl-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-8 col-md-6">
-                                        <div class="mt-2" id="detalleLicencia">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        <div class="mt-2" id="estadoLicencia">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end card -->
-                    </div>
-                </div>
-                <!-- end row -->
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-7 text-right">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                                style="background-color: #163552;color: #ffffff;">Cerrar</button>
-                        </div>
-                        <div class="col-md-5 text-right" style="padding-right:
-                            38px;">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<!--ANDROID-->
-<div id="detallesAndroid" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="detallesAndroid"
-    aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#163552;">
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" style="background-color:#fafafa">
-                <div class="row">
-                    <input style="display: none;" name="idDetalleA" id="idDetalleA">
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-body p-0">
-                                <h6 class="card-title border-bottom p-3 mb-0 header-title">Detalle de Plataforma Android
-                                </h6>
-                                <div class="row py-1">
-                                    <div class="col-xl-6 col-sm-12 text-center">
-                                        <!-- stat 1 -->
-                                        <div class="media p-4">
-                                            <div class="media-body">
-                                                <img id="imgsmEmpleadoAndroid"
-                                                    src="{{URL::asset('admin/assets//images/users/avatar-7.png') }}"
-                                                    class="avatar avatar-128 rounded-circle mr-2 img-thumbnail" />
-                                                <span class="text-muted" id="colaboradorA"
-                                                    style="text-transform:uppercase;"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 text-center">
-                                        <div class="mt-4">
-                                            <a href="javascript:getlink();" data-toggle="tooltip" data-placement="right"
-                                                title="copiar enlace" data-original-title="">
-                                                <img src="{{asset('landing/images/document.svg')}}" height="30">
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- details-->
-                <!--<div class="row" id="notifEnlace">
-                    <div class="col-xl-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6 text-center">
-                                        <div class="mt-2">
-                                            <img src="{{asset('landing/images/playstore.svg')}}" height="20"
-                                                class="mr-2" alt="" />
-                                            <p class="mb-2">Play Store</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 text-center">
-                                        <div class="mt-2">
-                                            <a href="javascript:getlink();" data-toggle="tooltip" data-placement="right"
-                                                title="copiar enlace" data-original-title="">
-                                                <img src="{{asset('landing/images/document.svg')}}" height="30">
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
-                <!-- end row -->
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-7 text-right">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                                style="background-color: #163552;color: #ffffff;">Cerrar</button>
-                        </div>
-                        <div class="col-md-5 text-right" style="padding-right:
-                            38px;">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 <!------------CAMBIAR ESTADO LICENCIA-->
 <div id="estadoLicenciaC" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="estadoLicenciaC"
     aria-hidden="true" data-backdrop="static">
@@ -573,14 +389,9 @@
             <td></td>
             @else
             <td class="text-center">
-                <a onclick="$('#modalCorreo').modal();" data-toggle="tooltip" data-placement="right" title="Enviar
+                <a data-toggle="tooltip" data-placement="right" title="Enviar
                     correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
                         src="{{asset('landing/images/note.svg')}}" height="20">
-                </a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a class="detalleW" data-toggle="tooltip" data-placement="right" title="Ver Detalles"
-                    data-original-title="Ver Detalles" style="cursor: pointer"><img
-                        src="{{asset('landing/images/see.svg')}}" height="20">
                 </a>
             </td>
             @endif
@@ -588,15 +399,9 @@
             <td></td>
             @else
             <td class="text-center">
-                <a onclick="$('#modalAndroid').modal();" data-toggle="tooltip" data-placement="right"
+                <a data-toggle="tooltip" data-placement="right"
                     title="Enviar correo empleado" data-original-title="Enviar correo empleado"
                     style="cursor: pointer"><img src="{{asset('landing/images/note.svg')}}" height="20">
-                </a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a class="detalleA" data-toggle="tooltip" data-placement="right" title="Ver Detalles"
-                    data-original-title="Ver Detalles" style="cursor:
-                    pointer">
-                    <img src="{{asset('landing/images/see.svg')}}" height="20">
                 </a>
             </td>
             @endif
