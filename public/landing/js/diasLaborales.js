@@ -280,6 +280,7 @@ $('#horaIncidenCa_ed').flatpickr({
 //////////////////7
 function IncidenciaEmpleados(){
     $('#btnLabo').hide();
+    $("#frmIncidenciaCa_ed")[0].reset();
     $('#modalIncidencia_ed').modal('show');
 }
 function modalIncidencia_ed() {

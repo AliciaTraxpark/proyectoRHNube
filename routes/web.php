@@ -269,3 +269,4 @@ Route::get('cambiarEstadoLicencia', 'detallesActivacionController@cambiarEstadoL
 //laborales
 Route::post('/dias/storeCalendario', 'diasLaborablesController@storeCalendario');
 Route::post('/dias/delete', 'diasLaborablesController@eliminarBD');
+Route::post('/dias/diasIncidempleado', 'diasLaborablesController@diasIncidempleado');
