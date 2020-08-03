@@ -794,6 +794,11 @@ function registrarHorario(){
 
             $('#horarioAgregar').modal('hide');
             leertabla();
+            $('#selectHorario').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                value: data.horario_id,
+                text: data.horario_descripcion
+
+            }));
             if($('#asignarHorario').is(':visible')){
                 registrarhDias(data.horario_id);
             }

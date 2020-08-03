@@ -1417,6 +1417,68 @@ use App\proyecto_empleado;
                                             </div>
                                         </div>
 
+                                    </div>
+
+                                    <div class="col-md-12" id="calendarInv"></div>
+                                    @endif
+                                     <input type="hidden" id="pruebaEnd">
+                                    <input type="hidden" id="pruebaStar">
+                                    <div class="col-md-10" id="calendar" style="display: none"></div>
+                                    <div class="col-md-2" id="opborrar" style="display: none">
+                                        <br><br><br><br><br>
+                                        <div class="btn-group mt-2 mr-1">
+                                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" style="color: #fff;
+                                            background-color: #4a5669;
+                                            border-color: #485263;"
+                                                data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false"><img src="{{asset('admin/images/borrador.svg')}}" height="15" > Borrar <i class="icon"><span data-feather="chevron-down"></span></i></button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" onclick="vaciardFeria()">Dias feriados</a>
+                                                <a class="dropdown-item" onclick="vaciarddescanso()">Dias descanso</a>
+                                                {{-- <a class="dropdown-item"  onclick="vaciardlabTem()" >D. laborables</a> --}}
+                                                <a class="dropdown-item" onclick="vaciardNlabTem()">D. no laborables</a>
+                                                <a class="dropdown-item" onclick="vaciardIncidTem()">Incidencia</a>
+
+                                            </div>
+                                        </div><!-- /btn-group --></div>
+                                    <div id="calendarioAsignar" class="modal fade" tabindex="-1" role="dialog"
+                                        aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                                        <div class="modal-dialog  modal-lg d-flex justify-content-center "
+                                            style="width:580px;  margin-top: 150px; left: 30px;">
+
+                                            <div class="modal-content">
+
+                                                <div class="modal-body"
+                                                    style="font-size:12px!important;background: #f3f3f3;">
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <button type="button"
+                                                                    style=" max-width: 18em!important;"
+                                                                    class="btn btn-secondary btn-sm"
+                                                                    onclick="laborableTem()"><img
+                                                                        src="{{asset('admin/images/dormir.svg')}}"
+                                                                        height="20"> Descanso</button>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <button type="button"
+                                                                    style=" max-width: 18em!important;"
+                                                                    class="btn btn-secondary btn-sm"
+                                                                    onclick="nolaborableTem()"><img
+                                                                        src="{{asset('admin/images/evento.svg')}}"
+                                                                        height="20"> Dia no laborable</button>
+                                                            </div>
+                                                            <div class="col-md-4 text-right">
+                                                                {{--  <button type="button" style=" max-width: 18em!important;" class="btn btn-secondary btn-sm " onclick="registrarDdescanso()" ><img src="{{asset('admin/images/calendarioInc.svg')}}"
+                                                                height="20"> Incidencia</button> --}}
+                                                                <button style=" max-width: 18em!important;"
+                                                                    class="btn btn-secondary btn-sm"
+                                                                    onclick="agregarinciden()"><img
+                                                                        src="{{asset('admin/images/calendarioInc.svg')}}"
+                                                                        height="20"> Incidencia</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
                                     </div>
                                     @else
@@ -2059,6 +2121,60 @@ use App\proyecto_empleado;
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-md-1"><br></div>
+                                    <div class="col-md-10" id="calendarInv_ed" style="display:none"></div> <input type="hidden" id="pruebaEnd_ed">
+                                    <input type="hidden" id="pruebaStar_ed">
+                                    <div class="col-md-10" id="calendar_ed" style="display: none"></div>
+                                    <div class="col-md-1"><br></div>
+
+                                    <div id="calendarioAsignar_ed" class="modal fade" tabindex="-1" role="dialog"
+                                        aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                                        <div class="modal-dialog  modal-lg d-flex justify-content-center "
+                                            style="width:580px;  margin-top: 150px; left: 30px;">
+
+                                            <div class="modal-content">
+
+                                                <div class="modal-body"
+                                                    style="font-size:12px!important;background: #f3f3f3;">
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <button type="button"
+                                                                    style=" max-width: 18em!important;"
+                                                                    class="btn btn-secondary btn-sm"
+                                                                    onclick="laborable_ed()"><img
+                                                                        src="{{asset('admin/images/dormir.svg')}}"
+                                                                        height="20"> Descanso</button>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <button type="button"
+                                                                    style=" max-width: 18em!important;"
+                                                                    class="btn btn-secondary btn-sm"
+                                                                    onclick="nolaborable_ed()"><img
+                                                                        src="{{asset('admin/images/evento.svg')}}"
+                                                                        height="20"> Dia no laborable</button>
+                                                            </div>
+                                                            <div class="col-md-4 text-right">
+                                                                {{--  <button type="button" style=" max-width: 18em!important;" class="btn btn-secondary btn-sm " onclick="registrarDdescanso()" ><img src="{{asset('admin/images/calendarioInc.svg')}}"
+                                                                height="20"> Incidencia</button> --}}
+                                                                <button style=" max-width: 18em!important;"
+                                                                    class="btn btn-secondary btn-sm"
+                                                                    onclick="agregarinciden_ed()"><img
+                                                                        src="{{asset('admin/images/calendarioInc.svg')}}"
+                                                                        height="20"> Incidencia</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="modal-footer"
+                                                    style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-12 text-right">
+                                                                <button type="button"
+                                                                    class="btn btn-soft-primary btn-sm "
+                                                                    onclick="$('#calendarioAsignar_ed').modal('hide')">Cancelar</button>
 
                                 </div>
                                 <div class="col-md-1"><br></div>

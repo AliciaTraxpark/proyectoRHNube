@@ -145,7 +145,7 @@
                 <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                 <div class="row">
 
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                         <div class="col-xl-12 col-sm-8">
                             <div class="form-group mt-3 mt-sm-0">
                                 <label>Empleado</label>
@@ -158,19 +158,26 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 text-right" id="btnLabo" style="display: none"><br><br>
+                    <div class="col-md-5 text-right" id="btnLabo" style="display: none"><br><br>
                         <button type="button"
                         style=" max-width: 18em!important;"
                         class="btn btn-secondary btn-sm"
                         onclick="laborable_ed()"><img
-                            src="{{asset('admin/images/calendariolab.svg')}}"
-                            height="20"> Dia laborable</button>
-                            <button type="button"
-                            style=" max-width: 18em!important;"
-                            class="btn btn-secondary btn-sm"
-                            onclick="nolaborable_ed()"><img
-                                src="{{asset('admin/images/evento.svg')}}"
-                                height="20"> Dia no laborable</button>
+                            src="{{asset('admin/images/dormir.svg')}}"
+                            height="20"> Descanso</button>
+                        <button type="button"
+                        style=" max-width: 18em!important;"
+                        class="btn btn-secondary btn-sm"
+                        onclick="nolaborable_ed()"><img
+                            src="{{asset('admin/images/evento.svg')}}"
+                            height="20"> Dia no laborable</button>
+                        <button type="button"
+                        style=" max-width: 18em!important;"
+                        class="btn btn-secondary btn-sm"
+                        onclick="IncidenciaEmpleados()"><img
+                        src="{{asset('admin/images/calendarioInc.svg')}}"
+                            height="20"> Incidencia</button>
+
                     </div>
                     <div class="col-xl-12" id="imgV">
                         <br><br><br>
@@ -184,7 +191,9 @@
                     <input type="hidden" id="pruebaStar_ed">
                     <div class="col-xl-12">
                         <div class="row">
-                            <div class="col-xl-12" id="verinfo" style="display: none"><br><label style="font-weight: 600;color: #03345f">Seleccione dias para asignar a dias laborables o no laborales:</label></div>
+                            <div class="col-xl-12" id="verinfo" style="display: none">
+                                <br><label style="font-weight: 600;color: #03345f">Seleccione dias para asignar a dias laborables o no laborales:</label>
+                            </div>
                         <div id="calendar_ed" style="display: none" class="col-xl-10"> </div>
                         <div class="col-xl-2" id="calendar_ed_bt" style="display: none">
                             <div class="col-md-10" style="top:86px">
@@ -209,7 +218,66 @@
 
             </div> <!-- end card body-->
         </div> <!-- end card -->
+        <div id="modalIncidencia_ed" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar nueva incidencia
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
 
+                    <div class="col-md-12">
+                        <form id="frmIncidenciaCa_ed" action="javascript:modalIncidencia_ed()">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="">Descripcion:</label>
+                                        <input type="text" class="form-control form-control-sm" id="descripcionInciCa_ed"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6"><label for=""><br></label>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="descuentoCheckCa_ed">
+                                        <label class="form-check-label" for="descuentoCheckCa_ed">Aplicar descuento</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" id="divhoraCa_ed">
+                                    <div class="form-group">
+                                        <label for="">Hora de salida(24h):</label>
+                                        <input type="text" id="horaIncidenCa_ed" class="form-control form-control-sm">
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <button type="button" class="btn btn-light btn-sm " data-dismiss="modal">Cancelar</button>
+                                <button type="submit" name="" style="background-color: #163552;"
+                                    class="btn btn-sm">Guardar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
     </div>
 </div>

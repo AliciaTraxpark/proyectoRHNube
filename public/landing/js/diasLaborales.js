@@ -149,9 +149,9 @@ document.addEventListener('DOMContentLoaded', calendario_edit); ///////////
 ////////////////////////
 function laborable_ed() {
     $('#btnLabo').hide();
-    title = 'Laborable';
-    color = '#dfe6f2';
-    textColor = '#0b1b29';
+    title = 'Descanso';
+    color = '#4673a0';
+    textColor = '#ffffff';
     start = $('#pruebaStar_ed').val();
     end = $('#pruebaEnd_ed').val();
     tipo = 3;
@@ -270,3 +270,72 @@ function nolaborable_ed() {
         error: function () {}
     });
 };
+///////////////////////////////
+$('#horaIncidenCa_ed').flatpickr({
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i",
+    time_24hr: true
+});
+//////////////////7
+function IncidenciaEmpleados(){
+    $('#btnLabo').hide();
+    $("#frmIncidenciaCa_ed")[0].reset();
+    $('#modalIncidencia_ed').modal('show');
+}
+function modalIncidencia_ed() {
+    var idempleado = $('#idempleado').val();
+    descripcionI = $('#descripcionInciCa_ed').val();
+    var descuentoI;
+    if ($('#descuentoCheckCa_ed').prop('checked')) {
+        descuentoI = 1;
+    } else {
+        descuentoI = 0
+    }
+    fechaI = $('#pruebaStar_ed').val();
+    fechaFin = $('#pruebaEnd_ed').val();
+    horaIn = $('#horaIncidenCa_ed').val();
+
+    $.ajax({
+        type: "post",
+        url: "/empleado/storeIncidempleado",
+        data: {
+            start: fechaI,
+            title: descripcionI,
+            descuentoI: descuentoI,
+            end: fechaFin,
+            horaIn,
+            idempleado
+
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            num=$('#idempleado').val().length;
+            console.log(num);
+            if(num==1){
+
+            calendarioedit.refetchEvents();}
+            else{
+
+             calendarioedit.addEvent({
+                 id:
+                 data,
+                title: 'data',
+                start: $('#pruebaStar_ed').val(),
+                end: $('#pruebaEnd_ed').val(),
+                color : '#a34141',
+                textColor:'#ffffff'
+
+              });
+
+            }
+            $('#modalIncidencia_ed').modal('hide');
+
+        },
+        error: function (data) {
+            alert('Ocurrio un error');
+        }
+    });
+}

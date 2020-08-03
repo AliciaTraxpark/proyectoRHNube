@@ -16,7 +16,12 @@ $('#horaF').flatpickr({
     dateFormat: "H:i",
     time_24hr: true
 });
-
+$('#horaIncidenCa_ed').flatpickr({
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i",
+    time_24hr: true
+});
 function calendarioInv() {
     var calendarElInv = document.getElementById('calendarInv');
     calendarElInv.innerHTML = "";
@@ -384,9 +389,9 @@ function calendario_edit() {
 document.addEventListener('DOMContentLoaded', calendario_edit); ///////////
 function laborable_ed() {
     $('#calendarioAsignar_ed').modal('hide');
-    title = 'Laborable';
-    color = '#dfe6f2';
-    textColor = '#0b1b29';
+    title = 'Descanso';
+    color = '#4673a0';
+    textColor = '#ffffff';
     start = $('#pruebaStar_ed').val();
     end = $('#pruebaEnd_ed').val();
     tipo = 3;
@@ -727,9 +732,9 @@ function registrarHorario_ed() {
 function laborableTem() {
     $('#calendarioAsignar').modal('hide');
 
-    title = 'Laborable';
-    color = '#dfe6f2';
-    textColor = '#0b1b29';
+    title = 'Descanso';
+    color = '#4673a0';
+    textColor = '#ffffff';
     start = $('#pruebaStar').val();
     end = $('#pruebaEnd').val();
     tipo = 3;

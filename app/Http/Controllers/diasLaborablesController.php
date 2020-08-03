@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\empleado;
 use App\eventos_empleado;
+use App\incidencias;
+use App\incidencia_dias;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 class diasLaborablesController extends Controller
@@ -41,13 +43,25 @@ class diasLaborablesController extends Controller
 
           $eventos_empleado = eventos_empleado::whereIn('evEmpleado_id', explode(",",$ideve))->get();
           $eventos_empleado->each->delete();
-          $array = array();
-        /*  foreach ($empleado as $t) {
 
-            $array[] = $t->emple_persona;
-        } */
-
-
+    }
+    public function diasIncidempleado(Request $request)
+    {
+        $idempleado=$request->get('idempleado');
+        $incidencia = new incidencias();
+        $incidencia->inciden_descripcion =  $request->get('title');
+        $incidencia->inciden_descuento = $request->get('descuentoI');
+        $incidencia->inciden_hora =  $request->get('horaIn');
+        $incidencia->users_id = Auth::user()->id;
+        $incidencia->save();
+        foreach($idempleado as $idempleados){
+        $incidencia_dias = new incidencia_dias();
+        $incidencia_dias->id_incidencia = $incidencia->inciden_id;
+        $incidencia_dias->inciden_dias_fechaI = $request->get('start');
+        $incidencia_dias->inciden_dias_fechaF = $request->get('end');
+        $incidencia_dias->id_empleado = $idempleados;
+        }
+        $incidencia_dias->save();
 
     }
 }
