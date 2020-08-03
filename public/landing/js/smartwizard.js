@@ -284,6 +284,12 @@ $(document).ready(function () {
                 }
             }
         }
+        if (isStepValid == true) {
+            idE = $('#v_id').val();
+            console.log($('#v_fechaFC').text());
+            objEmpleadoA = datosPersonaA("PUT");
+            actualizarEmpleado('/' + idE, objEmpleadoA);
+        }
         return isStepValid;
     }
     $('#smartwizard').smartWizard({
@@ -350,7 +356,27 @@ $(document).ready(function () {
         },
         leaveStep: function () {
             return true;
-        }
+        },
+        toolbarSettings: {
+            toolbarPosition: 'bottom', // none, top, bottom, both
+            toolbarButtonPosition: 'right', // left, right, center
+            toolbarExtraButtons: [
+                $(`<button></button>`).text('Finalizar')
+                .addClass('btn btn-secondary sw-btn-finish')
+                .attr("id", "FinalizarEmpleadoEditar")
+                .on('click', function () {
+                    leertabla();
+                    $('#smartwizard').smartWizard("reset");
+                    $('#navActualizar').hide();
+                    $('input[type="file"]').val("");
+                    $('input[typt="checkbox"]').val("");
+                    $('#formNuevoEd').hide();
+                    $('#formNuevoEl').hide();
+                    $('#checkboxFechaIE').prop('checked', false);
+                    $('#form-ver').modal('toggle');
+                }),
+            ]
+        },
     });
     //************Validacion********//
     $('#smartwizard').on("leaveStep", function leaveAStepCallback(event, obj, indice) {
@@ -370,12 +396,13 @@ $(document).ready(function () {
         }
     });
     $('#smartwizard1').on("showStep", function (e, anchorObject, stepNumber, stepDirection) {
-        if ($('button.sw-btn-next').hasClass('disabled')) {
-            $('button.sw-btn-next').hide();
+        if (stepNumber == 0) {
+            $('#FinalizarEmpleadoEditar').hide();
+        }
+        if (stepNumber == 5) {
             $('button.sw-btn-prev').hide();
-        } else {
-            $('button.sw-btn-prev').show();
-            $('button.sw-btn-next').show();
+            $('button.sw-btn-next').hide();
+            $('#FinalizarEmpleadoEditar').show();
         }
     })
 });

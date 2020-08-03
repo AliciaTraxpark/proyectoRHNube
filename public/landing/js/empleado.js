@@ -2706,12 +2706,12 @@ $("#checkboxFechaIE").on("click", function () {
         $('#ocultarFechaE > .combodate').show();
     }
 });
-$('#actualizarEmpleado').click(function () {
+/*$('#actualizarEmpleado').click(function () {
     idE = $('#v_id').val();
     console.log($('#v_fechaFC').text());
     objEmpleadoA = datosPersonaA("PUT");
     actualizarEmpleado('/' + idE, objEmpleadoA);
-});
+});*/
 
 
 function datosPersonaA(method) {
@@ -2775,19 +2775,13 @@ function actualizarEmpleado(accion, objEmpleadoA) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (msg) {
-            leertabla();
-            $('#smartwizard').smartWizard("reset");
-            $('#navActualizar').hide();
-            $('input[type="file"]').val("");
-            $('input[typt="checkbox"]').val("");
-            $('#formNuevoEd').hide();
-            $('#formNuevoEl').hide();
-            $('#checkboxFechaIE').prop('checked', false);
-            $('#form-ver').modal('toggle');
+            $.notifyClose();
             $.notify({
-                message: "\nEmpleado Actualizado.",
+                message: "\nDatos Actualizado.",
                 icon: 'admin/images/checked.svg'
             }, {
+                element: $('#form-ver'),
+                position: 'fixed',
                 icon_type: 'image',
                 newest_on_top: true,
                 delay: 5000,
@@ -2890,6 +2884,7 @@ $('#formNuevoE').click(function () {
 
 });
 $('#formNuevoEd').click(function () {
+    $('#FinalizarEmpleadoEditar').hide();
     $.get("/empleado/vaciarcalend", {}, function (data, status) {
         $('#form-ver').modal();
     })
