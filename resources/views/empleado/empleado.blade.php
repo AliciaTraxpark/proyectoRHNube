@@ -131,6 +131,81 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    <div id="v_androidEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="v_androidEmpleado"
+        aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
+                        empleado
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <h5 class="modal-title" id="myModalLabel" style="font-size:
+                        15px">¿Desea enviar correo al empleado?</h5>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-7 text-right">
+                                <button type="button" class="btn btn-light btn-sm"
+                                    data-dismiss="modal">Cancelar</button>
+                            </div>
+                            <div class="col-md-5 text-right" style="padding-right:
+                            38px;">
+                                <button type="button" id="v_enviarCorreoAndroidEmpleado"
+                                    name="v_enviarCorreoAndroidEmpleado" style="background-color: #163552;" class="btn
+                                btn-sm">Enviar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div id="v_windowsEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="v_windowsEmpleado"
+        aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
+                        empleado
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input style="display: none;" id="windows">
+                    <form class="form-horizontal">
+                        <h5 class="modal-title" id="myModalLabel" style="font-size:
+                        15px">¿Desea enviar correo al empleado?</h5>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-7 text-right">
+                                <button type="button" class="btn btn-light btn-sm"
+                                    data-dismiss="modal">Cancelar</button>
+                            </div>
+                            <div class="col-md-5 text-right" style="padding-right:
+                            38px;">
+                                <button type="button" id="v_enviarCorreoWindowsEmpleado"
+                                    name="v_enviarCorreoWindowsEmpleado" style="background-color: #163552;" class="btn
+                                btn-sm">Enviar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     <style>
         .container {
             margin-left: 40px;
@@ -1755,6 +1830,7 @@
                                     <li><a href="#sw-default-step-3">Foto</a></li>
                                     <li><a href="#sw-default-step-4">Calendario</a></li>
                                     <li><a href="#sw-default-step-5">Horario</a></li>
+                                    <li><a href="#sw-default-step-6">Dispositivo</a></li>
                                     <!--<div class="col-md-4 text-left" id="navActualizar" style="display: flex;
                                         align-items: center;cursor: pointer;"><a style="color: #3d3d3d;"
                                                 id="actualizarEmpleado">
@@ -2339,6 +2415,41 @@
                                                 </div><!-- /.modal-content -->
                                             </div><!-- /.modal-dialog -->
                                         </div><!-- /.modal -->
+                                    </div>
+                                    <div id="sw-default-step-6" class="setup-content">
+                                        <div class="row">
+                                            <div class="col-xl-12 col-sm-12">
+                                                <button style="background:#f0f4fd;border-color:#f0f4fd; color:#a0add3"
+                                                    class="btn btn-secondary btn-sm" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">+
+                                                    Agregar
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                    <a class="dropdown-item" id="v_agregarAndroid">ANDROID</a>
+                                                    <a class="dropdown-item" id="v_agregarWindows">WINDOWS</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="table-responsive">
+                                                <table id="v_tablaDispositivo" class="table"
+                                                    style="font-size: 13px!important;width:100%;">
+                                                    <thead style="background: #fafafa;">
+                                                        <tr>
+                                                            <th>Tipo Dispositivo</th>
+                                                            <th>Activación de Dispositivo</th>
+                                                            <th>Codigo</th>
+                                                            <th>Enviado</th>
+                                                            <th>Estado</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="v_tbodyDispositivo">
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

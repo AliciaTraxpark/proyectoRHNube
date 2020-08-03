@@ -785,99 +785,74 @@
                     $('#file2').fileinput('destroy');
                     cargarFile2();
                 }
-                //DETALLES DE PLATAFORMAS
-                $('#idDetalle').val(data[0].emple_id);
-                $('#idDetalleA').val(data[0].emple_id);
-                $('#colaborador').text(data[0].perso_apPaterno + ' ' + data[0].perso_apMaterno +
-                    ' ' + data[0].perso_nombre);
-                $('#colaboradorA').text(data[0].perso_apPaterno + ' ' + data[0].perso_apMaterno +
-                    ' ' + data[0].perso_nombre);
-                $('#totalPC').text(data[0].total);
-                $('#licencia').text(data[0].licencia);
-                $('#detalleLicencia').empty();
-                $('#estadoLicencia').empty();
-                $('#divActvPC').empty();
-                $('#divEstado').empty();
-                var container = $('#detalleLicencia');
-                var detalle = "";
-                var containerDisponible = $('#estadoLicencia');
-                var disponible = "";
-                var verContainer = $('#divActvPC');
-                var verDetalle = "";
-                var verContainerE = $('#divEstado');
-                var verDetalleE = "";
-                $('#imgsmEmpleado').attr("src", "admin/assets//images/users/avatar-7.png");
-                $('#imgsmEmpleadoAndroid').attr("src", "admin/assets//images/users/avatar-7.png");
-                if (data[0].foto != "") {
-                    $('#imgsmEmpleado').attr("src", "fotosEmpleado/" + data[0].foto);
-                    $('#imgsmEmpleadoAndroid').attr("src", "fotosEmpleado/" + data[0].foto);
-                }
-                if (data[0].total == 0) {
-                    $('#rowDetalles').hide();
-                } else {
-                    $('#rowDetalles').show();
-                    for (var i = 0; i < data[0].licencia.length; i++) {
-                        console.log(data[0].licencia[i]);
-                        detalle +=
-                            `<p class="mb-2" style="color: #4B4B5A;font-weight: bold"> DISPOSITIVO  ${i+1} &nbsp;&nbsp;<img src="{{asset('landing/images/laptop (1).svg')}}" height="25"
-                                                    class="mr-2" alt="" /></p>
-                            <h5 class="font-size-16" id="lic${data[0].licencia[i].id}">${data[0].licencia[i].licencia}</h5>`;
-                        verDetalle += `<label for="sw-default">Activación Dispositivo</label>
-                                        <input class="form-control" tabindex="4" value="${data[0].licencia[i].licencia}" disabled>`;
-                        if (data[0].licencia[i].disponible == 1) {
-                            disponible +=
-                                `<p class="mb-2" style="color: #4B4B5A;font-weight: bold">Estado</p>
-                                            <h5 class="font-size-16"><a class="badge badge-soft-primary mr-2">Disponible</a></h5>`;
-                            verDetalleE += `<label for="sw-default">Estado</label>
-                            <h5 class="font-size-16"><a class="badge badge-soft-primary mr-2">Disponible</a></h5>`;
-
-                        } else {
-                            disponible +=
-                                `<input style="display: none;" id="idLicenciaND${data[0].emple_id}" value="${data[0].licencia[i].id}">
-                                <p class="mb-2"style="color: #4B4B5A;font-weight: bold">ESTADO</p>
-                                            <h5 class="font-size-16"><a data-toggle="tooltip" data-placement="right"
-                                            title=" Al cambiar el estado de la licencia toda información del empleado en su PC será borrada" data-original-title="" onclick="$('#estadoLicenciaC').modal()" style="cursor: pointer" class="badge badge-soft-danger mr-2">No Disponible</a></h5>`;
-                            verDetalleE += `<label for="sw-default">Estado</label>
-                            <h5 class="font-size-16"><a class="badge badge-soft-danger mr-2">No Disponible</a></h5>`;
+                $('#v_tbodyDispositivo').empty();
+                var container = $('#v_tbodyDispositivo');
+                for (var i = 0; i < data[0].vinculacion.length; i++) {
+                    if(data[0].vinculacion[i].dispositivoD == 'WINDOWS'){
+                        if(data[0].vinculacion[i].disponible == 'c'){
+                            var tr = `<tr>
+                            <td>${data[0].vinculacion[i].dispositivoD}</td>
+                            <td>${data[0].vinculacion[i].licencia}</td>
+                            <td>${data[0].vinculacion[i].codigo}</td>
+                            <td id="enviadoW${data[0].vinculacion[i].idVinculacion}">${data[0].vinculacion[i].envio}</td>
+                            <td id="estado${data[0].vinculacion[i].idVinculacion}">Creado</td>
+                            <td>
+                                <a  onclick="javascript:modalWindowsEditar(${data[0].vinculacion[i].idVinculacion});$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+                                    correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
+                                    src="landing/images/note.svg" height="20">
+                                </a>
+                            </td>
+                            </tr>`;
+                        }
+                        if(data[0].vinculacion[i].disponible == 'e'){
+                            var tr = `<tr>
+                            <td>${data[0].vinculacion[i].dispositivoD}</td>
+                            <td>${data[0].vinculacion[i].licencia}</td>
+                            <td>${data[0].vinculacion[i].codigo}</td>
+                            <td id="enviadoW${data[0].vinculacion[i].idVinculacion}">${data[0].vinculacion[i].envio}</td>
+                            <td id="estado${data[0].vinculacion[i].idVinculacion}">Enviado</td>
+                            <td>
+                                <a  onclick="javascript:modalWindowsEditar(${data[0].vinculacion[i].idVinculacion});$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+                                    correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
+                                    src="landing/images/note.svg" height="20">
+                                </a>
+                            </td>
+                            </tr>`;
+                        }
+                    }else{
+                        if(data[0].vinculacion[i].disponible == 'c'){
+                            var tr = `<tr>
+                                <td>${data[0].vinculacion[i].dispositivoD}</td>
+                                <td>${data[0].vinculacion[i].licencia}</td>
+                                <td>${data[0].vinculacion[i].codigo}</td>
+                                <td id="enviado${data[0].emple_id}">${data[0].vinculacion[i].envio}</td>
+                                <td id="estado${data[0].emple_id}">Creado</td>
+                                <td>
+                                <input style="display: none;" id="android${data[0].emple_id}" value="${data[0].vinculacion[i].idVinculacion}">
+                                <a  onclick="$('#v_androidEmpleado').modal();$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+                                correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
+                                    src="landing/images/note.svg" height="20">
+                            </a></td>
+                                </tr>`;
+                        }
+                        if(data[0].vinculacion[i].disponible == 'e'){
+                            var tr = `<tr>
+                                <td>${data[0].vinculacion[i].dispositivoD}</td>
+                                <td>${data[0].vinculacion[i].licencia}</td>
+                                <td>${data[0].vinculacion[i].codigo}</td>
+                                <td id="enviado${data[0].emple_id}">${data[0].vinculacion[i].envio}</td>
+                                <td id="estado${data[0].emple_id}">Enviado</td>
+                                <td>
+                                <input style="display: none;" id="android${data[0].emple_id}" value="${data[0].vinculacion[i].idVinculacion}">
+                                <a  onclick="$('#v_androidEmpleado').modal();$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+                                correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
+                                    src="landing/images/note.svg" height="20">
+                            </a></td>
+                                </tr>`;
                         }
                     }
-                    container.append(detalle);
-                    containerDisponible.append(disponible);
-                    verContainer.append(verDetalle);
-                    verContainerE.append(verDetalleE);
+                container.append(tr);
                 }
-                $('#totalCorteCap').text(data[0].corteCaptura);
-                //VER
-                $('#v_tipoDocV').val(data[0].tipoDoc_descripcion);
-                $('#v_apPaternoV').val(data[0].perso_apPaterno);
-                $('#v_direccionV').val(data[0].perso_direccion);
-                $('#v_idV').val(data[0].emple_id);
-                $('#v_fechaNV').combodate('setValue',data[0].perso_fechaNacimiento);
-                $('#v_apMaternoV').val(data[0].perso_apMaterno);
-                $('#v_numDocumentoV').val(data[0].emple_nDoc);
-                $('#v_emailV').val(data[0].emple_Correo);
-                $('#v_celularV').val(data[0].emple_celular);
-                $('#v_nombresV').val(data[0].perso_nombre);
-                $('#v_telefonoV').val(data[0].emple_telefono);
-                $('#v_depV').val(data[0].deparNo);
-                $('#v_departamentoV').val(data[0].depaN);
-                $("[name=v_tipoV]").val([data[0].perso_sexo]);
-                $('#v_provV').val(data[0].provi);
-                $('#v_provinciaV').val(data[0].proviN);
-                $('#v_distV').val(data[0].distNo)
-                $('#v_distritoV').val(data[0].distN)
-                $('#v_cargoV').val(data[0].cargo_descripcion);
-                $('#v_areaV').val(data[0].area_descripcion);
-                $('#v_centrocV').val(data[0].centroC_descripcion);
-                $('#v_contratoV').val(data[0].contrato_descripcion);
-                $('#v_nivelV').val(data[0].nivel_descripcion);
-                $('#v_localV').val(data[0].local_descripcion);
-                $('#v_codigoEmpleadoV').val(data[0].emple_codigo);
-                if(data[0].foto != ''){
-                    $('#v_fotoV').attr("src", "fotosEmpleado/" + data[0].foto);
-                    $('#h5Ocultar').hide();
-                }
-                $('#cantidadPC').val(data[0].total);
             },
             error: function () {}
         });

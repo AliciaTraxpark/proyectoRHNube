@@ -22,24 +22,32 @@ class vinculacionDispositivoController extends Controller
         $modo->idEmpleado = $idEmpleado;
         $modo->save();
         $idModo = $modo->id;
+        $licencia = new licencia_empleado();
+        $licencia->idEmpleado = $idEmpleado;
+        $encodeLicencia = STR::random(20);
+        $licencia->licencia = $encodeLicencia;
+        $licencia->disponible = 'c';
+        $licencia->save();
+        $idLicencia = $licencia->id;
         $vinculacion = new vinculacion();
+        $codigo = intval($encodeLicencia, 36);
+        $vinculacion->hash = $codigo;
         $vinculacion->idEmpleado = $idEmpleado;
         $vinculacion->envio = 0;
         $vinculacion->idModo = $idModo;
+        $vinculacion->idLicencia = $idLicencia;
         $vinculacion->save();
 
         $idVinculacion = $vinculacion->id;
 
-
-
         $tipo_modo = tipo_dispositivo::where('id', '=', 2)->get()->first();
-        $licencia = STR::random(20);
-        $codigo = intval($licencia, 36);
-        $tipo_modo->licencia = $licencia;
-        $tipo_modo->codigo = $codigo;
-        $tipo_modo->envio = $vinculacion->envio;
-        $tipo_modo->idVinculacion = $idVinculacion;
-        return response()->json($tipo_modo, 200);
+        $respuesta = [];
+        $respuesta['dispositivo_descripcion'] = $tipo_modo->dispositivo_descripcion;
+        $respuesta['licencia'] = $encodeLicencia;
+        $respuesta['codigo'] = $codigo;
+        $respuesta['envio'] = 0;
+        $respuesta['idVinculacion'] = $idVinculacion;
+        return response()->json($respuesta, 200);
     }
 
     public function vinculacionWindows(Request $request)

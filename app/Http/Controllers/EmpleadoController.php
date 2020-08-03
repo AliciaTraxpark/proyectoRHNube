@@ -458,12 +458,8 @@ class EmpleadoController extends Controller
                 if (!isset($resultado[$empleado->emple_id])) {
                     $resultado[$empleado->emple_id] = $empleado;
                 }
-                if (!isset($resultado[$empleado->emple_id]->dispositivos)) {
-                    $resultado[$empleado->emple_id]->dispositivos = array();
-                }
-                array_push($resultado[$empleado->emple_id]->dispositivos, $empleado->dispositivo);
-                if (!isset($resultado[$empleado->emple_id]->licencia)) {
-                    $resultado[$empleado->emple_id]->licencia = array();
+                if (!isset($resultado[$empleado->emple_id]->vinculacion)) {
+                    $resultado[$empleado->emple_id]->vinculacion = array();
                 }
             }
             return $resultado;
@@ -484,10 +480,6 @@ class EmpleadoController extends Controller
             ->leftJoin('tipo_contrato as tp', 'e.emple_tipoContrato', '=', 'tp.contrato_id')
             ->leftJoin('nivel as n', 'e.emple_nivel', '=', 'n.nivel_id')
             ->leftJoin('local as l', 'e.emple_local', '=', 'l.local_id')
-            ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
-            ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
-            ->leftJoin('tipo_dispositivo as td', 'td.id', '=', 'md.idTipoDispositivo')
-            /*->leftJoin('licencia_empleado as le', 'le.id', '=', 'v.idLicencia')*/
 
             ->select(
                 'e.emple_id',
@@ -534,9 +526,7 @@ class EmpleadoController extends Controller
                 'e.emple_codigo',
                 'tp.contrato_descripcion',
                 'n.nivel_descripcion',
-                'l.local_descripcion',
-                /*'le.id as licencia',*/
-                'md.idTipoDispositivo as dispositivo'
+                'l.local_descripcion'
             )
             ->where('e.emple_id', '=', $idempleado)
             ->where('e.users_id', '=', Auth::user()->id)
@@ -545,24 +535,23 @@ class EmpleadoController extends Controller
             ->select(DB::raw('COUNT(le.id) as total'), 'le.licencia')
             ->where('le.idEmpleado', '=', $idempleado)
             ->get();
-        $licenciaE = DB::table('vinculacion as v')
+        $vinculacion = DB::table('vinculacion as v')
+            ->join('modo as m', 'm.id', '=', 'v.idModo')
+            ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
             ->join('licencia_empleado as le', 'le.id', '=', 'v.idLicencia')
-            ->select('v.id as idV', 'le.idEmpleado', 'le.licencia', 'le.id', 'le.disponible')
-            ->where('le.idEmpleado', '=', $idempleado)
+            ->select('v.id as idV', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
+            ->where('v.idEmpleado', '=', $idempleado)
             ->get();
-        /*$dispositivo = DB::table('vinculacion as v')
-        ->join('modo as m','m.id','=','v.idModo')
-        ->select()*/
         $corteCaptura = DB::table('users as u')
             ->select('u.corteCaptura')
             ->where('u.id', '=', Auth::user()->id)
             ->get();
-        $licencia = [];
-        foreach ($licenciaE as $lic) {
-            array_push($licencia, array("idVinculacion" => $lic->idV, "id" => $lic->id, "licencia" => $lic->licencia, "disponible" => $lic->disponible));
+        $vinculacionD = [];
+        foreach ($vinculacion as $lic) {
+            array_push($vinculacionD, array("idVinculacion" => $lic->idV, "idLicencia" => $lic->idL, "licencia" => $lic->licencia, "disponible" => $lic->disponible, "dispositivoD" => $lic->dispositivo_descripcion, "codigo" => $lic->codigo, "envio" => $lic->envio));
         }
         $empleados[0]->total = $cantidad[0]->total;
-        $empleados[0]->licencia = $licencia;
+        $empleados[0]->vinculacion = $vinculacionD;
         $empleados[0]->corteCaptura = $corteCaptura[0]->corteCaptura;
         $empleado = agruparEmpleadosShow($empleados);
         return array_values($empleado);
