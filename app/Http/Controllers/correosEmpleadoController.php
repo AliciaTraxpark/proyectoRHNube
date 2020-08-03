@@ -34,8 +34,6 @@ class correosEmpleadoController extends Controller
             $licencia_empleado = licencia_empleado::findOrFail($vinculacion->idLicencia);
             $vinculacion->descarga = STR::random(25);
             $vinculacion->save();
-            $licencia_empleado->disponible = 'e';
-            $licencia_empleado->save();
             $datos = [];
             $datos["correo"] = $empleado->emple_Correo;
             $email = array($datos["correo"]);
@@ -50,6 +48,8 @@ class correosEmpleadoController extends Controller
             $vinculacion->fecha_entrega = Carbon::now();
             $envio = $vinculacion->envio;
             $suma = $envio + 1;
+            $licencia_empleado->disponible = 'e';
+            $licencia_empleado->save();
             $vinculacion->envio = $suma;
             $vinculacion->save();
             $respuesta = [];
@@ -201,7 +201,14 @@ class correosEmpleadoController extends Controller
             $envio = $vinculacion->envio;
             $suma = $envio + 1;
             $vinculacion->envio = $suma;
-            return json_encode(array("result" => true));
+            $vinculacion->save();
+            $licencia_empleado = licencia_empleado::findOrFail($vinculacion->idLicencia);
+            $licencia_empleado->disponible = 'e';
+            $licencia_empleado->save();
+            $respuesta = [];
+            $respuesta['envio'] = $vinculacion->envio;
+            $respuesta['disponible'] = $licencia_empleado->disponible;
+            return response()->json($respuesta, 200);
         }
         return response()->json(null, 400);
     }
