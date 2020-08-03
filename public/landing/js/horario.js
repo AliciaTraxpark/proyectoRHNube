@@ -577,63 +577,6 @@ document.addEventListener('DOMContentLoaded', calendario);
 
 ///////////////////////////////
 
-$('#departamento').change(function(){
-    var departamento = $('#departamento').val();
-    var pais = $('#pais').val();
-    if (pais == 173 && departamento == '') {
-        $('#Datoscalendar').show();
-        $('#Datoscalendar1').hide();
-        return false;
-    }
-
-    $.ajax({
-        type: "post",
-        url: "/horario/confirmarDepartamento",
-        data: {
-            departamento: departamento,
-            pais: pais
-        },
-        statusCode: {
-            /*401: function () {
-                location.reload();
-            },*/
-            419: function () {
-                location.reload();
-            }
-        },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function (dataA) {
-            if (dataA[0] == 1) {
-
-                $('#Datoscalendar').show();
-
-                //alert('ya esta creado');
-            } else {
-
-
-                bootbox.alert({
-                    message: "No existe calendario",
-
-                });
-                return false;
-            }
-
-        var fechah = new Date();
-            var ano3 = fechah. getFullYear();
-            var mes3=fechah.getMonth()+1;
-             var fechas1=ano3+'-'+mes3+'-01';
-            var fechasM=new Date(fechas1);
-            calendario(dataA[1],fechasM);
-
-        },
-        error: function () {
-            alert("Hay un error");
-        }
-    });
-
-});
 
 //////////////////////
 $('#guardarHorarioEventos').click(function () {
@@ -1960,3 +1903,114 @@ function editarHorario(){
     });
 
   }
+///////////////////////
+//select todo empleado
+$("#selectTodoCheck").click(function(){
+    if($("#selectTodoCheck").is(':checked') ){
+        $("#nombreEmpleado > option").prop("selected","selected");
+        $("#nombreEmpleado").trigger("change");
+    }else{
+        $("#nombreEmpleado > option").prop("selected",false);
+         $("#nombreEmpleado").trigger("change");
+     }
+});
+//////////////////////
+//seleccionar por area, cargo, etc
+$('#selectEmpresarial').change(function(e){
+ idempresarial=$('#selectEmpresarial').val();
+ textSelec=$('select[name="selectEmpresarial"] option:selected').text();
+ palabraEmpresarial=textSelec.split(' ')[0];
+ if(palabraEmpresarial=='Area'){
+    $.ajax({
+        type: "post",
+        url: "/horario/empleArea",
+        data: {
+            idarea: idempresarial
+        },
+        statusCode: {
+
+            419: function () {
+                location.reload();
+            }
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            $("#nombreEmpleado > option").prop("selected",false);
+            $("#nombreEmpleado").trigger("change");
+            $.each( data, function( index, value ){
+                 $("#nombreEmpleado > option[value='"+value.emple_id+"']").prop("selected","selected");
+                 $("#nombreEmpleado").trigger("change");
+            });
+        console.log(data);
+        },
+        error: function (data) {
+            alert('Ocurrio un error');
+        }
+    });
+ }
+ if(palabraEmpresarial=='Cargo'){
+    $.ajax({
+        type: "post",
+        url: "/horario/empleCargo",
+        data: {
+            idcargo: idempresarial
+        },
+        statusCode: {
+
+            419: function () {
+                location.reload();
+            }
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            $("#nombreEmpleado > option").prop("selected",false);
+            $("#nombreEmpleado").trigger("change");
+            $.each( data, function( index, value ){
+                 $("#nombreEmpleado > option[value='"+value.emple_id+"']").prop("selected","selected");
+                 $("#nombreEmpleado").trigger("change");
+            });
+        console.log(data);
+        },
+        error: function (data) {
+            alert('Ocurrio un error');
+        }
+    });
+    }
+
+if(palabraEmpresarial=='Local'){
+    $.ajax({
+        type: "post",
+        url: "/horario/empleLocal",
+        data: {
+            idlocal: idempresarial
+        },
+        statusCode: {
+
+            419: function () {
+                location.reload();
+            }
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            $("#nombreEmpleado > option").prop("selected",false);
+            $("#nombreEmpleado").trigger("change");
+            $.each( data, function( index, value ){
+                    $("#nombreEmpleado > option[value='"+value.emple_id+"']").prop("selected","selected");
+                    $("#nombreEmpleado").trigger("change");
+            });
+        console.log(data);
+        },
+        error: function (data) {
+            alert('Ocurrio un error');
+        }
+    });
+    }
+
+})
+/////////////////////////////////
