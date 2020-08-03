@@ -177,7 +177,6 @@ Route::get('tablahorario/ver', 'horarioController@tablaHorario');
 Route::post('/verDataEmpleado', 'horarioController@verDataEmpleado');
 Route::get('/vaciartemporal', 'horarioController@vaciartemporal');
 Route::get('/copiarEventos', 'horarioController@copiarEventos');
-Route::post('/horario/confirmarDepartamento', 'horarioController@confirmarDepartamento');
 Route::get('/empleadoIncHorario', 'horarioController@empleadosIncidencia');
 Route::post('/registrarInci', 'horarioController@registrarIncidencia');
 Route::post('/eliminarHora', 'horarioController@eliminarHora');
@@ -202,7 +201,9 @@ Route::post('/verDatahorario', 'horarioController@verDatahorario');
 Route::post('/horario/actualizarhorario', 'horarioController@actualizarhorarioed');
 Route::post('/horario/verificarID', 'horarioController@verificarID');
 Route::post('/horario/eliminarHorario', 'horarioController@eliminarHorario');
-
+Route::post('/horario/empleArea', 'horarioController@empleArea');
+Route::post('/horario/empleCargo', 'horarioController@empleCargo');
+Route::post('/horario/empleLocal', 'horarioController@empleLocal');
 //DASHBOARD
 Route::get('/eventosU', 'dashboardController@eventosUsuario');
 Route::get('/totalA', 'dashboardController@area');
