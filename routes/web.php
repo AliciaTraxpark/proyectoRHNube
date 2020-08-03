@@ -221,8 +221,9 @@ Route::get('/horarios', 'horarioController@indexMenu');
 Route::get('/dias/laborales', 'diasLaborablesController@indexMenu');
 //VINCULACION
 Route::get('vinculacionAndroid', 'vinculacionDispositivoController@vinculacionAndroid');
-//CORREO EMPLEADO
-Route::get('empleadoCorreo', 'correosEmpleadoController@encode');
+Route::get('vinculacionWindows', 'vinculacionDispositivoController@vinculacionWindows');
+//WINDOWS
+Route::get('correoWindows', 'correosEmpleadoController@envioWindows');
 Route::get('comprobR', 'correosEmpleadoController@reenvio');
 Route::get('envioMasivo', 'correosEmpleadoController@encodeMasivo');
 Route::get('asignarEscritorio', 'correosEmpleadoController@nuevoEncode');
