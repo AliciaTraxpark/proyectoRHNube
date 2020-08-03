@@ -148,7 +148,7 @@ function enviarCorreoWindows() {
             if (data.disponible == 'e') {
                 var cont = $('#estado' + idVinculacion);
                 cont.empty();
-                var tdE = `<td>${data.disponible}</td>`
+                var tdE = `<td>Enviado</td>`
                 cont.append(tdE);
             }
             container.append(td);
