@@ -1831,11 +1831,6 @@
                                     <li><a href="#sw-default-step-4">Calendario</a></li>
                                     <li><a href="#sw-default-step-5">Horario</a></li>
                                     <li><a href="#sw-default-step-6">Dispositivo</a></li>
-                                    <!--<div class="col-md-4 text-left" id="navActualizar" style="display: flex;
-                                        align-items: center;cursor: pointer;"><a style="color: #3d3d3d;"
-                                                id="actualizarEmpleado">
-                                                <img src="{{asset('admin/images/processing.svg')}}" height="18">
-                                                <span style="font-weight: 600">Actualizar Empleado</span></i></a>-->
                                 </ul>
                                 <div class="p-3" id="form-registrar">
                                     <div id="persona-step-1">
@@ -2156,14 +2151,6 @@
                                             </div> <!-- end col -->
                                         </div> <!-- end row -->
                                         <br>
-                                        <br>
-                                        <div class="row">
-                                            <div class="col-12 text-center">
-                                                <button type="button" id="actualizarEmpleado"
-                                                    style="background-color: #163552;color: #ffffff;"
-                                                    class="btn btn-light btn-sm">Actualizar</button>
-                                            </div>
-                                        </div>
                                     </div>
                                     <div id="sw-default-step-4">
                                         <div class="row">
