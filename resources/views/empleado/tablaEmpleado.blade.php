@@ -687,6 +687,7 @@
                 }
             },
             success: function (data) {
+                console.log(data);
                 calendario3();
 
                 $('#v_tipoDoc').val(data[0].tipoDoc_descripcion);

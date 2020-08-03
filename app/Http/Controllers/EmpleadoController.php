@@ -450,7 +450,25 @@ class EmpleadoController extends Controller
     public function show(Request $request)
     {
         $idempleado = $request->get('value');
-        $empleado = DB::table('empleado as e')
+        function agruparEmpleadosShow($array)
+        {
+            $resultado = array();
+
+            foreach ($array as $empleado) {
+                if (!isset($resultado[$empleado->emple_id])) {
+                    $resultado[$empleado->emple_id] = $empleado;
+                }
+                if (!isset($resultado[$empleado->emple_id]->dispositivos)) {
+                    $resultado[$empleado->emple_id]->dispositivos = array();
+                }
+                array_push($resultado[$empleado->emple_id]->dispositivos, $empleado->dispositivo);
+                if (!isset($resultado[$empleado->emple_id]->licencia)) {
+                    $resultado[$empleado->emple_id]->licencia = array();
+                }
+            }
+            return $resultado;
+        }
+        $empleados = DB::table('empleado as e')
             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->leftJoin('tipo_documento as tipoD', 'e.emple_tipoDoc', '=', 'tipoD.tipoDoc_id')
             ->leftJoin('ubigeo_peru_departments as depar', 'e.emple_departamento', '=', 'depar.id')
@@ -469,6 +487,7 @@ class EmpleadoController extends Controller
             ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
             ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
             ->leftJoin('tipo_dispositivo as td', 'td.id', '=', 'md.idTipoDispositivo')
+            /*->leftJoin('licencia_empleado as le', 'le.id', '=', 'v.idLicencia')*/
 
             ->select(
                 'e.emple_id',
@@ -516,6 +535,7 @@ class EmpleadoController extends Controller
                 'tp.contrato_descripcion',
                 'n.nivel_descripcion',
                 'l.local_descripcion',
+                /*'le.id as licencia',*/
                 'md.idTipoDispositivo as dispositivo'
             )
             ->where('e.emple_id', '=', $idempleado)
@@ -525,22 +545,27 @@ class EmpleadoController extends Controller
             ->select(DB::raw('COUNT(le.id) as total'), 'le.licencia')
             ->where('le.idEmpleado', '=', $idempleado)
             ->get();
-        $licenciaE = DB::table('licencia_empleado as le')
-            ->select('le.licencia', 'le.id', 'le.disponible')
+        $licenciaE = DB::table('vinculacion as v')
+            ->join('licencia_empleado as le', 'le.id', '=', 'v.idLicencia')
+            ->select('v.id as idV', 'le.idEmpleado', 'le.licencia', 'le.id', 'le.disponible')
             ->where('le.idEmpleado', '=', $idempleado)
             ->get();
+        /*$dispositivo = DB::table('vinculacion as v')
+        ->join('modo as m','m.id','=','v.idModo')
+        ->select()*/
         $corteCaptura = DB::table('users as u')
             ->select('u.corteCaptura')
             ->where('u.id', '=', Auth::user()->id)
             ->get();
         $licencia = [];
         foreach ($licenciaE as $lic) {
-            array_push($licencia, array("id" => $lic->id, "licencia" => $lic->licencia, "disponible" => $lic->disponible));
+            array_push($licencia, array("idVinculacion" => $lic->idV, "id" => $lic->id, "licencia" => $lic->licencia, "disponible" => $lic->disponible));
         }
-        $empleado[0]->total = $cantidad[0]->total;
-        $empleado[0]->licencia = $licencia;
-        $empleado[0]->corteCaptura = $corteCaptura[0]->corteCaptura;
-        return $empleado;
+        $empleados[0]->total = $cantidad[0]->total;
+        $empleados[0]->licencia = $licencia;
+        $empleados[0]->corteCaptura = $corteCaptura[0]->corteCaptura;
+        $empleado = agruparEmpleadosShow($empleados);
+        return array_values($empleado);
         //
 
     }
