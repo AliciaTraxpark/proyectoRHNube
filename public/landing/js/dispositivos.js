@@ -108,7 +108,7 @@ function vinculacionWindows() {
                 <td>${data.dispositivo_descripcion}</td>
                 <td>${data.licencia}</td>
                 <td>${data.codigo}</td>
-                <td id="enviadow${data.idVinculacion}">${data.envio}</td>
+                <td id="enviadoW${data.idVinculacion}">${data.envio}</td>
                 <td id="estado${data.idVinculacion}">Creado</td>
                 <td>
                 <a  onclick="javascript:modalWindows(${data.idVinculacion});$('#form-registrar').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
