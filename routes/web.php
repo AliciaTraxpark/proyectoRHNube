@@ -78,6 +78,11 @@ Route::get('/eventos_usuario/store', 'EventosUsuarioController@store');
 
 //EMPLEADOS
 Route::post('/empleado/store', 'EmpleadoController@store');
+Route::post('/empleado/storeEmpleado/{idE}', 'EmpleadoController@storeEmpleado');
+Route::post('/empleado/storeEmpresarial/{idE}', 'EmpleadoController@storeEmpresarial');
+Route::post('/empleado/storeFoto/{idE}', 'EmpleadoController@storeFoto');
+Route::post('/empleado/storeCalendario/{idE}', 'EmpleadoController@storeCalendario');
+Route::post('/empleado/storeHorario/{idE}', 'EmpleadoController@storeHorario');
 Route::get('/empleado', 'EmpleadoController@index');
 Route::get('/empleado/cargar', 'EmpleadoController@cargarDatos');
 Route::post('/empleado/file', 'EmpleadoController@upload');
@@ -88,6 +93,7 @@ Route::post('/empleado/eliminar', 'EmpleadoController@destroy');
 Route::post('/eliminarFoto/{v_id}', 'EmpleadoController@eliminarFoto');
 Route::delete('/eliminarEmpleados', 'EmpleadoController@deleteAll');
 Route::get('numDoc', 'EmpleadoController@comprobarNumD');
+Route::get('numDocStore', 'EmpleadoController@comprobarNumDocumentoStore');
 Route::get('email', 'EmpleadoController@comprobarCorreo');
 Route::get('emailE', 'EmpleadoController@comprobarCorreoEditar');
 Route::post('/empleado/calendarioEmpTemp', 'EmpleadoController@calendarioEmpTemp');
@@ -171,7 +177,6 @@ Route::get('tablahorario/ver', 'horarioController@tablaHorario');
 Route::post('/verDataEmpleado', 'horarioController@verDataEmpleado');
 Route::get('/vaciartemporal', 'horarioController@vaciartemporal');
 Route::get('/copiarEventos', 'horarioController@copiarEventos');
-Route::post('/horario/confirmarDepartamento', 'horarioController@confirmarDepartamento');
 Route::get('/empleadoIncHorario', 'horarioController@empleadosIncidencia');
 Route::post('/registrarInci', 'horarioController@registrarIncidencia');
 Route::post('/eliminarHora', 'horarioController@eliminarHora');
@@ -196,7 +201,9 @@ Route::post('/verDatahorario', 'horarioController@verDatahorario');
 Route::post('/horario/actualizarhorario', 'horarioController@actualizarhorarioed');
 Route::post('/horario/verificarID', 'horarioController@verificarID');
 Route::post('/horario/eliminarHorario', 'horarioController@eliminarHorario');
-
+Route::post('/horario/empleArea', 'horarioController@empleArea');
+Route::post('/horario/empleCargo', 'horarioController@empleCargo');
+Route::post('/horario/empleLocal', 'horarioController@empleLocal');
 //DASHBOARD
 Route::get('/eventosU', 'dashboardController@eventosUsuario');
 Route::get('/totalA', 'dashboardController@area');
@@ -213,15 +220,17 @@ Route::get('/empleados', 'EmpleadoController@indexMenu');
 Route::get('/calendarios', 'calendarioController@indexMenu');
 Route::get('/horarios', 'horarioController@indexMenu');
 Route::get('/dias/laborales', 'diasLaborablesController@indexMenu');
-
-//CORREO EMPLEADO
-Route::get('empleadoCorreo', 'correosEmpleadoController@encode');
+//VINCULACION
+Route::get('vinculacionAndroid', 'vinculacionDispositivoController@vinculacionAndroid');
+Route::get('vinculacionWindows', 'vinculacionDispositivoController@vinculacionWindows');
+//WINDOWS
+Route::get('correoWindows', 'correosEmpleadoController@envioWindows');
 Route::get('comprobR', 'correosEmpleadoController@reenvio');
 Route::get('envioMasivo', 'correosEmpleadoController@encodeMasivo');
 Route::get('asignarEscritorio', 'correosEmpleadoController@nuevoEncode');
 Route::get('ambasPlataformas', 'correosEmpleadoController@ambasPlataformas');
 //ANDROID
-Route::get('empleadoAndroid', 'correosEmpleadoController@envioA');
+Route::get('correoAndroid', 'correosEmpleadoController@envioAndroid');
 Route::get('empleadoAndroidMasivo', 'correosEmpleadoController@envioAndroidM');
 //DOWNLOAD
 Route::get('download/{code}', 'downloadController@download');

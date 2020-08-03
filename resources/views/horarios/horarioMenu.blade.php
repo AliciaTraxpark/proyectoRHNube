@@ -34,6 +34,7 @@
 
 @section('content')
 <style>
+
   div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content.fc-sun{
 
 background-color: rgb(255, 239, 239) !important;
@@ -146,11 +147,11 @@ a:not([href]):not([tabindex]){
                 <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                 <div class="row">
                     <div class="col-md-6">
-
+                        <button class="btn btn-sm btn-primary" id="btnasignar" style="background-color: #e3eaef;border-color:#e3eaef;color:#37394b"><img src="{{asset('admin/images/calendarioHor.svg')}}" height="15">&nbsp; Asignar horarios</button>
                     </div>
                     <div class=" col-md-6 col-xl-6 text-right">
                         <button class="btn btn-sm btn-primary" onclick="abrirHorario()" id="btnNuevoHorario" style="background-color: #183b5d;border-color:#62778c">+ Nuevo Horario</button>
-                        <button class="btn btn-sm btn-primary" id="btnasignar" style="background-color: #183b5d;border-color:#62778c">Asignar horarios</button>
+
                        {{--  <button class="btn btn-sm btn-primary" id="btnasignarIncidencia" style="background-color: #183b5d;border-color:#62778c">Asignar incidencias</button> --}}
                     </div>
                 </div>
@@ -335,51 +336,60 @@ a:not([href]):not([tabindex]){
                        <span aria-hidden="true">&times;</span>
                    </button>
                </div>
-               <div class="modal-body" style="font-size: 13.5px!important;padding-top: 8px;
+               <div class="modal-body" style="font-size: 13x!important;padding-top: 4px;
                padding-bottom: 8px;">
                 <input type="hidden" id="horario1">
                 <input type="hidden" id="horario2">
                    <div class="row">
-                       <div class="col-md-10">
+                       <div class="col-md-12" style="padding-left: 24px;">
                         <form id="formulario" action="javascript:agregarHoras()">
                            <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-9" style="zoom:90%;">
                                 <input type="hidden" id="fechaDa" name="fechaDa">
-                                <label for="">Asignar empleado(s):</label>
+                                <label for="" style="font-weight: 600;">Seleccionar empleado(s):</label>
+                            </div>
+                            <div class="col-md-6" style="zoom:90%;">
+                                <div class="form-check">
+                                    <input type="checkbox" style="" class="form-check-input" id="selectTodoCheck">
+                                    <label class="form-check-label" for="selectTodoCheck" style="font-style: oblique;">Seleccionar todos.</label>
+                                </div>
                             </div>
 
-
-                            <div class="col-md-9">
+                            <div class="col-md-7">
                                    <select class="form-control wide" data-plugin="customselect" multiple id="nombreEmpleado" >
                                 </select>
 
-                             </div> </div> </div>
+                             </div>
+                             <div class="col-md-2">
+                                 <label for="" style="margin-top: 9px;" >Seleccionar por:</label>
+                             </div>
+                             <div class="col-md-3">
+                                <select data-plugin="customselect" id="selectEmpresarial" name="selectEmpresarial" class="form-control" data-placeholder="seleccione">
+                                    <option value=""></option>
+                                    @foreach ($area as $areas)
+                                    <option value="{{$areas->idarea}}">Area : {{$areas->descripcion}}</option>
+                                    @endforeach
+                                    @foreach ($cargo as $cargos)
+                                    <option value="{{$cargos->idcargo}}">Cargo : {{$cargos->descripcion}}</option>
+                                    @endforeach
+                                    @foreach ($local as $locales)
+                                    <option value="{{$locales->idlocal}}">Local : {{$locales->descripcion}}</option>
+                                    @endforeach
+                                </select>
+                             </div>
+                            </div><br> </div>
 
-                       <div class="col-md-1"><label for="sdfgh"></label></div>
+
                         <div class="col-md-10" >
-                         <div class="row">
 
-                          </div>
                           <div class="col-md-12 text-center" id="Datoscalendar" style=" max-width: 100%;">
-                            <div class="col-md-12 row" style="    margin-left: 59%;
-                            top: 40px;">
 
-
-                            </div>
                             <div id="calendar" style="">
                             </div>
 
                           </div>
                           <input type="hidden" id="horarioEnd">
                           <input type="hidden" id="horarioStart">
-
-                          <div class="col-md-12 text-right" id="Datoscalendar1" style=" max-width: 100%;">
-                            <div id="calendar1">
-                            </div>
-
-                          </div>
-
-
                         </div>
                         <div class="col-md-1" style="top: 100px;">
                             <div class="row">
@@ -392,7 +402,7 @@ a:not([href]):not([tabindex]){
                                 height: 35px;border: 1px solid #d4d4d4;"><h1>&nbsp;</h1></div>
                                   <div class="col-md-6"><label for=""style="font-size: 12px">Dias laborables</label></div>
                             </div> <br><br><br>
-                            <div class="row">
+                            {{-- <div class="row">
                              <div class="col-6" style="padding-left: 0px;">
                                 <button style="background-color: #dddaee; border-color: #ffffff; color: #44444c;" onclick="vaciarcalendario()"  class="btn btn-xs btn-primary" ><img src="{{asset('admin/images/borrar.svg')}}" height="10" ></button>
                             </div>
@@ -400,7 +410,7 @@ a:not([href]):not([tabindex]){
                             <label style="font-size: 12px" for="">vaciar calendario</label>
                             </div>
                             </div>
-                            <br>
+                            <br> --}}
                             <div class="row">
 
 
@@ -434,7 +444,7 @@ a:not([href]):not([tabindex]){
                    <div class="col-md-12">
                        <div class="row">
 
-                           <div class="col-md-12 text-right" >
+                           <div class="col-md-12 text-right" style="padding-right: 0px;" >
                             <button type="button" id="" class="btn btn-light " data-dismiss="modal">Cancelar</button>
                             <button type="button" id="guardarTodoHorario" name="" style="background-color: #163552;" class="btn ">Guardar</button>
 

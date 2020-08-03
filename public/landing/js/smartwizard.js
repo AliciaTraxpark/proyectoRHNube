@@ -9,34 +9,64 @@ $(document).ready(function () {
             } else {
                 //VALIDAR NUMERO DOCUMENTO
                 var numeroD = $('#numDocumento').val();
-                $.ajax({
-                    async: false,
-                    type: "GET",
-                    url: "numDoc",
-                    data: {
-                        numeroD: numeroD
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    statusCode: {
-                        /*401: function () {
-                            location.reload();
-                        },*/
-                        419: function () {
-                            location.reload();
+                idE = $('#idEmpleado').val();
+                if (idE == '') {
+                    $.ajax({
+                        async: false,
+                        type: "GET",
+                        url: "numDoc",
+                        data: {
+                            numeroD: numeroD
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        statusCode: {
+                            /*401: function () {
+                                location.reload();
+                            },*/
+                            419: function () {
+                                location.reload();
+                            }
+                        },
+                        success: function (data) {
+                            if (data == 1) {
+                                $('#numR').show();
+                                isStepValid = false;
+                                return false;
+                            } else {
+                                $('#numR').hide();
+                            }
                         }
-                    },
-                    success: function (data) {
-                        if (data == 1) {
-                            $('#numR').show();
-                            isStepValid = false;
-                            return false;
-                        } else {
-                            $('#numR').hide();
+                    });
+                } else {
+                    $.ajax({
+                        async: false,
+                        type: "GET",
+                        url: "numDocStore",
+                        data: {
+                            numeroD: numeroD,
+                            idE: idE
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        statusCode: {
+                            419: function () {
+                                location.reload();
+                            }
+                        },
+                        success: function (data) {
+                            if (data == 1) {
+                                $('#numR').show();
+                                isStepValid = false;
+                                return false;
+                            } else {
+                                $('#numR').hide();
+                            }
                         }
-                    }
-                });
+                    });
+                }
                 $('#validDocumento').hide();
             }
             if ($('#apPaterno').val() == "") {
@@ -73,34 +103,59 @@ $(document).ready(function () {
                 //VALIDAR CORREO
                 var email = $('#email').val();
                 $('#validCorreo').hide();
-                $.ajax({
-                    async: false,
-                    type: "GET",
-                    url: "email",
-                    data: {
-                        email: email
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    statusCode: {
-                        /*401: function () {
-                            location.reload();
-                        },*/
-                        419: function () {
-                            location.reload();
+                idE = $('#idEmpleado').val();
+                if (idE == '') {
+                    $.ajax({
+                        async: false,
+                        type: "GET",
+                        url: "email",
+                        data: {
+                            email: email
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        statusCode: {
+                            /*401: function () {
+                                location.reload();
+                            },*/
+                            419: function () {
+                                location.reload();
+                            }
+                        },
+                        success: function (data) {
+                            if (data == 1) {
+                                $('#emailR').show();
+                                isStepValid = false;
+                                return false;
+                            } else {
+                                $('#emailR').hide();
+                            }
                         }
-                    },
-                    success: function (data) {
-                        if (data == 1) {
-                            $('#emailR').show();
-                            isStepValid = false;
-                            return false;
-                        } else {
-                            $('#emailR').hide();
+                    });
+                } else {
+                    $.ajax({
+                        async: false,
+                        type: "GET",
+                        url: "emailE",
+                        data: {
+                            email: email,
+                            idE: idE
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function (data) {
+                            if (data == 1) {
+                                $('#v_emailR').show();
+                                isStepValid = false;
+                                return false;
+                            } else {
+                                $('#v_emailR').hide();
+                            }
                         }
-                    }
-                });
+                    });
+                }
             } else {
                 $('#validCorreo').show();
                 isStepValid = false;
@@ -116,7 +171,43 @@ $(document).ready(function () {
                     console.log(regex.test($('#celular').val()));
                 }
             }
-            console.log(isStepValid)
+            if (isStepValid == true) {
+                idE = $('#idEmpleado').val();
+                if (idE == '') {
+                    objEmpleado = datosPersona("POST");
+                    enviarEmpleado('', objEmpleado);
+                } else {
+                    objEmpleado = datosPersona("POST");
+                    enviarEmpleadoStore('/' + idE, objEmpleado);
+                }
+            }
+        }
+        if (stepnumber == 1) {
+            if (isStepValid == true) {
+                idE = $('#idEmpleado').val();
+                objEmpleado = datosEmpresaEmpleado("POST");
+                enviarEmpresarialEmpleado('/' + idE, objEmpleado);
+            }
+        }
+        if (stepnumber == 2) {
+            if (isStepValid == true) {
+                idE = $('#idEmpleado').val();
+                enviarFotoEmpleado('/' + idE);
+            }
+        }
+        if (stepnumber == 3) {
+            if (isStepValid == true) {
+                idE = $('#idEmpleado').val();
+                objEmpleado = datosCalendarioEmpleado("POST");
+                enviarCalendarioEmpleado('/' + idE, objEmpleado);
+            }
+        }
+        if (stepnumber == 4) {
+            if (isStepValid == true) {
+                idE = $('#idEmpleado').val();
+                objEmpleado = datosHorarioEmpleado("POST");
+                enviarHorarioEmpleado('/' + idE, objEmpleado);
+            }
         }
         return isStepValid;
 
@@ -192,7 +283,12 @@ $(document).ready(function () {
                     console.log(regex.test($('#v_celular').val()));
                 }
             }
-            console.log(isStepValid)
+        }
+        if (isStepValid == true) {
+            idE = $('#v_id').val();
+            console.log($('#v_fechaFC').text());
+            objEmpleadoA = datosPersonaA("PUT");
+            actualizarEmpleado('/' + idE, objEmpleadoA);
         }
         return isStepValid;
     }
@@ -212,8 +308,37 @@ $(document).ready(function () {
             enableAllAnchors: true,
             markDoneStep: true,
             enableAllAnchorOnDoneStep: true
-        }
-
+        },
+        toolbarSettings: {
+            toolbarPosition: 'bottom', // none, top, bottom, both
+            toolbarButtonPosition: 'right', // left, right, center
+            toolbarExtraButtons: [
+                $(`<button></button>`).text('Finalizar')
+                .addClass('btn btn-secondary sw-btn-finish')
+                .attr("id", "FinalizarEmpleado")
+                .on('click', function () {
+                    leertabla();
+                    $('#smartwizard').smartWizard("reset");
+                    $('input[type="text"]').val("");
+                    $('input:radio[name=tipo]:checked').prop('checked', false);
+                    $('input[type="date"]').val("");
+                    $('input[type="file"]').val("");
+                    $('input[type="email"]').val("");
+                    $('#form-registrar :input').val("");
+                    $('#codigoCelular').val("+51");
+                    $("#form-registrar :input").prop('disabled', true);
+                    $('#documento').attr('disabled', false);
+                    $('#cerrarMoadalEmpleado').attr('disabled', false);
+                    $('#m_fechaI').combodate("clearValue");
+                    $('#m_fechaF').combodate("clearValue");
+                    $('#detalleContrato').hide();
+                    $('#checkboxFechaI').prop('checked', false);
+                    $('#form-registrar').modal('toggle');
+                    $('#selectCalendario').val("Asignar calendario");
+                    $('#selectHorario').val("Seleccionar horario");
+                }),
+            ]
+        },
     });
     $('#smartwizard1').smartWizard({
         selected: 0,
@@ -231,7 +356,27 @@ $(document).ready(function () {
         },
         leaveStep: function () {
             return true;
-        }
+        },
+        toolbarSettings: {
+            toolbarPosition: 'bottom', // none, top, bottom, both
+            toolbarButtonPosition: 'right', // left, right, center
+            toolbarExtraButtons: [
+                $(`<button></button>`).text('Finalizar')
+                .addClass('btn btn-secondary sw-btn-finish')
+                .attr("id", "FinalizarEmpleadoEditar")
+                .on('click', function () {
+                    leertabla();
+                    $('#smartwizard').smartWizard("reset");
+                    $('#navActualizar').hide();
+                    $('input[type="file"]').val("");
+                    $('input[typt="checkbox"]').val("");
+                    $('#formNuevoEd').hide();
+                    $('#formNuevoEl').hide();
+                    $('#checkboxFechaIE').prop('checked', false);
+                    $('#form-ver').modal('toggle');
+                }),
+            ]
+        },
     });
     //************Validacion********//
     $('#smartwizard').on("leaveStep", function leaveAStepCallback(event, obj, indice) {
@@ -242,21 +387,22 @@ $(document).ready(function () {
         return validateSteps1(indice);
     });
     $('#smartwizard').on("showStep", function (e, anchorObject, stepNumber, stepDirection) {
-        if ($('button.sw-btn-next').hasClass('disabled')) {
-            $('button.sw-btn-next').hide();
+        console.log("ingreso");
+        console.log(stepNumber);
+        if (stepNumber == 5) {
             $('button.sw-btn-prev').hide();
-        } else {
-            $('button.sw-btn-prev').show();
-            $('button.sw-btn-next').show();
+            $('button.sw-btn-next').hide();
+            $('#FinalizarEmpleado').show();
         }
     });
     $('#smartwizard1').on("showStep", function (e, anchorObject, stepNumber, stepDirection) {
-        if ($('button.sw-btn-next').hasClass('disabled')) {
-            $('button.sw-btn-next').hide();
+        if (stepNumber == 0) {
+            $('#FinalizarEmpleadoEditar').hide();
+        }
+        if (stepNumber == 5) {
             $('button.sw-btn-prev').hide();
-        } else {
-            $('button.sw-btn-prev').show();
-            $('button.sw-btn-next').show();
+            $('button.sw-btn-next').hide();
+            $('#FinalizarEmpleadoEditar').show();
         }
     })
 });

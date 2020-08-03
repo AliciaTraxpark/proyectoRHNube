@@ -207,9 +207,9 @@ class EmpleadoController extends Controller
             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
             ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
-            ->leftJoin('modo as md', 'md.idEmpleado', '=', 'e.emple_id')
-            ->leftJoin('tipo_dispositivo as td', 'td.id', '=', 'md.idTipoDispositivo')
             ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
+            ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
+            ->leftJoin('tipo_dispositivo as td', 'td.id', '=', 'md.idTipoDispositivo')
             ->select(
                 'p.perso_nombre',
                 'p.perso_apPaterno',
@@ -218,9 +218,7 @@ class EmpleadoController extends Controller
                 'a.area_descripcion',
                 'cc.centroC_descripcion',
                 'e.emple_id',
-                'md.idTipoDispositivo as dispositivo',
-                'v.envio',
-                'v.reenvio'
+                'md.idTipoDispositivo as dispositivo'
             )
             ->where('e.users_id', '=', Auth::user()->id)
             ->get();
@@ -262,16 +260,6 @@ class EmpleadoController extends Controller
             $empleado->emple_provinciaN = $objEmpleado['provincia'];
             $empleado->emple_distritoN = $objEmpleado['distrito'];
         }
-        if ($objEmpleado['cargo'] != '') {
-            $empleado->emple_cargo = $objEmpleado['cargo'];
-        }
-        if ($objEmpleado['area'] != '') {
-            $empleado->emple_area = $objEmpleado['area'];
-        }
-        if ($objEmpleado['centroc'] != '') {
-            $empleado->emple_centCosto = $objEmpleado['centroc'];
-        }
-
         if ($objEmpleado['dep'] != '') {
             $empleado->emple_departamento = $objEmpleado['dep'];
         }
@@ -281,29 +269,99 @@ class EmpleadoController extends Controller
         if ($objEmpleado['dist'] != '') {
             $empleado->emple_distrito = $objEmpleado['dist'];
         }
-        if ($objEmpleado['contrato'] != '') {
-            $empleado->emple_tipoContrato = $objEmpleado['contrato'];
+        $empleado->emple_celular = '';
+        if ($objEmpleado['celular'] != '') {
+            $empleado->emple_celular = $objEmpleado['celular'];
         }
-        if ($objEmpleado['local'] != '') {
-            $empleado->emple_local = $objEmpleado['local'];
+        $empleado->emple_telefono = $objEmpleado['telefono'];
+        if ($objEmpleado['correo'] != '') {
+            $empleado->emple_Correo = $objEmpleado['correo'];
         }
-        if ($objEmpleado['nivel'] != '') {
-            $empleado->emple_nivel = $objEmpleado['nivel'];
+        $empleado->emple_pasword = Hash::make($objEmpleado['numDocumento']);
+        $empleado->emple_estado = '1';
+        $empleado->users_id = Auth::user()->id;
+        $empleado->save();
+        $idempleado = $empleado->emple_id;
+        return response()->json($idempleado, 200);
+    }
+
+    public function storeEmpleado(Request $request, $idE)
+    {
+        $objEmpleado = json_decode($request->get('objEmpleado'), true);
+        $empleado = Empleado::findOrFail($idE);
+        $persona = persona::findOrFail($empleado->emple_persona);
+        $persona->perso_nombre = $objEmpleado['nombres'];
+        $persona->perso_apPaterno = $objEmpleado['apPaterno'];
+        $persona->perso_apMaterno = $objEmpleado['apMaterno'];
+        $persona->perso_direccion = $objEmpleado['direccion'];
+        $persona->perso_fechaNacimiento = $objEmpleado['fechaN'];
+        $persona->perso_sexo = $objEmpleado['tipo'];
+        $persona->save();
+        $empleado->emple_tipoDoc = $objEmpleado['documento'];
+        $empleado->emple_nDoc = $objEmpleado['numDocumento'];
+        if ($objEmpleado['departamento'] != '') {
+            $empleado->emple_departamentoN = $objEmpleado['departamento'];
+            $empleado->emple_provinciaN = $objEmpleado['provincia'];
+            $empleado->emple_distritoN = $objEmpleado['distrito'];
+        }
+        if ($objEmpleado['dep'] != '') {
+            $empleado->emple_departamento = $objEmpleado['dep'];
+        }
+        if ($objEmpleado['prov'] != '') {
+            $empleado->emple_provincia = $objEmpleado['prov'];
+        }
+        if ($objEmpleado['dist'] != '') {
+            $empleado->emple_distrito = $objEmpleado['dist'];
         }
         $empleado->emple_celular = '';
         if ($objEmpleado['celular'] != '') {
             $empleado->emple_celular = $objEmpleado['celular'];
         }
         $empleado->emple_telefono = $objEmpleado['telefono'];
+        if ($objEmpleado['correo'] != '') {
+            $empleado->emple_Correo = $objEmpleado['correo'];
+        }
+        $empleado->emple_pasword = Hash::make($objEmpleado['numDocumento']);
+        $empleado->save();
+        return json_encode(array('status' => true));
+    }
+
+    public function storeEmpresarial(Request $request, $idE)
+    {
+        $objEmpleado = json_decode($request->get('objEmpleado'), true);
+        $empleado = Empleado::findOrFail($idE);
+        $empleado->emple_codigo = $objEmpleado['codigoEmpleado'];
+        if ($objEmpleado['cargo'] != '') {
+            $empleado->emple_cargo = $objEmpleado['cargo'];
+        }
+        if ($objEmpleado['area'] != '') {
+            $empleado->emple_area = $objEmpleado['area'];
+        }
+        if ($objEmpleado['centroc'] != '') {
+            $empleado->emple_centCosto = $objEmpleado['centroc'];
+        }
+        if ($objEmpleado['contrato'] != '') {
+            $empleado->emple_tipoContrato = $objEmpleado['contrato'];
+        }
         if ($objEmpleado['fechaI'] != '') {
             $empleado->emple_fechaIC = $objEmpleado['fechaI'];
         }
         if ($objEmpleado['fechaF'] != '') {
             $empleado->emple_fechaFC = $objEmpleado['fechaF'];
         }
-        if ($objEmpleado['correo'] != '') {
-            $empleado->emple_Correo = $objEmpleado['correo'];
+        if ($objEmpleado['nivel'] != '') {
+            $empleado->emple_nivel = $objEmpleado['nivel'];
         }
+        if ($objEmpleado['local'] != '') {
+            $empleado->emple_local = $objEmpleado['local'];
+        }
+        $empleado->save();
+        return json_encode(array('status' => true));
+    }
+
+    public function storeFoto(Request $request, $idE)
+    {
+        $empleado = Empleado::findOrFail($idE);
         $empleado->emple_foto = '';
 
         if ($request->hasFile('file')) {
@@ -313,23 +371,15 @@ class EmpleadoController extends Controller
             $file->move($path, $fileName);
             $empleado->emple_foto = $fileName;
         }
-        $empleado->emple_pasword = Hash::make($objEmpleado['numDocumento']);
-        $empleado->emple_estado = '1';
-        $empleado->emple_codigo = $objEmpleado['codigoEmpleado'];
-        $empleado->users_id = Auth::user()->id;
         $empleado->save();
-        $idempleado = $empleado->emple_id;
-        $modo = new modo();
-        $modo->idEmpleado = $idempleado;
-        $modo->idTipoModo = 1;
-        $modo->idTipoDispositivo = 1;
-        $modo->save();
+        return json_encode(array('status' => true));
+    }
 
-        $modo = new modo();
-        $modo->idEmpleado = $idempleado;
-        $modo->idTipoModo = 1;
-        $modo->idTipoDispositivo = 2;
-        $modo->save();
+    public function storeCalendario(Request $request, $idE)
+    {
+        $empleado = Empleado::findOrFail($idE);
+        $idempleado = $empleado->emple_id;
+        $objEmpleado = json_decode($request->get('objEmpleado'), true);
         ///CALENDARIO
 
         $eventos_empleado_tempEU = eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
@@ -359,6 +409,14 @@ class EmpleadoController extends Controller
             $incidenciadias_dias->id_empleado = $idempleado;
             $incidenciadias_dias->save();
         }
+        return json_encode(array('status' => true));
+    }
+
+    public function storeHorario(Request $request, $idE)
+    {
+        $empleado = Empleado::findOrFail($idE);
+        $idempleado = $empleado->emple_id;
+        $objEmpleado = json_decode($request->get('objEmpleado'), true);
         //HORARIO
         $eventos_empleado_tempHor = eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
             ->where('id_horario', '!=', null)->where('color', '=', '#ffffff')->where('textColor', '=', '111111')
@@ -380,14 +438,9 @@ class EmpleadoController extends Controller
             $horario_empleados->horario_dias_id = $horario_dias->id;
             $horario_empleados->save();
         }
-
-
-
         ///////////FIN CALENDARIO
-
         return json_encode(array('status' => true));
     }
-
     /**
      * Display the specified resource.
      *
@@ -397,7 +450,21 @@ class EmpleadoController extends Controller
     public function show(Request $request)
     {
         $idempleado = $request->get('value');
-        $empleado = DB::table('empleado as e')
+        function agruparEmpleadosShow($array)
+        {
+            $resultado = array();
+
+            foreach ($array as $empleado) {
+                if (!isset($resultado[$empleado->emple_id])) {
+                    $resultado[$empleado->emple_id] = $empleado;
+                }
+                if (!isset($resultado[$empleado->emple_id]->vinculacion)) {
+                    $resultado[$empleado->emple_id]->vinculacion = array();
+                }
+            }
+            return $resultado;
+        }
+        $empleados = DB::table('empleado as e')
             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->leftJoin('tipo_documento as tipoD', 'e.emple_tipoDoc', '=', 'tipoD.tipoDoc_id')
             ->leftJoin('ubigeo_peru_departments as depar', 'e.emple_departamento', '=', 'depar.id')
@@ -413,8 +480,6 @@ class EmpleadoController extends Controller
             ->leftJoin('tipo_contrato as tp', 'e.emple_tipoContrato', '=', 'tp.contrato_id')
             ->leftJoin('nivel as n', 'e.emple_nivel', '=', 'n.nivel_id')
             ->leftJoin('local as l', 'e.emple_local', '=', 'l.local_id')
-            ->leftJoin('modo as md', 'md.idEmpleado', '=', 'e.emple_id')
-            ->leftJoin('tipo_dispositivo as td', 'td.id', '=', 'md.idTipoDispositivo')
 
             ->select(
                 'e.emple_id',
@@ -461,8 +526,7 @@ class EmpleadoController extends Controller
                 'e.emple_codigo',
                 'tp.contrato_descripcion',
                 'n.nivel_descripcion',
-                'l.local_descripcion',
-                'md.idTipoDispositivo as dispositivo'
+                'l.local_descripcion'
             )
             ->where('e.emple_id', '=', $idempleado)
             ->where('e.users_id', '=', Auth::user()->id)
@@ -471,22 +535,26 @@ class EmpleadoController extends Controller
             ->select(DB::raw('COUNT(le.id) as total'), 'le.licencia')
             ->where('le.idEmpleado', '=', $idempleado)
             ->get();
-        $licenciaE = DB::table('licencia_empleado as le')
-            ->select('le.licencia', 'le.id', 'le.disponible')
-            ->where('le.idEmpleado', '=', $idempleado)
+        $vinculacion = DB::table('vinculacion as v')
+            ->join('modo as m', 'm.id', '=', 'v.idModo')
+            ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
+            ->join('licencia_empleado as le', 'le.id', '=', 'v.idLicencia')
+            ->select('v.id as idV', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
+            ->where('v.idEmpleado', '=', $idempleado)
             ->get();
         $corteCaptura = DB::table('users as u')
             ->select('u.corteCaptura')
             ->where('u.id', '=', Auth::user()->id)
             ->get();
-        $licencia = [];
-        foreach ($licenciaE as $lic) {
-            array_push($licencia, array("id" => $lic->id, "licencia" => $lic->licencia, "disponible" => $lic->disponible));
+        $vinculacionD = [];
+        foreach ($vinculacion as $lic) {
+            array_push($vinculacionD, array("idVinculacion" => $lic->idV, "idLicencia" => $lic->idL, "licencia" => $lic->licencia, "disponible" => $lic->disponible, "dispositivoD" => $lic->dispositivo_descripcion, "codigo" => $lic->codigo, "envio" => $lic->envio));
         }
-        $empleado[0]->total = $cantidad[0]->total;
-        $empleado[0]->licencia = $licencia;
-        $empleado[0]->corteCaptura = $corteCaptura[0]->corteCaptura;
-        return $empleado;
+        $empleados[0]->total = $cantidad[0]->total;
+        $empleados[0]->vinculacion = $vinculacionD;
+        $empleados[0]->corteCaptura = $corteCaptura[0]->corteCaptura;
+        $empleado = agruparEmpleadosShow($empleados);
+        return array_values($empleado);
         //
 
     }
@@ -651,6 +719,10 @@ class EmpleadoController extends Controller
         $incidencias->each->delete();
 
         $licencia_empleado = licencia_empleado::whereIn('idEmpleado', explode(",", $ids))->get();
+        $vinculacion = vinculacion::whereIn('idEmpleado', explode(",", $ids))->get();
+        $modo = modo::whereIn('idEmpleado', explode(",", $ids))->get();
+        $vinculacion->each->delete();
+        $modo->each->delete();
         $licencia_empleado->each->delete();
 
         $proyecto_empleado = proyecto_empleado::whereIn('empleado_emple_id', explode(",", $ids))->get();
@@ -659,10 +731,8 @@ class EmpleadoController extends Controller
         $tarea = tarea::whereIn('empleado_emple_id', explode(",", $ids))->get();
         $tarea->each->delete();
 
-        $modo = modo::whereIn('idEmpleado', explode(",", $ids))->get();
-        $modo->each->delete();
-        $vinculacion = vinculacion::whereIn('idEmpleado', explode(",", $ids))->get();
-        $vinculacion->each->delete();
+
+
         $empleado->each->delete();
         $persona = persona::whereIn('perso_id', explode(",", $idem))->get();
         $persona->each->delete();
@@ -726,10 +796,22 @@ class EmpleadoController extends Controller
         }
     }
 
+    public function comprobarNumDocumentoStore(Request $request)
+    {
+        $numDoc = $request->get('numDoc');
+        $empleado = $request->get('idE');
+        $empleado = DB::table('empleado as e')
+            ->where('e.emple_nDoc', '=', $numDoc)
+            ->where('e.emple_id', '!=', $empleado)
+            ->get()->first();
+        if ($empleado != null) {
+            return 1;
+        }
+    }
+
     public function comprobarCorreo(Request $request)
     {
         $email = $request->get('email');
-        //$empleado = empleado::where('emple_Correo', '=', $email)->first();
         $empleado = DB::table('empleado as e')
             ->where('emple_Correo', '=', $email)
             ->where('e.users_id', '=', Auth::user()->id)

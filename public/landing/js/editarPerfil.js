@@ -1,6 +1,6 @@
 $('#rowAlert').hide();
 actualizarDatos();
-$('#fechaN').combodate({
+$('#fechaNacimiento').combodate({
     yearDescending: false,
 });
 $('[data-toggle="tooltip"]').tooltip();
@@ -24,8 +24,8 @@ $('#fechaN').change(function () {
         $('#actualizarDatosPersonales').attr('disabled', false);
     }
 });
-$('#apPaterno').change(function () {
-    if ($('#apPaterno').val() == '') {
+$('#apPaternoP').change(function () {
+    if ($('#apPaternoP').val() == '') {
         $('#actualizarDatosPersonales').attr('disabled', true);
     } else {
         $('#actualizarDatosPersonales').attr('disabled', false);
@@ -38,8 +38,8 @@ $('#direccion').change(function () {
         $('#actualizarDatosPersonales').attr('disabled', false);
     }
 });
-$('#apMaterno').change(function () {
-    if ($('#apMaterno').val() == '') {
+$('#apMaternoP').change(function () {
+    if ($('#apMaternoP').val() == '') {
         $('#actualizarDatosPersonales').attr('disabled', true);
     } else {
         $('#actualizarDatosPersonales').attr('disabled', false);
@@ -103,10 +103,10 @@ function datosPersonales(method) {
     nuevoDatos = {
         id: $('#id').val(),
         nombre: $('#nombre').val(),
-        fechaN: $('#fechaN').val(),
-        apPaterno: $('#apPaterno').val(),
+        fechaN: $('#fechaNacimiento').val(),
+        apPaterno: $('#apPaternoP').val(),
         direccion: $('#direccion').val(),
-        apMaterno: $('#apMaterno').val(),
+        apMaterno: $('#apMaternoP').val(),
         genero: $('#genero').val(),
         '_method': method
     }
@@ -262,6 +262,7 @@ $('#guardarFoto').on("click", function () {
             $('#preview').attr("src", "fotosUser/" + data[0].foto);
             $('#imgsm').attr("src", "fotosUser/" + data[0].foto);
             $('#imgxs').attr("src", "fotosUser/" + data[0].foto);
+            $('#imgxs2').attr("src", "fotosUser/" + data[0].foto);
             $.notify({
                 message: "\nPerfil Editado\n",
                 icon: 'admin/images/checked.svg'

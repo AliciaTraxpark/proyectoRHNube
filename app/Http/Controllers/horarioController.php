@@ -43,8 +43,17 @@ class horarioController extends Controller
         ->where('h.user_id', '=', Auth::user()->id)
         ->whereNull('he.horario_horario_id')
         ->get();
-
-        return view('horarios.horarios', ['pais' => $paises, 'departamento' => $departamento, 'empleado' => $empleado,'horario'=>$horario,'horarion'=>$horarion]);
+        $area=DB::table('area')
+        ->select('area_id as idarea', 'area_descripcion as descripcion')
+        ->get();
+        $cargo=DB::table('cargo')
+        ->select('cargo_id as idcargo', 'cargo_descripcion as descripcion')
+        ->get();
+        $local=DB::table('local')
+        ->select('local_id as idlocal', 'local_descripcion as descripcion')
+        ->get();
+        return view('horarios.horarios', ['pais' => $paises, 'departamento' => $departamento, 'empleado' => $empleado,'horario'=>$horario,'horarion'=>$horarion,
+        'area'=>$area,'cargo'=>$cargo,'local'=>$local]);
     }
     public function verTodEmpleado(Request $request)
     {
@@ -219,65 +228,7 @@ class horarioController extends Controller
         DB::table('temporal_eventos')->where('users_id', '=', Auth::user()->id)->delete();
     }
 
-    public function confirmarDepartamento(Request $request)
-    {    DB::table('temporal_eventos')->where('users_id', '=', Auth::user()->id)->delete();
-        $pais = $request->get('pais');
-        $depa = $request->get('departamento');
 
-
-        $eventos_usuario = eventos_usuario::where('users_id', '=', Auth::user()->id)
-        ->where('evento_pais', '=', 173)
-        ->where('evento_departamento', '=', $depa)->get();
-        $eventos = eventos::all();
-        if($eventos_usuario){
-          foreach ($eventos_usuario as $eventos_usuarios) {
-            $temporal_eventos = new temporal_eventos();
-            $temporal_eventos->users_id = Auth::user()->id;
-            $temporal_eventos->title =$eventos_usuarios->title;
-            $temporal_eventos->color =$eventos_usuarios->color;
-            $temporal_eventos->textColor =$eventos_usuarios->textColor;
-            $temporal_eventos->start =$eventos_usuarios->start;
-            $temporal_eventos->end =$eventos_usuarios->end;
-            $temporal_eventos->paises_id =$eventos_usuarios->evento_pais;
-            $temporal_eventos->ubigeo_peru_departments_id =$eventos_usuarios->evento_departamento;
-            $temporal_eventos->save();
-        }
-        }
-
-        foreach ($eventos as $eventost) {
-            $temporal_eventos = new temporal_eventos();
-            $temporal_eventos->users_id = Auth::user()->id;
-            $temporal_eventos->title =$eventost->title;
-            $temporal_eventos->color =$eventost->color;
-            $temporal_eventos->textColor =$eventost->textColor;
-            $temporal_eventos->start =$eventost->start;
-            $temporal_eventos->end =$eventost->end;
-            $temporal_eventos->paises_id =173;
-            $temporal_eventos->ubigeo_peru_departments_id=$depa;
-            $temporal_eventos->save();
-        }
-
-        $existencia = DB::table('calendario')
-            ->select('users_id', 'calen_departamento')
-            ->where('users_id', '=', Auth::user()->id)
-            ->where('calen_departamento', '=', $depa)
-            ->where('calen_pais', '=', $pais)
-            ->get();
-        $exist = 1;
-
-        $temporal_eventos = DB::table('temporal_eventos')->select(['id', 'title', 'color', 'textColor', 'start', 'end'])
-            ->where('users_id', '=', Auth::user()->id)
-           /*  ->where('ubigeo_peru_departments_id', '=', $depa) */
-
-            ->get();
-        //
-        $json = response()->json($temporal_eventos);
-
-        if (count($existencia) >= 1) {
-
-            return [$exist, $temporal_eventos];
-        }
-    }
     public function empleadosIncidencia(Request $request)
     {
         $empleados = DB::table('empleado as e')
@@ -323,7 +274,18 @@ class horarioController extends Controller
         ->where('h.user_id', '=', Auth::user()->id)
         ->whereNull('he.horario_horario_id')
         ->get();
-        return view('horarios.horarioMenu', ['pais' => $paises, 'departamento' => $departamento, 'empleado' => $empleado,'horario'=>$horario,'horarion'=>$horarion]);
+        $area=DB::table('area')
+        ->select('area_id as idarea', 'area_descripcion as descripcion')
+        ->get();
+        $cargo=DB::table('cargo')
+        ->select('cargo_id as idcargo', 'cargo_descripcion as descripcion')
+        ->get();
+        $local=DB::table('local')
+        ->select('local_id as idlocal', 'local_descripcion as descripcion')
+        ->get();
+
+        return view('horarios.horarioMenu', ['pais' => $paises, 'departamento' => $departamento, 'empleado' => $empleado,'horario'=>$horario,'horarion'=>$horarion,
+        'area'=>$area,'cargo'=>$cargo,'local'=>$local]);
     }
 
     public function eliminarHora(Request $request)
@@ -851,6 +813,32 @@ class horarioController extends Controller
 
     }
 
+    public function empleArea(Request $request){
+        $idarea=$request->idarea;
+        $empleadosArea = DB::table('empleado')
+        ->where('users_id', '=', Auth::user()->id)
+        ->where('emple_area', '=', $idarea)
+        ->get();
+        return $empleadosArea;
+    }
+
+    public function empleCargo(Request $request){
+        $idcargo=$request->idcargo;
+        $empleadosCargo = DB::table('empleado')
+        ->where('users_id', '=', Auth::user()->id)
+        ->where('emple_cargo', '=', $idcargo)
+        ->get();
+        return $empleadosCargo;
+    }
+
+   public function empleLocal(Request $request){
+        $idlocal=$request->idlocal;
+        $empleadosidLocal = DB::table('empleado')
+        ->where('users_id', '=', Auth::user()->id)
+        ->where('emple_local', '=', $idlocal)
+        ->get();
+        return $empleadosidLocal;
+    }
 }
 
 

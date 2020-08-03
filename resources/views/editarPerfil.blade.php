@@ -123,7 +123,7 @@
                             <label for="" class="col-5 col-form-label">Fecha
                                 Nacimiento</label>
                             <div class="col-7">
-                                <input type="text" id="fechaN" data-custom-class="form-control" data-format="YYYY-MM-DD"
+                                <input type="text" id="fechaNacimiento" data-custom-class="form-control" data-format="YYYY-MM-DD"
                                     data-template="D MMM YYYY" name="date" required>
                             </div>
                         </div>
@@ -133,7 +133,7 @@
                             <label for="" class="col-5 col-form-label">Apellido
                                 paterno</label>
                             <div class="col-7">
-                                <input type="text" id="apPaterno" class="form-control text-center" required>
+                                <input type="text" id="apPaternoP" class="form-control text-center" required>
                             </div>
                         </div>
                         <div class="form-group row mb-3">
@@ -150,7 +150,7 @@
                                 Materno</label>
                             <div class="col-7">
                                 <input type="text" class="form-control
-                                    text-center" id="apMaterno" required>
+                                    text-center" id="apMaternoP" required>
                             </div>
                         </div>
                         <div class="form-group row mb-3">

@@ -1,5 +1,7 @@
-<link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet"
+    type="text/css" />
+<link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet"
+    type="text/css" />
 <style>
     div.dataTables_wrapper div.dataTables_filter {
         display: none;
@@ -24,15 +26,18 @@
         background-color: rgb(0, 0, 0);
     }
 </style>
-<div id="modalCorreo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCorreo" aria-hidden="true"
+<div id="modalCorreo" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="modalCorreo" aria-hidden="true"
     data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
+                <h5 class="modal-title" id="myModalLabel"
+                    style="color:#ffffff;font-size:15px">Enviar correo a
                     empleado
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal"
+                    aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -46,11 +51,13 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-7 text-right">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-light btn-sm"
+                                data-dismiss="modal">Cancelar</button>
                         </div>
                         <div class="col-md-5 text-right" style="padding-right:
                             38px;">
-                            <button type="button" id="enviarCorreo" name="enviarCorreo"
+                            <button type="button" id="enviarCorreo"
+                                name="enviarCorreo"
                                 style="background-color: #163552;" class="btn
                                 btn-sm">Enviar</button>
                         </div>
@@ -61,15 +68,18 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!--NUEVO ESCRITORIO-->
-<div id="modalNuevoE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalNuevoE" aria-hidden="true"
+<div id="modalNuevoE" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="modalNuevoE" aria-hidden="true"
     data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
+                <h5 class="modal-title" id="myModalLabel"
+                    style="color:#ffffff;font-size:15px">Enviar correo a
                     empleado
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal"
+                    aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -77,11 +87,14 @@
                 <form class="form-horizontal">
                     <div class="row">
                         <div class="col-md-2 text-center">
-                            <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
+                            <img src="{{asset('landing/images/alert.svg')}}"
+                                height="25" class="mr-1 mt-2">
                         </div>
                         <div class="col-md-8 text-center">
-                            <h5 class="modal-title" id="myModalLabel" style="font-size:15px">Esta opción se usa para
-                                asignar nueva PC en lo cual el empleado trabajara en más de una
+                            <h5 class="modal-title" id="myModalLabel"
+                                style="font-size:15px">Esta opción se usa para
+                                asignar nueva PC en lo cual el empleado
+                                trabajara en más de una
                                 PC.
                             </h5>
                         </div>
@@ -92,11 +105,13 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-6 text-center">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-light btn-sm"
+                                data-dismiss="modal">Cancelar</button>
                         </div>
                         <div class="col-md-6 text-center" style="padding-right:
                             38px;">
-                            <button type="button" id="agregarEscritorio" name="agregarEscritorio"
+                            <button type="button" id="agregarEscritorio"
+                                name="agregarEscritorio"
                                 style="background-color: #163552;" class="btn
                                 btn-sm">Enviar</button>
                         </div>
@@ -106,33 +121,39 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div id="modalCorreoM" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCorreo" aria-hidden="true"
+<div id="modalCorreoM" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="modalCorreo" aria-hidden="true"
     data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
+                <h5 class="modal-title" id="myModalLabel"
+                    style="color:#ffffff;font-size:15px">Enviar correo a
                     empleado
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal"
+                    aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
                     <h5 class="modal-title" id="myModalLabel" style="font-size:
-                        15px">¿Desea enviar correo a los empleados seleccionados?</h5>
+                        15px">¿Desea enviar correo a los empleados
+                        seleccionados?</h5>
                 </form>
             </div>
             <div class="modal-footer">
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-7 text-right">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-light btn-sm"
+                                data-dismiss="modal">Cancelar</button>
                         </div>
                         <div class="col-md-5 text-right" style="padding-right:
                             38px;">
-                            <button type="button" id="enviarCorreoM" name="enviarCorreo"
+                            <button type="button" id="enviarCorreoM"
+                                name="enviarCorreo"
                                 style="background-color: #163552;" class="btn
                                 btn-sm">Enviar</button>
                         </div>
@@ -143,33 +164,39 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- Modal Ambas Plataformas-->
-<div id="modalCorreoAmbos" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCorreo"
+<div id="modalCorreoAmbos" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="modalCorreo"
     aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
+                <h5 class="modal-title" id="myModalLabel"
+                    style="color:#ffffff;font-size:15px">Enviar correo a
                     empleado
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal"
+                    aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
                     <h5 class="modal-title" id="myModalLabel" style="font-size:
-                        15px">¿Desea enviar correo a los empleados seleccionados?</h5>
+                        15px">¿Desea enviar correo a los empleados
+                        seleccionados?</h5>
                 </form>
             </div>
             <div class="modal-footer">
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-7 text-right">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-light btn-sm"
+                                data-dismiss="modal">Cancelar</button>
                         </div>
                         <div class="col-md-5 text-right" style="padding-right:
                             38px;">
-                            <button type="button" id="enviarAmbasP" name="enviarAmbasP"
+                            <button type="button" id="enviarAmbasP"
+                                name="enviarAmbasP"
                                 style="background-color: #163552;" class="btn
                                 btn-sm">Enviar</button>
                         </div>
@@ -180,15 +207,18 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- Modal Android-->
-<div id="modalAndroid" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalAndroid" aria-hidden="true"
+<div id="modalAndroid" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="modalAndroid" aria-hidden="true"
     data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
+                <h5 class="modal-title" id="myModalLabel"
+                    style="color:#ffffff;font-size:15px">Enviar correo a
                     empleado
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal"
+                    aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -202,11 +232,13 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-7 text-right">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-light btn-sm"
+                                data-dismiss="modal">Cancelar</button>
                         </div>
                         <div class="col-md-5 text-right" style="padding-right:
                             38px;">
-                            <button type="button" id="enviarAndroid" name="enviarCorreo"
+                            <button type="button" id="enviarAndroid"
+                                name="enviarCorreo"
                                 style="background-color: #163552;" class="btn
                                 btn-sm">Enviar</button>
                         </div>
@@ -216,219 +248,41 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div id="modalAndroidMasivo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalAndroidMasivo"
+<div id="modalAndroidMasivo" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="modalAndroidMasivo"
     aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
+                <h5 class="modal-title" id="myModalLabel"
+                    style="color:#ffffff;font-size:15px">Enviar correo a
                     empleado
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal"
+                    aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
                     <h5 class="modal-title" id="myModalLabel" style="font-size:
-                        15px">¿Desea enviar correo a los empleados seleccionados?</h5>
+                        15px">¿Desea enviar correo a los empleados
+                        seleccionados?</h5>
                 </form>
             </div>
             <div class="modal-footer">
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-7 text-right">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-light btn-sm"
+                                data-dismiss="modal">Cancelar</button>
                         </div>
                         <div class="col-md-5 text-right" style="padding-right:
                             38px;">
-                            <button type="button" id="enviarAndroidMasivo" name="enviarAndroidMasivo"
+                            <button type="button" id="enviarAndroidMasivo"
+                                name="enviarAndroidMasivo"
                                 style="background-color: #163552;" class="btn
                                 btn-sm">Enviar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<!--WINDOWS-->
-<div id="detallesWindows" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="detallesWindows"
-    aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#163552;">
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" style="background-color:#fafafa">
-                <div class="row">
-                    <input style="display: none;" name="idDetalle" id="idDetalle">
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-body p-0">
-                                <h6 class="card-title border-bottom p-3 mb-0 header-title" style="color: #163552;">
-                                    Detalle de Plataforma Windows
-                                </h6>
-                                <div class="row py-1">
-                                    <div class="col-xl-5 col-sm-12 text-center">
-                                        <!-- stat 1 -->
-                                        <div class="media p-2">
-                                            <div class="media-body">
-                                                <img id="imgsmEmpleado"
-                                                    src="{{URL::asset('admin/assets//images/users/avatar-7.png') }}"
-                                                    class="avatar avatar-128 rounded-circle mr-2 img-thumbnail" />
-                                                <span class="text-muted" id="colaborador"
-                                                    style="text-transform:uppercase;"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-4 col-sm-12 text-center">
-                                        <!-- stat 2 -->
-                                        <div class="media p-2">
-                                            <div class="media-body mt-3">
-                                                <span class="text-muted" style="font-weight: 600">Total
-                                                    Dispositivos:</span>
-                                                <span class="text-muted" id="totalPC"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-3 col-sm-12 text-center">
-                                        <!-- stat 2 -->
-                                        <div class="media p-2">
-                                            <div class="media-body mt-3">
-                                                <span class="text-muted" style="font-weight: 600">Captura(min):</span>
-                                                <span class="text-muted" id="totalCorteCap"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- details-->
-                <div class="row" id="rowDetalles">
-                    <div class="col-xl-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-8 col-md-6">
-                                        <div class="mt-2" id="detalleLicencia">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        <div class="mt-2" id="estadoLicencia">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end card -->
-                    </div>
-                </div>
-                <!-- end row -->
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-7 text-right">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                                style="background-color: #163552;color: #ffffff;">Cerrar</button>
-                        </div>
-                        <div class="col-md-5 text-right" style="padding-right:
-                            38px;">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<!--ANDROID-->
-<div id="detallesAndroid" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="detallesAndroid"
-    aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#163552;">
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" style="background-color:#fafafa">
-                <div class="row">
-                    <input style="display: none;" name="idDetalleA" id="idDetalleA">
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-body p-0">
-                                <h6 class="card-title border-bottom p-3 mb-0 header-title">Detalle de Plataforma Android
-                                </h6>
-                                <div class="row py-1">
-                                    <div class="col-xl-6 col-sm-12 text-center">
-                                        <!-- stat 1 -->
-                                        <div class="media p-4">
-                                            <div class="media-body">
-                                                <img id="imgsmEmpleadoAndroid"
-                                                    src="{{URL::asset('admin/assets//images/users/avatar-7.png') }}"
-                                                    class="avatar avatar-128 rounded-circle mr-2 img-thumbnail" />
-                                                <span class="text-muted" id="colaboradorA"
-                                                    style="text-transform:uppercase;"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 text-center">
-                                        <div class="mt-4">
-                                            <a href="javascript:getlink();" data-toggle="tooltip" data-placement="right"
-                                                title="copiar enlace" data-original-title="">
-                                                <img src="{{asset('landing/images/document.svg')}}" height="30">
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- details-->
-                <!--<div class="row" id="notifEnlace">
-                    <div class="col-xl-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6 text-center">
-                                        <div class="mt-2">
-                                            <img src="{{asset('landing/images/playstore.svg')}}" height="20"
-                                                class="mr-2" alt="" />
-                                            <p class="mb-2">Play Store</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 text-center">
-                                        <div class="mt-2">
-                                            <a href="javascript:getlink();" data-toggle="tooltip" data-placement="right"
-                                                title="copiar enlace" data-original-title="">
-                                                <img src="{{asset('landing/images/document.svg')}}" height="30">
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
-                <!-- end row -->
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-7 text-right">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                                style="background-color: #163552;color: #ffffff;">Cerrar</button>
-                        </div>
-                        <div class="col-md-5 text-right" style="padding-right:
-                            38px;">
                         </div>
                     </div>
                 </div>
@@ -437,16 +291,19 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!------------CAMBIAR ESTADO LICENCIA-->
-<div id="estadoLicenciaC" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="estadoLicenciaC"
+<div id="estadoLicenciaC" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="estadoLicenciaC"
     aria-hidden="true" data-backdrop="static">
     <br><br><br><br>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Cambiar Estado de
+                <h5 class="modal-title" id="myModalLabel"
+                    style="color:#ffffff;font-size:15px">Cambiar Estado de
                     Activacion de Eliminada
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal"
+                    aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -454,11 +311,14 @@
                 <form class="form-horizontal">
                     <div class="row">
                         <div class="col-md-2 text-center">
-                            <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
+                            <img src="{{asset('landing/images/alert.svg')}}"
+                                height="25" class="mr-1 mt-2">
                         </div>
                         <div class="col-md-8 text-center">
-                            <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
-                                Al cambiar el estado de la licencia toda información del empleado en su PC será borrada.
+                            <h5 class="modal-title" id="myModalLabel"
+                                style="font-size:15px">
+                                Al cambiar el estado de la licencia toda
+                                información del empleado en su PC será borrada.
                             </h5>
                         </div>
                     </div>
@@ -468,11 +328,13 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-6 text-center">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-light btn-sm"
+                                data-dismiss="modal">Cancelar</button>
                         </div>
                         <div class="col-md-6 text-center" style="padding-right:
                             38px;">
-                            <button type="button" id="CambiarEstadoL" name="CambiarEstadoL"
+                            <button type="button" id="CambiarEstadoL"
+                                name="CambiarEstadoL"
                                 style="background-color: #163552;" class="btn
                                 btn-sm">Enviar</button>
                         </div>
@@ -514,22 +376,34 @@
             <th style="border-top: 1px solid #fdfdfd;"></th>
             <th style="border-top: 1px solid #fdfdfd;"></th>
             <th style="border-top: 1px solid #fdfdfd;"></th>
-            <th class="text-center" style="border-top: 1px solid #fdfdfd;" id="enviarCorreosMasivos">
-                <button type="button" class="btn  btn-sm btn-rounded" onclick="$('#modalCorreoM').modal();"
-                    style="color: #548ec7;border-color: #e7edf3; padding-left: 4px; padding-right: 4px;"
-                    data-toggle="tooltip" data-placement="right" title="Enviar a todos los empleados
+            <th class="text-center" style="border-top: 1px solid #fdfdfd;"
+                id="enviarCorreosMasivos">
+                <button type="button" class="btn btn-sm btn-rounded"
+                    onclick="$('#modalCorreoM').modal();"
+                    style="color: #548ec7;border-color: #e7edf3; padding-left:
+                    4px; padding-right: 4px;"
+                    data-toggle="tooltip" data-placement="right" title="Enviar a
+                    todos los empleados
                     seleccionados." data-original-title="">Enviar&nbsp;&nbsp;<img
                         src="{{asset('landing/images/group.svg')}}" height="20"></button></th>
-            <th class="text-center" style="border-top: 1px solid #fdfdfd;" id="enviarAndroidMasivos"> <button
-                    type="button" class="btn  btn-sm btn-rounded" onclick="$('#modalAndroidMasivo').modal();"
-                    style="color: #548ec7;border-color: #e7edf3; padding-left: 4px; padding-right: 4px;"
-                    data-toggle="tooltip" data-placement="right" title="Enviar a todos los empleados
+            <th class="text-center" style="border-top: 1px solid #fdfdfd;"
+                id="enviarAndroidMasivos"> <button
+                    type="button" class="btn btn-sm btn-rounded"
+                    onclick="$('#modalAndroidMasivo').modal();"
+                    style="color: #548ec7;border-color: #e7edf3; padding-left:
+                    4px; padding-right: 4px;"
+                    data-toggle="tooltip" data-placement="right" title="Enviar a
+                    todos los empleados
                     seleccionados." data-original-title="">Enviar&nbsp;&nbsp;<img
                         src="{{asset('landing/images/group.svg')}}" height="20"></button></th>
-            <th class="text-center" style="border-top: 1px solid #fdfdfd;" id="enviarMasivo">
-                <a style="cursor: pointer" data-toggle="tooltip" data-placement="right"
-                    title="Enviar para ambas plataformas Windows y Android" data-original-title=""
-                    onclick="$('#modalCorreoAmbos').modal();"><img src="{{asset('landing/images/mail (3).svg')}}"
+            <th class="text-center" style="border-top: 1px solid #fdfdfd;"
+                id="enviarMasivo">
+                <a style="cursor: pointer" data-toggle="tooltip"
+                    data-placement="right"
+                    title="Enviar para ambas plataformas Windows y Android"
+                    data-original-title=""
+                    onclick="$('#modalCorreoAmbos').modal();"><img
+                        src="{{asset('landing/images/mail (3).svg')}}"
                         height="30"></a>
             </th>
         </tr>
@@ -547,21 +421,29 @@
 
         </tr>
     </thead>
-    <tbody style="background:#ffffff;color: #585858;font-size: 12.5px" id="tbodyr">
+    <tbody style="background:#ffffff;color: #585858;font-size: 12.5px"
+        id="tbodyr">
         @foreach ($tabla_empleado as $tabla_empleados)
-        <tr class="" id="{{$tabla_empleados->emple_id}}" value="{{$tabla_empleados->emple_id}}">
+        <tr class="" id="{{$tabla_empleados->emple_id}}"
+            value="{{$tabla_empleados->emple_id}}">
 
-            <td><a id="formNuevoEd" onclick="$('#form-ver').modal();" style="cursor: pointer"><img
+            <td><a id="formNuevoEd" onclick="$('#form-ver').modal();"
+                    style="cursor: pointer"><img
                         src="{{asset('admin/images/edit.svg')}}" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-                    onclick="marcareliminar({{$tabla_empleados->emple_id}})" style="cursor: pointer"><img
+                    onclick="marcareliminar({{$tabla_empleados->emple_id}})"
+                    style="cursor: pointer"><img
                         src="{{asset('admin/images/delete.svg')}}" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a class="verEmpleado" onclick="$('#verEmpleadoDetalles').modal();" data-toggle="tooltip"
-                    data-placement="right" title="Ver Detalles" data-original-title="Ver Detalles" style="cursor:
-                        pointer">
+                <a class="verEmpleado"
+                    onclick="$('#verEmpleadoDetalles').modal();"
+                    data-toggle="tooltip"
+                    data-placement="right" title="Ver Detalles"
+                    data-original-title="Ver Detalles" style="cursor:
+                    pointer">
                     <img src="{{asset('landing/images/see.svg')}}" height="20">
                 </a>
             </td>
-            <td class="text-center">&nbsp; <input type="hidden" id="codE" value="{{$tabla_empleados->emple_id}}"><img
+            <td class="text-center">&nbsp; <input type="hidden" id="codE"
+                    value="{{$tabla_empleados->emple_id}}"><img
                     src="{{ URL::asset('admin/assets/images/users/empleado.png')
                     }}" class="" alt="" /></td>
             <td>{{$tabla_empleados->perso_nombre}}</td>
@@ -572,74 +454,31 @@
             @if(!in_array("1",$tabla_empleados->dispositivos))
             <td></td>
             @else
-            @if ($tabla_empleados->envio != null)
-            @if($tabla_empleados->reenvio == null)
             <td class="text-center">
-                <a id="reenviar" onclick="$('#modalCorreo').modal();" data-toggle="tooltip" data-placement="right"
-                    title="Reenviar correo empleado" data-original-title="Reenviar correo empleado"
-                    style="cursor: pointer"><img src="{{asset('landing/images/refresh.svg')}}" height="20">
-                </a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a data-toggle="tooltip" data-placement="right" title="Nueva PC" data-original-title="Nueva PC"
-                    style="cursor:pointer" onclick="$('#modalNuevoE').modal();">
-                    <img src="{{asset('landing/images/plus.svg')}}" height="15">
-                </a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a class="detalleW" data-toggle="tooltip" data-placement="right" title="Ver Detalles"
-                    data-original-title="Ver Detalles" style="cursor:
-                    pointer">
-                    <img src="{{asset('landing/images/see.svg')}}" height="20">
-                </a>
-            </td>
-            @else
-            <td class="text-center">
-                <a id="reenviar" onclick="$('#modalCorreo').modal();" disabled><img
-                        src="{{asset('landing/images/refresh.svg')}}" height="20">
-                </a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a data-toggle="tooltip" data-placement="right" title="Nueva PC" data-original-title="Nueva PC"
-                    style="cursor: pointer" onclick="$('#modalNuevoE').modal();"><img
-                        src="{{asset('landing/images/plus.svg')}}" height="15">
-                </a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a class="detalleW" data-toggle="tooltip" data-placement="right" title="Ver Detalles"
-                    data-original-title="Ver Detalles" style="cursor: pointer"><img
-                        src="{{asset('landing/images/see.svg')}}" height="20">
-                </a>
-            </td>
-            @endif
-            @else
-            <td class="text-center">
-                <a onclick="$('#modalCorreo').modal();" data-toggle="tooltip" data-placement="right" title="Enviar
-                    correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
+                <a data-toggle="tooltip" data-placement="right" title="Enviar
+                    correo empleado" data-original-title="Enviar correo
+                    empleado" style="cursor: pointer"><img
                         src="{{asset('landing/images/note.svg')}}" height="20">
                 </a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a class="detalleW" data-toggle="tooltip" data-placement="right" title="Ver Detalles"
-                    data-original-title="Ver Detalles" style="cursor: pointer"><img
-                        src="{{asset('landing/images/see.svg')}}" height="20">
-                </a>
             </td>
-            @endif
             @endif
             @if(!in_array("2",$tabla_empleados->dispositivos))
             <td></td>
             @else
             <td class="text-center">
-                <a onclick="$('#modalAndroid').modal();" data-toggle="tooltip" data-placement="right"
-                    title="Enviar correo empleado" data-original-title="Enviar correo empleado"
-                    style="cursor: pointer"><img src="{{asset('landing/images/note.svg')}}" height="20">
-                </a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a class="detalleA" data-toggle="tooltip" data-placement="right" title="Ver Detalles"
-                    data-original-title="Ver Detalles" style="cursor:
-                    pointer">
-                    <img src="{{asset('landing/images/see.svg')}}" height="20">
+                <a data-toggle="tooltip" data-placement="right"
+                    title="Enviar correo empleado" data-original-title="Enviar
+                    correo empleado"
+                    style="cursor: pointer"><img
+                        src="{{asset('landing/images/note.svg')}}" height="20">
                 </a>
             </td>
             @endif
-            <td class="text-center"><input type="checkbox" id="tdC" style="margin-left:5.5px!important"
-                    class="form-check-input sub_chk" data-id="{{$tabla_empleados->emple_id}}" $(this)$(this)$(this)>
+            <td class="text-center"><input type="checkbox" id="tdC"
+                    style="margin-left:5.5px!important"
+                    class="form-check-input sub_chk"
+                    data-id="{{$tabla_empleados->emple_id}}"
+                $(this)$(this)$(this)>
             </td>
         </tr>
         @endforeach
@@ -725,6 +564,7 @@
                 }
             },
             success: function (data) {
+                console.log(data);
                 calendario3();
 
                 $('#v_tipoDoc').val(data[0].tipoDoc_descripcion);
@@ -822,99 +662,74 @@
                     $('#file2').fileinput('destroy');
                     cargarFile2();
                 }
-                //DETALLES DE PLATAFORMAS
-                $('#idDetalle').val(data[0].emple_id);
-                $('#idDetalleA').val(data[0].emple_id);
-                $('#colaborador').text(data[0].perso_apPaterno + ' ' + data[0].perso_apMaterno +
-                    ' ' + data[0].perso_nombre);
-                $('#colaboradorA').text(data[0].perso_apPaterno + ' ' + data[0].perso_apMaterno +
-                    ' ' + data[0].perso_nombre);
-                $('#totalPC').text(data[0].total);
-                $('#licencia').text(data[0].licencia);
-                $('#detalleLicencia').empty();
-                $('#estadoLicencia').empty();
-                $('#divActvPC').empty();
-                $('#divEstado').empty();
-                var container = $('#detalleLicencia');
-                var detalle = "";
-                var containerDisponible = $('#estadoLicencia');
-                var disponible = "";
-                var verContainer = $('#divActvPC');
-                var verDetalle = "";
-                var verContainerE = $('#divEstado');
-                var verDetalleE = "";
-                $('#imgsmEmpleado').attr("src", "admin/assets//images/users/avatar-7.png");
-                $('#imgsmEmpleadoAndroid').attr("src", "admin/assets//images/users/avatar-7.png");
-                if (data[0].foto != "") {
-                    $('#imgsmEmpleado').attr("src", "fotosEmpleado/" + data[0].foto);
-                    $('#imgsmEmpleadoAndroid').attr("src", "fotosEmpleado/" + data[0].foto);
-                }
-                if (data[0].total == 0) {
-                    $('#rowDetalles').hide();
-                } else {
-                    $('#rowDetalles').show();
-                    for (var i = 0; i < data[0].licencia.length; i++) {
-                        console.log(data[0].licencia[i]);
-                        detalle +=
-                            `<p class="mb-2" style="color: #4B4B5A;font-weight: bold"> DISPOSITIVO  ${i+1} &nbsp;&nbsp;<img src="{{asset('landing/images/laptop (1).svg')}}" height="25"
-                                                    class="mr-2" alt="" /></p>
-                            <h5 class="font-size-16" id="lic${data[0].licencia[i].id}">${data[0].licencia[i].licencia}</h5>`;
-                        verDetalle += `<label for="sw-default">Activación Dispositivo</label>
-                                        <input class="form-control" tabindex="4" value="${data[0].licencia[i].licencia}" disabled>`;
-                        if (data[0].licencia[i].disponible == 1) {
-                            disponible +=
-                                `<p class="mb-2" style="color: #4B4B5A;font-weight: bold">Estado</p>
-                                            <h5 class="font-size-16"><a class="badge badge-soft-primary mr-2">Disponible</a></h5>`;
-                            verDetalleE += `<label for="sw-default">Estado</label>
-                            <h5 class="font-size-16"><a class="badge badge-soft-primary mr-2">Disponible</a></h5>`;
-
-                        } else {
-                            disponible +=
-                                `<input style="display: none;" id="idLicenciaND${data[0].emple_id}" value="${data[0].licencia[i].id}">
-                                <p class="mb-2"style="color: #4B4B5A;font-weight: bold">ESTADO</p>
-                                            <h5 class="font-size-16"><a data-toggle="tooltip" data-placement="right"
-                                            title=" Al cambiar el estado de la licencia toda información del empleado en su PC será borrada" data-original-title="" onclick="$('#estadoLicenciaC').modal()" style="cursor: pointer" class="badge badge-soft-danger mr-2">No Disponible</a></h5>`;
-                            verDetalleE += `<label for="sw-default">Estado</label>
-                            <h5 class="font-size-16"><a class="badge badge-soft-danger mr-2">No Disponible</a></h5>`;
+                $('#v_tbodyDispositivo').empty();
+                var container = $('#v_tbodyDispositivo');
+                for (var i = 0; i < data[0].vinculacion.length; i++) {
+                    if(data[0].vinculacion[i].dispositivoD == 'WINDOWS'){
+                        if(data[0].vinculacion[i].disponible == 'c'){
+                            var tr = `<tr>
+                            <td>${data[0].vinculacion[i].dispositivoD}</td>
+                            <td>${data[0].vinculacion[i].licencia}</td>
+                            <td>${data[0].vinculacion[i].codigo}</td>
+                            <td id="enviadoW${data[0].vinculacion[i].idVinculacion}">${data[0].vinculacion[i].envio}</td>
+                            <td id="estado${data[0].vinculacion[i].idVinculacion}">Creado</td>
+                            <td>
+                                <a  onclick="javascript:modalWindowsEditar(${data[0].vinculacion[i].idVinculacion});$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+                                    correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
+                                    src="landing/images/note.svg" height="20">
+                                </a>
+                            </td>
+                            </tr>`;
+                        }
+                        if(data[0].vinculacion[i].disponible == 'e'){
+                            var tr = `<tr>
+                            <td>${data[0].vinculacion[i].dispositivoD}</td>
+                            <td>${data[0].vinculacion[i].licencia}</td>
+                            <td>${data[0].vinculacion[i].codigo}</td>
+                            <td id="enviadoW${data[0].vinculacion[i].idVinculacion}">${data[0].vinculacion[i].envio}</td>
+                            <td id="estado${data[0].vinculacion[i].idVinculacion}">Enviado</td>
+                            <td>
+                                <a  onclick="javascript:modalWindowsEditar(${data[0].vinculacion[i].idVinculacion});$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+                                    correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
+                                    src="landing/images/note.svg" height="20">
+                                </a>
+                            </td>
+                            </tr>`;
+                        }
+                    }else{
+                        if(data[0].vinculacion[i].disponible == 'c'){
+                            var tr = `<tr>
+                                <td>${data[0].vinculacion[i].dispositivoD}</td>
+                                <td>${data[0].vinculacion[i].licencia}</td>
+                                <td>${data[0].vinculacion[i].codigo}</td>
+                                <td id="enviado${data[0].emple_id}">${data[0].vinculacion[i].envio}</td>
+                                <td id="estado${data[0].emple_id}">Creado</td>
+                                <td>
+                                <input style="display: none;" id="android${data[0].emple_id}" value="${data[0].vinculacion[i].idVinculacion}">
+                                <a  onclick="$('#v_androidEmpleado').modal();$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+                                correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
+                                    src="landing/images/note.svg" height="20">
+                            </a></td>
+                                </tr>`;
+                        }
+                        if(data[0].vinculacion[i].disponible == 'e'){
+                            var tr = `<tr>
+                                <td>${data[0].vinculacion[i].dispositivoD}</td>
+                                <td>${data[0].vinculacion[i].licencia}</td>
+                                <td>${data[0].vinculacion[i].codigo}</td>
+                                <td id="enviado${data[0].emple_id}">${data[0].vinculacion[i].envio}</td>
+                                <td id="estado${data[0].emple_id}">Enviado</td>
+                                <td>
+                                <input style="display: none;" id="android${data[0].emple_id}" value="${data[0].vinculacion[i].idVinculacion}">
+                                <a  onclick="$('#v_androidEmpleado').modal();$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+                                correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
+                                    src="landing/images/note.svg" height="20">
+                            </a></td>
+                                </tr>`;
                         }
                     }
-                    container.append(detalle);
-                    containerDisponible.append(disponible);
-                    verContainer.append(verDetalle);
-                    verContainerE.append(verDetalleE);
+                container.append(tr);
                 }
-                $('#totalCorteCap').text(data[0].corteCaptura);
-                //VER
-                $('#v_tipoDocV').val(data[0].tipoDoc_descripcion);
-                $('#v_apPaternoV').val(data[0].perso_apPaterno);
-                $('#v_direccionV').val(data[0].perso_direccion);
-                $('#v_idV').val(data[0].emple_id);
-                $('#v_fechaNV').combodate('setValue',data[0].perso_fechaNacimiento);
-                $('#v_apMaternoV').val(data[0].perso_apMaterno);
-                $('#v_numDocumentoV').val(data[0].emple_nDoc);
-                $('#v_emailV').val(data[0].emple_Correo);
-                $('#v_celularV').val(data[0].emple_celular);
-                $('#v_nombresV').val(data[0].perso_nombre);
-                $('#v_telefonoV').val(data[0].emple_telefono);
-                $('#v_depV').val(data[0].deparNo);
-                $('#v_departamentoV').val(data[0].depaN);
-                $("[name=v_tipoV]").val([data[0].perso_sexo]);
-                $('#v_provV').val(data[0].provi);
-                $('#v_provinciaV').val(data[0].proviN);
-                $('#v_distV').val(data[0].distNo)
-                $('#v_distritoV').val(data[0].distN)
-                $('#v_cargoV').val(data[0].cargo_descripcion);
-                $('#v_areaV').val(data[0].area_descripcion);
-                $('#v_centrocV').val(data[0].centroC_descripcion);
-                $('#v_contratoV').val(data[0].contrato_descripcion);
-                $('#v_nivelV').val(data[0].nivel_descripcion);
-                $('#v_localV').val(data[0].local_descripcion);
-                $('#v_codigoEmpleadoV').val(data[0].emple_codigo);
-                if(data[0].foto != ''){
-                    $('#v_fotoV').attr("src", "fotosEmpleado/" + data[0].foto);
-                    $('#h5Ocultar').hide();
-                }
-                $('#cantidadPC').val(data[0].total);
             },
             error: function () {}
         });
@@ -1476,11 +1291,11 @@
 
 </script>
 <script src="{{
-        URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js')
-        }}"></script>
+    URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js')
+    }}"></script>
 <script src="{{
-        URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')
-        }}"></script>
+    URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')
+    }}"></script>
 <script src="{{asset('landing/js/correoEmpleados.js')}}"></script>
 <script src="{{asset('landing/js/correoAndroid.js')}}"></script>
 <script src="{{asset('landing/js/detallesPlataforma.js')}}"></script>

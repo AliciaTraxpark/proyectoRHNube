@@ -114,16 +114,9 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
                     @endforeach
                 </select>
             </div>
-            <form action="javascript:agregarcalendario()"  class="col-md-5">
-                <div class="row">
-                    <div class="col-md-5"> <input type="text" class="form-control" id="nombreCalen" placeholder="Nombre nuevo calend." required></div>
-
-                <div class=" col-md-2">
-                <button  id="nuevoCalendario" type="submit"class="boton" style="font-size: 12px;padding: 4px" >Nuevo</button>
-                </div>
-                </div>
-
-            </form>
+            <div class="col-md-2">
+                <button  onclick="abrirNcalendario()" class="boton" style="font-size: 12px;padding: 4px" >+ Nuevo calendario</button>
+            </div>
 
         </div>
     </nav>
@@ -354,44 +347,66 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
+                <div id="agregarCalendarioN" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                    <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 550px;" >
 
+                    <div class="modal-content">
+                       <div class="modal-header" style="background-color:#163552;">
+                           <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Nuevo calendario</h5>
+                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                               <span aria-hidden="true">&times;</span>
+                           </button>
+                       </div>
+                       <div class="modal-body" style="font-size:12px!important">
+                           <div class="row">
+
+                               <div class="col-md-12">
+                                <form id="" action="javascript:agregarcalendario()">
+                                   <div class="row">
+                                    <div class="col-md-8"> <input type="text" class="form-control" id="nombreCalen" placeholder="Nombre nuevo calendario" required></div>
+
+                                   </div>
+
+                               </div>
+                           </div>
+
+                       </div>
+                       <div class="modal-footer">
+                           <div class="col-md-12">
+                               <div class="row">
+                                   <div class="col-md-12 text-right" >
+                                    <button type="button"  class="btn btn-light btn-sm " data-dismiss="modal">Cancelar</button>
+                                    <button type="submit"  name="" style="background-color: #163552;" class="btn btn-sm ">Guardar</button>
+                                </form>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div><!-- /.modal-content -->
+                 </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
             <div class="row " >
+                <div class="col-md-1"></div>
+    <div class="col-md-9" id="calendar">
 
-                <div class="col-md-12 text-center">
-                  <div class="col-md-7" style="left: 10%;max-width: 80%; " id="Datoscalendar">
-                      <div class="card">
-                          <div class="card-body">
-                             <div class="row">
-                                <div class="col-md-11" id="calendar">
+    </div>
+    &nbsp;&nbsp;&nbsp;<div class="col-md-1" style="top:86px">
+        <div class="row">
+            <div class="col-md-6" style="  background: #f9e9e9;
+            height: 35px;"><h1>&nbsp;</h1></div>
+            <div class="col-md-6"><label style="font-size: 12px" for="">Dias de Descanso</label></div>
+        </div>
+        <div class="row">
+            <div class="col-md-6" style="  background: #ffffff;border: 1px solid #d4d4d4;
+            height: 35px;"><h1>&nbsp;</h1></div>
+              <div class="col-md-6"><label style="font-size: 12px" for="">Dias laborables</label></div>
+        </div>
 
-                                </div>
-                                <div class="col-md-1" style="top:86px">
-                                    <div class="row">
-                                        <div class="col-md-6" style="  background: #f9e9e9;
-                                        height: 35px;"><h1>&nbsp;</h1></div>
-                                        <div class="col-md-6"><label for="">Dias de Descanso</label></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6" style="  background: #ffffff;
-                                        height: 35px;border: 1px solid #d4d4d4;"><h1>&nbsp;</h1></div>
-                                          <div class="col-md-6"><label for="">Dias laborables</label></div>
-                                    </div>
-
-                                </div>
-                             </div>
-
-
-                          </div> <!-- end card body-->
-                          <div class="card-footer">
-                            <div class="row">
-                            </div>
-                          </div>
-                      </div> <!-- end card -->
-                  </div>
+    </div>
 
                    <input type="hidden" id="pruebaStar">
                    <input type="hidden" id="pruebaEnd">
-                </div>
+
                 <div id="calendarioAsignar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 720px;  margin-top: 150px; left: 94px;" >
 
@@ -429,15 +444,17 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
                    </div><!-- /.modal-content -->
                  </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-            </div>
-            <div class="row">
-                <div class="col-md-12  text-right">
-                    <a href="{{('/empleado')}}"><button class="boton btn btn-default mr-1" >CONTINUAR</button></a>
-                </div>
-            </div>
-        <footer class="border-top">
-            <p class="text-center text-muted pt-4">© <?php echo date("Y"); ?> - RH Solution | Todos los derechos reservados.</p>
-        </footer>
+
+
+                    <div class="col-md-12  text-right">
+                        <a href="{{('/empleado')}}"><button class="boton btn btn-default mr-1" >CONTINUAR</button></a>
+                    </div>
+         <div class="col-md-12 text-center">
+            <footer class=" border-top">
+                <p class="text-center text-muted pt-4">© <?php echo date("Y"); ?> - RH Solution | Todos los derechos reservados.</p>
+            </footer>
+         </div>
+
         </div>
     </div>
   <script src="{{asset('landing/vendors/jquery/jquery.min.js')}}"></script>
