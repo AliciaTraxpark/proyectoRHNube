@@ -1290,7 +1290,7 @@ body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-foote
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item" onclick="vaciardFeria()">Dias feriados</a>
                                                 <a class="dropdown-item" onclick="vaciarddescanso()">Dias descanso</a>
-                                                <a class="dropdown-item"  onclick="vaciardlabTem()" >D. laborables</a>
+                                                {{-- <a class="dropdown-item"  onclick="vaciardlabTem()" >D. laborables</a> --}}
                                                 <a class="dropdown-item" onclick="vaciardNlabTem()">D. no laborables</a>
                                                 <a class="dropdown-item" onclick="vaciardIncidTem()">Incidencia</a>
 
@@ -1312,8 +1312,8 @@ body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-foote
                                                                     style=" max-width: 18em!important;"
                                                                     class="btn btn-secondary btn-sm"
                                                                     onclick="laborableTem()"><img
-                                                                        src="{{asset('admin/images/calendariolab.svg')}}"
-                                                                        height="20"> Dia laborable</button>
+                                                                        src="{{asset('admin/images/dormir.svg')}}"
+                                                                        height="20"> Descanso</button>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <button type="button"
@@ -1906,8 +1906,8 @@ body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-foote
                                                                     style=" max-width: 18em!important;"
                                                                     class="btn btn-secondary btn-sm"
                                                                     onclick="laborable_ed()"><img
-                                                                        src="{{asset('admin/images/calendariolab.svg')}}"
-                                                                        height="20"> Dia laborable</button>
+                                                                        src="{{asset('admin/images/dormir.svg')}}"
+                                                                        height="20"> Descanso</button>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <button type="button"
