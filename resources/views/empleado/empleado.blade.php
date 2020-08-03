@@ -131,6 +131,81 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    <div id="v_androidEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="v_androidEmpleado"
+        aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
+                        empleado
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <h5 class="modal-title" id="myModalLabel" style="font-size:
+                        15px">¿Desea enviar correo al empleado?</h5>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-7 text-right">
+                                <button type="button" class="btn btn-light btn-sm"
+                                    data-dismiss="modal">Cancelar</button>
+                            </div>
+                            <div class="col-md-5 text-right" style="padding-right:
+                            38px;">
+                                <button type="button" id="v_enviarCorreoAndroidEmpleado"
+                                    name="v_enviarCorreoAndroidEmpleado" style="background-color: #163552;" class="btn
+                                btn-sm">Enviar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div id="v_windowsEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="v_windowsEmpleado"
+        aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
+                        empleado
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input style="display: none;" id="windows">
+                    <form class="form-horizontal">
+                        <h5 class="modal-title" id="myModalLabel" style="font-size:
+                        15px">¿Desea enviar correo al empleado?</h5>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-7 text-right">
+                                <button type="button" class="btn btn-light btn-sm"
+                                    data-dismiss="modal">Cancelar</button>
+                            </div>
+                            <div class="col-md-5 text-right" style="padding-right:
+                            38px;">
+                                <button type="button" id="v_enviarCorreoWindowsEmpleado"
+                                    name="v_enviarCorreoWindowsEmpleado" style="background-color: #163552;" class="btn
+                                btn-sm">Enviar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     <style>
         .container {
             margin-left: 40px;

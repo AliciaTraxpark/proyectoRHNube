@@ -539,7 +539,7 @@ class EmpleadoController extends Controller
             ->join('modo as m', 'm.id', '=', 'v.idModo')
             ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
             ->join('licencia_empleado as le', 'le.id', '=', 'v.idLicencia')
-            ->select('v.id as idV', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
+            ->select('v.id as idV', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
             ->where('v.idEmpleado', '=', $idempleado)
             ->get();
         $corteCaptura = DB::table('users as u')
@@ -548,7 +548,7 @@ class EmpleadoController extends Controller
             ->get();
         $vinculacionD = [];
         foreach ($vinculacion as $lic) {
-            array_push($vinculacionD, array("idVinculacion" => $lic->idV, "idLicencia" => $lic->idL, "licencia" => $lic->licencia, "disponible" => $lic->disponible, "dispositivoD" => $lic->dispositivo_descripcion, "codigo" => $lic->codigo));
+            array_push($vinculacionD, array("idVinculacion" => $lic->idV, "idLicencia" => $lic->idL, "licencia" => $lic->licencia, "disponible" => $lic->disponible, "dispositivoD" => $lic->dispositivo_descripcion, "codigo" => $lic->codigo, "envio" => $lic->envio));
         }
         $empleados[0]->total = $cantidad[0]->total;
         $empleados[0]->vinculacion = $vinculacionD;
