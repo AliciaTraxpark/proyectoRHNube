@@ -893,7 +893,8 @@ $('#selectCalendario').change(function () {
             $('#calendar2').show();
 
 
-            $("#detallehorario").append("<label style='color:#163552'>Se muestra calendario de " + $('select[id="selectCalendario"] option:selected').text() + "</label><br><label style='font-weight: 600'>Seleccione dias para asignar horarios</label>");
+            $("#detallehorario").append("<div class='form-group row'><div class='col-md-5 text-right'><label style='color:#163552;margin-top: 5px;'>Se muestra calendario de: </label> </div>" +
+            "<div class='col-md-5'><select disabled class='form-control form-control-sm'><option>"+ $('select[id="selectCalendario"] option:selected').text() +"</option></select></div></div>");
         },
         error: function (data) {
             alert('Ocurrio un error');
@@ -933,7 +934,9 @@ $('#selectCalendario_ed').change(function () {
 
             calendario_edit()
             calendario2_ed();
-            $("#detallehorario_ed").append("<label style='color:#163552'>Se muestra calendario de " + $('select[id="selectCalendario_ed"] option:selected').text() + "</label><br><label style='font-weight: 600'>Seleccione dias para asignar horarios</label>");
+            $("#detallehorario_ed").append("<div class='form-group row'><div class='col-md-5 text-right'><label style='color:#163552;margin-top: 5px;'>Se muestra calendario de: </label> </div>" +
+            "<div class='col-md-5'><select disabled class='form-control form-control-sm'><option>"+ $('select[id="selectCalendario_ed"] option:selected').text() +"</option></select></div></div>");
+
         },
         error: function (data) {
             alert('Ocurrio un error');
