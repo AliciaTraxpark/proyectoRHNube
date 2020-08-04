@@ -298,7 +298,7 @@ function modalIncidencia_ed() {
 
     $.ajax({
         type: "post",
-        url: "/empleado/storeIncidempleado",
+        url: "/dias/diasIncidempleado",
         data: {
             start: fechaI,
             title: descripcionI,
@@ -321,12 +321,12 @@ function modalIncidencia_ed() {
 
              calendarioedit.addEvent({
                  id:
-                 data,
-                title: 'data',
+                 data.inciden_id,
+                title: data.inciden_descripcion,
                 start: $('#pruebaStar_ed').val(),
                 end: $('#pruebaEnd_ed').val(),
-                color : '#a34141',
-                textColor:'#ffffff'
+                color : '#d1c3c3',
+                textColor:'#000000'
 
               });
 
