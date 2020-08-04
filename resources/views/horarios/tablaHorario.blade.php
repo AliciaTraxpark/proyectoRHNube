@@ -29,6 +29,7 @@
             <th>Tolerancia</th>
             <th>Hora inicio</th>
             <th>Hora fin</th>
+            <th>En uso</th>
             <th></th>
 
 
@@ -43,6 +44,11 @@
             <td>{{$horarios->horario_tolerancia}} min</td>
             <td>{{$horarios->horaI}}</td>
             <td>{{$horarios->horaF}} </td>
+            @if ($horarios->horario_horario_id==null)
+            <td> <img src="{{asset('admin/images/borrarH.svg')}}" height="11"> No</td>
+            @else
+            <td> <img src="{{asset('admin/images/checkH.svg')}}" height="13"> Si</td>
+            @endif
             <td><a onclick=" editarHorarioLista({{$horarios->horario_id}})" style="cursor: pointer"><img
                 src="{{asset('admin/images/edit.svg')}}" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
             onclick="" style="cursor: pointer"><img

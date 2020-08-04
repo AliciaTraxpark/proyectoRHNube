@@ -15,7 +15,7 @@ function calendario() {
 
     var configuracionCalendario = {
         locale: 'es',
-        defaultDate: ano + '-01-01',
+        defaultDate: fecha,
         height: 550,
         fixedWeekCount: false,
         plugins: ['dayGrid', 'interaction', 'timeGrid'],

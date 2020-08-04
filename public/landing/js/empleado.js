@@ -33,7 +33,7 @@ function calendarioInv() {
 
     var configuracionCalendario = {
         locale: 'es',
-        defaultDate: ano + '-01-01',
+        defaultDate: fecha,
         height: 360,
         fixedWeekCount: false,
         plugins: ['dayGrid', 'interaction', 'timeGrid'],
@@ -66,7 +66,7 @@ function calendario() {
 
     var configuracionCalendario = {
         locale: 'es',
-        defaultDate: ano + '-01-01',
+        defaultDate: fecha,
         height: 400,
         fixedWeekCount: false,
         plugins: ['dayGrid', 'interaction', 'timeGrid'],
@@ -185,7 +185,7 @@ function calendario_edit() {
 
     var configuracionCalendario = {
         locale: 'es',
-        defaultDate: ano + '-01-01',
+        defaultDate: fecha,
         height: 400,
         fixedWeekCount: false,
         plugins: ['dayGrid', 'interaction', 'timeGrid'],
@@ -960,7 +960,7 @@ function calendario2() {
 
     var configuracionCalendario = {
         locale: 'es',
-        defaultDate: ano + '-01-01',
+        defaultDate: fecha,
         height: 400,
         fixedWeekCount: false,
         plugins: ['dayGrid', 'interaction', 'timeGrid'],
@@ -1283,7 +1283,7 @@ function calendario3() {
 
     var configuracionCalendario = {
         locale: 'es',
-        defaultDate: ano + '-01-01',
+        defaultDate: fecha,
         height: 400,
         fixedWeekCount: false,
         plugins: ['dayGrid', 'interaction', 'timeGrid'],
@@ -1367,7 +1367,7 @@ function calendarioInv_ed() {
 
     var configuracionCalendario = {
         locale: 'es',
-        defaultDate: ano + '-01-01',
+        defaultDate: fecha,
         height: 360,
         fixedWeekCount: false,
         plugins: ['dayGrid', 'interaction', 'timeGrid'],
@@ -1400,7 +1400,7 @@ function calendario2_ed() {
 
     var configuracionCalendario = {
         locale: 'es',
-        defaultDate: ano + '-01-01',
+        defaultDate: fecha,
         height: 400,
         fixedWeekCount: false,
         plugins: ['dayGrid', 'interaction', 'timeGrid'],

@@ -132,7 +132,10 @@ class horarioController extends Controller
     }
 
     public function tablaHorario()
-    {   $horario=horario::where('user_id', '=', Auth::user()->id)->get();
+    {   $horario=horario::where('user_id', '=', Auth::user()->id)
+        ->leftJoin('horario_empleado as he', 'horario.horario_id', '=', 'he.horario_horario_id')
+        ->groupBy('horario.horario_id')
+        ->get();
 
        return view('horarios.tablaHorario',['horario'=>$horario]);
     }
@@ -824,6 +827,7 @@ class horarioController extends Controller
 
     public function empleCargo(Request $request){
         $idcargo=$request->idcargo;
+       /*  dd($idcargo);  */
         $empleadosCargo = DB::table('empleado')
         ->where('users_id', '=', Auth::user()->id)
         ->where('emple_cargo', '=', $idcargo)
