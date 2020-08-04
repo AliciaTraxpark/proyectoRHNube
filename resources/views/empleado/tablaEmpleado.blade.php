@@ -536,12 +536,7 @@
                         $('#calendar_ed').show();
                         $('#mensajeOc_ed').hide();
                         $('#calendar2_ed').show();
-
-
-
                     }
-
-
                 },
                 error: function () {}
             });
@@ -558,8 +553,6 @@
                 $('#v_fechaN').combodate('setValue', data[0].perso_fechaNacimiento);
                 $('#v_nombres').val(data[0].perso_nombre);
                 $('#v_direccion').val(data[0].perso_direccion);
-
-
                 $('#v_cargo').val(data[0].cargo_id);
                 $('#v_area').val(data[0].area_id);
                 $('#v_centroc').val(data[0].centroC_id);

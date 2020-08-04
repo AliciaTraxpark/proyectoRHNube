@@ -318,12 +318,12 @@ $(document).ready(function () {
                 .attr("id", "FinalizarEmpleado")
                 .on('click', function () {
                     leertabla();
-                    $('#form-registrar input[type="text"]').val("");
-                    $('#form-registrar input:radio[name=tipo]:checked').prop('checked', false);
-                    $('#form-registrar input[type="date"]').val("");
-                    $('#form-registrar input[type="file"]').val("");
-                    $('#form-registrar input[type="email"]').val("");
                     $('#form-registrar :input').val("");
+                    $('input[type="text"]').val("");
+                    $('input:radio[name=tipo]:checked').prop('checked', false);
+                    $('input[type="date"]').val("");
+                    $('input[type="file"]').val("");
+                    $('input[type="email"]').val("");
                     $('#codigoCelular').val("+51");
                     $("#form-registrar :input").prop('disabled', true);
                     $('#documento').attr('disabled', false);
