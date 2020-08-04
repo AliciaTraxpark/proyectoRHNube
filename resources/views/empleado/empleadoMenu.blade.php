@@ -1441,7 +1441,7 @@ use App\proyecto_empleado;
 
                                             </div>
                                         </div><!-- /btn-group --></div>
-                                    
+
                                 <div id="calendarioAsignar" class="modal fade" tabindex="-1" role="dialog"
                                     aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                                     <div class="modal-dialog  modal-lg d-flex justify-content-center "
