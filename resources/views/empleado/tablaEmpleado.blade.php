@@ -261,53 +261,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<!------------CAMBIAR ESTADO LICENCIA-->
-<div id="estadoLicenciaC" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="estadoLicenciaC"
-    aria-hidden="true" data-backdrop="static">
-    <br><br><br><br>
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Cambiar Estado de
-                    Activacion de Eliminada
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal">
-                    <div class="row">
-                        <div class="col-md-2 text-center">
-                            <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
-                        </div>
-                        <div class="col-md-8 text-center">
-                            <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
-                                Al cambiar el estado de la licencia toda
-                                información del empleado en su PC será borrada.
-                            </h5>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-6 text-center">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
-                        </div>
-                        <div class="col-md-6 text-center" style="padding-right:
-                            38px;">
-                            <button type="button" id="CambiarEstadoL" name="CambiarEstadoL"
-                                style="background-color: #163552;" class="btn
-                                btn-sm">Enviar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 <!---->
 <input type="hidden" id="csrf_token" name="_token" value="{{ csrf_token() }}">
 <div class="row">
@@ -536,12 +489,7 @@
                         $('#calendar_ed').show();
                         $('#mensajeOc_ed').hide();
                         $('#calendar2_ed').show();
-
-
-
                     }
-
-
                 },
                 error: function () {}
             });
@@ -558,8 +506,6 @@
                 $('#v_fechaN').combodate('setValue', data[0].perso_fechaNacimiento);
                 $('#v_nombres').val(data[0].perso_nombre);
                 $('#v_direccion').val(data[0].perso_direccion);
-
-
                 $('#v_cargo').val(data[0].cargo_id);
                 $('#v_area').val(data[0].area_id);
                 $('#v_centroc').val(data[0].centroC_id);
@@ -1235,4 +1181,3 @@
     }}"></script>
 <script src="{{asset('landing/js/correoEmpleados.js')}}"></script>
 <script src="{{asset('landing/js/correoAndroid.js')}}"></script>
-<script src="{{asset('landing/js/detallesPlataforma.js')}}"></script>
