@@ -1,5 +1,3 @@
-$('#validCelCorreo').hide();
-
 function agregarempleado() {
 
     ///validar fecha
