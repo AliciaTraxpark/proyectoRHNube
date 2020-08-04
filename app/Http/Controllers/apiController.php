@@ -252,23 +252,8 @@ class apiController extends Controller
                 $horario->idHorario_dias = $horario_dias->id;
                 $fecha = Carbon::now();
                 $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
-                $fechaS = Carbon::now();
-                $weekStartDate = $fechaS->startOfWeek()->format('Y-m-d');
-                $weekEndDate = $fechaS->endOfWeek()->format('Y-m-d');
-                $explode = explode(":", $horario->horaI);
-                $explode1 = explode(":", $horario->horaF);
-                $horario->horarioInicio = $explode;
-                $horario->horarioFin = $explode1;
-                if ($horario_dias->start >= $weekStartDate && $horario_dias->start <= $weekEndDate) {
-                    if ($horario_dias->start == $fechaHoy) {
-                        $estado = true;
-                        $horario->estado = $estado;
-                        array_push($respuesta, $horario);
-                    } else {
-                        $estado = false;
-                        $horario->estado = $estado;
-                        array_push($respuesta, $horario);
-                    }
+                if ($horario_dias->start == $fechaHoy) {
+                    array_push($respuesta, $horario);
                 }
             }
             return response()->json($respuesta, 200);
