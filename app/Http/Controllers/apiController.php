@@ -78,7 +78,7 @@ class apiController extends Controller
         $idUser = $explode[0];
 
         if ($empleado) {
-            $vinculacion = vinculacion::where('idEmpleado', '=', $empleado->emple_id)->get()->first();
+            $vinculacion = vinculacion::where('id', '=', $explode[1])->get()->first();
             if ($vinculacion) {
                 if ($vinculacion->hash == $request->get('codigo')) {
                     if ($vinculacion->pc_mac !=  null) {

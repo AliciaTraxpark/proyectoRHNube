@@ -99,13 +99,8 @@ class vinculacionDispositivoController extends Controller
             $licencia->save();
             $idLicencia = $licencia->id;
             //VINCULACION
-            $codigoU = Auth::user()->id;
-            $diferente = STR::random(4);
-            $codigoHash = $codigoU . "s" . $codigoEmpresa[0]->organi_id . $idEmpleado . $diferente;
-            $encode = intval($codigoHash, 36);
             $vinculacion = new vinculacion();
             $vinculacion->idEmpleado = $idEmpleado;
-            $vinculacion->hash = $encode;
             $vinculacion->envio = 0;
             $vinculacion->idModo = $idModo;
             $vinculacion->idLicencia = $idLicencia;
@@ -113,6 +108,12 @@ class vinculacionDispositivoController extends Controller
 
             $idVinculacion = $vinculacion->id;
 
+            $vinc = vinculacion::where('id', '=', $idVinculacion)->get()->first();
+            $codigoU = Auth::user()->id;
+            $codigoHash = $codigoU . "s" . $idVinculacion . "s" . $codigoEmpresa[0]->organi_id . $idEmpleado;
+            $encode = intval($codigoHash, 36);
+            $vinc->hash = $encode;
+            $vinc->save();
             $tipo_modo = tipo_dispositivo::where('id', '=', 1)->get()->first();
             $respuesta = [];
             $respuesta['dispositivo_descripcion'] = $tipo_modo->dispositivo_descripcion;
