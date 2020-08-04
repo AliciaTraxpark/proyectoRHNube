@@ -60,8 +60,10 @@ class diasLaborablesController extends Controller
         $incidencia_dias->inciden_dias_fechaI = $request->get('start');
         $incidencia_dias->inciden_dias_fechaF = $request->get('end');
         $incidencia_dias->id_empleado = $idempleados;
+        $incidencia_dias->save(); 
         }
-        $incidencia_dias->save();
+
+        return $incidencia;
 
     }
 }
