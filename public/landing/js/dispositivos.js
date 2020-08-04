@@ -48,6 +48,7 @@ function cambiarEstadoLicenciaAndroid() {
             $('#estado' + idVinculacion).append(tdE);
             $('#estadoLicenciaC').modal('toggle');
             $('#form-registrar').show();
+            $.notifyClose();
             $.notify({
                 message: "\nProceso con éxito.",
                 icon: 'admin/images/checked.svg'
@@ -69,6 +70,7 @@ function cambiarEstadoLicenciaAndroid() {
         error: function () {
             $('#estadoLicenciaC').modal('toggle');
             $('#form-registrar').show();
+            $.notifyClose();
             $.notify({
                 message: "\nAún no ha registrado correo a empleado.",
                 icon: 'admin/images/warning.svg'
@@ -128,6 +130,7 @@ function cambiarEstadoLicenciaWindows() {
             $('#estado' + idVinculacion).append(tdE);
             $('#estadoLicenciaW').modal('toggle');
             $('#form-registrar').show();
+            $.notifyClose();
             $.notify({
                 message: "\nProceso con éxito.",
                 icon: 'admin/images/checked.svg'
@@ -149,6 +152,7 @@ function cambiarEstadoLicenciaWindows() {
         error: function () {
             $('#estadoLicenciaW').modal('toggle');
             $('#form-registrar').show();
+            $.notifyClose();
             $.notify({
                 message: "\nAún no ha registrado correo a empleado.",
                 icon: 'admin/images/warning.svg'
@@ -258,6 +262,7 @@ function enviarCorreoAndoid() {
             var tdE = `<td>Enviado</td>`;
             container.append(td);
             cont.append(tdE);
+            $.notifyClose();
             $.notify({
                 message: "\nCorreo Enviado.",
                 icon: 'admin/images/checked.svg'
@@ -376,6 +381,7 @@ function enviarCorreoWindows() {
                 cont.append(tdE);
             }
             container.append(td);
+            $.notifyClose();
             $.notify({
                 message: "\nCorreo Enviado.",
                 icon: 'admin/images/checked.svg'
@@ -480,6 +486,7 @@ function enviarCorreoAndoidEditar() {
             var tdE = `<td>Enviado</td>`;
             container.append(td);
             cont.append(tdE);
+            $.notifyClose();
             $.notify({
                 message: "\nCorreo Enviado.",
                 icon: 'admin/images/checked.svg'
@@ -593,6 +600,7 @@ function enviarCorreoWindowsEditar() {
                 cont.append(tdE);
             }
             container.append(td);
+            $.notifyClose();
             $.notify({
                 message: "\nCorreo Enviado.",
                 icon: 'admin/images/checked.svg'
