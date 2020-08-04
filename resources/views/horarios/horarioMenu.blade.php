@@ -364,16 +364,16 @@ a:not([href]):not([tabindex]){
                                  <label for="" style="margin-top: 9px;" >Seleccionar por:</label>
                              </div>
                              <div class="col-md-3">
-                                <select data-plugin="customselect" id="selectEmpresarial" name="selectEmpresarial" class="form-control" data-placeholder="seleccione">
+                                <select data-plugin="customselect" multiple id="selectEmpresarial" name="selectEmpresarial" class="form-control" data-placeholder="seleccione">
                                     <option value=""></option>
                                     @foreach ($area as $areas)
-                                    <option value="{{$areas->idarea}}">Area : {{$areas->descripcion}}</option>
+                                    <option value="{{$areas->idarea}}">Area : {{$areas->descripcion}}.</option>
                                     @endforeach
                                     @foreach ($cargo as $cargos)
-                                    <option value="{{$cargos->idcargo}}">Cargo : {{$cargos->descripcion}}</option>
+                                    <option value="{{$cargos->idcargo}}">Cargo : {{$cargos->descripcion}}.</option>
                                     @endforeach
                                     @foreach ($local as $locales)
-                                    <option value="{{$locales->idlocal}}">Local : {{$locales->descripcion}}</option>
+                                    <option value="{{$locales->idlocal}}">Local : {{$locales->descripcion}}.</option>
                                     @endforeach
                                 </select>
                              </div>

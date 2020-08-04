@@ -360,7 +360,7 @@ function calendario() {
     var configuracionCalendario = {
         locale: 'es',
         //defaultDate: ano + '-01-01',
-        defaultDate: ano + '-01-01',
+        defaultDate: fecha,
         height: "auto",
         contentHeight: 440,
         fixedWeekCount: false,
@@ -1922,8 +1922,13 @@ $("#selectTodoCheck").click(function(){
 //////////////////////
 //seleccionar por area, cargo, etc
 $('#selectEmpresarial').change(function(e){
+    var idempresarial=[];
  idempresarial=$('#selectEmpresarial').val();
- textSelec=$('select[name="selectEmpresarial"] option:selected').text();
+ textSelec=$('select[name="selectEmpresarial"] option:selected:last').text();
+ textSelec2=$('select[name="selectEmpresarial"] option:selected:last').text();
+/*  palabrasepara=textSelec2.split('.')[0];
+ alert(palabrasepara);
+ return false; */
  palabraEmpresarial=textSelec.split(' ')[0];
  if(palabraEmpresarial=='Area'){
     $.ajax({

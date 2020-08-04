@@ -22,7 +22,7 @@ function calendario_edit() {
 
     var configuracionCalendario = {
         locale: 'es',
-        defaultDate: ano + '-01-01',
+        defaultDate: fecha,
         height: 460,
         fixedWeekCount: false,
         plugins: ['dayGrid', 'interaction', 'timeGrid'],
