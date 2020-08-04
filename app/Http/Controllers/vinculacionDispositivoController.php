@@ -64,55 +64,66 @@ class vinculacionDispositivoController extends Controller
     public function vinculacionWindows(Request $request)
     {
         $idEmpleado = $request->get('idEmpleado');
-        //MODO
-        $modo = new modo();
-        $modo->idTipoModo = 1;
-        $modo->idTipoDispositivo = 1;
-        $modo->idEmpleado = $idEmpleado;
-        $modo->save();
-        $idModo = $modo->id;
-        //LICENCIA
-        $codigoEmpresa = DB::table('users as u')
-            ->join('usuario_organizacion as uo', 'uo.user_id', '=', 'u.id')
-            ->select('uo.organi_id')
-            ->where('u.id', '=', Auth::user()->id)
-            ->get();
-        $codigoEmpleado = DB::table('empleado as e')
-            ->select('e.emple_codigo', 'e.emple_persona', 'e.created_at')
-            ->where('e.emple_id', '=', $idEmpleado)
-            ->get();
-        $nuevaLivencia = STR::random(4);
-        $codigoLicencia = $idEmpleado . '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id . $nuevaLivencia;
-        $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
-        $licencia = new licencia_empleado();
-        $licencia->idEmpleado = $idEmpleado;
-        $licencia->licencia = $encodeLicencia;
-        $licencia->disponible = 'c';
-        $licencia->save();
-        $idLicencia = $licencia->id;
-        //VINCULACION
-        $codigoU = Auth::user()->id;
-        $diferente = STR::random(4);
-        $codigoHash = $codigoU . "s" . $codigoEmpresa[0]->organi_id . $idEmpleado . $diferente;
-        $encode = intval($codigoHash, 36);
-        $vinculacion = new vinculacion();
-        $vinculacion->idEmpleado = $idEmpleado;
-        $vinculacion->hash = $encode;
-        $vinculacion->envio = 0;
-        $vinculacion->idModo = $idModo;
-        $vinculacion->idLicencia = $idLicencia;
-        $vinculacion->save();
+        $contar = DB::table('vinculacion as v')
+            ->join('modo as m', 'm.id', '=', 'v.idModo')
+            ->select(DB::raw('COUNT(m.idTipoDispositivo) as total'))
+            ->where('v.idEmpleado', '=', $idEmpleado)
+            ->where('m.idTipoDispositivo', '=', 1)
+            ->get()
+            ->first();
+        if ($contar->total == 3) {
+            return 1;
+        } else {
+            //MODO
+            $modo = new modo();
+            $modo->idTipoModo = 1;
+            $modo->idTipoDispositivo = 1;
+            $modo->idEmpleado = $idEmpleado;
+            $modo->save();
+            $idModo = $modo->id;
+            //LICENCIA
+            $codigoEmpresa = DB::table('users as u')
+                ->join('usuario_organizacion as uo', 'uo.user_id', '=', 'u.id')
+                ->select('uo.organi_id')
+                ->where('u.id', '=', Auth::user()->id)
+                ->get();
+            $codigoEmpleado = DB::table('empleado as e')
+                ->select('e.emple_codigo', 'e.emple_persona', 'e.created_at')
+                ->where('e.emple_id', '=', $idEmpleado)
+                ->get();
+            $nuevaLivencia = STR::random(4);
+            $codigoLicencia = $idEmpleado . '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id . $nuevaLivencia;
+            $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
+            $licencia = new licencia_empleado();
+            $licencia->idEmpleado = $idEmpleado;
+            $licencia->licencia = $encodeLicencia;
+            $licencia->disponible = 'c';
+            $licencia->save();
+            $idLicencia = $licencia->id;
+            //VINCULACION
+            $codigoU = Auth::user()->id;
+            $diferente = STR::random(4);
+            $codigoHash = $codigoU . "s" . $codigoEmpresa[0]->organi_id . $idEmpleado . $diferente;
+            $encode = intval($codigoHash, 36);
+            $vinculacion = new vinculacion();
+            $vinculacion->idEmpleado = $idEmpleado;
+            $vinculacion->hash = $encode;
+            $vinculacion->envio = 0;
+            $vinculacion->idModo = $idModo;
+            $vinculacion->idLicencia = $idLicencia;
+            $vinculacion->save();
 
-        $idVinculacion = $vinculacion->id;
+            $idVinculacion = $vinculacion->id;
 
-        $tipo_modo = tipo_dispositivo::where('id', '=', 1)->get()->first();
-        $respuesta = [];
-        $respuesta['dispositivo_descripcion'] = $tipo_modo->dispositivo_descripcion;
-        $respuesta['licencia'] = $encodeLicencia;
-        $respuesta['codigo'] = $encode;
-        $respuesta['envio'] = 0;
-        $respuesta['idVinculacion'] = $idVinculacion;
+            $tipo_modo = tipo_dispositivo::where('id', '=', 1)->get()->first();
+            $respuesta = [];
+            $respuesta['dispositivo_descripcion'] = $tipo_modo->dispositivo_descripcion;
+            $respuesta['licencia'] = $encodeLicencia;
+            $respuesta['codigo'] = $encode;
+            $respuesta['envio'] = 0;
+            $respuesta['idVinculacion'] = $idVinculacion;
 
-        return response()->json($respuesta, 200);
+            return response()->json($respuesta, 200);
+        }
     }
 }

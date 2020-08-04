@@ -379,7 +379,6 @@
             <th class="text-center" style="border-top: 1px solid #fdfdfd;"
                 id="enviarCorreosMasivos">
                 <button type="button" class="btn btn-sm btn-rounded"
-                    onclick="$('#modalCorreoM').modal();"
                     style="color: #548ec7;border-color: #e7edf3; padding-left:
                     4px; padding-right: 4px;"
                     data-toggle="tooltip" data-placement="right" title="Enviar a
@@ -389,7 +388,6 @@
             <th class="text-center" style="border-top: 1px solid #fdfdfd;"
                 id="enviarAndroidMasivos"> <button
                     type="button" class="btn btn-sm btn-rounded"
-                    onclick="$('#modalAndroidMasivo').modal();"
                     style="color: #548ec7;border-color: #e7edf3; padding-left:
                     4px; padding-right: 4px;"
                     data-toggle="tooltip" data-placement="right" title="Enviar a
@@ -401,8 +399,7 @@
                 <a style="cursor: pointer" data-toggle="tooltip"
                     data-placement="right"
                     title="Enviar para ambas plataformas Windows y Android"
-                    data-original-title=""
-                    onclick="$('#modalCorreoAmbos').modal();"><img
+                    data-original-title=""><img
                         src="{{asset('landing/images/mail (3).svg')}}"
                         height="30"></a>
             </th>

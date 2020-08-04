@@ -55,6 +55,7 @@ function vinculacionAndroid() {
 }
 $('#agregarAndroid').on("click", vinculacionAndroid);
 
+
 function enviarCorreoAndoid() {
     var idEmpleado = $('#idEmpleado').val();
     var idVinculacion = $('#android' + idEmpleado).val();
@@ -124,8 +125,28 @@ function vinculacionWindows() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-            var container = $('#tbodyDispositivo');
-            var tr = `<tr>
+            if (data == 1) {
+                $.notifyClose();
+                $.notify({
+                    message: "\nLlego al limite de dispositivos Windows",
+                    icon: 'admin/images/warning.svg'
+                }, {
+                    element: $('#form-registrar'),
+                    position: 'fixed',
+                    icon_type: 'image',
+                    newest_on_top: true,
+                    delay: 5000,
+                    template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            } else {
+                var container = $('#tbodyDispositivo');
+                var tr = `<tr>
                 <td>${data.dispositivo_descripcion}</td>
                 <td>${data.licencia}</td>
                 <td>${data.codigo}</td>
@@ -137,7 +158,8 @@ function vinculacionWindows() {
                     src="landing/images/note.svg" height="20">
             </a></td>
                 </tr>`;
-            container.append(tr);
+                container.append(tr);
+            }
             console.log(data);
         },
         error: function () {}
