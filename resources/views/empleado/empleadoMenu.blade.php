@@ -1413,37 +1413,68 @@ use App\proyecto_empleado;
                                             <h5>No existe calendarios registrados</h5>
                                         </div>
                                         <div style="display: none">
-                                            <div class="col-md-12" id="calendarInv" style="display: none!important">
-                                            </div>
+                                            <div class="col-md-12" id="calendarInv"
+                                                style="display: none!important"></div>
                                         </div>
 
+
+                                    </div>
+                                    @else
+                                    <div class="form-group row">
+                                        <label style="font-weight: 600;font-size: 14px;"
+                                            class="col-lg-5 col-form-label text-right"
+                                            for="simpleinput">Calendario
+                                            de empleado:</label>
+                                        <div class="col-lg-5">
+                                            <select name="" id="selectCalendario"
+                                                class="form-control form-control-sm"
+                                                style="margin-top: 4px;">
+                                                <option hidden selected>Asignar calendario</option>
+                                                @foreach ($calendario as $calendarios)
+                                                <option class="" value="{{$calendarios->calen_id}}">
+                                                    {{$calendarios->calendario_nombre}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
 
-                                    <div class="col-md-12" id="calendarInv"></div>
-                                    @endif
-                                     <input type="hidden" id="pruebaEnd">
-                                    <input type="hidden" id="pruebaStar">
-                                    <div class="col-md-10" id="calendar" style="display: none"></div>
-                                    <div class="col-md-2" id="opborrar" style="display: none">
-                                        <br><br><br><br><br>
-                                        <div class="btn-group mt-2 mr-1">
-                                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" style="color: #fff;
-                                            background-color: #4a5669;
-                                            border-color: #485263;"
-                                                data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false"><img src="{{asset('admin/images/borrador.svg')}}" height="15" > Borrar <i class="icon"><span data-feather="chevron-down"></span></i></button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" onclick="vaciardFeria()">Dias feriados</a>
-                                                <a class="dropdown-item" onclick="vaciarddescanso()">Dias descanso</a>
-                                                {{-- <a class="dropdown-item"  onclick="vaciardlabTem()" >D. laborables</a> --}}
-                                                <a class="dropdown-item" onclick="vaciardNlabTem()">D. no laborables</a>
-                                                <a class="dropdown-item" onclick="vaciardIncidTem()">Incidencia</a>
+                                </div>
 
-                                            </div>
-                                        </div><!-- /btn-group --></div>
+                                <div class="col-md-12" id="calendarInv"></div>
+                                @endif
+                                <input type="hidden" id="pruebaEnd">
+                                <input type="hidden" id="pruebaStar">
+                                <div class="col-md-10" id="calendar" style="display: none"></div>
+                                <div class="col-md-2" id="opborrar" style="display: none">
+                                    <br><br><br><br><br>
+                                    <div class="btn-group mt-2 mr-1">
+                                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle"
+                                            style="color: #fff;
+                                            background-color: #4a5669;
+                                            border-color: #485263;" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false"><img
+                                                src="{{asset('admin/images/borrador.svg')}}" height="15">
+                                            Borrar <i class="icon"><span
+                                                    data-feather="chevron-down"></span></i></button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" onclick="vaciardFeria()">Dias
+                                                feriados</a>
+                                            <a class="dropdown-item" onclick="vaciarddescanso()">Dias
+                                                descanso</a>
+                                            {{-- <a class="dropdown-item" onclick="vaciardlabTem()">D.
+                                                laborables</a> --}}
+                                            <a class="dropdown-item" onclick="vaciardNlabTem()">D. no
+                                                laborables</a>
+                                            <a class="dropdown-item"
+                                                onclick="vaciardIncidTem()">Incidencia</a>
+
+                                        </div>
+                                    </div><!-- /btn-group -->
+                                </div>
 
                                 <div id="calendarioAsignar" class="modal fade" tabindex="-1" role="dialog"
-                                    aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                                    aria-labelledby="myModalLabel" aria-hidden="true"
+                                    data-backdrop="static">
                                     <div class="modal-dialog  modal-lg d-flex justify-content-center "
                                         style="width:580px;  margin-top: 150px; left: 30px;">
 
@@ -1454,14 +1485,16 @@ use App\proyecto_empleado;
                                                 <div class="col-md-12">
                                                     <div class="row">
                                                         <div class="col-md-4">
-                                                            <button type="button" style=" max-width: 18em!important;"
+                                                            <button type="button"
+                                                                style=" max-width: 18em!important;"
                                                                 class="btn btn-secondary btn-sm"
                                                                 onclick="laborableTem()"><img
-                                                                    src="{{asset('admin/images/calendariolab.svg')}}"
-                                                                    height="20"> Dia laborable</button>
+                                                                src="{{asset('admin/images/dormir.svg')}}"
+                                                                    height="20"> Descanso</button>
                                                         </div>
                                                         <div class="col-md-4">
-                                                            <button type="button" style=" max-width: 18em!important;"
+                                                            <button type="button"
+                                                                style=" max-width: 18em!important;"
                                                                 class="btn btn-secondary btn-sm"
                                                                 onclick="nolaborableTem()"><img
                                                                     src="{{asset('admin/images/evento.svg')}}"
@@ -1478,14 +1511,14 @@ use App\proyecto_empleado;
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </div>
                                             <div class="modal-footer"
                                                 style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
                                                 <div class="col-md-12">
                                                     <div class="row">
                                                         <div class="col-md-12 text-right">
-                                                            <button type="button" class="btn btn-soft-primary btn-sm "
+                                                            <button type="button"
+                                                                class="btn btn-soft-primary btn-sm "
                                                                 onclick="$('#calendarioAsignar').modal('hide')">Cancelar</button>
 
                                                             </form>
