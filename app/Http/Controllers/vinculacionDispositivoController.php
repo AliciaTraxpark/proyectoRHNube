@@ -21,9 +21,8 @@ class vinculacionDispositivoController extends Controller
             ->select(DB::raw('COUNT(m.idTipoDispositivo) as total'))
             ->where('v.idEmpleado', '=', $idEmpleado)
             ->where('m.idTipoDispositivo', '=', 2)
-            ->get()
-            ->first();
-        if ($contar->total == 1) {
+            ->get();
+        if ($contar[0]->total == 1) {
             return 1;
         } else {
             $modo = new modo();
@@ -69,9 +68,8 @@ class vinculacionDispositivoController extends Controller
             ->select(DB::raw('COUNT(m.idTipoDispositivo) as total'))
             ->where('v.idEmpleado', '=', $idEmpleado)
             ->where('m.idTipoDispositivo', '=', 1)
-            ->get()
-            ->first();
-        if ($contar->total == 3) {
+            ->get();
+        if ($contar[0]->total == 3) {
             return 1;
         } else {
             //MODO

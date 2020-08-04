@@ -125,6 +125,7 @@ function vinculacionWindows() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
+            console.log(data);
             if (data == 1) {
                 $.notifyClose();
                 $.notify({
@@ -219,6 +220,62 @@ function enviarCorreoWindows() {
 }
 $('#enviarCorreoWindowsEmpleado').on("click", enviarCorreoWindows);
 //EDITAR
+function vinculacionAndroidEditar() {
+    var idEmpleado = $('#v_id').val();
+    $.ajax({
+        async: false,
+        type: "get",
+        url: "vinculacionAndroid",
+        data: {
+            idEmpleado: idEmpleado
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            if (data == 1) {
+                $.notifyClose();
+                $.notify({
+                    message: "\nLlego al limite de dispositivos Android",
+                    icon: 'admin/images/warning.svg'
+                }, {
+                    element: $('#form-ver'),
+                    position: 'fixed',
+                    icon_type: 'image',
+                    newest_on_top: true,
+                    delay: 5000,
+                    template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            } else {
+                var container = $('#v_tbodyDispositivo');
+                var tr = `<tr>
+                <td>${data.dispositivo_descripcion}</td>
+                <td>${data.licencia}</td>
+                <td>${data.codigo}</td>
+                <td id="enviado${idEmpleado}">${data.envio}</td>
+                <td id="estado${idEmpleado}">Creado</td>
+                <td>
+                <input style="display: none;" id="android${idEmpleado}" value="${data.idVinculacion}">
+                <a  onclick="$('#androidEmpleado').modal();$('#form-registrar').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+                correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
+                    src="landing/images/note.svg" height="20">
+            </a></td>
+                </tr>`;
+                container.append(tr);
+            }
+            console.log(data);
+        },
+        error: function () {}
+    });
+}
+$('#v_agregarAndroid').on("click", vinculacionAndroidEditar);
+
 function enviarCorreoAndoidEditar() {
     var idEmpleado = $('#v_id').val();
     var idVinculacion = $('#android' + idEmpleado).val();
@@ -248,7 +305,7 @@ function enviarCorreoAndoidEditar() {
                 message: "\nCorreo Enviado.",
                 icon: 'admin/images/checked.svg'
             }, {
-                element: $('#form-registrar'),
+                element: $('#form-ver'),
                 position: 'fixed',
                 icon_type: 'image',
                 newest_on_top: true,
@@ -273,6 +330,61 @@ function modalWindowsEditar(id) {
     $('#v_windowsEmpleado').modal();
 
 }
+
+function vinculacionWindowsEditar() {
+    var idEmpleado = $('#v_id').val();
+    $.ajax({
+        async: false,
+        type: "get",
+        url: "vinculacionWindows",
+        data: {
+            idEmpleado: idEmpleado
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            if (data == 1) {
+                $.notifyClose();
+                $.notify({
+                    message: "\nLlego al limite de dispositivos Windows",
+                    icon: 'admin/images/warning.svg'
+                }, {
+                    element: $('#form-ver'),
+                    position: 'fixed',
+                    icon_type: 'image',
+                    newest_on_top: true,
+                    delay: 5000,
+                    template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            } else {
+                var container = $('#v_tbodyDispositivo');
+                var tr = `<tr>
+                <td>${data.dispositivo_descripcion}</td>
+                <td>${data.licencia}</td>
+                <td>${data.codigo}</td>
+                <td id="enviadoW${data.idVinculacion}">${data.envio}</td>
+                <td id="estado${data.idVinculacion}">Creado</td>
+                <td>
+                <a  onclick="javascript:modalWindows(${data.idVinculacion});$('#form-registrar').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+                correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
+                    src="landing/images/note.svg" height="20">
+            </a></td>
+                </tr>`;
+                container.append(tr);
+            }
+            console.log(data);
+        },
+        error: function () {}
+    });
+}
+$('#v_agregarWindows').on("click", vinculacionWindowsEditar);
 
 function enviarCorreoWindowsEditar() {
     var idEmpleado = $('#v_id').val();
@@ -306,7 +418,7 @@ function enviarCorreoWindowsEditar() {
                 message: "\nCorreo Enviado.",
                 icon: 'admin/images/checked.svg'
             }, {
-                element: $('#form-registrar'),
+                element: $('#form-ver'),
                 position: 'fixed',
                 icon_type: 'image',
                 newest_on_top: true,
