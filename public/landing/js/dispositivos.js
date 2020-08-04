@@ -174,6 +174,183 @@ function cambiarEstadoLicenciaWindows() {
     });
 }
 $('#CambiarEstadoLW').on("click", cambiarEstadoLicenciaWindows);
+//EDITAR
+function inactivarLicenciaEditar(id) {
+    $('#estadoLicencia').val(id);
+    $('#form-ver').hide();
+    $('#v_estadoLicenciaC').modal();
+}
+
+function inactivarLicenciaWEditar(id) {
+    $('#estadoLicenciaW').val(id);
+    $('#form-ver').hide();
+    $('#v_estadoLicenciaW').modal();
+}
+
+function cambiarEstadoLicenciaAndroidEditar() {
+    var idEmpleado = $('#v_id').val();
+    var idVinculacion = $('#estadoLicencia').val();
+    //NOTIFICACION
+    $.ajax({
+        async: false,
+        type: "get",
+        url: "/cambiarEstadoLicencia",
+        data: {
+            idE: idEmpleado,
+            idV: idVinculacion
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            $('#correo' + idVinculacion).empty();
+            $('#inactivar' + idVinculacion).empty();
+            $('#estado' + idVinculacion).empty();
+            var td = `<input style="display: none;" id="android${idEmpleado}" value="${data.idVinculacion}">
+            <a  onclick="$('#androidEmpleado').modal();$('#form-registrar').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+            correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
+                src="landing/images/note.svg" height="20">
+            </a>`;
+            var tdE = `Inactivo`;
+            $('#correo' + idVinculacion).append(td);
+            $('#inactivar' + idVinculacion).append(``);
+            $('#estado' + idVinculacion).append(tdE);
+            $('#estadoLicenciaC').modal('toggle');
+            $('#form-registrar').show();
+            $.notifyClose();
+            $.notify({
+                message: "\nProceso con éxito.",
+                icon: 'admin/images/checked.svg'
+            }, {
+                element: $('#form-registrar'),
+                position: 'fixed',
+                icon_type: 'image',
+                newest_on_top: true,
+                delay: 5000,
+                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+        },
+        error: function () {
+            $('#estadoLicenciaC').modal('toggle');
+            $('#form-registrar').show();
+            $.notifyClose();
+            $.notify({
+                message: "\nAún no ha registrado correo a empleado.",
+                icon: 'admin/images/warning.svg'
+            }, {
+                element: $('#form-registrar'),
+                position: 'fixed',
+                icon_type: 'image',
+                newest_on_top: true,
+                delay: 5000,
+                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+        }
+    });
+}
+$('#CambiarEstadoL').on("click", cambiarEstadoLicenciaAndroidEditar);
+
+function cambiarEstadoLicenciaWindowsEditar() {
+    var idEmpleado = $('#v_id').val();
+    var idVinculacion = $('#estadoLicencia').val();
+    //NOTIFICACION
+    $.ajax({
+        async: false,
+        type: "get",
+        url: "/cambiarEstadoLicencia",
+        data: {
+            idE: idEmpleado,
+            idV: idVinculacion
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            $('#correo' + idVinculacion).empty();
+            $('#inactivar' + idVinculacion).empty();
+            $('#estado' + idVinculacion).empty();
+            var td = `<a  onclick="javascript:modalWindows(${data.idVinculacion});$('#form-registrar').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+            correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
+                src="landing/images/note.svg" height="20">
+            </a>`;
+            var tdE = `Inactivo`;
+            $('#correo' + idVinculacion).append(td);
+            $('#inactivar' + idVinculacion).append(``);
+            $('#estado' + idVinculacion).append(tdE);
+            $('#estadoLicenciaW').modal('toggle');
+            $('#form-registrar').show();
+            $.notifyClose();
+            $.notify({
+                message: "\nProceso con éxito.",
+                icon: 'admin/images/checked.svg'
+            }, {
+                element: $('#form-registrar'),
+                position: 'fixed',
+                icon_type: 'image',
+                newest_on_top: true,
+                delay: 5000,
+                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+        },
+        error: function () {
+            $('#estadoLicenciaW').modal('toggle');
+            $('#form-registrar').show();
+            $.notifyClose();
+            $.notify({
+                message: "\nAún no ha registrado correo a empleado.",
+                icon: 'admin/images/warning.svg'
+            }, {
+                element: $('#form-registrar'),
+                position: 'fixed',
+                icon_type: 'image',
+                newest_on_top: true,
+                delay: 5000,
+                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+        }
+    });
+}
+$('#CambiarEstadoLW').on("click", cambiarEstadoLicenciaWindowsEditar);
 //*************************************************************************** */
 $('#tbodyDispositivo').empty();
 $('#v_tbodyDispositivo').empty();
@@ -443,14 +620,16 @@ function vinculacionAndroidEditar() {
                 <td>${data.dispositivo_descripcion}</td>
                 <td>${data.licencia}</td>
                 <td class="hidetext">${data.codigo}</td>
-                <td id="enviado${idEmpleado}">${data.envio}</td>
-                <td id="estado${idEmpleado}">Creado</td>
+                <td id="enviado${data.idVinculacion}">${data.envio}</td>
+                <td id="estado${data.idVinculacion}">Creado</td>
                 <td>
-                <input style="display: none;" id="android${idEmpleado}" value="${data.idVinculacion}">
-                <a  onclick="$('#androidEmpleado').modal();$('#form-registrar').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
-                correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
-                    src="landing/images/note.svg" height="20">
-            </a></td>
+                    <input style="display: none;" id="android${idEmpleado}" value="${data.idVinculacion}">
+                    <a  onclick="$('#androidEmpleado').modal();$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+                    correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
+                        src="landing/images/note.svg" height="20">
+                    </a>
+                </td>
+                <td "inactivar${data.idVinculacion}"><a onclick="javascript:inactivarLicenciaEditar(${data.idVinculacion})" class="badge badge-soft-danger mr-2">Inactivar</a></td>
                 </tr>`;
                 container.append(tr);
             }
@@ -478,8 +657,8 @@ function enviarCorreoAndoidEditar() {
         success: function (data) {
             $('#v_androidEmpleado').modal('toggle');
             $('#form-ver').show();
-            var container = $('#enviado' + idEmpleado);
-            var cont = $('#estado' + idEmpleado);
+            var container = $('#enviado' + idVinculacion);
+            var cont = $('#estado' + idVinculacion);
             container.empty();
             cont.empty();
             var td = `<td>${data.envio}</td>`;
@@ -558,10 +737,12 @@ function vinculacionWindowsEditar() {
                 <td id="enviadoW${data.idVinculacion}">${data.envio}</td>
                 <td id="estado${data.idVinculacion}">Creado</td>
                 <td>
-                <a  onclick="javascript:modalWindows(${data.idVinculacion});$('#form-registrar').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
-                correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
-                    src="landing/images/note.svg" height="20">
-            </a></td>
+                    <a  onclick="javascript:modalWindows(${data.idVinculacion});$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+                    correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
+                        src="landing/images/note.svg" height="20">
+                </a>
+                </td>
+                <td "inactivar${data.idVinculacion}"><a onclick="javascript:inactivarLicenciaWEditar(${data.idVinculacion})" class="badge badge-soft-danger mr-2">Inactivar</a></td>
                 </tr>`;
                 container.append(tr);
             }

@@ -39,6 +39,7 @@ Route::post("editarProyecto", "apiController@editarProyecto")->middleware('token
 Route::post("eliminarProyecto", "apiController@eliminarProyecto")->middleware('token');
 //HORARIO
 Route::post("horario", "apiController@horario")->middleware('token');
+Route::post("ultimoHorario", "apiController@ultimoHorario")->middleware('token');
 ///LOGUEO CON CORREO
 Route::post("logueoV", "apiController@verificacion");
 

@@ -7,6 +7,7 @@ use App\captura;
 use App\control;
 use App\empleado;
 use App\envio;
+use App\horario;
 use App\horario_dias;
 use App\horario_empleado;
 use App\licencia_empleado;
@@ -77,7 +78,7 @@ class apiController extends Controller
         $idUser = $explode[0];
 
         if ($empleado) {
-            $vinculacion = vinculacion::where('idEmpleado', '=', $empleado->emple_id)->get()->first();
+            $vinculacion = vinculacion::where('id', '=', $explode[1])->get()->first();
             if ($vinculacion) {
                 if ($vinculacion->hash == $request->get('codigo')) {
                     if ($vinculacion->pc_mac !=  null) {
@@ -259,6 +260,44 @@ class apiController extends Controller
             return response()->json($respuesta, 200);
         }
         return response()->json("Empleado no encontrado", 400);
+    }
+
+    public function ultimoHorario(Request $request)
+    {
+        $idEmpleado = $request->get('idEmpleado');
+        $fecha = $request->get('fecha');
+        $carbon = Carbon::create($fecha);
+        $fechaAnterior = $carbon->add(-1, 'day');
+        $fechaBuscar = $fechaAnterior->isoFormat('YYYY-MM-DD');
+        $respuesta = [];
+        $horarioD = [];
+        $horarioEmpleado = DB::table('horario_empleado as he')
+            ->select('he.horario_dias_id', 'he.horario_horario_id')
+            ->where('he.empleado_emple_id', '=', $idEmpleado)
+            ->get();
+        foreach ($horarioEmpleado as $he) {
+            $horarioDias = DB::table('horario_dias as hd')
+                ->select(DB::raw('DATE(hd.start) as start'), 'hd.id')
+                ->where('hd.id', '=', $he->horario_dias_id)
+                ->get();
+            foreach ($horarioDias as $hd) {
+                if ($hd->start == $fechaBuscar) {
+                    array_push($horarioD, $hd->id);
+                }
+            }
+            foreach ($horarioD as $arrayH) {
+                $hora = '00:00:00';
+                $horarioE = horario_empleado::where('horario_dias_id', $arrayH)->where('empleado_emple_id', $idEmpleado)->get()->first();
+                $horario = horario::where('horario_id', '=', $horarioE->horario_horario_id)->get()->first();
+                if ($horario->horaI > $hora) {
+                    $hora = $horario->horaI;
+                    unset($respuesta);
+                    $respuesta = array();
+                    array_push($respuesta, $horario);
+                }
+            }
+        }
+        return response()->json($respuesta, 200);
     }
 
     public function apiTarea(Request $request)
