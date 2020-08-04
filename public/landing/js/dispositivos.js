@@ -1,3 +1,5 @@
+$('#tbodyDispositivo').empty();
+$('#v_tbodyDispositivo').empty();
 //ANDROID
 function vinculacionAndroid() {
     var idEmpleado = $('#idEmpleado').val();

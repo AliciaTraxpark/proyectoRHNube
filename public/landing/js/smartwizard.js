@@ -318,12 +318,11 @@ $(document).ready(function () {
                 .attr("id", "FinalizarEmpleado")
                 .on('click', function () {
                     leertabla();
-                    $('#smartwizard').smartWizard("reset");
-                    $('input[type="text"]').val("");
-                    $('input:radio[name=tipo]:checked').prop('checked', false);
-                    $('input[type="date"]').val("");
-                    $('input[type="file"]').val("");
-                    $('input[type="email"]').val("");
+                    $('#form-registrar input[type="text"]').val("");
+                    $('#form-registrar input:radio[name=tipo]:checked').prop('checked', false);
+                    $('#form-registrar input[type="date"]').val("");
+                    $('#form-registrar input[type="file"]').val("");
+                    $('#form-registrar input[type="email"]').val("");
                     $('#form-registrar :input').val("");
                     $('#codigoCelular').val("+51");
                     $("#form-registrar :input").prop('disabled', true);
@@ -333,9 +332,11 @@ $(document).ready(function () {
                     $('#m_fechaF').combodate("clearValue");
                     $('#detalleContrato').hide();
                     $('#checkboxFechaI').prop('checked', false);
-                    $('#form-registrar').modal('toggle');
                     $('#selectCalendario').val("Asignar calendario");
                     $('#selectHorario').val("Seleccionar horario");
+                    $('#tbodyDispositivo').empty();
+                    $('#smartwizard').smartWizard("reset");
+                    $('#form-registrar').modal('toggle');
                 }),
             ]
         },
