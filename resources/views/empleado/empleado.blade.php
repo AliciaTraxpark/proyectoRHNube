@@ -330,6 +330,10 @@
         body {
             background-color: #f8f8f8;
         }
+        .hidetext {
+        -webkit-text-security: disc;
+        /* Default */
+    }
     </style>
     <div id="preloader">
         <div id="status">

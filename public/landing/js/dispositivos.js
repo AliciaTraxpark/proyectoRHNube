@@ -36,7 +36,7 @@ function vinculacionAndroid() {
                 var tr = `<tr>
                 <td>${data.dispositivo_descripcion}</td>
                 <td>${data.licencia}</td>
-                <td>${data.codigo}</td>
+                <td class="hidetext">${data.codigo}</td>
                 <td id="enviado${idEmpleado}">${data.envio}</td>
                 <td id="estado${idEmpleado}">Creado</td>
                 <td>
@@ -150,7 +150,7 @@ function vinculacionWindows() {
                 var tr = `<tr>
                 <td>${data.dispositivo_descripcion}</td>
                 <td>${data.licencia}</td>
-                <td>${data.codigo}</td>
+                <td class="hidetext">${data.codigo}</td>
                 <td id="enviadoW${data.idVinculacion}">${data.envio}</td>
                 <td id="estado${data.idVinculacion}">Creado</td>
                 <td>
@@ -257,7 +257,7 @@ function vinculacionAndroidEditar() {
                 var tr = `<tr>
                 <td>${data.dispositivo_descripcion}</td>
                 <td>${data.licencia}</td>
-                <td>${data.codigo}</td>
+                <td class="hidetext">${data.codigo}</td>
                 <td id="enviado${idEmpleado}">${data.envio}</td>
                 <td id="estado${idEmpleado}">Creado</td>
                 <td>
@@ -368,7 +368,7 @@ function vinculacionWindowsEditar() {
                 var tr = `<tr>
                 <td>${data.dispositivo_descripcion}</td>
                 <td>${data.licencia}</td>
-                <td>${data.codigo}</td>
+                <td class="hidetext">${data.codigo}</td>
                 <td id="enviadoW${data.idVinculacion}">${data.envio}</td>
                 <td id="estado${data.idVinculacion}">Creado</td>
                 <td>
