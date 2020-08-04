@@ -18,6 +18,8 @@ function vinculacionAndroid() {
                     message: "\nLlego al limite de dispositivos Android",
                     icon: 'admin/images/warning.svg'
                 }, {
+                    element: $('#form-registrar'),
+                    position: 'fixed',
                     icon_type: 'image',
                     newest_on_top: true,
                     delay: 5000,
