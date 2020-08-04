@@ -51,8 +51,8 @@ class apiController extends Controller
         $licencia = $request->get('licencia');
         $licencia_empleado = licencia_empleado::where('licencia', '=', $licencia)->get()->first();
         if ($licencia_empleado) {
-            if ($licencia_empleado->disponible == 1) {
-                $licencia_empleado->disponible = 0;
+            if ($licencia_empleado->disponible == 'e') {
+                $licencia_empleado->disponible = 'a';
                 $licencia_empleado->save();
                 return response()->json("Licencia Correcta", 200);
             }
