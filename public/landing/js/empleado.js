@@ -1209,7 +1209,7 @@ function registrarHorario() {
                 },
                 success: function (data) {
 
-
+                    calendar.refetchEvents();
                     calendar2.refetchEvents();
 
 
@@ -1302,7 +1302,7 @@ $('#selectHorario').change(function (e) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-
+            calendar.refetchEvents();
             calendar2.refetchEvents();
             $("#selectHorario").val("Seleccionar horario");
             $('#horarioAsignar').modal('hide');
@@ -1466,8 +1466,144 @@ function calendario2_ed() {
             console.log(info);
             console.log(info.event.id);
             console.log(info.event.title);
-            var event = calendar2_ed.getEventById(id);
+            console.log(info.event.textColor);
+            var event = calendarioedit.getEventById(id);
+            if (info.event.textColor == '111111' || info.event.textColor == '1' || info.event.textColor == '0') {
+                if (info.event.textColor == '111111') {
+                    bootbox.confirm({
+                        message: "¿Desea eliminar: " + info.event.title + " del horario?",
+                        buttons: {
+                            confirm: {
+                                label: 'Aceptar',
+                                className: 'btn-success'
+                            },
+                            cancel: {
+                                label: 'Cancelar',
+                                className: 'btn-light'
+                            }
+                        },
+                        callback: function (result) {
+                            if (result == true) {
+                                $.ajax({
+                                    type: "post",
+                                    url: "/empleado/eliminarHorariosEdit",
+                                    data: {
+                                        ideve: info.event.id
+                                    },
+                                    statusCode: {
 
+                                        419: function () {
+                                            location.reload();
+                                        }
+                                    },
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    success: function (data) {
+                                        info.event.remove();
+                                        calendar2_ed.refetchEvents();
+
+                                    },
+                                    error: function (data) {
+                                        alert('Ocurrio un error');
+                                    }
+
+
+                                });
+                            }
+                        }
+                    });
+                } else {
+                    bootbox.confirm({
+                        message: "¿Desea eliminar: " + info.event.title + " del horario?",
+                        buttons: {
+                            confirm: {
+                                label: 'Aceptar',
+                                className: 'btn-success'
+                            },
+                            cancel: {
+                                label: 'Cancelar',
+                                className: 'btn-light'
+                            }
+                        },
+                        callback: function (result) {
+                            if (result == true) {
+                                $.ajax({
+                                    type: "post",
+                                    url: "/empleado/eliminarInciEdit",
+                                    data: {
+                                        ideve: info.event.id
+                                    },
+                                    statusCode: {
+
+                                        419: function () {
+                                            location.reload();
+                                        }
+                                    },
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    success: function (data) {
+                                        info.event.remove();
+                                        calendar2_ed.refetchEvents();
+
+                                    },
+                                    error: function (data) {
+                                        alert('Ocurrio un error');
+                                    }
+
+
+                                });
+                            }
+                        }
+                    });
+
+                }
+            } else {
+                bootbox.confirm({
+                    message: "¿Desea eliminar: " + info.event.title + " del horario?",
+                    buttons: {
+                        confirm: {
+                            label: 'Aceptar',
+                            className: 'btn-success'
+                        },
+                        cancel: {
+                            label: 'Cancelar',
+                            className: 'btn-light'
+                        }
+                    },
+                    callback: function (result) {
+                        if (result == true) {
+                            $.ajax({
+                                type: "post",
+                                url: "/empleado/eliminareventBD",
+                                data: {
+                                    ideve: info.event.id
+                                },
+                                statusCode: {
+
+                                    419: function () {
+                                        location.reload();
+                                    }
+                                },
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: function (data) {
+                                    info.event.remove();
+                                    calendar2_ed.refetchEvents();
+
+                                },
+                                error: function (data) {
+                                    alert('Ocurrio un error');
+                                }
+
+
+                            });
+                        }
+                    }
+                });
+            }
 
 
         },
@@ -3674,7 +3810,7 @@ function diaferiadoRe_ed() {
 //////////////////////////////////////////////////////////
 function vaciardFeriaBD(){
     var idempleado = $('#idempleado').val();
-    fmes = calendar.getDate();
+    fmes = calendarioedit.getDate();
     mescale = fmes.getMonth() + 1;
     aniocalen = fmes.getFullYear();
     bootbox.confirm({
@@ -3693,10 +3829,11 @@ function vaciardFeriaBD(){
             if (result == true) {
                 $.ajax({
                     type: "post",
-                    url: "/empleado/vaciardfTem",
+                    url: "/empleado/vaciarFerBD",
                     data: {
                         mescale,
-                        aniocalen
+                        aniocalen,
+                        idempleado
                     },
                     statusCode: {
 
@@ -3708,8 +3845,161 @@ function vaciardFeriaBD(){
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function (data) {
-                        calendar.refetchEvents();
-                        calendar2.refetchEvents();
+                        calendarioedit.refetchEvents();
+                        calendar2_ed.refetchEvents();
+
+                    },
+                    error: function (data) {
+                        alert('Ocurrio un error');
+                    }
+                });
+
+
+            }
+        }
+    });
+}
+function vaciarddescansoBD(){
+    var idempleado = $('#idempleado').val();
+    fmes = calendarioedit.getDate();
+    mescale = fmes.getMonth() + 1;
+    aniocalen = fmes.getFullYear();
+    bootbox.confirm({
+        message: "¿Esta seguro que desea eliminar dias de descanso  del calendario?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            if (result == true) {
+                $.ajax({
+                    type: "post",
+                    url: "/empleado/vaciarFdescansoBD",
+                    data: {
+                        mescale,
+                        aniocalen,
+                        idempleado
+                    },
+                    statusCode: {
+
+                        419: function () {
+                            location.reload();
+                        }
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        calendarioedit.refetchEvents();
+                        calendar2_ed.refetchEvents();
+
+                    },
+                    error: function (data) {
+                        alert('Ocurrio un error');
+                    }
+                });
+
+
+            }
+        }
+    });
+}
+function vaciarNlabBD(){
+    var idempleado = $('#idempleado').val();
+    fmes = calendarioedit.getDate();
+    mescale = fmes.getMonth() + 1;
+    aniocalen = fmes.getFullYear();
+    bootbox.confirm({
+        message: "¿Esta seguro que desea eliminar dias no laborales del calendario?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            if (result == true) {
+                $.ajax({
+                    type: "post",
+                    url: "/empleado/vaciardnlaBD",
+                    data: {
+                        mescale,
+                        aniocalen,
+                        idempleado
+                    },
+                    statusCode: {
+
+                        419: function () {
+                            location.reload();
+                        }
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        calendarioedit.refetchEvents();
+                        calendar2_ed.refetchEvents();
+
+                    },
+                    error: function (data) {
+                        alert('Ocurrio un error');
+                    }
+                });
+
+
+            }
+        }
+    });
+}
+function vaciardIncidBD(){
+    var idempleado = $('#idempleado').val();
+    fmes = calendarioedit.getDate();
+    mescale = fmes.getMonth() + 1;
+    aniocalen = fmes.getFullYear();
+    bootbox.confirm({
+        message: "¿Esta seguro que desea eliminar incidencias del calendario?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            if (result == true) {
+                $.ajax({
+                    type: "post",
+                    url: "/empleado/vaciarincidelaBD",
+                    data: {
+                        mescale,
+                        aniocalen,
+                        idempleado
+                    },
+                    statusCode: {
+
+                        419: function () {
+                            location.reload();
+                        }
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        calendarioedit.refetchEvents();
+                        calendar2_ed.refetchEvents();
 
                     },
                     error: function (data) {

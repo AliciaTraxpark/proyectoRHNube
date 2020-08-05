@@ -2131,14 +2131,14 @@ use App\proyecto_empleado;
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item" onclick="vaciardFeriaBD()">Dias
                                                     feriados</a>
-                                                <a class="dropdown-item" onclick="vaciarddescanso()">Dias
+                                                <a class="dropdown-item" onclick="vaciarddescansoBD()">Dias
                                                     descanso</a>
                                                 {{-- <a class="dropdown-item"
                                                     onclick="vaciardlabTem()">D.
                                                     laborables</a> --}}
-                                                <a class="dropdown-item" onclick="vaciardNlabTem()">D. no
+                                                <a class="dropdown-item" onclick="vaciarNlabBD()">D. no
                                                     laborables</a>
-                                                <a class="dropdown-item" onclick="vaciardIncidTem()">Incidencia</a>
+                                                <a class="dropdown-item" onclick="vaciardIncidBD()">Incidencia</a>
 
                                             </div>
                                         </div><!-- /btn-group -->
