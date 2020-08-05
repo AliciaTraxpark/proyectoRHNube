@@ -316,28 +316,7 @@ $(document).ready(function () {
                 $(`<button></button>`).text('Finalizar')
                 .addClass('btn btn-secondary sw-btn-finish')
                 .attr("id", "FinalizarEmpleado")
-                .on('click', function () {
-                    leertabla();
-                    $('#form-registrar :input').val("");
-                    $('input[type="text"]').val("");
-                    $('input:radio[name=tipo]:checked').prop('checked', false);
-                    $('input[type="date"]').val("");
-                    $('input[type="file"]').val("");
-                    $('input[type="email"]').val("");
-                    $('#codigoCelular').val("+51");
-                    $("#form-registrar :input").prop('disabled', true);
-                    $('#documento').attr('disabled', false);
-                    $('#cerrarMoadalEmpleado').attr('disabled', false);
-                    $('#m_fechaI').combodate("clearValue");
-                    $('#m_fechaF').combodate("clearValue");
-                    $('#detalleContrato').hide();
-                    $('#checkboxFechaI').prop('checked', false);
-                    $('#selectCalendario').val("Asignar calendario");
-                    $('#selectHorario').val("Seleccionar horario");
-                    $('#tbodyDispositivo').empty();
-                    $('#smartwizard').smartWizard("reset");
-                    $('#form-registrar').modal('toggle');
-                }),
+                .on('click', FinalizarEmpleado),
             ]
         },
     });

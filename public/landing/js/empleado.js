@@ -2360,6 +2360,7 @@ function valorCodigoEmpleado() {
 
 function datosPersona(method) {
     var celularC = '';
+    console.log($('input:radio[name=tipo]:checked').val());
     if ($('#celular').val() != '') {
         celularC = $('#codigoCelular').val() + $('#celular').val();
     }
@@ -3050,6 +3051,32 @@ $('#editarNivelA').hide();
 $('#editarContratoA').hide();
 $('#validCel').hide();
 $('#v_validCel').hide();
+
+function FinalizarEmpleado() {
+    leertabla();
+    $('#form-registrar :input').val("");
+    $('input[type="text"]').val("");
+    $('input:radio[name=tipo]:checked').prop('checked', false);
+    $('input[type="date"]').val("");
+    $('input[type="file"]').val("");
+    $('input[type="email"]').val("");
+    $('#form-registrar :input').val("");
+    $('#file').val('');
+    $('#file').fileinput('refresh');
+    $('#codigoCelular').val("+51");
+    $("#form-registrar :input").prop('disabled', true);
+    $('#documento').attr('disabled', false);
+    $('#cerrarMoadalEmpleado').attr('disabled', false);
+    $('#m_fechaI').combodate("clearValue");
+    $('#m_fechaF').combodate("clearValue");
+    $('#detalleContrato').hide();
+    $('#checkboxFechaI').prop('checked', false);
+    $('#selectCalendario').val("Asignar calendario");
+    $('#selectHorario').val("Seleccionar horario");
+    $('#tbodyDispositivo').empty();
+    $('#smartwizard').smartWizard("reset");
+    $('#form-registrar').modal('toggle');
+}
 //************************Editar en los modal de agregar */
 //*******AREA***/
 $('#buscarArea').on("click", function () {

@@ -37,14 +37,14 @@ function cambiarEstadoLicenciaAndroid() {
             $('#correo' + idVinculacion).empty();
             $('#inactivar' + idVinculacion).empty();
             $('#estado' + idVinculacion).empty();
-            var td = `<input style="display: none;" id="android${idEmpleado}" value="${data.idVinculacion}">
+            var tdC = `<input style="display: none;" id="android${idEmpleado}" value="${idVinculacion}">
             <a  onclick="$('#androidEmpleado').modal();$('#form-registrar').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
-            correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
-                src="landing/images/note.svg" height="20">
+            correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img src="landing/images/email (4).svg" height="20">
             </a>`;
             var tdE = `Inactivo`;
-            $('#correo' + idVinculacion).append(td);
-            $('#inactivar' + idVinculacion).append(``);
+            var tdI = ``;
+            $('#correo' + idVinculacion).append(tdC);
+            $('#inactivar' + idVinculacion).append(tdI);
             $('#estado' + idVinculacion).append(tdE);
             $('#estadoLicenciaC').modal('toggle');
             $('#form-registrar').show();
@@ -95,7 +95,7 @@ $('#CambiarEstadoL').on("click", cambiarEstadoLicenciaAndroid);
 
 function cambiarEstadoLicenciaWindows() {
     var idEmpleado = $('#idEmpleado').val();
-    var idVinculacion = $('#estadoLicencia').val();
+    var idVinculacion = $('#estadoLicenciaW').val();
     //NOTIFICACION
     $.ajax({
         async: false,
@@ -120,13 +120,14 @@ function cambiarEstadoLicenciaWindows() {
             $('#correo' + idVinculacion).empty();
             $('#inactivar' + idVinculacion).empty();
             $('#estado' + idVinculacion).empty();
-            var td = `<a  onclick="javascript:modalWindows(${data.idVinculacion});$('#form-registrar').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+            var td = `<a  onclick="javascript:modalWindows(${idVinculacion});$('#form-registrar').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
             correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
-                src="landing/images/note.svg" height="20">
+                src="landing/images/email (4).svg" height="20">
             </a>`;
             var tdE = `Inactivo`;
+            var tdI = ``;
             $('#correo' + idVinculacion).append(td);
-            $('#inactivar' + idVinculacion).append(``);
+            $('#inactivar' + idVinculacion).append(tdI);
             $('#estado' + idVinculacion).append(tdE);
             $('#estadoLicenciaW').modal('toggle');
             $('#form-registrar').show();
@@ -435,10 +436,17 @@ function enviarCorreoAndoid() {
             var cont = $('#estado' + idVinculacion);
             container.empty();
             cont.empty();
-            var td = `<td>${data.envio}</td>`;
-            var tdE = `<td>Enviado</td>`;
+            $('#correo' + idVinculacion).empty;
+            var td = `${data.envio}`;
+            var tdE = `Enviado`;
+            var tdC = `<input style="display: none;" id="android${idEmpleado}" value="${idVinculacion}">
+            <a  onclick="$('#androidEmpleado').modal();$('#form-registrar').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+            correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
+                src="landing/images/note.svg" height="20">
+            </a>`;
             container.append(td);
             cont.append(tdE);
+            $('#correo' + idVinculacion).append(tdC);
             $.notifyClose();
             $.notify({
                 message: "\nCorreo Enviado.",
@@ -518,7 +526,7 @@ function vinculacionWindows() {
                         src="landing/images/note.svg" height="20">
                     </a>
                 </td>
-                <td "inactivar${data.idVinculacion}"><a onclick="javascript:inactivarLicenciaW(${data.idVinculacion})" class="badge badge-soft-danger mr-2">Inactivar</a></td>
+                <td id="inactivar${data.idVinculacion}"><a onclick="javascript:inactivarLicenciaW(${data.idVinculacion})" class="badge badge-soft-danger mr-2">Inactivar</a></td>
                 </tr>`;
                 container.append(tr);
             }
@@ -622,14 +630,14 @@ function vinculacionAndroidEditar() {
                 <td class="hidetext">${data.codigo}</td>
                 <td id="enviado${data.idVinculacion}">${data.envio}</td>
                 <td id="estado${data.idVinculacion}">Creado</td>
-                <td>
+                <td id="correo${data.idVinculacion}">
                     <input style="display: none;" id="android${idEmpleado}" value="${data.idVinculacion}">
                     <a  onclick="$('#androidEmpleado').modal();$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
                     correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
                         src="landing/images/note.svg" height="20">
                     </a>
                 </td>
-                <td "inactivar${data.idVinculacion}"><a onclick="javascript:inactivarLicenciaEditar(${data.idVinculacion})" class="badge badge-soft-danger mr-2">Inactivar</a></td>
+                <td id="inactivar${data.idVinculacion}"><a onclick="javascript:inactivarLicenciaEditar(${data.idVinculacion})" class="badge badge-soft-danger mr-2">Inactivar</a></td>
                 </tr>`;
                 container.append(tr);
             }
@@ -736,13 +744,13 @@ function vinculacionWindowsEditar() {
                 <td class="hidetext">${data.codigo}</td>
                 <td id="enviadoW${data.idVinculacion}">${data.envio}</td>
                 <td id="estado${data.idVinculacion}">Creado</td>
-                <td>
+                <td id="correo${data.idVinculacion}">
                     <a  onclick="javascript:modalWindows(${data.idVinculacion});$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
                     correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
                         src="landing/images/note.svg" height="20">
                 </a>
                 </td>
-                <td "inactivar${data.idVinculacion}"><a onclick="javascript:inactivarLicenciaWEditar(${data.idVinculacion})" class="badge badge-soft-danger mr-2">Inactivar</a></td>
+                <td id="inactivar${data.idVinculacion}"><a onclick="javascript:inactivarLicenciaWEditar(${data.idVinculacion})" class="badge badge-soft-danger mr-2">Inactivar</a></td>
                 </tr>`;
                 container.append(tr);
             }

@@ -14,13 +14,10 @@ class detallesActivacionController extends Controller
         $vinculacion = vinculacion::where('id', '=', $request->get('idV'))->get()->first();
         if ($vinculacion) {
             $empleado = empleado::where('emple_id', '=', $request->get('idE'))->get()->first();
-            if ($empleado->emple_Correo != "") {
-                $licencia = licencia_empleado::where('id', '=', $vinculacion->idLicencia)->get()->first();
-                $licencia->disponible = 'i';
-                $licencia->save();
-                return json_encode(array("result" => true));
-            }
-            return response()->json(null, 400);
+            $licencia = licencia_empleado::where('id', '=', $vinculacion->idLicencia)->get()->first();
+            $licencia->disponible = 'i';
+            $licencia->save();
+            return json_encode(array("result" => true));
         }
     }
 }
