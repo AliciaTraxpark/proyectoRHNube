@@ -64,7 +64,8 @@
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
                         empleado
                     </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-registrar').show();">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -78,8 +79,8 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-7 text-right">
-                                <button type="button" class="btn btn-light btn-sm"
-                                    data-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                    onclick="$('#form-registrar').show();">Cancelar</button>
                             </div>
                             <div class="col-md-5 text-right" style="padding-right:
                             38px;">
@@ -101,7 +102,8 @@
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
                         empleado
                     </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-registrar').show();">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -116,8 +118,8 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-7 text-right">
-                                <button type="button" class="btn btn-light btn-sm"
-                                    data-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                    onclick="$('#form-registrar').show();">Cancelar</button>
                             </div>
                             <div class="col-md-5 text-right" style="padding-right:
                             38px;">
@@ -139,7 +141,8 @@
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
                         empleado
                     </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-ver').show();">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -153,8 +156,8 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-7 text-right">
-                                <button type="button" class="btn btn-light btn-sm"
-                                    data-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                    onclick="$('#form-ver').show();">Cancelar</button>
                             </div>
                             <div class="col-md-5 text-right" style="padding-right:
                             38px;">
@@ -176,7 +179,8 @@
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
                         empleado
                     </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-ver').show();">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -191,8 +195,8 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-7 text-right">
-                                <button type="button" class="btn btn-light btn-sm"
-                                    data-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                    onclick="$('#form-ver').show();">Cancelar</button>
                             </div>
                             <div class="col-md-5 text-right" style="padding-right:
                             38px;">
@@ -216,7 +220,8 @@
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Cambiar Estado de
                         Activacion de Dispositivo
                     </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-registrar').show();">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -240,8 +245,8 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-6 text-center">
-                                <button type="button" class="btn btn-light btn-sm"
-                                    data-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                    onclick="$('#form-registrar').show();">Cancelar</button>
                             </div>
                             <div class="col-md-6 text-center" style="padding-right:
                         38px;">
@@ -265,7 +270,8 @@
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Cambiar Estado de
                         Activacion de Dispositivo
                     </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-registrar').show();">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -289,8 +295,8 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-6 text-center">
-                                <button type="button" class="btn btn-light btn-sm"
-                                    data-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                    onclick="$('#form-registrar').show();">Cancelar</button>
                             </div>
                             <div class="col-md-6 text-center" style="padding-right:
                          38px;">
@@ -314,7 +320,8 @@
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Cambiar Estado de
                         Activacion de Dispositivo
                     </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-ver').show();">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -338,8 +345,8 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-6 text-center">
-                                <button type="button" class="btn btn-light btn-sm"
-                                    data-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                    onclick="$('#form-ver').show();">Cancelar</button>
                             </div>
                             <div class="col-md-6 text-center" style="padding-right:
                         38px;">
@@ -363,7 +370,8 @@
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Cambiar Estado de
                         Activacion de Dispositivo
                     </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-ver').show();">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -387,8 +395,8 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-6 text-center">
-                                <button type="button" class="btn btn-light btn-sm"
-                                    data-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                    onclick="$('#form-ver').show();">Cancelar</button>
                             </div>
                             <div class="col-md-6 text-center" style="padding-right:
                          38px;">
