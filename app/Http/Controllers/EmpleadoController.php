@@ -239,6 +239,7 @@ class EmpleadoController extends Controller
             $vinculacionD = array();
         }
         $result = agruparEmpleados($tabla_empleado1);
+        // dd($result);
         return view('empleado.tablaEmpleado', ['tabla_empleado' => $result]);
     }
 

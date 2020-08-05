@@ -359,7 +359,9 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         @foreach($tabla_empleados->vinculacion as $tablaV)
+                        @if($tablaV["dispositivoD"] == "WINDOWS")
                         <a class="dropdown-item" href="#">Action2</a>
+                        @endif
                         @endforeach
                     </ul>
                 </div>
@@ -369,11 +371,19 @@
             <td></td>
             @else
             <td class="text-center">
-                <a data-toggle="tooltip" data-placement="right" title="Enviar
-                    correo empleado" data-original-title="Enviar
-                    correo empleado" style="cursor: pointer"><img src="{{asset('landing/images/note.svg')}}"
-                        height="20">
-                </a>
+                <div class="dropup">
+                    <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        style="cursor: pointer">
+                        <img src="{{asset('landing/images/note.svg')}}" height="20">
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        @foreach($tabla_empleados->vinculacion as $tablaV)
+                        @if($tablaV["dispositivoD"] == "ANDROID")
+                        <a class="dropdown-item" href="#">Action2</a>
+                        @endif
+                        @endforeach
+                    </ul>
+                </div>
             </td>
             @endif
             <td class="text-center"><input type="checkbox" id="tdC" style="margin-left:5.5px!important"
