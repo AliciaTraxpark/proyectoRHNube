@@ -29,7 +29,7 @@ class downloadController extends Controller
         if ($vinculacion) {
             //$this->downloadArchivo(app_path() . "/file/Debug.rar");
             $vinculacion->descarga = null;
-            $vinculacion->fecha_descarga = Carbon::now();
+            $vinculacion->fecha_entrega = Carbon::now();
             $vinculacion->save();
             return response()->download(app_path() . "/file/RHBOX.msi");
         }
