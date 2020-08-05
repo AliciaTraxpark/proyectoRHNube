@@ -1500,7 +1500,7 @@ use App\proyecto_empleado;
                                                                         height="20"> Dia no laborable</button>
                                                             </div>
                                                             <div class="col-md-3">
-                                                                <button type="button" class="btn btn-secondary btn-sm"
+                                                                <button type="button" style=" max-width: 18em!important;" class="btn btn-secondary btn-sm"
                                                                     onclick="$('#nombreFeriado').val('');$('#calendarioAsignar').modal('hide'); $('#myModalFeriado').modal('show')"><img
                                                                         src="{{ asset('admin/images/calendario.svg') }}"
                                                                         height="20"> Dia feriado</button>
@@ -2154,21 +2154,27 @@ use App\proyecto_empleado;
                                                     style="font-size:12px!important;background: #f3f3f3;">
                                                     <div class="col-md-12">
                                                         <div class="row">
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-3">
                                                                 <button type="button" style=" max-width: 18em!important;"
                                                                     class="btn btn-secondary btn-sm"
                                                                     onclick="laborable_ed()"><img
                                                                         src="{{ asset('admin/images/dormir.svg') }}"
                                                                         height="20"> Descanso</button>
                                                             </div>
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-3">
                                                                 <button type="button" style=" max-width: 18em!important;"
                                                                     class="btn btn-secondary btn-sm"
                                                                     onclick="nolaborable_ed()"><img
                                                                         src="{{ asset('admin/images/evento.svg') }}"
                                                                         height="20"> Dia no laborable</button>
                                                             </div>
-                                                            <div class="col-md-4 text-right">
+                                                            <div class="col-md-3">
+                                                                <button type="button" style=" max-width: 18em!important;" class="btn btn-secondary btn-sm"
+                                                                    onclick="$('#nombreFeriado_ed').val('');$('#calendarioAsignar_ed').modal('hide'); $('#myModalFeriado_ed').modal('show')"><img
+                                                                        src="{{ asset('admin/images/calendario.svg') }}"
+                                                                        height="20"> Dia feriado</button>
+                                                            </div>
+                                                            <div class="col-md-3 text-right">
                                                                 {{-- <button type="button"
                                                                     style=" max-width: 18em!important;"
                                                                     class="btn btn-secondary btn-sm "
