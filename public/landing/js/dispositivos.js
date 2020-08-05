@@ -269,7 +269,7 @@ function cambiarEstadoLicenciaAndroidEditar() {
         }
     });
 }
-$('#CambiarEstadoL').on("click", cambiarEstadoLicenciaAndroidEditar);
+$('#v_CambiarEstadoL').on("click", cambiarEstadoLicenciaAndroidEditar);
 
 function cambiarEstadoLicenciaWindowsEditar() {
     var idEmpleado = $('#v_id').val();
@@ -351,7 +351,7 @@ function cambiarEstadoLicenciaWindowsEditar() {
         }
     });
 }
-$('#CambiarEstadoLW').on("click", cambiarEstadoLicenciaWindowsEditar);
+$('#v_CambiarEstadoLW').on("click", cambiarEstadoLicenciaWindowsEditar);
 //*************************************************************************** */
 $('#tbodyDispositivo').empty();
 $('#v_tbodyDispositivo').empty();
