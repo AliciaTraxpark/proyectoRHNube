@@ -411,6 +411,9 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
     <style>
+        .form-control{
+            font-size: 12px;
+        }
         .container {
             margin-left: 40px;
             margin-right: 28px;
@@ -1377,7 +1380,7 @@
                                         <li><a href="#sw-default-step-6">Dispositivo</a></li>
                                     </ul>
                                     <div class="p-3">
-                                        <div id="sw-default-step-1" class="setup-content">
+                                        <div id="sw-default-step-1" class="setup-content" style="font-size: 12px!important">
                                             <div class="row">
                                                 <div class="col-4">
                                                     <input style="display: none;" name="idEmpleado" id="idEmpleado">
@@ -1562,7 +1565,7 @@
                                                 </div>
                                             </div> <!-- end row -->
                                         </div>
-                                        <div id="sw-default-step-2" class="setup-content">
+                                        <div id="sw-default-step-2" class="setup-content" style="font-size: 12px!important">
                                             <div class="row">
                                                 <div class="col-4">
                                                     <div class="form-group">
@@ -1693,7 +1696,7 @@
                                             </div> <!-- end row -->
 
                                         </div>
-                                        <div id="sw-default-step-3" class="setup-content">
+                                        <div id="sw-default-step-3" class="setup-content" style="font-size: 12px!important">
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="form-group">
@@ -1703,7 +1706,7 @@
                                             </div> <!-- end row -->
 
                                         </div>
-                                        <div id="sw-default-step-4" class="setup-content">
+                                        <div id="sw-default-step-4" class="setup-content" style="font-size: 12px!important">
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     @if (count($calendario) === 0)
@@ -1890,7 +1893,7 @@
                                             </div><!-- /.modal -->
                                         </div>
                                     </div>
-                                    <div id="sw-default-step-5" class="setup-content">
+                                    <div id="sw-default-step-5" class="setup-content" style="font-size: 12px!important">
                                         <div class="row">
                                             <div class="col-md-12 text-center" id="detallehorario"></div>
                                             <div class="col-md-1"><br></div>
@@ -2041,7 +2044,7 @@
                                             </div><!-- /.modal-dialog -->
                                         </div><!-- /.modal -->
                                     </div>
-                                    <div id="sw-default-step-6" class="setup-content">
+                                    <div id="sw-default-step-6" class="setup-content" style="font-size: 12px!important">
                                         <div class="row">
                                             <div class="col-xl-12 col-sm-12">
                                                 <button class="btn btn-sm dropdown-toggle" style="background-color:#163552;"
@@ -2104,7 +2107,7 @@
                                     <li><a href="#sw-default-step-6">Dispositivo</a></li>
                                 </ul>
                                 <div class="p-3" id="form-registrar">
-                                    <div id="persona-step-1">
+                                    <div id="persona-step-1" style="font-size: 12px!important">
                                         <div class="row">
                                             <div class="col-4">
                                                 <input style="display: none;" name="v_id" id="v_id">
@@ -2293,7 +2296,7 @@
                                             </div>
                                         </div> <!-- end row -->
                                     </div>
-                                    <div id="sw-default-step-2">
+                                    <div id="sw-default-step-2" style="font-size: 12px!important">
                                         <div class="row">
 
                                             <div class="col-4">
@@ -2413,7 +2416,7 @@
                                             </div> <!-- end col -->
                                         </div> <!-- end row -->
                                     </div>
-                                    <div id="sw-default-step-3">
+                                    <div id="sw-default-step-3" style="font-size: 12px!important">
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="form-group text-center">
@@ -2425,7 +2428,7 @@
                                         </div> <!-- end row -->
                                         <br>
                                     </div>
-                                    <div id="sw-default-step-4">
+                                    <div id="sw-default-step-4" style="font-size: 12px!important">
                                         <div class="row">
                                             <div class="col-md-12" id="MostrarCa_e" style="display: none">
                                                 <div class="form-group row">
@@ -2593,7 +2596,7 @@
                                         </div> <!-- end row -->
 
                                     </div>
-                                    <div id="sw-default-step-5" class="setup-content">
+                                    <div id="sw-default-step-5" class="setup-content" style="font-size: 12px!important">
                                         <div class="row">
                                             <div class="col-md-12 text-center" id="detallehorario_ed"></div>
                                             <div class="col-md-1"><br></div>
@@ -2755,7 +2758,7 @@
                                             </div><!-- /.modal-dialog -->
                                         </div><!-- /.modal -->
                                     </div>
-                                    <div id="sw-default-step-6" class="setup-content">
+                                    <div id="sw-default-step-6" class="setup-content" style="font-size: 12px!important">
                                         <div class="row">
                                             <div class="col-xl-12 col-sm-12">
                                                 <button class="btn btn-sm dropdown-toggle" style="background-color:#163552;"
@@ -2826,7 +2829,7 @@
                                     </div>
                                 </ul>
                                 <div class="p-3" id="form-registrar">
-                                    <div id="persona-step-1">
+                                    <div id="persona-step-1" style="font-size: 12px!important">
                                         <div class="row">
                                             <div class="col-4">
                                                 <input style="display: none;" name="v_idV" id="v_idV">
@@ -2951,7 +2954,7 @@
                                             </div>
                                         </div> <!-- end row -->
                                     </div>
-                                    <div id="sw-default-step-2">
+                                    <div id="sw-default-step-2" style="font-size: 12px!important">
                                         <div class="row">
                                             <div class="col-4">
                                                 <div class="form-group">
@@ -3000,7 +3003,7 @@
                                             </div> <!-- end col -->
                                         </div>
                                     </div>
-                                    <div id="sw-default-step-3">
+                                    <div id="sw-default-step-3" style="font-size: 12px!important">
                                         <br><br>
                                         <div class="row">
                                             <div class="col-12">
@@ -3013,7 +3016,7 @@
                                             </div> <!-- end col -->
                                         </div> <!-- end row -->
                                     </div>
-                                    <div id="sw-default-step-4">
+                                    <div id="sw-default-step-4" style="font-size: 12px!important">
                                         <div class="row">
                                             <input type="hidden" name="" id="idempleado">
                                             <div class="col-md-1"><br></div>
@@ -3021,7 +3024,7 @@
                                             <div class="col-md-1"><br></div>
                                         </div>
                                     </div>
-                                    <div id="sw-default-step-5">
+                                    <div id="sw-default-step-5" style="font-size: 12px!important">
                                         <div class="row">
                                             <div class="col-xl-12 col-sm-12">
                                                 <button class="btn btn-sm dropdown-toggle" style="background-color:#163552;"

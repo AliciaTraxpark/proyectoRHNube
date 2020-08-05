@@ -203,7 +203,9 @@ use App\proyecto_empleado;
             font-size: 12.2px !important;
             margin: 2px 2px;
         }
-
+        .form-control{
+            font-size: 12px;
+        }
         tr:first-child>td>.fc-day-grid-event {
             margin-top: 0px;
             padding-top: 0px;
@@ -1102,7 +1104,7 @@ use App\proyecto_empleado;
                                 <li><a href="#sw-default-step-6">Dispositivo</a></li>
                             </ul>
                             <div class="p-3">
-                                <div id="sw-default-step-1" class="setup-content">
+                                <div id="sw-default-step-1" class="setup-content" style="font-size: 12px!important">
                                     <div class="row">
                                         <div class="col-4">
                                             <input style="display: none;" name="idEmpleado" id="idEmpleado">
@@ -1281,7 +1283,7 @@ use App\proyecto_empleado;
                                         </div>
                                     </div> <!-- end row -->
                                 </div>
-                                <div id="sw-default-step-2" class="setup-content">
+                                <div id="sw-default-step-2" class="setup-content" style="font-size: 12px!important">
                                     <div class="row">
                                         <div class="col-4">
                                             <div class="form-group">
@@ -1400,7 +1402,7 @@ use App\proyecto_empleado;
                                     </div> <!-- end row -->
 
                                 </div>
-                                <div id="sw-default-step-3" class="setup-content">
+                                <div id="sw-default-step-3" class="setup-content" style="font-size: 12px!important">
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group">
@@ -1410,7 +1412,7 @@ use App\proyecto_empleado;
                                     </div> <!-- end row -->
 
                                 </div>
-                                <div id="sw-default-step-4" class="setup-content">
+                                <div id="sw-default-step-4" class="setup-content" style="font-size: 12px!important">
                                     <div class="row">
                                         <div class="col-md-12">
                                             @if (count($calendario) === 0)
@@ -1582,7 +1584,7 @@ use App\proyecto_empleado;
 
                                 </div>
                             </div>
-                            <div id="sw-default-step-5" class="setup-content">
+                            <div id="sw-default-step-5" class="setup-content" style="font-size: 12px!important">
                                 <div class="row">
                                     <div class="col-md-12 text-center" id="detallehorario"></div>
                                     <div class="col-md-1"><br></div>
@@ -1722,7 +1724,7 @@ use App\proyecto_empleado;
                                     </div><!-- /.modal-dialog -->
                                 </div><!-- /.modal -->
                             </div>
-                            <div id="sw-default-step-6" class="setup-content">
+                            <div id="sw-default-step-6" class="setup-content" style="font-size: 12px!important">
                                 <div class="row">
                                     <div class="col-xl-12 col-sm-12">
                                         <button class="btn btn-sm" style="background-color:#163552;"
@@ -1785,7 +1787,7 @@ use App\proyecto_empleado;
                             <li><a href="#sw-default-step-6">Dispositivo</a></li>
                         </ul>
                         <div class="p-3" id="form-registrar">
-                            <div id="persona-step-1">
+                            <div id="persona-step-1" style="font-size: 12px!important">
                                 <div class="row">
                                     <div class="col-4">
                                         <input style="display: none;" name="v_id" id="v_id">
@@ -1967,7 +1969,7 @@ use App\proyecto_empleado;
                                     </div>
                                 </div> <!-- end row -->
                             </div>
-                            <div id="sw-default-step-2">
+                            <div id="sw-default-step-2" style="font-size: 12px!important">
                                 <div class="row">
 
                                     <div class="col-4">
@@ -2082,7 +2084,7 @@ use App\proyecto_empleado;
                                     </div> <!-- end col -->
                                 </div> <!-- end row -->
                             </div>
-                            <div id="sw-default-step-3">
+                            <div id="sw-default-step-3" style="font-size: 12px!important">
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group text-center">
@@ -2094,7 +2096,7 @@ use App\proyecto_empleado;
                                 </div> <!-- end row -->
                                 <br>
                             </div>
-                            <div id="sw-default-step-4">
+                            <div id="sw-default-step-4" style="font-size: 12px!important">
                                 <div class="row">
                                     <div class="col-md-12" id="MostrarCa_e" style="display: none">
                                         <div class="form-group row">
@@ -2260,7 +2262,7 @@ use App\proyecto_empleado;
                                 </div> <!-- end row -->
 
                             </div>
-                            <div id="sw-default-step-5" class="setup-content">
+                            <div id="sw-default-step-5" class="setup-content" style="font-size: 12px!important">
                                 <div class="row">
                                     <div class="col-md-12 text-center" id="detallehorario_ed"></div>
                                     <div class="col-md-1"><br></div>
@@ -2410,7 +2412,7 @@ use App\proyecto_empleado;
                                     </div><!-- /.modal-dialog -->
                                 </div><!-- /.modal -->
                             </div>
-                            <div id="sw-default-step-6" class="setup-content">
+                            <div id="sw-default-step-6" class="setup-content" style="font-size: 12px!important">
                                 <div class="row">
                                     <div class="col-xl-12 col-sm-12">
                                         <button class="btn btn-sm" style="background-color:#163552;"
@@ -2480,7 +2482,7 @@ use App\proyecto_empleado;
                             </div>
                         </ul>
                         <div class="p-3" id="form-registrar">
-                            <div id="persona-step-1">
+                            <div id="persona-step-1" style="font-size: 12px!important">
                                 <div class="row">
                                     <div class="col-4">
                                         <input style="display: none;" name="v_idV" id="v_idV">
@@ -2602,7 +2604,7 @@ use App\proyecto_empleado;
                                     </div>
                                 </div> <!-- end row -->
                             </div>
-                            <div id="sw-default-step-2">
+                            <div id="sw-default-step-2" style="font-size: 12px!important">
                                 <div class="row">
                                     <div class="col-4">
                                         <div class="form-group">
@@ -2648,7 +2650,7 @@ use App\proyecto_empleado;
                                     </div> <!-- end col -->
                                 </div>
                             </div>
-                            <div id="sw-default-step-3">
+                            <div id="sw-default-step-3" style="font-size: 12px!important">
                                 <br><br>
                                 <div class="row">
                                     <div class="col-12">
@@ -2661,7 +2663,7 @@ use App\proyecto_empleado;
                                     </div> <!-- end col -->
                                 </div> <!-- end row -->
                             </div>
-                            <div id="sw-default-step-4">
+                            <div id="sw-default-step-4" style="font-size: 12px!important">
                                 <div class="row">
                                     <input type="hidden" name="" id="idempleado">
                                     <div class="col-md-1"><br></div>
@@ -2669,7 +2671,7 @@ use App\proyecto_empleado;
                                     <div class="col-md-1"><br></div>
                                 </div>
                             </div>
-                            <div id="sw-default-step-5">
+                            <div id="sw-default-step-5" style="font-size: 12px!important">
                                 <div class="row">
                                     <div class="col-xl-12 col-sm-12">
                                         <button class="btn btn-sm" style="background-color:#163552;"
