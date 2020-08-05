@@ -201,6 +201,8 @@
                 </button>
             </div>
             <div class="modal-body">
+                <input style="display: none;" id="empleadoAndroid">
+                <input style="display: none;" id="vinculaciónAndroid">
                 <form class="form-horizontal">
                     <h5 class="modal-title" id="myModalLabel" style="font-size:
                         15px">¿Desea enviar correo al empleado?</h5>
@@ -353,14 +355,14 @@
             @else
             <td class="text-center">
                 <div class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                         style="cursor: pointer">
                         <img src="{{asset('landing/images/note.svg')}}" height="20">
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         @foreach($tabla_empleados->vinculacion as $tablaV)
                         @if($tablaV["dispositivoD"] == "WINDOWS")
-                        <a class="dropdown-item" href="#">Action2</a>
+                        <a class="dropdown-item" onclick="javascript:enviarWindowsTabla()">WINDOWS</a>
                         @endif
                         @endforeach
                     </ul>
@@ -372,14 +374,15 @@
             @else
             <td class="text-center">
                 <div class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                         style="cursor: pointer">
                         <img src="{{asset('landing/images/note.svg')}}" height="20">
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         @foreach($tabla_empleados->vinculacion as $tablaV)
                         @if($tablaV["dispositivoD"] == "ANDROID")
-                        <a class="dropdown-item" href="#">Action2</a>
+                        <a class="dropdown-item"
+                            onclick="enviarAndroidTabla({{$tabla_empleados->emple_id}},{{$tablaV['idVinculacion']}})">ANDROID</a>
                         @endif
                         @endforeach
                     </ul>

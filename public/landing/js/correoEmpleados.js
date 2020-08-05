@@ -1,12 +1,14 @@
 function enviar() {
-    var idEmpleado = $('#v_id').val();
+    var idEmpleado = $('#empleadoAndroid').val();
+    var idVinculacion = $('#vinculaciónAndroid').val();
     //NOTIFICACION
     $.ajax({
         async: false,
         type: "get",
-        url: "empleadoCorreo",
+        url: "correoAndroid",
         data: {
-            idEmpleado: idEmpleado
+            idEmpleado: idEmpleado,
+            idVinculacion: idVinculacion
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

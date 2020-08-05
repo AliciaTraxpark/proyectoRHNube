@@ -812,5 +812,3 @@ function enviarCorreoWindowsEditar() {
     });
 }
 $('#v_enviarCorreoWindowsEmpleado').on("click", enviarCorreoWindowsEditar);
-
-
