@@ -402,6 +402,10 @@ class EmpleadoController extends Controller
         $eventos_empleado_tempEU = eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
             ->where('id_horario', '=', null)->where('color', '!=', '#9E9E9E')
             ->where('calendario_calen_id', '=', $objEmpleado['idca'])->get();
+
+        $eventos_empleadoVerif = eventos_empleado::where('id_empleado', '=',$idempleado)
+        ->get();
+        if ($eventos_empleadoVerif->isEmpty()) {
         foreach ($eventos_empleado_tempEU as $eventos_empleado_tempEUs) {
             $eventos_empleado = new eventos_empleado();
             $eventos_empleado->title = $eventos_empleado_tempEUs->title;
@@ -412,8 +416,10 @@ class EmpleadoController extends Controller
             $eventos_empleado->id_empleado = $idempleado;
             $eventos_empleado->tipo_ev = $eventos_empleado_tempEUs->tipo_ev;
             $eventos_empleado->save();
-        }
+        }}
         //INIDENC
+        $incidenciasborrar=incidencia_dias::where('id_empleado', '=', $idempleado)
+       ->delete();
         $eventos_empleado_tempInc = eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
             ->where('id_horario', '=', null)->where('color', '=', '#9E9E9E')->where('textColor', '=', '#313131')
             ->where('calendario_calen_id', '=', $objEmpleado['idca'])->get();
@@ -435,9 +441,12 @@ class EmpleadoController extends Controller
         $idempleado = $empleado->emple_id;
         $objEmpleado = json_decode($request->get('objEmpleado'), true);
         //HORARIO
+        $horario_empleadoBor=horario_empleado::where('empleado_emple_id', '=', $idempleado)
+        ->delete();
         $eventos_empleado_tempHor = eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
             ->where('id_horario', '!=', null)->where('color', '=', '#ffffff')->where('textColor', '=', '111111')
             ->where('calendario_calen_id', '=', $objEmpleado['idca'])->get();
+
 
         foreach ($eventos_empleado_tempHor as $eventos_empleado_tempHors) {
             $horario_dias = new horario_dias();
