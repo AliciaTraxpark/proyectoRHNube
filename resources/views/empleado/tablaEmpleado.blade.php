@@ -1,7 +1,5 @@
-<link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet"
-    type="text/css" />
-<link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet"
-    type="text/css" />
+<link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
 <style>
     div.dataTables_wrapper div.dataTables_filter {
         display: none;
@@ -31,18 +29,15 @@
         /* Default */
     }
 </style>
-<div id="modalCorreo" class="modal fade" tabindex="-1" role="dialog"
-    aria-labelledby="modalCorreo" aria-hidden="true"
+<div id="modalCorreo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCorreo" aria-hidden="true"
     data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel"
-                    style="color:#ffffff;font-size:15px">Enviar correo a
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
                     empleado
                 </h5>
-                <button type="button" class="close" data-dismiss="modal"
-                    aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -56,13 +51,11 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-7 text-right">
-                            <button type="button" class="btn btn-light btn-sm"
-                                data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
                         </div>
                         <div class="col-md-5 text-right" style="padding-right:
                             38px;">
-                            <button type="button" id="enviarCorreo"
-                                name="enviarCorreo"
+                            <button type="button" id="enviarCorreo" name="enviarCorreo"
                                 style="background-color: #163552;" class="btn
                                 btn-sm">Enviar</button>
                         </div>
@@ -73,18 +66,15 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!--NUEVO ESCRITORIO-->
-<div id="modalNuevoE" class="modal fade" tabindex="-1" role="dialog"
-    aria-labelledby="modalNuevoE" aria-hidden="true"
+<div id="modalNuevoE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalNuevoE" aria-hidden="true"
     data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel"
-                    style="color:#ffffff;font-size:15px">Enviar correo a
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
                     empleado
                 </h5>
-                <button type="button" class="close" data-dismiss="modal"
-                    aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -92,12 +82,10 @@
                 <form class="form-horizontal">
                     <div class="row">
                         <div class="col-md-2 text-center">
-                            <img src="{{asset('landing/images/alert.svg')}}"
-                                height="25" class="mr-1 mt-2">
+                            <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
                         </div>
                         <div class="col-md-8 text-center">
-                            <h5 class="modal-title" id="myModalLabel"
-                                style="font-size:15px">Esta opción se usa para
+                            <h5 class="modal-title" id="myModalLabel" style="font-size:15px">Esta opción se usa para
                                 asignar nueva PC en lo cual el empleado
                                 trabajara en más de una
                                 PC.
@@ -110,13 +98,11 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-6 text-center">
-                            <button type="button" class="btn btn-light btn-sm"
-                                data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
                         </div>
                         <div class="col-md-6 text-center" style="padding-right:
                             38px;">
-                            <button type="button" id="agregarEscritorio"
-                                name="agregarEscritorio"
+                            <button type="button" id="agregarEscritorio" name="agregarEscritorio"
                                 style="background-color: #163552;" class="btn
                                 btn-sm">Enviar</button>
                         </div>
@@ -126,18 +112,15 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div id="modalCorreoM" class="modal fade" tabindex="-1" role="dialog"
-    aria-labelledby="modalCorreo" aria-hidden="true"
+<div id="modalCorreoM" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCorreo" aria-hidden="true"
     data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel"
-                    style="color:#ffffff;font-size:15px">Enviar correo a
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
                     empleado
                 </h5>
-                <button type="button" class="close" data-dismiss="modal"
-                    aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -152,13 +135,11 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-7 text-right">
-                            <button type="button" class="btn btn-light btn-sm"
-                                data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
                         </div>
                         <div class="col-md-5 text-right" style="padding-right:
                             38px;">
-                            <button type="button" id="enviarCorreoM"
-                                name="enviarCorreo"
+                            <button type="button" id="enviarCorreoM" name="enviarCorreo"
                                 style="background-color: #163552;" class="btn
                                 btn-sm">Enviar</button>
                         </div>
@@ -169,18 +150,15 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- Modal Ambas Plataformas-->
-<div id="modalCorreoAmbos" class="modal fade" tabindex="-1" role="dialog"
-    aria-labelledby="modalCorreo"
+<div id="modalCorreoAmbos" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCorreo"
     aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel"
-                    style="color:#ffffff;font-size:15px">Enviar correo a
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
                     empleado
                 </h5>
-                <button type="button" class="close" data-dismiss="modal"
-                    aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -195,13 +173,11 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-7 text-right">
-                            <button type="button" class="btn btn-light btn-sm"
-                                data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
                         </div>
                         <div class="col-md-5 text-right" style="padding-right:
                             38px;">
-                            <button type="button" id="enviarAmbasP"
-                                name="enviarAmbasP"
+                            <button type="button" id="enviarAmbasP" name="enviarAmbasP"
                                 style="background-color: #163552;" class="btn
                                 btn-sm">Enviar</button>
                         </div>
@@ -212,18 +188,15 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- Modal Android-->
-<div id="modalAndroid" class="modal fade" tabindex="-1" role="dialog"
-    aria-labelledby="modalAndroid" aria-hidden="true"
+<div id="modalAndroid" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalAndroid" aria-hidden="true"
     data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel"
-                    style="color:#ffffff;font-size:15px">Enviar correo a
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
                     empleado
                 </h5>
-                <button type="button" class="close" data-dismiss="modal"
-                    aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -237,13 +210,11 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-7 text-right">
-                            <button type="button" class="btn btn-light btn-sm"
-                                data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
                         </div>
                         <div class="col-md-5 text-right" style="padding-right:
                             38px;">
-                            <button type="button" id="enviarAndroid"
-                                name="enviarCorreo"
+                            <button type="button" id="enviarAndroid" name="enviarCorreo"
                                 style="background-color: #163552;" class="btn
                                 btn-sm">Enviar</button>
                         </div>
@@ -253,18 +224,15 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div id="modalAndroidMasivo" class="modal fade" tabindex="-1" role="dialog"
-    aria-labelledby="modalAndroidMasivo"
+<div id="modalAndroidMasivo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalAndroidMasivo"
     aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel"
-                    style="color:#ffffff;font-size:15px">Enviar correo a
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
                     empleado
                 </h5>
-                <button type="button" class="close" data-dismiss="modal"
-                    aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -279,13 +247,11 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-7 text-right">
-                            <button type="button" class="btn btn-light btn-sm"
-                                data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
                         </div>
                         <div class="col-md-5 text-right" style="padding-right:
                             38px;">
-                            <button type="button" id="enviarAndroidMasivo"
-                                name="enviarAndroidMasivo"
+                            <button type="button" id="enviarAndroidMasivo" name="enviarAndroidMasivo"
                                 style="background-color: #163552;" class="btn
                                 btn-sm">Enviar</button>
                         </div>
@@ -327,32 +293,23 @@
             <th style="border-top: 1px solid #fdfdfd;"></th>
             <th style="border-top: 1px solid #fdfdfd;"></th>
             <th style="border-top: 1px solid #fdfdfd;"></th>
-            <th class="text-center" style="border-top: 1px solid #fdfdfd;"
-                id="enviarCorreosMasivos">
-                <button type="button" class="btn btn-sm btn-rounded"
-                    style="color: #548ec7;border-color: #e7edf3; padding-left:
-                    4px; padding-right: 4px;" data-toggle="tooltip"
-                    data-placement="right" title="Enviar a
+            <th class="text-center" style="border-top: 1px solid #fdfdfd;" id="enviarCorreosMasivos">
+                <button type="button" class="btn btn-sm btn-rounded" style="color: #548ec7;border-color: #e7edf3; padding-left:
+                    4px; padding-right: 4px;" data-toggle="tooltip" data-placement="right" title="Enviar a
                     todos los empleados
                     seleccionados." data-original-title="">Enviar&nbsp;&nbsp;<img
                         src="{{asset('landing/images/group.svg')}}" height="20"></button></th>
-            <th class="text-center" style="border-top: 1px solid #fdfdfd;"
-                id="enviarAndroidMasivos"> <button
+            <th class="text-center" style="border-top: 1px solid #fdfdfd;" id="enviarAndroidMasivos"> <button
                     type="button" class="btn btn-sm btn-rounded" style="color:
                     #548ec7;border-color: #e7edf3; padding-left:
-                    4px; padding-right: 4px;" data-toggle="tooltip"
-                    data-placement="right" title="Enviar a
+                    4px; padding-right: 4px;" data-toggle="tooltip" data-placement="right" title="Enviar a
                     todos los empleados
                     seleccionados." data-original-title="">Enviar&nbsp;&nbsp;<img
                         src="{{asset('landing/images/group.svg')}}" height="20"></button></th>
-            <th class="text-center" style="border-top: 1px solid #fdfdfd;"
-                id="enviarMasivo">
-                <a style="cursor: pointer" data-toggle="tooltip"
-                    data-placement="right"
-                    title="Enviar para ambas plataformas Windows y Android"
-                    data-original-title=""><img
-                        src="{{asset('landing/images/mail (3).svg')}}"
-                        height="30"></a>
+            <th class="text-center" style="border-top: 1px solid #fdfdfd;" id="enviarMasivo">
+                <a style="cursor: pointer" data-toggle="tooltip" data-placement="right"
+                    title="Enviar para ambas plataformas Windows y Android" data-original-title=""><img
+                        src="{{asset('landing/images/mail (3).svg')}}" height="30"></a>
             </th>
         </tr>
         <tr>
@@ -369,29 +326,21 @@
 
         </tr>
     </thead>
-    <tbody style="background:#ffffff;color: #585858;font-size: 12.5px"
-        id="tbodyr">
+    <tbody style="background:#ffffff;color: #585858;font-size: 12.5px" id="tbodyr">
         @foreach ($tabla_empleado as $tabla_empleados)
-        <tr class="" id="{{$tabla_empleados->emple_id}}"
-            value="{{$tabla_empleados->emple_id}}">
+        <tr class="" id="{{$tabla_empleados->emple_id}}" value="{{$tabla_empleados->emple_id}}">
 
-            <td><a id="formNuevoEd" onclick="$('#form-ver').modal();"
-                    style="cursor: pointer"><img
+            <td><a id="formNuevoEd" onclick="$('#form-ver').modal();" style="cursor: pointer"><img
                         src="{{asset('admin/images/edit.svg')}}" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-                    onclick="marcareliminar({{$tabla_empleados->emple_id}})"
-                    style="cursor: pointer"><img
+                    onclick="marcareliminar({{$tabla_empleados->emple_id}})" style="cursor: pointer"><img
                         src="{{asset('admin/images/delete.svg')}}" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a class="verEmpleado"
-                    onclick="$('#verEmpleadoDetalles').modal();"
-                    data-toggle="tooltip"
-                    data-placement="right" title="Ver Detalles"
-                    data-original-title="Ver Detalles" style="cursor:
+                <a class="verEmpleado" onclick="$('#verEmpleadoDetalles').modal();" data-toggle="tooltip"
+                    data-placement="right" title="Ver Detalles" data-original-title="Ver Detalles" style="cursor:
                     pointer">
                     <img src="{{asset('landing/images/see.svg')}}" height="20">
                 </a>
             </td>
-            <td class="text-center">&nbsp; <input type="hidden" id="codE"
-                    value="{{$tabla_empleados->emple_id}}"><img
+            <td class="text-center">&nbsp; <input type="hidden" id="codE" value="{{$tabla_empleados->emple_id}}"><img
                     src="{{ URL::asset('admin/assets/images/users/empleado.png')
                     }}" class="" alt="" /></td>
             <td>{{$tabla_empleados->perso_nombre}}</td>
@@ -404,17 +353,14 @@
             @else
             <td class="text-center">
                 <div class="dropup">
-                    <a class="dropdown-toggle" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false"
+                    <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                         style="cursor: pointer">
-                        <img src="{{asset('landing/images/note.svg')}}"
-                            height="20">
+                        <img src="{{asset('landing/images/note.svg')}}" height="20">
                     </a>
-                    <ul class="dropdown-menu"
-                        aria-labelledby="dropdownMenuButton">
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        @foreach($tabla_empleados->vinculacion as $tablaV)
                         <a class="dropdown-item" href="#">Action2</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                        @endforeach
                     </ul>
                 </div>
             </td>
@@ -425,17 +371,13 @@
             <td class="text-center">
                 <a data-toggle="tooltip" data-placement="right" title="Enviar
                     correo empleado" data-original-title="Enviar
-                    correo empleado" style="cursor: pointer"><img
-                        src="{{asset('landing/images/note.svg')}}"
+                    correo empleado" style="cursor: pointer"><img src="{{asset('landing/images/note.svg')}}"
                         height="20">
                 </a>
             </td>
             @endif
-            <td class="text-center"><input type="checkbox" id="tdC"
-                    style="margin-left:5.5px!important"
-                    class="form-check-input sub_chk"
-                    data-id="{{$tabla_empleados->emple_id}}"
-                $(this)$(this)$(this)>
+            <td class="text-center"><input type="checkbox" id="tdC" style="margin-left:5.5px!important"
+                    class="form-check-input sub_chk" data-id="{{$tabla_empleados->emple_id}}" $(this)$(this)$(this)>
             </td>
         </tr>
         @endforeach
