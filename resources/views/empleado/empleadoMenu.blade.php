@@ -2119,7 +2119,7 @@ use App\proyecto_empleado;
                                     <input type="hidden" id="pruebaEnd_ed">
                                     <input type="hidden" id="pruebaStar_ed">
                                     <div class="col-md-10" id="calendar_ed" style="display: none"></div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-2" style="margin-top: 90px;">
                                         <div class="btn-group mt-2 mr-1">
                                             <button type="button" class="btn btn-primary btn-sm dropdown-toggle" style="color: #fff;
                                             background-color: #4a5669;
@@ -2146,7 +2146,7 @@ use App\proyecto_empleado;
                                     <div id="calendarioAsignar_ed" class="modal fade" tabindex="-1" role="dialog"
                                         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                                         <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                            style="width:580px;  margin-top: 150px; left: 30px;">
+                                            style="width:670px;  margin-top: 150px; left: 0px;">
 
                                             <div class="modal-content">
 
@@ -2208,6 +2208,55 @@ use App\proyecto_empleado;
                                             </div><!-- /.modal-content -->
                                         </div><!-- /.modal-dialog -->
                                     </div><!-- /.modal -->
+                                    <div id="myModalFeriado_ed" class="modal fade" tabindex="-1" role="dialog"
+                                                aria-labelledby="myModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header" style="background-color: #163552;">
+                                                            <h5 class="modal-title" id="myModalLabel"
+                                                                style="color:#ffffff;font-size:15px">Agregar nuevo
+                                                                feriado</h5>
+                                                            <button type="button" class="close"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <div class="form-group col-md-12">
+                                                                    <div class="col-md-6">
+                                                                        <label for="">Nombre de dia feriado:</label>
+                                                                    </div>
+                                                                    <div class="col-md-10">
+                                                                        <form action="javascript:diaferiadoRe_ed()">
+                                                                            <input class="form-control" type="text"
+                                                                                id="nombreFeriado_ed" required>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <div class="col-md-12">
+                                                                <div class="row">
+                                                                    <div class="col-md-7 text-right">
+                                                                        <button type="button" class="btn btn-light"
+                                                                            data-dismiss="modal">Cancelar</button>
+                                                                    </div>
+                                                                    <div class="col-md-5 text-right"
+                                                                        style="padding-right: 38px; ">
+                                                                        <button type="submit"
+                                                                            class="btn btn-secondary">Aceptar</button>
+                                                                        </form>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- /.modal-content -->
+                                                </div><!-- /.modal-dialog -->
+                                            </div><!-- /.modal -->
                                 </div> <!-- end row -->
 
                             </div>

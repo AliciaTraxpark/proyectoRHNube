@@ -3626,3 +3626,99 @@ function vaciardIncidTem() {
         }
     });
 }
+////////////////////////////////////////////////////////////
+function diaferiadoRe_ed() {
+    $('#calendarioAsignar_ed').modal('hide');
+    title = $('#nombreFeriado_ed').val(),
+        color = '#e6bdbd',
+        textColor = '#775555',
+        start = $('#pruebaStar_ed').val();
+        end = $('#pruebaEnd_ed').val();
+    tipo = 2;
+    var idempleado = $('#idempleado').val();
+    //$('#myModal').modal('show');
+    $.ajax({
+        type: "POST",
+        url: "/empleado/storeCalendarioempleado",
+        data: {
+            title,
+            color,
+            textColor,
+            start,
+            end,
+            tipo,
+            idempleado
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (msg) {
+
+            $('#myModalFeriado_ed').modal('hide');
+            calendarioedit.refetchEvents();
+            calendar2_ed.refetchEvents();
+
+            console.log(msg);
+        },
+        error: function () {}
+    });
+};
+//////////////////////////////////////////////////////////
+function vaciardFeriaBD(){
+    var idempleado = $('#idempleado').val();
+    fmes = calendar.getDate();
+    mescale = fmes.getMonth() + 1;
+    aniocalen = fmes.getFullYear();
+    bootbox.confirm({
+        message: "¿Esta seguro que desea eliminar dias feriados del calendario?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            if (result == true) {
+                $.ajax({
+                    type: "post",
+                    url: "/empleado/vaciardfTem",
+                    data: {
+                        mescale,
+                        aniocalen
+                    },
+                    statusCode: {
+
+                        419: function () {
+                            location.reload();
+                        }
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        calendar.refetchEvents();
+                        calendar2.refetchEvents();
+
+                    },
+                    error: function (data) {
+                        alert('Ocurrio un error');
+                    }
+                });
+
+
+            }
+        }
+    });
+}
