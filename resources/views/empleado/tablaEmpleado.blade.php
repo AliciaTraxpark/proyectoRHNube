@@ -317,7 +317,7 @@
     </div>
 </div>
 
-<table id="tablaEmpleado" class="table dt-responsive nowrap">
+<table id="tablaEmpleado" class="table table-drop dt-responsive nowrap">
     <thead style="background: #edf0f1;color: #6c757d;">
         <tr style="background: #ffffff">
             <th style="border-top: 1px solid #fdfdfd;"></th>
@@ -403,11 +403,20 @@
             <td></td>
             @else
             <td class="text-center">
-                <a data-toggle="tooltip" data-placement="right" title="Enviar
-                    correo empleado" data-original-title="Enviar correo
-                    empleado" style="cursor: pointer"><img
-                        src="{{asset('landing/images/note.svg')}}" height="20">
-                </a>
+                <div class="dropup">
+                    <a class="dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false"
+                        style="cursor: pointer">
+                        <img src="{{asset('landing/images/note.svg')}}"
+                            height="20">
+                    </a>
+                    <ul class="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Action2</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </ul>
+                </div>
             </td>
             @endif
             @if(!in_array("2",$tabla_empleados->dispositivos))
