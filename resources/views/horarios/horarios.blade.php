@@ -190,7 +190,7 @@ background-color: #ffffff !important;
                         </div> <!-- end card body-->
                     </div> <!-- end card -->
                     <div id="asignarHorario" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" style="overflow-y: auto;">
-                        <div class="modal-dialog  modal-lg d-flex justify-content-center" style="margin-top: 15px;max-width:1000px!important;">
+                        <div class="modal-dialog  modal-lg d-flex modal-dialog-scrollable justify-content-center" style="margin-top: 15px;max-width:1000px!important;">
 
                         <div class="modal-content" >
                             <div class="modal-header" style="background-color:#163552;">
