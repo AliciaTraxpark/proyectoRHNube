@@ -2044,7 +2044,7 @@
                                     <div id="sw-default-step-6" class="setup-content">
                                         <div class="row">
                                             <div class="col-xl-12 col-sm-12">
-                                                <button class="btn btn-sm" style="background-color:#163552;"
+                                                <button class="btn btn-sm dropdown-toggle" style="background-color:#163552;"
                                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">+
                                                     Agregar
                                                 </button>
@@ -2758,7 +2758,7 @@
                                     <div id="sw-default-step-6" class="setup-content">
                                         <div class="row">
                                             <div class="col-xl-12 col-sm-12">
-                                                <button class="btn btn-sm" style="background-color:#163552;"
+                                                <button class="btn btn-sm dropdown-toggle" style="background-color:#163552;"
                                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">+
                                                     Agregar
                                                 </button>
@@ -3024,7 +3024,7 @@
                                     <div id="sw-default-step-5">
                                         <div class="row">
                                             <div class="col-xl-12 col-sm-12">
-                                                <button class="btn btn-sm" style="background-color:#163552;"
+                                                <button class="btn btn-sm dropdown-toggle" style="background-color:#163552;"
                                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                                     disabled>+
                                                     Agregar
