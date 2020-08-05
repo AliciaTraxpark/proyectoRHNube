@@ -352,7 +352,7 @@
             <td></td>
             @else
             <td class="text-center">
-                <div class="dropup">
+                <div class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                         style="cursor: pointer">
                         <img src="{{asset('landing/images/note.svg')}}" height="20">
@@ -371,7 +371,7 @@
             <td></td>
             @else
             <td class="text-center">
-                <div class="dropup">
+                <div class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                         style="cursor: pointer">
                         <img src="{{asset('landing/images/note.svg')}}" height="20">
