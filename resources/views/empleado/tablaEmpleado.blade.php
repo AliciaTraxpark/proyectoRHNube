@@ -603,7 +603,9 @@
                     cargarFile2();
                 }
                 $('#v_tbodyDispositivo').empty();
+                $('#ver_tbodyDispositivo').empty();
                 var container = $('#v_tbodyDispositivo');
+                var containerVer = $('#ver_tbodyDispositivo');
                 for (var i = 0; i < data[0].vinculacion.length; i++) {
                     if(data[0].vinculacion[i].dispositivoD == 'WINDOWS'){
                             var tr = `<tr id="tr${data[0].vinculacion[i].idVinculacion}">
@@ -619,6 +621,18 @@
                                 </a>
                             </td>
                             <td id="inactivar${data[0].vinculacion[i].idVinculacion}"><a onclick="javascript:inactivarLicenciaWEditar(${data[0].vinculacion[i].idVinculacion})" class="badge badge-soft-danger mr-2">Inactivar</a></td>
+                            </tr>`;
+                            var trVer = `<tr id="trVer${data[0].vinculacion[i].idVinculacion}">
+                            <td>${data[0].vinculacion[i].dispositivoD}</td>
+                            <td>${data[0].vinculacion[i].licencia}</td>
+                            <td class="hidetext">${data[0].vinculacion[i].codigo}</td>
+                            <td id="enviadoW${data[0].vinculacion[i].idVinculacion}">${data[0].vinculacion[i].envio}</td>
+                            <td id="estado${data[0].vinculacion[i].idVinculacion}"></td>
+                            <td id="correoVer${data[0].vinculacion[i].idVinculacion}">
+                                <a><img src="landing/images/note.svg" height="20">
+                                </a>
+                            </td>
+                            <td id="inactivarVer${data[0].vinculacion[i].idVinculacion}"><a class="badge badge-soft-danger mr-2">Inactivar</a></td>
                             </tr>`;
                     }else{
                             var tr = `<tr id="tr${data[0].vinculacion[i].idVinculacion}">
@@ -636,26 +650,48 @@
                                 </td>
                                 <td id="inactivar${data[0].vinculacion[i].idVinculacion}"><a onclick="javascript:inactivarLicenciaEditar(${data[0].vinculacion[i].idVinculacion})" class="badge badge-soft-danger mr-2">Inactivar</a></td>
                                 </tr>`;
+                            var trVer = `<tr id="trVer${data[0].vinculacion[i].idVinculacion}">
+                                <td>${data[0].vinculacion[i].dispositivoD}</td>
+                                <td>${data[0].vinculacion[i].licencia}</td>
+                                <td class="hidetext">${data[0].vinculacion[i].codigo}</td>
+                                <td id="enviado${data[0].vinculacion[i].idVinculacion}">${data[0].vinculacion[i].envio}</td>
+                                <td id="estado${data[0].vinculacion[i].idVinculacion}"></td>
+                                <td id="correoVer${data[0].vinculacion[i].idVinculacion}">
+                                    <input style="display: none;" id="android${data[0].emple_id}" value="${data[0].vinculacion[i].idVinculacion}">
+                                    <a><img src="landing/images/note.svg" height="20">
+                                    </a>
+                                </td>
+                                <td id="inactivarVer${data[0].vinculacion[i].idVinculacion}"><a class="badge badge-soft-danger mr-2">Inactivar</a></td>
+                                </tr>`;
                         
                     }
                     container.append(tr);
+                    containerVer.append(trVer);
                     if(data[0].vinculacion[i].disponible == 'c'){
                         $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Creado");
+                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Creado");
                     }
                     if(data[0].vinculacion[i].disponible == 'e'){
                         $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Enviado");
+                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Enviado");
                     }
                     if(data[0].vinculacion[i].disponible == 'a'){
                         $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Activado");
+                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Activado");
                     }
                     if(data[0].vinculacion[i].disponible == 'i'){
                         $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Inactivo");
+                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Inactivo");
                         $('#inactivar'+data[0].vinculacion[i].idVinculacion).empty();
                         $('#correo' + data[0].vinculacion[i].idVinculacion).empty();
+                        $('#inactivarVer'+data[0].vinculacion[i].idVinculacion).empty();
+                        $('#correoVer' + data[0].vinculacion[i].idVinculacion).empty();
                         if(data[0].vinculacion[i].dispositivoD == 'WINDOWS'){
                                 var td = `<a  onclick="javascript:modalWindowsEditar(${data[0].vinculacion[i].idVinculacion});$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
                                             correo empleado" data-original-title="Habilitar activación" style="cursor: pointer"><img
                                                 src="landing/images/email (4).svg" height="20">
+                                            </a>`;
+                                var tdV = `<a><img src="landing/images/email (4).svg" height="20">
                                             </a>`;
                         }else{
                             var td = `<input style="display: none;" id="android${data[0].emple_id}" value="${data[0].vinculacion[i].idVinculacion}">
@@ -663,8 +699,12 @@
                                         correo empleado" data-original-title="Habilitar activación" style="cursor: pointer"><img
                                             src="landing/images/email (4).svg" height="20">
                                         </a>`;
+                            var tdV = `<input style="display: none;" id="android${data[0].emple_id}" value="${data[0].vinculacion[i].idVinculacion}">
+                                        <a><img src="landing/images/email (4).svg" height="20">
+                                        </a>`;
                         }
                         $('#correo' + data[0].vinculacion[i].idVinculacion).append(td);
+                        $('#correoVer' + data[0].vinculacion[i].idVinculacion).append(tdV);
                     }
                 }
                 //VER

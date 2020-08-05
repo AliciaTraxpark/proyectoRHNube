@@ -2960,28 +2960,38 @@
                                     </div>
                                     <div id="sw-default-step-5">
                                         <div class="row">
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label for="sw-default">Cantidad de PC</label>
-                                                    <input class="form-control" tabindex="4" id="cantidadPC" disabled>
+                                            <div class="col-xl-12 col-sm-12">
+                                                <button class="btn btn-sm" style="background-color:#163552;"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                                    disabled>+
+                                                    Agregar
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                    <a class="dropdown-item" id="agregarAndroid">ANDROID</a>
+                                                    <a class="dropdown-item" id="agregarWindows">WINDOWS</a>
                                                 </div>
                                             </div>
-                                            <div class="col-4"><br></div>
-                                            <div class="col-4"><br></div>
                                         </div>
+                                        <br>
                                         <div class="row">
-                                            <div class="col-6">
-                                                <div class="form-group" id="divActvPC">
-                                                    <!--<label for="sw-default">Activación PC</label>
-                                                        <input class="form-control" tabindex="4" disabled>-->
-                                                </div>
-                                            </div>
-                                            <div class="col-2"><br></div>
-                                            <div class="col-4">
-                                                <div class="form-group" id="divEstado">
-                                                    <!--<label for="sw-default">Estado</label>
-                                                        <input class="form-control" tabindex="4" disabled>-->
-                                                </div>
+                                            <div class="table-responsive">
+                                                <table id="ver_tablaDispositivo" class="table"
+                                                    style="font-size: 13px!important;width:100%;">
+                                                    <thead style="background: #fafafa;">
+                                                        <tr>
+                                                            <th>Tipo Dispositivo</th>
+                                                            <th>Activación de Dispositivo</th>
+                                                            <th>Codigo</th>
+                                                            <th>Enviado</th>
+                                                            <th>Estado</th>
+                                                            <th></th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="ver_tbodyDispositivo"
+                                                        style="background:#ffffff;color: #585858;font-size: 12px">
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
