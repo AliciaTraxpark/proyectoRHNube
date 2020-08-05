@@ -206,194 +206,202 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-<!------------CAMBIAR ESTADO LICENCIA-->
-<div id="estadoLicenciaC" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="estadoLicenciaC"
-aria-hidden="true" data-backdrop="static">
-<br><br><br><br>
-<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header" style="background-color:#163552;">
-            <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Cambiar Estado de
-                Activacion de Dispositivo
-            </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <input style="display: none;" id="estadoLicencia">
-            <form class="form-horizontal">
-                <div class="row">
-                    <div class="col-md-2 text-center">
-                        <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
-                    </div>
-                    <div class="col-md-8 text-center">
-                        <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
-                            Al cambiar el estado de la licencia se inhabilitará información del empleado en su PC.
-                        </h5>
-                    </div>
+    <!------------CAMBIAR ESTADO LICENCIA-->
+    <div id="estadoLicenciaC" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="estadoLicenciaC"
+        aria-hidden="true" data-backdrop="static">
+        <br><br><br><br>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Cambiar Estado de
+                        Activacion de Dispositivo
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-6 text-center">
-                        <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
-                    </div>
-                    <div class="col-md-6 text-center" style="padding-right:
+                <div class="modal-body">
+                    <input style="display: none;" id="estadoLicencia">
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-md-2 text-center">
+                                <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
+                            </div>
+                            <div class="col-md-8 text-center">
+                                <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
+                                    Al cambiar el estado de la licencia se inhabilitará información del empleado en su
+                                    PC.
+                                </h5>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6 text-center">
+                                <button type="button" class="btn btn-light btn-sm"
+                                    data-dismiss="modal">Cancelar</button>
+                            </div>
+                            <div class="col-md-6 text-center" style="padding-right:
                         38px;">
-                        <button type="button" id="CambiarEstadoL" name="CambiarEstadoL"
-                            style="background-color: #163552;" class="btn
+                                <button type="button" id="CambiarEstadoL" name="CambiarEstadoL"
+                                    style="background-color: #163552;" class="btn
                             btn-sm">Aceptar</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div><!-- /.modal-content -->
-</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
- <!------------CAMBIAR ESTADO LICENCIA-->
- <div id="estadoLicenciaW" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="estadoLicenciaW"
- aria-hidden="true" data-backdrop="static">
- <br><br><br><br>
- <div class="modal-dialog">
-     <div class="modal-content">
-         <div class="modal-header" style="background-color:#163552;">
-             <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Cambiar Estado de
-                 Activacion de Dispositivo
-             </h5>
-             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                 <span aria-hidden="true">&times;</span>
-             </button>
-         </div>
-         <div class="modal-body">
-             <input style="display: none;" id="estadoLicenciaW">
-             <form class="form-horizontal">
-                 <div class="row">
-                     <div class="col-md-2 text-center">
-                         <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
-                     </div>
-                     <div class="col-md-8 text-center">
-                         <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
-                             Al cambiar el estado de la licencia se inhabilitará información del empleado en su PC.
-                         </h5>
-                     </div>
-                 </div>
-             </form>
-         </div>
-         <div class="modal-footer">
-             <div class="col-md-12">
-                 <div class="row">
-                     <div class="col-md-6 text-center">
-                         <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
-                     </div>
-                     <div class="col-md-6 text-center" style="padding-right:
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!------------CAMBIAR ESTADO LICENCIA-->
+    <div id="estadoLicenciaW" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="estadoLicenciaW"
+        aria-hidden="true" data-backdrop="static">
+        <br><br><br><br>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Cambiar Estado de
+                        Activacion de Dispositivo
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input style="display: none;" id="estadoLicenciaW">
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-md-2 text-center">
+                                <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
+                            </div>
+                            <div class="col-md-8 text-center">
+                                <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
+                                    Al cambiar el estado de la licencia se inhabilitará información del empleado en su
+                                    PC.
+                                </h5>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6 text-center">
+                                <button type="button" class="btn btn-light btn-sm"
+                                    data-dismiss="modal">Cancelar</button>
+                            </div>
+                            <div class="col-md-6 text-center" style="padding-right:
                          38px;">
-                         <button type="button" id="CambiarEstadoLW" name="CambiarEstadoLW"
-                             style="background-color: #163552;" class="btn
+                                <button type="button" id="CambiarEstadoLW" name="CambiarEstadoLW"
+                                    style="background-color: #163552;" class="btn
                              btn-sm">Aceptar</button>
-                     </div>
-                 </div>
-             </div>
-         </div>
-     </div><!-- /.modal-content -->
- </div><!-- /.modal-dialog -->
- </div><!-- /.modal -->
- <!------------CAMBIAR ESTADO LICENCIA-->
-<div id="v_estadoLicenciaC" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="v_estadoLicenciaC"
-aria-hidden="true" data-backdrop="static">
-<br><br><br><br>
-<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header" style="background-color:#163552;">
-            <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Cambiar Estado de
-                Activacion de Dispositivo
-            </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <input style="display: none;" id="estadoLicencia">
-            <form class="form-horizontal">
-                <div class="row">
-                    <div class="col-md-2 text-center">
-                        <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
-                    </div>
-                    <div class="col-md-8 text-center">
-                        <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
-                            Al cambiar el estado de la licencia se inhabilitará información del empleado en su PC.
-                        </h5>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-6 text-center">
-                        <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
-                    </div>
-                    <div class="col-md-6 text-center" style="padding-right:
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!------------CAMBIAR ESTADO LICENCIA-->
+    <div id="v_estadoLicenciaC" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="v_estadoLicenciaC"
+        aria-hidden="true" data-backdrop="static">
+        <br><br><br><br>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Cambiar Estado de
+                        Activacion de Dispositivo
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input style="display: none;" id="estadoLicencia">
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-md-2 text-center">
+                                <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
+                            </div>
+                            <div class="col-md-8 text-center">
+                                <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
+                                    Al cambiar el estado de la licencia se inhabilitará información del empleado en su
+                                    PC.
+                                </h5>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6 text-center">
+                                <button type="button" class="btn btn-light btn-sm"
+                                    data-dismiss="modal">Cancelar</button>
+                            </div>
+                            <div class="col-md-6 text-center" style="padding-right:
                         38px;">
-                        <button type="button" id="v_CambiarEstadoL" name="v_CambiarEstadoL"
-                            style="background-color: #163552;" class="btn
+                                <button type="button" id="v_CambiarEstadoL" name="v_CambiarEstadoL"
+                                    style="background-color: #163552;" class="btn
                             btn-sm">Aceptar</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div><!-- /.modal-content -->
-</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
- <!------------CAMBIAR ESTADO LICENCIA-->
- <div id="v_estadoLicenciaW" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="v_estadoLicenciaW"
- aria-hidden="true" data-backdrop="static">
- <br><br><br><br>
- <div class="modal-dialog">
-     <div class="modal-content">
-         <div class="modal-header" style="background-color:#163552;">
-             <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Cambiar Estado de
-                 Activacion de Dispositivo
-             </h5>
-             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                 <span aria-hidden="true">&times;</span>
-             </button>
-         </div>
-         <div class="modal-body">
-             <input style="display: none;" id="estadoLicenciaW">
-             <form class="form-horizontal">
-                 <div class="row">
-                     <div class="col-md-2 text-center">
-                         <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
-                     </div>
-                     <div class="col-md-8 text-center">
-                         <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
-                             Al cambiar el estado de la licencia se inhabilitará información del empleado en su PC.
-                         </h5>
-                     </div>
-                 </div>
-             </form>
-         </div>
-         <div class="modal-footer">
-             <div class="col-md-12">
-                 <div class="row">
-                     <div class="col-md-6 text-center">
-                         <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
-                     </div>
-                     <div class="col-md-6 text-center" style="padding-right:
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!------------CAMBIAR ESTADO LICENCIA-->
+    <div id="v_estadoLicenciaW" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="v_estadoLicenciaW"
+        aria-hidden="true" data-backdrop="static">
+        <br><br><br><br>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Cambiar Estado de
+                        Activacion de Dispositivo
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input style="display: none;" id="estadoLicenciaW">
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-md-2 text-center">
+                                <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
+                            </div>
+                            <div class="col-md-8 text-center">
+                                <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
+                                    Al cambiar el estado de la licencia se inhabilitará información del empleado en su
+                                    PC.
+                                </h5>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6 text-center">
+                                <button type="button" class="btn btn-light btn-sm"
+                                    data-dismiss="modal">Cancelar</button>
+                            </div>
+                            <div class="col-md-6 text-center" style="padding-right:
                          38px;">
-                         <button type="button" id="v_CambiarEstadoLW" name="v_CambiarEstadoLW"
-                             style="background-color: #163552;" class="btn
+                                <button type="button" id="v_CambiarEstadoLW" name="v_CambiarEstadoLW"
+                                    style="background-color: #163552;" class="btn
                              btn-sm">Aceptar</button>
-                     </div>
-                 </div>
-             </div>
-         </div>
-     </div><!-- /.modal-content -->
- </div><!-- /.modal-dialog -->
- </div><!-- /.modal -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     <style>
         .container {
             margin-left: 40px;
@@ -518,10 +526,11 @@ aria-hidden="true" data-backdrop="static">
         body {
             background-color: #f8f8f8;
         }
+
         .hidetext {
-        -webkit-text-security: disc;
-        /* Default */
-    }
+            -webkit-text-security: disc;
+            /* Default */
+        }
     </style>
     <div id="preloader">
         <div id="status">
@@ -1757,7 +1766,7 @@ aria-hidden="true" data-backdrop="static">
                                                 aria-labelledby="myModalLabel" aria-hidden="true"
                                                 data-backdrop="static">
                                                 <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                                style="width:670px;  margin-top: 150px; left:0px;">
+                                                    style="width:670px;  margin-top: 150px; left:0px;">
 
                                                     <div class="modal-content">
 
@@ -1766,21 +1775,24 @@ aria-hidden="true" data-backdrop="static">
                                                             <div class="col-md-12">
                                                                 <div class="row">
                                                                     <div class="col-md-3">
-                                                                        <button type="button" style=" max-width: 18em!important;"
+                                                                        <button type="button"
+                                                                            style=" max-width: 18em!important;"
                                                                             class="btn btn-secondary btn-sm"
                                                                             onclick="laborableTem()"><img
                                                                                 src="{{ asset('admin/images/dormir.svg') }}"
                                                                                 height="20"> Descanso</button>
                                                                     </div>
                                                                     <div class="col-md-3">
-                                                                        <button type="button" style=" max-width: 18em!important;"
+                                                                        <button type="button"
+                                                                            style=" max-width: 18em!important;"
                                                                             class="btn btn-secondary btn-sm"
                                                                             onclick="nolaborableTem()"><img
                                                                                 src="{{ asset('admin/images/evento.svg') }}"
                                                                                 height="20"> Dia no laborable</button>
                                                                     </div>
                                                                     <div class="col-md-3">
-                                                                        <button type="button" class="btn btn-secondary btn-sm"
+                                                                        <button type="button"
+                                                                            class="btn btn-secondary btn-sm"
                                                                             onclick="$('#nombreFeriado').val('');$('#calendarioAsignar').modal('hide'); $('#myModalFeriado').modal('show')"><img
                                                                                 src="{{ asset('admin/images/calendario.svg') }}"
                                                                                 height="20"> Dia feriado</button>
@@ -1791,7 +1803,7 @@ aria-hidden="true" data-backdrop="static">
                                                                             class="btn btn-secondary btn-sm "
                                                                             onclick="registrarDdescanso()"><img
                                                                                 src="{{ asset('admin/images/calendarioInc.svg') }}"
-                                                                                height="20"> Incidencia</button>
+                                                                        height="20"> Incidencia</button>
                                                                         --}}
                                                                         <button style=" max-width: 18em!important;"
                                                                             class="btn btn-secondary btn-sm"
@@ -1819,12 +1831,16 @@ aria-hidden="true" data-backdrop="static">
                                                     </div><!-- /.modal-content -->
                                                 </div><!-- /.modal-dialog -->
                                             </div><!-- /.modal -->
-                                            <div id="myModalFeriado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                            <div id="myModalFeriado" class="modal fade" tabindex="-1" role="dialog"
+                                                aria-labelledby="myModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header" style="background-color: #163552;">
-                                                            <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar nuevo feriado</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <h5 class="modal-title" id="myModalLabel"
+                                                                style="color:#ffffff;font-size:15px">Agregar nuevo
+                                                                feriado</h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
@@ -1834,10 +1850,11 @@ aria-hidden="true" data-backdrop="static">
                                                                     <div class="col-md-6">
                                                                         <label for="">Nombre de dia feriado:</label>
                                                                     </div>
-                                                                     <div class="col-md-10">
-                                                                         <form action="javascript:diaferiadoTem()">
-                                                                        <input class="form-control" type="text" id="nombreFeriado" required>
-                                                                     </div>
+                                                                    <div class="col-md-10">
+                                                                        <form action="javascript:diaferiadoTem()">
+                                                                            <input class="form-control" type="text"
+                                                                                id="nombreFeriado" required>
+                                                                    </div>
 
                                                                 </div>
                                                             </div>
@@ -1847,11 +1864,14 @@ aria-hidden="true" data-backdrop="static">
                                                             <div class="col-md-12">
                                                                 <div class="row">
                                                                     <div class="col-md-7 text-right">
-                                                                        <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                                                                        <button type="button" class="btn btn-light"
+                                                                            data-dismiss="modal">Cancelar</button>
                                                                     </div>
-                                                                    <div class="col-md-5 text-right" style="padding-right: 38px; ">
-                                                                        <button type="submit"  class="btn btn-secondary">Aceptar</button>
-                                                                    </form>
+                                                                    <div class="col-md-5 text-right"
+                                                                        style="padding-right: 38px; ">
+                                                                        <button type="submit"
+                                                                            class="btn btn-secondary">Aceptar</button>
+                                                                        </form>
 
                                                                     </div>
                                                                 </div>
@@ -2016,9 +2036,8 @@ aria-hidden="true" data-backdrop="static">
                                     <div id="sw-default-step-6" class="setup-content">
                                         <div class="row">
                                             <div class="col-xl-12 col-sm-12">
-                                                <button style="background:#f0f4fd;border-color:#f0f4fd; color:#a0add3"
-                                                    class="btn btn-secondary btn-sm" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">+
+                                                <button class="btn btn-sm" style="background-color:#163552;"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">+
                                                     Agregar
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
@@ -2043,7 +2062,8 @@ aria-hidden="true" data-backdrop="static">
                                                             <th></th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody id="tbodyDispositivo">
+                                                    <tbody id="tbodyDispositivo"
+                                                        style="background:#ffffff;color: #585858;font-size: 12px">
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -2466,7 +2486,7 @@ aria-hidden="true" data-backdrop="static">
                                                                             style=" max-width: 18em!important;"
                                                                             class="btn btn-secondary btn-sm"
                                                                             onclick="laborable_ed()"><img
-                                                                            src="{{asset('admin/images/dormir.svg')}}"
+                                                                                src="{{asset('admin/images/dormir.svg')}}"
                                                                                 height="20"> Descanso</button>
                                                                     </div>
                                                                     <div class="col-md-4">
@@ -2675,9 +2695,8 @@ aria-hidden="true" data-backdrop="static">
                                     <div id="sw-default-step-6" class="setup-content">
                                         <div class="row">
                                             <div class="col-xl-12 col-sm-12">
-                                                <button style="background:#f0f4fd;border-color:#f0f4fd; color:#a0add3"
-                                                    class="btn btn-secondary btn-sm" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">+
+                                                <button class="btn btn-sm" style="background-color:#163552;"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">+
                                                     Agregar
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
@@ -2702,7 +2721,8 @@ aria-hidden="true" data-backdrop="static">
                                                             <th></th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody id="v_tbodyDispositivo" style="background:#ffffff;color: #585858;font-size: 12px">
+                                                    <tbody id="v_tbodyDispositivo"
+                                                        style="background:#ffffff;color: #585858;font-size: 12px">
                                                     </tbody>
                                                 </table>
                                             </div>
