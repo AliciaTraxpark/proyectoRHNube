@@ -405,7 +405,7 @@
             $('#a'+$(this).attr('data-id')).show();
         }
     });
-    $('#selectT').click(function(){
+    seleccionarTodos.click(function(){
         $(".sub_chk").each(function(){
             if($(this).prop('checked')){
             $('#w'+$(this).attr('data-id')).hide();
