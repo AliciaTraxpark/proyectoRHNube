@@ -779,12 +779,12 @@ function laborableTem() {
 /////////////////////////////////
 function diaferiadoTem() {
     $('#calendarioAsignar').modal('hide');
-    title= $('#nombreFeriado').val(),
-    color='#e6bdbd',
-    textColor= '#775555',
-    start= $('#pruebaStar').val();
-    end= $('#pruebaEnd').val();
-    tipo= 2;
+    title = $('#nombreFeriado').val(),
+        color = '#e6bdbd',
+        textColor = '#775555',
+        start = $('#pruebaStar').val();
+    end = $('#pruebaEnd').val();
+    tipo = 2;
     id_calendario = $('#selectCalendario').val();
     //$('#myModal').modal('show');
     $.ajax({
@@ -939,7 +939,7 @@ $('#selectCalendario').change(function () {
 
 
             $("#detallehorario").append("<div class='form-group row'><div class='col-md-5 text-right'><label style='color:#163552;margin-top: 5px;'>Se muestra calendario de: </label> </div>" +
-            "<div class='col-md-5'><select disabled class='form-control form-control-sm'><option>"+ $('select[id="selectCalendario"] option:selected').text() +"</option></select></div></div>");
+                "<div class='col-md-5'><select disabled class='form-control form-control-sm'><option>" + $('select[id="selectCalendario"] option:selected').text() + "</option></select></div></div>");
         },
         error: function (data) {
             alert('Ocurrio un error');
@@ -980,7 +980,7 @@ $('#selectCalendario_ed').change(function () {
             calendario_edit()
             calendario2_ed();
             $("#detallehorario_ed").append("<div class='form-group row'><div class='col-md-5 text-right'><label style='color:#163552;margin-top: 5px;'>Se muestra calendario de: </label> </div>" +
-            "<div class='col-md-5'><select disabled class='form-control form-control-sm'><option>"+ $('select[id="selectCalendario_ed"] option:selected').text() +"</option></select></div></div>");
+                "<div class='col-md-5'><select disabled class='form-control form-control-sm'><option>" + $('select[id="selectCalendario_ed"] option:selected').text() + "</option></select></div></div>");
 
         },
         error: function (data) {
@@ -3099,6 +3099,7 @@ $('#editarNivelA').hide();
 $('#editarContratoA').hide();
 $('#validCel').hide();
 $('#v_validCel').hide();
+$('#v_validGenero').hide();
 
 function FinalizarEmpleado() {
     leertabla();
@@ -3402,9 +3403,9 @@ function limpiar() {
 }
 
 function vaciardFeria() {
-    fmes=calendar.getDate();
-    mescale=fmes.getMonth()+1;
-    aniocalen=fmes.getFullYear();
+    fmes = calendar.getDate();
+    mescale = fmes.getMonth() + 1;
+    aniocalen = fmes.getFullYear();
     bootbox.confirm({
         message: "¿Esta seguro que desea eliminar dias feriados del calendario?",
         buttons: {
@@ -3423,7 +3424,8 @@ function vaciardFeria() {
                     type: "post",
                     url: "/empleado/vaciardfTem",
                     data: {
-                        mescale,aniocalen
+                        mescale,
+                        aniocalen
                     },
                     statusCode: {
 
@@ -3451,9 +3453,9 @@ function vaciardFeria() {
 }
 /////////////////
 function vaciarddescanso() {
-    fmes=calendar.getDate();
-    mescale=fmes.getMonth()+1;
-    aniocalen=fmes.getFullYear();
+    fmes = calendar.getDate();
+    mescale = fmes.getMonth() + 1;
+    aniocalen = fmes.getFullYear();
     bootbox.confirm({
         message: "¿Esta seguro que desea eliminar dias de descanso del calendario?",
         buttons: {
@@ -3472,7 +3474,8 @@ function vaciarddescanso() {
                     type: "post",
                     url: "/empleado/vaciardescansoTem",
                     data: {
-                        mescale,aniocalen
+                        mescale,
+                        aniocalen
                     },
                     statusCode: {
 
@@ -3526,9 +3529,9 @@ function vaciardlabTem() {
 }
 
 function vaciardNlabTem() {
-    fmes=calendar.getDate();
-    mescale=fmes.getMonth()+1;
-    aniocalen=fmes.getFullYear();
+    fmes = calendar.getDate();
+    mescale = fmes.getMonth() + 1;
+    aniocalen = fmes.getFullYear();
     bootbox.confirm({
         message: "¿Esta seguro que desea eliminar dias no laborales del calendario?",
         buttons: {
@@ -3547,7 +3550,8 @@ function vaciardNlabTem() {
                     type: "post",
                     url: "/empleado/vaciardNlabTem",
                     data: {
-                        mescale,aniocalen
+                        mescale,
+                        aniocalen
                     },
                     statusCode: {
 
@@ -3575,9 +3579,9 @@ function vaciardNlabTem() {
 }
 
 function vaciardIncidTem() {
-    fmes=calendar.getDate();
-    mescale=fmes.getMonth()+1;
-    aniocalen=fmes.getFullYear();
+    fmes = calendar.getDate();
+    mescale = fmes.getMonth() + 1;
+    aniocalen = fmes.getFullYear();
     bootbox.confirm({
         message: "¿Esta seguro que desea eliminar todas las incidencias del calendario?",
         buttons: {
@@ -3596,7 +3600,8 @@ function vaciardIncidTem() {
                     type: "post",
                     url: "/empleado/vaciardIncidTem",
                     data: {
-                        mescale,aniocalen
+                        mescale,
+                        aniocalen
                     },
                     statusCode: {
 

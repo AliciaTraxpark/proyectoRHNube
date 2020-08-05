@@ -217,7 +217,6 @@ $(document).ready(function () {
         var isStepValid = true;
         // validate step 1
         if (stepnumber == 0) {
-            console.log("validar primer paso");
             if ($('#v_apPaterno').val() == "") {
                 isStepValid = false;
                 $('#v_validApPaterno').show();
@@ -282,6 +281,12 @@ $(document).ready(function () {
                     $('#v_validCel').show();
                     console.log(regex.test($('#v_celular').val()));
                 }
+            }
+            if ($("input[type=radio]:checked").length == 0) {
+                isStepValid = false;
+                $('#v_validGenero').show();
+            } else {
+                $('#v_validGenero').hide();
             }
         }
         if (isStepValid == true) {

@@ -2192,6 +2192,8 @@ aria-hidden="true" data-backdrop="static">
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="normal" for="">Genero</label>
+                                                    <span id="v_validGenero" style="color: red;">*Campo
+                                                        Obligatorio</span>
                                                     <label class="custom-control custom-radio">
                                                         <input type="radio" name="v_tipo" id="v_tipo" value="Femenino">
                                                         Femenino
@@ -2689,7 +2691,7 @@ aria-hidden="true" data-backdrop="static">
                                             <div class="table-responsive">
                                                 <table id="v_tablaDispositivo" class="table"
                                                     style="font-size: 13px!important;width:100%;">
-                                                    <thead style="background: #fafafa;">
+                                                    <thead style="background: #fafafa;font-size: 14px">
                                                         <tr>
                                                             <th>Tipo Dispositivo</th>
                                                             <th>Activación de Dispositivo</th>
@@ -2697,9 +2699,10 @@ aria-hidden="true" data-backdrop="static">
                                                             <th>Enviado</th>
                                                             <th>Estado</th>
                                                             <th></th>
+                                                            <th></th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody id="v_tbodyDispositivo">
+                                                    <tbody id="v_tbodyDispositivo" style="background:#ffffff;color: #585858;font-size: 12px">
                                                     </tbody>
                                                 </table>
                                             </div>

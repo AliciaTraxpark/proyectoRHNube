@@ -436,7 +436,7 @@ function enviarCorreoAndoid() {
             var cont = $('#estado' + idVinculacion);
             container.empty();
             cont.empty();
-            $('#correo' + idVinculacion).empty;
+            $('#correo' + idVinculacion).empty();
             var td = `${data.envio}`;
             var tdE = `Enviado`;
             var tdC = `<input style="display: none;" id="android${idEmpleado}" value="${idVinculacion}">

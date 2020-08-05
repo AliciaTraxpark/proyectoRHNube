@@ -606,7 +606,7 @@
                 var container = $('#v_tbodyDispositivo');
                 for (var i = 0; i < data[0].vinculacion.length; i++) {
                     if(data[0].vinculacion[i].dispositivoD == 'WINDOWS'){
-                            var tr = `<tr id="${data[0].vinculacion[i].idVinculacion}">
+                            var tr = `<tr id="tr${data[0].vinculacion[i].idVinculacion}">
                             <td>${data[0].vinculacion[i].dispositivoD}</td>
                             <td>${data[0].vinculacion[i].licencia}</td>
                             <td class="hidetext">${data[0].vinculacion[i].codigo}</td>
@@ -621,7 +621,7 @@
                             <td id="inactivar${data[0].vinculacion[i].idVinculacion}"><a onclick="javascript:inactivarLicenciaWEditar(${data[0].vinculacion[i].idVinculacion})" class="badge badge-soft-danger mr-2">Inactivar</a></td>
                             </tr>`;
                     }else{
-                            var tr = `<tr id="${data[0].vinculacion[i].idVinculacion}">
+                            var tr = `<tr id="tr${data[0].vinculacion[i].idVinculacion}">
                                 <td>${data[0].vinculacion[i].dispositivoD}</td>
                                 <td>${data[0].vinculacion[i].licencia}</td>
                                 <td class="hidetext">${data[0].vinculacion[i].codigo}</td>
@@ -640,16 +640,16 @@
                     }
                     container.append(tr);
                     if(data[0].vinculacion[i].disponible == 'c'){
-                        $("#"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Creado");
+                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Creado");
                     }
                     if(data[0].vinculacion[i].disponible == 'e'){
-                        $("#"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Enviado");
+                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Enviado");
                     }
                     if(data[0].vinculacion[i].disponible == 'a'){
-                        $("#"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Activado");
+                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Activado");
                     }
                     if(data[0].vinculacion[i].disponible == 'i'){
-                        $("#"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Inactivo");
+                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Inactivo");
                         $('#inactivar'+data[0].vinculacion[i].idVinculacion).empty();
                         $('#correo' + data[0].vinculacion[i].idVinculacion).empty();
                         if(data[0].vinculacion[i].dispositivoD == 'WINDOWS'){
