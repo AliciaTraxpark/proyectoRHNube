@@ -1155,33 +1155,40 @@ class EmpleadoController extends Controller
         }
     }
 
-    public function vaciardfTem()
+    public function vaciardfTem(Request $request)
     {
         DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
             ->where('color', '=', '#e6bdbd')
-            ->where('textColor', '=', '#945353')
+            ->whereYear('start', $request->get('aniocalen'))
+            ->whereMonth('start',$request->get('mescale'))
             ->delete();
     }
 
-    public function vaciardlabTem()
+    public function vaciardlabTem(Request $request)
     {
         DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
             ->where('color', '=', '#dfe6f2')
             ->where('textColor', '=', '#0b1b29')
+            ->whereYear('start', $request->get('aniocalen'))
+            ->whereMonth('start',$request->get('mescale'))
             ->delete();
     }
-    public function vaciardNlabTem()
+    public function vaciardNlabTem(Request $request)
     {
         DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
             ->where('color', '=', '#a34141')
             ->where('textColor', '=', '#ffffff')
+            ->whereYear('start', $request->get('aniocalen'))
+            ->whereMonth('start',$request->get('mescale'))
             ->delete();
     }
-    public function vaciardIncidTem()
+    public function vaciardIncidTem(Request $request)
     {
         DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
             ->where('color', '=', '#9E9E9E')
             ->where('textColor', '=', '#313131')
+            ->whereYear('start', $request->get('aniocalen'))
+            ->whereMonth('start',$request->get('mescale'))
             ->delete();
     }
     public function eliminareventBD(Request $request)
@@ -1201,11 +1208,13 @@ class EmpleadoController extends Controller
         $incidencia_dias = incidencia_dias::where('inciden_dias_id', '=', $ideve)->delete();
     }
 
-    public function vaciardescansoTem()
+    public function vaciardescansoTem(Request $request)
     {
         DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
             ->where('color', '=', '#4673a0')
             ->where('textColor', '=', '#ffffff')
+            ->whereYear('start', $request->get('aniocalen'))
+            ->whereMonth('start',$request->get('mescale'))
             ->delete();
     }
 }

@@ -66,7 +66,7 @@ function calendario() {
 
     var configuracionCalendario = {
         locale: 'es',
-        defaultDate: fecha,
+        /* defaultDate: fecha, */
         height: 400,
         fixedWeekCount: false,
         plugins: ['dayGrid', 'interaction', 'timeGrid'],
@@ -776,7 +776,52 @@ function laborableTem() {
         error: function () {}
     });
 };
+/////////////////////////////////
+function diaferiadoTem() {
+    $('#calendarioAsignar').modal('hide');
+    title= $('#nombreFeriado').val(),
+    color='#e6bdbd',
+    textColor= '#775555',
+    start= $('#pruebaStar').val();
+    end= $('#pruebaEnd').val();
+    tipo= 2;
+    id_calendario = $('#selectCalendario').val();
+    //$('#myModal').modal('show');
+    $.ajax({
+        type: "POST",
+        url: "/empleado/storeCalendarioTem",
+        data: {
+            title,
+            color,
+            textColor,
+            start,
+            end,
+            tipo,
+            id_calendario
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (msg) {
 
+            $('#myModalFeriado').modal('hide');
+            calendar.refetchEvents();
+            calendar2.refetchEvents();
+
+            console.log(msg);
+        },
+        error: function () {}
+    });
+};
+/////////////////////////////////
 function nolaborableTem() {
     $('#calendarioAsignar').modal('hide');
 
@@ -3357,6 +3402,9 @@ function limpiar() {
 }
 
 function vaciardFeria() {
+    fmes=calendar.getDate();
+    mescale=fmes.getMonth()+1;
+    aniocalen=fmes.getFullYear();
     bootbox.confirm({
         message: "¿Esta seguro que desea eliminar dias feriados del calendario?",
         buttons: {
@@ -3371,10 +3419,31 @@ function vaciardFeria() {
         },
         callback: function (result) {
             if (result == true) {
-                $.get("/empleado/vaciardfTem", {}, function (data, status) {
-                    calendario();
-                    calendario2();;
+                $.ajax({
+                    type: "post",
+                    url: "/empleado/vaciardfTem",
+                    data: {
+                        mescale,aniocalen
+                    },
+                    statusCode: {
+
+                        419: function () {
+                            location.reload();
+                        }
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        calendar.refetchEvents();
+                        calendar2.refetchEvents();
+
+                    },
+                    error: function (data) {
+                        alert('Ocurrio un error');
+                    }
                 });
+
 
             }
         }
@@ -3382,6 +3451,9 @@ function vaciardFeria() {
 }
 /////////////////
 function vaciarddescanso() {
+    fmes=calendar.getDate();
+    mescale=fmes.getMonth()+1;
+    aniocalen=fmes.getFullYear();
     bootbox.confirm({
         message: "¿Esta seguro que desea eliminar dias de descanso del calendario?",
         buttons: {
@@ -3396,10 +3468,31 @@ function vaciarddescanso() {
         },
         callback: function (result) {
             if (result == true) {
-                $.get("/empleado/vaciardescansoTem", {}, function (data, status) {
-                    calendario();
-                    calendario2();;
+                $.ajax({
+                    type: "post",
+                    url: "/empleado/vaciardescansoTem",
+                    data: {
+                        mescale,aniocalen
+                    },
+                    statusCode: {
+
+                        419: function () {
+                            location.reload();
+                        }
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        calendar.refetchEvents();
+                        calendar2.refetchEvents();
+
+                    },
+                    error: function (data) {
+                        alert('Ocurrio un error');
+                    }
                 });
+
 
             }
         }
@@ -3407,6 +3500,7 @@ function vaciarddescanso() {
 }
 //////////////
 function vaciardlabTem() {
+
     bootbox.confirm({
         message: "¿Esta seguro que desea eliminar dias laborales del calendario?",
         buttons: {
@@ -3432,6 +3526,9 @@ function vaciardlabTem() {
 }
 
 function vaciardNlabTem() {
+    fmes=calendar.getDate();
+    mescale=fmes.getMonth()+1;
+    aniocalen=fmes.getFullYear();
     bootbox.confirm({
         message: "¿Esta seguro que desea eliminar dias no laborales del calendario?",
         buttons: {
@@ -3446,10 +3543,31 @@ function vaciardNlabTem() {
         },
         callback: function (result) {
             if (result == true) {
-                $.get("/empleado/vaciardNlabTem", {}, function (data, status) {
-                    calendario();
-                    calendario2();;
+                $.ajax({
+                    type: "post",
+                    url: "/empleado/vaciardNlabTem",
+                    data: {
+                        mescale,aniocalen
+                    },
+                    statusCode: {
+
+                        419: function () {
+                            location.reload();
+                        }
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        calendar.refetchEvents();
+                        calendar2.refetchEvents();
+
+                    },
+                    error: function (data) {
+                        alert('Ocurrio un error');
+                    }
                 });
+
 
             }
         }
@@ -3457,6 +3575,9 @@ function vaciardNlabTem() {
 }
 
 function vaciardIncidTem() {
+    fmes=calendar.getDate();
+    mescale=fmes.getMonth()+1;
+    aniocalen=fmes.getFullYear();
     bootbox.confirm({
         message: "¿Esta seguro que desea eliminar todas las incidencias del calendario?",
         buttons: {
@@ -3471,9 +3592,29 @@ function vaciardIncidTem() {
         },
         callback: function (result) {
             if (result == true) {
-                $.get("/empleado/vaciardIncidTem", {}, function (data, status) {
-                    calendario();
-                    calendario2();;
+                $.ajax({
+                    type: "post",
+                    url: "/empleado/vaciardIncidTem",
+                    data: {
+                        mescale,aniocalen
+                    },
+                    statusCode: {
+
+                        419: function () {
+                            location.reload();
+                        }
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        calendar.refetchEvents();
+                        calendar2.refetchEvents();
+
+                    },
+                    error: function (data) {
+                        alert('Ocurrio un error');
+                    }
                 });
 
             }

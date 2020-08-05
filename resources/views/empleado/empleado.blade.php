@@ -1757,7 +1757,7 @@ aria-hidden="true" data-backdrop="static">
                                                 aria-labelledby="myModalLabel" aria-hidden="true"
                                                 data-backdrop="static">
                                                 <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                                    style="width:580px;  margin-top: 150px; left: 30px;">
+                                                style="width:670px;  margin-top: 150px; left:0px;">
 
                                                     <div class="modal-content">
 
@@ -1765,29 +1765,38 @@ aria-hidden="true" data-backdrop="static">
                                                             style="font-size:12px!important;background: #f3f3f3;">
                                                             <div class="col-md-12">
                                                                 <div class="row">
-                                                                    <div class="col-md-4">
-                                                                        <button type="button"
-                                                                            style=" max-width: 18em!important;"
+                                                                    <div class="col-md-3">
+                                                                        <button type="button" style=" max-width: 18em!important;"
                                                                             class="btn btn-secondary btn-sm"
                                                                             onclick="laborableTem()"><img
-                                                                            src="{{asset('admin/images/dormir.svg')}}"
+                                                                                src="{{ asset('admin/images/dormir.svg') }}"
                                                                                 height="20"> Descanso</button>
                                                                     </div>
-                                                                    <div class="col-md-4">
-                                                                        <button type="button"
-                                                                            style=" max-width: 18em!important;"
+                                                                    <div class="col-md-3">
+                                                                        <button type="button" style=" max-width: 18em!important;"
                                                                             class="btn btn-secondary btn-sm"
                                                                             onclick="nolaborableTem()"><img
-                                                                                src="{{asset('admin/images/evento.svg')}}"
+                                                                                src="{{ asset('admin/images/evento.svg') }}"
                                                                                 height="20"> Dia no laborable</button>
                                                                     </div>
-                                                                    <div class="col-md-4 text-right">
-                                                                        {{--  <button type="button" style=" max-width: 18em!important;" class="btn btn-secondary btn-sm " onclick="registrarDdescanso()" ><img src="{{asset('admin/images/calendarioInc.svg')}}"
-                                                                        height="20"> Incidencia</button> --}}
+                                                                    <div class="col-md-3">
+                                                                        <button type="button" class="btn btn-secondary btn-sm"
+                                                                            onclick="$('#nombreFeriado').val('');$('#calendarioAsignar').modal('hide'); $('#myModalFeriado').modal('show')"><img
+                                                                                src="{{ asset('admin/images/calendario.svg') }}"
+                                                                                height="20"> Dia feriado</button>
+                                                                    </div>
+                                                                    <div class="col-md-3 text-right">
+                                                                        {{-- <button type="button"
+                                                                            style=" max-width: 18em!important;"
+                                                                            class="btn btn-secondary btn-sm "
+                                                                            onclick="registrarDdescanso()"><img
+                                                                                src="{{ asset('admin/images/calendarioInc.svg') }}"
+                                                                                height="20"> Incidencia</button>
+                                                                        --}}
                                                                         <button style=" max-width: 18em!important;"
                                                                             class="btn btn-secondary btn-sm"
                                                                             onclick="agregarinciden()"><img
-                                                                                src="{{asset('admin/images/calendarioInc.svg')}}"
+                                                                                src="{{ asset('admin/images/calendarioInc.svg') }}"
                                                                                 height="20"> Incidencia</button>
                                                                     </div>
                                                                 </div>
@@ -1803,6 +1812,47 @@ aria-hidden="true" data-backdrop="static">
                                                                             onclick="$('#calendarioAsignar').modal('hide')">Cancelar</button>
 
                                                                         </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- /.modal-content -->
+                                                </div><!-- /.modal-dialog -->
+                                            </div><!-- /.modal -->
+                                            <div id="myModalFeriado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header" style="background-color: #163552;">
+                                                            <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar nuevo feriado</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <div class="form-group col-md-12">
+                                                                    <div class="col-md-6">
+                                                                        <label for="">Nombre de dia feriado:</label>
+                                                                    </div>
+                                                                     <div class="col-md-10">
+                                                                         <form action="javascript:diaferiadoTem()">
+                                                                        <input class="form-control" type="text" id="nombreFeriado" required>
+                                                                     </div>
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <div class="col-md-12">
+                                                                <div class="row">
+                                                                    <div class="col-md-7 text-right">
+                                                                        <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                                                                    </div>
+                                                                    <div class="col-md-5 text-right" style="padding-right: 38px; ">
+                                                                        <button type="submit"  class="btn btn-secondary">Aceptar</button>
+                                                                    </form>
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -2367,12 +2417,36 @@ aria-hidden="true" data-backdrop="static">
                                                 </div>
 
                                             </div>
-                                            <div class="col-md-1"><br></div>
+
                                             <div class="col-md-10" id="calendarInv_ed" style="display:none"></div>
                                             <input type="hidden" id="pruebaEnd_ed">
                                             <input type="hidden" id="pruebaStar_ed">
                                             <div class="col-md-10" id="calendar_ed" style="display: none"></div>
-                                            <div class="col-md-1"><br></div>
+                                            <div class="col-md-2">
+                                                <div class="btn-group mt-2 mr-1">
+                                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle"
+                                                        style="color: #fff;
+                                                        background-color: #4a5669;
+                                                        border-color: #485263;" data-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false"><img
+                                                            src="{{asset('admin/images/borrador.svg')}}" height="15">
+                                                        Borrar <i class="icon"><span
+                                                                data-feather="chevron-down"></span></i></button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" onclick="vaciardFeriaBD()">Dias
+                                                            feriados</a>
+                                                        <a class="dropdown-item" onclick="vaciarddescanso()">Dias
+                                                            descanso</a>
+                                                        {{-- <a class="dropdown-item" onclick="vaciardlabTem()">D.
+                                                            laborables</a> --}}
+                                                        <a class="dropdown-item" onclick="vaciardNlabTem()">D. no
+                                                            laborables</a>
+                                                        <a class="dropdown-item"
+                                                            onclick="vaciardIncidTem()">Incidencia</a>
+
+                                                    </div>
+                                                </div><!-- /btn-group -->
+                                            </div>
                                             <div id="calendarioAsignar_ed" class="modal fade" tabindex="-1"
                                                 role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
                                                 data-backdrop="static">
