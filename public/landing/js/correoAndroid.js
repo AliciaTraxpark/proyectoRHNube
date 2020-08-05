@@ -1,12 +1,21 @@
+function enviarAndroidTabla(idEmpleado, idVinculacion) {
+    console.log(idEmpleado, idVinculacion);
+    $('#empleadoAndroid').val(idEmpleado);
+    $('#vinculaciónAndroid').val(idVinculacion);
+    $('#modalAndroid').modal();
+}
+
 function enviarA() {
-    var idEmpleado = $('#v_id').val();
+    var idEmpleado = $('#empleadoAndroid').val();
+    var idVinculacion = $('#vinculaciónAndroid').val();
     //NOTIFICACION
     $.ajax({
         async: false,
         type: "get",
-        url: "empleadoAndroid",
+        url: "correoAndroid",
         data: {
-            idEmpleado: idEmpleado
+            idEmpleado: idEmpleado,
+            idVinculacion: idVinculacion
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
