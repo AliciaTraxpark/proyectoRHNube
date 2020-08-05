@@ -3056,7 +3056,8 @@ function FinalizarEmpleado() {
     leertabla();
     $('#form-registrar :input').val("");
     $('input[type="text"]').val("");
-    $('input:radio[name=tipo]:checked').prop('checked', false);
+    // $('input:radio[name=tipo]:checked').prop('checked', false);
+    $('input:radio[name=tipo]:checked').removeProp('checked');
     $('input[type="date"]').val("");
     $('input[type="file"]').val("");
     $('input[type="email"]').val("");
