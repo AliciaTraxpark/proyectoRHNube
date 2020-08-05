@@ -309,7 +309,7 @@
             <td></td>
             @else
             <td class="text-center">
-                <div class="dropdown">
+                <div class="dropdown" id="w{{$tabla_empleados->emple_id}}">
                     <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                         style="cursor: pointer">
                         <img src="{{asset('landing/images/note.svg')}}" height="20">
@@ -329,7 +329,7 @@
             <td></td>
             @else
             <td class="text-center">
-                <div class="dropdown">
+                <div class="dropdown" id="a{{$tabla_empleados->emple_id}}">
                     <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                         style="cursor: pointer">
                         <img src="{{asset('landing/images/note.svg')}}" height="20">
@@ -396,7 +396,26 @@
         }
         seleccionarTodos.prop('checked', (CheckBoxMarcados === CheckBoxs.length));
     });
-
+    $(".sub_chk").click(function () {
+        if($(this).prop('checked')){
+            $('#w'+$(this).attr('data-id')).hide();
+            $('#a'+$(this).attr('data-id')).hide();
+        }else{
+            $('#w'+$(this).attr('data-id')).show();
+            $('#a'+$(this).attr('data-id')).show();
+        }
+    });
+    $('#selectT').click(function(){
+        $(".sub_chk").each(function(){
+            if($(this).prop('checked')){
+            $('#w'+$(this).attr('data-id')).hide();
+            $('#a'+$(this).attr('data-id')).hide();
+            }else{
+                $('#w'+$(this).attr('data-id')).show();
+                $('#a'+$(this).attr('data-id')).show();
+            }
+        });
+    });
 </script>
 <script>
     $("#tablaEmpleado tbody tr").click(function () {
