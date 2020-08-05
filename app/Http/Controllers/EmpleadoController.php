@@ -222,7 +222,24 @@ class EmpleadoController extends Controller
             )
             ->where('e.users_id', '=', Auth::user()->id)
             ->get();
+        $vinculacionD = [];
+        foreach ($tabla_empleado1 as $tab) {
+            $vinculacion = DB::table('vinculacion as v')
+                ->join('modo as m', 'm.id', '=', 'v.idModo')
+                ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
+                ->join('licencia_empleado as le', 'le.id', '=', 'v.idLicencia')
+                ->select('v.id as idV', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
+                ->where('v.idEmpleado', '=', $tab->emple_id)
+                ->get();
+            foreach ($vinculacion as $vinc) {
+                array_push($vinculacionD, array("idVinculacion" => $vinc->idV, "idLicencia" => $vinc->idL, "licencia" => $vinc->licencia, "disponible" => $vinc->disponible, "dispositivoD" => $vinc->dispositivo_descripcion, "codigo" => $vinc->codigo, "envio" => $vinc->envio));
+            }
+            $tab->vinculacion = $vinculacionD;
+            unset($vinculacionD);
+            $vinculacionD = array();
+        }
         $result = agruparEmpleados($tabla_empleado1);
+        // dd($result);
         return view('empleado.tablaEmpleado', ['tabla_empleado' => $result]);
     }
 
@@ -1165,7 +1182,7 @@ class EmpleadoController extends Controller
         DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
             ->where('color', '=', '#e6bdbd')
             ->whereYear('start', $request->get('aniocalen'))
-            ->whereMonth('start',$request->get('mescale'))
+            ->whereMonth('start', $request->get('mescale'))
             ->delete();
     }
 
@@ -1175,7 +1192,7 @@ class EmpleadoController extends Controller
             ->where('color', '=', '#dfe6f2')
             ->where('textColor', '=', '#0b1b29')
             ->whereYear('start', $request->get('aniocalen'))
-            ->whereMonth('start',$request->get('mescale'))
+            ->whereMonth('start', $request->get('mescale'))
             ->delete();
     }
     public function vaciardNlabTem(Request $request)
@@ -1184,7 +1201,7 @@ class EmpleadoController extends Controller
             ->where('color', '=', '#a34141')
             ->where('textColor', '=', '#ffffff')
             ->whereYear('start', $request->get('aniocalen'))
-            ->whereMonth('start',$request->get('mescale'))
+            ->whereMonth('start', $request->get('mescale'))
             ->delete();
     }
     public function vaciardIncidTem(Request $request)
@@ -1193,7 +1210,7 @@ class EmpleadoController extends Controller
             ->where('color', '=', '#9E9E9E')
             ->where('textColor', '=', '#313131')
             ->whereYear('start', $request->get('aniocalen'))
-            ->whereMonth('start',$request->get('mescale'))
+            ->whereMonth('start', $request->get('mescale'))
             ->delete();
     }
     public function eliminareventBD(Request $request)
@@ -1219,7 +1236,7 @@ class EmpleadoController extends Controller
             ->where('color', '=', '#4673a0')
             ->where('textColor', '=', '#ffffff')
             ->whereYear('start', $request->get('aniocalen'))
-            ->whereMonth('start',$request->get('mescale'))
+            ->whereMonth('start', $request->get('mescale'))
             ->delete();
     }
     public function vaciarFerBD(Request $request)
