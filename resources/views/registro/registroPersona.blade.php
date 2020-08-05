@@ -127,7 +127,7 @@
                                         value="{{old ('direccion')}}" required>
                                     {{$errors->first('direccion')}}
                                 </div>
-                                <div class="col-md-9" id="validCelCorreo">
+                                <div class="col-md-9" id="validCelCorreo" style="display: none">
                                     <br>
                                     <span style="color:red;">*Número de celular incorrecto o Correo
                                         electrónico incorrecto.</span><br></div><br><br>

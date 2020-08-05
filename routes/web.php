@@ -119,6 +119,11 @@ Route::post('/empleado/vaciardescansoTem', 'EmpleadoController@vaciardescansoTem
 Route::post('/empleado/eliminareventBD', 'EmpleadoController@eliminareventBD');
 Route::post('/empleado/eliminarHorariosEdit', 'EmpleadoController@eliminarHorariosEdit');
 Route::post('/empleado/eliminarInciEdit', 'EmpleadoController@eliminarInciEdit');
+Route::post('/empleado/vaciarFerBD', 'EmpleadoController@vaciarFerBD');
+Route::post('/empleado/vaciarFdescansoBD', 'EmpleadoController@vaciarFdescansoBD');
+Route::post('/empleado/vaciardnlaBD', 'EmpleadoController@vaciardnlaBD');
+Route::post('/empleado/vaciarincidelaBD', 'EmpleadoController@vaciarincidelaBD');
+
 //AREA
 Route::post('/registrar/area', 'areaController@store');
 

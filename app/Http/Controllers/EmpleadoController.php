@@ -1234,4 +1234,41 @@ class EmpleadoController extends Controller
             ->whereMonth('start', $request->get('mescale'))
             ->delete();
     }
+    public function vaciarFerBD(Request $request)
+    {
+        DB::table('eventos_empleado')
+            ->where('id_empleado', '=',$request->get('idempleado'))
+            ->where('color', '=', '#e6bdbd')
+            ->whereYear('start', $request->get('aniocalen'))
+            ->whereMonth('start',$request->get('mescale'))
+            ->delete();
+    }
+    public function vaciarFdescansoBD(Request $request)
+    {
+        DB::table('eventos_empleado')
+            ->where('id_empleado', '=',$request->get('idempleado'))
+            ->where('color', '=', '#4673a0')
+            ->where('textColor', '=', '#ffffff')
+            ->whereYear('start', $request->get('aniocalen'))
+            ->whereMonth('start',$request->get('mescale'))
+            ->delete();
+    }
+    public function vaciardnlaBD(Request $request)
+    {
+        DB::table('eventos_empleado')
+            ->where('id_empleado', '=',$request->get('idempleado'))
+            ->where('color', '=', '#a34141')
+            ->where('textColor', '=', '#ffffff')
+            ->whereYear('start', $request->get('aniocalen'))
+            ->whereMonth('start',$request->get('mescale'))
+            ->delete();
+    }
+    public function vaciarincidelaBD(Request $request)
+    {
+        DB::table('incidencia_dias')
+            ->where('id_empleado', '=',$request->get('idempleado'))
+            ->whereYear('inciden_dias_fechaI', $request->get('aniocalen'))
+            ->whereMonth('inciden_dias_fechaI',$request->get('mescale'))
+            ->delete();
+    }
 }
