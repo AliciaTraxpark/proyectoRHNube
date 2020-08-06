@@ -415,6 +415,7 @@ class EmpleadoController extends Controller
             $eventos_empleado->end = $eventos_empleado_tempEUs->end;
             $eventos_empleado->id_empleado = $idempleado;
             $eventos_empleado->tipo_ev = $eventos_empleado_tempEUs->tipo_ev;
+            $eventos_empleado->id_calendario = $eventos_empleado_tempEUs->calendario_calen_id;
             $eventos_empleado->save();
         }}
         //INIDENC
@@ -1299,5 +1300,10 @@ class EmpleadoController extends Controller
             ->whereMonth('hd.start',$request->get('mescale'))
             ->delete();
 
+    }
+    public function vaciarbdempleado(Request $request){
+        DB::table('eventos_empleado')
+            ->where('id_empleado', '=',$request->get('idempleado'))
+            ->delete();
     }
 }

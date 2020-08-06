@@ -926,6 +926,25 @@ function modalIncidencia() {
 }
 
 $('#selectCalendario').change(function () {
+    var idempleado = $('#idEmpleado').val();
+    console.log(idempleado);
+    $.ajax({
+        type: "post",
+        url: "/empleado/vaciarbdempleado",
+        data: {
+            idempleado
+
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+
+        },
+        error: function (data) {
+            alert('Ocurrio un error');
+        }
+    });
     $("#detallehorario").empty();
     idca = $('#selectCalendario').val();
     $.ajax({
