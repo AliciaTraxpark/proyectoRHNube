@@ -9,6 +9,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use App\organizacion;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -62,9 +63,14 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             return redirect(route('dashboard'));
         } else {
-            //return view('Welcome');
-            return redirect()->route('login')
-                ->with('error', 'Correo electronico o contraseña incorrecta');
+            $user = User::where('email', '=', request()->get('email'))->get()->first();
+            if ($user) {
+                return redirect()->route('login')
+                    ->with('error', 'Correo electronico o contraseña incorrecta');
+            } else {
+                return redirect()->route('login')
+                    ->with('error', 'Usuario no registrado.');
+            }
         }
     }
 
