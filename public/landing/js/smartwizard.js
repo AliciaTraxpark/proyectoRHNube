@@ -355,7 +355,9 @@ $(document).ready(function () {
                     $('#navActualizar').hide();
                     $('input[type="file"]').val("");
                     $('input[typt="checkbox"]').val("");
-                    $('#form-ver').removeAttr('selected').find('option:first').attr('selected', 'selected');
+                    $('#v_documento').val("").trigger("change");
+                    $('#v_departamento').val("").trigger("change");
+                    $('#v_dep').val("").trigger("change");
                     $('#v_prov').empty();
                     $('#v_provincia').empty();
                     $('#v_prov').append(`<option value="">Provincia</option>`);

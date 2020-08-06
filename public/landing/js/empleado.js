@@ -3279,7 +3279,8 @@ $('#cerrarEd').click(function () {
     $('input[type="file"]').val("");
     $('input[type="email"]').val("");
     $('input[type="number"]').val("");
-    $('#form-ver').removeAttr('selected').find('option:first').attr('selected', 'selected');
+    $('#departamento').val("").trigger("change");
+    $('#dep').val("").trigger("change");
     $('#v_prov').empty();
     $('#v_provincia').empty();
     $('#v_prov').append(`<option value="">Provincia</option>`);
@@ -3382,7 +3383,7 @@ function FinalizarEmpleado() {
     $('input[type="date"]').val("");
     $('input[type="file"]').val("");
     $('input[type="email"]').val("");
-    $('#form-registrar .form-control').removeAttr('selected').find('option:first').attr('selected', 'selected');
+    $('#documento').val("").trigger("change");
     $('#prov').empty();
     $('#provincia').empty();
     $('#prov').append(`<option value="">Provincia</option>`);
