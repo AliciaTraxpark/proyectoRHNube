@@ -230,15 +230,14 @@ class apiController extends Controller
     public function horario(Request $request)
     {
         $respuesta = [];
-        $horario_empleado = DB::table('horario_empleado as he')
-            ->select('he.horario_horario_id', 'he.horario_dias_id')
-            ->where('empleado_emple_id', '=', $request->get('idEmpleado'))
+        $horario_empleado = DB::table('emplead as e')
+            ->where('e.emple_id', '=', $request->get('idEmpleado'))
             ->get()
             ->first();
         if ($horario_empleado) {
             $horario = DB::table('horario_empleado as he')
                 ->select('he.horario_dias_id', 'he.horario_horario_id')
-                ->where('empleado_emple_id', '=', $request->get('idEmpleado'))
+                ->where('he.empleado_emple_id', '=', $request->get('idEmpleado'))
                 ->get();
 
             foreach ($horario as $resp) {
