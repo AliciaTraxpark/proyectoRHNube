@@ -138,6 +138,9 @@ function calendario() {
             center: 'title',
             right: ''
         },
+        eventRender: function(info) {
+            $(info.el).tooltip({ title: info.event.title });
+        },
         events: function (info, successCallback, failureCallback) {
             var idcalendario = $('#selectCalendario').val();
             var datoscal;
@@ -350,6 +353,9 @@ function calendario_edit() {
             left: 'prev,next today',
             center: 'title',
             right: ''
+        },
+        eventRender: function(info) {
+            $(info.el).tooltip({ title: info.event.title });
         },
         events: function (info, successCallback, failureCallback) {
             var idcalendario = $('#selectCalendario_ed').val();
@@ -1133,6 +1139,9 @@ function calendario2() {
             center: 'title',
             right: ''
         },
+        eventRender: function(info) {
+            $(info.el).tooltip({ title: info.event.title });
+        },
         events: function (info, successCallback, failureCallback) {
             var idcalendario = $('#selectCalendario').val();
             var datoscal;
@@ -1407,6 +1416,9 @@ function calendario3() {
             center: 'title',
             right: ''
         },
+        eventRender: function(info) {
+            $(info.el).tooltip({ title: info.event.title });
+        },
         events: function (info, successCallback, failureCallback) {
             var idempleado = $('#idempleado').val();
             var datoscal;
@@ -1666,6 +1678,9 @@ function calendario2_ed() {
             left: 'prev,next today',
             center: 'title',
             right: ''
+        },
+        eventRender: function(info) {
+            $(info.el).tooltip({ title: info.event.title });
         },
         events: function (info, successCallback, failureCallback) {
             var idcalendario = $('#selectCalendario_ed').val();

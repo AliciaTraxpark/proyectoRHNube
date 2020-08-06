@@ -448,7 +448,9 @@ function calendario() {
             center: 'title',
             right: ''
         },
-
+        eventRender: function(info) {
+            $(info.el).tooltip({ title: info.event.title });
+        },
         events: function (info, successCallback, failureCallback) {
 
             $.ajax({
