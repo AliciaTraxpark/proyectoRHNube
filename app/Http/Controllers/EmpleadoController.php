@@ -1314,4 +1314,13 @@ class EmpleadoController extends Controller
             ->where('id_empleado', '=',$request->get('idempleado'))
             ->delete();
     }
+
+    public function vaciarhorariosBD(Request $request){
+
+        DB::table('horario_empleado as he')
+            ->where('he.empleado_emple_id', '=',$request->get('idempleado'))
+            ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+            
+            ->delete();
+    }
 }

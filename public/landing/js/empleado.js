@@ -4218,8 +4218,24 @@ function eliminarhorariosBD() {
 }
 ////////////////////////////////
 $('#selectCalendario_edit3').change(function () {
-    var idempleado = $('#idempleado').val();
+    var antSe= $('#idselect3').val();
+    bootbox.confirm({
+        message: "Al cambiar de calendario se borrará horarios actuales, ¿Confirmar?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            if (result == true) {
+                var idempleado = $('#idempleado').val();
     var idcalendario=$('#selectCalendario_edit3').val();
+    $('#idselect3').val(idcalendario);
     console.log(idempleado);
     $.ajax({
         type: "post",
@@ -4232,6 +4248,18 @@ $('#selectCalendario_edit3').change(function () {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
+            $('#calendar_ed').hide();
+            $.ajax({
+                type: "post",
+                url: "/empleado/vaciarhorariosBD",
+                data: {
+                    idempleado
+
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+            });
             $.ajax({
                 type: "POST",
                 url: "/empleado/calendarioEmpleado",
@@ -4248,8 +4276,11 @@ $('#selectCalendario_edit3').change(function () {
                     }
                 },
                 success: function (data) {
+
                  calendarioedit.refetchEvents();
                  calendar2_ed.refetchEvents();
+                 $('#calendar_ed').show();
+
 
 
                 },
@@ -4261,5 +4292,11 @@ $('#selectCalendario_edit3').change(function () {
             alert('Ocurrio un error');
         }
     });
+            } else{
+                $('#selectCalendario_edit3').val(antSe);
+            }
+        }
+    });
+
 
 })
