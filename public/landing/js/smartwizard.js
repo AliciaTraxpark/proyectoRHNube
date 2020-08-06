@@ -382,6 +382,8 @@ $(document).ready(function () {
     });
     $('#smartwizard1').on("showStep", function (e, anchorObject, stepNumber, stepDirection) {
         if (stepNumber == 0) {
+            $('button.sw-btn-prev').show();
+            $('button.sw-btn-next').show();
             $('#FinalizarEmpleadoEditar').hide();
         }
         if (stepNumber == 5) {

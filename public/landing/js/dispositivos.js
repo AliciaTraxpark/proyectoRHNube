@@ -215,23 +215,23 @@ function cambiarEstadoLicenciaAndroidEditar() {
             $('#correo' + idVinculacion).empty();
             $('#inactivar' + idVinculacion).empty();
             $('#estado' + idVinculacion).empty();
-            var td = `<input style="display: none;" id="android${idEmpleado}" value="${data.idVinculacion}">
-            <a  onclick="$('#androidEmpleado').modal();$('#form-registrar').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+            var td = `<input style="display: none;" id="android${idEmpleado}" value="${idVinculacion}">
+            <a  onclick="$('#v_androidEmpleado').modal();$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
             correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
-                src="landing/images/note.svg" height="20">
+                src="landing/images/email (4).svg" height="20">
             </a>`;
             var tdE = `Inactivo`;
             $('#correo' + idVinculacion).append(td);
             $('#inactivar' + idVinculacion).append(``);
             $('#estado' + idVinculacion).append(tdE);
-            $('#estadoLicenciaC').modal('toggle');
-            $('#form-registrar').show();
+            $('#v_estadoLicenciaC').modal('toggle');
+            $('#form-ver').show();
             $.notifyClose();
             $.notify({
                 message: "\nProceso con éxito.",
                 icon: 'admin/images/checked.svg'
             }, {
-                element: $('#form-registrar'),
+                element: $('#form-ver'),
                 position: 'fixed',
                 icon_type: 'image',
                 newest_on_top: true,
@@ -246,14 +246,14 @@ function cambiarEstadoLicenciaAndroidEditar() {
             });
         },
         error: function () {
-            $('#estadoLicenciaC').modal('toggle');
-            $('#form-registrar').show();
+            $('#v_estadoLicenciaC').modal('toggle');
+            $('#form-ver').show();
             $.notifyClose();
             $.notify({
                 message: "\nAún no ha registrado correo a empleado.",
                 icon: 'admin/images/warning.svg'
             }, {
-                element: $('#form-registrar'),
+                element: $('#form-ver'),
                 position: 'fixed',
                 icon_type: 'image',
                 newest_on_top: true,
@@ -273,7 +273,7 @@ $('#v_CambiarEstadoL').on("click", cambiarEstadoLicenciaAndroidEditar);
 
 function cambiarEstadoLicenciaWindowsEditar() {
     var idEmpleado = $('#v_id').val();
-    var idVinculacion = $('#estadoLicencia').val();
+    var idVinculacion = $('#estadoLicenciaW').val();
     //NOTIFICACION
     $.ajax({
         async: false,
@@ -298,22 +298,22 @@ function cambiarEstadoLicenciaWindowsEditar() {
             $('#correo' + idVinculacion).empty();
             $('#inactivar' + idVinculacion).empty();
             $('#estado' + idVinculacion).empty();
-            var td = `<a  onclick="javascript:modalWindows(${data.idVinculacion});$('#form-registrar').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+            var td = `<a  onclick="javascript:modalWindowsEditar(${idVinculacion});$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
             correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
-                src="landing/images/note.svg" height="20">
+                src="landing/images/email (4).svg" height="20">
             </a>`;
             var tdE = `Inactivo`;
             $('#correo' + idVinculacion).append(td);
             $('#inactivar' + idVinculacion).append(``);
             $('#estado' + idVinculacion).append(tdE);
-            $('#estadoLicenciaW').modal('toggle');
-            $('#form-registrar').show();
+            $('#v_estadoLicenciaW').modal('toggle');
+            $('#form-ver').show();
             $.notifyClose();
             $.notify({
                 message: "\nProceso con éxito.",
                 icon: 'admin/images/checked.svg'
             }, {
-                element: $('#form-registrar'),
+                element: $('#form-ver'),
                 position: 'fixed',
                 icon_type: 'image',
                 newest_on_top: true,
@@ -328,8 +328,8 @@ function cambiarEstadoLicenciaWindowsEditar() {
             });
         },
         error: function () {
-            $('#estadoLicenciaW').modal('toggle');
-            $('#form-registrar').show();
+            $('#v_estadoLicenciaW').modal('toggle');
+            $('#form-ver').show();
             $.notifyClose();
             $.notify({
                 message: "\nAún no ha registrado correo a empleado.",
