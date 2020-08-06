@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <title>RH Solution</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <link rel="stylesheet" href="{{asset('landing/vendors/mdi/css/materialdesignicons.min.css')}}">
-    <link rel="stylesheet" href="{{asset('landing/vendors/aos/css/aos.css')}}">
-    <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="{{
-        URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')
-        }}" rel="stylesheet" />
-    <link rel="shortcut icon"
-        href="https://rhsolution.com.pe/wp-content/uploads/2019/06/small-logo-rh-solution-64x64.png" sizes="32x32">
-</head>
+    <head>
+        <title>RH Solution</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
+        <link rel="stylesheet"
+            href="{{asset('landing/vendors/mdi/css/materialdesignicons.min.css')}}">
+        <link rel="stylesheet"
+            href="{{asset('landing/vendors/aos/css/aos.css')}}">
+        <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <link rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="{{
+            URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')
+            }}" rel="stylesheet" />
+        <link rel="shortcut icon"
+            href="https://rhsolution.com.pe/wp-content/uploads/2019/06/small-logo-rh-solution-64x64.png"
+            sizes="32x32">
+    </head>
 
-<body id="body" data-spy="scroll" data-target=".navbar" data-offset="100" style=" background: #f7f8fa;">
-    <style>
+    <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100"
+        style="background: #f7f8fa;">
+        <style>
         .btn-group-sm>.btn,
         .btn-sm {
             padding: .25rem .5rem !important;
@@ -37,27 +42,31 @@
         }
 
     </style>
-    <header id="header-section">
-        <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
-            <div class="container" style="color: #ffffff;">
-                <div class="col-md-2">
-                    <div class="navbar-brand-wrapper d-flex w-100">
-                        <img src="{{asset('landing/images/logo.png')}}" height="80">
+        <header id="header-section">
+            <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
+                <div class="container" style="color: #ffffff;">
+                    <div class="col-md-2">
+                        <div class="navbar-brand-wrapper d-flex w-100">
+                            <img src="{{asset('landing/images/logo.png')}}"
+                                height="80">
+                        </div>
                     </div>
+                    <div class="col-md-4 text-left">
+                        <h5 style="color: #ffffff;font-size: 15px!important">Por
+                            favor verifica tu cuenta para poder
+                            empezar.</h5>
+                    </div>
+                    <div class="col-md-6 text-left"></div>
                 </div>
-                <div class="col-md-4 text-left">
-                    <h5 style="color: #ffffff;font-size: 15px!important">Por favor verifica tu cuenta para poder
-                        empezar.</h5>
-                </div>
-                <div class="col-md-6 text-left"></div>
-            </div>
             </div>
         </nav>
     </header>
     <div class="container"> <br>
         <div class="row">
-            <div class="col-md-12 text-center" style="padding-top: 30px;padding-bottom: 30px">
-                <h4 class="font-weight-semibold">Organicemos tu equipo de trabajo en 10 minutos: Controla, mide y
+            <div class="col-md-12 text-center" style="padding-top:
+                30px;padding-bottom: 30px">
+                <h4 class="font-weight-semibold">Organicemos tu equipo de
+                    trabajo en 10 minutos: Controla, mide y
                     gestiona.
                 </h4>
             </div>
@@ -69,20 +78,26 @@
                         <div class="text-center">
                             <div class="mx-auto">
                                 <a href="index.html">
-                                    <h3 class="d-inline align-middle ml-1 text-logo">RH SOLUTION</h3>
+                                    <h3 class="d-inline align-middle ml-1
+                                        text-logo">RH SOLUTION</h3>
                                 </a>
                             </div>
                             <br>
                             <div class="mx-auto">
-                                <img src="{{asset('landing/images/login.svg')}}" alt="" height="80" />
+                                <img src="{{asset('landing/images/login.svg')}}"
+                                    alt="" height="80" />
                             </div>
-                            <h6 class="h5 mb-0 mt-5" style="text-transform: uppercase;">Confirma tu email
+                            <h6 class="h5 mb-0 mt-5" style="text-transform:
+                                uppercase;">Confirma tu email
                                 {{$persona[0]->perso_nombre}}
                                 {{$persona[0]->perso_apPaterno}}</h6>
-                            <p class="text-muted mt-3 mb-3">Su cuenta ha sido registrada exitosamente. Para
-                                completar el proceso de verificación, debe verficar su cuenta.
+                            <p class="text-muted mt-3 mb-3">Su cuenta ha sido
+                                registrada exitosamente. Para
+                                completar el proceso de verificación, debe
+                                verficar su cuenta.
                                 <a href="{{route('reenvioCorreo')}}"
-                                    class="text-primary font-weight-bold ml-1">Verificar</a>
+                                    class="text-primary font-weight-bold ml-1">Reenviar
+                                    Correo</a>
                             </p>
                         </div>
                     </div> <!-- end card-body -->
@@ -91,7 +106,8 @@
 
                 <div class="row mt-3">
                     <div class="col-12 text-center">
-                        <p class="text-muted">Regresar a <a href="{{ route('logout') }}"
+                        <p class="text-muted">Regresar a <a href="{{
+                                route('logout') }}"
                                 class="text-primary font-weight-bold ml-1">Inicio</a></p>
                     </div> <!-- end col -->
                 </div>
