@@ -230,7 +230,7 @@ class apiController extends Controller
     public function horario(Request $request)
     {
         $respuesta = [];
-        $horario_empleado = DB::table('emplead as e')
+        $horario_empleado = DB::table('empleado as e')
             ->where('e.emple_id', '=', $request->get('idEmpleado'))
             ->get()
             ->first();
