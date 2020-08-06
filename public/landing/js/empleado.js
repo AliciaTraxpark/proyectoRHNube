@@ -138,8 +138,10 @@ function calendario() {
             center: 'title',
             right: ''
         },
-        eventRender: function(info) {
-            $(info.el).tooltip({ title: info.event.title });
+        eventRender: function (info) {
+            $(info.el).tooltip({
+                title: info.event.title
+            });
         },
         events: function (info, successCallback, failureCallback) {
             var idcalendario = $('#selectCalendario').val();
@@ -354,8 +356,10 @@ function calendario_edit() {
             center: 'title',
             right: ''
         },
-        eventRender: function(info) {
-            $(info.el).tooltip({ title: info.event.title });
+        eventRender: function (info) {
+            $(info.el).tooltip({
+                title: info.event.title
+            });
         },
         events: function (info, successCallback, failureCallback) {
             var idcalendario = $('#selectCalendario_ed').val();
@@ -945,9 +949,9 @@ $('#selectCalendario').change(function () {
 
 
             $("#detallehorario").append("<div class='form-group row'><div class='col-md-1'></div><label class='col-lg-3 col-form-label' style='color:#163552;margin-top: 5px;'>Se muestra calendario de: </label>" +
-                "<div class='col-md-5'><select disabled style='margin-top: 9px;' class='form-control col-lg-6 form-control-sm'><option>" + $('select[id="selectCalendario"] option:selected').text() + "</option></select></div>"+
-                "<div class='col-md-2' ><div class='btn-group mt-2 mr-1'> <button type='button' onclick='eliminarhorariosTem()' class='btn btn-primary btn-sm dropdown-toggle' style='color: #fff; background-color: #4a5669;"+
-                "border-color: #485263;' > <img src='admin/images/borrador.svg' height='15'>"+
+                "<div class='col-md-5'><select disabled style='margin-top: 9px;' class='form-control col-lg-6 form-control-sm'><option>" + $('select[id="selectCalendario"] option:selected').text() + "</option></select></div>" +
+                "<div class='col-md-2' ><div class='btn-group mt-2 mr-1'> <button type='button' onclick='eliminarhorariosTem()' class='btn btn-primary btn-sm dropdown-toggle' style='color: #fff; background-color: #4a5669;" +
+                "border-color: #485263;' > <img src='admin/images/borrador.svg' height='15'>" +
                 " Borrar horarios </button> </div></div></div>");
         },
         error: function (data) {
@@ -1007,7 +1011,7 @@ $('#selectCalendario_ed').change(function () {
 
 })
 ///////////////////
-function eliminarhorariosTem(){
+function eliminarhorariosTem() {
     fmes = calendar2.getDate();
     mescale = fmes.getMonth() + 1;
     aniocalen = fmes.getFullYear();
@@ -1139,8 +1143,10 @@ function calendario2() {
             center: 'title',
             right: ''
         },
-        eventRender: function(info) {
-            $(info.el).tooltip({ title: info.event.title });
+        eventRender: function (info) {
+            $(info.el).tooltip({
+                title: info.event.title
+            });
         },
         events: function (info, successCallback, failureCallback) {
             var idcalendario = $('#selectCalendario').val();
@@ -1416,8 +1422,10 @@ function calendario3() {
             center: 'title',
             right: ''
         },
-        eventRender: function(info) {
-            $(info.el).tooltip({ title: info.event.title });
+        eventRender: function (info) {
+            $(info.el).tooltip({
+                title: info.event.title
+            });
         },
         events: function (info, successCallback, failureCallback) {
             var idempleado = $('#idempleado').val();
@@ -1679,8 +1687,10 @@ function calendario2_ed() {
             center: 'title',
             right: ''
         },
-        eventRender: function(info) {
-            $(info.el).tooltip({ title: info.event.title });
+        eventRender: function (info) {
+            $(info.el).tooltip({
+                title: info.event.title
+            });
         },
         events: function (info, successCallback, failureCallback) {
             var idcalendario = $('#selectCalendario_ed').val();
@@ -2609,10 +2619,17 @@ function valorCodigoEmpleado() {
     enviarEmpleado('', objEmpleado);
 });*/
 
+$("input[name=tipo]") // select the radio by its id
+    .change(function () { // bind a function to the change event
+        if ($(this).is(":checked")) { // check if the radio is checked
+            var val = $(this).val(); // retrieve the value
+            console.log(val);
+        }
+    });
 
 function datosPersona(method) {
     var celularC = '';
-    console.log($('input:radio[name=tipo]:checked').val());
+    console.log($('input[name=tipo]:checked').val());
     if ($('#celular').val() != '') {
         celularC = $('#codigoCelular').val() + $('#celular').val();
     }
@@ -2621,7 +2638,7 @@ function datosPersona(method) {
         apPaterno: $('#apPaterno').val(),
         apMaterno: $('#apMaterno').val(),
         fechaN: $('#fechaN').val(),
-        tipo: $('input:radio[name=tipo]:checked').val(),
+        tipo: $('input[name=tipo]:checked').val(),
         documento: $('#documento').val(),
         numDocumento: $('#numDocumento').val(),
         departamento: $('#departamento').val(),
@@ -3160,14 +3177,14 @@ function cargarFile2() {
 //********************** */
 $('#documento').on('change', function () {
     $("#form-registrar :input").attr('disabled', false);
-    if($('#documento').val()==1){
-        $( "#numDocumento" ).attr( "maxlength", "8" );
+    if ($('#documento').val() == 1) {
+        $("#numDocumento").attr("maxlength", "8");
     }
-    if($('#documento').val()==2){
-        $( "#numDocumento" ).attr( "maxlength", "12" );
+    if ($('#documento').val() == 2) {
+        $("#numDocumento").attr("maxlength", "12");
     }
-    if($('#documento').val()==3){
-        $( "#numDocumento" ).attr( "maxlength", "12" );
+    if ($('#documento').val() == 3) {
+        $("#numDocumento").attr("maxlength", "12");
     }
 });
 $('#smartwizardVer :input').attr('disabled', true);
@@ -3178,14 +3195,14 @@ $('#cerrarE').attr('disabled', false);
 $('#cerrarEd').attr('disabled', false);
 $('#documento').on('change', function () {
     $("#form-registrar :input").attr('disabled', false);
-    if($('#documento').val()==1){
-        $( "#numDocumento" ).attr( "maxlength", "8" );
+    if ($('#documento').val() == 1) {
+        $("#numDocumento").attr("maxlength", "8");
     }
-    if($('#documento').val()==2){
-        $( "#numDocumento" ).attr( "maxlength", "12" );
+    if ($('#documento').val() == 2) {
+        $("#numDocumento").attr("maxlength", "12");
     }
-    if($('#documento').val()==3){
-        $( "#numDocumento" ).attr( "maxlength", "12" );
+    if ($('#documento').val() == 3) {
+        $("#numDocumento").attr("maxlength", "12");
     }
 });
 $('#formNuevoE').click(function () {
@@ -3243,7 +3260,15 @@ $('#cerrarEd').click(function () {
     $('input[type="file"]').val("");
     $('input[type="email"]').val("");
     $('input[type="number"]').val("");
-    $('#form-ver :input').val("");
+    $('#form-ver').removeAttr('selected').find('option:first').attr('selected', 'selected');
+    $('#v_prov').empty();
+    $('#v_provincia').empty();
+    $('#v_prov').append(`<option value="">Provincia</option>`);
+    $('#v_provincia').append(`<option value="">Provincia</option>`);
+    $('#v_dist').empty();
+    $('#v_distrito').empty();
+    $('#v_dist').append(`<option value="">Distrito</option>`);
+    $('#v_distrito').append(`<<option value="">Distrito</option>`);
     $('#selectHorario_ed').val("Seleccionar horario");
     $('#codigoCelular').val("+51");
     limpiar();
@@ -3264,7 +3289,15 @@ $('#cerrarModalEmpleado').click(function () {
     $('input[type="file"]').val("");
     $('input[type="email"]').val("");
     $('input[type="number"]').val("");
-    $('#form-registrar :input').val("");
+    $('#form-registrar .form-control').removeAttr('selected').find('option:first').attr('selected', 'selected');
+    $('#prov').empty();
+    $('#provincia').empty();
+    $('#prov').append(`<option value="">Provincia</option>`);
+    $('#provincia').append(`<option value="">Provincia</option>`);
+    $('#dist').empty();
+    $('#distrito').empty();
+    $('#dist').append(`<option value="">Distrito</option>`);
+    $('#distrito').append(`<<option value="">Distrito</option>`);
     $("#form-registrar :input").prop('disabled', true);
     $('#documento').attr('disabled', false);
     $('#cerrarMoadalEmpleado').attr('disabled', false);
@@ -3325,14 +3358,20 @@ $('#v_validGenero').hide();
 
 function FinalizarEmpleado() {
     leertabla();
-    $('#form-registrar :input').val("");
     $('input[type="text"]').val("");
-    // $('input:radio[name=tipo]:checked').prop('checked', false);
-    $('input:radio[name=tipo]:checked').removeProp('checked');
+    $('input:radio[name=tipo]:checked').prop('checked', false);
     $('input[type="date"]').val("");
     $('input[type="file"]').val("");
     $('input[type="email"]').val("");
-    $('#form-registrar :input').val("");
+    $('#form-registrar .form-control').removeAttr('selected').find('option:first').attr('selected', 'selected');
+    $('#prov').empty();
+    $('#provincia').empty();
+    $('#prov').append(`<option value="">Provincia</option>`);
+    $('#provincia').append(`<option value="">Provincia</option>`);
+    $('#dist').empty();
+    $('#distrito').empty();
+    $('#dist').append(`<option value="">Distrito</option>`);
+    $('#distrito').append(`<<option value="">Distrito</option>`);
     $('#file').val('');
     $('#file').fileinput('refresh');
     $('#codigoCelular').val("+51");
@@ -3855,7 +3894,7 @@ function diaferiadoRe_ed() {
         color = '#e6bdbd',
         textColor = '#775555',
         start = $('#pruebaStar_ed').val();
-        end = $('#pruebaEnd_ed').val();
+    end = $('#pruebaEnd_ed').val();
     tipo = 2;
     var idempleado = $('#idempleado').val();
     //$('#myModal').modal('show');
@@ -3894,7 +3933,7 @@ function diaferiadoRe_ed() {
     });
 };
 //////////////////////////////////////////////////////////
-function vaciardFeriaBD(){
+function vaciardFeriaBD() {
     var idempleado = $('#idempleado').val();
     fmes = calendarioedit.getDate();
     mescale = fmes.getMonth() + 1;
@@ -3945,7 +3984,8 @@ function vaciardFeriaBD(){
         }
     });
 }
-function vaciarddescansoBD(){
+
+function vaciarddescansoBD() {
     var idempleado = $('#idempleado').val();
     fmes = calendarioedit.getDate();
     mescale = fmes.getMonth() + 1;
@@ -3996,7 +4036,8 @@ function vaciarddescansoBD(){
         }
     });
 }
-function vaciarNlabBD(){
+
+function vaciarNlabBD() {
     var idempleado = $('#idempleado').val();
     fmes = calendarioedit.getDate();
     mescale = fmes.getMonth() + 1;
@@ -4047,7 +4088,8 @@ function vaciarNlabBD(){
         }
     });
 }
-function vaciardIncidBD(){
+
+function vaciardIncidBD() {
     var idempleado = $('#idempleado').val();
     fmes = calendarioedit.getDate();
     mescale = fmes.getMonth() + 1;
@@ -4098,7 +4140,8 @@ function vaciardIncidBD(){
         }
     });
 }
-function eliminarhorariosBD(){
+
+function eliminarhorariosBD() {
     var idempleado = $('#idempleado').val();
     fmes = calendar2_ed.getDate();
     mescale = fmes.getMonth() + 1;

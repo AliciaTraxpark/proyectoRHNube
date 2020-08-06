@@ -355,6 +355,15 @@ $(document).ready(function () {
                     $('#navActualizar').hide();
                     $('input[type="file"]').val("");
                     $('input[typt="checkbox"]').val("");
+                    $('#form-ver').removeAttr('selected').find('option:first').attr('selected', 'selected');
+                    $('#v_prov').empty();
+                    $('#v_provincia').empty();
+                    $('#v_prov').append(`<option value="">Provincia</option>`);
+                    $('#v_provincia').append(`<option value="">Provincia</option>`);
+                    $('#v_dist').empty();
+                    $('#v_distrito').empty();
+                    $('#v_dist').append(`<option value="">Distrito</option>`);
+                    $('#v_distrito').append(`<<option value="">Distrito</option>`);
                     $('#formNuevoEd').hide();
                     $('#formNuevoEl').hide();
                     $('#checkboxFechaIE').prop('checked', false);
