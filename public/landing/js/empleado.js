@@ -3225,7 +3225,7 @@ $('#documento').on('change', function () {
     }
 });
 $('#formNuevoE').click(function () {
-    $('#idEmpleado').empty();
+    $('#idEmpleado').val('');
     calendarioInv();
     $('#calendarInv').show();
     $('#calendar').hide();
