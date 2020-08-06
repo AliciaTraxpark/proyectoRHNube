@@ -252,7 +252,8 @@
             <th style="border-top: 1px solid #fdfdfd;"></th>
             <th class="text-center" style="border-top: 1px solid #fdfdfd;" id="enviarCorreosMasivos">
                 <button type="button" class="btn btn-sm btn-rounded" style="color: #548ec7;border-color: #e7edf3; padding-left:
-                    4px; padding-right: 4px;" data-toggle="tooltip" data-placement="right" title="Enviar a
+                    4px; padding-right: 4px;" onclick="$('#modalCorreoM').modal()" data-toggle="tooltip"
+                    data-placement="right" title="Enviar a
                     todos los empleados
                     seleccionados." data-original-title="">Enviar&nbsp;&nbsp;<img
                         src="{{asset('landing/images/group.svg')}}" height="20"></button></th>
@@ -979,7 +980,7 @@
         $.ajax({
             async: false,
             type: "get",
-            url: "envioMasivo",
+            url: "envioMasivoW",
             data: 'ids=' + join_selected_values,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

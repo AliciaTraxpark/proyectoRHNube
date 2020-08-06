@@ -7,6 +7,7 @@ use App\licencia_empleado;
 use App\Mail\AndroidMail;
 use App\Mail\CorreoEmpleadoMail;
 use App\Mail\CorreoMasivoMail;
+use App\Mail\MasivoWindowsMail;
 use App\modo;
 use App\persona;
 use App\vinculacion;
@@ -60,7 +61,7 @@ class correosEmpleadoController extends Controller
         return response()->json(null, 400);
     }
 
-    public function encodeMasivo(Request $request)
+    public function encodeMasivoN(Request $request)
     {
         $idEmpleados = $request->ids;
         $idEmp = explode(",", $idEmpleados);
@@ -164,19 +165,6 @@ class correosEmpleadoController extends Controller
         }
         return response()->json($resultado, 200);
     }
-    public function reenvio(Request $request)
-    {
-        $idEmpleado = $request->get('idEmpleado');
-
-        $reenvio = DB::table('vinculacion as v')
-            ->select('v.reenvio')
-            ->where('v.idEmpleado', '=', $idEmpleado)
-            ->get();
-
-        if ($reenvio[0]->reenvio != null) {
-            return 1;
-        }
-    }
     public function envioAndroid(Request $request)
     {
         $idEmpleado = $request->get('idEmpleado');
@@ -240,66 +228,45 @@ class correosEmpleadoController extends Controller
         return response()->json($resultado, 200);
     }
 
-    public function nuevoEncode(Request $request)
+    public function envioMasivoWindows(Request $request)
     {
-        $respuesta = [];
+        $idEmpleado = $request->ids;
+        $idEmp = explode(",", $idEmpleado);
+        $resultado = [];
+        $arrayVinculacion = [];
         $c = true;
-        $l = true;
-        $idEmpleado = $request->get('idEmpleado');
-        $empleado = DB::table('empleado as e')
-            ->select('e.emple_Correo')
-            ->where('e.emple_id', '=', $idEmpleado)
-            ->get()->first();
-        if ($empleado->emple_Correo != "") {
-            $codV = DB::table('vinculacion as v')
-                ->select('v.id', 'v.envio')
-                ->where('v.idEmpleado', '=', $idEmpleado)
-                ->get()->first();
-            $codigoEmpleado = DB::table('empleado as e')
-                ->select('e.emple_codigo', 'e.emple_persona', 'e.created_at')
-                ->where('e.emple_id', '=', $idEmpleado)
-                ->get();
-            $codigoP = DB::table('empleado as e')
-                ->select('emple_persona')
-                ->where('e.emple_id', '=', $idEmpleado)
-                ->get();
-            $codP = [];
-            $codP["id"] = $codigoP[0]->emple_persona;
-            $persona = persona::find($codP["id"]);
-            $cantidad = DB::table('licencia_empleado as le')
-                ->select(DB::raw('COUNT(le.id) as total'))
-                ->where('le.idEmpleado', '=', $idEmpleado)
-                ->get()->first();
-            if ($cantidad->total < 3) {
-                if ($codigoEmpleado[0]->emple_codigo != '') {
-                    $nuevaLivencia = STR::random(8);
-                    $codigoLicencia = $nuevaLivencia . '.' . $idEmpleado . '*';
-                    $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
-                } else {
-                    $nuevaLivencia = STR::random(8);
-                    $codigoLicencia = $nuevaLivencia . '.' . $idEmpleado . '*';
-                    $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
+        $v = true;
+        foreach ($idEmp as $idEm) {
+            $empleado = empleado::where('emple_id', '=', $idEm)->get()->first();
+            $persona = persona::where('perso_id', '=', $empleado->emple_persona)->get()->first();
+            if ($empleado->emple_Correo != "") {
+                $codV = DB::table('vinculacion as v')
+                    ->join('modo as m', 'm.id', '=', 'v.idModo')
+                    ->select('v.id')
+                    ->where('v.idEmpleado', '=', $idEm)
+                    ->where('m.idTipoDispositivo', '=', 1)
+                    ->get();
+                foreach ($codV as $vinc) {
+                    $vinculacion = vinculacion::findOrFail($vinc->id);
+                    $licenciaEmpleado = licencia_empleado::findOrFail($vinculacion->idLicencia);
+                    $vinculacion->licencia = $licenciaEmpleado;
+                    array_push($arrayVinculacion, $vinculacion);
                 }
-
-                $licencia_empleado = new licencia_empleado();
-                $licencia_empleado->idEmpleado = $idEmpleado;
-                $licencia_empleado->licencia = $encodeLicencia;
-                $licencia_empleado->idVinculacion = $codV->id;
-                $licencia_empleado->save();
-                $vinculacion = vinculacion::findOrFail($codV->id);
-                $datos = [];
-                $datos["correo"] = $empleado->emple_Correo;
-                $email = array($datos["correo"]);
-                Mail::to($email)->queue(new CorreoEmpleadoMail($vinculacion, $persona, $licencia_empleado));
-                return json_encode(array("result" => true));
+                if (sizeof($arrayVinculacion) >= 1) {
+                    $datos["correo"] = $empleado->emple_Correo;
+                    $email = array($datos["correo"]);
+                    Mail::to($email)->queue(new MasivoWindowsMail($arrayVinculacion, $persona));
+                    array_push($resultado, array("Persona" => $persona, "Correo" => $c, "Vinculacion" => $v));
+                } else {
+                    $v = false;
+                    array_push($resultado, array("Persona" => $persona, "Correo" => $c, "Vinculacion" => $v));
+                }
+            } else {
+                $c = false;
+                array_push($resultado, array("Persona" => $persona, "Correo" => $c));
             }
-            $l = false;
-            array_push($respuesta, array('limite' => $l, 'correo' => $c));
-            return response()->json($respuesta, 200);
         }
-        $c = false;
-        array_push($respuesta, array('limite' => $l, 'correo' => $c));
-        return response()->json($respuesta, 200);
+        return response()->json($resultado, 200);
     }
 
     public function ambasPlataformas(Request $request)

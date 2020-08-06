@@ -230,8 +230,7 @@ Route::get('vinculacionAndroid', 'vinculacionDispositivoController@vinculacionAn
 Route::get('vinculacionWindows', 'vinculacionDispositivoController@vinculacionWindows');
 //WINDOWS
 Route::get('correoWindows', 'correosEmpleadoController@envioWindows');
-Route::get('comprobR', 'correosEmpleadoController@reenvio');
-Route::get('envioMasivo', 'correosEmpleadoController@encodeMasivo');
+Route::get('envioMasivoW', 'correosEmpleadoController@envioMasivoWindows');
 Route::get('asignarEscritorio', 'correosEmpleadoController@nuevoEncode');
 Route::get('ambasPlataformas', 'correosEmpleadoController@ambasPlataformas');
 //ANDROID
