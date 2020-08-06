@@ -938,8 +938,11 @@ $('#selectCalendario').change(function () {
             $('#calendar2').show();
 
 
-            $("#detallehorario").append("<div class='form-group row'><div class='col-md-5 text-right'><label style='color:#163552;margin-top: 5px;'>Se muestra calendario de: </label> </div>" +
-                "<div class='col-md-5'><select disabled class='form-control form-control-sm'><option>" + $('select[id="selectCalendario"] option:selected').text() + "</option></select></div></div>");
+            $("#detallehorario").append("<div class='form-group row'><div class='col-md-1'></div><label class='col-lg-3 col-form-label' style='color:#163552;margin-top: 5px;'>Se muestra calendario de: </label>" +
+                "<div class='col-md-5'><select disabled style='margin-top: 9px;' class='form-control col-lg-6 form-control-sm'><option>" + $('select[id="selectCalendario"] option:selected').text() + "</option></select></div>"+
+                "<div class='col-md-2' ><div class='btn-group mt-2 mr-1'> <button type='button' onclick='eliminarhorariosTem()' class='btn btn-primary btn-sm dropdown-toggle' style='color: #fff; background-color: #4a5669;"+
+                "border-color: #485263;' > <img src='admin/images/borrador.svg' height='15'>"+
+                " Borrar horarios </button> </div></div></div>");
         },
         error: function (data) {
             alert('Ocurrio un error');
@@ -997,6 +1000,56 @@ $('#selectCalendario_ed').change(function () {
     }, 1400);
 
 })
+///////////////////
+function eliminarhorariosTem(){
+    fmes = calendar.getDate();
+    mescale = fmes.getMonth() + 1;
+    aniocalen = fmes.getFullYear();
+    bootbox.confirm({
+        message: "¿Esta seguro que desea eliminar feriados del calendario?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            if (result == true) {
+                $.ajax({
+                    type: "post",
+                    url: "/empleado/vaciarhorarioTem",
+                    data: {
+                        mescale,
+                        aniocalen
+                    },
+                    statusCode: {
+
+                        419: function () {
+                            location.reload();
+                        }
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        calendar.refetchEvents();
+                        calendar2.refetchEvents();
+
+                    },
+                    error: function (data) {
+                        alert('Ocurrio un error');
+                    }
+                });
+
+
+            }
+        }
+    });
+}
 ////////
 function calendario2() {
     var calendarEl = document.getElementById('calendar2');

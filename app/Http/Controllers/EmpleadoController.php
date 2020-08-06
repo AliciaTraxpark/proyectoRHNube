@@ -1280,4 +1280,13 @@ class EmpleadoController extends Controller
             ->whereMonth('inciden_dias_fechaI',$request->get('mescale'))
             ->delete();
     }
+    public function vaciarhorarioTem(Request $request)
+    {
+        DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
+            ->where('color', '=', '#ffffff')
+            ->where('textColor', '=', '111111')
+            ->whereYear('start', $request->get('aniocalen'))
+            ->whereMonth('start', $request->get('mescale'))
+            ->delete();
+    }
 }

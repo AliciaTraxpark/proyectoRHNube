@@ -1428,11 +1428,12 @@ use App\proyecto_empleado;
                                         </div>
                                     @else
                                         <div class="form-group row">
+                                            <div class="col-md-1"></div>
                                             <label style="font-weight: 600;font-size: 14px;"
-                                                class="col-lg-5 col-form-label text-right" for="simpleinput">Calendario
+                                                class="col-lg-3 col-form-label" for="simpleinput">Calendario
                                                 de empleado:</label>
                                             <div class="col-lg-5">
-                                                <select name="" id="selectCalendario" class="form-control form-control-sm"
+                                                <select name="" id="selectCalendario" class="form-control col-lg-6 form-control-sm"
                                                     style="margin-top: 4px;">
                                                     <option hidden selected>Asignar calendario</option>
                                                     @foreach ($calendario as $calendarios)
@@ -1441,41 +1442,42 @@ use App\proyecto_empleado;
                                                     @endforeach
                                                 </select>
                                             </div>
+                                            <div class="col-md-2" id="opborrar" style="display: none">
+
+                                                <div class="btn-group mt-2 mr-1">
+                                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" style="color: #fff;
+                                                    background-color: #4a5669;
+                                                    border-color: #485263;" data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false"><img src="{{ asset('admin/images/borrador.svg') }}"
+                                                            height="15">
+                                                        Borrar <i class="icon"><span
+                                                                data-feather="chevron-down"></span></i></button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" onclick="vaciardFeria()">Dias
+                                                            feriados</a>
+                                                        <a class="dropdown-item" onclick="vaciarddescanso()">Dias
+                                                            descanso</a>
+                                                        {{-- <a class="dropdown-item"
+                                                            onclick="vaciardlabTem()">D.
+                                                            laborables</a> --}}
+                                                        <a class="dropdown-item" onclick="vaciardNlabTem()">D. no
+                                                            laborables</a>
+                                                        <a class="dropdown-item" onclick="vaciardIncidTem()">Incidencia</a>
+
+                                                    </div>
+                                                </div><!-- /btn-group -->
+                                            </div>
+
                                         </div>
 
                                     </div>
-
-                                    <div class="col-md-12" id="calendarInv"></div>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-10" id="calendarInv"></div>
                                     @endif
                                     <input type="hidden" id="pruebaEnd">
                                     <input type="hidden" id="pruebaStar">
                                     <div class="col-md-10" id="calendar" style="display: none"></div>
-                                    <div class="col-md-2" id="opborrar" style="display: none">
-                                        <br><br><br><br><br>
-                                        <div class="btn-group mt-2 mr-1">
-                                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" style="color: #fff;
-                                            background-color: #4a5669;
-                                            border-color: #485263;" data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false"><img src="{{ asset('admin/images/borrador.svg') }}"
-                                                    height="15">
-                                                Borrar <i class="icon"><span
-                                                        data-feather="chevron-down"></span></i></button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" onclick="vaciardFeria()">Dias
-                                                    feriados</a>
-                                                <a class="dropdown-item" onclick="vaciarddescanso()">Dias
-                                                    descanso</a>
-                                                {{-- <a class="dropdown-item"
-                                                    onclick="vaciardlabTem()">D.
-                                                    laborables</a> --}}
-                                                <a class="dropdown-item" onclick="vaciardNlabTem()">D. no
-                                                    laborables</a>
-                                                <a class="dropdown-item" onclick="vaciardIncidTem()">Incidencia</a>
-
-                                            </div>
-                                        </div><!-- /btn-group -->
-                                    </div>
-
+                                    <div class="col-md-1"></div>
                                     <div id="calendarioAsignar" class="modal fade" tabindex="-1" role="dialog"
                                         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                                         <div class="modal-dialog  modal-lg d-flex justify-content-center "
