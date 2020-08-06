@@ -959,7 +959,7 @@ $('#selectCalendario').change(function () {
         },
         success: function (data) {
             calendar.refetchEvents();
-            calendario2();
+            calendar2.refetchEvents();
             $('#calendarInv').hide();
             $('#calendar').show();
             $('#opborrar').show()
@@ -3225,7 +3225,7 @@ $('#documento').on('change', function () {
     }
 });
 $('#formNuevoE').click(function () {
-
+    $('#idEmpleado').val('');
     calendarioInv();
     $('#calendarInv').show();
     $('#calendar').hide();

@@ -1383,7 +1383,7 @@
                                         <div id="sw-default-step-1" class="setup-content" style="font-size: 12px!important">
                                             <div class="row">
                                                 <div class="col-4">
-                                                    <input style="display: none;" name="idEmpleado" id="idEmpleado">
+                                                    <input type="hidden" name="idEmpleado" id="idEmpleado">
                                                     <div class="form-group">
                                                         <label for="sw-default">Tipo Documento</label>
                                                         <span id="validDocumento" style="color: red;">*Campo
