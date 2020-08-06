@@ -9,9 +9,6 @@ $( "#idempleado" ).change(function() {
     calendario_edit();
   });
 
-
-
-
 function calendario_edit() {
     var calendarEl = document.getElementById('calendar_ed');
     calendarEl.innerHTML = "";
@@ -26,7 +23,14 @@ function calendario_edit() {
         height: 460,
         fixedWeekCount: false,
         plugins: ['dayGrid', 'interaction', 'timeGrid'],
-
+        eventRender: function(info) {
+            var tooltip = new Tooltip(info.el, {
+              title: info.event.extendedProps.description,
+              placement: 'top',
+              trigger: 'hover',
+              container: 'body'
+            });
+          },
         selectable: true,
         selectMirror: true,
         select: function (arg) {

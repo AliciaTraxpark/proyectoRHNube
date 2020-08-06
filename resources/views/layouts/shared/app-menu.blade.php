@@ -80,7 +80,7 @@ use Illuminate\Support\Facades\DB;
                 </a>
                 <a href="/dias/laborales">
 
-                    <span>Asignar dias laborales</span>
+                    <span>Asignar dias no laborales</span>
                 </a>
                 @endif
 

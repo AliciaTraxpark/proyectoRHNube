@@ -292,7 +292,8 @@ $('#horaF_ed').flatpickr({
 $('#btnasignar').on('click', function(e) {
     $.get("/vaciartemporal", {}, function (data, status) {
      calendar.refetchEvents();
-      $('#nombreEmpleado').empty();
+     $("#nombreEmpleado > option").prop("selected",false);
+     $("#nombreEmpleado").trigger("change");
     $('#Datoscalendar').show();
     $('#Datoscalendar1').hide();
     $('#asignarHorario').modal('toggle');
@@ -324,7 +325,7 @@ $('#btnasignar').on('click', function(e) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-            json1 = JSON.parse(JSON.stringify(data));
+           /*  json1 = JSON.parse(JSON.stringify(data));
 
             for (var i in json1) {
 
@@ -339,7 +340,7 @@ $('#btnasignar').on('click', function(e) {
                 });
                 num2=$('#nombreEmpleado').val().length;
 
-            }
+            } */
 
         },
         error: function (data) {

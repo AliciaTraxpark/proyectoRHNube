@@ -220,6 +220,9 @@ background-color: #ffffff !important;
 
                                         <div class="col-md-7">
                                                <select class="form-control wide" data-plugin="customselect" multiple id="nombreEmpleado" >
+                                                @foreach ($empleado as  $empleados)
+                                                <option value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</option>
+                                              @endforeach
                                             </select>
 
                                          </div>
