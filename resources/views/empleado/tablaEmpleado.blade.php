@@ -260,7 +260,7 @@
             <th class="text-center" style="border-top: 1px solid #fdfdfd;" id="enviarAndroidMasivos"> <button
                     type="button" class="btn btn-sm btn-rounded" style="color:
                     #548ec7;border-color: #e7edf3; padding-left:
-                    4px; padding-right: 4px;" onclick="$('#modalCorreoM').modal()" data-toggle="tooltip"
+                    4px; padding-right: 4px;" onclick="$('#modalAndroidMasivo').modal()" data-toggle="tooltip"
                     data-placement="right" title="Enviar a
                     todos los empleados
                     seleccionados." data-original-title="">Enviar&nbsp;&nbsp;<img
@@ -997,7 +997,7 @@
             success: function (data) {
                 console.log(data);
                 for (var i = 0; i < data.length; i++) {
-                    if (data[i].Correo == true && data[i].Reenvio == true) {
+                    if (data[i].Correo == true && data[i].Vinculacion == true) {
                         $.notify({
                             message: "\nCorreo enviado a\n" + data[i].Persona.perso_nombre + " " +
                                 data[i].Persona.perso_apPaterno + " " + data[i].Persona
@@ -1036,11 +1036,11 @@
                                 spacing: 35
                             });
                         }
-                        if (data[i].Reenvio != true) {
+                        if (data[i].Vinculacion!= true) {
                             $.notify({
                                 message: data[i].Persona.perso_nombre + " " + data[i].Persona
                                     .perso_apPaterno + " " + data[i].Persona.perso_apMaterno +
-                                    "\nllego al limite de envio de correo",
+                                    "\naún no tiene dispositivo Windows asignado.",
                                 icon: 'admin/images/warning.svg'
                             }, {
                                 icon_type: 'image',
