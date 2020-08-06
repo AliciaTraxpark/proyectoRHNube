@@ -231,7 +231,6 @@ Route::get('vinculacionWindows', 'vinculacionDispositivoController@vinculacionWi
 //WINDOWS
 Route::get('correoWindows', 'correosEmpleadoController@envioWindows');
 Route::get('envioMasivoW', 'correosEmpleadoController@envioMasivoWindows');
-Route::get('asignarEscritorio', 'correosEmpleadoController@nuevoEncode');
 Route::get('ambasPlataformas', 'correosEmpleadoController@ambasPlataformas');
 //ANDROID
 Route::get('correoAndroid', 'correosEmpleadoController@envioAndroid');
