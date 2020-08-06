@@ -1289,4 +1289,15 @@ class EmpleadoController extends Controller
             ->whereMonth('start', $request->get('mescale'))
             ->delete();
     }
+
+    public function eliminarhorariosBD(Request $request)
+    {
+        DB::table('horario_empleado as he')
+            ->where('he.empleado_emple_id', '=',$request->get('idempleado'))
+            ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+            ->whereYear('hd.start', $request->get('aniocalen'))
+            ->whereMonth('hd.start',$request->get('mescale'))
+            ->delete();
+
+    }
 }

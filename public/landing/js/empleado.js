@@ -1002,7 +1002,7 @@ $('#selectCalendario_ed').change(function () {
 })
 ///////////////////
 function eliminarhorariosTem(){
-    fmes = calendar.getDate();
+    fmes = calendar2.getDate();
     mescale = fmes.getMonth() + 1;
     aniocalen = fmes.getFullYear();
     bootbox.confirm({
@@ -3145,6 +3145,15 @@ function cargarFile2() {
 //********************** */
 $('#documento').on('change', function () {
     $("#form-registrar :input").attr('disabled', false);
+    if($('#documento').val()==1){
+        $( "#numDocumento" ).attr( "maxlength", "8" );
+    }
+    if($('#documento').val()==2){
+        $( "#numDocumento" ).attr( "maxlength", "12" );
+    }
+    if($('#documento').val()==3){
+        $( "#numDocumento" ).attr( "maxlength", "12" );
+    }
 });
 $('#smartwizardVer :input').attr('disabled', true);
 $("#form-registrar :input").prop('disabled', true);
@@ -3154,6 +3163,15 @@ $('#cerrarE').attr('disabled', false);
 $('#cerrarEd').attr('disabled', false);
 $('#documento').on('change', function () {
     $("#form-registrar :input").attr('disabled', false);
+    if($('#documento').val()==1){
+        $( "#numDocumento" ).attr( "maxlength", "8" );
+    }
+    if($('#documento').val()==2){
+        $( "#numDocumento" ).attr( "maxlength", "12" );
+    }
+    if($('#documento').val()==3){
+        $( "#numDocumento" ).attr( "maxlength", "12" );
+    }
 });
 $('#formNuevoE').click(function () {
 
@@ -4064,4 +4082,56 @@ function vaciardIncidBD(){
             }
         }
     });
+}
+function eliminarhorariosBD(){
+    var idempleado = $('#idempleado').val();
+    fmes = calendar2_ed.getDate();
+    mescale = fmes.getMonth() + 1;
+    aniocalen = fmes.getFullYear();
+    bootbox.confirm({
+        message: "¿Esta seguro que desea eliminar horarios del calendario?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            if (result == true) {
+                $.ajax({
+                    type: "post",
+                    url: "/empleado/eliminarhorariosBD",
+                    data: {
+                        mescale,
+                        aniocalen,
+                        idempleado
+                    },
+                    statusCode: {
+
+                        419: function () {
+                            location.reload();
+                        }
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        calendarioedit.refetchEvents();
+                        calendar2_ed.refetchEvents();
+
+                    },
+                    error: function (data) {
+                        alert('Ocurrio un error');
+                    }
+                });
+
+
+            }
+        }
+    });
+
 }

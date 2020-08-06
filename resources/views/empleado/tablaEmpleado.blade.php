@@ -426,6 +426,8 @@
         $('#smartwizardVer').smartWizard("reset");
         $('#MostrarCa_e').hide();
         $('#calendarInv_ed').hide();
+        $('#divescond1').hide();
+        $('#divescond2').hide();
         $('#calendar_ed').hide();
         $('#h5Ocultar').show();
         $('#v_fotoV').attr("src", "landing/images/png.svg");
@@ -482,11 +484,20 @@
                     if(data==1){
                         $('#MostrarCa_e').show();
                         $('#calendarInv_ed').show();
+
                     }
                     else{
                         $('#calendar_ed').show();
                         $('#mensajeOc_ed').hide();
                         $('#calendar2_ed').show();
+                        $('#divescond1').show();
+                        $('#divescond2').show();
+                       $('#detallehorario_ed2').empty();
+                        $("#detallehorario_ed2").append("<div class='form-group row'><div class='col-md-1'></div><label class='col-lg-4 col-form-label' style='color:#163552;margin-top: 5px;'>Se muestra calendario de empleado </label>" +
+                "<div class='col-md-3'></div>"+
+                "<div class='col-md-3' ><div class='btn-group mt-2 mr-1'> <button type='button' onclick='eliminarhorariosBD()' class='btn btn-primary btn-sm dropdown-toggle' style='color: #fff; background-color: #4a5669;"+
+                "border-color: #485263;' > <img src='admin/images/borrador.svg' height='15'>"+
+                " Borrar horarios </button> </div></div></div>");
                     }
                 },
                 error: function () {}
@@ -604,7 +615,7 @@
                                 </td>
                                 <td id="inactivarVer${data[0].vinculacion[i].idVinculacion}"><a class="badge badge-soft-danger mr-2">Inactivar</a></td>
                                 </tr>`;
-                        
+
                     }
                     container.append(tr);
                     containerVer.append(trVer);

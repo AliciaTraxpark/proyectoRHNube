@@ -1144,7 +1144,9 @@ use App\proyecto_empleado;
                                                     Obligatorio</span>
                                                 <span id="numR" style="color: red;">*Num. registrado</span>
                                                 <input type="text" class="form-control" name="numDocumento"
-                                                    id="numDocumento" tabindex="2" required>
+                                                    id="numDocumento" 
+                                                    onkeypress="return isNumeric(event)"
+                                                    oninput="maxLengthCheck(this)" tabindex="2" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="sw-default">Apellido Materno</label>
@@ -2118,12 +2120,9 @@ use App\proyecto_empleado;
                                         </div>
 
                                     </div>
-
-                                    <div class="col-md-10" id="calendarInv_ed" style="display:none"></div>
-                                    <input type="hidden" id="pruebaEnd_ed">
-                                    <input type="hidden" id="pruebaStar_ed">
-                                    <div class="col-md-10" id="calendar_ed" style="display: none"></div>
-                                    <div class="col-md-2" style="margin-top: 90px;">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-8" id="divescond1" style="display: none"><label for="" style="margin-top:14px;font-weight: 600 ">Calendario de empleado</label></div>
+                                    <div class="col-md-2" style="" id="divescond2" style="display: none">
                                         <div class="btn-group mt-2 mr-1">
                                             <button type="button" class="btn btn-primary btn-sm dropdown-toggle" style="color: #fff;
                                             background-color: #4a5669;
@@ -2146,7 +2145,13 @@ use App\proyecto_empleado;
 
                                             </div>
                                         </div><!-- /btn-group -->
-                                    </div>
+                                    </div><div class="col-md-12"></div>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-10" id="calendarInv_ed" style="display:none"></div>
+                                    <input type="hidden" id="pruebaEnd_ed">
+                                    <input type="hidden" id="pruebaStar_ed">
+                                    <div class="col-md-10" id="calendar_ed" style="display: none;"></div>
+                                    <div class="col-md-1"></div>
                                     <div id="calendarioAsignar_ed" class="modal fade" tabindex="-1" role="dialog"
                                         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                                         <div class="modal-dialog  modal-lg d-flex justify-content-center "
@@ -2267,6 +2272,7 @@ use App\proyecto_empleado;
                             <div id="sw-default-step-5" class="setup-content" style="font-size: 12px!important">
                                 <div class="row">
                                     <div class="col-md-12 text-center" id="detallehorario_ed"></div>
+                                    <div id="detallehorario_ed2" class="col-md-12"></div>
                                     <div class="col-md-1"><br></div>
                                     <div class="col-md-10" id="mensajeOc_ed"><label for="">Aún no ha
                                             seleccionado un
