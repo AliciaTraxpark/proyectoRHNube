@@ -28,6 +28,11 @@
         -webkit-text-security: disc;
         /* Default */
     }
+
+    .table-responsive,
+    .dataTables_scrollBody {
+        overflow: visible !important;
+    }
 </style>
 <div id="modalCorreo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCorreo" aria-hidden="true"
     data-backdrop="static">
@@ -320,7 +325,7 @@
                         @foreach($tabla_empleados->vinculacion as $tablaV)
                         @if($tablaV["dispositivoD"] == "WINDOWS")
                         <a class="dropdown-item"
-                            onclick="javascript:enviarWindowsTabla({{$tabla_empleados->emple_id}},{{$tablaV['idVinculacion']}})">WINDOWS</a>
+                            onclick="javascript:enviarWindowsTabla({{$tabla_empleados->emple_id}},{{$tablaV['idVinculacion']}})">PC</a>
                         @endif
                         @endforeach
                     </ul>
