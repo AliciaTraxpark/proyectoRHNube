@@ -90,10 +90,6 @@ function onMostrarPantallas() {
                             var totalE = data[hora][j][data[hora][j].length - 1].Total_Envio.split(":");
                             var segundosT = parseInt(totalE[0]) * 3600 + parseInt(totalE[1]) * 60 + parseInt(totalE[2]);
                             var promedio = Math.round((segundos * 100) / segundosT);*/
-                            var nivel;
-                            if (promedio >= 50) nivel = "green";
-                            else if (promedio > 35) nivel = "#f3c623";
-                            else nivel = "red";
                             if (j < 5) {
                                 var capturas = "";
                                 console.log(data[hora][j].length);
@@ -115,6 +111,10 @@ function onMostrarPantallas() {
                                         promedio = 0
                                     }
                                 }
+                                var nivel;
+                                if (promedio >= 50) nivel = "green";
+                                else if (promedio > 35) nivel = "#f3c623";
+                                else nivel = "red";
                                 card = `<div class="col-2" style="margin-left: 0px!important;">
                                         <div class="mb-0 text-center" style="padding-left: 0px;">
                                             <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
