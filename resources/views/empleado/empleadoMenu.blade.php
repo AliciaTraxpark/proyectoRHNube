@@ -2489,13 +2489,14 @@ use App\proyecto_empleado;
                             <li><a href="#persona-step-1">Personales</a></li>
                             <li><a href="#sw-default-step-2">Empresarial</a></li>
                             <li><a href="#sw-default-step-3">Foto</a></li>
-                            <li><a href="#sw-default-step-4">Calendario-Horario</a></li>
-                            <li><a href="#sw-default-step-5">Dispositivo</a></li>
+                            <li><a href="#sw-default-step-4">Calendario</a></li>
+                            <li><a href="#sw-default-step-5">Horario</a></li>
+                            <li><a href="#sw-default-step-6">Dispositivo</a></li>
                             <div class="col-md-2 text-left" style="display: flex; align-items: center;cursor: pointer;">
                                 <a style="color: #3d3d3d;"
                                     onclick="$('#verEmpleadoDetalles').modal('toggle');$('#form-ver').modal();">
                                     <img src="{{ asset('admin/images/edit.svg') }}" height="15">
-                                    <span style="font-weight: 600">Empleado</span>
+                                    <span style="font-weight: 600">Editar</span>
                                 </a>
                             </div>
                         </ul>
@@ -2689,7 +2690,7 @@ use App\proyecto_empleado;
                                     <div class="col-md-1"><br></div>
                                 </div>
                             </div>
-                            <div id="sw-default-step-5" style="font-size: 12px!important">
+                            <div id="sw-default-step-6" style="font-size: 12px!important">
                                 <div class="row">
                                     <div class="col-xl-12 col-sm-12">
                                         <button class="btn btn-sm" style="background-color:#163552;"

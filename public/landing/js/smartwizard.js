@@ -407,9 +407,9 @@ $(document).ready(function () {
 $('#smartwizardVer').smartWizard({
     selected: 0,
     showStepURLhash: false,
-    toolbarSettings: {
-        showNextButton: false,
-        showPreviousButton: false
+    lang: { // Language variables
+        next: 'Siguiente',
+        previous: 'Anterior'
     },
     justified: true,
     anchorSettings: {
@@ -417,6 +417,29 @@ $('#smartwizardVer').smartWizard({
         enableAllAnchors: true,
         markDoneStep: true,
         enableAllAnchorOnDoneStep: true
+    },
+    toolbarSettings: {
+        toolbarPosition: 'bottom', // none, top, bottom, both
+        toolbarButtonPosition: 'right', // left, right, center
+        toolbarExtraButtons: [
+            $(`<button></button>`).text('Finalizar')
+            .addClass('btn btn-secondary sw-btn-finish')
+            .attr("id", "FinalizarEmpleadoVer")
+            .on('click', function () {
+                $('#verEmpleadoDetalles').modal('toggle');
+            }),
+        ]
+    },
+});
+$('#smartwizardVer').on("showStep", function (e, anchorObject, stepNumber, stepDirection) {
+    if (stepNumber == 0 || stepNumber == 1 || stepNumber == 2 || stepNumber == 3 || stepNumber == 4) {
+        $('button.sw-btn-prev').show();
+        $('button.sw-btn-next').show();
+        $('#FinalizarEmpleadoVer').hide();
     }
-
+    if (stepNumber == 5) {
+        $('button.sw-btn-prev').hide();
+        $('button.sw-btn-next').hide();
+        $('#FinalizarEmpleadoVer').show();
+    }
 });
