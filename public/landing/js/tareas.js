@@ -217,7 +217,7 @@ function onMostrarPantallas() {
                                         </div>`
                             }
                             grupo += card;
-                            prom = prom + promedio;
+                            prom = prom + parseFloat(promedio);
                         } else {
                             card = `<div class="col-2" style="margin-left: 0px!important;justify-content:center;!important">
                         <br><br><br>
