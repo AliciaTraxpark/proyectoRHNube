@@ -76,6 +76,7 @@ class ControlController extends Controller
                 DB::raw('TIME(cp.fecha_hora) as hora_ini'),
                 DB::raw('MAX(en.Total_Envio) as Total_Envio'),
                 DB::raw('SUM(promedio.promedio) as promedio'),
+                DB::raw('COUNT(promedio.id) as total'),
                 DB::raw($sql),
                 DB::raw('DATE(cp.fecha_hora) as fecha_captura')
             )
@@ -94,10 +95,12 @@ class ControlController extends Controller
         $horas = array();
         $dias = array();
         $promedio = array();
+        $total = array();
 
         for ($i = 0; $i <= $diff->days; $i++) {
             array_push($horas, "00:00:00");
             array_push($promedio, "0.0");
+            array_push($total, "0");
             $dia = strtotime('+' . $i . 'day', strtotime($fechaF[0]));
 
             array_push($dias, date('Y-m-j', $dia));
@@ -106,7 +109,7 @@ class ControlController extends Controller
         foreach ($empleados as $empleado) {
             array_push($respuesta, array(
                 "id" => $empleado->emple_id, "nombre" => $empleado->nombre, "apPaterno" => $empleado->apPaterno,
-                "apMaterno" => $empleado->apMaterno, "horas" => $horas, "fechaF" => $dias, "promedio" => $promedio
+                "apMaterno" => $empleado->apMaterno, "horas" => $horas, "fechaF" => $dias, "promedio" => $promedio, "total" => $total
             ));
         }
         for ($j = 0; $j < sizeof($respuesta); $j++) {
@@ -114,10 +117,12 @@ class ControlController extends Controller
                 if ($respuesta[$j]["id"] == $horasTrabajadas[$i]->emple_id) {
                     $respuesta[$j]["horas"][$horasTrabajadas[$i]->dia] = $horasTrabajadas[$i]->Total_Envio == null ? "00:00:00" : $horasTrabajadas[$i]->Total_Envio;
                     $respuesta[$j]["promedio"][$horasTrabajadas[$i]->dia] = $horasTrabajadas[$i]->promedio == null ? "00:00:00" : $horasTrabajadas[$i]->promedio;
+                    $respuesta[$j]["total"][$horasTrabajadas[$i]->dia] = $horasTrabajadas[$i]->total == null ? "0" : $horasTrabajadas[$i]->total;
                 }
             }
             $respuesta[$j]['horas'] = array_reverse($respuesta[$j]['horas']);
             $respuesta[$j]['promedio'] = array_reverse($respuesta[$j]['promedio']);
+            $respuesta[$j]['total'] = array_reverse($respuesta[$j]['total']);
         }
         return response()->json($respuesta, 200);
     }
@@ -181,7 +186,7 @@ class ControlController extends Controller
             ->where(DB::raw('IF(hd.id is null, DATE(cp.fecha_hora), DATE(hd.start))'), '=', $fecha)
             ->where('e.emple_id', '=', $idempleado)
             ->where('e.users_id', '=', Auth::user()->id)
-            ->orderBy('cp.idCaptura', 'asc')
+            ->orderBy('pc.id', 'asc')
             ->get();
         $control = controlAJson($control);
         return response()->json($control, 200);

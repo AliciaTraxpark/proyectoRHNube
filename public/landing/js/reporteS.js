@@ -51,10 +51,21 @@ function calcularPromedio(a, b) {
     }
     let suma = parseFloat(a) + parseFloat(b);
     promedio = suma;
+    console.log(suma);
     if (acumulado != 0) {
         promedio = suma / acumulado;
     }
     resultado.push(promedio);
+    return resultado;
+}
+
+function totalContar(a, b) {
+    if (!a) return b;
+    let resultado = [];
+    let suma = 0;
+    suma += parseInt(a) + parseInt(b);
+    console.log(suma);
+    resultado.push(suma);
     return resultado;
 }
 var grafico = {};
@@ -88,9 +99,9 @@ function onSelectFechas() {
             }*/
         },
         success: function (data) {
-            console.log(data);
             //var container = $('#empleado');
             //var containerD = $('#dias');
+            console.log(data);
             $('#myChartD').hide();
             var nombre = [];
             var horas = [];
@@ -111,10 +122,14 @@ function onSelectFechas() {
                 var promedio = data[i].promedio.reduce(function (a, b) {
                     return calcularPromedio(a, b);
                 });
+                console.log(data[i].total);
+                var contar = data[i].total.reduce(function (a, b) {
+                    return totalContar(a, b);
+                });
                 for (let j = 0; j < data[i].horas.length; j++) {
                     html_tr += '<td>' + data[i].horas[j] + '</td>';
                 }
-                var p1 = promedio[0].toFixed(2);
+                var p1 = (promedio[0] / contar[0]).toFixed(2);
                 var sumaP = p1;
                 /*var t1 = total.split(":");
                 var sumaT = parseInt(t1[0]) * 3600 + parseInt(t1[1]) * 60 + parseInt(t1[2]);*/
@@ -129,7 +144,6 @@ function onSelectFechas() {
                 html_tr += '<td>' + total + '</td>';
                 html_tr += '<td>' + sumaP + '%' + '</td>';
                 var decimal = parseFloat(total.split(":")[0] + "." + total.split(":")[1] + total.split(":")[2]);
-                console.log(decimal);
                 horas.push(decimal);
                 html_tr += '</tr>';
             }
