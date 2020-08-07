@@ -442,7 +442,8 @@ class apiController extends Controller
                         $totalP1 = $calSegund - $calSegund2;
                         //PROMEDIO
                         $promedio = floatval($totalP / $totalP1);
-                        $round = round($promedio, 2);
+                        $promedioFinal = $promedio * 100;
+                        $round = round($promedioFinal, 2);
                         //TABLA PROMEDIO_CAPTURA
                         $promedio_captura = new promedio_captura();
                         $promedio_captura->idCaptura = $idCaptura;
@@ -493,7 +494,8 @@ class apiController extends Controller
                         $totalP1 = $calSegund - $calSegund2;
                         //PROMEDIO
                         $promedio = floatval($totalP / $totalP1);
-                        $round = round($promedio, 2);
+                        $promedioFinal = $promedio * 100;
+                        $round = round($promedioFinal, 2);
                         //TABLA PROMEDIO_CAPTURA
                         $promedio_captura = new promedio_captura();
                         $promedio_captura->idCaptura = $idCaptura;
