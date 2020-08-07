@@ -411,9 +411,10 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
     <style>
-        .form-control{
+        .form-control {
             font-size: 12px;
         }
+
         .container {
             margin-left: 40px;
             margin-right: 28px;
@@ -1380,7 +1381,8 @@
                                         <li><a href="#sw-default-step-6">Dispositivo</a></li>
                                     </ul>
                                     <div class="p-3">
-                                        <div id="sw-default-step-1" class="setup-content" style="font-size: 12px!important">
+                                        <div id="sw-default-step-1" class="setup-content"
+                                            style="font-size: 12px!important">
                                             <div class="row">
                                                 <div class="col-4">
                                                     <input type="hidden" name="idEmpleado" id="idEmpleado">
@@ -1420,9 +1422,8 @@
                                                             Obligatorio</span>
                                                         <span id="numR" style="color: red;">*Num. registrado</span>
                                                         <input type="text" class="form-control" name="numDocumento"
-                                                          id="numDocumento"
-                                                           onkeypress="return isNumeric(event)"
-                                                    oninput="maxLengthCheck(this)" tabindex="2" required>
+                                                            id="numDocumento" onkeypress="return isNumeric(event)"
+                                                            oninput="maxLengthCheck(this)" tabindex="2" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Apellido Materno</label>
@@ -1446,7 +1447,7 @@
                                                                     id="celular" tabindex="8" maxlength="9"
                                                                     onkeypress="return isNumeric(event)"
                                                                     oninput="maxLengthCheck(this)"
-                                                                    pattern="/^9{1}|[0-9]{8,8}+">
+                                                                    pattern="^9{1}|[0-9]{8,8}+">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1467,10 +1468,42 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Teléfono</label>
-                                                        <input type="number" class="form-control" name="telefono"
-                                                            id="telefono" tabindex="9" maxlength="9"
-                                                            onkeypress="return isNumeric(event)"
-                                                            oninput="maxLengthCheck(this)">
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <select class="form-control" id="codigoTelefono">
+                                                                    <option value="01" selected>01</option>
+                                                                    <option value="41">41</option>
+                                                                    <option value="43">43</option>
+                                                                    <option value="83">83</option>
+                                                                    <option value="54">54</option>
+                                                                    <option value="66">66</option>
+                                                                    <option value="76">76</option>
+                                                                    <option value="84">84</option>
+                                                                    <option value="67">67</option>
+                                                                    <option value="62">62</option>
+                                                                    <option value="56">56</option>
+                                                                    <option value="64">64</option>
+                                                                    <option value="44">44</option>
+                                                                    <option value="74">74</option>
+                                                                    <option value="65">65</option>
+                                                                    <option value="82">82</option>
+                                                                    <option value="53">53</option>
+                                                                    <option value="63">63</option>
+                                                                    <option value="73">73</option>
+                                                                    <option value="51">51</option>
+                                                                    <option value="42">42</option>
+                                                                    <option value="52">52</option>
+                                                                    <option value="72">72</option>
+                                                                    <option value="61">61</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                <input type="number" class="form-control"
+                                                                    name="telefono" id="telefono" tabindex="9"
+                                                                    maxlength="9" onkeypress="return isNumeric(event)"
+                                                                    oninput="maxLengthCheck(this)">
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-12">
@@ -1567,7 +1600,8 @@
                                                 </div>
                                             </div> <!-- end row -->
                                         </div>
-                                        <div id="sw-default-step-2" class="setup-content" style="font-size: 12px!important">
+                                        <div id="sw-default-step-2" class="setup-content"
+                                            style="font-size: 12px!important">
                                             <div class="row">
                                                 <div class="col-4">
                                                     <div class="form-group">
@@ -1698,7 +1732,8 @@
                                             </div> <!-- end row -->
 
                                         </div>
-                                        <div id="sw-default-step-3" class="setup-content" style="font-size: 12px!important">
+                                        <div id="sw-default-step-3" class="setup-content"
+                                            style="font-size: 12px!important">
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="form-group">
@@ -1708,179 +1743,201 @@
                                             </div> <!-- end row -->
 
                                         </div>
-                                        <div id="sw-default-step-4" class="setup-content" style="font-size: 12px!important">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            @if (count($calendario) === 0)
-                                                <div class="col-md-12 text-center">
-                                                    <h5>No existe calendarios registrados</h5>
-                                                </div>
-                                                <div style="display: none">
-                                                    <div class="col-md-12" id="calendarInv" style="display: none!important">
+                                        <div id="sw-default-step-4" class="setup-content"
+                                            style="font-size: 12px!important">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    @if (count($calendario) === 0)
+                                                    <div class="col-md-12 text-center">
+                                                        <h5>No existe calendarios registrados</h5>
                                                     </div>
+                                                    <div style="display: none">
+                                                        <div class="col-md-12" id="calendarInv"
+                                                            style="display: none!important">
+                                                        </div>
+                                                    </div>
+
+
                                                 </div>
+                                                @else
+                                                <div class="form-group row">
+                                                    <div class="col-md-1"></div>
+                                                    <label style="font-weight: 600;font-size: 14px;"
+                                                        class="col-lg-3 col-form-label" for="simpleinput">Calendario
+                                                        de empleado:</label>
+                                                    <div class="col-lg-5">
+                                                        <select name="" id="selectCalendario"
+                                                            class="form-control col-lg-6 form-control-sm"
+                                                            style="margin-top: 4px;">
+                                                            <option hidden selected>Asignar calendario</option>
+                                                            @foreach ($calendario as $calendarios)
+                                                            <option class="" value="{{ $calendarios->calen_id }}">
+                                                                {{ $calendarios->calendario_nombre }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-2" id="opborrar" style="display: none">
 
-
-                                        </div>
-                                    @else
-                                        <div class="form-group row">
-                                            <div class="col-md-1"></div>
-                                            <label style="font-weight: 600;font-size: 14px;"
-                                                class="col-lg-3 col-form-label" for="simpleinput">Calendario
-                                                de empleado:</label>
-                                            <div class="col-lg-5">
-                                                <select name="" id="selectCalendario" class="form-control col-lg-6 form-control-sm"
-                                                    style="margin-top: 4px;">
-                                                    <option hidden selected>Asignar calendario</option>
-                                                    @foreach ($calendario as $calendarios)
-                                                        <option class="" value="{{ $calendarios->calen_id }}">
-                                                            {{ $calendarios->calendario_nombre }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-md-2" id="opborrar" style="display: none">
-
-                                                <div class="btn-group mt-2 mr-1">
-                                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" style="color: #fff;
+                                                        <div class="btn-group mt-2 mr-1">
+                                                            <button type="button"
+                                                                class="btn btn-primary btn-sm dropdown-toggle" style="color: #fff;
                                                     background-color: #4a5669;
                                                     border-color: #485263;" data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false"><img src="{{ asset('admin/images/borrador.svg') }}"
-                                                            height="15">
-                                                        Borrar <i class="icon"><span
-                                                                data-feather="chevron-down"></span></i></button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" onclick="vaciardFeria()">Dias
-                                                            feriados</a>
-                                                        <a class="dropdown-item" onclick="vaciarddescanso()">Dias
-                                                            descanso</a>
-                                                        {{-- <a class="dropdown-item"
+                                                                aria-expanded="false"><img
+                                                                    src="{{ asset('admin/images/borrador.svg') }}"
+                                                                    height="15">
+                                                                Borrar <i class="icon"><span
+                                                                        data-feather="chevron-down"></span></i></button>
+                                                            <div class="dropdown-menu">
+                                                                <a class="dropdown-item" onclick="vaciardFeria()">Dias
+                                                                    feriados</a>
+                                                                <a class="dropdown-item"
+                                                                    onclick="vaciarddescanso()">Dias
+                                                                    descanso</a>
+                                                                {{-- <a class="dropdown-item"
                                                             onclick="vaciardlabTem()">D.
                                                             laborables</a> --}}
-                                                        <a class="dropdown-item" onclick="vaciardNlabTem()">D. no
-                                                            laborables</a>
-                                                        <a class="dropdown-item" onclick="vaciardIncidTem()">Incidencia</a>
+                                                                <a class="dropdown-item" onclick="vaciardNlabTem()">D.
+                                                                    no
+                                                                    laborables</a>
+                                                                <a class="dropdown-item"
+                                                                    onclick="vaciardIncidTem()">Incidencia</a>
 
+                                                            </div>
+                                                        </div><!-- /btn-group -->
                                                     </div>
-                                                </div><!-- /btn-group -->
+
+                                                </div>
+
                                             </div>
+                                            <div class="col-md-1"></div>
+                                            <div class="col-md-10" id="calendarInv"></div>
+                                            @endif
+                                            <input type="hidden" id="pruebaEnd">
+                                            <input type="hidden" id="pruebaStar">
+                                            <div class="col-md-10" id="calendar" style="display: none"></div>
+                                            <div class="col-md-1"></div>
+                                            <div id="calendarioAsignar" class="modal fade" tabindex="-1" role="dialog"
+                                                aria-labelledby="myModalLabel" aria-hidden="true"
+                                                data-backdrop="static">
+                                                <div class="modal-dialog  modal-lg d-flex justify-content-center "
+                                                    style="width:670px;  margin-top: 150px; left:0px;">
 
-                                        </div>
+                                                    <div class="modal-content">
 
-                                    </div>
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-10" id="calendarInv"></div>
-                                    @endif
-                                    <input type="hidden" id="pruebaEnd">
-                                    <input type="hidden" id="pruebaStar">
-                                    <div class="col-md-10" id="calendar" style="display: none"></div>
-                                    <div class="col-md-1"></div>
-                                    <div id="calendarioAsignar" class="modal fade" tabindex="-1" role="dialog"
-                                        aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-                                        <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                            style="width:670px;  margin-top: 150px; left:0px;">
-
-                                            <div class="modal-content">
-
-                                                <div class="modal-body"
-                                                    style="font-size:12px!important;background: #f3f3f3;">
-                                                    <div class="col-md-12">
-                                                        <div class="row">
-                                                            <div class="col-md-3">
-                                                                <button type="button" style=" max-width: 18em!important;"
-                                                                    class="btn btn-secondary btn-sm"
-                                                                    onclick="laborableTem()"><img
-                                                                        src="{{ asset('admin/images/dormir.svg') }}"
-                                                                        height="20"> Descanso</button>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <button type="button" style=" max-width: 18em!important;"
-                                                                    class="btn btn-secondary btn-sm"
-                                                                    onclick="nolaborableTem()"><img
-                                                                        src="{{ asset('admin/images/evento.svg') }}"
-                                                                        height="20"> Dia no laborable</button>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <button type="button" style=" max-width: 18em!important;" class="btn btn-secondary btn-sm"
-                                                                    onclick="$('#nombreFeriado').val('');$('#calendarioAsignar').modal('hide'); $('#myModalFeriado').modal('show')"><img
-                                                                        src="{{ asset('admin/images/calendario.svg') }}"
-                                                                        height="20"> Dia feriado</button>
-                                                            </div>
-                                                            <div class="col-md-3 text-right">
-                                                                {{-- <button type="button"
+                                                        <div class="modal-body"
+                                                            style="font-size:12px!important;background: #f3f3f3;">
+                                                            <div class="col-md-12">
+                                                                <div class="row">
+                                                                    <div class="col-md-3">
+                                                                        <button type="button"
+                                                                            style=" max-width: 18em!important;"
+                                                                            class="btn btn-secondary btn-sm"
+                                                                            onclick="laborableTem()"><img
+                                                                                src="{{ asset('admin/images/dormir.svg') }}"
+                                                                                height="20"> Descanso</button>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <button type="button"
+                                                                            style=" max-width: 18em!important;"
+                                                                            class="btn btn-secondary btn-sm"
+                                                                            onclick="nolaborableTem()"><img
+                                                                                src="{{ asset('admin/images/evento.svg') }}"
+                                                                                height="20"> Dia no laborable</button>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <button type="button"
+                                                                            style=" max-width: 18em!important;"
+                                                                            class="btn btn-secondary btn-sm"
+                                                                            onclick="$('#nombreFeriado').val('');$('#calendarioAsignar').modal('hide'); $('#myModalFeriado').modal('show')"><img
+                                                                                src="{{ asset('admin/images/calendario.svg') }}"
+                                                                                height="20"> Dia feriado</button>
+                                                                    </div>
+                                                                    <div class="col-md-3 text-right">
+                                                                        {{-- <button type="button"
                                                                     style=" max-width: 18em!important;"
                                                                     class="btn btn-secondary btn-sm "
                                                                     onclick="registrarDdescanso()"><img
                                                                         src="{{ asset('admin/images/calendarioInc.svg') }}"
                                                                         height="20"> Incidencia</button>
-                                                                --}}
-                                                                <button style=" max-width: 18em!important;"
-                                                                    class="btn btn-secondary btn-sm"
-                                                                    onclick="agregarinciden()"><img
-                                                                        src="{{ asset('admin/images/calendarioInc.svg') }}"
-                                                                        height="20"> Incidencia</button>
+                                                                        --}}
+                                                                        <button style=" max-width: 18em!important;"
+                                                                            class="btn btn-secondary btn-sm"
+                                                                            onclick="agregarinciden()"><img
+                                                                                src="{{ asset('admin/images/calendarioInc.svg') }}"
+                                                                                height="20"> Incidencia</button>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer"
-                                                    style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
-                                                    <div class="col-md-12">
-                                                        <div class="row">
-                                                            <div class="col-md-12 text-right">
-                                                                <button type="button" class="btn btn-soft-primary btn-sm "
-                                                                    onclick="$('#calendarioAsignar').modal('hide')">Cancelar</button>
+                                                        <div class="modal-footer"
+                                                            style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
+                                                            <div class="col-md-12">
+                                                                <div class="row">
+                                                                    <div class="col-md-12 text-right">
+                                                                        <button type="button"
+                                                                            class="btn btn-soft-primary btn-sm "
+                                                                            onclick="$('#calendarioAsignar').modal('hide')">Cancelar</button>
 
-                                                                </form>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </div><!-- /.modal-content -->
-                                        </div><!-- /.modal-dialog -->
-                                    </div><!-- /.modal -->
-                                    <div id="myModalFeriado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header" style="background-color: #163552;">
-                                                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar nuevo feriado</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="row">
-                                                        <div class="form-group col-md-12">
-                                                            <div class="col-md-6">
-                                                                <label for="">Nombre de dia feriado:</label>
+                                                    </div><!-- /.modal-content -->
+                                                </div><!-- /.modal-dialog -->
+                                            </div><!-- /.modal -->
+                                            <div id="myModalFeriado" class="modal fade" tabindex="-1" role="dialog"
+                                                aria-labelledby="myModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header" style="background-color: #163552;">
+                                                            <h5 class="modal-title" id="myModalLabel"
+                                                                style="color:#ffffff;font-size:15px">Agregar nuevo
+                                                                feriado</h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <div class="form-group col-md-12">
+                                                                    <div class="col-md-6">
+                                                                        <label for="">Nombre de dia feriado:</label>
+                                                                    </div>
+                                                                    <div class="col-md-10">
+                                                                        <form action="javascript:diaferiadoTem()">
+                                                                            <input class="form-control" type="text"
+                                                                                id="nombreFeriado" required>
+                                                                    </div>
+
+                                                                </div>
                                                             </div>
-                                                             <div class="col-md-10">
-                                                                 <form action="javascript:diaferiadoTem()">
-                                                                <input class="form-control" type="text" id="nombreFeriado" required>
-                                                             </div>
 
                                                         </div>
-                                                    </div>
+                                                        <div class="modal-footer">
+                                                            <div class="col-md-12">
+                                                                <div class="row">
+                                                                    <div class="col-md-7 text-right">
+                                                                        <button type="button" class="btn btn-light"
+                                                                            data-dismiss="modal">Cancelar</button>
+                                                                    </div>
+                                                                    <div class="col-md-5 text-right"
+                                                                        style="padding-right: 38px; ">
+                                                                        <button type="submit"
+                                                                            class="btn btn-secondary">Aceptar</button>
+                                                                        </form>
 
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <div class="col-md-12">
-                                                        <div class="row">
-                                                            <div class="col-md-7 text-right">
-                                                                <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
-                                                            </div>
-                                                            <div class="col-md-5 text-right" style="padding-right: 38px; ">
-                                                                <button type="submit"  class="btn btn-secondary">Aceptar</button>
-                                                            </form>
-
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </div><!-- /.modal-content -->
-                                        </div><!-- /.modal-dialog -->
-                                    </div><!-- /.modal -->
+                                                    </div><!-- /.modal-content -->
+                                                </div><!-- /.modal-dialog -->
+                                            </div><!-- /.modal -->
 
-                                </div>
+                                        </div>
                                     </div>
                                     <div id="sw-default-step-5" class="setup-content" style="font-size: 12px!important">
                                         <div class="row">
@@ -2036,8 +2093,9 @@
                                     <div id="sw-default-step-6" class="setup-content" style="font-size: 12px!important">
                                         <div class="row">
                                             <div class="col-xl-12 col-sm-12">
-                                                <button class="btn btn-sm dropdown-toggle" style="background-color:#163552;"
-                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">+
+                                                <button class="btn btn-sm dropdown-toggle"
+                                                    style="background-color:#163552;" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">+
                                                     Agregar
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
@@ -2174,10 +2232,42 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Teléfono</label>
-                                                    <input type="text" class="form-control" name="v_telefono"
-                                                        id="v_telefono" tabindex="9" maxlength="9"
-                                                        onkeypress="return isNumeric(event)"
-                                                        oninput="maxLengthCheck(this)">
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <select class="form-control" id="v_codigoTelefono">
+                                                                <option value="01" selected>01</option>
+                                                                <option value="41">41</option>
+                                                                <option value="43">43</option>
+                                                                <option value="83">83</option>
+                                                                <option value="54">54</option>
+                                                                <option value="66">66</option>
+                                                                <option value="76">76</option>
+                                                                <option value="84">84</option>
+                                                                <option value="67">67</option>
+                                                                <option value="62">62</option>
+                                                                <option value="56">56</option>
+                                                                <option value="64">64</option>
+                                                                <option value="44">44</option>
+                                                                <option value="74">74</option>
+                                                                <option value="65">65</option>
+                                                                <option value="82">82</option>
+                                                                <option value="53">53</option>
+                                                                <option value="63">63</option>
+                                                                <option value="73">73</option>
+                                                                <option value="51">51</option>
+                                                                <option value="42">42</option>
+                                                                <option value="52">52</option>
+                                                                <option value="72">72</option>
+                                                                <option value="61">61</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <input type="number" class="form-control" name="telefono"
+                                                                id="v_telefono" tabindex="9" maxlength="9"
+                                                                onkeypress="return isNumeric(event)"
+                                                                oninput="maxLengthCheck(this)">
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -2422,15 +2512,17 @@
                                             <div class="col-md-12" id="MostrarCa_e" style="display: none">
                                                 <div class="form-group row">
                                                     <label style="font-weight: 600;font-size: 14px;"
-                                                        class="col-lg-5 col-form-label text-right" for="simpleinput">Calendario
+                                                        class="col-lg-5 col-form-label text-right"
+                                                        for="simpleinput">Calendario
                                                         de empleado:</label>
                                                     <div class="col-lg-5">
                                                         <select name="" id="selectCalendario_ed"
-                                                            class="form-control form-control-sm" style="margin-top: 4px;">
+                                                            class="form-control form-control-sm"
+                                                            style="margin-top: 4px;">
                                                             <option hidden selected>Asignar calendario</option>
                                                             @foreach ($calendario as $calendarios)
-                                                                <option class="" value="{{ $calendarios->calen_id }}">
-                                                                    {{ $calendarios->calendario_nombre }}</option>
+                                                            <option class="" value="{{ $calendarios->calen_id }}">
+                                                                {{ $calendarios->calendario_nombre }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -2440,22 +2532,24 @@
                                             <div class="col-md-1"></div>
                                             <div class="col-md-8" id="divescond1" style="display: none">
                                                 <input type="hidden" id="idselect3">
-                                                <select name="" id="selectCalendario_edit3" class="form-control col-lg-6 form-control-sm"
-                                                            style="margin-top: 4px;">
-                                                            <option hidden selected>Asignar calendario</option>
-                                                            @foreach ($calendario as $calendarios)
-                                                                <option class="" value="{{ $calendarios->calen_id }}">
-                                                                    {{ $calendarios->calendario_nombre }}</option>
-                                                            @endforeach
-                                                        </select>
+                                                <select name="" id="selectCalendario_edit3"
+                                                    class="form-control col-lg-6 form-control-sm"
+                                                    style="margin-top: 4px;">
+                                                    <option hidden selected>Asignar calendario</option>
+                                                    @foreach ($calendario as $calendarios)
+                                                    <option class="" value="{{ $calendarios->calen_id }}">
+                                                        {{ $calendarios->calendario_nombre }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                             <div class="col-md-2" style="" id="divescond2" style="display: none">
                                                 <div class="btn-group mt-2 mr-1">
-                                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" style="color: #fff;
+                                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle"
+                                                        style="color: #fff;
                                                     background-color: #4a5669;
                                                     border-color: #485263;" data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false"><img src="{{ asset('admin/images/borrador.svg') }}"
-                                                            height="15">
+                                                        aria-expanded="false"><img
+                                                            src="{{ asset('admin/images/borrador.svg') }}" height="15">
                                                         Borrar <i class="icon"><span
                                                                 data-feather="chevron-down"></span></i></button>
                                                     <div class="dropdown-menu">
@@ -2468,19 +2562,22 @@
                                                             laborables</a> --}}
                                                         <a class="dropdown-item" onclick="vaciarNlabBD()">D. no
                                                             laborables</a>
-                                                        <a class="dropdown-item" onclick="vaciardIncidBD()">Incidencia</a>
+                                                        <a class="dropdown-item"
+                                                            onclick="vaciardIncidBD()">Incidencia</a>
 
                                                     </div>
                                                 </div><!-- /btn-group -->
-                                            </div><div class="col-md-12"></div>
+                                            </div>
+                                            <div class="col-md-12"></div>
                                             <div class="col-md-1"></div>
                                             <div class="col-md-10" id="calendarInv_ed" style="display:none"></div>
                                             <input type="hidden" id="pruebaEnd_ed">
                                             <input type="hidden" id="pruebaStar_ed">
                                             <div class="col-md-10" id="calendar_ed" style="display: none;"></div>
                                             <div class="col-md-1"></div>
-                                            <div id="calendarioAsignar_ed" class="modal fade" tabindex="-1" role="dialog"
-                                                aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                                            <div id="calendarioAsignar_ed" class="modal fade" tabindex="-1"
+                                                role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+                                                data-backdrop="static">
                                                 <div class="modal-dialog  modal-lg d-flex justify-content-center "
                                                     style="width:670px;  margin-top: 150px; left: 0px;">
 
@@ -2491,21 +2588,26 @@
                                                             <div class="col-md-12">
                                                                 <div class="row">
                                                                     <div class="col-md-3">
-                                                                        <button type="button" style=" max-width: 18em!important;"
+                                                                        <button type="button"
+                                                                            style=" max-width: 18em!important;"
                                                                             class="btn btn-secondary btn-sm"
                                                                             onclick="laborable_ed()"><img
                                                                                 src="{{ asset('admin/images/dormir.svg') }}"
                                                                                 height="20"> Descanso</button>
                                                                     </div>
                                                                     <div class="col-md-3">
-                                                                        <button type="button" style=" max-width: 18em!important;"
+                                                                        <button type="button"
+                                                                            style=" max-width: 18em!important;"
                                                                             class="btn btn-secondary btn-sm"
                                                                             onclick="nolaborable_ed()"><img
                                                                                 src="{{ asset('admin/images/evento.svg') }}"
-                                                                                height="20"> Dia no laborable</button>
+                                                                                height="20"> Dia no
+                                                                            laborable</button>
                                                                     </div>
                                                                     <div class="col-md-3">
-                                                                        <button type="button" style=" max-width: 18em!important;" class="btn btn-secondary btn-sm"
+                                                                        <button type="button"
+                                                                            style=" max-width: 18em!important;"
+                                                                            class="btn btn-secondary btn-sm"
                                                                             onclick="$('#nombreFeriado_ed').val('');$('#calendarioAsignar_ed').modal('hide'); $('#myModalFeriado_ed').modal('show')"><img
                                                                                 src="{{ asset('admin/images/calendario.svg') }}"
                                                                                 height="20"> Dia feriado</button>
@@ -2516,7 +2618,7 @@
                                                                             class="btn btn-secondary btn-sm "
                                                                             onclick="registrarDdescanso()"><img
                                                                                 src="{{ asset('admin/images/calendarioInc.svg') }}"
-                                                                                height="20"> Incidencia</button>
+                                                                        height="20"> Incidencia</button>
                                                                         --}}
                                                                         <button style=" max-width: 18em!important;"
                                                                             class="btn btn-secondary btn-sm"
@@ -2533,7 +2635,8 @@
                                                             <div class="col-md-12">
                                                                 <div class="row">
                                                                     <div class="col-md-12 text-right">
-                                                                        <button type="button" class="btn btn-soft-primary btn-sm "
+                                                                        <button type="button"
+                                                                            class="btn btn-soft-primary btn-sm "
                                                                             onclick="$('#calendarioAsignar_ed').modal('hide')">Cancelar</button>
 
                                                                         </form>
@@ -2545,54 +2648,53 @@
                                                 </div><!-- /.modal-dialog -->
                                             </div><!-- /.modal -->
                                             <div id="myModalFeriado_ed" class="modal fade" tabindex="-1" role="dialog"
-                                                        aria-labelledby="myModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header" style="background-color: #163552;">
-                                                                    <h5 class="modal-title" id="myModalLabel"
-                                                                        style="color:#ffffff;font-size:15px">Agregar nuevo
-                                                                        feriado</h5>
-                                                                    <button type="button" class="close"
-                                                                        aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <div class="row">
-                                                                        <div class="form-group col-md-12">
-                                                                            <div class="col-md-6">
-                                                                                <label for="">Nombre de dia feriado:</label>
-                                                                            </div>
-                                                                            <div class="col-md-10">
-                                                                                <form action="javascript:diaferiadoRe_ed()">
-                                                                                    <input class="form-control" type="text"
-                                                                                        id="nombreFeriado_ed" required>
-                                                                            </div>
-
-                                                                        </div>
+                                                aria-labelledby="myModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header" style="background-color: #163552;">
+                                                            <h5 class="modal-title" id="myModalLabel"
+                                                                style="color:#ffffff;font-size:15px">Agregar nuevo
+                                                                feriado</h5>
+                                                            <button type="button" class="close" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <div class="form-group col-md-12">
+                                                                    <div class="col-md-6">
+                                                                        <label for="">Nombre de dia feriado:</label>
+                                                                    </div>
+                                                                    <div class="col-md-10">
+                                                                        <form action="javascript:diaferiadoRe_ed()">
+                                                                            <input class="form-control" type="text"
+                                                                                id="nombreFeriado_ed" required>
                                                                     </div>
 
                                                                 </div>
-                                                                <div class="modal-footer">
-                                                                    <div class="col-md-12">
-                                                                        <div class="row">
-                                                                            <div class="col-md-7 text-right">
-                                                                                <button type="button" class="btn btn-light"
-                                                                                    data-dismiss="modal">Cancelar</button>
-                                                                            </div>
-                                                                            <div class="col-md-5 text-right"
-                                                                                style="padding-right: 38px; ">
-                                                                                <button type="submit"
-                                                                                    class="btn btn-secondary">Aceptar</button>
-                                                                                </form>
+                                                            </div>
 
-                                                                            </div>
-                                                                        </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <div class="col-md-12">
+                                                                <div class="row">
+                                                                    <div class="col-md-7 text-right">
+                                                                        <button type="button" class="btn btn-light"
+                                                                            data-dismiss="modal">Cancelar</button>
+                                                                    </div>
+                                                                    <div class="col-md-5 text-right"
+                                                                        style="padding-right: 38px; ">
+                                                                        <button type="submit"
+                                                                            class="btn btn-secondary">Aceptar</button>
+                                                                        </form>
+
                                                                     </div>
                                                                 </div>
-                                                            </div><!-- /.modal-content -->
-                                                        </div><!-- /.modal-dialog -->
-                                                    </div><!-- /.modal -->
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- /.modal-content -->
+                                                </div><!-- /.modal-dialog -->
+                                            </div><!-- /.modal -->
                                         </div> <!-- end row -->
 
                                     </div>
@@ -2615,17 +2717,21 @@
 
                                                 <div class="modal-content">
 
-                                                    <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
+                                                    <div class="modal-body"
+                                                        style="font-size:12px!important;background: #f3f3f3;">
                                                         <div class="col-md-12">
                                                             <div class="row">
                                                                 <div class="col-md-8">
-                                                                    <select class="form-control custom-select custom-select-sm"
+                                                                    <select
+                                                                        class="form-control custom-select custom-select-sm"
                                                                         name="selectHorario_ed" id="selectHorario_ed">
                                                                         <option hidden selected>Seleccionar horario
                                                                         </option>
                                                                         @foreach ($horario as $horarios)
-                                                                            <option class="" value="{{ $horarios->horario_id }}">
-                                                                                {{ $horarios->horario_descripcion }}</option>
+                                                                        <option class=""
+                                                                            value="{{ $horarios->horario_id }}">
+                                                                            {{ $horarios->horario_descripcion }}
+                                                                        </option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
@@ -2645,7 +2751,8 @@
                                                         <div class="col-md-12">
                                                             <div class="row">
                                                                 <div class="col-md-12 text-right">
-                                                                    <button type="button" class="btn btn-soft-primary btn-sm "
+                                                                    <button type="button"
+                                                                        class="btn btn-soft-primary btn-sm "
                                                                         onclick="$('#horarioAsignar_ed').modal('hide')">Cancelar</button>
 
                                                                     </form>
@@ -2664,8 +2771,10 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header" style="background-color:#163552;">
                                                         <h5 class="modal-title" id="myModalLabel"
-                                                            style="color:#ffffff;font-size:15px">Asignar horario</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            style="color:#ffffff;font-size:15px">Asignar horario
+                                                        </h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
@@ -2673,13 +2782,16 @@
                                                         <div class="row">
 
                                                             <div class="col-md-12">
-                                                                <form id="frmHor_ed" action="javascript:registrarHorario_ed()">
+                                                                <form id="frmHor_ed"
+                                                                    action="javascript:registrarHorario_ed()">
                                                                     <div class="row">
 
-                                                                        <div class="col-md-12"><label for=""><br></label>
+                                                                        <div class="col-md-12"><label
+                                                                                for=""><br></label>
                                                                             <div class="form-check">
 
-                                                                                <input type="checkbox" class="form-check-input"
+                                                                                <input type="checkbox"
+                                                                                    class="form-check-input"
                                                                                     id="exampleCheck1_ed">
                                                                                 <label class="form-check-label"
                                                                                     for="exampleCheck1_ed">Aplicar
@@ -2700,8 +2812,9 @@
                                                                             <div class="form-group">
                                                                                 <label for="">Tolerancia(Min):</label>
                                                                                 <input type="number" value="0"
-                                                                                    class="form-control form-control-sm" min="0"
-                                                                                    id="toleranciaH_ed" required>
+                                                                                    class="form-control form-control-sm"
+                                                                                    min="0" id="toleranciaH_ed"
+                                                                                    required>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-6">
@@ -2709,14 +2822,17 @@
                                                                                 <label for="">Hora de
                                                                                     inicio(24h):</label>
                                                                                 <input type="text" id="horaI_ed"
-                                                                                    class="form-control form-control-sm" required>
+                                                                                    class="form-control form-control-sm"
+                                                                                    required>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-6">
                                                                             <div class="form-group">
-                                                                                <label for="">Hora de fin(24h):</label>
+                                                                                <label for="">Hora de
+                                                                                    fin(24h):</label>
                                                                                 <input type="text" id="horaF_ed"
-                                                                                    class="form-control form-control-sm" required>
+                                                                                    class="form-control form-control-sm"
+                                                                                    required>
                                                                             </div>
                                                                         </div>
 
@@ -2736,7 +2852,8 @@
                                                                 <div class="col-md-12 text-right">
                                                                     <button type="button" class="btn btn-light btn-sm "
                                                                         onclick="$('#horarioAgregar_ed').modal('hide')">Cancelar</button>
-                                                                    <button type="submit" name="" style="background-color: #163552;"
+                                                                    <button type="submit" name=""
+                                                                        style="background-color: #163552;"
                                                                         class="btn btn-sm ">Guardar</button>
                                                                     </form>
                                                                 </div>
@@ -2750,8 +2867,9 @@
                                     <div id="sw-default-step-6" class="setup-content" style="font-size: 12px!important">
                                         <div class="row">
                                             <div class="col-xl-12 col-sm-12">
-                                                <button class="btn btn-sm dropdown-toggle" style="background-color:#163552;"
-                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">+
+                                                <button class="btn btn-sm dropdown-toggle"
+                                                    style="background-color:#163552;" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">+
                                                     Agregar
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
@@ -3025,9 +3143,9 @@
                                     <div id="sw-default-step-6" style="font-size: 12px!important">
                                         <div class="row">
                                             <div class="col-xl-12 col-sm-12">
-                                                <button class="btn btn-sm dropdown-toggle" style="background-color:#163552;"
-                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                                    disabled>+
+                                                <button class="btn btn-sm dropdown-toggle"
+                                                    style="background-color:#163552;" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false" disabled>+
                                                     Agregar
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
@@ -3135,7 +3253,8 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header" style="background-color: #163552;">
-                            <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar nueva
+                            <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                nueva
                                 incidencia
                             </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">

@@ -294,7 +294,10 @@ class EmpleadoController extends Controller
         if ($objEmpleado['celular'] != '') {
             $empleado->emple_celular = $objEmpleado['celular'];
         }
-        $empleado->emple_telefono = $objEmpleado['telefono'];
+        $empleado->emple_telefono = '';
+        if ($objEmpleado['telefono'] != '') {
+            $empleado->emple_telefono = $objEmpleado['telefono'];
+        }
         if ($objEmpleado['correo'] != '') {
             $empleado->emple_Correo = $objEmpleado['correo'];
         }
@@ -342,7 +345,10 @@ class EmpleadoController extends Controller
         if ($objEmpleado['celular'] != '') {
             $empleado->emple_celular = $objEmpleado['celular'];
         }
-        $empleado->emple_telefono = $objEmpleado['telefono'];
+        $empleado->emple_telefono = '';
+        if ($objEmpleado['telefono'] != '') {
+            $empleado->emple_telefono = $objEmpleado['telefono'];
+        }
         if ($objEmpleado['correo'] != '') {
             $empleado->emple_Correo = $objEmpleado['correo'];
         }
