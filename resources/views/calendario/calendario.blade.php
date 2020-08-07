@@ -394,7 +394,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
         <div class="row">
             <div class="col-md-6" style="  background: #f9e9e9;
             height: 35px;"><h1>&nbsp;</h1></div>
-            <div class="col-md-6"><label style="font-size: 12px" for="">Dias de Descanso</label></div>
+            <div class="col-md-6"><label style="font-size: 12px" for="">Dias no laborales</label></div>
         </div>
         <div class="row">
             <div class="col-md-6" style="  background: #ffffff;border: 1px solid #d4d4d4;

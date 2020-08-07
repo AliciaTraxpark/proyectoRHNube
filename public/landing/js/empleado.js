@@ -22,7 +22,18 @@ $('#horaIncidenCa_ed').flatpickr({
     dateFormat: "H:i",
     time_24hr: true
 });
-
+$('#horaI_ed').flatpickr({
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i",
+    time_24hr: true
+});
+$('#horaF_ed').flatpickr({
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i",
+    time_24hr: true
+});
 function calendarioInv() {
     var calendarElInv = document.getElementById('calendarInv');
     calendarElInv.innerHTML = "";

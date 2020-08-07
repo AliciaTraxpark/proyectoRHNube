@@ -290,6 +290,7 @@ $('#horaF_ed').flatpickr({
     time_24hr: true
 });
 $('#btnasignar').on('click', function(e) {
+    $('input[type=checkbox]').prop('checked',false);
     $.get("/vaciartemporal", {}, function (data, status) {
      calendar.refetchEvents();
      $("#nombreEmpleado > option").prop("selected",false);
@@ -2027,3 +2028,56 @@ if(palabraEmpresarial=='Local'){
 
 })
 /////////////////////////////////
+$("#FeriadosCheck").click(function(){
+    $('#Datoscalendar').hide();
+    $('#DatoscalendarOculto').show();
+    if($("#FeriadosCheck").is(':checked') ){
+        $.ajax({
+            type: "post",
+            url: "/horario/copiarferiados",
+            data: {
+            },
+            statusCode: {
+                419: function () {
+                    location.reload();
+                }
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                calendar.refetchEvents();
+                $('#DatoscalendarOculto').hide();
+                $('#Datoscalendar').show();
+            },
+            error: function (data) {
+                alert('Ocurrio un error');
+            }
+        });
+
+    }else{
+        $.ajax({
+            type: "post",
+            url: "/horario/borrarferiados",
+            data: {
+            },
+            statusCode: {
+                419: function () {
+                    location.reload();
+                }
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                calendar.refetchEvents();
+                $('#DatoscalendarOculto').hide();
+                $('#Datoscalendar').show();
+            },
+            error: function (data) {
+                alert('Ocurrio un error');
+            }
+        });
+
+     }
+});

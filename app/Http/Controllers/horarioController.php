@@ -843,6 +843,30 @@ class horarioController extends Controller
         ->get();
         return $empleadosidLocal;
     }
+
+    public function copiarferiados(Request $request){
+        $evento = eventos::all();
+            if ($evento) {
+                foreach ($evento as $eventos) {
+                    $temporal_eventos = new temporal_eventos();
+
+                    $temporal_eventos->title = $eventos->title;
+                    $temporal_eventos->color =$eventos->color;
+                    $temporal_eventos->textColor=$eventos->textColor;
+                    $temporal_eventos->start = $eventos->start;
+                    $temporal_eventos->end = $eventos->end;
+                    $temporal_eventos->users_id = Auth::user()->id;
+                    $temporal_eventos->save();
+
+                }
+            }
+
+    }
+    public function borrarferiados(Request $request){
+        $temporal_eventoH =  temporal_eventos::where('users_id', '=', Auth::user()->id)
+        ->where('color', '=','#e6bdbd')->delete();
+
+    }
 }
 
 

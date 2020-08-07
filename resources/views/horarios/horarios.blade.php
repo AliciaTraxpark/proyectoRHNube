@@ -137,6 +137,10 @@ background-color: #ffffff !important;
     #calendar > div.fc-toolbar.fc-header-toolbar > div.fc-center{
         margin-right: 200px;
     }
+    .select2-container .select2-selection {
+    height: 50px;
+    overflow-y: scroll;
+}
 </style>
 <div id="preloader">
     <div id="status">
@@ -199,112 +203,121 @@ background-color: #ffffff !important;
                                    <span aria-hidden="true">&times;</span>
                                </button>
                            </div>
-                           <div class="modal-body" style="font-size: 13x!important;padding-top: 4px;
-                           padding-bottom: 8px;">
-                            <input type="hidden" id="horario1">
-                            <input type="hidden" id="horario2">
-                               <div class="row">
-                                   <div class="col-md-12" style="padding-left: 24px;">
-                                    <form id="formulario" action="javascript:agregarHoras()">
-                                       <div class="row">
-                                        <div class="col-md-9" style="zoom:90%;">
-                                            <input type="hidden" id="fechaDa" name="fechaDa">
-                                            <label for="" style="font-weight: 600;">Seleccionar empleado(s):</label>
-                                        </div>
-                                        <div class="col-md-6" style="zoom:90%;">
-                                            <div class="form-check">
-                                                <input type="checkbox" style="" class="form-check-input" id="selectTodoCheck">
-                                                <label class="form-check-label" for="selectTodoCheck" style="font-style: oblique;">Seleccionar todos.</label>
+                                        <div class="modal-body" style="font-size: 13x!important;padding-top: 4px;
+                            padding-bottom: 8px;">
+                                <input type="hidden" id="horario1">
+                                <input type="hidden" id="horario2">
+                                <div class="row">
+                                    <div class="col-md-12" style="padding-left: 24px;">
+                                        <form id="formulario" action="javascript:agregarHoras()">
+                                        <div class="row">
+                                            <div class="col-md-9" style="zoom:90%;">
+                                                <input type="hidden" id="fechaDa" name="fechaDa">
+                                                <label for="" style="font-weight: 600;">Seleccionar empleado(s):</label>
                                             </div>
-                                        </div>
-
-                                        <div class="col-md-7">
-                                               <select class="form-control wide" data-plugin="customselect" multiple id="nombreEmpleado" >
-                                                @foreach ($empleado as  $empleados)
-                                                <option value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</option>
-                                              @endforeach
-                                            </select>
-
-                                         </div>
-                                         <div class="col-md-2">
-                                             <label for="" style="margin-top: 9px;" >Seleccionar por:</label>
-                                         </div>
-                                         <div class="col-md-3">
-                                            <select data-plugin="customselect" multiple  id="selectEmpresarial" name="selectEmpresarial" class="form-control" data-placeholder="seleccione">
-                                                <option value=""></option>
-                                                @foreach ($area as $areas)
-                                                <option value="{{$areas->idarea}}">Area : {{$areas->descripcion}}</option>
-                                                @endforeach
-                                                @foreach ($cargo as $cargos)
-                                                <option value="{{$cargos->idcargo}}">Cargo : {{$cargos->descripcion}}</option>
-                                                @endforeach
-                                                @foreach ($local as $locales)
-                                                <option value="{{$locales->idlocal}}">Local : {{$locales->descripcion}}</option>
-                                                @endforeach
-                                            </select>
-                                         </div>
-                                        </div><br> </div>
-
-
-                                    <div class="col-md-10" >
-
-                                      <div class="col-md-12 text-center" id="Datoscalendar" style=" max-width: 100%;">
-
-                                        <div id="calendar" style="">
-                                        </div>
-
-                                      </div>
-                                      <input type="hidden" id="horarioEnd">
-                                      <input type="hidden" id="horarioStart">
-                                    </div>
-                                    <div class="col-md-1" style="top: 100px;">
-                                        <div class="row">
-                                            <div class="col-md-6" style="  background: #f9e9e9;
-                                            height: 35px;"><h1>&nbsp;</h1></div>
-                                            <div class="col-md-6"><label for=""style="font-size: 12px">Dias de Descanso</label></div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6" style="  background: #ffffff;
-                                            height: 35px;border: 1px solid #d4d4d4;"><h1>&nbsp;</h1></div>
-                                              <div class="col-md-6"><label for=""style="font-size: 12px">Dias laborables</label></div>
-                                        </div> <br><br><br>
-                                        {{-- <div class="row">
-                                         <div class="col-6" style="padding-left: 0px;">
-                                            <button style="background-color: #dddaee; border-color: #ffffff; color: #44444c;" onclick="vaciarcalendario()"  class="btn btn-xs btn-primary" ><img src="{{asset('admin/images/borrar.svg')}}" height="10" ></button>
-                                        </div>
-                                        <div class="col-md-6" style="padding-left: 0px;">
-                                        <label style="font-size: 12px" for="">vaciar calendario</label>
-                                        </div>
-                                        </div>
-                                        <br> --}}
-                                        <div class="row">
-
-
-                                        <div class="col-md-6" style="padding-left: 0px;">
-                                            <div class="btn-group mt-2 mr-1">
-                                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" style="color: #fff;
-                                                background-color: #1c3763;
-                                                border-color: #1c3763;"
-                                                    data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false"><img src="{{asset('admin/images/borrador.svg')}}" height="15" > Borrar <i class="icon"><span data-feather="chevron-down"></span></i></button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" onclick="vaciarhor()">Horarios</a>
-                                                   {{--  <a class="dropdown-item"  onclick="vaciardl()" >D. laborables</a>
-                                                    <a class="dropdown-item" onclick="vaciarndl()">D. no laborables</a>
-                                                    <a class="dropdown-item" onclick="vaciarinH()">Incidencia</a> --}}
-
+                                            <div class="col-md-7" style="zoom:90%;">
+                                                <div class="form-check">
+                                                    <input type="checkbox" style="" class="form-check-input" id="selectTodoCheck">
+                                                    <label class="form-check-label" for="selectTodoCheck" style="font-style: oblique;">Seleccionar todos.</label>
                                                 </div>
-                                            </div><!-- /btn-group -->
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <select class="form-control wide" data-plugin="customselect" multiple id="nombreEmpleado" >
+                                                    @foreach ($empleado as  $empleados)
+                                                    <option value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</option>
+                                                @endforeach
+                                                </select>
+
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="" style="margin-top: 9px;" >Seleccionar por:</label>
+                                            </div>
+                                            <div class="row col-md-4">
+                                                <select data-plugin="customselect" multiple id="selectEmpresarial" name="selectEmpresarial" class="form-control" data-placeholder="seleccione">
+                                                    <option value=""></option>
+                                                    @foreach ($area as $areas)
+                                                    <option value="{{$areas->idarea}}">Area : {{$areas->descripcion}}.</option>
+                                                    @endforeach
+                                                    @foreach ($cargo as $cargos)
+                                                    <option value="{{$cargos->idcargo}}">Cargo : {{$cargos->descripcion}}.</option>
+                                                    @endforeach
+                                                    @foreach ($local as $locales)
+                                                    <option value="{{$locales->idlocal}}">Local : {{$locales->descripcion}}.</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            </div><br> </div>
+
+
+                                        <div class="col-md-10" >
+                                        <div class="col-md-12 text-center" id="DatoscalendarOculto" style=" display: none">
+                                            <img src="{{asset('landing/images/loading.gif')}}" height="100">
                                         </div>
+                                        <div class="col-md-12 text-center" id="Datoscalendar" style=" max-width: 100%;">
+
+                                            <div id="calendar" style="">
+                                            </div>
+
+                                        </div>
+                                        <input type="hidden" id="horarioEnd">
+                                        <input type="hidden" id="horarioStart">
+                                        </div>
+                                        <div class="col-md-1" style="margin-top: 100px;">
+                                            <div class="row">
+                                                <div class="col-md-6" style="  background: #f9e9e9;
+                                                height: 35px;"><h1>&nbsp;</h1></div>
+                                                <div class="col-md-6"><label for=""style="font-size: 12px">Dias no laborales</label></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6" style="  background: #ffffff;
+                                                height: 35px;border: 1px solid #d4d4d4;"><h1>&nbsp;</h1></div>
+                                                <div class="col-md-6"><label for=""style="font-size: 12px">Dias laborables</label></div>
+                                            </div> <br><br>
+                                            {{-- <div class="row">
+                                            <div class="col-6" style="padding-left: 0px;">
+                                                <button style="background-color: #dddaee; border-color: #ffffff; color: #44444c;" onclick="vaciarcalendario()"  class="btn btn-xs btn-primary" ><img src="{{asset('admin/images/borrar.svg')}}" height="10" ></button>
+                                            </div>
+                                            <div class="col-md-6" style="padding-left: 0px;">
+                                            <label style="font-size: 12px" for="">vaciar calendario</label>
+                                            </div>
+                                            </div>
+                                            <br> --}}
+                                            <div class="row">
+
+
+                                            <div class="col-md-6" style="padding-left: 0px;">
+                                                <div class="btn-group mt-2 mr-1">
+                                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" style="color: #fff;
+                                                    background-color: #1c3763;
+                                                    border-color: #1c3763;"
+                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false"><img src="{{asset('admin/images/borrador.svg')}}" height="15" > Borrar <i class="icon"><span data-feather="chevron-down"></span></i></button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" onclick="vaciarhor()">Horarios</a>
+                                                    {{--  <a class="dropdown-item"  onclick="vaciardl()" >D. laborables</a>
+                                                        <a class="dropdown-item" onclick="vaciarndl()">D. no laborables</a>
+                                                        <a class="dropdown-item" onclick="vaciarinH()">Incidencia</a> --}}
+
+                                                    </div>
+                                                </div><!-- /btn-group -->
+                                            </div><br><br><br>
+                                            <div class="col-md-7" style="padding-left: 0px;">
+                                                <div class="form-check">
+                                                    <input type="checkbox" style="" class="form-check-input" id="FeriadosCheck">
+                                                    <label class="form-check-label" for="FeriadosCheck" style="font-style: oblique;color:#8a032c;font-weight: 600"
+                                                    >Ver feriados.</label>
+                                                </div>
+                                            </div>
+                                            </div>
+
+
+
                                         </div>
 
+                                </div>
 
-
-                                    </div>
-
-                               </div>
-
-                           </div>
+                            </div>
                            <div class="modal-footer" style="padding-top: 8px;
                            padding-bottom: 8px;">
                                <div class="col-md-12">
