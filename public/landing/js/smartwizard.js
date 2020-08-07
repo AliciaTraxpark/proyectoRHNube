@@ -366,6 +366,12 @@ $(document).ready(function () {
                     $('#v_distrito').empty();
                     $('#v_dist').append(`<option value="">Distrito</option>`);
                     $('#v_distrito').append(`<<option value="">Distrito</option>`);
+                    $('#v_cargo').val("").trigger("change");
+                    $('#v_contrato').val("").trigger("change");
+                    $('#v_area').val("").trigger("change");
+                    $('#v_nivel').val("").trigger("change");
+                    $('#v_centroc').val("").trigger("change");
+                    $('#v_local').val("").trigger("change");
                     $('#formNuevoEd').hide();
                     $('#formNuevoEl').hide();
                     $('#checkboxFechaIE').prop('checked', false);

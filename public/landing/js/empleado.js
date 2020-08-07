@@ -34,6 +34,7 @@ $('#horaF_ed').flatpickr({
     dateFormat: "H:i",
     time_24hr: true
 });
+
 function calendarioInv() {
     var calendarElInv = document.getElementById('calendarInv');
     calendarElInv.innerHTML = "";
@@ -3300,6 +3301,12 @@ $('#cerrarEd').click(function () {
     $('#v_distrito').empty();
     $('#v_dist').append(`<option value="">Distrito</option>`);
     $('#v_distrito').append(`<<option value="">Distrito</option>`);
+    $('#v_cargo').val("").trigger("change");
+    $('#v_contrato').val("").trigger("change");
+    $('#v_area').val("").trigger("change");
+    $('#v_nivel').val("").trigger("change");
+    $('#v_centroc').val("").trigger("change");
+    $('#v_local').val("").trigger("change");
     $('#selectHorario_ed').val("Seleccionar horario");
     $('#codigoCelular').val("+51");
     limpiar();
@@ -3320,6 +3327,8 @@ $('#cerrarModalEmpleado').click(function () {
     $('input[type="file"]').val("");
     $('input[type="email"]').val("");
     $('input[type="number"]').val("");
+    $('#documento').val("").trigger("change");
+    $('#fechaN').combodate("clearValue");
     $('#departamento').val("").trigger("change");
     $('#dep').val("").trigger("change");
     $('#prov').empty();
@@ -3330,6 +3339,12 @@ $('#cerrarModalEmpleado').click(function () {
     $('#distrito').empty();
     $('#dist').append(`<option value="">Distrito</option>`);
     $('#distrito').append(`<<option value="">Distrito</option>`);
+    $('#cargo').val("").trigger("change");
+    $('#contrato').val("").trigger("change");
+    $('#area').val("").trigger("change");
+    $('#nivel').val("").trigger("change");
+    $('#centroc').val("").trigger("change");
+    $('#local').val("").trigger("change");
     $("#form-registrar :input").prop('disabled', true);
     $('#documento').attr('disabled', false);
     $('#cerrarMoadalEmpleado').attr('disabled', false);
@@ -3395,7 +3410,9 @@ function FinalizarEmpleado() {
     $('input[type="date"]').val("");
     $('input[type="file"]').val("");
     $('input[type="email"]').val("");
+    $('input[type="number"]').val("");
     $('#documento').val("").trigger("change");
+    $('#fechaN').combodate("clearValue");
     $('#departamento').val("").trigger("change");
     $('#dep').val("").trigger("change");
     $('#prov').empty();
@@ -3409,6 +3426,12 @@ function FinalizarEmpleado() {
     $('#file').val('');
     $('#file').fileinput('refresh');
     $('#codigoCelular').val("+51");
+    $('#cargo').val("").trigger("change");
+    $('#contrato').val("").trigger("change");
+    $('#area').val("").trigger("change");
+    $('#nivel').val("").trigger("change");
+    $('#centroc').val("").trigger("change");
+    $('#local').val("").trigger("change");
     $("#form-registrar :input").prop('disabled', true);
     $('#documento').attr('disabled', false);
     $('#cerrarMoadalEmpleado').attr('disabled', false);
@@ -4229,7 +4252,7 @@ function eliminarhorariosBD() {
 }
 ////////////////////////////////
 $('#selectCalendario_edit3').change(function () {
-    var antSe= $('#idselect3').val();
+    var antSe = $('#idselect3').val();
     bootbox.confirm({
         message: "Al cambiar de calendario se borrará horarios actuales, ¿Confirmar?",
         buttons: {
@@ -4245,65 +4268,65 @@ $('#selectCalendario_edit3').change(function () {
         callback: function (result) {
             if (result == true) {
                 var idempleado = $('#idempleado').val();
-    var idcalendario=$('#selectCalendario_edit3').val();
-    $('#idselect3').val(idcalendario);
-    console.log(idempleado);
-    $.ajax({
-        type: "post",
-        url: "/empleado/vaciarbdempleado",
-        data: {
-            idempleado
+                var idcalendario = $('#selectCalendario_edit3').val();
+                $('#idselect3').val(idcalendario);
+                console.log(idempleado);
+                $.ajax({
+                    type: "post",
+                    url: "/empleado/vaciarbdempleado",
+                    data: {
+                        idempleado
 
-        },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function (data) {
-            $('#calendar_ed').hide();
-            $.ajax({
-                type: "post",
-                url: "/empleado/vaciarhorariosBD",
-                data: {
-                    idempleado
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        $('#calendar_ed').hide();
+                        $.ajax({
+                            type: "post",
+                            url: "/empleado/vaciarhorariosBD",
+                            data: {
+                                idempleado
 
-                },
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-            });
-            $.ajax({
-                type: "POST",
-                url: "/empleado/calendarioEmpleado",
-                data: {
-                    idcalendario,
-                    idempleado
-                },
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                statusCode: {
-                    419: function () {
-                        location.reload();
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                        });
+                        $.ajax({
+                            type: "POST",
+                            url: "/empleado/calendarioEmpleado",
+                            data: {
+                                idcalendario,
+                                idempleado
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            statusCode: {
+                                419: function () {
+                                    location.reload();
+                                }
+                            },
+                            success: function (data) {
+
+                                calendarioedit.refetchEvents();
+                                calendar2_ed.refetchEvents();
+                                $('#calendar_ed').show();
+
+
+
+                            },
+                            error: function () {}
+                        });
+
+                    },
+                    error: function (data) {
+                        alert('Ocurrio un error');
                     }
-                },
-                success: function (data) {
-
-                 calendarioedit.refetchEvents();
-                 calendar2_ed.refetchEvents();
-                 $('#calendar_ed').show();
-
-
-
-                },
-                error: function () {}
-            });
-
-        },
-        error: function (data) {
-            alert('Ocurrio un error');
-        }
-    });
-            } else{
+                });
+            } else {
                 $('#selectCalendario_edit3').val(antSe);
             }
         }
