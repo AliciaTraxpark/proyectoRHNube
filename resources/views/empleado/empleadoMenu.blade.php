@@ -1129,7 +1129,7 @@ use App\proyecto_empleado;
                                                     tabindex="4" required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="sw-default">Correo Electronico</label>
+                                                <label for="sw-default">Correo Electrónico</label>
                                                 <span id="validCorreo" style="color: red;">*Campo
                                                     Obligatorio</span>
                                                 <span id="emailR" style="color: red;">*Correo registrado</span>
@@ -1188,7 +1188,7 @@ use App\proyecto_empleado;
                                                     tabindex="6" required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="sw-default">Telefono</label>
+                                                <label for="sw-default">Teléfono</label>
                                                 <input type="number" class="form-control" name="telefono" id="telefono"
                                                     tabindex="9" maxlength="9" onkeypress="return isNumeric(event)"
                                                     oninput="maxLengthCheck(this)">
@@ -1808,7 +1808,7 @@ use App\proyecto_empleado;
                                                 tabindex="4" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="sw-default">Correo Electronico</label>
+                                            <label for="sw-default">Correo Electrónico</label>
                                             <span id="v_validCorreo" style="color: red;">*Campo
                                                 Obligatorio</span>
                                             <span id="v_emailR" style="color: red;">*Correo
@@ -1865,7 +1865,7 @@ use App\proyecto_empleado;
                                                 tabindex="6" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="sw-default">Telefono</label>
+                                            <label for="sw-default">Teléfono</label>
                                             <input type="text" class="form-control" name="v_telefono" id="v_telefono"
                                                 tabindex="9" maxlength="9" onkeypress="return isNumeric(event)"
                                                 oninput="maxLengthCheck(this)">
@@ -2515,7 +2515,7 @@ use App\proyecto_empleado;
                                                 disabled>
                                         </div>
                                         <div class="form-group">
-                                            <label for="sw-default">Correo Electronico</label>
+                                            <label for="sw-default">Correo Electrónico</label>
                                             <input type="email" class="form-control" id="v_emailV" name="v_emailV" disabled>
                                         </div>
                                     </div> <!-- end col -->
@@ -2549,7 +2549,7 @@ use App\proyecto_empleado;
                                                 disabled>
                                         </div>
                                         <div class="form-group">
-                                            <label for="sw-default">Telefono</label>
+                                            <label for="sw-default">Teléfono</label>
                                             <input type="text" class="form-control" name="v_telefonoV" id="v_telefonoV"
                                                 disabled>
                                         </div>

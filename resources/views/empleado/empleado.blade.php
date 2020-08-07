@@ -1405,7 +1405,7 @@
                                                             id="apPaterno" tabindex="4" required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="sw-default">Correo Electronico</label>
+                                                        <label for="sw-default">Correo Electrónico</label>
                                                         <span id="validCorreo" style="color: red;">*Campo
                                                             Obligatorio</span>
                                                         <span id="emailR" style="color: red;">*Correo registrado</span>
@@ -1466,7 +1466,7 @@
                                                             id="nombres" tabindex="6" required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="sw-default">Telefono</label>
+                                                        <label for="sw-default">Teléfono</label>
                                                         <input type="number" class="form-control" name="telefono"
                                                             id="telefono" tabindex="9" maxlength="9"
                                                             onkeypress="return isNumeric(event)"
@@ -2114,7 +2114,7 @@
                                                         id="v_apPaterno" tabindex="4" required>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default">Correo Electronico</label>
+                                                    <label for="sw-default">Correo Electrónico</label>
                                                     <span id="v_validCorreo" style="color: red;">*Campo
                                                         Obligatorio</span>
                                                     <span id="v_emailR" style="color: red;">*Correo
@@ -2173,7 +2173,7 @@
                                                         id="v_nombres" tabindex="6" required>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default">Telefono</label>
+                                                    <label for="sw-default">Teléfono</label>
                                                     <input type="text" class="form-control" name="v_telefono"
                                                         id="v_telefono" tabindex="9" maxlength="9"
                                                         onkeypress="return isNumeric(event)"
@@ -2833,7 +2833,7 @@
                                                         id="v_apPaternoV" disabled>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default">Correo Electronico</label>
+                                                    <label for="sw-default">Correo Electrónico</label>
                                                     <input type="email" class="form-control" id="v_emailV"
                                                         name="v_emailV" disabled>
                                                 </div>
@@ -2868,7 +2868,7 @@
                                                         id="v_nombresV" disabled>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default">Telefono</label>
+                                                    <label for="sw-default">Teléfono</label>
                                                     <input type="text" class="form-control" name="v_telefonoV"
                                                         id="v_telefonoV" disabled>
                                                 </div>
