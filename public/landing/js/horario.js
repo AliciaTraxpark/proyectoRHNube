@@ -395,50 +395,52 @@ function calendario() {
             id = info.event.id;
             console.log(info);
             console.log(info.event.id);
-            console.log(info.event.title);
+            console.log(info.event.textColor);
            var event = calendar.getEventById(id);
-
-            bootbox.confirm({
-                message: "¿Desea eliminar: "+info.event.title+" del horario?",
-                buttons: {
-                    confirm: {
-                        label: 'Aceptar',
-                        className: 'btn-success'
-                    },
-                    cancel: {
-                        label: 'Cancelar',
-                        className: 'btn-light'
-                    }
-                },
-                callback: function (result) {
-                    if (result == true) {
-                        $.ajax({
-                            type: "post",
-                            url: "/eliminarHora",
-                            data: {
-                                idHora: info.event.id
-                            },
-                            statusCode: {
-
-                                419: function () {
-                                    location.reload();
-                                }
-                            },
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            success: function (data) {
-                            info.event.remove();
-                            },
-                            error: function (data) {
-                                alert('Ocurrio un error');
-                            }
-
-
-                        });
+            if(info.event.textColor=='111111'){
+                bootbox.confirm({
+                    message: "¿Desea eliminar: "+info.event.title+" del horario?",
+                    buttons: {
+                        confirm: {
+                            label: 'Aceptar',
+                            className: 'btn-success'
+                        },
+                        cancel: {
+                            label: 'Cancelar',
+                            className: 'btn-light'
                         }
-                }
-            });
+                    },
+                    callback: function (result) {
+                        if (result == true) {
+                            $.ajax({
+                                type: "post",
+                                url: "/eliminarHora",
+                                data: {
+                                    idHora: info.event.id
+                                },
+                                statusCode: {
+
+                                    419: function () {
+                                        location.reload();
+                                    }
+                                },
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: function (data) {
+                                info.event.remove();
+                                },
+                                error: function (data) {
+                                    alert('Ocurrio un error');
+                                }
+
+
+                            });
+                            }
+                    }
+                });
+            }
+
 
            //info.event.remove();
         },

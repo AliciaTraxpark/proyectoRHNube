@@ -295,13 +295,13 @@
         <tr class="" id="{{$tabla_empleados->emple_id}}" value="{{$tabla_empleados->emple_id}}">
 
             <td><a id="formNuevoEd" onclick="$('#form-ver').modal();" style="cursor: pointer"><img
-                        src="{{asset('admin/images/edit.svg')}}" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+                        src="{{asset('admin/images/edit.svg')}}" height="15"></a>&nbsp;&nbsp;&nbsp;<a
                     onclick="marcareliminar({{$tabla_empleados->emple_id}})" style="cursor: pointer"><img
-                        src="{{asset('admin/images/delete.svg')}}" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        src="{{asset('admin/images/delete.svg')}}" height="15"></a>&nbsp;&nbsp;
                 <a class="verEmpleado" onclick="$('#verEmpleadoDetalles').modal();" data-toggle="tooltip"
                     data-placement="right" title="Ver Detalles" data-original-title="Ver Detalles" style="cursor:
                     pointer">
-                    <img src="{{asset('landing/images/see.svg')}}" height="20">
+                    <img src="{{asset('landing/images/see.svg')}}" height="18">
                 </a>
             </td>
             <td class="text-center">&nbsp; <input type="hidden" id="codE" value="{{$tabla_empleados->emple_id}}"><img
