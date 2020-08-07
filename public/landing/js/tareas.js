@@ -95,7 +95,7 @@ function onMostrarPantallas() {
                             if (j < 5) {
                                 var capturas = "";
                                 for (let index = 1; index < data[hora][j].length; index++) {
-                                    promedios += data[hora][j][index].prom;
+                                    promedios = promedios + data[hora][j][index].prom;
                                     capturas += `<div class = "carousel-item">
                                     <img src="data:image/jpeg;base64,${data[hora][j][index].imagen}" height="120" width="200" class="img-responsive">
                                     <div class="overlay">
@@ -107,7 +107,7 @@ function onMostrarPantallas() {
                                 if (data[hora][j].length == 1) {
                                     promedio = data[hora][j][0].prom;
                                 } else {
-                                    promedio = (promedios / (data[hora][j].length - 1)).toFixed(2);
+                                    promedio = (promedios / (data[hora][j].length)).toFixed(2);
                                     if (promedios == 0) {
                                         promedio = 0
                                     }
