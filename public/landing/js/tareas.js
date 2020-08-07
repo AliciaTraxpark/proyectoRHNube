@@ -244,6 +244,7 @@ function onMostrarPantallas() {
                     }
                     grupo += `</div><br>`;
                     container.append(grupo);
+                    console.log(prom);
                     promedioHoras = (prom / 6).toFixed(2);
                     var span = "";
                     span += `${promedioHoras}%`;
