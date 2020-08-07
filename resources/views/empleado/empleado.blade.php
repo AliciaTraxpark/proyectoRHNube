@@ -2814,7 +2814,7 @@
                                         <a style="color: #3d3d3d;"
                                             onclick="$('#verEmpleadoDetalles').modal('toggle');$('#form-ver').modal();">
                                             <img src="{{asset('admin/images/edit.svg')}}" height="15">
-                                            <span style="font-weight: 600">Editar</span>
+                                            <span style="font-weight: bold">Editar</span>
                                         </a>
                                     </div>
                                 </ul>

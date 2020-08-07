@@ -432,17 +432,23 @@ class apiController extends Controller
                         $explode2 = explode(":", $capturaRegistrada->promedio);
                         $calSeg2 = $explode2[0] * 3600 + $explode2[1] * 60 + $explode2[2];
                         $totalP = $calSeg2;
-                        //RESTA POR FECHA HORA DE   CAPTURAS
-                        $fecha = Carbon::create($capturaRegistrada->fecha_hora)->format('H:i:s');
-                        $explo1 = explode(":", $fecha);
-                        $calSegund = $explo1[0] * 3600 + $explo1[1] * 60 + $explo1[2];
-                        $fecha1 = Carbon::create($promedio->fecha_hora)->format('H:i:s');
-                        $explo2 = explode(":", $fecha1);
-                        $calSegund2 = $explo2[0] * 3600 + $explo2[1] * 60 + $explo2[2];
-                        $totalP1 = $calSegund - $calSegund2;
-                        //PROMEDIO
-                        $promedio = floatval($totalP / $totalP1);
-                        $round = round($promedio, 2);
+                        //VALIDACION DE CERO
+                        if ($calSeg2 == 0) {
+                            $round = 0;
+                        } else {
+                            //RESTA POR FECHA HORA DE   CAPTURAS
+                            $fecha = Carbon::create($capturaRegistrada->fecha_hora)->format('H:i:s');
+                            $explo1 = explode(":", $fecha);
+                            $calSegund = $explo1[0] * 3600 + $explo1[1] * 60 + $explo1[2];
+                            $fecha1 = Carbon::create($promedio->fecha_hora)->format('H:i:s');
+                            $explo2 = explode(":", $fecha1);
+                            $calSegund2 = $explo2[0] * 3600 + $explo2[1] * 60 + $explo2[2];
+                            $totalP1 = $calSegund - $calSegund2;
+                            //PROMEDIO
+                            $promedio = floatval($totalP / $totalP1);
+                            $promedioFinal = $promedio * 100;
+                            $round = round($promedioFinal, 2);
+                        }
                         //TABLA PROMEDIO_CAPTURA
                         $promedio_captura = new promedio_captura();
                         $promedio_captura->idCaptura = $idCaptura;
@@ -483,17 +489,22 @@ class apiController extends Controller
                         $explode2 = explode(":", $capturaRegistrada->promedio);
                         $calSeg2 = $explode2[0] * 3600 + $explode2[1] * 60 + $explode2[2];
                         $totalP = $calSeg2;
-                        //RESTA POR FECHA HORA DE   CAPTURAS
-                        $fecha = Carbon::create($capturaRegistrada->fecha_hora)->format('H:i:s');
-                        $explo1 = explode(":", $fecha);
-                        $calSegund = $explo1[0] * 3600 + $explo1[1] * 60 + $explo1[2];
-                        $fecha1 = Carbon::create($promedio->fecha_hora)->format('H:i:s');
-                        $explo2 = explode(":", $fecha1);
-                        $calSegund2 = $explo2[0] * 3600 + $explo2[1] * 60 + $explo2[2];
-                        $totalP1 = $calSegund - $calSegund2;
-                        //PROMEDIO
-                        $promedio = floatval($totalP / $totalP1);
-                        $round = round($promedio, 2);
+                        if ($calSeg2 == 0) {
+                            $round = 0;
+                        } else {
+                            //RESTA POR FECHA HORA DE   CAPTURAS
+                            $fecha = Carbon::create($capturaRegistrada->fecha_hora)->format('H:i:s');
+                            $explo1 = explode(":", $fecha);
+                            $calSegund = $explo1[0] * 3600 + $explo1[1] * 60 + $explo1[2];
+                            $fecha1 = Carbon::create($promedio->fecha_hora)->format('H:i:s');
+                            $explo2 = explode(":", $fecha1);
+                            $calSegund2 = $explo2[0] * 3600 + $explo2[1] * 60 + $explo2[2];
+                            $totalP1 = $calSegund - $calSegund2;
+                            //PROMEDIO
+                            $promedio = floatval($totalP / $totalP1);
+                            $promedioFinal = $promedio * 100;
+                            $round = round($promedioFinal, 2);
+                        }
                         //TABLA PROMEDIO_CAPTURA
                         $promedio_captura = new promedio_captura();
                         $promedio_captura->idCaptura = $idCaptura;
