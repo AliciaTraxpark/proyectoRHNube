@@ -351,11 +351,26 @@ $(document).ready(function () {
                 .attr("id", "FinalizarEmpleadoEditar")
                 .on('click', function () {
                     leertabla();
-                    $('#smartwizard').smartWizard("reset");
+                    $('#smartwizard1').smartWizard("reset");
+                    $('#formNuevoEd').hide();
+                    $('#formNuevoEl').hide();
                     $('#navActualizar').hide();
+                    $()
+                    $('#m_fechaIE').combodate("clearValue");
+                    $('#m_fechaFE').combodate("clearValue");
+                    $('#checkboxFechaIE').prop('checked', false);
+                    //************* */
+                    $('#v_validApPaterno').hide();
+                    $('#v_validNumDocumento').hide();
+                    $('#v_validApMaterno').hide();
+                    $('#v_validNombres').hide();
+                    $('#v_validCorreo').hide();
+                    $('#v_emailR').hide();
+                    $('#v_validCel').hide();
+                    $('input[type="date"]').val("");
                     $('input[type="file"]').val("");
-                    $('input[typt="checkbox"]').val("");
-                    $('#v_documento').val("").trigger("change");
+                    $('input[type="email"]').val("");
+                    $('input[type="number"]').val("");
                     $('#v_departamento').val("").trigger("change");
                     $('#v_dep').val("").trigger("change");
                     $('#v_prov').empty();
@@ -372,9 +387,11 @@ $(document).ready(function () {
                     $('#v_nivel').val("").trigger("change");
                     $('#v_centroc').val("").trigger("change");
                     $('#v_local').val("").trigger("change");
-                    $('#formNuevoEd').hide();
-                    $('#formNuevoEl').hide();
-                    $('#checkboxFechaIE').prop('checked', false);
+                    $('#selectHorario_ed').val("Seleccionar horario");
+                    $('#codigoCelular').val("+51");
+                    limpiar();
+                    $('#selectCalendario').val("Asignar calendario");
+                    $('#selectHorario').val("Seleccionar horario");
                     $('#form-ver').modal('toggle');
                 }),
             ]
