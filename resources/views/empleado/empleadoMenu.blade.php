@@ -1225,7 +1225,7 @@ use App\proyecto_empleado;
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label class="normal" for="">Genero</label>
+                                                <label class="normal" for="">Género</label>
                                                 <span id="validGenero" style="color: red;">*Campo
                                                     Obligatorio</span>
                                                 <label class="custom-control custom-radio">
@@ -1902,7 +1902,9 @@ use App\proyecto_empleado;
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label class="normal" for="">Genero</label>
+                                            <label class="normal" for="">Género</label>
+                                            <span id="v_validGenero" style="color: red;">*Campo
+                                                Obligatorio</span>
                                             <label class="custom-control custom-radio">
                                                 <input type="radio" name="v_tipo" id="v_tipo" value="Femenino">
                                                 Femenino
@@ -2575,7 +2577,7 @@ use App\proyecto_empleado;
                                                 id="v_departamentoV" disabled>
                                         </div>
                                         <div class="form-group">
-                                            <label class="normal" for="">Genero</label>
+                                            <label class="normal" for="">Género</label>
                                             <label class="custom-control custom-radio">
                                                 <input type="radio" name="v_tipoV" id="v_tipoV" value="Femenino" disabled>
                                                 Femenino

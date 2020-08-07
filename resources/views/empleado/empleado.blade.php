@@ -1505,7 +1505,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label class="normal" for="">Genero</label>
+                                                        <label class="normal" for="">Género</label>
                                                         <span id="validGenero" style="color: red;">*Campo
                                                             Obligatorio</span>
                                                         <label class="custom-control custom-radio">
@@ -2211,7 +2211,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="normal" for="">Genero</label>
+                                                    <label class="normal" for="">Género</label>
                                                     <span id="v_validGenero" style="color: red;">*Campo
                                                         Obligatorio</span>
                                                     <label class="custom-control custom-radio">
@@ -2894,7 +2894,7 @@
                                                         name="v_departamentoV" id="v_departamentoV" disabled>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="normal" for="">Genero</label>
+                                                    <label class="normal" for="">Género</label>
                                                     <label class="custom-control custom-radio">
                                                         <input type="radio" name="v_tipoV" id="v_tipoV" value="Femenino"
                                                             disabled>
