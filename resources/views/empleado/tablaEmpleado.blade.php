@@ -514,7 +514,8 @@
                     onSelectVProv('#v_prov').then((result) => $('#v_dist').val(data[0]
                         .distId))
                 });
-
+                $('#selectCalendario_edit3').val(data[0].idcalendar);
+                $('#idselect3').val(data[0].idcalendar);
                 $('#v_numDocumento').val(data[0].emple_nDoc);
                 $('#v_apMaterno').val(data[0].perso_apMaterno);
                 $("[name=v_tipo]").val([data[0].perso_sexo]);

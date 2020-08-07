@@ -507,6 +507,7 @@ class EmpleadoController extends Controller
             ->leftJoin('tipo_contrato as tp', 'e.emple_tipoContrato', '=', 'tp.contrato_id')
             ->leftJoin('nivel as n', 'e.emple_nivel', '=', 'n.nivel_id')
             ->leftJoin('local as l', 'e.emple_local', '=', 'l.local_id')
+            ->leftJoin('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
 
             ->select(
                 'e.emple_id',
@@ -553,10 +554,12 @@ class EmpleadoController extends Controller
                 'e.emple_codigo',
                 'tp.contrato_descripcion',
                 'n.nivel_descripcion',
-                'l.local_descripcion'
+                'l.local_descripcion',
+                'eve.id_calendario as idcalendar'
             )
             ->where('e.emple_id', '=', $idempleado)
             ->where('e.users_id', '=', Auth::user()->id)
+            ->groupBy('e.users_id')
             ->get();
         $cantidad = DB::table('licencia_empleado as le')
             ->select(DB::raw('COUNT(le.id) as total'), 'le.licencia')
@@ -1090,6 +1093,7 @@ class EmpleadoController extends Controller
                     $eventos_empleado_r->start = $eventos_usuarios->start;
                     $eventos_empleado_r->end = $eventos_usuarios->end;
                     $eventos_empleado_r->tipo_ev = $eventos_usuarios->tipo;
+                    $eventos_empleado_r->id_calendario = $idcalendario;
                     $eventos_empleado_r->save();
                 }
             }
@@ -1128,6 +1132,9 @@ class EmpleadoController extends Controller
 
     public function storeCalendarioempleado(Request $request)
     {
+        $ev1=eventos_empleado:: where('id_empleado', '=', $request->get('idempleado'))
+            ->first();
+
         $eventos_empleado = new eventos_empleado();
 
         $eventos_empleado->title = $request->get('title');
@@ -1137,6 +1144,7 @@ class EmpleadoController extends Controller
         $eventos_empleado->end = $request->get('end');
         $eventos_empleado->tipo_ev = $request->get('tipo');
         $eventos_empleado->id_empleado = $request->get('idempleado');
+        $eventos_empleado->id_calendario = $ev1->id_calendario;
         $eventos_empleado->save();
     }
     public function storeIncidempleado(Request $request)
@@ -1304,6 +1312,15 @@ class EmpleadoController extends Controller
     public function vaciarbdempleado(Request $request){
         DB::table('eventos_empleado')
             ->where('id_empleado', '=',$request->get('idempleado'))
+            ->delete();
+    }
+
+    public function vaciarhorariosBD(Request $request){
+
+        DB::table('horario_empleado as he')
+            ->where('he.empleado_emple_id', '=',$request->get('idempleado'))
+            ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+            
             ->delete();
     }
 }

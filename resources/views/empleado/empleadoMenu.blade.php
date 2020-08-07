@@ -2121,7 +2121,17 @@ use App\proyecto_empleado;
 
                                     </div>
                                     <div class="col-md-1"></div>
-                                    <div class="col-md-8" id="divescond1" style="display: none"><label for="" style="margin-top:14px;font-weight: 600 ">Calendario de empleado</label></div>
+                                    <div class="col-md-8" id="divescond1" style="display: none">
+                                        <input type="hidden" id="idselect3">
+                                        <select name="" id="selectCalendario_edit3" class="form-control col-lg-6 form-control-sm"
+                                                    style="margin-top: 4px;">
+                                                    <option hidden selected>Asignar calendario</option>
+                                                    @foreach ($calendario as $calendarios)
+                                                        <option class="" value="{{ $calendarios->calen_id }}">
+                                                            {{ $calendarios->calendario_nombre }}</option>
+                                                    @endforeach
+                                                </select>
+                                    </div>
                                     <div class="col-md-2" style="" id="divescond2" style="display: none">
                                         <div class="btn-group mt-2 mr-1">
                                             <button type="button" class="btn btn-primary btn-sm dropdown-toggle" style="color: #fff;
