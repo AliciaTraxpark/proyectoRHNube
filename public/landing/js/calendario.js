@@ -226,7 +226,7 @@ function calendario() {
 
 function registrarDdescanso()  {
     $('#calendarioAsignar').modal('hide');
-
+   var idevento;
     title= 'Descanso';
     color='#4673a0';
     textColor= '#ffffff';
@@ -250,16 +250,83 @@ function registrarDdescanso()  {
                 location.reload();
             }
         },
-        success: function (msg) {
+        success: function (data) {
             //var date = calendar1.getDate();
             //alert("The current date of the calendar is " + date.toISOString());
 
             calendar.refetchEvents();
+            idevento=data;
 
-            console.log(msg);
+
         },
         error: function () {}
     });
+    $.ajax({
+        type: "POST",
+        url: "/calendario/verificarID",
+        data: {id_calendario},
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+         if(data==1){
+
+            bootbox.confirm({
+                message: "¿Agregar a empleados con este calendario?",
+                buttons: {
+                    confirm: {
+                        label: 'Si',
+                        className: 'btn-primary'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-light'
+                    }
+                },
+                callback: function (result) {
+                    if (result == true) {
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/calendario/copiarevenEmpleado",
+                            data: {idevento,id_calendario},
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            statusCode: {
+                                /*401: function () {
+                                    location.reload();
+                                },*/
+                                419: function () {
+                                    location.reload();
+                                }
+                            },
+                            success: function (data) {
+                               console.log(data);
+
+
+                            },
+                            error: function () {}
+                        });
+
+                    }
+                }
+            });
+
+         }
+        },
+        error: function () {}
+    });
+
+
 };
 function registrarDferiado()  {
     $('#calendarioAsignar').modal('hide');

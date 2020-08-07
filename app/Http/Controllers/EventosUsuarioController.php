@@ -53,6 +53,7 @@ class EventosUsuarioController extends Controller
         $eventos_usuario->users_id=Auth::user()->id;
 
         $eventos_usuario->save();
+        return $eventos_usuario->id;
     }
 
     /**

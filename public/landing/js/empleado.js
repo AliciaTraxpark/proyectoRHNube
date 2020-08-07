@@ -1495,6 +1495,80 @@ function calendario3() {
 }
 document.addEventListener('DOMContentLoaded', calendario3);
 ////////////////
+function calendario4() {
+    var calendarEl = document.getElementById('calendar4');
+    calendarEl.innerHTML = "";
+
+    var fecha = new Date();
+    var ano = fecha.getFullYear();
+    var id;
+
+    var configuracionCalendario = {
+        locale: 'es',
+        defaultDate: fecha,
+        height: 400,
+        fixedWeekCount: false,
+        plugins: ['dayGrid', 'interaction', 'timeGrid'],
+
+        selectable: true,
+        selectMirror: true,
+        /* select: function (arg) {
+            $('#pruebaEnd').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
+            $('#pruebaStar').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
+            console.log(arg);
+            $('#horarioAsignar').modal('show');
+        }, */
+        eventClick: function (info) {
+
+        },
+        editable: false,
+        eventLimit: true,
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: ''
+        },
+        eventRender: function (info) {
+            $(info.el).tooltip({
+                title: info.event.title
+            });
+        },
+        events: function (info, successCallback, failureCallback) {
+            var idempleado = $('#idempleado').val();
+            var datoscal;
+            $.ajax({
+                type: "POST",
+                url: "/empleado/vercalendario",
+                data: {
+                    idempleado
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                statusCode: {
+                    419: function () {
+                        location.reload();
+                    }
+                },
+                success: function (data) {
+
+                    successCallback(data);
+
+                },
+                error: function () {}
+            });
+
+        },
+
+        /*  events: "calendario/show", */
+
+    }
+    calendar4 = new FullCalendar.Calendar(calendarEl, configuracionCalendario);
+    calendar4.setOption('locale', "Es");
+
+    calendar4.render();
+}
+document.addEventListener('DOMContentLoaded', calendario4);
 //************* */
 $("#checkboxFechaI").on("click", function () {
     if ($("#checkboxFechaI").is(':checked')) {

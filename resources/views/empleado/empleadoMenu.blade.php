@@ -312,7 +312,7 @@ use App\proyecto_empleado;
             border-color: #163552;
             zoom: 85%;
         }
-
+        
     </style>
     <div class="row page-title" style="padding-right: 20px;">
         <div class="col-md-8">
@@ -2689,6 +2689,14 @@ use App\proyecto_empleado;
                                     <input type="hidden" name="" id="idempleado">
                                     <div class="col-md-1"><br></div>
                                     <div class="col-md-10" id="calendar3"></div>
+                                    <div class="col-md-1"><br></div>
+                                </div>
+                            </div>
+                            <div id="sw-default-step-5" style="font-size: 12px!important">
+                                <div class="row">
+
+                                    <div class="col-md-1"><br></div>
+                                    <div class="col-md-10" id="calendar4"></div>
                                     <div class="col-md-1"><br></div>
                                 </div>
                             </div>

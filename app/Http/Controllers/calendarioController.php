@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\ubigeo_peru_departments;
 use App\paises;
 use App\calendario;
+use App\eventos_empleado;
 use App\eventos_usuario;
 use Illuminate\Support\Facades\DB;
 
@@ -166,5 +167,44 @@ class calendarioController extends Controller
         ->where('id_calendario','=',$idcalendario)
         ->get();
         return $eventos_usuario;
+    }
+
+    public function verificarID(Request $request){
+        $idcalendario=$request->id_calendario;
+        $eventos_empleado = DB::table('eventos_empleado')
+        ->where('id_calendario', '=', $idcalendario)
+        ->get();
+        if ($eventos_empleado->isEmpty()) {
+            return  0;
+        } else{ return  1;}
+
+    }
+    public function copiarevenEmpleado(Request $request){
+        $idcalendario=$request->id_calendario;
+        $idevento=$request->idevento;
+        $eventos_usuario = DB::table('eventos_usuario')
+        ->where('id_calendario', '=', $idcalendario)
+        ->where('id', '=',  $idevento)
+        ->get()->first();
+
+        $eventos_empleadoN = DB::table('eventos_empleado')
+        ->where('id_calendario', '=', $idcalendario)
+        ->groupBy('id_empleado')
+        ->get();
+        /* dd($eventos_usuario->title); */
+        foreach($eventos_empleadoN as $eventos_empleadosN){
+            $eventos_empleado = new eventos_empleado();
+            $eventos_empleado->title =  $eventos_usuario->title;
+            $eventos_empleado->color = $eventos_usuario->color;
+            $eventos_empleado->textColor = $eventos_usuario->textColor;
+            $eventos_empleado->start = $eventos_usuario->start;
+            $eventos_empleado->end = $eventos_usuario->end;
+            $eventos_empleado->id_empleado =$eventos_empleadosN->id_empleado;
+            $eventos_empleado->tipo_ev = $eventos_usuario->tipo;
+            $eventos_empleado->id_calendario = $eventos_usuario->id_calendario; 
+            $eventos_empleado->save();
+
+        }
+
     }
 }

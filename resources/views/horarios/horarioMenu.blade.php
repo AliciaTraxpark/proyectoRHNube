@@ -140,6 +140,7 @@ a:not([href]):not([tabindex]){
     }
     .select2-container .select2-selection {
     height: 50px;
+    font-size: 12.2px;
     overflow-y: scroll;
 }
 </style>

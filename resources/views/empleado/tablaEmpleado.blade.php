@@ -463,6 +463,7 @@
             success: function (data) {
                 console.log(data);
                 calendario3();
+                calendario4();
                 $('#v_tipoDoc').val(data[0].tipoDoc_descripcion);
                 $('#v_apPaterno').val(data[0].perso_apPaterno);
                 $('#v_departamento').val(data[0].iddepaN);

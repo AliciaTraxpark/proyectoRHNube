@@ -136,6 +136,11 @@
           border-color: #163552;
           zoom: 85%;
       }
+      .select2-container .select2-selection {
+    height: 50px;
+    font-size: 12.5px;
+    overflow-y: scroll;
+}
   </style>
 <div class="row row-divided">
     <div class="col-md-12 col-xl-12">

@@ -46,6 +46,8 @@ Route::post('/calendarioe', 'calendarioController@destroy');
 Route::get('eliminarE/{id}', 'EventosUsuarioController@destroy');
 Route::post('/calendario/registrarnuevo', 'calendarioController@registrarnuevo');
 Route::post('/calendario/cargarcalendario', 'calendarioController@cargarcalendario');
+Route::post('/calendario/verificarID', 'calendarioController@verificarID');
+Route::post('/calendario/copiarevenEmpleado', 'calendarioController@copiarevenEmpleado');
 
 //PERSONA
 
@@ -73,8 +75,8 @@ Route::get('/departamento', function () {
     return view('calendario.departamento');
 })->name('depas');
 
-
-Route::get('/eventos_usuario/store', 'EventosUsuarioController@store');
+/*
+Route::get('/eventos_usuario/store', 'EventosUsuarioController@store'); */
 
 //EMPLEADOS
 Route::post('/empleado/store', 'EmpleadoController@store');

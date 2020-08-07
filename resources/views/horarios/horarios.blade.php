@@ -139,6 +139,7 @@ background-color: #ffffff !important;
     }
     .select2-container .select2-selection {
     height: 50px;
+    font-size: 12.2px;
     overflow-y: scroll;
 }
 </style>

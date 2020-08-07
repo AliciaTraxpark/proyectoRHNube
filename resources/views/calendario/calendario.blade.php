@@ -40,14 +40,14 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 <style>
-    body > div.bootbox.modal.fade.show > div > div > div{
+   /*  body > div.bootbox.modal.fade.show > div > div > div{
         background: #131313;
     color: #fbfbfb;
     }
     body > div.bootbox.modal.fade.show > div{
         top: 100px;
     left: 75px;
-    }
+    } */
    div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content.fc-sun{
 
 background-color: rgb(255, 239, 239) !important;
