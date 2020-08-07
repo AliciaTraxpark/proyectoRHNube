@@ -181,7 +181,7 @@ class ControlController extends Controller
             ->where(DB::raw('IF(hd.id is null, DATE(cp.fecha_hora), DATE(hd.start))'), '=', $fecha)
             ->where('e.emple_id', '=', $idempleado)
             ->where('e.users_id', '=', Auth::user()->id)
-            ->orderBy('pc.idCaptura', 'asc')
+            ->orderBy('pc.id', 'asc')
             ->get();
         $control = controlAJson($control);
         return response()->json($control, 200);
