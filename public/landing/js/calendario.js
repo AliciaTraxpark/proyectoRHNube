@@ -280,7 +280,7 @@ function registrarDdescanso()  {
          if(data==1){
 
             bootbox.confirm({
-                message: "¿Agregar a empleados con este calendario?",
+                message: "¿Agregar los cambios a los empleados asignados a este calendario?",
                 buttons: {
                     confirm: {
                         label: 'Si',
@@ -330,7 +330,7 @@ function registrarDdescanso()  {
 };
 function registrarDferiado()  {
     $('#calendarioAsignar').modal('hide');
-
+    var ideventoF;
     title= $('#nombreFeriado').val(),
     color='#e6bdbd',
     textColor= '#775555',
@@ -354,20 +354,86 @@ function registrarDferiado()  {
                 location.reload();
             }
         },
-        success: function (msg) {
+        success: function (data) {
             //var date = calendar1.getDate();
             //alert("The current date of the calendar is " + date.toISOString());
 
             calendar.refetchEvents();
+            ideventoF=data;
              $('#myModalFeriado').modal('hide');
-            console.log(msg);
+
         },
         error: function () {}
     });
+    $.ajax({
+        type: "POST",
+        url: "/calendario/verificarID",
+        data: {id_calendario},
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+         if(data==1){
+
+            bootbox.confirm({
+                message: "¿Agregar los cambios a los empleados asignados a este calendario?",
+                buttons: {
+                    confirm: {
+                        label: 'Si',
+                        className: 'btn-primary'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-light'
+                    }
+                },
+                callback: function (result) {
+                    if (result == true) {
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/calendario/copiarevenEmpleado",
+                            data: {idevento:ideventoF,id_calendario},
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            statusCode: {
+                                /*401: function () {
+                                    location.reload();
+                                },*/
+                                419: function () {
+                                    location.reload();
+                                }
+                            },
+                            success: function (data) {
+                               console.log(data);
+
+
+                            },
+                            error: function () {}
+                        });
+
+                    }
+                }
+            });
+
+         }
+        },
+        error: function () {}
+    });
+
 };
 function registrarDnlaborables()  {
     $('#calendarioAsignar').modal('hide');
-
+    var ideventonl;
     title= 'No laborable';
     color='#a34141';
     textColor=' #ffffff ';
@@ -391,13 +457,76 @@ function registrarDnlaborables()  {
                 location.reload();
             }
         },
-        success: function (msg) {
+        success: function (data) {
             //var date = calendar1.getDate();
             //alert("The current date of the calendar is " + date.toISOString());
 
             calendar.refetchEvents();
+            ideventonl=data;
+        },
+        error: function () {}
+    });
+    $.ajax({
+        type: "POST",
+        url: "/calendario/verificarID",
+        data: {id_calendario},
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+         if(data==1){
 
-            console.log(msg);
+            bootbox.confirm({
+                message: "¿Agregar los cambios a los empleados asignados a este calendario?",
+                buttons: {
+                    confirm: {
+                        label: 'Si',
+                        className: 'btn-primary'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-light'
+                    }
+                },
+                callback: function (result) {
+                    if (result == true) {
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/calendario/copiarevenEmpleado",
+                            data: {idevento:ideventonl,id_calendario},
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            statusCode: {
+                                /*401: function () {
+                                    location.reload();
+                                },*/
+                                419: function () {
+                                    location.reload();
+                                }
+                            },
+                            success: function (data) {
+                               console.log(data);
+
+
+                            },
+                            error: function () {}
+                        });
+
+                    }
+                }
+            });
+
+         }
         },
         error: function () {}
     });
