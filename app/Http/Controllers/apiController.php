@@ -211,17 +211,18 @@ class apiController extends Controller
         return response()->json("Proyecto no encontrado", 400);
     }
 
-    public function eliminarProyecto(Request $request)
+    public function cambiarEstadoProyecto(Request $request)
     {
         $proyectoEmpleado = DB::table('proyecto_empleado as pe')
-            ->select('pe.proye_empleado_id')
+            ->select('pe.Proyecto_Proye_id')
             ->where('pe.Proyecto_Proye_id', '=', $request->get('idProyecto'))
             ->where('pe.empleado_emple_id', '=', $request->get('idEmpleado'))
             ->get()
             ->first();
         if ($proyectoEmpleado) {
-            $eliminar = proyecto_empleado::findOrFail($proyectoEmpleado->proye_empleado_id);
-            $eliminar->delete();
+            $proyecto = proyecto::findOrFail($proyectoEmpleado->Proyecto_Proye_id);
+            $proyecto->Proye_estado = 0;
+            $proyecto->save();
             return response()->json($request->get('idEmpleado'), 200);
         }
         return response()->json("Proyecto no encontrado", 400);
