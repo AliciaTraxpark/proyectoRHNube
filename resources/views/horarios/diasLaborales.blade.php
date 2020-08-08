@@ -12,9 +12,6 @@
     <link href="{{asset('admin/packages/daygrid/main.css')}}" rel="stylesheet" />
     <link href="{{asset('admin/packages/timegrid/main.css')}}" rel="stylesheet" />
 
-    <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
@@ -142,6 +139,15 @@
     overflow-y: scroll;
 }
   </style>
+  <div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="circle1"></div>
+            <div class="circle2"></div>
+            <div class="circle3"></div>
+        </div>
+    </div>
+</div>
 <div class="row row-divided">
     <div class="col-md-12 col-xl-12">
         <div class="card">
@@ -289,15 +295,11 @@
 @endsection
 @section('script')
 
-<!-- Plugins Js -->
-<script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
+
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
 <script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
 
-<script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
 <script src="{{asset('admin/assets/libs/moment/moment.min.js')}}"></script>
 <script src="{{asset('admin/packages/core/main.js')}}"></script>
@@ -305,9 +307,6 @@
 <script src="{{asset('admin/packages/daygrid/main.js')}}"></script>
 <script src="{{asset('admin/packages/timegrid/main.js')}}"></script>
 <script src="{{asset('admin/packages/interaction/main.js')}}"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
 <script src="{{asset('landing/js/diasLaborales.js')}}"></script>
 
 @endsection
