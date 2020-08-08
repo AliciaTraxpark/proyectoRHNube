@@ -182,6 +182,12 @@ function limpiarDatosPersonales() {
     $('#generoPersonalizado').hide();
 }
 
+function limpiarDatosEmpresarial() {
+    Datos();
+    $('#disabledDatosE :input').attr('disabled', true);
+    $('#disabledDatosE button[type="button"]').hide();
+}
+
 function editarDatosPersonales() {
     objDatosPersonales = datosPersonales("POST");
     enviarDatosP('', objDatosPersonales);

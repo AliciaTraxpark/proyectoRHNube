@@ -254,7 +254,7 @@
                                     btn-light btn-sm" style="background-color:
                                     #163552;color:
                                     #ffffff;">Actualizar
-                                    </button>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -375,6 +375,11 @@
                         <div class="form-group mb-0
                             justify-content-end row">
                             <div class="col-12 text-right">
+                                <button type="button" class="btn btn-light
+                                    btn-sm"
+                                    onclick="javascript:limpiarDatosEmpresarial();">Cancelar
+                                </button>
+                                &nbsp;&nbsp;
                                 <button type="button" class="btn btn-light
                                     btn-sm" id="actualizarDatosEmpresa"
                                     style="background-color: #163552;color:
