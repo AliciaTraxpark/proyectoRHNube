@@ -1,5 +1,6 @@
 actualizarDatos();
-var valueGenero;
+var valueGenero = '';
+var valueOrgani = '';
 
 function Datos() {
     $.ajax({
@@ -16,7 +17,7 @@ function Datos() {
             $('#apPaternoP').val(data.perso_apPaterno);
             $('#direccion').val(data.perso_direccion);
             $('#apMaternoP').val(data.perso_apMaterno);
-            if (data.perso_sexo != "Mujer" || data.perso_sexo != "Hombre" || data.perso_sexo != "Personalizado") {
+            if (data.perso_sexo != "Mujer" && data.perso_sexo != "Hombre" && data.perso_sexo != "Personalizado") {
                 $('#genero').append($('<option>', {
                     value: data.perso_sexo,
                     text: data.perso_sexo,
@@ -31,6 +32,14 @@ function Datos() {
             $('#direccionE').val(data.organi_direccion);
             $('#numE').val(data.organi_nempleados);
             $('#pagWeb').val(data.organi_pagWeb);
+            if (data.organi_tipo != "Empresa" && data.organi_tipo != "Gobierno" && data.organi_tipo != "ONG" && data.organi_tipo != "Asociación" && data.organi_tipo != "Otros") {
+                $('#organizacion').append($('<option>', {
+                    value: data.organi_tipo,
+                    text: data.organi_tipo,
+                    selected: true
+                }));
+                valueGenero = data.organi_tipo;
+            }
             $('#organizacion').val(data.organi_tipo);
             if (data.foto != null) {
                 $('#preview').attr("src", "/fotosUser/" + data.foto);
@@ -56,6 +65,7 @@ $('[data-toggle="tooltip"]').tooltip();
 $('#disabledDatosP :input').attr('disabled', true);
 $('#disabledDatosP button[type="button"]').hide();
 $('#guardarPersonalizarSexo').prop('disabled', true);
+$('#guardarPersonalizarOrganizacion').prop('disabled', true);
 $('#editarDatosP').on("click", function () {
     $('#disabledDatosP :input').attr('disabled', false);
     $('#disabledDatosP button[type="button"]').show();
@@ -102,6 +112,7 @@ $('#editarDatosE').on("click", function () {
     $('#disabledDatosE :input').attr('disabled', false);
     $('#ruc').attr('disabled', true);
     $('#disabledDatosE button[type="button"]').show();
+    $('#organizacionPersonalizado').show();
 });
 $('#razonS').keyup(function () {
     if ($('#razonS').val() == '') {
@@ -149,14 +160,30 @@ function limpiartextSexo() {
     $('#textSexo').val("");
     $('#guardarPersonalizarSexo').prop('disabled', true);
 }
+
+function limpiartextOrganizacion() {
+    $('#textOrganizacion').val("");
+    $('#guardarPersonalizarOrganizacion').prop('disabled', true);
+}
 $('#generoPersonalizado').on("click", function () {
     $('#generoModal').modal();
+});
+$('#organizacionPersonalizado').on("click", function () {
+    $('#organizacionModal').modal();
 });
 $('#textSexo').keyup(function () {
     if ($(this).val() != '') {
         $('#guardarPersonalizarSexo').prop('disabled', false);
     } else {
         $('#guardarPersonalizarSexo').prop('disabled', true);
+    }
+});
+
+$('#textOrganizacion').keyup(function () {
+    if ($(this).val() != '') {
+        $('#guardarPersonalizarOrganizacion').prop('disabled', false);
+    } else {
+        $('#guardarPersonalizarOrganizacion').prop('disabled', true);
     }
 });
 
@@ -167,11 +194,30 @@ function personalizadoGenero() {
         text: sexo,
         selected: true
     }));
-    $('#genero').find("option[value='" + valueGenero + "']").remove();
+    if (valueGenero != '') {
+        $('#genero').find("option[value='" + valueGenero + "']").remove();
+    }
     valueGenero = sexo;
     $('#genero').val(sexo);
     $('#generoModal').modal("toggle");
     limpiartextSexo();
+}
+
+function personalizadoOrganizacion() {
+    var organi = $('#textOrganizacion').val();
+    $('#organizacion').append($('<option>', {
+        value: organi,
+        text: organi,
+        selected: true
+    }));
+    if (valueOrgani != '') {
+        $('#organizacion').find("option[value='" + valueOrgani + "']").remove();
+    }
+    valueOrgani = organi;
+    $('#organizacion').val(organi);
+    $('#organizacionModal').modal('toggle');
+    limpiartextOrganizacion();
+
 }
 
 function limpiarDatosPersonales() {
@@ -186,6 +232,7 @@ function limpiarDatosEmpresarial() {
     Datos();
     $('#disabledDatosE :input').attr('disabled', true);
     $('#disabledDatosE button[type="button"]').hide();
+    $('#organizacionPersonalizado').hide();
 }
 
 function editarDatosPersonales() {
@@ -302,6 +349,7 @@ function enviarDatosE(accion, objDatosEmpresa) {
             $('#strongOrganizacion').append(h6);
             $('#disabledDatosE :input').attr('disabled', true);
             $('#disabledDatosE button[type="button"]').hide();
+            $('#organizacionPersonalizado').hide();
             $.notify({
                 message: "\nPerfil Editado\n",
                 icon: 'admin/images/checked.svg'

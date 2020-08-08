@@ -98,6 +98,46 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<!--MODAL ORGANIZACION-->
+<div id="organizacionModal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="organizacionModal"
+    aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="padding-bottom:3px;
+                padding-top:10px;background: #ecebeb">
+                <h5 class="modal-title" id="myModalLabel" style="font-size:
+                    14px">
+                    Personalizar organización</h5>
+                <button type="button" class="close" data-dismiss="modal"
+                    aria-label="Close"
+                    onclick="javascript:limpiartextOrganizacion()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{ csrf_field() }}
+                <div class="col-md-12">
+                    <label for="">Organización</label>
+                </div>
+                <div class="col-md-12">
+                    <input type="text" class="form-control"
+                        id="textOrganizacion"
+                        required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm" style="background:
+                    #f0f0f0" data-dismiss="modal"
+                    onclick="javascript:limpiartextOrganizacion()">Cerrar</button>
+                <button type="button" class="btn btn-sm" style="background:
+                    #302f56;color: #ecebeb" class="btn
+                    btn-sm" onclick="javascript:personalizadoOrganizacion()"
+                    id="guardarPersonalizarOrganizacion">Guardar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
@@ -348,7 +388,7 @@
                         <div class="form-group row mb-3">
                             <label for="" class="col-5 col-form-label">Tipo de
                                 organización</label>
-                            <div class="col-7">
+                            <div class="col-5">
                                 <select class="form-control" name="organizacion"
                                     id="organizacion" required>
                                     <option class="" value="Empresa">Empresa</option>
@@ -357,6 +397,14 @@
                                     <option class="" value="Asociación">Asociación</option>
                                     <option class="" value="Otros">Otros</option>
                                 </select>
+                            </div>
+                            <div class="col-2 text-right">
+                                <a data-toggle="modal"
+                                    id="organizacionPersonalizado">
+                                    <img class="mt-2" style="cursor: pointer"
+                                        src="{{asset('landing/images/plus.svg')}}"
+                                        height="15">
+                                </a>
                             </div>
                         </div>
                         <div class="form-group row mb-3">
@@ -405,6 +453,7 @@
 <script>
     $('#rowAlert').hide();
     $('#generoPersonalizado').hide();
+    $('#organizacionPersonalizado').hide();
 </script>
 <script src="{{asset('landing/js/seleccionarDepOrg.js')}}"></script>
 <script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
