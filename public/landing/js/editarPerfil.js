@@ -174,6 +174,14 @@ function personalizadoGenero() {
     limpiartextSexo();
 }
 
+function limpiarDatosPersonales() {
+    Datos();
+    $('#disabledDatosP :input').attr('disabled', true);
+    $('#guardarPersonalizarSexo').prop('disabled', true);
+    $('#disabledDatosP button[type="button"]').hide();
+    $('#generoPersonalizado').hide();
+}
+
 function editarDatosPersonales() {
     objDatosPersonales = datosPersonales("POST");
     enviarDatosP('', objDatosPersonales);
