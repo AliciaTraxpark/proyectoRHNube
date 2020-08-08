@@ -1,4 +1,5 @@
 actualizarDatos();
+var valueGenero;
 
 function Datos() {
     $.ajax({
@@ -21,6 +22,7 @@ function Datos() {
                     text: data.perso_sexo,
                     selected: true
                 }));
+                valueGenero = data.perso_sexo;
             }
             $('#genero').val(data.perso_sexo);
             $('#idE').val(data.id);
@@ -53,9 +55,11 @@ $('#fechaNacimiento').combodate({
 $('[data-toggle="tooltip"]').tooltip();
 $('#disabledDatosP :input').attr('disabled', true);
 $('#disabledDatosP button[type="button"]').hide();
+$('#guardarPersonalizarSexo').prop('disabled', true);
 $('#editarDatosP').on("click", function () {
     $('#disabledDatosP :input').attr('disabled', false);
     $('#disabledDatosP button[type="button"]').show();
+    $('#generoPersonalizado').show();
 });
 $('#nombre').keyup(function () {
     if ($('#nombre').val() == '') {
@@ -141,6 +145,35 @@ $('#distE').change(function () {
     }
 });
 
+function limpiartextSexo() {
+    $('#textSexo').val("");
+    $('#guardarPersonalizarSexo').prop('disabled', true);
+}
+$('#generoPersonalizado').on("click", function () {
+    $('#generoModal').modal();
+});
+$('#textSexo').keyup(function () {
+    if ($(this).val() != '') {
+        $('#guardarPersonalizarSexo').prop('disabled', false);
+    } else {
+        $('#guardarPersonalizarSexo').prop('disabled', true);
+    }
+});
+
+function personalizadoGenero() {
+    var sexo = $('#textSexo').val();
+    $('#genero').append($('<option>', {
+        value: sexo,
+        text: sexo,
+        selected: true
+    }));
+    $('#genero').find("option[value='" + valueGenero + "']").remove();
+    valueGenero = sexo;
+    $('#genero').val(sexo);
+    $('#generoModal').modal("toggle");
+    limpiartextSexo();
+}
+
 function editarDatosPersonales() {
     objDatosPersonales = datosPersonales("POST");
     enviarDatosP('', objDatosPersonales);
@@ -186,6 +219,8 @@ function enviarDatosP(accion, objDatosPersonales) {
             $('#strongNombre').append(strong);
             $('#disabledDatosP :input').attr('disabled', true);
             $('#disabledDatosP button[type="button"]').hide();
+            $('#generoPersonalizado').hide();
+            Datos();
             $.notify({
                 message: "\nPerfil Editado\n",
                 icon: 'admin/images/checked.svg'
