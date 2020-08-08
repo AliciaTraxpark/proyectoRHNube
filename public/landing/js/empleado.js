@@ -2724,19 +2724,15 @@ function valorCodigoEmpleado() {
     enviarEmpleado('', objEmpleado);
 });*/
 
-$("input[name=tipo]") // select the radio by its id
-    .change(function () { // bind a function to the change event
-        if ($(this).is(":checked")) { // check if the radio is checked
-            var val = $(this).val(); // retrieve the value
-            console.log(val);
-        }
-    });
 
 function datosPersona(method) {
     var celularC = '';
-    console.log($('input[name=tipo]:checked').val());
+    var telefonoC = '';
     if ($('#celular').val() != '') {
         celularC = $('#codigoCelular').val() + $('#celular').val();
+    }
+    if ($('#telefono').val() != '') {
+        telefonoC = $('#codigoTelefono').val() + $('#telefono').val();
     }
     nuevoEmpleado = {
         nombres: $('#nombres').val(),
@@ -2754,7 +2750,7 @@ function datosPersona(method) {
         dist: $('#dist').val(),
         direccion: $('#direccion').val(),
         celular: celularC,
-        telefono: $('#telefono').val(),
+        telefono: telefonoC,
         correo: $('#email').val(),
         '_method': method
     }
@@ -3141,8 +3137,12 @@ $("#checkboxFechaIE").on("click", function () {
 
 function datosPersonaA(method) {
     var celularC = '';
+    var telefonoC = '';
     if ($('#v_celular').val() != '') {
         celularC = $('#v_codigoCelular').val() + $('#v_celular').val();
+    }
+    if ($('#v_telefono').val() != '') {
+        telefonoC = $('#v_codigoTelefono').val() + $('#v_telefono').val();
     }
     nuevoEmpleadoA = {
         nombres_v: $('#v_nombres').val(),
@@ -3164,7 +3164,7 @@ function datosPersonaA(method) {
         nivel_v: $('#v_nivel').val(),
         local_v: $('#v_local').val(),
         celular_v: celularC,
-        telefono_v: $('#v_telefono').val(),
+        telefono_v: telefonoC,
         correo_v: $('#v_email').val(),
         fechaI_v: $('#m_fechaIE').val(),
         fechaF_v: $('#m_fechaFE').val(),
@@ -3292,6 +3292,8 @@ $('#documento').on('change', function () {
         $("#numDocumento").attr("maxlength", "12");
     }
 });
+$("#telefono").attr("maxlength", "6");
+$("#v_telefono").attr("maxlength", "6");
 $('#smartwizardVer :input').attr('disabled', true);
 $("#form-registrar :input").prop('disabled', true);
 $('#documento').attr('disabled', false);
@@ -3382,7 +3384,8 @@ $('#cerrarEd').click(function () {
     $('#v_centroc').val("").trigger("change");
     $('#v_local').val("").trigger("change");
     $('#selectHorario_ed').val("Seleccionar horario");
-    $('#codigoCelular').val("+51");
+    $('#v_codigoCelular').val("+51");
+    $('#v_codigoTelefono').val("01");
     limpiar();
     $('#selectCalendario').val("Asignar calendario");
     $('#selectHorario').val("Seleccionar horario");
@@ -3424,6 +3427,7 @@ $('#cerrarModalEmpleado').click(function () {
     $('#cerrarMoadalEmpleado').attr('disabled', false);
     $('#checkboxFechaI').prop('checked', false);
     $('#codigoCelular').val("+51");
+    $('#codigoTelefono').val("01");
     //********** */
     $('#v_emailR').hide();
     $('#validDocumento').hide();
@@ -3500,6 +3504,7 @@ function FinalizarEmpleado() {
     $('#file').val('');
     $('#file').fileinput('refresh');
     $('#codigoCelular').val("+51");
+    $('#codigoTelefono').val("01");
     $('#cargo').val("").trigger("change");
     $('#contrato').val("").trigger("change");
     $('#area').val("").trigger("change");

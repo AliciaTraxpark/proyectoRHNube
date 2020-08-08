@@ -389,6 +389,7 @@ $(document).ready(function () {
                     $('#v_local').val("").trigger("change");
                     $('#selectHorario_ed').val("Seleccionar horario");
                     $('#codigoCelular').val("+51");
+                    $('#codigoTelefono').val("01");
                     limpiar();
                     $('#selectCalendario').val("Asignar calendario");
                     $('#selectHorario').val("Seleccionar horario");

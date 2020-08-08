@@ -36,7 +36,7 @@ Route::post("captura", "apiController@captura")->middleware('token');
 Route::post("proyecto", "apiController@selectProyecto")->middleware('token');
 Route::post("agregarProyecto", "apiController@agregarProyecto")->middleware('token');
 Route::post("editarProyecto", "apiController@editarProyecto")->middleware('token');
-Route::post("eliminarProyecto", "apiController@eliminarProyecto")->middleware('token');
+Route::post("eliminarProyecto", "apiController@cambiarEstadoProyecto")->middleware('token');
 //HORARIO
 Route::post("horario", "apiController@horario")->middleware('token');
 Route::post("ultimoHorario", "apiController@ultimoHorario")->middleware('token');
