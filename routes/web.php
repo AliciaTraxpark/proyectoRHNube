@@ -280,3 +280,5 @@ Route::get('cambiarEstadoLicencia', 'detallesActivacionController@cambiarEstadoL
 Route::post('/dias/storeCalendario', 'diasLaborablesController@storeCalendario');
 Route::post('/dias/delete', 'diasLaborablesController@eliminarBD');
 Route::post('/dias/diasIncidempleado', 'diasLaborablesController@diasIncidempleado');
+///errores
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
