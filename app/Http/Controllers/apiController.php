@@ -134,6 +134,7 @@ class apiController extends Controller
                 ->leftJoin('actividad as ac', 'ac.Tarea_Tarea_id', '=', 't.Tarea_id')
                 ->select('pr.Proye_id', 'pr.Proye_Nombre')
                 ->where('e.emple_id', '=', $empleado)
+                ->where('pr.Proye_estado', '=', 1)
                 ->groupBy('pr.Proye_id')
                 ->get();
 
