@@ -96,6 +96,7 @@ class EmpleadoController extends Controller
                 'e.emple_id'
             )
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->get();
         $calendario = DB::table('calendario as ca')
             ->where('ca.users_id', '=', Auth::user()->id)
@@ -815,6 +816,7 @@ class EmpleadoController extends Controller
                 'e.emple_id'
             )
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->get();
         $calendario = DB::table('calendario as ca')
             ->where('ca.users_id', '=', Auth::user()->id)
@@ -836,6 +838,7 @@ class EmpleadoController extends Controller
         $empleado = DB::table('empleado as e')
             ->where('e.emple_nDoc', '=', $numeroD)
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->get()->first();
         if ($empleado != null) {
             return 1;
@@ -849,6 +852,7 @@ class EmpleadoController extends Controller
         $empleado = DB::table('empleado as e')
             ->where('e.emple_nDoc', '=', $numDoc)
             ->where('e.emple_id', '!=', $empleado)
+            ->where('e.emple_estado', '=', 1)
             ->get()->first();
         if ($empleado != null) {
             return 1;
@@ -861,6 +865,7 @@ class EmpleadoController extends Controller
         $empleado = DB::table('empleado as e')
             ->where('emple_Correo', '=', $email)
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->get()->first();
         if ($empleado != null) {
             return 1;
@@ -875,6 +880,7 @@ class EmpleadoController extends Controller
             ->where('emple_Correo', '=', $email)
             ->where('e.users_id', '=', Auth::user()->id)
             ->where('e.emple_id', '!=', $empleado)
+            ->where('e.emple_estado', '=', 1)
             ->get()->first();
         if ($empleado != null) {
             return 1;
