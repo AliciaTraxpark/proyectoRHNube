@@ -25,6 +25,7 @@ class ControlController extends Controller
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->groupBy('p.perso_id')
             ->get();
         return view('tareas.tareas', ['empleado' => $empleado]);
@@ -41,6 +42,7 @@ class ControlController extends Controller
             })
             ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'en.Total_Envio')
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->groupBy('e.emple_id')
             ->get();
         return view('tareas.reporteSemanal', ['empleado' => $empleado]);
@@ -56,6 +58,7 @@ class ControlController extends Controller
             ->join('proyecto as pr', 'pr.Proye_id', '=', 'pe.Proyecto_Proye_id')
             ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->groupBy('e.emple_id')
             ->get();
 
@@ -83,6 +86,7 @@ class ControlController extends Controller
             ->where(DB::raw('IF(h.id is null, DATE(cp.fecha_hora), DATE(h.start))'), '>=', $fechaF[0])
             ->where(DB::raw('IF(h.id is null, DATE(cp.fecha_hora), DATE(h.start))'), '<=', $fechaF[1])
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->groupBy('fecha_captura', 'e.emple_id')
             ->get();
 
