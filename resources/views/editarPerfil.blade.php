@@ -308,6 +308,9 @@
 <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')}}"></script>
 <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
+<script>
+    $('#rowAlert').hide();
+</script>
 <script src="{{asset('landing/js/seleccionarDepOrg.js')}}"></script>
 <script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
 <script src="{{asset('landing/js/editarPerfil.js')}}"></script>
