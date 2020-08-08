@@ -110,28 +110,28 @@
                             <div class="modal-header" style="padding-bottom:3px; padding-top:10px;background: #ecebeb">
                                 <h5 class="modal-title" id="myModalLabel" style="font-size: 14px">
                                     Personalizar sexo</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                    onclick="javascript:limpiartextSexo()">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="">
-                                    {{ csrf_field() }}
-                                    <div class="col-md-12">
-                                        <label for="">Sexo</label>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <input type="text" class="form-control" id="textCargo" required>
-                                    </div>
+                                {{ csrf_field() }}
+                                <div class="col-md-12">
+                                    <label for="">Sexo</label>
+                                </div>
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" id="textSexo" required>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-sm" style="background:
-                                #f0f0f0" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-sm" style="background:
+                                #f0f0f0" data-dismiss="modal" onclick="javascript:limpiartextSexo()">Cerrar</button>
+                                <button type="button" class="btn btn-sm" style="background:
                                 #302f56;color: #ecebeb" class="btn
-                                btn-sm">Guardar</button>
+                                btn-sm" onclick="javascript:personalizadoGenero()"
+                                    id="guardarPersonalizarSexo">Guardar</button>
                             </div>
-                            </form>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
@@ -316,8 +316,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js">
     </script>
     <script>
+        function limpiartextSexo(){
+            $('#textSexo').val("");
+            $('#guardarPersonalizarSexo').prop('disabled', true);
+        }
         $('#validCelCorreo').hide();
         $('#generoPersonalizado').hide();
+        $('#guardarPersonalizarSexo').prop('disabled', true);
         $("input[name=sexo]") // select the radio by its id
         .change(function () { // bind a function to the change event
         if ($(this).is(":checked")) { // check if the radio is checked
@@ -327,11 +332,19 @@
             $('#generoPersonalizado').show();
             }else{
                 $('#generoPersonalizado').hide();
+                limpiartextSexo()
             }
         }
-        $('#generoPersonalizado').on("click", function(){
+    });
+    $('#generoPersonalizado').on("click", function(){
             $('#generoModal').modal();
-        });
+    });
+    $('#textSexo').keyup( function(){
+        if($(this).val() != ''){
+            $('#guardarPersonalizarSexo').prop('disabled', false);
+        }else{
+            $('#guardarPersonalizarSexo').prop('disabled', true);
+        }
     });
     </script>
     <script>
