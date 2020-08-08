@@ -60,11 +60,13 @@
     <div class="content-wrapper">
         <div class="container">
             <section class="features-overview" id="features-section">
+                <!--MODAL FECHA-->
                 <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header" style="padding-bottom: 3px; padding-top:
+                            <div class="modal-header" style="padding-bottom:
+                                    3px; padding-top:
                                     10px;background: #ecebeb">
                                 <h5 class="" id="myModalLabel" style="font-size: 14px">Confirma tu
                                     fecha de nacimiento
@@ -79,7 +81,8 @@
                                         <div class="col-lg-12">
                                             <label class="col-lg-12
                                                     col-form-label" for="simpleinput">Naciste el<input type="text"
-                                                    id="diaN" class="inp col-md-1" disabled>de<input type="text" class="inp
+                                                    id="diaN" class="inp
+                                                        col-md-1" disabled>de<input type="text" class="inp
                                                         col-md-3" id="mesN" disabled>de<input type="text" id="anoN"
                                                     class="inp col-md-2" disabled>?</label>
                                         </div>
@@ -91,14 +94,47 @@
                                     &nbsp; &nbsp;</button>
                                 <button type="submit" style="background:
                                             #302f56;color: #ecebeb" class="btn
-                                            btn-sm" id="confirmar"> &nbsp; &nbsp; Sí
+                                            btn-sm" id="confirmar"> &nbsp;
+                                    &nbsp; Sí
                                     &nbsp; &nbsp; </button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-
+                <!--MODAL GENERO-->
+                <div id="generoModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="generoModal"
+                    aria-hidden="true" data-backdrop="static">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header" style="padding-bottom:3px; padding-top:10px;background: #ecebeb">
+                                <h5 class="modal-title" id="myModalLabel" style="font-size: 14px">
+                                    Personalizar sexo</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="">
+                                    {{ csrf_field() }}
+                                    <div class="col-md-12">
+                                        <label for="">Sexo</label>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control" id="textCargo" required>
+                                    </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-sm" style="background:
+                                #f0f0f0" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-sm" style="background:
+                                #302f56;color: #ecebeb" class="btn
+                                btn-sm">Guardar</button>
+                            </div>
+                            </form>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
                 <form method="POST" action="javascript:agregarempleado()">
                     {{ csrf_field() }}
                     <div class="row">
@@ -129,11 +165,13 @@
                                 </div>
                                 <div class="col-md-9" id="validCelCorreo" style="display: none">
                                     <br>
-                                    <span style="color:red;">*Número de celular incorrecto o Correo
+                                    <span style="color:red;">*Número de
+                                        celular incorrecto o Correo
                                         electrónico incorrecto.</span><br></div><br><br>
                                 <div class="col-md-9">
                                     <input class="form-control" placeholder="Número de celular o correo electrónico"
-                                        name="email" id="email" value="{{old ('email')}}" required>
+                                        name="email" id="email" value="{{old
+                                            ('email')}}" required>
                                     {{$errors->first('email')}}
                                 </div><br><br>
                                 <div class="col-md-9">
@@ -227,15 +265,16 @@
                                         <input type="radio" name="sexo" id="sexo" value="Personalizado" required>
                                         Personalizado
                                     </label>
+                                    &nbsp;
+                                    <a data-toggle="modal" id="generoPersonalizado">
+                                        <img src="{{asset('landing/images/plus (3).svg')}}" style="cursor: pointer"
+                                            height="15">
+                                    </a>
                                 </div>
                             </div>
-
                         </div>
                         <br><br>
-
-
                         <br><br>
-
                     </div>
                     <div class="container col-md-3">
                         <img src="{{asset('landing/images/career.gif')}}" alt="" class="img-fluid"><br><br><br><br>
@@ -248,9 +287,6 @@
         </div>
         </form>
         </section>
-
-
-
         <footer class="border-top">
             <p class="text-center text-muted pt-4">© <?php echo date("
                             Y" ); ?> - RH Solution | Todos los derechos
@@ -281,11 +317,22 @@
     </script>
     <script>
         $('#validCelCorreo').hide();
-        $(document).ready(function () {
-            // Función para permitir sólo números, retroceso y enter
-
-        })
-
+        $('#generoPersonalizado').hide();
+        $("input[name=sexo]") // select the radio by its id
+        .change(function () { // bind a function to the change event
+        if ($(this).is(":checked")) { // check if the radio is checked
+            var val = $(this).val(); // retrieve the value
+            console.log(val);
+            if(val == "Personalizado"){
+            $('#generoPersonalizado').show();
+            }else{
+                $('#generoPersonalizado').hide();
+            }
+        }
+        $('#generoPersonalizado').on("click", function(){
+            $('#generoModal').modal();
+        });
+    });
     </script>
     <script>
         $(function () {
