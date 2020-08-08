@@ -221,6 +221,7 @@ class EmpleadoController extends Controller
                 'md.idTipoDispositivo as dispositivo'
             )
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->get();
         $vinculacionD = [];
         foreach ($tabla_empleado1 as $tab) {
@@ -740,10 +741,11 @@ class EmpleadoController extends Controller
 
         $array = array();
         foreach ($empleado as $t) {
-
+            $t->emple_estado = 0;
+            $t->save();
             $array[] = $t->emple_persona;
         }
-        $idem = implode(',', $array);
+        /*$idem = implode(',', $array);
 
 
         //dd($idem);
@@ -782,8 +784,7 @@ class EmpleadoController extends Controller
         $persona = persona::whereIn('perso_id', explode(",", $idem))->get();
         $persona->each->delete();
         //$persona= persona::where('perso_id','=',$empleado->emple_persona);
-        //dd($empleado->emple_persona);
-
+        //dd($empleado->emple_persona);*/
     }
     public function indexMenu()
     {
