@@ -15,6 +15,13 @@ function Datos() {
             $('#apPaternoP').val(data.perso_apPaterno);
             $('#direccion').val(data.perso_direccion);
             $('#apMaternoP').val(data.perso_apMaterno);
+            if (data.perso_sexo != "Mujer" || data.perso_sexo != "Hombre" || data.perso_sexo != "Personalizado") {
+                $('#genero').append($('<option>', {
+                    value: data.perso_sexo,
+                    text: data.perso_sexo,
+                    selected: true
+                }));
+            }
             $('#genero').val(data.perso_sexo);
             $('#idE').val(data.id);
             $('#ruc').val(data.organi_ruc);
@@ -50,7 +57,7 @@ $('#editarDatosP').on("click", function () {
     $('#disabledDatosP :input').attr('disabled', false);
     $('#disabledDatosP button[type="button"]').show();
 });
-$('#nombre').change(function () {
+$('#nombre').keyup(function () {
     if ($('#nombre').val() == '') {
         $('#actualizarDatosPersonales').attr('disabled', true);
     } else {
@@ -64,21 +71,21 @@ $('#fechaN').change(function () {
         $('#actualizarDatosPersonales').attr('disabled', false);
     }
 });
-$('#apPaternoP').change(function () {
+$('#apPaternoP').keyup(function () {
     if ($('#apPaternoP').val() == '') {
         $('#actualizarDatosPersonales').attr('disabled', true);
     } else {
         $('#actualizarDatosPersonales').attr('disabled', false);
     }
 });
-$('#direccion').change(function () {
+$('#direccion').keyup(function () {
     if ($('#direccion').val() == '') {
         $('#actualizarDatosPersonales').attr('disabled', true);
     } else {
         $('#actualizarDatosPersonales').attr('disabled', false);
     }
 });
-$('#apMaternoP').change(function () {
+$('#apMaternoP').keyup(function () {
     if ($('#apMaternoP').val() == '') {
         $('#actualizarDatosPersonales').attr('disabled', true);
     } else {
@@ -92,14 +99,14 @@ $('#editarDatosE').on("click", function () {
     $('#ruc').attr('disabled', true);
     $('#disabledDatosE button[type="button"]').show();
 });
-$('#razonS').change(function () {
+$('#razonS').keyup(function () {
     if ($('#razonS').val() == '') {
         $('#actualizarDatosEmpresa').attr('disabled', true);
     } else {
         $('#actualizarDatosEmpresa').attr('disabled', false);
     }
 });
-$('#numE').change(function () {
+$('#numE').keyup(function () {
     if ($('#numE').val() == '') {
         $('#actualizarDatosEmpresa').attr('disabled', true);
     } else {
