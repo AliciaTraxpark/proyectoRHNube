@@ -125,7 +125,7 @@ use App\proyecto_empleado;
                 <div id="myModal1" class="modal fade" tabindex="-1"
                     role="dialog" aria-labelledby="myModalLabel"
                     aria-hidden="true">
-                    <div class="modal-dialog"style="max-width: 550px;">
+                    <div class="modal-dialog" style="max-width: 550px;">
                         <div class="modal-content">
                             <div class="modal-header"
                                 style="background-color:#163552;">
@@ -216,7 +216,7 @@ use App\proyecto_empleado;
                 <div id="myModal2" class="modal fade" tabindex="-1"
                     role="dialog" aria-labelledby="myModalLabel"
                     aria-hidden="true">
-                    <div class="modal-dialog"style="max-width: 550px;">
+                    <div class="modal-dialog" style="max-width: 550px;">
                         <div class="modal-content">
                             <div class="modal-header"
                                 style="background-color:#163552;">
@@ -357,6 +357,7 @@ use App\proyecto_empleado;
                                 'p.perso_id')
                                 ->select('e.emple_id','p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno')
                                 ->where('e.emple_id','=',$proyectoEmps->empleado_emple_id)
+                                ->where('e.emple_estado', '=', 1)
                                 ->get();
 
                                 @endphp
@@ -412,7 +413,7 @@ use App\proyecto_empleado;
 <script src="{{asset('landing/js/proyecto.js')}}"></script>
 <script
     src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
-    <script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
+<script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
 @endsection
 
 @section('script-bottom')
