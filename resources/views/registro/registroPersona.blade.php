@@ -210,10 +210,8 @@
                                             electrónico incorrecto.</span><br></div><br><br>
                                     <div class="col-md-9">
                                         <input class="form-control"
-                                            placeholder="Número de celular o
-                                            correo electrónico"
-                                            name="email" id="email" value="{{old
-                                            ('email')}}" required>
+                                            placeholder="Número de celular o correo electrónico"
+                                            name="email" id="email" value="{{old('email')}}" required>
                                         {{$errors->first('email')}}
                                     </div><br><br>
                                     <div class="col-md-9">
@@ -239,8 +237,7 @@
                                             <input type="text"
                                                 placeholder="elegir fecha"
                                                 class="form-control" id="fecha"
-                                                name="fecha" value="{{old
-                                                ('fecha')}}"
+                                                name="fecha" value="{{old('fecha')}}"
                                                 required>
                                             {{$errors->first('fecha')}}
                                             <div class="input-group-append"><span
@@ -407,7 +404,7 @@
             $('#generoPersonalizado').show();
             }else{
                 $('#generoPersonalizado').hide();
-                limpiartextSexo()
+                limpiartextSexo();
             }
         }
     });

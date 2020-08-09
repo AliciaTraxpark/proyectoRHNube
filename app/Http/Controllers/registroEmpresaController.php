@@ -63,6 +63,11 @@ class registroEmpresaController extends Controller
             ->get()->first();
 
         if ($rucorganizacion == null) {
+            if ($request->get('inputOrgani') != null) {
+                $organi = $request->get('inputOrgani');
+            } else {
+                $organi = $request->get('tipo');
+            }
             $organizacion = new organizacion();
             $organizacion->organi_ruc = $request->get('ruc');
             $organizacion->organi_razonSocial = $request->get('razonSocial');
@@ -72,7 +77,7 @@ class registroEmpresaController extends Controller
             $organizacion->organi_distrito = $request->get('distrito');
             $organizacion->organi_nempleados = $request->get('nempleados');
             $organizacion->organi_pagWeb = $request->get('pagWeb');
-            $organizacion->organi_tipo = $request->get('tipo');
+            $organizacion->organi_tipo = $organi;
             $organizacion->save();
             $idorgani = $organizacion->organi_id;
 
