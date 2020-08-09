@@ -73,6 +73,7 @@ class apiController extends Controller
             ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
             ->where('emple_nDoc', '=', $nroD)
             ->where('e.users_id', '=', $explode[0])
+            ->where('e.emple_estado', '=', 1)
             ->get()->first();
 
         $idUser = $explode[0];

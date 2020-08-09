@@ -34,12 +34,14 @@ class dashboardController extends Controller
         $empleado = DB::table('empleado as e')
             ->select(DB::raw('COUNT(e.emple_id) as totalE'))
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->get();
 
         $area = DB::table('empleado as e')
             ->join('area as a', 'e.emple_area', '=', 'a.area_id')
             ->select('a.area_descripcion', DB::raw('COUNT(a.area_descripcion) as Total'))
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->groupBy('a.area_id')
             ->get();
 
@@ -53,12 +55,14 @@ class dashboardController extends Controller
         $empleado = DB::table('empleado as e')
             ->select(DB::raw('COUNT(e.emple_id) as totalE'))
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->get();
 
         $nivel = DB::table('empleado as e')
             ->join('nivel as n', 'e.emple_nivel', '=', 'n.nivel_id')
             ->select('n.nivel_descripcion', DB::raw('COUNT(n.nivel_descripcion) as Total'))
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->groupBy('n.nivel_id')
             ->get();
 
@@ -72,12 +76,14 @@ class dashboardController extends Controller
         $empleado = DB::table('empleado as e')
             ->select(DB::raw('COUNT(e.emple_id) as totalE'))
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->get();
 
         $contrato = DB::table('empleado as e')
             ->join('tipo_contrato as c', 'e.emple_tipoContrato', '=', 'c.contrato_id')
             ->select('c.contrato_descripcion', DB::raw('COUNT(c.contrato_descripcion) as Total'))
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->groupBy('c.contrato_id')
             ->get();
 
@@ -91,12 +97,14 @@ class dashboardController extends Controller
         $empleado = DB::table('empleado as e')
             ->select(DB::raw('COUNT(e.emple_id) as totalE'))
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->get();
 
         $centro = DB::table('empleado as e')
             ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
             ->select('cc.centroC_descripcion', DB::raw('COUNT(cc.centroC_descripcion) as Total'))
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->groupBy('cc.centroC_id')
             ->get();
 
@@ -110,12 +118,14 @@ class dashboardController extends Controller
         $empleado = DB::table('empleado as e')
             ->select(DB::raw('COUNT(e.emple_id) as totalE'))
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->get();
 
         $local = DB::table('empleado as e')
             ->join('local as l', 'e.emple_local', '=', 'l.local_id')
             ->select('l.local_descripcion', DB::raw('COUNT(l.local_descripcion) as Total'))
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->groupBy('l.local_id')
             ->get();
 
@@ -129,11 +139,13 @@ class dashboardController extends Controller
         $empleado = DB::table('empleado as e')
             ->select(DB::raw('COUNT(e.emple_id) as totalE'))
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->get();
         $departamento = DB::table('empleado as e')
             ->join('ubigeo_peru_departments as d', 'd.id', '=', 'e.emple_departamento')
             ->select('d.name', DB::raw('COUNT(d.name) as total'))
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->groupBy('d.id')
             ->get();
 
@@ -147,12 +159,14 @@ class dashboardController extends Controller
         $empleado = DB::table('empleado as e')
             ->select(DB::raw('COUNT(e.emple_id) as totalE'))
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->get();
 
         $edad = DB::table('empleado as e')
             ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
             ->select(DB::raw('YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento) as edad'), DB::raw('COUNT(YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento)) as total'))
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->groupBy('edad')
             ->get();
 
@@ -166,6 +180,7 @@ class dashboardController extends Controller
         $empleado = DB::table('empleado as e')
             ->select(DB::raw('COUNT(e.emple_id) as totalE'))
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->get();
         $edad = DB::table('empleado as e')
             ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
@@ -180,6 +195,7 @@ class dashboardController extends Controller
                 DB::raw('COUNT(*) as total')
             )
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->groupBy('rango')
             ->get();
         array_push($datos, array("empleado" => $empleado, "edad" => $edad));

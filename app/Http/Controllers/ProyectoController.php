@@ -11,18 +11,21 @@ use Illuminate\Support\Facades\DB;
 use App\proyecto;
 use App\proyecto_empleado;
 use Illuminate\Support\Facades\Response;
+
 class ProyectoController extends Controller
-{   public function __construct()
+{
+    public function __construct()
     {
         $this->middleware(['auth', 'verified']);
     }
     public function index()
     {
-        $proyecto = proyecto::where('idUser', '=', Auth::user()->id)->get();
+        $proyecto = proyecto::where('idUser', '=', Auth::user()->id)->where('Proye_estado', '=', 1)->get();
         $empleado = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->get();
 
         return view('Proyecto.proyecto', ['empleado' => $empleado, 'proyecto' => $proyecto]);
@@ -84,16 +87,18 @@ class ProyectoController extends Controller
         $proyecto = proyecto::where('Proye_id', '=', $idproyecto)->delete();
     }
 
-    public function empleadosTabla(Request $request){
-        $proyecto = proyecto::where('Proye_id','=',$request->get('id'))->get();
-        foreach ($proyecto as $proyectos){
-            $proyectoEmp=DB::table('proyecto_empleado as pe')
-            ->join('empleado as e','pe.empleado_emple_id','=','e.emple_id')
-            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-            ->where('Proyecto_Proye_id','=',$proyectos->Proye_id)
-            ->get();
+    public function empleadosTabla(Request $request)
+    {
+        $proyecto = proyecto::where('Proye_id', '=', $request->get('id'))->get();
+        foreach ($proyecto as $proyectos) {
+            $proyectoEmp = DB::table('proyecto_empleado as pe')
+                ->join('empleado as e', 'pe.empleado_emple_id', '=', 'e.emple_id')
+                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                ->where('Proyecto_Proye_id', '=', $proyectos->Proye_id)
+                ->where('e.emple_estado', '=', 1)
+                ->get();
 
-        /* if(!$proyectoEmp->isEmpty()){
+            /* if(!$proyectoEmp->isEmpty()){
             foreach ( $proyectoEmp as $proyectoEmps){
             $empleadoTabE = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
@@ -104,23 +109,18 @@ class ProyectoController extends Controller
             }
 
             } */
-
-        }  return [$proyecto,$proyectoEmp];
-
-
-
+        }
+        return [$proyecto, $proyectoEmp];
     }
 
-    public function eliminarEmpleado(Request $request){
-    $id=$request->id;
-    $proyecto_empleado = proyecto_empleado::where('proye_empleado_id', '=', $id)->delete();
+    public function eliminarEmpleado(Request $request)
+    {
+        $id = $request->id;
+        $proyecto_empleado = proyecto_empleado::where('proye_empleado_id', '=', $id)->delete();
     }
-    public function editarProyecto(Request $request){
-        $proyecto =proyecto::where('Proye_id', '=', $request->idPr)
-        ->update(['Proye_Nombre' =>  $request->nombreP,'Proye_Detalle' =>  $request->detalleP]);
-
-
+    public function editarProyecto(Request $request)
+    {
+        $proyecto = proyecto::where('Proye_id', '=', $request->idPr)
+            ->update(['Proye_Nombre' =>  $request->nombreP, 'Proye_Detalle' =>  $request->detalleP]);
     }
-
-
 }

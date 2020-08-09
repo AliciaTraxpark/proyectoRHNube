@@ -126,6 +126,10 @@ function agregarempleado() {
     //
 }
 
+function personalizadoGenero() {
+    $('#generoModal').modal("toggle");
+}
+
 function registerP() {
     var emailCelular = $('#email').val().split("@");
     var emailC;
@@ -133,6 +137,12 @@ function registerP() {
         emailC = $('#email').val();
     } else {
         emailC = "+51" + $('#email').val();
+    }
+    var sexoP;
+    if ($('#textSexo').val() != '') {
+        sexoP = $('#textSexo').val();
+    } else {
+        sexoP = $('input:radio[name=sexo]:checked').val();
     }
     var nombres = $('#nombres').val();
     var apPaterno = $('#apPaterno').val();
@@ -143,7 +153,7 @@ function registerP() {
     var dia_fecha = $('#dia_fecha').val();
     var mes_fecha = $('#mes_fecha').val();
     var ano_fecha = $('#ano_fecha').val();
-    var sexo = $('input:radio[name=sexo]:checked').val();
+    var sexo = sexoP;
 
     $.ajax({
         type: "POST",
