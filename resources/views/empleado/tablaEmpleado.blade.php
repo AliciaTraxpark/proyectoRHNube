@@ -372,7 +372,7 @@
                         @if($tablaV["dispositivoD"] == "WINDOWS")
                         <a class="dropdown-item"
                             onclick="javascript:enviarWindowsTabla({{$tabla_empleados->emple_id}},{{$tablaV['idVinculacion']}})">PC
-                            {{$loop->index}}</a>
+                            {{$loop->index +1}}</a>
                         @endif
                         @endforeach
                     </ul>
