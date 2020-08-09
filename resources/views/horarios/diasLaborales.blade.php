@@ -156,7 +156,7 @@
                 <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                 <div class="row">
 
-                    <div class="col-md-7">
+                    <div class="col-md-6">
                         <div class="col-xl-12 col-sm-8">
                             <div class="form-group mt-3 mt-sm-0">
                                 <label>Empleado</label>
@@ -169,7 +169,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5 text-right" id="btnLabo" style="display: none"><br><br>
+                    <div class="col-md-6 text-right" id="btnLabo" style="display: none"><br><br>
                         <button type="button"
                         style=" max-width: 18em!important;"
                         class="btn btn-secondary btn-sm"
