@@ -97,10 +97,12 @@ function onMostrarPantallas() {
                                 var capturas = "";
                                 for (let index = 1; index < data[hora][j].length; index++) {
                                     promedios = promedios + data[hora][j][index].prom;
-                                    var totalMinutos = data[hora][j][index].promedio.split(":");
-                                    var convertirMinutos = parseInt(totalMinutos[0]) * 60 + parseInt(totalMinutos[1]) + parseFloat(totalMinutos[2] / 60);
-                                    var minutosT = minutosT + convertirMinutos;
-                                    totalCM = Math.round(minutosT);
+                                    if (data[hora][j][index].promedio != "00:00:00") {
+                                        var totalMinutos = data[hora][j][index].promedio.split(":");
+                                        var convertirMinutos = parseInt(totalMinutos[0]) * 60 + parseInt(totalMinutos[1]) + parseFloat(totalMinutos[2] / 60);
+                                        var minutosT = minutosT + convertirMinutos;
+                                        totalCM = Math.round(minutosT);
+                                    }
                                     capturas += `<div class = "carousel-item">
                                     <img src="data:image/jpeg;base64,${data[hora][j][index].imagen}" height="120" width="200" class="img-responsive">
                                     <div class="overlay">
