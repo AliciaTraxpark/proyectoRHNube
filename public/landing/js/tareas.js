@@ -128,7 +128,7 @@ function onMostrarPantallas() {
                                 else nivel = "red";
                                 var labelEstadoP = ``;
                                 if (data[hora][j][0].Proye_estado == 0) {
-                                    labelEstadoP = `Finalizado`;
+                                    labelEstadoP = `(Finalizado)`;
                                 }
                                 card = `<div class="col-2" style="margin-left: 0px!important;">
                                         <div class="mb-0 text-center" style="padding-left: 0px;">
@@ -176,7 +176,7 @@ function onMostrarPantallas() {
                                                     </div>
                                                     <label style="font-size: 12px;font-style: italic; bold;color:#1f4068;" for="">Total de ${totalCM} minutos</label>
                                                     <br>
-                                                    <label style="font-size: 12px;font-style: italic; bold;color:red;">&nbsp;(${labelEstadoP})</label>
+                                                    <label style="font-size: 12px;font-style: italic; bold;color:red;">&nbsp;${labelEstadoP}</label>
                                                 </div>
                                             </div>
                                             </div>
@@ -229,7 +229,7 @@ function onMostrarPantallas() {
                                                         </div>
                                                         <label style="font-size: 12px;font-style: italic; bold;color:#1f4068;" for="">Total de ${totalCM} minutos</label>
                                                         <br>
-                                                        <label style="font-size: 12px;font-style: italic; bold;color:red;">&nbsp;(${labelEstadoP})</label>
+                                                        <label style="font-size: 12px;font-style: italic; bold;color:red;">&nbsp;${labelEstadoP}</label>
                                                     </div>
                                                 </div>
                                                 </div>
