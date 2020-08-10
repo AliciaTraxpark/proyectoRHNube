@@ -95,7 +95,8 @@ function onMostrarPantallas() {
                             if (j < 5) {
                                 var capturas = "";
                                 for (let index = 1; index < data[hora][j].length; index++) {
-                                    promedios = promedios + data[hora][j][index].prom;
+                                    promedios = promedios + parseFloat(data[hora][j][index].prom);
+                                    console.log(data[hora][j][index].prom);
                                     var totalMinutos = data[hora][j][index].promedio.split(":");
                                     var convertirMinutos = parseInt(totalMinutos[0]) * 60 + parseInt(totalMinutos[1]) + parseFloat(totalMinutos[2] / 60);
                                     var minutosT = minutosT + convertirMinutos;
