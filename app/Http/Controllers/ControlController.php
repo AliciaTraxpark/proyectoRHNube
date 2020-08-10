@@ -177,6 +177,7 @@ class ControlController extends Controller
                 DB::raw('IF(hd.id is null, DATE(cp.fecha_hora), DATE(hd.start))'),
                 'P.Proye_id',
                 'P.Proye_Nombre',
+                'p.Proye_estado',
                 'en.idEnvio',
                 'cp.imagen',
                 'cp.promedio',

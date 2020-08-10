@@ -125,6 +125,10 @@ function onMostrarPantallas() {
                                 if (promedio >= 50) nivel = "green";
                                 else if (promedio > 35) nivel = "#f3c623";
                                 else nivel = "red";
+                                var labelEstadoP = ``;
+                                if (data[hora][j][0].Proye_estado == 0) {
+                                    labelEstadoP = `Finalizado`;
+                                }
                                 card = `<div class="col-2" style="margin-left: 0px!important;">
                                         <div class="mb-0 text-center" style="padding-left: 0px;">
                                             <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
@@ -170,6 +174,8 @@ function onMostrarPantallas() {
                                                     </div>
                                                     </div>
                                                     <label style="font-size: 12px;font-style: italic; bold;color:#1f4068;" for="">Total de ${totalCM} minutos</label>
+                                                    <br>
+                                                    <label style="font-size: 12px;font-style: italic; bold;color:red;">&nbsp;(${labelEstadoP})</label>
                                                 </div>
                                             </div>
                                             </div>
@@ -221,6 +227,8 @@ function onMostrarPantallas() {
                                                         </div>
                                                         </div>
                                                         <label style="font-size: 12px;font-style: italic; bold;color:#1f4068;" for="">Total de ${totalCM} minutos</label>
+                                                        <br>
+                                                        <label style="font-size: 12px;font-style: italic; bold;color:red;">&nbsp;(${labelEstadoP})</label>
                                                     </div>
                                                 </div>
                                                 </div>
