@@ -83,6 +83,7 @@ function onMostrarPantallas() {
                     var prom = 0;
                     var minutosT = 0;
                     var totalCM = 0;
+                    var labelEstadoP = ``;
                     var labelDelGrupo = horaDelGrupo + ":00:00" + " - " + (parseInt(horaDelGrupo) + 1) + ":00:00";
                     var grupo = `<span style="font-weight: bold;color:#6c757d;cursor:default">${labelDelGrupo}</span>&nbsp;&nbsp;<img src="landing/images/punt.gif" height="70">&nbsp;&nbsp;
                     <span class="promHoras" style="font-weight: bold;color:#6c757d;cursor:default" id="promHoras${$i}" data-toggle="tooltip" data-placement="right" title="Actividad por Hora"
@@ -129,7 +130,6 @@ function onMostrarPantallas() {
                                 if (promedio >= 50) nivel = "green";
                                 else if (promedio > 35) nivel = "#f3c623";
                                 else nivel = "red";
-                                var labelEstadoP = ``;
                                 if (data[hora][j][0].Proye_estado == 0) {
                                     labelEstadoP = `(Finalizado)`;
                                 }
