@@ -9,7 +9,10 @@ use App\Mail\CorreoEmpleadoMail;
 use App\Mail\CorreoMasivoMail;
 use App\Mail\MasivoWindowsMail;
 use App\modo;
+use App\organizacion;
 use App\persona;
+use App\User;
+use App\usuario_organizacion;
 use App\vinculacion;
 use Carbon\Carbon;
 use DateTime;
@@ -73,13 +76,16 @@ class correosEmpleadoController extends Controller
             $datos["correo"] = $correoE->emple_Correo;
             $email = array($datos["correo"]);
             $codigoP = DB::table('empleado as e')
-                ->select('emple_persona')
+                ->select('emple_persona', 'e.users_id')
                 ->where('e.emple_id', '=', $idEmpleado)
                 ->get()->first();
             $codP = [];
             $codP["id"] = $codigoP->emple_persona;
             $persona = persona::find($codP["id"]);
-            Mail::to($email)->queue(new AndroidMail($persona));
+            $user = User::where('id', '=', $codigoP->users_id)->get()->first();
+            $usuarioOrganizacion = usuario_organizacion::where('user_id', '=', $user->id)->get()->first();
+            $organizacion = organizacion::where('organi_id', '=', $usuarioOrganizacion->organi_id)->get()->first();
+            Mail::to($email)->queue(new AndroidMail($persona, $organizacion));
             $vinculacion = vinculacion::where('id', '=', $idVinculacion)->get()->first();
             $envio = $vinculacion->envio;
             $suma = $envio + 1;
@@ -113,7 +119,10 @@ class correosEmpleadoController extends Controller
                 $datos = [];
                 $datos["correo"] = $correoE->emple_Correo;
                 $email = array($datos["correo"]);
-                Mail::to($email)->queue(new AndroidMail($persona));
+                $user = User::where('id', '=', $empleado->users_id)->get()->first();
+                $usuarioOrganizacion = usuario_organizacion::where('user_id', '=', $user->id)->get()->first();
+                $organizacion = organizacion::where('organi_id', '=', $usuarioOrganizacion->organi_id)->get()->first();
+                Mail::to($email)->queue(new AndroidMail($persona, $organizacion));
                 array_push($resultado, array("Persona" => $persona, "Correo" => $c));
             } else {
                 $c = false;
