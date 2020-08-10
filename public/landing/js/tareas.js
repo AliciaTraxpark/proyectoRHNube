@@ -100,7 +100,6 @@ function onMostrarPantallas() {
                                     var convertirMinutos = parseInt(totalMinutos[0]) * 60 + parseInt(totalMinutos[1]) + parseFloat(totalMinutos[2] / 60);
                                     var minutosT = minutosT + convertirMinutos;
                                     var totalCM = Math.round(minutosT);
-                                    console.log(totalCM);
                                     capturas += `<div class = "carousel-item">
                                     <img src="data:image/jpeg;base64,${data[hora][j][index].imagen}" height="120" width="200" class="img-responsive">
                                     <div class="overlay">
@@ -114,9 +113,9 @@ function onMostrarPantallas() {
                                     var convertirMinutos = parseInt(totalMinutos[0]) * 60 + parseInt(totalMinutos[1]) + parseFloat(totalMinutos[2] / 60);
                                     var minutosT = convertirMinutos;
                                     var totalCM = Math.round(minutosT);
-                                    console.log(totalCM);
                                     promedio = data[hora][j][0].prom;
                                 } else {
+                                    console.log(promedios);
                                     promedio = (promedios / (data[hora][j].length)).toFixed(2);
                                     if (promedios == 0) {
                                         promedio = 0
