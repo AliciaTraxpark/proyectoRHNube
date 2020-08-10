@@ -42,7 +42,7 @@ class correosEmpleadoController extends Controller
             $datos["correo"] = $empleado->emple_Correo;
             $email = array($datos["correo"]);
             $codigoP = DB::table('empleado as e')
-                ->select('emple_persona','e.users_id')
+                ->select('emple_persona', 'e.users_id')
                 ->where('e.emple_id', '=', $idEmpleado)
                 ->get();
             $codP = [];
@@ -51,7 +51,7 @@ class correosEmpleadoController extends Controller
             $user = User::where('id', '=', $codigoP[0]->users_id)->get()->first();
             $usuarioOrganizacion = usuario_organizacion::where('user_id', '=', $user->id)->get()->first();
             $organizacion = organizacion::where('organi_id', '=', $usuarioOrganizacion->organi_id)->get()->first();
-            Mail::to($email)->queue(new CorreoEmpleadoMail($vinculacion, $persona, $licencia_empleado,$organizacion));
+            Mail::to($email)->queue(new CorreoEmpleadoMail($vinculacion, $persona, $licencia_empleado, $organizacion));
             $vinculacion->fecha_entrega = Carbon::now();
             $envio = $vinculacion->envio;
             $suma = $envio + 1;
@@ -162,7 +162,10 @@ class correosEmpleadoController extends Controller
                 if (sizeof($arrayVinculacion) >= 1) {
                     $datos["correo"] = $empleado->emple_Correo;
                     $email = array($datos["correo"]);
-                    Mail::to($email)->queue(new MasivoWindowsMail($arrayVinculacion, $persona));
+                    $user = User::where('id', '=', $empleado->users_id)->get()->first();
+                    $usuarioOrganizacion = usuario_organizacion::where('user_id', '=', $user->id)->get()->first();
+                    $organizacion = organizacion::where('organi_id', '=', $usuarioOrganizacion->organi_id)->get()->first();
+                    Mail::to($email)->queue(new MasivoWindowsMail($arrayVinculacion, $persona, $organizacion));
                     array_push($resultado, array("Persona" => $persona, "Correo" => $c, "Vinculacion" => $v));
                 } else {
                     $v = false;
