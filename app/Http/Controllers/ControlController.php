@@ -192,7 +192,6 @@ class ControlController extends Controller
             ->where('e.emple_id', '=', $idempleado)
             ->where('e.users_id', '=', Auth::user()->id)
             ->groupBy('cp.idCaptura')
-            ->orderBy('cp.fecha_hora', 'asc')
             ->get();
         $control = controlAJson($control);
         return response()->json($control, 200);
