@@ -103,6 +103,7 @@ class registroEmpresaController extends Controller
             $datos["confirmation_code"] = $data[0]->confirmation_code;
             $persona = persona::find($persona["id"]);
             $users = User::find($request->get('iduser'));
+            $organi = organizacion::find($idorgani);
             $correo = array($datos['email']);
             $datoNuevo = explode("@", $data[0]->email);
 
@@ -113,7 +114,7 @@ class registroEmpresaController extends Controller
                 $this->sendMessage($mensaje, $data[0]->email);
                 return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado.!");
             } else {
-                Mail::to($correo)->queue(new CorreoMail($users, $persona));
+                Mail::to($correo)->queue(new CorreoMail($users, $persona, $organi));
                 return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado! Te hemos enviado un correo de verificación.");
             }
         } else {
