@@ -152,8 +152,8 @@ function onMostrarPantallas() {
                                                         </div>
                                                     </div>
                                                     &nbsp;
-                                                    <label style="font-size: 12px" for="">${hora + ":" + (j-1) + "0" + " - " + hora + 
-                                                    ":" + (j-1) + "9"}</label>
+                                                    <label style="font-size: 12px" for="">${hora + ":" + j + "0" + " - " + hora + 
+                                                    ":" + j + "9"}</label>
                                                     <div class="progress" style="background-color: #d4d4d4;" data-toggle="tooltip" data-placement="bottom" title="Actividad por Rango de Tiempo"
                                                     data-original-title="">
                                                         <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:${nivel}" aria-valuenow=${promedio}
@@ -202,8 +202,8 @@ function onMostrarPantallas() {
                                                         </div>
                                                     </div>
                                                         &nbsp;
-                                                        <label style="font-size: 12px" for="">${hora + ":" + (j-1) + "0" + " - " + hora + 
-                                                        ":" + (j-1) + "9"}</label>
+                                                        <label style="font-size: 12px" for="">${hora + ":" + j + "0" + " - " + hora + 
+                                                        ":" + j + "9"}</label>
                                                         <div class="progress" style="background-color: #d4d4d4;" data-toggle="tooltip" data-placement="bottom" title="Actividad por Rango de Tiempo"
                                                         data-original-title="">
                                                             <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:${nivel}" aria-valuenow=${promedio}
