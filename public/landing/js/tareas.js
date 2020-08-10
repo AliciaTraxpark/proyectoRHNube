@@ -81,6 +81,7 @@ function onMostrarPantallas() {
                     var promedios = 0;
                     var promedio = 0;
                     var prom = 0;
+                    var minutosT = 0;
                     var totalCM = 0;
                     var labelDelGrupo = horaDelGrupo + ":00:00" + " - " + (parseInt(horaDelGrupo) + 1) + ":00:00";
                     var grupo = `<span style="font-weight: bold;color:#6c757d;cursor:default">${labelDelGrupo}</span>&nbsp;&nbsp;<img src="landing/images/punt.gif" height="70">&nbsp;&nbsp;
@@ -100,7 +101,7 @@ function onMostrarPantallas() {
                                     if (data[hora][j][index].promedio != "00:00:00") {
                                         var totalMinutos = data[hora][j][index].promedio.split(":");
                                         var convertirMinutos = parseInt(totalMinutos[0]) * 60 + parseInt(totalMinutos[1]) + parseFloat(totalMinutos[2] / 60);
-                                        var minutosT = minutosT + convertirMinutos;
+                                        minutosT = minutosT + convertirMinutos;
                                         totalCM = Math.round(minutosT);
                                     }
                                     capturas += `<div class = "carousel-item">
