@@ -42,7 +42,6 @@ input[type=number] { -moz-appearance:textfield; }
             </div>
         </nav>
     </header>
-
     <div class="content-wrapper">
         <div class="container">
             @if (session('errors'))
@@ -55,6 +54,46 @@ input[type=number] { -moz-appearance:textfield; }
             </div>
             @endif
             <section class="features-overview" id="features-section">
+                <!--MODAL ORGANIZACION-->
+                <div id="organizacionModal" class="modal fade" tabindex="-1" role="dialog"
+                aria-labelledby="organizacionModal"
+                aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" style="padding-bottom:3px;
+                            padding-top:10px;background: #ecebeb">
+                            <h5 class="modal-title" id="myModalLabel" style="font-size:
+                                14px">
+                                Personalizar organización</h5>
+                            <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close"
+                                onclick="javascript:limpiartextOrganizacion()">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            {{ csrf_field() }}
+                            <div class="col-md-12">
+                                <label for="">Organización</label>
+                            </div>
+                            <div class="col-md-12">
+                                <input type="text" class="form-control"
+                                    id="textOrganizacion"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm" style="background:
+                                #f0f0f0" data-dismiss="modal"
+                                onclick="javascript:limpiartextOrganizacion()">Cerrar</button>
+                            <button type="button" class="btn btn-sm" style="background:
+                                #302f56;color: #ecebeb" class="btn
+                                btn-sm" onclick="javascript:personalizadoOrganizacion()"
+                                id="guardarPersonalizarOrganizacion">Guardar</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
                 <form method="POST" action="{{route('registerOrganizacion')}}">
                     @csrf
                     <div class="row">
@@ -120,6 +159,7 @@ input[type=number] { -moz-appearance:textfield; }
                                 </div>
                                 <div class="col-md-2">
                                     <div class="control">
+                                        <input type="hidden" class="form-control" id="inputOrgani" name="inputOrgani">
                                         <label class="radio normal">
                                             <input type="radio" name="tipo" id="tipo" value="Empresa" required>
                                             Empresa
@@ -156,6 +196,13 @@ input[type=number] { -moz-appearance:textfield; }
                                             <input type="radio" name="tipo" id="tipo" value="Otros" required>
                                             Otros
                                         </label>
+                                        &nbsp;
+                                        <a data-toggle="modal"
+                                            id="organizacionPersonalizado">
+                                            <img class="mt-0" style="cursor: pointer"
+                                                src="{{asset('landing/images/plus.svg')}}"
+                                                height="15">
+                                        </a>
                                     </div>
                                 </div>
 
@@ -175,9 +222,6 @@ input[type=number] { -moz-appearance:textfield; }
                     </div>
                 </form>
             </section>
-
-
-
             <footer class="border-top">
                 <p class="text-center text-muted pt-4">© <?php echo date("Y"); ?> - RH Solution | Todos los derechos
                     reservados.</p>
@@ -208,9 +252,46 @@ input[type=number] { -moz-appearance:textfield; }
     <script src="{{asset('landing/vendors/bootstrap/bootstrap.min.js')}}"></script>
     <script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>
     <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
-    <script src="{{asset('landing/js/landingpage.js')}}"></script>
     <script src="{{asset('landing/js/seleccionarDepProv.js')}}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function limpiartextOrganizacion() {
+            $('#textOrganizacion').val("");
+            $('#inputOrgani').val("");
+            $('#guardarPersonalizarOrganizacion').prop('disabled', true);
+        }
+        $('#organizacionPersonalizado').hide();
+        $('#guardarPersonalizarOrganizacion').prop('disabled', true);
+        $("input[name=tipo]") // select the radio by its id
+        .change(function () { // bind a function to the change event
+            if ($(this).is(":checked")) { // check if the radio is checked
+                var val = $(this).val(); // retrieve the value
+                console.log(val);
+                if(val == "Otros"){
+                    $('#organizacionPersonalizado').show();
+                }else{
+                    $('#organizacionPersonalizado').hide();
+                    limpiartextOrganizacion();
+                }
+            }
+        });
+        $('#organizacionPersonalizado').on("click", function () {
+            var valor = $('#textOrganizacion').val();
+            $('#organizacionModal').modal();
+        });
+        $('#textOrganizacion').keyup(function () {
+            if ($(this).val() != '') {
+                $('#guardarPersonalizarOrganizacion').prop('disabled', false);
+            } else {
+                $('#guardarPersonalizarOrganizacion').prop('disabled', true);
+            }
+        });
+        function personalizadoOrganizacion() {
+            var valor = $('#textOrganizacion').val();
+            $('#inputOrgani').val(valor);
+            console.log($('#inputOrgani').val());
+            $('#organizacionModal').modal('toggle');
+        }
+    </script>
     <script>
         $(document).ready(function() {
         $('#ruc').focus();
@@ -239,12 +320,13 @@ input[type=number] { -moz-appearance:textfield; }
                 alert('Error');
             }
                 });
-
-
-
-
 });
 })
+    </script>
+    <script>
+        function agregarEmpresa(){
+
+        }
     </script>
 </body>
 

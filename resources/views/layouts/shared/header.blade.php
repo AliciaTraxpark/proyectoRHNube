@@ -59,7 +59,7 @@ use App\persona;
                 <a class="nav-link dropdown-toggle mr-0" data-toggle="dropdown" href="#" role="button"
                     aria-haspopup="false" aria-expanded="false">
                     <span  class="pro-user-name ml-1">
-                       <strong style="color: aliceblue;font-size:
+                       <strong id="strongNombre" style="color: aliceblue;font-size:
                        13px">Bienvenido(a), {{$persona->perso_nombre}}</strong> &nbsp;<img id="imgxs2" src="{{
                         URL::asset('admin/assets//images/users/avatar-7.png') }}"
                         class="avatar-xs rounded-circle mr-2" alt="Shreyu" /> <i data-feather="chevron-down"></i>

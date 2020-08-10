@@ -1,16 +1,77 @@
-$('#rowAlert').hide();
 actualizarDatos();
+var valueGenero = '';
+var valueOrgani = '';
+
+function Datos() {
+    $.ajax({
+        async: false,
+        url: "/perfilMostrar",
+        method: "GET",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            $('#id').val(data.id);
+            $('#nombre').val(data.perso_nombre);
+            $('#fechaNacimiento').val(data.perso_fechaNacimiento);
+            $('#apPaternoP').val(data.perso_apPaterno);
+            $('#direccion').val(data.perso_direccion);
+            $('#apMaternoP').val(data.perso_apMaterno);
+            if (data.perso_sexo != "Mujer" && data.perso_sexo != "Hombre" && data.perso_sexo != "Personalizado") {
+                $('#genero').append($('<option>', {
+                    value: data.perso_sexo,
+                    text: data.perso_sexo,
+                    selected: true
+                }));
+                valueGenero = data.perso_sexo;
+            }
+            $('#genero').val(data.perso_sexo);
+            $('#idE').val(data.id);
+            $('#ruc').val(data.organi_ruc);
+            $('#razonS').val(data.organi_razonSocial);
+            $('#direccionE').val(data.organi_direccion);
+            $('#numE').val(data.organi_nempleados);
+            $('#pagWeb').val(data.organi_pagWeb);
+            if (data.organi_tipo != "Empresa" && data.organi_tipo != "Gobierno" && data.organi_tipo != "ONG" && data.organi_tipo != "Asociación" && data.organi_tipo != "Otros") {
+                $('#organizacion').append($('<option>', {
+                    value: data.organi_tipo,
+                    text: data.organi_tipo,
+                    selected: true
+                }));
+                valueGenero = data.organi_tipo;
+            }
+            $('#organizacion').val(data.organi_tipo);
+            if (data.foto != null) {
+                $('#preview').attr("src", "/fotosUser/" + data.foto);
+                $('#imgsm').attr("src", "/fotosUser/" + data.foto);
+                $('#imgxs').attr("src", "/fotosUser/" + data.foto);
+                $('#imgxs2').attr("src", "/fotosUser/" + data.foto);
+            }
+            $('#depE').val(data.organi_departamento);
+            onSelectDepartamentoOrgani('#depE').then(function () {
+                $('#provE').val(data.organi_provincia);
+                onSelectProvinciaOrgani('#provE').then((result) => $('#distE')
+                    .val(data.organi_distrito))
+            });
+        },
+        error: function (data) {}
+    });
+}
+Datos();
 $('#fechaNacimiento').combodate({
     yearDescending: false,
 });
 $('[data-toggle="tooltip"]').tooltip();
 $('#disabledDatosP :input').attr('disabled', true);
 $('#disabledDatosP button[type="button"]').hide();
+$('#guardarPersonalizarSexo').prop('disabled', true);
+$('#guardarPersonalizarOrganizacion').prop('disabled', true);
 $('#editarDatosP').on("click", function () {
     $('#disabledDatosP :input').attr('disabled', false);
     $('#disabledDatosP button[type="button"]').show();
+    $('#generoPersonalizado').show();
 });
-$('#nombre').change(function () {
+$('#nombre').keyup(function () {
     if ($('#nombre').val() == '') {
         $('#actualizarDatosPersonales').attr('disabled', true);
     } else {
@@ -24,21 +85,21 @@ $('#fechaN').change(function () {
         $('#actualizarDatosPersonales').attr('disabled', false);
     }
 });
-$('#apPaternoP').change(function () {
+$('#apPaternoP').keyup(function () {
     if ($('#apPaternoP').val() == '') {
         $('#actualizarDatosPersonales').attr('disabled', true);
     } else {
         $('#actualizarDatosPersonales').attr('disabled', false);
     }
 });
-$('#direccion').change(function () {
+$('#direccion').keyup(function () {
     if ($('#direccion').val() == '') {
         $('#actualizarDatosPersonales').attr('disabled', true);
     } else {
         $('#actualizarDatosPersonales').attr('disabled', false);
     }
 });
-$('#apMaternoP').change(function () {
+$('#apMaternoP').keyup(function () {
     if ($('#apMaternoP').val() == '') {
         $('#actualizarDatosPersonales').attr('disabled', true);
     } else {
@@ -51,15 +112,16 @@ $('#editarDatosE').on("click", function () {
     $('#disabledDatosE :input').attr('disabled', false);
     $('#ruc').attr('disabled', true);
     $('#disabledDatosE button[type="button"]').show();
+    $('#organizacionPersonalizado').show();
 });
-$('#razonS').change(function () {
+$('#razonS').keyup(function () {
     if ($('#razonS').val() == '') {
         $('#actualizarDatosEmpresa').attr('disabled', true);
     } else {
         $('#actualizarDatosEmpresa').attr('disabled', false);
     }
 });
-$('#numE').change(function () {
+$('#numE').keyup(function () {
     if ($('#numE').val() == '') {
         $('#actualizarDatosEmpresa').attr('disabled', true);
     } else {
@@ -93,6 +155,85 @@ $('#distE').change(function () {
         $('#actualizarDatosEmpresa').attr('disabled', false);
     }
 });
+
+function limpiartextSexo() {
+    $('#textSexo').val("");
+    $('#guardarPersonalizarSexo').prop('disabled', true);
+}
+
+function limpiartextOrganizacion() {
+    $('#textOrganizacion').val("");
+    $('#guardarPersonalizarOrganizacion').prop('disabled', true);
+}
+$('#generoPersonalizado').on("click", function () {
+    $('#generoModal').modal();
+});
+$('#organizacionPersonalizado').on("click", function () {
+    $('#organizacionModal').modal();
+});
+$('#textSexo').keyup(function () {
+    if ($(this).val() != '') {
+        $('#guardarPersonalizarSexo').prop('disabled', false);
+    } else {
+        $('#guardarPersonalizarSexo').prop('disabled', true);
+    }
+});
+
+$('#textOrganizacion').keyup(function () {
+    if ($(this).val() != '') {
+        $('#guardarPersonalizarOrganizacion').prop('disabled', false);
+    } else {
+        $('#guardarPersonalizarOrganizacion').prop('disabled', true);
+    }
+});
+
+function personalizadoGenero() {
+    var sexo = $('#textSexo').val();
+    $('#genero').append($('<option>', {
+        value: sexo,
+        text: sexo,
+        selected: true
+    }));
+    if (valueGenero != '') {
+        $('#genero').find("option[value='" + valueGenero + "']").remove();
+    }
+    valueGenero = sexo;
+    $('#genero').val(sexo);
+    $('#generoModal').modal("toggle");
+    limpiartextSexo();
+}
+
+function personalizadoOrganizacion() {
+    var organi = $('#textOrganizacion').val();
+    $('#organizacion').append($('<option>', {
+        value: organi,
+        text: organi,
+        selected: true
+    }));
+    if (valueOrgani != '') {
+        $('#organizacion').find("option[value='" + valueOrgani + "']").remove();
+    }
+    valueOrgani = organi;
+    $('#organizacion').val(organi);
+    $('#organizacionModal').modal('toggle');
+    limpiartextOrganizacion();
+
+}
+
+function limpiarDatosPersonales() {
+    Datos();
+    $('#disabledDatosP :input').attr('disabled', true);
+    $('#guardarPersonalizarSexo').prop('disabled', true);
+    $('#disabledDatosP button[type="button"]').hide();
+    $('#generoPersonalizado').hide();
+}
+
+function limpiarDatosEmpresarial() {
+    Datos();
+    $('#disabledDatosE :input').attr('disabled', true);
+    $('#disabledDatosE button[type="button"]').hide();
+    $('#organizacionPersonalizado').hide();
+}
 
 function editarDatosPersonales() {
     objDatosPersonales = datosPersonales("POST");
@@ -129,13 +270,18 @@ function enviarDatosP(accion, objDatosPersonales) {
         success: function (data) {
             console.log(data);
             var h5 = `${data.perso_nombre} ${data.perso_apPaterno} ${data.perso_apMaterno}`;
+            var strong = `Bienvenido(a), ${data.perso_nombre}`;
             actualizarDatos();
             $('#h5Nombres').empty();
             $('#h6Nombres').empty();
+            $('#strongNombre').empty();
             $('#h5Nombres').append(h5);
             $('#h6Nombres').append(h5);
+            $('#strongNombre').append(strong);
             $('#disabledDatosP :input').attr('disabled', true);
             $('#disabledDatosP button[type="button"]').hide();
+            $('#generoPersonalizado').hide();
+            Datos();
             $.notify({
                 message: "\nPerfil Editado\n",
                 icon: 'admin/images/checked.svg'
@@ -203,6 +349,7 @@ function enviarDatosE(accion, objDatosEmpresa) {
             $('#strongOrganizacion').append(h6);
             $('#disabledDatosE :input').attr('disabled', true);
             $('#disabledDatosE button[type="button"]').hide();
+            $('#organizacionPersonalizado').hide();
             $.notify({
                 message: "\nPerfil Editado\n",
                 icon: 'admin/images/checked.svg'
