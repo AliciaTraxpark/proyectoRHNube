@@ -895,37 +895,8 @@
                 });
             }
         });
-        /*table.columns().every(function(){
-            var that = this;
-            var i;
-            var val1;
-            $('#select').on("keyup change", function(){
-                i = this.value;
-                console.log(i);
-                var val = $('#global_filter').val();
-                if(that.column(i).search() !== this.value){
-                    console.log(this.value);
-                    that.column(this.value).search(val).draw();
-                }
-                val1 = this.value;
-                $('#global_filter').on("keyup change clear",function(){
-                    var val = $(this).val();
-                    if(that.column(i).search() !== val1){
-                        that.column(val1).search(val).draw();
-                    }
-                });
-            });
-        });*/
-        //$('#verf1').hide();
-        //$('#tablaEmpleado tbody #tdC').css('display', 'none');
-
-        $("#tablaEmpleado tbody tr").hover(function () {
-            //$('#verf1').css('display', 'block');
-            $('#tablaEmpleado tbody #tdC').css('display', 'block');
-
-        }, function () {
-
-        });
+        $('#tablaEmpleado tbody #tdC').css('display', 'block');
+        
         $('input.global_filter').on('keyup click', function () {
             filterGlobal();
         });
