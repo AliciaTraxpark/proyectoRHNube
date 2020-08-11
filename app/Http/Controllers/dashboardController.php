@@ -205,8 +205,8 @@ class dashboardController extends Controller
     public function horarioDias()
     {
         $respuesta = false;
-        $horario = DB::table('horario_dias as hd')
-            ->where('hd.users_id', '=', Auth::user()->id)
+        $horario = DB::table('horario as h')
+            ->where('h.user_id', '=', Auth::user()->id)
             ->get()
             ->first();
 
