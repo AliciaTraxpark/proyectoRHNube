@@ -115,11 +115,10 @@ use App\persona;
                         <!-- item-->
                         <a href="javascript:void(0);" class="dropdown-item
                             notify-item border-bottom">
-                            <div class="notify-icon bg-primary"><i
-                                    class="uil
-                                    uil-user-plus"></i></div>
-                            <p class="notify-details">New user registered.<small
-                                    class="text-muted">5 hours ago</small>
+                            <div class="notify-icon bg-primary">
+                                <i data-feather="bell"></i>
+                            </div>
+                            <p class="notify-details">New user registered.
                             </p>
                         </a>
 
