@@ -1572,13 +1572,21 @@ document.addEventListener('DOMContentLoaded', calendario4);
 //************* */
 $("#checkboxFechaI").on("click", function () {
     if ($("#checkboxFechaI").is(':checked')) {
-        $('#ocultarFecha > .combodate').hide();
-        $('#labelfechaF').hide();
-        $('#m_fechaF').combodate("clearValue");
-    } else {
-        $('#labelfechaF').show();
-        $('#ocultarFecha > .combodate').show();
-    }
+
+          $('#labelfechaF').hide();
+          $('#mf_dia_fecha').val("0");
+          $('#mf_mes_fecha').val("0");
+          $('#mf_ano_fecha').val("0");
+          $('#mf_dia_fecha').hide();
+          $('#mf_mes_fecha').hide();
+          $('#mf_ano_fecha').hide();
+      } else {
+          $('#labelfechaF').show();
+          $('#mf_dia_fecha').show();
+          $('#mf_mes_fecha').show();
+          $('#mf_ano_fecha').show();
+      }
+
 });
 document.addEventListener('DOMContentLoaded', calendario3);
 
@@ -1838,12 +1846,19 @@ document.addEventListener('DOMContentLoaded', calendario2_ed);
 //************* */
 $("#checkboxFechaI").on("click", function () {
     if ($("#checkboxFechaI").is(':checked')) {
-        $('#ocultarFecha > .combodate').hide();
+
         $('#labelfechaF').hide();
-        $('#m_fechaF').combodate("clearValue");
+        $('#mf_dia_fecha').val("0");
+        $('#mf_mes_fecha').val("0");
+        $('#mf_ano_fecha').val("0");
+        $('#mf_dia_fecha').hide();
+        $('#mf_mes_fecha').hide();
+        $('#mf_ano_fecha').hide();
     } else {
         $('#labelfechaF').show();
-        $('#ocultarFecha > .combodate').show();
+        $('#mf_dia_fecha').show();
+        $('#mf_mes_fecha').show();
+        $('#mf_ano_fecha').show();
     }
 });
 ////////////////////////////
@@ -1860,29 +1875,9 @@ $("#file").fileinput({
     showUpload: false,
     showBrowse: false
 });
-$('#fechaN').combodate({
-    minYear: 1960,
-    yearDescending: false,
-});
-$('#m_fechaI').combodate({
-    value: new Date(),
-    minYear: 2000,
-    maxYear: moment().format('YYYY') + 1,
-    yearDescending: false
-});
-$('#m_fechaF').combodate({
-    minYear: 2014,
-    maxYear: moment().format('YYYY') + 1,
-    yearDescending: false,
-});
-$('#v_fechaN').combodate({
-    minYear: 1900,
-    yearDescending: false,
-});
-$('#v_fechaNV').combodate({
-    minYear: 1900,
-    yearDescending: false,
-});
+
+
+
 //AREA
 function agregarArea() {
     objArea = datosArea("POST");
@@ -2705,12 +2700,55 @@ function enviarContrato(accion, objContrato) {
 }
 //FECHAS
 function agregarFechas() {
-    $('#form-registrar').modal('show');
-    fechaI = $('#m_fechaI').val();
-    fechaF = $('#m_fechaF').val();
+
+    //////////////////////////////////////////
+    var m_Anio = parseInt($('#m_ano_fecha').val());
+    var m_Mes = parseInt($('#m_mes_fecha').val() - 1);
+    var m_Dia = parseInt($('#m_dia_fecha').val());
+    var m1_VFecha = new Date(m_Anio, m_Mes, m_Dia);
+        if ((m1_VFecha.getFullYear() == m_Anio) && (m1_VFecha.getMonth() == m_Mes) && (m1_VFecha.getDate() == m_Dia)) {
+            $('#m_validFechaC').hide();
+        } else {
+
+
+            $('#m_validFechaC').show();
+            return false; e.preventDefault();
+
+        }
+    if(m_Anio!=0 && m_Mes!=-1 && m_Dia!=0){
+
+         fechaI = new Date(m_Anio,m_Mes, m_Dia);
+    } else{
+         fechaI = '0000-00-00';
+    }
+    ///////////////////////////////////////////
+    //////////////////////////////////////////
+    if ($("#checkboxFechaI").is(':checked')) {}
+    else{
+    var mf_Anio = parseInt($('#mf_ano_fecha').val());
+    var mf_Mes = parseInt($('#mf_mes_fecha').val() - 1);
+    var mf_Dia = parseInt($('#mf_dia_fecha').val());
+    var m1f_VFecha = new Date(mf_Anio, mf_Mes, mf_Dia);
+        if ((m1f_VFecha.getFullYear() == mf_Anio) && (m1f_VFecha.getMonth() == mf_Mes) && (m1f_VFecha.getDate() == mf_Dia)) {
+            $('#mf_validFechaC').hide();
+        } else {
+            $('#mf_validFechaC').show();
+            return false; e.preventDefault();
+
+        }
+    if(mf_Anio!=0 && mf_Mes!=-1 && mf_Dia!=0){
+
+         fechaF= new Date(mf_Anio,mf_Mes, mf_Dia);
+    } else{
+         fechaF = '0000-00-00';
+    }}
+    ///////////////////////////////////////////
+
+
     //$('#c_fechaI').text(fechaI);
     //$('#c_fechaF').text(fechaF);
     $('#fechasmodal').modal('toggle');
+    $('#form-registrar').modal('show');
 }
 //CODIGO EMPLEADO
 function valorCodigoEmpleado() {
@@ -2734,11 +2772,25 @@ function datosPersona(method) {
     if ($('#telefono').val() != '') {
         telefonoC = $('#codigoTelefono').val() + $('#telefono').val();
     }
+    var Anio = parseInt($('#ano_fecha').val()); // Extraemos en año
+    var Mes = parseInt($('#mes_fecha').val() - 1); // Extraemos el mes
+    var Dia = parseInt($('#dia_fecha').val()); // Extraemos el día
+
+    // Con la función Date() de javascript evaluamos si la fecha existe
+    if(Anio!=0 && Mes!=-1 && Dia!=0){
+        var VFecha = new Date(Anio, Mes, Dia);
+    } else{
+        var VFecha = '0000-00-00';
+    }
+
+
+
+
     nuevoEmpleado = {
         nombres: $('#nombres').val(),
         apPaterno: $('#apPaterno').val(),
         apMaterno: $('#apMaterno').val(),
-        fechaN: $('#fechaN').val(),
+        fechaN: VFecha,
         tipo: $('input[name=tipo]:checked').val(),
         documento: $('#documento').val(),
         numDocumento: $('#numDocumento').val(),
@@ -2853,14 +2905,33 @@ function enviarEmpleadoStore(accion, objEmpleado) {
 }
 //GUARDAR DATOS EMPRESARIAL EN GUARDAR EMPLEADO
 function datosEmpresaEmpleado(method) {
+    var m_Anio = parseInt($('#m_ano_fecha').val());
+    var m_Mes = parseInt($('#m_mes_fecha').val() - 1);
+    var m_Dia = parseInt($('#m_dia_fecha').val());
+
+    if(m_Anio!=0 && m_Mes!=-1 && m_Dia!=0){
+         fechaIn = new Date(m_Anio,m_Mes, m_Dia);
+    } else{
+         fechaIn = '0000-00-00';
+    }
+    //////////////////////
+    var mf_Anio = parseInt($('#mf_ano_fecha').val());
+    var mf_Mes = parseInt($('#mf_mes_fecha').val() - 1);
+    var mf_Dia = parseInt($('#mf_dia_fecha').val());
+
+    if(mf_Anio!=0 && mf_Mes!=-1 && mf_Dia!=0){
+         fechaFn = new Date(mf_Anio,mf_Mes, mf_Dia);
+    } else{
+         fechaFn = '0000-00-00';
+    }
     nuevoEmpresa = {
         codigoEmpleado: $('#codigoEmpleado').val(),
         cargo: $('#cargo').val(),
         area: $('#area').val(),
         centroc: $('#centroc').val(),
         contrato: $('#contrato').val(),
-        fechaI: $('#m_fechaI').val(),
-        fechaF: $('#m_fechaF').val(),
+        fechaI: fechaIn,
+        fechaF: fechaFn,
         nivel: $('#nivel').val(),
         local: $('#local').val(),
         '_method': method
@@ -3119,7 +3190,9 @@ function enviarEmpleadoStore(accion, objEmpleado) {
 //EMPLEADO ACTUALIZAR
 $("#checkboxFechaIE").on("click", function () {
     if ($("#checkboxFechaIE").is(':checked')) {
-        $('#m_fechaFE').combodate("clearValue");
+        $('#m_dia_fechaFE').val("0");
+        $('#m_mes_fechaFE').val("0");
+        $('#m_ano_fechaFE').val("0");
         $('#ocultarFechaE > .combodate').hide();
         $('#ocultarFechaE').hide();
     } else {
@@ -3144,11 +3217,43 @@ function datosPersonaA(method) {
     if ($('#v_telefono').val() != '') {
         telefonoC = $('#v_codigoTelefono').val() + $('#v_telefono').val();
     }
+    ////////////////////////////////////
+    var v_Anio = parseInt($('#v_ano_fecha').val());
+    var v_Mes = parseInt($('#v_mes_fecha').val() - 1);
+    var v_Dia = parseInt($('#v_dia_fecha').val());
+
+    if(v_Anio!=0 && v_Mes!=-1 && v_Dia!=0){
+        var v_VFecha = new Date(v_Anio,v_Mes, v_Dia);
+    } else{
+        var v_VFecha = '0000-00-00';
+    }
+    //////////////////////////////////////
+    var v_AnioIE = parseInt($('#m_ano_fechaIE').val());
+    var v_MesIE = parseInt($('#m_mes_fechaIE').val() - 1);
+    var v_DiaIE = parseInt($('#m_dia_fechaIE').val());
+
+    if(v_AnioIE!=0 && v_MesIE!=-1 && v_DiaIE!=0){
+        var v_VFechaIE = new Date(v_AnioIE,v_MesIE, v_DiaIE);
+    } else{
+        var v_VFechaIE = '0000-00-00';
+    }
+    /////////////////////////////////////////////
+    //////////////////////////////////////
+    var v_AnioFE = parseInt($('#m_ano_fechaFE').val());
+    var v_MesFE = parseInt($('#m_mes_fechaFE').val() - 1);
+    var v_DiaFE = parseInt($('#m_dia_fechaFE').val());
+
+    if(v_AnioFE!=0 && v_MesFE!=-1 && v_DiaFE!=0){
+        var v_VFechaFE = new Date(v_AnioFE,v_MesFE, v_DiaFE);
+    } else{
+        var v_VFechaFE = '0000-00-00';
+    }
+    /////////////////////////////////////////////
     nuevoEmpleadoA = {
         nombres_v: $('#v_nombres').val(),
         apPaterno_v: $('#v_apPaterno').val(),
         apMaterno_v: $('#v_apMaterno').val(),
-        fechaN_v: $('#v_fechaN').val(),
+        fechaN_v: v_VFecha,
         tipo_v: $('input:radio[name=v_tipo]:checked').val(),
         departamento_v: $('#v_departamento').val(),
         provincia_v: $('#v_provincia').val(),
@@ -3166,8 +3271,8 @@ function datosPersonaA(method) {
         celular_v: celularC,
         telefono_v: telefonoC,
         correo_v: $('#v_email').val(),
-        fechaI_v: $('#m_fechaIE').val(),
-        fechaF_v: $('#m_fechaFE').val(),
+        fechaI_v: v_VFechaIE,
+        fechaF_v: v_VFechaFE,
         codigoEmpleado_v: $('#v_codigoEmpleado').val(),
         '_method': method
     }
@@ -3313,7 +3418,17 @@ $('#documento').on('change', function () {
     }
 });
 $('#formNuevoE').click(function () {
+    fechaActual=new Date();
+$('#m_ano_fecha').val(fechaActual.getFullYear());
+$('#m_mes_fecha').val(fechaActual.getMonth()+1);
+$('#m_dia_fecha').val(fechaActual.getDate());
     $('#idEmpleado').val('');
+    $('#dia_fecha').val("0");
+    $('#mes_fecha').val("0");
+    $('#ano_fecha').val("0");
+    $('#mf_dia_fecha').show();
+    $('#mf_mes_fecha').show();
+    $('#mf_ano_fecha').show();
     calendarioInv();
     $('#calendarInv').show();
     $('#calendar').hide();
@@ -3351,9 +3466,13 @@ $('#cerrarEd').click(function () {
     $('#formNuevoEd').hide();
     $('#formNuevoEl').hide();
     $('#navActualizar').hide();
-    $()
-    $('#m_fechaIE').combodate("clearValue");
-    $('#m_fechaFE').combodate("clearValue");
+    $('#m_dia_fechaIE').val("0");
+    $('#m_mes_fechaIE').val("0");
+    $('#m_ano_fechaIE').val("0");
+
+    $('#m_dia_fechaFE').val("0");
+    $('#m_mes_fechaFE').val("0");
+    $('#m_ano_fechaFE').val("0");
     $('#checkboxFechaIE').prop('checked', false);
     //************* */
     $('#v_validApPaterno').hide();
@@ -3405,7 +3524,6 @@ $('#cerrarModalEmpleado').click(function () {
     $('input[type="email"]').val("");
     $('input[type="number"]').val("");
     $('#documento').val("").trigger("change");
-    $('#fechaN').combodate("clearValue");
     $('#departamento').val("").trigger("change");
     $('#dep').val("").trigger("change");
     $('#prov').empty();
@@ -3436,6 +3554,7 @@ $('#cerrarModalEmpleado').click(function () {
     $('#validApMaterno').hide();
     $('#validFechaN').hide();
     $('#validNombres').hide();
+    $('#validFechaC').hide();
     $('#validGenero').hide();
     $('#validCel').hide();
     $('#emailR').hide();
@@ -3446,6 +3565,8 @@ $('#cerrarModalEmpleado').click(function () {
     limpiar();
     $('#selectCalendario').val("Asignar calendario");
     $('#selectHorario').val("Seleccionar horario");
+
+
 });
 //*********************/
 $('#numR').hide();
@@ -3458,12 +3579,15 @@ $('#validApMaterno').hide();
 $('#validCorreo').hide();
 $('#validNombres').hide();
 $('#validGenero').hide();
+$('#validFechaC').hide();
 //************* */
 $('#v_validApPaterno').hide();
 $('#v_validNumDocumento').hide();
 $('#v_validApMaterno').hide();
 $('#v_validNombres').hide();
 $('#v_validCorreo').hide();
+$('#v_validFechaC').hide();
+$('#v_validFechaC').hide();
 $('#detalleContrato').hide();
 $('#editarArea').hide();
 $('#editarCargo').hide();
@@ -3490,7 +3614,6 @@ function FinalizarEmpleado() {
     $('input[type="email"]').val("");
     $('input[type="number"]').val("");
     $('#documento').val("").trigger("change");
-    $('#fechaN').combodate("clearValue");
     $('#departamento').val("").trigger("change");
     $('#dep').val("").trigger("change");
     $('#prov').empty();
@@ -3514,8 +3637,10 @@ function FinalizarEmpleado() {
     $("#form-registrar :input").prop('disabled', true);
     $('#documento').attr('disabled', false);
     $('#cerrarMoadalEmpleado').attr('disabled', false);
-    $('#m_fechaI').combodate("clearValue");
-    $('#m_fechaF').combodate("clearValue");
+ 
+   $('#mf_dia_fecha').val("0");
+   $('#mf_mes_fecha').val("0");
+   $('#mf_ano_fecha').val("0");
     $('#detalleContrato').hide();
     $('#checkboxFechaI').prop('checked', false);
     $('#selectCalendario').val("Asignar calendario");

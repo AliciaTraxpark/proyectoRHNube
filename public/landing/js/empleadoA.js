@@ -1,14 +1,4 @@
-$('#m_fechaIE').combodate({
-    value: new Date(),
-    minYear: 2000,
-    maxYear: moment().format('YYYY') + 1,
-    yearDescending: false
-});
-$('#m_fechaFE').combodate({
-    minYear: 2014,
-    maxYear: moment().format('YYYY') + 1,
-    yearDescending: false,
-});
+
 //AREA
 function agregarAreaA() {
     objArea = datosAreaA("POST");
@@ -829,7 +819,9 @@ function enviarContratoA(accion, objContrato) {
 //EMPLEADO ACTUALIZAR
 $("#checkboxFechaIE").on("click", function () {
     if ($("#checkboxFechaIE").is(':checked')) {
-        $('#m_fechaFE').val("null");
+        $('#m_dia_fechaFE').val("0");
+        $('#m_mes_fechaFE').val("0");
+        $('#m_ano_fechaFE').val("0");
         console.log($('#m_fechaFE').val());
         $('#ocultarFechaE > .combodate').hide();
         $('#ocultarFechaE').hide();
@@ -840,11 +832,49 @@ $("#checkboxFechaIE").on("click", function () {
 });
 //FECHAS
 function agregarFechasA() {
+    //////////////////////////////////
+    var m_AnioIE = parseInt($('#m_ano_fechaIE').val());
+    var m_MesIE = parseInt($('#m_mes_fechaIE').val() - 1);
+    var m_DiaIE = parseInt($('#m_dia_fechaIE').val());
+    var m1_VFechaIE = new Date(m_AnioIE, m_MesIE, m_DiaIE);
+        if ((m1_VFechaIE.getFullYear() == m_AnioIE) && (m1_VFechaIE.getMonth() == m_MesIE) && (m1_VFechaIE.getDate() == m_DiaIE)) {
+            $('#m_validFechaCIE').hide();
+        } else {
+
+
+            $('#m_validFechaCIE').show();
+            return false; e.preventDefault();
+
+        }
+    if(m_AnioIE!=0 && m_MesIE!=-1 && m_DiaIE!=0){
+
+         fechaI = new Date(m_AnioIE,m_MesIE, m_DiaIE);
+    } else{
+         fechaI = '0000-00-00';
+    }
+    /////////////////////////////////
+    if ($("#checkboxFechaIE").is(':checked')) {}
+    else{
+    var mf_AnioFE = parseInt($('#m_ano_fechaFE').val());
+    var mf_MesFE = parseInt($('#m_mes_fechaFE').val() - 1);
+    var mf_DiaFE = parseInt($('#m_dia_fechaFE').val());
+    var m1f_VFechaFE = new Date(mf_AnioFE, mf_MesFE, mf_DiaFE);
+        if ((m1f_VFechaFE.getFullYear() == mf_AnioFE) && (m1f_VFechaFE.getMonth() == mf_MesFE) && (m1f_VFechaFE.getDate() == mf_DiaFE)) {
+            $('#m_validFechaCFE').hide();
+        } else {
+            $('#m_validFechaCFE').show();
+            return false; e.preventDefault();
+
+        }
+    if(mf_AnioFE!=0 && mf_MesFE!=-1 && mf_DiaFE!=0){
+
+         fechaF= new Date(mf_AnioFE,mf_MesFE, mf_DiaFE);
+    } else{
+         fechaF = '0000-00-00';
+    }}
+//////////////////////////////////////////////////
+
     $('#form-ver').modal('show');
-    fechaI = $('#m_fechaIE').val();
-    fechaF = $('#m_fechaFE').val();
-    //$('#v_fechaFC').text(fechaF);
-    //console.log($('#m_fechaFE').val());
     $('#fechasmodalE').modal('toggle');
 }
 

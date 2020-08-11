@@ -412,6 +412,7 @@
         @endforeach
     </tbody>
 </table>
+
 <script>
     $('[data-toggle="tooltip"]').tooltip();
     $('#enviarCorreosMasivos').hide();
@@ -572,7 +573,13 @@
                 $('#v_numDocumento').val(data[0].emple_nDoc);
                 $('#v_apMaterno').val(data[0].perso_apMaterno);
                 $("[name=v_tipo]").val([data[0].perso_sexo]);
-                $('#v_fechaN').combodate('setValue', data[0].perso_fechaNacimiento);
+                ////////////////////////////////////////////////
+               var VFechaDa=moment(data[0].perso_fechaNacimiento).format('YYYY-MM-DD');
+               var VFechaDia = new Date(moment(VFechaDa));
+              $('#v_dia_fecha').val(VFechaDia.getDate());
+               $('#v_mes_fecha').val(moment(VFechaDa).month()+1);
+               $('#v_ano_fecha').val(moment(VFechaDa).year());
+               //////////////////////////////////////////////
                 $('#v_nombres').val(data[0].perso_nombre);
                 $('#v_direccion').val(data[0].perso_direccion);
                 $('#v_cargo').val(data[0].cargo_id);
@@ -596,13 +603,23 @@
                     $('#v_codigoTelefono').val(telefonoSplit[0] + telefonoSplit[1]);
                     $('#v_telefono').val(telefonoSplit[2] + telefonoSplit[3] + telefonoSplit[4] + telefonoSplit[5] + telefonoSplit[6] + telefonoSplit[7]);
                 }
-                $('#m_fechaIE').combodate('setValue', data[0].emple_fechaIC);
+
+               var VFechaDaIE=moment(data[0].emple_fechaIC).format('YYYY-MM-DD');
+               var VFechaDiaIE = new Date(moment(VFechaDaIE));
+              $('#m_dia_fechaIE').val(VFechaDiaIE.getDate());
+               $('#m_mes_fechaIE').val(moment(VFechaDaIE).month()+1);
+               $('#m_ano_fechaIE').val(moment(VFechaDaIE).year());
                 if (data[0].emple_fechaFC == null || data[0].emple_fechaFC == "0000-00-00") {
                     $("#checkboxFechaIE").prop('checked', true);
                     $('#ocultarFechaE > .combodate').hide();
                     $('#ocultarFechaE').hide();
                 }
-                $('#m_fechaFE').combodate('setValue', data[0].emple_fechaFC);
+
+               var VFechaDaFE=moment(data[0].emple_fechaFC).format('YYYY-MM-DD');
+               var VFechaDiaFE = new Date(moment(VFechaDaFE));
+              $('#m_dia_fechaFE').val(VFechaDiaFE.getDate());
+               $('#m_mes_fechaFE').val(moment(VFechaDaFE).month()+1);
+               $('#m_ano_fechaFE').val(moment(VFechaDaFE).year());
                 $('#v_email').val(data[0].emple_Correo);
                 calendario_edit();
                 calendario2_ed();
@@ -729,7 +746,14 @@
                 $('#v_apPaternoV').val(data[0].perso_apPaterno);
                 $('#v_direccionV').val(data[0].perso_direccion);
                 $('#v_idV').val(data[0].emple_id);
-                $('#v_fechaNV').combodate('setValue',data[0].perso_fechaNacimiento);
+
+                //////////////////////////////////////////////////////////////
+                var VFechaDaVer=moment(data[0].perso_fechaNacimiento).format('YYYY-MM-DD');
+               var VFechaDiaVer = new Date(moment(VFechaDaVer));
+              $('#v_dia_fechaV').val(VFechaDiaVer.getDate());
+               $('#v_mes_fechaV').val(moment(VFechaDaVer).month()+1);
+               $('#v_ano_fechaV').val(moment(VFechaDaVer).year());
+                /////////////////////////////////////////////////////////////////
                 $('#v_apMaternoV').val(data[0].perso_apMaterno);
                 $('#v_numDocumentoV').val(data[0].emple_nDoc);
                 $('#v_emailV').val(data[0].emple_Correo);

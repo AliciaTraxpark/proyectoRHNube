@@ -93,6 +93,23 @@ $(document).ready(function () {
             } else {
                 $('#validNombres').hide();
             }
+
+            ///////////////////////////////////////
+            var Anio = parseInt($('#ano_fecha').val());
+            var Mes = parseInt($('#mes_fecha').val() - 1);
+            var Dia = parseInt($('#dia_fecha').val());
+            if(Anio!=0 && Mes!=-1 && Dia!=0){
+                var VFecha = new Date(Anio, Mes, Dia);
+                if ((VFecha.getFullYear() == Anio) && (VFecha.getMonth() == Mes) && (VFecha.getDate() == Dia)) {
+                    $('#validFechaC').hide();
+                } else {
+                    isStepValid = false;
+                    $('#validFechaC').show();
+
+                }
+
+            }
+            ///////////////////////////////////////
             if ($("input[type=radio]:checked").length == 0) {
                 isStepValid = false;
                 $('#validGenero').show();
@@ -241,6 +258,22 @@ $(document).ready(function () {
             } else {
                 $('#v_validNombres').hide();
             }
+            /////////////////////////////////
+            var v_Anio = parseInt($('#v_ano_fecha').val());
+            var v_Mes = parseInt($('#v_mes_fecha').val() - 1);
+            var v_Dia = parseInt($('#v_dia_fecha').val());
+            if(v_Anio!=0 && v_Mes!=-1 && v_Dia!=0){
+                var v_VFecha = new Date(v_Anio, v_Mes, v_Dia);
+                if ((v_VFecha.getFullYear() == v_Anio) && (v_VFecha.getMonth() == v_Mes) && (v_VFecha.getDate() == v_Dia)) {
+                    $('#v_validFechaC').hide();
+                } else {
+                    isStepValid = false;
+                    $('#v_validFechaC').show();
+
+                }
+
+            }
+            /////////////////////////////
             if ($("#v_email").val() != "") {
                 //VALIDAR CORREO
                 var email = $('#v_email').val();
@@ -355,9 +388,13 @@ $(document).ready(function () {
                     $('#formNuevoEd').hide();
                     $('#formNuevoEl').hide();
                     $('#navActualizar').hide();
-                    $()
-                    $('#m_fechaIE').combodate("clearValue");
-                    $('#m_fechaFE').combodate("clearValue");
+
+                    $('#m_dia_fechaIE').val("0");
+                    $('#m_mes_fechaIE').val("0");
+                    $('#m_ano_fechaIE').val("0");
+                    $('#m_dia_fechaFE').val("0");
+                    $('#m_mes_fechaFE').val("0");
+                    $('#m_ano_fechaFE').val("0");
                     $('#checkboxFechaIE').prop('checked', false);
                     //************* */
                     $('#v_validApPaterno').hide();

@@ -1028,8 +1028,53 @@
                                     {{ csrf_field() }}
                                     <div class="col-md-12">
                                         <label for="">Fecha Inicial</label>
-                                        <input type="text" data-custom-class="form-control" id="m_fechaI"
-                                            data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date" required>
+                                        <span id="m_validFechaC" style="color: red;display: none;">*Fecha incorrecta.</span>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <select class="form-control"
+                                                        name="m_dia_fecha"
+                                                        id="m_dia_fecha" required="">
+                                                        <option value="0">Dia</option>
+                                                        @for ($i = 1; $i <32; $i++)
+                                                        <option class=""
+                                                            value="{{$i}}">{{$i}}</option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control"
+                                                        name="m_mes_fecha"
+                                                        id="m_mes_fecha" required="">
+                                                        <option value="0">Mes</option>
+                                                        <option class="" value="1">Ene.</option>
+                                                        <option class="" value="2">Feb.</option>
+                                                        <option class="" value="3">Mar.</option>
+                                                        <option class="" value="4">Abr.</option>
+                                                        <option class="" value="5">May.</option>
+                                                        <option class="" value="6">Jun.</option>
+                                                        <option class="" value="7">Jul.</option>
+                                                        <option class="" value="8">Ago.</option>
+                                                        <option class="" value="9">Set.</option>
+                                                        <option class="" value="10">Oct.</option>
+                                                        <option class="" value="11">Nov.</option>
+                                                        <option class="" value="12">Dic.</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" style="padding-left: 5px;
+                                                    padding-right: 5px;"
+                                                        name="m_ano_fecha"
+                                                        id="m_ano_fecha" required="">
+                                                        <option value="0">Año</option>
+                                                        @for ($i = 2000; $i <2100;
+                                                            $i++) <option class=""
+                                                            value="{{$i}}">{{$i}}
+                                                        </option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+
+                                            </div>
                                         <br>
                                         <div class="form-group">
                                             <label for="">Fecha Indifinida</label>
@@ -1037,8 +1082,53 @@
                                         </div>
                                         <div id="ocultarFecha">
                                             <label id="labelfechaF">Fecha Final</label>
-                                            <input type="text" data-custom-class="form-control" id="m_fechaF"
-                                                data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date">
+                                            <span id="mf_validFechaC" style="color: red;display: none;">*Fecha incorrecta.</span>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <select class="form-control"
+                                                        name="mf_dia_fecha"
+                                                        id="mf_dia_fecha" required="">
+                                                        <option value="0">Dia</option>
+                                                        @for ($i = 1; $i <32; $i++)
+                                                        <option class=""
+                                                            value="{{$i}}">{{$i}}</option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control"
+                                                        name="mf_mes_fecha"
+                                                        id="mf_mes_fecha" required="">
+                                                        <option value="0">Mes</option>
+                                                        <option class="" value="1">Ene.</option>
+                                                        <option class="" value="2">Feb.</option>
+                                                        <option class="" value="3">Mar.</option>
+                                                        <option class="" value="4">Abr.</option>
+                                                        <option class="" value="5">May.</option>
+                                                        <option class="" value="6">Jun.</option>
+                                                        <option class="" value="7">Jul.</option>
+                                                        <option class="" value="8">Ago.</option>
+                                                        <option class="" value="9">Set.</option>
+                                                        <option class="" value="10">Oct.</option>
+                                                        <option class="" value="11">Nov.</option>
+                                                        <option class="" value="12">Dic.</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" style="padding-left: 5px;
+                                                    padding-right: 5px;"
+                                                        name="mf_ano_fecha"
+                                                        id="mf_ano_fecha" required="">
+                                                        <option value="0">Año</option>
+                                                        @for ($i = 2014; $i <2100;
+                                                            $i++) <option class=""
+                                                            value="{{$i}}">{{$i}}
+                                                        </option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>
                             </div>
@@ -1332,12 +1422,103 @@
                                     {{ csrf_field() }}
                                     <div class="col-md-12">
                                         <label for="">Fecha Inicial</label>
-                                        <input type="text" data-custom-class="form-control" id="m_fechaIE"
-                                            data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date" required>
+                                        <span id="m_validFechaCIE" style="color: red;display: none;">*Fecha incorrecta.</span>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <select class="form-control"
+                                                        name="m_dia_fechaIE"
+                                                        id="m_dia_fechaIE" required="">
+                                                        <option value="0">Dia</option>
+                                                        @for ($i = 1; $i <32; $i++)
+                                                        <option class=""
+                                                            value="{{$i}}">{{$i}}</option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control"
+                                                        name="m_mes_fechaIE"
+                                                        id="m_mes_fechaIE" required="">
+                                                        <option value="0">Mes</option>
+                                                        <option class="" value="1">Ene.</option>
+                                                        <option class="" value="2">Feb.</option>
+                                                        <option class="" value="3">Mar.</option>
+                                                        <option class="" value="4">Abr.</option>
+                                                        <option class="" value="5">May.</option>
+                                                        <option class="" value="6">Jun.</option>
+                                                        <option class="" value="7">Jul.</option>
+                                                        <option class="" value="8">Ago.</option>
+                                                        <option class="" value="9">Set.</option>
+                                                        <option class="" value="10">Oct.</option>
+                                                        <option class="" value="11">Nov.</option>
+                                                        <option class="" value="12">Dic.</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" style="padding-left: 5px;
+                                                    padding-right: 5px;"
+                                                        name="m_ano_fechaIE"
+                                                        id="m_ano_fechaIE" required="">
+                                                        <option value="0">Año</option>
+                                                        @for ($i = 2000; $i <2100;
+                                                            $i++) <option class=""
+                                                            value="{{$i}}">{{$i}}
+                                                        </option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+
+                                            </div>
                                         <br>
                                         <div class="form-group">
                                             <label for="">Fecha Indifinida</label>
-                                            <input type="checkbox" id="checkboxFechaIE" name="FechaIE">
+                                            <span id="m_validFechaCFE" style="color: red;display: none;">*Fecha incorrecta.</span>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <select class="form-control"
+                                                        name="m_dia_fechaFE"
+                                                        id="m_dia_fechaFE" required="">
+                                                        <option value="0">Dia</option>
+                                                        @for ($i = 1; $i <32; $i++)
+                                                        <option class=""
+                                                            value="{{$i}}">{{$i}}</option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control"
+                                                        name="m_mes_fechaFE"
+                                                        id="m_mes_fechaFE" required="">
+                                                        <option value="0">Mes</option>
+                                                        <option class="" value="1">Ene.</option>
+                                                        <option class="" value="2">Feb.</option>
+                                                        <option class="" value="3">Mar.</option>
+                                                        <option class="" value="4">Abr.</option>
+                                                        <option class="" value="5">May.</option>
+                                                        <option class="" value="6">Jun.</option>
+                                                        <option class="" value="7">Jul.</option>
+                                                        <option class="" value="8">Ago.</option>
+                                                        <option class="" value="9">Set.</option>
+                                                        <option class="" value="10">Oct.</option>
+                                                        <option class="" value="11">Nov.</option>
+                                                        <option class="" value="12">Dic.</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" style="padding-left: 5px;
+                                                    padding-right: 5px;"
+                                                        name="m_ano_fechaFE"
+                                                        id="m_ano_fechaFE" required="">
+                                                        <option value="0">Año</option>
+                                                        @for ($i = 2000; $i <2100;
+                                                            $i++) <option class=""
+                                                            value="{{$i}}">{{$i}}
+                                                        </option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+
+                                            </div>
                                         </div>
                                         <div id="ocultarFechaE">
                                             <label for="">Fecha Final</label>
@@ -1455,9 +1636,53 @@
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Fecha Nacimiento</label>
-                                                        <input type="text" data-custom-class="form-control" id="fechaN"
-                                                            tabindex="3" data-format="YYYY-MM-DD"
-                                                            data-template="D MMM YYYY" name="date">
+                                                        <span id="validFechaC" style="color: red;display: none;">*Fecha incorrecta.</span>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <select class="form-control"
+                                                        name="dia_fecha"
+                                                        id="dia_fecha" required="">
+                                                        <option value="0">Dia</option>
+                                                        @for ($i = 1; $i <32; $i++)
+                                                        <option class=""
+                                                            value="{{$i}}">{{$i}}</option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control"
+                                                        name="mes_fecha"
+                                                        id="mes_fecha" required="">
+                                                        <option value="0">Mes</option>
+                                                        <option class="" value="1">Ene.</option>
+                                                        <option class="" value="2">Feb.</option>
+                                                        <option class="" value="3">Mar.</option>
+                                                        <option class="" value="4">Abr.</option>
+                                                        <option class="" value="5">May.</option>
+                                                        <option class="" value="6">Jun.</option>
+                                                        <option class="" value="7">Jul.</option>
+                                                        <option class="" value="8">Ago.</option>
+                                                        <option class="" value="9">Set.</option>
+                                                        <option class="" value="10">Oct.</option>
+                                                        <option class="" value="11">Nov.</option>
+                                                        <option class="" value="12">Dic.</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" style="padding-left: 5px;
+                                                    padding-right: 5px;"
+                                                        name="ano_fecha"
+                                                        id="ano_fecha" required="">
+                                                        <option value="0">Año</option>
+                                                        @for ($i = 1950; $i <2011;
+                                                            $i++) <option class=""
+                                                            value="{{$i}}">{{$i}}
+                                                        </option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+
+                                            </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Nombres</label>
@@ -2219,9 +2444,53 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Fecha Nacimiento</label>
-                                                    <input type="text" data-custom-class="form-control" id="v_fechaN"
-                                                        data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date"
-                                                        tabindex="3">
+                                                    <span id="v_validFechaC" style="color: red;display: none;">*Fecha incorrecta.</span>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <select class="form-control"
+                                                    name="v_dia_fecha"
+                                                    id="v_dia_fecha" required="">
+                                                    <option value="0">Dia</option>
+                                                    @for ($i = 1; $i <32; $i++)
+                                                    <option class=""
+                                                        value="{{$i}}">{{$i}}</option>
+                                                    @endfor
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select class="form-control"
+                                                    name="v_mes_fecha"
+                                                    id="v_mes_fecha" required="">
+                                                    <option value="0">Mes</option>
+                                                    <option class="" value="1">Ene.</option>
+                                                    <option class="" value="2">Feb.</option>
+                                                    <option class="" value="3">Mar.</option>
+                                                    <option class="" value="4">Abr.</option>
+                                                    <option class="" value="5">May.</option>
+                                                    <option class="" value="6">Jun.</option>
+                                                    <option class="" value="7">Jul.</option>
+                                                    <option class="" value="8">Ago.</option>
+                                                    <option class="" value="9">Set.</option>
+                                                    <option class="" value="10">Oct.</option>
+                                                    <option class="" value="11">Nov.</option>
+                                                    <option class="" value="12">Dic.</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select class="form-control" style="padding-left: 5px;
+                                                padding-right: 5px;"
+                                                    name="v_mes_fecha"
+                                                    id="v_ano_fecha" required="">
+                                                    <option value="0">Año</option>
+                                                    @for ($i = 1950; $i <2011;
+                                                        $i++) <option class=""
+                                                        value="{{$i}}">{{$i}}
+                                                    </option>
+                                                    @endfor
+                                                </select>
+                                            </div>
+
+                                        </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Nombres</label>
@@ -2977,9 +3246,52 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Fecha Nacimiento</label>
-                                                    <input type="text" class="form-control" id="v_fechaNV"
-                                                        data-custom-class="form-control" data-format="YYYY-MM-DD"
-                                                        data-template="D MMM YYYY" name="date" disabled>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <select class="form-control"
+                                                                name="v_dia_fechaV"
+                                                                id="v_dia_fechaV" required="">
+                                                                <option value="0">Dia</option>
+                                                                @for ($i = 1; $i <32; $i++)
+                                                                <option class=""
+                                                                    value="{{$i}}">{{$i}}</option>
+                                                                @endfor
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <select class="form-control"
+                                                                name="v_mes_fechaV"
+                                                                id="v_mes_fechaV" required="">
+                                                                <option value="0">Mes</option>
+                                                                <option class="" value="1">Ene.</option>
+                                                                <option class="" value="2">Feb.</option>
+                                                                <option class="" value="3">Mar.</option>
+                                                                <option class="" value="4">Abr.</option>
+                                                                <option class="" value="5">May.</option>
+                                                                <option class="" value="6">Jun.</option>
+                                                                <option class="" value="7">Jul.</option>
+                                                                <option class="" value="8">Ago.</option>
+                                                                <option class="" value="9">Set.</option>
+                                                                <option class="" value="10">Oct.</option>
+                                                                <option class="" value="11">Nov.</option>
+                                                                <option class="" value="12">Dic.</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <select class="form-control" style="padding-left: 5px;
+                                                            padding-right: 5px;"
+                                                                name="v_mes_fechaV"
+                                                                id="v_ano_fechaV" required="">
+                                                                <option value="0">Año</option>
+                                                                @for ($i = 1950; $i <2011;
+                                                                    $i++) <option class=""
+                                                                    value="{{$i}}">{{$i}}
+                                                                </option>
+                                                                @endfor
+                                                            </select>
+                                                        </div>
+
+                                                    </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Nombres</label>
@@ -3359,7 +3671,7 @@
     <script src="{{asset('admin/assets/libs/bootstrap-fileinput/fileinput.min.js')}}"></script>
     <script src="{{asset('admin/assets/libs/bootstrap-fileinput/theme.js')}}"></script>
     <script src="{{asset('admin/assets/libs/bootstrap-fileinput/es.js')}}"></script>
-    <script src="{{asset('admin/assets/libs/combodate-1.0.7/combodate.js')}}"></script>
+
     <script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
     <script src="{{asset('admin/assets/libs/moment/moment.min.js')}}"></script>
     <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>

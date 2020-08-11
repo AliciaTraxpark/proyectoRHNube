@@ -29,151 +29,359 @@ use App\proyecto_empleado;
 
 @section('breadcrumb')
 <div id="androidEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="androidEmpleado"
-    aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
-                    empleado
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal">
-                    <h5 class="modal-title" id="myModalLabel" style="font-size:
-                    15px">¿Desea enviar correo al empleado?</h5>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-7 text-right">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
-                        </div>
-                        <div class="col-md-5 text-right" style="padding-right:
-                        38px;">
-                            <button type="button" id="enviarCorreoAndroidEmpleado" name="enviarCorreoAndroidEmpleado"
-                                style="background-color: #163552;" class="btn
-                            btn-sm">Enviar</button>
+        aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
+                        empleado
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-registrar').show();">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <h5 class="modal-title" id="myModalLabel" style="font-size:
+                        15px">¿Desea enviar correo al empleado?</h5>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-7 text-right">
+                                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                    onclick="$('#form-registrar').show();">Cancelar</button>
+                            </div>
+                            <div class="col-md-5 text-right" style="padding-right:
+                            38px;">
+                                <button type="button" id="enviarCorreoAndroidEmpleado"
+                                    name="enviarCorreoAndroidEmpleado" style="background-color: #163552;" class="btn
+                                btn-sm">Enviar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<div id="windowsEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="windowsEmpleado"
-    aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
-                    empleado
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <input style="display: none;" id="windows">
-                <form class="form-horizontal">
-                    <h5 class="modal-title" id="myModalLabel" style="font-size:
-                    15px">¿Desea enviar correo al empleado?</h5>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-7 text-right">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
-                        </div>
-                        <div class="col-md-5 text-right" style="padding-right:
-                        38px;">
-                            <button type="button" id="enviarCorreoWindowsEmpleado" name="enviarCorreoWindowsEmpleado"
-                                style="background-color: #163552;" class="btn
-                            btn-sm">Enviar</button>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div id="windowsEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="windowsEmpleado"
+        aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
+                        empleado
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-registrar').show();">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input style="display: none;" id="windows">
+                    <form class="form-horizontal">
+                        <h5 class="modal-title" id="myModalLabel" style="font-size:
+                        15px">¿Desea enviar correo al empleado?</h5>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-7 text-right">
+                                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                    onclick="$('#form-registrar').show();">Cancelar</button>
+                            </div>
+                            <div class="col-md-5 text-right" style="padding-right:
+                            38px;">
+                                <button type="button" id="enviarCorreoWindowsEmpleado"
+                                    name="enviarCorreoWindowsEmpleado" style="background-color: #163552;" class="btn
+                                btn-sm">Enviar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<div id="v_androidEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="v_androidEmpleado"
-    aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
-                    empleado
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal">
-                    <h5 class="modal-title" id="myModalLabel" style="font-size:
-                    15px">¿Desea enviar correo al empleado?</h5>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-7 text-right">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
-                        </div>
-                        <div class="col-md-5 text-right" style="padding-right:
-                        38px;">
-                            <button type="button" id="v_enviarCorreoAndroidEmpleado"
-                                name="v_enviarCorreoAndroidEmpleado" style="background-color: #163552;" class="btn
-                            btn-sm">Enviar</button>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div id="v_androidEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="v_androidEmpleado"
+        aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
+                        empleado
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-ver').show();">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <h5 class="modal-title" id="myModalLabel" style="font-size:
+                        15px">¿Desea enviar correo al empleado?</h5>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-7 text-right">
+                                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                    onclick="$('#form-ver').show();">Cancelar</button>
+                            </div>
+                            <div class="col-md-5 text-right" style="padding-right:
+                            38px;">
+                                <button type="button" id="v_enviarCorreoAndroidEmpleado"
+                                    name="v_enviarCorreoAndroidEmpleado" style="background-color: #163552;" class="btn
+                                btn-sm">Enviar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<div id="v_windowsEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="v_windowsEmpleado"
-    aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
-                    empleado
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <input style="display: none;" id="windows">
-                <form class="form-horizontal">
-                    <h5 class="modal-title" id="myModalLabel" style="font-size:
-                    15px">¿Desea enviar correo al empleado?</h5>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-7 text-right">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
-                        </div>
-                        <div class="col-md-5 text-right" style="padding-right:
-                        38px;">
-                            <button type="button" id="v_enviarCorreoWindowsEmpleado"
-                                name="v_enviarCorreoWindowsEmpleado" style="background-color: #163552;" class="btn
-                            btn-sm">Enviar</button>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div id="v_windowsEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="v_windowsEmpleado"
+        aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
+                        empleado
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-ver').show();">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input style="display: none;" id="windows">
+                    <form class="form-horizontal">
+                        <h5 class="modal-title" id="myModalLabel" style="font-size:
+                        15px">¿Desea enviar correo al empleado?</h5>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-7 text-right">
+                                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                    onclick="$('#form-ver').show();">Cancelar</button>
+                            </div>
+                            <div class="col-md-5 text-right" style="padding-right:
+                            38px;">
+                                <button type="button" id="v_enviarCorreoWindowsEmpleado"
+                                    name="v_enviarCorreoWindowsEmpleado" style="background-color: #163552;" class="btn
+                                btn-sm">Enviar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!------------CAMBIAR ESTADO LICENCIA-->
+    <div id="estadoLicenciaC" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="estadoLicenciaC"
+        aria-hidden="true" data-backdrop="static">
+        <br><br><br><br>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Cambiar Estado de
+                        Activacion de Dispositivo
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-registrar').show();">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input style="display: none;" id="estadoLicencia">
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-md-2 text-center">
+                                <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
+                            </div>
+                            <div class="col-md-8 text-center">
+                                <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
+                                    Al cambiar el estado de la licencia se inhabilitará información del empleado en su
+                                    PC.
+                                </h5>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6 text-center">
+                                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                    onclick="$('#form-registrar').show();">Cancelar</button>
+                            </div>
+                            <div class="col-md-6 text-center" style="padding-right:
+                        38px;">
+                                <button type="button" id="CambiarEstadoL" name="CambiarEstadoL"
+                                    style="background-color: #163552;" class="btn
+                            btn-sm">Aceptar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!------------CAMBIAR ESTADO LICENCIA-->
+    <div id="estadoLicenciaW" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="estadoLicenciaW"
+        aria-hidden="true" data-backdrop="static">
+        <br><br><br><br>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Cambiar Estado de
+                        Activacion de Dispositivo
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-registrar').show();">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input style="display: none;" id="estadoLicenciaW">
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-md-2 text-center">
+                                <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
+                            </div>
+                            <div class="col-md-8 text-center">
+                                <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
+                                    Al cambiar el estado de la licencia se inhabilitará información del empleado en su
+                                    PC.
+                                </h5>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6 text-center">
+                                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                    onclick="$('#form-registrar').show();">Cancelar</button>
+                            </div>
+                            <div class="col-md-6 text-center" style="padding-right:
+                         38px;">
+                                <button type="button" id="CambiarEstadoLW" name="CambiarEstadoLW"
+                                    style="background-color: #163552;" class="btn
+                             btn-sm">Aceptar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!------------CAMBIAR ESTADO LICENCIA-->
+    <div id="v_estadoLicenciaC" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="v_estadoLicenciaC"
+        aria-hidden="true" data-backdrop="static">
+        <br><br><br><br>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Cambiar Estado de
+                        Activacion de Dispositivo
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-ver').show();">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input style="display: none;" id="estadoLicencia">
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-md-2 text-center">
+                                <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
+                            </div>
+                            <div class="col-md-8 text-center">
+                                <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
+                                    Al cambiar el estado de la licencia se inhabilitará información del empleado en su
+                                    PC.
+                                </h5>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6 text-center">
+                                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                    onclick="$('#form-ver').show();">Cancelar</button>
+                            </div>
+                            <div class="col-md-6 text-center" style="padding-right:
+                        38px;">
+                                <button type="button" id="v_CambiarEstadoL" name="v_CambiarEstadoL"
+                                    style="background-color: #163552;" class="btn
+                            btn-sm">Aceptar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!------------CAMBIAR ESTADO LICENCIA-->
+    <div id="v_estadoLicenciaW" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="v_estadoLicenciaW"
+        aria-hidden="true" data-backdrop="static">
+        <br><br><br><br>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Cambiar Estado de
+                        Activacion de Dispositivo
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-ver').show();">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input style="display: none;" id="estadoLicenciaW">
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-md-2 text-center">
+                                <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
+                            </div>
+                            <div class="col-md-8 text-center">
+                                <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
+                                    Al cambiar el estado de la licencia se inhabilitará información del empleado en su
+                                    PC.
+                                </h5>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6 text-center">
+                                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                    onclick="$('#form-ver').show();">Cancelar</button>
+                            </div>
+                            <div class="col-md-6 text-center" style="padding-right:
+                         38px;">
+                                <button type="button" id="v_CambiarEstadoLW" name="v_CambiarEstadoLW"
+                                    style="background-color: #163552;" class="btn
+                             btn-sm">Aceptar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 <div id="preloader">
     <div id="status">
         <div class="spinner">
@@ -768,8 +976,55 @@ use App\proyecto_empleado;
                         {{ csrf_field() }}
                         <div class="col-md-12">
                             <label for="">Fecha Inicial</label>
-                            <input type="text" data-custom-class="form-control" id="m_fechaI" data-format="YYYY-MM-DD"
-                                data-template="D MMM YYYY" name="date" required>
+                            <span id="m_validFechaC" style="color: red;display: none;">*Fecha incorrecta.</span>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <select class="form-control"
+                                                        name="m_dia_fecha"
+                                                        id="m_dia_fecha" required="">
+                                                        <option value="0">Dia</option>
+                                                        @for ($i = 1; $i <32; $i++)
+                                                        <option class=""
+                                                            value="{{$i}}">{{$i}}</option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control"
+                                                        name="m_mes_fecha"
+                                                        id="m_mes_fecha" required="">
+                                                        <option value="0">Mes</option>
+                                                        <option class="" value="1">Ene.</option>
+                                                        <option class="" value="2">Feb.</option>
+                                                        <option class="" value="3">Mar.</option>
+                                                        <option class="" value="4">Abr.</option>
+                                                        <option class="" value="5">May.</option>
+                                                        <option class="" value="6">Jun.</option>
+                                                        <option class="" value="7">Jul.</option>
+                                                        <option class="" value="8">Ago.</option>
+                                                        <option class="" value="9">Set.</option>
+                                                        <option class="" value="10">Oct.</option>
+                                                        <option class="" value="11">Nov.</option>
+                                                        <option class="" value="12">Dic.</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" style="padding-left: 5px;
+                                                    padding-right: 5px;"
+                                                        name="m_ano_fecha"
+                                                        id="m_ano_fecha" required="">
+                                                        <option value="0">Año</option>
+                                                        @for ($i = 2000; $i <2100;
+                                                            $i++) <option class=""
+                                                            value="{{$i}}">{{$i}}
+                                                        </option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                            {{-- <input type="text" data-custom-class="form-control" id="m_fechaI" data-format="YYYY-MM-DD"
+                                data-template="D MMM YYYY" name="date" required> --}}
                             <br>
                             <div class="form-group">
                                 <label for="">Fecha Indifinida</label>
@@ -777,8 +1032,55 @@ use App\proyecto_empleado;
                             </div>
                             <div id="ocultarFecha">
                                 <label id="labelfechaF">Fecha Final</label>
-                                <input type="text" data-custom-class="form-control" id="m_fechaF"
-                                    data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date">
+                                <span id="mf_validFechaC" style="color: red;display: none;">*Fecha incorrecta.</span>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <select class="form-control"
+                                                        name="mf_dia_fecha"
+                                                        id="mf_dia_fecha" required="">
+                                                        <option value="0">Dia</option>
+                                                        @for ($i = 1; $i <32; $i++)
+                                                        <option class=""
+                                                            value="{{$i}}">{{$i}}</option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control"
+                                                        name="mf_mes_fecha"
+                                                        id="mf_mes_fecha" required="">
+                                                        <option value="0">Mes</option>
+                                                        <option class="" value="1">Ene.</option>
+                                                        <option class="" value="2">Feb.</option>
+                                                        <option class="" value="3">Mar.</option>
+                                                        <option class="" value="4">Abr.</option>
+                                                        <option class="" value="5">May.</option>
+                                                        <option class="" value="6">Jun.</option>
+                                                        <option class="" value="7">Jul.</option>
+                                                        <option class="" value="8">Ago.</option>
+                                                        <option class="" value="9">Set.</option>
+                                                        <option class="" value="10">Oct.</option>
+                                                        <option class="" value="11">Nov.</option>
+                                                        <option class="" value="12">Dic.</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" style="padding-left: 5px;
+                                                    padding-right: 5px;"
+                                                        name="mf_ano_fecha"
+                                                        id="mf_ano_fecha" required="">
+                                                        <option value="0">Año</option>
+                                                        @for ($i = 2014; $i <2100;
+                                                            $i++) <option class=""
+                                                            value="{{$i}}">{{$i}}
+                                                        </option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                               {{--  <input type="text" data-custom-class="form-control" id="m_fechaF"
+                                    data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date"> --}}
                             </div>
                         </div>
                 </div>
@@ -1057,8 +1359,55 @@ use App\proyecto_empleado;
                         {{ csrf_field() }}
                         <div class="col-md-12">
                             <label for="">Fecha Inicial</label>
-                            <input type="text" data-custom-class="form-control" id="m_fechaIE" data-format="YYYY-MM-DD"
-                                data-template="D MMM YYYY" name="date" required>
+                            <span id="m_validFechaCIE" style="color: red;display: none;">*Fecha incorrecta.</span>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <select class="form-control"
+                                                        name="m_dia_fechaIE"
+                                                        id="m_dia_fechaIE" required="">
+                                                        <option value="0">Dia</option>
+                                                        @for ($i = 1; $i <32; $i++)
+                                                        <option class=""
+                                                            value="{{$i}}">{{$i}}</option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control"
+                                                        name="m_mes_fechaIE"
+                                                        id="m_mes_fechaIE" required="">
+                                                        <option value="0">Mes</option>
+                                                        <option class="" value="1">Ene.</option>
+                                                        <option class="" value="2">Feb.</option>
+                                                        <option class="" value="3">Mar.</option>
+                                                        <option class="" value="4">Abr.</option>
+                                                        <option class="" value="5">May.</option>
+                                                        <option class="" value="6">Jun.</option>
+                                                        <option class="" value="7">Jul.</option>
+                                                        <option class="" value="8">Ago.</option>
+                                                        <option class="" value="9">Set.</option>
+                                                        <option class="" value="10">Oct.</option>
+                                                        <option class="" value="11">Nov.</option>
+                                                        <option class="" value="12">Dic.</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" style="padding-left: 5px;
+                                                    padding-right: 5px;"
+                                                        name="m_ano_fechaIE"
+                                                        id="m_ano_fechaIE" required="">
+                                                        <option value="0">Año</option>
+                                                        @for ($i = 2000; $i <2100;
+                                                            $i++) <option class=""
+                                                            value="{{$i}}">{{$i}}
+                                                        </option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                            {{-- <input type="text" data-custom-class="form-control" id="m_fechaIE" data-format="YYYY-MM-DD"
+                                data-template="D MMM YYYY" name="date" required> --}}
                             <br>
                             <div class="form-group">
                                 <label for="">Fecha Indifinida</label>
@@ -1066,8 +1415,56 @@ use App\proyecto_empleado;
                             </div>
                             <div id="ocultarFechaE">
                                 <label for="">Fecha Final</label>
-                                <input type="text" data-custom-class="form-control" id="m_fechaFE"
-                                    data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date" required>
+                                <span id="m_validFechaCFE" style="color: red;display: none;">*Fecha incorrecta.</span>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <select class="form-control"
+                                                        name="m_dia_fechaFE"
+                                                        id="m_dia_fechaFE" required="">
+                                                        <option value="0">Dia</option>
+                                                        @for ($i = 1; $i <32; $i++)
+                                                        <option class=""
+                                                            value="{{$i}}">{{$i}}</option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control"
+                                                        name="m_mes_fechaFE"
+                                                        id="m_mes_fechaFE" required="">
+                                                        <option value="0">Mes</option>
+                                                        <option class="" value="1">Ene.</option>
+                                                        <option class="" value="2">Feb.</option>
+                                                        <option class="" value="3">Mar.</option>
+                                                        <option class="" value="4">Abr.</option>
+                                                        <option class="" value="5">May.</option>
+                                                        <option class="" value="6">Jun.</option>
+                                                        <option class="" value="7">Jul.</option>
+                                                        <option class="" value="8">Ago.</option>
+                                                        <option class="" value="9">Set.</option>
+                                                        <option class="" value="10">Oct.</option>
+                                                        <option class="" value="11">Nov.</option>
+                                                        <option class="" value="12">Dic.</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" style="padding-left: 5px;
+                                                    padding-right: 5px;"
+                                                        name="m_ano_fechaFE"
+                                                        id="m_ano_fechaFE" required="">
+                                                        <option value="0">Año</option>
+                                                        @for ($i = 2000; $i <2100;
+                                                            $i++) <option class=""
+                                                            value="{{$i}}">{{$i}}
+                                                        </option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+
+                                            </div>
+
+                                {{-- <input type="text" data-custom-class="form-control" id="m_fechaFE"
+                                    data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date" required> --}}
                             </div>
                         </div>
                 </div>
@@ -1176,8 +1573,55 @@ use App\proyecto_empleado;
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="sw-default">Fecha Nacimiento</label>
-                                            <input type="text" data-custom-class="form-control" id="fechaN" tabindex="3"
-                                                data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date">
+                                            <span id="validFechaC" style="color: red;display: none;">*Fecha incorrecta.</span>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <select class="form-control"
+                                                        name="dia_fecha"
+                                                        id="dia_fecha" required="">
+                                                        <option value="0">Dia</option>
+                                                        @for ($i = 1; $i <32; $i++)
+                                                        <option class=""
+                                                            value="{{$i}}">{{$i}}</option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control"
+                                                        name="mes_fecha"
+                                                        id="mes_fecha" required="">
+                                                        <option value="0">Mes</option>
+                                                        <option class="" value="1">Ene.</option>
+                                                        <option class="" value="2">Feb.</option>
+                                                        <option class="" value="3">Mar.</option>
+                                                        <option class="" value="4">Abr.</option>
+                                                        <option class="" value="5">May.</option>
+                                                        <option class="" value="6">Jun.</option>
+                                                        <option class="" value="7">Jul.</option>
+                                                        <option class="" value="8">Ago.</option>
+                                                        <option class="" value="9">Set.</option>
+                                                        <option class="" value="10">Oct.</option>
+                                                        <option class="" value="11">Nov.</option>
+                                                        <option class="" value="12">Dic.</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" style="padding-left: 5px;
+                                                    padding-right: 5px;"
+                                                        name="ano_fecha"
+                                                        id="ano_fecha" required="">
+                                                        <option value="0">Año</option>
+                                                        @for ($i = 1950; $i <2011;
+                                                            $i++) <option class=""
+                                                            value="{{$i}}">{{$i}}
+                                                        </option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                           {{--  <input type="text" data-custom-class="form-control" id="fechaN" tabindex="3"
+                                                data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date"> --}}
                                         </div>
                                         <div class="form-group">
                                             <label for="sw-default">Nombres</label>
@@ -1893,9 +2337,56 @@ use App\proyecto_empleado;
                                 <div class="col-4">
                                     <div class="form-group">
                                         <label for="sw-default">Fecha Nacimiento</label>
-                                        <input type="text" data-custom-class="form-control" id="v_fechaN"
+                                        <span id="v_validFechaC" style="color: red;display: none;">*Fecha incorrecta.</span>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <select class="form-control"
+                                                    name="v_dia_fecha"
+                                                    id="v_dia_fecha" required="">
+                                                    <option value="0">Dia</option>
+                                                    @for ($i = 1; $i <32; $i++)
+                                                    <option class=""
+                                                        value="{{$i}}">{{$i}}</option>
+                                                    @endfor
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select class="form-control"
+                                                    name="v_mes_fecha"
+                                                    id="v_mes_fecha" required="">
+                                                    <option value="0">Mes</option>
+                                                    <option class="" value="1">Ene.</option>
+                                                    <option class="" value="2">Feb.</option>
+                                                    <option class="" value="3">Mar.</option>
+                                                    <option class="" value="4">Abr.</option>
+                                                    <option class="" value="5">May.</option>
+                                                    <option class="" value="6">Jun.</option>
+                                                    <option class="" value="7">Jul.</option>
+                                                    <option class="" value="8">Ago.</option>
+                                                    <option class="" value="9">Set.</option>
+                                                    <option class="" value="10">Oct.</option>
+                                                    <option class="" value="11">Nov.</option>
+                                                    <option class="" value="12">Dic.</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select class="form-control" style="padding-left: 5px;
+                                                padding-right: 5px;"
+                                                    name="v_mes_fecha"
+                                                    id="v_ano_fecha" required="">
+                                                    <option value="0">Año</option>
+                                                    @for ($i = 1950; $i <2011;
+                                                        $i++) <option class=""
+                                                        value="{{$i}}">{{$i}}
+                                                    </option>
+                                                    @endfor
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                       {{--  <input type="text" data-custom-class="form-control" id="v_fechaN"
                                             data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date"
-                                            tabindex="3">
+                                            tabindex="3"> --}}
                                     </div>
                                     <div class="form-group">
                                         <label for="sw-default">Nombres</label>
@@ -2614,9 +3105,56 @@ use App\proyecto_empleado;
                                 <div class="col-4">
                                     <div class="form-group">
                                         <label for="sw-default">Fecha Nacimiento</label>
-                                        <input type="text" class="form-control" id="v_fechaNV"
+
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <select class="form-control"
+                                                    name="v_dia_fechaV"
+                                                    id="v_dia_fechaV" required="">
+                                                    <option value="0">Dia</option>
+                                                    @for ($i = 1; $i <32; $i++)
+                                                    <option class=""
+                                                        value="{{$i}}">{{$i}}</option>
+                                                    @endfor
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select class="form-control"
+                                                    name="v_mes_fechaV"
+                                                    id="v_mes_fechaV" required="">
+                                                    <option value="0">Mes</option>
+                                                    <option class="" value="1">Ene.</option>
+                                                    <option class="" value="2">Feb.</option>
+                                                    <option class="" value="3">Mar.</option>
+                                                    <option class="" value="4">Abr.</option>
+                                                    <option class="" value="5">May.</option>
+                                                    <option class="" value="6">Jun.</option>
+                                                    <option class="" value="7">Jul.</option>
+                                                    <option class="" value="8">Ago.</option>
+                                                    <option class="" value="9">Set.</option>
+                                                    <option class="" value="10">Oct.</option>
+                                                    <option class="" value="11">Nov.</option>
+                                                    <option class="" value="12">Dic.</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select class="form-control" style="padding-left: 5px;
+                                                padding-right: 5px;"
+                                                    name="v_mes_fechaV"
+                                                    id="v_ano_fechaV" required="">
+                                                    <option value="0">Año</option>
+                                                    @for ($i = 1950; $i <2011;
+                                                        $i++) <option class=""
+                                                        value="{{$i}}">{{$i}}
+                                                    </option>
+                                                    @endfor
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                        {{-- <input type="text" class="form-control" id="v_fechaNV"
                                             data-custom-class="form-control" data-format="YYYY-MM-DD"
-                                            data-template="D MMM YYYY" name="date" disabled>
+                                            data-template="D MMM YYYY" name="date" disabled> --}}
                                     </div>
                                     <div class="form-group">
                                         <label for="sw-default">Nombres</label>
@@ -2952,6 +3490,8 @@ use App\proyecto_empleado;
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+
+<script src="{{ asset('admin/assets/libs/combodate-1.0.7/moment.js') }}"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <script src="{{ asset('admin/assets/libs/smartwizard/jquery.smartWizard.min.js') }}"></script>
 <script>
@@ -2972,14 +3512,14 @@ use App\proyecto_empleado;
         }
 
 </script>
+<script src="{{asset('landing/js/tabla.js')}}"></script>
 <script src="{{ asset('admin/assets/libs/bootstrap-fileinput/piexif.min.js') }} "></script>
 <script src="{{ asset('admin/assets/libs/bootstrap-fileinput/sortable.min.js') }}"></script>
 <script src="{{ asset('admin/assets/libs/bootstrap-fileinput/purify.min.js') }}"></script>
 <script src="{{ asset('admin/assets/libs/bootstrap-fileinput/fileinput.min.js') }}"></script>
 <script src="{{ asset('admin/assets/libs/bootstrap-fileinput/theme.js') }}"></script>
 <script src="{{ asset('admin/assets/libs/bootstrap-fileinput/es.js') }}"></script>
-<script src="{{ asset('admin/assets/libs/combodate-1.0.7/combodate.js') }}"></script>
-<script src="{{ asset('admin/assets/libs/combodate-1.0.7/moment.js') }}"></script>
+
 
 <script src="{{ asset('admin/assets/libs/moment/moment.min.js') }}"></script>
 <script src="{{ asset('admin/assets/libs/combodate-1.0.7/es.js') }}"></script>
@@ -2990,7 +3530,7 @@ use App\proyecto_empleado;
 <script src="{{ asset('admin/packages/interaction/main.js') }}"></script>
 <script src="{{ asset('admin/assets/js/pages/form-wizard.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
-<script src="{{ asset('landing/js/tabla.js') }}"></script>
+
 <script src="{{ asset('landing/js/smartwizard.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
