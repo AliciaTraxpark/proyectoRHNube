@@ -1,7 +1,4 @@
-<link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet"
-    type="text/css" />
-<link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet"
-    type="text/css" />
+
 <style>
     div.dataTables_wrapper div.dataTables_filter {
         display: none;
@@ -611,7 +608,7 @@
                $('#m_ano_fechaIE').val(moment(VFechaDaIE).year());
                 if (data[0].emple_fechaFC == null || data[0].emple_fechaFC == "0000-00-00") {
                     $("#checkboxFechaIE").prop('checked', true);
-           
+
                     $('#ocultarFechaE').hide();
                 }
 
