@@ -305,20 +305,23 @@
                                                 </tr>
                                             </table>
                                             <!--[if mso]></td><td style="width:20px"></td><td style="width:270px" valign="top"><![endif]-->
-                                            <table class="es-right" cellspacing="0" cellpadding="0" align="right"
-                                                style="border-collapse:collapse;border-spacing:0px;float:right">
-                                                <tr style="border-collapse:collapse">
-                                                    <td align="left" style="padding:0;Margin:0;width:270px">
-                                                        <table width="100%" cellspacing="0" cellpadding="0"
-                                                            style="border-collapse:collapse;border-spacing:0px">
-                                                            <tr style="border-collapse:collapse">
-                                                                <td align="center"
-                                                                    style="padding:0;Margin:0;display:none"></td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </table>
+                                                <table class="es-right" cellspacing="0" cellpadding="0" align="right">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="esd-container-frame" width="270" align="left" esdev-config="h18">
+                                                                <table width="100%" cellspacing="0" cellpadding="0">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td align="right" class="esd-block-text es-p40t es-p40b">
+                                                                                <p style="color: #ffffff;"><strong>{{$organizacion->organi_razonSocial}} - {{$organizacion->organi_ruc}}<span style="color:#FFFFFF;"></span></strong></p>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                         </td>
                                     </tr>
                                 </table>

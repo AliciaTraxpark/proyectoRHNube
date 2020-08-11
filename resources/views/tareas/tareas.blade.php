@@ -149,7 +149,6 @@
 <!-- end row -->
 @endsection
 @section('script')
-<script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
 <!-- Plugins Js -->
 <script src="{{
     URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js')
@@ -182,4 +181,5 @@
     }}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{asset('landing/js/tareas.js')}}"></script>
+<script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
 @endsection

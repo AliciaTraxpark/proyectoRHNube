@@ -177,6 +177,7 @@ class ControlController extends Controller
                 DB::raw('IF(hd.id is null, DATE(cp.fecha_hora), DATE(hd.start))'),
                 'P.Proye_id',
                 'P.Proye_Nombre',
+                'p.Proye_estado',
                 'en.idEnvio',
                 'cp.imagen',
                 'cp.promedio',
@@ -190,7 +191,8 @@ class ControlController extends Controller
             ->where(DB::raw('IF(hd.id is null, DATE(cp.fecha_hora), DATE(hd.start))'), '=', $fecha)
             ->where('e.emple_id', '=', $idempleado)
             ->where('e.users_id', '=', Auth::user()->id)
-            ->orderBy('pc.id', 'asc')
+            ->groupBy('cp.idCaptura')
+            ->orderBy('cp.fecha_hora', 'asc')
             ->get();
         $control = controlAJson($control);
         return response()->json($control, 200);

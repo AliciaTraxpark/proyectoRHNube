@@ -2,7 +2,9 @@
 
 namespace App\Mail;
 
+use App\organizacion;
 use App\persona;
+use App\vinculacion;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -19,10 +21,12 @@ class MasivoWindowsMail extends Mailable
      */
     public $vinculacion;
     public $persona;
-    public function __construct(array $vinculacion, persona $persona)
+    public $organizacion;
+    public function __construct(array $vinculacion, persona $persona, organizacion $organizacion)
     {
         $this->vinculacion = $vinculacion;
         $this->persona = $persona;
+        $this->organizacion = $organizacion;
     }
 
     /**

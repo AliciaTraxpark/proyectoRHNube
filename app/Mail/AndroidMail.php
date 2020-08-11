@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\organizacion;
 use App\persona;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -18,9 +19,11 @@ class AndroidMail extends Mailable
      * @return void
      */
     public $persona;
-    public function __construct(persona $persona)
+    public $organizacion;
+    public function __construct(persona $persona, organizacion $organizacion)
     {
         $this->persona = $persona;
+        $this->organizacion = $organizacion;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\organizacion;
 use App\persona;
 use App\User;
 use Illuminate\Bus\Queueable;
@@ -20,10 +21,12 @@ class CorreoMail extends Mailable implements ShouldQueue
      */
     public $datos;
     public $persona;
-    public function __construct(User $datos, persona $persona)
+    public $organizacion;
+    public function __construct(User $datos, persona $persona, organizacion $organizacion)
     {
         $this->datos = $datos;
         $this->persona = $persona;
+        $this->organizacion = $organizacion;
     }
 
     /**

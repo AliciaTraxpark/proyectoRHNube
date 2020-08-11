@@ -592,6 +592,7 @@ $('#enviarCorreoWindowsEmpleado').on("click", enviarCorreoWindows);
 //EDITAR
 function vinculacionAndroidEditar() {
     var idEmpleado = $('#v_id').val();
+    console.log(idEmpleado);
     $.ajax({
         async: false,
         type: "get",
@@ -632,7 +633,7 @@ function vinculacionAndroidEditar() {
                 <td id="estado${data.idVinculacion}">Creado</td>
                 <td id="correo${data.idVinculacion}">
                     <input style="display: none;" id="android${idEmpleado}" value="${data.idVinculacion}">
-                    <a  onclick="$('#androidEmpleado').modal();$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+                    <a  onclick="$('#v_androidEmpleado').modal();$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
                     correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
                         src="landing/images/note.svg" height="20">
                     </a>
@@ -650,6 +651,7 @@ $('#v_agregarAndroid').on("click", vinculacionAndroidEditar);
 
 function enviarCorreoAndoidEditar() {
     var idEmpleado = $('#v_id').val();
+    console.log(idEmpleado);
     var idVinculacion = $('#android' + idEmpleado).val();
     $.ajax({
         async: false,
@@ -706,6 +708,7 @@ function modalWindowsEditar(id) {
 
 function vinculacionWindowsEditar() {
     var idEmpleado = $('#v_id').val();
+    console.log(idEmpleado);
     $.ajax({
         async: false,
         type: "get",
@@ -745,7 +748,7 @@ function vinculacionWindowsEditar() {
                 <td id="enviadoW${data.idVinculacion}">${data.envio}</td>
                 <td id="estado${data.idVinculacion}">Creado</td>
                 <td id="correo${data.idVinculacion}">
-                    <a  onclick="javascript:modalWindows(${data.idVinculacion});$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+                    <a  onclick="javascript:modalWindowsEditar(${data.idVinculacion});$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
                     correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
                         src="landing/images/note.svg" height="20">
                 </a>
@@ -763,8 +766,9 @@ $('#v_agregarWindows').on("click", vinculacionWindowsEditar);
 
 function enviarCorreoWindowsEditar() {
     var idEmpleado = $('#v_id').val();
+    console.log(idEmpleado);
     var idVinculacion = $('#windows').val();
-    console.log(idVinculacion);
+    console.log(idEmpleado);
     $.ajax({
         async: false,
         type: "get",
