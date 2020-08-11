@@ -3193,11 +3193,11 @@ $("#checkboxFechaIE").on("click", function () {
         $('#m_dia_fechaFE').val("0");
         $('#m_mes_fechaFE').val("0");
         $('#m_ano_fechaFE').val("0");
-        $('#ocultarFechaE > .combodate').hide();
         $('#ocultarFechaE').hide();
+       
     } else {
         $('#ocultarFechaE').show();
-        $('#ocultarFechaE > .combodate').show();
+
     }
 });
 /*$('#actualizarEmpleado').click(function () {
@@ -3637,7 +3637,7 @@ function FinalizarEmpleado() {
     $("#form-registrar :input").prop('disabled', true);
     $('#documento').attr('disabled', false);
     $('#cerrarMoadalEmpleado').attr('disabled', false);
- 
+
    $('#mf_dia_fecha').val("0");
    $('#mf_mes_fecha').val("0");
    $('#mf_ano_fecha').val("0");

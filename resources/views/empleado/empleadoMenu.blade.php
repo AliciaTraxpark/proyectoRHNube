@@ -459,10 +459,7 @@ use App\proyecto_empleado;
         color: #0b1b29 !important;
     }
 
-    .combodate {
-        display: flex;
-        justify-content: space-between;
-    }
+
 
     .day {
         max-width: 30%;
@@ -3491,7 +3488,7 @@ use App\proyecto_empleado;
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 
-<script src="{{ asset('admin/assets/libs/combodate-1.0.7/moment.js') }}"></script>
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <script src="{{ asset('admin/assets/libs/smartwizard/jquery.smartWizard.min.js') }}"></script>
 <script>
@@ -3522,7 +3519,7 @@ use App\proyecto_empleado;
 
 
 <script src="{{ asset('admin/assets/libs/moment/moment.min.js') }}"></script>
-<script src="{{ asset('admin/assets/libs/combodate-1.0.7/es.js') }}"></script>
+
 <script src="{{ asset('admin/packages/core/main.js') }}"></script>
 <script src="{{ asset('admin/packages/core/locales/es.js') }}"></script>
 <script src="{{ asset('admin/packages/daygrid/main.js') }}"></script>

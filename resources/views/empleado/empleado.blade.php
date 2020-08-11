@@ -501,10 +501,7 @@
             color: #0b1b29 !important;
         }
 
-        .combodate {
-            display: flex;
-            justify-content: space-between;
-        }
+
 
         .day {
             max-width: 30%;
@@ -3647,9 +3644,7 @@
     <script src="{{asset('admin/assets/libs/bootstrap-fileinput/theme.js')}}"></script>
     <script src="{{asset('admin/assets/libs/bootstrap-fileinput/es.js')}}"></script>
 
-    <script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
     <script src="{{asset('admin/assets/libs/moment/moment.min.js')}}"></script>
-    <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
     <script src="{{asset('admin/packages/core/main.js')}}"></script>
     <script src="{{asset('admin/packages/core/locales/es.js')}}"></script>
     <script src="{{asset('admin/packages/daygrid/main.js')}}"></script>

@@ -823,11 +823,11 @@ $("#checkboxFechaIE").on("click", function () {
         $('#m_mes_fechaFE').val("0");
         $('#m_ano_fechaFE').val("0");
         console.log($('#m_fechaFE').val());
-        $('#ocultarFechaE > .combodate').hide();
+
         $('#ocultarFechaE').hide();
     } else {
         $('#ocultarFechaE').show();
-        $('#ocultarFechaE > .combodate').show();
+
     }
 });
 //FECHAS

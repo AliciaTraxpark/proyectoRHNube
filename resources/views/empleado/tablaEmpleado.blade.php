@@ -611,7 +611,7 @@
                $('#m_ano_fechaIE').val(moment(VFechaDaIE).year());
                 if (data[0].emple_fechaFC == null || data[0].emple_fechaFC == "0000-00-00") {
                     $("#checkboxFechaIE").prop('checked', true);
-                    $('#ocultarFechaE > .combodate').hide();
+           
                     $('#ocultarFechaE').hide();
                 }
 
