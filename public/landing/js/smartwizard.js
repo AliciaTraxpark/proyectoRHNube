@@ -98,7 +98,7 @@ $(document).ready(function () {
             var Anio = parseInt($('#ano_fecha').val());
             var Mes = parseInt($('#mes_fecha').val() - 1);
             var Dia = parseInt($('#dia_fecha').val());
-            if(Anio!=0 && Mes!=-1 && Dia!=0){
+            if (Anio != 0 && Mes != -1 && Dia != 0) {
                 var VFecha = new Date(Anio, Mes, Dia);
                 if ((VFecha.getFullYear() == Anio) && (VFecha.getMonth() == Mes) && (VFecha.getDate() == Dia)) {
                     $('#validFechaC').hide();
@@ -262,7 +262,7 @@ $(document).ready(function () {
             var v_Anio = parseInt($('#v_ano_fecha').val());
             var v_Mes = parseInt($('#v_mes_fecha').val() - 1);
             var v_Dia = parseInt($('#v_dia_fecha').val());
-            if(v_Anio!=0 && v_Mes!=-1 && v_Dia!=0){
+            if (v_Anio != 0 && v_Mes != -1 && v_Dia != 0) {
                 var v_VFecha = new Date(v_Anio, v_Mes, v_Dia);
                 if ((v_VFecha.getFullYear() == v_Anio) && (v_VFecha.getMonth() == v_Mes) && (v_VFecha.getDate() == v_Dia)) {
                     $('#v_validFechaC').hide();
@@ -366,6 +366,7 @@ $(document).ready(function () {
             previous: 'Anterior'
         },
         justified: true,
+        autoAdjustHeight: true,
         anchorSettings: {
             anchorClickable: true, // Enable/Disable anchor navigation
             enableAllAnchors: true,

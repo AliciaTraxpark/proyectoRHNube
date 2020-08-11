@@ -1028,53 +1028,49 @@
                                     {{ csrf_field() }}
                                     <div class="col-md-12">
                                         <label for="">Fecha Inicial</label>
-                                        <span id="m_validFechaC" style="color: red;display: none;">*Fecha incorrecta.</span>
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <select class="form-control"
-                                                        name="m_dia_fecha"
-                                                        id="m_dia_fecha" required="">
-                                                        <option value="0">Dia</option>
-                                                        @for ($i = 1; $i <32; $i++)
-                                                        <option class=""
-                                                            value="{{$i}}">{{$i}}</option>
-                                                        @endfor
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <select class="form-control"
-                                                        name="m_mes_fecha"
-                                                        id="m_mes_fecha" required="">
-                                                        <option value="0">Mes</option>
-                                                        <option class="" value="1">Ene.</option>
-                                                        <option class="" value="2">Feb.</option>
-                                                        <option class="" value="3">Mar.</option>
-                                                        <option class="" value="4">Abr.</option>
-                                                        <option class="" value="5">May.</option>
-                                                        <option class="" value="6">Jun.</option>
-                                                        <option class="" value="7">Jul.</option>
-                                                        <option class="" value="8">Ago.</option>
-                                                        <option class="" value="9">Set.</option>
-                                                        <option class="" value="10">Oct.</option>
-                                                        <option class="" value="11">Nov.</option>
-                                                        <option class="" value="12">Dic.</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <select class="form-control" style="padding-left: 5px;
-                                                    padding-right: 5px;"
-                                                        name="m_ano_fecha"
-                                                        id="m_ano_fecha" required="">
-                                                        <option value="0">Año</option>
-                                                        @for ($i = 2000; $i <2100;
-                                                            $i++) <option class=""
-                                                            value="{{$i}}">{{$i}}
+                                        <span id="m_validFechaC" style="color: red;display: none;">*Fecha
+                                            incorrecta.</span>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <select class="form-control" name="m_dia_fecha" id="m_dia_fecha"
+                                                    required="">
+                                                    <option value="0">Dia</option>
+                                                    @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">{{$i}}
                                                         </option>
                                                         @endfor
-                                                    </select>
-                                                </div>
-
+                                                </select>
                                             </div>
+                                            <div class="col-md-4">
+                                                <select class="form-control" name="m_mes_fecha" id="m_mes_fecha"
+                                                    required="">
+                                                    <option value="0">Mes</option>
+                                                    <option class="" value="1">Ene.</option>
+                                                    <option class="" value="2">Feb.</option>
+                                                    <option class="" value="3">Mar.</option>
+                                                    <option class="" value="4">Abr.</option>
+                                                    <option class="" value="5">May.</option>
+                                                    <option class="" value="6">Jun.</option>
+                                                    <option class="" value="7">Jul.</option>
+                                                    <option class="" value="8">Ago.</option>
+                                                    <option class="" value="9">Set.</option>
+                                                    <option class="" value="10">Oct.</option>
+                                                    <option class="" value="11">Nov.</option>
+                                                    <option class="" value="12">Dic.</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select class="form-control" style="padding-left: 5px;
+                                                    padding-right: 5px;" name="m_ano_fecha" id="m_ano_fecha"
+                                                    required="">
+                                                    <option value="0">Año</option>
+                                                    @for ($i = 2000; $i <2100; $i++) <option class="" value="{{$i}}">
+                                                        {{$i}}
+                                                        </option>
+                                                        @endfor
+                                                </select>
+                                            </div>
+
+                                        </div>
                                         <br>
                                         <div class="form-group">
                                             <label for="">Fecha Indifinida</label>
@@ -1082,23 +1078,21 @@
                                         </div>
                                         <div id="ocultarFecha">
                                             <label id="labelfechaF">Fecha Final</label>
-                                            <span id="mf_validFechaC" style="color: red;display: none;">*Fecha incorrecta.</span>
+                                            <span id="mf_validFechaC" style="color: red;display: none;">*Fecha
+                                                incorrecta.</span>
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <select class="form-control"
-                                                        name="mf_dia_fecha"
-                                                        id="mf_dia_fecha" required="">
+                                                    <select class="form-control" name="mf_dia_fecha" id="mf_dia_fecha"
+                                                        required="">
                                                         <option value="0">Dia</option>
-                                                        @for ($i = 1; $i <32; $i++)
-                                                        <option class=""
-                                                            value="{{$i}}">{{$i}}</option>
-                                                        @endfor
+                                                        @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
+                                                            {{$i}}</option>
+                                                            @endfor
                                                     </select>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <select class="form-control"
-                                                        name="mf_mes_fecha"
-                                                        id="mf_mes_fecha" required="">
+                                                    <select class="form-control" name="mf_mes_fecha" id="mf_mes_fecha"
+                                                        required="">
                                                         <option value="0">Mes</option>
                                                         <option class="" value="1">Ene.</option>
                                                         <option class="" value="2">Feb.</option>
@@ -1116,15 +1110,13 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <select class="form-control" style="padding-left: 5px;
-                                                    padding-right: 5px;"
-                                                        name="mf_ano_fecha"
-                                                        id="mf_ano_fecha" required="">
+                                                    padding-right: 5px;" name="mf_ano_fecha" id="mf_ano_fecha"
+                                                        required="">
                                                         <option value="0">Año</option>
-                                                        @for ($i = 2014; $i <2100;
-                                                            $i++) <option class=""
+                                                        @for ($i = 2014; $i <2100; $i++) <option class=""
                                                             value="{{$i}}">{{$i}}
-                                                        </option>
-                                                        @endfor
+                                                            </option>
+                                                            @endfor
                                                     </select>
                                                 </div>
 
@@ -1422,73 +1414,67 @@
                                     {{ csrf_field() }}
                                     <div class="col-md-12">
                                         <label for="">Fecha Inicial</label>
-                                        <span id="m_validFechaCIE" style="color: red;display: none;">*Fecha incorrecta.</span>
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <select class="form-control"
-                                                        name="m_dia_fechaIE"
-                                                        id="m_dia_fechaIE" required="">
-                                                        <option value="0">Dia</option>
-                                                        @for ($i = 1; $i <32; $i++)
-                                                        <option class=""
-                                                            value="{{$i}}">{{$i}}</option>
-                                                        @endfor
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <select class="form-control"
-                                                        name="m_mes_fechaIE"
-                                                        id="m_mes_fechaIE" required="">
-                                                        <option value="0">Mes</option>
-                                                        <option class="" value="1">Ene.</option>
-                                                        <option class="" value="2">Feb.</option>
-                                                        <option class="" value="3">Mar.</option>
-                                                        <option class="" value="4">Abr.</option>
-                                                        <option class="" value="5">May.</option>
-                                                        <option class="" value="6">Jun.</option>
-                                                        <option class="" value="7">Jul.</option>
-                                                        <option class="" value="8">Ago.</option>
-                                                        <option class="" value="9">Set.</option>
-                                                        <option class="" value="10">Oct.</option>
-                                                        <option class="" value="11">Nov.</option>
-                                                        <option class="" value="12">Dic.</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <select class="form-control" style="padding-left: 5px;
-                                                    padding-right: 5px;"
-                                                        name="m_ano_fechaIE"
-                                                        id="m_ano_fechaIE" required="">
-                                                        <option value="0">Año</option>
-                                                        @for ($i = 2000; $i <2100;
-                                                            $i++) <option class=""
-                                                            value="{{$i}}">{{$i}}
+                                        <span id="m_validFechaCIE" style="color: red;display: none;">*Fecha
+                                            incorrecta.</span>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <select class="form-control" name="m_dia_fechaIE" id="m_dia_fechaIE"
+                                                    required="">
+                                                    <option value="0">Dia</option>
+                                                    @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">{{$i}}
                                                         </option>
                                                         @endfor
-                                                    </select>
-                                                </div>
-
+                                                </select>
                                             </div>
+                                            <div class="col-md-4">
+                                                <select class="form-control" name="m_mes_fechaIE" id="m_mes_fechaIE"
+                                                    required="">
+                                                    <option value="0">Mes</option>
+                                                    <option class="" value="1">Ene.</option>
+                                                    <option class="" value="2">Feb.</option>
+                                                    <option class="" value="3">Mar.</option>
+                                                    <option class="" value="4">Abr.</option>
+                                                    <option class="" value="5">May.</option>
+                                                    <option class="" value="6">Jun.</option>
+                                                    <option class="" value="7">Jul.</option>
+                                                    <option class="" value="8">Ago.</option>
+                                                    <option class="" value="9">Set.</option>
+                                                    <option class="" value="10">Oct.</option>
+                                                    <option class="" value="11">Nov.</option>
+                                                    <option class="" value="12">Dic.</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select class="form-control" style="padding-left: 5px;
+                                                    padding-right: 5px;" name="m_ano_fechaIE" id="m_ano_fechaIE"
+                                                    required="">
+                                                    <option value="0">Año</option>
+                                                    @for ($i = 2000; $i <2100; $i++) <option class="" value="{{$i}}">
+                                                        {{$i}}
+                                                        </option>
+                                                        @endfor
+                                                </select>
+                                            </div>
+
+                                        </div>
                                         <br>
                                         <div class="form-group">
                                             <label for="">Fecha Indifinida</label>
-                                            <span id="m_validFechaCFE" style="color: red;display: none;">*Fecha incorrecta.</span>
+                                            <span id="m_validFechaCFE" style="color: red;display: none;">*Fecha
+                                                incorrecta.</span>
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <select class="form-control"
-                                                        name="m_dia_fechaFE"
-                                                        id="m_dia_fechaFE" required="">
+                                                    <select class="form-control" name="m_dia_fechaFE" id="m_dia_fechaFE"
+                                                        required="">
                                                         <option value="0">Dia</option>
-                                                        @for ($i = 1; $i <32; $i++)
-                                                        <option class=""
-                                                            value="{{$i}}">{{$i}}</option>
-                                                        @endfor
+                                                        @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
+                                                            {{$i}}</option>
+                                                            @endfor
                                                     </select>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <select class="form-control"
-                                                        name="m_mes_fechaFE"
-                                                        id="m_mes_fechaFE" required="">
+                                                    <select class="form-control" name="m_mes_fechaFE" id="m_mes_fechaFE"
+                                                        required="">
                                                         <option value="0">Mes</option>
                                                         <option class="" value="1">Ene.</option>
                                                         <option class="" value="2">Feb.</option>
@@ -1506,15 +1492,13 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <select class="form-control" style="padding-left: 5px;
-                                                    padding-right: 5px;"
-                                                        name="m_ano_fechaFE"
-                                                        id="m_ano_fechaFE" required="">
+                                                    padding-right: 5px;" name="m_ano_fechaFE" id="m_ano_fechaFE"
+                                                        required="">
                                                         <option value="0">Año</option>
-                                                        @for ($i = 2000; $i <2100;
-                                                            $i++) <option class=""
+                                                        @for ($i = 2000; $i <2100; $i++) <option class=""
                                                             value="{{$i}}">{{$i}}
-                                                        </option>
-                                                        @endfor
+                                                            </option>
+                                                            @endfor
                                                     </select>
                                                 </div>
 
@@ -1636,53 +1620,48 @@
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Fecha Nacimiento</label>
-                                                        <span id="validFechaC" style="color: red;display: none;">*Fecha incorrecta.</span>
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <select class="form-control"
-                                                        name="dia_fecha"
-                                                        id="dia_fecha" required="">
-                                                        <option value="0">Dia</option>
-                                                        @for ($i = 1; $i <32; $i++)
-                                                        <option class=""
-                                                            value="{{$i}}">{{$i}}</option>
-                                                        @endfor
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <select class="form-control"
-                                                        name="mes_fecha"
-                                                        id="mes_fecha" required="">
-                                                        <option value="0">Mes</option>
-                                                        <option class="" value="1">Ene.</option>
-                                                        <option class="" value="2">Feb.</option>
-                                                        <option class="" value="3">Mar.</option>
-                                                        <option class="" value="4">Abr.</option>
-                                                        <option class="" value="5">May.</option>
-                                                        <option class="" value="6">Jun.</option>
-                                                        <option class="" value="7">Jul.</option>
-                                                        <option class="" value="8">Ago.</option>
-                                                        <option class="" value="9">Set.</option>
-                                                        <option class="" value="10">Oct.</option>
-                                                        <option class="" value="11">Nov.</option>
-                                                        <option class="" value="12">Dic.</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <select class="form-control" style="padding-left: 5px;
-                                                    padding-right: 5px;"
-                                                        name="ano_fecha"
-                                                        id="ano_fecha" required="">
-                                                        <option value="0">Año</option>
-                                                        @for ($i = 1950; $i <2011;
-                                                            $i++) <option class=""
-                                                            value="{{$i}}">{{$i}}
-                                                        </option>
-                                                        @endfor
-                                                    </select>
-                                                </div>
+                                                        <span id="validFechaC" style="color: red;display: none;">*Fecha
+                                                            incorrecta.</span>
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <select class="form-control" name="dia_fecha"
+                                                                    id="dia_fecha" required="">
+                                                                    <option value="0">Dia</option>
+                                                                    @for ($i = 1; $i <32; $i++) <option class=""
+                                                                        value="{{$i}}">{{$i}}</option>
+                                                                        @endfor
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <select class="form-control" name="mes_fecha"
+                                                                    id="mes_fecha" required="">
+                                                                    <option value="0">Mes</option>
+                                                                    <option class="" value="1">Ene.</option>
+                                                                    <option class="" value="2">Feb.</option>
+                                                                    <option class="" value="3">Mar.</option>
+                                                                    <option class="" value="4">Abr.</option>
+                                                                    <option class="" value="5">May.</option>
+                                                                    <option class="" value="6">Jun.</option>
+                                                                    <option class="" value="7">Jul.</option>
+                                                                    <option class="" value="8">Ago.</option>
+                                                                    <option class="" value="9">Set.</option>
+                                                                    <option class="" value="10">Oct.</option>
+                                                                    <option class="" value="11">Nov.</option>
+                                                                    <option class="" value="12">Dic.</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <select class="form-control" style="padding-left: 5px;
+                                                    padding-right: 5px;" name="ano_fecha" id="ano_fecha" required="">
+                                                                    <option value="0">Año</option>
+                                                                    @for ($i = 1950; $i <2011; $i++) <option class=""
+                                                                        value="{{$i}}">{{$i}}
+                                                                        </option>
+                                                                        @endfor
+                                                                </select>
+                                                            </div>
 
-                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sw-default">Nombres</label>
@@ -2331,24 +2310,26 @@
                                         </div>
                                         <br>
                                         <div class="row">
-                                            <div class="table-responsive">
-                                                <table id="tablaDispositivo" class="table"
-                                                    style="font-size: 13px!important;width:100%;">
-                                                    <thead style="background: #fafafa;">
-                                                        <tr>
-                                                            <th>Tipo Dispositivo</th>
-                                                            <th>Activación de Dispositivo</th>
-                                                            <th>Codigo</th>
-                                                            <th>Enviado</th>
-                                                            <th>Estado</th>
-                                                            <th></th>
-                                                            <th></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="tbodyDispositivo"
-                                                        style="background:#ffffff;color: #585858;font-size: 12px">
-                                                    </tbody>
-                                                </table>
+                                            <div class="col-xl-12 col-sm-12">
+                                                <div class="table-responsive-xl">
+                                                    <table id="tablaDispositivo" class="table"
+                                                        style="font-size: 13px!important;">
+                                                        <thead style="background: #fafafa;">
+                                                            <tr>
+                                                                <th>Tipo Dispositivo</th>
+                                                                <th>Activación de Dispositivo</th>
+                                                                <th>Codigo</th>
+                                                                <th>Enviado</th>
+                                                                <th>Estado</th>
+                                                                <th></th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tbodyDispositivo"
+                                                            style="background:#ffffff;color: #585858;font-size: 12px">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -2444,53 +2425,48 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Fecha Nacimiento</label>
-                                                    <span id="v_validFechaC" style="color: red;display: none;">*Fecha incorrecta.</span>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <select class="form-control"
-                                                    name="v_dia_fecha"
-                                                    id="v_dia_fecha" required="">
-                                                    <option value="0">Dia</option>
-                                                    @for ($i = 1; $i <32; $i++)
-                                                    <option class=""
-                                                        value="{{$i}}">{{$i}}</option>
-                                                    @endfor
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <select class="form-control"
-                                                    name="v_mes_fecha"
-                                                    id="v_mes_fecha" required="">
-                                                    <option value="0">Mes</option>
-                                                    <option class="" value="1">Ene.</option>
-                                                    <option class="" value="2">Feb.</option>
-                                                    <option class="" value="3">Mar.</option>
-                                                    <option class="" value="4">Abr.</option>
-                                                    <option class="" value="5">May.</option>
-                                                    <option class="" value="6">Jun.</option>
-                                                    <option class="" value="7">Jul.</option>
-                                                    <option class="" value="8">Ago.</option>
-                                                    <option class="" value="9">Set.</option>
-                                                    <option class="" value="10">Oct.</option>
-                                                    <option class="" value="11">Nov.</option>
-                                                    <option class="" value="12">Dic.</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <select class="form-control" style="padding-left: 5px;
-                                                padding-right: 5px;"
-                                                    name="v_mes_fecha"
-                                                    id="v_ano_fecha" required="">
-                                                    <option value="0">Año</option>
-                                                    @for ($i = 1950; $i <2011;
-                                                        $i++) <option class=""
-                                                        value="{{$i}}">{{$i}}
-                                                    </option>
-                                                    @endfor
-                                                </select>
-                                            </div>
+                                                    <span id="v_validFechaC" style="color: red;display: none;">*Fecha
+                                                        incorrecta.</span>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <select class="form-control" name="v_dia_fecha"
+                                                                id="v_dia_fecha" required="">
+                                                                <option value="0">Dia</option>
+                                                                @for ($i = 1; $i <32; $i++) <option class=""
+                                                                    value="{{$i}}">{{$i}}</option>
+                                                                    @endfor
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <select class="form-control" name="v_mes_fecha"
+                                                                id="v_mes_fecha" required="">
+                                                                <option value="0">Mes</option>
+                                                                <option class="" value="1">Ene.</option>
+                                                                <option class="" value="2">Feb.</option>
+                                                                <option class="" value="3">Mar.</option>
+                                                                <option class="" value="4">Abr.</option>
+                                                                <option class="" value="5">May.</option>
+                                                                <option class="" value="6">Jun.</option>
+                                                                <option class="" value="7">Jul.</option>
+                                                                <option class="" value="8">Ago.</option>
+                                                                <option class="" value="9">Set.</option>
+                                                                <option class="" value="10">Oct.</option>
+                                                                <option class="" value="11">Nov.</option>
+                                                                <option class="" value="12">Dic.</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <select class="form-control" style="padding-left: 5px;
+                                                padding-right: 5px;" name="v_mes_fecha" id="v_ano_fecha" required="">
+                                                                <option value="0">Año</option>
+                                                                @for ($i = 1950; $i <2011; $i++) <option class=""
+                                                                    value="{{$i}}">{{$i}}
+                                                                    </option>
+                                                                    @endfor
+                                                            </select>
+                                                        </div>
 
-                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Nombres</label>
@@ -3149,24 +3125,26 @@
                                         </div>
                                         <br>
                                         <div class="row">
-                                            <div class="table-responsive">
-                                                <table id="v_tablaDispositivo" class="table"
-                                                    style="font-size: 13px!important;width:100%;">
-                                                    <thead style="background: #fafafa;font-size: 14px">
-                                                        <tr>
-                                                            <th>Tipo Dispositivo</th>
-                                                            <th>Activación de Dispositivo</th>
-                                                            <th>Codigo</th>
-                                                            <th>Enviado</th>
-                                                            <th>Estado</th>
-                                                            <th></th>
-                                                            <th></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="v_tbodyDispositivo"
-                                                        style="background:#ffffff;color: #585858;font-size: 12px">
-                                                    </tbody>
-                                                </table>
+                                            <div class="col-xl-12 col-sm-12">
+                                                <div class="table-responsive-xl">
+                                                    <table id="v_tablaDispositivo" class="table"
+                                                        style="font-size: 13px!important;">
+                                                        <thead style="background: #fafafa;font-size: 14px">
+                                                            <tr>
+                                                                <th>Tipo Dispositivo</th>
+                                                                <th>Activación de Dispositivo</th>
+                                                                <th>Codigo</th>
+                                                                <th>Enviado</th>
+                                                                <th>Estado</th>
+                                                                <th></th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="v_tbodyDispositivo"
+                                                            style="background:#ffffff;color: #585858;font-size: 12px">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -3248,19 +3226,16 @@
                                                     <label for="sw-default">Fecha Nacimiento</label>
                                                     <div class="row">
                                                         <div class="col-md-4">
-                                                            <select class="form-control"
-                                                                name="v_dia_fechaV"
+                                                            <select class="form-control" name="v_dia_fechaV"
                                                                 id="v_dia_fechaV" required="">
                                                                 <option value="0">Dia</option>
-                                                                @for ($i = 1; $i <32; $i++)
-                                                                <option class=""
+                                                                @for ($i = 1; $i <32; $i++) <option class=""
                                                                     value="{{$i}}">{{$i}}</option>
-                                                                @endfor
+                                                                    @endfor
                                                             </select>
                                                         </div>
                                                         <div class="col-md-4">
-                                                            <select class="form-control"
-                                                                name="v_mes_fechaV"
+                                                            <select class="form-control" name="v_mes_fechaV"
                                                                 id="v_mes_fechaV" required="">
                                                                 <option value="0">Mes</option>
                                                                 <option class="" value="1">Ene.</option>
@@ -3279,15 +3254,13 @@
                                                         </div>
                                                         <div class="col-md-4">
                                                             <select class="form-control" style="padding-left: 5px;
-                                                            padding-right: 5px;"
-                                                                name="v_mes_fechaV"
-                                                                id="v_ano_fechaV" required="">
+                                                            padding-right: 5px;" name="v_mes_fechaV" id="v_ano_fechaV"
+                                                                required="">
                                                                 <option value="0">Año</option>
-                                                                @for ($i = 1950; $i <2011;
-                                                                    $i++) <option class=""
+                                                                @for ($i = 1950; $i <2011; $i++) <option class=""
                                                                     value="{{$i}}">{{$i}}
-                                                                </option>
-                                                                @endfor
+                                                                    </option>
+                                                                    @endfor
                                                             </select>
                                                         </div>
 
@@ -3461,31 +3434,33 @@
                                                     Agregar
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                    <a class="dropdown-item" id="agregarAndroid">ANDROID</a>
-                                                    <a class="dropdown-item" id="agregarWindows">WINDOWS</a>
+                                                    <a class="dropdown-item">ANDROID</a>
+                                                    <a class="dropdown-item">WINDOWS</a>
                                                 </div>
                                             </div>
                                         </div>
                                         <br>
                                         <div class="row">
-                                            <div class="table-responsive">
-                                                <table id="ver_tablaDispositivo" class="table"
-                                                    style="font-size: 13px!important;width:100%;">
-                                                    <thead style="background: #fafafa;">
-                                                        <tr>
-                                                            <th>Tipo Dispositivo</th>
-                                                            <th>Activación de Dispositivo</th>
-                                                            <th>Codigo</th>
-                                                            <th>Enviado</th>
-                                                            <th>Estado</th>
-                                                            <th></th>
-                                                            <th></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="ver_tbodyDispositivo"
-                                                        style="background:#ffffff;color: #585858;font-size: 12px">
-                                                    </tbody>
-                                                </table>
+                                            <div class="col-xl-12 col-sm-12">
+                                                <div class="table-responsive-xl">
+                                                    <table id="ver_tablaDispositivo" class="table"
+                                                        style="font-size: 13px!important;">
+                                                        <thead style="background: #fafafa;">
+                                                            <tr>
+                                                                <th>Tipo Dispositivo</th>
+                                                                <th>Activación de Dispositivo</th>
+                                                                <th>Codigo</th>
+                                                                <th>Enviado</th>
+                                                                <th>Estado</th>
+                                                                <th></th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="ver_tbodyDispositivo"
+                                                            style="background:#ffffff;color: #585858;font-size: 12px">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
