@@ -129,6 +129,8 @@ Route::post('/empleado/vaciarincidelaBD', 'EmpleadoController@vaciarincidelaBD')
 Route::post('/empleado/eliminarhorariosBD', 'EmpleadoController@eliminarhorariosBD');
 Route::post('/empleado/vaciarbdempleado', 'EmpleadoController@vaciarbdempleado');
 Route::post('/empleado/vaciarhorariosBD', 'EmpleadoController@vaciarhorariosBD');
+Route::post('/empleado/cambiarEstado', 'EmpleadoController@cambiarEstadoEmp');
+
 //AREA
 Route::post('/registrar/area', 'areaController@store');
 

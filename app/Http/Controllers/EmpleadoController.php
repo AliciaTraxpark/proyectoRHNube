@@ -842,8 +842,19 @@ class EmpleadoController extends Controller
             ->where('e.users_id', '=', Auth::user()->id)
             ->where('e.emple_estado', '=', 1)
             ->get()->first();
+        $empleadoEli = DB::table('empleado as e')
+        ->where('e.emple_nDoc', '=', $numeroD)
+        ->where('e.users_id', '=', Auth::user()->id)
+        ->where('e.emple_estado', '=', 0)
+        ->get()->first();
         if ($empleado != null) {
             return 1;
+        }
+        if ($empleadoEli != null) {
+            return 2;
+        }
+        if ($empleado == null && $empleadoEli == null ) {
+            return 3;
         }
     }
 
@@ -851,13 +862,30 @@ class EmpleadoController extends Controller
     {
         $numDoc = $request->get('numDoc');
         $empleado = $request->get('idE');
-        $empleado = DB::table('empleado as e')
+        $empleado1 = DB::table('empleado as e')
             ->where('e.emple_nDoc', '=', $numDoc)
             ->where('e.emple_id', '!=', $empleado)
             ->where('e.emple_estado', '=', 1)
+            ->where('e.users_id', '=', Auth::user()->id)
             ->get()->first();
-        if ($empleado != null) {
+
+            $empleado2 = DB::table('empleado as e')
+            ->where('e.emple_nDoc', '=', $numDoc)
+            ->where('e.emple_id', '!=', $empleado)
+            ->where('e.emple_estado', '=', 0)
+            ->where('e.users_id', '=', Auth::user()->id)
+            ->get()->first();
+
+
+
+         if ($empleado1 != null) {
             return 1;
+        }
+        if ($empleado2 != null) {
+            return 2;
+        }
+        if ($empleado1 == null && $empleado2 == null ) {
+            return 3;
         }
     }
 
@@ -1347,5 +1375,16 @@ class EmpleadoController extends Controller
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
 
             ->delete();
+    }
+
+    public function cambiarEstadoEmp(Request $request){
+        $ids = $request->ids;
+        $empleado =DB::table('empleado')
+        ->where('emple_nDoc',$ids)
+        ->where('users_id', '=', Auth::user()->id)
+        ->update(['emple_estado' => 1]);
+
+
+
     }
 }

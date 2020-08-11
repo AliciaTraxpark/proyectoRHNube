@@ -34,7 +34,55 @@ $(document).ready(function () {
                                 $('#numR').show();
                                 isStepValid = false;
                                 return false;
-                            } else {
+                            }
+                            if (data == 2) {
+                                bootbox.confirm({
+                                    message: "El empleado con este numero de documento existe, desea recuperarlo?",
+                                    buttons: {
+                                        confirm: {
+                                            label: 'Aceptar',
+                                            className: 'btn-success'
+                                        },
+                                        cancel: {
+                                            label: 'Cancelar',
+                                            className: 'btn-light'
+                                        }
+                                    },
+                                    callback: function (result) {
+                                        if (result == true) {
+                                            $.ajax({
+                                                type: "post",
+                                                url: "/empleado/cambiarEstado",
+                                                data: {
+                                                    ids: numeroD
+                                                },
+                                                statusCode: {
+
+                                                    419: function () {
+                                                        location.reload();
+                                                    }
+                                                },
+                                                headers: {
+                                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                },
+                                                success: function (data) {
+                                                leertabla();
+                                                $('#form-registrar').modal('hide');
+
+                                                },
+                                                error: function (data) {
+                                                    alert('Ocurrio un error');
+                                                }
+
+
+                                            }) ;
+                                        }
+                                    }
+                                });
+                                 isStepValid = false;
+                                return false;
+                            }
+                            if (data == 3) {
                                 $('#numR').hide();
                             }
                         }
@@ -45,7 +93,7 @@ $(document).ready(function () {
                         type: "GET",
                         url: "numDocStore",
                         data: {
-                            numeroD: numeroD,
+                            numDoc: numeroD,
                             idE: idE
                         },
                         headers: {
@@ -61,7 +109,13 @@ $(document).ready(function () {
                                 $('#numR').show();
                                 isStepValid = false;
                                 return false;
-                            } else {
+                            }
+                            if (data == 2) {
+                                alert('ya existe');
+                                 isStepValid = false;
+                                return false;
+                            }
+                            if (data == 3) {
                                 $('#numR').hide();
                             }
                         }
