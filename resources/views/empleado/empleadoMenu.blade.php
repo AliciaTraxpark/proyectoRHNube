@@ -376,7 +376,7 @@ use App\proyecto_empleado;
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-<div id="preloader">
+{{-- <div id="preloader">
     <div id="status">
         <div class="spinner">
             <div class="circle1"></div>
@@ -384,7 +384,7 @@ use App\proyecto_empleado;
             <div class="circle3"></div>
         </div>
     </div>
-</div>
+</div> --}}
 <style>
     #calendarInv>div.fc-view-container>div>table>tbody {
         background: #f4f4f4;
