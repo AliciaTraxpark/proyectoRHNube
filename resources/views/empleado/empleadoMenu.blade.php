@@ -22,6 +22,15 @@ use App\proyecto_empleado;
 @endsection
 
 @section('breadcrumb')
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="circle1"></div>
+            <div class="circle2"></div>
+            <div class="circle3"></div>
+        </div>
+    </div>
+</div>
 <div id="androidEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="androidEmpleado"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
@@ -376,15 +385,7 @@ use App\proyecto_empleado;
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-{{-- <div id="preloader">
-    <div id="status">
-        <div class="spinner">
-            <div class="circle1"></div>
-            <div class="circle2"></div>
-            <div class="circle3"></div>
-        </div>
-    </div>
-</div> --}}
+
 <style>
     #calendarInv>div.fc-view-container>div>table>tbody {
         background: #f4f4f4;
