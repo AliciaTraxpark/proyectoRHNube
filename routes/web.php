@@ -283,3 +283,6 @@ Route::post('/dias/delete', 'diasLaborablesController@eliminarBD');
 Route::post('/dias/diasIncidempleado', 'diasLaborablesController@diasIncidempleado');
 ///errores
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
+//NOTIFICACIONES USER
+Route::get('/notificacionesUser', 'NotificacionController@notificacionesUsuario');
