@@ -16,6 +16,7 @@ class diasLaborablesController extends Controller
     public function indexMenu(){
         $empleado = DB::table('empleado as e')
         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+        ->where('e.emple_estado', '=', 1)
         ->where('users_id','=',Auth::user()->id)
         ->get();
         return View('horarios.diasLaborales',['empleado'=>$empleado]);
@@ -60,7 +61,7 @@ class diasLaborablesController extends Controller
         $incidencia_dias->inciden_dias_fechaI = $request->get('start');
         $incidencia_dias->inciden_dias_fechaF = $request->get('end');
         $incidencia_dias->id_empleado = $idempleados;
-        $incidencia_dias->save(); 
+        $incidencia_dias->save();
         }
 
         return $incidencia;

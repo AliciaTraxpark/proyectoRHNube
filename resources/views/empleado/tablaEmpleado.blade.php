@@ -483,6 +483,7 @@
         $('#MostrarCa_e').hide();
         $('#calendarInv_ed').hide();
         $('#divescond1').hide();
+        $('#divescond1_ver').hide();
         $('#divescond2').hide();
         $('#calendar_ed').hide();
         $('#h5Ocultar').show();
@@ -548,6 +549,7 @@
                         $('#mensajeOc_ed').hide();
                         $('#calendar2_ed').show();
                         $('#divescond1').show();
+                        $('#divescond1_ver').show();
                         $('#divescond2').show();
                        $('#detallehorario_ed2').empty();
                         $("#detallehorario_ed2").append("<div class='form-group row'><div class='col-md-1'></div><label class='col-lg-4 col-form-label' style='color:#163552;margin-top: 5px;'>Se muestra calendario de empleado </label>" +
@@ -566,6 +568,7 @@
                         .distId))
                 });
                 $('#selectCalendario_edit3').val(data[0].idcalendar);
+                $('#selectCalendario_edit3_ver').val(data[0].idcalendar);
                 $('#idselect3').val(data[0].idcalendar);
                 $('#v_numDocumento').val(data[0].emple_nDoc);
                 $('#v_apMaterno').val(data[0].perso_apMaterno);
@@ -896,7 +899,7 @@
             }
         });
         $('#tablaEmpleado tbody #tdC').css('display', 'block');
-        
+
         $('input.global_filter').on('keyup click', function () {
             filterGlobal();
         });

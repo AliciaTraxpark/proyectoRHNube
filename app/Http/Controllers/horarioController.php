@@ -36,6 +36,7 @@ class horarioController extends Controller
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc', 'p.perso_id', 'e.emple_id')
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->get();
         $horario=horario::where('user_id', '=', Auth::user()->id)->get();
         $horarion=DB::table('horario as h')
@@ -63,6 +64,7 @@ class horarioController extends Controller
             ->leftJoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
             // ->whereNull('he.empleado_emple_id')
             ->distinct('e.emple_id')
+            ->where('e.emple_estado', '=', 1)
             ->where('e.users_id', '=', Auth::user()->id)
             ->get();
         return $empleados;
@@ -173,7 +175,7 @@ class horarioController extends Controller
             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
             ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
             ->leftJoin('local as lo', 'e.emple_local', '=', 'lo.local_id')
-
+            ->where('e.emple_estado', '=', 1)
             ->distinct('e.emple_id')
             ->where('emple_id', '=', $idsEm)->get();
         if (count($empleado) >= 1) {
@@ -239,6 +241,7 @@ class horarioController extends Controller
             ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc', 'p.perso_id', 'e.emple_id', 'he.empleado_emple_id')
             ->join('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
             ->distinct('e.emple_id')
+            ->where('e.emple_estado', '=', 1)
             ->get();
         return $empleados;
     }
@@ -270,6 +273,7 @@ class horarioController extends Controller
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc', 'p.perso_id', 'e.emple_id')
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
             ->get();
             $horario=horario::where('user_id', '=', Auth::user()->id)->get();
             $horarion=DB::table('horario as h')
@@ -431,7 +435,7 @@ class horarioController extends Controller
             $empleadoN = DB::table('empleado as e')
                     ->select('e.emple_id')
                     ->distinct('e.emple_id')
-
+                    ->where('e.emple_estado', '=', 1)
                         ->join('eventos_empleado as ve', 'e.emple_id', '=', 've.id_empleado')
                         ->pluck('e.emple_id');
                         $integerIDs = array_map('intval',$idemps);
