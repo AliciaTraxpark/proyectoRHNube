@@ -49,6 +49,7 @@ function onMostrarPantallas() {
             }*/
         },
         success: function (data) {
+            console.log(data);
             //data = data.reverse();
             var vacio = `<img id="VacioImg" style="margin-left:28%" src="admin/images/search-file.svg"
                 class="mr-2" height="220" /> <br> <label for=""
