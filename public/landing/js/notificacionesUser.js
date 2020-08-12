@@ -65,11 +65,11 @@ $.ajax({
                     <div class="badge float-right mt-0 mr-1">
                         <button class="btn btn-sm" style="background-color: #163552;color:#fdfdfd;" onclick="javascript:pagina('${url}')">
                             <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                            <img src="landing/images/flecha (1).svg" height="20">
+                            <img src="/landing/images/flecha (1).svg" height="20">
                         </button>
                     </div>
                     <div class="notify-icon" style="background: #163552;">
-                        <img src="landing/images/campana.svg" height="20">
+                        <img src="/landing/images/campana.svg" height="20">
                     </div>
                     <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6"> ${data["user"]["nombre"]} ${data["user"]["apPaterno"]} ${data["user"]["apMaterno"]}
                         <span style="font-weight:200;color:#28292f">${data["notificaciones"][i].data[0].mensaje}</span>
@@ -81,11 +81,11 @@ $.ajax({
                     <div class="badge float-right mt-0 mr-1">
                         <button class="btn btn-sm" style="background-color: #163552;color:#ffffff;" onclick="javascript:pagina('${url}')">
                             <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                            <img src="landing/images/flecha (1).svg" height="20">
+                            <img src="/landing/images/flecha (1).svg" height="20">
                         </button>
                     </div>
                     <div class="notify-icon" style="background: #163552;">
-                        <img src="landing/images/campana.svg" height="20">
+                        <img src="/landing/images/campana.svg" height="20">
                     </div>
                     <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6"> ${data["user"]["nombre"]} ${data["user"]["apPaterno"]} ${data["user"]["apMaterno"]}
                         <span style="font-weight:200;color:#28292f">${data["notificaciones"][i].data[0].mensaje}</span>

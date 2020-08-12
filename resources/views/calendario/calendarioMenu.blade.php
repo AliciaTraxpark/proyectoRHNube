@@ -479,4 +479,5 @@ background-color: #ffffff !important;
 <script src="{{asset('admin/packages/interaction/main.js')}}"></script>
  <script src="{{asset('landing/js/calendario.js')}}"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+ <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 @endsection

@@ -3538,4 +3538,5 @@ use App\proyecto_empleado;
 <script src="{{ asset('landing/js/empleado.js') }}"></script>
 <script src="{{ asset('landing/js/empleadoA.js') }}"></script>
 <script src="{{ asset('landing/js/dispositivos.js') }}"></script>
+<script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 @endsection

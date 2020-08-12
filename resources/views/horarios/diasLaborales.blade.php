@@ -299,6 +299,7 @@
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
 <script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
+<script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 
 <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
 <script src="{{asset('admin/assets/libs/moment/moment.min.js')}}"></script>
