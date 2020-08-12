@@ -24,14 +24,26 @@ $.ajax({
         var url;
         for (var i = 0; i < data["notificaciones"].length; i++) {
             console.log(data["notificaciones"][i].data[0].id);
-            if (data["notificaciones"][i].data[0].id == 1) {
-                url = "calendario";
-            }
-            if (data["notificaciones"][i].data[0].id == 2) {
-                url = "empleado";
-            }
-            if (data["notificaciones"][i].data[0].id == 3) {
-                url = "horario";
+            if (data["user"]["user_estado"] == 0) {
+                if (data["notificaciones"][i].data[0].id == 1) {
+                    url = "calendario";
+                }
+                if (data["notificaciones"][i].data[0].id == 2) {
+                    url = "empleado";
+                }
+                if (data["notificaciones"][i].data[0].id == 3) {
+                    url = "horario";
+                }
+            }else{
+                if (data["notificaciones"][i].data[0].id == 1) {
+                    url = "calendarios";
+                }
+                if (data["notificaciones"][i].data[0].id == 2) {
+                    url = "empleados";
+                }
+                if (data["notificaciones"][i].data[0].id == 3) {
+                    url = "horarios";
+                }
             }
             if (data["notificaciones"][i].read_at == null) {
                 a = `<li class="dropdown-item
@@ -69,6 +81,7 @@ $.ajax({
 
     }
 });
+
 function pagina(url) {
     console.log(url);
     window.location.replace(
