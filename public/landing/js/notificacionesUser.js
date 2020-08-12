@@ -4,12 +4,12 @@ $.ajax({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
-    success: function (data) {
-    },
+    success: function (data) {},
     error: function () {
 
     }
 });
+
 $.ajax({
     type: "GET",
     url: "/showNotificaciones",
@@ -17,21 +17,49 @@ $.ajax({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     success: function (data) {
-        console.log(data);
+        console.log(data["notificaciones"]);
         $('#notificacionesUser').empty();
         var grupo = ``;
         var container = $('#notificacionesUser');
-        for (var i = 0; i < data.length; i++) {
-            console.log(data[i].data[0].mensaje);
-            a = `<a href="javascript:void(0);" class="dropdown-item
+        var url;
+        for (var i = 0; i < data["notificaciones"].length; i++) {
+            console.log(data["notificaciones"][i].data[0].id);
+            if (data["notificaciones"][i].data[0].id == 1) {
+                url = "calendario";
+            }
+            if (data["notificaciones"][i].data[0].id == 2) {
+                url = "empleado";
+            }
+            if (data["notificaciones"][i].data[0].id == 3) {
+                url = "horario";
+            }
+            if (data["notificaciones"][i].read_at == null) {
+                a = `<li class="dropdown-item
+                notify-item border-bottom" style="background: #f8f8f8;">
+                    <div class="badge float-right mt-0 mr-1">
+                        <a class="btn btn-sm" style="background-color: #163552;" onclick="javascript:pagina('${url}')">
+                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                            <img src="landing/images/flecha (1).svg" height="20">
+                        </a>
+                    </div>
+                    <div class="notify-icon" style="background: #a6b1e1;">
+                        <img src="landing/images/reloj.svg" height="20">
+                    </div>
+                    <p class="notify-details mb-1 mt-0"> ${data["user"]["nombre"]} ${data["user"]["apPaterno"]} ${data["user"]["apMaterno"]}
+                        <span>${data["notificaciones"][i].data[0].mensaje}</span>
+                    </p>
+                </li>`;
+            } else {
+                a = `<li class="dropdown-item
                 notify-item border-bottom">
                     <div class="notify-icon" style="background: #a6b1e1;">
                         <img src="landing/images/reloj.svg" height="20">
                     </div>
-                    <p class="text-muted mb-2 mt-2">
-                        <span>${data[i].data[0].mensaje}</span>
+                    <p class="notify-details mb-2 mt-0"> ${data["user"]["nombre"]} ${data["user"]["apPaterno"]} ${data["user"]["apMaterno"]}
+                        <span>${data["notificaciones"][i].data[0].mensaje}</span>
                     </p>
-                </a>`;
+                </li>`;
+            }
             grupo += a;
         }
         console.log(grupo);
@@ -41,3 +69,9 @@ $.ajax({
 
     }
 });
+function pagina(url) {
+    console.log(url);
+    window.location.replace(
+        location.origin + "/" + url
+    );
+}

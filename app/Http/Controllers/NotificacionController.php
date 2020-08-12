@@ -63,6 +63,7 @@ class NotificacionController extends Controller
 
             if (!$eventos) {
                 $mensaje = [
+                    "id" =>1,
                     "tipo" => 'eventosUsuario',
                     "mensaje" => 'Personaliza tu calendario.'
                 ];
@@ -79,6 +80,7 @@ class NotificacionController extends Controller
 
             if (!$area) {
                 $mensaje = [
+                    "id" =>2,
                     "tipo" => 'empleadoArea',
                     "mensaje" => 'Asigna área a tus empleados.'
                 ];
@@ -95,6 +97,7 @@ class NotificacionController extends Controller
 
             if (!$nivel) {
                 $mensaje = [
+                    "id" =>2,
                     "tipo" => 'empleadoNivel',
                     "mensaje" => 'Asigna nivel a tus empleados.'
                 ];
@@ -111,6 +114,7 @@ class NotificacionController extends Controller
 
             if (!$contrato) {
                 $mensaje = [
+                    "id" =>2,
                     "tipo" => 'empleadoContrato',
                     "mensaje" => 'Asigna contrato a tus empleados.'
                 ];
@@ -127,6 +131,7 @@ class NotificacionController extends Controller
 
             if (!$centro) {
                 $mensaje = [
+                    "id" =>2,
                     "tipo" => 'empleadoCentro',
                     "mensaje" => 'Asigna CC a tus empleados.'
                 ];
@@ -143,6 +148,7 @@ class NotificacionController extends Controller
 
             if (!$local) {
                 $mensaje = [
+                    "id" =>2,
                     "tipo" => 'empleadoLocal',
                     "mensaje" => 'Asigna local a tus empleados.'
                 ];
@@ -156,6 +162,7 @@ class NotificacionController extends Controller
 
             if (!$horario) {
                 $mensaje = [
+                    "id" =>3,
                     "tipo" => 'empleadoHorario',
                     "mensaje" => 'Personaliza tus horarios.'
                 ];
@@ -172,6 +179,7 @@ class NotificacionController extends Controller
 
                 if (!$eventos) {
                     $mensaje = [
+                        "id" =>1,
                         "tipo" => 'eventosUsuario',
                         "mensaje" => 'Personaliza tu calendario.'
                     ];
@@ -190,6 +198,7 @@ class NotificacionController extends Controller
 
                 if (!$area) {
                     $mensaje = [
+                        "id" =>2,
                         "tipo" => 'empleadoArea',
                         "mensaje" => 'Asigna área a tus empleados.'
                     ];
@@ -208,6 +217,7 @@ class NotificacionController extends Controller
 
                 if (!$nivel) {
                     $mensaje = [
+                        "id" =>2,
                         "tipo" => 'empleadoNivel',
                         "mensaje" => 'Asigna nivel a tus empleados.'
                     ];
@@ -226,6 +236,7 @@ class NotificacionController extends Controller
 
                 if (!$contrato) {
                     $mensaje = [
+                        "id" =>2,
                         "tipo" => 'empleadoContrato',
                         "mensaje" => 'Asigna contrato a tus empleados.'
                     ];
@@ -244,6 +255,7 @@ class NotificacionController extends Controller
 
                 if (!$centro) {
                     $mensaje = [
+                        "id" =>2,
                         "tipo" => 'empleadoCentro',
                         "mensaje" => 'Asigna CC a tus empleados.'
                     ];
@@ -262,6 +274,7 @@ class NotificacionController extends Controller
 
                 if (!$local) {
                     $mensaje = [
+                        "id" =>2,
                         "tipo" => 'empleadoLocal',
                         "mensaje" => 'Asigna local a tus empleados.'
                     ];
@@ -277,6 +290,7 @@ class NotificacionController extends Controller
 
                 if (!$horario) {
                     $mensaje = [
+                        "id" =>3,
                         "tipo" => 'empleadoHorario',
                         "mensaje" => 'Personaliza tus horarios.'
                     ];
@@ -291,6 +305,11 @@ class NotificacionController extends Controller
     public function showNotificaciones()
     {
         $respuesta = Auth::user()->notifications;
-        return response()->json($respuesta, 200);
+        $user = DB::table('users as u')
+            ->join('persona as p', 'u.perso_id', '=', 'p.perso_id')
+            ->select('p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno', 'u.user_estado')
+            ->where('u.id', '=', Auth::user()->id)
+            ->get()->first();
+        return response()->json(["notificaciones" => $respuesta, "user" => $user], 200);
     }
 }

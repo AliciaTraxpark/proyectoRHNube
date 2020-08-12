@@ -99,22 +99,28 @@ use App\persona;
                     <span class="noti-icon-badge"></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right
-                    dropdown-menu-xl-right" style="max-height:800px">
+                    dropdown-menu-xl-right"
+                    style="max-height:800px;">
                     <!-- item-->
-                    <div class="dropdown-item noti-title border-bottom">
-                        <div class="col-lg-12 col-sm-12 col-12">
-                            <h5 class="m-0 font-size-16">
-                                <span class="float-right">
-                                    <a href="" class="text-dark">
-                                        <small>Clear All</small>
-                                    </a>
-                                </span>Notificaciones
+                    <div class="dropdown-item noti-title border-bottom"
+                        style="background-color: #222831;">
+                        <div class="col-lg-12 col-sm-12 col-12 m-0">
+                            <h5 class="m-0 font-size-14" style="font-weight:
+                                bold;color: #fff;">
+                                Notificaciones <span class="badge float-right
+                                    mt-0 mr-1" style="background-color:
+                                    #a6b1e1;">8</span>
                             </h5>
                         </div>
                     </div>
 
-                    <div class="slimscroll noti-scroll" id="notificacionesUser" style="min-height: 200px;min-width: 400px;">
+                    <div class="slimscroll noti-scroll" id="notificacionesUser"
+                        style="min-height: 200px;min-width:400px">
                     </div>
+                    <a class="dropdown-item text-center text-primary
+                        notify-item notify-all border-top">
+                        Marcar como leídas todas.
+                    </a>
                 </div>
             </li>
             <li class="dropdown d-none d-lg-block" data-toggle="tooltip"
