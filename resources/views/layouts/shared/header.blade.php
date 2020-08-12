@@ -51,7 +51,7 @@ use App\persona;
                     aria-haspopup="false" aria-expanded="false">
                     <span style="color: aliceblue;font-size:
                     12px" ;></span>&nbsp; <strong id="strongOrganizacion" style="color:
-                    rgb(255, 255, 255)">{{$organizacion->organi_razonSocial}} |</strong>
+                    rgb(255, 255, 255)">{{$organizacion->organi_razonSocial}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  |</strong>
                 </a>
 
             </li>
