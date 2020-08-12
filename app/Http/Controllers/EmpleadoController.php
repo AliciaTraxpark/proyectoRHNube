@@ -79,7 +79,7 @@ class EmpleadoController extends Controller
         $centro_costo = centro_costo::all();
         $nivel = nivel::all();
         $local = local::all();
-        $empleado = empleado::all();
+        $empleado = empleado::where('emple_estado', '=', 1)->get();
         $dispositivo = tipo_dispositivo::all();
         $tabla_empleado = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
@@ -119,7 +119,7 @@ class EmpleadoController extends Controller
             ->leftJoin('ubigeo_peru_departments as depar', 'e.emple_departamento', '=', 'depar.id')
             ->leftJoin('ubigeo_peru_provinces as provi', 'e.emple_provincia', '=', 'provi.id')
             ->leftJoin('ubigeo_peru_districts as dist', 'e.emple_distrito', '=', 'dist.id')
-
+            ->where('e.emple_estado', '=', 1)
             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
             ->leftJoin('ubigeo_peru_departments as para', 'e.emple_departamentoN', '=', 'para.id')
             ->leftJoin('ubigeo_peru_provinces as proviN', 'e.emple_provinciaN', '=', 'proviN.id')
@@ -211,6 +211,7 @@ class EmpleadoController extends Controller
             ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
             ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
             ->leftJoin('tipo_dispositivo as td', 'td.id', '=', 'md.idTipoDispositivo')
+
             ->select(
                 'p.perso_nombre',
                 'p.perso_apPaterno',
@@ -575,6 +576,7 @@ class EmpleadoController extends Controller
                 'eve.id_calendario as idcalendar'
             )
             ->where('e.emple_id', '=', $idempleado)
+            ->where('e.emple_estado', '=', 1)
             ->where('e.users_id', '=', Auth::user()->id)
             ->groupBy('e.users_id')
             ->get();
@@ -840,8 +842,19 @@ class EmpleadoController extends Controller
             ->where('e.users_id', '=', Auth::user()->id)
             ->where('e.emple_estado', '=', 1)
             ->get()->first();
+        $empleadoEli = DB::table('empleado as e')
+        ->where('e.emple_nDoc', '=', $numeroD)
+        ->where('e.users_id', '=', Auth::user()->id)
+        ->where('e.emple_estado', '=', 0)
+        ->get()->first();
         if ($empleado != null) {
             return 1;
+        }
+        if ($empleadoEli != null) {
+            return 2;
+        }
+        if ($empleado == null && $empleadoEli == null ) {
+            return 3;
         }
     }
 
@@ -849,13 +862,30 @@ class EmpleadoController extends Controller
     {
         $numDoc = $request->get('numDoc');
         $empleado = $request->get('idE');
-        $empleado = DB::table('empleado as e')
+        $empleado1 = DB::table('empleado as e')
             ->where('e.emple_nDoc', '=', $numDoc)
             ->where('e.emple_id', '!=', $empleado)
             ->where('e.emple_estado', '=', 1)
+            ->where('e.users_id', '=', Auth::user()->id)
             ->get()->first();
-        if ($empleado != null) {
+
+            $empleado2 = DB::table('empleado as e')
+            ->where('e.emple_nDoc', '=', $numDoc)
+            ->where('e.emple_id', '!=', $empleado)
+            ->where('e.emple_estado', '=', 0)
+            ->where('e.users_id', '=', Auth::user()->id)
+            ->get()->first();
+
+
+
+         if ($empleado1 != null) {
             return 1;
+        }
+        if ($empleado2 != null) {
+            return 2;
+        }
+        if ($empleado1 == null && $empleado2 == null ) {
+            return 3;
         }
     }
 
@@ -1345,5 +1375,16 @@ class EmpleadoController extends Controller
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
 
             ->delete();
+    }
+
+    public function cambiarEstadoEmp(Request $request){
+        $ids = $request->ids;
+        $empleado =DB::table('empleado')
+        ->where('emple_nDoc',$ids)
+        ->where('users_id', '=', Auth::user()->id)
+        ->update(['emple_estado' => 1]);
+
+
+
     }
 }

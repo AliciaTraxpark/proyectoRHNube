@@ -5,9 +5,6 @@ use App\proyecto_empleado;
 @extends('layouts.vertical')
 
 @section('css')
-<link href="{{ asset('admin/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('admin/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('admin/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('admin/assets/libs/bootstrap-fileinput/fileinput.min.css') }}" rel="stylesheet" type="text/css" />
 <!-- Plugin css  CALENDAR-->
@@ -20,14 +17,20 @@ use App\proyecto_empleado;
 <link href="{{ asset('admin/assets/libs/smartwizard/smart_wizard_theme_arrows.min.css') }}" type="text/css" />
 <link href="{{ asset('admin/assets/libs/smartwizard/smart_wizard_theme_circles.min.css') }}" type="text/css" />
 <link href="{{ asset('admin/assets/libs/smartwizard/smart_wizard_theme_dots.min.css') }}" type="text/css" />
-<link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
 @section('breadcrumb')
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="circle1"></div>
+            <div class="circle2"></div>
+            <div class="circle3"></div>
+        </div>
+    </div>
+</div>
 <div id="androidEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="androidEmpleado"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
@@ -382,15 +385,7 @@ use App\proyecto_empleado;
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-<div id="preloader">
-    <div id="status">
-        <div class="spinner">
-            <div class="circle1"></div>
-            <div class="circle2"></div>
-            <div class="circle3"></div>
-        </div>
-    </div>
-</div>
+
 <style>
     #calendarInv>div.fc-view-container>div>table>tbody {
         background: #f4f4f4;
@@ -3293,8 +3288,22 @@ use App\proyecto_empleado;
                         </div>
                         <div id="sw-default-step-4" style="font-size: 12px!important">
                             <div class="row">
+                                <div class="col-md-4 text-right"><label for="" style="margin-top: 7px;font-weight: 600">Calendario:</label></div>
+                                <div class="col-md-4 text-center" id="divescond1_ver" style="">
+                                    <input type="hidden" id="idselect3_ver">
+                                    <select name="" id="selectCalendario_edit3_ver"
+                                        class="form-control form-control-sm" style="margin-top: 4px;">
+                                        <option hidden selected>Asignar calendario</option>
+                                        @foreach ($calendario as $calendarios)
+                                        <option class="" value="{{ $calendarios->calen_id }}">
+                                            {{ $calendarios->calendario_nombre }}</option>
+                                        @endforeach
+                                    </select><br><br>
+                                </div>
+                                <div class="col-md-4"></div>
                                 <input type="hidden" name="" id="idempleado">
                                 <div class="col-md-1"><br></div>
+
                                 <div class="col-md-10" id="calendar3"></div>
                                 <div class="col-md-1"><br></div>
                             </div>
@@ -3486,7 +3495,7 @@ use App\proyecto_empleado;
 <script src="{{ asset('landing/js/actualizarPDatos.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+
 
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">

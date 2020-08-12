@@ -1,7 +1,4 @@
-<link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet"
-    type="text/css" />
-<link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet"
-    type="text/css" />
+
 <style>
     div.dataTables_wrapper div.dataTables_filter {
         display: none;
@@ -486,6 +483,7 @@
         $('#MostrarCa_e').hide();
         $('#calendarInv_ed').hide();
         $('#divescond1').hide();
+        $('#divescond1_ver').hide();
         $('#divescond2').hide();
         $('#calendar_ed').hide();
         $('#h5Ocultar').show();
@@ -551,6 +549,7 @@
                         $('#mensajeOc_ed').hide();
                         $('#calendar2_ed').show();
                         $('#divescond1').show();
+                        $('#divescond1_ver').show();
                         $('#divescond2').show();
                        $('#detallehorario_ed2').empty();
                         $("#detallehorario_ed2").append("<div class='form-group row'><div class='col-md-1'></div><label class='col-lg-4 col-form-label' style='color:#163552;margin-top: 5px;'>Se muestra calendario de empleado </label>" +
@@ -569,6 +568,7 @@
                         .distId))
                 });
                 $('#selectCalendario_edit3').val(data[0].idcalendar);
+                $('#selectCalendario_edit3_ver').val(data[0].idcalendar);
                 $('#idselect3').val(data[0].idcalendar);
                 $('#v_numDocumento').val(data[0].emple_nDoc);
                 $('#v_apMaterno').val(data[0].perso_apMaterno);
@@ -611,7 +611,7 @@
                $('#m_ano_fechaIE').val(moment(VFechaDaIE).year());
                 if (data[0].emple_fechaFC == null || data[0].emple_fechaFC == "0000-00-00") {
                     $("#checkboxFechaIE").prop('checked', true);
-           
+
                     $('#ocultarFechaE').hide();
                 }
 
@@ -791,51 +791,7 @@
         ).draw();
     }
 
-    function filterColumn(i) {
-        $("#tablaEmpleado").DataTable({
-            retrieve: true,
-            "searching": true,
-            "lengthChange": false,
-            "scrollX": true,
-            "pageLength": 30,
-            fixedHeader: true,
-            "processing": true,
-            language: {
-                "sProcessing": "Procesando...",
-                "sLengthMenu": "Mostrar _MENU_ registros",
-                "sZeroRecords": "No se encontraron resultados",
-                "sEmptyTable": "Ningún dato disponible en esta tabla",
-                "sInfo": "Mostrando registros del _START_ al _END_ ",
-                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                "sInfoPostFix": "",
-                "sSearch": "Buscar:",
-                "sUrl": "",
-                "sInfoThousands": ",",
-                "sLoadingRecords": "Cargando...",
-                "oPaginate": {
-                    "sFirst": "Primero",
-                    "sLast": "Último",
-                    "sNext": ">",
-                    "sPrevious": "<"
-                },
-                "oAria": {
-                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                },
-                "buttons": {
-                    "copy": "Copiar",
-                    "colvis": "Visibilidad"
-                }
-            },
-
-
-        }).column(i).search(
-
-            $('#col' + i + '_filter').val(),
-        ).draw();
-        $('#i' + i).prop('checked', true);
-    }
+   
 
     $(document).ready(function () {
 
@@ -898,37 +854,8 @@
                 });
             }
         });
-        /*table.columns().every(function(){
-            var that = this;
-            var i;
-            var val1;
-            $('#select').on("keyup change", function(){
-                i = this.value;
-                console.log(i);
-                var val = $('#global_filter').val();
-                if(that.column(i).search() !== this.value){
-                    console.log(this.value);
-                    that.column(this.value).search(val).draw();
-                }
-                val1 = this.value;
-                $('#global_filter').on("keyup change clear",function(){
-                    var val = $(this).val();
-                    if(that.column(i).search() !== val1){
-                        that.column(val1).search(val).draw();
-                    }
-                });
-            });
-        });*/
-        //$('#verf1').hide();
-        //$('#tablaEmpleado tbody #tdC').css('display', 'none');
+        $('#tablaEmpleado tbody #tdC').css('display', 'block');
 
-        $("#tablaEmpleado tbody tr").hover(function () {
-            //$('#verf1').css('display', 'block');
-            $('#tablaEmpleado tbody #tdC').css('display', 'block');
-
-        }, function () {
-
-        });
         $('input.global_filter').on('keyup click', function () {
             filterGlobal();
         });
