@@ -34,7 +34,7 @@ $.ajax({
                 if (data["notificaciones"][i].data[0].id == 3) {
                     url = "horario";
                 }
-            }else{
+            } else {
                 if (data["notificaciones"][i].data[0].id == 1) {
                     url = "calendarios";
                 }
@@ -64,10 +64,16 @@ $.ajax({
             } else {
                 a = `<li class="dropdown-item
                 notify-item border-bottom">
+                    <div class="badge float-right mt-0 mr-1">
+                        <a class="btn btn-sm" style="background-color: #163552;" onclick="javascript:pagina('${url}')">
+                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                            <img src="landing/images/flecha (1).svg" height="20">
+                        </a>
+                    </div>
                     <div class="notify-icon" style="background: #a6b1e1;">
                         <img src="landing/images/reloj.svg" height="20">
                     </div>
-                    <p class="notify-details mb-2 mt-0"> ${data["user"]["nombre"]} ${data["user"]["apPaterno"]} ${data["user"]["apMaterno"]}
+                    <p class="notify-details mb-1 mt-0"> ${data["user"]["nombre"]} ${data["user"]["apPaterno"]} ${data["user"]["apMaterno"]}
                         <span>${data["notificaciones"][i].data[0].mensaje}</span>
                     </p>
                 </li>`;
