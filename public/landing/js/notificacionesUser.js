@@ -12,6 +12,18 @@ $.ajax({
 
 $.ajax({
     type: "GET",
+    url: "/leerNotificaciones",
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function (data) {},
+    error: function () {
+
+    }
+});
+
+$.ajax({
+    type: "GET",
     url: "/showNotificaciones",
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
