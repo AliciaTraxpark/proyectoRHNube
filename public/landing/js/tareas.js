@@ -49,7 +49,6 @@ function onMostrarPantallas() {
             }*/
         },
         success: function (data) {
-            console.log(data);
             //data = data.reverse();
             var vacio = `<img id="VacioImg" style="margin-left:28%" src="admin/images/search-file.svg"
                 class="mr-2" height="220" /> <br> <label for=""
@@ -82,7 +81,6 @@ function onMostrarPantallas() {
                     var promedio = 0;
                     var prom = 0;
                     var minutosT = 0;
-                    var totalCM = 0;
                     var labelEstadoP = ``;
                     var labelDelGrupo = horaDelGrupo + ":00:00" + " - " + (parseInt(horaDelGrupo) + 1) + ":00:00";
                     var grupo = `<span style="font-weight: bold;color:#6c757d;cursor:default">${labelDelGrupo}</span>&nbsp;&nbsp;<img src="landing/images/punt.gif" height="70">&nbsp;&nbsp;
@@ -90,6 +88,7 @@ function onMostrarPantallas() {
                     data-original-title=""></span><br><br><div class="row">`;
                     for (var j = 0; j < 6; j++) {
                         if (data[hora][j] != undefined) {
+                            var totalCM = 0;
                             /*var horaP = data[hora][j][data[hora][j].length - 1].promedio.split(":");
                             var segundos = parseInt(horaP[0]) * 3600 + parseInt(horaP[1]) * 60 + parseInt(horaP[2]);
                             var totalE = data[hora][j][data[hora][j].length - 1].Total_Envio.split(":");
@@ -97,14 +96,14 @@ function onMostrarPantallas() {
                             var promedio = Math.round((segundos * 100) / segundosT);*/
                             if (j < 5) {
                                 var capturas = "";
-                                for (let index = 1; index < data[hora][j].length; index++) {
+                                for (let index = 0; index < data[hora][j].length; index++) {
                                     promedios = promedios + data[hora][j][index].prom;
                                     if (data[hora][j][index].promedio != "00:00:00") {
                                         var totalMinutos = data[hora][j][index].promedio.split(":");
                                         var convertirMinutos = parseInt(totalMinutos[0]) * 60 + parseInt(totalMinutos[1]) + parseFloat(totalMinutos[2] / 60);
                                         minutosT = minutosT + convertirMinutos;
-                                        totalCM = Math.round(minutosT);
                                     }
+                                    totalCM = Math.round((minutosT / data[hora][j].length));
                                     capturas += `<div class = "carousel-item">
                                     <img src="data:image/jpeg;base64,${data[hora][j][index].imagen}" height="120" width="200" class="img-responsive">
                                     <div class="overlay">
@@ -118,6 +117,7 @@ function onMostrarPantallas() {
                                     var convertirMinutos = parseInt(totalMinutos[0]) * 60 + parseInt(totalMinutos[1]) + parseFloat(totalMinutos[2] / 60);
                                     var minutosT = convertirMinutos;
                                     totalCM = Math.round(minutosT);
+                                    console.log(totalCM);
                                     promedio = data[hora][j][0].prom;
                                 } else {
                                     console.log(promedios);
@@ -125,6 +125,7 @@ function onMostrarPantallas() {
                                     if (promedios == 0) {
                                         promedio = 0
                                     }
+                                    promedios = 0;
                                 }
                                 var nivel;
                                 if (promedio >= 50) nivel = "green";
@@ -170,7 +171,7 @@ function onMostrarPantallas() {
                                                     </div>
                                                     &nbsp;
                                                     <label style="font-size: 12px" for="">${hora + ":" + j + "0" + " - " + hora + 
-                                                    ":" + j + "9"}</label>
+                                                    ":" + (j+1) + "0"}</label>
                                                     <div class="progress" style="background-color: #d4d4d4;" data-toggle="tooltip" data-placement="bottom" title="Actividad por Rango de Tiempo"
                                                     data-original-title="">
                                                         <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:${nivel}" aria-valuenow=${promedio}
@@ -184,7 +185,7 @@ function onMostrarPantallas() {
                                             </div>
                                             </div>
                                         </div>
-                                    </div>`
+                                    </div>`;
                             } else {
                                 card = `<div class="col-2" style="margin-left: 0px!important;">
                                             <div class="mb-0 text-center" style="padding-left: 0px;">
@@ -222,8 +223,8 @@ function onMostrarPantallas() {
                                                         </div>
                                                     </div>
                                                         &nbsp;
-                                                        <label style="font-size: 12px" for="">${hora + ":" + j + "0" + " - " + hora + 
-                                                        ":" + j + "9"}</label>
+                                                        <label style="font-size: 12px" for="">${hora + ":" + j + "0" + " - " + (parseInt(hora)+1) + 
+                                                        ":" + "00"}</label>
                                                         <div class="progress" style="background-color: #d4d4d4;" data-toggle="tooltip" data-placement="bottom" title="Actividad por Rango de Tiempo"
                                                         data-original-title="">
                                                             <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:${nivel}" aria-valuenow=${promedio}
@@ -237,7 +238,7 @@ function onMostrarPantallas() {
                                                 </div>
                                                 </div>
                                             </div>
-                                        </div>`
+                                        </div>`;
                             }
                             grupo += card;
                             prom = prom + parseFloat(promedio);
@@ -267,7 +268,6 @@ function onMostrarPantallas() {
                     }
                     grupo += `</div><br>`;
                     container.append(grupo);
-                    console.log(prom);
                     promedioHoras = (prom / 6).toFixed(2);
                     var span = "";
                     span += `${promedioHoras}%`;
