@@ -15,7 +15,7 @@ $.notifyDefaults({
 //HORARIO
 $.ajax({
     type: "GET",
-    url: "/eventosU",
+    url: "/horarioU",
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
@@ -30,7 +30,7 @@ $.ajax({
     success: function (data) {
         if (data == false) {
             $.notify({
-                message: "\n\nAún no has personalizado tu horarios a tus colaboradores. <br><a id=\"horario\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></button></a>",
+                message: "\n\nAún no has personalizado tu horarios a tus empleados. <br><a id=\"horario\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></button></a>",
                 icon: 'admin/images/warning.svg',
             }, {
                 mouse_over: "pause"

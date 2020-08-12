@@ -998,7 +998,7 @@ $.ajax({
         } else {
             $('#divedades').hide();
             $.notify({
-                message: "\n\nAún no has asignado empleados a un local.<br><a id=\"empleadoRE\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></a>",
+                message: "\n\nAún no has asignado empleados fecha nacimiento.<br><a id=\"empleadoRE\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></a>",
                 icon: 'admin/images/warning.svg'
             }, {
                 mouse_over: "pause"

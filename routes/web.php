@@ -228,6 +228,7 @@ Route::get('/totalL', 'dashboardController@local');
 Route::get('/totalDepartamento', 'dashboardController@departamento');
 Route::get('/totalE', 'dashboardController@edad');
 Route::get('/totalRE', 'dashboardController@rangoE');
+Route::get('/horarioU', 'dashboardController@horarioDias');
 
 //MENU
 Route::get('/empleados', 'EmpleadoController@indexMenu');
@@ -284,3 +285,8 @@ Route::post('/dias/delete', 'diasLaborablesController@eliminarBD');
 Route::post('/dias/diasIncidempleado', 'diasLaborablesController@diasIncidempleado');
 ///errores
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
+//NOTIFICACIONES USER
+Route::get('/notificacionesUser', 'NotificacionController@notificacionesUsuario');
+Route::get('/leerNotificaciones', 'NotificacionController@cambiarestadoNotificacion');
+Route::get('/showNotificaciones', 'NotificacionController@showNotificaciones');

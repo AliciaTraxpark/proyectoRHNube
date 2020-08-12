@@ -458,5 +458,6 @@
 <script src="{{asset('landing/js/seleccionarDepOrg.js')}}"></script>
 <script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
 <script src="{{asset('landing/js/editarPerfil.js')}}"></script>
+<script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 @endsection
 @endsection

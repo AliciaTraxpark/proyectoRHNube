@@ -159,6 +159,7 @@
 <script src="{{ URL::asset('admin/assets/libs/datatables/pdfmake.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/vfs_fonts.js') }}"></script>
 <script src="{{asset('landing/js/reporteS.js')}}"></script>
+<script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 <script>
     var empleadosDefecto = @json($empleado);
     empleadosDefecto = empleadosDefecto.map(function(empleado){

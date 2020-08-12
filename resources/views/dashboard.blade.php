@@ -177,6 +177,7 @@
 <script src="{{asset('landing/js/notificacionesCalendario.js')}}"></script>
 <script src="{{asset('landing/js/dashboard.js')}}"></script>
 <script src="{{asset('landing/js/notificacionesHorario.js')}}"></script>
+<script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 @endsection
 @section('script-bottom')
 <!-- init js -->

@@ -1212,5 +1212,6 @@ a:not([href]):not([tabindex]){
 
 @section('script-bottom')
 <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
+<script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 @endsection
 
