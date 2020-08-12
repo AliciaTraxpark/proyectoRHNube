@@ -112,7 +112,7 @@ class NotificacionController extends Controller
             if (!$contrato) {
                 $mensaje = [
                     "tipo" => 'empleadoContrato',
-                    "mensaje" => 'Asigna tipo de contrato a tus empleados.'
+                    "mensaje" => 'Asigna contrato a tus empleados.'
                 ];
                 $recipient = User::find(Auth::user()->id);
                 $recipient->notify(new NuevaNotification($mensaje));
@@ -227,7 +227,7 @@ class NotificacionController extends Controller
                 if (!$contrato) {
                     $mensaje = [
                         "tipo" => 'empleadoContrato',
-                        "mensaje" => 'Asigna tipo de contrato a tus empleados.'
+                        "mensaje" => 'Asigna contrato a tus empleados.'
                     ];
                     $recipient = User::find(Auth::user()->id);
                     $recipient->notify(new NuevaNotification($mensaje));

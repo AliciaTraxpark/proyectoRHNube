@@ -98,29 +98,23 @@ use App\persona;
                     <i data-feather="bell"></i>
                     <span class="noti-icon-badge"></span>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right dropdown-xl">
+                <div class="dropdown-menu dropdown-menu-right
+                    dropdown-menu-xl-right" style="max-height:800px">
                     <!-- item-->
                     <div class="dropdown-item noti-title border-bottom">
-                        <h5 class="m-0 font-size-16">
-                            <span class="float-right">
-                                <a href="" class="text-dark">
-                                    <small>Clear All</small>
-                                </a>
-                            </span>Notificaciones
-                        </h5>
+                        <div class="col-lg-12 col-sm-12 col-12">
+                            <h5 class="m-0 font-size-16">
+                                <span class="float-right">
+                                    <a href="" class="text-dark">
+                                        <small>Clear All</small>
+                                    </a>
+                                </span>Notificaciones
+                            </h5>
+                        </div>
                     </div>
 
-                    <div class="slimscroll noti-scroll" id="notificacionesUser">
+                    <div class="slimscroll noti-scroll" id="notificacionesUser" style="min-height: 200px;min-width: 400px;">
                     </div>
-
-                    <!-- All-->
-                    <a href="javascript:void(0);"
-                        class="dropdown-item text-center text-primary
-                        notify-item notify-all border-top">
-                        View all
-                        <i class="fi-arrow-right"></i>
-                    </a>
-
                 </div>
             </li>
             <li class="dropdown d-none d-lg-block" data-toggle="tooltip"
