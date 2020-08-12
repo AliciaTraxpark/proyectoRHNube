@@ -22,6 +22,7 @@ $.ajax({
         var grupo = ``;
         var container = $('#notificacionesUser');
         var url;
+        var contador = 0;
         for (var i = 0; i < data["notificaciones"].length; i++) {
             console.log(data["notificaciones"][i].data[0].id);
             if (data["user"]["user_estado"] == 0) {
@@ -46,6 +47,7 @@ $.ajax({
                 }
             }
             if (data["notificaciones"][i].read_at == null) {
+                contador++;
                 a = `<li class="dropdown-item
                 notify-item border-bottom" style="background: #f8f8f8;">
                     <div class="badge float-right mt-0 mr-1">
@@ -80,8 +82,8 @@ $.ajax({
             }
             grupo += a;
         }
-        console.log(grupo);
         container.append(grupo);
+        $('#totalNotifNL').text(contador);
     },
     error: function () {
 

@@ -109,7 +109,7 @@ use App\persona;
                                 bold;color: #fff;">
                                 Notificaciones <span class="badge float-right
                                     mt-0 mr-1" style="background-color:
-                                    #a6b1e1;">8</span>
+                                    #a6b1e1;" id="totalNotifNL">0</span>
                             </h5>
                         </div>
                     </div>
@@ -118,8 +118,8 @@ use App\persona;
                         style="min-height: 200px;min-width:400px">
                     </div>
                     <a class="dropdown-item text-center text-primary
-                        notify-item notify-all border-top">
-                        Marcar como leídas todas.
+                        notify-item notify-all border-top" id="marcarTodas">
+                        Marcar todas como leídas.
                     </a>
                 </div>
             </li>
