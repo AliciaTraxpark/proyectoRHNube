@@ -103,24 +103,24 @@ use App\persona;
                     style="max-height:800px;">
                     <!-- item-->
                     <div class="dropdown-item noti-title border-bottom"
-                        style="background-color: #222831;">
+                        style="background-color: #00bdaa;">
                         <div class="col-lg-12 col-sm-12 col-12 m-0">
                             <h5 class="m-0 font-size-14" style="font-weight:
                                 bold;color: #fff;">
                                 Notificaciones <span class="badge float-right
                                     mt-0 mr-1" style="background-color:
-                                    #a6b1e1;" id="totalNotifNL">0</span>
+                                    #163552;" id="totalNotifNL">0</span>
                             </h5>
                         </div>
                     </div>
 
                     <div class="slimscroll noti-scroll" id="notificacionesUser"
-                        style="min-height: 200px;min-width:400px">
+                        style="min-height: 200px;min-width:430px">
                     </div>
-                    <a class="dropdown-item text-center text-primary
+                    <!-- <a class="dropdown-item text-center text-primary
                         notify-item notify-all border-top" id="marcarTodas">
                         Marcar todas como leídas.
-                    </a>
+                    </a> -->
                 </div>
             </li>
             <li class="dropdown d-none d-lg-block" data-toggle="tooltip"

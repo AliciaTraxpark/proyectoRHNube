@@ -56,8 +56,8 @@ $.ajax({
                             <img src="landing/images/flecha (1).svg" height="20">
                         </a>
                     </div>
-                    <div class="notify-icon" style="background: #a6b1e1;">
-                        <img src="landing/images/reloj.svg" height="20">
+                    <div class="notify-icon" style="background: #163552;">
+                        <img src="landing/images/campana.svg" height="20">
                     </div>
                     <p class="notify-details mb-1 mt-0"> ${data["user"]["nombre"]} ${data["user"]["apPaterno"]} ${data["user"]["apMaterno"]}
                         <span>${data["notificaciones"][i].data[0].mensaje}</span>
@@ -72,8 +72,8 @@ $.ajax({
                             <img src="landing/images/flecha (1).svg" height="20">
                         </a>
                     </div>
-                    <div class="notify-icon" style="background: #a6b1e1;">
-                        <img src="landing/images/reloj.svg" height="20">
+                    <div class="notify-icon" style="background: #163552;">
+                        <img src="landing/images/campana.svg" height="20">
                     </div>
                     <p class="notify-details mb-1 mt-0"> ${data["user"]["nombre"]} ${data["user"]["apPaterno"]} ${data["user"]["apMaterno"]}
                         <span>${data["notificaciones"][i].data[0].mensaje}</span>
