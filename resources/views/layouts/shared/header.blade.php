@@ -100,16 +100,16 @@ use App\persona;
                 </a>
                 <div class="dropdown-menu dropdown-menu-right
                     dropdown-menu-xl-right"
-                    style="max-height:800px;border-color:#94a9ce ;">
+                    style="max-height:800px;">
                     <!-- item-->
                     <div class="dropdown-item noti-title border-bottom"
-                        style="background-color: #94a9ce;">
+                        style="background-color: #163552;">
                         <div class="col-lg-12 col-sm-12 col-12 m-0">
                             <h5 class="m-0 font-size-16" style="font-weight:
                                 bold;color: #fff;">
                                 Notificaciones <span class="badge float-right
                                     mt-0 mr-1" style="background-color:
-                                    #163552;" id="totalNotifNL">0</span>
+                                    #fdfdfd;color: #28292f;" id="totalNotifNL">0</span>
                             </h5>
                         </div>
                     </div>

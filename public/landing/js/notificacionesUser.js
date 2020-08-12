@@ -63,32 +63,32 @@ $.ajax({
                 a = `<li class="dropdown-item
                 notify-item border-bottom" style="background: #f1f2f3;">
                     <div class="badge float-right mt-0 mr-1">
-                        <a class="btn btn-sm" style="background-color: #163552;color:#ffffff;" onclick="javascript:pagina('${url}')">
+                        <button class="btn btn-sm" style="background-color: #163552;color:#fdfdfd;" onclick="javascript:pagina('${url}')">
                             <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                             <img src="landing/images/flecha (1).svg" height="20">
-                        </a>
+                        </button>
                     </div>
                     <div class="notify-icon" style="background: #163552;">
                         <img src="landing/images/campana.svg" height="20">
                     </div>
-                    <p class="notify-details mb-1 mt-0"> ${data["user"]["nombre"]} ${data["user"]["apPaterno"]} ${data["user"]["apMaterno"]}
-                        <span>${data["notificaciones"][i].data[0].mensaje}</span>
+                    <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6"> ${data["user"]["nombre"]} ${data["user"]["apPaterno"]} ${data["user"]["apMaterno"]}
+                        <span style="font-weight:200;color:#28292f">${data["notificaciones"][i].data[0].mensaje}</span>
                     </p>
                 </li>`;
             } else {
                 a = `<li class="dropdown-item
                 notify-item border-bottom">
                     <div class="badge float-right mt-0 mr-1">
-                        <a class="btn btn-sm" style="background-color: #163552;color:#ffffff;" onclick="javascript:pagina('${url}')">
+                        <button class="btn btn-sm" style="background-color: #163552;color:#ffffff;" onclick="javascript:pagina('${url}')">
                             <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                             <img src="landing/images/flecha (1).svg" height="20">
-                        </a>
+                        </button>
                     </div>
                     <div class="notify-icon" style="background: #163552;">
                         <img src="landing/images/campana.svg" height="20">
                     </div>
-                    <p class="notify-details mb-1 mt-0"> ${data["user"]["nombre"]} ${data["user"]["apPaterno"]} ${data["user"]["apMaterno"]}
-                        <span>${data["notificaciones"][i].data[0].mensaje}</span>
+                    <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6"> ${data["user"]["nombre"]} ${data["user"]["apPaterno"]} ${data["user"]["apMaterno"]}
+                        <span style="font-weight:200;color:#28292f">${data["notificaciones"][i].data[0].mensaje}</span>
                     </p>
                 </li>`;
             }
