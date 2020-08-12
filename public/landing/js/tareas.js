@@ -112,15 +112,14 @@ function onMostrarPantallas() {
                                     </div>
                                 </div>`;
                                 }
+                                minutosT = 0;
                                 if (data[hora][j].length == 1) {
                                     var totalMinutos = data[hora][j][0].promedio.split(":");
                                     var convertirMinutos = parseInt(totalMinutos[0]) * 60 + parseInt(totalMinutos[1]) + parseFloat(totalMinutos[2] / 60);
                                     var minutosT = convertirMinutos;
                                     totalCM = Math.round(minutosT);
-                                    console.log(totalCM);
                                     promedio = data[hora][j][0].prom;
                                 } else {
-                                    console.log(promedios);
                                     promedio = (promedios / (data[hora][j].length)).toFixed(2);
                                     if (promedios == 0) {
                                         promedio = 0
