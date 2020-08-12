@@ -286,3 +286,4 @@ Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
 //NOTIFICACIONES USER
 Route::get('/notificacionesUser', 'NotificacionController@notificacionesUsuario');
+Route::get('/showNotificaciones', 'NotificacionController@showNotificaciones');
