@@ -51,10 +51,8 @@ use App\persona;
                     href="#" role="button"
                     aria-haspopup="false" aria-expanded="false">
                     <span style="color: aliceblue;font-size:
-                        12px" ;></span>&nbsp; <strong id="strongOrganizacion"
-                        style="color:
-                        rgb(255, 255, 255)">{{$organizacion->organi_razonSocial}}
-                        |</strong>
+                    12px" ;></span>&nbsp; <strong id="strongOrganizacion" style="color:
+                    rgb(255, 255, 255)">{{$organizacion->organi_razonSocial}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  |</strong>
                 </a>
 
             </li>
@@ -78,7 +76,7 @@ use App\persona;
                 </a>
                 <!-- <div class="dropdown-menu dropdown-menu-right" style="font-size:
                     12.2px!important">
-                    
+
                     <a href="/perfil" class="dropdown-item notify-item">
                         <i data-feather="edit" class="icon-dual icon-xs mr-2"></i>
                         <span>Editar perfil</span>

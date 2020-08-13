@@ -562,17 +562,16 @@
                     <h5 style="color: #ffffff">Gestión de empleados</h5>
                     <label for="" class="blanco font-italic">Tienes 2 minutos para registrar tu primer empleado</label>
                 </div>
-                <div class=" col-md-2 col-xl-2">
+                <div class=" col-md-5 col-xl-5">
                     <a href="{{('/empleado/cargar')}}"> <button class="btn btn-sm btn-primary"
                             style="background-color: #183b5d;border-color:#62778c"><img
                                 src="{{asset('admin/images/subir.ico')}}" height="25" class="mr-1">Carga
-                            masiva</button></a>
-                </div>
-                <div class=" col-md-3 col-xl-3">
+                            masiva emp.</button></a> &nbsp;&nbsp;&nbsp;
                     <button class="btn btn-sm btn-primary" style="background-color: #183b5d;border-color:#62778c"
-                        id="cargaMasivaF"><img src="{{asset('admin/images/image.ico')}}" height="25" class="mr-1">Carga
-                        masiva fotos</button>
+                    id="cargaMasivaF"><img src="{{asset('admin/images/image.ico')}}" height="25" class="mr-1">Carga
+                    masiva fotos</button>
                 </div>
+
             </div>
         </nav>
     </header>

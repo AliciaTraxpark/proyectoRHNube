@@ -515,20 +515,20 @@ use App\proyecto_empleado;
     }
 </style>
 <div class="row page-title" style="padding-right: 20px;">
-    <div class="col-md-8">
+    <div class="col-md-7">
 
         <h4 class="header-title mt-0 "></i>Empleados</h4>
     </div>
-    <div class=" col-md-2 col-xl-2 text-right">
+    <div class=" col-md-5 col-xl-5 text-right">
         <a href="{{ '/empleado/cargar' }}"> <button class="btn btn-outline-secondary btn-sm"><img
                     src="{{ asset('admin/images/subir.ico') }}" height="20" class="mr-1">Carga
-                masiva</button></a>
-    </div>
-    <div class=" col-md-2 col-xl-2 text-right">
+                masiva emp.</button></a>&nbsp;&nbsp;
+
         <button class="btn btn-outline-secondary btn-sm" id="cargaMasivaF"><img
-                src="{{ asset('admin/images/image.ico') }}" height="20" class="mr-1">Carga
-            masiva fotos</button>
+            src="{{ asset('admin/images/image.ico') }}" height="20" class="mr-1">Carga
+        masiva fotos</button>
     </div>
+
 </div>
 @endsection
 
@@ -550,9 +550,9 @@ use App\proyecto_empleado;
                             class="btn btn-sm btn-primary delete_all" data-url="">Eliminar seleccion
                         </button>
                         <button class="btn btn-sm btn-primary" id="formNuevoEd"
-                            style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d">Editar</button>
+                            style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"> Editar</button>
                         <button class="btn btn-sm btn-primary" id="formNuevoE"
-                            style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d">+ Nuevo</button>
+                            style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"> Nuevo</button>
                     </div>
                 </div>
                 <div id="espera" class="text-center" style="display: none">

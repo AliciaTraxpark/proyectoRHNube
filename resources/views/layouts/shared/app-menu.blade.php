@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 
 </style>
 <ul class="metismenu" id="menu-bar">
-    <li class="menu-title">Navigation</li>
+    
 
     <li>
         <a href="/dashboard">
