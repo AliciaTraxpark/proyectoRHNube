@@ -413,11 +413,12 @@ class apiController extends Controller
         if ($control) {
             $idHorario_dias = $control->idHorario_dias;
             $busquedaUltimoControl = DB::table('control as c')
-                ->join('envio as en', 'en.idEnvio', '=', 'c.idEnvio')
-                ->select(DB::raw('MAX(c.Cont_id)'),'c.idEnvio', DB::raw('COUNT(c.idHorario_dias) as total'))
+                ->join('envio as en', 'c.idEnvio', '=', 'en.idEnvio')
+                ->select(DB::raw('MAX(c.idEnvio) as idEnvio'), DB::raw('COUNT(c.idHorario_dias) as total'))
                 ->where('c.idHorario_dias', '=', $idHorario_dias)
                 ->where('c.idHorario_dias', '!=', null)
                 ->where('en.idEmpleado', '=', $envio->idEmpleado)
+                ->where('c.Cont_id', '!=', $control->Cont_id)
                 ->get()
                 ->first();
             if ($busquedaUltimoControl->total != 1) {
@@ -469,59 +470,62 @@ class apiController extends Controller
                 $promedio_captura->save();
             }
 
-            $busquedaUltimaCaptura = DB::table('control as c')
-                ->join('envio as en', 'en.idEnvio', '=', 'c.idEnvio')
-                ->join('captura as cp', 'cp.idEnvio', '=', 'en.idEnvio')
-                ->select(DB::raw('MAX(c.Cont_id)'),'c.idEnvio', DB::raw('COUNT(DATE(cp.fecha_hora)) as total'))
-                ->where('c.idHorario_dias', '=', null)
-                ->where('en.idEmpleado', '=', $envio->idEmpleado)
-                ->groupBy(DB::raw('DATE(cp.fecha_hora)'))
-                ->get()
-                ->first();
-            if ($busquedaUltimaCaptura->total != 1) {
-                $capturaBusqueda = captura::where('idEnvio', '=', $busquedaUltimaCaptura->idEnvio)->get();
-                foreach ($capturaBusqueda as $cb) {
-                    $promedio = DB::table('captura as c')
-                        ->select('c.promedio', 'c.fecha_hora')
-                        ->where('c.idCaptura', '=', $cb->idCaptura)
-                        ->get()
-                        ->first();
-                    if ($promedio) {
-                        //RESTA DE PROMEDIOS DE CAPTURAS
-                        $capturaRegistrada = captura::where('idCaptura', '=', $idCaptura)->get()->first();
-                        $explode2 = explode(":", $capturaRegistrada->promedio);
-                        $calSeg2 = $explode2[0] * 3600 + $explode2[1] * 60 + $explode2[2];
-                        $totalP = $calSeg2;
-                        if ($calSeg2 == 0) {
-                            $round = 0;
-                        } else {
-                            //RESTA POR FECHA HORA DE   CAPTURAS
-                            $fecha = Carbon::create($capturaRegistrada->fecha_hora)->format('H:i:s');
-                            $explo1 = explode(":", $fecha);
-                            $calSegund = $explo1[0] * 3600 + $explo1[1] * 60 + $explo1[2];
-                            $fecha1 = Carbon::create($promedio->fecha_hora)->format('H:i:s');
-                            $explo2 = explode(":", $fecha1);
-                            $calSegund2 = $explo2[0] * 3600 + $explo2[1] * 60 + $explo2[2];
-                            $totalP1 = $calSegund - $calSegund2;
-                            //PROMEDIO
-                            $promedio = floatval($totalP / $totalP1);
-                            $promedioFinal = $promedio * 100;
-                            $round = round($promedioFinal, 2);
+            if (!$busquedaUltimoControl) {
+                $busquedaUltimaCaptura = DB::table('control as c')
+                    ->join('envio as en', 'en.idEnvio', '=', 'c.idEnvio')
+                    ->join('captura as cp', 'cp.idEnvio', '=', 'en.idEnvio')
+                    ->select(DB::raw('MAX(c.idEnvio) as idEnvio'), 'c.idEnvio', DB::raw('COUNT(DATE(cp.fecha_hora)) as total'))
+                    ->where('c.idHorario_dias', '=', null)
+                    ->where('en.idEmpleado', '=', $envio->idEmpleado)
+                    ->where('c.Cont_id', '!=', $control->Cont_id)
+                    ->groupBy(DB::raw('DATE(cp.fecha_hora)'))
+                    ->get()
+                    ->first();
+                if ($busquedaUltimaCaptura->total != 1) {
+                    $capturaBusqueda = captura::where('idEnvio', '=', $busquedaUltimaCaptura->idEnvio)->get();
+                    foreach ($capturaBusqueda as $cb) {
+                        $promedio = DB::table('captura as c')
+                            ->select('c.promedio', 'c.fecha_hora')
+                            ->where('c.idCaptura', '=', $cb->idCaptura)
+                            ->get()
+                            ->first();
+                        if ($promedio) {
+                            //RESTA DE PROMEDIOS DE CAPTURAS
+                            $capturaRegistrada = captura::where('idCaptura', '=', $idCaptura)->get()->first();
+                            $explode2 = explode(":", $capturaRegistrada->promedio);
+                            $calSeg2 = $explode2[0] * 3600 + $explode2[1] * 60 + $explode2[2];
+                            $totalP = $calSeg2;
+                            if ($calSeg2 == 0) {
+                                $round = 0;
+                            } else {
+                                //RESTA POR FECHA HORA DE   CAPTURAS
+                                $fecha = Carbon::create($capturaRegistrada->fecha_hora)->format('H:i:s');
+                                $explo1 = explode(":", $fecha);
+                                $calSegund = $explo1[0] * 3600 + $explo1[1] * 60 + $explo1[2];
+                                $fecha1 = Carbon::create($promedio->fecha_hora)->format('H:i:s');
+                                $explo2 = explode(":", $fecha1);
+                                $calSegund2 = $explo2[0] * 3600 + $explo2[1] * 60 + $explo2[2];
+                                $totalP1 = $calSegund - $calSegund2;
+                                //PROMEDIO
+                                $promedio = floatval($totalP / $totalP1);
+                                $promedioFinal = $promedio * 100;
+                                $round = round($promedioFinal, 2);
+                            }
+                            //TABLA PROMEDIO_CAPTURA
+                            $promedio_captura = new promedio_captura();
+                            $promedio_captura->idCaptura = $idCaptura;
+                            $promedio_captura->promedio = $round;
+                            $promedio_captura->tiempo_rango = $totalP1;
+                            $promedio_captura->save();
                         }
-                        //TABLA PROMEDIO_CAPTURA
-                        $promedio_captura = new promedio_captura();
-                        $promedio_captura->idCaptura = $idCaptura;
-                        $promedio_captura->promedio = $round;
-                        $promedio_captura->tiempo_rango = $totalP1;
-                        $promedio_captura->save();
                     }
+                } else {
+                    $promedio_captura = new promedio_captura();
+                    $promedio_captura->idCaptura = $idCaptura;
+                    $promedio_captura->promedio = 0;
+                    $promedio_captura->tiempo_rango = 0;
+                    $promedio_captura->save();
                 }
-            } else {
-                $promedio_captura = new promedio_captura();
-                $promedio_captura->idCaptura = $idCaptura;
-                $promedio_captura->promedio = 0;
-                $promedio_captura->tiempo_rango = 0;
-                $promedio_captura->save();
             }
         }
 
