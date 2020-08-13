@@ -29,7 +29,6 @@ $.ajax({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     success: function (data) {
-        console.log(data["notificaciones"]);
         $('#notificacionesUser').empty();
         var grupo = ``;
         var container = $('#notificacionesUser');
@@ -103,7 +102,6 @@ $.ajax({
 });
 
 function pagina(url) {
-    console.log(url);
     window.location.replace(
         location.origin + "/" + url
     );
