@@ -17,14 +17,14 @@ function Datos() {
             $('#apPaternoP').val(data.perso_apPaterno);
             $('#direccion').val(data.perso_direccion);
             $('#apMaternoP').val(data.perso_apMaterno);
-            if (data.perso_sexo != "Mujer" && data.perso_sexo != "Hombre" && data.perso_sexo != "Personalizado") {
+            /* if (data.perso_sexo != "Mujer" && data.perso_sexo != "Hombre" && data.perso_sexo != "Personalizado") {
                 $('#genero').append($('<option>', {
                     value: data.perso_sexo,
                     text: data.perso_sexo,
                     selected: true
                 }));
                 valueGenero = data.perso_sexo;
-            }
+            } */
             $('#genero').val(data.perso_sexo);
             $('#idE').val(data.id);
             $('#ruc').val(data.organi_ruc);
@@ -32,14 +32,14 @@ function Datos() {
             $('#direccionE').val(data.organi_direccion);
             $('#numE').val(data.organi_nempleados);
             $('#pagWeb').val(data.organi_pagWeb);
-            if (data.organi_tipo != "Empresa" && data.organi_tipo != "Gobierno" && data.organi_tipo != "ONG" && data.organi_tipo != "Asociación" && data.organi_tipo != "Otros") {
+            /* if (data.organi_tipo != "Empresa" && data.organi_tipo != "Gobierno" && data.organi_tipo != "ONG" && data.organi_tipo != "Asociación" && data.organi_tipo != "Otros") {
                 $('#organizacion').append($('<option>', {
                     value: data.organi_tipo,
                     text: data.organi_tipo,
                     selected: true
                 }));
                 valueGenero = data.organi_tipo;
-            }
+            } */
             $('#organizacion').val(data.organi_tipo);
             if (data.foto != null) {
                 $('#preview').attr("src", "/fotosUser/" + data.foto);
