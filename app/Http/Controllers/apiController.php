@@ -414,11 +414,10 @@ class apiController extends Controller
             $idHorario_dias = $control->idHorario_dias;
             $busquedaUltimoControl = DB::table('control as c')
                 ->join('envio as en', 'en.idEnvio', '=', 'c.idEnvio')
-                ->select('c.idEnvio', DB::raw('COUNT(c.idHorario_dias) as total'))
+                ->select(DB::raw('MAX(c.Cont_id)'),'c.idEnvio', DB::raw('COUNT(c.idHorario_dias) as total'))
                 ->where('c.idHorario_dias', '=', $idHorario_dias)
                 ->where('c.idHorario_dias', '!=', null)
                 ->where('en.idEmpleado', '=', $envio->idEmpleado)
-                ->orderBy('c.Cont_id', 'desc')
                 ->get()
                 ->first();
             if ($busquedaUltimoControl->total != 1) {
@@ -457,6 +456,7 @@ class apiController extends Controller
                         $promedio_captura->idCaptura = $idCaptura;
                         $promedio_captura->idHorario = $idHorario_dias;
                         $promedio_captura->promedio = $round;
+                        $promedio_captura->tiempo_rango = $totalP1;
                         $promedio_captura->save();
                     }
                 }
@@ -465,17 +465,17 @@ class apiController extends Controller
                 $promedio_captura->idCaptura = $idCaptura;
                 $promedio_captura->idHorario = $idHorario_dias;
                 $promedio_captura->promedio = 0;
+                $promedio_captura->tiempo_rango = 0;
                 $promedio_captura->save();
             }
 
             $busquedaUltimaCaptura = DB::table('control as c')
                 ->join('envio as en', 'en.idEnvio', '=', 'c.idEnvio')
                 ->join('captura as cp', 'cp.idEnvio', '=', 'en.idEnvio')
-                ->select('c.idEnvio', DB::raw('COUNT(DATE(cp.fecha_hora)) as total'))
+                ->select(DB::raw('MAX(c.Cont_id)'),'c.idEnvio', DB::raw('COUNT(DATE(cp.fecha_hora)) as total'))
                 ->where('c.idHorario_dias', '=', null)
                 ->where('en.idEmpleado', '=', $envio->idEmpleado)
                 ->groupBy(DB::raw('DATE(cp.fecha_hora)'))
-                ->orderBy('c.Cont_id', 'desc')
                 ->get()
                 ->first();
             if ($busquedaUltimaCaptura->total != 1) {
@@ -512,6 +512,7 @@ class apiController extends Controller
                         $promedio_captura = new promedio_captura();
                         $promedio_captura->idCaptura = $idCaptura;
                         $promedio_captura->promedio = $round;
+                        $promedio_captura->tiempo_rango = $totalP1;
                         $promedio_captura->save();
                     }
                 }
@@ -519,6 +520,7 @@ class apiController extends Controller
                 $promedio_captura = new promedio_captura();
                 $promedio_captura->idCaptura = $idCaptura;
                 $promedio_captura->promedio = 0;
+                $promedio_captura->tiempo_rango = 0;
                 $promedio_captura->save();
             }
         }

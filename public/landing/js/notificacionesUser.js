@@ -29,14 +29,12 @@ $.ajax({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     success: function (data) {
-        console.log(data["notificaciones"]);
         $('#notificacionesUser').empty();
         var grupo = ``;
         var container = $('#notificacionesUser');
         var url;
         var contador = 0;
         for (var i = 0; i < data["notificaciones"].length; i++) {
-            console.log(data["notificaciones"][i].data[0].id);
             if (data["user"]["user_estado"] == 0) {
                 if (data["notificaciones"][i].data[0].id == 1) {
                     url = "calendario";
@@ -103,7 +101,6 @@ $.ajax({
 });
 
 function pagina(url) {
-    console.log(url);
     window.location.replace(
         location.origin + "/" + url
     );
