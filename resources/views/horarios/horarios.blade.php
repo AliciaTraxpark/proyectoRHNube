@@ -152,33 +152,33 @@ background-color: #ffffff !important;
         </div>
     </div>
 </div>
-  <header id="header-section">
+<header id="header-section">
     <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
-    <div class="container">
-        <div class="col-md-2 col-xl-2" >
-            <div class="navbar-brand-wrapper d-flex w-100">
-                <img src="{{asset('landing/images/logo.png')}}" height="100" >
-              </div>
-        </div>
-        <div class="col-md-8 col-xl-8">
-          <h5 style="color: #ffffff">Gestión de Horarios</h5>
-          <label for="" class="blanco font-italic">Asignemos los turnos y horarios
-        </label>
+        <div class="container">
+            <div class="col-md-2 col-xl-2">
+                <div class="navbar-brand-wrapper d-flex w-100">
+                    <img src="{{asset('landing/images/logo.png')}}" height="100">
+                </div>
+            </div>
+            <div class="col-md-7 col-xl-7 text-left">
+                <h5 style="color: #ffffff">Gestión de Horarios</h5>
+                <label for="" class="blanco font-italic">Asignemos los turnos y horarios</label>
+            </div>
+            <div class=" col-md-5 col-xl-5">
+             &nbsp;&nbsp;&nbsp;
+                        <button class="btn btn-sm btn-primary" onclick="finalizar()" style="background-color: #183b5d;border-color:#62778c;margin-left: 272px;">Finalizar</button>
+            </div>
 
         </div>
-        <div class="col-md-2 text-right">
-            <button class="btn btn-sm btn-primary" onclick="finalizar()" style="background-color: #183b5d;border-color:#62778c">Finalizar</button>
-        </div>
-    </div>
     </nav>
-  </header>
+</header>
     <div class="content-page" style="margin-top: 20px;margin-left: 0px">
         <div class="content">
             <div class="row row-divided">
                 <div class="col-md-12 col-xl-12">
                     <div class="card">
                         <div class="card-body" style="padding-top: 0px; background: #ffffff; font-size: 12.8px;
-                        color: #222222;   padding-left:0px; padding-right: 20px; ">
+                        color: #222222;   padding-left:60px; padding-right: 80px; ">
                             <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                             <div class="row">
                                 <div class="col-md-6">

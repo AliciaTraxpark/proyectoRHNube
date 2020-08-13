@@ -54,6 +54,8 @@
     background-color: #f4c8ce;
     border-color: #d77985;
     }
+    .btn-rounded {
+    border-radius: 1em;}
 </style>
   <header id="header-section">
     <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
@@ -171,7 +173,7 @@
 
                                             @if (session('empleados'))
 
-                                            <button type="button" id="btnRegistraBD" class="boton btn-sm" onclick="agregar()">Validar y registrar</button>
+                                            <button type="button" id="btnRegistraBD" class="boton btn-sm btn-rounded" onclick="agregar()">Validar y registrar</button>
                                             @endif
 
                                         </div>

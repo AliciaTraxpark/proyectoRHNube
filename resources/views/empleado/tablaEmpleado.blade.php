@@ -791,7 +791,7 @@
         ).draw();
     }
 
-   
+
 
     $(document).ready(function () {
 
@@ -926,7 +926,8 @@
         });
 
         if (allVals.length <= 0) {
-            alert("Por favor seleccione una fila.");
+       
+    bootbox.alert("Por favor seleccione una fila");
             return false;
         } else {
             $('#modalEliminar').modal();

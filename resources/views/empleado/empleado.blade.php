@@ -590,7 +590,7 @@
 
                                     <button id="" style="background-color: #183b5d;border-color:#62778c"
                                         onclick="eliminarEmpleado()" class="btn btn-sm btn-primary delete_all"
-                                        data-url="">Eliminar seleccion
+                                        data-url="">Eliminar
                                     </button>
                                     <button class="btn btn-sm btn-primary" id="formNuevoEd"
                                         style="background-color: #183b5d;border-color:#62778c">Editar</button>

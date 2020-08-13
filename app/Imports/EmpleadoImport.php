@@ -260,7 +260,7 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                 ++$this->numRows;
 
 
-            }
+            } else return redirect()->back()->with('alert', 'Archivo de carga vacío');
         }
     }
     public function rules(): array
