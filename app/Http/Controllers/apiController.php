@@ -547,6 +547,6 @@ class apiController extends Controller
             }
         }
 
-        return response()->json($promedioG, 200);
+        return response()->json($captura, 200);
     }
 }
