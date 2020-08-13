@@ -154,14 +154,14 @@ class ControlController extends Controller
             foreach ($array as $captura) {
                 $horaCaptura = explode(":", $captura->hora_ini);
                 if (!isset($resultado[$horaCaptura[0]])) {
-                    $resultado[$horaCaptura[0]] = array();
+                    $resultado[$horaCaptura[0]] = array("horaCaptura" => $horaCaptura[0], "minutos" => array());
                 }
-                if (!isset($resultado[$horaCaptura[0]][$horaCaptura[1][0]])) {
-                    $resultado[$horaCaptura[0]][$horaCaptura[1][0]] = array();
+                if (!isset($resultado[$horaCaptura[0]]["minutos"][$horaCaptura[1][0]])) {
+                    $resultado[$horaCaptura[0]]["minutos"][$horaCaptura[1][0]] = array();
                 }
-                array_push($resultado[$horaCaptura[0]][$horaCaptura[1][0]], $captura);
+                array_push($resultado[$horaCaptura[0]]["minutos"][$horaCaptura[1][0]], $captura);
             }
-            return $resultado;
+            return array_values($resultado);
         }
 
         $idempleado = $request->get('value');

@@ -55,6 +55,7 @@ function onMostrarPantallas() {
                 style="margin-left:30%;color:#7d7d7d">Realize una búsqueda para ver Actividad</label>`;
             $('#espera').hide();
             datos = data;
+            console.log(data.length);
             if (data.length != 0) {
                 $.notifyClose();
                 $.notify({
@@ -74,9 +75,11 @@ function onMostrarPantallas() {
                 });
                 var container = $('#card');
                 var $i = 0;
-                for (const hora in data) {
+                for (let index = 0; index < data.length; index++) {
+                    console.log(data[index]);
                     $('#promHoras' + $i).empty();
-                    var horaDelGrupo = hora;
+                    var horaDelGrupo = data[index].horaCaptura;
+                    var hora = data[index].horaCaptura;
                     var promedios = 0;
                     var promedio = 0;
                     var prom = 0;
@@ -87,20 +90,20 @@ function onMostrarPantallas() {
                     <span class="promHoras" style="font-weight: bold;color:#6c757d;cursor:default" id="promHoras${$i}" data-toggle="tooltip" data-placement="right" title="Actividad por Hora"
                     data-original-title=""></span><br><br><div class="row">`;
                     for (var j = 0; j < 6; j++) {
-                        if (data[hora][j] != undefined) {
+                        if (data[index].minutos[j] != undefined) {
                             var totalCM = 0;
                             var capturas = "";
-                            for (let index = 0; index < data[hora][j].length; index++) {
-                                if (data[hora][j].length > 1) {
-                                    promedios = promedios + data[hora][j][index].prom;
-                                    if (data[hora][j][index].promedio != "00:00:00") {
-                                        var totalMinutos = data[hora][j][index].promedio.split(":");
+                            for (let indexMinutos = 0; indexMinutos < data[index].minutos[j].length; indexMinutos++) {
+                                if (data[index].minutos[j].length > 1) {
+                                    promedios = promedios + data[index].minutos[j][indexMinutos].prom;
+                                    if (data[index].minutos[j][indexMinutos].promedio != "00:00:00") {
+                                        var totalMinutos = data[index].minutos[j][indexMinutos].promedio.split(":");
                                         var convertirMinutos = parseInt(totalMinutos[0]) * 60 + parseInt(totalMinutos[1]) + parseFloat(totalMinutos[2] / 60);
                                         minutosT = minutosT + convertirMinutos;
                                     }
-                                    totalCM = Math.round((minutosT / data[hora][j].length));
+                                    totalCM = Math.round((minutosT / data[index].minutos[j].length));
                                     capturas += `<div class = "carousel-item">
-                                        <img src="data:image/jpeg;base64,${data[hora][j][index].imagen}" height="120" width="200" class="img-responsive">
+                                        <img src="data:image/jpeg;base64,${data[index].minutos[j][indexMinutos].imagen}" height="120" width="200" class="img-responsive">
                                         <div class="overlay">
                                         <a class="info" onclick="zoom('${hora + "," + j}')" style="color:#fdfdfd">
                                         <i class="fa fa-eye"></i> Colección</a>
@@ -109,15 +112,15 @@ function onMostrarPantallas() {
                                 }
                             }
                             minutosT = 0;
-                            if (data[hora][j].length == 1) {
-                                var totalMinutos = data[hora][j][0].promedio.split(":");
+                            if (data[index].minutos[j].length == 1) {
+                                var totalMinutos = data[index].minutos[j][0].promedio.split(":");
                                 var convertirMinutos = parseInt(totalMinutos[0]) * 60 + parseInt(totalMinutos[1]) + parseFloat(totalMinutos[2] / 60);
                                 var minutosT = convertirMinutos;
                                 totalCM = Math.round(minutosT);
-                                promedio = data[hora][j][0].prom;
+                                promedio = data[index].minutos[j][0].prom;
                             } else {
                                 console.log(promedios);
-                                promedio = (promedios / (data[hora][j].length)).toFixed(2);
+                                promedio = (promedios / (data[index].minutos[j].length)).toFixed(2);
                                 if (promedios == 0) {
                                     promedio = 0
                                 }
@@ -127,7 +130,7 @@ function onMostrarPantallas() {
                             if (promedio >= 50) nivel = "green";
                             else if (promedio > 35) nivel = "#f3c623";
                             else nivel = "red";
-                            if (data[hora][j][0].Proye_estado == 0) {
+                            if (data[index].minutos[j][0].Proye_estado == 0) {
                                 labelEstadoP = `(Finalizado)`;
                             }
                             if (j < 5) {
@@ -141,14 +144,14 @@ function onMostrarPantallas() {
                                                 <div class="col-md-12">
                                                     <div class=" text-center col-md-12 col-sm-6" style="padding-top: 4px;
                                                     padding-bottom: 4px;">
-                                                        <h5 class="m-0 font-size-16" style="color:#1f4068;font-weight:bold;"><img src="landing/images/2143150.png" class="mr-2" height="20"/>${data[hora][j][0].Proye_Nombre} </h5>
+                                                        <h5 class="m-0 font-size-16" style="color:#1f4068;font-weight:bold;"><img src="landing/images/2143150.png" class="mr-2" height="20"/>${data[index].minutos[j][0].Proye_Nombre} </h5>
                                                     </div><br>
                                                     <div class="col-md-12 col-sm-6" style="padding-left: 0px;;padding-right: 0px">
                                                     <div class="hovereffect">
                                                         <div  id="myCarousel${hora + j}" class = "carousel carousel-fade" data-ride = "carousel">
                                                             <div class = "carousel-inner">
                                                                 <div class = "carousel-item active">
-                                                                    <img src="data:image/jpeg;base64,${data[hora][j][0].imagen}" height="120" width="200" class="img-responsive">
+                                                                    <img src="data:image/jpeg;base64,${data[index].minutos[j][0].imagen}" height="120" width="200" class="img-responsive">
                                                                     <div class="overlay">
                                                                     <a class="info" onclick="zoom('${hora + "," + j}')" style="color:#fdfdfd">
                                                                     <i class="fa fa-eye"></i> Colección</a>
@@ -194,14 +197,14 @@ function onMostrarPantallas() {
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class=" text-center col-md-12 col-sm-6" style="padding-top: 4px;padding-bottom: 4px;">
-                                                            <h5 class="m-0 font-size-16" style="color:#1f4068;font-weight:bold;"><img src="landing/images/2143150.png" class="mr-2" height="20"/>${data[hora][j][0].Proye_Nombre} </h5>
+                                                            <h5 class="m-0 font-size-16" style="color:#1f4068;font-weight:bold;"><img src="landing/images/2143150.png" class="mr-2" height="20"/>${data[index].minutos[j][0].Proye_Nombre} </h5>
                                                         </div>  <br>
                                                         <div class="col-md-12 col-sm-6" style="padding-left: 0px;padding-right: 0px">
                                                         <div class="hovereffect">
                                                         <div  id="myCarousel${hora + j}" class = "carousel carousel-fade" data-ride = "carousel">
                                                             <div class = "carousel-inner">
                                                                 <div class = "carousel-item active">
-                                                                    <img src="data:image/jpeg;base64,${data[hora][j][0].imagen}" height="120" width="200" class="img-responsive">
+                                                                    <img src="data:image/jpeg;base64,${data[index].minutos[j][0].imagen}" height="120" width="200" class="img-responsive">
                                                                     <div class="overlay">
                                                                     <a class="info" onclick="zoom('${hora + "," + j}')" style="color:#fdfdfd">
                                                                     <i class="fa fa-eye"></i> Colección</a>
@@ -317,9 +320,14 @@ function onMostrarProyecto() {
 }
 
 function zoom(horayJ) {
-    var hora = horayJ.split(",")[0];
+    var onlyHora = horayJ.split(",")[0];
     var j = horayJ.split(",")[1];
-    capturas = datos[hora][j];
+    capturas = [];
+    datos.forEach(hora => {
+        if (hora.horaCaptura == onlyHora) {
+            capturas = hora.minutos[j];
+        }
+    });
     var carusel = `<p class="imglist" style="max-width: 1000px;">`;
     for (let index = 0; index < capturas.length; index++) {
         const element = capturas[index];
