@@ -47,15 +47,6 @@ class registroEmpresaController extends Controller
         organizacion::insert($request->except(["_token"]));
     }
 
-    private function sendMessage($message, $recipients)
-    {
-        $account_sid = config('services.twilio.account_sid');
-        $auth_token = config('services.twilio.password');
-        $twilio_number = config('services.twilio.from');
-        $client = new Client($account_sid, $auth_token);
-        $client->messages->create($recipients, ['body' => $message, 'from' => $twilio_number]);
-    }
-
     public function create(Request $request)
     {
         $rucorganizacion = DB::table('organizacion as o')
@@ -111,8 +102,33 @@ class registroEmpresaController extends Controller
                 $codigo = $request->get('iduser') . "c" . $idPersona[0]->perso_id;
                 $codigoI = intval($codigo, 36);
                 $mensaje = "RH SOLUTION \nCodigo de validacion\n" . $codigoI;
-                $this->sendMessage($mensaje, $data[0]->email);
-                return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado.!");
+                $curl = curl_init();
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => "https://api.broadcastermobile.com/brdcstr-endpoint-web/services/messaging/",
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => "POST",
+                    CURLOPT_POSTFIELDS => '{
+                        "apiKey":2308,
+                        "country":"PE",
+                        "dial":38383,
+                        "message":"' . $mensaje . '",
+                        "msisdns":[' . $data[0]->email . '],
+                        "tag":"tag-prueba"
+                    }',
+                    CURLOPT_HTTPHEADER => array(
+                        "Content-Type: application/json",
+                        "Authorization:67p7e5ONkalvrKLDQh3RaONgSFs=",
+                        "Cache-Control: no-cache"
+                    ),
+                ));
+                $response = curl_exec($curl);
+                $err = curl_error($curl);
+                if ($err) {
+                    return Redirect::to('/')->with('mensaje', "Error.!");
+                } else {
+                    return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado.!");
+                }
             } else {
                 Mail::to($correo)->queue(new CorreoMail($users, $persona, $organi));
                 return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado! Te hemos enviado un correo de verificación.");

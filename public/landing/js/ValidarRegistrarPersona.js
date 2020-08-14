@@ -136,7 +136,7 @@ function registerP() {
     if (emailCelular.length == 2) {
         emailC = $('#email').val();
     } else {
-        emailC = "+51" + $('#email').val();
+        emailC = "51" + $('#email').val();
     }
     var sexoP;
     if ($('#textSexo').val() != '') {
