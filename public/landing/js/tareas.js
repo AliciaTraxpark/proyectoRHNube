@@ -108,8 +108,7 @@ function onMostrarPantallas() {
                                 }
                             }
                             if (data[index].minutos[j].length == 1) {
-                                var sumaRangos = data[index].minutos[j][0].rango;
-                                var totalR = parseFloat(sumaRangos / 60);
+                                var totalR = parseFloat(data[index].minutos[j][0].rango / 60);
                                 totalCM = totalR.toFixed(2);
                                 promedio = data[index].minutos[j][0].prom;
                             } else {
@@ -117,14 +116,14 @@ function onMostrarPantallas() {
                                     totalCM = 0;
                                 } else {
                                     var totalR = parseFloat(sumaRangos / 60);
-                                    totalCM = (totalR / data[index].minutos[j].length).toFixed(2);
+                                    totalCM = (totalR / (data[index].minutos[j].length)).toFixed(2);
                                 }
-                                sumaRangos = 0;
                                 promedio = (promedios / (data[index].minutos[j].length)).toFixed(2);
                                 if (promedios == 0) {
                                     promedio = 0
                                 }
                                 promedios = 0;
+                                sumaRangos = 0;
                             }
                             var nivel;
                             if (promedio >= 50) nivel = "green";
