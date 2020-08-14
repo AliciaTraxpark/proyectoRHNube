@@ -102,7 +102,7 @@ function onMostrarPantallas() {
                                         totalCM = 0;
                                     } else {
                                         var totalR = parseFloat(sumaRangos / 60);
-                                        totalCM = Math.round((totalR / data[index].minutos[j].length));
+                                        totalCM = (totalR / data[index].minutos[j].length).toFixed(2);
                                     }
                                     capturas += `<div class = "carousel-item">
                                         <img src="data:image/jpeg;base64,${data[index].minutos[j][indexMinutos].imagen}" height="120" width="200" class="img-responsive">
@@ -117,7 +117,7 @@ function onMostrarPantallas() {
                             if (data[index].minutos[j].length == 1) {
                                 var sumaRangos = data[index].minutos[j][0].rango;
                                 var totalR = parseFloat(sumaRangos / 60);
-                                totalCM = Math.round(totalR);
+                                totalCM = totalR.toFixed(2);
                                 promedio = data[index].minutos[j][0].prom;
                             } else {
                                 console.log(promedios);
