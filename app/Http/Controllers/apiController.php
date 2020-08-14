@@ -460,12 +460,17 @@ class apiController extends Controller
                             $promedioFinal = $promedio * 100;
                             $round = round($promedioFinal, 2);
                         }
+                        if ($totalP1 > 600) {
+                            $rango = 0;
+                        } else {
+                            $rango = $totalP1;
+                        }
                         //TABLA PROMEDIO_CAPTURA
                         $promedio_captura = new promedio_captura();
                         $promedio_captura->idCaptura = $idCaptura;
                         $promedio_captura->idHorario = $idHorario_dias;
                         $promedio_captura->promedio = $round;
-                        $promedio_captura->tiempo_rango = $totalP1;
+                        $promedio_captura->tiempo_rango = $rango;
                         $promedio_captura->save();
                         array_push($promedioG, $promedio_captura);
                     }
@@ -529,11 +534,16 @@ class apiController extends Controller
                                 $promedioFinal = $promedio * 100;
                                 $round = round($promedioFinal, 2);
                             }
+                            if ($totalP1 > 600) {
+                                $rango = 0;
+                            } else {
+                                $rango = $totalP1;
+                            }
                             //TABLA PROMEDIO_CAPTURA
                             $promedio_captura = new promedio_captura();
                             $promedio_captura->idCaptura = $idCaptura;
                             $promedio_captura->promedio = $round;
-                            $promedio_captura->tiempo_rango = $totalP1;
+                            $promedio_captura->tiempo_rango = $rango;
                             $promedio_captura->save();
                         }
                     }
