@@ -208,6 +208,7 @@
                                         <th>Contrato</th>
                                         <th>Local</th>
                                         <th>Nivel</th>
+                                        <th>Correo</th>
                                     </tr>
                                 </thead>
                                 <tbody style="background:#f7f7f7;color: #2c2c2c;">
@@ -235,7 +236,7 @@
                                         <td>{{$item[17]}}</td>
                                         <td>{{$item[18]}}</td>
                                         <td>{{$item[19]}}</td>
-
+                                        <td>{{$item[20]}}</td>
 
 
                                       </tr>
