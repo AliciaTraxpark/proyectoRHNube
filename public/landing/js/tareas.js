@@ -96,7 +96,7 @@ function onMostrarPantallas() {
                             for (let indexMinutos = 0; indexMinutos < data[index].minutos[j].length; indexMinutos++) {
                                 if (data[index].minutos[j].length > 1) {
                                     promedios = promedios + data[index].minutos[j][indexMinutos].prom;
-                                    sumaRangos = sumaRangos + data[index].minutos[j][index].rango;
+                                    sumaRangos = sumaRangos + data[index].minutos[j][indexMinutos].rango;
                                     capturas += `<div class = "carousel-item">
                                         <img src="data:image/jpeg;base64,${data[index].minutos[j][indexMinutos].imagen}" height="120" width="200" class="img-responsive">
                                         <div class="overlay">
@@ -108,14 +108,14 @@ function onMostrarPantallas() {
                             }
                             if (data[index].minutos[j].length == 1) {
                                 var totalR = parseFloat(data[index].minutos[j][0].rango / 60);
-                                totalCM = totalR.toFixed(2);
+                                totalCM = totalR.toFixed(1);
                                 promedio = data[index].minutos[j][0].prom;
                             } else {
                                 if (sumaRangos == 0) {
                                     totalCM = 0;
                                 } else {
                                     var totalR = parseFloat(sumaRangos / 60);
-                                    totalCM = (totalR / (data[index].minutos[j].length)).toFixed(2);
+                                    totalCM = (totalR).toFixed(1);
                                 }
                                 promedio = (promedios / (data[index].minutos[j].length)).toFixed(2);
                                 if (promedios == 0) {
