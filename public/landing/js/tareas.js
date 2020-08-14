@@ -108,14 +108,14 @@ function onMostrarPantallas() {
                             }
                             if (data[index].minutos[j].length == 1) {
                                 var totalR = parseFloat(data[index].minutos[j][0].rango / 60);
-                                totalCM = totalR.toFixed(1);
+                                totalCM = Math.round(totalR);
                                 promedio = data[index].minutos[j][0].prom;
                             } else {
                                 if (sumaRangos == 0) {
                                     totalCM = 0;
                                 } else {
                                     var totalR = parseFloat(sumaRangos / 60);
-                                    totalCM = (totalR).toFixed(1);
+                                    totalCM = Math.round(totalR);
                                 }
                                 promedio = (promedios / (data[index].minutos[j].length)).toFixed(2);
                                 if (promedios == 0) {
