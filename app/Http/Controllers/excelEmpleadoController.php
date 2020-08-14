@@ -249,6 +249,9 @@ class excelEmpleadoController extends Controller
                 'emple_persona'    => $personaId->perso_id,
                 'emple_tipoDoc'    =>  $row['tipo_doc'],
                 'emple_nDoc'       =>$emp[1],
+                'emple_Correo'=>$emp[20],
+                'emple_celular'=>'',
+                'emple_telefono'=>'',
                 'emple_departamento'=> $row['iddep'],
                 'emple_provincia'  => $row['idprov'],
                 'emple_distrito'   =>  $row['id'],
@@ -276,9 +279,10 @@ class excelEmpleadoController extends Controller
 
 
 
+
                 //
             ]);
-            modo::create([
+           /*  modo::create([
                 'idEmpleado'    => $empleadoId->emple_id,
                 'idTipoModo'    => 1,
                 'idTipoDispositivo'       =>1,
@@ -289,7 +293,7 @@ class excelEmpleadoController extends Controller
                 'idTipoModo'    => 1,
                 'idTipoDispositivo'       =>2,
 
-            ]);
+            ]); */
             }
         }
      }

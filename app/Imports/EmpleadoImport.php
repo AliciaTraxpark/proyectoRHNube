@@ -61,6 +61,7 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                           $row['tipo_doc'] =  $tipoDoc->tipoDoc_id;  $row['tipo_docArray'] =  $tipoDoc->tipoDoc_descripcion;
                     }  else{return redirect()->back()->with('alert', 'No se encontro el tipo de documento:'.$row['tipo_documento'].'.  El proceso se interrumpio en la fila:'.$filas); $row['tipo_doc']=null;}
                    } else{ $row['tipo_docArray']=null; }
+                   //dni
                    $empleadoAntiguo=DB::table('empleado')->where('emple_nDoc','=',$row['numero_documento'])->where('empleado.users_id', '=', Auth::user()->id)
                    ->where('empleado.emple_estado', '=', 1)->first();
                    if($empleadoAntiguo!=null){
@@ -83,6 +84,13 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                        }
 
 
+                    //correo
+
+                    $correoAntiguo=DB::table('empleado')->where('emple_Correo','=',$row['correo'])->where('empleado.users_id', '=', Auth::user()->id)
+                    ->where('empleado.emple_estado', '=', 1)->first();
+                    if( $correoAntiguo!=null){
+                        return redirect()->back()->with('alert', 'correo ya registrado en otro empleado: '.$row['correo'].' El proceso se interrumpio en la fila: '.$filas.' de excel');
+                    };
 
                         //dd($arraysimple);
 
@@ -253,7 +261,7 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                  //////////MANDA DATOS A VISTA
                  $din=[$row['tipo_docArray'],$row['numero_documento'],$row['nombres'],$row['apellido_paterno'],$row['apellido_materno'],$row['direccion'],$row['name_depArray'],
                  $row['provArray'],$row['distArray'], $row['cargoArray'],$row['areaArray'],$row['centro_costoArray'],$row['fecha_nacimiento'],$row['name_depNArray'],$row['provNArray'],
-                 $row['distNArray'], $row['sexo'],$row['tipo_contratoArray'],$row['localArray'],$row['nivelArray']];
+                 $row['distNArray'], $row['sexo'],$row['tipo_contratoArray'],$row['localArray'],$row['nivelArray'],$row['correo']];
                   array_push($this->dnias,$din);
 
 
