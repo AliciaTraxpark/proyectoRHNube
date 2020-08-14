@@ -442,6 +442,11 @@
 </div>
 <!-- end row -->
 @section('script')
+<script>
+    $('#rowAlert').hide();
+    $('#generoPersonalizado').hide();
+    $('#organizacionPersonalizado').hide();
+</script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/combodate.js')}}"></script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
@@ -450,11 +455,6 @@
 <script
     src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
-<script>
-    $('#rowAlert').hide();
-    $('#generoPersonalizado').hide();
-    $('#organizacionPersonalizado').hide();
-</script>
 <script src="{{asset('landing/js/seleccionarDepOrg.js')}}"></script>
 <script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
 <script src="{{asset('landing/js/editarPerfil.js')}}"></script>
