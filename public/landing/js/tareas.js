@@ -83,8 +83,8 @@ function onMostrarPantallas() {
                     var promedios = 0;
                     var promedio = 0;
                     var prom = 0;
-                    var minutosT = 0;
                     var sumaRangos = 0;
+                    var totalCM = 0;
                     var labelEstadoP = ``;
                     var labelDelGrupo = horaDelGrupo + ":00:00" + " - " + (parseInt(horaDelGrupo) + 1) + ":00:00";
                     var grupo = `<span style="font-weight: bold;color:#6c757d;cursor:default">${labelDelGrupo}</span>&nbsp;&nbsp;<img src="landing/images/punt.gif" height="70">&nbsp;&nbsp;
@@ -92,7 +92,6 @@ function onMostrarPantallas() {
                     data-original-title=""></span><br><br><div class="row">`;
                     for (var j = 0; j < 6; j++) {
                         if (data[index].minutos[j] != undefined) {
-                            var totalCM = 0;
                             var capturas = "";
                             for (let indexMinutos = 0; indexMinutos < data[index].minutos[j].length; indexMinutos++) {
                                 if (data[index].minutos[j].length > 1) {
