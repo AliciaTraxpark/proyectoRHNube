@@ -50,7 +50,13 @@ function agregarempleado() {
         return false;
     }
     //validar usuario
-    var email = $('#email').val();
+    var emailCelular = $('#email').val().split("@");
+    var email;
+    if (emailCelular.length == 2) {
+        email = $('#email').val();
+    } else {
+        email = "51" + $('#email').val();
+    }
     $.ajax({
         type: "get",
         url: "/persona/comprobar",

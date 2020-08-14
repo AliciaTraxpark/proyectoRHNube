@@ -94,7 +94,7 @@ input[type=number] { -moz-appearance:textfield; }
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-                <form method="POST" action="{{route('registerOrganizacion')}}">
+                <form method="POST" action="{{route('registerOrganizacion')}}" onsubmit="javascript:validate(event)">
                     @csrf
                     <div class="row">
                         <div class="col-md-9">
@@ -246,6 +246,15 @@ input[type=number] { -moz-appearance:textfield; }
             }
         }
 
+        function disabledForm(){
+            $('button[type="submit"]').attr("disabled",true);
+        }
+
+        function validate(e){
+            if(e.isTrusted == true){
+                disabledForm();
+            }
+        }
 
     </script>
     <script src="{{asset('landing/vendors/jquery/jquery.min.js')}}"></script>
