@@ -55,7 +55,7 @@ function onMostrarPantallas() {
                 style="margin-left:30%;color:#7d7d7d">Realize una búsqueda para ver Actividad</label>`;
             $('#espera').hide();
             datos = data;
-            console.log(data.length);
+            console.log(data);
             if (data.length != 0) {
                 $.notifyClose();
                 $.notify({
@@ -84,6 +84,7 @@ function onMostrarPantallas() {
                     var promedio = 0;
                     var prom = 0;
                     var minutosT = 0;
+                    var sumaRangos = 0;
                     var labelEstadoP = ``;
                     var labelDelGrupo = horaDelGrupo + ":00:00" + " - " + (parseInt(horaDelGrupo) + 1) + ":00:00";
                     var grupo = `<span style="font-weight: bold;color:#6c757d;cursor:default">${labelDelGrupo}</span>&nbsp;&nbsp;<img src="landing/images/punt.gif" height="70">&nbsp;&nbsp;
@@ -96,12 +97,13 @@ function onMostrarPantallas() {
                             for (let indexMinutos = 0; indexMinutos < data[index].minutos[j].length; indexMinutos++) {
                                 if (data[index].minutos[j].length > 1) {
                                     promedios = promedios + data[index].minutos[j][indexMinutos].prom;
-                                    if (data[index].minutos[j][indexMinutos].promedio != "00:00:00") {
-                                        var totalMinutos = data[index].minutos[j][indexMinutos].promedio.split(":");
-                                        var convertirMinutos = parseInt(totalMinutos[0]) * 60 + parseInt(totalMinutos[1]) + parseFloat(totalMinutos[2] / 60);
-                                        minutosT = minutosT + convertirMinutos;
+                                    sumaRangos = sumaRangos + data[index].minutos[j][index].rango;
+                                    if (sumaRangos == 0) {
+                                        totalCM = 0;
+                                    } else {
+                                        var totalR = parseFloat(sumaRangos / 60);
+                                        totalCM = Math.round((totalR / data[index].minutos[j].length));
                                     }
-                                    totalCM = Math.round((minutosT / data[index].minutos[j].length));
                                     capturas += `<div class = "carousel-item">
                                         <img src="data:image/jpeg;base64,${data[index].minutos[j][indexMinutos].imagen}" height="120" width="200" class="img-responsive">
                                         <div class="overlay">
@@ -111,12 +113,11 @@ function onMostrarPantallas() {
                                     </div>`;
                                 }
                             }
-                            minutosT = 0;
+                            sumaRangos = 0;
                             if (data[index].minutos[j].length == 1) {
-                                var totalMinutos = data[index].minutos[j][0].promedio.split(":");
-                                var convertirMinutos = parseInt(totalMinutos[0]) * 60 + parseInt(totalMinutos[1]) + parseFloat(totalMinutos[2] / 60);
-                                var minutosT = convertirMinutos;
-                                totalCM = Math.round(minutosT);
+                                var sumaRangos = data[index].minutos[j][0].rango;
+                                var totalR = parseFloat(sumaRangos / 60);
+                                totalCM = Math.round(totalR);
                                 promedio = data[index].minutos[j][0].prom;
                             } else {
                                 console.log(promedios);
