@@ -118,8 +118,8 @@ function onMostrarPantallas() {
                                 } else {
                                     var totalR = parseFloat(sumaRangos / 60);
                                     totalCM = (totalR / data[index].minutos[j].length).toFixed(2);
-                                    sumaRangos = 0;
                                 }
+                                sumaRangos = 0;
                                 promedio = (promedios / (data[index].minutos[j].length)).toFixed(2);
                                 if (promedios == 0) {
                                     promedio = 0
