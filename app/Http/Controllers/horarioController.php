@@ -71,8 +71,8 @@ class horarioController extends Controller
     }
     public function guardarEventos(Request $request)
     {
-        $pais = $request->pais;
-        $departamento = $request->departamento;
+
+
         $datafecha = $request->fechasArray;
         $horas = $request->hora;
         $inicio = $request->inicio;
@@ -86,8 +86,8 @@ class horarioController extends Controller
             $temporal_eventos->color = '#ffffff';
             $temporal_eventos->textColor = '111111';
             $temporal_eventos->users_id = Auth::user()->id;
-            $temporal_eventos->paises_id = $pais;
-            $temporal_eventos->ubigeo_peru_departments_id = $departamento;
+
+
             $temporal_eventos->temp_horaI = $inicio;
             $temporal_eventos->temp_horaF = $fin;
             $temporal_eventos->id_horario = $idhorar;
@@ -320,8 +320,7 @@ class horarioController extends Controller
         $temporal_eventos->textColor = '#3f51b5';
         $temporal_eventos->start = $request->get('start');
         $temporal_eventos->end = $request->get('end');
-        $temporal_eventos->paises_id = $request->get('pais');
-        $temporal_eventos->ubigeo_peru_departments_id = $request->get('departamento');
+
         $temporal_eventos->users_id = Auth::user()->id;
         $temporal_eventos->save();
 
@@ -343,8 +342,7 @@ class horarioController extends Controller
         $temporal_eventos->textColor = '#0b1b29';
         $temporal_eventos->start = $request->get('start');
         $temporal_eventos->end = $request->get('end');
-        $temporal_eventos->paises_id = $request->get('pais');
-        $temporal_eventos->ubigeo_peru_departments_id = $request->get('departamento');
+
         $temporal_eventos->users_id = Auth::user()->id;
         $temporal_eventos->save();
 
@@ -365,8 +363,7 @@ class horarioController extends Controller
         $temporal_eventos->textColor = '#fff7f7';
         $temporal_eventos->start = $request->get('start');
         $temporal_eventos->end = $request->get('end');
-        $temporal_eventos->paises_id = $request->get('pais');
-        $temporal_eventos->ubigeo_peru_departments_id = $request->get('departamento');
+
         $temporal_eventos->users_id = Auth::user()->id;
         $temporal_eventos->save();
 
@@ -387,8 +384,7 @@ class horarioController extends Controller
         $temporal_eventos->textColor = '#313131';
         $temporal_eventos->start = $request->get('start');
         $temporal_eventos->end = $request->get('end');
-        $temporal_eventos->paises_id = $request->get('pais');
-        $temporal_eventos->ubigeo_peru_departments_id = $request->get('departamento');
+
         $temporal_eventos->temp_horaI = $request->get('horaIn');
         $temporal_eventos->temp_horaF = $request->get('descuentoI');
         $temporal_eventos->users_id = Auth::user()->id;
@@ -458,8 +454,7 @@ class horarioController extends Controller
                         $eventos_empleado->textColor=$temporal_eventos->textColor;
                         $eventos_empleado->start=$temporal_eventos->start;
                         $eventos_empleado->end=$temporal_eventos->end;
-                        $eventos_empleado->paises_id=$temporal_eventos->paises_id;
-                        $eventos_empleado->ubigeo_peru_departments_id= $temporal_eventos->ubigeo_peru_departments_id;
+
                         $eventos_empleado->id_empleado=$nuevs;
                         /* if($temporal_eventos->color='#a34141'){
                         $eventos_empleado->tipo_ev=0;
@@ -496,8 +491,7 @@ class horarioController extends Controller
                         $eventos_empleado->textColor=$temporal_eventotextcs->textColor;
                         $eventos_empleado->start=$temporal_eventotextcs->start;
                         $eventos_empleado->end=$temporal_eventotextcs->end;
-                        $eventos_empleado->paises_id=$temporal_eventotextcs->paises_id;
-                        $eventos_empleado->ubigeo_peru_departments_id= $temporal_eventotextcs->ubigeo_peru_departments_id;
+
                         $eventos_empleado->id_empleado=$idempleados;
                         $eventos_empleado->save();
 
@@ -643,7 +637,7 @@ class horarioController extends Controller
             $horario_dias->color = '#ffffff';
             $horario_dias->textColor = '111111';
             $horario_dias->users_id = Auth::user()->id;
-            $horario_dias->paises_id = 173;
+
             $horario_dias->save();
             $horario_empleado = new horario_empleado();
             $horario_empleado->horario_horario_id =  $idhorar;
@@ -688,7 +682,7 @@ class horarioController extends Controller
         $eventos_empleado->textColor='#0b1b29';
         $eventos_empleado->start=$start;
         $eventos_empleado->end=$end;
-        $eventos_empleado->paises_id=173;
+
         $eventos_empleado->id_empleado=$idempl;
         $eventos_empleado->save();
 
@@ -727,7 +721,7 @@ class horarioController extends Controller
         $eventos_empleado->textColor='#fff7f7';
         $eventos_empleado->start=$start;
         $eventos_empleado->end=$end;
-        $eventos_empleado->paises_id=173;
+      
         $eventos_empleado->id_empleado=$idempl;
         $eventos_empleado->save();
 
