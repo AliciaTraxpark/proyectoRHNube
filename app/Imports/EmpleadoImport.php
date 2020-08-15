@@ -31,6 +31,7 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
     private $numRows = 0;
     public $dnias=[];
     public $Ndoc=[];
+
     /**
     * @param array $row
     *
@@ -268,7 +269,12 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                 ++$this->numRows;
 
 
-            } else return redirect()->back()->with('alert', 'Archivo de carga vacío');
+            }
+            $contando1=count($this->dnias);
+            if($contando1==0)
+            {
+
+                return redirect()->back()->with('alert', 'Archivo de carga vacío'); }
         }
     }
     public function rules(): array
