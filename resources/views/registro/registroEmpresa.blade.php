@@ -83,16 +83,27 @@ input[type=number] { -moz-appearance:textfield; }
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-sm" style="background:
-                                #f0f0f0" data-dismiss="modal"
+                            <button class="btn btn-sm" type="button" style="background:#f0f0f0" data-dismiss="modal"
                                 onclick="javascript:limpiartextOrganizacion()">Cerrar</button>
-                            <button type="button" class="btn btn-sm" style="background:
-                                #302f56;color: #ecebeb" class="btn
-                                btn-sm" onclick="javascript:personalizadoOrganizacion()"
+                            <button type="button" style="background:#302f56;color: #ecebeb"
+                            class="btn btn-sm" onclick="javascript:personalizadoOrganizacion()"
                                 id="guardarPersonalizarOrganizacion">Guardar</button>
                         </div>
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+                <!-- MODAL DE ENVIO -->
+                <div id="modalCargando" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCargando" aria-hidden="true" data-backdrop="static">
+                    <div class="modal-dialog modal-dialog-centered  modal-lg">
+                    <div class="modal-content" style="background: #ffffff;">
+                       <div class="modal-body" style="padding-top: 8px;  padding-bottom: 0px;">
+                           <div class="text-center">
+                                <h6 style="color: #163552;">Enviado datos, espere por favor.</h6>
+                                <img src="{{asset('landing/images/spiner.gif')}}" height="200" >
+                           </div>
+                       </div>
+                   </div><!-- /.modal-content -->
+                 </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
                 <form method="POST" action="{{route('registerOrganizacion')}}" onsubmit="javascript:validate(event)">
                     @csrf
@@ -248,6 +259,7 @@ input[type=number] { -moz-appearance:textfield; }
 
         function disabledForm(){
             $('button[type="submit"]').attr("disabled",true);
+            $('#modalCargando').modal();
         }
 
         function validate(e){
