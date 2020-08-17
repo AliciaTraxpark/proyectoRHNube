@@ -295,6 +295,8 @@ $('#btnasignar').on('click', function(e) {
      calendar.refetchEvents();
      $("#nombreEmpleado > option").prop("selected",false);
      $("#nombreEmpleado").trigger("change");
+     $("#selectEmpresarial > option").prop("selected",false);
+     $("#selectEmpresarial").trigger("change");
     $('#Datoscalendar').show();
     $('#Datoscalendar1').hide();
     $('#asignarHorario').modal('toggle');
