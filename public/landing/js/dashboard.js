@@ -353,6 +353,12 @@ $.ajax({
         var color = ['#b6eb7a', '#f9d56e', '#e84a5f'];
         var suma = 0;
         var totalP = 0;
+        $('#cantidadContrato').empty();
+        $('#fechaContrato').empty();
+        $('#panel1002C').empty();
+        var containerCantidadA = $('#cantidadContrato');
+        var containerFecha = $('#fechaContrato');
+        var containerDetalle = $('#panel1002C');
         if (data[0].contrato.length != 0) {
             for (var i = 0; i < data[0].contrato.length; i++) {
                 nombre.push(data[0].contrato[i].contrato_descripcion);
@@ -362,6 +368,28 @@ $.ajax({
             for (var j = 3; j < data[0].contrato.length; j++) {
                 color.push(getRandomColor());
             }
+            // CARD
+            p = `<img src="landing/images/grupo.svg" height="18" class="mr-2"> Total de ${suma} empleado(s)`;
+            f = new Date();
+            var options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            };
+            var fecha = f.toLocaleDateString("es-PE", options)
+            fechaF = `<img src="admin/images/calendarioHor.svg" height="20" class="mr-2"> ${fecha}`;
+            containerCantidadA.append(p);
+            containerFecha.append(fechaF);
+            var detalle = ``;
+            for (var l = 0; l < nombre.length; l++) {
+                detalle += `<p align="justify" class="font-small text-muted mx-1">\n 
+                <img src="landing/images/2143150.png" class="mr-2" height="20"/>
+                <span style="color:${color[l]};font-weight:bold;">${nombre[l]}</span> tiene un total de ${total[l]} empleado(s).
+                </p>`;
+            }
+            containerDetalle.append(detalle);
+            //GRAFICO
             var promedio = (suma * 100) / data[0].empleado[0].totalE;
             totalP = Math.round(promedio);
             var chartdata = {
