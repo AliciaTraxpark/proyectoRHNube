@@ -104,18 +104,23 @@
         box-shadow: 1px 1px 10px rgba(87, 87, 87, 0.5);
     }
 
+    .classic-tabs>ul.nav>li.nav-item>a {
+        color: #dce4eb !important;
+    }
+
     .classic-tabs>ul.nav>li.nav-item>a.active {
         color: #85a2b6 !important;
         border-bottom: 2px solid #f1f2f3 !important;
+        font-weight: bold !important;
         /* add background-color to active links */
     }
 </style>
 <div class="row">
-    <div class="col-md-6" id="divarea">
+    <div class="col-md-6 pl-5" id="divarea">
         <div class="card chart-card">
             <div class="card-body pb-0">
-                <h5 class="card-title font-weight-bold mb-2 mt-2"><img src="{{asset('landing/images/bookmark.svg')}}"
-                        height="25" class="mr-2">Área(s)</h5>
+                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
+                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Área(s)</h5>
                 <div class="d-flex justify-content-between">
                     <p class="align-self-end mt-2" id="fechaArea"></p>
                     <p class="align-self-end" id="cantidadArea"></p>
@@ -125,7 +130,7 @@
                 <!-- Nav tabs -->
                 <ul class="nav tabs-white nav-fill" role="tablist">
                     <li class="nav-item ml-0">
-                        <a class="nav-link active" data-toggle="tab" href="#panel1001" role="tab">Perfil</a>
+                        <a class="nav-link active" data-toggle="tab" href="#panel1001" role="tab">Grafico</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link " data-toggle="tab" href="#panel1002" role="tab">Información
@@ -141,15 +146,7 @@
                             <div id="js-legendArea" class="chart-legend"></div>
                         </div>
                     </div>
-                    <div class="tab-pane" id="panel1002" role="tabpanel">
-                        <p align="justify" class="font-small text-muted mx-1">Lorem ipsum dolor sit amet, consectetur
-                            adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat
-                            unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate
-                            odit minima.</p>
-                        <p align="justify" class="font-small text-muted mx-1">Lorem ipsum dolor sit amet, consectetur
-                            adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat
-                            unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate
-                            odit minima.</p>
+                    <div class="tab-pane ml-2" id="panel1002" role="tabpanel">
                     </div>
                 </div>
             </div>

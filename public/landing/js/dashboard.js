@@ -84,8 +84,10 @@ $.ajax({
         var totalP = 0;
         $('#cantidadArea').empty();
         $('#fechaArea').empty();
+        $('#panel1002').empty();
         var containerCantidadA = $('#cantidadArea');
         var containerFecha = $('#fechaArea');
+        var containerDetalle = $('#panel1002');
         if (data[0].area.length != 0) {
             for (var i = 0; i < data[0].area.length; i++) {
                 suma += data[0].area[i].Total;
@@ -108,6 +110,14 @@ $.ajax({
             fechaF = `<img src="admin/images/calendarioHor.svg" height="20" class="mr-2"> ${fecha}`;
             containerCantidadA.append(p);
             containerFecha.append(fechaF);
+            var detalle = ``;
+            for (var l = 0; l < nombre.length; l++) {
+                detalle += `<p align="justify" class="font-small text-muted mx-1">\n 
+                <img src="landing/images/2143150.png" class="mr-2" height="20"/>
+                <span style="color:${color[l]};font-weight:bold;">${nombre[l]}</span> tiene un total de ${total[l]} empleado(s).
+                </p>`;
+            }
+            containerDetalle.append(detalle);
             // GRAFICO
             var promedio = (suma * 100) / data[0].empleado[0].totalE;
             totalP = Math.round(promedio);
