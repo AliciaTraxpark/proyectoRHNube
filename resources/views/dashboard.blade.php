@@ -75,9 +75,12 @@
 <style>
     .chart-legend li span {
         display: inline-block;
-        width: 30px;
+        width: 12px;
         height: 12px;
         margin-right: 3px;
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        border-radius: 50px;
     }
 
     .chart-legend ul {
@@ -95,12 +98,11 @@
         padding-left: 0px;
         padding-right: 45px;
     }
-
 </style>
 <div class="row">
     <div class="col-md-6" id="divarea">
         <div class="float-right" style="width:100%">
-            <div class="float-right" style="width:45%">
+            <div class="float-right" style="width:70%">
                 <canvas id="area" height="300" width="300"></canvas>
             </div>
             <div id="js-legendArea" class="chart-legend"></div>
