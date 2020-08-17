@@ -10,7 +10,7 @@ use App\usuario_organizacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Hash;
 class editarPerfilController extends Controller
 {
     public function index()
@@ -95,5 +95,23 @@ class editarPerfilController extends Controller
             $user->save();
             return json_encode(array($user));
         }
+    }
+
+    public function cambiarCont(Request $request){
+        $userId = Auth::user();
+        $cantigua=$request->get('cantigua');
+
+        $cnueva= $request->get('cnueva');
+        $user = User::where('id', '=', $userId->id)->get()->first();
+
+
+       /*  if (Auth::attempt(['email' => $user->email, 'password' => $cantigua])) { */
+            if (Hash::check($cantigua,$user->password)) {
+            // Authentication passed...
+            $user =DB::table('users')
+            ->where('id', '=', Auth::user()->id)
+            ->update(['password' => Hash::make($cnueva)]);
+            return 1;
+        } else { return 0;}
     }
 }

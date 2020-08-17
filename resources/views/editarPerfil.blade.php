@@ -26,6 +26,15 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="circle1"></div>
+            <div class="circle2"></div>
+            <div class="circle3"></div>
+        </div>
+    </div>
+</div>
 <style>
     .form-control:disabled {
         background-color: #fcfcfc !important;
@@ -57,8 +66,15 @@
         background-color: #ffffff;
         box-shadow: 3px 3px 20px rgba(48, 48, 48, 0.5);
     }
+   
+
+    body > div.bootbox.modal.fade.bootbox-alert.show > div > div > div.modal-footer > button{
+        background-color: #163552;
+        border-color: #163552;
+        zoom: 85%;
+    }
 </style>
-<br><br>
+
 <!--MODAL GENERO-->
 <div id="generoModal" class="modal fade" tabindex="-1" role="dialog"
     aria-labelledby="generoModal"
@@ -138,6 +154,55 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+{{-- modal cambiar contraseña --}}
+<div id="cambiarContras" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 550px;" >
+
+    <div class="modal-content">
+       <div class="modal-header" style="background-color:#163552;">
+           <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Cambiar contraseña</h5>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+           </button>
+       </div>
+       <div class="modal-body" style="font-size:12px!important">
+           <div class="row">
+               <div class="col-md-12">
+                <form id="frmCamb" action="javascript:cambioClave()">
+                   <div class="row">
+                     <div class="col-md-6">
+                        <div class="form-group">
+                           <label for="">Contraseña actual:</label>
+                           <input type="password" class="form-control form-control-sm" id="contraAnti" required>
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="form-group">
+                           <label for="">Contraseña nueva:</label>
+                           <input type="password"  class="form-control form-control-sm"  id="contraNue" required>
+                        </div>
+                     </div>
+                   </div>
+               </div>
+           </div>
+
+       </div>
+       <div class="modal-footer">
+           <div class="col-md-12">
+               <div class="row">
+                   <div class="col-md-12 text-right" >
+                    <button type="button"  class="btn btn-light btn-sm " data-dismiss="modal">Cancelar</button>
+                    <button type="submit"  name="" style="background-color: #163552;" class="btn btn-sm ">Guardar</button>
+                </form>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div><!-- /.modal-content -->
+ </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
@@ -189,6 +254,7 @@
                     <h6 class="text-muted font-weight-normal mt-1 mb-4"
                         style="text-transform: capitalize;">
                         {{$organizacion->organi_ruc}}</h6>
+                        <button class="btn btn-secondary btn-sm" onclick="cambiarCont()">Cambiar contraseña</button>
                 </div>
             </div>
         </div>
@@ -447,6 +513,7 @@
     $('#generoPersonalizado').hide();
     $('#organizacionPersonalizado').hide();
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/combodate.js')}}"></script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
