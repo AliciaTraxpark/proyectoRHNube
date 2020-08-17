@@ -101,7 +101,7 @@ class registroEmpresaController extends Controller
             if (sizeof($datoNuevo) != 2) {
                 $codigo = $request->get('iduser') . "c" . $idPersona[0]->perso_id;
                 $codigoI = intval($codigo, 36);
-                $mensaje = "RH SOLUTION - Codigo de validacion" . $codigoI;
+                $mensaje = "RH SOLUTION - Codigo de validacion " . $codigoI;
                 $curl = curl_init();
                 curl_setopt_array($curl, array(
                     CURLOPT_URL => "https://api.broadcastermobile.com/brdcstr-endpoint-web/services/messaging/",
