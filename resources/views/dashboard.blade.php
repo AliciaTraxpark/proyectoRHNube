@@ -75,13 +75,17 @@
 <style>
     .chart-legend li span {
         display: inline-block;
-        width: 30px;
+        width: 12px;
         height: 12px;
         margin-right: 3px;
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        border-radius: 50px;
     }
 
     .chart-legend ul {
         list-style: none;
+        width: 140px;
     }
 
     .chart-legend {
@@ -96,89 +100,300 @@
         padding-right: 45px;
     }
 
+    .chart-card {
+        background-color: #ffffff;
+        box-shadow: 1px 1px 10px rgba(87, 87, 87, 0.5);
+    }
+
+    .classic-tabs>ul.nav>li.nav-item>a {
+        color: #dce4eb !important;
+    }
+
+    .classic-tabs>ul.nav>li.nav-item>a.active {
+        color: #85a2b6 !important;
+        border-bottom: 2px solid #f1f2f3 !important;
+        font-weight: bold !important;
+        /* add background-color to active links */
+    }
 </style>
 <div class="row">
-    <div class="col-md-6" id="divarea">
-        <div class="float-right" style="width:100%">
-            <div class="float-right" style="width:45%">
-                <canvas id="area" height="300" width="300"></canvas>
+    <div class="col-md-6 pl-5" id="divarea" style="min-height: 460px">
+        <div class="card chart-card">
+            <div class="card-body pb-0">
+                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
+                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Área(s)</h5>
+                <div class="d-flex justify-content-between">
+                    <p class="align-self-end mt-2" id="fechaArea"></p>
+                    <p class="align-self-end" id="cantidadArea"></p>
+                </div>
             </div>
-            <div id="js-legendArea" class="chart-legend"></div>
+            <div class="classic-tabs">
+                <!-- Nav tabs -->
+                <ul class="nav tabs-white nav-fill" role="tablist">
+                    <li class="nav-item ml-0">
+                        <a class="nav-link active" data-toggle="tab" href="#panel1001A" role="tab">Grafico</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " data-toggle="tab" href="#panel1002A" role="tab">Información
+                            detallada</a>
+                    </li>
+                </ul>
+                <div class="tab-content rounded-bottom">
+                    <div class="tab-pane fade in show active" id="panel1001A" role="tabpanel">
+                        <div class="float-right" style="width:100%">
+                            <div class="float-right" style="width:70%">
+                                <canvas id="area" height="300" width="300"></canvas>
+                            </div>
+                            <div id="js-legendArea" class="chart-legend"></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane ml-2" id="panel1002A" role="tabpanel">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-md-6" id="divnivel">
-        <div class="float-right" style="width:100%">
-            <div class="float-right" style="width:45%">
-                <canvas id="nivel" height="300" width="300"></canvas>
+    <div class="col-md-6 pl-5" id="divnivel" style="min-height: 460px">
+        <div class="card chart-card">
+            <div class="card-body pb-0">
+                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
+                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Nivel(es) del
+                    colaborador</h5>
+                <div class="d-flex justify-content-between">
+                    <p class="align-self-end mt-2" id="fechaNivel"></p>
+                    <p class="align-self-end" id="cantidadNivel"></p>
+                </div>
             </div>
-            <div id="js-legendNivel" class="chart-legend"></div>
+            <div class="classic-tabs">
+                <!-- Nav tabs -->
+                <ul class="nav tabs-white nav-fill" role="tablist">
+                    <li class="nav-item ml-0">
+                        <a class="nav-link active" data-toggle="tab" href="#panel1001N" role="tab">Grafico</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " data-toggle="tab" href="#panel1002N" role="tab">Información
+                            detallada</a>
+                    </li>
+                </ul>
+                <div class="tab-content rounded-bottom">
+                    <div class="tab-pane fade in show active" id="panel1001N" role="tabpanel">
+                        <div class="float-right" style="width:100%">
+                            <div class="float-right" style="width:70%">
+                                <canvas id="nivel" height="300" width="300"></canvas>
+                            </div>
+                            <div id="js-legendNivel" class="chart-legend"></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane ml-2" id="panel1002N" role="tabpanel">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <br><br><br>
-    <div class="col-md-6" id="divcontrato">
-        <div class="float-right" style="width:100%">
-            <div class="float-right" style="width:45%">
-                <canvas id="contrato" height="300" width="300"></canvas>
+    <div class="col-md-6 pl-5" id="divcontrato" style="min-height: 460px">
+        <div class="card chart-card">
+            <div class="card-body pb-0">
+                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
+                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Tipo de Contrato</h5>
+                <div class="d-flex justify-content-between">
+                    <p class="align-self-end mt-2" id="fechaContrato"></p>
+                    <p class="align-self-end" id="cantidadContrato"></p>
+                </div>
             </div>
-            <div id="js-legendContrato" class="chart-legend"></div>
+            <div class="classic-tabs">
+                <!-- Nav tabs -->
+                <ul class="nav tabs-white nav-fill" role="tablist">
+                    <li class="nav-item ml-0">
+                        <a class="nav-link active" data-toggle="tab" href="#panel1001C" role="tab">Grafico</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " data-toggle="tab" href="#panel1002C" role="tab">Información
+                            detallada</a>
+                    </li>
+                </ul>
+                <div class="tab-content rounded-bottom">
+                    <div class="tab-pane fade in show active" id="panel1001C" role="tabpanel">
+                        <div class="float-right" style="width:100%">
+                            <div class="float-right" style="width:70%">
+                                <canvas id="contrato" height="300" width="300"></canvas>
+                            </div>
+                            <div id="js-legendContrato" class="chart-legend"></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane ml-2" id="panel1002C" role="tabpanel">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-md-6" id="divcentro">
-        <div class="float-right" style="width:100%">
-            <div class="float-right" style="width:45%">
-                <canvas id="centro" height="300" width="300"></canvas>
+    <div class="col-md-6 pl-5" id="divcentro" style="min-height: 460px">
+        <div class="card chart-card">
+            <div class="card-body pb-0">
+                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
+                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Centro de Costos</h5>
+                <div class="d-flex justify-content-between">
+                    <p class="align-self-end mt-2" id="fechaCentro"></p>
+                    <p class="align-self-end" id="cantidadCentro"></p>
+                </div>
             </div>
-            <div id="js-legendCentro" class="chart-legend"></div>
+            <div class="classic-tabs">
+                <!-- Nav tabs -->
+                <ul class="nav tabs-white nav-fill" role="tablist">
+                    <li class="nav-item ml-0">
+                        <a class="nav-link active" data-toggle="tab" href="#panel1001CC" role="tab">Grafico</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " data-toggle="tab" href="#panel1002CC" role="tab">Información
+                            detallada</a>
+                    </li>
+                </ul>
+                <div class="tab-content rounded-bottom">
+                    <div class="tab-pane fade in show active" id="panel1001CC" role="tabpanel">
+                        <div class="float-right" style="width:100%">
+                            <div class="float-right" style="width:70%">
+                                <canvas id="centro" height="300" width="300"></canvas>
+                            </div>
+                            <div id="js-legendCentro" class="chart-legend"></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane ml-2" id="panel1002CC" role="tabpanel">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <br><br><br>
-    <div class="col-md-6" id="divlocal">
-        <div class="float-right" style="width:100%">
-            <div class="float-right" style="width:45%">
-                <canvas id="local" height="300" width="300"></canvas>
+    <div class="col-md-6 pl-5" id="divlocal" style="min-height: 460px">
+        <div class="card chart-card">
+            <div class="card-body pb-0">
+                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
+                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Local(es)</h5>
+                <div class="d-flex justify-content-between">
+                    <p class="align-self-end mt-2" id="fechaLocal"></p>
+                    <p class="align-self-end" id="cantidadLocal"></p>
+                </div>
             </div>
-            <div id="js-legendLocal" class="chart-legend"></div>
+            <div class="classic-tabs">
+                <!-- Nav tabs -->
+                <ul class="nav tabs-white nav-fill" role="tablist">
+                    <li class="nav-item ml-0">
+                        <a class="nav-link active" data-toggle="tab" href="#panel1001L" role="tab">Grafico</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " data-toggle="tab" href="#panel1002L" role="tab">Información
+                            detallada</a>
+                    </li>
+                </ul>
+                <div class="tab-content rounded-bottom">
+                    <div class="tab-pane fade in show active" id="panel1001L" role="tabpanel">
+                        <div class="float-right" style="width:100%">
+                            <div class="float-right" style="width:70%">
+                                <canvas id="local" height="300" width="300"></canvas>
+                            </div>
+                            <div id="js-legendLocal" class="chart-legend"></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane ml-2" id="panel1002L" role="tabpanel">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-md-6" id="divdepartamento">
-        <div class="float-right" style="width:100%">
-            <div class="float-right" style="width:45%">
-                <canvas id="departamento" height="300" width="300"></canvas>
+    <div class="col-md-6 pl-5" id="divdepartamento" style="min-height: 460px">
+        <div class="card chart-card">
+            <div class="card-body pb-0">
+                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
+                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Ciudad domiciliaria</h5>
+                <div class="d-flex justify-content-between">
+                    <p class="align-self-end mt-2" id="fechaDepartamento"></p>
+                    <p class="align-self-end" id="cantidadDepartamento"></p>
+                </div>
             </div>
-            <div id="js-legendDep" class="chart-legend"></div>
+            <div class="classic-tabs">
+                <!-- Nav tabs -->
+                <ul class="nav tabs-white nav-fill" role="tablist">
+                    <li class="nav-item ml-0">
+                        <a class="nav-link active" data-toggle="tab" href="#panel1001D" role="tab">Grafico</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " data-toggle="tab" href="#panel1002D" role="tab">Información
+                            detallada</a>
+                    </li>
+                </ul>
+                <div class="tab-content rounded-bottom">
+                    <div class="tab-pane fade in show active" id="panel1001D" role="tabpanel">
+                        <div class="float-right" style="width:100%">
+                            <div class="float-right" style="width:70%">
+                                <canvas id="departamento" height="300" width="300"></canvas>
+                            </div>
+                            <div id="js-legendDep" class="chart-legend"></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane ml-2" id="panel1002D" role="tabpanel">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <br><br><br>
-    <div class="col-md-6" id="divedades">
-        <div class="float-right" style="width:100%">
-            <div class="float-right" style="width:45%">
-                <canvas id="edades" height="300" width="300"></canvas>
+    <div class="col-md-6 pl-5" id="divedades" style="min-height:460px">
+        <div class="card chart-card">
+            <div class="card-body pb-0">
+                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
+                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Rangos de Edades</h5>
+                <div class="d-flex justify-content-between">
+                    <p class="align-self-end mt-2" id="fechaEdades"></p>
+                    <p class="align-self-end" id="cantidadEdades"></p>
+                </div>
             </div>
-            <div id="js-legendEdades" class="chart-legend"></div>
+            <div class="classic-tabs">
+                <!-- Nav tabs -->
+                <ul class="nav tabs-white nav-fill" role="tablist">
+                    <li class="nav-item ml-0">
+                        <a class="nav-link active" data-toggle="tab" href="#panel1001E" role="tab">Grafico</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " data-toggle="tab" href="#panel1002E" role="tab">Información
+                            detallada</a>
+                    </li>
+                </ul>
+                <div class="tab-content rounded-bottom">
+                    <div class="tab-pane fade in show active" id="panel1001E" role="tabpanel">
+                        <div class="float-right" style="width:100%">
+                            <div class="float-right" style="width:70%">
+                                <canvas id="edades" height="300" width="300"></canvas>
+                            </div>
+                            <div id="js-legendEdades" class="chart-legend"></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane ml-2" id="panel1002E" role="tabpanel">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-@endsection
-@endif
-@section('script')
-<script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
-<!-- optional plugins -->
-<script src="{{ URL::asset('admin/assets/libs/moment/moment.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/chart/Chart.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/chart/Chart.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.min.js') }}"></script>
-<!--<script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-piechart-outlabels.js') }}"></script>-->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-<script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
-<script src="{{asset('landing/js/notificacionesCalendario.js')}}"></script>
-<script src="{{asset('landing/js/dashboard.js')}}"></script>
-<script src="{{asset('landing/js/notificacionesHorario.js')}}"></script>
-<script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
-@endsection
-@section('script-bottom')
-<!-- init js -->
-@endsection
+    @endsection
+    @endif
+    @section('script')
+    <script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
+    <!-- optional plugins -->
+    <script src="{{ URL::asset('admin/assets/libs/moment/moment.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/libs/chart/Chart.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/libs/chart/Chart.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.min.js') }}"></script>
+    <!--<script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-piechart-outlabels.js') }}"></script>-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
+    <script src="{{asset('landing/js/notificacionesCalendario.js')}}"></script>
+    <script src="{{asset('landing/js/dashboard.js')}}"></script>
+    <script src="{{asset('landing/js/notificacionesHorario.js')}}"></script>
+    <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
+    @endsection
+    @section('script-bottom')
+    <!-- init js -->
+    @endsection
