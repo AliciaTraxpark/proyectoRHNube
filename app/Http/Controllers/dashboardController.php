@@ -125,6 +125,8 @@ class dashboardController extends Controller
     public function local()
     {
         $datos = [];
+        $usuario_organizacion = usuario_organizacion::where('user_id', '=', Auth::user()->id)->get()->first();
+        $organizacion = organizacion::where('organi_id', '=', $usuario_organizacion->organi_id)->get()->first();
         $empleado = DB::table('empleado as e')
             ->select(DB::raw('COUNT(e.emple_id) as totalE'))
             ->where('e.users_id', '=', Auth::user()->id)
@@ -139,7 +141,7 @@ class dashboardController extends Controller
             ->groupBy('l.local_id')
             ->get();
 
-        array_push($datos, array("empleado" => $empleado, "local" => $local));
+        array_push($datos, array("empleado" => $empleado, "local" => $local, "organizacion" => $organizacion));
         return response()->json($datos, 200);
     }
 

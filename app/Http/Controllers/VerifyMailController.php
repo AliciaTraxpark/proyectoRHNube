@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Mail\CorreoMail;
+use App\organizacion;
 use App\persona;
 use App\User;
+use App\usuario_organizacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -50,8 +52,9 @@ class VerifyMailController extends Controller
             $persona = persona::find($persona["id"]);
             $users = User::find(Auth::user()->id);
             $correo = array($datos['email']);
-
-            Mail::to($correo)->queue(new CorreoMail($users, $persona));
+            $usuario_organizacion = usuario_organizacion::where('user_id', '=', Auth::user()->id)->get()->first();
+            $organizacion = organizacion::where('organi_id', '=', $usuario_organizacion->organi_id)->get()->first();
+            Mail::to($correo)->queue(new CorreoMail($users, $persona, $organizacion));
         }
 
         return redirect('/dashboard')->with('notification', 'Has confirmado correctamente tu correo!');
