@@ -95,13 +95,20 @@ $.ajax({
             for (var j = 3; j < data[0].area.length; j++) {
                 color.push(getRandomColor());
             }
+            // CARD
             p = `<img src="landing/images/grupo.svg" height="18" class="mr-2"> Total de ${suma} empleados`;
             f = new Date();
-            var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            var options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            };
             var fecha = f.toLocaleDateString("es-PE", options)
             fechaF = `<img src="admin/images/calendarioHor.svg" height="20" class="mr-2"> ${fecha}`;
             containerCantidadA.append(p);
             containerFecha.append(fechaF);
+            // GRAFICO
             var promedio = (suma * 100) / data[0].empleado[0].totalE;
             totalP = Math.round(promedio);
             var chartdata = {
