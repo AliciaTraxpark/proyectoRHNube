@@ -116,7 +116,7 @@
     }
 </style>
 <div class="row">
-    <div class="col-md-6 pl-5" id="divarea">
+    <div class="col-md-6 pl-5" id="divarea" style="min-height: 460px">
         <div class="card chart-card">
             <div class="card-body pb-0">
                 <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
@@ -130,15 +130,15 @@
                 <!-- Nav tabs -->
                 <ul class="nav tabs-white nav-fill" role="tablist">
                     <li class="nav-item ml-0">
-                        <a class="nav-link active" data-toggle="tab" href="#panel1001" role="tab">Grafico</a>
+                        <a class="nav-link active" data-toggle="tab" href="#panel1001A" role="tab">Grafico</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " data-toggle="tab" href="#panel1002" role="tab">Información
+                        <a class="nav-link " data-toggle="tab" href="#panel1002A" role="tab">Información
                             detallada</a>
                     </li>
                 </ul>
                 <div class="tab-content rounded-bottom">
-                    <div class="tab-pane fade in show active" id="panel1001" role="tabpanel">
+                    <div class="tab-pane fade in show active" id="panel1001A" role="tabpanel">
                         <div class="float-right" style="width:100%">
                             <div class="float-right" style="width:70%">
                                 <canvas id="area" height="300" width="300"></canvas>
@@ -146,18 +146,46 @@
                             <div id="js-legendArea" class="chart-legend"></div>
                         </div>
                     </div>
-                    <div class="tab-pane ml-2" id="panel1002" role="tabpanel">
+                    <div class="tab-pane ml-2" id="panel1002A" role="tabpanel">
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-6" id="divnivel">
-        <div class="float-right" style="width:100%">
-            <div class="float-right" style="width:45%">
-                <canvas id="nivel" height="300" width="300"></canvas>
+    <div class="col-md-6 pl-5" id="divnivel" style="min-height: 460px">
+        <div class="card chart-card">
+            <div class="card-body pb-0">
+                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
+                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Nivel(es)</h5>
+                <div class="d-flex justify-content-between">
+                    <p class="align-self-end mt-2" id="fechaNivel"></p>
+                    <p class="align-self-end" id="cantidadNivel"></p>
+                </div>
             </div>
-            <div id="js-legendNivel" class="chart-legend"></div>
+            <div class="classic-tabs">
+                <!-- Nav tabs -->
+                <ul class="nav tabs-white nav-fill" role="tablist">
+                    <li class="nav-item ml-0">
+                        <a class="nav-link active" data-toggle="tab" href="#panel1001N" role="tab">Grafico</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " data-toggle="tab" href="#panel1002N" role="tab">Información
+                            detallada</a>
+                    </li>
+                </ul>
+                <div class="tab-content rounded-bottom">
+                    <div class="tab-pane fade in show active" id="panel1001N" role="tabpanel">
+                        <div class="float-right" style="width:100%">
+                            <div class="float-right" style="width:70%">
+                                <canvas id="nivel" height="300" width="300"></canvas>
+                            </div>
+                            <div id="js-legendNivel" class="chart-legend"></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane ml-2" id="panel1002N" role="tabpanel">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <br><br><br>
