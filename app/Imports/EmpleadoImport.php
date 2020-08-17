@@ -26,6 +26,7 @@ use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Maatwebsite\Excel\Concerns\Importable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, WithBatchInserts, SkipsOnError
 {    use Importable, SkipsErrors;
     private $numRows = 0;
@@ -83,8 +84,19 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                         return redirect()->back()->with('alert', 'numero de documento duplicado en la importacion: '.$row['numero_documento'].' .El proceso se interrumpio en la fila '.$filas.' de excel');
 
                        }
+                       $stringtipo = str_replace(" ", "", $row['tipo_documento']);
+                       //vaidar dni y tipo
+                       $length = Str::length($row['numero_documento']);
+                       if($stringtipo=='DNI' && $length!=8){
+                        return redirect()->back()->with('alert', 'numero de DNI '.$row['numero_documento'].' invalido en la importacion(Debe tener 8 digitos)  .El proceso se interrumpio en la fila '.$filas.' de excel');
+                       }
 
-
+                        if($stringtipo=='Carnetextranjeria' && $length!=12){
+                        return redirect()->back()->with('alert', 'numero de Carnet extranjeria '.$row['numero_documento'].' invalido en la importacion(Debe tener 12 digitos)  .El proceso se interrumpio en la fila '.$filas.' de excel');
+                       }
+                       if($stringtipo=='Pasaporte' && $length!=12){
+                        return redirect()->back()->with('alert', 'numero de Pasaporte '.$row['numero_documento'].' invalido en la importacion(Debe tener 12 digitos)  .El proceso se interrumpio en la fila '.$filas.' de excel');
+                       }
                     //correo
 
                     $correoAntiguo=DB::table('empleado')->where('emple_Correo','=',$row['correo'])->where('empleado.users_id', '=', Auth::user()->id)
