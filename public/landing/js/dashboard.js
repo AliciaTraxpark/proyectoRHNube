@@ -423,21 +423,6 @@ $.ajax({
                     plugins: {
                         datalabels: {
                             display: false
-                            /*formatter: function (value, context) {
-                                var label = context.chart.data.labels[context.dataIndex];
-                                var mostrar = [];
-                                mostrar.push(label);
-                                return mostrar;
-                            },
-                            color: '#323232',
-                            anchor: 'end',
-                            align: 'end',
-                            font: {
-                                weight: 'bold',
-                                fontSize: 20
-                            },
-                            padding: 5,
-                            clamp: true*/
                         }
                     },
                     tooltips: {
@@ -453,7 +438,7 @@ $.ajax({
                     },
                     elements: {
                         center: {
-                            text: '\nCONTRATO',
+                            text: '\n' + data[0].organizacion.organi_razonSocial,
                             color: '#424874', //Default black
                             fontFamily: 'Arial', //Default Arial
                             sidePadding: 20,
@@ -462,7 +447,7 @@ $.ajax({
                 }
             });
             mostrar.mouseout(function (e) {
-                grafico.options.elements.center.text = '\nCONTRATO';
+                grafico.options.elements.center.text = '\n' + data[0].organizacion.organi_razonSocial;
             });
             document.getElementById('js-legendContrato').innerHTML = grafico.generateLegend();
         } else {
@@ -502,6 +487,12 @@ $.ajax({
         var total = [];
         var color = ['#b6eb7a', '#f9d56e', '#e84a5f'];
         var suma = 0;
+        $('#cantidadCentro').empty();
+        $('#fechaCentro').empty();
+        $('#panel1002CC').empty();
+        var containerCantidadA = $('#cantidadCentro');
+        var containerFecha = $('#fechaCentro');
+        var containerDetalle = $('#panel1002CC');
         if (data[0].centro.length != 0) {
             for (var i = 0; i < data[0].centro.length; i++) {
                 nombre.push(data[0].centro[i].centroC_descripcion);
@@ -511,6 +502,28 @@ $.ajax({
             for (var j = 3; j < data[0].centro.length; j++) {
                 color.push(getRandomColor());
             }
+            // CARD
+            p = `<img src="landing/images/grupo.svg" height="18" class="mr-2"> Total de ${suma} empleado(s)`;
+            f = new Date();
+            var options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            };
+            var fecha = f.toLocaleDateString("es-PE", options)
+            fechaF = `<img src="admin/images/calendarioHor.svg" height="20" class="mr-2"> ${fecha}`;
+            containerCantidadA.append(p);
+            containerFecha.append(fechaF);
+            var detalle = ``;
+            for (var l = 0; l < nombre.length; l++) {
+                detalle += `<p align="justify" class="font-small text-muted mx-1">\n 
+                 <img src="landing/images/2143150.png" class="mr-2" height="20"/>
+                 <span style="color:${color[l]};font-weight:bold;">${nombre[l]}</span> tiene un total de ${total[l]} empleado(s).
+                 </p>`;
+            }
+            containerDetalle.append(detalle);
+            //GRAFICO
             var promedio = (suma * 100) / data[0].empleado[0].totalE;
             totalP = Math.round(promedio);
             var chartdata = {
@@ -543,22 +556,7 @@ $.ajax({
                     },
                     plugins: {
                         datalabels: {
-                            display: false,
-                            /*formatter: function (value, context) {
-                                var label = context.chart.data.labels[context.dataIndex];
-                                var mostrar = [];
-                                mostrar.push(label);
-                                return mostrar;
-                            },
-                            color: '#323232',
-                            anchor: 'end',
-                            align: 'end',
-                            font: {
-                                weight: 'bold',
-                                fontSize: 20
-                            },
-                            padding: 5,
-                            clamp: true*/
+                            display: false
                         }
                     },
                     tooltips: {
@@ -574,7 +572,7 @@ $.ajax({
                     },
                     elements: {
                         center: {
-                            text: '\nCENTRO COSTO',
+                            text: '\n' + data[0].organizacion.organi_razonSocial,
                             color: '#424874', //Default black
                             fontFamily: 'Arial', //Default Arial
                             sidePadding: 20,
@@ -583,7 +581,7 @@ $.ajax({
                 }
             });
             mostrar.mouseout(function (e) {
-                grafico.options.elements.center.text = '\nCENTRO COSTO';
+                grafico.options.elements.center.text = '\n' + data[0].organizacion.organi_razonSocial;
             });
             document.getElementById('js-legendCentro').innerHTML = grafico.generateLegend();
         } else {

@@ -156,7 +156,8 @@
         <div class="card chart-card">
             <div class="card-body pb-0">
                 <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
-                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Nivel(es)</h5>
+                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Nivel(es) del
+                    colaborador</h5>
                 <div class="d-flex justify-content-between">
                     <p class="align-self-end mt-2" id="fechaNivel"></p>
                     <p class="align-self-end" id="cantidadNivel"></p>
@@ -225,12 +226,40 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6" id="divcentro">
-        <div class="float-right" style="width:100%">
-            <div class="float-right" style="width:45%">
-                <canvas id="centro" height="300" width="300"></canvas>
+    <div class="col-md-6 pl-5" id="divcentro" style="min-height: 460px">
+        <div class="card chart-card">
+            <div class="card-body pb-0">
+                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
+                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Centro de Costos</h5>
+                <div class="d-flex justify-content-between">
+                    <p class="align-self-end mt-2" id="fechaCentro"></p>
+                    <p class="align-self-end" id="cantidadCentro"></p>
+                </div>
             </div>
-            <div id="js-legendCentro" class="chart-legend"></div>
+            <div class="classic-tabs">
+                <!-- Nav tabs -->
+                <ul class="nav tabs-white nav-fill" role="tablist">
+                    <li class="nav-item ml-0">
+                        <a class="nav-link active" data-toggle="tab" href="#panel1001CC" role="tab">Grafico</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " data-toggle="tab" href="#panel1002CC" role="tab">Información
+                            detallada</a>
+                    </li>
+                </ul>
+                <div class="tab-content rounded-bottom">
+                    <div class="tab-pane fade in show active" id="panel1001CC" role="tabpanel">
+                        <div class="float-right" style="width:100%">
+                            <div class="float-right" style="width:70%">
+                                <canvas id="centro" height="300" width="300"></canvas>
+                            </div>
+                            <div id="js-legendCentro" class="chart-legend"></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane ml-2" id="panel1002CC" role="tabpanel">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <br><br><br>
