@@ -98,12 +98,14 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                         return redirect()->back()->with('alert', 'numero de Pasaporte '.$row['numero_documento'].' invalido en la importacion(Debe tener 12 digitos)  .El proceso se interrumpio en la fila '.$filas.' de excel');
                        }
                     //correo
-
-                    $correoAntiguo=DB::table('empleado')->where('emple_Correo','=',$row['correo'])->where('empleado.users_id', '=', Auth::user()->id)
+                   if($row['correo']!=null || $row['correo']!=''){
+                     $correoAntiguo=DB::table('empleado')->where('emple_Correo','=',$row['correo'])->where('empleado.users_id', '=', Auth::user()->id)
                     ->where('empleado.emple_estado', '=', 1)->first();
                     if( $correoAntiguo!=null){
                         return redirect()->back()->with('alert', 'correo ya registrado en otro empleado: '.$row['correo'].' El proceso se interrumpio en la fila: '.$filas.' de excel');
                     };
+                   }
+
 
                         //dd($arraysimple);
 
