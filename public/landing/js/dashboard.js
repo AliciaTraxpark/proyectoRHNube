@@ -39,6 +39,14 @@ Chart.pluginService.register({
         }
     }
 });
+// 
+$('#divarea').hide();
+$('#divnivel').hide();
+$('#divcontrato').hide();
+$('#divcentro').hide();
+$('#divlocal').hide();
+$('#divdepartamento').hide();
+$('#divedades').hide();
 //NOTIFICACION
 $.notifyDefaults({
     icon_type: 'image',
@@ -89,6 +97,7 @@ $.ajax({
         var containerFecha = $('#fechaArea');
         var containerDetalle = $('#panel1002A');
         if (data[0].area.length != 0) {
+            $('#divarea').show();
             for (var i = 0; i < data[0].area.length; i++) {
                 suma += data[0].area[i].Total;
                 nombre.push(data[0].area[i].area_descripcion);
@@ -225,6 +234,7 @@ $.ajax({
         var containerFecha = $('#fechaNivel');
         var containerDetalle = $('#panel1002N');
         if (data[0].nivel.length != 0) {
+            $('#divnivel').show();
             for (var i = 0; i < data[0].nivel.length; i++) {
                 nombre.push(data[0].nivel[i].nivel_descripcion);
                 total.push(data[0].nivel[i].Total);
@@ -360,6 +370,7 @@ $.ajax({
         var containerFecha = $('#fechaContrato');
         var containerDetalle = $('#panel1002C');
         if (data[0].contrato.length != 0) {
+            $('#divcontrato').show();
             for (var i = 0; i < data[0].contrato.length; i++) {
                 nombre.push(data[0].contrato[i].contrato_descripcion);
                 total.push(data[0].contrato[i].Total);
@@ -494,6 +505,7 @@ $.ajax({
         var containerFecha = $('#fechaCentro');
         var containerDetalle = $('#panel1002CC');
         if (data[0].centro.length != 0) {
+            $('#divcentro').show();
             for (var i = 0; i < data[0].centro.length; i++) {
                 nombre.push(data[0].centro[i].centroC_descripcion);
                 total.push(data[0].centro[i].Total);
@@ -629,6 +641,7 @@ $.ajax({
         var containerFecha = $('#fechaLocal');
         var containerDetalle = $('#panel1002L');
         if (data[0].local.length != 0) {
+            $('#divlocal').show();
             for (var i = 0; i < data[0].local.length; i++) {
                 nombre.push(data[0].local[i].local_descripcion);
                 total.push(data[0].local[i].Total);
@@ -861,6 +874,7 @@ $.ajax({
         var containerFecha = $('#fechaDepartamento');
         var containerDetalle = $('#panel1002D');
         if (data[0].departamento.length != 0) {
+            $('#divdepartamento').show();
             for (var i = 0; i < data[0].departamento.length; i++) {
                 nombre.push(data[0].departamento[i].name);
                 total.push(data[0].departamento[i].total);
@@ -996,6 +1010,7 @@ $.ajax({
         var containerFecha = $('#fechaEdades');
         var containerDetalle = $('#panel1002E');
         if (data[0].edad.length != 0) {
+            $('#divedades').show();
             for (var i = 0; i < data[0].edad.length; i++) {
                 nombre.push(data[0].edad[i].rango);
                 total.push(data[0].edad[i].total);
