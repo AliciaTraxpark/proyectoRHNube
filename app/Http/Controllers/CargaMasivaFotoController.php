@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\empleado;
 use App\persona;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class CargaMasivaFotoController extends Controller
@@ -13,7 +14,7 @@ class CargaMasivaFotoController extends Controller
     {
         $file = $request->file('fileMasiva');
         $idempleado = explode(".", $file[0]->getClientOriginalName());
-        $empleado = empleado::where('emple_nDoc', '=', $idempleado)->where('emple_estado', '=', 1)->get()->first();
+        $empleado = empleado::whereIn('emple_nDoc', $idempleado)->where('emple_estado', 1)->where('users_id', Auth::user()->id)->get()->first();
         if ($empleado) {
             $persona = persona::where('perso_id', '=', $empleado->emple_persona)->get()->first();
             $path = public_path() . '/fotosEmpleado';
