@@ -147,7 +147,7 @@
                             <div id="js-legendArea" class="chart-legend"></div>
                         </div>
                     </div>
-                    <div class="tab-pane ml-2" id="panel1002A" role="tabpanel">
+                    <div class="tab-pane ml-2" id="panel1002A" role="tabpanel" style="max-height: 460px">
                     </div>
                 </div>
             </div>
@@ -184,7 +184,7 @@
                             <div id="js-legendNivel" class="chart-legend"></div>
                         </div>
                     </div>
-                    <div class="tab-pane ml-2" id="panel1002N" role="tabpanel">
+                    <div class="tab-pane ml-2" id="panel1002N" role="tabpanel" style="max-height: 460px">
                     </div>
                 </div>
             </div>
@@ -221,7 +221,7 @@
                             <div id="js-legendContrato" class="chart-legend"></div>
                         </div>
                     </div>
-                    <div class="tab-pane ml-2" id="panel1002C" role="tabpanel">
+                    <div class="tab-pane ml-2" id="panel1002C" role="tabpanel" style="max-height: 460px">
                     </div>
                 </div>
             </div>
@@ -257,7 +257,7 @@
                             <div id="js-legendCentro" class="chart-legend"></div>
                         </div>
                     </div>
-                    <div class="tab-pane ml-2" id="panel1002CC" role="tabpanel">
+                    <div class="tab-pane ml-2" id="panel1002CC" role="tabpanel" style="max-height: 460px">
                     </div>
                 </div>
             </div>
@@ -294,7 +294,7 @@
                             <div id="js-legendLocal" class="chart-legend"></div>
                         </div>
                     </div>
-                    <div class="tab-pane ml-2" id="panel1002L" role="tabpanel">
+                    <div class="tab-pane ml-2" id="panel1002L" role="tabpanel" style="max-height: 460px">
                     </div>
                 </div>
             </div>
@@ -330,7 +330,7 @@
                             <div id="js-legendDep" class="chart-legend"></div>
                         </div>
                     </div>
-                    <div class="tab-pane ml-2" id="panel1002D" role="tabpanel">
+                    <div class="tab-pane ml-2" id="panel1002D" role="tabpanel" style="max-height: 460px">
                     </div>
                 </div>
             </div>
@@ -367,7 +367,7 @@
                             <div id="js-legendEdades" class="chart-legend"></div>
                         </div>
                     </div>
-                    <div class="tab-pane ml-2" id="panel1002E" role="tabpanel">
+                    <div class="tab-pane ml-2" id="panel1002E" role="tabpanel" style="max-height: 460px">
                     </div>
                 </div>
             </div>
