@@ -118,7 +118,7 @@
 </style>
 <div class="row">
     <div class="col-md-6 pl-5" id="divarea" style="min-height: 460px">
-        <div class="card chart-card" style="max-height: 460px">
+        <div class="card chart-card">
             <div class="card-body pb-0">
                 <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
                         src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Área(s)</h5>
@@ -147,14 +147,14 @@
                             <div id="js-legendArea" class="chart-legend"></div>
                         </div>
                     </div>
-                    <div class="tab-pane ml-2" id="panel1002A" role="tabpanel">
+                    <div class="tab-pane ml-2" id="panel1002A" role="tabpanel" style="max-height: 460px">
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-6 pl-5" id="divnivel" style="min-height: 460px">
-        <div class="card chart-card" style="max-height: 460px">
+        <div class="card chart-card">
             <div class="card-body pb-0">
                 <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
                         src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Nivel(es) del
@@ -184,7 +184,7 @@
                             <div id="js-legendNivel" class="chart-legend"></div>
                         </div>
                     </div>
-                    <div class="tab-pane ml-2" id="panel1002N" role="tabpanel">
+                    <div class="tab-pane ml-2" id="panel1002N" role="tabpanel" style="max-height: 460px">
                     </div>
                 </div>
             </div>
@@ -192,7 +192,7 @@
     </div>
     <br><br><br>
     <div class="col-md-6 pl-5" id="divcontrato" style="min-height: 460px">
-        <div class="card chart-card" style="max-height: 460px">
+        <div class="card chart-card">
             <div class="card-body pb-0">
                 <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
                         src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Tipo de Contrato</h5>
@@ -221,14 +221,14 @@
                             <div id="js-legendContrato" class="chart-legend"></div>
                         </div>
                     </div>
-                    <div class="tab-pane ml-2" id="panel1002C" role="tabpanel">
+                    <div class="tab-pane ml-2" id="panel1002C" role="tabpanel" style="max-height: 460px">
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-6 pl-5" id="divcentro" style="min-height: 460px">
-        <div class="card chart-card" style="max-height: 460px">
+        <div class="card chart-card">
             <div class="card-body pb-0">
                 <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
                         src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Centro de Costos</h5>
@@ -257,7 +257,7 @@
                             <div id="js-legendCentro" class="chart-legend"></div>
                         </div>
                     </div>
-                    <div class="tab-pane ml-2" id="panel1002CC" role="tabpanel">
+                    <div class="tab-pane ml-2" id="panel1002CC" role="tabpanel" style="max-height: 460px">
                     </div>
                 </div>
             </div>
@@ -265,7 +265,7 @@
     </div>
     <br><br><br>
     <div class="col-md-6 pl-5" id="divlocal" style="min-height: 460px">
-        <div class="card chart-card" style="max-height: 460px">
+        <div class="card chart-card">
             <div class="card-body pb-0">
                 <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
                         src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Local(es)</h5>
@@ -294,14 +294,14 @@
                             <div id="js-legendLocal" class="chart-legend"></div>
                         </div>
                     </div>
-                    <div class="tab-pane ml-2" id="panel1002L" role="tabpanel">
+                    <div class="tab-pane ml-2" id="panel1002L" role="tabpanel" style="max-height: 460px">
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-6 pl-5" id="divdepartamento" style="min-height: 460px">
-        <div class="card chart-card" style="max-height: 460px">
+        <div class="card chart-card">
             <div class="card-body pb-0">
                 <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
                         src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Ciudad domiciliaria</h5>
@@ -330,7 +330,7 @@
                             <div id="js-legendDep" class="chart-legend"></div>
                         </div>
                     </div>
-                    <div class="tab-pane ml-2" id="panel1002D" role="tabpanel">
+                    <div class="tab-pane ml-2" id="panel1002D" role="tabpanel" style="max-height: 460px">
                     </div>
                 </div>
             </div>
@@ -338,7 +338,7 @@
     </div>
     <br><br><br>
     <div class="col-md-6 pl-5" id="divedades" style="min-height:460px">
-        <div class="card chart-card" style="max-height: 460px">
+        <div class="card chart-card">
             <div class="card-body pb-0">
                 <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
                         src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Rangos de Edades</h5>
@@ -367,7 +367,7 @@
                             <div id="js-legendEdades" class="chart-legend"></div>
                         </div>
                     </div>
-                    <div class="tab-pane ml-2" id="panel1002E" role="tabpanel">
+                    <div class="tab-pane ml-2" id="panel1002E" role="tabpanel" style="max-height: 460px">
                     </div>
                 </div>
             </div>
