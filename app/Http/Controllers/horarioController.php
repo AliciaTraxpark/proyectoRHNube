@@ -34,9 +34,12 @@ class horarioController extends Controller
         $departamento = ubigeo_peru_departments::all();
         $empleado = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->join('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
             ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc', 'p.perso_id', 'e.emple_id')
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('eve.id_empleado', '!=', null)
             ->where('e.emple_estado', '=', 1)
+            ->groupBy('e.emple_id')
             ->get();
         $horario=horario::where('user_id', '=', Auth::user()->id)->get();
         $horarion=DB::table('horario as h')
@@ -271,9 +274,12 @@ class horarioController extends Controller
         $departamento = ubigeo_peru_departments::all();
         $empleado = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->join('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
             ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc', 'p.perso_id', 'e.emple_id')
             ->where('e.users_id', '=', Auth::user()->id)
+            ->where('eve.id_empleado', '!=', null)
             ->where('e.emple_estado', '=', 1)
+            ->groupBy('e.emple_id')
             ->get();
             $horario=horario::where('user_id', '=', Auth::user()->id)->get();
             $horarion=DB::table('horario as h')
@@ -721,7 +727,7 @@ class horarioController extends Controller
         $eventos_empleado->textColor='#fff7f7';
         $eventos_empleado->start=$start;
         $eventos_empleado->end=$end;
-      
+
         $eventos_empleado->id_empleado=$idempl;
         $eventos_empleado->save();
 
