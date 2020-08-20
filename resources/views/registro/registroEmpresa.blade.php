@@ -94,12 +94,18 @@ input[type=number] { -moz-appearance:textfield; }
                 </div><!-- /.modal -->
                 <!-- MODAL DE ENVIO -->
                 <div id="modalCargando" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCargando" aria-hidden="true" data-backdrop="static">
-                    <div class="modal-dialog modal-dialog-centered  modal-lg">
+                    <div class="modal-dialog modal-dialog-centered  modal-lg" style="padding-left: 15%;">
                     <div class="modal-content" style="background: #ffffff;">
                        <div class="modal-body" style="padding-top: 8px;  padding-bottom: 0px;">
                            <div class="text-center">
                                 <h6 style="color: #163552;">Enviado datos, espere por favor.</h6>
-                                <img src="{{asset('landing/images/spiner.gif')}}" height="200" >
+                                <div class="row">
+                                    <div class="col-3"></div>
+                                    <div class="col-6">
+                                        <img src="{{asset('landing/images/loading.gif')}}" height="100">
+                                    </div>
+                                    <div class="col-3"></div>
+                                </div>
                            </div>
                        </div>
                    </div><!-- /.modal-content -->
