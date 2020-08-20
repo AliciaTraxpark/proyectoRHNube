@@ -217,10 +217,17 @@ background-color: #ffffff !important;
                                                 <label for="" style="font-weight: 600;">Seleccionar empleado(s):</label>
                                             </div>
                                             <div class="col-md-7" style="zoom:90%;">
-                                                <div class="form-check">
-                                                    <input type="checkbox" style="" class="form-check-input" id="selectTodoCheck">
-                                                    <label class="form-check-label" for="selectTodoCheck" style="font-style: oblique;">Seleccionar todos.</label>
+                                                <div class="row" style="margin-left: 6px;">
+                                                    <div class="col-md-5 form-check">
+                                                        <input type="checkbox"  class="form-check-input" id="selectTodoCheck">
+                                                        <label class="form-check-label" for="selectTodoCheck" style="font-style: oblique;margin-top: 2px;">Seleccionar todos.</label>
+
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <span style="font-size: 11px!important">*Se visualizará empleados con calendario</span>
+                                                    </div>
                                                 </div>
+
                                             </div>
 
                                             <div class="col-md-6">

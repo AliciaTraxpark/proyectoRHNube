@@ -6,11 +6,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+ .pace {
+  -webkit-pointer-events: none;
+  pointer-events: none;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.pace-inactive {
+  display: none;
+}
+
+.pace .pace-progress {
+  background: #bacad3;
+  position: fixed;
+  z-index: 2000;
+  top: 0;
+  /* right: 100%; */
+  width: 100%;
+  height: 2px;
+}
+
+
+    </style>
+
+
+    <script  type="text/javascript" src="{{asset('admin/assets/pace/pace.min.js')}}"></script>
+
     {{-- <link rel="stylesheet" href="{{asset('landing/vendors/owl-carousel/css/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{asset('landing/vendors/owl-carousel/css/owl.theme.default.css')}}">
     <link rel="stylesheet" href="{{asset('landing/vendors/mdi/css/materialdesignicons.min.css')}}"> --}}
     <link rel="stylesheet" href="{{asset('landing/vendors/aos/css/aos.css')}}">
     <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- App favicon -->
 
@@ -39,15 +70,7 @@
 </head>
 
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100" style="background-color: #fdfdfd;">
-    <div id="preloader">
-        <div id="status">
-            <div class="spinner">
-                <div class="circle1"></div>
-                <div class="circle2"></div>
-                <div class="circle3"></div>
-            </div>
-        </div>
-    </div>
+
     <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel"
         aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered">
@@ -483,6 +506,7 @@
         .flatpickr-calendar {
             width: 220px !important;
         }
+
 
         .fc-time {
             display: none;
@@ -3636,6 +3660,7 @@
         }
 
     </script>
+
     <script src="{{asset('admin/assets/libs/bootstrap-fileinput/piexif.min.js')}}"></script>
     <script src="{{asset('admin/assets/libs/bootstrap-fileinput/sortable.min.js')}}"></script>
     <script src="{{asset('admin/assets/libs/bootstrap-fileinput/purify.min.js')}}"></script>

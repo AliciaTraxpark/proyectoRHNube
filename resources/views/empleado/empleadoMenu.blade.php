@@ -5,6 +5,35 @@ use App\proyecto_empleado;
 @extends('layouts.vertical')
 
 @section('css')
+<style>
+    .pace {
+     -webkit-pointer-events: none;
+     pointer-events: none;
+
+     -webkit-user-select: none;
+     -moz-user-select: none;
+     user-select: none;
+   }
+
+   .pace-inactive {
+     display: none;
+   }
+
+   .pace .pace-progress {
+     background: #bacad3;
+     position: fixed;
+     z-index: 2000;
+     top: 0;
+     /* right: 100%; */
+     width: 100%;
+     height: 2px;
+   }
+
+
+       </style>
+
+
+       <script  type="text/javascript" src="{{asset('admin/assets/pace/pace.min.js')}}"></script>
 <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('admin/assets/libs/bootstrap-fileinput/fileinput.min.css') }}" rel="stylesheet" type="text/css" />
 <!-- Plugin css  CALENDAR-->
@@ -22,7 +51,7 @@ use App\proyecto_empleado;
 @endsection
 
 @section('breadcrumb')
-<div id="preloader">
+{{-- <div id="preloader">
     <div id="status">
         <div class="spinner">
             <div class="circle1"></div>
@@ -30,7 +59,7 @@ use App\proyecto_empleado;
             <div class="circle3"></div>
         </div>
     </div>
-</div>
+</div> --}}
 <div id="androidEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="androidEmpleado"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
