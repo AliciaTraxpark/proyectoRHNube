@@ -220,6 +220,7 @@ Route::post('/horario/empleLocal', 'horarioController@empleLocal');
 Route::post('/horario/copiarferiados', 'horarioController@copiarferiados');
 Route::post('/horario/borrarferiados', 'horarioController@borrarferiados');
 //DASHBOARD
+Route::get('/respuestaC', 'dashboardController@respuestaCalendario');
 Route::get('/eventosU', 'dashboardController@eventosUsuario');
 Route::get('/totalA', 'dashboardController@area');
 Route::get('/totalN', 'dashboardController@nivel');

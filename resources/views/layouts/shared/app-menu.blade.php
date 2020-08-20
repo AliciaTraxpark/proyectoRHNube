@@ -17,10 +17,8 @@ use Illuminate\Support\Facades\DB;
 
 </style>
 <ul class="metismenu" id="menu-bar">
-    
-
     <li>
-        <a href="/dashboard">
+        <a href="/dashboard" id="menuD">
             <i data-feather="home"></i>
             <span class="badge badge-success float-right">1</span>
             <span> Dashboard </span>
