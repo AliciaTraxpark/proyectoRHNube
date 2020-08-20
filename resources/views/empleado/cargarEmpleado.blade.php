@@ -209,6 +209,7 @@
                                         <th>Local</th>
                                         <th>Nivel</th>
                                         <th>Correo</th>
+                                        <th>Celular</th>
                                     </tr>
                                 </thead>
                                 <tbody style="background:#f7f7f7;color: #2c2c2c;">
@@ -237,7 +238,7 @@
                                         <td>{{$item[18]}}</td>
                                         <td>{{$item[19]}}</td>
                                         <td>{{$item[20]}}</td>
-
+                                        <td>{{$item[21]}}</td>
 
                                       </tr>
                                       @endforeach

@@ -250,7 +250,8 @@ class excelEmpleadoController extends Controller
                 'emple_tipoDoc'    =>  $row['tipo_doc'],
                 'emple_nDoc'       =>$emp[1],
                 'emple_Correo'=>$emp[20],
-                'emple_celular'=>'',
+                'emple_celular'=>'+51'.$emp[21],
+
                 'emple_telefono'=>'',
                 'emple_departamento'=> $row['iddep'],
                 'emple_provincia'  => $row['idprov'],

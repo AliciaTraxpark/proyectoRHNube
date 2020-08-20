@@ -106,6 +106,21 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                     };
                    }
 
+                   //celular
+                   if($row['celular']!=null || $row['celular']!=''){
+                    $lengthCelu = Str::length($row['celular']);
+                   if( $lengthCelu!=9){
+                    return redirect()->back()->with('alert', 'el numero de celular: '.$row['celular'].' debe tenr 9 digitos'.' El proceso se interrumpio en la fila: '.$filas.' de excel');
+                   } else{
+                    $qwert= Str::substr($row['celular'], 0,1);
+                    if($qwert!=9){
+                        return redirect()->back()->with('alert', 'el numero de celular: '.$row['celular'].' es invalido'.' El proceso se interrumpio en la fila: '.$filas.' de excel');
+                    }
+                   }
+
+
+                  }
+
 
                         //dd($arraysimple);
 
@@ -276,7 +291,7 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                  //////////MANDA DATOS A VISTA
                  $din=[$row['tipo_docArray'],$row['numero_documento'],$row['nombres'],$row['apellido_paterno'],$row['apellido_materno'],$row['direccion'],$row['name_depArray'],
                  $row['provArray'],$row['distArray'], $row['cargoArray'],$row['areaArray'],$row['centro_costoArray'],$row['fecha_nacimiento'],$row['name_depNArray'],$row['provNArray'],
-                 $row['distNArray'], $row['sexo'],$row['tipo_contratoArray'],$row['localArray'],$row['nivelArray'],$row['correo']];
+                 $row['distNArray'], $row['sexo'],$row['tipo_contratoArray'],$row['localArray'],$row['nivelArray'],$row['correo'],$row['celular']];
                   array_push($this->dnias,$din);
 
 
