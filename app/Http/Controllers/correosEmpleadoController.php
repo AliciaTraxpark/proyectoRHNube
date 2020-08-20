@@ -155,6 +155,8 @@ class correosEmpleadoController extends Controller
                     ->get();
                 foreach ($codV as $vinc) {
                     $vinculacion = vinculacion::findOrFail($vinc->id);
+                    $vinculacion->descarga = STR::random(25);
+                    $vinculacion->save();
                     $licenciaEmpleado = licencia_empleado::findOrFail($vinculacion->idLicencia);
                     $vinculacion->licencia = $licenciaEmpleado;
                     array_push($arrayVinculacion, $vinculacion);

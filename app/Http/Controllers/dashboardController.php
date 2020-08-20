@@ -15,6 +15,21 @@ class dashboardController extends Controller
         $this->middleware(['auth', 'verified']);
     }
 
+    public function respuestaCalendario()
+    {
+        $respuesta = false;
+        $eventos = DB::table('calendario as c')
+            ->where('c.users_id', '=', Auth::user()->id)
+            ->get()
+            ->first();
+
+        if ($eventos) {
+            $respuesta = true;
+            return response()->json($respuesta, 200);
+        }
+        return response()->json($respuesta, 200);
+    }
+
     public function eventosUsuario()
     {
         $respuesta = false;
