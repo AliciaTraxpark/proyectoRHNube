@@ -3425,6 +3425,11 @@ $('#documento').on('change', function () {
         $("#numDocumento").attr("maxlength", "12");
     }
 });
+$("#formContrato :input").prop('disabled', true);
+$('#condicion').prop('disabled', false);
+$('#condicion').on("change", function(){
+    $("#formContrato :input").prop('disabled', false);
+});
 $('#formNuevoE').click(function () {
     fechaActual = new Date();
     $('#m_ano_fecha').val(fechaActual.getFullYear());

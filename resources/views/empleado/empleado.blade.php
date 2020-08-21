@@ -1041,7 +1041,7 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body" id="formContrato">
                                 <form action="javascript:agregarFechas()">
                                     {{ csrf_field() }}
                                     <input type="hidden" name="idContrato" id="idContrato">
@@ -1061,7 +1061,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="sw-default">Monto</label>
-                                                <input type="text" class="form-control" name="monto" id="monto">
+                                                <input type="number" step=".01" class="form-control" name="monto" id="monto">
                                             </div>
                                         </div>
                                     </div>

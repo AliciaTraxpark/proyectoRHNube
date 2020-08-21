@@ -384,10 +384,10 @@ class EmpleadoController extends Controller
                 $contrato->id_tipoContrato = $objEmpleado['contrato'];
                 $contrato->fechaInicio = $objEmpleado['fechaI'];
                 $contrato->fechaFinal = $objEmpleado['fechaF'];
-                $contrato->monto = $objEmpleado['monto'];
                 $contrato->idEmpleado = $idE;
                 $contrato->estado = 1;
                 if ($objEmpleado['condicion'] != '') {
+                    $contrato->monto = $objEmpleado['monto'];
                     $contrato->id_condicionPago = $objEmpleado['condicion'];
                 }
                 $contrato->save();

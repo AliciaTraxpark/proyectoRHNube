@@ -990,7 +990,7 @@ use App\proyecto_empleado;
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="formContrato">
                     <form action="javascript:agregarFechas()">
                         {{ csrf_field() }}
                         <input type="hidden" name="idContrato" id="idContrato">
