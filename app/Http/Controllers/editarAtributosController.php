@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\area;
 use App\cargo;
 use App\centro_costo;
+use App\condicion_pago;
 use App\local;
 use App\nivel;
 use App\tipo_contrato;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class editarAtributosController extends Controller
 {
@@ -158,6 +160,31 @@ class editarAtributosController extends Controller
             $contrato->contrato_descripcion = $request->get('objContrato')['contrato_descripcion'];
             $contrato->save();
             return response()->json($contrato, 200);
+        }
+    }
+
+    public function condicion()
+    {
+        $condicion = condicion_pago::where('user_id', '=', Auth::user()->id)->get()->first();
+        return response()->json($condicion, 200);
+    }
+
+    public function buscarCondicion(Request $request)
+    {
+        $condicion = condicion_pago::where('id', '=', $request->get('id'))->get()->first();
+        if ($condicion) {
+            return response()->json($condicion->condicion, 200);
+        }
+        return response()->json(null, 400);
+    }
+
+    public function editarCondicion(Request $request)
+    {
+        $condicion = condicion_pago::where('id', '=', $request->get('id'))->get()->first();
+        if ($condicion) {
+            $condicion->condicion = $request->get('objCondicion')['condicion'];
+            $condicion->save();
+            return response()->json($condicion, 200);
         }
     }
 }

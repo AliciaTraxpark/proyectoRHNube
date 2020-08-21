@@ -277,6 +277,10 @@ Route::post('editarNivel', 'editarAtributosController@editarNivel');
 Route::get('contrato', 'editarAtributosController@contrato');
 Route::get('buscarContrato', 'editarAtributosController@buscarContrato');
 Route::post('editarContrato', 'editarAtributosController@editarContrato');
+// **********CONDICION DE PAGO*****/
+Route::get('condicion', 'editarAtributosController@condicion');
+Route::get('buscarCondicion', 'editarAtributosController@buscarCondicion');
+Route::post('editarCondicion', 'editarAtributosController@editarCondicion');
 //*************************************************************************/
 //ESTADO LICENCIA
 Route::get('cambiarEstadoLicencia', 'detallesActivacionController@cambiarEstadoLicencia');
