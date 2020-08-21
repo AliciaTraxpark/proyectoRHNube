@@ -92,7 +92,7 @@
                     <div class="col-md-6"> <label><br> </label>
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label">Fecha:</label>
-                            <div class="input-group col-md-7"
+                            <div class="input-group col-md-6"
                                 style="padding-left: 0px;">
                                 <input type="text" id="fecha"
                                     class="form-control">
@@ -100,6 +100,11 @@
                                     <div class="input-group-text form-control"><i
                                             class="uil uil-calender"></i></div>
                                 </div>
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <button type="button" class="btn btn-sm mt-1"
+                                    style="background-color: #163552;"
+                                    onclick="javascript:fechaHoy()">Hoy</button>
                             </div>
                         </div>
                     </div>
@@ -164,6 +169,7 @@
 <script src="{{
     URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js')
     }}"></script>
+    <script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
 @endsection
 @section('script-bottom')
 <link rel="stylesheet"

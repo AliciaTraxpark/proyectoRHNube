@@ -170,7 +170,7 @@ class EmpleadoController extends Controller
                 'e.emple_celular',
                 'e.emple_telefono',
 
-                
+
                 'e.emple_Correo'
             )
 
@@ -394,17 +394,19 @@ class EmpleadoController extends Controller
                 $idContrato = $contrato->id;
             } else {
                 $contrato = contrato::where('id', '=', $objEmpleado['idContrato'])->get()->first();
-                $contrato->id_tipoContrato = $objEmpleado['contrato'];
-                $contrato->fechaInicio = $objEmpleado['fechaI'];
-                $contrato->fechaFinal = $objEmpleado['fechaF'];
-                $contrato->monto = $objEmpleado['monto'];
-                $contrato->idEmpleado = $idE;
-                $contrato->estado = 1;
-                if ($objEmpleado['condicion'] != '') {
-                    $contrato->id_condicionPago = $objEmpleado['condicion'];
+                if ($contrato) {
+                    $contrato->id_tipoContrato = $objEmpleado['contrato'];
+                    $contrato->fechaInicio = $objEmpleado['fechaI'];
+                    $contrato->fechaFinal = $objEmpleado['fechaF'];
+                    $contrato->monto = $objEmpleado['monto'];
+                    $contrato->idEmpleado = $idE;
+                    $contrato->estado = 1;
+                    if ($objEmpleado['condicion'] != '') {
+                        $contrato->id_condicionPago = $objEmpleado['condicion'];
+                    }
+                    $contrato->save();
                 }
-                $contrato->save();
-                $idContrato = $contrato->id;
+                $idContrato = $objEmpleado['idContrato'];
             }
         }
         if ($objEmpleado['nivel'] != '') {
@@ -546,7 +548,6 @@ class EmpleadoController extends Controller
             ->leftJoin('ubigeo_peru_districts as distN', 'e.emple_distritoN', '=', 'distN.id')
             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
             ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
-            ->leftJoin('tipo_contrato as tp', 'e.emple_tipoContrato', '=', 'tp.contrato_id')
             ->leftJoin('nivel as n', 'e.emple_nivel', '=', 'n.nivel_id')
             ->leftJoin('local as l', 'e.emple_local', '=', 'l.local_id')
             ->leftJoin('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
@@ -581,7 +582,6 @@ class EmpleadoController extends Controller
                 'c.cargo_id',
                 'a.area_id',
                 'cc.centroC_id',
-                'e.emple_tipoContrato',
                 'e.emple_local',
                 'e.emple_nivel',
                 'e.emple_departamento',
@@ -590,11 +590,8 @@ class EmpleadoController extends Controller
                 'e.emple_foto as foto',
                 'e.emple_celular',
                 'e.emple_telefono',
-                'e.emple_fechaIC',
-                'e.emple_fechaFC',
                 'e.emple_Correo',
                 'e.emple_codigo',
-                'tp.contrato_descripcion',
                 'n.nivel_descripcion',
                 'l.local_descripcion',
                 'eve.id_calendario as idcalendar'
@@ -604,10 +601,6 @@ class EmpleadoController extends Controller
             ->where('e.users_id', '=', Auth::user()->id)
             ->groupBy('e.users_id')
             ->get();
-        $cantidad = DB::table('licencia_empleado as le')
-            ->select(DB::raw('COUNT(le.id) as total'), 'le.licencia')
-            ->where('le.idEmpleado', '=', $idempleado)
-            ->get();
         $vinculacion = DB::table('vinculacion as v')
             ->join('modo as m', 'm.id', '=', 'v.idModo')
             ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
@@ -615,17 +608,20 @@ class EmpleadoController extends Controller
             ->select('v.id as idV', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
             ->where('v.idEmpleado', '=', $idempleado)
             ->get();
-        $corteCaptura = DB::table('users as u')
-            ->select('u.corteCaptura')
-            ->where('u.id', '=', Auth::user()->id)
-            ->get();
         $vinculacionD = [];
         foreach ($vinculacion as $lic) {
             array_push($vinculacionD, array("idVinculacion" => $lic->idV, "idLicencia" => $lic->idL, "licencia" => $lic->licencia, "disponible" => $lic->disponible, "dispositivoD" => $lic->dispositivo_descripcion, "codigo" => $lic->codigo, "envio" => $lic->envio));
         }
-        $empleados[0]->total = $cantidad[0]->total;
         $empleados[0]->vinculacion = $vinculacionD;
-        $empleados[0]->corteCaptura = $corteCaptura[0]->corteCaptura;
+        $contrato = DB::table('contrato as c')
+            ->join('tipo_contrato as tc', 'tc.contrato_id', '=', 'c.id_tipoContrato')
+            ->leftJoin('condicion_pago as cp', 'cp.id', '=', 'c.id_condicionPago')
+            ->select('c.id as idC', 'c.fechaInicio', 'c.fechaFinal', 'c.monto', 'tc.contrato_id as idTipoC', 'tc.contrato_descripcion', 'cp.id as idCond', 'cp.condicion')
+            ->where('cp.user_id', '=', Auth::user()->id)
+            ->where('c.idEmpleado', '=', $idempleado)
+            ->where('c.estado', '=', 1)
+            ->get();
+        $empleados[0]->contrato = $contrato;
         $empleado = agruparEmpleadosShow($empleados);
         return array_values($empleado);
         //
@@ -656,6 +652,7 @@ class EmpleadoController extends Controller
         $objEmpleado = json_decode($request->get('objEmpleadoA'), true);
         if ($request == null) return false;
         $empleado = Empleado::findOrFail($idE);
+        $idContrato = '';
 
         if ($objEmpleado['cargo_v'] != '') {
             $empleado->emple_cargo = $objEmpleado['cargo_v'];
@@ -685,7 +682,34 @@ class EmpleadoController extends Controller
             $empleado->emple_distrito = $objEmpleado['dist_v'];
         }
         if ($objEmpleado['contrato_v'] != '') {
-            $empleado->emple_tipoContrato = $objEmpleado['contrato_v'];
+            if ($objEmpleado['idContrato_v'] == '') {
+                $contrato = new contrato();
+                $contrato->id_tipoContrato = $objEmpleado['contrato_v'];
+                $contrato->fechaInicio = $objEmpleado['fechaI_v'];
+                $contrato->fechaFinal = $objEmpleado['fechaF_v'];
+                $contrato->idEmpleado = $idE;
+                if ($objEmpleado['condicion_v'] != '') {
+                    $contrato->monto = $objEmpleado['monto_v'];
+                    $contrato->id_condicionPago = $objEmpleado['condicion_v'];
+                }
+                $contrato->save();
+                $idContrato = $contrato->id;
+            } else {
+                $contrato = contrato::where('id', '=', $objEmpleado['idContrato_v'])->get()->first();
+                if ($contrato) {
+                    $contrato->id_tipoContrato = $objEmpleado['contrato_v'];
+                    $contrato->fechaInicio = $objEmpleado['fechaI_v'];
+                    $contrato->fechaFinal = $objEmpleado['fechaF_v'];
+                    $contrato->monto = $objEmpleado['monto_v'];
+                    $contrato->idEmpleado = $idE;
+                    $contrato->estado = 1;
+                    if ($objEmpleado['condicion_v'] != '') {
+                        $contrato->id_condicionPago = $objEmpleado['condicion_v'];
+                    }
+                    $contrato->save();
+                }
+                $idContrato = $objEmpleado['idContrato_v'];
+            }
         }
         if ($objEmpleado['local_v'] != '') {
             $empleado->emple_local = $objEmpleado['local_v'];
@@ -698,8 +722,6 @@ class EmpleadoController extends Controller
 
         $empleado->emple_telefono = $objEmpleado['telefono_v'];
         $empleado->emple_Correo = $objEmpleado['correo_v'];
-        $empleado->emple_fechaIC = $objEmpleado['fechaI_v'];
-        $empleado->emple_fechaFC = $objEmpleado['fechaF_v'];
         $empleado->emple_codigo = $objEmpleado['codigoEmpleado_v'];
         if ($request->hasfile('file')) {
             $file = $request->file('file');
@@ -724,7 +746,7 @@ class EmpleadoController extends Controller
         $persona->perso_fechaNacimiento = $objEmpleado['fechaN_v'];
         $persona->perso_sexo = $objEmpleado['tipo_v'];
         $persona->save();
-        return json_encode(array('status' => true));
+        return response()->json($idContrato, 200);
     }
 
     /**
