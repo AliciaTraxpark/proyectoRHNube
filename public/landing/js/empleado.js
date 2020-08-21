@@ -3433,6 +3433,9 @@ function datosPersonaA(method) {
         fechaI_v: v_VFechaIE,
         fechaF_v: v_VFechaFE,
         codigoEmpleado_v: $('#v_codigoEmpleado').val(),
+        idContrato_v:$('#v_idContrato').val(),
+        monto_v:$('#v_monto').val(),
+        condicion_v:$('#v_condicion').val(),
         '_method': method
     }
     return (nuevoEmpleadoA);
@@ -3769,6 +3772,7 @@ $('#editarCentroA').hide();
 $('#editarLocalA').hide();
 $('#editarNivelA').hide();
 $('#editarContratoA').hide();
+$('#editarCondicionA').hide();
 $('#validCel').hide();
 $('#v_validCel').hide();
 $('#v_validGenero').hide();

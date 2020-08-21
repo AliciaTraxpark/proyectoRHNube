@@ -46,6 +46,7 @@ function enviarAreaA(accion, objArea) {
                 $('#v_area').val(data.area_id).trigger("change");
                 $('#textAreaE').val('');
                 $('#editarAreaA').hide();
+                limpiarEditar();
                 $('#areamodalE').modal('toggle');
                 $('#form-ver').modal('show');
                 $.notify({
@@ -112,6 +113,7 @@ function enviarAreaA(accion, objArea) {
                 $('#v_area').val(data.area_id).trigger("change");
                 $('#textAreaE').val('');
                 $('#editarAreaA').hide();
+                limpiarEditar();
                 $('#areamodalE').modal('toggle');
                 $('#form-ver').modal('show');
                 $.notify({
@@ -182,8 +184,9 @@ function enviarCargoA(accion, objCargo) {
                 $('#cargo').val(data.cargo_id).trigger("change"); //lo selecciona
                 $('#v_cargo').val(data.cargo_id).trigger("change"); //lo selecciona
                 $('#textCargoE').val('');
-                $('#cargomodalE').modal('toggle');
                 $('#editarCargoA').hide();
+                limpiarEditar();
+                $('#cargomodalE').modal('toggle');
                 $('#form-ver').modal('show');
                 $.notify({
                     message: "\nCargo Registrado\n",
@@ -249,8 +252,9 @@ function enviarCargoA(accion, objCargo) {
                 $('#cargo').val(data.cargo_id).trigger("change"); //lo selecciona
                 $('#v_cargo').val(data.cargo_id).trigger("change"); //lo selecciona
                 $('#textCargoE').val('');
-                $('#cargomodalE').modal('toggle');
                 $('#editarCargoA').hide();
+                limpiarEditar();
+                $('#cargomodalE').modal('toggle');
                 $('#form-ver').modal('show');
                 $.notify({
                     message: "\nCargo Modificado\n",
@@ -321,6 +325,7 @@ function enviarCentroA(accion, objCentroC) {
                 $('#v_centroc').val(data.centroC_id).trigger("change"); //lo selecciona
                 $('#textCentroE').val('');
                 $('#editarCentroA').hide();
+                limpiarEditar();
                 $('#centrocmodalE').modal('toggle');
                 $('#form-ver').modal('show');
                 $.notify({
@@ -387,6 +392,7 @@ function enviarCentroA(accion, objCentroC) {
                 $('#v_centroc').val(data.centroC_id).trigger("change"); //lo selecciona
                 $('#textCentroE').val('');
                 $('#editarCentroA').hide();
+                limpiarEditar();
                 $('#centrocmodalE').modal('toggle');
                 $('#form-ver').modal('show');
                 $.notify({
@@ -457,6 +463,7 @@ function enviarLocalA(accion, objLocal) {
                 $('#v_local').val(data.local_id).trigger("change"); //lo selecciona
                 $('#textLocalE').val('');
                 $('#editarLocalA').hide();
+                limpiarEditar();
                 $('#localmodalE').modal('toggle');
                 $('#form-ver').modal('show');
                 $.notify({
@@ -524,6 +531,7 @@ function enviarLocalA(accion, objLocal) {
                 $('#v_local').val(data.local_id).trigger("change"); //lo selecciona
                 $('#textLocalE').val('');
                 $('#editarLocalA').hide();
+                limpiarEditar();
                 $('#localmodalE').modal('toggle');
                 $('#form-ver').modal('show');
                 $.notify({
@@ -594,6 +602,7 @@ function enviarNivelA(accion, objNivel) {
                 $('#v_nivel').val(data.nivel_id).trigger("change"); //lo selecciona
                 $('#textNivelE').val('');
                 $('#editarNivelA').hide();
+                limpiarEditar();
                 $('#nivelmodalE').modal('toggle');
                 $('#form-ver').modal('show');
                 $.notify({
@@ -661,6 +670,7 @@ function enviarNivelA(accion, objNivel) {
                 $('#v_nivel').val(data.nivel_id).trigger("change"); //lo selecciona
                 $('#textNivelE').val('');
                 $('#editarNivelA').hide();
+                limpiarEditar();
                 $('#nivelmodalE').modal('toggle');
                 $('#form-ver').modal('show');
                 $.notify({
@@ -718,6 +728,11 @@ function enviarContratoA(accion, objContrato) {
                 }
             },
             success: function (data) {
+                $('#contrato').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                    value: data.contrato_id,
+                    text: data.contrato_descripcion,
+                    selected: true
+                }));
                 $('#v_contrato').append($('<option>', { //agrego los valores que obtengo de una base de datos
                     value: data.contrato_id,
                     text: data.contrato_descripcion,
@@ -727,6 +742,7 @@ function enviarContratoA(accion, objContrato) {
                 $('#v_contrato').val(data.contrato_id).trigger("change");
                 $('#textContratoE').val('');
                 $('#editarContratoA').hide();
+                limpiarEditar();
                 $('#contratomodalE').modal('toggle');
                 $('#form-ver').modal('show');
                 $.notify({
@@ -793,6 +809,7 @@ function enviarContratoA(accion, objContrato) {
                 $('#v_contrato').val(data.contrato_id).trigger("change");
                 $('#textContratoE').val('');
                 $('#editarContratoA').hide();
+                limpiarEditar();
                 $('#contratomodalE').modal('toggle');
                 $('#form-ver').modal('show');
                 $.notify({
@@ -800,6 +817,144 @@ function enviarContratoA(accion, objContrato) {
                     icon: 'admin/images/checked.svg'
                 }, {
                     element: $('#form-ver'),
+                    position: 'fixed',
+                    icon_type: 'image',
+                    newest_on_top: true,
+                    delay: 5000,
+                    template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            }
+        });
+    }
+}
+//CONDICION PAGO
+function agregarCondicionA() {
+    objCondicion = datosCondicionA("POST");
+    enviarCondicionA('', objCondicion);
+};
+
+function datosCondicionA(method) {
+    nuevoCondicion = {
+        condicion: $('#textCondicionE').val().toUpperCase(),
+        '_method': method
+    }
+    return (nuevoCondicion);
+}
+
+function enviarCondicionA(accion, objCondicion) {
+    var id = $('#editarCO').val();
+    if (id == '' || id == undefined) {
+        $.ajax({
+            type: "POST",
+            url: "/registrar/condicion" + accion,
+            data: objCondicion,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                }
+            },
+            success: function (data) {
+                $('#condicion').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                    value: data.id,
+                    text: data.condicion,
+                    selected: true
+                }));
+                $('#v_condicion').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                    value: data.id,
+                    text: data.condicion,
+                    selected: true
+                }));
+                $('#condicion').val(data.id).trigger("change"); //lo selecciona
+                $('#v_condicion').val(data.id).trigger("change");
+                $('#textContratoE').val('');
+                $('#editarCondicionA').hide();
+                limpiarEditar();
+                $('#condicionmodalE').modal('toggle');
+                $('#fechasmodalE').modal('show');
+                $.notify({
+                    message: "\nCondición de Pago Registrado\n",
+                    icon: 'admin/images/checked.svg'
+                }, {
+                    element: $('#fechasmodalE'),
+                    position: 'fixed',
+                    icon_type: 'image',
+                    newest_on_top: true,
+                    delay: 5000,
+                    template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            },
+            error: function () {}
+        });
+    } else {
+        $.ajax({
+            type: "POST",
+            url: "/editarCondicion" + accion,
+            data: {
+                id: id,
+                objCondicion
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                }
+            },
+            success: function (data) {
+                $('#condicion').empty();
+                $('#v_condicion').empty();
+                var select = "";
+                $.ajax({
+                    async: false,
+                    type: "GET",
+                    url: "/contrato",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        select += `<option value="">Seleccionar</option>`;
+                        for (var i = 0; i < data.length; i++) {
+                            select += `<option class="" value="${data[i].id}">${data[i].condicion}</option>`;
+                        }
+                        $('#condicion').append(select);
+                        $('#v_condicion').append(select);
+                    },
+                    error: function () {}
+                });
+                $('#condicion').val(data.id).trigger("change"); //lo selecciona
+                $('#v_condicion').val(data.id).trigger("change");
+                $('#textCondicionE').val('');
+                $('#editarCondicionA').hide();
+                limpiarEditar();
+                $('#condicionmodalE').modal('toggle');
+                $('#fechasmodalE').modal('show');
+                $.notify({
+                    message: "\nContrato Modificado\n",
+                    icon: 'admin/images/checked.svg'
+                }, {
+                    element: $('#fechasmodalE'),
                     position: 'fixed',
                     icon_type: 'image',
                     newest_on_top: true,
@@ -1098,9 +1253,9 @@ $('#buscarNivelA').on("click", function () {
     $('#editarNivelA').show();
 });
 //******CONTRATO***/
-$('#buscarContratoC').on("click", function () {
-    $('#editarContratoC').empty();
-    var container = $('#editarContratoC');
+$('#buscarContratoA').on("click", function () {
+    $('#editarContratoA').empty();
+    var container = $('#editarContratoA');
     var select = "";
     $.ajax({
         type: "GET",
@@ -1140,6 +1295,49 @@ $('#buscarContratoC').on("click", function () {
     });
     $('#editarContratoC').show();
 });
+//******CONDICION***/
+$('#buscarCondicionA').on("click", function () {
+    $('#editarCondicionA').empty();
+    var container = $('#editarCondicionA');
+    var select = "";
+    $.ajax({
+        type: "GET",
+        url: "/condicion",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            select += `<select class="form-control" name="contrato" id="editarCP">
+            <option value="">Seleccionar</option>`;
+            for (var i = 0; i < data.length; i++) {
+                select += `<option class="" value="${data[i].id}">${data[i].condicion}</option>`;
+            }
+            select += `</select>`;
+            container.append(select);
+            $('#editarCP').on("change", function () {
+                var id = $('#editarCP').val();
+                $.ajax({
+                    type: "GET",
+                    url: "/buscarCondicion",
+                    data: {
+                        id: id
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        $('#textCondicionE').val(data);
+                    },
+                    error: function () {
+                        $('#textCondicionE').val("");
+                    }
+                })
+            });
+        },
+        error: function () {}
+    });
+    $('#editarContratoC').show();
+});
 //*****LIMPIAR***/
 function limpiarEditar() {
     $('#editarAreaA').hide();
@@ -1148,10 +1346,19 @@ function limpiarEditar() {
     $('#editarLocalA').hide();
     $('#editarNivelA').hide();
     $('#editarContratoA').hide();
+    $('#editarCondicionA').hide();
     $('#textAreaE').val("");
     $('#textCargoE').val("");
     $('#textCentroE').val("");
     $('#textLocalE').val("");
     $('#textNivelE').val("");
     $('#textContratoE').val("");
+    $('#textCondicionE').val("");
+    $('#editarA').val("");
+    $('#editarC').val("");
+    $('#editarCC').val("");
+    $('#editarL').val("");
+    $('#editarN').val("");
+    $('#editarCO').val("");
+    $('#editarCP').val("");
 }
