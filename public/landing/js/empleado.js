@@ -3437,6 +3437,7 @@ $('#formNuevoE').click(function () {
     $('#mf_dia_fecha').show();
     $('#mf_mes_fecha').show();
     $('#mf_ano_fecha').show();
+    $('#idContrato').val("");
     calendarioInv();
     $('#calendarInv').show();
     $('#calendar').hide();

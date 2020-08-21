@@ -848,12 +848,13 @@ class EmpleadoController extends Controller
             ->where('ca.users_id', '=', Auth::user()->id)
             ->get();
         $horario = horario::where('user_id', '=', Auth::user()->id)->get();
+        $condicionPago = condicion_pago::where('user_id', '=', Auth::user()->id)->get();
         //dd($tabla_empleado);
         return view('empleado.empleadoMenu', [
             'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
             'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
             'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
-            'calendario' => $calendario, 'horario' => $horario
+            'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
         ]);
     }
 

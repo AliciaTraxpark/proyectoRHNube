@@ -1044,6 +1044,7 @@
                             <div class="modal-body">
                                 <form action="javascript:agregarFechas()">
                                     {{ csrf_field() }}
+                                    <input type="hidden" name="idContrato" id="idContrato">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -1453,7 +1454,6 @@
                             <div class="modal-body">
                                 <form action="javascript:agregarFechasA()">
                                     {{ csrf_field() }}
-                                    <input type="hidden" name="idContrato" id="idContrato">
                                     <div class="col-md-12">
                                         <label for="">Fecha Inicial</label>
                                         <span id="m_validFechaCIE" style="color: red;display: none;">*Fecha
