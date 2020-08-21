@@ -290,7 +290,8 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                  } else{ $row['nivelArray']=null; }
 
                  //CONDICION_PAGO
-                $condicPago = condicion_pago::where("condicion", "like", "%".$row['condicion_pago']."%")->first();
+                $condicPago = condicion_pago::where("condicion", "like", "%".$row['condicion_pago']."%")
+                ->where('user_id', '=', Auth::user()->id)->first();
                 if($row['condicion_pago']!=null){
                     if ($condicPago!=null){
                         $row['idcondicion'] = $condicPago->id;  $row['condicionArray'] = $condicPago->condicion;

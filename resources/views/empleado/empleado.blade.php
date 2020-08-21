@@ -21,13 +21,13 @@
         }
 
         .pace .pace-progress {
-            background: #bacad3;
+            background: #545474;
             position: fixed;
             z-index: 2000;
             top: 0;
             /* right: 100%; */
             width: 100%;
-            height: 2px;
+            height: 6px;
         }
     </style>
 
