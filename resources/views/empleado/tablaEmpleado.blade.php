@@ -434,6 +434,7 @@
     $('#divescond1').hide();
     $('#divescond2').hide();
     $('#calendar_ed').hide();
+    $('#detalleContratoE').hide();
     var value = idempleado;
     $('#selectCalendario_ed').val("Asignar calendario");
 
@@ -541,6 +542,7 @@
                 }
 
                 if(data[0].contrato.length >= 1){
+                    $('#detalleContratoE').show();
                     $('#v_contrato').val(data[0].contrato[0].idTipoC);
                     $('#v_idContrato').val(data[0].contrato[0].idC);
                     $('#v_monto').val(data[0].contrato[0].monto);
