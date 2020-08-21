@@ -158,7 +158,7 @@ class EmpleadoController extends Controller
                 'c.cargo_id',
                 'a.area_id',
                 'cc.centroC_id',
-                'e.emple_tipoContrato',
+
                 'e.emple_local',
                 'e.emple_nivel',
                 'e.emple_departamento',
@@ -167,8 +167,8 @@ class EmpleadoController extends Controller
                 'e.emple_foto as foto',
                 'e.emple_celular',
                 'e.emple_telefono',
-                'e.emple_fechaIC',
-                'e.emple_fechaFC',
+
+                
                 'e.emple_Correo'
             )
 
