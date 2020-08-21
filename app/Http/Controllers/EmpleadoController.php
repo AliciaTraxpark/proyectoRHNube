@@ -10,6 +10,8 @@ use App\empleado;
 use App\area;
 use App\cargo;
 use App\centro_costo;
+use App\condicion_pago;
+use App\contrato;
 use Illuminate\Http\Request;
 use App\ubigeo_peru_departments;
 use App\ubigeo_peru_provinces;
@@ -102,12 +104,12 @@ class EmpleadoController extends Controller
             ->where('ca.users_id', '=', Auth::user()->id)
             ->get();
         $horario = horario::where('user_id', '=', Auth::user()->id)->get();
-        //dd($tabla_empleado);
+        $condicionPago = condicion_pago::where('user_id', '=', Auth::user()->id)->get();
         return view('empleado.empleado', [
             'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
             'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
             'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
-            'calendario' => $calendario, 'horario' => $horario
+            'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
         ]);
     }
     public function cargarDatos()
@@ -365,6 +367,7 @@ class EmpleadoController extends Controller
         $objEmpleado = json_decode($request->get('objEmpleado'), true);
         $empleado = Empleado::findOrFail($idE);
         $empleado->emple_codigo = $objEmpleado['codigoEmpleado'];
+        $idContrato = '';
         if ($objEmpleado['cargo'] != '') {
             $empleado->emple_cargo = $objEmpleado['cargo'];
         }
@@ -374,14 +377,35 @@ class EmpleadoController extends Controller
         if ($objEmpleado['centroc'] != '') {
             $empleado->emple_centCosto = $objEmpleado['centroc'];
         }
+
         if ($objEmpleado['contrato'] != '') {
-            $empleado->emple_tipoContrato = $objEmpleado['contrato'];
-        }
-        if ($objEmpleado['fechaI'] != '') {
-            $empleado->emple_fechaIC = $objEmpleado['fechaI'];
-        }
-        if ($objEmpleado['fechaF'] != '') {
-            $empleado->emple_fechaFC = $objEmpleado['fechaF'];
+            if ($objEmpleado['idContrato'] == '') {
+                $contrato = new contrato();
+                $contrato->id_tipoContrato = $objEmpleado['contrato'];
+                $contrato->fechaInicio = $objEmpleado['fechaI'];
+                $contrato->fechaFinal = $objEmpleado['fechaF'];
+                $contrato->idEmpleado = $idE;
+                $contrato->estado = 1;
+                if ($objEmpleado['condicion'] != '') {
+                    $contrato->monto = $objEmpleado['monto'];
+                    $contrato->id_condicionPago = $objEmpleado['condicion'];
+                }
+                $contrato->save();
+                $idContrato = $contrato->id;
+            } else {
+                $contrato = contrato::where('id', '=', $objEmpleado['idContrato'])->get()->first();
+                $contrato->id_tipoContrato = $objEmpleado['contrato'];
+                $contrato->fechaInicio = $objEmpleado['fechaI'];
+                $contrato->fechaFinal = $objEmpleado['fechaF'];
+                $contrato->monto = $objEmpleado['monto'];
+                $contrato->idEmpleado = $idE;
+                $contrato->estado = 1;
+                if ($objEmpleado['condicion'] != '') {
+                    $contrato->id_condicionPago = $objEmpleado['condicion'];
+                }
+                $contrato->save();
+                $idContrato = $contrato->id;
+            }
         }
         if ($objEmpleado['nivel'] != '') {
             $empleado->emple_nivel = $objEmpleado['nivel'];
@@ -390,7 +414,7 @@ class EmpleadoController extends Controller
             $empleado->emple_local = $objEmpleado['local'];
         }
         $empleado->save();
-        return json_encode(array('status' => true));
+        return response()->json($idContrato, 200);
     }
 
     public function storeFoto(Request $request, $idE)
@@ -824,12 +848,13 @@ class EmpleadoController extends Controller
             ->where('ca.users_id', '=', Auth::user()->id)
             ->get();
         $horario = horario::where('user_id', '=', Auth::user()->id)->get();
+        $condicionPago = condicion_pago::where('user_id', '=', Auth::user()->id)->get();
         //dd($tabla_empleado);
         return view('empleado.empleadoMenu', [
             'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
             'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
             'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
-            'calendario' => $calendario, 'horario' => $horario
+            'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
         ]);
     }
 
@@ -843,17 +868,17 @@ class EmpleadoController extends Controller
             ->where('e.emple_estado', '=', 1)
             ->get()->first();
         $empleadoEli = DB::table('empleado as e')
-        ->where('e.emple_nDoc', '=', $numeroD)
-        ->where('e.users_id', '=', Auth::user()->id)
-        ->where('e.emple_estado', '=', 0)
-        ->get()->first();
+            ->where('e.emple_nDoc', '=', $numeroD)
+            ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 0)
+            ->get()->first();
         if ($empleado != null) {
             return 1;
         }
         if ($empleadoEli != null) {
             return 2;
         }
-        if ($empleado == null && $empleadoEli == null ) {
+        if ($empleado == null && $empleadoEli == null) {
             return 3;
         }
     }
@@ -869,7 +894,7 @@ class EmpleadoController extends Controller
             ->where('e.users_id', '=', Auth::user()->id)
             ->get()->first();
 
-            $empleado2 = DB::table('empleado as e')
+        $empleado2 = DB::table('empleado as e')
             ->where('e.emple_nDoc', '=', $numDoc)
             ->where('e.emple_id', '!=', $empleado)
             ->where('e.emple_estado', '=', 0)
@@ -878,13 +903,13 @@ class EmpleadoController extends Controller
 
 
 
-         if ($empleado1 != null) {
+        if ($empleado1 != null) {
             return 1;
         }
         if ($empleado2 != null) {
             return 2;
         }
-        if ($empleado1 == null && $empleado2 == null ) {
+        if ($empleado1 == null && $empleado2 == null) {
             return 3;
         }
     }
@@ -1377,14 +1402,12 @@ class EmpleadoController extends Controller
             ->delete();
     }
 
-    public function cambiarEstadoEmp(Request $request){
+    public function cambiarEstadoEmp(Request $request)
+    {
         $ids = $request->ids;
-        $empleado =DB::table('empleado')
-        ->where('emple_nDoc',$ids)
-        ->where('users_id', '=', Auth::user()->id)
-        ->update(['emple_estado' => 1]);
-
-
-
+        $empleado = DB::table('empleado')
+            ->where('emple_nDoc', $ids)
+            ->where('users_id', '=', Auth::user()->id)
+            ->update(['emple_estado' => 1]);
     }
 }

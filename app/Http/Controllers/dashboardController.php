@@ -103,11 +103,12 @@ class dashboardController extends Controller
             ->get();
 
         $contrato = DB::table('empleado as e')
-            ->join('tipo_contrato as c', 'e.emple_tipoContrato', '=', 'c.contrato_id')
-            ->select('c.contrato_descripcion', DB::raw('COUNT(c.contrato_descripcion) as Total'))
+            ->join('contrato as c', 'c.idEmpleado', '=', 'e.emple_id')
+            ->join('tipo_contrato as tc', 'tc.contrato_id', '=', 'c.id_tipoContrato')
+            ->select('tc.contrato_descripcion', DB::raw('COUNT(tc.contrato_descripcion) as Total'))
             ->where('e.users_id', '=', Auth::user()->id)
             ->where('e.emple_estado', '=', 1)
-            ->groupBy('c.contrato_id')
+            ->groupBy('tc.contrato_id')
             ->get();
 
         array_push($datos, array("empleado" => $empleado, "contrato" => $contrato, "organizacion" => $organizacion));
