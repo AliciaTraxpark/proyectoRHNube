@@ -1688,6 +1688,152 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
+                <div id="fechasmodalVer" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fechasmodalVer"
+                    aria-hidden=" true" data-backdrop="static">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Indicar
+                                    fechas de Contrato</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                    onclick="$('#verEmpleadoDetalles').modal('show');">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" id="formContratoVer">
+                                <form>
+                                    {{ csrf_field() }}
+                                    <input type="hidden" name="v_idContratoVer" id="v_idContratoVer">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="sw-default">Condición Pago</label>
+                                                <select class="form-control" name="v_condicionV" id="v_condicionV" required>
+                                                    <option value="">Seleccionar</option>
+                                                    @foreach ($condicionP as $condicion)
+                                                    <option class="" value="{{$condicion->id}}">
+                                                        {{$condicion->condicion}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="sw-default">Monto</label>
+                                                <input type="number" step=".01" class="form-control" name="v_montoV"
+                                                    id="v_montoV">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="">Fecha Inicial</label>
+                                            <span id="m_validFechaCIE" style="color: red;display: none;">*Fecha
+                                                incorrecta.</span>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <select class="form-control" name="m_dia_fechaIEV" id="m_dia_fechaIEV"
+                                                        required="">
+                                                        <option value="0">Dia</option>
+                                                        @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
+                                                            {{$i}}
+                                                            </option>
+                                                            @endfor
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" name="m_mes_fechaIEV" id="m_mes_fechaIEV"
+                                                        required="">
+                                                        <option value="0">Mes</option>
+                                                        <option class="" value="1">Ene.</option>
+                                                        <option class="" value="2">Feb.</option>
+                                                        <option class="" value="3">Mar.</option>
+                                                        <option class="" value="4">Abr.</option>
+                                                        <option class="" value="5">May.</option>
+                                                        <option class="" value="6">Jun.</option>
+                                                        <option class="" value="7">Jul.</option>
+                                                        <option class="" value="8">Ago.</option>
+                                                        <option class="" value="9">Set.</option>
+                                                        <option class="" value="10">Oct.</option>
+                                                        <option class="" value="11">Nov.</option>
+                                                        <option class="" value="12">Dic.</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" style="padding-left: 5px;
+                                                    padding-right: 5px;" name="m_ano_fechaIEV" id="m_ano_fechaIEV"
+                                                        required="">
+                                                        <option value="0">Año</option>
+                                                        @for ($i = 2000; $i <2100; $i++) <option class=""
+                                                            value="{{$i}}">
+                                                            {{$i}}
+                                                            </option>
+                                                            @endfor
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                            <br>
+                                            <div class="form-group">
+                                                <label for="">Fecha Indifinida</label>
+                                                <input type="checkbox" id="checkboxFechaIEV" name="checkboxFechaIEV">
+                                            </div>
+                                            <div id="ocultarFechaEV">
+                                                <label for="">Fecha Final</label>
+                                                <span id="m_validFechaCFE" style="color: red;display: none;">*Fecha
+                                                    incorrecta.</span>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <select class="form-control" name="m_dia_fechaFEV"
+                                                            id="m_dia_fechaFEV">
+                                                            <option value="0">Dia</option>
+                                                            @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
+                                                                {{$i}}</option>
+                                                                @endfor
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <select class="form-control" name="m_mes_fechaFEV"
+                                                            id="m_mes_fechaFEV">
+                                                            <option value="0">Mes</option>
+                                                            <option class="" value="1">Ene.</option>
+                                                            <option class="" value="2">Feb.</option>
+                                                            <option class="" value="3">Mar.</option>
+                                                            <option class="" value="4">Abr.</option>
+                                                            <option class="" value="5">May.</option>
+                                                            <option class="" value="6">Jun.</option>
+                                                            <option class="" value="7">Jul.</option>
+                                                            <option class="" value="8">Ago.</option>
+                                                            <option class="" value="9">Set.</option>
+                                                            <option class="" value="10">Oct.</option>
+                                                            <option class="" value="11">Nov.</option>
+                                                            <option class="" value="12">Dic.</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <select class="form-control" style="padding-left: 5px;
+                                                        padding-right: 5px;" name="m_ano_fechaFEV" id="m_ano_fechaFEV">
+                                                            <option value="0">Año</option>
+                                                            @for ($i = 2000; $i <2100; $i++) <option class=""
+                                                                value="{{$i}}">{{$i}}
+                                                                </option>
+                                                                @endfor
+                                                        </select>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" onclick="$('#verEmpleadoDetalles').modal('show');"
+                                    class="btn btn-sm" style="background: #163552;" data-dismiss="modal">Cerrar</button>
+                            </div>
+                            </form>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
                 <!-- /.modal -->
                 <!---->
                 <div class="modal fade" style="font-size: 13px" id="form-registrar" tabindex="-1" role="dialog"
@@ -3081,10 +3227,8 @@
                                                                             <input class="form-control" type="text"
                                                                                 id="nombreFeriado_ed" required>
                                                                     </div>
-
                                                                 </div>
                                                             </div>
-
                                                         </div>
                                                         <div class="modal-footer">
                                                             <div class="col-md-12">
@@ -3120,7 +3264,6 @@
                                             <div class="col-md-10" id="calendar2_ed" style="display: none"></div>
                                             <div class="col-md-1"><br></div>
                                         </div>
-
                                         <div id="horarioAsignar_ed" class="modal fade" tabindex="-1" role="dialog"
                                             aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                                             <div class="modal-dialog  modal-lg d-flex justify-content-center "
@@ -3246,16 +3389,9 @@
                                                                                     required>
                                                                             </div>
                                                                         </div>
-
-
                                                                     </div>
-
                                                             </div>
-
-
-
                                                         </div>
-
                                                     </div>
                                                     <div class="modal-footer">
                                                         <div class="col-md-12">
@@ -3343,7 +3479,7 @@
                                     <div class="col-md-2 text-left"
                                         style="display: flex; align-items: center;cursor: pointer;">
                                         <a style="color: #3d3d3d;"
-                                            onclick="$('#verEmpleadoDetalles').modal('toggle');$('#form-ver').modal();">
+                                            onclick="$('#verEmpleadoDetalles').modal('toggle');javascript:editarEmpleado($('#v_idV').val())">
                                             <img src="{{asset('admin/images/edit.svg')}}" height="15">
                                             <span style="font-weight: bold">Editar</span>
                                         </a>
@@ -3531,7 +3667,16 @@
                                                     <input class="form-control" name="v_cargoV" id="v_cargoV" disabled>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default">Contrato</label>
+                                                    <label for="sw-default">Contrato &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <a id="detalleContratoE" onclick="$('#verEmpleadoDetalles').modal('hide');"
+                                                            href="#fechasmodalVer" data-toggle="modal"
+                                                            data-target="#fechasmodalVer" data-toggle="tooltip"
+                                                            data-placement="right" title="Detalle de Contrato."
+                                                            data-original-title="Detalle de Contrato."
+                                                            style="cursor: pointer;">
+                                                            <img src="{{asset('landing/images/adaptive.svg')}}" height="18">
+                                                        </a>
+                                                        </label>
                                                     <input class="form-control" name="v_contratoV" id="v_contratoV"
                                                         tabindex="5" disabled>
                                                 </div>

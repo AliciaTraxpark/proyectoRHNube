@@ -434,7 +434,6 @@
     $('#divescond1').hide();
     $('#divescond2').hide();
     $('#calendar_ed').hide();
-    $('#v_fotoV').attr("src", "landing/images/png.svg");
     var value = idempleado;
     $('#selectCalendario_ed').val("Asignar calendario");
 
@@ -596,18 +595,6 @@
                             </td>
                             <td id="inactivar${data[0].vinculacion[i].idVinculacion}"><a onclick="javascript:inactivarLicenciaWEditar(${data[0].vinculacion[i].idVinculacion})" class="badge badge-soft-danger mr-2">Inactivar</a></td>
                             </tr>`;
-                            var trVer = `<tr id="trVer${data[0].vinculacion[i].idVinculacion}">
-                            <td>${data[0].vinculacion[i].dispositivoD}</td>
-                            <td>${data[0].vinculacion[i].licencia}</td>
-                            <td class="hidetext">${data[0].vinculacion[i].codigo}</td>
-                            <td id="enviadoW${data[0].vinculacion[i].idVinculacion}">${data[0].vinculacion[i].envio}</td>
-                            <td id="estado${data[0].vinculacion[i].idVinculacion}"></td>
-                            <td id="correoVer${data[0].vinculacion[i].idVinculacion}">
-                                <a><img src="landing/images/note.svg" height="20">
-                                </a>
-                            </td>
-                            <td id="inactivarVer${data[0].vinculacion[i].idVinculacion}"><a class="badge badge-soft-danger mr-2">Inactivar</a></td>
-                            </tr>`;
                     }else{
                             var tr = `<tr id="tr${data[0].vinculacion[i].idVinculacion}">
                                 <td>${data[0].vinculacion[i].dispositivoD}</td>
@@ -624,48 +611,27 @@
                                 </td>
                                 <td id="inactivar${data[0].vinculacion[i].idVinculacion}"><a onclick="javascript:inactivarLicenciaEditar(${data[0].vinculacion[i].idVinculacion})" class="badge badge-soft-danger mr-2">Inactivar</a></td>
                                 </tr>`;
-                            var trVer = `<tr id="trVer${data[0].vinculacion[i].idVinculacion}">
-                                <td>${data[0].vinculacion[i].dispositivoD}</td>
-                                <td>${data[0].vinculacion[i].licencia}</td>
-                                <td class="hidetext">${data[0].vinculacion[i].codigo}</td>
-                                <td id="enviado${data[0].vinculacion[i].idVinculacion}">${data[0].vinculacion[i].envio}</td>
-                                <td id="estado${data[0].vinculacion[i].idVinculacion}"></td>
-                                <td id="correoVer${data[0].vinculacion[i].idVinculacion}">
-                                    <input style="display: none;" id="android${data[0].emple_id}" value="${data[0].vinculacion[i].idVinculacion}">
-                                    <a><img src="landing/images/note.svg" height="20">
-                                    </a>
-                                </td>
-                                <td id="inactivarVer${data[0].vinculacion[i].idVinculacion}"><a class="badge badge-soft-danger mr-2">Inactivar</a></td>
-                                </tr>`;
 
                     }
                     container.append(tr);
 
                     if(data[0].vinculacion[i].disponible == 'c'){
                         $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Creado");
-                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Creado");
                     }
                     if(data[0].vinculacion[i].disponible == 'e'){
                         $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Enviado");
-                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Enviado");
                     }
                     if(data[0].vinculacion[i].disponible == 'a'){
                         $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Activado");
-                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Activado");
                     }
                     if(data[0].vinculacion[i].disponible == 'i'){
                         $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Inactivo");
-                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Inactivo");
                         $('#inactivar'+data[0].vinculacion[i].idVinculacion).empty();
                         $('#correo' + data[0].vinculacion[i].idVinculacion).empty();
-                        $('#inactivarVer'+data[0].vinculacion[i].idVinculacion).empty();
-                        $('#correoVer' + data[0].vinculacion[i].idVinculacion).empty();
                         if(data[0].vinculacion[i].dispositivoD == 'WINDOWS'){
                                 var td = `<a  onclick="javascript:modalWindowsEditar(${data[0].vinculacion[i].idVinculacion});$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
                                             correo empleado" data-original-title="Habilitar activación" style="cursor: pointer"><img
                                                 src="landing/images/email (4).svg" height="20">
-                                            </a>`;
-                                var tdV = `<a><img src="landing/images/email (4).svg" height="20">
                                             </a>`;
                         }else{
                             var td = `<input style="display: none;" id="android${data[0].emple_id}" value="${data[0].vinculacion[i].idVinculacion}">
@@ -673,12 +639,8 @@
                                         correo empleado" data-original-title="Habilitar activación" style="cursor: pointer"><img
                                             src="landing/images/email (4).svg" height="20">
                                         </a>`;
-                            var tdV = `<input style="display: none;" id="android${data[0].emple_id}" value="${data[0].vinculacion[i].idVinculacion}">
-                                        <a><img src="landing/images/email (4).svg" height="20">
-                                        </a>`;
                         }
                         $('#correo' + data[0].vinculacion[i].idVinculacion).append(td);
-                        $('#correoVer' + data[0].vinculacion[i].idVinculacion).append(tdV);
                     }
                 }
             },
@@ -726,15 +688,6 @@ function verDEmpleado(idempleadoVer){
                 console.log(data);
                 calendario3();
                 calendario4();
-                $('#v_tipoDoc').val(data[0].tipoDoc_descripcion);
-                $('#v_apPaterno').val(data[0].perso_apPaterno);
-                $('#v_departamento').val(data[0].iddepaN);
-                onSelectVDepartamento('#v_departamento').then(function () {
-                    $('#v_provincia').val(data[0].idproviN);
-                    onSelectVProvincia('#v_provincia').then((result) => $('#v_distrito')
-                        .val(data[0].iddistN))
-                });
-
                 $.ajax({
                 type:"POST",
                 url: "/empleado/calendarioEditar",
@@ -753,7 +706,6 @@ function verDEmpleado(idempleadoVer){
                     if(data==1){
                         $('#MostrarCa_e').show();
                         $('#calendarInv_ed').show();
-
                     }
                     else{
                         $('#calendar_ed').show();
@@ -772,101 +724,14 @@ function verDEmpleado(idempleadoVer){
                 },
                 error: function () {}
             });
-                $('#v_dep').val(data[0].depar);
-                onSelectVDepart('#v_dep').then(function () {
-                    $('#v_prov').val(data[0].proviId);
-                    onSelectVProv('#v_prov').then((result) => $('#v_dist').val(data[0]
-                        .distId))
-                });
-                $('#selectCalendario_edit3').val(data[0].idcalendar);
                 $('#selectCalendario_edit3_ver').val(data[0].idcalendar);
                 $('#idselect3').val(data[0].idcalendar);
-                $('#v_numDocumento').val(data[0].emple_nDoc);
-                $('#v_apMaterno').val(data[0].perso_apMaterno);
-                $("[name=v_tipo]").val([data[0].perso_sexo]);
-                ////////////////////////////////////////////////
-               var VFechaDa=moment(data[0].perso_fechaNacimiento).format('YYYY-MM-DD');
-               var VFechaDia = new Date(moment(VFechaDa));
-              $('#v_dia_fecha').val(VFechaDia.getDate());
-               $('#v_mes_fecha').val(moment(VFechaDa).month()+1);
-               $('#v_ano_fecha').val(moment(VFechaDa).year());
-               //////////////////////////////////////////////
-                $('#v_nombres').val(data[0].perso_nombre);
-                $('#v_direccion').val(data[0].perso_direccion);
-                $('#v_cargo').val(data[0].cargo_id);
-                $('#v_area').val(data[0].area_id);
-                $('#v_centroc').val(data[0].centroC_id);
-                id_empleado = data[0].emple_id;
-                $('#v_id').val(data[0].emple_id);
-                $('#v_contrato').val(data[0].emple_tipoContrato);
-                $('#v_nivel').val(data[0].emple_nivel);
-                $('#v_local').val(data[0].emple_local);
-                $('#v_codigoCelular').val("+51");
-                $('#v_celular').val(data[0].emple_celular);
-                if(data[0].emple_celular != '' ){
-                    celularSplit = data[0].emple_celular.split("+51");
-                    $('#v_celular').val(celularSplit[1]);
-                }
-                $('#v_codigoTelefono').val("01");
-                $('#v_telefono').val(data[0].emple_telefono);
-                if(data[0].emple_telefono != ''){
-                    telefonoSplit = data[0].emple_telefono.split("");
-                    $('#v_codigoTelefono').val(telefonoSplit[0] + telefonoSplit[1]);
-                    $('#v_telefono').val(telefonoSplit[2] + telefonoSplit[3] + telefonoSplit[4] + telefonoSplit[5] + telefonoSplit[6] + telefonoSplit[7]);
-                }
-
-               var VFechaDaIE=moment(data[0].emple_fechaIC).format('YYYY-MM-DD');
-               var VFechaDiaIE = new Date(moment(VFechaDaIE));
-              $('#m_dia_fechaIE').val(VFechaDiaIE.getDate());
-               $('#m_mes_fechaIE').val(moment(VFechaDaIE).month()+1);
-               $('#m_ano_fechaIE').val(moment(VFechaDaIE).year());
-                if (data[0].emple_fechaFC == null || data[0].emple_fechaFC == "0000-00-00") {
-                    $("#checkboxFechaIE").prop('checked', true);
-
-                    $('#ocultarFechaE').hide();
-                }
-
-               var VFechaDaFE=moment(data[0].emple_fechaFC).format('YYYY-MM-DD');
-               var VFechaDiaFE = new Date(moment(VFechaDaFE));
-              $('#m_dia_fechaFE').val(VFechaDiaFE.getDate());
-               $('#m_mes_fechaFE').val(moment(VFechaDaFE).month()+1);
-               $('#m_ano_fechaFE').val(moment(VFechaDaFE).year());
-                $('#v_email').val(data[0].emple_Correo);
                 calendario_edit();
                 calendario2_ed();
-                $('#v_codigoEmpleado').val(data[0].emple_codigo);
-                if (data[0].foto != "") {
-                    urlFoto = data[0].foto;
-                    hayFoto = true;
-                    $('#file2').fileinput('destroy');
-                    cargarFile2();
-                    $('#v_foto').attr("src", "{{asset('/fotosEmpleado')}}" + "/" + data[0].foto);
-                } else {
-                    hayFoto = false;
-                    urlFoto = "";
-                    $('#file2').fileinput('destroy');
-                    cargarFile2();
-                }
-                $('#v_tbodyDispositivo').empty();
                 $('#ver_tbodyDispositivo').empty();
-                var container = $('#v_tbodyDispositivo');
                 var containerVer = $('#ver_tbodyDispositivo');
                 for (var i = 0; i < data[0].vinculacion.length; i++) {
                     if(data[0].vinculacion[i].dispositivoD == 'WINDOWS'){
-                            var tr = `<tr id="tr${data[0].vinculacion[i].idVinculacion}">
-                            <td>${data[0].vinculacion[i].dispositivoD}</td>
-                            <td>${data[0].vinculacion[i].licencia}</td>
-                            <td class="hidetext">${data[0].vinculacion[i].codigo}</td>
-                            <td id="enviadoW${data[0].vinculacion[i].idVinculacion}">${data[0].vinculacion[i].envio}</td>
-                            <td id="estado${data[0].vinculacion[i].idVinculacion}"></td>
-                            <td id="correo${data[0].vinculacion[i].idVinculacion}">
-                                <a  onclick="javascript:modalWindowsEditar(${data[0].vinculacion[i].idVinculacion});$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
-                                    correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
-                                    src="landing/images/note.svg" height="20">
-                                </a>
-                            </td>
-                            <td id="inactivar${data[0].vinculacion[i].idVinculacion}"><a onclick="javascript:inactivarLicenciaWEditar(${data[0].vinculacion[i].idVinculacion})" class="badge badge-soft-danger mr-2">Inactivar</a></td>
-                            </tr>`;
                             var trVer = `<tr id="trVer${data[0].vinculacion[i].idVinculacion}">
                             <td>${data[0].vinculacion[i].dispositivoD}</td>
                             <td>${data[0].vinculacion[i].licencia}</td>
@@ -880,21 +745,6 @@ function verDEmpleado(idempleadoVer){
                             <td id="inactivarVer${data[0].vinculacion[i].idVinculacion}"><a class="badge badge-soft-danger mr-2">Inactivar</a></td>
                             </tr>`;
                     }else{
-                            var tr = `<tr id="tr${data[0].vinculacion[i].idVinculacion}">
-                                <td>${data[0].vinculacion[i].dispositivoD}</td>
-                                <td>${data[0].vinculacion[i].licencia}</td>
-                                <td class="hidetext">${data[0].vinculacion[i].codigo}</td>
-                                <td id="enviado${data[0].vinculacion[i].idVinculacion}">${data[0].vinculacion[i].envio}</td>
-                                <td id="estado${data[0].vinculacion[i].idVinculacion}"></td>
-                                <td id="correo${data[0].vinculacion[i].idVinculacion}">
-                                    <input style="display: none;" id="android${data[0].emple_id}" value="${data[0].vinculacion[i].idVinculacion}">
-                                    <a  onclick="$('#v_androidEmpleado').modal();$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
-                                    correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
-                                        src="landing/images/note.svg" height="20">
-                                    </a>
-                                </td>
-                                <td id="inactivar${data[0].vinculacion[i].idVinculacion}"><a onclick="javascript:inactivarLicenciaEditar(${data[0].vinculacion[i].idVinculacion})" class="badge badge-soft-danger mr-2">Inactivar</a></td>
-                                </tr>`;
                             var trVer = `<tr id="trVer${data[0].vinculacion[i].idVinculacion}">
                                 <td>${data[0].vinculacion[i].dispositivoD}</td>
                                 <td>${data[0].vinculacion[i].licencia}</td>
@@ -910,45 +760,28 @@ function verDEmpleado(idempleadoVer){
                                 </tr>`;
 
                     }
-                    container.append(tr);
                     containerVer.append(trVer);
                     if(data[0].vinculacion[i].disponible == 'c'){
-                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Creado");
                         $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Creado");
                     }
                     if(data[0].vinculacion[i].disponible == 'e'){
-                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Enviado");
                         $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Enviado");
                     }
                     if(data[0].vinculacion[i].disponible == 'a'){
-                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Activado");
                         $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Activado");
                     }
                     if(data[0].vinculacion[i].disponible == 'i'){
-                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Inactivo");
                         $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Inactivo");
-                        $('#inactivar'+data[0].vinculacion[i].idVinculacion).empty();
-                        $('#correo' + data[0].vinculacion[i].idVinculacion).empty();
                         $('#inactivarVer'+data[0].vinculacion[i].idVinculacion).empty();
                         $('#correoVer' + data[0].vinculacion[i].idVinculacion).empty();
                         if(data[0].vinculacion[i].dispositivoD == 'WINDOWS'){
-                                var td = `<a  onclick="javascript:modalWindowsEditar(${data[0].vinculacion[i].idVinculacion});$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
-                                            correo empleado" data-original-title="Habilitar activación" style="cursor: pointer"><img
-                                                src="landing/images/email (4).svg" height="20">
-                                            </a>`;
                                 var tdV = `<a><img src="landing/images/email (4).svg" height="20">
                                             </a>`;
                         }else{
-                            var td = `<input style="display: none;" id="android${data[0].emple_id}" value="${data[0].vinculacion[i].idVinculacion}">
-                                        <a  onclick="$('#v_androidEmpleado').modal();$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
-                                        correo empleado" data-original-title="Habilitar activación" style="cursor: pointer"><img
-                                            src="landing/images/email (4).svg" height="20">
-                                        </a>`;
                             var tdV = `<input style="display: none;" id="android${data[0].emple_id}" value="${data[0].vinculacion[i].idVinculacion}">
                                         <a><img src="landing/images/email (4).svg" height="20">
                                         </a>`;
                         }
-                        $('#correo' + data[0].vinculacion[i].idVinculacion).append(td);
                         $('#correoVer' + data[0].vinculacion[i].idVinculacion).append(tdV);
                     }
                 }
@@ -960,10 +793,10 @@ function verDEmpleado(idempleadoVer){
 
                 //////////////////////////////////////////////////////////////
                 var VFechaDaVer=moment(data[0].perso_fechaNacimiento).format('YYYY-MM-DD');
-               var VFechaDiaVer = new Date(moment(VFechaDaVer));
-              $('#v_dia_fechaV').val(VFechaDiaVer.getDate());
-               $('#v_mes_fechaV').val(moment(VFechaDaVer).month()+1);
-               $('#v_ano_fechaV').val(moment(VFechaDaVer).year());
+                var VFechaDiaVer = new Date(moment(VFechaDaVer));
+                $('#v_dia_fechaV').val(VFechaDiaVer.getDate());
+                $('#v_mes_fechaV').val(moment(VFechaDaVer).month()+1);
+                $('#v_ano_fechaV').val(moment(VFechaDaVer).year());
                 /////////////////////////////////////////////////////////////////
                 $('#v_apMaternoV').val(data[0].perso_apMaterno);
                 $('#v_numDocumentoV').val(data[0].emple_nDoc);
@@ -981,7 +814,6 @@ function verDEmpleado(idempleadoVer){
                 $('#v_cargoV').val(data[0].cargo_descripcion);
                 $('#v_areaV').val(data[0].area_descripcion);
                 $('#v_centrocV').val(data[0].centroC_descripcion);
-                $('#v_contratoV').val(data[0].contrato_descripcion);
                 $('#v_nivelV').val(data[0].nivel_descripcion);
                 $('#v_localV').val(data[0].local_descripcion);
                 $('#v_codigoEmpleadoV').val(data[0].emple_codigo);
@@ -989,6 +821,28 @@ function verDEmpleado(idempleadoVer){
                     $('#v_fotoV').attr("src", "fotosEmpleado/" + data[0].foto);
                     $('#h5Ocultar').hide();
                 }
+                if(data[0].contrato.length >= 1){
+                    $('#v_contratoV').val(data[0].contrato[0].contrato_descripcion);
+                    $('#v_idContratoV').val(data[0].contrato[0].idC);
+                    $('#v_montoV').val(data[0].contrato[0].monto);
+                    $('#v_condicionV').val(data[0].contrato[0].idCond);
+                    var VFechaDaIE=moment(data[0].contrato[0].fechaInicio).format('YYYY-MM-DD');
+                    var VFechaDiaIE = new Date(moment(VFechaDaIE));
+                    $('#m_dia_fechaIEV').val(VFechaDiaIE.getDate());
+                    $('#m_mes_fechaIEV').val(moment(VFechaDaIE).month()+1);
+                    $('#m_ano_fechaIEV').val(moment(VFechaDaIE).year());
+                        if (data[0].contrato[0].fechaFinal == null || data[0].contrato[0].fechaFinal == "0000-00-00") {
+                            $("#checkboxFechaIEV").prop('checked', true);
+                            $('#ocultarFechaEV').hide();
+                        }
+                    var VFechaDaFE=moment(data[0].contrato[0].fechaFinal ).format('YYYY-MM-DD');
+                    var VFechaDiaFE = new Date(moment(VFechaDaFE));
+                    $('#m_dia_fechaFEV').val(VFechaDiaFE.getDate());
+                    $('#m_mes_fechaFEV').val(moment(VFechaDaFE).month()+1);
+                    $('#m_ano_fechaFEV').val(moment(VFechaDaFE).year());
+                }
+                $('#ver_tbodyDispositivo').css('pointer-events', 'none');
+                $("#formContratoVer :input").prop('disabled', true);
             },
             error: function () {}
         });
