@@ -1029,6 +1029,51 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div>
+                <div id="condicionmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="condicionmodal"
+                    aria-hidden="true" data-backdrop="static">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                    Condición de Pago</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                    onclick="$('#fechasmodal').modal('show');javascript:limpiar()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="javascript:agregarCondicion()">
+                                    {{ csrf_field() }}
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label for="">Condición</label>
+                                        </div>
+                                        <div id="editarCondicion" class="col-md-6"></div>
+                                        <div class="col-md-4">
+                                            <a id="buscarCondicion" data-toggle="tooltip" data-placement="right"
+                                                title="Editar Condición de Pago."
+                                                data-original-title="Editar Condición de Pago."
+                                                style="cursor: pointer;"><img
+                                                    src="{{asset('landing/images/search.svg')}}" height="18">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control" name="textCondicion" id="textCondicion"
+                                            required>
+                                    </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" onclick="$('#fechasmodal').modal('show');javascript:limpiar()"
+                                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" id="guardarCondicion" class="btn btn-sm"
+                                    style="background-color:#163552;">Guardar</button>
+                            </div>
+                            </form>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div>
                 <div id="fechasmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fechasmodal"
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
@@ -1048,7 +1093,11 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="sw-default">Condición Pago</label>
+                                                <label for="sw-default">Condición Pago <a
+                                                        onclick="$('#fechasmodal').modal('hide');"
+                                                        href="#condicionmodal" data-toggle="modal"
+                                                        data-target="#condicionmodal"><i
+                                                            class="uil uil-plus"></i></a></label>
                                                 <select class="form-control" name="condicion" id="condicion" required>
                                                     <option value="">Seleccionar</option>
                                                     @foreach ($condicionP as $condicion)
@@ -1061,7 +1110,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="sw-default">Monto</label>
-                                                <input type="number" step=".01" class="form-control" name="monto" id="monto">
+                                                <input type="number" step=".01" class="form-control" name="monto"
+                                                    id="monto">
                                             </div>
                                         </div>
                                     </div>
