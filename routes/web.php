@@ -150,6 +150,9 @@ Route::post('/registrar/nivel', 'nivelController@store');
 //CONTRATO
 Route::post('/registrar/contrato', 'contratoController@store');
 
+// CONDICION DE PAGO
+Route::post('/registrar/condicion', 'condicionPagoController@store');
+
 //TAREAS
 Route::get('/tareas', 'ControlController@index');
 Route::get('/tareas/show', 'ControlController@show');
@@ -277,6 +280,10 @@ Route::post('editarNivel', 'editarAtributosController@editarNivel');
 Route::get('contrato', 'editarAtributosController@contrato');
 Route::get('buscarContrato', 'editarAtributosController@buscarContrato');
 Route::post('editarContrato', 'editarAtributosController@editarContrato');
+// **********CONDICION DE PAGO*****/
+Route::get('condicion', 'editarAtributosController@condicion');
+Route::get('buscarCondicion', 'editarAtributosController@buscarCondicion');
+Route::post('editarCondicion', 'editarAtributosController@editarCondicion');
 //*************************************************************************/
 //ESTADO LICENCIA
 Route::get('cambiarEstadoLicencia', 'detallesActivacionController@cambiarEstadoLicencia');
