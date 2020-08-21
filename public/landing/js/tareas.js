@@ -14,6 +14,11 @@ $('#fecha').flatpickr({
     locale: "es",
     maxDate: "today"
 });
+function fechaHoy(){
+    f = moment().format("YYYY-MM-DD");
+    $('#fecha').val(f);
+    onMostrarPantallas();
+}
 //CAPTURAS
 $(function () {
     $('#empleado').on('change', onMostrarPantallas);
