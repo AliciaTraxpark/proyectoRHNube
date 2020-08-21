@@ -3457,13 +3457,13 @@
                 </div>
             </div>
             <!--VER EMPLEADO-->
-            <div id="verEmpleadoDetalles" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="verEmpleado"
+            <div id="verEmpleadoDetalles" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="verEmpleadoDetalles"
                 aria-hidden="true" data-backdrop="static">
                 <div class="modal-dialog modal-dialog-scrollable modal-lg">
                     <div class="modal-content">
                         <div class="modal-header" style="background: #163552;">
                             <h4 class="header-title mt-0 " style="color: #f0f0f0">Datos de empleado</h4><br>
-                            <button type="button" class="close" id="cerrarEd" data-dismiss="modal" aria-label="Close">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="javascript:cerrarVer()">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -3668,7 +3668,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Contrato &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <a id="detalleContratoE" onclick="$('#verEmpleadoDetalles').modal('hide');"
+                                                        <a id="detalleContratoVer" onclick="$('#verEmpleadoDetalles').modal('hide');"
                                                             href="#fechasmodalVer" data-toggle="modal"
                                                             data-target="#fechasmodalVer" data-toggle="tooltip"
                                                             data-placement="right" title="Detalle de Contrato."

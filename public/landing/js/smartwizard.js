@@ -542,6 +542,7 @@ $('#smartwizardVer').smartWizard({
             .addClass('btn btn-secondary sw-btn-finish')
             .attr("id", "FinalizarEmpleadoVer")
             .on('click', function () {
+                cerrarVer();
                 $('#verEmpleadoDetalles').modal('toggle');
             }),
         ]

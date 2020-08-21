@@ -821,7 +821,9 @@ function verDEmpleado(idempleadoVer){
                     $('#v_fotoV').attr("src", "fotosEmpleado/" + data[0].foto);
                     $('#h5Ocultar').hide();
                 }
+                $('#detalleContratoVer').hide();
                 if(data[0].contrato.length >= 1){
+                    $('#detalleContratoVer').show();
                     $('#v_contratoV').val(data[0].contrato[0].contrato_descripcion);
                     $('#v_idContratoV').val(data[0].contrato[0].idC);
                     $('#v_montoV').val(data[0].contrato[0].monto);

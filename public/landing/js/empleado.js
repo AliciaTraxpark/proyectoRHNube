@@ -3433,9 +3433,9 @@ function datosPersonaA(method) {
         fechaI_v: v_VFechaIE,
         fechaF_v: v_VFechaFE,
         codigoEmpleado_v: $('#v_codigoEmpleado').val(),
-        idContrato_v:$('#v_idContrato').val(),
-        monto_v:$('#v_monto').val(),
-        condicion_v:$('#v_condicion').val(),
+        idContrato_v: $('#v_idContrato').val(),
+        monto_v: $('#v_monto').val(),
+        condicion_v: $('#v_condicion').val(),
         '_method': method
     }
     return (nuevoEmpleadoA);
@@ -3629,7 +3629,7 @@ $('#cerrarE').click(function () {
     $('#selectHorario').val("Seleccionar horario");
 });
 $('#cerrarEd').click(function () {
-    //leertabla();
+    leertabla();
     $('#smartwizard1').smartWizard("reset");
     $('#formNuevoEd').hide();
     $('#formNuevoEl').hide();
@@ -3679,9 +3679,7 @@ $('#cerrarEd').click(function () {
 
 });
 $('#cerrarModalEmpleado').click(function () {
-    //leertabla();
-
-    //************ */
+    leertabla();
     $('#formNuevoEd').hide();
     $('#formNuevoEl').hide();
     $('#smartwizard').smartWizard("reset");
@@ -3735,9 +3733,11 @@ $('#cerrarModalEmpleado').click(function () {
     limpiar();
     $('#selectCalendario').val("Asignar calendario");
     $('#selectHorario').val("Seleccionar horario");
-
-
 });
+
+function cerrarVer() {
+    $('#verEmpleadoDetalles :input').val('');
+}
 //*********************/
 $('#numR').hide();
 $('#emailR').hide();
