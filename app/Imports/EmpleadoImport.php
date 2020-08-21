@@ -15,6 +15,7 @@ use App\tipo_contrato;
 use App\local;
 use Illuminate\Support\Arr;
 use App\nivel;
+use App\condicion_pago;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Collection;
@@ -287,13 +288,56 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                         $row['nivelArray'] = $row['nivel'];
                    }
                  } else{ $row['nivelArray']=null; }
-                 $fechaNacimieB=\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['fecha_nacimiento']);
+
+                 //CONDICION_PAGO
+                $condicPago = condicion_pago::where("condicion", "like", "%".$row['condicion_pago']."%")->first();
+                if($row['condicion_pago']!=null){
+                    if ($condicPago!=null){
+                        $row['idcondicion'] = $condicPago->id;  $row['condicionArray'] = $condicPago->condicion;
+                    } else{
+
+                        $row['condicionArray'] =$row['condicion_pago'];
+                    }
+                 } else{ $row['condicionArray']=null; }
+                 ///
+
+                 if($row['fecha_nacimiento']!=null ||$row['fecha_nacimiento']!=''){
+                    $fechaNacimieB=date_format(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['fecha_nacimiento']), 'Y-m-d');
+                 } else{
+                    $fechaNacimieB='';
+                 }
+
+
+                 if($row['tipo_contratoArray']!=null || $row['tipo_contratoArray']!=''){
+                    if($row['condicionArray']!=null || $row['condicionArray']!=''){
+                        if($row['monto_pago']!=null || $row['monto_pago']!=''){
+                            if( is_numeric($row['monto_pago'])){
+                            } else{
+                                return redirect()->back()->with('alert', 'el monto no es numerico.  El proceso se interrumpio en la fila:'.$filas);
+
+                            }
+                         }
+                    }
+                    else{
+                        if($row['monto_pago']!=null || $row['monto_pago']!=''){
+                            return redirect()->back()->with('alert', 'Debe especificar condicion de pago.  El proceso se interrumpio en la fila:'.$filas);
+                        }
+                    }
+                 } else{
+
+                    if($row['monto_pago']!=null || $row['monto_pago']!='' || $row['condicionArray']!=null || $row['condicionArray']!=''){
+                        return redirect()->back()->with('alert', 'Debe especificar tipo de contrato.  El proceso se interrumpio en la fila:'.$filas);
+                    }
+
+
+                 }
+
                /*   dd(date_format( $fechaNacimieB, 'Y-m-d')); */
                  //////////MANDA DATOS A VISTA
                  $din=[$row['tipo_docArray'],$row['numero_documento'],$row['nombres'],$row['apellido_paterno'],$row['apellido_materno'],$row['correo'],$row['celular'],
-                 $row['sexo'],date_format( $fechaNacimieB, 'Y-m-d'), $row['name_depNArray'],$row['provNArray'],
+                 $row['sexo'],$fechaNacimieB, $row['name_depNArray'],$row['provNArray'],
                  $row['distNArray'], $row['direccion'],$row['name_depArray'], $row['provArray'],$row['distArray'],$row['tipo_contratoArray'],$row['localArray'],$row['nivelArray'],
-                  $row['cargoArray'],$row['areaArray'],$row['centro_costoArray'], $row['condicion_pago']];
+                  $row['cargoArray'],$row['areaArray'],$row['centro_costoArray'], $row['condicionArray'],$row['monto_pago']];
                   array_push($this->dnias,$din);
 
 

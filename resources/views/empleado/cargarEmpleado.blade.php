@@ -210,6 +210,7 @@
                                         <th>Área</th>
                                         <th>Centro de costo</th>
                                         <th>Condicion de pago</th>
+                                        <th>Monto de pago</th>
                                     </tr>
                                 </thead>
                                 <tbody style="background:#f7f7f7;color: #2c2c2c;">
@@ -240,6 +241,7 @@
                                         <td>{{$item[20]}}</td>
                                         <td>{{$item[21]}}</td>
                                         <td>{{$item[22]}}</td>
+                                        <td>{{$item[23]}}</td>
 
                                       </tr>
                                       @endforeach
