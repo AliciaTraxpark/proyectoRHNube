@@ -3315,7 +3315,7 @@ use App\proyecto_empleado;
                         <li><a href="#sw-default-step-6">Dispositivo</a></li>
                         <div class="col-md-2 text-left" style="display: flex; align-items: center;cursor: pointer;">
                             <a style="color: #3d3d3d;"
-                                onclick="$('#verEmpleadoDetalles').modal('toggle');$('#form-ver').modal();">
+                                onclick="$('#verEmpleadoDetalles').modal('toggle');javascript:editarEmpleado($('#v_idV').val())">
                                 <img src="{{ asset('admin/images/edit.svg') }}" height="15">
                                 <span style="font-weight: 600">Editar</span>
                             </a>
