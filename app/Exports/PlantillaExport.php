@@ -40,7 +40,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
             'tipo_documento', 'numero_documento', 'nombres', 'apellido_paterno',
             'apellido_materno', 'direccion', 'departamento', 'provincia', 'distrito',
             'cargo', 'area', 'centro_costo', 'fecha_nacimiento', 'departamento_nacimiento',
-            'provincia_nacimiento', 'distrito_nacimiento', 'sexo', 'tipo_contrato', 'local', 'nivel', 'correo'
+            'provincia_nacimiento', 'distrito_nacimiento', 'sexo', 'tipo_contrato', 'local', 'nivel', 'correo','celular'
         ];
     }
 
@@ -67,9 +67,9 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                     ],
                 ];
 
-                $event->sheet->getStyle('A1:U1')->applyFromArray($styleArray);
+                $event->sheet->getStyle('A1:V1')->applyFromArray($styleArray);
                 $event->sheet->getDelegate()->setTitle("Empleado");
-                foreach (range('A', 'U') as $columnID) {
+                foreach (range('A', 'V') as $columnID) {
                     $event->sheet->getColumnDimension($columnID)->setAutoSize(false);
                     $event->sheet->getColumnDimension($columnID)
                         ->setWidth(25);
