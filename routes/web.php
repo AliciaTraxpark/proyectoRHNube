@@ -150,6 +150,9 @@ Route::post('/registrar/nivel', 'nivelController@store');
 //CONTRATO
 Route::post('/registrar/contrato', 'contratoController@store');
 
+// CONDICION DE PAGO
+Route::post('/registrar/condicion', 'condicionPagoController@store');
+
 //TAREAS
 Route::get('/tareas', 'ControlController@index');
 Route::get('/tareas/show', 'ControlController@show');
