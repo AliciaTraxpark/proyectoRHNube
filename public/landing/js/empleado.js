@@ -1925,6 +1925,7 @@ function enviarArea(accion, objArea) {
                 $('#v_area').val(data.area_id).trigger("change");
                 $('#textArea').val('');
                 $('#editarArea').hide();
+                limpiar();
                 $('#areamodal').modal('toggle');
                 $('#form-registrar').modal('show');
                 $.notify({
@@ -1991,6 +1992,7 @@ function enviarArea(accion, objArea) {
                 $('#v_area').val(data.area_id).trigger("change");
                 $('#textArea').val('');
                 $('#editarArea').hide();
+                limpiar();
                 $('#areamodal').modal('toggle');
                 $('#form-registrar').modal('show');
                 $.notify({
@@ -2061,6 +2063,7 @@ function enviarCargo(accion, objCargo) {
                 $('#v_cargo').val(data.cargo_id).trigger("change"); //lo selecciona
                 $('#textCargo').val('');
                 $('#editarCargo').hide();
+                limpiar();
                 $('#cargomodal').modal('toggle');
                 $('#form-registrar').modal('show');
                 $.notify({
@@ -2128,6 +2131,7 @@ function enviarCargo(accion, objCargo) {
                 $('#v_cargo').val(data.cargo_id).trigger("change");
                 $('#textCargo').val('');
                 $('#editarCargo').hide();
+                limpiar();
                 $('#cargomodal').modal('toggle');
                 $('#form-registrar').modal('show');
                 $.notify({
@@ -2198,6 +2202,7 @@ function enviarCentro(accion, objCentroC) {
                 $('#v_centroc').val(data.centroC_id).trigger("change"); //lo selecciona
                 $('#textCentro').val('');
                 $('#editarCentro').hide();
+                limpiar();
                 $('#centrocmodal').modal('toggle');
                 $('#form-registrar').modal('show');
                 $.notify({
@@ -2264,6 +2269,7 @@ function enviarCentro(accion, objCentroC) {
                 $('#v_centroc').val(data.centroC_id).trigger("change"); //lo selecciona
                 $('#textCentro').val('');
                 $('#editarCentro').hide();
+                limpiar();
                 $('#centrocmodal').modal('toggle');
                 $('#form-registrar').modal('show');
                 $.notify({
@@ -2334,6 +2340,7 @@ function enviarLocal(accion, objLocal) {
                 $('#v_local').val(data.local_id).trigger("change"); //lo selecciona
                 $('#textLocal').val('');
                 $('#editarLocal').hide();
+                limpiar();
                 $('#localmodal').modal('toggle');
                 $('#form-registrar').modal('show');
                 $.notify({
@@ -2400,6 +2407,7 @@ function enviarLocal(accion, objLocal) {
                 $('#v_local').val(data.local_id).trigger("change"); //lo selecciona
                 $('#textLocal').val('');
                 $('#editarLocal').hide();
+                limpiar();
                 $('#localmodal').modal('toggle');
                 $('#form-registrar').modal('show');
                 $.notify({
@@ -2470,6 +2478,7 @@ function enviarNivel(accion, objNivel) {
                 $('#v_nivel').val(data.nivel_id).trigger("change"); //lo selecciona
                 $('#textNivel').val('');
                 $('#editarNivel').hide();
+                limpiar();
                 $('#nivelmodal').modal('toggle');
                 $('#form-registrar').modal('show');
                 $.notify({
@@ -2537,6 +2546,7 @@ function enviarNivel(accion, objNivel) {
                 $('#v_nivel').val(data.nivel_id).trigger("change"); //lo selecciona
                 $('#textNivel').val('');
                 $('#editarNivel').hide();
+                limpiar();
                 $('#nivelmodal').modal('toggle');
                 $('#form-registrar').modal('show');
                 $.notify({
@@ -2608,6 +2618,7 @@ function enviarContrato(accion, objContrato) {
                 $('#v_contrato').val(data.contrato_id).trigger("change"); //lo selecciona
                 $('#textContrato').val('');
                 $('#editarContrato').hide();
+                limpiar();
                 $('#contratomodal').modal('toggle');
                 $('#form-registrar').modal('show');
                 $.notify({
@@ -2675,6 +2686,7 @@ function enviarContrato(accion, objContrato) {
                 $('#v_contrato').val(data.contrato_id).trigger("change"); //lo selecciona
                 $('#textContrato').val('');
                 $('#editarContrato').hide();
+                limpiar();
                 $('#contratomodal').modal('toggle');
                 $('#form-registrar').modal('show');
                 $.notify({
@@ -2745,6 +2757,7 @@ function enviarCondicion(accion, objCondicion) {
                 $('#v_condicion').val(data.id).trigger("change"); //lo selecciona
                 $('#textCondicion').val('');
                 $('#editarCondicion').hide();
+                limpiar();
                 $('#condicionmodal').modal('toggle');
                 $('#fechasmodal').modal('show');
                 $.notify({
@@ -2812,6 +2825,7 @@ function enviarCondicion(accion, objCondicion) {
                 $('#v_condicion').val(data.id).trigger("change"); //lo selecciona
                 $('#textCondicion').val('');
                 $('#editarCondicion').hide();
+                limpiar();
                 $('#condicionmodal').modal('toggle');
                 $('#fechasmodal').modal('show');
                 $.notify({
