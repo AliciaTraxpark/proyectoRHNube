@@ -287,11 +287,13 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                         $row['nivelArray'] = $row['nivel'];
                    }
                  } else{ $row['nivelArray']=null; }
-
+                 $fechaNacimieB=\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['fecha_nacimiento']);
+               /*   dd(date_format( $fechaNacimieB, 'Y-m-d')); */
                  //////////MANDA DATOS A VISTA
-                 $din=[$row['tipo_docArray'],$row['numero_documento'],$row['nombres'],$row['apellido_paterno'],$row['apellido_materno'],$row['direccion'],$row['name_depArray'],
-                 $row['provArray'],$row['distArray'], $row['cargoArray'],$row['areaArray'],$row['centro_costoArray'],$row['fecha_nacimiento'],$row['name_depNArray'],$row['provNArray'],
-                 $row['distNArray'], $row['sexo'],$row['tipo_contratoArray'],$row['localArray'],$row['nivelArray'],$row['correo'],$row['celular']];
+                 $din=[$row['tipo_docArray'],$row['numero_documento'],$row['nombres'],$row['apellido_paterno'],$row['apellido_materno'],$row['correo'],$row['celular'],
+                 $row['sexo'],date_format( $fechaNacimieB, 'Y-m-d'), $row['name_depNArray'],$row['provNArray'],
+                 $row['distNArray'], $row['direccion'],$row['name_depArray'], $row['provArray'],$row['distArray'],$row['tipo_contratoArray'],$row['localArray'],$row['nivelArray'],
+                  $row['cargoArray'],$row['areaArray'],$row['centro_costoArray'], $row['condicion_pago']];
                   array_push($this->dnias,$din);
 
 

@@ -38,9 +38,9 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
     {
         return [
             'tipo_documento', 'numero_documento', 'nombres', 'apellido_paterno',
-            'apellido_materno', 'direccion', 'departamento', 'provincia', 'distrito',
-            'cargo', 'area', 'centro_costo', 'fecha_nacimiento', 'departamento_nacimiento',
-            'provincia_nacimiento', 'distrito_nacimiento', 'sexo', 'tipo_contrato', 'local', 'nivel', 'correo','celular'
+            'apellido_materno','correo','celular','sexo', 'fecha_nacimiento', 'departamento_nacimiento',
+            'provincia_nacimiento', 'distrito_nacimiento', 'direccion', 'departamento', 'provincia', 'distrito',
+            'tipo_contrato', 'local', 'nivel','cargo', 'area', 'centro_costo','condicion_pago'
         ];
     }
 
@@ -67,9 +67,9 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                     ],
                 ];
 
-                $event->sheet->getStyle('A1:V1')->applyFromArray($styleArray);
+                $event->sheet->getStyle('A1:W1')->applyFromArray($styleArray);
                 $event->sheet->getDelegate()->setTitle("Empleado");
-                foreach (range('A', 'V') as $columnID) {
+                foreach (range('A', 'W') as $columnID) {
                     $event->sheet->getColumnDimension($columnID)->setAutoSize(false);
                     $event->sheet->getColumnDimension($columnID)
                         ->setWidth(25);
@@ -84,20 +84,20 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $local = local::all();
                 $nivel = nivel::all();
 
-                $drop_column = 'G';
-                $drop_columnP = 'H';
+                $drop_column = 'N';
+                $drop_columnP = 'o';
                 $drop_columnD = 'A';
-                $drop_columnC = 'R';
-                $drop_columnN = 'N';
-                $drop_columnPN = 'O';
-                $drop_columnCargo = 'J';
-                $drop_columnArea = 'K';
-                $drop_columnCentro = 'L';
-                $drop_columnLocal = 'S';
-                $drop_columnNivel = 'T';
-                $drop_columnGenero = 'Q';
+                $drop_columnC = 'Q';
+                $drop_columnN = 'J';
+                $drop_columnPN = 'K';
+                $drop_columnCargo = 'T';
+                $drop_columnArea = 'U';
+                $drop_columnCentro = 'V';
+                $drop_columnLocal = 'R';
+                $drop_columnNivel = 'S';
+                $drop_columnGenero = 'H';
 
-                $drop_columnFecha = 'M';
+                $drop_columnFecha = 'I';
 
                 $row = 1;
                 $rowP = 1;

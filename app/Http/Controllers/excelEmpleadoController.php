@@ -245,12 +245,15 @@ class excelEmpleadoController extends Controller
 
                 //
             ]);
-            $empleadoId=empleado::create([
+            if($emp[21]!=null || $emp[21]!=''){
+                $numcelular='+51'.$emp[21];
+            } else { $numcelular='';}
+            $empleadoId=empleado::create([  
                 'emple_persona'    => $personaId->perso_id,
                 'emple_tipoDoc'    =>  $row['tipo_doc'],
                 'emple_nDoc'       =>$emp[1],
                 'emple_Correo'=>$emp[20],
-                'emple_celular'=>'+51'.$emp[21],
+                'emple_celular'=>$numcelular,
 
                 'emple_telefono'=>'',
                 'emple_departamento'=> $row['iddep'],

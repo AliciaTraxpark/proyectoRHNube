@@ -192,24 +192,24 @@
                                         <th>Nombres</th>
                                         <th>Ap. Paterno</th>
                                         <th>Ap. Materno</th>
+                                        <th>Correo</th>
+                                        <th>Celular</th>
+                                        <th>Sexo</th>
+                                        <th>Fecha nacimiento</th>
+                                        <th>Departamento Nac.</th>
+                                        <th>Provincia Nac.</th>
+                                        <th>Distrito Nac.</th>
                                         <th>Direccion</th>
                                         <th>Departamento</th>
                                         <th>Provincia</th>
                                         <th>Distrito</th>
-                                        <th>Cargo</th>
-                                        <th>Área</th>
-                                        <th>Centro de costo</th>
-                                        <th>Fecha nacimiento</th>
-                                        {{-- <th>Ciudad Nac</th> --}}
-                                        <th>Departamento Nac.</th>
-                                        <th>Provincia Nac.</th>
-                                        <th>Distrito Nac.</th>
-                                        <th>Sexo</th>
                                         <th>Contrato</th>
                                         <th>Local</th>
                                         <th>Nivel</th>
-                                        <th>Correo</th>
-                                        <th>Celular</th>
+                                        <th>Cargo</th>
+                                        <th>Área</th>
+                                        <th>Centro de costo</th>
+                                        <th>Condicion de pago</th>
                                     </tr>
                                 </thead>
                                 <tbody style="background:#f7f7f7;color: #2c2c2c;">
@@ -239,6 +239,7 @@
                                         <td>{{$item[19]}}</td>
                                         <td>{{$item[20]}}</td>
                                         <td>{{$item[21]}}</td>
+                                        <td>{{$item[22]}}</td>
 
                                       </tr>
                                       @endforeach
