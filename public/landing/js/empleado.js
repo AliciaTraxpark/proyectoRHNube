@@ -1047,7 +1047,7 @@ function eliminarhorariosTem() {
     mescale = fmes.getMonth() + 1;
     aniocalen = fmes.getFullYear();
     bootbox.confirm({
-        message: "¿Esta seguro que desea eliminar feriados del calendario?",
+        message: "¿Esta seguro que desea eliminar horarios del calendario?",
         buttons: {
             confirm: {
                 label: 'Aceptar',

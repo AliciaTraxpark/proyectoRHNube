@@ -291,6 +291,7 @@
                                         </div>
 
                                     </div>
+                                   <br><br>
                                     <div class="col-md-12">
                                         <label class="normal" for="">Sexo:</label>
                                     </div>
@@ -318,7 +319,7 @@
                                         <div class="control">
                                             <label class="radio normal"
                                                 data-toggle="tooltip"
-                                                data-placement="right" title=""
+                                                data-placement="bottom" title=""
                                                 data-original-title="Puedes
                                                 elegir personalizado si no
                                                 deseas especificar tu sexo.">
@@ -340,7 +341,7 @@
                                     </div>
                                 </div>
                                 <br><br>
-                                <br><br>
+                                
                             </div>
                             <div class="container col-md-3">
                                 <img
