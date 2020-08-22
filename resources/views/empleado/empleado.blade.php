@@ -2337,7 +2337,7 @@
                                                 aria-labelledby="myModalLabel" aria-hidden="true"
                                                 data-backdrop="static">
                                                 <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                                    style="width:670px;  margin-top: 150px; left:0px;">
+                                                    style="width:750px;  margin-top: 150px; left:0px;">
 
                                                     <div class="modal-content">
 

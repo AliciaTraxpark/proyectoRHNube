@@ -99,7 +99,7 @@ function calendario() {
             var event = calendar.getEventById(id);
 
             bootbox.confirm({
-                message: "¿Desea eliminar: " + info.event.title + " del horario?",
+                message: "¿Desea eliminar: " + info.event.title + " del calendario?",
                 buttons: {
                     confirm: {
                         label: 'Aceptar',
@@ -225,7 +225,7 @@ function calendario_edit() {
             if (info.event.textColor == '111111' || info.event.textColor == '1' || info.event.textColor == '0') {
                 if (info.event.textColor == '111111') {
                     bootbox.confirm({
-                        message: "¿Desea eliminar: " + info.event.title + " del horario?",
+                        message: "¿Desea eliminar: " + info.event.title + " del calendario?",
                         buttons: {
                             confirm: {
                                 label: 'Aceptar',
@@ -269,7 +269,7 @@ function calendario_edit() {
                     });
                 } else {
                     bootbox.confirm({
-                        message: "¿Desea eliminar: " + info.event.title + " del horario?",
+                        message: "¿Desea eliminar: " + info.event.title + " del calendario?",
                         buttons: {
                             confirm: {
                                 label: 'Aceptar',
@@ -315,7 +315,7 @@ function calendario_edit() {
                 }
             } else {
                 bootbox.confirm({
-                    message: "¿Desea eliminar: " + info.event.title + " del horario?",
+                    message: "¿Desea eliminar: " + info.event.title + " del calendario?",
                     buttons: {
                         confirm: {
                             label: 'Aceptar',
@@ -1123,7 +1123,7 @@ function calendario2() {
             var event = calendar2.getEventById(id);
 
             bootbox.confirm({
-                message: "¿Desea eliminar: " + info.event.title + " del horario?",
+                message: "¿Desea eliminar: " + info.event.title + " del calendario?",
                 buttons: {
                     confirm: {
                         label: 'Aceptar',
@@ -1657,7 +1657,7 @@ function calendario2_ed() {
             if (info.event.textColor == '111111' || info.event.textColor == '1' || info.event.textColor == '0') {
                 if (info.event.textColor == '111111') {
                     bootbox.confirm({
-                        message: "¿Desea eliminar: " + info.event.title + " del horario?",
+                        message: "¿Desea eliminar: " + info.event.title + " del calendario?",
                         buttons: {
                             confirm: {
                                 label: 'Aceptar',
@@ -1701,7 +1701,7 @@ function calendario2_ed() {
                     });
                 } else {
                     bootbox.confirm({
-                        message: "¿Desea eliminar: " + info.event.title + " del horario?",
+                        message: "¿Desea eliminar: " + info.event.title + " del calendario?",
                         buttons: {
                             confirm: {
                                 label: 'Aceptar',
@@ -1747,7 +1747,7 @@ function calendario2_ed() {
                 }
             } else {
                 bootbox.confirm({
-                    message: "¿Desea eliminar: " + info.event.title + " del horario?",
+                    message: "¿Desea eliminar: " + info.event.title + " del calendario?",
                     buttons: {
                         confirm: {
                             label: 'Aceptar',
