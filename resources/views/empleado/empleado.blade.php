@@ -29,40 +29,43 @@
             width: 100%;
             height: 6px;
         }
+
     </style>
 
 
-    <script type="text/javascript" src="{{asset('admin/assets/pace/pace.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('admin/assets/pace/pace.min.js') }}"></script>
 
-    {{-- <link rel="stylesheet" href="{{asset('landing/vendors/owl-carousel/css/owl.carousel.min.css')}}">
-    <link rel="stylesheet" href="{{asset('landing/vendors/owl-carousel/css/owl.theme.default.css')}}">
-    <link rel="stylesheet" href="{{asset('landing/vendors/mdi/css/materialdesignicons.min.css')}}"> --}}
-    <link rel="stylesheet" href="{{asset('landing/vendors/aos/css/aos.css')}}">
-    <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
+    {{--
+    <link rel="stylesheet" href="{{ asset('landing/vendors/owl-carousel/css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('landing/vendors/owl-carousel/css/owl.theme.default.css') }}">
+    <link rel="stylesheet" href="{{ asset('landing/vendors/mdi/css/materialdesignicons.min.css') }}">
+    --}}
+    <link rel="stylesheet" href="{{ asset('landing/vendors/aos/css/aos.css') }}">
+    <link rel="stylesheet" href="{{ asset('landing/css/style.min.css') }}">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- App favicon -->
 
 
     <!-- App css -->
-    <link href="{{asset('admin/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('admin/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('admin/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('admin/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
 
-    <link href="{{asset('admin/assets/libs/bootstrap-fileinput/fileinput.min.css')}}" rel="stylesheet"
+    <link href="{{ asset('admin/assets/libs/bootstrap-fileinput/fileinput.min.css') }}" rel="stylesheet"
         type="text/css" />
 
     <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- Plugin css  CALENDAR-->
-    <link href="{{asset('admin/packages/core/main.css')}}" rel="stylesheet" />
-    <link href="{{asset('admin/packages/daygrid/main.css')}}" rel="stylesheet" />
-    <link href="{{asset('admin/packages/timegrid/main.css')}}" rel="stylesheet" />
+    <link href="{{ asset('admin/packages/core/main.css') }}" rel="stylesheet" />
+    <link href="{{ asset('admin/packages/daygrid/main.css') }}" rel="stylesheet" />
+    <link href="{{ asset('admin/packages/timegrid/main.css') }}" rel="stylesheet" />
 
-    <link href="{{asset('admin/assets/libs/smartwizard/smart_wizard.min.css')}}" type="text/css" />
-    <link href="{{asset('admin/assets/libs/smartwizard/smart_wizard_theme_arrows.min.css')}}" type="text/css" />
-    <link href="{{asset('admin/assets/libs/smartwizard/smart_wizard_theme_circles.min.css')}}" type="text/css" />
-    <link href="{{asset('admin/assets/libs/smartwizard/smart_wizard_theme_dots.min.css')}}" type="text/css" />
+    <link href="{{ asset('admin/assets/libs/smartwizard/smart_wizard.min.css') }}" type="text/css" />
+    <link href="{{ asset('admin/assets/libs/smartwizard/smart_wizard_theme_arrows.min.css') }}" type="text/css" />
+    <link href="{{ asset('admin/assets/libs/smartwizard/smart_wizard_theme_circles.min.css') }}" type="text/css" />
+    <link href="{{ asset('admin/assets/libs/smartwizard/smart_wizard_theme_dots.min.css') }}" type="text/css" />
     <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
 </head>
@@ -74,11 +77,11 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body text-center">
-                    <img src="{{asset('landing/images/notification.svg')}}" height="100">
+                    <img src="{{ asset('landing/images/notification.svg') }}" height="100">
                     <h4 class="text-danger mt-4">Su sesion expiró</h4>
                     <p class="w-75 mx-auto text-muted">Por favor inicie sesion nuevamente.</p>
                     <div class="mt-4">
-                        <a href="{{('/')}}" class="btn btn-outline-primary btn-rounded width-md"><i
+                        <a href="{{ '/' }}" class="btn btn-outline-primary btn-rounded width-md"><i
                                 class="uil uil-arrow-right mr-1"></i> Iniciar sesion</a>
                     </div>
                 </div>
@@ -259,7 +262,7 @@
                     <form class="form-horizontal">
                         <div class="row">
                             <div class="col-md-2 text-center">
-                                <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
+                                <img src="{{ asset('landing/images/alert.svg') }}" height="25" class="mr-1 mt-2">
                             </div>
                             <div class="col-md-8 text-center">
                                 <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
@@ -309,7 +312,7 @@
                     <form class="form-horizontal">
                         <div class="row">
                             <div class="col-md-2 text-center">
-                                <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
+                                <img src="{{ asset('landing/images/alert.svg') }}" height="25" class="mr-1 mt-2">
                             </div>
                             <div class="col-md-8 text-center">
                                 <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
@@ -359,7 +362,7 @@
                     <form class="form-horizontal">
                         <div class="row">
                             <div class="col-md-2 text-center">
-                                <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
+                                <img src="{{ asset('landing/images/alert.svg') }}" height="25" class="mr-1 mt-2">
                             </div>
                             <div class="col-md-8 text-center">
                                 <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
@@ -409,7 +412,7 @@
                     <form class="form-horizontal">
                         <div class="row">
                             <div class="col-md-2 text-center">
-                                <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
+                                <img src="{{ asset('landing/images/alert.svg') }}" height="25" class="mr-1 mt-2">
                             </div>
                             <div class="col-md-8 text-center">
                                 <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
@@ -570,6 +573,7 @@
             -webkit-text-security: disc;
             /* Default */
         }
+
     </style>
 
     <header id="header-section">
@@ -577,7 +581,7 @@
             <div class="container">
                 <div class="col-md-2 col-xl-2">
                     <div class="navbar-brand-wrapper d-flex w-100">
-                        <img src="{{asset('landing/images/logo.png')}}" height="100">
+                        <img src="{{ asset('landing/images/logo.png') }}" height="100">
                     </div>
                 </div>
                 <div class="col-md-7 col-xl-7 text-left">
@@ -585,12 +589,13 @@
                     <label for="" class="blanco font-italic">Tienes 2 minutos para registrar tu primer empleado</label>
                 </div>
                 <div class=" col-md-5 col-xl-5">
-                    <a href="{{('/empleado/cargar')}}"> <button class="btn btn-sm btn-primary"
+                    <a href="{{ '/empleado/cargar' }}"> <button class="btn btn-sm btn-primary"
                             style="background-color: #183b5d;border-color:#62778c"><img
-                                src="{{asset('admin/images/subir.ico')}}" height="25" class="mr-1">Carga
+                                src="{{ asset('admin/images/subir.ico') }}" height="25" class="mr-1">Carga
                             masiva emp.</button></a> &nbsp;&nbsp;&nbsp;
                     <button class="btn btn-sm btn-primary" style="background-color: #183b5d;border-color:#62778c"
-                        id="cargaMasivaF"><img src="{{asset('admin/images/image.ico')}}" height="25" class="mr-1">Carga
+                        id="cargaMasivaF"><img src="{{ asset('admin/images/image.ico') }}" height="25"
+                            class="mr-1">Carga
                         masiva fotos</button>
                 </div>
 
@@ -622,12 +627,12 @@
                             </div>
                             <div id="espera" class="text-center" style="display: none">
 
-                                <img src="{{asset('landing/images/loading.gif')}}" height="100">
+                                <img src="{{ asset('landing/images/loading.gif') }}" height="100">
                             </div>
                             <div id="tabladiv">
                             </div>
                             <div class="text-right"><br><br>
-                                <a href="{{('/horario')}}"><button
+                                <a href="{{ '/horario' }}"><button
                                         class="boton btn btn-default mr-1">CONTINUAR</button></a>
                             </div>
                         </div> <!-- end card body-->
@@ -650,16 +655,16 @@
                                 <br>
                                 <div class="row">
                                     <div class="col-xl-5 text-center">
-                                        <img src="{{asset('landing/images/photo (3).svg')}}" height="100">
+                                        <img src="{{ asset('landing/images/photo (3).svg') }}" height="100">
                                         <br>
                                         <span class="mr-2 text-center" style="color: #024079;font-weight: bold;">DNI
                                             Empleado</span>
                                     </div>
                                     <div class="col-xl-2 text-left">
-                                        <img src="{{asset('landing/images/right-arrow.svg')}}" height="80">
+                                        <img src="{{ asset('landing/images/right-arrow.svg') }}" height="80">
                                     </div>
                                     <div class="col-xl-5 text-center">
-                                        <img src="{{asset('landing/images/photo (3).svg')}}" height="100">
+                                        <img src="{{ asset('landing/images/photo (3).svg') }}" height="100">
                                         <br>
                                         <span class="mr-2 text-center"
                                             style="color: #024079;font-weight: bold;">12345678</span>
@@ -668,7 +673,7 @@
                                 <br>
                                 <div class="row">
                                     <div class="col-xl-12 text-center">
-                                        <img src="{{asset('landing/images/alert.svg')}}" height="25"
+                                        <img src="{{ asset('landing/images/alert.svg') }}" height="25"
                                             class="mr-1"><span>Puedes guardar tus fotos en una carpeta
                                             especifica.</span>
                                     </div>
@@ -786,7 +791,7 @@
                                                 <a id="buscarArea" data-toggle="tooltip" data-placement="right"
                                                     title="Editar Área." data-original-title="Editar Área."
                                                     style="cursor: pointer;"><img
-                                                        src="{{asset('landing/images/search.svg')}}" height="18">
+                                                        src="{{ asset('landing/images/search.svg') }}" height="18">
                                                 </a>
                                             </div>
                                         </div>
@@ -831,7 +836,7 @@
                                                 <a id="buscarCargo" data-toggle="tooltip" data-placement="right"
                                                     title="Editar Cargo." data-original-title="Editar Cargo."
                                                     style="cursor: pointer;"><img
-                                                        src="{{asset('landing/images/search.svg')}}" height="18">
+                                                        src="{{ asset('landing/images/search.svg') }}" height="18">
                                                 </a>
                                             </div>
                                         </div>
@@ -877,7 +882,7 @@
                                                     title="Editar Centro Costo."
                                                     data-original-title="Editar Centro Costo."
                                                     style="cursor: pointer;"><img
-                                                        src="{{asset('landing/images/search.svg')}}" height="18">
+                                                        src="{{ asset('landing/images/search.svg') }}" height="18">
                                                 </a>
                                             </div>
                                         </div>
@@ -921,7 +926,7 @@
                                             <a id="buscarLocal" data-toggle="tooltip" data-placement="right"
                                                 title="Editar Local." data-original-title="Editar Local."
                                                 style="cursor: pointer;"><img
-                                                    src="{{asset('landing/images/search.svg')}}" height="18">
+                                                    src="{{ asset('landing/images/search.svg') }}" height="18">
                                             </a>
                                         </div>
                                     </div>
@@ -965,7 +970,7 @@
                                             <a id="buscarNivel" data-toggle="tooltip" data-placement="right"
                                                 title="Editar Nivel." data-original-title="Editar Nivel."
                                                 style="cursor: pointer;"><img
-                                                    src="{{asset('landing/images/search.svg')}}" height="18">
+                                                    src="{{ asset('landing/images/search.svg') }}" height="18">
                                             </a>
                                         </div>
                                     </div>
@@ -1009,7 +1014,7 @@
                                             <a id="buscarContrato" data-toggle="tooltip" data-placement="right"
                                                 title="Editar Contrato." data-original-title="Editar Contrato."
                                                 style="cursor: pointer;"><img
-                                                    src="{{asset('landing/images/search.svg')}}" height="18">
+                                                    src="{{ asset('landing/images/search.svg') }}" height="18">
                                             </a>
                                         </div>
                                     </div>
@@ -1054,7 +1059,7 @@
                                                 title="Editar Condición de Pago."
                                                 data-original-title="Editar Condición de Pago."
                                                 style="cursor: pointer;"><img
-                                                    src="{{asset('landing/images/search.svg')}}" height="18">
+                                                    src="{{ asset('landing/images/search.svg') }}" height="18">
                                             </a>
                                         </div>
                                     </div>
@@ -1101,8 +1106,8 @@
                                                 <select class="form-control" name="condicion" id="condicion" required>
                                                     <option value="">Seleccionar</option>
                                                     @foreach ($condicionP as $condicion)
-                                                    <option class="" value="{{$condicion->id}}">
-                                                        {{$condicion->condicion}}</option>
+                                                        <option class="" value="{{ $condicion->id }}">
+                                                            {{ $condicion->condicion }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -1125,9 +1130,10 @@
                                                     <select class="form-control" name="m_dia_fecha" id="m_dia_fecha"
                                                         required="">
                                                         <option value="0">Dia</option>
-                                                        @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
-                                                            {{$i}}</option>
-                                                            @endfor
+                                                        @for ($i = 1; $i < 32; $i++)
+                                                            <option class="" value="{{ $i }}">
+                                                                {{ $i }}</option>
+                                                        @endfor
                                                     </select>
                                                 </div>
                                                 <div class="col-md-4">
@@ -1153,11 +1159,11 @@
                                                     padding-right: 5px;" name="m_ano_fecha" id="m_ano_fecha"
                                                         required="">
                                                         <option value="0">Año</option>
-                                                        @for ($i = 2000; $i <2100; $i++) <option class=""
-                                                            value="{{$i}}">
-                                                            {{$i}}
+                                                        @for ($i = 2000; $i < 2100; $i++)
+                                                            <option class="" value="{{ $i }}">
+                                                                {{ $i }}
                                                             </option>
-                                                            @endfor
+                                                        @endfor
                                                     </select>
                                                 </div>
 
@@ -1176,9 +1182,10 @@
                                                         <select class="form-control" name="mf_dia_fecha"
                                                             id="mf_dia_fecha" required="">
                                                             <option value="0">Dia</option>
-                                                            @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
-                                                                {{$i}}</option>
-                                                                @endfor
+                                                            @for ($i = 1; $i < 32; $i++)
+                                                                <option class="" value="{{ $i }}">
+                                                                    {{ $i }}</option>
+                                                            @endfor
                                                         </select>
                                                     </div>
                                                     <div class="col-md-4">
@@ -1204,10 +1211,10 @@
                                                     padding-right: 5px;" name="mf_ano_fecha" id="mf_ano_fecha"
                                                             required="">
                                                             <option value="0">Año</option>
-                                                            @for ($i = 2014; $i <2100; $i++) <option class=""
-                                                                value="{{$i}}">{{$i}}
+                                                            @for ($i = 2014; $i < 2100; $i++)
+                                                                <option class="" value="{{ $i }}">{{ $i }}
                                                                 </option>
-                                                                @endfor
+                                                            @endfor
                                                         </select>
                                                     </div>
 
@@ -1252,7 +1259,7 @@
                                             <a id="buscarAreaA" data-toggle="tooltip" data-placement="right"
                                                 title="Editar Area." data-original-title="Editar Area."
                                                 style="cursor: pointer;"><img
-                                                    src="{{asset('landing/images/search.svg')}}" height="18">
+                                                    src="{{ asset('landing/images/search.svg') }}" height="18">
                                             </a>
                                         </div>
                                     </div>
@@ -1296,7 +1303,7 @@
                                             <a id="buscarCargoA" data-toggle="tooltip" data-placement="right"
                                                 title="Editar Cargo." data-original-title="Editar Cargo."
                                                 style="cursor: pointer;"><img
-                                                    src="{{asset('landing/images/search.svg')}}" height="18">
+                                                    src="{{ asset('landing/images/search.svg') }}" height="18">
                                             </a>
                                         </div>
                                     </div>
@@ -1339,7 +1346,7 @@
                                             <a id="buscarCentroA" data-toggle="tooltip" data-placement="right"
                                                 title="Editar Centro Costo." data-original-title="Editar Centro Costo."
                                                 style="cursor: pointer;"><img
-                                                    src="{{asset('landing/images/search.svg')}}" height="18">
+                                                    src="{{ asset('landing/images/search.svg') }}" height="18">
                                             </a>
                                         </div>
                                     </div>
@@ -1382,7 +1389,7 @@
                                             <a id="buscarLocalA" data-toggle="tooltip" data-placement="right"
                                                 title="Editar Local." data-original-title="Editar Local."
                                                 style="cursor: pointer;"><img
-                                                    src="{{asset('landing/images/search.svg')}}" height="18">
+                                                    src="{{ asset('landing/images/search.svg') }}" height="18">
                                             </a>
                                         </div>
                                     </div>
@@ -1425,7 +1432,7 @@
                                             <a id="buscarNivelA" data-toggle="tooltip" data-placement="right"
                                                 title="Editar Nivel." data-original-title="Editar Nivel."
                                                 style="cursor: pointer;"><img
-                                                    src="{{asset('landing/images/search.svg')}}" height="18">
+                                                    src="{{ asset('landing/images/search.svg') }}" height="18">
                                             </a>
                                         </div>
                                     </div>
@@ -1469,7 +1476,7 @@
                                             <a id="buscarContratoA" data-toggle="tooltip" data-placement="right"
                                                 title="Editar Contrato." data-original-title="Editar Contrato."
                                                 style="cursor: pointer;"><img
-                                                    src="{{asset('landing/images/search.svg')}}" height="18">
+                                                    src="{{ asset('landing/images/search.svg') }}" height="18">
                                             </a>
                                         </div>
                                     </div>
@@ -1514,7 +1521,7 @@
                                                 title="Editar Condición de Pago."
                                                 data-original-title="Editar Condición de Pago."
                                                 style="cursor: pointer;"><img
-                                                    src="{{asset('landing/images/search.svg')}}" height="18">
+                                                    src="{{ asset('landing/images/search.svg') }}" height="18">
                                             </a>
                                         </div>
                                     </div>
@@ -1563,8 +1570,8 @@
                                                     required>
                                                     <option value="">Seleccionar</option>
                                                     @foreach ($condicionP as $condicion)
-                                                    <option class="" value="{{$condicion->id}}">
-                                                        {{$condicion->condicion}}</option>
+                                                        <option class="" value="{{ $condicion->id }}">
+                                                            {{ $condicion->condicion }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -1587,10 +1594,11 @@
                                                     <select class="form-control" name="m_dia_fechaIE" id="m_dia_fechaIE"
                                                         required="">
                                                         <option value="0">Dia</option>
-                                                        @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
-                                                            {{$i}}
+                                                        @for ($i = 1; $i < 32; $i++)
+                                                            <option class="" value="{{ $i }}">
+                                                                {{ $i }}
                                                             </option>
-                                                            @endfor
+                                                        @endfor
                                                     </select>
                                                 </div>
                                                 <div class="col-md-4">
@@ -1616,11 +1624,11 @@
                                                     padding-right: 5px;" name="m_ano_fechaIE" id="m_ano_fechaIE"
                                                         required="">
                                                         <option value="0">Año</option>
-                                                        @for ($i = 2000; $i <2100; $i++) <option class=""
-                                                            value="{{$i}}">
-                                                            {{$i}}
+                                                        @for ($i = 2000; $i < 2100; $i++)
+                                                            <option class="" value="{{ $i }}">
+                                                                {{ $i }}
                                                             </option>
-                                                            @endfor
+                                                        @endfor
                                                     </select>
                                                 </div>
 
@@ -1639,9 +1647,10 @@
                                                         <select class="form-control" name="m_dia_fechaFE"
                                                             id="m_dia_fechaFE">
                                                             <option value="0">Dia</option>
-                                                            @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
-                                                                {{$i}}</option>
-                                                                @endfor
+                                                            @for ($i = 1; $i < 32; $i++)
+                                                                <option class="" value="{{ $i }}">
+                                                                    {{ $i }}</option>
+                                                            @endfor
                                                         </select>
                                                     </div>
                                                     <div class="col-md-4">
@@ -1666,10 +1675,10 @@
                                                         <select class="form-control" style="padding-left: 5px;
                                                         padding-right: 5px;" name="m_ano_fechaFE" id="m_ano_fechaFE">
                                                             <option value="0">Año</option>
-                                                            @for ($i = 2000; $i <2100; $i++) <option class=""
-                                                                value="{{$i}}">{{$i}}
+                                                            @for ($i = 2000; $i < 2100; $i++)
+                                                                <option class="" value="{{ $i }}">{{ $i }}
                                                                 </option>
-                                                                @endfor
+                                                            @endfor
                                                         </select>
                                                     </div>
 
@@ -1708,11 +1717,12 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="sw-default">Condición Pago</label>
-                                                <select class="form-control" name="v_condicionV" id="v_condicionV" required>
+                                                <select class="form-control" name="v_condicionV" id="v_condicionV"
+                                                    required>
                                                     <option value="">Seleccionar</option>
                                                     @foreach ($condicionP as $condicion)
-                                                    <option class="" value="{{$condicion->id}}">
-                                                        {{$condicion->condicion}}</option>
+                                                        <option class="" value="{{ $condicion->id }}">
+                                                            {{ $condicion->condicion }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -1732,18 +1742,19 @@
                                                 incorrecta.</span>
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <select class="form-control" name="m_dia_fechaIEV" id="m_dia_fechaIEV"
-                                                        required="">
+                                                    <select class="form-control" name="m_dia_fechaIEV"
+                                                        id="m_dia_fechaIEV" required="">
                                                         <option value="0">Dia</option>
-                                                        @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
-                                                            {{$i}}
+                                                        @for ($i = 1; $i < 32; $i++)
+                                                            <option class="" value="{{ $i }}">
+                                                                {{ $i }}
                                                             </option>
-                                                            @endfor
+                                                        @endfor
                                                     </select>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <select class="form-control" name="m_mes_fechaIEV" id="m_mes_fechaIEV"
-                                                        required="">
+                                                    <select class="form-control" name="m_mes_fechaIEV"
+                                                        id="m_mes_fechaIEV" required="">
                                                         <option value="0">Mes</option>
                                                         <option class="" value="1">Ene.</option>
                                                         <option class="" value="2">Feb.</option>
@@ -1764,11 +1775,11 @@
                                                     padding-right: 5px;" name="m_ano_fechaIEV" id="m_ano_fechaIEV"
                                                         required="">
                                                         <option value="0">Año</option>
-                                                        @for ($i = 2000; $i <2100; $i++) <option class=""
-                                                            value="{{$i}}">
-                                                            {{$i}}
+                                                        @for ($i = 2000; $i < 2100; $i++)
+                                                            <option class="" value="{{ $i }}">
+                                                                {{ $i }}
                                                             </option>
-                                                            @endfor
+                                                        @endfor
                                                     </select>
                                                 </div>
 
@@ -1787,9 +1798,10 @@
                                                         <select class="form-control" name="m_dia_fechaFEV"
                                                             id="m_dia_fechaFEV">
                                                             <option value="0">Dia</option>
-                                                            @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
-                                                                {{$i}}</option>
-                                                                @endfor
+                                                            @for ($i = 1; $i < 32; $i++)
+                                                                <option class="" value="{{ $i }}">
+                                                                    {{ $i }}</option>
+                                                            @endfor
                                                         </select>
                                                     </div>
                                                     <div class="col-md-4">
@@ -1814,10 +1826,10 @@
                                                         <select class="form-control" style="padding-left: 5px;
                                                         padding-right: 5px;" name="m_ano_fechaFEV" id="m_ano_fechaFEV">
                                                             <option value="0">Año</option>
-                                                            @for ($i = 2000; $i <2100; $i++) <option class=""
-                                                                value="{{$i}}">{{$i}}
+                                                            @for ($i = 2000; $i < 2100; $i++)
+                                                                <option class="" value="{{ $i }}">{{ $i }}
                                                                 </option>
-                                                                @endfor
+                                                            @endfor
                                                         </select>
                                                     </div>
 
@@ -1871,8 +1883,8 @@
                                                             name="documento" id="documento" tabindex="1" required>
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($tipo_doc as $tipo_docs)
-                                                            <option class="" value="{{$tipo_docs->tipoDoc_id}}">
-                                                                {{$tipo_docs->tipoDoc_descripcion}}</option>
+                                                                <option class="" value="{{ $tipo_docs->tipoDoc_id }}">
+                                                                    {{ $tipo_docs->tipoDoc_descripcion }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -1939,9 +1951,10 @@
                                                                 <select class="form-control" name="dia_fecha"
                                                                     id="dia_fecha" required="">
                                                                     <option value="0">Dia</option>
-                                                                    @for ($i = 1; $i <32; $i++) <option class=""
-                                                                        value="{{$i}}">{{$i}}</option>
-                                                                        @endfor
+                                                                    @for ($i = 1; $i < 32; $i++)
+                                                                        <option class="" value="{{ $i }}">{{ $i }}
+                                                                        </option>
+                                                                    @endfor
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-4">
@@ -1966,10 +1979,10 @@
                                                                 <select class="form-control" style="padding-left: 5px;
                                                     padding-right: 5px;" name="ano_fecha" id="ano_fecha" required="">
                                                                     <option value="0">Año</option>
-                                                                    @for ($i = 1950; $i <2011; $i++) <option class=""
-                                                                        value="{{$i}}">{{$i}}
+                                                                    @for ($i = 1950; $i < 2011; $i++)
+                                                                        <option class="" value="{{ $i }}">{{ $i }}
                                                                         </option>
-                                                                        @endfor
+                                                                    @endfor
                                                                 </select>
                                                             </div>
 
@@ -2036,8 +2049,8 @@
                                                             name="departamento" id="dep" tabindex="11" required>
                                                             <option value="">Departamento</option>
                                                             @foreach ($departamento as $departamentos)
-                                                            <option class="" value="{{$departamentos->id}}">
-                                                                {{$departamentos->name}}</option>
+                                                                <option class="" value="{{ $departamentos->id }}">
+                                                                    {{ $departamentos->name }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -2048,8 +2061,8 @@
                                                             required>
                                                             <option value="">Departamento</option>
                                                             @foreach ($departamento as $departamentos)
-                                                            <option class="" value="{{$departamentos->id}}">
-                                                                {{$departamentos->name}}</option>
+                                                                <option class="" value="{{ $departamentos->id }}">
+                                                                    {{ $departamentos->name }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -2145,8 +2158,8 @@
                                                             tabindex="2">
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($cargo as $cargos)
-                                                            <option class="" value="{{$cargos->cargo_id}}">
-                                                                {{$cargos->cargo_descripcion}}</option>
+                                                                <option class="" value="{{ $cargos->cargo_id }}">
+                                                                    {{ $cargos->cargo_descripcion }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -2163,15 +2176,15 @@
                                                                 data-placement="right" title="Detalle de Contrato."
                                                                 data-original-title="Detalle de Contrato."
                                                                 style="cursor: pointer;"><img
-                                                                    src="{{asset('landing/images/adaptive.svg')}}"
+                                                                    src="{{ asset('landing/images/adaptive.svg') }}"
                                                                     height="18"></a></label>
                                                         <select class="form-control" name="contrato" id="contrato"
                                                             onchange="$('#detalleContrato').show();" tabindex="5"
                                                             required>
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($tipo_cont as $tipo_conts)
-                                                            <option value="{{$tipo_conts->contrato_id}}">
-                                                                {{$tipo_conts->contrato_descripcion}}</option>
+                                                                <option value="{{ $tipo_conts->contrato_id }}">
+                                                                    {{ $tipo_conts->contrato_descripcion }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -2192,8 +2205,8 @@
                                                         <select class="form-control" name="area" id="area" tabindex="3">
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($area as $areas)
-                                                            <option class="" value="{{$areas->area_id}}">
-                                                                {{$areas->area_descripcion}}</option>
+                                                                <option class="" value="{{ $areas->area_id }}">
+                                                                    {{ $areas->area_descripcion }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -2207,8 +2220,8 @@
                                                             tabindex="6">
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($nivel as $niveles)
-                                                            <option class="" value="{{$niveles->nivel_id}}">
-                                                                {{$niveles->nivel_descripcion}}</option>
+                                                                <option class="" value="{{ $niveles->nivel_id }}">
+                                                                    {{ $niveles->nivel_descripcion }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -2224,8 +2237,9 @@
                                                             tabindex="4">
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($centro_costo as $centro_costos)
-                                                            <option class="" value="{{$centro_costos->centroC_id}}">
-                                                                {{$centro_costos->centroC_descripcion}}</option>
+                                                                <option class=""
+                                                                    value="{{ $centro_costos->centroC_id }}">
+                                                                    {{ $centro_costos->centroC_descripcion }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -2239,8 +2253,8 @@
                                                             tabindex="7">
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($local as $locales)
-                                                            <option class="" value="{{$locales->local_id}}">
-                                                                {{$locales->local_descripcion}}</option>
+                                                                <option class="" value="{{ $locales->local_id }}">
+                                                                    {{ $locales->local_descripcion }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -2264,18 +2278,18 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     @if (count($calendario) === 0)
-                                                    <div class="col-md-12 text-center">
-                                                        <h5>No existe calendarios registrados</h5>
-                                                    </div>
-                                                    <div style="display: none">
-                                                        <div class="col-md-12" id="calendarInv"
-                                                            style="display: none!important">
+                                                        <div class="col-md-12 text-center">
+                                                            <h5>No existe calendarios registrados</h5>
                                                         </div>
-                                                    </div>
+                                                        <div style="display: none">
+                                                            <div class="col-md-12" id="calendarInv"
+                                                                style="display: none!important">
+                                                            </div>
+                                                        </div>
 
 
                                                 </div>
-                                                @else
+                                            @else
                                                 <div class="form-group row">
                                                     <div class="col-md-1"></div>
                                                     <label style="font-weight: 600;font-size: 14px;"
@@ -2287,8 +2301,8 @@
                                                             style="margin-top: 4px;">
                                                             <option hidden selected>Asignar calendario</option>
                                                             @foreach ($calendario as $calendarios)
-                                                            <option class="" value="{{ $calendarios->calen_id }}">
-                                                                {{ $calendarios->calendario_nombre }}</option>
+                                                                <option class="" value="{{ $calendarios->calen_id }}">
+                                                                    {{ $calendarios->calendario_nombre }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -2310,9 +2324,9 @@
                                                                 <a class="dropdown-item"
                                                                     onclick="vaciarddescanso()">Dias
                                                                     descanso</a>
-                                                                {{-- <a class="dropdown-item"
-                                                            onclick="vaciardlabTem()">D.
-                                                            laborables</a> --}}
+                                                                {{-- <a
+                                                                    class="dropdown-item" onclick="vaciardlabTem()">D.
+                                                                    laborables</a> --}}
                                                                 <a class="dropdown-item" onclick="vaciardNlabTem()">D.
                                                                     no
                                                                     laborables</a>
@@ -2370,12 +2384,13 @@
                                                                                 height="20"> Dia feriado</button>
                                                                     </div>
                                                                     <div class="col-md-3 text-right">
-                                                                        {{-- <button type="button"
-                                                                    style=" max-width: 18em!important;"
-                                                                    class="btn btn-secondary btn-sm "
-                                                                    onclick="registrarDdescanso()"><img
-                                                                        src="{{ asset('admin/images/calendarioInc.svg') }}"
-                                                                        height="20"> Incidencia</button>
+                                                                        {{-- <button
+                                                                            type="button"
+                                                                            style=" max-width: 18em!important;"
+                                                                            class="btn btn-secondary btn-sm "
+                                                                            onclick="registrarDdescanso()"><img
+                                                                                src="{{ asset('admin/images/calendarioInc.svg') }}"
+                                                                                height="20"> Incidencia</button>
                                                                         --}}
                                                                         <button style=" max-width: 18em!important;"
                                                                             class="btn btn-secondary btn-sm"
@@ -2480,10 +2495,10 @@
                                                                         <option hidden selected>Seleccionar horario
                                                                         </option>
                                                                         @foreach ($horario as $horarios)
-                                                                        <option class=""
-                                                                            value="{{$horarios->horario_id}}">
-                                                                            {{$horarios->horario_descripcion}}
-                                                                        </option>
+                                                                            <option class=""
+                                                                                value="{{ $horarios->horario_id }}">
+                                                                                {{ $horarios->horario_descripcion }}
+                                                                            </option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
@@ -2744,9 +2759,9 @@
                                                             <select class="form-control" name="v_dia_fecha"
                                                                 id="v_dia_fecha" required="">
                                                                 <option value="0">Dia</option>
-                                                                @for ($i = 1; $i <32; $i++) <option class=""
-                                                                    value="{{$i}}">{{$i}}</option>
-                                                                    @endfor
+                                                                @for ($i = 1; $i < 32; $i++)
+                                                                    <option class="" value="{{ $i }}">{{ $i }}</option>
+                                                                @endfor
                                                             </select>
                                                         </div>
                                                         <div class="col-md-4">
@@ -2771,10 +2786,10 @@
                                                             <select class="form-control" style="padding-left: 5px;
                                                 padding-right: 5px;" name="v_mes_fecha" id="v_ano_fecha" required="">
                                                                 <option value="0">Año</option>
-                                                                @for ($i = 1950; $i <2011; $i++) <option class=""
-                                                                    value="{{$i}}">{{$i}}
+                                                                @for ($i = 1950; $i < 2011; $i++)
+                                                                    <option class="" value="{{ $i }}">{{ $i }}
                                                                     </option>
-                                                                    @endfor
+                                                                @endfor
                                                             </select>
                                                         </div>
 
@@ -2841,8 +2856,8 @@
                                                         id="v_dep" tabindex="11" required>
                                                         <option value="">Departamento</option>
                                                         @foreach ($departamento as $departamentos)
-                                                        <option class="" value="{{$departamentos->id}}">
-                                                            {{$departamentos->name}}</option>
+                                                            <option class="" value="{{ $departamentos->id }}">
+                                                                {{ $departamentos->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -2852,8 +2867,8 @@
                                                         name="v_departamento" id="v_departamento" tabindex="14">
                                                         <option value="">Departamento</option>
                                                         @foreach ($departamento as $departamentos)
-                                                        <option class="" value="{{$departamentos->id}}">
-                                                            {{$departamentos->name}}</option>
+                                                            <option class="" value="{{ $departamentos->id }}">
+                                                                {{ $departamentos->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -2874,8 +2889,8 @@
                                                         id="v_prov" tabindex="12" required>
                                                         <option value="">Provincia</option>
                                                         @foreach ($provincia as $provincias)
-                                                        <option class="" value="{{$provincias->id}}">
-                                                            {{$provincias->name}}</option>
+                                                            <option class="" value="{{ $provincias->id }}">
+                                                                {{ $provincias->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -2885,8 +2900,8 @@
                                                         name="v_provincia" id="v_provincia" tabindex="15">
                                                         <option value="">Provincia</option>
                                                         @foreach ($provincia as $provincias)
-                                                        <option class="" value="{{$provincias->id}}">
-                                                            {{$provincias->name}}</option>
+                                                            <option class="" value="{{ $provincias->id }}">
+                                                                {{ $provincias->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -2905,8 +2920,8 @@
                                                         id="v_dist" tabindex="13" required>
                                                         <option value="">Distrito</option>
                                                         @foreach ($distrito as $distritos)
-                                                        <option class="" value="{{$distritos->id}}">
-                                                            {{$distritos->name}}</option>
+                                                            <option class="" value="{{ $distritos->id }}">
+                                                                {{ $distritos->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -2916,8 +2931,8 @@
                                                         name="v_distrito" id="v_distrito" tabindex="16">
                                                         <option value="">Distrito</option>
                                                         @foreach ($distrito as $distritos)
-                                                        <option class="" value="{{$distritos->id}}">
-                                                            {{$distritos->name}}</option>
+                                                            <option class="" value="{{ $distritos->id }}">
+                                                                {{ $distritos->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -2956,8 +2971,8 @@
                                                         <option value="">Seleccionar</option>
 
                                                         @foreach ($cargo as $cargos)
-                                                        <option class="" value="{{$cargos->cargo_id}}">
-                                                            {{$cargos->cargo_descripcion}}</option>
+                                                            <option class="" value="{{ $cargos->cargo_id }}">
+                                                                {{ $cargos->cargo_descripcion }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -2972,14 +2987,14 @@
                                                             data-placement="right" title="Detalle de Contrato."
                                                             data-original-title="Detalle de Contrato."
                                                             style="cursor: pointer;"><img
-                                                                src="{{asset('landing/images/adaptive.svg')}}"
+                                                                src="{{ asset('landing/images/adaptive.svg') }}"
                                                                 height="18"></a></label>
                                                     <select class="form-control" name="v_contrato" id="v_contrato"
                                                         onchange="$('#detalleContratoE').show();" tabindex="5" required>
                                                         <option value="">Seleccionar</option>
                                                         @foreach ($tipo_cont as $tipo_conts)
-                                                        <option class="" value="{{$tipo_conts->contrato_id}}">
-                                                            {{$tipo_conts->contrato_descripcion}}</option>
+                                                            <option class="" value="{{ $tipo_conts->contrato_id }}">
+                                                                {{ $tipo_conts->contrato_descripcion }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -3000,8 +3015,8 @@
                                                         required>
                                                         <option value="">Seleccionar</option>
                                                         @foreach ($area as $areas)
-                                                        <option class="" value="{{$areas->area_id}}">
-                                                            {{$areas->area_descripcion}}</option>
+                                                            <option class="" value="{{ $areas->area_id }}">
+                                                                {{ $areas->area_descripcion }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -3014,8 +3029,8 @@
                                                         tabindex="6">
                                                         <option value="">Seleccionar</option>
                                                         @foreach ($nivel as $niveles)
-                                                        <option class="" value="{{$niveles->nivel_id}}">
-                                                            {{$niveles->nivel_descripcion}}</option>
+                                                            <option class="" value="{{ $niveles->nivel_id }}">
+                                                                {{ $niveles->nivel_descripcion }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -3030,8 +3045,8 @@
                                                         tabindex="4" required>
                                                         <option value="">Seleccionar</option>
                                                         @foreach ($centro_costo as $centro_costos)
-                                                        <option class="" value="{{$centro_costos->centroC_id}}">
-                                                            {{$centro_costos->centroC_descripcion}}</option>
+                                                            <option class="" value="{{ $centro_costos->centroC_id }}">
+                                                                {{ $centro_costos->centroC_descripcion }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -3044,8 +3059,8 @@
                                                         tabindex="7">
                                                         <option value="">Seleccionar</option>
                                                         @foreach ($local as $locales)
-                                                        <option class="" value="{{$locales->local_id}}">
-                                                            {{$locales->local_descripcion}}</option>
+                                                            <option class="" value="{{ $locales->local_id }}">
+                                                                {{ $locales->local_descripcion }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -3078,8 +3093,8 @@
                                                             style="margin-top: 4px;">
                                                             <option hidden selected>Asignar calendario</option>
                                                             @foreach ($calendario as $calendarios)
-                                                            <option class="" value="{{ $calendarios->calen_id }}">
-                                                                {{ $calendarios->calendario_nombre }}</option>
+                                                                <option class="" value="{{ $calendarios->calen_id }}">
+                                                                    {{ $calendarios->calendario_nombre }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -3094,8 +3109,8 @@
                                                     style="margin-top: 4px;">
                                                     <option hidden selected>Asignar calendario</option>
                                                     @foreach ($calendario as $calendarios)
-                                                    <option class="" value="{{ $calendarios->calen_id }}">
-                                                        {{ $calendarios->calendario_nombre }}</option>
+                                                        <option class="" value="{{ $calendarios->calen_id }}">
+                                                            {{ $calendarios->calendario_nombre }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -3136,7 +3151,7 @@
                                                 role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
                                                 data-backdrop="static">
                                                 <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                                    style="width:670px;  margin-top: 150px; left: 0px;">
+                                                    style="width:750px;  margin-top: 150px; left: 0px;">
 
                                                     <div class="modal-content">
 
@@ -3144,7 +3159,7 @@
                                                             style="font-size:12px!important;background: #f3f3f3;">
                                                             <div class="col-md-12">
                                                                 <div class="row">
-                                                                    <div class="col-md-3">
+                                                                    <div class="col-md-3 text-center">
                                                                         <button type="button"
                                                                             style=" max-width: 18em!important;"
                                                                             class="btn btn-secondary btn-sm"
@@ -3152,7 +3167,7 @@
                                                                                 src="{{ asset('admin/images/dormir.svg') }}"
                                                                                 height="20"> Descanso</button>
                                                                     </div>
-                                                                    <div class="col-md-3">
+                                                                    <div class="col-md-3 text-center">
                                                                         <button type="button"
                                                                             style=" max-width: 18em!important;"
                                                                             class="btn btn-secondary btn-sm"
@@ -3161,7 +3176,7 @@
                                                                                 height="20"> Dia no
                                                                             laborable</button>
                                                                     </div>
-                                                                    <div class="col-md-3">
+                                                                    <div class="col-md-3 text-center">
                                                                         <button type="button"
                                                                             style=" max-width: 18em!important;"
                                                                             class="btn btn-secondary btn-sm"
@@ -3169,13 +3184,14 @@
                                                                                 src="{{ asset('admin/images/calendario.svg') }}"
                                                                                 height="20"> Dia feriado</button>
                                                                     </div>
-                                                                    <div class="col-md-3 text-right">
-                                                                        {{-- <button type="button"
+                                                                    <div class="col-md-3 text-center">
+                                                                        {{-- <button
+                                                                            type="button"
                                                                             style=" max-width: 18em!important;"
                                                                             class="btn btn-secondary btn-sm "
                                                                             onclick="registrarDdescanso()"><img
                                                                                 src="{{ asset('admin/images/calendarioInc.svg') }}"
-                                                                        height="20"> Incidencia</button>
+                                                                                height="20"> Incidencia</button>
                                                                         --}}
                                                                         <button style=" max-width: 18em!important;"
                                                                             class="btn btn-secondary btn-sm"
@@ -3189,16 +3205,11 @@
                                                         </div>
                                                         <div class="modal-footer"
                                                             style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
-                                                            <div class="col-md-12">
-                                                                <div class="row">
-                                                                    <div class="col-md-12 text-right">
-                                                                        <button type="button"
-                                                                            class="btn btn-soft-primary btn-sm "
-                                                                            onclick="$('#calendarioAsignar_ed').modal('hide')">Cancelar</button>
-
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
+                                                            <div class="col-md-12 text-right">
+                                                                <button type="button" style="margin-right: 25px;"
+                                                                    class="btn btn-soft-primary btn-sm "
+                                                                    onclick="$('#calendarioAsignar_ed').modal('hide')">Cancelar</button>
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div><!-- /.modal-content -->
@@ -3282,10 +3293,10 @@
                                                                         <option hidden selected>Seleccionar horario
                                                                         </option>
                                                                         @foreach ($horario as $horarios)
-                                                                        <option class=""
-                                                                            value="{{ $horarios->horario_id }}">
-                                                                            {{ $horarios->horario_descripcion }}
-                                                                        </option>
+                                                                            <option class=""
+                                                                                value="{{ $horarios->horario_id }}">
+                                                                                {{ $horarios->horario_descripcion }}
+                                                                            </option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
@@ -3457,13 +3468,14 @@
                 </div>
             </div>
             <!--VER EMPLEADO-->
-            <div id="verEmpleadoDetalles" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="verEmpleadoDetalles"
-                aria-hidden="true" data-backdrop="static">
+            <div id="verEmpleadoDetalles" class="modal fade" tabindex="-1" role="dialog"
+                aria-labelledby="verEmpleadoDetalles" aria-hidden="true" data-backdrop="static">
                 <div class="modal-dialog modal-dialog-scrollable modal-lg">
                     <div class="modal-content">
                         <div class="modal-header" style="background: #163552;">
                             <h4 class="header-title mt-0 " style="color: #f0f0f0">Datos de empleado</h4><br>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="javascript:cerrarVer()">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                onclick="javascript:cerrarVer()">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -3480,7 +3492,7 @@
                                         style="display: flex; align-items: center;cursor: pointer;">
                                         <a style="color: #3d3d3d;"
                                             onclick="$('#verEmpleadoDetalles').modal('toggle');javascript:editarEmpleado($('#v_idV').val())">
-                                            <img src="{{asset('admin/images/edit.svg')}}" height="15">
+                                            <img src="{{ asset('admin/images/edit.svg') }}" height="15">
                                             <span style="font-weight: bold">Editar</span>
                                         </a>
                                     </div>
@@ -3531,9 +3543,9 @@
                                                             <select class="form-control" name="v_dia_fechaV"
                                                                 id="v_dia_fechaV" required="">
                                                                 <option value="0">Dia</option>
-                                                                @for ($i = 1; $i <32; $i++) <option class=""
-                                                                    value="{{$i}}">{{$i}}</option>
-                                                                    @endfor
+                                                                @for ($i = 1; $i < 32; $i++)
+                                                                    <option class="" value="{{ $i }}">{{ $i }}</option>
+                                                                @endfor
                                                             </select>
                                                         </div>
                                                         <div class="col-md-4">
@@ -3559,10 +3571,10 @@
                                                             padding-right: 5px;" name="v_mes_fechaV" id="v_ano_fechaV"
                                                                 required="">
                                                                 <option value="0">Año</option>
-                                                                @for ($i = 1950; $i <2011; $i++) <option class=""
-                                                                    value="{{$i}}">{{$i}}
+                                                                @for ($i = 1950; $i < 2011; $i++)
+                                                                    <option class="" value="{{ $i }}">{{ $i }}
                                                                     </option>
-                                                                    @endfor
+                                                                @endfor
                                                             </select>
                                                         </div>
 
@@ -3667,16 +3679,19 @@
                                                     <input class="form-control" name="v_cargoV" id="v_cargoV" disabled>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default">Contrato &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <a id="detalleContratoVer" onclick="$('#verEmpleadoDetalles').modal('hide');"
+                                                    <label for="sw-default">Contrato
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <a id="detalleContratoVer"
+                                                            onclick="$('#verEmpleadoDetalles').modal('hide');"
                                                             href="#fechasmodalVer" data-toggle="modal"
                                                             data-target="#fechasmodalVer" data-toggle="tooltip"
                                                             data-placement="right" title="Detalle de Contrato."
                                                             data-original-title="Detalle de Contrato."
                                                             style="cursor: pointer;">
-                                                            <img src="{{asset('landing/images/adaptive.svg')}}" height="18">
+                                                            <img src="{{ asset('landing/images/adaptive.svg') }}"
+                                                                height="18">
                                                         </a>
-                                                        </label>
+                                                    </label>
                                                     <input class="form-control" name="v_contratoV" id="v_contratoV"
                                                         tabindex="5" disabled>
                                                 </div>
@@ -3914,25 +3929,15 @@
             </div><!-- /.modal -->
         </div>
         <footer class="border-top">
-            <p class="text-center text-muted pt-4">© <?php echo date("Y"); ?> - RH Solution | Todos los derechos
-                reservados.</p>
-        </footer>
-    </div>
-    </div>
-    <script>
-        var urlFoto = "";
-        var hayFoto = false;
-        var id_empleado = '';
-    </script>
-    <!-- Vendor js -->
-    {{-- <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script> --}}
-    <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script>
+            <p class="text-center text-muted pt-4">© {{-- <script src="{{ asset('landing/vendors/aos/js/aos.js') }}"></script>
+    --}}
+    <script src="{{ asset('admin/assets/js/vendor.min.js') }}"></script>
     <!-- App js -->
-    <script src="{{asset('admin/assets/js/app.min.js')}}"></script>
+    <script src="{{ asset('admin/assets/js/app.min.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <script src="{{asset('admin/assets/libs/smartwizard/jquery.smartWizard.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/libs/smartwizard/jquery.smartWizard.min.js') }}"></script>
     <script>
         function maxLengthCheck(object) {
             if (object.value.length > object.maxLength)
@@ -3952,47 +3957,47 @@
 
     </script>
 
-    <script src="{{asset('admin/assets/libs/bootstrap-fileinput/piexif.min.js')}}"></script>
-    <script src="{{asset('admin/assets/libs/bootstrap-fileinput/sortable.min.js')}}"></script>
-    <script src="{{asset('admin/assets/libs/bootstrap-fileinput/purify.min.js')}}"></script>
-    <script src="{{asset('admin/assets/libs/bootstrap-fileinput/fileinput.min.js')}}"></script>
-    <script src="{{asset('admin/assets/libs/bootstrap-fileinput/theme.js')}}"></script>
-    <script src="{{asset('admin/assets/libs/bootstrap-fileinput/es.js')}}"></script>
+    <script src="{{ asset('admin/assets/libs/bootstrap-fileinput/piexif.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/libs/bootstrap-fileinput/sortable.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/libs/bootstrap-fileinput/purify.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/libs/bootstrap-fileinput/fileinput.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/libs/bootstrap-fileinput/theme.js') }}"></script>
+    <script src="{{ asset('admin/assets/libs/bootstrap-fileinput/es.js') }}"></script>
 
-    <script src="{{asset('admin/assets/libs/moment/moment.min.js')}}"></script>
-    <script src="{{asset('admin/packages/core/main.js')}}"></script>
-    <script src="{{asset('admin/packages/core/locales/es.js')}}"></script>
-    <script src="{{asset('admin/packages/daygrid/main.js')}}"></script>
-    <script src="{{asset('admin/packages/timegrid/main.js')}}"></script>
-    <script src="{{asset('admin/packages/interaction/main.js')}}"></script>
-    <script src="{{asset('admin/assets/js/pages/form-wizard.init.js') }}"></script>
+    <script src="{{ asset('admin/assets/libs/moment/moment.min.js') }}"></script>
+    <script src="{{ asset('admin/packages/core/main.js') }}"></script>
+    <script src="{{ asset('admin/packages/core/locales/es.js') }}"></script>
+    <script src="{{ asset('admin/packages/daygrid/main.js') }}"></script>
+    <script src="{{ asset('admin/packages/timegrid/main.js') }}"></script>
+    <script src="{{ asset('admin/packages/interaction/main.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/pages/form-wizard.init.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
-    <script src="{{asset('landing/js/tabla.js')}}"></script>
-    <script src="{{asset('landing/js/smartwizard.js')}}"></script>
+    <script src="{{ asset('landing/js/tabla.js') }}"></script>
+    <script src="{{ asset('landing/js/smartwizard.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
-    <script src="{{asset('landing/js/seleccionarDepProv.js')}}"></script>
-    <script src="{{asset('landing/js/cargaMasivaF.js')}}"></script>
+    <script src="{{ asset('landing/js/seleccionarDepProv.js') }}"></script>
+    <script src="{{ asset('landing/js/cargaMasivaF.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
-    <script src="{{asset('landing/js/empleado.js')}}"></script>
-    <script src="{{asset('landing/js/empleadoA.js')}}"></script>
-    <script src="{{asset('landing/js/dispositivos.js')}}"></script>
+    <script src="{{ asset('landing/js/empleado.js') }}"></script>
+    <script src="{{ asset('landing/js/empleadoA.js') }}"></script>
+    <script src="{{ asset('landing/js/dispositivos.js') }}"></script>
     @if (Auth::user())
-    <script>
-        $(function () {
-            setInterval(function checkSession() {
-                $.get('/check-session', function (data) {
-                    // if session was expired
-                    if (data.guest == false) {
-                        $('#modal-error').modal('show');
+        <script>
+            $(function() {
+                setInterval(function checkSession() {
+                    $.get('/check-session', function(data) {
+                        // if session was expired
+                        if (data.guest == false) {
+                            $('#modal-error').modal('show');
 
-                    }
-                });
-            }, 7202000);
-        });
+                        }
+                    });
+                }, 7202000);
+            });
 
-    </script>
+        </script>
     @endif
 </body>
 
