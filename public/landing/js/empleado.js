@@ -34,7 +34,15 @@ $('#horaF_ed').flatpickr({
     dateFormat: "H:i",
     time_24hr: true
 });
+$(document).ready(function () {
 
+
+    $('.flatpickr-input[readonly]').on('focus', function () {
+        $(this).blur()
+    })
+    $('.flatpickr-input[readonly]').prop('readonly', false)
+
+});
 function calendarioInv() {
     var calendarElInv = document.getElementById('calendarInv');
     calendarElInv.innerHTML = "";
