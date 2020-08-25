@@ -452,7 +452,7 @@ class apiController extends Controller
                         $calSegund2 = $explo2[0] * 3600 + $explo2[1] * 60 + $explo2[2];
                         $totalP1 = $calSegund - $calSegund2;
                         //VALIDACION DE CERO
-                        if ($calSeg2 == 0) {
+                        if ($calSeg2 == 0 || $totalP1 == 0) {
                             $round = 0;
                         } else {
                             //PROMEDIO
@@ -526,7 +526,7 @@ class apiController extends Controller
                             $explo2 = explode(":", $fecha1);
                             $calSegund2 = $explo2[0] * 3600 + $explo2[1] * 60 + $explo2[2];
                             $totalP1 = $calSegund - $calSegund2;
-                            if ($calSeg2 == 0) {
+                            if ($calSeg2 == 0 || $totalP1 == 0) {
                                 $round = 0;
                             } else {
                                 //PROMEDIO
