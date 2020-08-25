@@ -97,51 +97,44 @@
         <div class="container">
             <section class="features-overview" id="features-section">
                 <div class="content-header">
-                    <h2>How does it works</h2>
-                    <h6 class="section-subtitle text-muted">One theme that
-                        serves as an easy-to-use operational
-                        toolkit<br>that meets customer's needs.</h6>
+                    <h2>¿Cómo trabaja RHNube?</h2>
+                    <h6 class="section-subtitle text-muted">Es la plataforma de control de personal
+                         más sencilla y segura del mercado, contrata, agrega y controla personal en menos de 5 minutos.</h6>
                 </div>
                 <div class="d-md-flex justify-content-between">
                     <div class="grid-margin d-flex justify-content-start">
                         <div class="features-width">
-                            <img src="{{asset('landing/images/Group12.svg')}}" alt="" class="img-icons">
-                            <h5 class="py-3">Speed<br>Optimisation</h5>
-                            <p class="text-muted">Lorem ipsum dolor sit
-                                amet, tincidunt vestibulum. Fusce egeabus
-                                consectetuer turpis, suspendisse.</p>
-                            <a href="#">
+                            <img src="{{asset('landing/images/personal.svg')}}" height="80" alt="" class="img-icons">
+                            <h5 class="py-3">Agregar<br>personal</h5>
+                            <p class="text-muted">Puedes agregar personal de forma individual o desde un archivo de carga en Excel y luego enviarles una invitación.</p>
+                           {{--  <a href="#">
                                 <p class="readmore-link">Readmore</p>
-                            </a>
+                            </a> --}}
                         </div>
                     </div>
                     <div class="grid-margin d-flex justify-content-center">
                         <div class="features-width">
-                            <img src="{{asset('landing/images/Group7.svg')}}" alt="" class="img-icons">
-                            <h5 class="py-3">SEO and<br>Backlinks</h5>
-                            <p class="text-muted">Lorem ipsum dolor sit
-                                amet, tincidunt vestibulum. Fusce egeabus
-                                consectetuer turpis, suspendisse.</p>
-                            <a href="#">
+                            <img src="{{asset('landing/images/plataforma.svg')}}" height="80" alt="" class="img-icons">
+                            <h5 class="py-3">Dispositivos y <br>licencias</h5>
+                            <p class="text-muted">Agrega un punto de control de personal en cualquier plataforma PC, móvil Android o equipo biométrico homologado.</p>
+                           {{--  <a href="#">
                                 <p class="readmore-link">Readmore</p>
-                            </a>
+                            </a> --}}
                         </div>
                     </div>
                     <div class="grid-margin d-flex justify-content-end">
                         <div class="features-width">
-                            <img src="{{asset('landing/images/Group5.svg')}}" alt="" class="img-icons">
-                            <h5 class="py-3">Content<br>Marketing</h5>
-                            <p class="text-muted">Lorem ipsum dolor sit
-                                amet, tincidunt vestibulum. Fusce egeabus
-                                consectetuer turpis, suspendisse.</p>
-                            <a href="#">
+                            <img src="{{asset('landing/images/reporte.svg')}}" height="80" alt="" class="img-icons">
+                            <h5 class="py-3">Monitorea y <br>controla</h5>
+                            <p class="text-muted">Obtén información de valor y controla el tiempo invertido en tu personal.</p>
+                            {{-- <a href="#">
                                 <p class="readmore-link">Readmore</p>
-                            </a>
+                            </a> --}}
                         </div>
                     </div>
                 </div>
             </section>
-            <section class="digital-marketing-service" id="digital-marketing-section">
+            {{-- <section class="digital-marketing-service" id="digital-marketing-section">
                 <div class="row align-items-center">
                     <div class="col-12 col-lg-7 grid-margin
                             grid-margin-lg-0" data-aos="fade-right">
@@ -489,8 +482,8 @@
                             us</button>
                     </div>
                 </div>
-            </section>
-            <section class="contact-details" id="contact-details-section">
+            </section> --}}
+            {{-- <section class="contact-details" id="contact-details-section">
                 <div class="row text-center text-md-left">
                     <div class="col-12 col-md-6 col-lg-3 grid-margin">
                         <img src="{{asset('landing/images/Group2.svg')}}" alt="" class="pb-2">
@@ -538,7 +531,7 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> --}}
             <footer class="border-top">
                 <p class="text-center text-muted pt-4">© <?php echo date("
                             Y" ); ?> - RH Solution | Todos los derechos
