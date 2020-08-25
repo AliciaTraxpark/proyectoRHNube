@@ -151,23 +151,6 @@ use App\proyecto_empleado;
                                         <div class="col-lg-12">
                                             <div class="form-group col-lg-12
                                                 row">
-                                                <label class="col-lg-6
-                                                    col-form-label"
-                                                    for="simpleinput">Nombre de
-                                                    tarea:</label>
-                                                <div class="col-lg-6">
-                                                    <input type="text"
-                                                        class="form-control-plaintext"
-                                                        id="nombre1"
-                                                        disabled>
-                                                    <input type="hidden"
-                                                        id="id1">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <div class="form-group col-lg-12
-                                                row">
                                                 <label class="col-lg-4
                                                     col-form-label"
                                                     for="simpleinput">Miembros
@@ -205,6 +188,24 @@ use App\proyecto_empleado;
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group col-lg-12
+                                                row">
+                                                <label class="col-lg-6
+                                                    col-form-label"
+                                                    for="simpleinput">Nombre de
+                                                    tarea:</label>
+                                                <div class="col-lg-6">
+                                                    <input type="text"
+                                                        class="form-control-plaintext"
+                                                        id="nombre1"
+                                                        disabled>
+                                                    <input type="hidden"
+                                                        id="id1">
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
