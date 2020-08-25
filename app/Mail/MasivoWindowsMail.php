@@ -36,6 +36,6 @@ class MasivoWindowsMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.masivoWindows')->subject('RH SOLUTION');
+        return $this->view('mails.masivoWindows')->subject('RH NUBE');
     }
 }
