@@ -48,6 +48,23 @@ class ControlController extends Controller
         return view('tareas.reporteSemanal', ['empleado' => $empleado]);
     }
 
+    public function empleadoRefresh()
+    {
+        $empleado = DB::table('empleado as e')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->join('proyecto_empleado as pe', 'pe.empleado_emple_id', '=', 'e.emple_id')
+            ->join('proyecto as pr', 'pr.Proye_id', '=', 'pe.Proyecto_Proye_id')
+            ->leftJoin('envio as en', function ($join) {
+                $join->on('en.idEmpleado', '=', 'e.emple_id');
+            })
+            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'en.Total_Envio')
+            ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.emple_estado', '=', 1)
+            ->groupBy('e.emple_id')
+            ->get();
+        return response()->json($empleado, 200);
+    }
+
     public function EmpleadoReporte(Request $request)
     {
         $fecha = $request->get('fecha');

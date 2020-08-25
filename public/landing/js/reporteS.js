@@ -1,11 +1,10 @@
 $('#fecha').datetimepicker({
     language: 'es',
-    format: 'yyyy-mm-dd',
+    format: 'dd/mm/yyyy',
     minView: 2,
     pickTime: false,
-    autoclose: true
+    autoclose: true,
 });
-
 var notify = $.notifyDefaults({
     icon_type: 'image',
     newest_on_top: true,
@@ -139,8 +138,12 @@ function onSelectFechas() {
                     for (let j = 0; j < data[i].horas.length; j++) {
                         html_tr += '<td>' + data[i].horas[j] + '</td>';
                     }
-                    var p1 = (promedio[0] / contar[0]).toFixed(2);
-                    var sumaP = p1;
+                    if (contar[0] != 0) {
+                        var p1 = (promedio[0] / contar[0]).toFixed(2);
+                        var sumaP = p1;
+                    }else{
+                        var sumaP = 0;
+                    }
                     /*var t1 = total.split(":");
                     var sumaT = parseInt(t1[0]) * 3600 + parseInt(t1[1]) * 60 + parseInt(t1[2]);*/
                     /*var sumaTotalP = 0;
@@ -265,10 +268,26 @@ function onSelectFechas() {
 
 $(function () {
     $('#fecha').on('change.dp', function (e) {
-        value = $('#fecha').val();
-        firstDate = moment(value, 'YYYY-MM-DD').day(0).format('YYYY-MM-DD');
-        lastDate = moment(value, 'YYYY-MM-DD').day(6).format('YYYY-MM-DD');
+        dato = $('#fecha').val();
+        value = moment(dato, ["MM-DD-YYYY", "DD-MM", "DD-MM-YYYY"]).format("YYYY-MM-DD");
+        firstDate = moment(value, 'YYYY-MM-DD').day(1).format('YYYY-MM-DD');
+        lastDate = moment(value, 'YYYY-MM-DD').day(7).format('YYYY-MM-DD');
         $('#fecha').val(firstDate + "   a   " + lastDate);
         onSelectFechas();
     });
+});
+
+function fechaDefecto() {
+    dato = $('#fecha').val();
+    value = moment(dato, ["MM-DD-YYYY", "DD-MM", "DD-MM-YYYY"]).format("YYYY-MM-DD");
+    firstDate = moment(value, 'YYYY-MM-DD').day(1).format('YYYY-MM-DD');
+    lastDate = moment(value, 'YYYY-MM-DD').day(7).format('YYYY-MM-DD');
+    $('#fecha').val(firstDate + "   a   " + lastDate);
+    onSelectFechas();
+}
+$(function () {
+    var hoy = moment().format("DD/MM/YYYY");
+    $('#fecha').val(hoy);
+    $('#fecha').trigger("change.dp");
+    $('#fecha').val(hoy);
 });

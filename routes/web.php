@@ -156,6 +156,7 @@ Route::post('/registrar/condicion', 'condicionPagoController@store');
 //TAREAS
 Route::get('/tareas', 'ControlController@index');
 Route::get('/tareas/show', 'ControlController@show');
+Route::get('/tareas/empleadoR', 'ControlController@empleadoRefresh');
 Route::get('/tareas/proyecto', 'ControlController@proyecto');
 Route::get('/reporteSemanal', 'ControlController@reporteS');
 Route::get('/reporte/empleado', 'ControlController@EmpleadoReporte');

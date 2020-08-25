@@ -14,10 +14,43 @@ $('#fecha').flatpickr({
     locale: "es",
     maxDate: "today"
 });
-function fechaHoy(){
+
+function fechaHoy() {
     f = moment().format("YYYY-MM-DD");
     $('#fecha').val(f);
     onMostrarPantallas();
+}
+
+function refreshCapturas() {
+    onMostrarPantallas();
+    var value = $('#empleado').val();
+    $('#empleado').empty();
+    var container = $('#empleado');
+    $.ajax({
+        async: false,
+        url: "/tareas/empleadoR",
+        method: "GET",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            var option = `<option value="" disabled selected>Seleccionar</option>`;
+            for (var $i = 0; $i < data.length; $i++) {
+                option += `<option value="${data[0].emple_id}">${data[0].perso_nombre} ${data[0].perso_apPaterno} ${data[0].perso_apMaterno}</option>`
+            }
+            container.append(option);
+            $('#empleado').val(value);
+        },
+        error: function () {}
+    });
 }
 //CAPTURAS
 $(function () {
@@ -54,7 +87,6 @@ function onMostrarPantallas() {
             }*/
         },
         success: function (data) {
-            //data = data.reverse();
             var vacio = `<img id="VacioImg" style="margin-left:28%" src="admin/images/search-file.svg"
                 class="mr-2" height="220" /> <br> <label for=""
                 style="margin-left:30%;color:#7d7d7d">Realize una búsqueda para ver Actividad</label>`;
@@ -113,14 +145,24 @@ function onMostrarPantallas() {
                             }
                             if (data[index].minutos[j].length == 1) {
                                 var totalR = parseFloat(data[index].minutos[j][0].rango / 60);
-                                totalCM = Math.round(totalR);
+                                totalM = Math.round(totalR);
+                                if (totalM > 10) {
+                                    totalCM = 10;
+                                } else {
+                                    totalCM = totalM;
+                                }
                                 promedio = data[index].minutos[j][0].prom;
                             } else {
                                 if (sumaRangos == 0) {
                                     totalCM = 0;
                                 } else {
                                     var totalR = parseFloat(sumaRangos / 60);
-                                    totalCM = Math.round(totalR);
+                                    totalM = Math.round(totalR);
+                                    if (totalM > 10) {
+                                        totalCM = 10;
+                                    } else {
+                                        totalCM = totalM;
+                                    }
                                 }
                                 promedio = (promedios / (data[index].minutos[j].length)).toFixed(2);
                                 if (promedios == 0) {
@@ -280,6 +322,7 @@ function onMostrarPantallas() {
                 }
             } else {
                 $('#card').append(vacio);
+                $.notifyClose();
                 $.notify({
                     message: "Falta elegir campos o No se encontrado capturas.",
                     icon: 'admin/images/warning.svg'
@@ -289,9 +332,11 @@ function onMostrarPantallas() {
         error: function (data) {}
     })
 }
+
 //PROYECTO
 $(function () {
     $('#empleado').on('change', onMostrarProyecto);
+
 });
 
 function onMostrarProyecto() {
