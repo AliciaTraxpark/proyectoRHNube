@@ -77,7 +77,7 @@ class ControlController extends Controller
                 'p.perso_apMaterno',
                 DB::raw('IF(h.id is null, DATE(cp.fecha_hora), DATE(h.start)) as fecha'),
                 DB::raw('TIME(cp.fecha_hora) as hora_ini'),
-                DB::raw('MAX(en.Total_Envio) as Total_Envio'),
+                DB::raw('TIME_FORMAT(SEC_TO_TIME(SUM(promedio.tiempo_rango)), "%H:%i:%s") as Total_Envio'),
                 DB::raw('SUM(promedio.promedio) as promedio'),
                 DB::raw('COUNT(promedio.id) as total'),
                 DB::raw($sql),
