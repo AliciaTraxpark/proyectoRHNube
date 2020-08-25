@@ -108,9 +108,9 @@
                             <div class="form-group col-lg-2">
                                 <button type="button" class="btn btn-sm mt-1"
                                     style="background-color: #163552;"
-                                    onclick="javascript:refresh()"><img src="{{
-                                        asset('landing/images/refresh (2).svg') }}"
-                                        height="20"></button>
+                                    onclick="javascript:refreshCapturas()">
+                                    <img src="{{asset('landing/images/refresh (2).svg') }}" height="20">
+                                </button>
                             </div>
                         </div>
                     </div>
