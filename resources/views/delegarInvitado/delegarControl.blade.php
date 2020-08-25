@@ -80,6 +80,7 @@
                         </div>
                     </div>
                     <br>
+                    
 
                     {{-- <table id="tablaProyecto"
                         class="table table-drop dt-responsive nowrap" style="font-size: 12.5px!important">
@@ -208,7 +209,7 @@
                                     <div class="col-md-12">
                                         <div class="row">
                                             <div class="col-md-12 form-check" style="padding-left: 4px;">
-                                                <label for="" class="col-md-10">Seleccionar area(s):</label>
+                                                <label for="" class="col-md-10">Seleccionar por area(s):</label>
                                                 <input type="checkbox" style="font-size: 11.4px" class="form-check-input"
                                                     id="selectAreaCheck">
                                                 <label class="form-check-label" for="selectAreaCheck"
@@ -218,14 +219,14 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <select data-plugin="customselect" multiple id="selectEmpresarial"
-                                            name="selectEmpresarial" class="form-control" data-placeholder="seleccione">
-                                            <option value=""></option>
+                                        <select data-plugin="customselect" multiple id="selectArea"
+                                            name="selectArea" class="form-control" data-placeholder="seleccione">
+
                                             @foreach ($area as $areas)
                                                 <option value="{{ $areas->idarea }}">Area : {{ $areas->descripcion }}.
                                                 </option>
                                             @endforeach
-                                            
+
                                         </select>
                                     </div>
 
