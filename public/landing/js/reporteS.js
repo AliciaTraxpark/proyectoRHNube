@@ -1,9 +1,10 @@
 $('#fecha').datetimepicker({
     language: 'es',
-    format: 'yyyy-mm-dd',
+    format: 'dd/mm/yyyy',
     minView: 2,
     pickTime: false,
-    autoclose: true
+    autoclose: true,
+    startDate: new Date()
 });
 
 var notify = $.notifyDefaults({
@@ -265,9 +266,10 @@ function onSelectFechas() {
 
 $(function () {
     $('#fecha').on('change.dp', function (e) {
-        value = $('#fecha').val();
-        firstDate = moment(value, 'YYYY-MM-DD').day(0).format('YYYY-MM-DD');
-        lastDate = moment(value, 'YYYY-MM-DD').day(6).format('YYYY-MM-DD');
+        dato = $('#fecha').val();
+        value = moment(dato, ["MM-DD-YYYY", "DD-MM", "DD-MM-YYYY"]).format("YYYY-MM-DD");
+        firstDate = moment(value, 'YYYY-MM-DD').day(1).format('YYYY-MM-DD');
+        lastDate = moment(value, 'YYYY-MM-DD').day(7).format('YYYY-MM-DD');
         $('#fecha').val(firstDate + "   a   " + lastDate);
         onSelectFechas();
     });
