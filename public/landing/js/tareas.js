@@ -10,7 +10,11 @@ var notify = $.notifyDefaults({
         '</div>'
 });
 //FECHA
-$('#fecha').flatpickr({
+var fechaValue = $('#fecha').flatpickr({
+    mode:"single",
+    dateFormat: "Y-m-d",
+    altInput: true,
+    altFormat: "D, j F",
     locale: "es",
     maxDate: "today"
 });
@@ -53,9 +57,10 @@ $('#empleado').on("select2:close", function () {
     }
 });
 
+
 function fechaHoy() {
     f = moment().format("YYYY-MM-DD");
-    $('#fecha').val(f);
+    fechaValue.setDate(f);
     onMostrarPantallas();
 }
 
@@ -103,6 +108,7 @@ function onMostrarPantallas() {
     var value = $('#empleado').val();
     var fecha = $('#fecha').val();
     var proyecto = $('#proyecto').val();
+    console.log(fecha);
     $('#card').empty();
     $('#espera').show();
     $.ajax({
