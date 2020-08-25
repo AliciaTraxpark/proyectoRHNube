@@ -299,3 +299,6 @@ Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 Route::get('/notificacionesUser', 'NotificacionController@notificacionesUsuario');
 Route::get('/leerNotificaciones', 'NotificacionController@cambiarestadoNotificacion');
 Route::get('/showNotificaciones', 'NotificacionController@showNotificaciones');
+
+//////delegar
+Route::get('/delegarcontrol', 'delegarInvController@index');

@@ -52,7 +52,12 @@ use Illuminate\Support\Facades\DB;
         @endif
 
     </li>
-
+    <li>
+        <a href="/proyecto">
+            <i data-feather="briefcase"></i>
+            <span>Asignar tarea</span>
+        </a>
+    </li>
 
     <li>
 
@@ -107,12 +112,7 @@ use Illuminate\Support\Facades\DB;
             <span>Horas trabajadas</span>
         </a>
     </li>
-    <li>
-        <a href="/proyecto">
-            <i data-feather="briefcase"></i>
-            <span>Asignar tarea</span>
-        </a>
-    </li>
+
 
     <!--<li>
         <a href="javascript: void(0);">

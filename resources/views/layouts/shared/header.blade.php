@@ -146,6 +146,10 @@ use App\persona;
                         <i data-feather="edit" class="icon-dual icon-xs mr-2"></i>
                         <span>Editar perfil</span>
                     </a>
+                    <a href="/delegarcontrol" class="dropdown-item notify-item">
+                        <i data-feather="corner-up-right" class="icon-dual icon-xs mr-2"></i>
+                        <span>Delegar control</span>
+                    </a>
                     <!-- item-->
                     <a href="{{ route('logout') }}" class="dropdown-item
                         notify-item">

@@ -42,6 +42,13 @@ use App\proyecto_empleado;
         border-color:#e2e1e1;
         zoom: 85%;
     }
+    .table {
+        width: 100% !important;
+    }
+
+    .dataTables_scrollHeadInner {
+        width: 100% !important;
+    }
 </style>
 <div class="row page-title">
     <div class="col-md-12">
@@ -329,7 +336,7 @@ use App\proyecto_empleado;
                 </div>
                 <br>
 
-                <table id="tablaProyecto" class="table dt-responsive nowrap"
+                <table id="tablaProyecto" class="table table-drop dt-responsive nowrap"
                     style="font-size: 12.5px!important">
                     <thead style="background: #fafafa">
                         <tr>
