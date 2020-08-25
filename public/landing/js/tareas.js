@@ -42,7 +42,7 @@ $('#empleado').on("select2:opening", function () {
         success: function (data) {
             var option = `<option value="" disabled selected>Seleccionar</option>`;
             for (var $i = 0; $i < data.length; $i++) {
-                option += `<option value="${data[0].emple_id}">${data[0].perso_nombre} ${data[0].perso_apPaterno} ${data[0].perso_apMaterno}</option>`
+                option += `<option value="${data[i].emple_id}">${data[i].perso_nombre} ${data[i].perso_apPaterno} ${data[i].perso_apMaterno}</option>`
             }
             container.append(option);
             $('#empleado').val(value);
