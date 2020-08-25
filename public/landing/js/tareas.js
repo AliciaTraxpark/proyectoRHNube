@@ -145,14 +145,24 @@ function onMostrarPantallas() {
                             }
                             if (data[index].minutos[j].length == 1) {
                                 var totalR = parseFloat(data[index].minutos[j][0].rango / 60);
-                                totalCM = Math.round(totalR);
+                                totalM = Math.round(totalR);
+                                if (totalM > 10) {
+                                    totalCM = 10;
+                                } else {
+                                    totalCM = totalM;
+                                }
                                 promedio = data[index].minutos[j][0].prom;
                             } else {
                                 if (sumaRangos == 0) {
                                     totalCM = 0;
                                 } else {
                                     var totalR = parseFloat(sumaRangos / 60);
-                                    totalCM = Math.round(totalR);
+                                    totalM = Math.round(totalR);
+                                    if (totalM > 10) {
+                                        totalCM = 10;
+                                    } else {
+                                        totalCM = totalM;
+                                    }
                                 }
                                 promedio = (promedios / (data[index].minutos[j].length)).toFixed(2);
                                 if (promedios == 0) {
