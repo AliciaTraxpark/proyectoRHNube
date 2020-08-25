@@ -138,8 +138,12 @@ function onSelectFechas() {
                     for (let j = 0; j < data[i].horas.length; j++) {
                         html_tr += '<td>' + data[i].horas[j] + '</td>';
                     }
-                    var p1 = (promedio[0] / contar[0]).toFixed(2);
-                    var sumaP = p1;
+                    if (contar[0] != 0) {
+                        var p1 = (promedio[0] / contar[0]).toFixed(2);
+                        var sumaP = p1;
+                    }else{
+                        var sumaP = 0;
+                    }
                     /*var t1 = total.split(":");
                     var sumaT = parseInt(t1[0]) * 3600 + parseInt(t1[1]) * 60 + parseInt(t1[2]);*/
                     /*var sumaTotalP = 0;
