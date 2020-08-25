@@ -4,9 +4,7 @@ $('#fecha').datetimepicker({
     minView: 2,
     pickTime: false,
     autoclose: true,
-    startDate: new Date()
 });
-
 var notify = $.notifyDefaults({
     icon_type: 'image',
     newest_on_top: true,
@@ -273,4 +271,19 @@ $(function () {
         $('#fecha').val(firstDate + "   a   " + lastDate);
         onSelectFechas();
     });
+});
+
+function fechaDefecto() {
+    dato = $('#fecha').val();
+    value = moment(dato, ["MM-DD-YYYY", "DD-MM", "DD-MM-YYYY"]).format("YYYY-MM-DD");
+    firstDate = moment(value, 'YYYY-MM-DD').day(1).format('YYYY-MM-DD');
+    lastDate = moment(value, 'YYYY-MM-DD').day(7).format('YYYY-MM-DD');
+    $('#fecha').val(firstDate + "   a   " + lastDate);
+    onSelectFechas();
+}
+$(function () {
+    var hoy = moment().format("DD/MM/YYYY");
+    $('#fecha').val(hoy);
+    $('#fecha').trigger("change.dp");
+    $('#fecha').val(hoy);
 });
