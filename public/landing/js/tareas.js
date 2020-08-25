@@ -15,6 +15,44 @@ $('#fecha').flatpickr({
     maxDate: "today"
 });
 
+$('#empleado').select2();
+$('#empleado').on("select2:opening", function () {
+    var value = $('#empleado').val();
+    $('#empleado').empty();
+    var container = $('#empleado');
+    $.ajax({
+        async: false,
+        url: "/tareas/empleadoR",
+        method: "GET",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            var option = `<option value="" disabled selected>Seleccionar</option>`;
+            for (var $i = 0; $i < data.length; $i++) {
+                option += `<option value="${data[0].emple_id}">${data[0].perso_nombre} ${data[0].perso_apPaterno} ${data[0].perso_apMaterno}</option>`
+            }
+            container.append(option);
+            $('#empleado').val(value);
+        },
+        error: function () {}
+    });
+});
+
+$('#empleado').on("select2:close", function () {
+    if ($(this).val() != '') {
+        onMostrarPantallas();
+    }
+});
+
 function fechaHoy() {
     f = moment().format("YYYY-MM-DD");
     $('#fecha').val(f);
@@ -54,7 +92,7 @@ function refreshCapturas() {
 }
 //CAPTURAS
 $(function () {
-    $('#empleado').on('change', onMostrarPantallas);
+    // $('#empleado').on('change', onMostrarPantallas);
     $('#fecha').on('change', onMostrarPantallas);
     $('#proyecto').on('change', onMostrarPantallas);
 });

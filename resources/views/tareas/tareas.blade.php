@@ -105,13 +105,13 @@
                                     style="background-color: #163552;"
                                     onclick="javascript:fechaHoy()">Hoy</button>
                             </div>
-                            <div class="form-group col-lg-2">
+                            <!-- <div class="form-group col-lg-2">
                                 <button type="button" class="btn btn-sm mt-1"
                                     style="background-color: #163552;"
                                     onclick="javascript:refreshCapturas()">
                                     <img src="{{asset('landing/images/refresh (2).svg') }}" height="20">
                                 </button>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="col-md-6"> <label><br> </label>
