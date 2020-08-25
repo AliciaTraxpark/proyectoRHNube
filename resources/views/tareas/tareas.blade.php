@@ -88,7 +88,6 @@
                 <div class="row">
                     <div class="col-md-12">
                     </div>
-
                     <div class="col-md-6"> <label><br> </label>
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label">Fecha:</label>
@@ -101,10 +100,17 @@
                                             class="uil uil-calender"></i></div>
                                 </div>
                             </div>
-                            <div class="form-group col-lg-4">
+                            <div class="form-group col-lg-2">
                                 <button type="button" class="btn btn-sm mt-1"
                                     style="background-color: #163552;"
                                     onclick="javascript:fechaHoy()">Hoy</button>
+                            </div>
+                            <div class="form-group col-lg-2">
+                                <button type="button" class="btn btn-sm mt-1"
+                                    style="background-color: #163552;"
+                                    onclick="javascript:refresh()"><img src="{{
+                                        asset('landing/images/refresh (2).svg') }}"
+                                        height="20"></button>
                             </div>
                         </div>
                     </div>
@@ -126,14 +132,6 @@
                         </div>
                     </div>
                     <div class="col-md-2"></div>
-                    <!--<div class="col-md-4">
-                        <div class="form-group  col-md-10">
-                            <label>Proyecto</label>
-                            <select data-plugin="customselect" class="form-control" id="proyecto">
-                                <option value="">Seleccionar</option>
-                            </select>
-                        </div>
-                    </div>-->
                 </div>
                 <div id="espera" class="text-center" style="display: none">
                     <img src="{{asset('landing/images/loading.gif')}}"
@@ -169,7 +167,7 @@
 <script src="{{
     URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js')
     }}"></script>
-    <script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
+<script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
 @endsection
 @section('script-bottom')
 <link rel="stylesheet"
