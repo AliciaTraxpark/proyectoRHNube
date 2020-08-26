@@ -19,12 +19,15 @@
         .select2-container--default .select2-results__option[aria-selected=true] {
             background: #ced0d3;
         }
+
         .select2-container--default .select2-results__option {
-            font-size: 11.5px!important;
+            font-size: 11.5px !important;
         }
-        .select2-container--default .select2-results>.select2-results__options{
+
+        .select2-container--default .select2-results>.select2-results__options {
             max-height: 90px;
         }
+
         body>div.bootbox.modal.fade.bootbox-confirm.show>div>div>div.modal-footer>button.btn.btn-primary.bootbox-accept {
             background-color: #163552;
             border-color: #163552;
@@ -47,7 +50,7 @@
         }
 
         .select2-container .select2-selection {
-            height: 30px;
+            height: 40px;
             font-size: 12.2px;
             overflow-y: scroll;
         }
@@ -74,13 +77,14 @@
                         </div> --}}
                         <div class="col-md-5 text-left" style="bottom: 5px;">
                             <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal"
-                                data-target="#agregarInvitado" style="background: #507394;
-                                    border-color: #507394;">+ Invitar miembro</button>
+                                data-target="#agregarInvitado" onclick="$('#frmInvi')[0].reset();$('#nombreEmpleado').prop('required',true);
+                                $('#divInvitado').show();" style="background: #507394;
+                                        border-color: #507394;">+ Invitar miembro</button>
 
                         </div>
                     </div>
                     <br>
-                    
+
 
                     {{-- <table id="tablaProyecto"
                         class="table table-drop dt-responsive nowrap" style="font-size: 12.5px!important">
@@ -122,7 +126,7 @@
 
                                     </td>
                                     <td><button style="background:#f0f4fd;
-                                            border-color:#f0f4fd; color:#a0add3" class="btn btn-secondary btn-sm"
+                                                border-color:#f0f4fd; color:#a0add3" class="btn btn-secondary btn-sm"
                                             onclick="abrirM({{ $proyectos->Proye_id }})">+
                                             Miembro </button>&nbsp;&nbsp;&nbsp;&nbsp; <a id="formNuevoEd"
                                             onclick="editarproyecto({{ $proyectos->Proye_id }})"
@@ -148,87 +152,77 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body" style="font-size:12px!important">
+                <div class="modal-body" style="font-size:12px!important;padding-top: 0px;">
                     <div class="row">
                         <div class="col-md-12">
-                            <form id="frmHor" action="javascript:registrarHorario()">
+                            <form id="frmInvi" action="javascript:registrarInvit()">
                                 <div class="row">
 
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="">Nombre:</label>
-                                            <input type="text" class="form-control form-control-sm" id="descripcionCa"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="">Apellido paterno:</label>
-                                            <input type="text" class="form-control form-control-sm" id="descripcionCa"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="">Apellido materno:</label>
-                                            <input type="text" class="form-control form-control-sm" id="descripcionCa"
-                                                required>
+                                    <div class="col-md-12"><label for=""></label>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="adminCheck">
+                                            <label class="form-check-label" for="adminCheck" style="margin-top: 2px;">Invitar como
+                                                administrador</label><br><br>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="">Email de invitado:</label>
-                                            <input type="email" class="form-control form-control-sm" id="descripcionCa"
+                                            <input type="email" class="form-control form-control-sm" id="emailInvi"
                                                 required>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-12 form-check" style="padding-left: 4px;">
-                                                <label for="" class="col-md-10">Empleado(s):</label>
-                                                <input type="checkbox" style="font-size: 11.4px" class="form-check-input"
-                                                    id="selectTodoCheck">
-                                                <label class="form-check-label" for="selectTodoCheck"
-                                                    style="font-style: oblique;margin-top: 2px;font-size: 11.4px">Seleccionar
-                                                    todos.</label>
+                                    <div id="divInvitado" class="col-md-12" style="padding-left: 0px;padding-right: 0px">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-12 form-check" style="padding-left: 4px;">
+                                                    <label for="" class="col-md-10">Empleado(s):</label>
+                                                    <input type="checkbox" style="font-size: 11.4px" class="form-check-input"
+                                                        id="selectTodoCheck">
+                                                    <label class="form-check-label" for="selectTodoCheck"
+                                                        style="font-style: oblique;margin-top: 2px;font-size: 11.4px">Seleccionar
+                                                        todos.</label>
+                                                </div>
                                             </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <select class="form-control wide" data-plugin="customselect" multiple
+                                                id="nombreEmpleado" >
+                                                @foreach ($empleado as $empleados)
+                                                    <option value="{{ $empleados->emple_id }}">{{ $empleados->perso_nombre }}
+                                                        {{ $empleados->perso_apPaterno }} {{ $empleados->perso_apMaterno }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            <br><br>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-12 form-check" style="padding-left: 4px;">
+                                                    <label for="" class="col-md-10">Seleccionar por area(s):</label>
+                                                    <input type="checkbox" style="font-size: 11.4px" class="form-check-input"
+                                                        id="selectAreaCheck">
+                                                    <label class="form-check-label" for="selectAreaCheck"
+                                                        style="font-style: oblique;margin-top: 2px;font-size: 11.4px">Seleccionar
+                                                        todas.</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <select data-plugin="customselect" multiple id="selectArea" name="selectArea"
+                                                class="form-control" data-placeholder="seleccione">
+
+                                                @foreach ($area as $areas)
+                                                    <option value="{{ $areas->idarea }}">Area : {{ $areas->descripcion }}.
+                                                    </option>
+                                                @endforeach
+
+                                            </select>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-12">
-                                        <select class="form-control wide" data-plugin="customselect" multiple
-                                            id="nombreEmpleado">
-                                            @foreach ($empleado as $empleados)
-                                                <option value="{{ $empleados->emple_id }}">{{ $empleados->perso_nombre }}
-                                                    {{ $empleados->perso_apPaterno }} {{ $empleados->perso_apMaterno }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <br><br>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-12 form-check" style="padding-left: 4px;">
-                                                <label for="" class="col-md-10">Seleccionar por area(s):</label>
-                                                <input type="checkbox" style="font-size: 11.4px" class="form-check-input"
-                                                    id="selectAreaCheck">
-                                                <label class="form-check-label" for="selectAreaCheck"
-                                                    style="font-style: oblique;margin-top: 2px;font-size: 11.4px">Seleccionar
-                                                    todas.</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <select data-plugin="customselect" multiple id="selectArea"
-                                            name="selectArea" class="form-control" data-placeholder="seleccione">
 
-                                            @foreach ($area as $areas)
-                                                <option value="{{ $areas->idarea }}">Area : {{ $areas->descripcion }}.
-                                                </option>
-                                            @endforeach
-
-                                        </select>
-                                    </div>
 
                                 </div>
                         </div>

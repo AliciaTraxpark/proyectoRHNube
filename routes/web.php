@@ -55,6 +55,7 @@ Route::post('/calendario/copiarevenEmpleado', 'calendarioController@copiarevenEm
 
 //persona
 Route::get('registro/persona', 'registroPController@index')->name('registroPersona');
+Route::get('registroInvitado/{idinEncr}', 'delegarInvController@vistaRegistroInv');
 Route::post('/persona/store', 'registroPController@registrarDatos')->name('persona');
 Route::POST('persona/create', 'RegistroPController@create')->name('registerPersona');
 Route::get('/persona/comprobar', 'registroPController@comprobar');
@@ -305,3 +306,5 @@ Route::get('/showNotificaciones', 'NotificacionController@showNotificaciones');
 
 //////delegar
 Route::get('/delegarcontrol', 'delegarInvController@index');
+Route::post('/empleAreaIn', 'delegarInvController@empleAreaIn');
+Route::post('/registrarInvitado','delegarInvController@registrarInvitado');
