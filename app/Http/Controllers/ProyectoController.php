@@ -137,4 +137,22 @@ class ProyectoController extends Controller
         }
         return response()->json($respuesta, 200);
     }
+
+    public function registrarProyectoE(Request $request)
+    {
+        $idE = $request->get('idE');
+        $proyecto = new proyecto();
+        $proyecto->Proye_Nombre = $request->get('nombre');
+        $proyecto->Proye_estado = 1;
+        $proyecto->idUser = Auth::user()->id;
+        $proyecto->save();
+
+        $idProyecto = $proyecto->Proye_id;
+
+        $proyecto_empleado = new proyecto_empleado();
+        $proyecto_empleado->Proyecto_Proye_id = $idProyecto;
+        $proyecto_empleado->empleado_emple_id = $idE;
+        $proyecto_empleado->save();
+        return response()->json($proyecto_empleado, 200);
+    }
 }

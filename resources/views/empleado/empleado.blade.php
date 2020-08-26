@@ -567,7 +567,7 @@
 
         .scroll {
             max-height: 100px;
-            overflow-y: hidden;
+            overflow-y: auto;
         }
     </style>
 
@@ -3451,7 +3451,8 @@
                                                                     <input type="checkbox" class="custom-control-input"
                                                                         id="customSwitch1">
                                                                     <label class="custom-control-label"
-                                                                        for="customSwitch1">Modo Tarea</label>
+                                                                        for="customSwitch1"
+                                                                        style="font-weight: bold">Modo Tarea</label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -3460,7 +3461,9 @@
                                                         <div class="row">
                                                             <div class="col-xl-12 text-right">
                                                                 <button type="button" class="btn btn-sm mt-1"
-                                                                    style="background-color: #163552;">+ Nueva Actividad
+                                                                    style="background-color: #163552;"
+                                                                    onclick="$('#actividadTarea').modal()">+ Nueva
+                                                                    Actividad
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -3497,7 +3500,8 @@
                                                                     <input type="checkbox" class="custom-control-input"
                                                                         id="customSwitch2">
                                                                     <label class="custom-control-label"
-                                                                        for="customSwitch2">Modo Proyecto</label>
+                                                                        for="customSwitch2"
+                                                                        style="font-weight: bold">Modo Proyecto</label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -3530,6 +3534,54 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div id="actividadTarea" class="modal fade" tabindex="-1" role="dialog"
+                                            aria-labelledby="actividadTarea" aria-hidden="true" data-backdrop="static">
+                                            <div class="modal-dialog  modal-lg d-flex justify-content-center "
+                                                style="width: 550px;">
+                                                <div class="modal-content">
+                                                    <div class="modal-header" style="background-color:#163552;">
+                                                        <h5 class="modal-title" id="myModalLabel"
+                                                            style="color:#ffffff;font-size:15px">Registrar Actividad
+                                                        </h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body" style="font-size:12px!important">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <form action="javascript:registrarActividadTarea()">
+                                                                    <div class="row">
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <label for="">Nombre:</label>
+                                                                                <input type="text"
+                                                                                    class="form-control form-control-sm"
+                                                                                    id="nombreTarea" required>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                                <div class="col-md-12 text-right">
+                                                                    <button type="button" class="btn btn-light btn-sm "
+                                                                        onclick="$('#actividadTarea').modal('toggle')">Cancelar</button>
+                                                                    <button type="submit" name=""
+                                                                        style="background-color: #163552;"
+                                                                        class="btn btn-sm ">Guardar</button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- /.modal-content -->
+                                            </div><!-- /.modal-dialog -->
+                                        </div><!-- /.modal -->
                                     </div>
                                 </div>
                             </div>
