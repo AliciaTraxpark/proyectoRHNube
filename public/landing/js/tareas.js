@@ -10,14 +10,58 @@ var notify = $.notifyDefaults({
         '</div>'
 });
 //FECHA
-$('#fecha').flatpickr({
+var fechaValue = $('#fecha').flatpickr({
+    mode:"single",
+    dateFormat: "Y-m-d",
+    altInput: true,
+    altFormat: "D, j F",
     locale: "es",
     maxDate: "today"
 });
 
+$('#empleado').select2();
+$('#empleado').on("select2:opening", function () {
+    var value = $('#empleado').val();
+    $('#empleado').empty();
+    var container = $('#empleado');
+    $.ajax({
+        async: false,
+        url: "/tareas/empleadoR",
+        method: "GET",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            console.log(data);
+            var option = `<option value="" disabled selected>Seleccionar</option>`;
+            for (var $i = 0; $i < data.length; $i++) {
+                option += `<option value="${data[$i].emple_id}">${data[$i].perso_nombre} ${data[$i].perso_apPaterno} ${data[$i].perso_apMaterno}</option>`
+            }
+            container.append(option);
+            $('#empleado').val(value);
+        },
+        error: function () {}
+    });
+});
+
+$('#empleado').on("select2:close", function () {
+    if ($(this).val() != '') {
+        onMostrarPantallas();
+    }
+});
+
+
 function fechaHoy() {
     f = moment().format("YYYY-MM-DD");
-    $('#fecha').val(f);
+    fechaValue.setDate(f);
     onMostrarPantallas();
 }
 
@@ -54,7 +98,7 @@ function refreshCapturas() {
 }
 //CAPTURAS
 $(function () {
-    $('#empleado').on('change', onMostrarPantallas);
+    // $('#empleado').on('change', onMostrarPantallas);
     $('#fecha').on('change', onMostrarPantallas);
     $('#proyecto').on('change', onMostrarPantallas);
 });
@@ -65,6 +109,7 @@ function onMostrarPantallas() {
     var value = $('#empleado').val();
     var fecha = $('#fecha').val();
     var proyecto = $('#proyecto').val();
+    console.log(fecha);
     $('#card').empty();
     $('#espera').show();
     $.ajax({
@@ -122,7 +167,6 @@ function onMostrarPantallas() {
                     var prom = 0;
                     var sumaRangos = 0;
                     var totalCM = 0;
-                    var labelEstadoP = ``;
                     var labelDelGrupo = horaDelGrupo + ":00:00" + " - " + (parseInt(horaDelGrupo) + 1) + ":00:00";
                     var grupo = `<span style="font-weight: bold;color:#6c757d;cursor:default">${labelDelGrupo}</span>&nbsp;&nbsp;<img src="landing/images/punt.gif" height="70">&nbsp;&nbsp;
                     <span class="promHoras" style="font-weight: bold;color:#6c757d;cursor:default" id="promHoras${$i}" data-toggle="tooltip" data-placement="right" title="Actividad por Hora"
@@ -175,9 +219,6 @@ function onMostrarPantallas() {
                             if (promedio >= 50) nivel = "green";
                             else if (promedio > 35) nivel = "#f3c623";
                             else nivel = "red";
-                            if (data[index].minutos[j][0].Proye_estado == 0) {
-                                labelEstadoP = `(Finalizado)`;
-                            }
                             if (j < 5) {
                                 card = `<div class="col-2" style="margin-left: 0px!important;">
                                         <div class="mb-0 text-center" style="padding-left: 0px;">
@@ -225,7 +266,6 @@ function onMostrarPantallas() {
                                                     </div>
                                                     <label style="font-size: 12px;font-style: italic; bold;color:#1f4068;" for="">Total de ${totalCM} minutos</label>
                                                     <br>
-                                                    <label style="font-size: 12px;font-style: italic; bold;color:red;">&nbsp;${labelEstadoP}</label>
                                                 </div>
                                             </div>
                                             </div>
@@ -278,7 +318,6 @@ function onMostrarPantallas() {
                                                         </div>
                                                         <label style="font-size: 12px;font-style: italic; bold;color:#1f4068;" for="">Total de ${totalCM} minutos</label>
                                                         <br>
-                                                        <label style="font-size: 12px;font-style: italic; bold;color:red;">&nbsp;${labelEstadoP}</label>
                                                     </div>
                                                 </div>
                                                 </div>

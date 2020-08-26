@@ -36,6 +36,6 @@ class CorreoMail extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->view('mails.confirmation_code')->subject('RH SOLUTION');
+        return $this->view('mails.confirmation_code')->subject('RH NUBE');
     }
 }
