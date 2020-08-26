@@ -26,17 +26,21 @@ Route::get('/provincia/{id}/niveles', 'EmpleadoController@distritos');
 
 Route::get("empleado", "apiController@api");
 Route::post("tarea", "apiController@apiTarea")->middleware('token');
-Route::post("actividad", "apiController@apiActividad")->middleware('token');
 Route::post("logueo", "apiController@logueoEmpleado");
 Route::post("editarTarea", "apiController@editarApiTarea")->middleware('token');
-Route::post("editarActividad", "apiController@editarApiActividad")->middleware('token');
 Route::post("envio", "apiController@envio")->middleware('token');
 Route::post("control", "apiController@control")->middleware('token');
 Route::post("captura", "apiController@captura")->middleware('token');
+// PROYECTO
 Route::post("proyecto", "apiController@selectProyecto")->middleware('token');
 Route::post("agregarProyecto", "apiController@agregarProyecto")->middleware('token');
 Route::post("editarProyecto", "apiController@editarProyecto")->middleware('token');
 Route::post("eliminarProyecto", "apiController@cambiarEstadoProyecto")->middleware('token');
+// ACTIVIDAD
+Route::post("actividad", "apiController@selectActividad")->middleware('token');
+Route::post("agregarActividad", "apiController@apiActividad")->middleware('token');
+Route::post("editarActividad", "apiController@editarApiActividad")->middleware('token');
+Route::post("eliminarActividad", "apiController@cambiarEstadoActividad")->middleware('token');
 //HORARIO
 Route::post("horario", "apiController@horario")->middleware('token');
 Route::post("ultimoHorario", "apiController@ultimoHorario")->middleware('token');

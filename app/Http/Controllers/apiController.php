@@ -363,11 +363,7 @@ class apiController extends Controller
 
     public function cambiarEstadoActividad(Request $request)
     {
-        $actividad = DB::table('actividad as a')
-            ->where('Activi_id', '=', $request->get('idActividad'))
-            ->where('empleado_emple_id', '=', $request->get('idEmpleado'))
-            ->get()
-            ->first();
+        $actividad = actividad::where('Activi_id', $request->get('idActividad'))->first();
         if ($actividad) {
             $actividad->estado = 0;
             $actividad->save();
@@ -379,7 +375,7 @@ class apiController extends Controller
     {
         $empleado = $request->get('emple_id');
         $respuesta = [];
-        $actividad = actividad::whereIn('empleado_emple_id', '=', $empleado)->where('estado', '=', 1)->get();
+        $actividad = actividad::where('empleado_emple_id', '=', $empleado)->where('estado', '=', 1)->get();
         foreach ($actividad as $act) {
             array_push($respuesta, $act);
         }
@@ -448,11 +444,11 @@ class apiController extends Controller
             $fecha1 = Carbon::create($capturaRegistrada->hora_fin)->format('H:i:s');
             $explo1 = explode(":", $fecha1);
             $calSegund1 = $explo1[0] * 3600 + $explo1[1] * 60 + $explo1[2];
-            $totalP = $calSegund - $calSegund1;
+            $totalP = $calSegund1 - $calSegund;
             // ACTIVIDAD DE CAPTURA
             $activ = $capturaRegistrada->actividad;
             //VALIDACION DE CERO
-            if ($calSegund1 == 0 || $totalP == 0) {
+            if ($totalP == 0) {
                 $round = 0;
             } else {
                 //PROMEDIO
