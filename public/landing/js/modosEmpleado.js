@@ -11,8 +11,8 @@ function actividadEmp() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
+            $('#tablaBodyTarea').empty();
             if (data != 0) {
-                $('#tablaBodyTarea').empty();
                 var container = $('#tablaBodyTarea');
                 var td = '';
                 for (var $i = 0; $i < data.length; $i++) {
