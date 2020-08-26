@@ -14,9 +14,11 @@
             -moz-user-select: none;
             user-select: none;
         }
+
         .pace-inactive {
             display: none;
         }
+
         .pace .pace-progress {
             background: #545474;
             position: fixed;
@@ -440,10 +442,12 @@
         .form-control {
             font-size: 12px;
         }
+
         .container {
             margin-left: 40px;
             margin-right: 28px;
         }
+
         tr:first-child>td>.fc-day-grid-event {
             margin-top: 0px;
             padding-top: 0px;
@@ -452,9 +456,11 @@
             margin-left: 2px;
             margin-right: 2px;
         }
+
         #calendarInv_ed>div.fc-view-container>div>table>tbody {
             background: #f4f4f4;
         }
+
         .fc-event,
         .fc-event-dot {
             /*  background-color: #d1c3c3; */
@@ -463,77 +469,97 @@
             cursor: url("../landing/images/cruz1.svg"), auto !important;
             font-weight: 600;
         }
+
         a:not([href]):not([tabindex]) {
             color: #000;
             cursor: pointer;
             font-size: 12px;
         }
+
         body>div.bootbox.modal.fade.bootbox-confirm.show>div>div>div.modal-footer>button.btn.btn-light.bootbox-cancel {
             background: #e2e1e1;
             color: #000000;
             border-color: #e2e1e1;
             zoom: 85%;
         }
+
         body>div.bootbox.modal.fade.bootbox-alert.show>div>div>div.modal-footer>button,
         body>div.bootbox.modal.fade.bootbox-confirm.show>div>div>div.modal-footer>button.btn.btn-success.bootbox-accept {
             background-color: #163552;
             border-color: #163552;
             zoom: 85%;
         }
+
         #calendarInv>div.fc-view-container>div>table>tbody {
             background: #f4f4f4;
         }
+
         .fc-event,
         .fc-event-dot {
             font-size: 12.2px !important;
             margin: 2px 2px;
         }
+
         .flatpickr-calendar {
             width: 220px !important;
         }
+
         .fc-time {
             display: none;
         }
+
         .v-divider {
             border-right: 5px solid #4C5D73;
         }
+
         .table th,
         .table td {
             padding: 0.55rem;
             border-top: 1px solid #c9c9c9;
         }
+
         .sw-theme-default>ul.step-anchor>li.active>a {
             color: #1c68b1 !important;
         }
+
         .sw-theme-default>ul.step-anchor>li.done>a,
         .sw-theme-default>ul.step-anchor>li>a {
             color: #0b1b29 !important;
         }
+
         .day {
             max-width: 30%;
         }
+
         .month {
             max-width: 35%;
         }
+
         .year {
             max-width: 40%;
         }
+
         .btn-group {
             width: 100%;
             justify-content: space-between;
         }
+
         .sw-btn-group-extra {
             justify-content: flex-end !important;
         }
+
         .btn-secondary {
             max-width: 9em;
         }
+
         .form-control:disabled {
             background-color: #fcfcfc;
         }
+
         body {
             background-color: #f8f8f8;
         }
+
         .hidetext {
             -webkit-text-security: disc;
             /* Default */
@@ -1676,7 +1702,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="sw-default">Condición Pago</label>
-                                                <select class="form-control" name="v_condicionV" id="v_condicionV" required>
+                                                <select class="form-control" name="v_condicionV" id="v_condicionV"
+                                                    required>
                                                     <option value="">Seleccionar</option>
                                                     @foreach ($condicionP as $condicion)
                                                     <option class="" value="{{$condicion->id}}">
@@ -1700,8 +1727,8 @@
                                                 incorrecta.</span>
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <select class="form-control" name="m_dia_fechaIEV" id="m_dia_fechaIEV"
-                                                        required="">
+                                                    <select class="form-control" name="m_dia_fechaIEV"
+                                                        id="m_dia_fechaIEV" required="">
                                                         <option value="0">Dia</option>
                                                         @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
                                                             {{$i}}
@@ -1710,8 +1737,8 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <select class="form-control" name="m_mes_fechaIEV" id="m_mes_fechaIEV"
-                                                        required="">
+                                                    <select class="form-control" name="m_mes_fechaIEV"
+                                                        id="m_mes_fechaIEV" required="">
                                                         <option value="0">Mes</option>
                                                         <option class="" value="1">Ene.</option>
                                                         <option class="" value="2">Feb.</option>
@@ -3151,14 +3178,14 @@
 
                                                         </div>
                                                         <div class="modal-footer"
-                                                        style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
-                                                        <div class="col-md-12 text-right">
-                                                            <button type="button" style="margin-right: 25px;"
-                                                                class="btn btn-soft-primary btn-sm "
-                                                                onclick="$('#calendarioAsignar_ed').modal('hide')">Cancelar</button>
-                                                            </form>
+                                                            style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
+                                                            <div class="col-md-12 text-right">
+                                                                <button type="button" style="margin-right: 25px;"
+                                                                    class="btn btn-soft-primary btn-sm "
+                                                                    onclick="$('#calendarioAsignar_ed').modal('hide')">Cancelar</button>
+                                                                </form>
+                                                            </div>
                                                         </div>
-                                                    </div>
                                                     </div><!-- /.modal-content -->
                                                 </div><!-- /.modal-dialog -->
                                             </div><!-- /.modal -->
@@ -3409,6 +3436,92 @@
                                         </div>
                                     </div>
                                     <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <div class="row pb-1 pl-2">
+                                                            <div class="col">
+                                                                <div class="custom-control custom-switch mb-2">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                        id="customSwitch1">
+                                                                    <label class="custom-control-label"
+                                                                        for="customSwitch1">Modo Tarea</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body border p-2" id="bodyModoTarea">
+                                                        <div class="row">
+                                                            <div class="col-xl-12 text-right">
+                                                                <button type="button" class="btn btn-sm mt-1"
+                                                                    style="background-color: #163552;">+ Nueva Tarea
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row pt-3">
+                                                            <div class="col-xl-12 col-sm-12">
+                                                                <div class="table-responsive-xl">
+                                                                    <table class="table"
+                                                                        style="font-size: 13px!important;">
+                                                                        <thead
+                                                                            style="background: #fafafa;font-size: 14px">
+                                                                            <tr>
+                                                                                <th>Actividad</th>
+                                                                                <th>Estado</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <div class="row pb-1 pl-2">
+                                                            <div class="col">
+                                                                <div class="custom-control custom-switch mb-2">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                        id="customSwitch2">
+                                                                    <label class="custom-control-label"
+                                                                        for="customSwitch2">Modo Proyecto</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body border p-2" id="bodyModoProyecto">
+                                                        <div class="row">
+                                                            <div class="col-xl-12 text-right">
+                                                                <button type="button" class="btn btn-sm mt-1"
+                                                                    style="background-color: #163552;">+ Nuevo Proyecto
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row pt-3">
+                                                            <div class="col-xl-12 col-sm-12">
+                                                                <div class="table-responsive-xl">
+                                                                    <table class="table"
+                                                                        style="font-size: 13px!important;">
+                                                                        <thead
+                                                                            style="background: #fafafa;font-size: 14px">
+                                                                            <tr>
+                                                                                <th>Actividad</th>
+                                                                                <th>Estado</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -3417,13 +3530,14 @@
                 </div>
             </div>
             <!--VER EMPLEADO-->
-            <div id="verEmpleadoDetalles" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="verEmpleadoDetalles"
-                aria-hidden="true" data-backdrop="static">
+            <div id="verEmpleadoDetalles" class="modal fade" tabindex="-1" role="dialog"
+                aria-labelledby="verEmpleadoDetalles" aria-hidden="true" data-backdrop="static">
                 <div class="modal-dialog modal-dialog-scrollable modal-lg">
                     <div class="modal-content">
                         <div class="modal-header" style="background: #163552;">
                             <h4 class="header-title mt-0 " style="color: #f0f0f0">Datos de empleado</h4><br>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="javascript:cerrarVer()">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                onclick="javascript:cerrarVer()">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -3627,16 +3741,19 @@
                                                     <input class="form-control" name="v_cargoV" id="v_cargoV" disabled>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default">Contrato &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <a id="detalleContratoVer" onclick="$('#verEmpleadoDetalles').modal('hide');"
+                                                    <label for="sw-default">Contrato
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <a id="detalleContratoVer"
+                                                            onclick="$('#verEmpleadoDetalles').modal('hide');"
                                                             href="#fechasmodalVer" data-toggle="modal"
                                                             data-target="#fechasmodalVer" data-toggle="tooltip"
                                                             data-placement="right" title="Detalle de Contrato."
                                                             data-original-title="Detalle de Contrato."
                                                             style="cursor: pointer;">
-                                                            <img src="{{asset('landing/images/adaptive.svg')}}" height="18">
+                                                            <img src="{{asset('landing/images/adaptive.svg')}}"
+                                                                height="18">
                                                         </a>
-                                                        </label>
+                                                    </label>
                                                     <input class="form-control" name="v_contratoV" id="v_contratoV"
                                                         tabindex="5" disabled>
                                                 </div>
@@ -3936,6 +4053,7 @@
     <script src="{{asset('landing/js/empleado.js')}}"></script>
     <script src="{{asset('landing/js/empleadoA.js')}}"></script>
     <script src="{{asset('landing/js/dispositivos.js')}}"></script>
+    <script src="{{asset('landing/js/modosEmpleado.js')}}"></script>
     @if (Auth::user())
     <script>
         $(function () {

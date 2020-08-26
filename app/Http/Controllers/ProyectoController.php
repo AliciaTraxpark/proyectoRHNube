@@ -123,4 +123,18 @@ class ProyectoController extends Controller
         $proyecto = proyecto::where('Proye_id', '=', $request->idPr)
             ->update(['Proye_Nombre' =>  $request->nombreP, 'Proye_Detalle' =>  $request->detalleP]);
     }
+
+    public function actividadesEmpleado(Request $request)
+    {
+        $respuesta = [];
+        $id = $request->get('id');
+        $proyecto_empleado = proyecto_empleado::where('empleado_emple_id', '=', $id)->get();
+        foreach ($proyecto_empleado as $pe) {
+            $proyecto = proyecto::where('Proye_id', '=', $pe->Proyecto_Proye_id)->get()->first();
+            if ($proyecto) {
+                array_push($respuesta, $proyecto);
+            }
+        }
+        return response()->json($respuesta, 200);
+    }
 }

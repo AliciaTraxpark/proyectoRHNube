@@ -517,6 +517,7 @@ $(document).ready(function () {
             $('button.sw-btn-prev').hide();
             $('button.sw-btn-next').hide();
             $('#FinalizarEmpleadoEditar').show();
+            actividadEmp();
         }
     })
 });
