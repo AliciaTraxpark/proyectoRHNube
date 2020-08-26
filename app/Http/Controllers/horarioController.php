@@ -825,6 +825,7 @@ class horarioController extends Controller
         $empleadosArea = DB::table('empleado')
         ->where('users_id', '=', Auth::user()->id)
         ->where('emple_area', '=', $idarea)
+        ->where('emple_estado', '=', 1)
         ->get();
         return $empleadosArea;
     }
@@ -835,6 +836,7 @@ class horarioController extends Controller
         $empleadosCargo = DB::table('empleado')
         ->where('users_id', '=', Auth::user()->id)
         ->where('emple_cargo', '=', $idcargo)
+        ->where('emple_estado', '=', 1)
         ->get();
         return $empleadosCargo;
     }
@@ -844,6 +846,7 @@ class horarioController extends Controller
         $empleadosidLocal = DB::table('empleado')
         ->where('users_id', '=', Auth::user()->id)
         ->where('emple_local', '=', $idlocal)
+        ->where('emple_estado', '=', 1)
         ->get();
         return $empleadosidLocal;
     }
