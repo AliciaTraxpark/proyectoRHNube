@@ -564,6 +564,11 @@
             -webkit-text-security: disc;
             /* Default */
         }
+
+        .scroll {
+            max-height: 100px;
+            overflow-y: hidden;
+        }
     </style>
 
     <header id="header-section">
@@ -3455,13 +3460,13 @@
                                                         <div class="row">
                                                             <div class="col-xl-12 text-right">
                                                                 <button type="button" class="btn btn-sm mt-1"
-                                                                    style="background-color: #163552;">+ Nueva Tarea
+                                                                    style="background-color: #163552;">+ Nueva Actividad
                                                                 </button>
                                                             </div>
                                                         </div>
                                                         <div class="row pt-3">
                                                             <div class="col-xl-12 col-sm-12">
-                                                                <div class="table-responsive-xl">
+                                                                <div class="table-responsive-xl scroll">
                                                                     <table class="table"
                                                                         style="font-size: 13px!important;">
                                                                         <thead
@@ -3471,6 +3476,9 @@
                                                                                 <th>Estado</th>
                                                                             </tr>
                                                                         </thead>
+                                                                        <tbody id="tablaBodyTarea"
+                                                                            style="background:#ffffff;color: #585858;font-size: 12px">
+                                                                        </tbody>
                                                                     </table>
                                                                 </div>
                                                             </div>
@@ -3498,7 +3506,7 @@
                                                         <div class="row">
                                                             <div class="col-xl-12 text-right">
                                                                 <button type="button" class="btn btn-sm mt-1"
-                                                                    style="background-color: #163552;">+ Nuevo Proyecto
+                                                                    style="background-color: #163552;">+ Nueva Actividad
                                                                 </button>
                                                             </div>
                                                         </div>

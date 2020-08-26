@@ -11,7 +11,20 @@ function actividadEmp() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-            console.log(data);
+            if (data != 0) {
+                $('#tablaBodyTarea').empty();
+                var container = $('#tablaBodyTarea');
+                var td = '';
+                for (var $i = 0; $i < data.length; $i++) {
+                    td += `<tr><td>${data[$i].Proye_Nombre}</td>`;
+                    if (data[$i].Proye_estado == 1) {
+                        td += `<td>Activo</td></tr>`;
+                    } else {
+                        td += `<td>Inactivo</td></tr>`;
+                    }
+                }
+                container.append(td);
+            }
         },
         error: function () {
 
