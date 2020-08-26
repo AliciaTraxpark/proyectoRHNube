@@ -3477,6 +3477,7 @@
                                                                             <tr>
                                                                                 <th>Actividad</th>
                                                                                 <th>Estado</th>
+                                                                                <th>Total</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody id="tablaBodyTarea"

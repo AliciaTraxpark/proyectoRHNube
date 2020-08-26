@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\actividad;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use App\empleado;
@@ -128,12 +128,9 @@ class ProyectoController extends Controller
     {
         $respuesta = [];
         $id = $request->get('id');
-        $proyecto_empleado = proyecto_empleado::where('empleado_emple_id', '=', $id)->get();
-        foreach ($proyecto_empleado as $pe) {
-            $proyecto = proyecto::where('Proye_id', '=', $pe->Proyecto_Proye_id)->get()->first();
-            if ($proyecto) {
-                array_push($respuesta, $proyecto);
-            }
+        $actividad = actividad::where('empleado_emple_id', '=', $id)->get();
+        foreach ($actividad as $a) {
+            array_push($respuesta, $a);
         }
         return response()->json($respuesta, 200);
     }
@@ -141,18 +138,11 @@ class ProyectoController extends Controller
     public function registrarProyectoE(Request $request)
     {
         $idE = $request->get('idE');
-        $proyecto = new proyecto();
-        $proyecto->Proye_Nombre = $request->get('nombre');
-        $proyecto->Proye_estado = 1;
-        $proyecto->idUser = Auth::user()->id;
-        $proyecto->save();
+        $actividad = new actividad();
+        $actividad->Activi_Nombre = $request->get('nombre');
+        $actividad->empleado_emple_id = $idE;
+        $actividad->save();
 
-        $idProyecto = $proyecto->Proye_id;
-
-        $proyecto_empleado = new proyecto_empleado();
-        $proyecto_empleado->Proyecto_Proye_id = $idProyecto;
-        $proyecto_empleado->empleado_emple_id = $idE;
-        $proyecto_empleado->save();
-        return response()->json($proyecto_empleado, 200);
+        return response()->json($actividad, 200);
     }
 }
