@@ -13,9 +13,11 @@ use App\proyecto_empleado;
         -moz-user-select: none;
         user-select: none;
     }
+
     .pace-inactive {
         display: none;
     }
+
     .pace .pace-progress {
         background: #545474;
         position: fixed;
@@ -23,7 +25,7 @@ use App\proyecto_empleado;
         top: 0;
         /* right: 100%; */
         width: 100%;
-        height: 6    px;
+        height: 6 px;
     }
 </style>
 
@@ -414,22 +416,27 @@ use App\proyecto_empleado;
     #calendarInv>div.fc-view-container>div>table>tbody {
         background: #f4f4f4;
     }
+
     #calendarInv_ed>div.fc-view-container>div>table>tbody {
         background: #f4f4f4;
     }
+
     .page-item.active .page-link {
         background-color: #e3eaef;
         border-color: #e3eaef;
         color: #3d3d3d;
     }
+
     .fc-event,
     .fc-event-dot {
         font-size: 12.2px !important;
         margin: 2px 2px;
     }
+
     .form-control {
         font-size: 12px;
     }
+
     tr:first-child>td>.fc-day-grid-event {
         margin-top: 0px;
         padding-top: 0px;
@@ -438,9 +445,11 @@ use App\proyecto_empleado;
         margin-left: 2px;
         margin-right: 2px;
     }
+
     .flatpickr-calendar {
         width: 220px !important;
     }
+
     .btn-outline-secondary {
         border-color: #e3eaef;
         background: #ffffff;
@@ -451,41 +460,53 @@ use App\proyecto_empleado;
         margin-left: 40px;
         margin-right: 28px;
     }
+
     .fc-time {
         display: none;
     }
+
     .v-divider {
         border-right: 5px solid #4C5D73;
     }
+
     .sw-theme-default>ul.step-anchor>li.active>a {
         color: #1c68b1 !important;
     }
+
     .sw-theme-default>ul.step-anchor>li.done>a,
     .sw-theme-default>ul.step-anchor>li>a {
         color: #0b1b29 !important;
     }
+
     .day {
         max-width: 30%;
     }
+
     .month {
         max-width: 35%;
     }
+
     .year {
         max-width: 40%;
     }
+
     .btn-group {
         width: 100%;
         justify-content: space-between;
     }
+
     .sw-btn-group-extra {
         justify-content: flex-end !important;
     }
+
     .btn-secondary {
         max-width: 9em;
     }
+
     .form-control:disabled {
         background-color: #fcfcfc;
     }
+
     .fc-event,
     .fc-event-dot {
         /*  background-color: #d1c3c3; */
@@ -494,22 +515,30 @@ use App\proyecto_empleado;
         cursor: url("../landing/images/cruz1.svg"), auto !important;
         font-weight: 600;
     }
+
     a:not([href]):not([tabindex]) {
         color: #000;
         cursor: pointer;
         font-size: 12px;
     }
+
     body>div.bootbox.modal.fade.bootbox-confirm.show>div>div>div.modal-footer>button.btn.btn-light.bootbox-cancel {
         background: #e2e1e1;
         color: #000000;
         border-color: #e2e1e1;
         zoom: 85%;
     }
+
     body>div.bootbox.modal.fade.bootbox-alert.show>div>div>div.modal-footer>button,
     body>div.bootbox.modal.fade.bootbox-confirm.show>div>div>div.modal-footer>button.btn.btn-success.bootbox-accept {
         background-color: #163552;
         border-color: #163552;
         zoom: 85%;
+    }
+
+    .scroll {
+        max-height: 100px;
+        overflow-y: auto;
     }
 </style>
 <div class="row page-title" style="padding-right: 20px;">
@@ -3006,13 +3035,13 @@ use App\proyecto_empleado;
 
                                             </div>
                                             <div class="modal-footer"
-                                                        style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
-                                                        <div class="col-md-12 text-right">
-                                                            <button type="button" style="margin-right: 21px;"
-                                                                class="btn btn-soft-primary btn-sm "
-                                                                onclick="$('#calendarioAsignar_ed').modal('hide')">Cancelar</button>
-                                                            </form>
-                                                     </div>
+                                                style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
+                                                <div class="col-md-12 text-right">
+                                                    <button type="button" style="margin-right: 21px;"
+                                                        class="btn btn-soft-primary btn-sm "
+                                                        onclick="$('#calendarioAsignar_ed').modal('hide')">Cancelar</button>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
@@ -3264,8 +3293,7 @@ use App\proyecto_empleado;
                                                     <div class="custom-control custom-switch mb-2">
                                                         <input type="checkbox" class="custom-control-input"
                                                             id="customSwitch1">
-                                                        <label class="custom-control-label"
-                                                            for="customSwitch1"
+                                                        <label class="custom-control-label" for="customSwitch1"
                                                             style="font-weight: bold">Modo Tarea</label>
                                                     </div>
                                                 </div>
@@ -3284,10 +3312,8 @@ use App\proyecto_empleado;
                                             <div class="row pt-3">
                                                 <div class="col-xl-12 col-sm-12">
                                                     <div class="table-responsive-xl scroll">
-                                                        <table class="table"
-                                                            style="font-size: 13px!important;">
-                                                            <thead
-                                                                style="background: #fafafa;font-size: 14px">
+                                                        <table class="table" style="font-size: 13px!important;">
+                                                            <thead style="background: #fafafa;font-size: 14px">
                                                                 <tr>
                                                                     <th>Actividad</th>
                                                                     <th>Estado</th>
@@ -3313,8 +3339,7 @@ use App\proyecto_empleado;
                                                     <div class="custom-control custom-switch mb-2">
                                                         <input type="checkbox" class="custom-control-input"
                                                             id="customSwitch2">
-                                                        <label class="custom-control-label"
-                                                            for="customSwitch2"
+                                                        <label class="custom-control-label" for="customSwitch2"
                                                             style="font-weight: bold">Modo Proyecto</label>
                                                     </div>
                                                 </div>
@@ -3331,10 +3356,8 @@ use App\proyecto_empleado;
                                             <div class="row pt-3">
                                                 <div class="col-xl-12 col-sm-12">
                                                     <div class="table-responsive-xl">
-                                                        <table class="table"
-                                                            style="font-size: 13px!important;">
-                                                            <thead
-                                                                style="background: #fafafa;font-size: 14px">
+                                                        <table class="table" style="font-size: 13px!important;">
+                                                            <thead style="background: #fafafa;font-size: 14px">
                                                                 <tr>
                                                                     <th>Actividad</th>
                                                                     <th>Estado</th>
@@ -3357,8 +3380,7 @@ use App\proyecto_empleado;
                                             <h5 class="modal-title" id="myModalLabel"
                                                 style="color:#ffffff;font-size:15px">Registrar Actividad
                                             </h5>
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                aria-label="Close">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
@@ -3385,8 +3407,7 @@ use App\proyecto_empleado;
                                                     <div class="col-md-12 text-right">
                                                         <button type="button" class="btn btn-light btn-sm "
                                                             onclick="$('#actividadTarea').modal('toggle')">Cancelar</button>
-                                                        <button type="submit" name=""
-                                                            style="background-color: #163552;"
+                                                        <button type="submit" name="" style="background-color: #163552;"
                                                             class="btn btn-sm ">Guardar</button>
                                                         </form>
                                                     </div>
