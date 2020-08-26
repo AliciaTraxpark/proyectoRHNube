@@ -311,6 +311,12 @@ class EmpleadoController extends Controller
         $empleado->users_id = Auth::user()->id;
         $empleado->save();
         $idempleado = $empleado->emple_id;
+
+        $actividad = new actividad();
+        $actividad->Activi_Nombre = "Tarea 01";
+        $actividad->empleado_emple_id = $idempleado;
+        $actividad->estado = 1;
+        $actividad->save();
         return response()->json($idempleado, 200);
     }
 

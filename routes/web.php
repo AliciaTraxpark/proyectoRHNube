@@ -181,6 +181,8 @@ Route::post('/proyecto/eliminar', 'ProyectoController@eliminar');
 Route::post('/proyecto/tablaEmpleados', 'ProyectoController@empleadosTabla');
 Route::post('/proyecto/eliminarEmpleado', 'ProyectoController@eliminarEmpleado');
 Route::post('/proyecto/editarPro', 'ProyectoController@editarProyecto');
+Route::get('/actividadEmpleado', 'ProyectoController@actividadesEmpleado');
+Route::get('/registrarActvE', 'ProyectoController@registrarProyectoE');
 
 //carga masiva de fotos
 Route::post('/subirfoto', 'CargaMasivaFotoController@subirfoto');

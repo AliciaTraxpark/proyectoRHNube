@@ -327,16 +327,6 @@ class apiController extends Controller
         return response()->json($proyecto, 400);
     }
 
-    public function apiActividad(Request $request)
-    {
-        $actividad = new actividad();
-        $actividad->Activi_Nombre = $request['Activi_Nombre'];
-        $actividad->Tarea_Tarea_id = $request['Tarea_Tarea_id'];
-        $actividad->empleado_emple_id = $request['emple_id'];
-        $actividad->save();
-        return response()->json($actividad, 200);
-    }
-
     public function editarApiTarea(Request $request)
     {
         $Tarea_id = $request['Tarea_id'];
@@ -349,6 +339,16 @@ class apiController extends Controller
         return response()->json($tarea, 400);
     }
 
+    public function apiActividad(Request $request)
+    {
+        $actividad = new actividad();
+        $actividad->Activi_Nombre = $request['Activi_Nombre'];
+        $actividad->Tarea_Tarea_id = $request['Tarea_Tarea_id'];
+        $actividad->empleado_emple_id = $request['emple_id'];
+        $actividad->save();
+        return response()->json($actividad, 200);
+    }
+
     public function editarApiActividad(Request $request)
     {
         $Activi_id = $request['Activi_id'];
@@ -359,6 +359,27 @@ class apiController extends Controller
             return response()->json($actividad, 200);
         }
         return response()->json($actividad, 400);
+    }
+
+    public function cambiarEstadoActividad(Request $request)
+    {
+        $actividad = actividad::where('Activi_id', $request->get('idActividad'))->first();
+        if ($actividad) {
+            $actividad->estado = 0;
+            $actividad->save();
+        }
+        return response()->json($actividad, 200);
+    }
+
+    public function selectActividad(Request $request)
+    {
+        $empleado = $request->get('emple_id');
+        $respuesta = [];
+        $actividad = actividad::where('empleado_emple_id', '=', $empleado)->where('estado', '=', 1)->get();
+        foreach ($actividad as $act) {
+            array_push($respuesta, $act);
+        }
+        return response()->json($respuesta, 200);
     }
 
     public function envio(Request $request)
@@ -398,165 +419,50 @@ class apiController extends Controller
     public function captura(Request $request)
     {
         $idEnvio = $request['idEnvio'];
-        $promedioG = [];
         $captura = new captura();
         $captura->idEnvio = $idEnvio;
         $captura->estado = $request->get('estado');
         $captura->fecha_hora = $request->get('fecha_hora');
         $captura->imagen = $request->get('imagen');
-        $captura->promedio = $request->get('promedio');
+        $captura->actividad = $request->get('actividad');
+        $captura->hora_ini = $request->get('hora_ini');
+        $captura->hora_fin = $request->get('hora_fin');
+        $captura->ultimo_acumulado = $request->get('ultimo_acumulado');
+        $captura->acumulador = $request->get('acumulador');
         $captura->save();
 
         $idCaptura = $captura->idCaptura;
 
-        $control = control::where('idEnvio', '=', $idEnvio)->get()->first();
-        $envio = envio::where('idEnvio', '=', $idEnvio)->get()->first();
-        if ($control) {
-            $idHorario_dias = $control->idHorario_dias;
-            $busquedaUltimoControl = DB::table('control as c')
-                ->join('envio as en', 'c.idEnvio', '=', 'en.idEnvio')
-                ->select(DB::raw('MAX(c.idEnvio) as idEnvio'), DB::raw('COUNT(c.idHorario_dias) as total'))
-                ->where('c.idHorario_dias', '=', $idHorario_dias)
-                ->where('en.idEmpleado', '=', $envio->idEmpleado)
-                ->get()
-                ->first();
-            if ($busquedaUltimoControl->total != 1) {
-                $busquedaC = DB::table('control as c')
-                    ->join('envio as en', 'c.idEnvio', '=', 'en.idEnvio')
-                    ->select(DB::raw('MAX(c.idEnvio) as idEnvio'), DB::raw('COUNT(c.idHorario_dias) as total'))
-                    ->where('c.idHorario_dias', '=', $idHorario_dias)
-                    ->where('c.idHorario_dias', '!=', null)
-                    ->where('en.idEmpleado', '=', $envio->idEmpleado)
-                    ->where('c.Cont_id', '!=', $control->Cont_id)
-                    ->get()
-                    ->first();
-                $capturaBusqueda = captura::where('idEnvio', '=', $busquedaC->idEnvio)->get();
-                foreach ($capturaBusqueda as $cb) {
-                    $promedio = DB::table('captura as c')
-                        ->select('c.promedio', 'c.fecha_hora')
-                        ->where('c.idCaptura', '=', $cb->idCaptura)
-                        ->get()
-                        ->first();
-                    if ($promedio) {
-                        $capturaRegistrada = captura::where('idCaptura', '=', $idCaptura)->get()->first();
-                        //PROMEDIOS DE CAPTURAS
-                        $explode2 = explode(":", $capturaRegistrada->promedio);
-                        $calSeg2 = $explode2[0] * 3600 + $explode2[1] * 60 + $explode2[2];
-                        $totalP = $calSeg2;
-                        //RESTA POR FECHA HORA DE   CAPTURAS
-                        $fecha = Carbon::create($capturaRegistrada->fecha_hora)->format('H:i:s');
-                        $explo1 = explode(":", $fecha);
-                        $calSegund = $explo1[0] * 3600 + $explo1[1] * 60 + $explo1[2];
-                        $fecha1 = Carbon::create($promedio->fecha_hora)->format('H:i:s');
-                        $explo2 = explode(":", $fecha1);
-                        $calSegund2 = $explo2[0] * 3600 + $explo2[1] * 60 + $explo2[2];
-                        $totalP1 = $calSegund - $calSegund2;
-                        //VALIDACION DE CERO
-                        if ($calSeg2 == 0 || $totalP1 == 0) {
-                            $round = 0;
-                        } else {
-                            //PROMEDIO
-                            $promedio = floatval($totalP / $totalP1);
-                            $promedioFinal = $promedio * 100;
-                            $round = round($promedioFinal, 2);
-                        }
-                        if ($totalP1 > 600) {
-                            $rango = 0;
-                        } else {
-                            $rango = $totalP1;
-                        }
-                        //TABLA PROMEDIO_CAPTURA
-                        $promedio_captura = new promedio_captura();
-                        $promedio_captura->idCaptura = $idCaptura;
-                        $promedio_captura->idHorario = $idHorario_dias;
-                        $promedio_captura->promedio = $round;
-                        $promedio_captura->tiempo_rango = $rango;
-                        $promedio_captura->save();
-                        array_push($promedioG, $promedio_captura);
-                    }
-                }
+        $control = control::where('idEnvio', '=', $idEnvio)->get();
+        foreach ($control as $cont) {
+            $idHorario_dias = $cont->idHorario_dias;
+            $capturaRegistrada = captura::where('idCaptura', '=', $idCaptura)->get()->first();
+            //RESTA POR FECHA HORA DE   CAPTURAS
+            $fecha = Carbon::create($capturaRegistrada->hora_ini)->format('H:i:s');
+            $explo = explode(":", $fecha);
+            $calSegund = $explo[0] * 3600 + $explo[1] * 60 + $explo[2];
+            $fecha1 = Carbon::create($capturaRegistrada->hora_fin)->format('H:i:s');
+            $explo1 = explode(":", $fecha1);
+            $calSegund1 = $explo1[0] * 3600 + $explo1[1] * 60 + $explo1[2];
+            $totalP = $calSegund1 - $calSegund;
+            // ACTIVIDAD DE CAPTURA
+            $activ = $capturaRegistrada->actividad;
+            //VALIDACION DE CERO
+            if ($totalP == 0) {
+                $round = 0;
             } else {
-                $promedio_captura = new promedio_captura();
-                $promedio_captura->idCaptura = $idCaptura;
-                $promedio_captura->idHorario = $idHorario_dias;
-                $promedio_captura->promedio = 0;
-                $promedio_captura->tiempo_rango = 0;
-                $promedio_captura->save();
-                array_push($promedioG, $promedio_captura);
+                //PROMEDIO
+                $promedio = floatval($activ / $totalP);
+                $promedioFinal = $promedio * 100;
+                $round = round($promedioFinal, 2);
             }
-            if ($idHorario_dias == null) {
-                $busquedaUltimaCaptura = DB::table('control as c')
-                    ->join('envio as en', 'en.idEnvio', '=', 'c.idEnvio')
-                    ->join('captura as cp', 'cp.idEnvio', '=', 'en.idEnvio')
-                    ->select(DB::raw('MAX(c.idEnvio) as idEnvio'), 'c.idEnvio', DB::raw('COUNT(DATE(cp.fecha_hora)) as total'))
-                    ->where('en.idEmpleado', '=', $envio->idEmpleado)
-                    ->where('c.idHorario_dias', '=', $idHorario_dias)
-                    ->groupBy(DB::raw('DATE(cp.fecha_hora)'))
-                    ->get()
-                    ->first();
-                if ($busquedaUltimaCaptura->total != 1) {
-                    $busquedaC = DB::table('control as c')
-                        ->join('envio as en', 'en.idEnvio', '=', 'c.idEnvio')
-                        ->join('captura as cp', 'cp.idEnvio', '=', 'en.idEnvio')
-                        ->select(DB::raw('MAX(c.idEnvio) as idEnvio'), DB::raw('COUNT(DATE(cp.fecha_hora)) as total'))
-                        ->where('c.idHorario_dias', '=', $idHorario_dias)
-                        ->where('en.idEmpleado', '=', $envio->idEmpleado)
-                        ->where('c.Cont_id', '!=', $control->Cont_id)
-                        ->groupBy(DB::raw('DATE(cp.fecha_hora)'))
-                        ->get()
-                        ->first();
-                    $capturaBusqueda = captura::where('idEnvio', '=', $busquedaC->idEnvio)->get();
-                    foreach ($capturaBusqueda as $cb) {
-                        $promedio = DB::table('captura as c')
-                            ->select('c.promedio', 'c.fecha_hora')
-                            ->where('c.idCaptura', '=', $cb->idCaptura)
-                            ->get()
-                            ->first();
-                        if ($promedio) {
-                            //RESTA DE PROMEDIOS DE CAPTURAS
-                            $capturaRegistrada = captura::where('idCaptura', '=', $idCaptura)->get()->first();
-                            $explode2 = explode(":", $capturaRegistrada->promedio);
-                            $calSeg2 = $explode2[0] * 3600 + $explode2[1] * 60 + $explode2[2];
-                            $totalP = $calSeg2;
-                            //RESTA POR FECHA HORA DE   CAPTURAS
-                            $fecha = Carbon::create($capturaRegistrada->fecha_hora)->format('H:i:s');
-                            $explo1 = explode(":", $fecha);
-                            $calSegund = $explo1[0] * 3600 + $explo1[1] * 60 + $explo1[2];
-                            $fecha1 = Carbon::create($promedio->fecha_hora)->format('H:i:s');
-                            $explo2 = explode(":", $fecha1);
-                            $calSegund2 = $explo2[0] * 3600 + $explo2[1] * 60 + $explo2[2];
-                            $totalP1 = $calSegund - $calSegund2;
-                            if ($calSeg2 == 0 || $totalP1 == 0) {
-                                $round = 0;
-                            } else {
-                                //PROMEDIO
-                                $promedio = floatval($totalP / $totalP1);
-                                $promedioFinal = $promedio * 100;
-                                $round = round($promedioFinal, 2);
-                            }
-                            if ($totalP1 > 600) {
-                                $rango = 0;
-                            } else {
-                                $rango = $totalP1;
-                            }
-                            //TABLA PROMEDIO_CAPTURA
-                            $promedio_captura = new promedio_captura();
-                            $promedio_captura->idCaptura = $idCaptura;
-                            $promedio_captura->promedio = $round;
-                            $promedio_captura->tiempo_rango = $rango;
-                            $promedio_captura->save();
-                        }
-                    }
-                } else {
-                    $promedio_captura = new promedio_captura();
-                    $promedio_captura->idCaptura = $idCaptura;
-                    $promedio_captura->promedio = 0;
-                    $promedio_captura->tiempo_rango = 0;
-                    $promedio_captura->save();
-                }
-            }
+            $promedio_captura = new promedio_captura();
+            $promedio_captura->idCaptura = $idCaptura;
+            $promedio_captura->idHorario = $idHorario_dias;
+            $promedio_captura->promedio = $round;
+            $promedio_captura->tiempo_rango = $totalP;
+            $promedio_captura->save();
         }
-
         return response()->json($captura, 200);
     }
 }

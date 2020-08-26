@@ -13,9 +13,11 @@ use App\proyecto_empleado;
         -moz-user-select: none;
         user-select: none;
     }
+
     .pace-inactive {
         display: none;
     }
+
     .pace .pace-progress {
         background: #545474;
         position: fixed;
@@ -23,7 +25,7 @@ use App\proyecto_empleado;
         top: 0;
         /* right: 100%; */
         width: 100%;
-        height: 6    px;
+        height: 6 px;
     }
 </style>
 
@@ -414,22 +416,27 @@ use App\proyecto_empleado;
     #calendarInv>div.fc-view-container>div>table>tbody {
         background: #f4f4f4;
     }
+
     #calendarInv_ed>div.fc-view-container>div>table>tbody {
         background: #f4f4f4;
     }
+
     .page-item.active .page-link {
         background-color: #e3eaef;
         border-color: #e3eaef;
         color: #3d3d3d;
     }
+
     .fc-event,
     .fc-event-dot {
         font-size: 12.2px !important;
         margin: 2px 2px;
     }
+
     .form-control {
         font-size: 12px;
     }
+
     tr:first-child>td>.fc-day-grid-event {
         margin-top: 0px;
         padding-top: 0px;
@@ -438,9 +445,11 @@ use App\proyecto_empleado;
         margin-left: 2px;
         margin-right: 2px;
     }
+
     .flatpickr-calendar {
         width: 220px !important;
     }
+
     .btn-outline-secondary {
         border-color: #e3eaef;
         background: #ffffff;
@@ -451,41 +460,53 @@ use App\proyecto_empleado;
         margin-left: 40px;
         margin-right: 28px;
     }
+
     .fc-time {
         display: none;
     }
+
     .v-divider {
         border-right: 5px solid #4C5D73;
     }
+
     .sw-theme-default>ul.step-anchor>li.active>a {
         color: #1c68b1 !important;
     }
+
     .sw-theme-default>ul.step-anchor>li.done>a,
     .sw-theme-default>ul.step-anchor>li>a {
         color: #0b1b29 !important;
     }
+
     .day {
         max-width: 30%;
     }
+
     .month {
         max-width: 35%;
     }
+
     .year {
         max-width: 40%;
     }
+
     .btn-group {
         width: 100%;
         justify-content: space-between;
     }
+
     .sw-btn-group-extra {
         justify-content: flex-end !important;
     }
+
     .btn-secondary {
         max-width: 9em;
     }
+
     .form-control:disabled {
         background-color: #fcfcfc;
     }
+
     .fc-event,
     .fc-event-dot {
         /*  background-color: #d1c3c3; */
@@ -494,22 +515,30 @@ use App\proyecto_empleado;
         cursor: url("../landing/images/cruz1.svg"), auto !important;
         font-weight: 600;
     }
+
     a:not([href]):not([tabindex]) {
         color: #000;
         cursor: pointer;
         font-size: 12px;
     }
+
     body>div.bootbox.modal.fade.bootbox-confirm.show>div>div>div.modal-footer>button.btn.btn-light.bootbox-cancel {
         background: #e2e1e1;
         color: #000000;
         border-color: #e2e1e1;
         zoom: 85%;
     }
+
     body>div.bootbox.modal.fade.bootbox-alert.show>div>div>div.modal-footer>button,
     body>div.bootbox.modal.fade.bootbox-confirm.show>div>div>div.modal-footer>button.btn.btn-success.bootbox-accept {
         background-color: #163552;
         border-color: #163552;
         zoom: 85%;
+    }
+
+    .scroll {
+        max-height: 100px;
+        overflow-y: auto;
     }
 </style>
 <div class="row page-title" style="padding-right: 20px;">
@@ -2504,6 +2533,7 @@ use App\proyecto_empleado;
                         <li><a href="#sw-default-step-4">Calendario</a></li>
                         <li><a href="#sw-default-step-5">Horario</a></li>
                         <li><a href="#sw-default-step-6">Dispositivo</a></li>
+                        <li><a href="#sw-default-step-7">Modos de Control</a></li>
                     </ul>
                     <div class="p-3" id="form-registrar">
                         <div id="persona-step-1" style="font-size: 12px!important">
@@ -3005,13 +3035,13 @@ use App\proyecto_empleado;
 
                                             </div>
                                             <div class="modal-footer"
-                                                        style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
-                                                        <div class="col-md-12 text-right">
-                                                            <button type="button" style="margin-right: 21px;"
-                                                                class="btn btn-soft-primary btn-sm "
-                                                                onclick="$('#calendarioAsignar_ed').modal('hide')">Cancelar</button>
-                                                            </form>
-                                                     </div>
+                                                style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
+                                                <div class="col-md-12 text-right">
+                                                    <button type="button" style="margin-right: 21px;"
+                                                        class="btn btn-soft-primary btn-sm "
+                                                        onclick="$('#calendarioAsignar_ed').modal('hide')">Cancelar</button>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
@@ -3252,6 +3282,141 @@ use App\proyecto_empleado;
                                     </table>
                                 </div>
                             </div>
+                        </div>
+                        <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="row pb-1 pl-2">
+                                                <div class="col">
+                                                    <div class="custom-control custom-switch mb-2">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="customSwitch1">
+                                                        <label class="custom-control-label" for="customSwitch1"
+                                                            style="font-weight: bold">Modo Tarea</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body border p-2" id="bodyModoTarea">
+                                            <div class="row">
+                                                <div class="col-xl-12 text-right">
+                                                    <button type="button" class="btn btn-sm mt-1"
+                                                        style="background-color: #163552;"
+                                                        onclick="$('#actividadTarea').modal()">+ Nueva
+                                                        Actividad
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="row pt-3">
+                                                <div class="col-xl-12 col-sm-12">
+                                                    <div class="table-responsive-xl scroll">
+                                                        <table class="table" style="font-size: 13px!important;">
+                                                            <thead style="background: #fafafa;font-size: 14px">
+                                                                <tr>
+                                                                    <th>Actividad</th>
+                                                                    <th>Estado</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="tablaBodyTarea"
+                                                                style="background:#ffffff;color: #585858;font-size: 12px">
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="row pb-1 pl-2">
+                                                <div class="col">
+                                                    <div class="custom-control custom-switch mb-2">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="customSwitch2">
+                                                        <label class="custom-control-label" for="customSwitch2"
+                                                            style="font-weight: bold">Modo Proyecto</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body border p-2" id="bodyModoProyecto">
+                                            <div class="row">
+                                                <div class="col-xl-12 text-right">
+                                                    <button type="button" class="btn btn-sm mt-1"
+                                                        style="background-color: #163552;">+ Nueva Actividad
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="row pt-3">
+                                                <div class="col-xl-12 col-sm-12">
+                                                    <div class="table-responsive-xl">
+                                                        <table class="table" style="font-size: 13px!important;">
+                                                            <thead style="background: #fafafa;font-size: 14px">
+                                                                <tr>
+                                                                    <th>Actividad</th>
+                                                                    <th>Estado</th>
+                                                                </tr>
+                                                            </thead>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="actividadTarea" class="modal fade" tabindex="-1" role="dialog"
+                                aria-labelledby="actividadTarea" aria-hidden="true" data-backdrop="static">
+                                <div class="modal-dialog  modal-lg d-flex justify-content-center "
+                                    style="width: 550px;">
+                                    <div class="modal-content">
+                                        <div class="modal-header" style="background-color:#163552;">
+                                            <h5 class="modal-title" id="myModalLabel"
+                                                style="color:#ffffff;font-size:15px">Registrar Actividad
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body" style="font-size:12px!important">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <form action="javascript:registrarActividadTarea()">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label for="">Nombre:</label>
+                                                                    <input type="text"
+                                                                        class="form-control form-control-sm"
+                                                                        id="nombreTarea" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-12 text-right">
+                                                        <button type="button" class="btn btn-light btn-sm "
+                                                            onclick="$('#actividadTarea').modal('toggle')">Cancelar</button>
+                                                        <button type="submit" name="" style="background-color: #163552;"
+                                                            class="btn btn-sm ">Guardar</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
                         </div>
                     </div>
                 </div>
@@ -3780,5 +3945,6 @@ use App\proyecto_empleado;
 <script src="{{ asset('landing/js/empleado.js') }}"></script>
 <script src="{{ asset('landing/js/empleadoA.js') }}"></script>
 <script src="{{ asset('landing/js/dispositivos.js') }}"></script>
+<script src="{{asset('landing/js/modosEmpleado.js')}}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 @endsection

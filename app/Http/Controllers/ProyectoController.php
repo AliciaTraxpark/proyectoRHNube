@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\actividad;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use App\empleado;
@@ -122,5 +122,27 @@ class ProyectoController extends Controller
     {
         $proyecto = proyecto::where('Proye_id', '=', $request->idPr)
             ->update(['Proye_Nombre' =>  $request->nombreP, 'Proye_Detalle' =>  $request->detalleP]);
+    }
+
+    public function actividadesEmpleado(Request $request)
+    {
+        $respuesta = [];
+        $id = $request->get('id');
+        $actividad = actividad::where('empleado_emple_id', '=', $id)->get();
+        foreach ($actividad as $a) {
+            array_push($respuesta, $a);
+        }
+        return response()->json($respuesta, 200);
+    }
+
+    public function registrarProyectoE(Request $request)
+    {
+        $idE = $request->get('idE');
+        $actividad = new actividad();
+        $actividad->Activi_Nombre = $request->get('nombre');
+        $actividad->empleado_emple_id = $idE;
+        $actividad->save();
+
+        return response()->json($actividad, 200);
     }
 }

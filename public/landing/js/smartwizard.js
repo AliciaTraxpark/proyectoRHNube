@@ -508,15 +508,16 @@ $(document).ready(function () {
         }
     });
     $('#smartwizard1').on("showStep", function (e, anchorObject, stepNumber, stepDirection) {
-        if (stepNumber == 0 || stepNumber == 1 || stepNumber == 2 || stepNumber == 3 || stepNumber == 4) {
+        if (stepNumber == 0 || stepNumber == 1 || stepNumber == 2 || stepNumber == 3 || stepNumber == 4 || stepNumber == 5) {
             $('button.sw-btn-prev').show();
             $('button.sw-btn-next').show();
             $('#FinalizarEmpleadoEditar').hide();
         }
-        if (stepNumber == 5) {
+        if (stepNumber == 6) {
             $('button.sw-btn-prev').hide();
             $('button.sw-btn-next').hide();
             $('#FinalizarEmpleadoEditar').show();
+            actividadEmp();
         }
     })
 });

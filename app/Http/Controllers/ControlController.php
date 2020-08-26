@@ -21,7 +21,7 @@ class ControlController extends Controller
     public function index()
     {
         $empleado = DB::table('empleado as e')
-            ->join('proyecto_empleado as pe', 'pe.empleado_emple_id', '=', 'e.emple_id')
+            ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
             ->where('e.users_id', '=', Auth::user()->id)
@@ -35,8 +35,7 @@ class ControlController extends Controller
     {
         $empleado = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-            ->join('proyecto_empleado as pe', 'pe.empleado_emple_id', '=', 'e.emple_id')
-            ->join('proyecto as pr', 'pr.Proye_id', '=', 'pe.Proyecto_Proye_id')
+            ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
             ->leftJoin('envio as en', function ($join) {
                 $join->on('en.idEmpleado', '=', 'e.emple_id');
             })
@@ -52,8 +51,7 @@ class ControlController extends Controller
     {
         $empleado = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-            ->join('proyecto_empleado as pe', 'pe.empleado_emple_id', '=', 'e.emple_id')
-            ->join('proyecto as pr', 'pr.Proye_id', '=', 'pe.Proyecto_Proye_id')
+            ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
             ->leftJoin('envio as en', function ($join) {
                 $join->on('en.idEmpleado', '=', 'e.emple_id');
             })
@@ -71,8 +69,7 @@ class ControlController extends Controller
         $fechaF = explode("a", $fecha);
         $empleados = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-            ->join('proyecto_empleado as pe', 'pe.empleado_emple_id', '=', 'e.emple_id')
-            ->join('proyecto as pr', 'pr.Proye_id', '=', 'pe.Proyecto_Proye_id')
+            ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
             ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
             ->where('e.users_id', '=', Auth::user()->id)
             ->where('e.emple_estado', '=', 1)
@@ -189,15 +186,15 @@ class ControlController extends Controller
             ->join('promedio_captura as pc', 'pc.idCaptura', '=', 'cp.idCaptura')
             ->leftJoin('horario_dias as hd', 'hd.id', '=', 'pc.idHorario')
             ->join('control as c', 'c.idEnvio', '=', 'en.idEnvio')
-            ->join('proyecto as p', 'p.Proye_id', '=', 'c.Proyecto_Proye_id')
+            ->join('actividad as a', 'a.Activi_id', '=', 'c.Actividad_Activi_id')
             ->select(
                 DB::raw('IF(hd.id is null, DATE(cp.fecha_hora), DATE(hd.start))'),
-                'P.Proye_id',
-                'P.Proye_Nombre',
-                'p.Proye_estado',
+                'a.Activi_id',
+                'a.Activi_Nombre',
+                'a.estado',
                 'en.idEnvio',
                 'cp.imagen',
-                'cp.promedio',
+                'cp.actividad',
                 'en.hora_Envio',
                 'cp.fecha_hora',
                 'en.Total_Envio',
