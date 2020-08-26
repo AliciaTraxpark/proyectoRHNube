@@ -2143,12 +2143,6 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <!--<div class="form-group">
-                                            <label for="sw-default" style="color: darkblue;">Fecha Inicio
-                                                <label for="sw-default" id="c_fechaI"></label></label>
-                                            <label for="sw-default" style="color: red;">Fecha Final <label
-                                                    for="sw-default" id="c_fechaF"></label></label>
-                                        </div>-->
                                                 </div> <!-- end col -->
                                                 <div class="col-4">
                                                     <div class="form-group">
@@ -2638,6 +2632,7 @@
                                     <li><a href="#sw-default-step-4">Calendario</a></li>
                                     <li><a href="#sw-default-step-5">Horario</a></li>
                                     <li><a href="#sw-default-step-6">Dispositivo</a></li>
+                                    <li><a href="#sw-default-step-7">Modos de Control</a></li>
                                 </ul>
                                 <div class="p-3" id="form-registrar">
                                     <div id="persona-step-1" style="font-size: 12px!important">
@@ -3412,6 +3407,8 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
                                     </div>
                                 </div>
                             </div>
