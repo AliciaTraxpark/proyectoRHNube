@@ -52,12 +52,12 @@ use Illuminate\Support\Facades\DB;
         @endif
 
     </li>
-    <li>
+    <!-- <li>
         <a href="/proyecto">
             <i data-feather="briefcase"></i>
             <span>Asignar tarea</span>
         </a>
-    </li>
+    </li> -->
 
     <li>
 
