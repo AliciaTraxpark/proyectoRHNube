@@ -306,3 +306,4 @@ Route::get('/showNotificaciones', 'NotificacionController@showNotificaciones');
 Route::get('/delegarcontrol', 'delegarInvController@index');
 Route::post('/empleAreaIn', 'delegarInvController@empleAreaIn');
 Route::post('/registrarInvitado','delegarInvController@registrarInvitado');
+Route::post('/registroinvitadoBD', 'delegarInvController@registroInvitado');

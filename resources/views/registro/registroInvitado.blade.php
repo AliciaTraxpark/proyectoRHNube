@@ -174,7 +174,7 @@
 
                             $invitado=invitado::where('idinvitado','=',$idInvit)->get()->first();
                         @endphp
-
+                            <input type="hidden" name="idInvit" value="{{$idInvit}}" id="idInvit">
                             <div class="col-md-9">
                                 <div class="row">
                                     <div class="col-md-9">
@@ -452,7 +452,7 @@
     var texto = '"'+URLactual+'';
     separador = "registroInvitado/";
    textoseparado = texto.split(separador);
-alert(textoseparado[1]);
+/* alert(textoseparado[1]); */
     </script>
     <script></script>
         </body>
