@@ -230,7 +230,7 @@ function onMostrarPantallas() {
                                                 <div class="col-md-12">
                                                     <div class=" text-center col-md-12 col-sm-6" style="padding-top: 4px;
                                                     padding-bottom: 4px;">
-                                                        <h5 class="m-0 font-size-16" style="color:#1f4068;font-weight:bold;"><img src="landing/images/2143150.png" class="mr-2" height="20"/>${data[index].minutos[j][0].Proye_Nombre} </h5>
+                                                        <h5 class="m-0 font-size-16" style="color:#1f4068;font-weight:bold;"><img src="landing/images/2143150.png" class="mr-2" height="20"/>${data[index].minutos[j][0].Activi_Nombre} </h5>
                                                     </div><br>
                                                     <div class="col-md-12 col-sm-6" style="padding-left: 0px;;padding-right: 0px">
                                                     <div class="hovereffect">
@@ -282,7 +282,7 @@ function onMostrarPantallas() {
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class=" text-center col-md-12 col-sm-6" style="padding-top: 4px;padding-bottom: 4px;">
-                                                            <h5 class="m-0 font-size-16" style="color:#1f4068;font-weight:bold;"><img src="landing/images/2143150.png" class="mr-2" height="20"/>${data[index].minutos[j][0].Proye_Nombre} </h5>
+                                                            <h5 class="m-0 font-size-16" style="color:#1f4068;font-weight:bold;"><img src="landing/images/2143150.png" class="mr-2" height="20"/>${data[index].minutos[j][0].Activi_Nombre} </h5>
                                                         </div>  <br>
                                                         <div class="col-md-12 col-sm-6" style="padding-left: 0px;padding-right: 0px">
                                                         <div class="hovereffect">
