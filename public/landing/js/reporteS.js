@@ -156,6 +156,7 @@ function onSelectFechas() {
                     }*/
                     html_tr += '<td>' + total + '</td>';
                     html_tr += '<td>' + sumaP + '%' + '</td>';
+                    console.log(total);
                     var decimal = parseFloat(total.split(":")[0] + "." + total.split(":")[1] + total.split(":")[2]);
                     horas.push(decimal);
                     html_tr += '</tr>';
