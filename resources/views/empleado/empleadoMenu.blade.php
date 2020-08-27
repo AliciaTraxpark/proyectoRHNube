@@ -3454,6 +3454,7 @@ use App\proyecto_empleado;
                         <li><a href="#sw-default-step-4">Calendario</a></li>
                         <li><a href="#sw-default-step-5">Horario</a></li>
                         <li><a href="#sw-default-step-6">Dispositivo</a></li>
+                        <li><a href="#sw-default-step-7">Modos de Control</a></li>
                     </ul>
                     <div class="p-3" id="form-registrar">
                         <div id="persona-step-1" style="font-size: 12px!important">
@@ -3752,6 +3753,80 @@ use App\proyecto_empleado;
                                             style="background:#ffffff;color: #585858;font-size: 12px">
                                         </tbody>
                                     </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="row pb-1 pl-2">
+                                                <div class="col">
+                                                    <div class="custom-control custom-switch mb-2">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="customSwitch5">
+                                                        <label class="custom-control-label" for="customSwitch5"
+                                                            style="font-weight: bold">Modo Tarea</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body border p-2" id="bodyModoTarea_ver">
+                                            <div class="row pt-3">
+                                                <div class="col-xl-12 col-sm-12">
+                                                    <div class="table-responsive-xl scroll">
+                                                        <table class="table" style="font-size: 13px!important;">
+                                                            <thead style="background: #fafafa;font-size: 14px">
+                                                                <tr>
+                                                                    <th>Actividad</th>
+                                                                    <th>Estado</th>
+                                                                    <th>Total</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="tablaBodyTarea_ver"
+                                                                style="background:#ffffff;color: #585858;font-size: 12px">
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="row pb-1 pl-2">
+                                                <div class="col">
+                                                    <div class="custom-control custom-switch mb-2">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="customSwitch6">
+                                                        <label class="custom-control-label" for="customSwitch6"
+                                                            style="font-weight: bold">Modo Proyecto</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body border p-2" id="bodyModoProyecto_ver">
+                                            <div class="row pt-3">
+                                                <div class="col-xl-12 col-sm-12">
+                                                    <div class="table-responsive-xl">
+                                                        <table class="table" style="font-size: 13px!important;">
+                                                            <thead style="background: #fafafa;font-size: 14px">
+                                                                <tr>
+                                                                    <th>Actividad</th>
+                                                                    <th>Estado</th>
+                                                                </tr>
+                                                            </thead>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
