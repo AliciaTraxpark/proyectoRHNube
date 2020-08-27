@@ -43,6 +43,7 @@ $(document).ready(function () {
     $('.flatpickr-input[readonly]').prop('readonly', false)
 
 });
+
 function calendarioInv() {
     var calendarElInv = document.getElementById('calendarInv');
     calendarElInv.innerHTML = "";
@@ -3744,7 +3745,8 @@ $('#cerrarModalEmpleado').click(function () {
 });
 
 function cerrarVer() {
-    $('#verEmpleadoDetalles :input').val('');
+    $('#smartwizard').smartWizard("reset");
+    $('input[type="text"]').val("");
 }
 //*********************/
 $('#numR').hide();

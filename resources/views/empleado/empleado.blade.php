@@ -3839,12 +3839,12 @@
                                                 <div class="form-group">
                                                     <label for="sw-default">Dirección
                                                         Domiciliara</label>
-                                                    <input class="form-control" placeholder="Departamento" name="v_depV"
+                                                    <input type="text" class="form-control" placeholder="Departamento" name="v_depV"
                                                         id="v_depV" disabled>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Lugar Nacimiento</label>
-                                                    <input class="form-control" placeholder="Departamento"
+                                                    <input type="text" class="form-control" placeholder="Departamento"
                                                         name="v_departamentoV" id="v_departamentoV" disabled>
                                                 </div>
                                                 <div class="form-group">
@@ -3859,12 +3859,12 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
-                                                    <input class="form-control" placeholder="Provincia " name="v_provV"
+                                                    <input type="text" class="form-control" placeholder="Provincia " name="v_provV"
                                                         id="v_provV" disabled>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
-                                                    <input class="form-control" placeholder="Provincia "
+                                                    <input type="text" class="form-control" placeholder="Provincia "
                                                         name="v_provinciaV" id="v_provinciaV" disabled>
                                                 </div>
                                                 <div class="form-group">
@@ -3879,12 +3879,12 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
-                                                    <input class="form-control" placeholder="Distrito " name="v_distV"
+                                                    <input type="text" class="form-control" placeholder="Distrito " name="v_distV"
                                                         id="v_distV" disabled>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
-                                                    <input class="form-control" placeholder="Distrito "
+                                                    <input type="text" class="form-control" placeholder="Distrito "
                                                         name="v_distritoV" id="v_distritoV" disabled>
                                                 </div>
                                                 <div class="form-group">
@@ -3913,7 +3913,7 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Cargo</label>
-                                                    <input class="form-control" name="v_cargoV" id="v_cargoV" disabled>
+                                                    <input type="text" class="form-control" name="v_cargoV" id="v_cargoV" disabled>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Contrato
@@ -3929,31 +3929,31 @@
                                                                 height="18">
                                                         </a>
                                                     </label>
-                                                    <input class="form-control" name="v_contratoV" id="v_contratoV"
+                                                    <input type="text" class="form-control" name="v_contratoV" id="v_contratoV"
                                                         tabindex="5" disabled>
                                                 </div>
                                             </div> <!-- end col -->
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Área</label>
-                                                    <input class="form-control" name="v_areaV" id="v_areaV" tabindex="3"
+                                                    <input type="text" class="form-control" name="v_areaV" id="v_areaV" tabindex="3"
                                                         disabled>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Nivel del Colaborador</label>
-                                                    <input class="form-control" name="v_nivelV" id="v_nivelV"
+                                                    <input type="text" class="form-control" name="v_nivelV" id="v_nivelV"
                                                         tabindex="6" disabled>
                                                 </div>
                                             </div> <!-- end col -->
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Centro Costo</label>
-                                                    <input class="form-control" name="v_centrocV" id="v_centrocV"
+                                                    <input type="text" class="form-control" name="v_centrocV" id="v_centrocV"
                                                         tabindex="4" disabled>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Local</label>
-                                                    <input class="form-control" name="v_localV" id="v_localV"
+                                                    <input type="text" class="form-control" name="v_localV" id="v_localV"
                                                         tabindex="7" disabled>
                                                 </div>
                                             </div> <!-- end col -->
