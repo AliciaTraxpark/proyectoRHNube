@@ -1764,6 +1764,7 @@ use App\proyecto_empleado;
                             <li><a href="#sw-default-step-4">Calendario</a></li>
                             <li><a href="#sw-default-step-5">Horario</a></li>
                             <li><a href="#sw-default-step-6">Dispositivo</a></li>
+                            <li><a href="#sw-default-step-7">Modos de Control</a></li>
                         </ul>
                         <div class="p-3">
                             <div id="sw-default-step-1" class="setup-content" style="font-size: 12px!important">
@@ -2507,6 +2508,143 @@ use App\proyecto_empleado;
                                     </table>
                                 </div>
                             </div>
+                        </div>
+                        <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="row pb-1 pl-2">
+                                                <div class="col">
+                                                    <div class="custom-control custom-switch mb-2">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="customSwitch3">
+                                                        <label class="custom-control-label" for="customSwitch3"
+                                                            style="font-weight: bold">Modo Tarea</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body border p-2" id="regbodyModoTarea">
+                                            <div class="row">
+                                                <div class="col-xl-12 text-right">
+                                                    <button type="button" class="btn btn-sm mt-1"
+                                                        style="background-color: #163552;"
+                                                        onclick="$('#regactividadTarea').modal()">+ Nueva
+                                                        Actividad
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="row pt-3">
+                                                <div class="col-xl-12 col-sm-12">
+                                                    <div class="table-responsive-xl scroll">
+                                                        <table class="table" style="font-size: 13px!important;">
+                                                            <thead style="background: #fafafa;font-size: 14px">
+                                                                <tr>
+                                                                    <th>Actividad</th>
+                                                                    <th>Estado</th>
+                                                                    <th>Total</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="regtablaBodyTarea"
+                                                                style="background:#ffffff;color: #585858;font-size: 12px">
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="row pb-1 pl-2">
+                                                <div class="col">
+                                                    <div class="custom-control custom-switch mb-2">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="customSwitch4">
+                                                        <label class="custom-control-label" for="customSwitch4"
+                                                            style="font-weight: bold">Modo Proyecto</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body border p-2" id="regbodyModoProyecto">
+                                            <div class="row">
+                                                <div class="col-xl-12 text-right">
+                                                    <button type="button" class="btn btn-sm mt-1"
+                                                        style="background-color: #163552;">+ Nueva Actividad
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="row pt-3">
+                                                <div class="col-xl-12 col-sm-12">
+                                                    <div class="table-responsive-xl">
+                                                        <table class="table" style="font-size: 13px!important;">
+                                                            <thead style="background: #fafafa;font-size: 14px">
+                                                                <tr>
+                                                                    <th>Actividad</th>
+                                                                    <th>Estado</th>
+                                                                </tr>
+                                                            </thead>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="regactividadTarea" class="modal fade" tabindex="-1" role="dialog"
+                                aria-labelledby="regactividadTarea" aria-hidden="true" data-backdrop="static">
+                                <div class="modal-dialog  modal-lg d-flex justify-content-center "
+                                    style="width: 550px;">
+                                    <div class="modal-content">
+                                        <div class="modal-header" style="background-color:#163552;">
+                                            <h5 class="modal-title" id="myModalLabel"
+                                                style="color:#ffffff;font-size:15px">Registrar Actividad
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                                onclick="javasript:limpiarModo()">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body" style="font-size:12px!important">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <form action="javascript:registrarNuevaActividadTarea()">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label for="">Nombre:</label>
+                                                                    <input type="text"
+                                                                        class="form-control form-control-sm"
+                                                                        id="regnombreTarea" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-12 text-right">
+                                                        <button type="button" class="btn btn-light btn-sm "
+                                                            onclick="javasript:limpiarModo();$('#regactividadTarea').modal('toggle')">Cancelar</button>
+                                                        <button type="submit" name="" style="background-color: #163552;"
+                                                            class="btn btn-sm ">Guardar</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
                         </div>
                     </div>
                 </div>
@@ -3563,13 +3701,13 @@ use App\proyecto_empleado;
                                     <div class="form-group">
                                         <label for="sw-default">Dirección
                                             Domiciliara</label>
-                                        <input type="text" class="form-control" placeholder="Departamento" name="v_depV" id="v_depV"
-                                            disabled>
+                                        <input type="text" class="form-control" placeholder="Departamento" name="v_depV"
+                                            id="v_depV" disabled>
                                     </div>
                                     <div class="form-group">
                                         <label for="sw-default">Lugar Nacimiento</label>
-                                        <input type="text" class="form-control" placeholder="Departamento" name="v_departamentoV"
-                                            id="v_departamentoV" disabled>
+                                        <input type="text" class="form-control" placeholder="Departamento"
+                                            name="v_departamentoV" id="v_departamentoV" disabled>
                                     </div>
                                     <div class="form-group">
                                         <label class="normal" for="">Género</label>
@@ -3582,13 +3720,13 @@ use App\proyecto_empleado;
                                 <div class="col-4">
                                     <div class="form-group">
                                         <label for="sw-default"><br></label>
-                                        <input type="text" class="form-control" placeholder="Provincia " name="v_provV" id="v_provV"
-                                            disabled>
+                                        <input type="text" class="form-control" placeholder="Provincia " name="v_provV"
+                                            id="v_provV" disabled>
                                     </div>
                                     <div class="form-group">
                                         <label for="sw-default"><br></label>
-                                        <input type="text" class="form-control" placeholder="Provincia " name="v_provinciaV"
-                                            id="v_provinciaV" disabled>
+                                        <input type="text" class="form-control" placeholder="Provincia "
+                                            name="v_provinciaV" id="v_provinciaV" disabled>
                                     </div>
                                     <div class="form-group">
                                         <label class="normal" for=""><br></label>
@@ -3601,13 +3739,13 @@ use App\proyecto_empleado;
                                 <div class="col-4">
                                     <div class="form-group">
                                         <label for="sw-default"><br></label>
-                                        <input type="text" class="form-control" placeholder="Distrito " name="v_distV" id="v_distV"
-                                            disabled>
+                                        <input type="text" class="form-control" placeholder="Distrito " name="v_distV"
+                                            id="v_distV" disabled>
                                     </div>
                                     <div class="form-group">
                                         <label for="sw-default"><br></label>
-                                        <input type="text" class="form-control" placeholder="Distrito " name="v_distritoV"
-                                            id="v_distritoV" disabled>
+                                        <input type="text" class="form-control" placeholder="Distrito "
+                                            name="v_distritoV" id="v_distritoV" disabled>
                                     </div>
                                     <div class="form-group">
                                         <label class="normal" for=""><br></label>
@@ -3649,29 +3787,32 @@ use App\proyecto_empleado;
                                                 <img src="{{asset('landing/images/adaptive.svg')}}" height="18">
                                             </a>
                                         </label>
-                                        <input type="text" class="form-control" name="v_contratoV" id="v_contratoV" tabindex="5"
-                                            disabled>
+                                        <input type="text" class="form-control" name="v_contratoV" id="v_contratoV"
+                                            tabindex="5" disabled>
                                     </div>
                                 </div> <!-- end col -->
                                 <div class="col-4">
                                     <div class="form-group">
                                         <label for="sw-default">Área</label>
-                                        <input type="text" class="form-control" name="v_areaV" id="v_areaV" tabindex="3" disabled>
+                                        <input type="text" class="form-control" name="v_areaV" id="v_areaV" tabindex="3"
+                                            disabled>
                                     </div>
                                     <div class="form-group">
                                         <label for="sw-default">Nivel del Colaborador</label>
-                                        <input type="text" class="form-control" name="v_nivelV" id="v_nivelV" tabindex="6" disabled>
+                                        <input type="text" class="form-control" name="v_nivelV" id="v_nivelV"
+                                            tabindex="6" disabled>
                                     </div>
                                 </div> <!-- end col -->
                                 <div class="col-4">
                                     <div class="form-group">
                                         <label for="sw-default">Centro Costo</label>
-                                        <input type="text" class="form-control" name="v_centrocV" id="v_centrocV" tabindex="4"
-                                            disabled>
+                                        <input type="text" class="form-control" name="v_centrocV" id="v_centrocV"
+                                            tabindex="4" disabled>
                                     </div>
                                     <div class="form-group">
                                         <label for="sw-default">Local</label>
-                                        <input type="text" class="form-control" name="v_localV" id="v_localV" tabindex="7" disabled>
+                                        <input type="text" class="form-control" name="v_localV" id="v_localV"
+                                            tabindex="7" disabled>
                                     </div>
                                 </div> <!-- end col -->
                             </div>
