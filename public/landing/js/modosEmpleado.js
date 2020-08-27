@@ -68,6 +68,7 @@ function registrarActividadTarea() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
+            limpiarModo();
             actividadEmp();
             $.notifyClose();
             $.notify({
@@ -94,3 +95,6 @@ function registrarActividadTarea() {
         }
     });
 }
+ function limpiarModo(){
+    $('#nombreTarea').val("");
+ }

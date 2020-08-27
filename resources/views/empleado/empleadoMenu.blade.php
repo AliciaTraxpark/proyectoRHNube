@@ -3381,7 +3381,8 @@ use App\proyecto_empleado;
                                             <h5 class="modal-title" id="myModalLabel"
                                                 style="color:#ffffff;font-size:15px">Registrar Actividad
                                             </h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                                onclick="javasript:limpiarModo()">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
@@ -3407,7 +3408,7 @@ use App\proyecto_empleado;
                                                 <div class="row">
                                                     <div class="col-md-12 text-right">
                                                         <button type="button" class="btn btn-light btn-sm "
-                                                            onclick="$('#actividadTarea').modal('toggle')">Cancelar</button>
+                                                            onclick="javasript:limpiarModo();$('#actividadTarea').modal('toggle')">Cancelar</button>
                                                         <button type="submit" name="" style="background-color: #163552;"
                                                             class="btn btn-sm ">Guardar</button>
                                                         </form>
