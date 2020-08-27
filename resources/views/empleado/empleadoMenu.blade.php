@@ -1764,6 +1764,7 @@ use App\proyecto_empleado;
                             <li><a href="#sw-default-step-4">Calendario</a></li>
                             <li><a href="#sw-default-step-5">Horario</a></li>
                             <li><a href="#sw-default-step-6">Dispositivo</a></li>
+                            <li><a href="#sw-default-step-7">Modos de Control</a></li>
                         </ul>
                         <div class="p-3">
                             <div id="sw-default-step-1" class="setup-content" style="font-size: 12px!important">
@@ -2444,16 +2445,9 @@ use App\proyecto_empleado;
                                                                         class="form-control form-control-sm" required>
                                                                 </div>
                                                             </div>
-
-
                                                         </div>
-
                                                 </div>
-
-
-
                                             </div>
-
                                         </div>
                                         <div class="modal-footer">
                                             <div class="col-md-12">
@@ -2508,781 +2502,6 @@ use App\proyecto_empleado;
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="form-ver" style="font-size: 13px" tabindex="-1" role="dialog" aria-labelledby="form-ver"
-    aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog modal-dialog-scrollable modal-lg">
-        <div class="modal-content">
-            <div class="modal-header" style="background: #163552;">
-                <h4 class="header-title mt-0 " style="color: #f0f0f0">Datos de empleado</h4><br>
-                <button type="button" class="close" id="cerrarEd" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" style="padding: 0px;">
-                <div id="smartwizard1" style="background: #ffffff; color:#3d3d3d;">
-                    <ul style="background: #fdfdfd!important;">
-                        <li><a href="#persona-step-1">Personales</a></li>
-                        <li><a href="#sw-default-step-2">Empresarial</a></li>
-                        <li><a href="#sw-default-step-3">Foto</a></li>
-                        <li><a href="#sw-default-step-4">Calendario</a></li>
-                        <li><a href="#sw-default-step-5">Horario</a></li>
-                        <li><a href="#sw-default-step-6">Dispositivo</a></li>
-                        <li><a href="#sw-default-step-7">Modos de Control</a></li>
-                    </ul>
-                    <div class="p-3" id="form-registrar">
-                        <div id="persona-step-1" style="font-size: 12px!important">
-                            <div class="row">
-                                <div class="col-4">
-                                    <input style="display: none;" name="v_id" id="v_id">
-                                    <div class="form-group">
-                                        <label for="sw-default">Tipo Documento</label>
-                                        <input type="text" class="form-control" name="v_tipoDoc" id="v_tipoDoc" disabled
-                                            style="background-color: #fcfcfc;" tabindex="1">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Apellido Paterno</label>
-                                        <span id="v_validApPaterno" style="color: red;">*Campo
-                                            Obligatorio</span>
-                                        <input type="text" class="form-control" name="v_apPaterno" id="v_apPaterno"
-                                            tabindex="4" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Correo Electrónico</label>
-                                        <span id="v_validCorreo" style="color: red;">*Campo
-                                            Obligatorio</span>
-                                        <span id="v_emailR" style="color: red;">*Correo
-                                            registrado</span>
-                                        <input type="email" class="form-control" id="v_email" name="email" tabindex="7">
-                                    </div>
-                                </div> <!-- end col -->
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default">Num. Documento</label>
-                                        <span id="v_validNumDocumento" style="color: red;">*Campo
-                                            Obligatorio</span>
-                                        <input type="text" class="form-control" name="v_numDocumento"
-                                            id="v_numDocumento" required disabled style="background-color: #fcfcfc;"
-                                            tabindex="2">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Apellido Materno</label>
-                                        <span id="v_validApMaterno" style="color: red;">*Campo
-                                            Obligatorio</span>
-                                        <input type="text" class="form-control" name="v_apMaterno" id="v_apMaterno"
-                                            tabindex="5" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Celular</label>
-                                        <span id="v_validCel" style="color: red;">*Número
-                                            incorrecto.</span>
-                                        <div class="row">
-                                            <div class="col-4">
-                                                <select class="form-control" id="v_codigoCelular">
-                                                    <option value="+51" selected>+51</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-8">
-                                                <input type="text" class="form-control" name="v_celular" id="v_celular"
-                                                    tabindex="8" maxlength="9" onkeypress="return isNumeric(event)"
-                                                    oninput="maxLengthCheck(this)">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default">Fecha Nacimiento</label>
-                                        <span id="v_validFechaC" style="color: red;display: none;">*Fecha
-                                            incorrecta.</span>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <select class="form-control" name="v_dia_fecha" id="v_dia_fecha"
-                                                    required="">
-                                                    <option value="0">Dia</option>
-                                                    @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">{{$i}}
-                                                        </option>
-                                                        @endfor
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <select class="form-control" name="v_mes_fecha" id="v_mes_fecha"
-                                                    required="">
-                                                    <option value="0">Mes</option>
-                                                    <option class="" value="1">Ene.</option>
-                                                    <option class="" value="2">Feb.</option>
-                                                    <option class="" value="3">Mar.</option>
-                                                    <option class="" value="4">Abr.</option>
-                                                    <option class="" value="5">May.</option>
-                                                    <option class="" value="6">Jun.</option>
-                                                    <option class="" value="7">Jul.</option>
-                                                    <option class="" value="8">Ago.</option>
-                                                    <option class="" value="9">Set.</option>
-                                                    <option class="" value="10">Oct.</option>
-                                                    <option class="" value="11">Nov.</option>
-                                                    <option class="" value="12">Dic.</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <select class="form-control" style="padding-left: 5px;
-                                                padding-right: 5px;" name="v_mes_fecha" id="v_ano_fecha" required="">
-                                                    <option value="0">Año</option>
-                                                    @for ($i = 1950; $i <2011; $i++) <option class="" value="{{$i}}">
-                                                        {{$i}}
-                                                        </option>
-                                                        @endfor
-                                                </select>
-                                            </div>
-
-                                        </div>
-                                        {{--  <input type="text" data-custom-class="form-control" id="v_fechaN"
-                                            data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date"
-                                            tabindex="3"> --}}
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Nombres</label>
-                                        <span id="v_validNombres" style="color: red;">*Campo
-                                            Obligatorio</span>
-                                        <input type="text" class="form-control" name="v_nombres" id="v_nombres"
-                                            tabindex="6" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Teléfono</label>
-                                        <div class="row">
-                                            <div class="col-4">
-                                                <select class="form-control" id="v_codigoTelefono">
-                                                    <option value="01" selected>01</option>
-                                                    <option value="41">41</option>
-                                                    <option value="43">43</option>
-                                                    <option value="83">83</option>
-                                                    <option value="54">54</option>
-                                                    <option value="66">66</option>
-                                                    <option value="76">76</option>
-                                                    <option value="84">84</option>
-                                                    <option value="67">67</option>
-                                                    <option value="62">62</option>
-                                                    <option value="56">56</option>
-                                                    <option value="64">64</option>
-                                                    <option value="44">44</option>
-                                                    <option value="74">74</option>
-                                                    <option value="65">65</option>
-                                                    <option value="82">82</option>
-                                                    <option value="53">53</option>
-                                                    <option value="63">63</option>
-                                                    <option value="73">73</option>
-                                                    <option value="51">51</option>
-                                                    <option value="42">42</option>
-                                                    <option value="52">52</option>
-                                                    <option value="72">72</option>
-                                                    <option value="61">61</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-8">
-                                                <input type="number" class="form-control" name="telefono"
-                                                    id="v_telefono" tabindex="9" maxlength="9"
-                                                    onkeypress="return isNumeric(event)" oninput="maxLengthCheck(this)">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="sw-default">Dirección</label>
-                                        <input type="text" class="form-control" name="v_direccion" id="v_direccion"
-                                            tabindex="10" required>
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default">Dirección Domiciliara</label>
-                                        <select class="form-control" placeholder="Departamento" name="v_dep" id="v_dep"
-                                            tabindex="11" required>
-                                            <option value="">Departamento</option>
-                                            @foreach ($departamento as $departamentos)
-                                            <option class="" value="{{ $departamentos->id }}">
-                                                {{ $departamentos->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Lugar Nacimiento</label>
-                                        <select class="form-control" placeholder="Departamento" name="v_departamento"
-                                            id="v_departamento" tabindex="14">
-                                            <option value="">Departamento</option>
-                                            @foreach ($departamento as $departamentos)
-                                            <option class="" value="{{ $departamentos->id }}">
-                                                {{ $departamentos->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="normal" for="">Género</label>
-                                        <span id="v_validGenero" style="color: red;">*Campo
-                                            Obligatorio</span>
-                                        <label class="custom-control custom-radio">
-                                            <input type="radio" name="v_tipo" id="v_tipo" value="Femenino">
-                                            Femenino
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default"><br></label>
-                                        <select class="form-control " placeholder="Provincia " name="v_prov" id="v_prov"
-                                            tabindex="12" required>
-                                            <option value="">Provincia</option>
-                                            @foreach ($provincia as $provincias)
-                                            <option class="" value="{{ $provincias->id }}">
-                                                {{ $provincias->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default"><br></label>
-                                        <select class="form-control " placeholder="Provincia " name="v_provincia"
-                                            id="v_provincia" tabindex="15">
-                                            <option value="">Provincia</option>
-                                            @foreach ($provincia as $provincias)
-                                            <option class="" value="{{ $provincias->id }}">
-                                                {{ $provincias->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="normal" for=""><br></label>
-                                        <label class="custom-control custom-radio">
-                                            <input type="radio" name="v_tipo" id="v_tipo" value="Masculino">
-                                            Masculino
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default"><br></label>
-                                        <select class="form-control " placeholder="Distrito " name="v_dist" id="v_dist"
-                                            tabindex="13" required>
-                                            <option value="">Distrito</option>
-                                            @foreach ($distrito as $distritos)
-                                            <option class="" value="{{ $distritos->id }}">
-                                                {{ $distritos->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default"><br></label>
-                                        <select class="form-control " placeholder="Distrito " name="v_distrito"
-                                            id="v_distrito" tabindex="16">
-                                            <option value="">Distrito</option>
-                                            @foreach ($distrito as $distritos)
-                                            <option class="" value="{{ $distritos->id }}">
-                                                {{ $distritos->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="normal" for=""><br></label>
-                                        <label class="custom-control custom-radio">
-                                            <input type="radio" name="v_tipo" id="v_tipo" value="Personalizado">
-                                            Personalizado
-                                        </label>
-                                    </div>
-                                </div>
-                            </div> <!-- end row -->
-                        </div>
-                        <div id="sw-default-step-2" style="font-size: 12px!important">
-                            <div class="row">
-
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default">Codigo Empleado</label>
-                                        <input type="text" class="form-control" name="v_codigoEmpleado"
-                                            id="v_codigoEmpleado" tabindex="1" required>
-                                    </div>
-                                </div>
-                                <div class="col-4"><br></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default">Cargo <a
-                                                onclick="$('#form-ver').modal('hide');$('#cargomodalE').modal('show')"
-                                                data-toggle="modal"><i class="uil uil-plus"
-                                                    style="color: darkblue;cursor: pointer;"></i></a></label>
-                                        <select class="form-control" name="v_cargo" id="v_cargo" tabindex="2" required>
-                                            <option value="">Seleccionar</option>
-
-                                            @foreach ($cargo as $cargos)
-                                            <option class="" value="{{ $cargos->cargo_id }}">
-                                                {{ $cargos->cargo_descripcion }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Contrato
-                                            <a onclick="$('#form-ver').modal('hide');$('#contratomodalE').modal('show');"
-                                                data-toggle="modal"><i class="uil uil-plus"
-                                                    style="color: darkblue;cursor: pointer;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <a id="detalleContratoE" onclick="$('#form-ver').modal('hide');"
-                                                href="#fechasmodalE" data-toggle="modal" data-target="#fechasmodalE"
-                                                data-toggle="tooltip" data-placement="right"
-                                                title="Detalle de Contrato." data-original-title="Detalle de Contrato."
-                                                style="cursor: pointer;"><img
-                                                    src="{{ asset('landing/images/adaptive.svg') }}"
-                                                    height="18"></a></label>
-                                        <select class="form-control" name="v_contrato" id="v_contrato"
-                                            onchange="$('#detalleContratoE').show();" tabindex="5" required>
-                                            <option value="">Seleccionar</option>
-                                            @foreach ($tipo_cont as $tipo_conts)
-                                            <option class="" value="{{ $tipo_conts->contrato_id }}">
-                                                {{ $tipo_conts->contrato_descripcion }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <!--<div class="form-group" style="display: none;">
-                                            <label for="sw-default" style="color: darkblue;">Fecha Inicio
-                                                <label for="sw-default" id="v_fechaIC"></label></label>
-                                            <label for="sw-default" style="color: red;">Fecha Final <label
-                                                    for="sw-default" id="v_fechaFC"></label></label>
-                                        </div>-->
-                                </div> <!-- end col -->
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default">Área <a
-                                                onclick="$('#form-ver').modal('hide');$('#areamodalE').modal('show');"
-                                                data-toggle="modal"><i class="uil uil-plus"
-                                                    style="color: darkblue;cursor: pointer;"></i></a></label>
-                                        <select class="form-control" name="v_area" id="v_area" tabindex="3" required>
-                                            <option value="">Seleccionar</option>
-                                            @foreach ($area as $areas)
-                                            <option class="" value="{{ $areas->area_id }}">
-                                                {{ $areas->area_descripcion }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Nivel del Colaborador<a
-                                                onclick="$('#form-ver').modal('hide');$('#nivelmodalE').modal('show');"
-                                                data-toggle="modal"><i class="uil uil-plus"
-                                                    style="color: darkblue;cursor: pointer;"></i></a></label>
-                                        <select class="form-control" name="v_nivel" id="v_nivel" tabindex="6">
-                                            <option value="">Seleccionar</option>
-                                            @foreach ($nivel as $niveles)
-                                            <option class="" value="{{ $niveles->nivel_id }}">
-                                                {{ $niveles->nivel_descripcion }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div> <!-- end col -->
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default">Centro Costo <a
-                                                onclick="$('#form-ver').modal('hide');$('#centrocmodalE').modal('show');"
-                                                data-toggle="modal"><i class="uil uil-plus"
-                                                    style="color: darkblue;cursor: pointer;"></i></a></label>
-                                        <select class="form-control" name="v_centroc" id="v_centroc" tabindex="4"
-                                            required>
-                                            <option value="">Seleccionar</option>
-                                            @foreach ($centro_costo as $centro_costos)
-                                            <option class="" value="{{ $centro_costos->centroC_id }}">
-                                                {{ $centro_costos->centroC_descripcion }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Local <a
-                                                onclick="$('#form-ver').modal('hide');$('#localmodalE').modal('show');"
-                                                data-toggle="modal"><i class="uil uil-plus"
-                                                    style="color: darkblue;cursor: pointer;"></i></a></label>
-                                        <select class="form-control" name="v_local" id="v_local" tabindex="7">
-                                            <option value="">Seleccionar</option>
-                                            @foreach ($local as $locales)
-                                            <option class="" value="{{ $locales->local_id }}">
-                                                {{ $locales->local_descripcion }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div> <!-- end col -->
-                            </div> <!-- end row -->
-                        </div>
-                        <div id="sw-default-step-3" style="font-size: 12px!important">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group text-center">
-                                        {{ csrf_field() }}
-                                        <!--<img  alt="" id="v_foto" width="300" height="200">-->
-                                        <input type="file" name="file" id="file2" accept="image/*">
-                                    </div>
-                                </div> <!-- end col -->
-                            </div> <!-- end row -->
-                            <br>
-                        </div>
-                        <div id="sw-default-step-4" style="font-size: 12px!important">
-                            <div class="row">
-                                <div class="col-md-12" id="MostrarCa_e" style="display: none">
-                                    <div class="form-group row">
-                                        <label style="font-weight: 600;font-size: 14px;"
-                                            class="col-lg-5 col-form-label text-right" for="simpleinput">Calendario
-                                            de empleado:</label>
-                                        <div class="col-lg-5">
-                                            <select name="" id="selectCalendario_ed"
-                                                class="form-control form-control-sm" style="margin-top: 4px;">
-                                                <option hidden selected>Asignar calendario</option>
-                                                @foreach ($calendario as $calendarios)
-                                                <option class="" value="{{ $calendarios->calen_id }}">
-                                                    {{ $calendarios->calendario_nombre }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="col-md-1"></div>
-                                <div class="col-md-8" id="divescond1" style="display: none">
-                                    <input type="hidden" id="idselect3">
-                                    <select name="" id="selectCalendario_edit3"
-                                        class="form-control col-lg-6 form-control-sm" style="margin-top: 4px;">
-                                        <option hidden selected>Asignar calendario</option>
-                                        @foreach ($calendario as $calendarios)
-                                        <option class="" value="{{ $calendarios->calen_id }}">
-                                            {{ $calendarios->calendario_nombre }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-2" style="" id="divescond2" style="display: none">
-                                    <div class="btn-group mt-2 mr-1">
-                                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" style="color: #fff;
-                                            background-color: #4a5669;
-                                            border-color: #485263;" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false"><img src="{{ asset('admin/images/borrador.svg') }}"
-                                                height="15">
-                                            Borrar <i class="icon"><span
-                                                    data-feather="chevron-down"></span></i></button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" onclick="vaciardFeriaBD()">Dias
-                                                feriados</a>
-                                            <a class="dropdown-item" onclick="vaciarddescansoBD()">Dias
-                                                descanso</a>
-                                            {{-- <a class="dropdown-item"
-                                                    onclick="vaciardlabTem()">D.
-                                                    laborables</a> --}}
-                                            <a class="dropdown-item" onclick="vaciarNlabBD()">D. no
-                                                laborables</a>
-                                            <a class="dropdown-item" onclick="vaciardIncidBD()">Incidencia</a>
-
-                                        </div>
-                                    </div><!-- /btn-group -->
-                                </div>
-                                <div class="col-md-12"></div>
-                                <div class="col-md-1"></div>
-                                <div class="col-md-10" id="calendarInv_ed" style="display:none"></div>
-                                <input type="hidden" id="pruebaEnd_ed">
-                                <input type="hidden" id="pruebaStar_ed">
-                                <div class="col-md-10" id="calendar_ed" style="display: none;"></div>
-                                <div class="col-md-1"></div>
-                                <div id="calendarioAsignar_ed" class="modal fade" tabindex="-1" role="dialog"
-                                    aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-                                    <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                        style="width:670px;  margin-top: 150px; left: 0px;">
-
-                                        <div class="modal-content">
-
-                                            <div class="modal-body"
-                                                style="font-size:12px!important;background: #f3f3f3;">
-                                                <div class="col-md-12">
-                                                    <div class="row">
-                                                        <div class="col-md-3 text-center">
-                                                            <button type="button" style=" max-width: 18em!important;"
-                                                                class="btn btn-secondary btn-sm"
-                                                                onclick="laborable_ed()"><img
-                                                                    src="{{ asset('admin/images/dormir.svg') }}"
-                                                                    height="20"> Descanso</button>
-                                                        </div>
-                                                        <div class="col-md-3 text-center">
-                                                            <button type="button" style=" max-width: 18em!important;"
-                                                                class="btn btn-secondary btn-sm"
-                                                                onclick="nolaborable_ed()"><img
-                                                                    src="{{ asset('admin/images/evento.svg') }}"
-                                                                    height="20"> Dia no laborable</button>
-                                                        </div>
-                                                        <div class="col-md-3 text-center">
-                                                            <button type="button" style=" max-width: 18em!important;"
-                                                                class="btn btn-secondary btn-sm"
-                                                                onclick="$('#nombreFeriado_ed').val('');$('#calendarioAsignar_ed').modal('hide'); $('#myModalFeriado_ed').modal('show')"><img
-                                                                    src="{{ asset('admin/images/calendario.svg') }}"
-                                                                    height="20"> Dia feriado</button>
-                                                        </div>
-                                                        <div class="col-md-3 text-center">
-                                                            {{-- <button type="button"
-                                                                    style=" max-width: 18em!important;"
-                                                                    class="btn btn-secondary btn-sm "
-                                                                    onclick="registrarDdescanso()"><img
-                                                                        src="{{ asset('admin/images/calendarioInc.svg') }}"
-                                                            height="20"> Incidencia</button>
-                                                            --}}
-                                                            <button style=" max-width: 18em!important;"
-                                                                class="btn btn-secondary btn-sm"
-                                                                onclick="agregarinciden_ed()"><img
-                                                                    src="{{ asset('admin/images/calendarioInc.svg') }}"
-                                                                    height="20"> Incidencia</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div class="modal-footer"
-                                                style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
-                                                <div class="col-md-12 text-right">
-                                                    <button type="button" style="margin-right: 21px;"
-                                                        class="btn btn-soft-primary btn-sm "
-                                                        onclick="$('#calendarioAsignar_ed').modal('hide')">Cancelar</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
-                                </div><!-- /.modal -->
-                                <div id="myModalFeriado_ed" class="modal fade" tabindex="-1" role="dialog"
-                                    aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header" style="background-color: #163552;">
-                                                <h5 class="modal-title" id="myModalLabel"
-                                                    style="color:#ffffff;font-size:15px">Agregar nuevo
-                                                    feriado</h5>
-                                                <button type="button" class="close" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="row">
-                                                    <div class="form-group col-md-12">
-                                                        <div class="col-md-6">
-                                                            <label for="">Nombre de dia feriado:</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <form action="javascript:diaferiadoRe_ed()">
-                                                                <input class="form-control" type="text"
-                                                                    id="nombreFeriado_ed" required>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div class="modal-footer">
-                                                <div class="col-md-12">
-                                                    <div class="row">
-                                                        <div class="col-md-7 text-right">
-                                                            <button type="button" class="btn btn-light"
-                                                                data-dismiss="modal">Cancelar</button>
-                                                        </div>
-                                                        <div class="col-md-5 text-right" style="padding-right: 38px; ">
-                                                            <button type="submit"
-                                                                class="btn btn-secondary">Aceptar</button>
-                                                            </form>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
-                                </div><!-- /.modal -->
-                            </div> <!-- end row -->
-
-                        </div>
-                        <div id="sw-default-step-5" class="setup-content" style="font-size: 12px!important">
-                            <div class="row">
-                                <div class="col-md-12 text-center" id="detallehorario_ed"></div>
-                                <div id="detallehorario_ed2" class="col-md-12"></div>
-                                <div class="col-md-1"><br></div>
-                                <div class="col-md-10" id="mensajeOc_ed"><label for="">Aún no ha
-                                        seleccionado un
-                                        calendario en el paso anterior.</label></div>
-                                <div class="col-md-10" id="calendar2_ed" style="display: none"></div>
-                                <div class="col-md-1"><br></div>
-                            </div>
-
-                            <div id="horarioAsignar_ed" class="modal fade" tabindex="-1" role="dialog"
-                                aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-                                <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                    style="width:330px;  margin-top: 150px; left: 30px;">
-
-                                    <div class="modal-content">
-
-                                        <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
-                                            <div class="col-md-12">
-                                                <div class="row">
-                                                    <div class="col-md-8">
-                                                        <select class="form-control custom-select custom-select-sm"
-                                                            name="selectHorario_ed" id="selectHorario_ed">
-                                                            <option hidden selected>Seleccionar horario
-                                                            </option>
-                                                            @foreach ($horario as $horarios)
-                                                            <option class="" value="{{ $horarios->horario_id }}">
-                                                                {{ $horarios->horario_descripcion }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-4 text-right">
-                                                        <button class="btn btn-primary btn-sm"
-                                                            style="background-color: #183b5d;border-color:#62778c"
-                                                            onclick="abrirHorario_ed()">+</button>
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-                                        <div class="modal-footer"
-                                            style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
-                                            <div class="col-md-12">
-                                                <div class="row">
-                                                    <div class="col-md-12 text-right">
-                                                        <button type="button" class="btn btn-soft-primary btn-sm "
-                                                            onclick="$('#horarioAsignar_ed').modal('hide')">Cancelar</button>
-
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div><!-- /.modal-content -->
-                                </div><!-- /.modal-dialog -->
-                            </div><!-- /.modal -->
-                            <div id="horarioAgregar_ed" class="modal fade" tabindex="-1" role="dialog"
-                                aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-                                <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                    style="width: 550px;">
-
-                                    <div class="modal-content">
-                                        <div class="modal-header" style="background-color:#163552;">
-                                            <h5 class="modal-title" id="myModalLabel"
-                                                style="color:#ffffff;font-size:15px">Asignar horario</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body" style="font-size:12px!important">
-                                            <div class="row">
-
-                                                <div class="col-md-12">
-                                                    <form id="frmHor_ed" action="javascript:registrarHorario_ed()">
-                                                        <div class="row">
-
-                                                            <div class="col-md-12"><label for=""><br></label>
-                                                                <div class="form-check">
-
-                                                                    <input type="checkbox" class="form-check-input"
-                                                                        id="exampleCheck1_ed">
-                                                                    <label class="form-check-label"
-                                                                        for="exampleCheck1_ed">Aplicar
-                                                                        sobretiempo</label>
-                                                                    <br><br>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label for="">Descripcion:</label>
-                                                                    <input type="text"
-                                                                        class="form-control form-control-sm"
-                                                                        id="descripcionCa_ed" required>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label for="">Tolerancia(Min):</label>
-                                                                    <input type="number" value="0"
-                                                                        class="form-control form-control-sm" min="0"
-                                                                        id="toleranciaH_ed" required>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label for="">Hora de
-                                                                        inicio(24h):</label>
-                                                                    <input type="text" id="horaI_ed"
-                                                                        class="form-control form-control-sm" required>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label for="">Hora de fin(24h):</label>
-                                                                    <input type="text" id="horaF_ed"
-                                                                        class="form-control form-control-sm" required>
-                                                                </div>
-                                                            </div>
-
-
-                                                        </div>
-
-                                                </div>
-
-
-
-                                            </div>
-
-                                        </div>
-                                        <div class="modal-footer">
-                                            <div class="col-md-12">
-                                                <div class="row">
-                                                    <div class="col-md-12 text-right">
-                                                        <button type="button" class="btn btn-light btn-sm "
-                                                            onclick="$('#horarioAgregar_ed').modal('hide')">Cancelar</button>
-                                                        <button type="submit" name="" style="background-color: #163552;"
-                                                            class="btn btn-sm ">Guardar</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div><!-- /.modal-content -->
-                                </div><!-- /.modal-dialog -->
-                            </div><!-- /.modal -->
-                        </div>
-                        <div id="sw-default-step-6" class="setup-content" style="font-size: 12px!important">
-                            <div class="row">
-                                <div class="col-xl-12 col-sm-12">
-                                    <button class="btn btn-sm" style="background-color:#163552;" data-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false">+
-                                        Agregar
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                        <a class="dropdown-item" id="v_agregarAndroid">ANDROID</a>
-                                        <a class="dropdown-item" id="v_agregarWindows">WINDOWS</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="table-responsive">
-                                    <table id="v_tablaDispositivo" class="table"
-                                        style="font-size: 13px!important;width:100%;">
-                                        <thead style="background: #fafafa;font-size: 14px">
-                                            <tr>
-                                                <th>Tipo Dispositivo</th>
-                                                <th>Activación de Dispositivo</th>
-                                                <th>Codigo</th>
-                                                <th>Enviado</th>
-                                                <th>Estado</th>
-                                                <th></th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="v_tbodyDispositivo"
-                                            style="background:#ffffff;color: #585858;font-size: 12px">
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
                         <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
                             <div class="row">
                                 <div class="col-xl-12">
@@ -3292,19 +2511,19 @@ use App\proyecto_empleado;
                                                 <div class="col">
                                                     <div class="custom-control custom-switch mb-2">
                                                         <input type="checkbox" class="custom-control-input"
-                                                            id="customSwitch1">
-                                                        <label class="custom-control-label" for="customSwitch1"
+                                                            id="customSwitch3">
+                                                        <label class="custom-control-label" for="customSwitch3"
                                                             style="font-weight: bold">Modo Tarea</label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body border p-2" id="bodyModoTarea">
+                                        <div class="card-body border p-2" id="regbodyModoTarea">
                                             <div class="row">
                                                 <div class="col-xl-12 text-right">
                                                     <button type="button" class="btn btn-sm mt-1"
                                                         style="background-color: #163552;"
-                                                        onclick="$('#actividadTarea').modal()">+ Nueva
+                                                        onclick="$('#regactividadTarea').modal()">+ Nueva
                                                         Actividad
                                                     </button>
                                                 </div>
@@ -3320,7 +2539,7 @@ use App\proyecto_empleado;
                                                                     <th>Total</th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody id="tablaBodyTarea"
+                                                            <tbody id="regtablaBodyTarea"
                                                                 style="background:#ffffff;color: #585858;font-size: 12px">
                                                             </tbody>
                                                         </table>
@@ -3339,14 +2558,14 @@ use App\proyecto_empleado;
                                                 <div class="col">
                                                     <div class="custom-control custom-switch mb-2">
                                                         <input type="checkbox" class="custom-control-input"
-                                                            id="customSwitch2">
-                                                        <label class="custom-control-label" for="customSwitch2"
+                                                            id="customSwitch4">
+                                                        <label class="custom-control-label" for="customSwitch4"
                                                             style="font-weight: bold">Modo Proyecto</label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body border p-2" id="bodyModoProyecto">
+                                        <div class="card-body border p-2" id="regbodyModoProyecto">
                                             <div class="row">
                                                 <div class="col-xl-12 text-right">
                                                     <button type="button" class="btn btn-sm mt-1"
@@ -3372,8 +2591,8 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
-                            <div id="actividadTarea" class="modal fade" tabindex="-1" role="dialog"
-                                aria-labelledby="actividadTarea" aria-hidden="true" data-backdrop="static">
+                            <div id="regactividadTarea" class="modal fade" tabindex="-1" role="dialog"
+                                aria-labelledby="regactividadTarea" aria-hidden="true" data-backdrop="static">
                                 <div class="modal-dialog  modal-lg d-flex justify-content-center "
                                     style="width: 550px;">
                                     <div class="modal-content">
@@ -3389,14 +2608,14 @@ use App\proyecto_empleado;
                                         <div class="modal-body" style="font-size:12px!important">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <form action="javascript:registrarActividadTarea()">
+                                                    <form action="javascript:registrarNuevaActividadTarea()">
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <div class="form-group">
                                                                     <label for="">Nombre:</label>
                                                                     <input type="text"
                                                                         class="form-control form-control-sm"
-                                                                        id="nombreTarea" required>
+                                                                        id="regnombreTarea" required>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -3408,7 +2627,7 @@ use App\proyecto_empleado;
                                                 <div class="row">
                                                     <div class="col-md-12 text-right">
                                                         <button type="button" class="btn btn-light btn-sm "
-                                                            onclick="javasript:limpiarModo();$('#actividadTarea').modal('toggle')">Cancelar</button>
+                                                            onclick="javasript:limpiarModo();$('#regactividadTarea').modal('toggle')">Cancelar</button>
                                                         <button type="submit" name="" style="background-color: #163552;"
                                                             class="btn btn-sm ">Guardar</button>
                                                         </form>
@@ -3425,334 +2644,922 @@ use App\proyecto_empleado;
             </div>
         </div>
     </div>
-</div>
-<!--VER EMPLEADO-->
-<div id="verEmpleadoDetalles" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="verEmpleadoDetalles"
-    aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog modal-dialog-scrollable modal-lg">
-        <div class="modal-content">
-            <div class="modal-header" style="background: #163552;">
-                <h4 class="header-title mt-0 " style="color: #f0f0f0">Datos de empleado</h4><br>
-                <button type="button" class="close" id="cerrarEd" data-dismiss="modal" aria-label="Close"
-                    onclick="javascript:cerrarVer()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" style="padding: 0px;">
-                <div id="smartwizardVer" style="background: #ffffff; color:#3d3d3d;">
-                    <ul style="background: #fdfdfd!important;">
-                        <li><a href="#persona-step-1">Personales</a></li>
-                        <li><a href="#sw-default-step-2">Empresarial</a></li>
-                        <li><a href="#sw-default-step-3">Foto</a></li>
-                        <li><a href="#sw-default-step-4">Calendario</a></li>
-                        <li><a href="#sw-default-step-5">Horario</a></li>
-                        <li><a href="#sw-default-step-6">Dispositivo</a></li>
-                        <div class="col-md-2 text-left" style="display: flex; align-items: center;cursor: pointer;">
-                            <a style="color: #3d3d3d;"
-                                onclick="$('#verEmpleadoDetalles').modal('toggle');javascript:editarEmpleado($('#v_idV').val())">
-                                <img src="{{ asset('admin/images/edit.svg') }}" height="15">
-                                <span style="font-weight: 600">Editar</span>
-                            </a>
-                        </div>
-                    </ul>
-                    <div class="p-3" id="form-registrar">
-                        <div id="persona-step-1" style="font-size: 12px!important">
-                            <div class="row">
-                                <div class="col-4">
-                                    <input style="display: none;" name="v_idV" id="v_idV">
-                                    <div class="form-group">
-                                        <label for="sw-default">Tipo Documento</label>
-                                        <input type="text" class="form-control" name="v_tipoDocV" id="v_tipoDocV"
-                                            style="background-color: #fcfcfc;" disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Apellido Paterno</label>
-                                        <input type="text" class="form-control" name="v_apPaternoV" id="v_apPaternoV"
-                                            disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Correo Electrónico</label>
-                                        <input type="email" class="form-control" id="v_emailV" name="v_emailV" disabled>
-                                    </div>
-                                </div> <!-- end col -->
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default">Num. Documento</label>
-                                        <input type="text" class="form-control" name="v_numDocumentoV"
-                                            id="v_numDocumentoV" style="background-color: #fcfcfc" disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Apellido Materno</label>
-                                        <input type="text" class="form-control" name="v_apMaternoV" id="v_apMaternoV"
-                                            disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Celular</label>
-                                        <input type="text" class="form-control" name="v_celularV" id="v_celularV"
-                                            disabled>
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default">Fecha Nacimiento</label>
-
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <select class="form-control" name="v_dia_fechaV" id="v_dia_fechaV"
-                                                    required="">
-                                                    <option value="0">Dia</option>
-                                                    @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">{{$i}}
-                                                        </option>
-                                                        @endfor
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <select class="form-control" name="v_mes_fechaV" id="v_mes_fechaV"
-                                                    required="">
-                                                    <option value="0">Mes</option>
-                                                    <option class="" value="1">Ene.</option>
-                                                    <option class="" value="2">Feb.</option>
-                                                    <option class="" value="3">Mar.</option>
-                                                    <option class="" value="4">Abr.</option>
-                                                    <option class="" value="5">May.</option>
-                                                    <option class="" value="6">Jun.</option>
-                                                    <option class="" value="7">Jul.</option>
-                                                    <option class="" value="8">Ago.</option>
-                                                    <option class="" value="9">Set.</option>
-                                                    <option class="" value="10">Oct.</option>
-                                                    <option class="" value="11">Nov.</option>
-                                                    <option class="" value="12">Dic.</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <select class="form-control" style="padding-left: 5px;
-                                                padding-right: 5px;" name="v_mes_fechaV" id="v_ano_fechaV" required="">
-                                                    <option value="0">Año</option>
-                                                    @for ($i = 1950; $i <2011; $i++) <option class="" value="{{$i}}">
-                                                        {{$i}}
-                                                        </option>
-                                                        @endfor
-                                                </select>
-                                            </div>
-
+    <div class="modal fade" id="form-ver" style="font-size: 13px" tabindex="-1" role="dialog" aria-labelledby="form-ver"
+        aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" style="background: #163552;">
+                    <h4 class="header-title mt-0 " style="color: #f0f0f0">Datos de empleado</h4><br>
+                    <button type="button" class="close" id="cerrarEd" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="padding: 0px;">
+                    <div id="smartwizard1" style="background: #ffffff; color:#3d3d3d;">
+                        <ul style="background: #fdfdfd!important;">
+                            <li><a href="#persona-step-1">Personales</a></li>
+                            <li><a href="#sw-default-step-2">Empresarial</a></li>
+                            <li><a href="#sw-default-step-3">Foto</a></li>
+                            <li><a href="#sw-default-step-4">Calendario</a></li>
+                            <li><a href="#sw-default-step-5">Horario</a></li>
+                            <li><a href="#sw-default-step-6">Dispositivo</a></li>
+                            <li><a href="#sw-default-step-7">Modos de Control</a></li>
+                        </ul>
+                        <div class="p-3" id="form-registrar">
+                            <div id="persona-step-1" style="font-size: 12px!important">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <input style="display: none;" name="v_id" id="v_id">
+                                        <div class="form-group">
+                                            <label for="sw-default">Tipo Documento</label>
+                                            <input type="text" class="form-control" name="v_tipoDoc" id="v_tipoDoc"
+                                                disabled style="background-color: #fcfcfc;" tabindex="1">
                                         </div>
-                                        {{-- <input type="text" class="form-control" id="v_fechaNV"
-                                            data-custom-class="form-control" data-format="YYYY-MM-DD"
-                                            data-template="D MMM YYYY" name="date" disabled> --}}
+                                        <div class="form-group">
+                                            <label for="sw-default">Apellido Paterno</label>
+                                            <span id="v_validApPaterno" style="color: red;">*Campo
+                                                Obligatorio</span>
+                                            <input type="text" class="form-control" name="v_apPaterno" id="v_apPaterno"
+                                                tabindex="4" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Correo Electrónico</label>
+                                            <span id="v_validCorreo" style="color: red;">*Campo
+                                                Obligatorio</span>
+                                            <span id="v_emailR" style="color: red;">*Correo
+                                                registrado</span>
+                                            <input type="email" class="form-control" id="v_email" name="email"
+                                                tabindex="7">
+                                        </div>
+                                    </div> <!-- end col -->
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Num. Documento</label>
+                                            <span id="v_validNumDocumento" style="color: red;">*Campo
+                                                Obligatorio</span>
+                                            <input type="text" class="form-control" name="v_numDocumento"
+                                                id="v_numDocumento" required disabled style="background-color: #fcfcfc;"
+                                                tabindex="2">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Apellido Materno</label>
+                                            <span id="v_validApMaterno" style="color: red;">*Campo
+                                                Obligatorio</span>
+                                            <input type="text" class="form-control" name="v_apMaterno" id="v_apMaterno"
+                                                tabindex="5" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Celular</label>
+                                            <span id="v_validCel" style="color: red;">*Número
+                                                incorrecto.</span>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <select class="form-control" id="v_codigoCelular">
+                                                        <option value="+51" selected>+51</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-8">
+                                                    <input type="text" class="form-control" name="v_celular"
+                                                        id="v_celular" tabindex="8" maxlength="9"
+                                                        onkeypress="return isNumeric(event)"
+                                                        oninput="maxLengthCheck(this)">
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Nombres</label>
-                                        <input type="text" class="form-control" name="v_nombresV" id="v_nombresV"
-                                            disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Teléfono</label>
-                                        <input type="text" class="form-control" name="v_telefonoV" id="v_telefonoV"
-                                            disabled>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="sw-default">Dirección</label>
-                                        <input type="text" class="form-control" name="v_direccionV" id="v_direccionV"
-                                            disabled>
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default">Dirección
-                                            Domiciliara</label>
-                                        <input class="form-control" placeholder="Departamento" name="v_depV" id="v_depV"
-                                            disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Lugar Nacimiento</label>
-                                        <input class="form-control" placeholder="Departamento" name="v_departamentoV"
-                                            id="v_departamentoV" disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="normal" for="">Género</label>
-                                        <label class="custom-control custom-radio">
-                                            <input type="radio" name="v_tipoV" id="v_tipoV" value="Femenino" disabled>
-                                            Femenino
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default"><br></label>
-                                        <input class="form-control" placeholder="Provincia " name="v_provV" id="v_provV"
-                                            disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default"><br></label>
-                                        <input class="form-control" placeholder="Provincia " name="v_provinciaV"
-                                            id="v_provinciaV" disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="normal" for=""><br></label>
-                                        <label class="custom-control custom-radio">
-                                            <input type="radio" name="v_tipoV" id="v_tipoV" value="Masculino" disabled>
-                                            Masculino
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default"><br></label>
-                                        <input class="form-control" placeholder="Distrito " name="v_distV" id="v_distV"
-                                            disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default"><br></label>
-                                        <input class="form-control" placeholder="Distrito " name="v_distritoV"
-                                            id="v_distritoV" disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="normal" for=""><br></label>
-                                        <label class="custom-control custom-radio">
-                                            <input type="radio" name="v_tipoV" id="v_tipoV" value="Personalizado"
-                                                disabled>
-                                            Personalizado
-                                        </label>
-                                    </div>
-                                </div>
-                            </div> <!-- end row -->
-                        </div>
-                        <div id="sw-default-step-2" style="font-size: 12px!important">
-                            <div class="row">
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default">Codigo Empleado</label>
-                                        <input type="text" class="form-control" name="v_codigoEmpleadoV"
-                                            id="v_codigoEmpleadoV" disabled>
-                                    </div>
-                                </div>
-                                <div class="col-4"><br></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default">Cargo</label>
-                                        <input class="form-control" name="v_cargoV" id="v_cargoV" disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Contrato
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <a id="detalleContratoVer"
-                                                onclick="$('#verEmpleadoDetalles').modal('hide');"
-                                                href="#fechasmodalVer" data-toggle="modal" data-target="#fechasmodalVer"
-                                                data-toggle="tooltip" data-placement="right"
-                                                title="Detalle de Contrato." data-original-title="Detalle de Contrato."
-                                                style="cursor: pointer;">
-                                                <img src="{{asset('landing/images/adaptive.svg')}}" height="18">
-                                            </a>
-                                        </label>
-                                        <input class="form-control" name="v_contratoV" id="v_contratoV" tabindex="5"
-                                            disabled>
-                                    </div>
-                                </div> <!-- end col -->
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default">Área</label>
-                                        <input class="form-control" name="v_areaV" id="v_areaV" tabindex="3" disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Nivel del Colaborador</label>
-                                        <input class="form-control" name="v_nivelV" id="v_nivelV" tabindex="6" disabled>
-                                    </div>
-                                </div> <!-- end col -->
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default">Centro Costo</label>
-                                        <input class="form-control" name="v_centrocV" id="v_centrocV" tabindex="4"
-                                            disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Local</label>
-                                        <input class="form-control" name="v_localV" id="v_localV" tabindex="7" disabled>
-                                    </div>
-                                </div> <!-- end col -->
-                            </div>
-                        </div>
-                        <div id="sw-default-step-3" style="font-size: 12px!important">
-                            <br><br>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group text-center">
-                                        <img src="landing/images/png.svg" height="150" id="v_fotoV">
-                                        <br><br>
-                                        <h5 id="h5Ocultar" class="m-0 font-size-14" style="color:#8888">
-                                            No se encontro imagen</h5>
-                                    </div>
-                                </div> <!-- end col -->
-                            </div> <!-- end row -->
-                        </div>
-                        <div id="sw-default-step-4" style="font-size: 12px!important">
-                            <div class="row">
-                                <div class="col-md-4 text-right"><label for=""
-                                        style="margin-top: 7px;font-weight: 600">Calendario:</label></div>
-                                <div class="col-md-4 text-center" id="divescond1_ver" style="">
-                                    <input type="hidden" id="idselect3_ver">
-                                    <select name="" id="selectCalendario_edit3_ver" class="form-control form-control-sm"
-                                        style="margin-top: 4px;">
-                                        <option hidden selected>Asignar calendario</option>
-                                        @foreach ($calendario as $calendarios)
-                                        <option class="" value="{{ $calendarios->calen_id }}">
-                                            {{ $calendarios->calendario_nombre }}</option>
-                                        @endforeach
-                                    </select><br><br>
-                                </div>
-                                <div class="col-md-4"></div>
-                                <input type="hidden" name="" id="idempleado">
-                                <div class="col-md-1"><br></div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Fecha Nacimiento</label>
+                                            <span id="v_validFechaC" style="color: red;display: none;">*Fecha
+                                                incorrecta.</span>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <select class="form-control" name="v_dia_fecha" id="v_dia_fecha"
+                                                        required="">
+                                                        <option value="0">Dia</option>
+                                                        @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
+                                                            {{$i}}
+                                                            </option>
+                                                            @endfor
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" name="v_mes_fecha" id="v_mes_fecha"
+                                                        required="">
+                                                        <option value="0">Mes</option>
+                                                        <option class="" value="1">Ene.</option>
+                                                        <option class="" value="2">Feb.</option>
+                                                        <option class="" value="3">Mar.</option>
+                                                        <option class="" value="4">Abr.</option>
+                                                        <option class="" value="5">May.</option>
+                                                        <option class="" value="6">Jun.</option>
+                                                        <option class="" value="7">Jul.</option>
+                                                        <option class="" value="8">Ago.</option>
+                                                        <option class="" value="9">Set.</option>
+                                                        <option class="" value="10">Oct.</option>
+                                                        <option class="" value="11">Nov.</option>
+                                                        <option class="" value="12">Dic.</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" style="padding-left: 5px;
+                                                padding-right: 5px;" name="v_mes_fecha" id="v_ano_fecha" required="">
+                                                        <option value="0">Año</option>
+                                                        @for ($i = 1950; $i <2011; $i++) <option class=""
+                                                            value="{{$i}}">
+                                                            {{$i}}
+                                                            </option>
+                                                            @endfor
+                                                    </select>
+                                                </div>
 
-                                <div class="col-md-10" id="calendar3"></div>
-                                <div class="col-md-1"><br></div>
+                                            </div>
+                                            {{--  <input type="text" data-custom-class="form-control" id="v_fechaN"
+                                            data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date"
+                                            tabindex="3"> --}}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Nombres</label>
+                                            <span id="v_validNombres" style="color: red;">*Campo
+                                                Obligatorio</span>
+                                            <input type="text" class="form-control" name="v_nombres" id="v_nombres"
+                                                tabindex="6" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Teléfono</label>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <select class="form-control" id="v_codigoTelefono">
+                                                        <option value="01" selected>01</option>
+                                                        <option value="41">41</option>
+                                                        <option value="43">43</option>
+                                                        <option value="83">83</option>
+                                                        <option value="54">54</option>
+                                                        <option value="66">66</option>
+                                                        <option value="76">76</option>
+                                                        <option value="84">84</option>
+                                                        <option value="67">67</option>
+                                                        <option value="62">62</option>
+                                                        <option value="56">56</option>
+                                                        <option value="64">64</option>
+                                                        <option value="44">44</option>
+                                                        <option value="74">74</option>
+                                                        <option value="65">65</option>
+                                                        <option value="82">82</option>
+                                                        <option value="53">53</option>
+                                                        <option value="63">63</option>
+                                                        <option value="73">73</option>
+                                                        <option value="51">51</option>
+                                                        <option value="42">42</option>
+                                                        <option value="52">52</option>
+                                                        <option value="72">72</option>
+                                                        <option value="61">61</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-8">
+                                                    <input type="number" class="form-control" name="telefono"
+                                                        id="v_telefono" tabindex="9" maxlength="9"
+                                                        onkeypress="return isNumeric(event)"
+                                                        oninput="maxLengthCheck(this)">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="sw-default">Dirección</label>
+                                            <input type="text" class="form-control" name="v_direccion" id="v_direccion"
+                                                tabindex="10" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Dirección Domiciliara</label>
+                                            <select class="form-control" placeholder="Departamento" name="v_dep"
+                                                id="v_dep" tabindex="11" required>
+                                                <option value="">Departamento</option>
+                                                @foreach ($departamento as $departamentos)
+                                                <option class="" value="{{ $departamentos->id }}">
+                                                    {{ $departamentos->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Lugar Nacimiento</label>
+                                            <select class="form-control" placeholder="Departamento"
+                                                name="v_departamento" id="v_departamento" tabindex="14">
+                                                <option value="">Departamento</option>
+                                                @foreach ($departamento as $departamentos)
+                                                <option class="" value="{{ $departamentos->id }}">
+                                                    {{ $departamentos->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="normal" for="">Género</label>
+                                            <span id="v_validGenero" style="color: red;">*Campo
+                                                Obligatorio</span>
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Femenino">
+                                                Femenino
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default"><br></label>
+                                            <select class="form-control " placeholder="Provincia " name="v_prov"
+                                                id="v_prov" tabindex="12" required>
+                                                <option value="">Provincia</option>
+                                                @foreach ($provincia as $provincias)
+                                                <option class="" value="{{ $provincias->id }}">
+                                                    {{ $provincias->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default"><br></label>
+                                            <select class="form-control " placeholder="Provincia " name="v_provincia"
+                                                id="v_provincia" tabindex="15">
+                                                <option value="">Provincia</option>
+                                                @foreach ($provincia as $provincias)
+                                                <option class="" value="{{ $provincias->id }}">
+                                                    {{ $provincias->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="normal" for=""><br></label>
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Masculino">
+                                                Masculino
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default"><br></label>
+                                            <select class="form-control " placeholder="Distrito " name="v_dist"
+                                                id="v_dist" tabindex="13" required>
+                                                <option value="">Distrito</option>
+                                                @foreach ($distrito as $distritos)
+                                                <option class="" value="{{ $distritos->id }}">
+                                                    {{ $distritos->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default"><br></label>
+                                            <select class="form-control " placeholder="Distrito " name="v_distrito"
+                                                id="v_distrito" tabindex="16">
+                                                <option value="">Distrito</option>
+                                                @foreach ($distrito as $distritos)
+                                                <option class="" value="{{ $distritos->id }}">
+                                                    {{ $distritos->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="normal" for=""><br></label>
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Personalizado">
+                                                Personalizado
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div> <!-- end row -->
                             </div>
-                        </div>
-                        <div id="sw-default-step-5" style="font-size: 12px!important">
-                            <div class="row">
+                            <div id="sw-default-step-2" style="font-size: 12px!important">
+                                <div class="row">
 
-                                <div class="col-md-1"><br></div>
-                                <div class="col-md-10" id="calendar4"></div>
-                                <div class="col-md-1"><br></div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Codigo Empleado</label>
+                                            <input type="text" class="form-control" name="v_codigoEmpleado"
+                                                id="v_codigoEmpleado" tabindex="1" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-4"><br></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Cargo <a
+                                                    onclick="$('#form-ver').modal('hide');$('#cargomodalE').modal('show')"
+                                                    data-toggle="modal"><i class="uil uil-plus"
+                                                        style="color: darkblue;cursor: pointer;"></i></a></label>
+                                            <select class="form-control" name="v_cargo" id="v_cargo" tabindex="2"
+                                                required>
+                                                <option value="">Seleccionar</option>
+
+                                                @foreach ($cargo as $cargos)
+                                                <option class="" value="{{ $cargos->cargo_id }}">
+                                                    {{ $cargos->cargo_descripcion }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Contrato
+                                                <a onclick="$('#form-ver').modal('hide');$('#contratomodalE').modal('show');"
+                                                    data-toggle="modal"><i class="uil uil-plus"
+                                                        style="color: darkblue;cursor: pointer;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <a id="detalleContratoE" onclick="$('#form-ver').modal('hide');"
+                                                    href="#fechasmodalE" data-toggle="modal" data-target="#fechasmodalE"
+                                                    data-toggle="tooltip" data-placement="right"
+                                                    title="Detalle de Contrato."
+                                                    data-original-title="Detalle de Contrato."
+                                                    style="cursor: pointer;"><img
+                                                        src="{{ asset('landing/images/adaptive.svg') }}"
+                                                        height="18"></a></label>
+                                            <select class="form-control" name="v_contrato" id="v_contrato"
+                                                onchange="$('#detalleContratoE').show();" tabindex="5" required>
+                                                <option value="">Seleccionar</option>
+                                                @foreach ($tipo_cont as $tipo_conts)
+                                                <option class="" value="{{ $tipo_conts->contrato_id }}">
+                                                    {{ $tipo_conts->contrato_descripcion }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <!--<div class="form-group" style="display: none;">
+                                            <label for="sw-default" style="color: darkblue;">Fecha Inicio
+                                                <label for="sw-default" id="v_fechaIC"></label></label>
+                                            <label for="sw-default" style="color: red;">Fecha Final <label
+                                                    for="sw-default" id="v_fechaFC"></label></label>
+                                        </div>-->
+                                    </div> <!-- end col -->
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Área <a
+                                                    onclick="$('#form-ver').modal('hide');$('#areamodalE').modal('show');"
+                                                    data-toggle="modal"><i class="uil uil-plus"
+                                                        style="color: darkblue;cursor: pointer;"></i></a></label>
+                                            <select class="form-control" name="v_area" id="v_area" tabindex="3"
+                                                required>
+                                                <option value="">Seleccionar</option>
+                                                @foreach ($area as $areas)
+                                                <option class="" value="{{ $areas->area_id }}">
+                                                    {{ $areas->area_descripcion }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Nivel del Colaborador<a
+                                                    onclick="$('#form-ver').modal('hide');$('#nivelmodalE').modal('show');"
+                                                    data-toggle="modal"><i class="uil uil-plus"
+                                                        style="color: darkblue;cursor: pointer;"></i></a></label>
+                                            <select class="form-control" name="v_nivel" id="v_nivel" tabindex="6">
+                                                <option value="">Seleccionar</option>
+                                                @foreach ($nivel as $niveles)
+                                                <option class="" value="{{ $niveles->nivel_id }}">
+                                                    {{ $niveles->nivel_descripcion }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div> <!-- end col -->
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Centro Costo <a
+                                                    onclick="$('#form-ver').modal('hide');$('#centrocmodalE').modal('show');"
+                                                    data-toggle="modal"><i class="uil uil-plus"
+                                                        style="color: darkblue;cursor: pointer;"></i></a></label>
+                                            <select class="form-control" name="v_centroc" id="v_centroc" tabindex="4"
+                                                required>
+                                                <option value="">Seleccionar</option>
+                                                @foreach ($centro_costo as $centro_costos)
+                                                <option class="" value="{{ $centro_costos->centroC_id }}">
+                                                    {{ $centro_costos->centroC_descripcion }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Local <a
+                                                    onclick="$('#form-ver').modal('hide');$('#localmodalE').modal('show');"
+                                                    data-toggle="modal"><i class="uil uil-plus"
+                                                        style="color: darkblue;cursor: pointer;"></i></a></label>
+                                            <select class="form-control" name="v_local" id="v_local" tabindex="7">
+                                                <option value="">Seleccionar</option>
+                                                @foreach ($local as $locales)
+                                                <option class="" value="{{ $locales->local_id }}">
+                                                    {{ $locales->local_descripcion }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div> <!-- end col -->
+                                </div> <!-- end row -->
                             </div>
-                        </div>
-                        <div id="sw-default-step-6" style="font-size: 12px!important">
-                            <div class="row">
-                                <div class="col-xl-12 col-sm-12">
-                                    <button class="btn btn-sm" style="background-color:#163552;" data-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false" disabled>+
-                                        Agregar
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                        <a class="dropdown-item" id="agregarAndroid">ANDROID</a>
-                                        <a class="dropdown-item" id="agregarWindows">WINDOWS</a>
+                            <div id="sw-default-step-3" style="font-size: 12px!important">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group text-center">
+                                            {{ csrf_field() }}
+                                            <!--<img  alt="" id="v_foto" width="300" height="200">-->
+                                            <input type="file" name="file" id="file2" accept="image/*">
+                                        </div>
+                                    </div> <!-- end col -->
+                                </div> <!-- end row -->
+                                <br>
+                            </div>
+                            <div id="sw-default-step-4" style="font-size: 12px!important">
+                                <div class="row">
+                                    <div class="col-md-12" id="MostrarCa_e" style="display: none">
+                                        <div class="form-group row">
+                                            <label style="font-weight: 600;font-size: 14px;"
+                                                class="col-lg-5 col-form-label text-right" for="simpleinput">Calendario
+                                                de empleado:</label>
+                                            <div class="col-lg-5">
+                                                <select name="" id="selectCalendario_ed"
+                                                    class="form-control form-control-sm" style="margin-top: 4px;">
+                                                    <option hidden selected>Asignar calendario</option>
+                                                    @foreach ($calendario as $calendarios)
+                                                    <option class="" value="{{ $calendarios->calen_id }}">
+                                                        {{ $calendarios->calendario_nombre }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-8" id="divescond1" style="display: none">
+                                        <input type="hidden" id="idselect3">
+                                        <select name="" id="selectCalendario_edit3"
+                                            class="form-control col-lg-6 form-control-sm" style="margin-top: 4px;">
+                                            <option hidden selected>Asignar calendario</option>
+                                            @foreach ($calendario as $calendarios)
+                                            <option class="" value="{{ $calendarios->calen_id }}">
+                                                {{ $calendarios->calendario_nombre }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2" style="" id="divescond2" style="display: none">
+                                        <div class="btn-group mt-2 mr-1">
+                                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" style="color: #fff;
+                                            background-color: #4a5669;
+                                            border-color: #485263;" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false"><img
+                                                    src="{{ asset('admin/images/borrador.svg') }}" height="15">
+                                                Borrar <i class="icon"><span
+                                                        data-feather="chevron-down"></span></i></button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" onclick="vaciardFeriaBD()">Dias
+                                                    feriados</a>
+                                                <a class="dropdown-item" onclick="vaciarddescansoBD()">Dias
+                                                    descanso</a>
+                                                {{-- <a class="dropdown-item"
+                                                    onclick="vaciardlabTem()">D.
+                                                    laborables</a> --}}
+                                                <a class="dropdown-item" onclick="vaciarNlabBD()">D. no
+                                                    laborables</a>
+                                                <a class="dropdown-item" onclick="vaciardIncidBD()">Incidencia</a>
+
+                                            </div>
+                                        </div><!-- /btn-group -->
+                                    </div>
+                                    <div class="col-md-12"></div>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-10" id="calendarInv_ed" style="display:none"></div>
+                                    <input type="hidden" id="pruebaEnd_ed">
+                                    <input type="hidden" id="pruebaStar_ed">
+                                    <div class="col-md-10" id="calendar_ed" style="display: none;"></div>
+                                    <div class="col-md-1"></div>
+                                    <div id="calendarioAsignar_ed" class="modal fade" tabindex="-1" role="dialog"
+                                        aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                                        <div class="modal-dialog  modal-lg d-flex justify-content-center "
+                                            style="width:670px;  margin-top: 150px; left: 0px;">
+
+                                            <div class="modal-content">
+
+                                                <div class="modal-body"
+                                                    style="font-size:12px!important;background: #f3f3f3;">
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-3 text-center">
+                                                                <button type="button"
+                                                                    style=" max-width: 18em!important;"
+                                                                    class="btn btn-secondary btn-sm"
+                                                                    onclick="laborable_ed()"><img
+                                                                        src="{{ asset('admin/images/dormir.svg') }}"
+                                                                        height="20"> Descanso</button>
+                                                            </div>
+                                                            <div class="col-md-3 text-center">
+                                                                <button type="button"
+                                                                    style=" max-width: 18em!important;"
+                                                                    class="btn btn-secondary btn-sm"
+                                                                    onclick="nolaborable_ed()"><img
+                                                                        src="{{ asset('admin/images/evento.svg') }}"
+                                                                        height="20"> Dia no laborable</button>
+                                                            </div>
+                                                            <div class="col-md-3 text-center">
+                                                                <button type="button"
+                                                                    style=" max-width: 18em!important;"
+                                                                    class="btn btn-secondary btn-sm"
+                                                                    onclick="$('#nombreFeriado_ed').val('');$('#calendarioAsignar_ed').modal('hide'); $('#myModalFeriado_ed').modal('show')"><img
+                                                                        src="{{ asset('admin/images/calendario.svg') }}"
+                                                                        height="20"> Dia feriado</button>
+                                                            </div>
+                                                            <div class="col-md-3 text-center">
+                                                                {{-- <button type="button"
+                                                                    style=" max-width: 18em!important;"
+                                                                    class="btn btn-secondary btn-sm "
+                                                                    onclick="registrarDdescanso()"><img
+                                                                        src="{{ asset('admin/images/calendarioInc.svg') }}"
+                                                                height="20"> Incidencia</button>
+                                                                --}}
+                                                                <button style=" max-width: 18em!important;"
+                                                                    class="btn btn-secondary btn-sm"
+                                                                    onclick="agregarinciden_ed()"><img
+                                                                        src="{{ asset('admin/images/calendarioInc.svg') }}"
+                                                                        height="20"> Incidencia</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="modal-footer"
+                                                    style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
+                                                    <div class="col-md-12 text-right">
+                                                        <button type="button" style="margin-right: 21px;"
+                                                            class="btn btn-soft-primary btn-sm "
+                                                            onclick="$('#calendarioAsignar_ed').modal('hide')">Cancelar</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div><!-- /.modal-content -->
+                                        </div><!-- /.modal-dialog -->
+                                    </div><!-- /.modal -->
+                                    <div id="myModalFeriado_ed" class="modal fade" tabindex="-1" role="dialog"
+                                        aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header" style="background-color: #163552;">
+                                                    <h5 class="modal-title" id="myModalLabel"
+                                                        style="color:#ffffff;font-size:15px">Agregar nuevo
+                                                        feriado</h5>
+                                                    <button type="button" class="close" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="form-group col-md-12">
+                                                            <div class="col-md-6">
+                                                                <label for="">Nombre de dia feriado:</label>
+                                                            </div>
+                                                            <div class="col-md-10">
+                                                                <form action="javascript:diaferiadoRe_ed()">
+                                                                    <input class="form-control" type="text"
+                                                                        id="nombreFeriado_ed" required>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-7 text-right">
+                                                                <button type="button" class="btn btn-light"
+                                                                    data-dismiss="modal">Cancelar</button>
+                                                            </div>
+                                                            <div class="col-md-5 text-right"
+                                                                style="padding-right: 38px; ">
+                                                                <button type="submit"
+                                                                    class="btn btn-secondary">Aceptar</button>
+                                                                </form>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><!-- /.modal-content -->
+                                        </div><!-- /.modal-dialog -->
+                                    </div><!-- /.modal -->
+                                </div> <!-- end row -->
+
+                            </div>
+                            <div id="sw-default-step-5" class="setup-content" style="font-size: 12px!important">
+                                <div class="row">
+                                    <div class="col-md-12 text-center" id="detallehorario_ed"></div>
+                                    <div id="detallehorario_ed2" class="col-md-12"></div>
+                                    <div class="col-md-1"><br></div>
+                                    <div class="col-md-10" id="mensajeOc_ed"><label for="">Aún no ha
+                                            seleccionado un
+                                            calendario en el paso anterior.</label></div>
+                                    <div class="col-md-10" id="calendar2_ed" style="display: none"></div>
+                                    <div class="col-md-1"><br></div>
+                                </div>
+
+                                <div id="horarioAsignar_ed" class="modal fade" tabindex="-1" role="dialog"
+                                    aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                                    <div class="modal-dialog  modal-lg d-flex justify-content-center "
+                                        style="width:330px;  margin-top: 150px; left: 30px;">
+
+                                        <div class="modal-content">
+
+                                            <div class="modal-body"
+                                                style="font-size:12px!important;background: #f3f3f3;">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            <select class="form-control custom-select custom-select-sm"
+                                                                name="selectHorario_ed" id="selectHorario_ed">
+                                                                <option hidden selected>Seleccionar horario
+                                                                </option>
+                                                                @foreach ($horario as $horarios)
+                                                                <option class="" value="{{ $horarios->horario_id }}">
+                                                                    {{ $horarios->horario_descripcion }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-4 text-right">
+                                                            <button class="btn btn-primary btn-sm"
+                                                                style="background-color: #183b5d;border-color:#62778c"
+                                                                onclick="abrirHorario_ed()">+</button>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                            <div class="modal-footer"
+                                                style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-12 text-right">
+                                                            <button type="button" class="btn btn-soft-primary btn-sm "
+                                                                onclick="$('#horarioAsignar_ed').modal('hide')">Cancelar</button>
+
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
+                                <div id="horarioAgregar_ed" class="modal fade" tabindex="-1" role="dialog"
+                                    aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                                    <div class="modal-dialog  modal-lg d-flex justify-content-center "
+                                        style="width: 550px;">
+
+                                        <div class="modal-content">
+                                            <div class="modal-header" style="background-color:#163552;">
+                                                <h5 class="modal-title" id="myModalLabel"
+                                                    style="color:#ffffff;font-size:15px">Asignar horario</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body" style="font-size:12px!important">
+                                                <div class="row">
+
+                                                    <div class="col-md-12">
+                                                        <form id="frmHor_ed" action="javascript:registrarHorario_ed()">
+                                                            <div class="row">
+
+                                                                <div class="col-md-12"><label for=""><br></label>
+                                                                    <div class="form-check">
+
+                                                                        <input type="checkbox" class="form-check-input"
+                                                                            id="exampleCheck1_ed">
+                                                                        <label class="form-check-label"
+                                                                            for="exampleCheck1_ed">Aplicar
+                                                                            sobretiempo</label>
+                                                                        <br><br>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="">Descripcion:</label>
+                                                                        <input type="text"
+                                                                            class="form-control form-control-sm"
+                                                                            id="descripcionCa_ed" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="">Tolerancia(Min):</label>
+                                                                        <input type="number" value="0"
+                                                                            class="form-control form-control-sm" min="0"
+                                                                            id="toleranciaH_ed" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="">Hora de
+                                                                            inicio(24h):</label>
+                                                                        <input type="text" id="horaI_ed"
+                                                                            class="form-control form-control-sm"
+                                                                            required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="">Hora de fin(24h):</label>
+                                                                        <input type="text" id="horaF_ed"
+                                                                            class="form-control form-control-sm"
+                                                                            required>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-12 text-right">
+                                                            <button type="button" class="btn btn-light btn-sm "
+                                                                onclick="$('#horarioAgregar_ed').modal('hide')">Cancelar</button>
+                                                            <button type="submit" name=""
+                                                                style="background-color: #163552;"
+                                                                class="btn btn-sm ">Guardar</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
+                            </div>
+                            <div id="sw-default-step-6" class="setup-content" style="font-size: 12px!important">
+                                <div class="row">
+                                    <div class="col-xl-12 col-sm-12">
+                                        <button class="btn btn-sm" style="background-color:#163552;"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">+
+                                            Agregar
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                            <a class="dropdown-item" id="v_agregarAndroid">ANDROID</a>
+                                            <a class="dropdown-item" id="v_agregarWindows">WINDOWS</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="table-responsive">
+                                        <table id="v_tablaDispositivo" class="table"
+                                            style="font-size: 13px!important;width:100%;">
+                                            <thead style="background: #fafafa;font-size: 14px">
+                                                <tr>
+                                                    <th>Tipo Dispositivo</th>
+                                                    <th>Activación de Dispositivo</th>
+                                                    <th>Codigo</th>
+                                                    <th>Enviado</th>
+                                                    <th>Estado</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="v_tbodyDispositivo"
+                                                style="background:#ffffff;color: #585858;font-size: 12px">
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
-                            <br>
-                            <div class="row">
-                                <div class="table-responsive">
-                                    <table id="ver_tablaDispositivo" class="table"
-                                        style="font-size: 13px!important;width:100%;">
-                                        <thead style="background: #fafafa;">
-                                            <tr>
-                                                <th>Tipo Dispositivo</th>
-                                                <th>Activación de Dispositivo</th>
-                                                <th>Codigo</th>
-                                                <th>Enviado</th>
-                                                <th>Estado</th>
-                                                <th></th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="ver_tbodyDispositivo"
-                                            style="background:#ffffff;color: #585858;font-size: 12px">
-                                        </tbody>
-                                    </table>
+                            <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <div class="row pb-1 pl-2">
+                                                    <div class="col">
+                                                        <div class="custom-control custom-switch mb-2">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="customSwitch1">
+                                                            <label class="custom-control-label" for="customSwitch1"
+                                                                style="font-weight: bold">Modo Tarea</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body border p-2" id="bodyModoTarea">
+                                                <div class="row">
+                                                    <div class="col-xl-12 text-right">
+                                                        <button type="button" class="btn btn-sm mt-1"
+                                                            style="background-color: #163552;"
+                                                            onclick="$('#actividadTarea').modal()">+ Nueva
+                                                            Actividad
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-3">
+                                                    <div class="col-xl-12 col-sm-12">
+                                                        <div class="table-responsive-xl scroll">
+                                                            <table class="table" style="font-size: 13px!important;">
+                                                                <thead style="background: #fafafa;font-size: 14px">
+                                                                    <tr>
+                                                                        <th>Actividad</th>
+                                                                        <th>Estado</th>
+                                                                        <th>Total</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody id="tablaBodyTarea"
+                                                                    style="background:#ffffff;color: #585858;font-size: 12px">
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <div class="row pb-1 pl-2">
+                                                    <div class="col">
+                                                        <div class="custom-control custom-switch mb-2">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="customSwitch2">
+                                                            <label class="custom-control-label" for="customSwitch2"
+                                                                style="font-weight: bold">Modo Proyecto</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body border p-2" id="bodyModoProyecto">
+                                                <div class="row">
+                                                    <div class="col-xl-12 text-right">
+                                                        <button type="button" class="btn btn-sm mt-1"
+                                                            style="background-color: #163552;">+ Nueva Actividad
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-3">
+                                                    <div class="col-xl-12 col-sm-12">
+                                                        <div class="table-responsive-xl">
+                                                            <table class="table" style="font-size: 13px!important;">
+                                                                <thead style="background: #fafafa;font-size: 14px">
+                                                                    <tr>
+                                                                        <th>Actividad</th>
+                                                                        <th>Estado</th>
+                                                                    </tr>
+                                                                </thead>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="actividadTarea" class="modal fade" tabindex="-1" role="dialog"
+                                    aria-labelledby="actividadTarea" aria-hidden="true" data-backdrop="static">
+                                    <div class="modal-dialog  modal-lg d-flex justify-content-center "
+                                        style="width: 550px;">
+                                        <div class="modal-content">
+                                            <div class="modal-header" style="background-color:#163552;">
+                                                <h5 class="modal-title" id="myModalLabel"
+                                                    style="color:#ffffff;font-size:15px">Registrar Actividad
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close" onclick="javasript:limpiarModo()">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body" style="font-size:12px!important">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <form action="javascript:registrarActividadTarea()">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="">Nombre:</label>
+                                                                        <input type="text"
+                                                                            class="form-control form-control-sm"
+                                                                            id="nombreTarea" required>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-12 text-right">
+                                                            <button type="button" class="btn btn-light btn-sm "
+                                                                onclick="javasript:limpiarModo();$('#actividadTarea').modal('toggle')">Cancelar</button>
+                                                            <button type="submit" name=""
+                                                                style="background-color: #163552;"
+                                                                class="btn btn-sm ">Guardar</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
                             </div>
                         </div>
                     </div>
@@ -3760,132 +3567,476 @@ use App\proyecto_empleado;
             </div>
         </div>
     </div>
-</div><!-- /.modal -->
-<div id="modalIncidencia" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color: #163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                    Agregar
-                    nueva incidencia</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-
-                    <div class="col-md-12">
-                        <form id="frmIncidenciaCa" action="javascript:modalIncidencia()">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="">Descripcion:</label>
-                                        <input type="text" class="form-control form-control-sm" id="descripcionInciCa"
-                                            required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6"><label for=""><br></label>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="descuentoCheckCa">
-                                        <label class="form-check-label" for="descuentoCheckCa">Aplicar
-                                            descuento</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6" id="divhoraCa">
-                                    <div class="form-group">
-                                        <label for="">Hora de salida(24h):</label>
-                                        <input type="text" id="horaIncidenCa" class="form-control form-control-sm">
-                                    </div>
-                                </div>
-
-
-                            </div>
-
-                    </div>
-
+    <!--VER EMPLEADO-->
+    <div id="verEmpleadoDetalles" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="verEmpleadoDetalles"
+        aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" style="background: #163552;">
+                    <h4 class="header-title mt-0 " style="color: #f0f0f0">Datos de empleado</h4><br>
+                    <button type="button" class="close" id="cerrarEd" data-dismiss="modal" aria-label="Close"
+                        onclick="javascript:cerrarVer()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
+                <div class="modal-body" style="padding: 0px;">
+                    <div id="smartwizardVer" style="background: #ffffff; color:#3d3d3d;">
+                        <ul style="background: #fdfdfd!important;">
+                            <li><a href="#persona-step-1">Personales</a></li>
+                            <li><a href="#sw-default-step-2">Empresarial</a></li>
+                            <li><a href="#sw-default-step-3">Foto</a></li>
+                            <li><a href="#sw-default-step-4">Calendario</a></li>
+                            <li><a href="#sw-default-step-5">Horario</a></li>
+                            <li><a href="#sw-default-step-6">Dispositivo</a></li>
+                            <div class="col-md-2 text-left" style="display: flex; align-items: center;cursor: pointer;">
+                                <a style="color: #3d3d3d;"
+                                    onclick="$('#verEmpleadoDetalles').modal('toggle');javascript:editarEmpleado($('#v_idV').val())">
+                                    <img src="{{ asset('admin/images/edit.svg') }}" height="15">
+                                    <span style="font-weight: 600">Editar</span>
+                                </a>
+                            </div>
+                        </ul>
+                        <div class="p-3" id="form-registrar">
+                            <div id="persona-step-1" style="font-size: 12px!important">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <input style="display: none;" name="v_idV" id="v_idV">
+                                        <div class="form-group">
+                                            <label for="sw-default">Tipo Documento</label>
+                                            <input type="text" class="form-control" name="v_tipoDocV" id="v_tipoDocV"
+                                                style="background-color: #fcfcfc;" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Apellido Paterno</label>
+                                            <input type="text" class="form-control" name="v_apPaternoV"
+                                                id="v_apPaternoV" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Correo Electrónico</label>
+                                            <input type="email" class="form-control" id="v_emailV" name="v_emailV"
+                                                disabled>
+                                        </div>
+                                    </div> <!-- end col -->
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Num. Documento</label>
+                                            <input type="text" class="form-control" name="v_numDocumentoV"
+                                                id="v_numDocumentoV" style="background-color: #fcfcfc" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Apellido Materno</label>
+                                            <input type="text" class="form-control" name="v_apMaternoV"
+                                                id="v_apMaternoV" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Celular</label>
+                                            <input type="text" class="form-control" name="v_celularV" id="v_celularV"
+                                                disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Fecha Nacimiento</label>
 
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-12 text-right">
-                            <button type="button" class="btn btn-light btn-sm " data-dismiss="modal">Cancelar</button>
-                            <button type="submit" name="" style="background-color: #163552;"
-                                class="btn btn-sm">Guardar</button>
-                            </form>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <select class="form-control" name="v_dia_fechaV" id="v_dia_fechaV"
+                                                        required="">
+                                                        <option value="0">Dia</option>
+                                                        @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
+                                                            {{$i}}
+                                                            </option>
+                                                            @endfor
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" name="v_mes_fechaV" id="v_mes_fechaV"
+                                                        required="">
+                                                        <option value="0">Mes</option>
+                                                        <option class="" value="1">Ene.</option>
+                                                        <option class="" value="2">Feb.</option>
+                                                        <option class="" value="3">Mar.</option>
+                                                        <option class="" value="4">Abr.</option>
+                                                        <option class="" value="5">May.</option>
+                                                        <option class="" value="6">Jun.</option>
+                                                        <option class="" value="7">Jul.</option>
+                                                        <option class="" value="8">Ago.</option>
+                                                        <option class="" value="9">Set.</option>
+                                                        <option class="" value="10">Oct.</option>
+                                                        <option class="" value="11">Nov.</option>
+                                                        <option class="" value="12">Dic.</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" style="padding-left: 5px;
+                                                padding-right: 5px;" name="v_mes_fechaV" id="v_ano_fechaV" required="">
+                                                        <option value="0">Año</option>
+                                                        @for ($i = 1950; $i <2011; $i++) <option class=""
+                                                            value="{{$i}}">
+                                                            {{$i}}
+                                                            </option>
+                                                            @endfor
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                            {{-- <input type="text" class="form-control" id="v_fechaNV"
+                                            data-custom-class="form-control" data-format="YYYY-MM-DD"
+                                            data-template="D MMM YYYY" name="date" disabled> --}}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Nombres</label>
+                                            <input type="text" class="form-control" name="v_nombresV" id="v_nombresV"
+                                                disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Teléfono</label>
+                                            <input type="text" class="form-control" name="v_telefonoV" id="v_telefonoV"
+                                                disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="sw-default">Dirección</label>
+                                            <input type="text" class="form-control" name="v_direccionV"
+                                                id="v_direccionV" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Dirección
+                                                Domiciliara</label>
+                                            <input class="form-control" placeholder="Departamento" name="v_depV"
+                                                id="v_depV" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Lugar Nacimiento</label>
+                                            <input class="form-control" placeholder="Departamento"
+                                                name="v_departamentoV" id="v_departamentoV" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="normal" for="">Género</label>
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" name="v_tipoV" id="v_tipoV" value="Femenino"
+                                                    disabled>
+                                                Femenino
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default"><br></label>
+                                            <input class="form-control" placeholder="Provincia " name="v_provV"
+                                                id="v_provV" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default"><br></label>
+                                            <input class="form-control" placeholder="Provincia " name="v_provinciaV"
+                                                id="v_provinciaV" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="normal" for=""><br></label>
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" name="v_tipoV" id="v_tipoV" value="Masculino"
+                                                    disabled>
+                                                Masculino
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default"><br></label>
+                                            <input class="form-control" placeholder="Distrito " name="v_distV"
+                                                id="v_distV" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default"><br></label>
+                                            <input class="form-control" placeholder="Distrito " name="v_distritoV"
+                                                id="v_distritoV" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="normal" for=""><br></label>
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" name="v_tipoV" id="v_tipoV" value="Personalizado"
+                                                    disabled>
+                                                Personalizado
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div> <!-- end row -->
+                            </div>
+                            <div id="sw-default-step-2" style="font-size: 12px!important">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Codigo Empleado</label>
+                                            <input type="text" class="form-control" name="v_codigoEmpleadoV"
+                                                id="v_codigoEmpleadoV" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-4"><br></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Cargo</label>
+                                            <input class="form-control" name="v_cargoV" id="v_cargoV" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Contrato
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <a id="detalleContratoVer"
+                                                    onclick="$('#verEmpleadoDetalles').modal('hide');"
+                                                    href="#fechasmodalVer" data-toggle="modal"
+                                                    data-target="#fechasmodalVer" data-toggle="tooltip"
+                                                    data-placement="right" title="Detalle de Contrato."
+                                                    data-original-title="Detalle de Contrato." style="cursor: pointer;">
+                                                    <img src="{{asset('landing/images/adaptive.svg')}}" height="18">
+                                                </a>
+                                            </label>
+                                            <input class="form-control" name="v_contratoV" id="v_contratoV" tabindex="5"
+                                                disabled>
+                                        </div>
+                                    </div> <!-- end col -->
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Área</label>
+                                            <input class="form-control" name="v_areaV" id="v_areaV" tabindex="3"
+                                                disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Nivel del Colaborador</label>
+                                            <input class="form-control" name="v_nivelV" id="v_nivelV" tabindex="6"
+                                                disabled>
+                                        </div>
+                                    </div> <!-- end col -->
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Centro Costo</label>
+                                            <input class="form-control" name="v_centrocV" id="v_centrocV" tabindex="4"
+                                                disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Local</label>
+                                            <input class="form-control" name="v_localV" id="v_localV" tabindex="7"
+                                                disabled>
+                                        </div>
+                                    </div> <!-- end col -->
+                                </div>
+                            </div>
+                            <div id="sw-default-step-3" style="font-size: 12px!important">
+                                <br><br>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group text-center">
+                                            <img src="landing/images/png.svg" height="150" id="v_fotoV">
+                                            <br><br>
+                                            <h5 id="h5Ocultar" class="m-0 font-size-14" style="color:#8888">
+                                                No se encontro imagen</h5>
+                                        </div>
+                                    </div> <!-- end col -->
+                                </div> <!-- end row -->
+                            </div>
+                            <div id="sw-default-step-4" style="font-size: 12px!important">
+                                <div class="row">
+                                    <div class="col-md-4 text-right"><label for=""
+                                            style="margin-top: 7px;font-weight: 600">Calendario:</label></div>
+                                    <div class="col-md-4 text-center" id="divescond1_ver" style="">
+                                        <input type="hidden" id="idselect3_ver">
+                                        <select name="" id="selectCalendario_edit3_ver"
+                                            class="form-control form-control-sm" style="margin-top: 4px;">
+                                            <option hidden selected>Asignar calendario</option>
+                                            @foreach ($calendario as $calendarios)
+                                            <option class="" value="{{ $calendarios->calen_id }}">
+                                                {{ $calendarios->calendario_nombre }}</option>
+                                            @endforeach
+                                        </select><br><br>
+                                    </div>
+                                    <div class="col-md-4"></div>
+                                    <input type="hidden" name="" id="idempleado">
+                                    <div class="col-md-1"><br></div>
+
+                                    <div class="col-md-10" id="calendar3"></div>
+                                    <div class="col-md-1"><br></div>
+                                </div>
+                            </div>
+                            <div id="sw-default-step-5" style="font-size: 12px!important">
+                                <div class="row">
+
+                                    <div class="col-md-1"><br></div>
+                                    <div class="col-md-10" id="calendar4"></div>
+                                    <div class="col-md-1"><br></div>
+                                </div>
+                            </div>
+                            <div id="sw-default-step-6" style="font-size: 12px!important">
+                                <div class="row">
+                                    <div class="col-xl-12 col-sm-12">
+                                        <button class="btn btn-sm" style="background-color:#163552;"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>+
+                                            Agregar
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                            <a class="dropdown-item" id="agregarAndroid">ANDROID</a>
+                                            <a class="dropdown-item" id="agregarWindows">WINDOWS</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="table-responsive">
+                                        <table id="ver_tablaDispositivo" class="table"
+                                            style="font-size: 13px!important;width:100%;">
+                                            <thead style="background: #fafafa;">
+                                                <tr>
+                                                    <th>Tipo Dispositivo</th>
+                                                    <th>Activación de Dispositivo</th>
+                                                    <th>Codigo</th>
+                                                    <th>Enviado</th>
+                                                    <th>Estado</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="ver_tbodyDispositivo"
+                                                style="background:#ffffff;color: #585858;font-size: 12px">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<div id="modalIncidencia_ed" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color: #163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar nueva
-                    incidencia
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
+        </div>
+    </div><!-- /.modal -->
+    <div id="modalIncidencia" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                        Agregar
+                        nueva incidencia</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
 
-                    <div class="col-md-12">
-                        <form id="frmIncidenciaCa_ed" action="javascript:modalIncidencia_ed()">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="">Descripcion:</label>
-                                        <input type="text" class="form-control form-control-sm"
-                                            id="descripcionInciCa_ed" required>
+                        <div class="col-md-12">
+                            <form id="frmIncidenciaCa" action="javascript:modalIncidencia()">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Descripcion:</label>
+                                            <input type="text" class="form-control form-control-sm"
+                                                id="descripcionInciCa" required>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6"><label for=""><br></label>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="descuentoCheckCa_ed">
-                                        <label class="form-check-label" for="descuentoCheckCa_ed">Aplicar
-                                            descuento</label>
+                                    <div class="col-md-6"><label for=""><br></label>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="descuentoCheckCa">
+                                            <label class="form-check-label" for="descuentoCheckCa">Aplicar
+                                                descuento</label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6" id="divhoraCa_ed">
-                                    <div class="form-group">
-                                        <label for="">Hora de salida(24h):</label>
-                                        <input type="text" id="horaIncidenCa_ed" class="form-control form-control-sm">
+                                    <div class="col-md-6" id="divhoraCa">
+                                        <div class="form-group">
+                                            <label for="">Hora de salida(24h):</label>
+                                            <input type="text" id="horaIncidenCa" class="form-control form-control-sm">
+                                        </div>
                                     </div>
-                                </div>
 
 
-                            </div>
+                                </div>
+
+                        </div>
 
                     </div>
 
                 </div>
-
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-12 text-right">
-                            <button type="button" class="btn btn-light btn-sm " data-dismiss="modal">Cancelar</button>
-                            <button type="submit" name="" style="background-color: #163552;"
-                                class="btn btn-sm">Guardar</button>
-                            </form>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <button type="button" class="btn btn-light btn-sm "
+                                    data-dismiss="modal">Cancelar</button>
+                                <button type="submit" name="" style="background-color: #163552;"
+                                    class="btn btn-sm">Guardar</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div id="modalIncidencia_ed" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar nueva
+                        incidencia
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
 
+                        <div class="col-md-12">
+                            <form id="frmIncidenciaCa_ed" action="javascript:modalIncidencia_ed()">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Descripcion:</label>
+                                            <input type="text" class="form-control form-control-sm"
+                                                id="descripcionInciCa_ed" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6"><label for=""><br></label>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="descuentoCheckCa_ed">
+                                            <label class="form-check-label" for="descuentoCheckCa_ed">Aplicar
+                                                descuento</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" id="divhoraCa_ed">
+                                        <div class="form-group">
+                                            <label for="">Hora de salida(24h):</label>
+                                            <input type="text" id="horaIncidenCa_ed"
+                                                class="form-control form-control-sm">
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <button type="button" class="btn btn-light btn-sm "
+                                    data-dismiss="modal">Cancelar</button>
+                                <button type="submit" name="" style="background-color: #163552;"
+                                    class="btn btn-sm">Guardar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 </div>
 @endsection
 @section('script')
