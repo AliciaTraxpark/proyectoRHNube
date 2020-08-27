@@ -9,13 +9,17 @@ use App\User;
 use App\invitado;
 use App\organizacion;
 use App\invitado_empleado;
+use App\usuario_organizacion;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\CorreoInvitado;
+use App\Mail\CorreoMail;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Redirect;
+
 class delegarInvController extends Controller
 {
     //
@@ -66,28 +70,6 @@ class delegarInvController extends Controller
 
         $emailInv=$request->emailInv;
         $idEmpleado=$request->idEmpleado;
-
-       /*  $persona = new persona();
-        $persona->perso_nombre = $nombreInv;
-        $persona->perso_apPaterno = $apPaInv;
-        $persona->perso_apMaterno =$apMaInv;
-        $persona->save();
-        $user_persona = $persona->perso_id;
-
-        $data['confirmation_code'] = STR::random(25);
-       ////////////
-       $clave=STR::random(9);
-       ////////////
-        $User = new User();
-        $User->email = $emailInv;
-        $User->rol_id = 3;
-        $User->perso_id = $user_persona;
-        $User->user_estado = 0;
-        $User->password = Hash::make($clave);
-        $User->confirmation_code = $data['confirmation_code'];
-        $User->save();
-        $id = $User->id;
-/////////////////////////////////////*/
         $idempusu=DB::table('usuario_organizacion')
         ->where('user_id', '=', Auth::user()->id)
         ->get()->first();
@@ -108,22 +90,90 @@ class delegarInvController extends Controller
         }
         Mail::to($emailInv)->queue(new CorreoInvitado($organi,$invitado));
 
-
-
-
-
     }
 
     public function vistaRegistroInv($idinEncr){
-      /*   $user = User::where('confirmation_code', $code)->first();
 
-        if (!$user)
-            return redirect('/');
-
-        $user->email_verified_at = Carbon::now();
-        $user->confirmation_code = null;
-        $user->save(); */
         $idInvit = Crypt::decrypt($idinEncr);
         return view('registro.registroInvitado',['idInvit'=>$idInvit]);
+    }
+
+    public function registroInvitado(Request $request){
+
+        $idinvitado=$request->idinvita;
+        //  registro persona y user
+        $persona = new persona();
+        $persona->perso_nombre = $request->get('nombres');
+        $persona->perso_apPaterno = $request->get('apPaterno');
+        $persona->perso_apMaterno = $request->get('apMaterno');
+        $persona->perso_direccion = $request->get('direccion');
+        $diaf = $request->get('dia_fecha');
+        $mesf = $request->get('mes_fecha');
+        $anof = $request->get('ano_fecha');
+
+        $fechaN = $anof . "-" . $mesf . "-" . $diaf;
+        $persona->perso_fechaNacimiento = $fechaN;
+
+        $persona->perso_sexo = $request->get('sexo');
+
+        $persona->save();
+        $user_persona = $persona->perso_id;
+
+        $data['confirmation_code'] = STR::random(25);
+
+        $User = new User();
+        $User->email = $request->get('email');
+        $User->rol_id = 3;
+        $User->perso_id = $user_persona;
+        $User->user_estado = 1;
+        $User->password = Hash::make($request->get('password'));
+        $User->confirmation_code = $data['confirmation_code'];
+        $User->save();
+
+        //registro en organizacion
+        $invitado = DB::table('invitado')
+            ->where('idinvitado', '=',  $idinvitado)
+            ->get()->first();
+        $usuario_organizacion = new usuario_organizacion();
+            $usuario_organizacion->user_id =$User->id;
+            $usuario_organizacion->organi_id = $invitado->organi_id;
+            $usuario_organizacion->save();
+
+         //actualiza invitado
+          
+        //////////////
+
+
+
+
+
+            $data = DB::table('users as u')
+                ->select('u.email', 'u.email_verified_at', 'confirmation_code')
+                ->where('u.id', '=', $User->id)
+                ->get();
+            $idPersona = DB::table('users as u')
+                ->join('persona as p', 'u.perso_id', 'p.perso_id', 'p.')
+                ->select('p.perso_id')
+                ->where('u.id', '=', $User->id)
+                ->get();
+            $datos = [];
+            $persona = [];
+            $persona["id"] = $idPersona[0]->perso_id;
+            $datos["email"] = $data[0]->email;
+            $datos["email_verified_at"] = $data[0]->email_verified_at;
+            $datos["confirmation_code"] = $data[0]->confirmation_code;
+            $persona = persona::find($persona["id"]);
+            $users = User::find($User->id);
+            $organi = organizacion::find($invitado->organi_id);
+            $correo = array($datos['email']);
+            $datoNuevo = explode("@", $data[0]->email);
+
+
+                Mail::to($correo)->queue(new CorreoMail($users, $persona, $organi));
+                return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado! Te hemos enviado un correo de verificación.");
+
+
+
+
     }
 }
