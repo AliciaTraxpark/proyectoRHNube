@@ -3836,6 +3836,7 @@ use App\proyecto_empleado;
         </div>
     </div>
 </div><!-- /.modal -->
+
 <div id="modalIncidencia" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
     <div class="modal-dialog">
