@@ -66,11 +66,47 @@ function actividadEmp() {
         }
     });
 }
+// MOSTRAR DATOS EN TABLA DEL FORMULARIO VER
+function actividadEmpVer() {
+    var id = $('#v_idV').val();
+    $.ajax({
+        type: "GET",
+        url: "/actividadEmpleado",
+        data: {
+            id: id
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            console.log(data);
+            $('#tablaBodyTarea_ver').empty();
+            if (data != 0) {
+                var container = $('#tablaBodyTarea_ver');
+                var td = '';
+                for (var $i = 0; $i < data.length; $i++) {
+                    td += `<tr><td>${data[$i].Activi_Nombre}</td>`;
+                    if (data[$i].estado == 1) {
+                        td += `<td>Activo</td><td></td></tr>`;
+                    } else {
+                        td += `<td>Inactivo</td><td></td></tr>`;
+                    }
+                }
+                container.append(td);
+            }
+        },
+        error: function () {
+
+        }
+    });
+}
 // ***********************************
 $('#customSwitch1').prop('checked', true);
 $('#bodyModoTarea').show();
 $('#customSwitch3').prop('checked', true);
 $('#regbodyModoTarea').show();
+$('#customSwitch5').prop('checked', true);
+$('#bodyModoTarea_ver').show();
 $('#customSwitch1').on('change.bootstrapSwitch', function (event) {
     console.log(event.target.checked);
     if (event.target.checked == true) {
@@ -84,13 +120,23 @@ $('#customSwitch3').on('change.bootstrapSwitch', function (event) {
     console.log(event.target.checked);
     if (event.target.checked == true) {
         $('#regbodyModoTarea').show();
-        actividadEmp();
+        actividad_empleado();
     } else {
         $('#regbodyModoTarea').hide();
     }
 });
+$('#customSwitch5').on('change.bootstrapSwitch', function (event) {
+    console.log(event.target.checked);
+    if (event.target.checked == true) {
+        $('#bodyModoTarea_ver').show();
+        actividadEmpVer();
+    } else {
+        $('#bodyModoTarea_ver').hide();
+    }
+});
 $('#bodyModoProyecto').hide();
 $('#regbodyModoProyecto').hide();
+$('#bodyModoProyecto_ver').hide();
 $('#customSwitch2').on('change.bootstrapSwitch', function (event) {
     console.log(event.target.checked);
     if (event.target.checked == true) {
@@ -106,6 +152,14 @@ $('#customSwitch4').on('change.bootstrapSwitch', function (event) {
         $('#regbodyModoProyecto').show();
     } else {
         $('#regbodyModoProyecto').hide();
+    }
+});
+$('#customSwitch6').on('change.bootstrapSwitch', function (event) {
+    console.log(event.target.checked);
+    if (event.target.checked == true) {
+        $('#bodyModoProyecto_ver').show();
+    } else {
+        $('#bodyModoProyecto_ver').hide();
     }
 });
 // **************************************
