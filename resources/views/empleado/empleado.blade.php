@@ -3713,6 +3713,13 @@
                             <h4 class="header-title mt-0 " style="color: #f0f0f0">Datos de empleado</h4><br>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                 onclick="javascript:cerrarVer()">
+                                <span class="badge float-left pr-4 pt-0">
+                                    <a style="color: #f0f0f0"
+                                        onclick="$('#verEmpleadoDetalles').modal('toggle');javascript:editarEmpleado($('#v_idV').val())">
+                                        <img src="{{asset('admin/images/edit.svg')}}" height="15">
+                                        <span style="font-weight: bold">Editar Empleado</span>
+                                    </a>
+                                </span>
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -3726,14 +3733,6 @@
                                     <li><a href="#sw-default-step-5">Horario</a></li>
                                     <li><a href="#sw-default-step-6">Dispositivo</a></li>
                                     <li><a href="#sw-default-step-7">Modos de Control</a></li>
-                                    <div class="col-md-1 text-left"
-                                        style="display: flex; align-items: center;cursor: pointer;">
-                                        <a style="color: #3d3d3d;"
-                                            onclick="$('#verEmpleadoDetalles').modal('toggle');javascript:editarEmpleado($('#v_idV').val())">
-                                            <img src="{{asset('admin/images/edit.svg')}}" height="15">
-                                            <span style="font-weight: bold">Editar</span>
-                                        </a>
-                                    </div>
                                 </ul>
                                 <div class="p-3" id="form-registrar">
                                     <div id="persona-step-1" style="font-size: 12px!important">
