@@ -51,7 +51,9 @@ function actividadEmp() {
                 var container = $('#tablaBodyTarea');
                 var td = '';
                 for (var $i = 0; $i < data.length; $i++) {
-                    td += `<tr><td>${data[$i].Activi_Nombre}</td>`;
+                    td += `<tr>
+                    <input type="hidden" id="idAct${data[$i].Activi_id}" value="${data[$i].Activi_Nombre}">
+                    <td class="editable" id="tdAct${data[$i].Activi_id}" onclick="return editarActE(${data[$i].Activi_id})">${data[$i].Activi_Nombre}</td>`;
                     if (data[$i].estado == 1) {
                         td += `<td>Activo</td><td></td></tr>`;
                     } else {
@@ -247,7 +249,34 @@ function registrarNuevaActividadTarea() {
     });
 }
 
- function limpiarModo(){
+function limpiarModo() {
     $('#nombreTarea').val("");
     $('#regnombreTarea').val("");
- }
+}
+//  *******************************
+
+function editarActE(idA) {
+    var OriginalContent = $('#idAct' + idA).val();
+    $("#tdAct" + idA).on('click', function () {
+        console.log(OriginalContent);
+        $(this).addClass("editable");
+        $(this).html("<input type='text' value='" + OriginalContent + "'/>");
+        $(this).children().first().focus();
+
+        $(this).children().first().keypress(function (e) {
+            if (e.which == 13) {
+                var newContent = $(this).val();
+                $(this).parent().text(newContent);
+                $(this).parent().removeClass("editable")
+            }
+        });
+
+        $(this).children().first().blur(function () {
+            console.log("ingreso");
+            console.log(OriginalContent);
+            $(this).parent().text(OriginalContent);
+            $(this).parent().removeClass("editable");
+        });
+
+    });
+}

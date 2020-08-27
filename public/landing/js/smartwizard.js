@@ -386,6 +386,7 @@ $(document).ready(function () {
     }
     $('#smartwizard').smartWizard({
         selected: 0,
+        keyNavigation:false,
         showStepURLhash: false,
         lang: { // Language variables
             next: 'Siguiente',
@@ -414,6 +415,7 @@ $(document).ready(function () {
     });
     $('#smartwizard1').smartWizard({
         selected: 0,
+        keyNavigation:false,
         showStepURLhash: false,
         lang: { // Language variables
             next: 'Siguiente',
@@ -527,6 +529,7 @@ $(document).ready(function () {
 });
 $('#smartwizardVer').smartWizard({
     selected: 0,
+    keyNavigation:false,
     showStepURLhash: false,
     lang: { // Language variables
         next: 'Siguiente',
