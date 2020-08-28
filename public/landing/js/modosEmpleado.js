@@ -443,8 +443,6 @@ function RegeditarActE(idA) {
                 alertify.confirm("¿Desea modificar nombre de la actividad?", function (e) {
                     if (e) {
                         editarActividadReg(idA, newContent);
-                    }else{
-                        actividad_empleado();
                     }
                 }).setting({
                     'title': 'Modificar Actividad',
@@ -457,6 +455,9 @@ function RegeditarActE(idA) {
                     'reverseButtons': true,
                     'resizable': false,
                     'transition': 'zoom',
+                    'oncancel': function (closeEvent) {
+                        actividad_empleado();
+                    },
                 });
             }
         });
@@ -477,8 +478,6 @@ function RegeditarActE(idA) {
         alertify.confirm("¿Desea modificar el estado de la  actividad?", function (e) {
             if (e) {
                 editarEstadoActividadReg(idA, valor);
-            } else {
-                actividad_empleado();
             }
         }).setting({
             'title': 'Modificar Actividad',
@@ -490,7 +489,10 @@ function RegeditarActE(idA) {
             'startMaximized': false,
             'reverseButtons': true,
             'resizable': false,
-            'transition': 'zoom'
+            'transition': 'zoom',
+            'oncancel': function (closeEvent) {
+                actividad_empleado();
+            },
         });
     });
 }
@@ -511,8 +513,6 @@ function editarActE(idA) {
                 alertify.confirm("¿Desea modificar nombre de la actividad?", function (e) {
                     if (e) {
                         editarActividad(idA, newContent);
-                    }else{
-                        actividadEmp();
                     }
                 }).setting({
                     'title': 'Modificar Actividad',
@@ -525,6 +525,9 @@ function editarActE(idA) {
                     'reverseButtons': true,
                     'resizable': false,
                     'transition': 'zoom',
+                    'oncancel': function (closeEvent) {
+                        actividadEmp();
+                    },
                 });
             }
         });
@@ -557,6 +560,9 @@ function editarActE(idA) {
             'reverseButtons': true,
             'resizable': false,
             'transition': 'zoom',
+            'oncancel': function (closeEvent) {
+                actividadEmp();
+            },
         });
     });
 }
