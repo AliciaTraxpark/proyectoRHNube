@@ -184,6 +184,7 @@ Route::post('/proyecto/editarPro', 'ProyectoController@editarProyecto');
 Route::get('/actividadEmpleado', 'ProyectoController@actividadesEmpleado');
 Route::get('/registrarActvE', 'ProyectoController@registrarActividadE');
 Route::get('/editarActvE', 'ProyectoController@editarActividadE');
+Route::get('/editarEstadoA', 'ProyectoController@editarEstadoActividad');
 
 //carga masiva de fotos
 Route::post('/subirfoto', 'CargaMasivaFotoController@subirfoto');

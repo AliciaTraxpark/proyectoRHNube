@@ -156,4 +156,15 @@ class ProyectoController extends Controller
             return response()->json($actividad, 200);
         }
     }
+
+    public function editarEstadoActividad(Request $request)
+    {
+        $idA = $request->get('idA');
+        $actividad = actividad::where('Activi_id', '=', $idA)->get()->first();
+        if ($actividad) {
+            $actividad->estado = $request->get('estado');
+            $actividad->save();
+            return response()->json($actividad, 200);
+        }
+    }
 }
