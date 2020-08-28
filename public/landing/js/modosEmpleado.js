@@ -443,7 +443,9 @@ function RegeditarActE(idA) {
                 alertify.confirm("¿Desea modificar nombre de la actividad?", function (e) {
                     if (e) {
                         editarActividadReg(idA, newContent);
-                    } 
+                    }else{
+                        actividad_empleado();
+                    }
                 }).setting({
                     'title': 'Modificar Actividad',
                     'labels': {
@@ -455,7 +457,6 @@ function RegeditarActE(idA) {
                     'reverseButtons': true,
                     'resizable': false,
                     'transition': 'zoom',
-                    'oncancel' : actividad_empleado(),
                 });
             }
         });
@@ -510,7 +511,9 @@ function editarActE(idA) {
                 alertify.confirm("¿Desea modificar nombre de la actividad?", function (e) {
                     if (e) {
                         editarActividad(idA, newContent);
-                    } 
+                    }else{
+                        actividadEmp();
+                    }
                 }).setting({
                     'title': 'Modificar Actividad',
                     'labels': {
@@ -522,7 +525,6 @@ function editarActE(idA) {
                     'reverseButtons': true,
                     'resizable': false,
                     'transition': 'zoom',
-                    'oncancel' : actividadEmp(),
                 });
             }
         });
@@ -555,7 +557,6 @@ function editarActE(idA) {
             'reverseButtons': true,
             'resizable': false,
             'transition': 'zoom',
-            'oncancel' : actividadEmp(),
         });
     });
 }
