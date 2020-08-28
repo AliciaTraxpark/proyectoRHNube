@@ -64,6 +64,8 @@
     <link href="{{asset('admin/assets/libs/smartwizard/smart_wizard_theme_dots.min.css')}}" type="text/css" />
     <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('admin/assets/libs/alertify/alertify.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('admin/assets/libs/alertify/bootstrap.css') }}" rel="stylesheet" type="text/css" />
 </head>
 
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100" style="background-color: #fdfdfd;">
@@ -3839,8 +3841,8 @@
                                                 <div class="form-group">
                                                     <label for="sw-default">Dirección
                                                         Domiciliara</label>
-                                                    <input type="text" class="form-control" placeholder="Departamento" name="v_depV"
-                                                        id="v_depV" disabled>
+                                                    <input type="text" class="form-control" placeholder="Departamento"
+                                                        name="v_depV" id="v_depV" disabled>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Lugar Nacimiento</label>
@@ -3859,8 +3861,8 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
-                                                    <input type="text" class="form-control" placeholder="Provincia " name="v_provV"
-                                                        id="v_provV" disabled>
+                                                    <input type="text" class="form-control" placeholder="Provincia "
+                                                        name="v_provV" id="v_provV" disabled>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
@@ -3879,8 +3881,8 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
-                                                    <input type="text" class="form-control" placeholder="Distrito " name="v_distV"
-                                                        id="v_distV" disabled>
+                                                    <input type="text" class="form-control" placeholder="Distrito "
+                                                        name="v_distV" id="v_distV" disabled>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
@@ -3913,7 +3915,8 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Cargo</label>
-                                                    <input type="text" class="form-control" name="v_cargoV" id="v_cargoV" disabled>
+                                                    <input type="text" class="form-control" name="v_cargoV"
+                                                        id="v_cargoV" disabled>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Contrato
@@ -3929,32 +3932,32 @@
                                                                 height="18">
                                                         </a>
                                                     </label>
-                                                    <input type="text" class="form-control" name="v_contratoV" id="v_contratoV"
-                                                        tabindex="5" disabled>
+                                                    <input type="text" class="form-control" name="v_contratoV"
+                                                        id="v_contratoV" tabindex="5" disabled>
                                                 </div>
                                             </div> <!-- end col -->
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Área</label>
-                                                    <input type="text" class="form-control" name="v_areaV" id="v_areaV" tabindex="3"
-                                                        disabled>
+                                                    <input type="text" class="form-control" name="v_areaV" id="v_areaV"
+                                                        tabindex="3" disabled>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Nivel del Colaborador</label>
-                                                    <input type="text" class="form-control" name="v_nivelV" id="v_nivelV"
-                                                        tabindex="6" disabled>
+                                                    <input type="text" class="form-control" name="v_nivelV"
+                                                        id="v_nivelV" tabindex="6" disabled>
                                                 </div>
                                             </div> <!-- end col -->
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Centro Costo</label>
-                                                    <input type="text" class="form-control" name="v_centrocV" id="v_centrocV"
-                                                        tabindex="4" disabled>
+                                                    <input type="text" class="form-control" name="v_centrocV"
+                                                        id="v_centrocV" tabindex="4" disabled>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Local</label>
-                                                    <input type="text" class="form-control" name="v_localV" id="v_localV"
-                                                        tabindex="7" disabled>
+                                                    <input type="text" class="form-control" name="v_localV"
+                                                        id="v_localV" tabindex="7" disabled>
                                                 </div>
                                             </div> <!-- end col -->
                                         </div>
@@ -4297,6 +4300,7 @@
     <script src="{{asset('admin/packages/interaction/main.js')}}"></script>
     <script src="{{asset('admin/assets/js/pages/form-wizard.init.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/libs/alertify/alertify.js') }}"></script>
     <script src="{{asset('landing/js/tabla.js')}}"></script>
     <script src="{{asset('landing/js/smartwizard.js')}}"></script>
     <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>

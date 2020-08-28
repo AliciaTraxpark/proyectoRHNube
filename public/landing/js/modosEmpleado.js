@@ -264,6 +264,24 @@ function editarActE(idA) {
         $(this).children().first().focus();
         $(this).children().first().keypress(function (e) {
             if (e.which == 13) {
+                alertify.confirm("¿Desea Modificar Actividad?", function (e) {
+                    if (e) {
+                        // user clicked "ok"
+                    } else {
+                        // user clicked "cancel"
+                    }
+                }).setting({
+                    'title': 'Modificar Actividad',
+                    'labels': {
+                        ok: 'Aceptar',
+                        cancel: 'Cancelar'
+                    },
+                    'modal': true,
+                    'startMaximized': false,
+                    'reverseButtons': true,
+                    'resizable': false,
+                    'transition': 'zoom'
+                });
                 var newContent = $(this).val();
                 $(this).parent().text(newContent);
                 $(this).parent().removeClass("editable")
