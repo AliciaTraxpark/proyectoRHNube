@@ -21,11 +21,11 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Redirect;
 
 class delegarInvController extends Controller
-{   public function __construct()
+{   /*SEPARAR ENVIAR CORREO public function __construct()
     {
         $this->middleware(['auth', 'verified']);
     }
-    //
+    // */
     public function index(){
         $empleado = DB::table('empleado as e')
             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
@@ -73,12 +73,10 @@ class delegarInvController extends Controller
 
         $emailInv=$request->emailInv;
         $idEmpleado=$request->idEmpleado;
-        $idempusu=DB::table('usuario_organizacion')
-        ->where('user_id', '=', Auth::user()->id)
-        ->get()->first();
-        $organi = organizacion::find( $idempusu->organi_id);
+
+        $organi = organizacion::find(session('sesionidorg'));
         $invitado = new invitado();
-        $invitado->organi_id =  $organi->organi_id;
+        $invitado->organi_id =  session('sesionidorg');
         $invitado->rol_id =3;
         $invitado->email_inv = $emailInv;
         $invitado->estado =0;

@@ -24,7 +24,7 @@ class calendarioController extends Controller
         if (Auth::check()) {
             $paises = paises::all();
             $departamento = ubigeo_peru_departments::all();
-            $calendario = calendario::where('users_id', '=', Auth::user()->id)->get();
+            $calendario = calendario::where('organi_id', '=', session('sesionidorg'))->get();
             if ($calendario->first()) {
             } else {
                 //copiar tabla
@@ -36,7 +36,7 @@ class calendarioController extends Controller
                 $calendarioR->save();
                  foreach ($evento as $eventos) {
                     $eventos_usuario = new eventos_usuario();
-
+                    $eventos_usuario->organi_id = session('sesionidorg');
                     $eventos_usuario->users_id = Auth::user()->id;
                     $eventos_usuario->title =$eventos->title;
                     $eventos_usuario->color =$eventos->color;
@@ -49,7 +49,7 @@ class calendarioController extends Controller
                 }
             }
 
-            $calendarioSel = calendario::where('users_id', '=', Auth::user()->id)->get();
+            $calendarioSel = calendario::where('organi_id', '=', session('sesionidorg'))->get();
             //FUNCIONA OK
 
 
@@ -201,7 +201,7 @@ class calendarioController extends Controller
             $eventos_empleado->end = $eventos_usuario->end;
             $eventos_empleado->id_empleado =$eventos_empleadosN->id_empleado;
             $eventos_empleado->tipo_ev = $eventos_usuario->tipo;
-            $eventos_empleado->id_calendario = $eventos_usuario->id_calendario; 
+            $eventos_empleado->id_calendario = $eventos_usuario->id_calendario;
             $eventos_empleado->save();
 
         }
