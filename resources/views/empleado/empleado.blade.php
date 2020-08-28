@@ -1856,6 +1856,7 @@
                                         <li><a href="#sw-default-step-4">Calendario</a></li>
                                         <li><a href="#sw-default-step-5">Horario</a></li>
                                         <li><a href="#sw-default-step-6">Dispositivo</a></li>
+                                        <li><a href="#sw-default-step-7">Modos de Control</a></li>
                                     </ul>
                                     <div class="p-3">
                                         <div id="sw-default-step-1" class="setup-content"
@@ -2240,7 +2241,6 @@
                                                     </div>
                                                 </div> <!-- end col -->
                                             </div> <!-- end row -->
-
                                         </div>
                                         <div id="sw-default-step-3" class="setup-content"
                                             style="font-size: 12px!important">
@@ -2251,7 +2251,6 @@
                                                     </div>
                                                 </div> <!-- end col -->
                                             </div> <!-- end row -->
-
                                         </div>
                                         <div id="sw-default-step-4" class="setup-content"
                                             style="font-size: 12px!important">
@@ -2266,8 +2265,6 @@
                                                             style="display: none!important">
                                                         </div>
                                                     </div>
-
-
                                                 </div>
                                                 @else
                                                 <div class="form-group row">
@@ -2290,9 +2287,9 @@
 
                                                         <div class="btn-group mt-2 mr-1">
                                                             <button type="button"
-                                                                class="btn btn-primary btn-sm dropdown-toggle" style="color: #fff;
-                                                    background-color: #4a5669;
-                                                    border-color: #485263;" data-toggle="dropdown" aria-haspopup="true"
+                                                                class="btn btn-primary btn-sm dropdown-toggle"
+                                                                style="color: #fff;background-color: #4a5669;border-color: #485263;"
+                                                                data-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false"><img
                                                                     src="{{ asset('admin/images/borrador.svg') }}"
                                                                     height="15">
@@ -2312,13 +2309,10 @@
                                                                     laborables</a>
                                                                 <a class="dropdown-item"
                                                                     onclick="vaciardIncidTem()">Incidencia</a>
-
                                                             </div>
                                                         </div><!-- /btn-group -->
                                                     </div>
-
                                                 </div>
-
                                             </div>
                                             <div class="col-md-1"></div>
                                             <div class="col-md-10" id="calendarInv"></div>
@@ -2332,9 +2326,7 @@
                                                 data-backdrop="static">
                                                 <div class="modal-dialog  modal-lg d-flex justify-content-center "
                                                     style="width:750px;  margin-top: 150px; left:0px;">
-
                                                     <div class="modal-content">
-
                                                         <div class="modal-body"
                                                             style="font-size:12px!important;background: #f3f3f3;">
                                                             <div class="col-md-12">
@@ -2421,10 +2413,8 @@
                                                                             <input class="form-control" type="text"
                                                                                 id="nombreFeriado" required>
                                                                     </div>
-
                                                                 </div>
                                                             </div>
-
                                                         </div>
                                                         <div class="modal-footer">
                                                             <div class="col-md-12">
@@ -2438,7 +2428,6 @@
                                                                         <button type="submit"
                                                                             class="btn btn-secondary">Aceptar</button>
                                                                         </form>
-
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -2446,7 +2435,6 @@
                                                     </div><!-- /.modal-content -->
                                                 </div><!-- /.modal-dialog -->
                                             </div><!-- /.modal -->
-
                                         </div>
                                     </div>
                                     <div id="sw-default-step-5" class="setup-content" style="font-size: 12px!important">
@@ -2497,7 +2485,6 @@
                                                                     <button type="button"
                                                                         class="btn btn-soft-primary btn-sm "
                                                                         onclick="$('#horarioAsignar').modal('hide')">Cancelar</button>
-
                                                                     </form>
                                                                 </div>
                                                             </div>
@@ -2510,7 +2497,6 @@
                                             aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                                             <div class="modal-dialog  modal-lg d-flex justify-content-center "
                                                 style="width: 550px;">
-
                                                 <div class="modal-content">
                                                     <div class="modal-header" style="background-color:#163552;">
                                                         <h5 class="modal-title" id="myModalLabel"
@@ -2571,16 +2557,9 @@
                                                                                     required>
                                                                             </div>
                                                                         </div>
-
-
                                                                     </div>
-
                                                             </div>
-
-
-
                                                         </div>
-
                                                     </div>
                                                     <div class="modal-footer">
                                                         <div class="col-md-12">
@@ -2638,6 +2617,152 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <div class="row pb-1 pl-2">
+                                                            <div class="col">
+                                                                <div class="custom-control custom-switch mb-2">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                        id="customSwitch3">
+                                                                    <label class="custom-control-label"
+                                                                        for="customSwitch3"
+                                                                        style="font-weight: bold">Modo Tarea</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body border p-2" id="regbodyModoTarea">
+                                                        <div class="row">
+                                                            <div class="col-xl-12 text-right">
+                                                                <button type="button" class="btn btn-sm mt-1"
+                                                                    style="background-color: #163552;"
+                                                                    onclick="$('#regactividadTarea').modal()">+ Nueva
+                                                                    Actividad
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row pt-3">
+                                                            <div class="col-xl-12 col-sm-12">
+                                                                <div class="table-responsive-xl scroll">
+                                                                    <table class="table"
+                                                                        style="font-size: 13px!important;">
+                                                                        <thead
+                                                                            style="background: #fafafa;font-size: 14px">
+                                                                            <tr>
+                                                                                <th>Actividad</th>
+                                                                                <th>Estado</th>
+                                                                                <th>Total</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody id="regtablaBodyTarea"
+                                                                            style="background:#ffffff;color: #585858;font-size: 12px">
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <div class="row pb-1 pl-2">
+                                                            <div class="col">
+                                                                <div class="custom-control custom-switch mb-2">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                        id="customSwitch4">
+                                                                    <label class="custom-control-label"
+                                                                        for="customSwitch4"
+                                                                        style="font-weight: bold">Modo Proyecto</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body border p-2" id="regbodyModoProyecto">
+                                                        <div class="row">
+                                                            <div class="col-xl-12 text-right">
+                                                                <button type="button" class="btn btn-sm mt-1"
+                                                                    style="background-color: #163552;">+ Nueva Actividad
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row pt-3">
+                                                            <div class="col-xl-12 col-sm-12">
+                                                                <div class="table-responsive-xl">
+                                                                    <table class="table"
+                                                                        style="font-size: 13px!important;">
+                                                                        <thead
+                                                                            style="background: #fafafa;font-size: 14px">
+                                                                            <tr>
+                                                                                <th>Actividad</th>
+                                                                                <th>Estado</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="regactividadTarea" class="modal fade" tabindex="-1" role="dialog"
+                                            aria-labelledby="regactividadTarea" aria-hidden="true"
+                                            data-backdrop="static">
+                                            <div class="modal-dialog  modal-lg d-flex justify-content-center "
+                                                style="width: 550px;">
+                                                <div class="modal-content">
+                                                    <div class="modal-header" style="background-color:#163552;">
+                                                        <h5 class="modal-title" id="myModalLabel"
+                                                            style="color:#ffffff;font-size:15px">Registrar Actividad
+                                                        </h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close" onclick="javasript:limpiarModo()">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body" style="font-size:12px!important">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <form
+                                                                    action="javascript:registrarNuevaActividadTarea()">
+                                                                    <div class="row">
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <label for="">Nombre:</label>
+                                                                                <input type="text"
+                                                                                    class="form-control form-control-sm"
+                                                                                    id="regnombreTarea" required>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                                <div class="col-md-12 text-right">
+                                                                    <button type="button" class="btn btn-light btn-sm "
+                                                                        onclick="javasript:limpiarModo();$('#regactividadTarea').modal('toggle')">Cancelar</button>
+                                                                    <button type="submit" name=""
+                                                                        style="background-color: #163552;"
+                                                                        class="btn btn-sm ">Guardar</button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- /.modal-content -->
+                                            </div><!-- /.modal-dialog -->
+                                        </div><!-- /.modal -->
                                     </div>
                                 </div>
                             </div>
@@ -2763,8 +2888,9 @@
                                                             </select>
                                                         </div>
                                                         <div class="col-md-4">
-                                                            <select class="form-control" style="padding-left: 5px;
-                                                padding-right: 5px;" name="v_mes_fecha" id="v_ano_fecha" required="">
+                                                            <select class="form-control"
+                                                                style="padding-left: 5px;padding-right: 5px;"
+                                                                name="v_mes_fecha" id="v_ano_fecha" required="">
                                                                 <option value="0">Año</option>
                                                                 @for ($i = 1950; $i <2011; $i++) <option class=""
                                                                     value="{{$i}}">{{$i}}
@@ -2772,7 +2898,6 @@
                                                                     @endfor
                                                             </select>
                                                         </div>
-
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -2929,7 +3054,6 @@
                                     </div>
                                     <div id="sw-default-step-2" style="font-size: 12px!important">
                                         <div class="row">
-
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Codigo Empleado</label>
@@ -3116,7 +3240,6 @@
                                                             laborables</a>
                                                         <a class="dropdown-item"
                                                             onclick="vaciardIncidBD()">Incidencia</a>
-
                                                     </div>
                                                 </div><!-- /btn-group -->
                                             </div>
@@ -3132,9 +3255,7 @@
                                                 data-backdrop="static">
                                                 <div class="modal-dialog  modal-lg d-flex justify-content-center "
                                                     style="width:750px;  margin-top: 150px; left: 0px;">
-
                                                     <div class="modal-content">
-
                                                         <div class="modal-body"
                                                             style="font-size:12px!important;background: #f3f3f3;">
                                                             <div class="col-md-12">
@@ -3180,7 +3301,6 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-
                                                         </div>
                                                         <div class="modal-footer"
                                                             style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
@@ -3241,7 +3361,6 @@
                                                 </div><!-- /.modal-dialog -->
                                             </div><!-- /.modal -->
                                         </div> <!-- end row -->
-
                                     </div>
                                     <div id="sw-default-step-5" class="setup-content" style="font-size: 12px!important">
                                         <div class="row">
@@ -3258,9 +3377,7 @@
                                             aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                                             <div class="modal-dialog  modal-lg d-flex justify-content-center "
                                                 style="width:330px;  margin-top: 150px; left: 30px;">
-
                                                 <div class="modal-content">
-
                                                     <div class="modal-body"
                                                         style="font-size:12px!important;background: #f3f3f3;">
                                                         <div class="col-md-12">
@@ -3284,11 +3401,8 @@
                                                                         style="background-color: #183b5d;border-color:#62778c"
                                                                         onclick="abrirHorario_ed()">+</button>
                                                                 </div>
-
                                                             </div>
-
                                                         </div>
-
                                                     </div>
                                                     <div class="modal-footer"
                                                         style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
@@ -3545,7 +3659,7 @@
                                                             style="color:#ffffff;font-size:15px">Registrar Actividad
                                                         </h5>
                                                         <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
+                                                            aria-label="Close" onclick="javasript:limpiarModo()">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
@@ -3571,7 +3685,7 @@
                                                             <div class="row">
                                                                 <div class="col-md-12 text-right">
                                                                     <button type="button" class="btn btn-light btn-sm "
-                                                                        onclick="$('#actividadTarea').modal('toggle')">Cancelar</button>
+                                                                        onclick="javasript:limpiarModo();$('#actividadTarea').modal('toggle')">Cancelar</button>
                                                                     <button type="submit" name=""
                                                                         style="background-color: #163552;"
                                                                         class="btn btn-sm ">Guardar</button>
@@ -3599,6 +3713,13 @@
                             <h4 class="header-title mt-0 " style="color: #f0f0f0">Datos de empleado</h4><br>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                 onclick="javascript:cerrarVer()">
+                                <span class="badge float-left pr-4 pt-0">
+                                    <a style="color: #f0f0f0"
+                                        onclick="$('#verEmpleadoDetalles').modal('toggle');javascript:editarEmpleado($('#v_idV').val())">
+                                        <img src="{{asset('admin/images/edit.svg')}}" height="15">
+                                        <span style="font-weight: bold">Editar Empleado</span>
+                                    </a>
+                                </span>
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -3611,14 +3732,7 @@
                                     <li><a href="#sw-default-step-4">Calendario</a></li>
                                     <li><a href="#sw-default-step-5">Horario</a></li>
                                     <li><a href="#sw-default-step-6">Dispositivo</a></li>
-                                    <div class="col-md-2 text-left"
-                                        style="display: flex; align-items: center;cursor: pointer;">
-                                        <a style="color: #3d3d3d;"
-                                            onclick="$('#verEmpleadoDetalles').modal('toggle');javascript:editarEmpleado($('#v_idV').val())">
-                                            <img src="{{asset('admin/images/edit.svg')}}" height="15">
-                                            <span style="font-weight: bold">Editar</span>
-                                        </a>
-                                    </div>
+                                    <li><a href="#sw-default-step-7">Modos de Control</a></li>
                                 </ul>
                                 <div class="p-3" id="form-registrar">
                                     <div id="persona-step-1" style="font-size: 12px!important">
@@ -3725,12 +3839,12 @@
                                                 <div class="form-group">
                                                     <label for="sw-default">Dirección
                                                         Domiciliara</label>
-                                                    <input class="form-control" placeholder="Departamento" name="v_depV"
+                                                    <input type="text" class="form-control" placeholder="Departamento" name="v_depV"
                                                         id="v_depV" disabled>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Lugar Nacimiento</label>
-                                                    <input class="form-control" placeholder="Departamento"
+                                                    <input type="text" class="form-control" placeholder="Departamento"
                                                         name="v_departamentoV" id="v_departamentoV" disabled>
                                                 </div>
                                                 <div class="form-group">
@@ -3745,12 +3859,12 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
-                                                    <input class="form-control" placeholder="Provincia " name="v_provV"
+                                                    <input type="text" class="form-control" placeholder="Provincia " name="v_provV"
                                                         id="v_provV" disabled>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
-                                                    <input class="form-control" placeholder="Provincia "
+                                                    <input type="text" class="form-control" placeholder="Provincia "
                                                         name="v_provinciaV" id="v_provinciaV" disabled>
                                                 </div>
                                                 <div class="form-group">
@@ -3765,12 +3879,12 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
-                                                    <input class="form-control" placeholder="Distrito " name="v_distV"
+                                                    <input type="text" class="form-control" placeholder="Distrito " name="v_distV"
                                                         id="v_distV" disabled>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
-                                                    <input class="form-control" placeholder="Distrito "
+                                                    <input type="text" class="form-control" placeholder="Distrito "
                                                         name="v_distritoV" id="v_distritoV" disabled>
                                                 </div>
                                                 <div class="form-group">
@@ -3799,7 +3913,7 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Cargo</label>
-                                                    <input class="form-control" name="v_cargoV" id="v_cargoV" disabled>
+                                                    <input type="text" class="form-control" name="v_cargoV" id="v_cargoV" disabled>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Contrato
@@ -3815,31 +3929,31 @@
                                                                 height="18">
                                                         </a>
                                                     </label>
-                                                    <input class="form-control" name="v_contratoV" id="v_contratoV"
+                                                    <input type="text" class="form-control" name="v_contratoV" id="v_contratoV"
                                                         tabindex="5" disabled>
                                                 </div>
                                             </div> <!-- end col -->
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Área</label>
-                                                    <input class="form-control" name="v_areaV" id="v_areaV" tabindex="3"
+                                                    <input type="text" class="form-control" name="v_areaV" id="v_areaV" tabindex="3"
                                                         disabled>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Nivel del Colaborador</label>
-                                                    <input class="form-control" name="v_nivelV" id="v_nivelV"
+                                                    <input type="text" class="form-control" name="v_nivelV" id="v_nivelV"
                                                         tabindex="6" disabled>
                                                 </div>
                                             </div> <!-- end col -->
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Centro Costo</label>
-                                                    <input class="form-control" name="v_centrocV" id="v_centrocV"
+                                                    <input type="text" class="form-control" name="v_centrocV" id="v_centrocV"
                                                         tabindex="4" disabled>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Local</label>
-                                                    <input class="form-control" name="v_localV" id="v_localV"
+                                                    <input type="text" class="form-control" name="v_localV" id="v_localV"
                                                         tabindex="7" disabled>
                                                 </div>
                                             </div> <!-- end col -->
@@ -3909,6 +4023,86 @@
                                                             style="background:#ffffff;color: #585858;font-size: 12px">
                                                         </tbody>
                                                     </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <div class="row pb-1 pl-2">
+                                                            <div class="col">
+                                                                <div class="custom-control custom-switch mb-2">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                        id="customSwitch5">
+                                                                    <label class="custom-control-label"
+                                                                        for="customSwitch5"
+                                                                        style="font-weight: bold">Modo Tarea</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body border p-2" id="bodyModoTarea_ver">
+                                                        <div class="row pt-3">
+                                                            <div class="col-xl-12 col-sm-12">
+                                                                <div class="table-responsive-xl scroll">
+                                                                    <table class="table"
+                                                                        style="font-size: 13px!important;">
+                                                                        <thead
+                                                                            style="background: #fafafa;font-size: 14px">
+                                                                            <tr>
+                                                                                <th>Actividad</th>
+                                                                                <th>Estado</th>
+                                                                                <th>Total</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody id="tablaBodyTarea_ver"
+                                                                            style="background:#ffffff;color: #585858;font-size: 12px">
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <div class="row pb-1 pl-2">
+                                                            <div class="col">
+                                                                <div class="custom-control custom-switch mb-2">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                        id="customSwitch6">
+                                                                    <label class="custom-control-label"
+                                                                        for="customSwitch6"
+                                                                        style="font-weight: bold">Modo Proyecto</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body border p-2" id="bodyModoProyecto_ver">
+                                                        <div class="row pt-3">
+                                                            <div class="col-xl-12 col-sm-12">
+                                                                <div class="table-responsive-xl">
+                                                                    <table class="table"
+                                                                        style="font-size: 13px!important;">
+                                                                        <thead
+                                                                            style="background: #fafafa;font-size: 14px">
+                                                                            <tr>
+                                                                                <th>Actividad</th>
+                                                                                <th>Estado</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

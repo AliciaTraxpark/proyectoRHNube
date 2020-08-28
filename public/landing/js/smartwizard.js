@@ -66,8 +66,8 @@ $(document).ready(function () {
                                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                                 },
                                                 success: function (data) {
-                                                leertabla();
-                                                $('#form-registrar').modal('hide');
+                                                    leertabla();
+                                                    $('#form-registrar').modal('hide');
 
                                                 },
                                                 error: function (data) {
@@ -75,11 +75,11 @@ $(document).ready(function () {
                                                 }
 
 
-                                            }) ;
+                                            });
                                         }
                                     }
                                 });
-                                 isStepValid = false;
+                                isStepValid = false;
                                 return false;
                             }
                             if (data == 3) {
@@ -112,7 +112,7 @@ $(document).ready(function () {
                             }
                             if (data == 2) {
                                 alert('ya existe');
-                                 isStepValid = false;
+                                isStepValid = false;
                                 return false;
                             }
                             if (data == 3) {
@@ -499,12 +499,16 @@ $(document).ready(function () {
         return validateSteps1(indice);
     });
     $('#smartwizard').on("showStep", function (e, anchorObject, stepNumber, stepDirection) {
-        console.log("ingreso");
-        console.log(stepNumber);
-        if (stepNumber == 5) {
+        if (stepNumber == 0 || stepNumber == 1 || stepNumber == 2 || stepNumber == 3 || stepNumber == 4 || stepNumber == 5) {
+            $('button.sw-btn-prev').show();
+            $('button.sw-btn-next').show();
+            $('#FinalizarEmpleado').hide();
+        }
+        if (stepNumber == 6) {
             $('button.sw-btn-prev').hide();
             $('button.sw-btn-next').hide();
             $('#FinalizarEmpleado').show();
+            actividad_empleado()
         }
     });
     $('#smartwizard1').on("showStep", function (e, anchorObject, stepNumber, stepDirection) {
@@ -550,14 +554,19 @@ $('#smartwizardVer').smartWizard({
     },
 });
 $('#smartwizardVer').on("showStep", function (e, anchorObject, stepNumber, stepDirection) {
-    if (stepNumber == 0 || stepNumber == 1 || stepNumber == 2 || stepNumber == 3 || stepNumber == 4) {
+    if (stepNumber == 0 || stepNumber == 1 || stepNumber == 2 || stepNumber == 3 || stepNumber == 4 || stepNumber == 5) {
         $('button.sw-btn-prev').show();
         $('button.sw-btn-next').show();
         $('#FinalizarEmpleadoVer').hide();
+        $('#smartwizardVer :input').attr('disabled', true);
+        $('button.sw-btn-prev').attr('disabled', false);
+        $('button.sw-btn-next').attr('disabled', false);
     }
-    if (stepNumber == 5) {
+    if (stepNumber == 6) {
         $('button.sw-btn-prev').hide();
         $('button.sw-btn-next').hide();
         $('#FinalizarEmpleadoVer').show();
+        $('#smartwizardVer :input').attr('disabled', false);
+        actividadEmpVer();
     }
 });
