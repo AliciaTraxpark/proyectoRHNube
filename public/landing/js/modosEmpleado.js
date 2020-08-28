@@ -438,15 +438,12 @@ function RegeditarActE(idA) {
         $(this).children().first().keypress(function (e) {
             if (e.which == 13) {
                 var newContent = $(this).val();
+                $(this).parent().text(newContent);
+                $(this).parent().removeClass("editable");
                 alertify.confirm("¿Desea modificar nombre de la actividad?", function (e) {
                     if (e) {
                         editarActividadReg(idA, newContent);
-                        $(this).parent().text(newContent);
-                        $(this).parent().removeClass("editable")
-                    } else {
-                        $(this).parent().text(OriginalContent);
-                        $(this).parent().removeClass("editable");
-                    }
+                    } 
                 }).setting({
                     'title': 'Modificar Actividad',
                     'labels': {
@@ -457,14 +454,14 @@ function RegeditarActE(idA) {
                     'startMaximized': false,
                     'reverseButtons': true,
                     'resizable': false,
-                    'transition': 'zoom'
+                    'transition': 'zoom',
+                    'oncancel' : actividad_empleado(),
                 });
             }
         });
 
         $(this).children().first().blur(function () {
-            $(this).parent().text(OriginalContent);
-            $(this).parent().removeClass("editable");
+            actividad_empleado();
         });
 
     });
@@ -508,15 +505,12 @@ function editarActE(idA) {
         $(this).children().first().keypress(function (e) {
             if (e.which == 13) {
                 var newContent = $(this).val();
+                $(this).parent().text(newContent);
+                $(this).parent().removeClass("editable");
                 alertify.confirm("¿Desea modificar nombre de la actividad?", function (e) {
                     if (e) {
                         editarActividad(idA, newContent);
-                        $(this).parent().text(newContent);
-                        $(this).parent().removeClass("editable")
-                    } else {
-                        $(this).parent().text(OriginalContent);
-                        $(this).parent().removeClass("editable");
-                    }
+                    } 
                 }).setting({
                     'title': 'Modificar Actividad',
                     'labels': {
@@ -527,14 +521,14 @@ function editarActE(idA) {
                     'startMaximized': false,
                     'reverseButtons': true,
                     'resizable': false,
-                    'transition': 'zoom'
+                    'transition': 'zoom',
+                    'oncancel' : actividadEmp(),
                 });
             }
         });
 
         $(this).children().first().blur(function () {
-            $(this).parent().text(OriginalContent);
-            $(this).parent().removeClass("editable");
+            actividadEmp();
         });
 
     });
@@ -549,8 +543,6 @@ function editarActE(idA) {
         alertify.confirm("¿Desea modificar el estado de la  actividad?", function (e) {
             if (e) {
                 editarEstadoActividad(idA, valor);
-            } else {
-                actividadEmp();
             }
         }).setting({
             'title': 'Modificar Actividad',
@@ -562,7 +554,8 @@ function editarActE(idA) {
             'startMaximized': false,
             'reverseButtons': true,
             'resizable': false,
-            'transition': 'zoom'
+            'transition': 'zoom',
+            'oncancel' : actividadEmp(),
         });
     });
 }
