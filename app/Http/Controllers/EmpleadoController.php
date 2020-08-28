@@ -97,14 +97,14 @@ class EmpleadoController extends Controller
                 'cc.centroC_descripcion',
                 'e.emple_id'
             )
-            ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.organi_id', '=', session('sesionidorg'))
             ->where('e.emple_estado', '=', 1)
             ->get();
         $calendario = DB::table('calendario as ca')
-            ->where('ca.users_id', '=', Auth::user()->id)
+        ->where('ca.organi_id', '=', session('sesionidorg'))
             ->get();
-        $horario = horario::where('user_id', '=', Auth::user()->id)->get();
-        $condicionPago = condicion_pago::where('user_id', '=', Auth::user()->id)->get();
+        $horario = horario::where('organi_id', '=', session('sesionidorg'))->get();
+        $condicionPago = condicion_pago::where('organi_id', '=', session('sesionidorg'))->get();
         return view('empleado.empleado', [
             'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
             'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
@@ -173,7 +173,7 @@ class EmpleadoController extends Controller
 
                 'e.emple_Correo'
             )
-
+            ->where('e.organi_id', '=',session('sesionidorg'))
             ->get();
 
         $usuario = DB::table('users')
@@ -224,7 +224,7 @@ class EmpleadoController extends Controller
                 'e.emple_id',
                 'md.idTipoDispositivo as dispositivo'
             )
-            ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.organi_id', '=', session('sesionidorg'))
             ->where('e.emple_estado', '=', 1)
             ->get();
         $vinculacionD = [];
@@ -309,6 +309,7 @@ class EmpleadoController extends Controller
         $empleado->emple_pasword = Hash::make($objEmpleado['numDocumento']);
         $empleado->emple_estado = '1';
         $empleado->users_id = Auth::user()->id;
+        $empleado->organi_id = session('sesionidorg');
         $empleado->save();
         $idempleado = $empleado->emple_id;
 
@@ -507,6 +508,7 @@ class EmpleadoController extends Controller
             $horario_dias->start = $eventos_empleado_tempHors->start;
             $horario_dias->end = $eventos_empleado_tempHors->end;
             $horario_dias->users_id = Auth::user()->id;
+            $horario_dias->organi_id = session('sesionidorg');
             $horario_dias->save();
 
             $horario_empleados = new horario_empleado();
@@ -604,8 +606,8 @@ class EmpleadoController extends Controller
             )
             ->where('e.emple_id', '=', $idempleado)
             ->where('e.emple_estado', '=', 1)
-            ->where('e.users_id', '=', Auth::user()->id)
-            ->groupBy('e.users_id')
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->groupBy('e.organi_id')
             ->get();
         $vinculacion = DB::table('vinculacion as v')
             ->join('modo as m', 'm.id', '=', 'v.idModo')
@@ -623,7 +625,7 @@ class EmpleadoController extends Controller
             ->join('tipo_contrato as tc', 'tc.contrato_id', '=', 'c.id_tipoContrato')
             ->leftJoin('condicion_pago as cp', 'cp.id', '=', 'c.id_condicionPago')
             ->select('c.id as idC', 'c.fechaInicio', 'c.fechaFinal', 'c.monto', 'tc.contrato_id as idTipoC', 'tc.contrato_descripcion', 'cp.id as idCond', 'cp.condicion')
-            ->where('cp.user_id', '=', Auth::user()->id)
+            ->where('cp.organi_id', '=', session('sesionidorg'))
             ->where('c.idEmpleado', '=', $idempleado)
             ->where('c.estado', '=', 1)
             ->get();
@@ -869,14 +871,14 @@ class EmpleadoController extends Controller
                 'cc.centroC_descripcion',
                 'e.emple_id'
             )
-            ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.organi_id', '=', session('sesionidorg'))
             ->where('e.emple_estado', '=', 1)
             ->get();
         $calendario = DB::table('calendario as ca')
-            ->where('ca.users_id', '=', Auth::user()->id)
+            ->where('ca.organi_id', '=', session('sesionidorg'))
             ->get();
-        $horario = horario::where('user_id', '=', Auth::user()->id)->get();
-        $condicionPago = condicion_pago::where('user_id', '=', Auth::user()->id)->get();
+        $horario = horario::where('organi_id', '=', session('sesionidorg'))->get();
+        $condicionPago = condicion_pago::where('organi_id', '=', session('sesionidorg'))->get();
         //dd($tabla_empleado);
         return view('empleado.empleadoMenu', [
             'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
@@ -892,12 +894,12 @@ class EmpleadoController extends Controller
         //$empleado = empleado::where('emple_nDoc', '=', $numeroD)->first();
         $empleado = DB::table('empleado as e')
             ->where('e.emple_nDoc', '=', $numeroD)
-            ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.organi_id', '=', session('sesionidorg'))
             ->where('e.emple_estado', '=', 1)
             ->get()->first();
         $empleadoEli = DB::table('empleado as e')
             ->where('e.emple_nDoc', '=', $numeroD)
-            ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.organi_id', '=', session('sesionidorg'))
             ->where('e.emple_estado', '=', 0)
             ->get()->first();
         if ($empleado != null) {
@@ -919,14 +921,14 @@ class EmpleadoController extends Controller
             ->where('e.emple_nDoc', '=', $numDoc)
             ->where('e.emple_id', '!=', $empleado)
             ->where('e.emple_estado', '=', 1)
-            ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.organi_id', '=', session('sesionidorg'))
             ->get()->first();
 
         $empleado2 = DB::table('empleado as e')
             ->where('e.emple_nDoc', '=', $numDoc)
             ->where('e.emple_id', '!=', $empleado)
             ->where('e.emple_estado', '=', 0)
-            ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.organi_id', '=', session('sesionidorg'))
             ->get()->first();
 
 
@@ -947,7 +949,7 @@ class EmpleadoController extends Controller
         $email = $request->get('email');
         $empleado = DB::table('empleado as e')
             ->where('emple_Correo', '=', $email)
-            ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.organi_id', '=', session('sesionidorg'))
             ->where('e.emple_estado', '=', 1)
             ->get()->first();
         if ($empleado != null) {
@@ -961,7 +963,7 @@ class EmpleadoController extends Controller
         $empleado = $request->get('idE');
         $empleado = DB::table('empleado as e')
             ->where('emple_Correo', '=', $email)
-            ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.organi_id', '=', session('sesionidorg'))
             ->where('e.emple_id', '!=', $empleado)
             ->where('e.emple_estado', '=', 1)
             ->get()->first();
@@ -977,7 +979,7 @@ class EmpleadoController extends Controller
         $eventos_empleado_tempCop = eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
             ->where('calendario_calen_id', '=', $idcalendario)->get();
         if ($eventos_empleado_tempCop->isEmpty()) {
-            $eventos_usuario = eventos_usuario::where('users_id', '=', Auth::user()->id)
+            $eventos_usuario = eventos_usuario::where('organi_id', '=', session('sesionidorg'))
                 ->where('id_calendario', '=', $idcalendario)->get();
             if ($eventos_usuario) {
                 foreach ($eventos_usuario as $eventos_usuarios) {
@@ -1038,6 +1040,7 @@ class EmpleadoController extends Controller
         $incidencia->inciden_descuento = $request->get('descuentoI');
         $incidencia->inciden_hora =  $request->get('horaIn');
         $incidencia->users_id = Auth::user()->id;
+        $incidencia->organi_id = session('sesionidorg');
         $incidencia->save();
 
         $eventos_empleado_tempSave = new eventos_empleado_temp();
@@ -1085,7 +1088,7 @@ class EmpleadoController extends Controller
 
         $horario = new horario();
         $horario->horario_sobretiempo = $sobretiempo;
-
+        $horario->organi_id = session('sesionidorg');
         $horario->horario_descripcion = $descripcion;
         $horario->horario_tolerancia = $toleranciaH;
         $horario->horaI = $inicio;
@@ -1186,7 +1189,7 @@ class EmpleadoController extends Controller
             ->get();
 
         if ($eventos_empleado->isEmpty()) {
-            $eventos_usuario = eventos_usuario::where('users_id', '=', Auth::user()->id)
+            $eventos_usuario = eventos_usuario::where('organi_id', '=', session('sesionidorg'))
                 ->where('id_calendario', '=', $idcalendario)->get();
             if ($eventos_usuario) {
                 foreach ($eventos_usuario as $eventos_usuarios) {
@@ -1260,6 +1263,7 @@ class EmpleadoController extends Controller
         $incidencia->inciden_descuento = $request->get('descuentoI');
         $incidencia->inciden_hora =  $request->get('horaIn');
         $incidencia->users_id = Auth::user()->id;
+        $incidencia->organi_id =session('sesionidorg');
         $incidencia->save();
 
         $incidencia_dias = new incidencia_dias();
@@ -1284,6 +1288,7 @@ class EmpleadoController extends Controller
             $horario_dias->color = '#ffffff';
             $horario_dias->textColor = '111111';
             $horario_dias->users_id = Auth::user()->id;
+            $horario_dias->organi_id = session('sesionidorg');
             $horario_dias->save();
             $arrayeve->push($horario_dias);
 
@@ -1435,7 +1440,7 @@ class EmpleadoController extends Controller
         $ids = $request->ids;
         $empleado = DB::table('empleado')
             ->where('emple_nDoc', $ids)
-            ->where('users_id', '=', Auth::user()->id)
+            ->where('organi_id', '=',session('sesionidorg'))
             ->update(['emple_estado' => 1]);
     }
 }

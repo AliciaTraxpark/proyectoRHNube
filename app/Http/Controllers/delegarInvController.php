@@ -27,6 +27,7 @@ class delegarInvController extends Controller
     }
     // */
     public function index(){
+        if (Auth::check()) {
         $empleado = DB::table('empleado as e')
             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
@@ -54,6 +55,10 @@ class delegarInvController extends Controller
             ->get();
         return view('delegarInvitado.delegarControl',['empleado'=>$empleado,'area'=>$area]);
     }
+    else {
+        return redirect(route('principal'));
+    }
+}
     public function empleAreaIn(Request $request){
         $idarea=$request->idarea;
         $arrayem = collect();

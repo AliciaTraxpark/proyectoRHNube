@@ -69,7 +69,7 @@ class calendarioController extends Controller
             $calendarioR = new calendario();
             $calendarioR->users_id = Auth::user()->id;
             $calendarioR->eventos_id = $eventos->id;
-
+            $calendarioR->organi_id = session('sesionidorg');
             $calendarioR->save();
         }
     }
@@ -79,8 +79,7 @@ class calendarioController extends Controller
 
         $eventos_usuario = DB::table('eventos_usuario')
             ->select(['id', 'title', 'color', 'textColor', 'start', 'end', 'tipo'])
-            ->where('Users_id', '=', Auth::user()->id)
-
+            ->where('organi_id', '=', session('sesionidorg'))
             ->union($eventos)
             ->get();
         return response()->json($eventos_usuario);
@@ -99,19 +98,20 @@ class calendarioController extends Controller
         if (Auth::check()) {
             $paises = paises::all();
             $departamento = ubigeo_peru_departments::all();
-            $calendario = calendario::where('users_id', '=', Auth::user()->id)->get();
+            $calendario = calendario::where('organi_id', '=', session('sesionidorg'))->get();
             if ($calendario->first()) {
             } else {
                 //copiar tabla
                 $evento = eventos::all();
 
                 $calendarioR = new calendario();
+                $calendarioR->organi_id = session('sesionidorg');
                 $calendarioR->users_id = Auth::user()->id;
                 $calendarioR->calendario_nombre='Perú';
                 $calendarioR->save();
                  foreach ($evento as $eventos) {
                     $eventos_usuario = new eventos_usuario();
-
+                    $eventos_usuario->organi_id = session('sesionidorg');
                     $eventos_usuario->users_id = Auth::user()->id;
                     $eventos_usuario->title =$eventos->title;
                     $eventos_usuario->color =$eventos->color;
@@ -124,11 +124,11 @@ class calendarioController extends Controller
                 }
             }
 
-            $calendarioSel = calendario::where('users_id', '=', Auth::user()->id)->get();
+            $calendarioSel = calendario::where('organi_id', '=', session('sesionidorg'))->get();
             //FUNCIONA OK
 
 
-            return view('calendario.calendarioMenu', ['pais' => $paises, 'calendario' => $calendarioSel]);
+            return view('calendario.calendario', ['pais' => $paises, 'calendario' => $calendarioSel]);
         } else {
             return redirect(route('principal'));
         }
@@ -140,13 +140,14 @@ class calendarioController extends Controller
         $evento = eventos::all();
 
         $calendarioR = new calendario();
+        $calendarioR->organi_id = session('sesionidorg');
         $calendarioR->users_id = Auth::user()->id;
         $calendarioR->calendario_nombre=$nombrecal;
         $calendarioR->save();
 
             foreach ($evento as $eventos) {
             $eventos_usuario = new eventos_usuario();
-
+            $eventos_usuario->organi_id = session('sesionidorg');
             $eventos_usuario->users_id = Auth::user()->id;
             $eventos_usuario->title =$eventos->title;
             $eventos_usuario->color =$eventos->color;
@@ -164,7 +165,7 @@ class calendarioController extends Controller
 
     public function cargarcalendario(Request $request){
         $idcalendario=$request->idcalendario;
-        $eventos_usuario=eventos_usuario::where('users_id','=',Auth::user()->id)
+        $eventos_usuario=eventos_usuario::where('organi_id', '=', session('sesionidorg'))
         ->where('id_calendario','=',$idcalendario)
         ->get();
         return $eventos_usuario;
@@ -203,6 +204,7 @@ class calendarioController extends Controller
             $eventos_empleado->id_empleado =$eventos_empleadosN->id_empleado;
             $eventos_empleado->tipo_ev = $eventos_usuario->tipo;
             $eventos_empleado->id_calendario = $eventos_usuario->id_calendario;
+            $eventos_usuario->organi_id = session('sesionidorg');
             $eventos_empleado->save();
 
         }
