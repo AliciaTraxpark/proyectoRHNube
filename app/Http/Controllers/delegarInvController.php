@@ -21,7 +21,10 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Redirect;
 
 class delegarInvController extends Controller
-{
+{   public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
     //
     public function index(){
         $empleado = DB::table('empleado as e')
@@ -123,7 +126,7 @@ class delegarInvController extends Controller
 
         $User = new User();
         $User->email = $request->get('email');
-        $User->rol_id = 3;
+
         $User->perso_id = $user_persona;
         $User->user_estado = 1;
         $User->password = Hash::make($request->get('password'));
@@ -137,10 +140,11 @@ class delegarInvController extends Controller
         $usuario_organizacion = new usuario_organizacion();
             $usuario_organizacion->user_id =$User->id;
             $usuario_organizacion->organi_id = $invitado->organi_id;
+            $usuario_organizacion->rol_id = 3;
             $usuario_organizacion->save();
 
          //actualiza invitado
-          
+
         //////////////
 
 
@@ -167,13 +171,28 @@ class delegarInvController extends Controller
             $organi = organizacion::find($invitado->organi_id);
             $correo = array($datos['email']);
             $datoNuevo = explode("@", $data[0]->email);
-
-
                 Mail::to($correo)->queue(new CorreoMail($users, $persona, $organi));
                 return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado! Te hemos enviado un correo de verificación.");
 
+    }
 
+    public function validaremailC(Request $request){
+        $emailUser = $request->get('email');
+        $cantigua=$request->get('clave');
 
+       /*  $cnueva= $request->get('cnueva'); */
+        $user = User::where('email', '=',$emailUser)->get()->first();
+
+        $id = $user->id;
+        $user1 = Crypt::encrypt($id);
+       /*  if (Auth::attempt(['email' => $user->email, 'password' => $cantigua])) { */
+            if (Hash::check($cantigua,$user->password)) {
+            // Authentication passed...
+           /*  $user =DB::table('users')
+            ->where('id', '=', Auth::user()->id)
+            ->update(['password' => Hash::make($cnueva)]); */
+            return [1,$user1];
+        } else { return [0,$user1];}
 
     }
 }

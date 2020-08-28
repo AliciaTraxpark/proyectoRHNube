@@ -26,6 +26,8 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 //MENU
 Route::name('dashboard')->get('dashboard', 'HomeController@index')->middleware('verified');
 //Route::name('dashboard')->get('dashboard', 'HomeController@index')->middleware('auth');
+Route::name('elegirorganizacion')->get('/elegirorganizacion', 'HomeController@elegirEmpresa');
+Route::post('/enviarIDorg', 'HomeController@enviarIDorg');
 //EDITAR PERFIL
 Route::get('perfil', 'editarPerfilController@index');
 Route::get('perfilMostrar', 'editarPerfilController@show');
@@ -309,3 +311,4 @@ Route::get('/delegarcontrol', 'delegarInvController@index');
 Route::post('/empleAreaIn', 'delegarInvController@empleAreaIn');
 Route::post('/registrarInvitado','delegarInvController@registrarInvitado');
 Route::post('/registroinvitadoBD', 'delegarInvController@registroInvitado');
+Route::post('/verificaremCla', 'delegarInvController@validaremailC');

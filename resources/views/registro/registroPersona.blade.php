@@ -121,6 +121,62 @@
                             </div><!-- /.modal-content -->
                         </div><!-- /.modal-dialog -->
                     </div><!-- /.modal -->
+
+                   {{--  Modal doble email --}}
+                   <div id="myModalEmail" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" style="overflow-y: auto;">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header" style="padding-bottom:
+                                    3px; padding-top:
+                                    10px;background: #ecebeb">
+                                    <h5 class="" id="myModalLabel"
+                                        style="font-size: 14px">Email ya registrado
+                                    </h5>
+                                   {{--  <button type="button" class="close"
+                                        data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button> --}}
+                                </div>
+                                <div class="modal-body">
+                                    <form method="POST"
+                                        action="javascript:confirmarEmail()">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <label class="col-lg-12
+                                                    col-form-label"
+                                                    for="simpleinput">El email:  </label>
+
+                                            </div>
+                                            <div class="col-md-12">
+                                                <input type="text" class="form-control" disabled class="col-md-8" id="email2">
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="col-lg-12
+                                                col-form-label"
+                                                for="simpleinput" for="">pertenece a un usuario
+                                                registrado,si desea registrar otra organizacion confirma su contraseña:</label>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <span  id="spanInc" style="color: #d41616;display: none;font-size: 12px!important;font-weight: 500;">Contraseña incorrecta</span>
+                                                <input type="password" class="form-control" id="claveCon" placeholder="escriba contraseña">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" style="background:
+                                            #f0f0f0" class="btn btn-sm" onclick="$('#email').val('');"
+                                            data-dismiss="modal">&nbsp; &nbsp;Cambiar email
+                                            &nbsp; &nbsp;</button>
+                                        <button type="submit" style="background:
+                                            #302f56;color: #ecebeb" class="btn
+                                            btn-sm" id="confirmar"> &nbsp;
+                                            &nbsp; Confirmar email
+                                            &nbsp; &nbsp; </button>
+                                    </div>
+                                </form>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
                     <!--MODAL GENERO-->
                     <div id="generoModal" class="modal fade" tabindex="-1"
                         role="dialog" aria-labelledby="generoModal"
@@ -169,6 +225,27 @@
                         <div class="row">
                             <div class="col-md-9">
                                 <div class="row">
+                                    <div class="col-md-9" id="validCelCorreo"
+                                        style="display: none">
+                                        <br>
+                                        <span style="color:red;">*Número de
+                                            celular incorrecto o Correo
+                                            electrónico incorrecto.</span><br></div><br><br>
+                                    <div class="col-md-9">
+                                        <input class="form-control" onblur="comprobarEmail()"
+                                            placeholder="Número de celular o correo electrónico"
+                                            name="email" id="email" value="{{old('email')}}" required>
+                                        {{$errors->first('email')}}
+                                    </div><br><br>
+                                    <div class="col-md-9">
+                                        <input class="form-control"
+                                             type="password"
+                                            placeholder="Contraseña nueva"
+                                            name="password" id="password"
+                                            value="{{old ('password')}}"
+                                            required>
+                                        {{$errors->first('password')}}
+                                    </div> <div class="col-md-3"></div><br><br>
                                     <div class="col-md-3">
                                         <input class="form-control"
                                             placeholder="Nombres" name="nombres"
@@ -202,27 +279,7 @@
                                             required>
                                         {{$errors->first('direccion')}}
                                     </div>
-                                    <div class="col-md-9" id="validCelCorreo"
-                                        style="display: none">
-                                        <br>
-                                        <span style="color:red;">*Número de
-                                            celular incorrecto o Correo
-                                            electrónico incorrecto.</span><br></div><br><br>
-                                    <div class="col-md-9">
-                                        <input class="form-control"
-                                            placeholder="Número de celular o correo electrónico"
-                                            name="email" id="email" value="{{old('email')}}" required>
-                                        {{$errors->first('email')}}
-                                    </div><br><br>
-                                    <div class="col-md-9">
-                                        <input class="form-control"
-                                            type="password"
-                                            placeholder="Contraseña nueva"
-                                            name="password" id="password"
-                                            value="{{old ('password')}}"
-                                            required>
-                                        {{$errors->first('password')}}
-                                    </div><br><br>
+
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12" style="color:
@@ -341,7 +398,7 @@
                                     </div>
                                 </div>
                                 <br><br>
-                                
+
                             </div>
                             <div class="container col-md-3">
                                 <img

@@ -11,7 +11,10 @@ use App\incidencia_dias;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 class diasLaborablesController extends Controller
-{
+{   public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
     //
     public function indexMenu(){
         $empleado = DB::table('empleado as e')

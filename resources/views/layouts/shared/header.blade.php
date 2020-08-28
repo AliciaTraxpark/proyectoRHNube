@@ -35,10 +35,10 @@ use App\persona;
         </a>
 
         @php
-        $usuario=Auth::user();
-        $usuario_organizacion=usuario_organizacion::where('user_id','=',$usuario->id)->first();
+       $usuario=Auth::user();
+        /*  $usuario_organizacion=usuario_organizacion::where('user_id','=',$usuario->id)->first(); */
         $organizacion=organizacion::where('organi_id','=',
-        $usuario_organizacion->organi_id)->first();
+        session('sesionidorg'))->first();
         $persona=persona::where('perso_id','=',$usuario->perso_id)->first();
         @endphp
 

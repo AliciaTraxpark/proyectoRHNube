@@ -596,6 +596,7 @@
         </div>
     </div>
     @endif
+    
     <script src="{{asset('landing/vendors/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('landing/vendors/bootstrap/bootstrap.min.js')}}"></script>
     <script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>

@@ -73,6 +73,7 @@ class registroEmpresaController extends Controller
             $idorgani = $organizacion->organi_id;
 
             $usuario_organizacion = new usuario_organizacion();
+            $usuario_organizacion->rol_id = 1;
             $usuario_organizacion->user_id = $request->get('iduser');
             $usuario_organizacion->organi_id = $idorgani;
             $usuario_organizacion->save();
@@ -97,44 +98,53 @@ class registroEmpresaController extends Controller
             $organi = organizacion::find($idorgani);
             $correo = array($datos['email']);
             $datoNuevo = explode("@", $data[0]->email);
+            /////////////////////////////////
+            $comusuario_organizacion=usuario_organizacion::where('user_id','=', $users->id)->count();
+            if($comusuario_organizacion>1){
+                return Redirect::to('/')->with('mensaje', "Nueva organizacion creada exitoxamente!");
 
-            if (sizeof($datoNuevo) != 2) {
-                $codigo = $request->get('iduser') . "c" . $idPersona[0]->perso_id;
-                $codigoI = intval($codigo, 36);
-                $mensaje = "RH SOLUTION - Codigo de validacion " . $codigoI;
-                $curl = curl_init();
-                curl_setopt_array($curl, array(
-                    CURLOPT_URL => "https://api.broadcastermobile.com/brdcstr-endpoint-web/services/messaging/",
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                    CURLOPT_FOLLOWLOCATION => TRUE,
-                    CURLOPT_SSL_VERIFYPEER => false,
-                    CURLOPT_CUSTOMREQUEST => "POST",
-                    CURLOPT_POSTFIELDS => '{
-                        "apiKey":2308,
-                        "country":"PE",
-                        "dial":38383,
-                        "message":"' . $mensaje . '",
-                        "msisdns":[' . $data[0]->email . '],
-                        "tag":"tag-prueba"
-                    }',
-                    CURLOPT_HTTPHEADER => array(
-                        "Content-Type: application/json",
-                        "Authorization:67p7e5ONkalvrKLDQh3RaONgSFs=",
-                        "Cache-Control: no-cache"
-                    ),
-                ));
-                $response = curl_exec($curl);
-                $err = curl_error($curl);
-                if ($err) {
-                    return Redirect::to('/')->with('mensaje', "Error.!");
+            }else{
+                if (sizeof($datoNuevo) != 2) {
+                    $codigo = $request->get('iduser') . "c" . $idPersona[0]->perso_id;
+                     $codigoI = intval($codigo, 36);
+                    $mensaje = "RH SOLUTION - Codigo de validacion " . $codigoI;
+                    $curl = curl_init();
+                    curl_setopt_array($curl, array(
+                        CURLOPT_URL => "https://api.broadcastermobile.com/brdcstr-endpoint-web/services/messaging/",
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_FOLLOWLOCATION => TRUE,
+                        CURLOPT_SSL_VERIFYPEER => false,
+                        CURLOPT_CUSTOMREQUEST => "POST",
+                        CURLOPT_POSTFIELDS => '{
+                            "apiKey":2308,
+                            "country":"PE",
+                            "dial":38383,
+                            "message":"' . $mensaje . '",
+                            "msisdns":[' . $data[0]->email . '],
+                            "tag":"tag-prueba"
+                        }',
+                        CURLOPT_HTTPHEADER => array(
+                            "Content-Type: application/json",
+                            "Authorization:67p7e5ONkalvrKLDQh3RaONgSFs=",
+                            "Cache-Control: no-cache"
+                        ),
+                    ));
+                    $response = curl_exec($curl);
+                    $err = curl_error($curl);
+                    if ($err) {
+                        return Redirect::to('/')->with('mensaje', "Error.!");
+                    } else {
+                        return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado.!");
+                    }
                 } else {
-                    return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado.!");
+                    Mail::to($correo)->queue(new CorreoMail($users, $persona, $organi));
+                    return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado! Te hemos enviado un correo de verificación.");
                 }
-            } else {
-                Mail::to($correo)->queue(new CorreoMail($users, $persona, $organi));
-                return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado! Te hemos enviado un correo de verificación.");
+
             }
+            ////////////////////////////
+
         } else {
             return redirect()->back()->with('errors', 'RUC/ID ya se encuentra registrado')->withInput();
         }

@@ -16,10 +16,11 @@ use App\persona;
             @php
             $usuario=Auth::user();
             $persona=persona::where('perso_id','=',$usuario->perso_id)->first();
+            $idOrgani=session('sesionidorg');
             @endphp
             <h6 class="pro-user-name mt-0 mb-0" id="h6Nombres">{{$persona->perso_nombre}}
                 {{$persona->perso_apPaterno}}</h6>
-            <span class="pro-user-desc">Administrador</span>
+            <span class="pro-user-desc">Administrador {{$idOrgani}} </span>
         </div>
        {{--  <div class="dropdown align-self-center profile-dropdown-menu">
             <a class="dropdown-toggle mr-0" data-toggle="dropdown" href="#"

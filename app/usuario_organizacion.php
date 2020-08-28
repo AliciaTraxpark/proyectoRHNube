@@ -9,5 +9,5 @@ class usuario_organizacion extends Model
     //
     protected $table = 'usuario_organizacion';
     protected $primaryKey = 'usua_orga_id';
-    protected $fillable = ['usua_orga_id','user_id','organi_id'];
+    protected $fillable = ['usua_orga_id','user_id','organi_id','rol_id'];
 }
