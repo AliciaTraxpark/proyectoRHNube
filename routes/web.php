@@ -184,7 +184,9 @@ Route::post('/proyecto/tablaEmpleados', 'ProyectoController@empleadosTabla');
 Route::post('/proyecto/eliminarEmpleado', 'ProyectoController@eliminarEmpleado');
 Route::post('/proyecto/editarPro', 'ProyectoController@editarProyecto');
 Route::get('/actividadEmpleado', 'ProyectoController@actividadesEmpleado');
-Route::get('/registrarActvE', 'ProyectoController@registrarProyectoE');
+Route::get('/registrarActvE', 'ProyectoController@registrarActividadE');
+Route::get('/editarActvE', 'ProyectoController@editarActividadE');
+Route::get('/editarEstadoA', 'ProyectoController@editarEstadoActividad');
 
 //carga masiva de fotos
 Route::post('/subirfoto', 'CargaMasivaFotoController@subirfoto');
@@ -309,6 +311,6 @@ Route::get('/showNotificaciones', 'NotificacionController@showNotificaciones');
 //////delegar
 Route::get('/delegarcontrol', 'delegarInvController@index');
 Route::post('/empleAreaIn', 'delegarInvController@empleAreaIn');
-Route::post('/registrarInvitado','delegarInvController@registrarInvitado');
+Route::post('/registrarInvitado', 'delegarInvController@registrarInvitado');
 Route::post('/registroinvitadoBD', 'delegarInvController@registroInvitado');
 Route::post('/verificaremCla', 'delegarInvController@validaremailC');

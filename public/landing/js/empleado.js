@@ -3745,8 +3745,8 @@ $('#cerrarModalEmpleado').click(function () {
 });
 
 function cerrarVer() {
-    $('#smartwizard').smartWizard("reset");
-    $('input[type="text"]').val("");
+    $('#smartwizardVer').smartWizard("reset");
+    $('#smartwizardVer :input[type="text"]').val("");
 }
 //*********************/
 $('#numR').hide();
