@@ -95,9 +95,15 @@ function actividadEmpVer() {
                 for (var $i = 0; $i < data.length; $i++) {
                     td += `<tr><td>${data[$i].Activi_Nombre}</td>`;
                     if (data[$i].estado == 1) {
-                        td += `<td>Activo</td><td></td></tr>`;
+                        td += `<td><div class="custom-control custom-switch">
+                        <input type="checkbox" checked="" class="custom-control-input" disabled id="customSwitchActV${data[$i].Activi_id}">
+                        <label class="custom-control-label" for="customSwitchActV${data[$i].Activi_id}"></label>
+                      </div></td><td></td></tr>`;
                     } else {
-                        td += `<td>Inactivo</td><td></td></tr>`;
+                        td += `<td><div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" disabled id="customSwitchActV${data[$i].Activi_id}">
+                        <label class="custom-control-label" for="customSwitchActV${data[$i].Activi_id}"></label>
+                      </div></td><td></td></tr>`;
                     }
                 }
                 container.append(td);
