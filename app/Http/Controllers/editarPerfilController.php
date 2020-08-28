@@ -17,8 +17,9 @@ class editarPerfilController extends Controller
     {
         $user = Auth::user();
         $persona = persona::where('perso_id', '=', $user->perso_id)->get()->first();
-        $usuarioOrg = usuario_organizacion::where('user_id', '=', $user->id)->get()->first();
-        $organizacion = organizacion::where('organi_id', '=', $usuarioOrg->organi_id)->get()->first();
+      /*   $usuarioOrg = usuario_organizacion::where('user_id', '=', $user->id)->get()->first(); */
+        $organizacion = organizacion::where('organi_id', '=', session('sesionidorg'))->get()->first();
+
         $departamentoOrgani = ubigeo_peru_departments::all();
         return view('editarPerfil', ['persona' => $persona, 'organizacion' => $organizacion, 'departamentoOrgani' => $departamentoOrgani]);
     }
@@ -28,6 +29,7 @@ class editarPerfilController extends Controller
             ->join('persona as p', 'p.perso_id', '=', 'u.perso_id')
             ->join('usuario_organizacion as uo', 'uo.user_id', '=', 'u.id')
             ->join('organizacion as o', 'o.organi_id', '=', 'uo.organi_id')
+            ->where('o.organi_id','=', session('sesionidorg'))
             ->select(
                 'u.id',
                 'u.foto',
@@ -72,8 +74,8 @@ class editarPerfilController extends Controller
     {
         $id = $request->get('id');
         $user = User::where('id', '=', $id)->get()->first();
-        $usuarioOrg = usuario_organizacion::where('user_id', '=', $user->id)->get()->first();
-        $organizacion = organizacion::where('organi_id', '=', $usuarioOrg->organi_id)->get()->first();
+        /* $usuarioOrg = usuario_organizacion::where('user_id', '=', $user->id)->get()->first(); */
+        $organizacion = organizacion::where('organi_id', '=', session('sesionidorg'))->get()->first();
         $organizacion->organi_razonSocial = $request->get('objDatosEmpresa')['razonSocial'];
         $organizacion->organi_direccion = $request->get('objDatosEmpresa')['direccion'];
         $organizacion->organi_nempleados = $request->get('objDatosEmpresa')['nempleados'];

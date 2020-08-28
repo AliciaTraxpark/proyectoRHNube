@@ -57,75 +57,53 @@ function agregarempleado() {
     } else {
         email = "51" + $('#email').val();
     }
-    $.ajax({
-        type: "get",
-        url: "/persona/comprobar",
-        data: {
-            email: email
-        },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function (data) {
-            if (data == 1) {
 
-                $.notify({
-                    message: "Usuario ya registrado.",
-                    icon: '../landing/images/warning.svg'
-                });
-                return false;
+    $.notifyClose();
+    var dia = $('#dia_fecha').val();
+    var mes = parseInt($('#mes_fecha').val());
+    switch (mes) {
+        case 1:
+            $('#mesN').val('Enero');
+            break;
+        case 2:
+            $('#mesN').val('Febrero');
+            break;
+        case 3:
+            $('#mesN').val('Marzo');
+            break;
+        case 4:
+            $('#mesN').val('Abril');
+            break;
+        case 5:
+            $('#mesN').val('Mayo');
+            break;
+        case 6:
+            $('#mesN').val('Junio');
+            break;
+        case 7:
+            $('#mesN').val('Julio');
+            break;
+        case 8:
+            $('#mesN').val('Agosto');
+            break;
+        case 9:
+            $('#mesN').val('Setiembre');
+            break;
+        case 10:
+            $('#mesN').val('Octubre');
+            break;
+        case 11:
+            $('#mesN').val('Noviembre');
+            break;
+        case 12:
+            $('#mesN').val('Diciembre');
 
-            } else {
-                $.notifyClose();
-                var dia = $('#dia_fecha').val();
-                var mes = parseInt($('#mes_fecha').val());
-                switch (mes) {
-                    case 1:
-                        $('#mesN').val('Enero');
-                        break;
-                    case 2:
-                        $('#mesN').val('Febrero');
-                        break;
-                    case 3:
-                        $('#mesN').val('Marzo');
-                        break;
-                    case 4:
-                        $('#mesN').val('Abril');
-                        break;
-                    case 5:
-                        $('#mesN').val('Mayo');
-                        break;
-                    case 6:
-                        $('#mesN').val('Junio');
-                        break;
-                    case 7:
-                        $('#mesN').val('Julio');
-                        break;
-                    case 8:
-                        $('#mesN').val('Agosto');
-                        break;
-                    case 9:
-                        $('#mesN').val('Setiembre');
-                        break;
-                    case 10:
-                        $('#mesN').val('Octubre');
-                        break;
-                    case 11:
-                        $('#mesN').val('Noviembre');
-                        break;
-                    case 12:
-                        $('#mesN').val('Diciembre');
+    }
+        var ano = $('#ano_fecha').val();
+        $('#diaN').val(dia);
 
-                }
-                var ano = $('#ano_fecha').val();
-                $('#diaN').val(dia);
-
-                $('#anoN').val(ano);
-                $('#myModal').modal('toggle');
-            }
-        },
-
-    });
+        $('#anoN').val(ano);
+        $('#myModal').modal('toggle');
 
 
 
@@ -137,6 +115,7 @@ function personalizadoGenero() {
 }
 
 function registerP() {
+
     var emailCelular = $('#email').val().split("@");
     var emailC;
     if (emailCelular.length == 2) {
@@ -185,6 +164,82 @@ function registerP() {
             );
         }
 
+    });
+
+}
+
+function comprobarEmail(){
+    $('#claveCon').val('');
+    $('#spanInc').hide();
+    var emailCelular = $('#email').val().split("@");
+    var emailC;
+    if (emailCelular.length == 2) {
+        emailC = $('#email').val();
+    } else {
+        emailC = "51" + $('#email').val();
+    }
+    var email = emailC;
+
+    $.ajax({
+        type: "get",
+        url: "/persona/comprobar",
+        data: {
+            email: email
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            if (data == 1) {
+                $('#myModalEmail').modal({backdrop: 'static', keyboard: false})
+                $('#email2').val(email);
+                $('#myModalEmail').modal('show');
+
+                return false;
+
+            } else {
+
+            }
+        },
+
+    });
+}
+/////////confirmar email y clave
+function confirmarEmail(){
+    $('#spanInc').hide();
+    var emailC= $('#email2').val();
+    var claveC=$('#claveCon').val();
+    $.ajax({
+        type: "post",
+        url: "/verificaremCla",
+        data: {
+            email:emailC,clave:claveC
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+
+            if(data[0]==1){
+                window.location.replace(
+                    location.origin + "/registro/organizacion/" + data[1]
+                );
+            }
+            else{
+                $('#spanInc').show();
+
+            }
+
+
+        },
+        error: function () {
+            alert("Hay un error");
+        }
     });
 
 }

@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
-use App\organizacion;
+use App\usuario_organizacion;
 use App\User;
 
 class LoginController extends Controller
@@ -61,7 +61,21 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
-            return redirect(route('dashboard'));
+            $usuario_organizacion=usuario_organizacion::where('user_id','=', Auth::user()->id)->get()->first();
+
+             $comusuario_organizacion=usuario_organizacion::where('user_id','=', Auth::user()->id)->count();
+            if($comusuario_organizacion>1) {
+
+
+                return redirect(route('elegirorganizacion'));
+                   /* ->with('elegirEmpresa',' Elige tu empresa')  */;
+            }else{
+
+                $vars=$usuario_organizacion->organi_id;
+                session(['sesionidorg' => $vars]);
+                return redirect(route('dashboard'));
+            }
+
         } else {
             $user = User::where('email', '=', request()->get('email'))->get()->first();
             if ($user) {
@@ -77,6 +91,7 @@ class LoginController extends Controller
     public function logout()
     {
         Auth::logout();
+        session()->forget('sesionidorg');
         /* return view ('welcome'); */
         return redirect(route('principal'));
     }

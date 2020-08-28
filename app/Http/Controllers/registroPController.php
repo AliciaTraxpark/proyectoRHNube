@@ -47,7 +47,7 @@ class registroPController extends Controller
         $User = new User();
 
         $User->email = $request->get('email');
-        $User->rol_id = 1;
+
         $User->perso_id = $user_persona;
         $User->user_estado = 0;
         $User->password = Hash::make($request->get('password'));

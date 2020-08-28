@@ -33,6 +33,7 @@ class empleado extends Model
         'emple_estado',
         'users_id',
         'emple_codigo',
-        'id_contrato'
+        'id_contrato',
+        'organi_id'
     ];
 }
