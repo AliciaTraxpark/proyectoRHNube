@@ -31,6 +31,7 @@ class calendarioController extends Controller
                 $evento = eventos::all();
 
                 $calendarioR = new calendario();
+                $calendarioR->organi_id = session('sesionidorg');
                 $calendarioR->users_id = Auth::user()->id;
                 $calendarioR->calendario_nombre='Perú';
                 $calendarioR->save();
