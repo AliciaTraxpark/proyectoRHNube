@@ -135,7 +135,7 @@ class ProyectoController extends Controller
         return response()->json($respuesta, 200);
     }
 
-    public function registrarProyectoE(Request $request)
+    public function registrarActividadE(Request $request)
     {
         $idE = $request->get('idE');
         $actividad = new actividad();
@@ -144,5 +144,16 @@ class ProyectoController extends Controller
         $actividad->save();
 
         return response()->json($actividad, 200);
+    }
+
+    public function editarActividadE(Request $request)
+    {
+        $idA = $request->get('idA');
+        $actividad = actividad::where('Activi_id', '=', $idA)->get()->first();
+        if ($actividad) {
+            $actividad->Activi_Nombre = $request->get('actividad');
+            $actividad->save();
+            return response()->json($actividad, 200);
+        }
     }
 }
