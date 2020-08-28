@@ -433,7 +433,7 @@ function RegeditarActE(idA) {
     $("#tdActReg" + idA).on('click', function () {
         console.log(OriginalContent);
         $(this).addClass("editable");
-        $(this).html("<input type='text' style='border-radius: 5px;border: 1px solid #39c;' value='" + OriginalContent + "'/>");
+        $(this).html("<input type=\"text\" style=\"border-radius: 5px;border: 2px solid #39c;\" maxlength=\"15\"  value='" + OriginalContent + "'/>");
         $(this).children().first().focus();
         $(this).children().first().keypress(function (e) {
             if (e.which == 13) {
@@ -503,7 +503,7 @@ function editarActE(idA) {
     $("#tdAct" + idA).on('click', function () {
         console.log(OriginalContent);
         $(this).addClass("editable");
-        $(this).html("<input type='text' style='border-radius: 5px;border: 1px solid #39c;' value='" + OriginalContent + "'/>");
+        $(this).html("<input type=\"text\" style=\"border-radius: 5px;border: 2px solid #39c;\" maxlength=\"15\" value='" + OriginalContent + "'/>");
         $(this).children().first().focus();
         $(this).children().first().keypress(function (e) {
             if (e.which == 13) {
