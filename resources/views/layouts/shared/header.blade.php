@@ -11,7 +11,7 @@ use App\persona;
 </style>
 <div class="navbar navbar-expand flex-column flex-md-row navbar-custom"
     style="padding-left: 0px;">
-    <div class="container-fluid">
+    <div class="container-fluid pb-3 pt-3">
         <ul class="navbar-nav bd-navbar-nav flex-row list-unstyled menu-left
             mb-0">
             <li class="" style="width: 80px;">
@@ -24,13 +24,13 @@ use App\persona;
         <!-- LOGO -->
         <a href="/" class="navbar-brand mr-0 mr-md-2 logo">
             <span class="logo-lg text-center">
-                <img src="https://i.ibb.co/b31CPDW/Recurso-13.png" alt=""
-                    height="60" />
+                <img src="{{asset('landing/images/Recurso 23.png')}}" alt=""
+                    height="35" />
 
             </span>
             <span class="logo-sm">
-                <img src="https://i.ibb.co/b31CPDW/Recurso-13.png" alt=""
-                    height="45">
+                <img src="{{asset('landing/images/Recurso 23.png')}}" alt=""
+                    height="25">
             </span>
         </a>
 

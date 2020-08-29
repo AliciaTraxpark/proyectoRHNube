@@ -575,8 +575,8 @@
     </style>
 
     <header id="header-section">
-        <nav class="navbar navbar-expand-lg  pl-sm-0 pb-3" id="navbar">
-            <div class="container">
+        <nav class="navbar navbar-expand-lg  pl-sm-0" id="navbar">
+            <div class="container pb-3">
                 <div class="col-md-2 col-xl-2 mr-4 p-0">
                     <div class="navbar-brand-wrapper d-flex w-100">
                         <img src="{{asset('landing/images/Recurso 23.png')}}" height="50">

@@ -96,7 +96,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
 </style>
 
   <header id="header-section">
-    <nav class="navbar navbar-expand-lg p-0 m-0 pl-sm-0" id="navbar">
+    <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
         <div class="container pb-3">
             <div class="col-md-2 col-xl-2 mr-4 p-0">
                 <div class="navbar-brand-wrapper d-flex w-200">
