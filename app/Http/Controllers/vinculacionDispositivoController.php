@@ -80,17 +80,13 @@ class vinculacionDispositivoController extends Controller
             $modo->save();
             $idModo = $modo->id;
             //LICENCIA
-            $codigoEmpresa = DB::table('users as u')
-                ->join('usuario_organizacion as uo', 'uo.user_id', '=', 'u.id')
-                ->select('uo.organi_id')
-                ->where('u.id', '=', Auth::user()->id)
-                ->get();
+            $codigoEmpresa =session('sesionidorg');
             $codigoEmpleado = DB::table('empleado as e')
                 ->select('e.emple_codigo', 'e.emple_persona', 'e.created_at')
                 ->where('e.emple_id', '=', $idEmpleado)
                 ->get();
             $nuevaLivencia = STR::random(4);
-            $codigoLicencia = $idEmpleado . '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id . $nuevaLivencia;
+            $codigoLicencia = $idEmpleado . '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa . $nuevaLivencia;
             $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
             $licencia = new licencia_empleado();
             $licencia->idEmpleado = $idEmpleado;
@@ -110,7 +106,7 @@ class vinculacionDispositivoController extends Controller
 
             $vinc = vinculacion::where('id', '=', $idVinculacion)->get()->first();
             $codigoU = Auth::user()->id;
-            $codigoHash = $codigoU . "s" . $idVinculacion . "s" . $codigoEmpresa[0]->organi_id . $idEmpleado;
+            $codigoHash = $codigoU . "s" . $idVinculacion . "s" . $codigoEmpresa . $idEmpleado;
             $encode = intval($codigoHash, 36);
             $vinc->hash = $encode;
             $vinc->save();
