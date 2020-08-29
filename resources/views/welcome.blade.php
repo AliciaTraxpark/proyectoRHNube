@@ -30,10 +30,10 @@
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
     <header id="header-section">
         <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
-            <div class="container">
+            <div class="container pb-3 pt-2">
                 <div class="col-md-5">
                     <div class="navbar-brand-wrapper d-flex">
-                        <img src="{{asset('landing/images/Recurso 23.png')}}" width="30%" height="30%">
+                        <img src="{{asset('landing/images/Recurso 23.png')}}" width="45%" height="45%">
                     </div>
                 </div>
 
