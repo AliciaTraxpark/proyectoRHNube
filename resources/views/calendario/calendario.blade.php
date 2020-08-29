@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <title>Calendario</title>
   <meta charset="UTF-8">
@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- App favicon -->
-  <link rel="shortcut icon" href="https://rhsolution.com.pe/wp-content/uploads/2019/06/small-logo-rh-solution-64x64.png" sizes="32x32">
+  <link rel="shortcut icon" href="https://i.ibb.co/b31CPDW/Recurso-13.png">
 
   <!-- Plugin css  CALENDAR-->
   <link href="{{asset('admin/packages/core/main.css')}}" rel="stylesheet" />
@@ -96,11 +96,11 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
 </style>
 
   <header id="header-section">
-    <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
-        <div class="container">
-            <div class="col-md-2">
-                <div class="navbar-brand-wrapper d-flex w-100">
-                    <img src="{{asset('landing/images/logo.png')}}" height="100" >
+    <nav class="navbar navbar-expand-lg p-0 m-0 pl-sm-0" id="navbar">
+        <div class="container pb-3">
+            <div class="col-md-2 col-xl-2 mr-4 p-0">
+                <div class="navbar-brand-wrapper d-flex w-200">
+                    <img src="{{asset('landing/images/Recurso 23.png')}}" height="45" >
                 </div>
             </div>
             <div class="col-md-6 text-left">

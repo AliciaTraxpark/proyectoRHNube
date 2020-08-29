@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <title>Gestion de empleados</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="https://i.ibb.co/b31CPDW/Recurso-13.png">
     <style>
         .pace {
             -webkit-pointer-events: none;
@@ -574,11 +575,11 @@
     </style>
 
     <header id="header-section">
-        <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
+        <nav class="navbar navbar-expand-lg  pl-sm-0 pb-3" id="navbar">
             <div class="container">
-                <div class="col-md-2 col-xl-2">
+                <div class="col-md-2 col-xl-2 mr-4 p-0">
                     <div class="navbar-brand-wrapper d-flex w-100">
-                        <img src="{{asset('landing/images/logo.png')}}" height="100">
+                        <img src="{{asset('landing/images/Recurso 23.png')}}" height="50">
                     </div>
                 </div>
                 <div class="col-md-7 col-xl-7 text-left">

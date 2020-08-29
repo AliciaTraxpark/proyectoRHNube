@@ -2,7 +2,7 @@
 <html lang="es">
 
 <head>
-    <title>NUBE</title>
+    <title>RH nube</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{asset('landing/vendors/mdi/css/materialdesignicons.min.css')}}">
     <link rel="stylesheet" href="{{asset('landing/vendors/aos/css/aos.css')}}">
     <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
-    <link rel="shortcut icon" href="https://i.ibb.co/b31CPDW/RH.png" sizes="62x62">
+    <link rel="shortcut icon" href="https://i.ibb.co/b31CPDW/Recurso-13.png">
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-169261172-1"></script>
     <script>
@@ -33,7 +33,7 @@
             <div class="container">
                 <div class="col-md-5">
                     <div class="navbar-brand-wrapper d-flex">
-                        <img src="{{asset('landing/images/logo.png')}}" width="30%" height="30%">
+                        <img src="{{asset('landing/images/Recurso 23.png')}}" width="30%" height="30%">
                     </div>
                 </div>
 
