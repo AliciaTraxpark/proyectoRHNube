@@ -296,9 +296,9 @@
                                                                 <td class="es-m-p0l es-m-txt-c" align="left"
                                                                     style="padding:0;Margin:0;font-size:0px"><img
                                                                         class="adapt-img"
-                                                                        src="https://i.ibb.co/8jsJv52/logo.png" alt
+                                                                        src="https://i.ibb.co/Gsh6jbp/Recurso-23.png"
                                                                         style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
-                                                                        width="30%" height="30%"></td>
+                                                                        width="183"></td>
                                                             </tr>
                                                         </table>
                                                     </td>
@@ -364,7 +364,7 @@
                                                                     <h1
                                                                         style="Margin:0;line-height:24px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333">
                                                                         <strong style="color: #163552;">&nbsp;RH
-                                                                            SOLUTION</strong></h1>
+                                                                            NUBE</strong></h1>
                                                                 </td>
                                                             </tr>
                                                             <tr style="border-collapse:collapse">

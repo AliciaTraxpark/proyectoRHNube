@@ -296,9 +296,9 @@
                                                                 <td class="es-m-p0l es-m-txt-c" align="left"
                                                                     style="padding:0;Margin:0;font-size:0px"><img
                                                                         class="adapt-img"
-                                                                        src="https://i.ibb.co/8jsJv52/logo.png" alt
+                                                                        src="https://i.ibb.co/Gsh6jbp/Recurso-23.png"
                                                                         style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
-                                                                        width="40%" height="40%"></td>
+                                                                        width="183"></td>
                                                             </tr>
                                                         </table>
                                                     </td>
@@ -363,7 +363,7 @@
                                                                     <h1
                                                                         style="Margin:0;line-height:24px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333">
                                                                         <strong style="color: #163552;">&nbsp;RH
-                                                                            SOLUTION</strong></h1>
+                                                                            NUBE</strong></h1>
                                                                 </td>
                                                             </tr>
                                                             <tr style="border-collapse:collapse">
@@ -380,7 +380,7 @@
                                                                     style="padding:0;Margin:0;padding-right:35px;padding-left:40px">
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center">
-                                                                        ¡Estas invitado a rhsolution!</p>
+                                                                        ¡Estas invitado a rhnube!</p>
                                                                 </td>
                                                             </tr>
                                                             <tr style="border-collapse:collapse">
