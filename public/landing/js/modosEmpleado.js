@@ -19,7 +19,8 @@ function actividad_empleado() {
                 for (var $i = 0; $i < data.length; $i++) {
                     td += `<tr onclick="return RegeditarActE(${data[$i].Activi_id})">
                     <input type="hidden" id="idActReg${data[$i].Activi_id}" value="${data[$i].Activi_Nombre}">
-                    <td class="editable" id="tdActReg${data[$i].Activi_id}">${data[$i].Activi_Nombre}</td>`;
+                    <td class="editable" id="tdActReg${data[$i].Activi_id}"  style="cursor: -webkit-grab; cursor: grab" data-toggle="tooltip"
+                    data-placement="right" title="Para editar actividad presionar doble click." data-original-title="">${data[$i].Activi_Nombre}</td>`;
                     if (data[$i].estado == 1) {
                         td += `<td><div class="custom-control custom-switch">
                         <input type="checkbox" checked="" class="custom-control-input" id="customSwitchActReg${data[$i].Activi_id}">
@@ -61,7 +62,8 @@ function actividadEmp() {
                 for (var $i = 0; $i < data.length; $i++) {
                     td += `<tr onclick="return editarActE(${data[$i].Activi_id})">
                     <input type="hidden" id="idAct${data[$i].Activi_id}" value="${data[$i].Activi_Nombre}">
-                    <td class="editable" id="tdAct${data[$i].Activi_id}">${data[$i].Activi_Nombre}</td>`;
+                    <td class="editable" id="tdAct${data[$i].Activi_id}" style="cursor: -webkit-grab; cursor: grab" data-toggle="tooltip"
+                    data-placement="right" title="Para editar actividad presionar doble click." data-original-title="">${data[$i].Activi_Nombre}</td>`;
                     if (data[$i].estado == 1) {
                         td += `<td><div class="custom-control custom-switch">
                         <input type="checkbox" checked="" class="custom-control-input" id="customSwitchAct${data[$i].Activi_id}">
@@ -566,3 +568,4 @@ function editarActE(idA) {
         });
     });
 }
+$('[data-toggle="tooltip"]').tooltip();
