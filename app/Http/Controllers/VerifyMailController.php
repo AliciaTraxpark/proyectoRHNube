@@ -52,8 +52,8 @@ class VerifyMailController extends Controller
             $persona = persona::find($persona["id"]);
             $users = User::find(Auth::user()->id);
             $correo = array($datos['email']);
-            $usuario_organizacion = usuario_organizacion::where('user_id', '=', Auth::user()->id)->get()->first();
-            $organizacion = organizacion::where('organi_id', '=', $usuario_organizacion->organi_id)->get()->first();
+
+            $organizacion = organizacion::where('organi_id', '=',session('sesionidorg'))->get()->first();
             Mail::to($correo)->queue(new CorreoMail($users, $persona, $organizacion));
         }
 

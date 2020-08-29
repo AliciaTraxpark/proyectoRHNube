@@ -24,7 +24,7 @@ class ControlController extends Controller
             ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-            ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.organi_id', '=',session('sesionidorg'))
             ->where('e.emple_estado', '=', 1)
             ->groupBy('p.perso_id')
             ->get();
@@ -40,7 +40,7 @@ class ControlController extends Controller
                 $join->on('en.idEmpleado', '=', 'e.emple_id');
             })
             ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'en.Total_Envio')
-            ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.organi_id', '=', session('sesionidorg'))
             ->where('e.emple_estado', '=', 1)
             ->groupBy('e.emple_id')
             ->get();
@@ -56,7 +56,7 @@ class ControlController extends Controller
                 $join->on('en.idEmpleado', '=', 'e.emple_id');
             })
             ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'en.Total_Envio')
-            ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.organi_id', '=', session('sesionidorg'))
             ->where('e.emple_estado', '=', 1)
             ->groupBy('e.emple_id')
             ->get();
@@ -71,7 +71,7 @@ class ControlController extends Controller
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
             ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-            ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.organi_id', '=', session('sesionidorg'))
             ->where('e.emple_estado', '=', 1)
             ->groupBy('e.emple_id')
             ->get();
@@ -99,7 +99,7 @@ class ControlController extends Controller
             )
             ->where(DB::raw('IF(h.id is null, DATE(cp.fecha_hora), DATE(h.start))'), '>=', $fechaF[0])
             ->where(DB::raw('IF(h.id is null, DATE(cp.fecha_hora), DATE(h.start))'), '<=', $fechaF[1])
-            ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.organi_id', '=', session('sesionidorg'))
             ->where('e.emple_estado', '=', 1)
             ->groupBy('fecha_captura', 'e.emple_id')
             ->get();
@@ -152,7 +152,7 @@ class ControlController extends Controller
             ->join('proyecto_empleado as pe', 'pe.empleado_emple_id', '=', 'e.emple_id')
             ->join('proyecto as p', 'p.Proye_id', '=', 'pe.Proyecto_Proye_id')
             ->select('P.Proye_id', 'P.Proye_Nombre')
-            ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.organi_id', '=', session('sesionidorg'))
             ->where('e.emple_id', '=', $idempleado)
             ->get();
         return response()->json($proyecto, 200);
@@ -205,7 +205,7 @@ class ControlController extends Controller
             )
             ->where(DB::raw('IF(hd.id is null, DATE(cp.fecha_hora), DATE(hd.start))'), '=', $fecha)
             ->where('e.emple_id', '=', $idempleado)
-            ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.organi_id', '=', session('sesionidorg'))
             ->groupBy('cp.idCaptura')
             ->orderBy('cp.fecha_hora', 'asc')
             ->get();

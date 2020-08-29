@@ -14,7 +14,7 @@ class CargaMasivaFotoController extends Controller
     {
         $file = $request->file('fileMasiva');
         $idempleado = explode(".", $file[0]->getClientOriginalName());
-        $empleado = empleado::whereIn('emple_nDoc', $idempleado)->where('emple_estado', 1)->where('users_id', Auth::user()->id)->get()->first();
+        $empleado = empleado::whereIn('emple_nDoc', $idempleado)->where('emple_estado', 1)->where('organi_id', session('sesionidorg'))->get()->first();
         if ($empleado) {
             $persona = persona::where('perso_id', '=', $empleado->emple_persona)->get()->first();
             $path = public_path() . '/fotosEmpleado';

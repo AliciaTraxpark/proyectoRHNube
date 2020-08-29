@@ -17,6 +17,7 @@ class condicionPagoController extends Controller
         $condicion = new condicion_pago();
         $condicion->condicion = $request->get('condicion');
         $condicion->user_id = Auth::user()->id;
+        $condicion->organi_id = session('sesionidorg');
         $condicion->save();
         return  $condicion;
     }
