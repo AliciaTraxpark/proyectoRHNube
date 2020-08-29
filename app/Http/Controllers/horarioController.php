@@ -138,7 +138,7 @@ class horarioController extends Controller
     }
 
     public function tablaHorario()
-    {   $horario=horario:: where('organi_id', '=', session('sesionidorg'))
+    {   $horario=horario:: where('horario.organi_id', '=', session('sesionidorg'))
         ->leftJoin('horario_empleado as he', 'horario.horario_id', '=', 'he.horario_horario_id')
         ->groupBy('horario.horario_id')
         ->get();

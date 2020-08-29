@@ -57,6 +57,7 @@ class HomeController extends Controller
     public function enviarIDorg(Request $request){
         $vars= $request->idorganiza;
         session(['sesionidorg' => $vars]);
+        
       /*   return redirect(route('dashboard')); */
     }
 }

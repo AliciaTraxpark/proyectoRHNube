@@ -133,10 +133,12 @@ function agregarempleado() {
 }
 
 function personalizadoGenero() {
+
     $('#generoModal').modal("toggle");
 }
 
 function registerP() {
+    $('#confirmar').prop( "disabled",true );
     var emailCelular = $('#email').val().split("@");
     var emailC;
     if (emailCelular.length == 2) {
@@ -179,7 +181,12 @@ function registerP() {
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-      
+        success: function (data) {
+                window.location.replace(
+                    location.origin
+                );
+                $('#modalInv').modal('show');
+        }
 
     });
 

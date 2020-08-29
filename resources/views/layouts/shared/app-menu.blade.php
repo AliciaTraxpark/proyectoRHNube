@@ -16,6 +16,15 @@ use Illuminate\Support\Facades\DB;
     }
 
 </style>
+@php
+     $usuario=DB::table('users')
+            ->where('id','=',Auth::user()->id)->get();
+      $usuario_organizacion=DB::table('usuario_organizacion')
+      ->where('user_id','=',Auth::user()->id)
+      ->where('organi_id','=',session('sesionidorg'))
+      ->get();
+        @endphp
+ @if ($usuario_organizacion[0]->rol_id==1)
 <ul class="metismenu" id="menu-bar">
     <li>
         <a href="/dashboard" id="menuD">
@@ -24,10 +33,7 @@ use Illuminate\Support\Facades\DB;
             <span> Dashboard </span>
         </a>
     </li>
-    @php
-     $usuario=DB::table('users')
-            ->where('id','=',Auth::user()->id)->get();
-        @endphp
+
     <li>
         @if ($usuario[0]->user_estado==0)
         <a href="/calendario"> @else <a href="/calendarios"> @endif
@@ -113,3 +119,48 @@ use Illuminate\Support\Facades\DB;
         </a>
     </li>
 </ul>
+@endif
+@if ($usuario_organizacion[0]->rol_id==3)
+<ul class="metismenu" id="menu-bar">
+    <li>
+        <a href="/dashboard" id="menuD">
+            <i data-feather="home"></i>
+            <span class="badge badge-success float-right">1</span>
+            <span> Dashboard </span>
+        </a>
+    </li>
+
+
+
+    <!-- <li>
+        <a href="/proyecto">
+            <i data-feather="briefcase"></i>
+            <span>Asignar tarea</span>
+        </a>
+    </li> -->
+
+   
+
+    <li>
+
+        <a href="javascript: void(0);">
+            <i data-feather="activity"></i>
+            <span>Modulo 1: Actividades</span>
+            <span class="menu-arrow"></span>
+        </a>
+
+        <ul class="nav-second-level" aria-expanded="false">
+            <li>
+                <a href="/tareas">Actividad de Captura de Pantalla</a>
+            </li>
+        </ul>
+    </li>
+
+    <li>
+        <a href="/reporteSemanal">
+            <img src="{{asset('admin/images/growth (2).svg')}}" height="25" class="mr-1" >
+            <span>Horas trabajadas</span>
+        </a>
+    </li>
+</ul>
+@endif

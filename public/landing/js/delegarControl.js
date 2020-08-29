@@ -70,6 +70,7 @@ function registrarInvit() {
     var emailInv = $("#emailInvi").val();
     var idEmpleado = $("#nombreEmpleado").val();
     if ($("#adminCheck").is(":checked")) {
+        
     } else {
         $.ajax({
             type: "post",
@@ -87,7 +88,7 @@ function registrarInvit() {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
             success: function (data) {
-                alert("listo");
+                $('#agregarInvitado').modal('hide');
             },
             error: function (data) {
                 alert("Ocurrio un error");

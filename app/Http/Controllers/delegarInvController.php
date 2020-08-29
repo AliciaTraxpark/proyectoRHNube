@@ -97,6 +97,29 @@ class delegarInvController extends Controller
         Mail::to($emailInv)->queue(new CorreoInvitado($organi,$invitado));
 
     }
+    public function registrarInvitadoAdm(Request $request){
+
+        $emailInv=$request->emailInv;
+        $idEmpleado=$request->idEmpleado;
+
+        $organi = organizacion::find(session('sesionidorg'));
+        $invitado = new invitado();
+        $invitado->organi_id =  session('sesionidorg');
+        $invitado->rol_id =3;
+        $invitado->email_inv = $emailInv;
+        $invitado->estado =0;
+        $invitado->users_id =Auth::user()->id;
+        $invitado->save();
+
+        foreach($idEmpleado as $idEmpleados){
+            $invitado_empleado = new invitado_empleado();
+            $invitado_empleado->idinvitado = $invitado->idinvitado;
+            $invitado_empleado->emple_id = $idEmpleados;
+            $invitado_empleado->save();
+        }
+        Mail::to($emailInv)->queue(new CorreoInvitado($organi,$invitado));
+
+    }
 
     public function vistaRegistroInv($idinEncr){
 
@@ -175,7 +198,7 @@ class delegarInvController extends Controller
             $correo = array($datos['email']);
             $datoNuevo = explode("@", $data[0]->email);
                 Mail::to($correo)->queue(new CorreoMail($users, $persona, $organi));
-                return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado! Te hemos enviado un correo de verificación.");
+               /*  return view('home')->with('mensaje', "Bien hecho, estas registrado! Te hemos enviado un correo de verificación."); */
 
     }
 

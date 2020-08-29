@@ -596,12 +596,15 @@
         </div>
     </div>
     @endif
-    
+
     <script src="{{asset('landing/vendors/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('landing/vendors/bootstrap/bootstrap.min.js')}}"></script>
     <script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>
     <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
     <script src="{{asset('landing/js/landingpage.js')}}"></script>
+
+
+
     @if (session('mensaje'))
     <div class="modal" id="modal" role="dialog" style="display: block;">
         <div class="modal-dialog" role="document">
@@ -627,17 +630,43 @@
             </div>
         </div>
     </div>
-    <script>
-        function cerrarModal() {
-            document.getElementById("modal").style.display = "none";
-        }
 
-    </script>
     @endif
     <script>
         function cerrarModalAdvertencia(){
             document.getElementById("modal1").style.display = "none";
         }
+    </script>
+      <div class="modal" id="modalInv" role="dialog" >
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="padding-top: 8px;
+                            padding-bottom: 5px;background-color:
+                            #163552;color:#ffffff">
+                    <h5 style="font-size: 14px" class="modal-title">CONFIRMACION</h5>
+                    <button type="button" class="close" data-dismiss="modal" onclick="cerrarModal()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="{{asset('admin/images/tick.svg')}}" height="25" class="mr-1 mt-2">
+                    <p>Bien hecho, estas registrado! Te hemos enviado un correo de verificación.</p>
+                </div>
+                <div class="modal-footer" style="padding-top: 8px;
+                            padding-bottom: 8px;">
+                    <button type="button" class="btn
+                    btn-sm" style="background-color:
+                    #163552;color:#ffffff" onclick="cerrarModal()">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function cerrarModal() {
+            document.getElementById("modalInv").style.display = "none";
+            document.getElementById("modal").style.display = "none";
+        }
+
     </script>
 </body>
 
