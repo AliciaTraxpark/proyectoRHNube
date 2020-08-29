@@ -54,7 +54,7 @@ class NotificacionController extends Controller
         }
         if (sizeof($notificacion) == 0) {
             $eventos = DB::table('eventos_usuario as eu')
-                ->where('eu.users_id', '=', Auth::user()->id)
+                ->where('eu.organi_id', '=', session('sesionidorg'))
                 ->get()
                 ->first();
 
@@ -70,7 +70,7 @@ class NotificacionController extends Controller
             $area = DB::table('empleado as e')
                 ->join('area as a', 'e.emple_area', '=', 'a.area_id')
                 ->select('a.area_descripcion', DB::raw('COUNT(a.area_descripcion) as Total'))
-                ->where('e.users_id', '=', Auth::user()->id)
+                ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
                 ->groupBy('a.area_id')
                 ->get()->first();
@@ -87,7 +87,7 @@ class NotificacionController extends Controller
             $nivel = DB::table('empleado as e')
                 ->join('nivel as n', 'e.emple_nivel', '=', 'n.nivel_id')
                 ->select('n.nivel_descripcion', DB::raw('COUNT(n.nivel_descripcion) as Total'))
-                ->where('e.users_id', '=', Auth::user()->id)
+                ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
                 ->groupBy('n.nivel_id')
                 ->get()->first();
@@ -105,7 +105,7 @@ class NotificacionController extends Controller
                 ->join('contrato as c', 'c.idEmpleado', '=', 'e.emple_id')
                 ->join('tipo_contrato as tc', 'tc.contrato_id', '=', 'c.id_tipoContrato')
                 ->select('tc.contrato_descripcion', DB::raw('COUNT(tc.contrato_descripcion) as Total'))
-                ->where('e.users_id', '=', Auth::user()->id)
+                ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
                 ->groupBy('tc.contrato_id')
                 ->get()->first();
@@ -122,7 +122,7 @@ class NotificacionController extends Controller
             $centro = DB::table('empleado as e')
                 ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                 ->select('cc.centroC_descripcion', DB::raw('COUNT(cc.centroC_descripcion) as Total'))
-                ->where('e.users_id', '=', Auth::user()->id)
+                ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
                 ->groupBy('cc.centroC_id')
                 ->get()->first();
@@ -139,7 +139,7 @@ class NotificacionController extends Controller
             $local = DB::table('empleado as e')
                 ->join('local as l', 'e.emple_local', '=', 'l.local_id')
                 ->select('l.local_descripcion', DB::raw('COUNT(l.local_descripcion) as Total'))
-                ->where('e.users_id', '=', Auth::user()->id)
+                ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
                 ->groupBy('l.local_id')
                 ->get()->first();
@@ -154,7 +154,7 @@ class NotificacionController extends Controller
                 $recipient->notify(new NuevaNotification($mensaje));
             }
             $horario = DB::table('horario as h')
-                ->where('h.user_id', '=', Auth::user()->id)
+            ->where('h.organi_id', '=', session('sesionidorg'))
                 ->get()
                 ->first();
 
@@ -171,7 +171,7 @@ class NotificacionController extends Controller
         } else {
             if ($respuestaEU == false) {
                 $eventos = DB::table('eventos_usuario as eu')
-                    ->where('eu.users_id', '=', Auth::user()->id)
+                ->where('eu.organi_id', '=', session('sesionidorg'))
                     ->get()
                     ->first();
 
@@ -189,7 +189,7 @@ class NotificacionController extends Controller
                 $area = DB::table('empleado as e')
                     ->join('area as a', 'e.emple_area', '=', 'a.area_id')
                     ->select('a.area_descripcion', DB::raw('COUNT(a.area_descripcion) as Total'))
-                    ->where('e.users_id', '=', Auth::user()->id)
+                    ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
                     ->groupBy('a.area_id')
                     ->get()->first();
@@ -208,7 +208,7 @@ class NotificacionController extends Controller
                 $nivel = DB::table('empleado as e')
                     ->join('nivel as n', 'e.emple_nivel', '=', 'n.nivel_id')
                     ->select('n.nivel_descripcion', DB::raw('COUNT(n.nivel_descripcion) as Total'))
-                    ->where('e.users_id', '=', Auth::user()->id)
+                    ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
                     ->groupBy('n.nivel_id')
                     ->get()->first();
@@ -228,7 +228,7 @@ class NotificacionController extends Controller
                     ->join('contrato as c', 'c.idEmpleado', '=', 'e.emple_id')
                     ->join('tipo_contrato as tc', 'tc.contrato_id', '=', 'c.id_tipoContrato')
                     ->select('tc.contrato_descripcion', DB::raw('COUNT(tc.contrato_descripcion) as Total'))
-                    ->where('e.users_id', '=', Auth::user()->id)
+                    ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
                     ->groupBy('tc.contrato_id')
                     ->get()->first();
@@ -247,7 +247,7 @@ class NotificacionController extends Controller
                 $centro = DB::table('empleado as e')
                     ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                     ->select('cc.centroC_descripcion', DB::raw('COUNT(cc.centroC_descripcion) as Total'))
-                    ->where('e.users_id', '=', Auth::user()->id)
+                    ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
                     ->groupBy('cc.centroC_id')
                     ->get()->first();
@@ -266,7 +266,7 @@ class NotificacionController extends Controller
                 $local = DB::table('empleado as e')
                     ->join('local as l', 'e.emple_local', '=', 'l.local_id')
                     ->select('l.local_descripcion', DB::raw('COUNT(l.local_descripcion) as Total'))
-                    ->where('e.users_id', '=', Auth::user()->id)
+                    ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
                     ->groupBy('l.local_id')
                     ->get()->first();
@@ -283,7 +283,7 @@ class NotificacionController extends Controller
             }
             if ($respuestaEH == false) {
                 $horario = DB::table('horario as h')
-                    ->where('h.user_id', '=', Auth::user()->id)
+                ->where('h.organi_id', '=', session('sesionidorg'))
                     ->get()
                     ->first();
 
@@ -338,7 +338,7 @@ class NotificacionController extends Controller
             }
             if ($respuestaEU == true) {
                 $eventos = DB::table('eventos_usuario as eu')
-                    ->where('eu.users_id', '=', Auth::user()->id)
+                     ->where('eu.organi_id', '=', session('sesionidorg'))
                     ->get()
                     ->first();
                 if ($eventos) {
@@ -351,7 +351,7 @@ class NotificacionController extends Controller
                 $area = DB::table('empleado as e')
                     ->join('area as a', 'e.emple_area', '=', 'a.area_id')
                     ->select('a.area_descripcion', DB::raw('COUNT(a.area_descripcion) as Total'))
-                    ->where('e.users_id', '=', Auth::user()->id)
+                    ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
                     ->groupBy('a.area_id')
                     ->get()->first();
@@ -365,7 +365,7 @@ class NotificacionController extends Controller
                 $nivel = DB::table('empleado as e')
                     ->join('nivel as n', 'e.emple_nivel', '=', 'n.nivel_id')
                     ->select('n.nivel_descripcion', DB::raw('COUNT(n.nivel_descripcion) as Total'))
-                    ->where('e.users_id', '=', Auth::user()->id)
+                    ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
                     ->groupBy('n.nivel_id')
                     ->get()->first();
@@ -380,7 +380,7 @@ class NotificacionController extends Controller
                     ->join('contrato as c', 'c.idEmpleado', '=', 'e.emple_id')
                     ->join('tipo_contrato as tc', 'tc.contrato_id', '=', 'c.id_tipoContrato')
                     ->select('tc.contrato_descripcion', DB::raw('COUNT(tc.contrato_descripcion) as Total'))
-                    ->where('e.users_id', '=', Auth::user()->id)
+                    ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
                     ->groupBy('tc.contrato_id')
                     ->get()->first();
@@ -394,7 +394,7 @@ class NotificacionController extends Controller
                 $centro = DB::table('empleado as e')
                     ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                     ->select('cc.centroC_descripcion', DB::raw('COUNT(cc.centroC_descripcion) as Total'))
-                    ->where('e.users_id', '=', Auth::user()->id)
+                    ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
                     ->groupBy('cc.centroC_id')
                     ->get()->first();
@@ -408,7 +408,7 @@ class NotificacionController extends Controller
                 $local = DB::table('empleado as e')
                     ->join('local as l', 'e.emple_local', '=', 'l.local_id')
                     ->select('l.local_descripcion', DB::raw('COUNT(l.local_descripcion) as Total'))
-                    ->where('e.users_id', '=', Auth::user()->id)
+                    ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
                     ->groupBy('l.local_id')
                     ->get()->first();
@@ -419,7 +419,7 @@ class NotificacionController extends Controller
             }
             if ($respuestaEH == true) {
                 $horario = DB::table('horario as h')
-                    ->where('h.user_id', '=', Auth::user()->id)
+                    ->where('h.organi_id', '=', session('sesionidorg'))
                     ->get()
                     ->first();
 

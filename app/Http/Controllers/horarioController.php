@@ -36,15 +36,15 @@ class horarioController extends Controller
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->join('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
             ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc', 'p.perso_id', 'e.emple_id')
-            ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.organi_id', '=', session('sesionidorg'))
             ->where('eve.id_empleado', '!=', null)
             ->where('e.emple_estado', '=', 1)
             ->groupBy('e.emple_id')
             ->get();
-        $horario=horario::where('user_id', '=', Auth::user()->id)->get();
+        $horario=horario:: where('organi_id', '=', session('sesionidorg'))->get();
         $horarion=DB::table('horario as h')
         ->leftJoin('horario_empleado as he','h.horario_id','=','he.horario_horario_id')
-        ->where('h.user_id', '=', Auth::user()->id)
+        ->where('h.organi_id', '=', session('sesionidorg'))
         ->whereNull('he.horario_horario_id')
         ->get();
         $area=DB::table('area')
@@ -68,7 +68,7 @@ class horarioController extends Controller
             // ->whereNull('he.empleado_emple_id')
             ->distinct('e.emple_id')
             ->where('e.emple_estado', '=', 1)
-            ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.organi_id', '=', session('sesionidorg'))
             ->get();
         return $empleados;
     }
@@ -131,13 +131,14 @@ class horarioController extends Controller
         $horario->horaI = $inicio;
         $horario->horaF = $fin;
         $horario->user_id = Auth::user()->id;
+        $horario->organi_id= session('sesionidorg');
         $horario->save();
         return $horario;
 
     }
 
     public function tablaHorario()
-    {   $horario=horario::where('user_id', '=', Auth::user()->id)
+    {   $horario=horario:: where('organi_id', '=', session('sesionidorg'))
         ->leftJoin('horario_empleado as he', 'horario.horario_id', '=', 'he.horario_horario_id')
         ->groupBy('horario.horario_id')
         ->get();
@@ -207,7 +208,7 @@ class horarioController extends Controller
 
                 $horarioEmpleado= DB::table('horario_empleado as he')
                 -> select ('hd.title','h.horaI','h.horaF', 'h.horaF','he.empleado_emple_id')
-                ->where('users_id', '=', Auth::user()->id)
+                ->where('he.organi_id', '=', session('sesionidorg'))
                 ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
                 ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
                 ->where('he.empleado_emple_id', '=', $idsEm)
@@ -276,15 +277,15 @@ class horarioController extends Controller
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->join('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
             ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc', 'p.perso_id', 'e.emple_id')
-            ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.organi_id', '=', session('sesionidorg'))
             ->where('eve.id_empleado', '!=', null)
             ->where('e.emple_estado', '=', 1)
             ->groupBy('e.emple_id')
             ->get();
-            $horario=horario::where('user_id', '=', Auth::user()->id)->get();
+            $horario=horario::where('organi_id', '=', session('sesionidorg'))->get();
             $horarion=DB::table('horario as h')
         ->leftJoin('horario_empleado as he','h.horario_id','=','he.horario_horario_id')
-        ->where('h.user_id', '=', Auth::user()->id)
+        ->where('h.organi_id', '=', session('sesionidorg'))
         ->whereNull('he.horario_horario_id')
         ->get();
         $area=DB::table('area')
@@ -613,7 +614,7 @@ class horarioController extends Controller
         ->where('id_empleado', '=', $idempl);
 
         $horario_empleado = DB::table('horario_empleado as he')->select(['id', 'title', 'color', 'textColor', 'start', 'end'])
-            ->where('users_id', '=', Auth::user()->id)
+        ->where('he.organi_id', '=', session('sesionidorg'))
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.empleado_emple_id', '=', $idempl)
             ->union($eventos_empleado);
@@ -643,6 +644,7 @@ class horarioController extends Controller
             $horario_dias->color = '#ffffff';
             $horario_dias->textColor = '111111';
             $horario_dias->users_id = Auth::user()->id;
+            $horario_dias->organi_id=  session('sesionidorg');
 
             $horario_dias->save();
             $horario_empleado = new horario_empleado();
@@ -658,7 +660,7 @@ class horarioController extends Controller
         ->where('id_empleado', '=', $idempl);
 
         $horario_empleado = DB::table('horario_empleado as he')->select(['id', 'title', 'color', 'textColor', 'start', 'end'])
-            ->where('users_id', '=', Auth::user()->id)
+            ->where('he.organi_id', '=', session('sesionidorg'))
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.empleado_emple_id', '=', $idempl)
             ->union($eventos_empleado);
@@ -697,7 +699,7 @@ class horarioController extends Controller
         ->where('id_empleado', '=', $idempl);
 
         $horario_empleado = DB::table('horario_empleado as he')->select(['id', 'title', 'color', 'textColor', 'start', 'end'])
-            ->where('users_id', '=', Auth::user()->id)
+           ->where('he.organi_id', '=', session('sesionidorg'))
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.empleado_emple_id', '=', $idempl)
             ->union($eventos_empleado1);
@@ -736,7 +738,7 @@ class horarioController extends Controller
         ->where('id_empleado', '=', $idempl);
 
         $horario_empleado = DB::table('horario_empleado as he')->select(['id', 'title', 'color', 'textColor', 'start', 'end'])
-            ->where('users_id', '=', Auth::user()->id)
+           ->where('he.organi_id', '=', session('sesionidorg'))
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.empleado_emple_id', '=', $idempl)
             ->union($eventos_empleado1);
@@ -770,7 +772,7 @@ class horarioController extends Controller
 
     public function verDatahorario(Request $request){
         $idsedit=$request->idsedit;
-    $horario=horario::where('user_id', '=', Auth::user()->id)
+    $horario=horario::where('organi_id', '=', session('sesionidorg'))
     ->where('horario_id', '=',$idsedit)
     ->get();
     return $horario;
@@ -793,7 +795,7 @@ class horarioController extends Controller
 
        $horarion=DB::table('horario as h')
         ->leftJoin('horario_empleado as he','h.horario_id','=','he.horario_horario_id')
-        ->where('h.user_id', '=', Auth::user()->id)
+        ->where('h.organi_id', '=', session('sesionidorg'))
         ->get();
 
         return($horarion);
@@ -804,7 +806,7 @@ class horarioController extends Controller
         $idhorario=$request->idhorario;
         $horarion=DB::table('horario as h')
         ->leftJoin('horario_empleado as he','h.horario_id','=','he.horario_horario_id')
-        ->where('h.user_id', '=', Auth::user()->id)
+        ->where('h.organi_id', '=', session('sesionidorg'))
         ->where('h.horario_id', '=', $idhorario)
         ->get();
         if($horarion[0]->horario_horario_id!=null){
@@ -823,7 +825,7 @@ class horarioController extends Controller
     public function empleArea(Request $request){
         $idarea=$request->idarea;
         $empleadosArea = DB::table('empleado')
-        ->where('users_id', '=', Auth::user()->id)
+        ->where('organi_id', '=', session('sesionidorg'))
         ->where('emple_area', '=', $idarea)
         ->where('emple_estado', '=', 1)
         ->get();
@@ -834,7 +836,7 @@ class horarioController extends Controller
         $idcargo=$request->idcargo;
        /*  dd($idcargo);  */
         $empleadosCargo = DB::table('empleado')
-        ->where('users_id', '=', Auth::user()->id)
+        ->where('organi_id', '=', session('sesionidorg'))
         ->where('emple_cargo', '=', $idcargo)
         ->where('emple_estado', '=', 1)
         ->get();
@@ -844,7 +846,7 @@ class horarioController extends Controller
    public function empleLocal(Request $request){
         $idlocal=$request->idlocal;
         $empleadosidLocal = DB::table('empleado')
-        ->where('users_id', '=', Auth::user()->id)
+        ->where('organi_id', '=', session('sesionidorg'))
         ->where('emple_local', '=', $idlocal)
         ->where('emple_estado', '=', 1)
         ->get();

@@ -31,7 +31,7 @@ class HomeController extends Controller
     {
 
         //$calendario=calendario::all();
-        $calendario = calendario::where('users_id', '=', Auth::user()->id)->get();
+        $calendario = calendario::where('organi_id', '=', session('sesionidorg'))->get();
         //dd($calendario);
         if ($calendario->first()) {
             $variable = 1;

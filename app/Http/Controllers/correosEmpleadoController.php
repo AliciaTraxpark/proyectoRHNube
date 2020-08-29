@@ -49,8 +49,8 @@ class correosEmpleadoController extends Controller
             $codP["id"] = $codigoP[0]->emple_persona;
             $persona = persona::find($codP["id"]);
             $user = User::where('id', '=', $codigoP[0]->users_id)->get()->first();
-            $usuarioOrganizacion = usuario_organizacion::where('user_id', '=', $user->id)->get()->first();
-            $organizacion = organizacion::where('organi_id', '=', $usuarioOrganizacion->organi_id)->get()->first();
+
+            $organizacion = organizacion::where('organi_id', '=', session('sesionidorg'))->get()->first();
             Mail::to($email)->queue(new CorreoEmpleadoMail($vinculacion, $persona, $licencia_empleado, $organizacion));
             $vinculacion->fecha_entrega = Carbon::now();
             $envio = $vinculacion->envio;
@@ -86,8 +86,8 @@ class correosEmpleadoController extends Controller
             $codP["id"] = $codigoP->emple_persona;
             $persona = persona::find($codP["id"]);
             $user = User::where('id', '=', $codigoP->users_id)->get()->first();
-            $usuarioOrganizacion = usuario_organizacion::where('user_id', '=', $user->id)->get()->first();
-            $organizacion = organizacion::where('organi_id', '=', $usuarioOrganizacion->organi_id)->get()->first();
+
+            $organizacion = organizacion::where('organi_id', '=', session('sesionidorg'))->get()->first();
             Mail::to($email)->queue(new AndroidMail($persona, $organizacion));
             $vinculacion = vinculacion::where('id', '=', $idVinculacion)->get()->first();
             $envio = $vinculacion->envio;
@@ -123,8 +123,8 @@ class correosEmpleadoController extends Controller
                 $datos["correo"] = $correoE->emple_Correo;
                 $email = array($datos["correo"]);
                 $user = User::where('id', '=', $empleado->users_id)->get()->first();
-                $usuarioOrganizacion = usuario_organizacion::where('user_id', '=', $user->id)->get()->first();
-                $organizacion = organizacion::where('organi_id', '=', $usuarioOrganizacion->organi_id)->get()->first();
+
+                $organizacion = organizacion::where('organi_id', '=', session('sesionidorg'))->get()->first();
                 Mail::to($email)->queue(new AndroidMail($persona, $organizacion));
                 array_push($resultado, array("Persona" => $persona, "Correo" => $c));
             } else {
@@ -165,8 +165,8 @@ class correosEmpleadoController extends Controller
                     $datos["correo"] = $empleado->emple_Correo;
                     $email = array($datos["correo"]);
                     $user = User::where('id', '=', $empleado->users_id)->get()->first();
-                    $usuarioOrganizacion = usuario_organizacion::where('user_id', '=', $user->id)->get()->first();
-                    $organizacion = organizacion::where('organi_id', '=', $usuarioOrganizacion->organi_id)->get()->first();
+
+                    $organizacion = organizacion::where('organi_id', '=', session('sesionidorg'))->get()->first();
                     Mail::to($email)->queue(new MasivoWindowsMail($arrayVinculacion, $persona, $organizacion));
                     array_push($resultado, array("Persona" => $persona, "Correo" => $c, "Vinculacion" => $v));
                 } else {
@@ -230,11 +230,7 @@ class correosEmpleadoController extends Controller
                         array_push($resultado, array("Persona" => $persona, "Correo" => $c, "Reenvio" => $r));
                     }
                 } else {
-                    $codigoEmpresa = DB::table('users as u')
-                        ->join('usuario_organizacion as uo', 'uo.user_id', '=', 'u.id')
-                        ->select('uo.organi_id')
-                        ->where('u.id', '=', Auth::user()->id)
-                        ->get();
+                  
                     $codigoEmpleado = DB::table('empleado as e')
                         ->select('e.emple_codigo', 'e.emple_persona', 'e.created_at')
                         ->where('e.emple_id', '=', $idEm)
@@ -247,14 +243,14 @@ class correosEmpleadoController extends Controller
                     $codP["id"] = $codigoP[0]->emple_persona;
                     $persona = persona::find($codP["id"]);
                     if ($codigoEmpleado[0]->emple_codigo != '') {
-                        $codigoHash = $codigoEmpresa[0]->organi_id . $idEm . $codigoEmpleado[0]->emple_codigo;
+                        $codigoHash = session('sesionidorg') . $idEm . $codigoEmpleado[0]->emple_codigo;
                         $encode = intval($codigoHash, 36);
-                        $codigoLicencia = $idEm . '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id;
+                        $codigoLicencia = $idEm . '.' . $codigoEmpleado[0]->created_at . session('sesionidorg');
                         $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
                     } else {
-                        $codigoHash = $codigoEmpresa[0]->organi_id . $idEm . $codigoEmpleado[0]->emple_persona;
+                        $codigoHash = session('sesionidorg') . $idEm . $codigoEmpleado[0]->emple_persona;
                         $encode = intval($codigoHash, 36);
-                        $codigoLicencia = $idEm . '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa[0]->organi_id;
+                        $codigoLicencia = $idEm . '.' . $codigoEmpleado[0]->created_at . session('sesionidorg');
                         $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
                     }
 

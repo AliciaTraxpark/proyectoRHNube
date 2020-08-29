@@ -65,7 +65,7 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                     }  else{return redirect()->back()->with('alert', 'No se encontro el tipo de documento:'.$row['tipo_documento'].'.  El proceso se interrumpio en la fila:'.$filas); $row['tipo_doc']=null;}
                    } else{ $row['tipo_docArray']=null; }
                    //dni
-                   $empleadoAntiguo=DB::table('empleado')->where('emple_nDoc','=',$row['numero_documento'])->where('empleado.users_id', '=', Auth::user()->id)
+                   $empleadoAntiguo=DB::table('empleado')->where('emple_nDoc','=',$row['numero_documento'])->where('empleado.organi_id', '=', session('sesionidorg'))
                    ->where('empleado.emple_estado', '=', 1)->first();
                    if($empleadoAntiguo!=null){
                        return redirect()->back()->with('alert', 'numero de documento ya registrado en otro empleado: '.$row['numero_documento'].' El proceso se interrumpio en la fila: '.$filas.' de excel');
@@ -100,7 +100,7 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                        }
                     //correo
                    if($row['correo']!=null || $row['correo']!=''){
-                     $correoAntiguo=DB::table('empleado')->where('emple_Correo','=',$row['correo'])->where('empleado.users_id', '=', Auth::user()->id)
+                     $correoAntiguo=DB::table('empleado')->where('emple_Correo','=',$row['correo'])->where('empleado.organi_id', '=',session('sesionidorg'))
                     ->where('empleado.emple_estado', '=', 1)->first();
                     if( $correoAntiguo!=null){
                         return redirect()->back()->with('alert', 'correo ya registrado en otro empleado: '.$row['correo'].' El proceso se interrumpio en la fila: '.$filas.' de excel');
@@ -291,7 +291,7 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
 
                  //CONDICION_PAGO
                 $condicPago = condicion_pago::where("condicion", "like", "%".$row['condicion_pago']."%")
-                ->where('user_id', '=', Auth::user()->id)->first();
+                ->where('organi_id', '=', session('sesionidorg'))->first();
                 if($row['condicion_pago']!=null){
                     if ($condicPago!=null){
                         $row['idcondicion'] = $condicPago->id;  $row['condicionArray'] = $condicPago->condicion;

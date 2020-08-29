@@ -31,7 +31,7 @@ class delegarInvController extends Controller
         $empleado = DB::table('empleado as e')
             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-            ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.organi_id', '=', session('sesionidorg'))
             ->where('e.emple_estado', '=', 1)
             ->select(
                 'e.emple_id',
@@ -64,7 +64,7 @@ class delegarInvController extends Controller
         $arrayem = collect();
         foreach($idarea as $idareas){
             $empleadosArea = DB::table('empleado')
-        ->where('users_id', '=', Auth::user()->id)
+        ->where('organi_id', '=', session('sesionidorg'))
         ->where('emple_area', '=', $idareas)
         ->where('emple_estado', '=', 1)
         ->get();

@@ -20,11 +20,11 @@ class ProyectoController extends Controller
     }
     public function index()
     {
-        $proyecto = proyecto::where('idUser', '=', Auth::user()->id)->where('Proye_estado', '=', 1)->get();
+        $proyecto = proyecto::where('organi_id', '=', session('sesionidorg'))->where('Proye_estado', '=', 1)->get();
         $empleado = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-            ->where('e.users_id', '=', Auth::user()->id)
+            ->where('e.organi_id', '=', session('sesionidorg'))
             ->where('e.emple_estado', '=', 1)
             ->get();
 
@@ -38,6 +38,7 @@ class ProyectoController extends Controller
         $proyecto->Proye_Detalle = $request->get('descripcion');
         $proyecto->Proye_estado = 1;
         $proyecto->idUser = Auth::user()->id;
+        $proyecto->organi_id = session('sesionidorg');
         $proyecto->save();
     }
     public function proyectoV(Request $request)

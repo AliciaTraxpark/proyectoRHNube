@@ -165,7 +165,7 @@ class editarAtributosController extends Controller
 
     public function condicion()
     {
-        $condicion = condicion_pago::where('user_id', '=', Auth::user()->id)->get();
+        $condicion = condicion_pago::where('organi_id', '=', session('sesionidorg'))->get();
         return response()->json($condicion, 200);
     }
 

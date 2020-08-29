@@ -84,7 +84,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $centroC = centro_costo::all();
                 $local = local::all();
                 $nivel = nivel::all();
-                $condicion_pago=condicion_pago::where('user_id','=',Auth::user()->id)->get();
+                $condicion_pago=condicion_pago::where('organi_id','=',session('sesionidorg'))->get();
 
                 $drop_column = 'N';
                 $drop_columnP = 'o';

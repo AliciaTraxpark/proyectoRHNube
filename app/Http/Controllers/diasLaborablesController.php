@@ -20,7 +20,7 @@ class diasLaborablesController extends Controller
         $empleado = DB::table('empleado as e')
         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
         ->where('e.emple_estado', '=', 1)
-        ->where('users_id','=',Auth::user()->id)
+        ->where('organi_id', '=', session('sesionidorg'))
         ->get();
         return View('horarios.diasLaborales',['empleado'=>$empleado]);
     }
@@ -57,6 +57,7 @@ class diasLaborablesController extends Controller
         $incidencia->inciden_descuento = $request->get('descuentoI');
         $incidencia->inciden_hora =  $request->get('horaIn');
         $incidencia->users_id = Auth::user()->id;
+        $incidencia->organi_id=session('sesionidorg');
         $incidencia->save();
         foreach($idempleado as $idempleados){
         $incidencia_dias = new incidencia_dias();

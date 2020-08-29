@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Imports\EmpleadoImport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\actividad;
 class excelEmpleadoController extends Controller
 {
     //
@@ -231,7 +232,7 @@ class excelEmpleadoController extends Controller
                    }
                  } else{ $row['idnivel']=null; }
                  ////////////////Condicion de pago
-                 $condicion_pago = condicion_pago::where("condicion", "like", "%".$emp[22]."%")->where('user_id', '=', Auth::user()->id)->first();
+                 $condicion_pago = condicion_pago::where("condicion", "like", "%".$emp[22]."%") ->where('organi_id', '=', session('sesionidorg'))->first();
                  if($emp[22]!=null){
                      if ($condicion_pago!=null){
                          $row['idcondicion_pago'] = $condicion_pago->id;
@@ -239,6 +240,7 @@ class excelEmpleadoController extends Controller
                          $condicion_pagorow = new condicion_pago();
                          $condicion_pagorow->condicion=$emp[22];
                          $condicion_pagorow->user_id=Auth::user()->id;
+                         $condicion_pago->organi_id= session('sesionidorg');
                          $condicion_pagorow->save();
                          $row['idcondicion_pago'] =$condicion_pagorow->id;
 
@@ -293,10 +295,19 @@ class excelEmpleadoController extends Controller
                 'emple_nivel'  =>$row['idnivel'],
                 'emple_foto' =>'',
                 'users_id'=> Auth::user()->id,
+                'organi_id'=> session('sesionidorg'),
                 'emple_pasword'=>Hash::make($emp[1]),
 
                 //
             ]);
+
+
+                actividad::create([
+                    'Activi_Nombre'=>"Tarea 01",
+                    'empleado_emple_id'=>$empleadoId->emple_id,
+                    'estado'    => 1,
+
+                ]);
             contrato::create([
                 'id_tipoContrato'=>$row['idtipo_contrato'],
                 'id_condicionPago'=>$row['idcondicion_pago'],

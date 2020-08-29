@@ -51,6 +51,7 @@ class EventosUsuarioController extends Controller
         $eventos_usuario->tipo= $request->get('tipo');
         $eventos_usuario->id_calendario= $request->get('id_calendario');
         $eventos_usuario->users_id=Auth::user()->id;
+        $eventos_usuario->organi_id=session('sesionidorg');
 
         $eventos_usuario->save();
         return $eventos_usuario->id;
