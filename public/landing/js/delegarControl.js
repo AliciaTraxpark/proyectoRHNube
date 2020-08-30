@@ -69,32 +69,83 @@ $("#selectArea").change(function (e) {
 function registrarInvit() {
     var emailInv = $("#emailInvi").val();
     var idEmpleado = $("#nombreEmpleado").val();
-    if ($("#adminCheck").is(":checked")) {
-        
-    } else {
-        $.ajax({
-            type: "post",
-            url: "/registrarInvitado",
-            data: {
-                emailInv,
-                idEmpleado,
+    $.ajax({
+        type: "post",
+        url: "/verificarEmaD",
+        data: {
+            email:emailInv
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
             },
-            statusCode: {
-                419: function () {
-                    location.reload();
-                },
-            },
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            success: function (data) {
-                $('#agregarInvitado').modal('hide');
-            },
-            error: function (data) {
-                alert("Ocurrio un error");
-            },
-        });
-    }
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+           if(data==1){
+            $('#spanEm').show();
+               return false;
+           }
+           else{   $('#spanEm').hide();
+            if ($("#adminCheck").is(":checked")) {
+                $.ajax({
+                    type: "post",
+                    url: "/registrarInvitadoAdm",
+                    data: {
+                        emailInv
+                    },
+                    statusCode: {
+                        419: function () {
+                            location.reload();
+                        },
+                    },
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    },
+                    success: function (data) {
+                        $('#tablaInvit').load(location.href + " #tablaInvit>*");
+                        $('#agregarInvitado').modal('hide');
+                    },
+                    error: function (data) {
+                        alert("Ocurrio un error");
+                    },
+                });
+            } else {
+                $('#btnGu').prop('disabled',true);
+                $.ajax({
+                    type: "post",
+                    url: "/registrarInvitado",
+                    data: {
+                        emailInv,
+                        idEmpleado,
+                    },
+                    statusCode: {
+                        419: function () {
+                            location.reload();
+                        },
+                    },
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    },
+                    success: function (data) {
+                        $('#tablaInvit').load(location.href + " #tablaInvit>*");
+                        $('#agregarInvitado').modal('hide');
+                    },
+                    error: function (data) {
+                        alert("Ocurrio un error");
+                    },
+                });
+            }
+           }
+        },
+        error: function (data) {
+            alert("Ocurrio un error");
+        },
+    });
+
+
 }
 //admin check
 $("#adminCheck").click(function () {

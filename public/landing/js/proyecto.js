@@ -349,7 +349,7 @@ function eliminarsoloEmp(id){
                     },
                     success: function (data) {
                         $('#r'+id).remove();
-                        $('#tablaProyecto').load(location.href + " #tablaProyecto>*");
+                        $('#tablaInvit').load(location.href + " #tablaInvit>*");
                         $.notify(" empleado eliminado", {
                             align: "right",
                             verticalAlign: "top",

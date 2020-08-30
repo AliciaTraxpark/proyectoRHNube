@@ -1,3 +1,61 @@
+function confirmarEmail(){
+    $('#spanInc').hide();
+    var emailC= $('#email2').val();
+    var claveC=$('#claveCon').val();
+    var idinvita=$('#idInvit').val();
+    $.ajax({
+        type: "post",
+        url: "/validaremailCInvita",
+        data: {
+            email:emailC,clave:claveC
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+
+            if(data[0]==1){
+                $.ajax({
+                    type: "POST",
+                    url: "/registrarEmailBD",
+                    data: {
+                        idinvitado:idinvita,
+                        iduser:data[1],
+
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+
+                            window.location.replace(
+                                location.origin
+                            );
+
+                    }
+
+                });
+
+            }
+            else{
+                $('#spanInc').show();
+
+            }
+
+
+        },
+        error: function () {
+            alert("Hay un error");
+        }
+    });
+
+}
+
 function agregarempleado() {
 
     ///validar fecha

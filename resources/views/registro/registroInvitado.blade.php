@@ -68,6 +68,58 @@
         <div class="content-wrapper">
             <div class="container">
                 <section class="features-overview" id="features-section">
+                     {{--  Modal doble email --}}
+                   <div id="myModalEmail" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" style="overflow-y: auto;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header" style="padding-bottom:
+                                3px; padding-top:
+                                10px;background: #ecebeb">
+                                <h5 class="" id="myModalLabel"
+                                    style="font-size: 14px">Email ya registrado
+                                </h5>
+                               {{--  <button type="button" class="close"
+                                    data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button> --}}
+                            </div>
+                            <div class="modal-body">
+                                <form method="POST"
+                                    action="javascript:confirmarEmail()">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <label class="col-lg-12
+                                                col-form-label"
+                                                for="simpleinput">El email:  </label>
+
+                                        </div>
+                                        <div class="col-md-12">
+                                            <input type="text" class="form-control" disabled class="col-md-8" id="email2">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="col-lg-12
+                                            col-form-label"
+                                            for="simpleinput" for="">pertenece a un usuario
+                                            registrado,para confirmar su invitacion como invitado escriba su contraseña:</label>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <span  id="spanInc" style="color: #d41616;display: none;font-size: 12px!important;font-weight: 500;">Contraseña incorrecta</span>
+                                            <input type="password" class="form-control" id="claveCon" placeholder="escriba contraseña">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+
+                                    <button type="submit" style="background:
+                                        #302f56;color: #ecebeb" class="btn
+                                        btn-sm" id="confirmar"> &nbsp;
+                                        &nbsp; Confirmar email
+                                        &nbsp; &nbsp; </button>
+                                </div>
+                            </form>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
                     <!--MODAL FECHA-->
                     <div id="myModal" class="modal fade" tabindex="-1"
                         role="dialog" aria-labelledby="myModalLabel"
@@ -454,7 +506,34 @@
    textoseparado = texto.split(separador);
 /* alert(textoseparado[1]); */
     </script>
-    <script></script>
+    <script>
+        $( document ).ready(function() {
+            var email=$('#email').val();
+            $.ajax({
+        type: "get",
+        url: "/persona/comprobar",
+        data: {
+            email: email
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            if (data == 1) {
+                $('#myModalEmail').modal({backdrop: 'static', keyboard: false})
+                $('#email2').val(email);
+                $('#myModalEmail').modal('show');
+
+                return false;
+
+            } else {
+
+            }
+        },
+
+    });
+    });
+    </script>
         </body>
 
     </html>

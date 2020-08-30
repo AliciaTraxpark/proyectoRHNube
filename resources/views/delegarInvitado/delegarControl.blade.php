@@ -77,7 +77,7 @@
                         </div> --}}
                         <div class="col-md-5 text-left" style="bottom: 5px;">
                             <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal"
-                                data-target="#agregarInvitado" onclick="$('#frmInvi')[0].reset();$('#nombreEmpleado').prop('required',true);
+                                data-target="#agregarInvitado" onclick="$('#frmInvi')[0].reset();$('#spanEm').hide();$('#nombreEmpleado').prop('required',true);
                                 $('#divInvitado').show();" style="background: #507394;
                                         border-color: #507394;">+ Invitar miembro</button>
 
@@ -86,58 +86,42 @@
                     <br>
 
 
-                    {{-- <table id="tablaProyecto"
+                     <table id="tablaInvit"
                         class="table table-drop dt-responsive nowrap" style="font-size: 12.5px!important">
                         <thead style="background: #fafafa">
                             <tr>
                                 <th>#</th>
-                                <th>Nombre</th>
-                                <th>Detalle</th>
-                                <th>Miembros</th>
+                                <th>Correo</th>
+                                <th>Rol</th>
+                                <th>Estado</th>
                                 <th>Opciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($proyecto as $proyectos)
-                                @php
-                                $proyectoEmp=proyecto_empleado::where('Proyecto_Proye_id','=',$proyectos->Proye_id)->get();
-                                @endphp
+                            @foreach ($invitado as $invitados)
+
                                 <tr>
                                     <th>{{ $loop->index + 1 }}</th>
-                                    <td>{{ $proyectos->Proye_Nombre }}</td>
-                                    <td>{{ $proyectos->Proye_Detalle }}</td>
+                                    <td>{{ $invitados->email_inv }}</td>
+                                    <td>{{ $invitados->rol_nombre }}</td>
                                     <td>
-                                        @foreach ($proyectoEmp as $proyectoEmps)
-                                            @php
-                                            $empleado = DB::table('empleado as e')
-                                            ->join('persona as p', 'e.emple_persona', '=',
-                                            'p.perso_id')
-                                            ->select('e.emple_id','p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno')
-                                            ->where('e.emple_id','=',$proyectoEmps->empleado_emple_id)
-                                            ->where('e.emple_estado', '=', 1)
-                                            ->get();
-
-                                            @endphp
-
-                                            <span> <img src="{{ URL::asset('admin/assets/images/users/empleado.png') }}"
-                                                    class="mr-2" alt="" />{{ $empleado[0]->perso_nombre }}
-                                                {{ $empleado[0]->perso_apPaterno }} &nbsp;</span>
-                                        @endforeach
+                                        @if ($invitados->estado==0)
+                                        No confirmado
+                                        @else
+                                        Confirmado
+                                        @endif
 
                                     </td>
-                                    <td><button style="background:#f0f4fd;
-                                                border-color:#f0f4fd; color:#a0add3" class="btn btn-secondary btn-sm"
-                                            onclick="abrirM({{ $proyectos->Proye_id }})">+
-                                            Miembro </button>&nbsp;&nbsp;&nbsp;&nbsp; <a id="formNuevoEd"
-                                            onclick="editarproyecto({{ $proyectos->Proye_id }})"
+                                    <td> {{-- <a id=""
+                                            onclick=""
                                             style="cursor: pointer"><img src="{{ asset('admin/images/edit.svg') }}"
                                                 height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a onclick="eliminarp({{ $proyectos->Proye_id }});" style="cursor: pointer"><img
-                                                src="{{ asset('admin/images/delete.svg') }}" height="15"></a></td>
+                                        <a onclick=" style="cursor: pointer"><img
+                                                src="{{ asset('admin/images/delete.svg') }}" height="15"></a> --}}</td>
                                 </tr>
                             @endforeach
                         </tbody>
-                    </table> --}}
+                    </table>
                 </div>
             </div>
         </div>
@@ -167,7 +151,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="">Email de invitado:</label>
+                                            <label for="">Email de invitado:</label> <span id="spanEm" style="display: none;color:#911818">*Email ya registrado como invitado</span>
                                             <input type="email" class="form-control form-control-sm" id="emailInvi"
                                                 required>
                                         </div>
@@ -231,7 +215,7 @@
                 <div class="modal-footer">
                     <div class="col-md-12 text-right" style="padding-right: 6px;">
                         <button type="button" class="btn btn-light  " data-dismiss="modal">Cancelar</button>
-                        <button type="submit" name="" style="background-color: #163552;" class="btn  ">Guardar</button>
+                        <button type="submit" id="btnGu" style="background-color: #163552;" class="btn  ">Guardar</button>
                         </form>
                     </div>
                 </div>

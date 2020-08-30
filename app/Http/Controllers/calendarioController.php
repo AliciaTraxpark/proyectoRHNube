@@ -128,7 +128,7 @@ class calendarioController extends Controller
             //FUNCIONA OK
 
 
-            return view('calendario.calendario', ['pais' => $paises, 'calendario' => $calendarioSel]);
+            return view('calendario.calendarioMenu', ['pais' => $paises, 'calendario' => $calendarioSel]);
         } else {
             return redirect(route('principal'));
         }

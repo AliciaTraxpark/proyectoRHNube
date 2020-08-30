@@ -28,6 +28,11 @@ class delegarInvController extends Controller
     // */
     public function index(){
         if (Auth::check()) {
+            $invitado=DB::table('invitado as i')
+            ->where('i.organi_id', '=',session('sesionidorg'))
+            ->join('rol as r', 'i.rol_id', '=', 'r.rol_id')
+            ->get();
+
         $empleado = DB::table('empleado as e')
             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
@@ -53,7 +58,7 @@ class delegarInvController extends Controller
             )
             ->groupBy('ar.area_id')
             ->get();
-        return view('delegarInvitado.delegarControl',['empleado'=>$empleado,'area'=>$area]);
+        return view('delegarInvitado.delegarControl',['empleado'=>$empleado,'area'=>$area,'invitado'=>$invitado]);
     }
     else {
         return redirect(route('principal'));
@@ -100,23 +105,17 @@ class delegarInvController extends Controller
     public function registrarInvitadoAdm(Request $request){
 
         $emailInv=$request->emailInv;
-        $idEmpleado=$request->idEmpleado;
+
 
         $organi = organizacion::find(session('sesionidorg'));
         $invitado = new invitado();
         $invitado->organi_id =  session('sesionidorg');
-        $invitado->rol_id =3;
+        $invitado->rol_id =1;
         $invitado->email_inv = $emailInv;
         $invitado->estado =0;
         $invitado->users_id =Auth::user()->id;
         $invitado->save();
 
-        foreach($idEmpleado as $idEmpleados){
-            $invitado_empleado = new invitado_empleado();
-            $invitado_empleado->idinvitado = $invitado->idinvitado;
-            $invitado_empleado->emple_id = $idEmpleados;
-            $invitado_empleado->save();
-        }
         Mail::to($emailInv)->queue(new CorreoInvitado($organi,$invitado));
 
     }
@@ -166,11 +165,13 @@ class delegarInvController extends Controller
         $usuario_organizacion = new usuario_organizacion();
             $usuario_organizacion->user_id =$User->id;
             $usuario_organizacion->organi_id = $invitado->organi_id;
-            $usuario_organizacion->rol_id = 3;
+            $usuario_organizacion->rol_id =$invitado->rol_id;
             $usuario_organizacion->save();
 
          //actualiza invitado
-
+         $invitadoAct  = DB::table('invitado')
+         ->where('idinvitado', '=',  $idinvitado)
+            ->update(['estado' => 1]);
         //////////////
 
 
@@ -219,6 +220,55 @@ class delegarInvController extends Controller
             ->update(['password' => Hash::make($cnueva)]); */
             return [1,$user1];
         } else { return [0,$user1];}
+
+    }
+    public function validaremailCInvita(Request $request){
+        $emailUser = $request->get('email');
+        $cantigua=$request->get('clave');
+
+       /*  $cnueva= $request->get('cnueva'); */
+        $user = User::where('email', '=',$emailUser)->get()->first();
+
+        $id = $user->id;
+
+            if (Hash::check($cantigua,$user->password)) {
+
+            return [1,$id];
+        } else { return [0,$id];}
+
+    }
+
+    public function registrarEmailBD(Request $request){
+        $idinvitado=$request->idinvitado;
+        $iduser=$request->iduser;
+         //registro en organizacion
+         $invitado = DB::table('invitado')
+         ->where('idinvitado', '=',  $idinvitado)
+         ->get()->first();
+     $usuario_organizacion = new usuario_organizacion();
+         $usuario_organizacion->user_id =$iduser;
+         $usuario_organizacion->organi_id = $invitado->organi_id;
+         $usuario_organizacion->rol_id =  $invitado->rol_id;
+         $usuario_organizacion->save();
+
+      //actualiza invitado
+      $invitadoAct  = DB::table('invitado')
+      ->where('idinvitado', '=',  $idinvitado)
+         ->update(['estado' => 1]);
+    }
+
+    public function verificarEmaD(Request $request){
+        $email=$request->email;
+        $invitado=DB::table('invitado')
+        ->where('organi_id','=',session('sesionidorg'))
+        ->where('email_inv','=', $email)
+        ->get();
+        if(count($invitado)){
+            return 1;
+        } else{
+            return 0;
+        }
+
 
     }
 }
