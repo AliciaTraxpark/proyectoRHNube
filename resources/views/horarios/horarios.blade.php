@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <title>Horarios</title>
     <meta charset="UTF-8">
@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- App favicon -->
-    <link rel="shortcut icon" href="https://rhsolution.com.pe/wp-content/uploads/2019/06/small-logo-rh-solution-64x64.png" sizes="32x32">
+    <link rel="shortcut icon" href="https://i.ibb.co/b31CPDW/Recurso-13.png">
 
     <!-- App css -->
     <link href="{{asset('admin/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
@@ -154,13 +154,13 @@ background-color: #ffffff !important;
 </div>
 <header id="header-section">
     <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
-        <div class="container">
+        <div class="container pb-3">
             <div class="col-md-2 col-xl-2">
                 <div class="navbar-brand-wrapper d-flex w-100">
-                    <img src="{{asset('landing/images/logo.png')}}" height="100">
+                    <img src="{{asset('landing/images/Recurso 23.png')}}" height="50">
                 </div>
             </div>
-            <div class="col-md-7 col-xl-7 text-left">
+            <div class="col-md-7 col-xl-7 text-left pl-5">
                 <h5 style="color: #ffffff">Gestión de Horarios</h5>
                 <label for="" class="blanco font-italic">Asignemos los turnos y horarios</label>
             </div>

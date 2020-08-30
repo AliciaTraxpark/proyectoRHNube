@@ -1,15 +1,16 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8" />
 
-    <title>RH Solution</title>
+    <title>RH nube</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="shortcut icon" href="https://i.ibb.co/b31CPDW/Recurso-13.png">
 
     @if(isset($isDark) && $isDark)
         @include('layouts.shared.head', ['isDark' => true])
