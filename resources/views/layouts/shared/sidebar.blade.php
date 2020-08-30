@@ -20,7 +20,7 @@ use App\persona;
             @endphp
             <h6 class="pro-user-name mt-0 mb-0" id="h6Nombres">{{$persona->perso_nombre}}
                 {{$persona->perso_apPaterno}}</h6>
-            <span class="pro-user-desc">Administrador {{$idOrgani}} </span>
+            <span class="pro-user-desc">Administrador </span>
         </div>
        {{--  <div class="dropdown align-self-center profile-dropdown-menu">
             <a class="dropdown-toggle mr-0" data-toggle="dropdown" href="#"

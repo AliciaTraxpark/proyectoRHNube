@@ -32,10 +32,11 @@ function confirmarEmail(){
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function (data) {
+                        $('.modal').modal('hide');
+                        $('#modalInv').modal({backdrop: 'static', keyboard: false});
+                        $('#modalInv').modal('show');
 
-                            window.location.replace(
-                                location.origin
-                            );
+
 
                     }
 
@@ -240,12 +241,19 @@ function registerP() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-                window.location.replace(
-                    location.origin
-                );
-                $('#modalInv').modal('show');
+            $('.modal').modal('hide');
+            $('#modalInv').modal({backdrop: 'static', keyboard: false});
+            $('#modalInv').modal('show');
+
         }
 
     });
+
+}
+function cerrarModal(){
+    $('.modal').modal('hide');
+    window.location.replace(
+        location.origin
+    );
 
 }

@@ -120,6 +120,7 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
+
                     <!--MODAL FECHA-->
                     <div id="myModal" class="modal fade" tabindex="-1"
                         role="dialog" aria-labelledby="myModalLabel"
@@ -417,6 +418,29 @@
                             </div>
                         </div>
                     </form>
+                    <div class="modal" id="modalInv" role="dialog" tabindex="-1"   aria-hidden="true" data-backdrop="static" data-keyboard="false" style="overflow-y: auto;"  >
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header" style="padding-top: 8px;
+                                            padding-bottom: 5px;background-color:
+                                            #163552;color:#ffffff">
+                                    <h5 style="font-size: 14px" class="modal-title">CONFIRMACION</h5>
+
+                                </div>
+                                <div class="modal-body text-center">
+                                    <img src="{{asset('admin/images/tick.svg')}}" height="25" class="mr-1 mt-2">
+                                    <p>Bien hecho, estas registrado! Te hemos enviado un correo de verificación.</p>
+                                </div>
+                                <div class="modal-footer" style="padding-top: 8px;
+                                            padding-bottom: 8px;">
+                                    <button type="button" class="btn
+                                    btn-sm" style="background-color:
+                                    #163552;color:#ffffff" onclick="cerrarModal()">OK</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </section>
                 <footer class="border-top">
                     <p class="text-center text-muted pt-4">© <?php echo date("

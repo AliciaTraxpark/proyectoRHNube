@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\condicion_pago;
 use App\Mail\CorreoMail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
@@ -71,6 +72,18 @@ class registroEmpresaController extends Controller
             $organizacion->organi_tipo = $organi;
             $organizacion->save();
             $idorgani = $organizacion->organi_id;
+
+            //
+            $condicion_pago=new condicion_pago();
+            $condicion_pago->condicion='Mensual';
+            $condicion_pago->organi_id=$idorgani;
+            $condicion_pago->save();
+
+            //
+            $condicion_pago1=new condicion_pago();
+            $condicion_pago1->condicion='Quincenal';
+            $condicion_pago1->organi_id=$idorgani;
+            $condicion_pago1->save();
 
             $usuario_organizacion = new usuario_organizacion();
             $usuario_organizacion->rol_id = 1;
