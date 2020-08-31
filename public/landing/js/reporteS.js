@@ -211,6 +211,7 @@ function onSelectFechas() {
                     dom: 'Bfrtip',
                     buttons: [{
                         extend: 'excel',
+                        className:'btn btn-sm mt-1',
                         text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
                         customize: function (xlsx) {
                             var sheet = xlsx.xl.worksheets['sheet1.xml'];
@@ -219,6 +220,7 @@ function onSelectFechas() {
                         autoFilter: false
                     }, {
                         extend: "pdfHtml5",
+                        className:'btn btn-sm mt-1',
                         text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
                         pageSize: 'LEGAL',
                         title: 'RH SOLUTION REPORTE SEMANAL'
