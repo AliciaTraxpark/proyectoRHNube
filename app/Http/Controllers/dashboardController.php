@@ -350,6 +350,7 @@ class dashboardController extends Controller
             )
             ->where('e.organi_id', '=', session('sesionidorg'))
             ->where('e.emple_estado', '=', 1)
+            ->where('p.perso_fechaNacimiento','!=','0000-00-00')
             ->groupBy('rango')
             ->get();
         array_push($datos, array("empleado" => $empleado, "edad" => $edad, "organizacion" => $organizacion));

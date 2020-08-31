@@ -205,7 +205,7 @@ function onMostrarPantallas() {
                                     totalCM = 0;
                                 } else {
                                     var totalR = parseFloat(sumaRangos / 60);
-                                    totalM = MtotalR.toFixed(1);
+                                    totalM = totalR.toFixed(1);
                                     if (totalM > 10) {
                                         totalCM = 10;
                                     } else {
