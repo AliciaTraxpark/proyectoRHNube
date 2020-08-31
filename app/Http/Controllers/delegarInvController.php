@@ -268,7 +268,17 @@ class delegarInvController extends Controller
         } else{
             return 0;
         }
+    }
 
-
+    public function verificarInvitadoreg(Request $request){
+        $idinvitado=$request->idinvitado;
+        $invitado=DB::table('invitado')
+        ->where('idinvitado','=', $idinvitado)
+        ->get();
+        if($invitado[0]->estado==1){
+            return 1;
+        } else{
+            return 0;
+        }
     }
 }

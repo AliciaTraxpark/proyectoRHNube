@@ -33,10 +33,8 @@ function confirmarEmail(){
                     },
                     success: function (data) {
                         $('.modal').modal('hide');
-                        $('#modalInv').modal({backdrop: 'static', keyboard: false});
-                        $('#modalInv').modal('show');
-
-
+                        $('#modalInvR').modal({backdrop: 'static', keyboard: false});
+                        $('#modalInvR').modal('show');
 
                     }
 
@@ -256,4 +254,10 @@ function cerrarModal(){
         location.origin
     );
 
+}
+function cerrarModalAdvertencia(){
+    $('.modal').modal('hide');
+    window.location.replace(
+        location.origin
+    );
 }
