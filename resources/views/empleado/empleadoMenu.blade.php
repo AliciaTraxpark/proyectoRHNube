@@ -2522,7 +2522,7 @@ use App\proyecto_empleado;
                                                         <input type="checkbox" class="custom-control-input"
                                                             id="customSwitch3">
                                                         <label class="custom-control-label" for="customSwitch3"
-                                                            style="font-weight: bold">Modo Tarea</label>
+                                                            style="font-weight: bold">Modo TASK</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -3434,7 +3434,7 @@ use App\proyecto_empleado;
                                                         <input type="checkbox" class="custom-control-input"
                                                             id="customSwitch1">
                                                         <label class="custom-control-label" for="customSwitch1"
-                                                            style="font-weight: bold">Modo Tarea</label>
+                                                            style="font-weight: bold">Modo TASK</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -3910,7 +3910,7 @@ use App\proyecto_empleado;
                                                         <input type="checkbox" class="custom-control-input"
                                                             id="customSwitch5">
                                                         <label class="custom-control-label" for="customSwitch5"
-                                                            style="font-weight: bold">Modo Tarea</label>
+                                                            style="font-weight: bold">Modo TASK</label>
                                                     </div>
                                                 </div>
                                             </div>
