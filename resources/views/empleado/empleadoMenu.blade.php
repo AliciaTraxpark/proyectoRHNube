@@ -2522,7 +2522,7 @@ use App\proyecto_empleado;
                                                         <input type="checkbox" class="custom-control-input"
                                                             id="customSwitch3">
                                                         <label class="custom-control-label" for="customSwitch3"
-                                                            style="font-weight: bold">Modo Tarea</label>
+                                                            style="font-weight: bold">Modo TASK</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -3093,7 +3093,7 @@ use App\proyecto_empleado;
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-md-2" style="" id="divescond2" style="display: none">
+                                <div class="col-md-2" id="divescond2" style="display: none">
                                     <div class="btn-group mt-2 mr-1">
                                         <button type="button" class="btn btn-primary btn-sm dropdown-toggle" style="color: #fff;
                                             background-color: #4a5669;
@@ -3434,7 +3434,7 @@ use App\proyecto_empleado;
                                                         <input type="checkbox" class="custom-control-input"
                                                             id="customSwitch1">
                                                         <label class="custom-control-label" for="customSwitch1"
-                                                            style="font-weight: bold">Modo Tarea</label>
+                                                            style="font-weight: bold">Modo TASK</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -3569,7 +3569,7 @@ use App\proyecto_empleado;
 <!--VER EMPLEADO-->
 <div id="verEmpleadoDetalles" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="verEmpleadoDetalles"
     aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" style="max-width: 880px!important;">
         <div class="modal-content">
             <div class="modal-header" style="background: #163552;">
                 <h4 class="header-title mt-0 " style="color: #f0f0f0">Datos de empleado</h4><br>
@@ -3836,7 +3836,7 @@ use App\proyecto_empleado;
                             <div class="row">
                                 <div class="col-md-4 text-right"><label for=""
                                         style="margin-top: 7px;font-weight: 600">Calendario:</label></div>
-                                <div class="col-md-4 text-center" id="divescond1_ver" style="">
+                                <div class="col-md-4 text-center" id="divescond1_ver">
                                     <input type="hidden" id="idselect3_ver">
                                     <select name="" id="selectCalendario_edit3_ver" class="form-control form-control-sm"
                                         style="margin-top: 4px;">
@@ -3910,7 +3910,7 @@ use App\proyecto_empleado;
                                                         <input type="checkbox" class="custom-control-input"
                                                             id="customSwitch5">
                                                         <label class="custom-control-label" for="customSwitch5"
-                                                            style="font-weight: bold">Modo Tarea</label>
+                                                            style="font-weight: bold">Modo TASK</label>
                                                     </div>
                                                 </div>
                                             </div>

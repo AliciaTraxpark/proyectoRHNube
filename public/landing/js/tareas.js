@@ -11,7 +11,7 @@ var notify = $.notifyDefaults({
 });
 //FECHA
 var fechaValue = $('#fecha').flatpickr({
-    mode:"single",
+    mode: "single",
     dateFormat: "Y-m-d",
     altInput: true,
     altFormat: "D, j F",
@@ -167,6 +167,8 @@ function onMostrarPantallas() {
                     var prom = 0;
                     var sumaRangos = 0;
                     var totalCM = 0;
+                    var hora_ini;
+                    var hora_fin;
                     var labelDelGrupo = horaDelGrupo + ":00:00" + " - " + (parseInt(horaDelGrupo) + 1) + ":00:00";
                     var grupo = `<span style="font-weight: bold;color:#6c757d;cursor:default">${labelDelGrupo}</span>&nbsp;&nbsp;<img src="landing/images/punt.gif" height="70">&nbsp;&nbsp;
                     <span class="promHoras" style="font-weight: bold;color:#6c757d;cursor:default" id="promHoras${$i}" data-toggle="tooltip" data-placement="right" title="Actividad por Hora"
@@ -188,8 +190,10 @@ function onMostrarPantallas() {
                                 }
                             }
                             if (data[index].minutos[j].length == 1) {
+                                hora_ini = data[index].minutos[j][0].hora_ini;
+                                hora_fin = data[index].minutos[j][0].hora_fin;
                                 var totalR = parseFloat(data[index].minutos[j][0].rango / 60);
-                                totalM = Math.round(totalR);
+                                totalM = totalR.toFixed(1);
                                 if (totalM > 10) {
                                     totalCM = 10;
                                 } else {
@@ -201,13 +205,15 @@ function onMostrarPantallas() {
                                     totalCM = 0;
                                 } else {
                                     var totalR = parseFloat(sumaRangos / 60);
-                                    totalM = Math.round(totalR);
+                                    totalM = MtotalR.toFixed(1);
                                     if (totalM > 10) {
                                         totalCM = 10;
                                     } else {
                                         totalCM = totalM;
                                     }
                                 }
+                                hora_ini = data[index].minutos[j][0].hora_ini;
+                                hora_fin = data[index].minutos[j][length - 1].hora_fin;
                                 promedio = (promedios / (data[index].minutos[j].length)).toFixed(2);
                                 if (promedios == 0) {
                                     promedio = 0
@@ -256,8 +262,7 @@ function onMostrarPantallas() {
                                                         </div>
                                                     </div>
                                                     &nbsp;
-                                                    <label style="font-size: 12px" for="">${hora + ":" + j + "0" + " - " + hora + 
-                                                    ":" + (j+1) + "0"}</label>
+                                                    <label style="font-size: 12px" for="">${hora_ini} - ${hora_fin}</label>
                                                     <div class="progress" style="background-color: #d4d4d4;" data-toggle="tooltip" data-placement="bottom" title="Actividad por Rango de Tiempo"
                                                     data-original-title="">
                                                         <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:${nivel}" aria-valuenow=${promedio}
@@ -308,8 +313,7 @@ function onMostrarPantallas() {
                                                         </div>
                                                     </div>
                                                         &nbsp;
-                                                        <label style="font-size: 12px" for="">${hora + ":" + j + "0" + " - " + (parseInt(hora)+1) + 
-                                                        ":" + "00"}</label>
+                                                        <label style="font-size: 12px" for="">${hora_ini} -  ${hora_fin}</label>
                                                         <div class="progress" style="background-color: #d4d4d4;" data-toggle="tooltip" data-placement="bottom" title="Actividad por Rango de Tiempo"
                                                         data-original-title="">
                                                             <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:${nivel}" aria-valuenow=${promedio}

@@ -1,3 +1,4 @@
+$('#graficaReporte').hide();
 $('#fecha').datetimepicker({
     language: 'es',
     format: 'dd/mm/yyyy',
@@ -141,7 +142,7 @@ function onSelectFechas() {
                     if (contar[0] != 0) {
                         var p1 = (promedio[0] / contar[0]).toFixed(2);
                         var sumaP = p1;
-                    }else{
+                    } else {
                         var sumaP = 0;
                     }
                     /*var t1 = total.split(":");
@@ -210,6 +211,7 @@ function onSelectFechas() {
                     dom: 'Bfrtip',
                     buttons: [{
                         extend: 'excel',
+                        className: 'btn btn-sm mt-1',
                         text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
                         customize: function (xlsx) {
                             var sheet = xlsx.xl.worksheets['sheet1.xml'];
@@ -218,6 +220,7 @@ function onSelectFechas() {
                         autoFilter: false
                     }, {
                         extend: "pdfHtml5",
+                        className: 'btn btn-sm mt-1',
                         text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
                         pageSize: 'LEGAL',
                         title: 'RH SOLUTION REPORTE SEMANAL'
@@ -253,7 +256,19 @@ function onSelectFechas() {
                             yAxes: [{
                                 stacked: true
                             }]
-                        }
+                        },
+                        tooltips: {
+                            callbacks: {
+                                title: function (tooltipItem, data) {
+                                    return data.labels[tooltipItem[0].index];
+                                },
+                                label: function (tooltipItem, data) {
+                                    var amount = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                                    // return amount + ' / ' + total + ' ( ' + parseFloat(amount * 100 / total).toFixed(2) + '% )';
+                                },
+                                //footer: function(tooltipItem, data) { return 'Total: 100 planos.'; }
+                            }
+                        },
                     }
                 });
             } else {
@@ -292,3 +307,7 @@ $(function () {
     $('#fecha').trigger("change.dp");
     $('#fecha').val(hoy);
 });
+
+function mostrarGrafica() {
+    $('#graficaReporte').toggle();
+}
