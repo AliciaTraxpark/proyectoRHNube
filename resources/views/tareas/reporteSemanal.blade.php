@@ -56,7 +56,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
-                <div class="row">
+                <div class="row pb-2">
                     <div class="col-md-8">
                         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
                             onclick="javascript:mostrarGrafica()"><i class="fa fa-eye mr-1"></i>Ver Grafica
