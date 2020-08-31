@@ -101,7 +101,7 @@ use Illuminate\Support\Facades\DB;
 
         <a href="javascript: void(0);">
             <i data-feather="activity"></i>
-            <span>Modulo 1: Actividades</span>
+            <span>Modulo TASK: Detalle diario</span>
             <span class="menu-arrow"></span>
         </a>
 
