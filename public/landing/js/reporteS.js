@@ -1,3 +1,4 @@
+$('#graficaReporte').hide();
 $('#fecha').datetimepicker({
     language: 'es',
     format: 'dd/mm/yyyy',
@@ -292,3 +293,7 @@ $(function () {
     $('#fecha').trigger("change.dp");
     $('#fecha').val(hoy);
 });
+
+function mostrarGrafica(){
+    $('#graficaReporte').toggle();
+}
