@@ -14,7 +14,9 @@ class invitado extends Model
         'rol_id',
         'email_inv',
         'estado',
-        'users_id'
+        'users_id',
+        'user_Invitado',
+        'dashboard'
 
     ];
 

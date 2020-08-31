@@ -121,14 +121,26 @@ use Illuminate\Support\Facades\DB;
 </ul>
 @endif
 @if ($usuario_organizacion[0]->rol_id==3)
+
 <ul class="metismenu" id="menu-bar">
-    <li>
+    @php
+        $invitadod=DB::table('invitado')
+      ->where('user_Invitado','=',Auth::user()->id)
+      ->where('organi_id','=',session('sesionidorg'))
+      ->get()->first();
+    @endphp
+     @if ($invitadod->dashboard==1)
+     <li>
         <a href="/dashboard" id="menuD">
             <i data-feather="home"></i>
             <span class="badge badge-success float-right">1</span>
             <span> Dashboard </span>
         </a>
     </li>
+
+
+     @endif
+
 
 
 
@@ -139,19 +151,19 @@ use Illuminate\Support\Facades\DB;
         </a>
     </li> -->
 
-   
+
 
     <li>
 
         <a href="javascript: void(0);">
             <i data-feather="activity"></i>
-            <span>Modulo 1: Actividades</span>
+            <span>Modulo TASK</span>
             <span class="menu-arrow"></span>
         </a>
 
         <ul class="nav-second-level" aria-expanded="false">
             <li>
-                <a href="/tareas">Actividad de Captura de Pantalla</a>
+                <a href="/tareas">Detalle diario</a>
             </li>
         </ul>
     </li>
@@ -159,7 +171,7 @@ use Illuminate\Support\Facades\DB;
     <li>
         <a href="/reporteSemanal">
             <img src="{{asset('admin/images/growth (2).svg')}}" height="25" class="mr-1" >
-            <span>Horas trabajadas</span>
+            <span>Informe semanal</span>
         </a>
     </li>
 </ul>
