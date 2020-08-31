@@ -165,6 +165,7 @@ return [
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Fedeisas\LaravelMailCssInliner\LaravelMailCssInlinerServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+        AWT\Providers\ApiLogServiceProvider::class,
         /*
          * Package Service Providers...
          */
