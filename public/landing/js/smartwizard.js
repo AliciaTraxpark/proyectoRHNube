@@ -536,6 +536,7 @@ $('#smartwizardVer').smartWizard({
         previous: 'Anterior'
     },
     justified: true,
+    autoAdjustHeight: true,
     anchorSettings: {
         anchorClickable: true, // Enable/Disable anchor navigation
         enableAllAnchors: true,
