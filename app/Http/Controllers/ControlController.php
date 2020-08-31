@@ -201,7 +201,9 @@ class ControlController extends Controller
                 DB::raw('DATE(cp.fecha_hora) as fecha'),
                 DB::raw('TIME(cp.fecha_hora) as hora'),
                 'pc.promedio as prom',
-                'pc.tiempo_rango as rango'
+                'pc.tiempo_rango as rango',
+                DB::raw('TIME(cp.hora_ini) as hora_ini'),
+                DB::raw('TIME(cp.hora_fin) as hora_fin')
             )
             ->where(DB::raw('IF(hd.id is null, DATE(cp.fecha_hora), DATE(hd.start))'), '=', $fecha)
             ->where('e.emple_id', '=', $idempleado)
