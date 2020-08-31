@@ -166,7 +166,7 @@ class ControlController extends Controller
             $resultado = array();
 
             foreach ($array as $captura) {
-                $horaCaptura = explode(":", $captura->hora_ini);
+                $horaCaptura = explode(":", $captura->hora);
                 if (!isset($resultado[$horaCaptura[0]])) {
                     $resultado[$horaCaptura[0]] = array("horaCaptura" => $horaCaptura[0], "minutos" => array());
                 }
@@ -199,7 +199,7 @@ class ControlController extends Controller
                 'cp.fecha_hora',
                 'en.Total_Envio',
                 DB::raw('DATE(cp.fecha_hora) as fecha'),
-                DB::raw('TIME(cp.fecha_hora) as hora_ini'),
+                DB::raw('TIME(cp.fecha_hora) as hora'),
                 'pc.promedio as prom',
                 'pc.tiempo_rango as rango'
             )
