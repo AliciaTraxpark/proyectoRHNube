@@ -318,3 +318,4 @@ Route::post('/verificaremCla', 'delegarInvController@validaremailC');
 Route::post('/validaremailCInvita', 'delegarInvController@validaremailCInvita');
 Route::post('/registrarEmailBD', 'delegarInvController@registrarEmailBD');
 Route::post('/verificarEmaD', 'delegarInvController@verificarEmaD');
+Route::post('/verificarInvitadoreg', 'delegarInvController@verificarInvitadoreg');

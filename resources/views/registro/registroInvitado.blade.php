@@ -51,8 +51,8 @@
                 <div class="container">
                     <div class="col-md-3">
                         <div class="navbar-brand-wrapper d-flex w-100">
-                            <img src="{{asset('landing/images/logo.png')}}"
-                                height="100">
+                            < <img src="{{asset('landing/images/Recurso 23.png')}}" alt=""
+                            height="35" />
                         </div>
                     </div>
                     <div class="col-md-9 text-left">
@@ -441,6 +441,50 @@
                         </div>
                     </div>
 
+                    <div class="modal" id="modalInvR" role="dialog" tabindex="-1"   aria-hidden="true" data-backdrop="static" data-keyboard="false" style="overflow-y: auto;"  >
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header" style="padding-top: 8px;
+                                            padding-bottom: 5px;background-color:
+                                            #163552;color:#ffffff">
+                                    <h5 style="font-size: 14px" class="modal-title">CONFIRMACION</h5>
+
+                                </div>
+                                <div class="modal-body text-center">
+                                    <img src="{{asset('admin/images/tick.svg')}}" height="25" class="mr-1 mt-2">
+                                    <p>Bien hecho, estas registrado! Ahora tienes registrada una nueva organizacion.</p>
+                                </div>
+                                <div class="modal-footer" style="padding-top: 8px;
+                                            padding-bottom: 8px;">
+                                    <button type="button" class="btn
+                                    btn-sm" style="background-color:
+                                    #163552;color:#ffffff" onclick="cerrarModal()">OK</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal" id="modalInvRegistra" role="dialog" tabindex="-1"   aria-hidden="true" data-backdrop="static" data-keyboard="false" style="overflow-y: auto;"  >
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header text-center" style="padding-top: 8px;
+                                    padding-bottom: 5px;background-color:
+                                    #163552;color:#ffffff">
+                            <h6 style="font-size: 14px" class="modal-title">Advertencia</h6>
+                        </div>
+                        <div class="modal-body text-center">
+                            <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
+                            <p>Usted ya utillizo este enlace para registrase.</p>
+                        </div>
+                        <div class="modal-footer text-center" style="padding-top: 5px;
+                                    padding-bottom: 5px;">
+                            <button type="button" onclick="cerrarModalAdvertencia()" class="btn
+                                        btn-sm" style="background-color:
+                                        #163552;color:#ffffff" data-dismiss="modal">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
                 </section>
                 <footer class="border-top">
                     <p class="text-center text-muted pt-4">© <?php echo date("
@@ -533,29 +577,57 @@
     <script>
         $( document ).ready(function() {
             var email=$('#email').val();
+            var idinvitad=$('#idInvit').val();
             $.ajax({
-        type: "get",
-        url: "/persona/comprobar",
-        data: {
-            email: email
-        },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function (data) {
-            if (data == 1) {
-                $('#myModalEmail').modal({backdrop: 'static', keyboard: false})
-                $('#email2').val(email);
-                $('#myModalEmail').modal('show');
+                    type: "POST",
+                    url: "/verificarInvitadoreg",
+                    data: {
+                        idinvitado:idinvitad
 
-                return false;
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
 
-            } else {
+                        if(data==1){
+                            $('.modal').modal('hide');
+                        $('#modalInvRegistra').modal({backdrop: 'static', keyboard: false});
+                        $('#modalInvRegistra').modal('show'); 
+                        }
+                        else{
+                        $.ajax({
+                            type: "get",
+                            url: "/persona/comprobar",
+                            data: {
+                                email: email
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function (data) {
+                                if (data == 1) {
+                                    $('#myModalEmail').modal({backdrop: 'static', keyboard: false})
+                                    $('#email2').val(email);
+                                    $('#myModalEmail').modal('show');
 
-            }
-        },
+                                    return false;
 
-    });
+                                } else {
+
+                                }
+                            },
+
+                });
+
+                        }
+
+
+                    }
+
+                });
+            ///////////////////////////////////
+
     });
     </script>
         </body>

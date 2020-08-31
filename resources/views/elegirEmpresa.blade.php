@@ -57,7 +57,8 @@
         <div class="container">
             <div class="col-md-2">
                 <div class="navbar-brand-wrapper d-flex w-100">
-                    <img src="{{asset('landing/images/logo.png')}}" height="100" >
+                    <img src="{{asset('landing/images/Recurso 23.png')}}" alt=""
+                    height="45" />
                 </div>
             </div>
             <div class="col-md-6 text-left">
