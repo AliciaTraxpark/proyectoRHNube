@@ -83,6 +83,7 @@ class delegarInvController extends Controller
 
         $emailInv=$request->emailInv;
         $idEmpleado=$request->idEmpleado;
+        $dash=$request->dash;
 
         $organi = organizacion::find(session('sesionidorg'));
         $invitado = new invitado();
@@ -91,6 +92,7 @@ class delegarInvController extends Controller
         $invitado->email_inv = $emailInv;
         $invitado->estado =0;
         $invitado->users_id =Auth::user()->id;
+        $invitado->dashboard =$dash;
         $invitado->save();
 
         foreach($idEmpleado as $idEmpleados){
@@ -171,7 +173,7 @@ class delegarInvController extends Controller
          //actualiza invitado
          $invitadoAct  = DB::table('invitado')
          ->where('idinvitado', '=',  $idinvitado)
-            ->update(['estado' => 1]);
+            ->update(['estado' => 1,'user_Invitado'=> $User->id]);
         //////////////
 
 
@@ -254,14 +256,14 @@ class delegarInvController extends Controller
       //actualiza invitado
       $invitadoAct  = DB::table('invitado')
       ->where('idinvitado', '=',  $idinvitado)
-         ->update(['estado' => 1]);
+      ->update(['estado' => 1,'user_Invitado'=> $iduser]);
     }
 
     public function verificarEmaD(Request $request){
         $email=$request->email;
         $invitado=DB::table('invitado')
         ->where('organi_id','=',session('sesionidorg'))
-        ->where('email_inv','=', $email)
+        ->where('email_inv','=',  $email)
         ->get();
         if(count($invitado)){
             return 1;

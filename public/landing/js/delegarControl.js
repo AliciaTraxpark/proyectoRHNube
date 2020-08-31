@@ -114,12 +114,17 @@ function registrarInvit() {
                 });
             } else {
                 $('#btnGu').prop('disabled',true);
+                var dash;
+                if ($("#dashboardCheck").is(":checked")) {
+                     dash=1;} else{
+                     dash=0;
+                    }
                 $.ajax({
                     type: "post",
                     url: "/registrarInvitado",
                     data: {
                         emailInv,
-                        idEmpleado,
+                        idEmpleado,dash
                     },
                     statusCode: {
                         419: function () {

@@ -142,13 +142,14 @@
                             <form id="frmInvi" action="javascript:registrarInvit()">
                                 <div class="row">
 
-                                    <div class="col-md-12"><label for=""></label>
+                                    <div class="col-md-6"><label for=""></label>
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input" id="adminCheck">
-                                            <label class="form-check-label" for="adminCheck" style="margin-top: 2px;">Invitar como
+                                            <label class="form-check-label" for="adminCheck" style="margin-top: 2px;font-weight: 600">Invitar como
                                                 administrador</label><br><br>
                                         </div>
                                     </div>
+
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="">Email de invitado:</label> <span id="spanEm" style="display: none;color:#911818">*Email ya registrado como invitado</span>
@@ -157,6 +158,12 @@
                                         </div>
                                     </div>
                                     <div id="divInvitado" class="col-md-12" style="padding-left: 0px;padding-right: 0px">
+                                        <div class="col-md-8 ">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="dashboardCheck">
+                                                <label class="form-check-label" for="dashboardCheck" style="margin-top: 2px;font-style: oblique;">Ver Dashboard</label><br><br>
+                                            </div>
+                                        </div>
                                         <div class="col-md-12">
                                             <div class="row">
                                                 <div class="col-md-12 form-check" style="padding-left: 4px;">
