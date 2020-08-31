@@ -3093,7 +3093,7 @@ use App\proyecto_empleado;
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-md-2" style="" id="divescond2" style="display: none">
+                                <div class="col-md-2" id="divescond2" style="display: none">
                                     <div class="btn-group mt-2 mr-1">
                                         <button type="button" class="btn btn-primary btn-sm dropdown-toggle" style="color: #fff;
                                             background-color: #4a5669;
@@ -3836,7 +3836,7 @@ use App\proyecto_empleado;
                             <div class="row">
                                 <div class="col-md-4 text-right"><label for=""
                                         style="margin-top: 7px;font-weight: 600">Calendario:</label></div>
-                                <div class="col-md-4 text-center" id="divescond1_ver" style="">
+                                <div class="col-md-4 text-center" id="divescond1_ver">
                                     <input type="hidden" id="idselect3_ver">
                                     <select name="" id="selectCalendario_edit3_ver" class="form-control form-control-sm"
                                         style="margin-top: 4px;">
