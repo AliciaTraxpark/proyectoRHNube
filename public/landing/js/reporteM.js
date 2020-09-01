@@ -1,10 +1,12 @@
 $('#graficaReporteMensual').hide();
 $('#fechaMensual').datetimepicker({
     language: 'es',
-    format: 'dd/mm/yyyy',
-    minView: 2,
+    format: 'mm/yyyy',
+    startView: 3,
+    minView: 3,
     pickTime: false,
     autoclose: true,
+    todayBtn: false,
 });
 var notify = $.notifyDefaults({
     icon_type: 'image',
@@ -285,9 +287,10 @@ function onSelectFechasMensual() {
 $(function () {
     $('#fechaMensual').on('change.dp', function (e) {
         dato = $('#fechaMensual').val();
-        value = moment(dato, ["MM-DD-YYYY", "DD-MM", "DD-MM-YYYY"]).format("YYYY-MM-DD");
-        firstDate = moment(value, 'YYYY-MM-DD').day(1).format('YYYY-MM-DD');
-        lastDate = moment(value, 'YYYY-MM-DD').day(7).format('YYYY-MM-DD');
+        value = moment(dato, ["MM-YYYY"]).format("YYYY-MM");
+        firstDate = moment(value, 'YYYY-MM').startOf('month').format('YYYY-MM-DD');
+        lastDate = moment(value, 'YYYY-MM-DD').endOf('month').format('YYYY-MM-DD');
+        console.log(firstDate,lastDate);
         $('#fechaMensual').val(firstDate + "   a   " + lastDate);
         onSelectFechasMensual();
     });
@@ -295,14 +298,14 @@ $(function () {
 
 function fechaDefecto() {
     dato = $('#fechaMensual').val();
-    value = moment(dato, ["MM-DD-YYYY", "DD-MM", "DD-MM-YYYY"]).format("YYYY-MM-DD");
+    value = moment(dato, ["DD-YYYY"]).format("YYYY-MM-DD");
     firstDate = moment(value, 'YYYY-MM-DD').day(1).format('YYYY-MM-DD');
     lastDate = moment(value, 'YYYY-MM-DD').day(7).format('YYYY-MM-DD');
     $('#fechaMensual').val(firstDate + "   a   " + lastDate);
     onSelectFechasMensual();
 }
 $(function () {
-    var hoy = moment().format("DD/MM/YYYY");
+    var hoy = moment().format("MM/YYYY");
     $('#fechaMensual').val(hoy);
     $('#fechaMensual').trigger("change.dp");
     $('#fechaMensual').val(hoy);

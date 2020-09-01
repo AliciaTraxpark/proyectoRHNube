@@ -46,7 +46,7 @@
     .datepicker,
     .table-condensed {
         width: 300px !important;
-        height: 300px !important;
+        height: 250px !important;
         min-width: 50% !important;
         min-height: 50% !important;
         font-size: small !important;
