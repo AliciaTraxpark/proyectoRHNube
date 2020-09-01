@@ -16,7 +16,9 @@ var fechaValue = $('#fecha').flatpickr({
     altInput: true,
     altFormat: "D, j F",
     locale: "es",
-    maxDate: "today"
+    maxDate: "today",
+    wrap: true,
+    allowInput: true
 });
 
 $('#empleado').select2();
