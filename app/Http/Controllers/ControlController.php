@@ -63,10 +63,7 @@ class ControlController extends Controller
                 ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
                 ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                 ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                ->leftJoin('envio as en', function ($join) {
-                    $join->on('en.idEmpleado', '=', 'e.emple_id');
-                })
-                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'en.Total_Envio')
+                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
                 ->where('invi.estado', '=', 1)
@@ -76,10 +73,7 @@ class ControlController extends Controller
             $empleado = DB::table('empleado as e')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                 ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
-                ->leftJoin('envio as en', function ($join) {
-                    $join->on('en.idEmpleado', '=', 'e.emple_id');
-                })
-                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'en.Total_Envio')
+                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
                 ->groupBy('e.emple_id')
@@ -103,7 +97,7 @@ class ControlController extends Controller
                 ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
                 ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                 ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'en.Total_Envio')
+                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
                 ->where('invi.estado', '=', 1)
@@ -113,7 +107,7 @@ class ControlController extends Controller
             $empleado = DB::table('empleado as e')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                 ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
-                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'en.Total_Envio')
+                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
                 ->groupBy('e.emple_id')
@@ -191,12 +185,12 @@ class ControlController extends Controller
         }
 
 
-        $sql = "IF(h.id is null,if(DATEDIFF('" . $fechaF[1] . "',DATE(cp.fecha_hora)) >= 0 , DATEDIFF('" . $fechaF[1] . "',DATE(cp.fecha_hora)), DAY(DATE(cp.fecha_hora)) ),
+        $sql = "IF(h.id is null,if(DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_fin)) >= 0 , DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_fin)), DAY(DATE(cp.hora_fin)) ),
         if(DATEDIFF('" . $fechaF[1] . "',DATE(h.start)) >= 0,DATEDIFF('" . $fechaF[1] . "',DATE(h.start)), DAY(DATE(h.start)) )) as dia";
         $horasTrabajadas = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-            ->join('envio as en', 'en.idEmpleado', '=', 'e.emple_id')
-            ->leftJoin('captura as cp', 'cp.idEnvio', '=', 'en.idEnvio')
+            ->leftJoin('control as c', 'c.idEmpleado', '=', 'e.emple_id')
+            ->leftJoin('captura as cp', 'cp.idCaptura', '=', 'c.idCaptura')
             ->leftJoin('promedio_captura as promedio', 'promedio.idCaptura', '=', 'cp.idCaptura')
             ->leftJoin('horario_dias as h', 'h.id', '=', 'promedio.idHorario')
             ->select(
@@ -204,19 +198,19 @@ class ControlController extends Controller
                 'p.perso_nombre',
                 'p.perso_apPaterno',
                 'p.perso_apMaterno',
-                DB::raw('IF(h.id is null, DATE(cp.fecha_hora), DATE(h.start)) as fecha'),
-                DB::raw('TIME(cp.fecha_hora) as hora_ini'),
+                DB::raw('IF(h.id is null, DATE(cp.hora_fin), DATE(h.start)) as fecha'),
+                DB::raw('TIME(cp.hora_fin) as hora_ini'),
                 DB::raw('TIME_FORMAT(SEC_TO_TIME(SUM(promedio.tiempo_rango)), "%H:%i:%s") as Total_Envio'),
                 DB::raw('SUM(promedio.promedio) as promedio'),
                 DB::raw('COUNT(promedio.id) as total'),
                 DB::raw($sql),
-                DB::raw('DATE(cp.fecha_hora) as fecha_captura')
+                DB::raw('DATE(cp.hora_fin) as fecha_captura')
             )
-            ->where(DB::raw('IF(h.id is null, DATE(cp.fecha_hora), DATE(h.start))'), '>=', $fechaF[0])
-            ->where(DB::raw('IF(h.id is null, DATE(cp.fecha_hora), DATE(h.start))'), '<=', $fechaF[1])
+            ->where(DB::raw('IF(h.id is null, DATE(cp.hora_fin), DATE(h.start))'), '>=', $fechaF[0])
+            ->where(DB::raw('IF(h.id is null, DATE(cp.hora_fin), DATE(h.start))'), '<=', $fechaF[1])
             ->where('e.organi_id', '=', session('sesionidorg'))
             ->where('e.emple_estado', '=', 1)
-            ->groupBy('fecha_captura', 'e.emple_id')
+            ->groupBy('cp.hora_ini', 'e.emple_id')
             ->get();
 
         $respuesta = [];
