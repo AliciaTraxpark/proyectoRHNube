@@ -92,6 +92,47 @@ class ControlController extends Controller
         return view('tareas.reporteSemanal', ['empleado' => $empleado]);
     }
 
+    public function ReporteM()
+    {  $usuario_organizacion=DB::table('usuario_organizacion as uso')
+        ->where('uso.organi_id', '=',session('sesionidorg'))
+        ->where('uso.user_id', '=', Auth::user()->id)
+        ->get()->first();
+        if($usuario_organizacion->rol_id==3){
+
+            $empleado = DB::table('empleado as e')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
+            ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+            ->leftJoin('envio as en', function ($join) {
+                $join->on('en.idEmpleado', '=', 'e.emple_id');
+            })
+            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'en.Total_Envio')
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->where('e.emple_estado', '=', 1)
+            ->where('invi.estado', '=', 1)
+            ->groupBy('e.emple_id')
+            ->get();
+        }
+        else
+        {
+            $empleado = DB::table('empleado as e')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
+            ->leftJoin('envio as en', function ($join) {
+                $join->on('en.idEmpleado', '=', 'e.emple_id');
+            })
+            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'en.Total_Envio')
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->where('e.emple_estado', '=', 1)
+            ->groupBy('e.emple_id')
+            ->get();
+        }
+
+
+        return view('tareas.reporteMensual', ['empleado' => $empleado]);
+    }
+
     public function empleadoRefresh()
     {    $usuario_organizacion=DB::table('usuario_organizacion as uso')
         ->where('uso.organi_id', '=',session('sesionidorg'))
