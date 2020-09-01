@@ -5,6 +5,7 @@ $('#fecha').datetimepicker({
     minView: 2,
     pickTime: false,
     autoclose: true,
+    weekStart:1
 });
 var notify = $.notifyDefaults({
     icon_type: 'image',
