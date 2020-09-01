@@ -424,7 +424,7 @@ function zoom(horayJ) {
     for (let index = 0; index < capturas.length; index++) {
         const element = capturas[index];
         console.log(element);
-        carusel += `<a href="data:image/jpeg;base64,${element.imagen}" data-fancybox="images" data-caption="Hora de capturas a las ${element.hora_fin}"><img src="data:image/jpeg;base64,${element.imagen}" width="350" height="300" style="padding-right:10px;padding-bottom:10px"></a>`
+        carusel += `<a href="data:image/jpeg;base64,${element.imagen}" data-fancybox="images" data-caption="Hora de captura a las ${element.hora_fin}"><img src="data:image/jpeg;base64,${element.imagen}" width="350" height="300" style="padding-right:10px;padding-bottom:10px"></a>`
     }
     carusel += `</p>`
     document.getElementById("zoom").innerHTML = carusel;
