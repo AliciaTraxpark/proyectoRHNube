@@ -428,6 +428,7 @@ class apiController extends Controller
         $idCaptura = $request['idCaptura'];
         $control = new control();
         $control->idCaptura = $idCaptura;
+        $control->idEmpleado = $request->get('idEmpleado');
         $control->Proyecto_Proye_id = $request->get('Proyecto_Proye_id');
         $control->fecha_ini = $request->get('fecha_ini');
         $control->Fecha_fin = $request->get('Fecha_fin');
