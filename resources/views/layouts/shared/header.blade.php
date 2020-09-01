@@ -142,6 +142,15 @@ use App\persona;
                 <div class="dropdown-menu dropdown-menu-right" style="font-size:
                     12.2px!important">
                     <!-- item-->
+                    @php
+                    $usuario=DB::table('users')
+                    ->where('id','=',Auth::user()->id)->get();
+                    $usuario_organizacion=DB::table('usuario_organizacion')
+                    ->where('user_id','=',Auth::user()->id)
+                    ->where('organi_id','=',session('sesionidorg'))
+                    ->get();
+                    @endphp
+                    @if ($usuario_organizacion[0]->rol_id==1)
                     <a href="/perfil" class="dropdown-item notify-item">
                         <i data-feather="edit" class="icon-dual icon-xs mr-2"></i>
                         <span>Editar perfil</span>
@@ -150,6 +159,7 @@ use App\persona;
                         <i data-feather="corner-up-right" class="icon-dual icon-xs mr-2"></i>
                         <span>Delegar control</span>
                     </a>
+                    @endif
                     <!-- item-->
                     <a href="{{ route('logout') }}" class="dropdown-item
                         notify-item">
