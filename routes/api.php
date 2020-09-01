@@ -17,7 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+//API
+Route::middleware('apilogger')->post('/test', function () {
+    return response()->json("test");
+});
 Route::get('/departamento/{id}/niveles', 'registroEmpresaController@provincias');
 Route::get('/provincia/{id}/niveles', 'registroEmpresaController@distritos');
 
@@ -25,27 +28,29 @@ Route::get('/departamento/{id}/niveles', 'EmpleadoController@provincias');
 Route::get('/provincia/{id}/niveles', 'EmpleadoController@distritos');
 
 Route::get("empleado", "apiController@api");
-Route::post("tarea", "apiController@apiTarea")->middleware('token');
-Route::post("logueo", "apiController@logueoEmpleado");
-Route::post("editarTarea", "apiController@editarApiTarea")->middleware('token');
-Route::post("envio", "apiController@envio")->middleware('token');
-Route::post("control", "apiController@control")->middleware('token');
-Route::post("captura", "apiController@captura")->middleware('token');
+Route::post("tarea", "apiController@apiTarea")->middleware('token')->middleware('apilogger');
+Route::post("logueo", "apiController@logueoEmpleado")->middleware('apilogger');
+Route::post("editarTarea", "apiController@editarApiTarea")->middleware('token')->middleware('apilogger');
+Route::post("envio", "apiController@envio")->middleware('token')->middleware('apilogger');
+Route::post("control", "apiController@control")->middleware('token')->middleware('apilogger');
+Route::post("captura", "apiController@captura")->middleware('token')->middleware('apilogger');
 // PROYECTO
-Route::post("proyecto", "apiController@selectProyecto")->middleware('token');
-Route::post("agregarProyecto", "apiController@agregarProyecto")->middleware('token');
-Route::post("editarProyecto", "apiController@editarProyecto")->middleware('token');
-Route::post("eliminarProyecto", "apiController@cambiarEstadoProyecto")->middleware('token');
+Route::post("proyecto", "apiController@selectProyecto")->middleware('token')->middleware('apilogger');
+Route::post("agregarProyecto", "apiController@agregarProyecto")->middleware('token')->middleware('apilogger');
+Route::post("editarProyecto", "apiController@editarProyecto")->middleware('token')->middleware('apilogger');
+Route::post("eliminarProyecto", "apiController@cambiarEstadoProyecto")->middleware('token')->middleware('apilogger');
 // ACTIVIDAD
-Route::post("actividad", "apiController@selectActividad")->middleware('token');
-Route::post("agregarActividad", "apiController@apiActividad")->middleware('token');
-Route::post("editarActividad", "apiController@editarApiActividad")->middleware('token');
-Route::post("eliminarActividad", "apiController@cambiarEstadoActividad")->middleware('token');
+Route::post("actividad", "apiController@selectActividad")->middleware('token')->middleware('apilogger');
+Route::post("actividadesEliminadas", "apiController@selectActividadEliminada")->middleware('token')->middleware('apilogger');
+Route::post("agregarActividad", "apiController@apiActividad")->middleware('token')->middleware('apilogger');
+Route::post("editarActividad", "apiController@editarApiActividad")->middleware('token')->middleware('apilogger');
+Route::post("editarEstadoActividad", "apiController@editarEstadoApiActividad")->middleware('token')->middleware('apilogger');
+Route::post("eliminarActividad", "apiController@cambiarEstadoActividad")->middleware('token')->middleware('apilogger');
 //HORARIO
-Route::post("horario", "apiController@horario")->middleware('token');
-Route::post("ultimoHorario", "apiController@ultimoHorario")->middleware('token');
+Route::post("horario", "apiController@horario")->middleware('token')->middleware('apilogger');
+Route::post("ultimoHorario", "apiController@ultimoHorario")->middleware('token')->middleware('apilogger');
 ///LOGUEO CON CORREO
-Route::post("logueoV", "apiController@verificacion");
+Route::post("logueoV", "apiController@verificacion")->middleware('apilogger');
 
 //LICENCIA
-Route::post("licencia", "apiController@licenciaProducto");
+Route::post("licencia", "apiController@licenciaProducto")->middleware('apilogger');

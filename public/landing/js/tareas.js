@@ -10,13 +10,15 @@ var notify = $.notifyDefaults({
         '</div>'
 });
 //FECHA
-var fechaValue = $('#fecha').flatpickr({
+var fechaValue = $('#fechaSelec').flatpickr({
     mode: "single",
     dateFormat: "Y-m-d",
     altInput: true,
     altFormat: "D, j F",
     locale: "es",
-    maxDate: "today"
+    maxDate: "today",
+    wrap: true,
+    allowInput: true
 });
 
 $('#empleado').select2();
@@ -109,7 +111,6 @@ function onMostrarPantallas() {
     var value = $('#empleado').val();
     var fecha = $('#fecha').val();
     var proyecto = $('#proyecto').val();
-    console.log(fecha);
     $('#card').empty();
     $('#espera').show();
     $.ajax({
@@ -167,8 +168,8 @@ function onMostrarPantallas() {
                     var prom = 0;
                     var sumaRangos = 0;
                     var totalCM = 0;
-                    var hora_ini;
-                    var hora_fin;
+                    var hora_inicial = "";
+                    var hora_final = "";
                     var labelDelGrupo = horaDelGrupo + ":00:00" + " - " + (parseInt(horaDelGrupo) + 1) + ":00:00";
                     var grupo = `<span style="font-weight: bold;color:#6c757d;cursor:default">${labelDelGrupo}</span>&nbsp;&nbsp;<img src="landing/images/punt.gif" height="70">&nbsp;&nbsp;
                     <span class="promHoras" style="font-weight: bold;color:#6c757d;cursor:default" id="promHoras${$i}" data-toggle="tooltip" data-placement="right" title="Actividad por Hora"
@@ -180,18 +181,22 @@ function onMostrarPantallas() {
                                 if (data[index].minutos[j].length > 1) {
                                     promedios = promedios + data[index].minutos[j][indexMinutos].prom;
                                     sumaRangos = sumaRangos + data[index].minutos[j][indexMinutos].rango;
-                                    capturas += `<div class = "carousel-item">
+                                    hora_inicial = data[index].minutos[j][0].hora_ini;
+                                    hora_final = data[index].minutos[j][data[index].minutos[j].length - 1].hora_fin;
+                                    if (data[index].minutos[j][indexMinutos].imagen != null) {
+                                        capturas += `<div class = "carousel-item">
                                         <img src="data:image/jpeg;base64,${data[index].minutos[j][indexMinutos].imagen}" height="120" width="200" class="img-responsive">
                                         <div class="overlay">
                                         <a class="info" onclick="zoom('${hora + "," + j}')" style="color:#fdfdfd">
                                         <i class="fa fa-eye"></i> Colección</a>
                                         </div>
                                     </div>`;
+                                    }
                                 }
                             }
                             if (data[index].minutos[j].length == 1) {
-                                hora_ini = data[index].minutos[j][0].hora_ini;
-                                hora_fin = data[index].minutos[j][0].hora_fin;
+                                hora_inicial = data[index].minutos[j][0].hora_ini;
+                                hora_final = data[index].minutos[j][0].hora_fin;
                                 var totalR = parseFloat(data[index].minutos[j][0].rango / 60);
                                 totalM = totalR.toFixed(1);
                                 if (totalM > 10) {
@@ -212,8 +217,6 @@ function onMostrarPantallas() {
                                         totalCM = totalM;
                                     }
                                 }
-                                hora_ini = data[index].minutos[j][0].hora_ini;
-                                hora_fin = data[index].minutos[j][length - 1].hora_fin;
                                 promedio = (promedios / (data[index].minutos[j].length)).toFixed(2);
                                 if (promedios == 0) {
                                     promedio = 0
@@ -225,7 +228,7 @@ function onMostrarPantallas() {
                             if (promedio >= 50) nivel = "green";
                             else if (promedio > 35) nivel = "#f3c623";
                             else nivel = "red";
-                            if (j < 5) {
+                            if (data[index].minutos[j][0].imagen != null) {
                                 card = `<div class="col-2" style="margin-left: 0px!important;">
                                         <div class="mb-0 text-center" style="padding-left: 0px;">
                                             <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
@@ -262,7 +265,7 @@ function onMostrarPantallas() {
                                                         </div>
                                                     </div>
                                                     &nbsp;
-                                                    <label style="font-size: 12px" for="">${hora_ini} - ${hora_fin}</label>
+                                                    <label style="font-size: 12px" for="">${hora_inicial} - ${hora_final}</label>
                                                     <div class="progress" style="background-color: #d4d4d4;" data-toggle="tooltip" data-placement="bottom" title="Actividad por Rango de Tiempo"
                                                     data-original-title="">
                                                         <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:${nivel}" aria-valuenow=${promedio}
@@ -278,55 +281,34 @@ function onMostrarPantallas() {
                                     </div>`;
                             } else {
                                 card = `<div class="col-2" style="margin-left: 0px!important;">
-                                            <div class="mb-0 text-center" style="padding-left: 0px;">
-                                                <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
-                                                    aria-expanded="true" aria-controls="customaccorcollapseOne">
-                                                </a>
-                                                <div class="collapse show" aria-labelledby="customaccorheadingOne"
-                                                    data-parent="#customaccordion_exa">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class=" text-center col-md-12 col-sm-6" style="padding-top: 4px;padding-bottom: 4px;">
-                                                            <h5 class="m-0 font-size-16" style="color:#1f4068;font-weight:bold;"><img src="landing/images/2143150.png" class="mr-2" height="20"/>${data[index].minutos[j][0].Activi_Nombre} </h5>
-                                                        </div>  <br>
-                                                        <div class="col-md-12 col-sm-6" style="padding-left: 0px;padding-right: 0px">
-                                                        <div class="hovereffect">
-                                                        <div  id="myCarousel${hora + j}" class = "carousel carousel-fade" data-ride = "carousel">
-                                                            <div class = "carousel-inner">
-                                                                <div class = "carousel-item active">
-                                                                    <img src="data:image/jpeg;base64,${data[index].minutos[j][0].imagen}" height="120" width="200" class="img-responsive">
-                                                                    <div class="overlay">
-                                                                    <a class="info" onclick="zoom('${hora + "," + j}')" style="color:#fdfdfd">
-                                                                    <i class="fa fa-eye"></i> Colección</a>
-                                                                    </div>
-                                                                </div>
-                                                                ${capturas}
-                                                            </div>
-                                                            <a class = "carousel-control-prev" href = "#myCarousel" role = "button" data-slide = "prev">
-                                                                <span class = "carousel-control-prev-icon" aria-hidden = "true"></span>
-                                                                <span class = "sr-only">Previous</span>
-                                                            </a>
-                                                            <a class = "carousel-control-next" href = "#myCarousel" role = "button" data-slide = "next">
-                                                                <span class = "carousel-control-next-icon" aria-hidden = "true"></span>
-                                                                <span class = "sr-only">Next</span>
-                                                            </a>
-                                                        </div>
+                                        <div class="mb-0 text-center" style="padding-left: 0px;">
+                                            <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
+                                                aria-expanded="true" aria-controls="customaccorcollapseOne">
+                                            </a>
+                                            <div class="collapse show" aria-labelledby="customaccorheadingOne" data-parent="#customaccordion_exa">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class=" text-center col-md-12 col-sm-6" style="padding-top: 4px;
+                                                    padding-bottom: 4px;">
+                                                        <h5 class="m-0 font-size-16" style="color:#1f4068;font-weight:bold;"><img src="landing/images/2143150.png" class="mr-2" height="20"/>${data[index].minutos[j][0].Activi_Nombre} </h5>
+                                                    </div><br>
+                                                    <div class="col-md-12 col-sm-6" style="padding-left: 0px;;padding-right: 0px">
+                                                    <img src="landing/images/3155773.png" height="100">
+                                                    &nbsp;
+                                                    <label style="font-size: 12px" for="">${hora_inicial} - ${hora_final}</label>
+                                                    <div class="progress" style="background-color: #d4d4d4;" data-toggle="tooltip" data-placement="bottom" title="Actividad por Rango de Tiempo"
+                                                    data-original-title="">
+                                                        <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:${nivel}" aria-valuenow=${promedio}
+                                                            aria-valuemin="0" aria-valuemax="100">${promedio + "%"}</div>
                                                     </div>
-                                                        &nbsp;
-                                                        <label style="font-size: 12px" for="">${hora_ini} -  ${hora_fin}</label>
-                                                        <div class="progress" style="background-color: #d4d4d4;" data-toggle="tooltip" data-placement="bottom" title="Actividad por Rango de Tiempo"
-                                                        data-original-title="">
-                                                            <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:${nivel}" aria-valuenow=${promedio}
-                                                                aria-valuemin="0" aria-valuemax="100">${promedio + "%"}</div>
-                                                        </div>
-                                                        </div>
-                                                        <label style="font-size: 12px;font-style: italic; bold;color:#1f4068;" for="">Total de ${totalCM} minutos</label>
-                                                        <br>
                                                     </div>
-                                                </div>
+                                                    <label style="font-size: 12px;font-style: italic; bold;color:#1f4068;" for="">Total de ${totalCM} minutos</label>
+                                                    <br>
                                                 </div>
                                             </div>
-                                        </div>`;
+                                            </div>
+                                        </div>
+                                    </div>`;
                             }
                             grupo += card;
                             prom = prom + parseFloat(promedio);
@@ -364,12 +346,31 @@ function onMostrarPantallas() {
                     $i = $i + 1;
                 }
             } else {
-                $('#card').append(vacio);
-                $.notifyClose();
-                $.notify({
-                    message: "Falta elegir campos o No se encontrado capturas.",
-                    icon: 'admin/images/warning.svg'
-                });
+                $('#card').empty();
+                if ($('#empleado').val() == null) {
+                    $('#card').append(vacio);
+                    $.notifyClose();
+                    $.notify({
+                        message: "Falta elegir empleado.",
+                        icon: 'admin/images/warning.svg'
+                    });
+                }
+                if ($('#fecha').val() == "") {
+                    $('#card').append(vacio);
+                    $.notifyClose();
+                    $.notify({
+                        message: "Falta elegir fecha a buscar.",
+                        icon: 'admin/images/warning.svg'
+                    });
+                }
+                if (data.length == 0 && $('#empleado').val() != null && $('#fecha').val() != "") {
+                    $('#card').append(vacio);
+                    $.notifyClose();
+                    $.notify({
+                        message: "No se encontratron capturas.",
+                        icon: 'admin/images/warning.svg'
+                    });
+                }
             }
         },
         error: function (data) {}

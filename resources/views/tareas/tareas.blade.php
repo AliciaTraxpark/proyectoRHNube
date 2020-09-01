@@ -91,27 +91,23 @@
                     <div class="col-md-6"> <label><br> </label>
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label">Fecha:</label>
-                            <div class="input-group col-md-6"
-                                style="padding-left: 0px;">
+                            <div class="input-group col-md-8"
+                                style="padding-left: 0px;padding-right: 0px;" id="fechaSelec">
                                 <input type="text" id="fecha"
-                                    class="form-control">
+                                    class="form-control" data-input>
                                 <div class="input-group-prepend">
-                                    <div class="input-group-text form-control"><i
-                                            class="uil uil-calender"></i></div>
+                                    <div class="input-group-text form-control flatpickr">
+                                        <a class="input-button" data-toggle>
+                                            <i class="uil uil-calender"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <button type="button" class="btn btn-sm mt-1"
+                                        style="background-color: #163552;"
+                                        onclick="javascript:fechaHoy()">Hoy</button>
                                 </div>
                             </div>
-                            <div class="form-group col-lg-2">
-                                <button type="button" class="btn btn-sm mt-1"
-                                    style="background-color: #163552;"
-                                    onclick="javascript:fechaHoy()">Hoy</button>
-                            </div>
-                            <!-- <div class="form-group col-lg-2">
-                                <button type="button" class="btn btn-sm mt-1"
-                                    style="background-color: #163552;"
-                                    onclick="javascript:refreshCapturas()">
-                                    <img src="{{asset('landing/images/refresh (2).svg') }}" height="20">
-                                </button>
-                            </div> -->
                         </div>
                     </div>
                     <div class="col-md-6"> <label><br> </label>
