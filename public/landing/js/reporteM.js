@@ -1,11 +1,11 @@
-$('#graficaReporte').hide();
-$('#fecha').datetimepicker({
+$('#graficaReporteMensual').hide();
+$('#fechaMensual').datetimepicker({
     language: 'es',
-    format: 'dd/mm/yyyy',
-    minView: 2,
+    format: 'mm/yyyy',
+    startView: 3,
+    minView: 3,
     pickTime: false,
     autoclose: true,
-    weekStart:1,
     todayBtn: false,
 });
 var notify = $.notifyDefaults({
@@ -84,15 +84,15 @@ function totalContar(a, b) {
 }
 var grafico = {};
 
-function onSelectFechas() {
-    var fecha = $('#fecha').val();
-    if ($.fn.DataTable.isDataTable("#Reporte")) {
-        $('#Reporte').DataTable().destroy();
+function onSelectFechasMensual() {
+    var fecha = $('#fechaMensual').val();
+    if ($.fn.DataTable.isDataTable("#ReporteMensual")) {
+        $('#ReporteMensual').DataTable().destroy();
     }
-    $('#empleado').empty();
-    $('#dias').empty();
-    $('#myChartD').empty();
-    $("#myChart").show();
+    $('#empleadoMensual').empty();
+    $('#diasMensual').empty();
+    $('#myChartDMensual').empty();
+    $("#myChartMensual").show();
     if (grafico.config != undefined) grafico.destroy();
     $.ajax({
         async: false,
@@ -114,7 +114,7 @@ function onSelectFechas() {
         },
         success: function (data) {
             if (data.length > 0) {
-                $('#myChartD').hide();
+                $('#myChartDMensual').hide();
                 var nombre = [];
                 var horas = [];
                 var prom = [];
@@ -172,12 +172,12 @@ function onSelectFechas() {
                 }
                 html_trD += '<th>TOTAL</th>';
                 html_trD += '<th>ACTIV.</th></tr>';
-                $("#dias").html(html_trD);
-                $("#empleado").html(html_tr);
+                $("#diasMensual").html(html_trD);
+                $("#empleadoMensual").html(html_tr);
                 //container.append(html_tr);
                 //containerD.append(html_trD);
 
-                $("#Reporte").DataTable({
+                $("#ReporteMensual").DataTable({
                     "searching": true,
                     "scrollX": true,
                     retrieve: true,
@@ -241,7 +241,7 @@ function onSelectFechas() {
                         data: horas
                     }]
                 };
-                var mostrar = $("#myChart");
+                var mostrar = $("#myChartMensual");
                 grafico = new Chart(mostrar, {
                     type: 'bar',
                     data: chartdata,
@@ -285,31 +285,32 @@ function onSelectFechas() {
 }
 
 $(function () {
-    $('#fecha').on('change.dp', function (e) {
-        dato = $('#fecha').val();
-        value = moment(dato, ["MM-DD-YYYY", "DD-MM", "DD-MM-YYYY"]).format("YYYY-MM-DD");
-        firstDate = moment(value, 'YYYY-MM-DD').day(1).format('YYYY-MM-DD');
-        lastDate = moment(value, 'YYYY-MM-DD').day(7).format('YYYY-MM-DD');
-        $('#fecha').val(firstDate + "   a   " + lastDate);
-        onSelectFechas();
+    $('#fechaMensual').on('change.dp', function (e) {
+        dato = $('#fechaMensual').val();
+        value = moment(dato, ["MM-YYYY"]).format("YYYY-MM");
+        firstDate = moment(value, 'YYYY-MM').startOf('month').format('YYYY-MM-DD');
+        lastDate = moment(value, 'YYYY-MM-DD').endOf('month').format('YYYY-MM-DD');
+        console.log(firstDate,lastDate);
+        $('#fechaMensual').val(firstDate + "   a   " + lastDate);
+        onSelectFechasMensual();
     });
 });
 
 function fechaDefecto() {
-    dato = $('#fecha').val();
-    value = moment(dato, ["MM-DD-YYYY", "DD-MM", "DD-MM-YYYY"]).format("YYYY-MM-DD");
+    dato = $('#fechaMensual').val();
+    value = moment(dato, ["DD-YYYY"]).format("YYYY-MM-DD");
     firstDate = moment(value, 'YYYY-MM-DD').day(1).format('YYYY-MM-DD');
     lastDate = moment(value, 'YYYY-MM-DD').day(7).format('YYYY-MM-DD');
-    $('#fecha').val(firstDate + "   a   " + lastDate);
-    onSelectFechas();
+    $('#fechaMensual').val(firstDate + "   a   " + lastDate);
+    onSelectFechasMensual();
 }
 $(function () {
-    var hoy = moment().format("DD/MM/YYYY");
-    $('#fecha').val(hoy);
-    $('#fecha').trigger("change.dp");
-    $('#fecha').val(hoy);
+    var hoy = moment().format("MM/YYYY");
+    $('#fechaMensual').val(hoy);
+    $('#fechaMensual').trigger("change.dp");
+    $('#fechaMensual').val(hoy);
 });
 
-function mostrarGrafica() {
-    $('#graficaReporte').toggle();
+function mostrarGraficaMensual() {
+    $('#graficaReporteMensual').toggle();
 }

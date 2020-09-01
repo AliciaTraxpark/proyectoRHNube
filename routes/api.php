@@ -31,7 +31,6 @@ Route::get("empleado", "apiController@api");
 Route::post("tarea", "apiController@apiTarea")->middleware('token')->middleware('apilogger');
 Route::post("logueo", "apiController@logueoEmpleado")->middleware('apilogger');
 Route::post("editarTarea", "apiController@editarApiTarea")->middleware('token')->middleware('apilogger');
-Route::post("envio", "apiController@envio")->middleware('token')->middleware('apilogger');
 Route::post("control", "apiController@control")->middleware('token')->middleware('apilogger');
 Route::post("captura", "apiController@captura")->middleware('token')->middleware('apilogger');
 // PROYECTO

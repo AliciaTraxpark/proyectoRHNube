@@ -10,15 +10,14 @@ class captura extends Model
     protected $primaryKey = 'idCaptura';
     protected $fillable = [
         'idCaptura',
-        'idEnvio',
         'estado',
-        'fecha_hora',
         'imagen',
         'actividad',
         'hora_ini',
         'hora_fin',
         'ultimo_acumulado',
-        'acumulador'
+        'acumulador',
+        'idHorario_dias'
     ];
     public $timestamps = false;
 }

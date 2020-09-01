@@ -162,6 +162,7 @@ Route::get('/tareas/show', 'ControlController@show');
 Route::get('/tareas/empleadoR', 'ControlController@empleadoRefresh');
 Route::get('/tareas/proyecto', 'ControlController@proyecto');
 Route::get('/reporteSemanal', 'ControlController@reporteS');
+Route::get('/reporteMensual', 'ControlController@reporteM');
 Route::get('/reporte/empleado', 'ControlController@EmpleadoReporte');
 
 
