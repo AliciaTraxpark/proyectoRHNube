@@ -404,40 +404,7 @@ class apiController extends Controller
         return response()->json($respuesta, 200);
     }
 
-    public function envio(Request $request)
-    {
-        $envio = new envio();
-        $envio->hora_Envio = $request->get('hora_Envio');
-        $envio->Total_Envio = $request->get('Total_Envio');
-        $envio->idEmpleado = $request->get('idEmpleado');
-        $envio->save();
-        $idEnvio = $envio->idEnvio;
-
-        return response()->json($idEnvio, 200);
-    }
-
-    public function control(Request $request)
-    {
-        $idEnvio = $request['idEnvio'];
-        $control = new control();
-        $control->Proyecto_Proye_id = $request->get('Proyecto_Proye_id');
-        $control->fecha_ini = $request->get('fecha_ini');
-        $control->Fecha_fin = $request->get('Fecha_fin');
-        $control->hora_ini = $request->get('hora_ini');
-        $control->hora_fin = $request->get('hora_fin');
-        $control->idEnvio = $idEnvio;
-        if ($request->get('Tarea_Tarea_id') != '') {
-            $control->Tarea_Tarea_id = $request->get('Tarea_Tarea_id');
-        }
-        if ($request->get('Actividad_Activi_id') != '') {
-            $control->Actividad_Activi_id = $request->get('Actividad_Activi_id');
-        }
-        $control->idHorario_dias = $request->get('idHorario');
-        $control->acumulado = $request->get('acumulado');
-        $control->save();
-        return response()->json($control, 200);
-    }
-
+    
     public function captura(Request $request)
     {
         $idEnvio = $request['idEnvio'];
@@ -486,5 +453,27 @@ class apiController extends Controller
             $promedio_captura->save();
         }
         return response()->json($captura, 200);
+    }
+
+    public function control(Request $request)
+    {
+        $idEnvio = $request['idEnvio'];
+        $control = new control();
+        $control->Proyecto_Proye_id = $request->get('Proyecto_Proye_id');
+        $control->fecha_ini = $request->get('fecha_ini');
+        $control->Fecha_fin = $request->get('Fecha_fin');
+        $control->hora_ini = $request->get('hora_ini');
+        $control->hora_fin = $request->get('hora_fin');
+        $control->idEnvio = $idEnvio;
+        if ($request->get('Tarea_Tarea_id') != '') {
+            $control->Tarea_Tarea_id = $request->get('Tarea_Tarea_id');
+        }
+        if ($request->get('Actividad_Activi_id') != '') {
+            $control->Actividad_Activi_id = $request->get('Actividad_Activi_id');
+        }
+        $control->idHorario_dias = $request->get('idHorario');
+        $control->acumulado = $request->get('acumulado');
+        $control->save();
+        return response()->json($control, 200);
     }
 }
