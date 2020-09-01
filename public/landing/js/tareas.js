@@ -168,7 +168,7 @@ function onMostrarPantallas() {
                     var sumaRangos = 0;
                     var totalCM = 0;
                     var hora_inicial = "";
-                    var hora_finnal = "";
+                    var hora_final = "";
                     var labelDelGrupo = horaDelGrupo + ":00:00" + " - " + (parseInt(horaDelGrupo) + 1) + ":00:00";
                     var grupo = `<span style="font-weight: bold;color:#6c757d;cursor:default">${labelDelGrupo}</span>&nbsp;&nbsp;<img src="landing/images/punt.gif" height="70">&nbsp;&nbsp;
                     <span class="promHoras" style="font-weight: bold;color:#6c757d;cursor:default" id="promHoras${$i}" data-toggle="tooltip" data-placement="right" title="Actividad por Hora"
@@ -180,8 +180,8 @@ function onMostrarPantallas() {
                                 if (data[index].minutos[j].length > 1) {
                                     promedios = promedios + data[index].minutos[j][indexMinutos].prom;
                                     sumaRangos = sumaRangos + data[index].minutos[j][indexMinutos].rango;
-                                    hora_ini = data[index].minutos[j][0].hora_ini;
-                                    hora_fin = data[index].minutos[j][data[index].minutos[j].length - 1].hora_fin;
+                                    hora_inicial = data[index].minutos[j][0].hora_ini;
+                                    hora_final = data[index].minutos[j][data[index].minutos[j].length - 1].hora_fin;
                                     if (data[index].minutos[j][indexMinutos].imagen != null) {
                                         capturas += `<div class = "carousel-item">
                                         <img src="data:image/jpeg;base64,${data[index].minutos[j][indexMinutos].imagen}" height="120" width="200" class="img-responsive">
