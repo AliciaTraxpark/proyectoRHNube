@@ -162,3 +162,32 @@ $("#adminCheck").click(function () {
         $("#divInvitado").show();
     }
 });
+function editarInv(idi){
+    $.ajax({
+        type: "post",
+        url: "/datosInvitado",
+        data: {
+            idi
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            $('#emailInvi_edit').val(data[0].email_inv);
+            /* if(data[0].rol_id==1){
+                $('#adminCheck_edit').prop('checked', true);
+            } */
+            $("#agregarInvitado_edit").modal('show');
+        },
+        error: function (data) {
+            alert("Ocurrio un error");
+        },
+    });
+
+
+}

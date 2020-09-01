@@ -19,6 +19,7 @@ use App\Mail\CorreoInvitado;
 use App\Mail\CorreoMail;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Redirect;
+use Mockery\Undefined;
 
 class delegarInvController extends Controller
 {   /*SEPARAR ENVIAR CORREO public function __construct()
@@ -282,5 +283,26 @@ class delegarInvController extends Controller
         } else{
             return 0;
         }
+    }
+
+    public function datosInvitado(Request $request){
+        $idinvitado=$request->idi;
+        $invitado=DB::table('invitado as i')
+        ->where('i.idinvitado','=', $idinvitado)
+        ->join('invitado_empleado as inve','i.idinvitado','=','inve.idinvitado')
+        ->get();
+        $invitado2=DB::table('invitado as i')
+        ->where('i.idinvitado','=', $idinvitado)
+        ->get();
+
+
+        if(!$invitado->isEmpty()){
+            return $invitado;
+        }
+        else{
+            return $invitado2;
+        }
+
+
     }
 }

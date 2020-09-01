@@ -420,7 +420,7 @@ class horarioController extends Controller
                 $horario_dias->color = $temporal_eventosH->color;
                 $horario_dias->textColor = $temporal_eventosH->textColor;
                 $horario_dias->users_id = $temporal_eventosH->users_id;
-
+                $horario_dias->organi_id = session('sesionidorg');
                 $horario_dias->save();
 
              foreach ($idemps as $idempleados) {
