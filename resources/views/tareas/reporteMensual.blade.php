@@ -59,12 +59,12 @@
                 <div class="row pb-2">
                     <div class="col-md-8">
                         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
-                            onclick="javascript:mostrarGrafica()"><i class="fa fa-eye mr-1"></i>VER GRAFICO
+                            onclick="javascript:mostrarGraficaMensual()"><i class="fa fa-eye mr-1"></i>VER GRAFICO
                         </button>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group col-md-12">
-                            <input type="text" id="fecha" class="form-control">
+                            <input type="text" id="fechaMensual" class="form-control">
                             <div class="input-group-prepend">
                                 <div class="input-group-text form-control"><i class="uil uil-calender"></i></div>
                             </div>
@@ -72,13 +72,13 @@
                     </div>
                 </div>
                 <br>
-                <div class="row" id="graficaReporte" style="display: none">
+                <div class="row" id="graficaReporteMensual" style="display: none">
                     <div class="col-lg-12">
                         <!-- Portlet card -->
                         <div class="card">
                             <div class="card-body">
-                                <canvas id="myChartD" height="35vh" width="85vw"></canvas>
-                                <canvas id="myChart" height="35vh" width="85vw"></canvas>
+                                <canvas id="myChartDMensual" height="35vh" width="85vw"></canvas>
+                                <canvas id="myChartMensual" height="35vh" width="85vw"></canvas>
                             </div> <!-- end card-body -->
                         </div> <!-- end card-->
                     </div> <!-- end col-->
@@ -94,9 +94,9 @@
                                 </p>
                                 <br>
                                 <div class="table-responsive-xl">
-                                    <table id="Reporte" class="table nowrap" style="font-size: 13px!important;width:
+                                    <table id="ReporteMensual" class="table nowrap" style="font-size: 13px!important;width:
                                         100%;">
-                                        <thead style="background: #fafafa;" id="dias">
+                                        <thead style="background: #fafafa;" id="diasMensual">
                                             <tr>
                                                 <th><img src="{{
                                                         URL::asset('admin/assets/images/users/empleado.png')
@@ -111,7 +111,7 @@
                                                 <th>ACTIV.</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="empleado">
+                                        <tbody id="empleadoMensual">
                                             @foreach ($empleado as $empleados)
                                             <tr>
                                                 <td>{{$empleados->perso_nombre}}
@@ -167,18 +167,18 @@
     }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/pdfmake.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/vfs_fonts.js') }}"></script>
-<script src="{{asset('landing/js/reporteS.js')}}"></script>
+<script src="{{asset('landing/js/reporteM.js')}}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 <script>
-    $('#graficaReporte').hide();
+    $('#graficaReporteMensual').hide();
     var empleadosDefecto = @json($empleado);
     empleadosDefecto = empleadosDefecto.map(function(empleado){
         return empleado.perso_nombre.charAt(0) + empleado.perso_apPaterno.charAt(0) + empleado.perso_apMaterno.charAt(0)
     });
     console.log(empleadosDefecto);
-    var tablaDefecto = $('#Reporte').html();
+    var tablaDefecto = $('#ReporteMensual').html();
 
-    var ctx = $('#myChartD');
+    var ctx = $('#myChartDMensual');
     var chart = new Chart(ctx, {
     // The type of chart we want to create
     type: 'bar',
