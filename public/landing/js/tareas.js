@@ -180,7 +180,7 @@ function onMostrarPantallas() {
                                 if (data[index].minutos[j].length > 1) {
                                     promedios = promedios + data[index].minutos[j][indexMinutos].prom;
                                     sumaRangos = sumaRangos + data[index].minutos[j][indexMinutos].rango;
-                                    hora_ini = data[index].minutos[j][indexMinutos].hora_ini;
+                                    hora_ini = data[index].minutos[j][0].hora_ini;
                                     hora_fin = data[index].minutos[j][data[index].minutos[j].length - 1].hora_fin;
                                     if (data[index].minutos[j][indexMinutos].imagen != null) {
                                         capturas += `<div class = "carousel-item">
