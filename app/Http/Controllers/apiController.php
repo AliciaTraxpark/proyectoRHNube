@@ -404,28 +404,47 @@ class apiController extends Controller
         return response()->json($respuesta, 200);
     }
 
-    
+
     public function captura(Request $request)
     {
-        $idEnvio = $request['idEnvio'];
         $captura = new captura();
-        $captura->idEnvio = $idEnvio;
         $captura->estado = $request->get('estado');
-        $captura->fecha_hora = $request->get('fecha_hora');
         $captura->imagen = $request->get('imagen');
         $captura->actividad = $request->get('actividad');
         $captura->hora_ini = $request->get('hora_ini');
         $captura->hora_fin = $request->get('hora_fin');
         $captura->ultimo_acumulado = $request->get('ultimo_acumulado');
         $captura->acumulador = $request->get('acumulador');
+        $captura->idHorario_dias = $request->get('idHorario_dias');
         $captura->save();
 
         $idCaptura = $captura->idCaptura;
 
-        $control = control::where('idEnvio', '=', $idEnvio)->get();
+        return response()->json($idCaptura, 200);
+    }
+
+    public function control(Request $request)
+    {
+        $idCaptura = $request['idCaptura'];
+        $control = new control();
+        $control->idCaptura = $idCaptura;
+        $control->Proyecto_Proye_id = $request->get('Proyecto_Proye_id');
+        $control->fecha_ini = $request->get('fecha_ini');
+        $control->Fecha_fin = $request->get('Fecha_fin');
+        $control->hora_ini = $request->get('hora_ini');
+        $control->hora_fin = $request->get('hora_fin');
+        if ($request->get('Tarea_Tarea_id') != '') {
+            $control->Tarea_Tarea_id = $request->get('Tarea_Tarea_id');
+        }
+        if ($request->get('Actividad_Activi_id') != '') {
+            $control->Actividad_Activi_id = $request->get('Actividad_Activi_id');
+        }
+        $control->acumulado = $request->get('acumulado');
+        $control->save();
+        $control = control::where('idCaptura', '=', $idCaptura)->get();
         foreach ($control as $cont) {
-            $idHorario_dias = $cont->idHorario_dias;
-            $capturaRegistrada = captura::where('idCaptura', '=', $idCaptura)->get()->first();
+            $capturaRegistrada = captura::where('idCaptura', '=', $cont->idCaptura)->get()->first();
+            $idHorario_dias = $capturaRegistrada->idHorario_dias;
             //RESTA POR FECHA HORA DE   CAPTURAS
             $fecha = Carbon::create($capturaRegistrada->hora_ini)->format('H:i:s');
             $explo = explode(":", $fecha);
@@ -446,34 +465,12 @@ class apiController extends Controller
                 $round = round($promedioFinal, 2);
             }
             $promedio_captura = new promedio_captura();
-            $promedio_captura->idCaptura = $idCaptura;
+            $promedio_captura->idCaptura = $cont->idCaptura;
             $promedio_captura->idHorario = $idHorario_dias;
             $promedio_captura->promedio = $round;
             $promedio_captura->tiempo_rango = $totalP;
             $promedio_captura->save();
         }
-        return response()->json($captura, 200);
-    }
-
-    public function control(Request $request)
-    {
-        $idEnvio = $request['idEnvio'];
-        $control = new control();
-        $control->Proyecto_Proye_id = $request->get('Proyecto_Proye_id');
-        $control->fecha_ini = $request->get('fecha_ini');
-        $control->Fecha_fin = $request->get('Fecha_fin');
-        $control->hora_ini = $request->get('hora_ini');
-        $control->hora_fin = $request->get('hora_fin');
-        $control->idEnvio = $idEnvio;
-        if ($request->get('Tarea_Tarea_id') != '') {
-            $control->Tarea_Tarea_id = $request->get('Tarea_Tarea_id');
-        }
-        if ($request->get('Actividad_Activi_id') != '') {
-            $control->Actividad_Activi_id = $request->get('Actividad_Activi_id');
-        }
-        $control->idHorario_dias = $request->get('idHorario');
-        $control->acumulado = $request->get('acumulado');
-        $control->save();
         return response()->json($control, 200);
     }
 }
