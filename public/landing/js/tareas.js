@@ -109,7 +109,6 @@ function onMostrarPantallas() {
     var value = $('#empleado').val();
     var fecha = $('#fecha').val();
     var proyecto = $('#proyecto').val();
-    console.log(fecha);
     $('#card').empty();
     $('#espera').show();
     $.ajax({
@@ -345,12 +344,31 @@ function onMostrarPantallas() {
                     $i = $i + 1;
                 }
             } else {
-                $('#card').append(vacio);
-                $.notifyClose();
-                $.notify({
-                    message: "Falta elegir campos o No se encontrado capturas.",
-                    icon: 'admin/images/warning.svg'
-                });
+                $('#card').empty();
+                if ($('#empleado').val() == null) {
+                    $('#card').append(vacio);
+                    $.notifyClose();
+                    $.notify({
+                        message: "Falta elegir empleado.",
+                        icon: 'admin/images/warning.svg'
+                    });
+                }
+                if ($('#fecha').val() == "") {
+                    $('#card').append(vacio);
+                    $.notifyClose();
+                    $.notify({
+                        message: "Falta elegir fecha a buscar.",
+                        icon: 'admin/images/warning.svg'
+                    });
+                }
+                if (data.length == 0 && $('#empleado').val() != null && $('#fecha').val() != "") {
+                    $('#card').append(vacio);
+                    $.notifyClose();
+                    $.notify({
+                        message: "No se encontratron capturas.",
+                        icon: 'admin/images/warning.svg'
+                    });
+                }
             }
         },
         error: function (data) {}
