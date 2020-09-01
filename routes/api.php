@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 //API
-Route::middleware('apilogger')->post('/test',function(){
+Route::middleware('apilogger')->post('/test', function () {
     return response()->json("test");
 });
 Route::get('/departamento/{id}/niveles', 'registroEmpresaController@provincias');
@@ -41,6 +41,7 @@ Route::post("editarProyecto", "apiController@editarProyecto")->middleware('token
 Route::post("eliminarProyecto", "apiController@cambiarEstadoProyecto")->middleware('token')->middleware('apilogger');
 // ACTIVIDAD
 Route::post("actividad", "apiController@selectActividad")->middleware('token')->middleware('apilogger');
+Route::post("actividadesEliminadas", "apiController@selectActividadEliminada")->middleware('token')->middleware('apilogger');
 Route::post("agregarActividad", "apiController@apiActividad")->middleware('token')->middleware('apilogger');
 Route::post("editarActividad", "apiController@editarApiActividad")->middleware('token')->middleware('apilogger');
 Route::post("eliminarActividad", "apiController@cambiarEstadoActividad")->middleware('token')->middleware('apilogger');

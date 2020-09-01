@@ -382,6 +382,17 @@ class apiController extends Controller
         return response()->json($respuesta, 200);
     }
 
+    public function selectActividadEliminada(Request $request)
+    {
+        $empleado = $request->get('emple_id');
+        $respuesta = [];
+        $actividad = actividad::where('empleado_emple_id', '=', $empleado)->where('estado', '=', 0)->get();
+        foreach ($actividad as $act) {
+            array_push($respuesta, $act);
+        }
+        return response()->json($respuesta, 200);
+    }
+
     public function envio(Request $request)
     {
         $envio = new envio();
