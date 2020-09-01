@@ -121,7 +121,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             <ul class="nav-second-level" aria-expanded="false">
                 <li>
                     <a href="/reporteSemanal">Reporte Semanal</a>
-                    <a href="/reporteSemanal">Reporte Mensual</a>
+                    <a href="/reporteMensual">Reporte Mensual</a>
                 </li>
             </ul>
         </li>
