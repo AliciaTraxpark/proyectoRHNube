@@ -361,6 +361,17 @@ class apiController extends Controller
         return response()->json($actividad, 400);
     }
 
+    public function editarEstadoApiActividad(Request $request)
+    {
+        $actividad = actividad::where('Activi_id', $request->get('idActividad'))->first();
+        if ($actividad) {
+            $actividad->estado = 1;
+            $actividad->save();
+            return response()->json($actividad, 200);
+        }
+        return response()->json($actividad, 400);
+    }
+
     public function cambiarEstadoActividad(Request $request)
     {
         $actividad = actividad::where('Activi_id', $request->get('idActividad'))->first();

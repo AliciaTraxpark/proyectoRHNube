@@ -44,6 +44,7 @@ Route::post("actividad", "apiController@selectActividad")->middleware('token')->
 Route::post("actividadesEliminadas", "apiController@selectActividadEliminada")->middleware('token')->middleware('apilogger');
 Route::post("agregarActividad", "apiController@apiActividad")->middleware('token')->middleware('apilogger');
 Route::post("editarActividad", "apiController@editarApiActividad")->middleware('token')->middleware('apilogger');
+Route::post("editarEstadoActividad", "apiController@editarEstadoApiActividad")->middleware('token')->middleware('apilogger');
 Route::post("eliminarActividad", "apiController@cambiarEstadoActividad")->middleware('token')->middleware('apilogger');
 //HORARIO
 Route::post("horario", "apiController@horario")->middleware('token')->middleware('apilogger');
