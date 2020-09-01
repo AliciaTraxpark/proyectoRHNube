@@ -101,13 +101,13 @@ use Illuminate\Support\Facades\DB;
 
         <a href="javascript: void(0);">
             <i data-feather="activity"></i>
-            <span>Modulo TASK: Detalle diario</span>
+            <span>Modulo TASK</span>
             <span class="menu-arrow"></span>
         </a>
 
         <ul class="nav-second-level" aria-expanded="false">
             <li>
-                <a href="/tareas">Actividad de Captura de Pantalla</a>
+                <a href="/tareas">Detalle diario</a>
             </li>
         </ul>
     </li>

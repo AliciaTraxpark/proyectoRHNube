@@ -266,7 +266,13 @@ class delegarInvController extends Controller
         ->where('organi_id','=',session('sesionidorg'))
         ->where('email_inv','=',  $email)
         ->get();
-        if(count($invitado)){
+
+        $usuario_organizacion=DB::table('usuario_organizacion')
+        ->join('users','usuario_organizacion.user_id','=','users.id')
+        ->where('organi_id','=',session('sesionidorg'))
+        ->where('users.email','=',  $email)
+        ->get();
+        if(count($invitado) || count($usuario_organizacion)){
             return 1;
         } else{
             return 0;
@@ -305,4 +311,72 @@ class delegarInvController extends Controller
 
 
     }
+
+
+    public function editarInviAdm(Request $request){
+        $idinvitado=$request->idinvitado;
+
+        $invitado = invitado::find( $idinvitado);
+        if($invitado->rol_id==1){
+
+        }
+        else{
+            $invitado_empleado = invitado_empleado::where('idinvitado','=', $idinvitado)->get();
+            $invitado_empleado->each->delete();
+
+            $invitadoAct  = DB::table('invitado')
+            ->where('idinvitado', '=',  $idinvitado)
+               ->update(['rol_id' => 1,'users_id'=>Auth::user()->id,'dashboard'=> null]);
+
+               $usuario_organizacion =DB::table('usuario_organizacion')
+               ->where('user_id', '=', $invitado->user_Invitado )
+               ->where('organi_id', '=', session('sesionidorg'))
+               ->update(['rol_id' => 1]);
+        }
+
+    }
+
+   public function editarInviI(Request$request ){
+    $idinvitado=$request->idinvitado;
+    $idEmpleado=$request->idEmpleado;
+    $dash_ed=$request->dash_ed;
+
+    $invitado = invitado::find( $idinvitado);
+    if($invitado->rol_id==3){
+        ///delete all emp
+       $invitado_empleado = invitado_empleado::where('idinvitado','=', $idinvitado)->get();
+       $invitado_empleado->each->delete();
+        ////copiar empleado
+       foreach($idEmpleado as $idEmpleados){
+        $invitado_empleado = new invitado_empleado();
+        $invitado_empleado->idinvitado = $invitado->idinvitado;
+        $invitado_empleado->emple_id = $idEmpleados;
+        $invitado_empleado->save();
+        }
+        ///
+        $invitadoAct  = DB::table('invitado')
+        ->where('idinvitado', '=',  $idinvitado)
+           ->update(['users_id'=>Auth::user()->id,'dashboard'=> $dash_ed]);
+
+    }
+    else{
+        foreach($idEmpleado as $idEmpleados){
+            $invitado_empleado = new invitado_empleado();
+            $invitado_empleado->idinvitado = $invitado->idinvitado;
+            $invitado_empleado->emple_id = $idEmpleados;
+            $invitado_empleado->save();
+        }
+
+        $invitadoAct  = DB::table('invitado')
+        ->where('idinvitado', '=',  $idinvitado)
+           ->update(['rol_id' => 3,'users_id'=>Auth::user()->id,'dashboard'=> $dash_ed]);
+
+           $usuario_organizacion =DB::table('usuario_organizacion')
+           ->where('user_id', '=', $invitado->user_Invitado )
+           ->where('organi_id', '=', session('sesionidorg'))
+           ->update(['rol_id' => 3]);
+    }
+
+
+   }
 }
