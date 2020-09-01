@@ -10,7 +10,7 @@ var notify = $.notifyDefaults({
         '</div>'
 });
 //FECHA
-var fechaValue = $('#fecha').flatpickr({
+var fechaValue = $('#fechaSelec').flatpickr({
     mode: "single",
     dateFormat: "Y-m-d",
     altInput: true,
