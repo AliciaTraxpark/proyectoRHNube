@@ -85,7 +85,10 @@ class ResetPasswordNotification extends Notification
         //     ->action(Lang::get('Reset Password'), $url)
         //     ->line(Lang::get('This password reset link will expire in :count minutes.', ['count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire')]))
         //     ->line(Lang::get('If you did not request a password reset, no further action is required.'));
-        return (new MailMessage())->action(Lang::get('Reset Password'), $url)->view('mails.resetPassword');
+        return (new MailMessage())
+            ->subject(Lang::get('Solicitud de Restablecimiento de Contraseña'))
+            ->action(Lang::get('Restablecer contraseña'), $url)
+            ->view('mails.resetPassword', ["token" => $url]);
     }
 
     /**

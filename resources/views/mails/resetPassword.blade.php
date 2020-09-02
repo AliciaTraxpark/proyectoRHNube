@@ -1,7 +1,6 @@
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office"
-    style="width:100%;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0">
+<!DOCTYPE html PUBLIC"-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" style="width:100%;font-family:helvetica, 'helvetica neue', arial, verdana,
+    sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0">
 
 <head>
     <meta charset="UTF-8">
@@ -258,24 +257,25 @@
             border-style: solid solid solid solid !important;
             border-color: #163552 #163552 #163552 #163552 !important;
         }
-
     </style>
 </head>
 
-<body
-    style="width:100%;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0">
+<body style="width:100%;font-family:helvetica, 'helvetica neue', arial,
+        verdana,
+        sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0">
     <div class="es-wrapper-color" style="background-color:#FAFAFA">
         <!--[if gte mso 9]>
 			<v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
 				<v:fill type="tile" color="#fafafa"></v:fill>
 			</v:background>
 		<![endif]-->
-        <table class="es-wrapper" width="100%" cellspacing="0" cellpadding="0"
-            style="border-collapse:collapse;border-spacing:0px;padding:0;Margin:0;width:100%;height:100%;background-repeat:repeat;background-position:center top">
+        <table class="es-wrapper" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border-spacing:0px;padding:0;Margin:0;width:100%;height:100%;background-repeat:repeat;background-position:center
+                top">
             <tr style="border-collapse:collapse">
                 <td valign="top" style="padding:0;Margin:0">
-                    <table cellpadding="0" cellspacing="0" class="es-header" align="center"
-                        style="border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top">
+                    <table cellpadding="0" cellspacing="0" class="es-header" align="center" style="border-collapse:collapse;border-spacing:0px;table-layout:fixed
+                            !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center
+                            top">
                         <tr style="border-collapse:collapse">
                             <td class="es-adaptive" align="center" style="padding:0;Margin:0">
                                 <table class="es-header-body"
@@ -293,7 +293,8 @@
                                                             role="presentation"
                                                             style="border-collapse:collapse;border-spacing:0px">
                                                             <tr style="border-collapse:collapse">
-                                                                <td class="es-m-p0l es-m-txt-c" align="left"
+                                                                <td class="es-m-p0l
+                                                                        es-m-txt-c" align="left"
                                                                     style="padding:0;Margin:0;font-size:0px"><img
                                                                         class="adapt-img"
                                                                         src="https://i.ibb.co/Gsh6jbp/Recurso-23.png"
@@ -305,31 +306,37 @@
                                                 </tr>
                                             </table>
                                             <!--[if mso]></td><td style="width:20px"></td><td style="width:270px" valign="top"><![endif]-->
-                                                <table class="es-right" cellspacing="0" cellpadding="0" align="right">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td class="esd-container-frame" width="270" align="left" esdev-config="h18">
-                                                                <table width="100%" cellspacing="0" cellpadding="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td align="right" class="esd-block-text es-p40t es-p40b">
-                                                                                <p style="color: #ffffff;"><strong><span style="color:#FFFFFF;"></span></strong></p>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                            <table class="es-right" cellspacing="0" cellpadding="0" align="right">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="esd-container-frame" width="270" align="left"
+                                                            esdev-config="h18">
+                                                            <table width="100%" cellspacing="0" cellpadding="0">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td align="right" class="esd-block-text
+                                                                                es-p40t
+                                                                                es-p40b">
+                                                                            <p style="color:
+                                                                                    #ffffff;"><strong><span
+                                                                                        style="color:#FFFFFF;"></span></strong>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </td>
                                     </tr>
                                 </table>
                             </td>
                         </tr>
                     </table>
-                    <table class="es-content" cellspacing="0" cellpadding="0" align="center"
-                        style="border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%">
+                    <table class="es-content" cellspacing="0" cellpadding="0" align="center" style="border-collapse:collapse;border-spacing:0px;table-layout:fixed
+                            !important;width:100%">
                         <tr style="border-collapse:collapse">
                             <td style="padding:0;Margin:0;background-color:#FAFAFA" bgcolor="#fafafa" align="center">
                                 <table class="es-content-body"
@@ -358,20 +365,37 @@
                                                                 <td align="center"
                                                                     style="padding:0;Margin:0;padding-top:15px;padding-bottom:15px">
                                                                     <h1
-                                                                        style="Margin:0;line-height:24px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333">
-                                                                        <strong style="color: #163552;">TE DAMOS LA
+                                                                        style="Margin:0;line-height:24px;font-family:arial,
+                                                                            'helvetica
+                                                                            neue',
+                                                                            helvetica,
+                                                                            sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333">
+                                                                        <strong style="color:
+                                                                                #163552;">TE
+                                                                            DAMOS
+                                                                            LA
                                                                             BIENVENIDA</strong></h1>
                                                                     <h1
-                                                                        style="Margin:0;line-height:24px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333">
-                                                                        <strong style="color: #163552;">&nbsp;RH
+                                                                        style="Margin:0;line-height:24px;font-family:arial,
+                                                                            'helvetica
+                                                                            neue',
+                                                                            helvetica,
+                                                                            sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333">
+                                                                        <strong style="color:
+                                                                                #163552;">&nbsp;RH
                                                                             NUBE</strong></h1>
                                                                 </td>
                                                             </tr>
                                                             <tr style="border-collapse:collapse">
                                                                 <td align="center"
                                                                     style="padding:0;Margin:0;padding-left:40px;padding-right:40px">
-                                                                    <strong style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center;text-transform:
-                                                                        uppercase;">
+                                                                    <strong style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica,
+                                                                            'helvetica
+                                                                            neue',
+                                                                            arial,
+                                                                            verdana,
+                                                                            sans-serif;line-height:24px;color:#666666;text-align:center;text-transform:
+                                                                            uppercase;">
                                                                         Hola,&nbsp;</strong>
                                                                 </td>
                                                             </tr>
@@ -379,10 +403,15 @@
                                                                 <td align="left"
                                                                     style="padding:0;Margin:0;padding-right:35px;padding-left:40px">
                                                                     <p
-                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center">
-                                                                        Para empezar usar nuestra plataforma android,
-                                                                        descarga nuestra aplicación que se
-                                                                        encuentra disponible en el siguiente enlace.</p>
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica,
+                                                                            'helvetica
+                                                                            neue',
+                                                                            arial,
+                                                                            verdana,
+                                                                            sans-serif;line-height:24px;color:#666666;text-align:center">
+                                                                        Estás recibiendo este email porque se ha
+                                                                        solicitado un cambio de contraseña para tu
+                                                                        cuenta.</p>
                                                                 </td>
                                                             </tr>
                                                             <tr style="border-collapse:collapse">
@@ -390,10 +419,35 @@
                                                                     style="Margin:0;padding-left:10px;padding-right:10px;padding-top:40px;padding-bottom:40px">
                                                                     <span class="es-button-border"
                                                                         style="border-style:solid;border-color:#163552;background:#FFFFFF;border-width:2px;display:inline-block;border-radius:10px;width:auto"><a
-                                                                            href="https://play.google.com/store/apps/details?id=pe.trax.park&hl=es"
-                                                                            class="es-button" target="_blank"
-                                                                            style="text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:14px;color:#163552;border-style:solid;border-color:#FFFFFF;border-width:15px 20px 15px 20px;display:inline-block;background:#FFFFFF;border-radius:10px;font-weight:bold;font-style:normal;line-height:17px;width:auto;text-align:center">
-                                                                            ANDROID</a></span></td>
+                                                                            href="{{$token}}" class="es-button"
+                                                                            target="_blank"
+                                                                            style="text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-family:arial,
+                                                                                'helvetica
+                                                                                neue',
+                                                                                helvetica,
+                                                                                sans-serif;font-size:14px;color:#163552;border-style:solid;border-color:#FFFFFF;border-width:15px
+                                                                                20px
+                                                                                15px
+                                                                                20px;display:inline-block;background:#FFFFFF;border-radius:10px;font-weight:bold;font-style:normal;line-height:17px;width:auto;text-align:center">
+                                                                            Restablecer
+                                                                            Contraseña</a></span></td>
+                                                            </tr>
+                                                            <tr style="border-collapse:collapse">
+                                                                <td align="left"
+                                                                    style="padding:0;Margin:0;padding-right:35px;padding-left:40px">
+                                                                    <p
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica,
+                                                                            'helvetica
+                                                                            neue',
+                                                                            arial,
+                                                                            verdana,
+                                                                            sans-serif;line-height:24px;color:#666666;text-align:center">
+                                                                        Este enlace para restablecer la contraseña
+                                                                        caduca en 60 minutos. Si no has solicitado un
+                                                                        cambio de contraseña,
+                                                                        puedes ignorar o eliminar estee-mail.
+                                                                        Saludos,RHNUBE.</p>
+                                                                </td>
                                                             </tr>
                                                         </table>
                                                     </td>
@@ -405,16 +459,17 @@
                             </td>
                         </tr>
                     </table>
-                    <table class="es-footer" cellspacing="0" cellpadding="0" align="center"
-                        style="border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top">
+                    <table class="es-footer" cellspacing="0" cellpadding="0" align="center" style="border-collapse:collapse;border-spacing:0px;table-layout:fixed
+                            !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center
+                            top">
                         <tr style="border-collapse:collapse">
                             <td style="padding:0;Margin:0;background-color:#FAFAFA" bgcolor="#fafafa" align="center">
                                 <table class="es-footer-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff"
                                     align="center"
                                     style="border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px">
                                     <tr style="border-collapse:collapse">
-                                        <td style="Margin:0;padding-top:10px;padding-left:20px;padding-right:20px;padding-bottom:30px;background-color:#163552;background-position:left top"
-                                            bgcolor="#163552" align="left">
+                                        <td style="Margin:0;padding-top:10px;padding-left:20px;padding-right:20px;padding-bottom:30px;background-color:#163552;background-position:left
+                                                top" bgcolor="#163552" align="left">
                                         </td>
                                     </tr>
                                 </table>
