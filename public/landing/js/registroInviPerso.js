@@ -214,6 +214,7 @@ function registerP() {
     var apMaterno = $('#apMaterno').val();
     var direccion = $('#direccion').val();
     var email = emailC;
+    var n_celular=$('#n_celular').val();
     var password = $('#password').val();
     var dia_fecha = $('#dia_fecha').val();
     var mes_fecha = $('#mes_fecha').val();
@@ -233,7 +234,7 @@ function registerP() {
             dia_fecha,
             mes_fecha,
             ano_fecha,
-            sexo,idinvita
+            sexo,idinvita,n_celular
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
