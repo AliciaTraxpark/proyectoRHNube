@@ -59,7 +59,24 @@ class delegarInvController extends Controller
             )
             ->groupBy('ar.area_id')
             ->get();
-        return view('delegarInvitado.delegarControl',['empleado'=>$empleado,'area'=>$area,'invitado'=>$invitado]);
+
+
+            $invitadod=DB::table('invitado')
+            ->where('user_Invitado','=',Auth::user()->id)
+            ->where('organi_id','=',session('sesionidorg'))
+            ->get()->first();
+
+                if($invitadod){
+                    if ($invitadod->rol_id!=1){
+                        return redirect('/dashboard');
+                    }
+                    else{
+                        return view('delegarInvitado.delegarControl',['empleado'=>$empleado,'area'=>$area,'invitado'=>$invitado]);
+                    }
+                }
+
+            else{
+        return view('delegarInvitado.delegarControl',['empleado'=>$empleado,'area'=>$area,'invitado'=>$invitado]);}
     }
     else {
         return redirect(route('principal'));
