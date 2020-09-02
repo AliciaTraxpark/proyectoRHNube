@@ -8,8 +8,8 @@
     <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('admin/assets/libs/alertify/alertify.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('admin/assets/libs/alertify/bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
@@ -28,18 +28,14 @@
             max-height: 90px;
         }
 
-        body>div.bootbox.modal.fade.bootbox-confirm.show>div>div>div.modal-footer>button.btn.btn-primary.bootbox-accept {
-            background-color: #163552;
-            border-color: #163552;
-            zoom: 85%;
-        }
-
-        body>div.bootbox.modal.fade.bootbox-confirm.show>div>div>div.modal-footer>button.btn.btn-light.bootbox-cancel {
-            background: #e2e1e1;
-            color: #000000;
-            border-color: #e2e1e1;
-            zoom: 85%;
-        }
+        body > div.bootbox.modal.fade.show > div > div > div{
+        background: #131313;
+    color: #fbfbfb;
+    }
+    body > div.bootbox.modal.fade.show > div{
+        top: 100px;
+    left: 75px;
+    }
 
         .table {
             width: 100% !important;
@@ -76,9 +72,7 @@
                                 Proyectos</label>
                         </div> --}}
                         <div class="col-md-5 text-left" style="bottom: 5px;">
-                            <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal"
-                                data-target="#agregarInvitado" onclick="$('#frmInvi')[0].reset();$('#spanEm').hide();$('#nombreEmpleado').prop('required',true);
-                                $('#divInvitado').show();" style="background: #507394;
+                            <button type="button" class="btn btn-secondary btn-sm"  onclick="abrirRegist()" style="background: #507394;
                                         border-color: #507394;">+ Invitar miembro</button>
 
                         </div>
@@ -152,7 +146,7 @@
 
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="">Email de invitado:</label> <span id="spanEm" style="display: none;color:#911818">*Email ya registrado como invitado</span>
+                                            <label for="">Email de invitado:</label> <span id="spanEm" style="display: none;color:#911818">*Email ya registrado como invitado o ya existe en la organizacion.</span>
                                             <input type="email" class="form-control form-control-sm" id="emailInvi"
                                                 required>
                                         </div>
@@ -236,7 +230,7 @@
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
                 <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Invitar miembro</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <input id="idInv" type="hidden"><button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -274,7 +268,7 @@
                                                 <label for="" class="col-md-10">Empleado(s):</label>
                                                 <input type="checkbox" style="font-size: 11.4px" class="form-check-input"
                                                     id="selectTodoCheck_edit">
-                                                <label class="form-check-label" for="selectTodoCheck"
+                                                <label class="form-check-label" for="selectTodoCheck_edit"
                                                     style="font-style: oblique;margin-top: 2px;font-size: 11.4px">Seleccionar
                                                     todos.</label>
                                             </div>
@@ -298,7 +292,7 @@
                                                 <label for="" class="col-md-10">Seleccionar por area(s):</label>
                                                 <input type="checkbox" style="font-size: 11.4px" class="form-check-input"
                                                     id="selectAreaCheck_edit">
-                                                <label class="form-check-label" for="selectAreaCheck"
+                                                <label class="form-check-label" for="selectAreaCheck_edit"
                                                     style="font-style: oblique;margin-top: 2px;font-size: 11.4px">Seleccionar
                                                     todas.</label>
                                             </div>
@@ -338,20 +332,21 @@
 @section('script')
 
     <!-- Plugins Js -->
-    <script src="{{ URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
+
     <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js') }}"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/libs/alertify/alertify.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
     <script src="{{ asset('landing/js/delegarControl.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
-    <script src="{{ asset('landing/js/actualizarPDatos.js') }}"></script>
-@endsection
 
-@section('script-bottom')
+    <script src="{{ asset('landing/js/actualizarPDatos.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
     <script src="{{ asset('landing/js/notificacionesUser.js') }}"></script>
 @endsection
+

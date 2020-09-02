@@ -38,8 +38,27 @@ class HomeController extends Controller
         } else {
             $variable = 0;
         }
+        ////////////////////////
 
-        return view('dashboard', ['variable' => $variable]);
+        $invitadod=DB::table('invitado')
+        ->where('user_Invitado','=',Auth::user()->id)
+        ->where('organi_id','=',session('sesionidorg'))
+        ->get()->first();
+
+        if($invitadod){
+            if ($invitadod->dashboard==0){
+                return redirect('/tareas');
+            }
+            else{
+                return view('dashboard', ['variable' => $variable]);
+            }
+        }
+        else{
+            return view('dashboard', ['variable' => $variable]);
+        }
+
+
+
     }
 
     public function elegirEmpresa(){
@@ -57,7 +76,7 @@ class HomeController extends Controller
     public function enviarIDorg(Request $request){
         $vars= $request->idorganiza;
         session(['sesionidorg' => $vars]);
-        
+
       /*   return redirect(route('dashboard')); */
     }
 }

@@ -21,7 +21,25 @@ class editarPerfilController extends Controller
         $organizacion = organizacion::where('organi_id', '=', session('sesionidorg'))->get()->first();
 
         $departamentoOrgani = ubigeo_peru_departments::all();
-        return view('editarPerfil', ['persona' => $persona, 'organizacion' => $organizacion, 'departamentoOrgani' => $departamentoOrgani]);
+
+        $invitadod=DB::table('invitado')
+        ->where('user_Invitado','=',Auth::user()->id)
+        ->where('organi_id','=',session('sesionidorg'))
+        ->get()->first();
+
+            if($invitadod){
+                if ($invitadod->rol_id!=1){
+                    return redirect('/dashboard');
+                }
+                else{
+                    return view('editarPerfil', ['persona' => $persona, 'organizacion' => $organizacion, 'departamentoOrgani' => $departamentoOrgani]);
+                }
+            }
+
+        else{
+
+
+        return view('editarPerfil', ['persona' => $persona, 'organizacion' => $organizacion, 'departamentoOrgani' => $departamentoOrgani]);}
     }
     public function show()
     {

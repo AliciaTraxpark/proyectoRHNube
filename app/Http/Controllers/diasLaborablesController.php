@@ -22,7 +22,23 @@ class diasLaborablesController extends Controller
         ->where('e.emple_estado', '=', 1)
         ->where('organi_id', '=', session('sesionidorg'))
         ->get();
-        return View('horarios.diasLaborales',['empleado'=>$empleado]);
+
+        $invitadod=DB::table('invitado')
+        ->where('user_Invitado','=',Auth::user()->id)
+        ->where('organi_id','=',session('sesionidorg'))
+        ->get()->first();
+
+            if($invitadod){
+                if ($invitadod->rol_id!=1){
+                    return redirect('/dashboard');
+                }
+                else{
+                    return View('horarios.diasLaborales',['empleado'=>$empleado]);
+                }
+            }
+
+        else{
+        return View('horarios.diasLaborales',['empleado'=>$empleado]);}
     }
     public function storeCalendario(Request $request){
 
