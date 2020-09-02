@@ -414,74 +414,7 @@
                                             </table>
                                         </td>
                                     </tr>
-                                    <tr style="border-collapse:collapse">
-                                        <td align="center"
-                                            style="padding:0;Margin:0;padding-left:10px;padding-right:10px;padding-top:20px;padding-bottom:20px;background-position:center center">
-                                            <!--[if mso]><table style="width:580px" cellpadding="0" cellspacing="0"><tr><td style="width:199px" valign="top"><![endif]-->
-                                            <table align="center" cellpadding="0" cellspacing="0" class="es-left"
-                                                style="border-collapse:collapse;border-spacing:0px;float:left">
-                                                <tr style="border-collapse:collapse">
-                                                    <td align="center" style="padding:0;Margin:0;width:199px">
-                                                        <table cellpadding="0" cellspacing="0" role="presentation"
-                                                            style="border-collapse:collapse;border-spacing:0px;background-position:center center"
-                                                            width="100%">
-                                                            <tr style="border-collapse:collapse">
-                                                                <td align="right" class="es-m-txt-c"
-                                                                    style="padding:0;Margin:0;padding-top:15px;padding-right:20px;padding-left:20px;">
-                                                                    <p
-                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666">
-                                                                        <strong>Síguenos:</strong></p>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                            <!--[if mso]></td><td style="width:20px"></td><td style="width:361px" valign="top"><![endif]-->
-                                            <table align="center" cellpadding="0" cellspacing="0" class="es-right"
-                                                style="border-collapse:collapse;border-spacing:0px;float:right">
-                                                <tr style="border-collapse:collapse">
-                                                    <td align="left" style="padding:0;Margin:0;width:361px">
-                                                        <table cellpadding="0" cellspacing="0" role="presentation"
-                                                            style="border-collapse:collapse;border-spacing:0px;background-position:center center"
-                                                            width="100%">
-                                                            <tr style="border-collapse:collapse">
-                                                                <td align="left" class="es-m-txt-c"
-                                                                    style="padding:0;Margin:0;padding-bottom:5px;padding-top:10px;font-size:0">
-                                                                    <table cellpadding="0" cellspacing="0"
-                                                                        class="es-table-not-adapt es-social"
-                                                                        role="presentation"
-                                                                        style="border-collapse:collapse;border-spacing:0px">
-                                                                        <tr style="border-collapse:collapse">
-                                                                            <td align="center"
-                                                                                style="padding:0;Margin:0;padding-right:20px;padding-left:20px;"
-                                                                                valign="top"><a
-                                                                                    href="https://rhsolution.com.pe/"><img
-                                                                                        alt="Web"
-                                                                                        src="https://i.ibb.co/LPnydc7/web-page.png"
-                                                                                        style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
-                                                                                        title="Pagina Web"
-                                                                                        width="32" /></a></td>
-                                                                            <td align="center"
-                                                                                style="padding:0;Margin:0;padding-right:20px;padding-left:20px;"
-                                                                                valign="top"><a
-                                                                                    href="https://www.facebook.com/rhsolutiongo/"><img
-                                                                                        alt="Fb"
-                                                                                        src="https://i.ibb.co/QcBV5Fb/facebook.png"
-                                                                                        style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
-                                                                                        title="Facebook"
-                                                                                        width="32" /></a></td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                            <!--[if mso]></td></tr></table><![endif]-->
-                                        </td>
-                                    </tr>
+                                    
                                     <tr style="border-collapse:collapse">
                                         <td align="left"
                                             style="Margin:0;padding-top:5px;padding-bottom:20px;padding-left:20px;padding-right:20px;background-position:left top">
@@ -497,12 +430,13 @@
                                                                 <td align="center" style="padding:0;Margin:0">
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:14px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:21px;color:#666666">
-                                                                        Contacta con nosotros: <a href="tel:123456789"
+                                                                        Contacta con nosotros: <br><br>
+                                                                         <a href="tel:123456789"
                                                                             style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;font-size:14px;text-decoration:none;color:#666666"
-                                                                            target="_blank">(01) 748-2415</a> | <a
+                                                                            target="_blank">info@rhnube.com.pe</a> <br><br> <a
                                                                             href="mailto:your@mail.com"
                                                                             style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;font-size:14px;text-decoration:none;color:#666666"
-                                                                            target="_blank">ventas@rhsolution.com.pe</a>
+                                                                            target="_blank">www.rhnube.com.pe</a>
                                                                     </p>
                                                                 </td>
                                                             </tr>
