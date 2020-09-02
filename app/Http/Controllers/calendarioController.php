@@ -53,8 +53,23 @@ class calendarioController extends Controller
             $calendarioSel = calendario::where('organi_id', '=', session('sesionidorg'))->get();
             //FUNCIONA OK
 
+                 $invitadod=DB::table('invitado')
+                ->where('user_Invitado','=',Auth::user()->id)
+                ->where('organi_id','=',session('sesionidorg'))
+                ->get()->first();
 
-            return view('calendario.calendario', ['pais' => $paises, 'calendario' => $calendarioSel]);
+                    if($invitadod){
+                        if ($invitadod->rol_id!=1){
+                            return redirect('/dashboard');
+                        }
+                        else{
+                            return view('calendario.calendario', ['pais' => $paises, 'calendario' => $calendarioSel]);
+                        }
+                    }
+
+                else{
+
+            return view('calendario.calendario', ['pais' => $paises, 'calendario' => $calendarioSel]);}
         } else {
             return redirect(route('principal'));
         }
@@ -128,7 +143,22 @@ class calendarioController extends Controller
             //FUNCIONA OK
 
 
-            return view('calendario.calendarioMenu', ['pais' => $paises, 'calendario' => $calendarioSel]);
+            $invitadod=DB::table('invitado')
+            ->where('user_Invitado','=',Auth::user()->id)
+            ->where('organi_id','=',session('sesionidorg'))
+            ->get()->first();
+
+                if($invitadod){
+                    if ($invitadod->rol_id!=1){
+                        return redirect('/dashboard');
+                    }
+                    else{
+                        return view('calendario.calendarioMenu', ['pais' => $paises, 'calendario' => $calendarioSel]);
+                    }
+                }
+
+            else{
+            return view('calendario.calendarioMenu', ['pais' => $paises, 'calendario' => $calendarioSel]);}
         } else {
             return redirect(route('principal'));
         }

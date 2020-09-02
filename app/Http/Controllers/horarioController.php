@@ -56,8 +56,26 @@ class horarioController extends Controller
         $local=DB::table('local')
         ->select('local_id as idlocal', 'local_descripcion as descripcion')
         ->get();
+
+        $invitadod=DB::table('invitado')
+        ->where('user_Invitado','=',Auth::user()->id)
+        ->where('organi_id','=',session('sesionidorg'))
+        ->get()->first();
+
+            if($invitadod){
+                if ($invitadod->rol_id!=1){
+                    return redirect('/dashboard');
+                }
+                else{
+                    return view('horarios.horarios', ['pais' => $paises, 'departamento' => $departamento, 'empleado' => $empleado,'horario'=>$horario,'horarion'=>$horarion,
+                    'area'=>$area,'cargo'=>$cargo,'local'=>$local]);
+                }
+            }
+
+        else{
         return view('horarios.horarios', ['pais' => $paises, 'departamento' => $departamento, 'empleado' => $empleado,'horario'=>$horario,'horarion'=>$horarion,
-        'area'=>$area,'cargo'=>$cargo,'local'=>$local]);
+        'area'=>$area,'cargo'=>$cargo,'local'=>$local]);}
+
     }
     public function verTodEmpleado(Request $request)
     {
@@ -298,8 +316,24 @@ class horarioController extends Controller
         ->select('local_id as idlocal', 'local_descripcion as descripcion')
         ->get();
 
-        return view('horarios.horarioMenu', ['pais' => $paises, 'departamento' => $departamento, 'empleado' => $empleado,'horario'=>$horario,'horarion'=>$horarion,
+        $invitadod=DB::table('invitado')
+        ->where('user_Invitado','=',Auth::user()->id)
+        ->where('organi_id','=',session('sesionidorg'))
+        ->get()->first();
+
+            if($invitadod){
+                if ($invitadod->rol_id!=1){
+                    return redirect('/dashboard');
+                }
+                else{
+                    return view('horarios.horarioMenu', ['pais' => $paises, 'departamento' => $departamento, 'empleado' => $empleado,'horario'=>$horario,'horarion'=>$horarion,
         'area'=>$area,'cargo'=>$cargo,'local'=>$local]);
+                }
+            }
+
+        else{
+        return view('horarios.horarioMenu', ['pais' => $paises, 'departamento' => $departamento, 'empleado' => $empleado,'horario'=>$horario,'horarion'=>$horarion,
+        'area'=>$area,'cargo'=>$cargo,'local'=>$local]);}
     }
 
     public function eliminarHora(Request $request)

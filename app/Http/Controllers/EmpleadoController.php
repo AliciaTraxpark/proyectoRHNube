@@ -105,12 +105,36 @@ class EmpleadoController extends Controller
             ->get();
         $horario = horario::where('organi_id', '=', session('sesionidorg'))->get();
         $condicionPago = condicion_pago::where('organi_id', '=', session('sesionidorg'))->get();
-        return view('empleado.empleado', [
-            'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
-            'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
-            'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
-            'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
-        ]);
+
+        $invitadod=DB::table('invitado')
+        ->where('user_Invitado','=',Auth::user()->id)
+        ->where('organi_id','=',session('sesionidorg'))
+        ->get()->first();
+
+            if($invitadod){
+                if ($invitadod->rol_id!=1){
+                    return redirect('/dashboard');
+                }
+                else{
+                    return view('empleado.empleado', [
+                        'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
+                        'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
+                        'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
+                        'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
+                    ]);
+                }
+            }
+
+        else{
+            return view('empleado.empleado', [
+                'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
+                'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
+                'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
+                'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
+            ]);
+        }
+
+
     }
     public function cargarDatos()
     {   //DATOS DE TABLA PARA CARGAR EXCEL
@@ -880,12 +904,33 @@ class EmpleadoController extends Controller
         $horario = horario::where('organi_id', '=', session('sesionidorg'))->get();
         $condicionPago = condicion_pago::where('organi_id', '=', session('sesionidorg'))->get();
         //dd($tabla_empleado);
+
+        $invitadod=DB::table('invitado')
+        ->where('user_Invitado','=',Auth::user()->id)
+        ->where('organi_id','=',session('sesionidorg'))
+        ->get()->first();
+
+            if($invitadod){
+                if ($invitadod->rol_id!=1){
+                    return redirect('/dashboard');
+                }
+                else{
+                    return view('empleado.empleadoMenu', [
+                        'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
+                        'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
+                        'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
+                        'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
+                    ]);
+                }
+            }
+
+        else{
         return view('empleado.empleadoMenu', [
             'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
             'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
             'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
             'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
-        ]);
+        ]);}
     }
 
     public function comprobarNumD(Request $request)
