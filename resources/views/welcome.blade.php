@@ -30,7 +30,7 @@
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
     <header id="header-section">
         <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
-            <div class="container pb-3 pt-2">
+            <div class="container pb-0 pt-2">
                 <div class="col-md-5">
                     <div class="navbar-brand-wrapper d-flex">
                         <img src="{{asset('landing/images/Recurso 23.png')}}" width="45%" height="45%">
@@ -69,16 +69,15 @@
                                     flex; align-items: center; top: 15px;">
                                 <button type="submit" class="boton">Iniciar
                                     sesión</button>
-
                             </div>
-                        </div>
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
+                            <div class="col-md-12 form-group row p-0 m-0 text-center">
+                                <div class="col-md-6 offset-md-4 p-0">
+                                    @if (Route::has('password.request'))
+                                        <a class="btn btn-link" href="{{ route('password.request') }}" style="color: #ffffff;">
+                                            ¿Olvidaste tu contraseña?
+                                        </a>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </form>

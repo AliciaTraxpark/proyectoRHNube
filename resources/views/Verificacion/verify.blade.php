@@ -104,8 +104,7 @@
 
                 <div class="row mt-3">
                     <div class="col-12 text-center">
-                        <p class="text-muted">Regresar a <a href="{{
-                                route('logout') }}"
+                        <p class="text-muted">Regresar a <a href="{{route('logout') }}"
                                 class="text-primary font-weight-bold ml-1">Inicio</a></p>
                     </div> <!-- end col -->
                 </div>

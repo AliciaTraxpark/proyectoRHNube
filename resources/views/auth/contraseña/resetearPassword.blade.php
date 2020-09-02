@@ -57,61 +57,61 @@
             </div>
         </nav>
     </header>
-    <div class="container"> <br>
-        <div class="row">
-            <div class="col-md-12 text-center" style="padding-top:
-                30px;padding-bottom: 30px">
-                <h4 class="font-weight-semibold">Organicemos tu equipo de
-                    trabajo en 10 minutos: Controla, mide y
-                    gestiona.
-                </h4>
+    <div class="account-pages my-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-6">
+                    <div class="card">
+                        <div class="card-body p-0">
+                            <div class="row">
+                                <div class="col-12 p-5">
+                                    <div class="mx-auto mb-5 text-center">
+                                        <a href="index.html">
+                                            <img src="{{asset('landing/images/Recurso 13.png')}}" alt="" height="45" />
+                                        </a>
+                                    </div>
+
+                                    <h6 class="h5 mb-0 mt-4">Restablecer contraseña</h6>
+                                    <p class="text-muted mt-1 mb-5">
+                                        Ingrese su dirección de correo electrónico y le enviaremos un correo electrónico con instrucciones para restablecer su contraseña.
+                                    </p>
+
+                                    <form action="#" class="authentication-form">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Correo electrónico</label>
+                                            <div class="input-group input-group-merge">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <img src="{{asset('landing/images/note.svg')}}" height="20">
+                                                    </span>
+                                                </div>
+                                                <input type="email" class="form-control" id="email" placeholder="hello@rhnube.com">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group mb-0 text-center">
+                                            <button class="btn btn-primary btn-block" type="submit">Enviar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div> <!-- end card-body -->
+                    </div>
+                    <!-- end card -->
+                    <div class="row mt-3">
+                        <div class="col-12 text-center">
+                            <p class="text-muted">Regresar a <a href="{{route('logout')}}" class="text-primary font-weight-bold ml-1">Inicio</a></p>
+                        </div> <!-- end col -->
+                    </div>
+                </div> <!-- end col -->
             </div>
+            <!-- end row -->
         </div>
-        <div class="row justify-content-center">
-            <div class="col-xl-5 col-lg-6 col-md-8">
-                <div class="card">
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <div class="mx-auto">
-                                <a href="index.html">
-                                    <h3 class="d-inline align-middle ml-1
-                                        text-logo">RH SOLUTION</h3>
-                                </a>
-                            </div>
-                            <br>
-                            <div class="mx-auto">
-                                <img src="{{asset('landing/images/login.svg')}}"
-                                    alt="" height="80" />
-                            </div>
-                            <h6 class="h5 mb-0 mt-5" style="text-transform:
-                                uppercase;">Confirma tu email</h6>
-                            <p class="text-muted mt-3 mb-3">Su cuenta ha sido
-                                registrada exitosamente. Para
-                                completar el proceso de verificación, debe
-                                verficar su cuenta.
-                                <a href="{{route('reenvioCorreo')}}"
-                                    class="text-primary font-weight-bold ml-1">Reenviar
-                                    Correo</a>
-                            </p>
-                        </div>
-                    </div> <!-- end card-body -->
-                </div>
-                <!-- end card -->
-
-                <div class="row mt-3">
-                    <div class="col-12 text-center">
-                        <p class="text-muted">Regresar a <a href="{{
-                                route('logout') }}"
-                                class="text-primary font-weight-bold ml-1">Inicio</a></p>
-                    </div> <!-- end col -->
-                </div>
-                <!-- end row -->
-
-            </div> <!-- end col -->
-        </div>
+        <!-- end container -->
     </div>
     <script src="{{asset('landing/vendors/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('landing/vendors/bootstrap/bootstrap.min.js')}}"></script>
+    <script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>
     <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
     <script src="{{asset('landing/js/landingpage.js')}}"></script>
 </body>
