@@ -75,8 +75,13 @@
                                     <p class="text-muted mt-1 mb-5">
                                         Ingrese su dirección de correo electrónico y le enviaremos un correo electrónico con instrucciones para restablecer su contraseña.
                                     </p>
-
-                                    <form action="#" class="authentication-form">
+                                    @if (session('status'))
+                                        <div class="alert alert-success" role="alert">
+                                            {{ session('status') }}
+                                        </div>
+                                    @endif
+                                    <form method="POST" action="{{ route('password.email') }}" class="authentication-form">
+                                        @csrf
                                         <div class="form-group">
                                             <label class="form-control-label">Correo electrónico</label>
                                             <div class="input-group input-group-merge">
@@ -85,7 +90,12 @@
                                                         <img src="{{asset('landing/images/note.svg')}}" height="20">
                                                     </span>
                                                 </div>
-                                                <input type="email" class="form-control" id="email" placeholder="hello@rhnube.com">
+                                                <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                                @error('email')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -114,4 +124,5 @@
     <script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>
     <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
     <script src="{{asset('landing/js/landingpage.js')}}"></script>
+    <script src="{{asset('landing/js/password.js')}}"></script>
 </body>

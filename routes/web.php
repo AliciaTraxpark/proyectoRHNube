@@ -22,6 +22,7 @@ Auth::routes(['verify' => true]);
 
 //PASSWORD RESET
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 
 /* Route::get('/', 'HomeController@principal')->name('principal'); */
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
