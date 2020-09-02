@@ -20,6 +20,8 @@ Route::get('/', 'Auth\LoginController@principal', function () {
 })->name('principal');
 Auth::routes(['verify' => true]);
 
+//PASSWORD RESET
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 
 /* Route::get('/', 'HomeController@principal')->name('principal'); */
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');

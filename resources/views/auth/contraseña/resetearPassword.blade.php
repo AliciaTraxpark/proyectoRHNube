@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
     <head>
         <title>RH nube</title>
@@ -50,9 +50,7 @@
                         </div>
                     </div>
                     <div class="col-md-4 text-left">
-                        <h5 style="color: #ffffff;font-size: 15px!important">Por
-                            favor verifica tu cuenta para poder
-                            empezar.</h5>
+                        <h5 style="color: #ffffff;font-size: 15px!important">Recuperar Contraseña.</h5>
                     </div>
                     <div class="col-md-6 text-left"></div>
                 </div>
@@ -86,23 +84,15 @@
                                     alt="" height="80" />
                             </div>
                             <h6 class="h5 mb-0 mt-5" style="text-transform:
-                                uppercase;">Ingresa tu Código
-                                {{$persona[0]->perso_nombre}}
-                                {{$persona[0]->perso_apPaterno}}
-                            </h6>
-                            <div class="mx-auto">
-                                <span class="mt-1" id="errorC" style="color:
-                                    red;">*Código erróneo.</span>
-                                <span class="mt-1" id="error" style="color:
-                                    red;">*Ingrese código.</span>
-                                <input id="codigoV" type="text"
-                                    class="form-control mt-3
-                                    text-center" name="codigo" required
-                                    autofocus>
-                            </div>
-                            <br>
-                            <a id="ComprobarC" class="text-primary
-                                font-weight-bold ml-1" style="cursor: pointer;">Verificar</a>
+                                uppercase;">Confirma tu email</h6>
+                            <p class="text-muted mt-3 mb-3">Su cuenta ha sido
+                                registrada exitosamente. Para
+                                completar el proceso de verificación, debe
+                                verficar su cuenta.
+                                <a href="{{route('reenvioCorreo')}}"
+                                    class="text-primary font-weight-bold ml-1">Reenviar
+                                    Correo</a>
+                            </p>
                         </div>
                     </div> <!-- end card-body -->
                 </div>
@@ -111,8 +101,8 @@
                 <div class="row mt-3">
                     <div class="col-12 text-center">
                         <p class="text-muted">Regresar a <a href="{{
-                                route('logout') }}" class="text-primary
-                                font-weight-bold ml-1">Inicio</a></p>
+                                route('logout') }}"
+                                class="text-primary font-weight-bold ml-1">Inicio</a></p>
                     </div> <!-- end col -->
                 </div>
                 <!-- end row -->
@@ -123,5 +113,5 @@
     <script src="{{asset('landing/vendors/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('landing/vendors/bootstrap/bootstrap.min.js')}}"></script>
     <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
-    <script src="{{asset('landing/js/codigoSms.js')}}"></script>
+    <script src="{{asset('landing/js/landingpage.js')}}"></script>
 </body>

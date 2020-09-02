@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
     <head>
-        <title>RH Solution</title>
+        <title>RH nube</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -19,8 +19,7 @@
             URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')
             }}" rel="stylesheet" />
         <link rel="shortcut icon"
-            href="https://rhsolution.com.pe/wp-content/uploads/2019/06/small-logo-rh-solution-64x64.png"
-            sizes="32x32">
+            href="https://i.ibb.co/b31CPDW/Recurso-13.png">
     </head>
 
     <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100"
@@ -44,11 +43,10 @@
     </style>
         <header id="header-section">
             <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
-                <div class="container" style="color: #ffffff;">
-                    <div class="col-md-2">
+                <div class="container pb-3 pt-3" style="color: #ffffff;">
+                    <div class="col-md-2 col-xl-2 mr-4 p-0">
                         <div class="navbar-brand-wrapper d-flex w-100">
-                            <img src="{{asset('landing/images/logo.png')}}"
-                                height="80">
+                            <img src="{{asset('landing/images/Recurso 23.png')}}" height="50">
                         </div>
                     </div>
                     <div class="col-md-4 text-left">
