@@ -133,6 +133,7 @@ class delegarInvController extends Controller
         $invitado->rol_id =1;
         $invitado->email_inv = $emailInv;
         $invitado->estado =0;
+        $invitado->dashboard =1;
         $invitado->users_id =Auth::user()->id;
         $invitado->save();
 
@@ -343,7 +344,7 @@ class delegarInvController extends Controller
 
             $invitadoAct  = DB::table('invitado')
             ->where('idinvitado', '=',  $idinvitado)
-               ->update(['rol_id' => 1,'users_id'=>Auth::user()->id,'dashboard'=> null]);
+               ->update(['rol_id' => 1,'users_id'=>Auth::user()->id,'dashboard'=> 1]);
 
                $usuario_organizacion =DB::table('usuario_organizacion')
                ->where('user_id', '=', $invitado->user_Invitado )
