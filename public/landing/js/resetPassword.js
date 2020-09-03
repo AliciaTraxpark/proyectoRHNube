@@ -35,17 +35,17 @@ function enviarReset() {
                     $('#alertPaswword').show();
                     $('#password').addClass("error");
                     $('#password-confirm').addClass("error");
-                    $('#password').keyup(function () {
-                        $('#password').removeClass("error");
-                        $('#password-confirm').removeClass("error");
-                        $('#password-confirm').val("");
-                    });
-                    $('#password-confirm').keyup(function () {
-                        $('#password').removeClass("error");
-                        $('#password-confirm').removeClass("error");
-                    });
                 }
             }
         }
     });
 }
+$('#password').keyup(function () {
+    $('#password').removeClass("error");
+    $('#password-confirm').removeClass("error");
+    $('#password-confirm').val("");
+});
+$('#password-confirm').keyup(function () {
+    $('#password').removeClass("error");
+    $('#password-confirm').removeClass("error");
+});
