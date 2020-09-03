@@ -296,7 +296,7 @@
                                                                 <td class="es-m-p0l es-m-txt-c" align="left"
                                                                     style="padding:0;Margin:0;font-size:0px"><img
                                                                         class="adapt-img"
-                                                                        src="https://i.ibb.co/Gsh6jbp/Recurso-23.png"
+                                                                        src="https://i.ibb.co/qDsr8Kx/Recurso-23.png"
                                                                         style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
                                                                         width="183"></td>
                                                             </tr>
@@ -414,7 +414,7 @@
                                             </table>
                                         </td>
                                     </tr>
-                                    
+
                                     <tr style="border-collapse:collapse">
                                         <td align="left"
                                             style="Margin:0;padding-top:5px;padding-bottom:20px;padding-left:20px;padding-right:20px;background-position:left top">
