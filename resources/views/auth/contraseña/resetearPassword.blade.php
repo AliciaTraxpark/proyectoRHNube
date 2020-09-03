@@ -79,7 +79,7 @@
                                         <strong><img src="{{asset('landing/images/alert1.svg')}}" height="20" class="mr-1 mt-0"></strong><span style="font-size: 14px;">Usuario no se encuentra registrado.</span>
                                     </div>
                                     <div class="alert alert-success" style="display: none;" id="alertCorreo" role="alert">
-                                        <strong><img src="{{asset('admin/images/checked.svg')}}" height="20" class="mr-1 mt-1"></strong><span style="font-size: 14px;">Solicitud enviada.</span>
+                                        <strong><img src="{{asset('admin/images/checked.svg')}}" height="20" class="mr-1 mt-1"></strong><span style="font-size: 14px;">Solicitud enviada, revisar correo electrónico.</span>
                                     </div>
                                     <form  action="javascript:enviarInstrucciones()" class="authentication-form">
                                         @csrf
