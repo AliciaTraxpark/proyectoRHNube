@@ -31,9 +31,9 @@
     <header id="header-section">
         <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
             <div class="container pb-0 pt-2">
-                <div class="col-md-5">
+                <div class="col-md-5" style="margin-bottom: 10px;">
                     <div class="navbar-brand-wrapper d-flex">
-                        <img src="{{asset('landing/images/Recurso_23.png')}}" width="37%" height="37%">
+                        <img src="{{asset('landing/images/Recurso_23.png')}}" width="35%" height="35%">
                     </div>
                 </div>
 
@@ -42,7 +42,7 @@
                         @csrf
                         <div class="row">
 
-                            <div class="col-md-5 form-group">
+                            <div class="col-md-5 form-group mb-0">
                                 <label class="blanco">Correo electrónico o
                                     teléfono </label>
                                 <input id="email" class="form-control form-control-sm
@@ -54,7 +54,7 @@
                                 </span>
                                 @enderror
                             </div>
-                            <div class="col-md-4 form-group">
+                            <div class="col-md-4 form-group mb-0">
                                 <label class="blanco">Contraseña</label>
                                 <input tid="password" type="password" class="form-control form-control-sm
                                         @error('password') is-invalid @enderror" name="password" required
@@ -65,15 +65,15 @@
                                 </span>
                                 @enderror
                             </div>
-                            <div class="col-md-3 form-group" style="display:
+                            <div class="col-md-3 form-group mb-0" style="display:
                                     flex; align-items: center; top: 15px;">
                                 <button type="submit" class="boton">Iniciar
                                     sesión</button>
                             </div>
-                            <div class="col-md-12 form-group row p-0 m-0 text-center">
-                                <div class="col-md-6 offset-md-4 p-0">
+                            <div class="col-md-12 form-group row p-0 m-0 text-left">
+                                <div class="col-md-6 offset-md-5 p-0">
                                     @if (Route::has('password.request'))
-                                        <a class="btn btn-link" href="{{ route('password.request') }}" style="color: #ffffff;">
+                                        <a class="btn btn-link" href="{{ route('password.request') }}" style="font-size:11.5px;color: #ffffff;padding-bottom: 0px;padding-top: 4px;padding-left: 14px;margin-left: 0px;">
                                             ¿Olvidaste tu contraseña?
                                         </a>
                                     @endif
