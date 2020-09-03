@@ -11,8 +11,13 @@ function enviarInstrucciones() {
         },
         success: function (data, textStatus, xhr) {
             console.log(data);
-            if(data == 1){
+            if(data == 0){
                 $('#alert').show();
+            }
+            if(data == false){
+                $('#alertCorreo').show();
+                $('#ocultar').hide();
+                $('#alert').hide();
             }
         }
     });

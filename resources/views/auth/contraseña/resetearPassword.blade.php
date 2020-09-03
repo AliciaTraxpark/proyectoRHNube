@@ -75,8 +75,14 @@
                                     <p class="text-muted mt-1 mb-5">
                                         Ingrese su dirección de correo electrónico y le enviaremos un correo electrónico con instrucciones para restablecer su contraseña.
                                     </p>
-                                    <div class="alert alert-danger alert-dismissible fade show" style="display: none;" id="alert"role="alert">
-                                        <strong><img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2"></strong> Usuario no se encuentra registrado.
+                                    <div class="alert alert-danger alert-dismissible fade show" style="display: none;" id="alert" role="alert">
+                                        <strong><img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-1"></strong> Usuario no se encuentra registrado.
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="alert alert-success alert-dismissible fade show" style="display: none;" id="alertCorreo" role="alert">
+                                        <strong><img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-1"></strong> Solicitud enviada.
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                           <span aria-hidden="true">&times;</span>
                                         </button>
@@ -100,7 +106,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group mb-0 text-center">
+                                        <div class="form-group mb-0 text-center" id="ocultar">
                                             <button class="btn btn-primary btn-block" type="submit">Enviar</button>
                                         </div>
                                     </form>
