@@ -45,7 +45,7 @@
             <div class="container pb-3 pt-3" style="color: #ffffff;">
                 <div class="col-md-2 col-xl-2 mr-4 p-0">
                     <div class="navbar-brand-wrapper d-flex w-100">
-                        <img src="{{asset('landing/images/Recurso 23.png')}}" height="50">
+                        <img src="{{asset('landing/images/Recurso_23.png')}}" height="50">
                     </div>
                 </div>
                 <div class="col-md-4 text-left">
