@@ -85,7 +85,7 @@
 
                                     <form action="javascript:enviarReset()" class="authentication-form">
                                         @csrf
-                                        <input type="hidden" name="token" value="{{ $token }}">
+                                        <input id="token" type="hidden" name="token" value="{{ $token }}">
                                         <div class="form-group">
                                             <label class="form-control-label">Correo electrónico</label>
                                             <div class="input-group input-group-merge">
@@ -97,7 +97,7 @@
                                                 <input id="email" type="email"
                                                     class="form-control @error('email') is-invalid @enderror"
                                                     name="email" value="{{ $email ?? old('email') }}" required
-                                                    autocomplete="email" autofocus>
+                                                    autocomplete="email" disabled>
                                             </div>
                                         </div>
 

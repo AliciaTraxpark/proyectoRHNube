@@ -73,6 +73,6 @@ class ForgotPasswordController extends Controller
         // return back()
         //     ->withInput($request->only('email'))
         //     ->withErrors(['email' => trans($response)]);
-        return 0;
+        return 1;
     }
 }

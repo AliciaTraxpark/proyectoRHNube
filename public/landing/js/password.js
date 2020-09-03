@@ -11,7 +11,7 @@ function enviarInstrucciones() {
         },
         success: function (data, textStatus, xhr) {
             console.log(data);
-            if(data == 0){
+            if(data == 1){
                 $('#alert').show();
             }
             if(data == false){

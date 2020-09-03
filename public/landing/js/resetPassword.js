@@ -16,14 +16,15 @@ function enviarReset() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data, textStatus, xhr) {
-            console.log(data);
+            window.location.replace(
+                location.origin + "/"
+            );
         },
         error: function (error) {
             $('#alertPaswword').empty();
             //valido que llegue errors
             if (error.responseJSON.hasOwnProperty('errors')) {
                 //valido que tenga el error nombre
-                console.log(error.responseJSON.errors.password);
                 if (error.responseJSON.errors.password) {
                     mensaje = `<strong><img src="/landing/images/alert.svg" height="25"
                                 class="mr-1 mt-1"></strong> Confirmar contraseña y contraseña no coinciden.
@@ -37,6 +38,7 @@ function enviarReset() {
                     $('#password').keyup(function () {
                         $('#password').removeClass("error");
                         $('#password-confirm').removeClass("error");
+                        $('#password-confirm').val("");
                     });
                     $('#password-confirm').keyup(function () {
                         $('#password').removeClass("error");
