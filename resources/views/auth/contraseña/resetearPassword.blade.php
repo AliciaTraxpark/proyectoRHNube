@@ -75,12 +75,13 @@
                                     <p class="text-muted mt-1 mb-5">
                                         Ingrese su dirección de correo electrónico y le enviaremos un correo electrónico con instrucciones para restablecer su contraseña.
                                     </p>
-                                    @if (session('status'))
-                                        <div class="alert alert-success" role="alert">
-                                            {{ session('status') }}
-                                        </div>
-                                    @endif
-                                    <form method="POST" action="{{ route('password.email') }}" class="authentication-form">
+                                    <div class="alert alert-danger alert-dismissible fade show" style="display: none;" id="alert"role="alert">
+                                        <strong><img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2"></strong> Usuario no se encuentra registrado.
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form  action="javascript:enviarInstrucciones()" class="authentication-form">
                                         @csrf
                                         <div class="form-group">
                                             <label class="form-control-label">Correo electrónico</label>

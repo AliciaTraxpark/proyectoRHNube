@@ -9,11 +9,11 @@ function enviarInstrucciones() {
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        success: function (data) {
+        success: function (data, textStatus, xhr) {
             console.log(data);
-        },
-        error: function () {
-            alert("Hay un error");
+            if(data == 1){
+                $('#alert').show();
+            }
         }
     });
 }
