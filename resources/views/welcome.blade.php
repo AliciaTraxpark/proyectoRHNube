@@ -33,7 +33,7 @@
             <div class="container pb-3 pt-2">
                 <div class="col-md-5">
                     <div class="navbar-brand-wrapper d-flex">
-                        <img src="{{asset('landing/images/Recurso 23.png')}}" width="37%" height="37%">
+                        <img src="{{asset('landing/images/Recurso_23.png')}}" width="37%" height="37%">
                     </div>
                 </div>
 
