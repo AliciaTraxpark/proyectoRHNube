@@ -164,6 +164,7 @@ class delegarInvController extends Controller
         $persona->perso_fechaNacimiento = $fechaN;
 
         $persona->perso_sexo = $request->get('sexo');
+        $persona->perso_celular = $request->get('n_celular');
 
         $persona->save();
         $user_persona = $persona->perso_id;

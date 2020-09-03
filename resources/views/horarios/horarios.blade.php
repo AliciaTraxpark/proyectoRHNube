@@ -157,7 +157,7 @@ background-color: #ffffff !important;
         <div class="container pb-3">
             <div class="col-md-2 col-xl-2">
                 <div class="navbar-brand-wrapper d-flex w-100">
-                    <img src="{{asset('landing/images/Recurso 23.png')}}" height="50">
+                    <img src="{{asset('landing/images/Recurso_23.png')}}" height="50">
                 </div>
             </div>
             <div class="col-md-7 col-xl-7 text-left pl-5">

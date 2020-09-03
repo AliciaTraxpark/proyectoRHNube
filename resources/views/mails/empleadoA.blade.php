@@ -296,7 +296,7 @@
                                                                 <td class="es-m-p0l es-m-txt-c" align="left"
                                                                     style="padding:0;Margin:0;font-size:0px"><img
                                                                         class="adapt-img"
-                                                                        src="https://i.ibb.co/Gsh6jbp/Recurso-23.png"
+                                                                        src="http://rhnube.com.pe/landing/images/Recurso_23.png"
                                                                         style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
                                                                         width="183"></td>
                                                             </tr>

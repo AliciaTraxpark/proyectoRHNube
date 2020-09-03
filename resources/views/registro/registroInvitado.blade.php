@@ -51,7 +51,7 @@
                 <div class="container">
                     <div class="col-md-3">
                         <div class="navbar-brand-wrapper d-flex w-100">
-                            < <img src="{{asset('landing/images/Recurso 23.png')}}" alt=""
+                            < <img src="{{asset('landing/images/Recurso_23.png')}}" alt=""
                             height="35" />
                         </div>
                     </div>
@@ -232,10 +232,11 @@
                                 <div class="row">
                                     <div class="col-md-9">
                                         <input class="form-control" disabled
-                                            placeholder="Número de celular o correo electrónico"
+                                            placeholder="Correo electrónico"
                                             name="email" id="email" value="{{$invitado->email_inv}}" required>
                                         {{$errors->first('email')}}
                                     </div><br><br>
+
                                     <div class="col-md-9">
                                         <input class="form-control"
                                             type="password"
@@ -245,6 +246,14 @@
                                             required>
                                         {{$errors->first('password')}}
                                     </div> <div class="col-md-3"></div> <br><br>
+                                    <div class="col-md-9">
+                                        <input type="number" maxlength="12" min="1"  class="form-control"
+                                            placeholder="Celular" name="n_celular" onkeypress="return isNumeric(event)"
+                                            oninput="maxLengthCheck(this)"
+                                            id="n_celular"
+                                            required>
+                                        {{$errors->first('nombres')}}
+                                    </div><br><br> <div class="col-md-3"></div>
                                     <div class="col-md-3">
                                         <input class="form-control"
                                             placeholder="Nombres" name="nombres"
@@ -281,8 +290,7 @@
                                     <div class="col-md-9" id="validCelCorreo"
                                         style="display: none">
                                         <br>
-                                        <span style="color:red;">*Número de
-                                            celular incorrecto o Correo
+                                        <span style="color:red;"> Correo
                                             electrónico incorrecto.</span><br></div><br><br>
 
                                 </div>
@@ -593,7 +601,7 @@
                         if(data==1){
                             $('.modal').modal('hide');
                         $('#modalInvRegistra').modal({backdrop: 'static', keyboard: false});
-                        $('#modalInvRegistra').modal('show'); 
+                        $('#modalInvRegistra').modal('show');
                         }
                         else{
                         $.ajax({
@@ -629,6 +637,22 @@
             ///////////////////////////////////
 
     });
+    function maxLengthCheck(object) {
+            if (object.value.length > object.maxLength)
+                object.value = object.value.slice(0, object.maxLength)
+        }
+
+        function isNumeric(evt) {
+            var theEvent = evt || window.event;
+            var key = theEvent.keyCode || theEvent.which;
+            key = String.fromCharCode(key);
+            var regex = /[0-9]|\./;
+            if (!regex.test(key)) {
+                theEvent.returnValue = false;
+                if (theEvent.preventDefault) theEvent.preventDefault();
+            }
+        }
+
     </script>
         </body>
 
