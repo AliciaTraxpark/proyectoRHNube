@@ -111,6 +111,7 @@ class delegarInvController extends Controller
         $invitado->estado =0;
         $invitado->users_id =Auth::user()->id;
         $invitado->dashboard =$dash;
+        $invitado->estado_condic=1;
         $invitado->save();
 
         foreach($idEmpleado as $idEmpleados){
@@ -370,6 +371,7 @@ class delegarInvController extends Controller
         $invitado_empleado = new invitado_empleado();
         $invitado_empleado->idinvitado = $invitado->idinvitado;
         $invitado_empleado->emple_id = $idEmpleados;
+        $invitado->estado_condic=1;
         $invitado_empleado->save();
         }
         ///
@@ -395,7 +397,15 @@ class delegarInvController extends Controller
            ->where('organi_id', '=', session('sesionidorg'))
            ->update(['rol_id' => 3]);
     }
+   }
 
+   public function cambInvitadoswit(Request $request){
+    $idinvitado=$request->idinvitado;
+    $estadosw=$request->estadosw;
+
+    $invitadoAct  = DB::table('invitado')
+        ->where('idinvitado', '=',  $idinvitado)
+           ->update(['estado_condic' => $estadosw]);
 
    }
 }
