@@ -158,7 +158,7 @@
 <script src="{{asset('admin/assets/libs/bootstrap-datetimepicker-master/bootstrap-datetimepicker.min.js')}}"></script>
 <script src="{{asset('admin/assets/libs/bootstrap-datetimepicker-master/bootstrap-datetimepicker.es.js')}}"></script>
 <script src="{{asset('admin/assets/libs/bootstrap-datetimepicker-master/moment.js')}}"></script>
-<script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
+<script src="{{asset('admin/assets/libs/bootstrap-datetimepicker-master/es.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js')
     }}"></script>
