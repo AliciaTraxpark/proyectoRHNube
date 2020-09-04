@@ -396,7 +396,7 @@
                                                                             verdana,
                                                                             sans-serif;line-height:24px;color:#666666;text-align:center;text-transform:
                                                                             uppercase;">
-                                                                        Hola,&nbsp;</strong>
+                                                                        Hola&nbsp;</strong>
                                                                 </td>
                                                             </tr>
                                                             <tr style="border-collapse:collapse">
