@@ -283,14 +283,21 @@ function onSelectFechasMensual() {
         error: function (data) {}
     })
 }
-
+$(function () {
+    $('#zonaHoraria').empty();
+    console.log(Intl.DateTimeFormat().resolvedOptions().timeZone);
+    var zona = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    var split = zona.split("/");
+    nombre = `${split[0]} - ${split[1]}`;
+    $('#zonaHoraria').append(nombre);
+});
 $(function () {
     $('#fechaMensual').on('change.dp', function (e) {
         dato = $('#fechaMensual').val();
         value = moment(dato, ["MM-YYYY"]).format("YYYY-MM");
         firstDate = moment(value, 'YYYY-MM').startOf('month').format('YYYY-MM-DD');
         lastDate = moment(value, 'YYYY-MM-DD').endOf('month').format('YYYY-MM-DD');
-        console.log(firstDate,lastDate);
+        console.log(firstDate, lastDate);
         $('#fechaMensual').val(firstDate + "   a   " + lastDate);
         onSelectFechasMensual();
     });

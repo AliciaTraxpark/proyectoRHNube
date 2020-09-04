@@ -285,6 +285,15 @@ function onSelectFechas() {
 }
 
 $(function () {
+    $('#zonaHoraria').empty();
+    console.log(Intl.DateTimeFormat().resolvedOptions().timeZone);
+    var zona = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    var split = zona.split("/");
+    nombre = `${split[0]} - ${split[1]}`;
+    $('#zonaHoraria').append(nombre);
+});
+
+$(function () {
     $('#fecha').on('change.dp', function (e) {
         dato = $('#fecha').val();
         value = moment(dato, ["DD-MM-YYYY"]).format("YYYY-MM-DD");

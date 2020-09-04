@@ -89,8 +89,7 @@
                             <div class="card-body">
                                 <h4 class="header-title mt-0 mb-1">TRAXPARK</h4>
                                 <p class="sub-header" style="margin-bottom:
-                                    0px">
-                                    America-Bogota
+                                    0px" id="zonaHoraria">
                                 </p>
                                 <br>
                                 <div class="table-responsive-xl">
