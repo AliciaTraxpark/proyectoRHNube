@@ -17,6 +17,7 @@ function enviarReset() {
         },
         success: function (data, textStatus, xhr) {
             $('#alertSuccess').show();
+            $('#ocultarbtn').hide();
             window.setTimeout(function () {
                 // Move to a new location or you can do something else
                 window.location.replace(
@@ -24,7 +25,6 @@ function enviarReset() {
                 );
 
             }, 10000);
-            $('#ocultarbtn').hide();
         },
         error: function (error) {
             $('#alertPaswword').empty();
@@ -38,6 +38,20 @@ function enviarReset() {
                     $('#alertPaswword').show();
                     $('#password').addClass("error");
                     $('#password-confirm').addClass("error");
+                }
+
+                if (error.responseJSON.errors.token) {
+                    mensaje = `<strong><img src="/landing/images/alert1.svg" height="20" class="mr-1 mt-0"></strong> 
+                    <span style="font-size: 14px;">Realizo nuevo reestablecimiento de contraseña, revisar su correo elctronico.</span>`;
+                    $('#alertPaswword').append(mensaje);
+                    $('#ocultarbtn').hide();
+                    window.setTimeout(function () {
+                        // Move to a new location or you can do something else
+                        window.location.replace(
+                            location.origin + "/"
+                        );
+
+                    }, 10000);
                 }
             }
         }

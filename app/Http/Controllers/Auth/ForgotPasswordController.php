@@ -7,6 +7,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 
 class ForgotPasswordController extends Controller
@@ -54,6 +55,7 @@ class ForgotPasswordController extends Controller
         // return $request->wantsJson()
         //     ? new JsonResponse(['message' => trans($response)], 200)
         //     : back()->with('status', trans($response));
+        Auth::logout();
         return response()->json($request->wantsJson(), 200);
     }
     /**
