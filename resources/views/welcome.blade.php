@@ -93,7 +93,7 @@
 
             <div>
                 <div class="col-md-12"> <br><br>
-                    <a href="{{route('registroPersona')}}"><button class="btn btn-opacity-primary mr-1">COMIENZA
+                    <a {{-- href="{{route('registroPersona')}} "--}}><button onclick="$('#modal-error').modal('show')" class="btn btn-opacity-primary mr-1">COMIENZA
                             AHORA</button></a>
                 </div>
 
@@ -101,6 +101,20 @@
             <img src="{{asset('landing/images/i')}}" alt="" class="img-fluid">
         </div>
     </div>
+    <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <img src="{{asset('landing/images/notification.svg')}}" height="100" >
+                    <h5 class="text-danger mt-4">Próximo lanzamiento</h5>
+                    <p class="w-75 mx-auto text-muted" style="color: black!important">Próximo lanzamiento en vivo en Perú 15 de este mes.</p>
+                    <div class="mt-4">
+                        <a  class="btn btn-outline-primary btn-rounded width-md" data-dismiss="modal"><i class="uil uil-arrow-right mr-1"></i> OK</a>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     <div class="content-wrapper">
         <div class="container">
             <section class="features-overview" id="features-section">

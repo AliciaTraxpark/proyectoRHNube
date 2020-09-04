@@ -136,6 +136,7 @@ class delegarInvController extends Controller
         $invitado->estado =0;
         $invitado->dashboard =1;
         $invitado->users_id =Auth::user()->id;
+        $invitado->estado_condic=1;
         $invitado->save();
 
         Mail::to($emailInv)->queue(new CorreoInvitado($organi,$invitado));
