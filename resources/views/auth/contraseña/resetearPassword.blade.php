@@ -71,30 +71,24 @@
                                         </a>
                                     </div>
 
-                                    <h6 class="h5 mb-0 mt-4">Restablecer contraseña</h6>
-                                    <p class="text-muted mt-1 mb-5">
+                                    <h6 class="h5 mb-0 mt-4 text-center">Restablecer contraseña</h6>
+                                    <p class="text-muted mt-1 mb-3">
                                         Ingrese su dirección de correo electrónico y le enviaremos un correo electrónico con instrucciones para restablecer su contraseña.
                                     </p>
-                                    <div class="alert alert-danger alert-dismissible fade show" style="display: none;" id="alert" role="alert">
-                                        <strong><img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-1"></strong> Usuario no se encuentra registrado.
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                          <span aria-hidden="true">&times;</span>
-                                        </button>
+                                    <div class="alert alert-danger" role="alert" id="alert" style="display: none;">
+                                        <strong><img src="{{asset('landing/images/alert1.svg')}}" height="20" class="mr-1 mt-0"></strong><span style="font-size: 14px;">Usuario no se encuentra registrado.</span>
                                     </div>
-                                    <div class="alert alert-success alert-dismissible fade show" style="display: none;" id="alertCorreo" role="alert">
-                                        <strong><img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-1"></strong> Solicitud enviada.
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                          <span aria-hidden="true">&times;</span>
-                                        </button>
+                                    <div class="alert alert-success" style="display: none;" id="alertCorreo" role="alert">
+                                        <strong><img src="{{asset('admin/images/checked.svg')}}" height="20" class="mr-1 mt-1"></strong><span style="font-size: 14px;">Solicitud enviada, revisar correo electrónico.</span>
                                     </div>
                                     <form  action="javascript:enviarInstrucciones()" class="authentication-form">
                                         @csrf
                                         <div class="form-group">
-                                            <label class="form-control-label">Correo electrónico</label>
+                                            <label class="form-control-label" style="font-weight: 500;">Usuario</label>
                                             <div class="input-group input-group-merge">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <img src="{{asset('landing/images/note.svg')}}" height="20">
+                                                    <span class="input-group-text" style="background-color: #ffffff;">
+                                                        <img src="{{asset('landing/images/iconfinder-icon (1).svg')}}" height="20">
                                                     </span>
                                                 </div>
                                                 <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>

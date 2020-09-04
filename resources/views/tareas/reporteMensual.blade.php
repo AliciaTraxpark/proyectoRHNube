@@ -89,8 +89,7 @@
                             <div class="card-body">
                                 <h4 class="header-title mt-0 mb-1">TRAXPARK</h4>
                                 <p class="sub-header" style="margin-bottom:
-                                    0px">
-                                    America-Bogota
+                                    0px" id="zonaHoraria">
                                 </p>
                                 <br>
                                 <div class="table-responsive-xl">
@@ -159,7 +158,7 @@
 <script src="{{asset('admin/assets/libs/bootstrap-datetimepicker-master/bootstrap-datetimepicker.min.js')}}"></script>
 <script src="{{asset('admin/assets/libs/bootstrap-datetimepicker-master/bootstrap-datetimepicker.es.js')}}"></script>
 <script src="{{asset('admin/assets/libs/bootstrap-datetimepicker-master/moment.js')}}"></script>
-<script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
+<script src="{{asset('admin/assets/libs/bootstrap-datetimepicker-master/es.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js')
     }}"></script>

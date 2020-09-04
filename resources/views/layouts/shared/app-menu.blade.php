@@ -100,7 +100,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
 
             <a href="javascript: void(0);">
                 <i data-feather="activity"></i>
-                <span>Modulo TASK</span>
+                <span>Modulo: Trabajo Remoto</span>
                 <span class="menu-arrow"></span>
             </a>
 

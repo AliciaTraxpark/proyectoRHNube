@@ -1,7 +1,7 @@
 $('#graficaReporteMensual').hide();
 $('#fechaMensual').datetimepicker({
     language: 'es',
-    format: 'mm/yyyy',
+    format: 'MM - yyyy',
     startView: 3,
     minView: 3,
     pickTime: false,
@@ -283,29 +283,33 @@ function onSelectFechasMensual() {
         error: function (data) {}
     })
 }
-
+$(function () {
+    $('#zonaHoraria').empty();
+    console.log(Intl.DateTimeFormat().resolvedOptions().timeZone);
+    var zona = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    var split = zona.split("/");
+    nombre = `${split[0]} - ${split[1]}`;
+    $('#zonaHoraria').append(nombre);
+});
 $(function () {
     $('#fechaMensual').on('change.dp', function (e) {
         dato = $('#fechaMensual').val();
-        value = moment(dato, ["MM-YYYY"]).format("YYYY-MM");
-        firstDate = moment(value, 'YYYY-MM').startOf('month').format('YYYY-MM-DD');
-        lastDate = moment(value, 'YYYY-MM-DD').endOf('month').format('YYYY-MM-DD');
-        console.log(firstDate,lastDate);
+        value = moment(dato, ["MMMM-YYYY","MMM-YYYY","MM-YYYY"]).format("MM-YYYY");
+        console.log(dato,value);
+        firstDate = moment(value, 'MM-YYYY').startOf('month').format('YYYY-MM-DD');
+        lastDate = moment(value, 'MM-YYYY').endOf('month').format('YYYY-MM-DD');
+        console.log(firstDate, lastDate);
         $('#fechaMensual').val(firstDate + "   a   " + lastDate);
         onSelectFechasMensual();
+        // var valor = moment(dato, ["MMMM-YYYY","MM-YYYY"]).format("MMMM YYYY");
+        // console.log(valor);
+        // $('#fechaMensual').val(valor);
     });
 });
 
-function fechaDefecto() {
-    dato = $('#fechaMensual').val();
-    value = moment(dato, ["DD-YYYY"]).format("YYYY-MM-DD");
-    firstDate = moment(value, 'YYYY-MM-DD').day(1).format('YYYY-MM-DD');
-    lastDate = moment(value, 'YYYY-MM-DD').day(7).format('YYYY-MM-DD');
-    $('#fechaMensual').val(firstDate + "   a   " + lastDate);
-    onSelectFechasMensual();
-}
 $(function () {
-    var hoy = moment().format("MM/YYYY");
+    var hoy = moment().format("MMMM - YYYY");
+    console.log(hoy);
     $('#fechaMensual').val(hoy);
     $('#fechaMensual').trigger("change.dp");
     $('#fechaMensual').val(hoy);

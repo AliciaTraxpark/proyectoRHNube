@@ -16,9 +16,15 @@ function enviarReset() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data, textStatus, xhr) {
-            window.location.replace(
-                location.origin + "/"
-            );
+            $('#alertSuccess').show();
+            window.setTimeout(function () {
+                // Move to a new location or you can do something else
+                window.location.replace(
+                    location.origin + "/"
+                );
+
+            }, 10000);
+            $('#ocultarbtn').hide();
         },
         error: function (error) {
             $('#alertPaswword').empty();
@@ -26,26 +32,25 @@ function enviarReset() {
             if (error.responseJSON.hasOwnProperty('errors')) {
                 //valido que tenga el error nombre
                 if (error.responseJSON.errors.password) {
-                    mensaje = `<strong><img src="/landing/images/alert.svg" height="25"
-                                class="mr-1 mt-1"></strong> Confirmar contraseña y contraseña no coinciden.
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>`;
+                    mensaje = `<strong><img src="/landing/images/alert1.svg" height="20" class="mr-1 mt-0"></strong> 
+                    <span style="font-size: 14px;">Contraseña y  confimar contraseña no coinciden.</span>`;
                     $('#alertPaswword').append(mensaje);
                     $('#alertPaswword').show();
                     $('#password').addClass("error");
                     $('#password-confirm').addClass("error");
-                    $('#password').keyup(function () {
-                        $('#password').removeClass("error");
-                        $('#password-confirm').removeClass("error");
-                        $('#password-confirm').val("");
-                    });
-                    $('#password-confirm').keyup(function () {
-                        $('#password').removeClass("error");
-                        $('#password-confirm').removeClass("error");
-                    });
                 }
             }
         }
     });
 }
+$('#password').keyup(function () {
+    $('#alertPaswword').hide();
+    $('#password').removeClass("error");
+    $('#password-confirm').removeClass("error");
+    $('#password-confirm').val("");
+});
+$('#password-confirm').keyup(function () {
+    $('#alertPaswword').hide();
+    $('#password').removeClass("error");
+    $('#password-confirm').removeClass("error");
+});
