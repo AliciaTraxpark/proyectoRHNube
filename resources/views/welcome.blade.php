@@ -105,11 +105,11 @@
         <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-body text-center">
-                    <img src="{{asset('landing/images/notification.svg')}}" height="100" >
-                    <h5 class="text-danger mt-4">Próximo lanzamiento</h5>
+                    <img src="{{asset('landing/images/lanzamiento.svg')}}" height="100" >
+                    <h5 style="color: #c51516!important;" class="text-danger mt-4">Próximo lanzamiento</h5>
                     <p class="w-75 mx-auto text-muted" style="color: black!important">Próximo lanzamiento en vivo en Perú 15 de este mes.</p>
                     <div class="mt-4">
-                        <a  class="btn btn-outline-primary btn-rounded width-md" data-dismiss="modal"><i class="uil uil-arrow-right mr-1"></i> OK</a>
+                        <button class="btn btn-opacity-primary mr-1"   data-dismiss="modal"><i class="uil uil-arrow-right mr-1"></i> OK</button>
                     </div>
                 </div>
             </div><!-- /.modal-content -->
