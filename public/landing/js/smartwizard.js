@@ -377,16 +377,20 @@ $(document).ready(function () {
             }
         }
         if (isStepValid == true) {
-            idE = $('#v_id').val();
-            console.log($('#v_fechaFC').text());
-            objEmpleadoA = datosPersonaA("PUT");
-            actualizarEmpleado('/' + idE, objEmpleadoA);
+            console.log($('#estadoP').val());
+            if ($('#estadoP').val() == "true") {
+                idE = $('#v_id').val();
+                console.log($('#v_fechaFC').text());
+                objEmpleadoA = datosPersonaA("PUT");
+                actualizarEmpleado('/' + idE, objEmpleadoA);
+                $('#estadoP').val("false")
+            }
         }
         return isStepValid;
     }
     $('#smartwizard').smartWizard({
         selected: 0,
-        keyNavigation:false,
+        keyNavigation: false,
         showStepURLhash: false,
         lang: { // Language variables
             next: 'Siguiente',
@@ -415,7 +419,7 @@ $(document).ready(function () {
     });
     $('#smartwizard1').smartWizard({
         selected: 0,
-        keyNavigation:false,
+        keyNavigation: false,
         showStepURLhash: false,
         lang: { // Language variables
             next: 'Siguiente',
@@ -529,7 +533,7 @@ $(document).ready(function () {
 });
 $('#smartwizardVer').smartWizard({
     selected: 0,
-    keyNavigation:false,
+    keyNavigation: false,
     showStepURLhash: false,
     lang: { // Language variables
         next: 'Siguiente',

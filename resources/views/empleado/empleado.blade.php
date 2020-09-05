@@ -2796,9 +2796,10 @@
                                 </ul>
                                 <div class="p-3" id="form-registrar">
                                     <div id="persona-step-1" style="font-size: 12px!important">
+                                        <input type="hidden" id="estadoP" value="false">
                                         <div class="row">
                                             <div class="col-4">
-                                                <input style="display: none;" name="v_id" id="v_id">
+                                                <input type="hidden" name="v_id" id="v_id">
                                                 <div class="form-group">
                                                     <label for="sw-default">Tipo Documento</label>
                                                     <input type="text" class="form-control" name="v_tipoDoc"

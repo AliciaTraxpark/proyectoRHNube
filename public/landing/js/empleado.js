@@ -3832,6 +3832,11 @@ function FinalizarEmpleado() {
     $('#smartwizard').smartWizard("reset");
     $('#form-registrar').modal('toggle');
 }
+// *******************************************************
+$('#persona-step-1').on("keyup change", function(){
+    console.log("ingreso");
+    $('#estadoP').val("true");
+});
 //************************Editar en los modal de agregar */
 //*******AREA***/
 $('#buscarArea').on("click", function () {
