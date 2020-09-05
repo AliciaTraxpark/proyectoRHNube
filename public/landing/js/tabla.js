@@ -15,18 +15,18 @@ function leertabla() {
 }
 
 function RefreshTablaEmpleado() {
+    if ($.fn.DataTable.isDataTable("#tablaEmpleado")) {
+        $('#tablaEmpleado').DataTable().destroy();
+    }
     $('#tbodyr').empty();
     $.ajax({
+        async: false,
         type: "get",
         url: "tablaempleado/refresh",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-            if ($.fn.DataTable.isDataTable("#tablaEmpleado")) {
-                $('#tablaEmpleado').DataTable().destroy();
-            }
-            $('#tbodyr').empty();
             var tbody = "";
             console.log(data);
             console.log(data.length);
@@ -54,7 +54,7 @@ function RefreshTablaEmpleado() {
                             <td>" + data[i].cargo_descripcion + "</td>\
                             <td> " + data[i].area_descripcion + "</td>\
                             <td>" + data[i].centroC_descripcion + "</td>";
-                            console.log(data[i].dispositivos.includes(1));
+                console.log(data[i].dispositivos.includes(1));
                 if (data[i].dispositivos.includes(1) == false) {
                     console.log("ingreso");
                     tbody += "<td></td>";
@@ -99,7 +99,7 @@ function RefreshTablaEmpleado() {
                      </td>";
                 }
                 tbody += "<td class=\"text-center\">\
-                            <input type=\"checkbox\" id=\"tdC\" style=\"margin-left:5.5px!important\"\
+                            <input type=\"checkbox\" id=\"tdC\"\
                             class=\"form-check-input sub_chk\" data-id=\"" + data[i].emple_id + "\" " + this + "" + this + "" + this + ">\
                         </td></tr>";
             }
