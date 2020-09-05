@@ -71,7 +71,7 @@ function RefreshTablaEmpleado() {
                     tbody += "<td></td>";
                 } else {
                     tbody += "<td class=\"text-center\">\
-                                    <div class=\"dropdown\" id=\"w" + data[i].emple_id + ">\
+                                    <div class=\"dropdown\" id=\"w" + data[i].emple_id + "\">\
                                     <a class=\"dropdown\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"\
                                         style=\"cursor: pointer\">\
                                         <img src=\"/landing/images/note.svg\" height=\"20\">\
@@ -92,7 +92,7 @@ function RefreshTablaEmpleado() {
                     tbody += "<td></td>";
                 } else {
                     tbody += "<td class=\"text-center\">\
-                                    <div class=\"dropdown\" id=\"a" + data[i].emple_id + ">\
+                                    <div class=\"dropdown\" id=\"a" + data[i].emple_id + "\">\
                                     <a class=\"dropdown\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"\
                                         style=\"cursor: pointer\">\
                                         <img src=\"/landing/images/note.svg\" height=\"20\">\
