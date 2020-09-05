@@ -291,7 +291,6 @@
     <tbody style="background:#ffffff;color: #585858;font-size: 12.5px" id="tbodyr">
         @foreach ($tabla_empleado as $tabla_empleados)
         <tr id="{{$tabla_empleados->emple_id}}" value="{{$tabla_empleados->emple_id}}">
-
             <td><a id="formNuevoEd" onclick="editarEmpleado({{$tabla_empleados->emple_id}})"
                     style="cursor: pointer"><img src="{{asset('admin/images/edit.svg')}}"
                         height="15"></a>&nbsp;&nbsp;&nbsp;<a onclick="marcareliminar({{$tabla_empleados->emple_id}})"
@@ -459,11 +458,14 @@
                 $('#v_tipoDoc').val(data[0].tipoDoc_descripcion);
                 $('#v_apPaterno').val(data[0].perso_apPaterno);
                 $('#v_departamento').val(data[0].iddepaN);
-                onSelectVDepartamento('#v_departamento').then(function () {
-                    $('#v_provincia').val(data[0].idproviN);
-                    onSelectVProvincia('#v_provincia').then((result) => $('#v_distrito')
-                        .val(data[0].iddistN))
-                });
+                console.log(data[0].iddepaN);
+                if(data[0].iddepaN != null){
+                    onSelectVDepartamento('#v_departamento').then(function () {
+                        $('#v_provincia').val(data[0].idproviN);
+                        onSelectVProvincia('#v_provincia').then((result) => $('#v_distrito')
+                            .val(data[0].iddistN))
+                    });
+                }
 
                 $.ajax({
                 type:"POST",
@@ -501,11 +503,15 @@
                 error: function () {}
             });
                 $('#v_dep').val(data[0].depar);
-                onSelectVDepart('#v_dep').then(function () {
-                    $('#v_prov').val(data[0].proviId);
-                    onSelectVProv('#v_prov').then((result) => $('#v_dist').val(data[0]
-                        .distId))
-                });
+
+                console.log(data[0].depar);
+                if(data[0].depar != null){
+                    onSelectVDepart('#v_dep').then(function () {
+                        $('#v_prov').val(data[0].proviId);
+                        onSelectVProv('#v_prov').then((result) => $('#v_dist').val(data[0]
+                            .distId))
+                    });
+                }
                 $('#selectCalendario_edit3').val(data[0].idcalendar);
                 $('#idselect3').val(data[0].idcalendar);
                 $('#v_numDocumento').val(data[0].emple_nDoc);

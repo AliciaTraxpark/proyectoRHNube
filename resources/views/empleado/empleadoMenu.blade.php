@@ -2876,10 +2876,6 @@ use App\proyecto_empleado;
                                         <select class="form-control " placeholder="Provincia " name="v_prov" id="v_prov"
                                             tabindex="12" required>
                                             <option value="">Provincia</option>
-                                            @foreach ($provincia as $provincias)
-                                            <option class="" value="{{ $provincias->id }}">
-                                                {{ $provincias->name }}</option>
-                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -2887,10 +2883,6 @@ use App\proyecto_empleado;
                                         <select class="form-control " placeholder="Provincia " name="v_provincia"
                                             id="v_provincia" tabindex="15">
                                             <option value="">Provincia</option>
-                                            @foreach ($provincia as $provincias)
-                                            <option class="" value="{{ $provincias->id }}">
-                                                {{ $provincias->name }}</option>
-                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -2907,10 +2899,6 @@ use App\proyecto_empleado;
                                         <select class="form-control " placeholder="Distrito " name="v_dist" id="v_dist"
                                             tabindex="13" required>
                                             <option value="">Distrito</option>
-                                            @foreach ($distrito as $distritos)
-                                            <option class="" value="{{ $distritos->id }}">
-                                                {{ $distritos->name }}</option>
-                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -2918,10 +2906,6 @@ use App\proyecto_empleado;
                                         <select class="form-control " placeholder="Distrito " name="v_distrito"
                                             id="v_distrito" tabindex="16">
                                             <option value="">Distrito</option>
-                                            @foreach ($distrito as $distritos)
-                                            <option class="" value="{{ $distritos->id }}">
-                                                {{ $distritos->name }}</option>
-                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group">
