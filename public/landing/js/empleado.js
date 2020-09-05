@@ -3630,7 +3630,6 @@ $('#formNuevoEd').click(function () {
 $('#formNuevoEd').hide();
 $('#formNuevoEl').hide();
 $('#cerrarE').click(function () {
-    //leertabla();
     $('#smartwizard1').smartWizard("reset");
     $('#formNuevoEd').hide();
     $('#formNuevoEl').hide();
@@ -3638,7 +3637,7 @@ $('#cerrarE').click(function () {
     $('#selectHorario').val("Seleccionar horario");
 });
 $('#cerrarEd').click(function () {
-    leertabla();
+    RefreshTablaEmpleado();
     $('#smartwizard1').smartWizard("reset");
     $('#formNuevoEd').hide();
     $('#formNuevoEl').hide();
@@ -3688,7 +3687,7 @@ $('#cerrarEd').click(function () {
 
 });
 $('#cerrarModalEmpleado').click(function () {
-    leertabla();
+    RefreshTablaEmpleado();
     $('#formNuevoEd').hide();
     $('#formNuevoEl').hide();
     $('#smartwizard').smartWizard("reset");
@@ -3788,7 +3787,7 @@ $('#v_validCel').hide();
 $('#v_validGenero').hide();
 
 function FinalizarEmpleado() {
-    leertabla();
+    RefreshTablaEmpleado();
     $('input[type="text"]').val("");
     $('input:radio[name=tipo]:checked').prop('checked', false);
     $('input[type="date"]').val("");

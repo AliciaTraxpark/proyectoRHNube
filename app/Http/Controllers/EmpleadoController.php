@@ -101,31 +101,28 @@ class EmpleadoController extends Controller
             ->where('e.emple_estado', '=', 1)
             ->get();
         $calendario = DB::table('calendario as ca')
-        ->where('ca.organi_id', '=', session('sesionidorg'))
+            ->where('ca.organi_id', '=', session('sesionidorg'))
             ->get();
         $horario = horario::where('organi_id', '=', session('sesionidorg'))->get();
         $condicionPago = condicion_pago::where('organi_id', '=', session('sesionidorg'))->get();
 
-        $invitadod=DB::table('invitado')
-        ->where('user_Invitado','=',Auth::user()->id)
-        ->where('organi_id','=',session('sesionidorg'))
-        ->get()->first();
+        $invitadod = DB::table('invitado')
+            ->where('user_Invitado', '=', Auth::user()->id)
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->get()->first();
 
-            if($invitadod){
-                if ($invitadod->rol_id!=1){
-                    return redirect('/dashboard');
-                }
-                else{
-                    return view('empleado.empleado', [
-                        'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
-                        'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
-                        'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
-                        'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
-                    ]);
-                }
+        if ($invitadod) {
+            if ($invitadod->rol_id != 1) {
+                return redirect('/dashboard');
+            } else {
+                return view('empleado.empleado', [
+                    'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
+                    'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
+                    'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
+                    'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
+                ]);
             }
-
-        else{
+        } else {
             return view('empleado.empleado', [
                 'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
                 'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
@@ -133,8 +130,6 @@ class EmpleadoController extends Controller
                 'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
             ]);
         }
-
-
     }
     public function cargarDatos()
     {   //DATOS DE TABLA PARA CARGAR EXCEL
@@ -197,7 +192,7 @@ class EmpleadoController extends Controller
 
                 'e.emple_Correo'
             )
-            ->where('e.organi_id', '=',session('sesionidorg'))
+            ->where('e.organi_id', '=', session('sesionidorg'))
             ->get();
 
         $usuario = DB::table('users')
@@ -270,6 +265,66 @@ class EmpleadoController extends Controller
         $result = agruparEmpleados($tabla_empleado1);
         // dd($result);
         return view('empleado.tablaEmpleado', ['tabla_empleado' => $result]);
+    }
+
+    public function refresTabla()
+    {
+        function agruparEmpleadosRefresh($array)
+        {
+            $resultado = array();
+
+            foreach ($array as $empleado) {
+                if (!isset($resultado[$empleado->emple_id])) {
+                    $resultado[$empleado->emple_id] = $empleado;
+                }
+                if (!isset($resultado[$empleado->emple_id]->dispositivos)) {
+                    $resultado[$empleado->emple_id]->dispositivos = array();
+                }
+                array_push($resultado[$empleado->emple_id]->dispositivos, $empleado->dispositivo);
+            }
+            return array_values($resultado);
+        }
+        $tabla_empleado1 = DB::table('empleado as e')
+            ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+            ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+            ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+            ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
+            ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
+            ->leftJoin('tipo_dispositivo as td', 'td.id', '=', 'md.idTipoDispositivo')
+
+            ->select(
+                'p.perso_nombre',
+                'p.perso_apPaterno',
+                'p.perso_apMaterno',
+                'c.cargo_descripcion',
+                'a.area_descripcion',
+                'cc.centroC_descripcion',
+                'e.emple_id',
+                'md.idTipoDispositivo as dispositivo'
+            )
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->where('e.emple_estado', '=', 1)
+            ->get();
+        $vinculacionD = [];
+        foreach ($tabla_empleado1 as $tab) {
+            $vinculacion = DB::table('vinculacion as v')
+                ->join('modo as m', 'm.id', '=', 'v.idModo')
+                ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
+                ->join('licencia_empleado as le', 'le.id', '=', 'v.idLicencia')
+                ->select('v.id as idV', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
+                ->where('v.idEmpleado', '=', $tab->emple_id)
+                ->get();
+            foreach ($vinculacion as $vinc) {
+                array_push($vinculacionD, array("idVinculacion" => $vinc->idV, "idLicencia" => $vinc->idL, "licencia" => $vinc->licencia, "disponible" => $vinc->disponible, "dispositivoD" => $vinc->dispositivo_descripcion, "codigo" => $vinc->codigo, "envio" => $vinc->envio));
+            }
+            $tab->vinculacion = $vinculacionD;
+            unset($vinculacionD);
+            $vinculacionD = array();
+        }
+        $result = agruparEmpleadosRefresh($tabla_empleado1);
+
+        return response()->json($result, 200);
     }
 
     public function create()
@@ -905,32 +960,30 @@ class EmpleadoController extends Controller
         $condicionPago = condicion_pago::where('organi_id', '=', session('sesionidorg'))->get();
         //dd($tabla_empleado);
 
-        $invitadod=DB::table('invitado')
-        ->where('user_Invitado','=',Auth::user()->id)
-        ->where('organi_id','=',session('sesionidorg'))
-        ->get()->first();
+        $invitadod = DB::table('invitado')
+            ->where('user_Invitado', '=', Auth::user()->id)
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->get()->first();
 
-            if($invitadod){
-                if ($invitadod->rol_id!=1){
-                    return redirect('/dashboard');
-                }
-                else{
-                    return view('empleado.empleadoMenu', [
-                        'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
-                        'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
-                        'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
-                        'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
-                    ]);
-                }
+        if ($invitadod) {
+            if ($invitadod->rol_id != 1) {
+                return redirect('/dashboard');
+            } else {
+                return view('empleado.empleadoMenu', [
+                    'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
+                    'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
+                    'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
+                    'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
+                ]);
             }
-
-        else{
-        return view('empleado.empleadoMenu', [
-            'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
-            'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
-            'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
-            'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
-        ]);}
+        } else {
+            return view('empleado.empleadoMenu', [
+                'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
+                'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
+                'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
+                'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
+            ]);
+        }
     }
 
     public function comprobarNumD(Request $request)
@@ -1308,7 +1361,7 @@ class EmpleadoController extends Controller
         $incidencia->inciden_descuento = $request->get('descuentoI');
         $incidencia->inciden_hora =  $request->get('horaIn');
         $incidencia->users_id = Auth::user()->id;
-        $incidencia->organi_id =session('sesionidorg');
+        $incidencia->organi_id = session('sesionidorg');
         $incidencia->save();
 
         $incidencia_dias = new incidencia_dias();
@@ -1485,7 +1538,7 @@ class EmpleadoController extends Controller
         $ids = $request->ids;
         $empleado = DB::table('empleado')
             ->where('emple_nDoc', $ids)
-            ->where('organi_id', '=',session('sesionidorg'))
+            ->where('organi_id', '=', session('sesionidorg'))
             ->update(['emple_estado' => 1]);
     }
 }

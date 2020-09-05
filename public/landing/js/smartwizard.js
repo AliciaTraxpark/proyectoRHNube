@@ -440,7 +440,7 @@ $(document).ready(function () {
                 .addClass('btn btn-secondary sw-btn-finish')
                 .attr("id", "FinalizarEmpleadoEditar")
                 .on('click', function () {
-                    leertabla();
+                    RefreshTablaEmpleado();
                     $('#smartwizard1').smartWizard("reset");
                     $('#formNuevoEd').hide();
                     $('#formNuevoEl').hide();
