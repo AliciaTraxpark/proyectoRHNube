@@ -1,3 +1,6 @@
+@php
+    use App\invitado;
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -83,9 +86,20 @@
                             <p class=" text-uppercase font-size-12 mb-2" style="font-weight: 600;color:#4a6d8d!important">{{$organizaciones->organi_tipo}}</p>
                             <h5><a  class="text-dark">{{$organizaciones->organi_razonSocial}}</a></h5>
                             <p class="text-muted" style="font-size:12px!important "><label style="font-weight: 600" for=""> RUC/ID:</label> {{$organizaciones->organi_ruc}}</p>
+                             @php
 
-                            <button class="btn btn-soft-primary btn-block btn-sm" style="color: #16588d;
-                            background-color: #c1cee0;" onclick="ingresarOrganiza({{$organizaciones->organi_id}})"><i class="uil uil-arrow-right mr-1"></i>Ingresar a organizacion</button>
+                                  $invitado=invitado::where('user_Invitado','=', Auth::user()->id)
+                                    ->where('organi_id','=', $organizaciones->organi_id)
+                                    ->where('estado_condic','=', 0)->get()->first();
+                             @endphp
+                             @if ($invitado)
+                             <button class="btn btn-soft-primary btn-block btn-sm" style="color: #16588d;
+                            background-color: #c1cee0;" disabled><i class="uil uil-arrow-right mr-1"></i>Acceso desactivado</button>
+                             @else
+                             <button class="btn btn-soft-primary btn-block btn-sm" style="color: #16588d;
+                             background-color: #c1cee0;" onclick="ingresarOrganiza({{$organizaciones->organi_id}})"><i class="uil uil-arrow-right mr-1"></i>Ingresar a organizacion</button>
+                             @endif
+
                         </div>
                         <div class="card-body border-top" style="padding: 10px 20px;">
                             <div class="row align-items-center">

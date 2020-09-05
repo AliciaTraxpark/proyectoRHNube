@@ -31,7 +31,7 @@ input[type=number] { -moz-appearance:textfield; }
             <div class="container">
                 <div class="col-md-3">
                     <div class="navbar-brand-wrapper d-flex w-100">
-                        <img src="{{asset('landing/images/Recurso_23.png')}}" height="100">
+                        <img src="{{asset('landing/images/Recurso_23.png')}}" height="45">
                     </div>
                 </div>
                 <div class="col-md-9 text-left">
@@ -94,11 +94,11 @@ input[type=number] { -moz-appearance:textfield; }
                 </div><!-- /.modal -->
                 <!-- MODAL DE ENVIO -->
                 <div id="modalCargando" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCargando" aria-hidden="true" data-backdrop="static">
-                    <div class="modal-dialog modal-dialog-centered  modal-lg" style="padding-left: 15%;">
+                    <div class="modal-dialog   modal-lg" style="padding-left: 9%;">
                     <div class="modal-content" style="background: #ffffff;">
                        <div class="modal-body" style="padding-top: 8px;  padding-bottom: 0px;">
                            <div class="text-center">
-                                <h6 style="color: #163552;">Enviado datos, espere por favor.</h6>
+                                <h6 style="color: #163552;">Enviando datos, espere por favor.</h6>
                                 <div class="row">
                                     <div class="col-3"></div>
                                     <div class="col-6">

@@ -108,10 +108,23 @@
                                         @endif
 
                                     </td>
-                                    <td>  <a id=""
-                                            onclick="editarInv({{ $invitados->idinvitado }})"
-                                            style="cursor: pointer"><img src="{{ asset('admin/images/edit.svg') }}"
-                                                height="15"></a> </td>
+                                    <td> <div class="row">
+                                        <div class="col-md-2">
+                                            <a id=""
+                                        onclick="editarInv({{ $invitados->idinvitado }})"
+                                        style="cursor: pointer"><img src="{{ asset('admin/images/edit.svg') }}"
+                                            height="15"></a>
+                                        </div>
+                                         <div class="custom-control custom-switch mb-2">
+                                            @if ($invitados->estado_condic==0)
+                                                <input type="checkbox" class="custom-control-input" name=checkAc id="activaSwitch{{$invitados->idinvitado}}" onchange="cambioswitch({{$invitados->idinvitado}})" >
+                                                <label class="custom-control-label" id="lblActiva{{$invitados->idinvitado}}" for="activaSwitch{{$invitados->idinvitado}}">Desactivado</label>
+                                            @else
+                                                <input type="checkbox" class="custom-control-input" name=checkAc id="activaSwitch{{$invitados->idinvitado}}" onchange="cambioswitch({{$invitados->idinvitado}})" checked >
+                                                <label class="custom-control-label" id="lblActiva{{$invitados->idinvitado}}" for="activaSwitch{{$invitados->idinvitado}}">Activado</label>
+                                            @endif
+                                            </div>
+                                        </div>  </td>
                                 </tr>
                             @endforeach
                         </tbody>

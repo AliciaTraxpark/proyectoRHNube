@@ -10,7 +10,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use App\usuario_organizacion;
 use App\User;
-
+use App\invitado;
 class LoginController extends Controller
 {
     /*
@@ -60,6 +60,7 @@ class LoginController extends Controller
             'password' => 'required|string'
         ]);
 
+
         if (Auth::attempt($credentials)) {
             $usuario_organizacion=usuario_organizacion::where('user_id','=', Auth::user()->id)->get()->first();
 
@@ -73,7 +74,21 @@ class LoginController extends Controller
 
                 $vars=$usuario_organizacion->organi_id;
                 session(['sesionidorg' => $vars]);
-                return redirect(route('dashboard'));
+                ///
+                $invitado=invitado::where('user_Invitado','=', Auth::user()->id)
+                ->where('organi_id','=', session('sesionidorg'))
+                ->where('estado_condic','=', 0)->get()->first();
+                /////
+                if($invitado){
+                    Auth::logout();
+                    session()->forget('sesionidorg');
+                    /* return view ('welcome'); */
+                    return redirect()->route('login')
+                    ->with('error', 'Usuario no activado.');
+                }else{
+                    return redirect(route('dashboard'));
+                }
+
             }
 
         } else {

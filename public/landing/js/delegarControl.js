@@ -398,3 +398,60 @@ function registrarInvit_edit()
 
 
 }
+////////switch estado
+function cambioswitch(idinvitado){
+    var estadosw;
+    if( $('#activaSwitch'+idinvitado).is(':checked')) {
+
+        estadosw=1;
+        $.ajax({
+            type: "post",
+            url: "/cambInvitadoswit",
+            data: { idinvitado,
+                estadosw
+            },
+            statusCode: {
+                419: function () {
+                    location.reload();
+                },
+            },
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (data) {
+                $('#lblActiva'+idinvitado).text("Activado");
+            },
+            error: function (data) {
+                alert("Ocurrio un error");
+            },
+        });
+
+    }
+    else{
+
+        estadosw=0;
+
+        $.ajax({
+            type: "post",
+            url: "/cambInvitadoswit",
+            data: { idinvitado,
+                estadosw
+            },
+            statusCode: {
+                419: function () {
+                    location.reload();
+                },
+            },
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (data) {
+                $('#lblActiva'+idinvitado).text("Desactivado");
+            },
+            error: function (data) {
+                alert("Ocurrio un error");
+            },
+        });
+    }
+
+}
