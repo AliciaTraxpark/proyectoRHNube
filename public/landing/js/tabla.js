@@ -50,13 +50,24 @@ function RefreshTablaEmpleado() {
                                 <img src=\"/admin/assets/images/users/empleado.png\" alt=\"\" />\
                             </td>\
                             <td>" + data[i].perso_nombre + "</td>\
-                            <td>" + data[i].perso_apPaterno + " " + data[i].perso_apMaterno + "</td>\
-                            <td>" + data[i].cargo_descripcion + "</td>\
-                            <td> " + data[i].area_descripcion + "</td>\
-                            <td>" + data[i].centroC_descripcion + "</td>";
+                            <td>" + data[i].perso_apPaterno + " " + data[i].perso_apMaterno + "</td>";
+                if (data[i].cargo_descripcion == null) {
+                    tbody += "<td></td>";
+                } else {
+                    tbody += "<td>" + data[i].cargo_descripcion + "</td>";
+                }
+                if (data[i].area_descripcion == null) {
+                    tbody += "<td></td>";
+                } else {
+                    tbody += "<td> " + data[i].area_descripcion + "</td>";
+                }
+                if (data[i].centroC_descripcion == null) {
+                    tbody += "<td></td>";
+                } else {
+                    tbody += "<td>" + data[i].centroC_descripcion + "</td>";
+                }
                 console.log(data[i].dispositivos.includes(1));
                 if (data[i].dispositivos.includes(1) == false) {
-                    console.log("ingreso");
                     tbody += "<td></td>";
                 } else {
                     tbody += "<td class=\"text-center\">\
@@ -99,7 +110,7 @@ function RefreshTablaEmpleado() {
                      </td>";
                 }
                 tbody += "<td class=\"text-center\">\
-                            <input type=\"checkbox\" id=\"tdC\"\
+                            <input type=\"checkbox\" id=\"tdC\" style=\"margin-right:5.5px!important\"\
                             class=\"form-check-input sub_chk\" data-id=\"" + data[i].emple_id + "\" " + this + "" + this + "" + this + ">\
                         </td></tr>";
             }
