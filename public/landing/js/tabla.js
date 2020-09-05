@@ -110,7 +110,7 @@ function RefreshTablaEmpleado() {
                      </td>";
                 }
                 tbody += "<td class=\"text-center\">\
-                            <input type=\"checkbox\" id=\"tdC\" style=\"margin-right:5px!important\"\
+                            <input type=\"checkbox\" id=\"tdC\" style=\"margin-right:5.6px!important\"\
                             class=\"form-check-input sub_chk\" data-id=" + data[i].emple_id + " " + this + "" + this + "" + this + ">\
                         </td></tr>";
             }
