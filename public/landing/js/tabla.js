@@ -110,8 +110,8 @@ function RefreshTablaEmpleado() {
                      </td>";
                 }
                 tbody += "<td class=\"text-center\">\
-                            <input type=\"checkbox\" id=\"tdC\" style=\"margin-right:5.5px!important\"\
-                            class=\"form-check-input sub_chk\" data-id=\"" + data[i].emple_id + "\" " + this + "" + this + "" + this + ">\
+                            <input type=\"checkbox\" id=\"tdC\" style=\"margin-right:5px!important\"\
+                            class=\"form-check-input sub_chk\" data-id=" + data[i].emple_id + " " + this + "" + this + "" + this + ">\
                         </td></tr>";
             }
             console.log(tbody);
@@ -174,6 +174,60 @@ function RefreshTablaEmpleado() {
                         });
                     });
                 }
+            });
+            var seleccionarTodos = $('#selectT');
+            var table = $('#tablaEmpleado');
+            var CheckBoxs = table.find('tbody input:checkbox');
+            var CheckBoxMarcados = 0;
+
+            seleccionarTodos.on('click', function () {
+                if (seleccionarTodos.is(":checked")) {
+                    CheckBoxs.prop('checked', true);
+                    $('#enviarCorreosMasivos').show();
+                    $('#enviarAndroidMasivos').show();
+                    $('#enviarMasivo').show();
+                } else {
+                    CheckBoxs.prop('checked', false);
+                    $('#enviarCorreosMasivos').hide();
+                    $('#enviarAndroidMasivos').hide();
+                    $('#enviarMasivo').hide();
+                };
+
+            });
+
+
+            CheckBoxs.on('change', function (e) {
+                CheckBoxMarcados = table.find('tbody input:checkbox:checked').length;
+                if (CheckBoxMarcados > 0) {
+                    $('#enviarCorreosMasivos').show();
+                    $('#enviarAndroidMasivos').show();
+                    $('#enviarMasivo').show();
+                } else {
+                    $('#enviarCorreosMasivos').hide();
+                    $('#enviarAndroidMasivos').hide();
+                    $('#enviarMasivo').hide();
+                }
+                seleccionarTodos.prop('checked', (CheckBoxMarcados === CheckBoxs.length));
+            });
+            $(".sub_chk").click(function () {
+                if ($(this).prop('checked')) {
+                    $('#w' + $(this).attr('data-id')).hide();
+                    $('#a' + $(this).attr('data-id')).hide();
+                } else {
+                    $('#w' + $(this).attr('data-id')).show();
+                    $('#a' + $(this).attr('data-id')).show();
+                }
+            });
+            seleccionarTodos.click(function () {
+                $(".sub_chk").each(function () {
+                    if ($(this).prop('checked')) {
+                        $('#w' + $(this).attr('data-id')).hide();
+                        $('#a' + $(this).attr('data-id')).hide();
+                    } else {
+                        $('#w' + $(this).attr('data-id')).show();
+                        $('#a' + $(this).attr('data-id')).show();
+                    }
+                });
             });
         }
     });
