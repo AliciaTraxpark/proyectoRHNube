@@ -234,6 +234,7 @@ class EmpleadoController extends Controller
             ->leftJoin('tipo_dispositivo as td', 'td.id', '=', 'md.idTipoDispositivo')
 
             ->select(
+                'e.emple_nDoc',
                 'p.perso_nombre',
                 'p.perso_apPaterno',
                 'p.perso_apMaterno',
@@ -294,6 +295,7 @@ class EmpleadoController extends Controller
             ->leftJoin('tipo_dispositivo as td', 'td.id', '=', 'md.idTipoDispositivo')
 
             ->select(
+                'e.emple_nDoc',
                 'p.perso_nombre',
                 'p.perso_apPaterno',
                 'p.perso_apMaterno',

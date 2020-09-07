@@ -233,11 +233,12 @@
         <td align="center">
             <select class="form-control" name="select" id="select">
                 <option value="-1">PERSONALIZADO</option>
-                <option value="2">Nombre</option>
-                <option value="3">Apellidos</option>
-                <option value="4">Cargo</option>
-                <option value="5">Área</option>
-                <option value="6">Costo</option>
+                <option value="2">Número Documento</option>
+                <option value="3">Nombre</option>
+                <option value="4">Apellidos</option>
+                <option value="5">Cargo</option>
+                <option value="6">Área</option>
+                <option value="7">Costo</option>
             </select>
         </td>
     </div>
@@ -277,6 +278,7 @@
         <tr>
             <th></th>
             <th class="text-center"></th>
+            <th>Número Documento</th>
             <th>Nombres</th>
             <th>Apellidos</th>
             <th>Cargo</th>
@@ -304,6 +306,7 @@
             <td class="text-center">&nbsp; <input type="hidden" id="codE" value="{{$tabla_empleados->emple_id}}"><img
                     src="{{ URL::asset('admin/assets/images/users/empleado.png')
                     }}" alt="" /></td>
+            <td>{{$tabla_empleados->emple_nDoc}}</td>
             <td>{{$tabla_empleados->perso_nombre}}</td>
             <td>{{$tabla_empleados->perso_apPaterno}} {{$tabla_empleados->perso_apMaterno}}</td>
             <td>{{$tabla_empleados->cargo_descripcion}}</td>
