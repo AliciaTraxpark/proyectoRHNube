@@ -1,3 +1,16 @@
+//OCULTAR
+$('#customSwitchC1').prop('checked', true);
+$('#bodyModoControlR').show();
+$('#customSwitchC1').on('change.bootstrapSwitch', function (event) {
+    console.log(event.target.checked);
+    if (event.target.checked == true) {
+        $('#bodyModoControlR').show();
+        actividadEmp();
+    } else {
+        $('#bodyModoControlR').hide();
+    }
+});
+// FUNCIONES DE DISPOSITIVOS
 function inactivarLicencia(id) {
     $('#estadoLicencia').val(id);
     $('#form-registrar').hide();
