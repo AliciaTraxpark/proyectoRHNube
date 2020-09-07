@@ -3085,7 +3085,7 @@ function enviarEmpleado(accion, objEmpleado) {
                     position: "fixed",
                     icon_type: "image",
                     newest_on_top: true,
-                    delay: 5000,
+                    delay: 1000,
                     template:
                         '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
@@ -3134,7 +3134,7 @@ function enviarEmpleadoStore(accion, objEmpleado) {
                     position: "fixed",
                     icon_type: "image",
                     newest_on_top: true,
-                    delay: 5000,
+                    delay: 1000,
                     template:
                         '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
@@ -3224,7 +3224,7 @@ function enviarEmpresarialEmpleado(accion, objEmpleado) {
                     position: "fixed",
                     icon_type: "image",
                     newest_on_top: true,
-                    delay: 5000,
+                    delay: 1000,
                     template:
                         '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
@@ -3275,7 +3275,7 @@ function enviarFotoEmpleado(accion) {
                     position: "fixed",
                     icon_type: "image",
                     newest_on_top: true,
-                    delay: 5000,
+                    delay: 1000,
                     template:
                         '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
@@ -3332,7 +3332,7 @@ function enviarCalendarioEmpleado(accion, objEmpleado) {
                     position: "fixed",
                     icon_type: "image",
                     newest_on_top: true,
-                    delay: 5000,
+                    delay: 1000,
                     template:
                         '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
@@ -3389,7 +3389,7 @@ function enviarHorarioEmpleado(accion, objEmpleado) {
                     position: "fixed",
                     icon_type: "image",
                     newest_on_top: true,
-                    delay: 5000,
+                    delay: 1000,
                     template:
                         '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
@@ -3420,6 +3420,7 @@ function enviarEmpleadoStore(accion, objEmpleado) {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
+            $.notifyClose();
             $.notify(
                 {
                     message: "\nDatos Modificados.",
@@ -3430,7 +3431,7 @@ function enviarEmpleadoStore(accion, objEmpleado) {
                     position: "fixed",
                     icon_type: "image",
                     newest_on_top: true,
-                    delay: 5000,
+                    delay: 1000,
                     template:
                         '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
@@ -3915,6 +3916,9 @@ $("#cerrarModalEmpleado").click(function () {
     limpiar();
     $("#selectCalendario").val("Asignar calendario");
     $("#selectHorario").val("Seleccionar horario");
+    $("#estadoPR").val("false");
+    $("#estadoPE").val("false");
+    $("#estadoPF").val("false");
 });
 
 function cerrarVer() {
@@ -4004,6 +4008,9 @@ function FinalizarEmpleado() {
     $("#selectHorario").val("Seleccionar horario");
     $("#tbodyDispositivo").empty();
     $("#smartwizard").smartWizard("reset");
+    $("#estadoPR").val("false");
+    $("#estadoPE").val("false");
+    $("#estadoPF").val("false");
     $("#form-registrar").modal("toggle");
 }
 // *******************************************************
@@ -4034,6 +4041,18 @@ $("#file2").on("fileclear", function () {
 $("#file2").on("filedeleted", function () {
     $("#estadoF").val("true");
     console.log($("#estadoF").val());
+});
+$("#sw-default-step-1").on("keyup change", function () {
+    $("#estadoPR").val("true");
+    console.log($("#estadoPR").val());
+});
+$("#sw-default-step-2").on("keyup change", function () {
+    $("#estadoPE").val("true");
+    console.log($("#estadoPE").val());
+});
+$("#sw-default-step-3").on("keyup change", function () {
+    $("#estadoPF").val("true");
+    console.log($("#estadoPF").val());
 });
 //************************Editar en los modal de agregar */
 //*******AREA***/

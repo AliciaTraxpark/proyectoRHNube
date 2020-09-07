@@ -1862,6 +1862,9 @@
                                         <li><a href="#sw-default-step-6">Dispositivo</a></li>
                                         <li><a href="#sw-default-step-7">Modos de Control</a></li>
                                     </ul>
+                                    <input type="hidden" id="estadoPR" value="false">
+                                    <input type="hidden" id="estadoPE" value="false">
+                                    <input type="hidden" id="estadoPF" value="false">
                                     <div class="p-3">
                                         <div id="sw-default-step-1" class="setup-content"
                                             style="font-size: 12px!important">

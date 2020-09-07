@@ -258,23 +258,33 @@ $(document).ready(function () {
                 if (idE == "") {
                     objEmpleado = datosPersona("POST");
                     enviarEmpleado("", objEmpleado);
+                    $("#estadoPR").val("false");
                 } else {
-                    objEmpleado = datosPersona("POST");
-                    enviarEmpleadoStore("/" + idE, objEmpleado);
+                    if ($("#estadoPR").val() == "true") {
+                        objEmpleado = datosPersona("POST");
+                        enviarEmpleadoStore("/" + idE, objEmpleado);
+                        $("#estadoPR").val("false");
+                    }
                 }
             }
         }
         if (stepnumber == 1) {
             if (isStepValid == true) {
-                idE = $("#idEmpleado").val();
-                objEmpleado = datosEmpresaEmpleado("POST");
-                enviarEmpresarialEmpleado("/" + idE, objEmpleado);
+                if ($("#estadoPE").val() == "true") {
+                    idE = $("#idEmpleado").val();
+                    objEmpleado = datosEmpresaEmpleado("POST");
+                    enviarEmpresarialEmpleado("/" + idE, objEmpleado);
+                    $("#estadoPE").val("false");
+                }
             }
         }
         if (stepnumber == 2) {
-            if (isStepValid == true) {
-                idE = $("#idEmpleado").val();
-                enviarFotoEmpleado("/" + idE);
+            if ($("#estadoPF").val() == "true") {
+                if (isStepValid == true) {
+                    idE = $("#idEmpleado").val();
+                    enviarFotoEmpleado("/" + idE);
+                    $("#estadoPF").val("false");
+                }
             }
         }
         if (stepnumber == 3) {
@@ -672,15 +682,13 @@ $("#smartwizardVer").on("showStep", function (
         $("button.sw-btn-next").attr("disabled", false);
     }
 
-    if(stepNumber == 3 || stepNumber == 4){
-
+    if (stepNumber == 3 || stepNumber == 4) {
         $("button.sw-btn-prev").show();
         $("button.sw-btn-next").show();
         $("#FinalizarEmpleadoVer").hide();
         $("button.sw-btn-prev").attr("disabled", false);
         $("button.sw-btn-next").attr("disabled", false);
         $("#smartwizardVer :input").attr("disabled", false);
-
     }
     if (stepNumber == 6) {
         $("button.sw-btn-prev").hide();

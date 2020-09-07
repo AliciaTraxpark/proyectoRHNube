@@ -389,6 +389,7 @@ class EmpleadoController extends Controller
         $empleado->emple_estado = '1';
         $empleado->users_id = Auth::user()->id;
         $empleado->organi_id = session('sesionidorg');
+        $empleado->emple_foto = '';
         $empleado->save();
         $idempleado = $empleado->emple_id;
 
@@ -444,6 +445,7 @@ class EmpleadoController extends Controller
             $empleado->emple_Correo = $objEmpleado['correo'];
         }
         $empleado->emple_pasword = Hash::make($objEmpleado['numDocumento']);
+        $empleado->emple_foto = '';
         $empleado->save();
         return json_encode(array('status' => true));
     }
