@@ -1,6 +1,7 @@
 //OCULTAR
 $('#customSwitchC1').prop('checked', true);
 $('#bodyModoControlR').show();
+$('#bodyModoControlA').hide();
 $('#customSwitchC1').on('change.bootstrapSwitch', function (event) {
     console.log(event.target.checked);
     if (event.target.checked == true) {
@@ -9,8 +10,18 @@ $('#customSwitchC1').on('change.bootstrapSwitch', function (event) {
         $('#bodyModoControlR').hide();
     }
 });
+$('#customSwitchC2').on('change.bootstrapSwitch', function (event) {
+    console.log(event.target.checked);
+    if (event.target.checked == true) {
+        $('#bodyModoControlA').show();
+    } else {
+        $('#bodyModoControlA').hide();
+    }
+});
+// EN REGISTRAR
 $('#customSwitchCR1').prop('checked', true);
 $('#bodyModoControlRR').show();
+$('#bodyModoControlAR').hide();
 $('#customSwitchCR1').on('change.bootstrapSwitch', function (event) {
     console.log(event.target.checked);
     if (event.target.checked == true) {
@@ -19,7 +30,6 @@ $('#customSwitchCR1').on('change.bootstrapSwitch', function (event) {
         $('#bodyModoControlRR').hide();
     }
 });
-// EN REGISTRAR
 $('#customSwitchCR2').on('change.bootstrapSwitch', function (event) {
     console.log(event.target.checked);
     if (event.target.checked == true) {
@@ -28,6 +38,8 @@ $('#customSwitchCR2').on('change.bootstrapSwitch', function (event) {
         $('#bodyModoControlAR').hide();
     }
 });
+// VER
+
 // FUNCIONES DE DISPOSITIVOS
 function inactivarLicencia(id) {
     $('#estadoLicencia').val(id);

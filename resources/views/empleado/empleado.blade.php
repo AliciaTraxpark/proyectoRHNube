@@ -4038,39 +4038,63 @@
                                     </div>
                                     <div id="sw-default-step-6" style="font-size: 12px!important">
                                         <div class="row">
-                                            <div class="col-xl-12 col-sm-12">
-                                                <button class="btn btn-sm dropdown-toggle"
-                                                    style="background-color:#163552;" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false" disabled>+
-                                                    Agregar
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                    <a class="dropdown-item">ANDROID</a>
-                                                    <a class="dropdown-item">WINDOWS</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <div class="row">
-                                            <div class="col-xl-12 col-sm-12">
-                                                <div class="table-responsive-xl">
-                                                    <table id="ver_tablaDispositivo" class="table"
-                                                        style="font-size: 13px!important;">
-                                                        <thead style="background: #fafafa;">
-                                                            <tr>
-                                                                <th>Tipo Dispositivo</th>
-                                                                <th>Activación de Dispositivo</th>
-                                                                <th>Codigo</th>
-                                                                <th>Enviado</th>
-                                                                <th>Estado</th>
-                                                                <th></th>
-                                                                <th></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="ver_tbodyDispositivo"
-                                                            style="background:#ffffff;color: #585858;font-size: 12px">
-                                                        </tbody>
-                                                    </table>
+                                            <div class="col-xl-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <div class="row pb-1 pl-2">
+                                                            <div class="col">
+                                                                <div class="custom-control custom-switch mb-2">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                        id="customSwitchCV1">
+                                                                    <label class="custom-control-label"
+                                                                        for="customSwitchCV1"
+                                                                        style="font-weight: bold">Modo Control
+                                                                        Remoto</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body border p-2" id="bodyModoControlRV">
+                                                        <div class="row">
+                                                            <div class="col-xl-12 col-sm-12">
+                                                                <button class="btn btn-sm dropdown-toggle"
+                                                                    style="background-color:#163552;"
+                                                                    data-toggle="dropdown" aria-haspopup="true"
+                                                                    aria-expanded="false" disabled>+
+                                                                    Agregar
+                                                                </button>
+                                                                <div class="dropdown-menu"
+                                                                    aria-labelledby="btnGroupDrop1">
+                                                                    <a class="dropdown-item">ANDROID</a>
+                                                                    <a class="dropdown-item">WINDOWS</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="row">
+                                                            <div class="col-xl-12 col-sm-12">
+                                                                <div class="table-responsive-xl">
+                                                                    <table id="ver_tablaDispositivo" class="table"
+                                                                        style="font-size: 13px!important;">
+                                                                        <thead style="background: #fafafa;">
+                                                                            <tr>
+                                                                                <th>Tipo Dispositivo</th>
+                                                                                <th>Activación de Dispositivo</th>
+                                                                                <th>Codigo</th>
+                                                                                <th>Enviado</th>
+                                                                                <th>Estado</th>
+                                                                                <th></th>
+                                                                                <th></th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody id="ver_tbodyDispositivo"
+                                                                            style="background:#ffffff;color: #585858;font-size: 12px">
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
