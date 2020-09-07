@@ -2668,13 +2668,16 @@ use App\proyecto_empleado;
                 <div id="smartwizard1" style="background: #ffffff; color:#3d3d3d;">
                     <ul style="background: #fdfdfd!important;">
                         <li><a href="#persona-step-1">Personales</a></li>
-                        <li><a href="#sw-default-step-2">Empresarial</a></li>
-                        <li><a href="#sw-default-step-3">Foto</a></li>
+                        <li><a href="#swE-default-step-2">Empresarial</a></li>
+                        <li><a href="#swF-default-step-3">Foto</a></li>
                         <li><a href="#sw-default-step-4">Calendario</a></li>
                         <li><a href="#sw-default-step-5">Horario</a></li>
                         <li><a href="#sw-default-step-6">Dispositivo</a></li>
                         <li><a href="#sw-default-step-7">Modos de Control</a></li>
                     </ul>
+                    <input type="hidden" id="estadoP" value="false">
+                    <input type="hidden" id="estadoE" value="false">
+                    <input type="hidden" id="estadoF" value="false">
                     <div class="p-3" id="form-registrar">
                         <div id="persona-step-1" style="font-size: 12px!important">
                             <div class="row">
@@ -2918,7 +2921,7 @@ use App\proyecto_empleado;
                                 </div>
                             </div> <!-- end row -->
                         </div>
-                        <div id="sw-default-step-2" style="font-size: 12px!important">
+                        <div id="swE-default-step-2" style="font-size: 12px!important">
                             <div class="row">
 
                                 <div class="col-4">
@@ -3033,7 +3036,7 @@ use App\proyecto_empleado;
                                 </div> <!-- end col -->
                             </div> <!-- end row -->
                         </div>
-                        <div id="sw-default-step-3" style="font-size: 12px!important">
+                        <div id="swF-default-step-3" style="font-size: 12px!important">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group text-center">
