@@ -284,8 +284,8 @@
             <th>Cargo</th>
             <th>Área</th>
             <th>Centro de Costo</th>
-            <th class="text-center">Windows</th>
-            <th class="text-center">Android</th>
+            <th class="text-center">Control Remoto</th>
+            <th class="text-center">Control de asistencia en puerta</th>
             <th>&nbsp;<input type="checkbox" name="" id="selectT"></th>
 
         </tr>
@@ -313,7 +313,12 @@
             <td>{{$tabla_empleados->area_descripcion}}</td>
             <td>{{$tabla_empleados->centroC_descripcion}} </td>
             @if(!in_array("1",$tabla_empleados->dispositivos))
-            <td></td>
+            <td class="text-center">
+                <div class="custom-control custom-switch mb-2">
+                    <input type="checkbox" class="custom-control-input" id="customSwitchCR{{$tabla_empleados->emple_id}}">
+                    <label class="custom-control-label" for="customSwitchCR{{$tabla_empleados->emple_id}}" style="font-weight: bold"></label>
+                </div>
+            </td>
             @else
             <td class="text-center">
                 <div class="dropdown" id="w{{$tabla_empleados->emple_id}}">
