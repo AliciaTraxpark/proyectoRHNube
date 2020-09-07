@@ -19,6 +19,15 @@ $('#customSwitchCR1').on('change.bootstrapSwitch', function (event) {
         $('#bodyModoControlRR').hide();
     }
 });
+// EN REGISTRAR
+$('#customSwitchCR2').on('change.bootstrapSwitch', function (event) {
+    console.log(event.target.checked);
+    if (event.target.checked == true) {
+        $('#bodyModoControlAR').show();
+    } else {
+        $('#bodyModoControlAR').hide();
+    }
+});
 // FUNCIONES DE DISPOSITIVOS
 function inactivarLicencia(id) {
     $('#estadoLicencia').val(id);

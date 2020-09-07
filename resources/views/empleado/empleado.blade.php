@@ -2650,6 +2650,28 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <div class="row pb-1 pl-2">
+                                                            <div class="col">
+                                                                <div class="custom-control custom-switch mb-2">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                        id="customSwitchCR2">
+                                                                    <label class="custom-control-label"
+                                                                        for="customSwitchCR2"
+                                                                        style="font-weight: bold">Modo Control de
+                                                                        Asistencia en Puerta</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body border p-2" id="bodyModoControlAR">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
                                         <div class="row">
@@ -2663,7 +2685,8 @@
                                                                         id="customSwitch3">
                                                                     <label class="custom-control-label"
                                                                         for="customSwitch3"
-                                                                        style="font-weight: bold">Modo TASK</label>
+                                                                        style="font-weight: bold">Modo Control
+                                                                        Remoto</label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -2713,35 +2736,13 @@
                                                                         id="customSwitch4">
                                                                     <label class="custom-control-label"
                                                                         for="customSwitch4"
-                                                                        style="font-weight: bold">Modo Proyecto</label>
+                                                                        style="font-weight: bold">Modo Control de
+                                                                        Asistencia en Puerta</label>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="card-body border p-2" id="regbodyModoProyecto">
-                                                        <div class="row">
-                                                            <div class="col-xl-12 text-right">
-                                                                <button type="button" class="btn btn-sm mt-1"
-                                                                    style="background-color: #163552;">+ Nueva Actividad
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row pt-3">
-                                                            <div class="col-xl-12 col-sm-12">
-                                                                <div class="table-responsive-xl">
-                                                                    <table class="table"
-                                                                        style="font-size: 13px!important;">
-                                                                        <thead
-                                                                            style="background: #fafafa;font-size: 14px">
-                                                                            <tr>
-                                                                                <th>Actividad</th>
-                                                                                <th>Estado</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
