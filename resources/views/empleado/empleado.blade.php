@@ -1553,6 +1553,7 @@
                                 <form action="javascript:agregarFechasA()">
                                     {{ csrf_field() }}
                                     <input type="hidden" name="v_idContrato" id="v_idContrato">
+                                    <input type="hidden" id="estadoCond" value="false">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">

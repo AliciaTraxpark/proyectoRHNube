@@ -403,12 +403,17 @@ $(document).ready(function () {
         if (stepnumber == 1) {
             if (isStepValid == true) {
                 console.log($("#estadoE").val());
-                if ($("#estadoE").val() == "true") {
+                console.log($("#estadoCond").val());
+                if (
+                    $("#estadoE").val() == "true" ||
+                    $("#estadoCond").val() == "true"
+                ) {
                     idE = $("#v_id").val();
                     objEmpleadoA = datosEmpresarialA("PUT");
                     actualizarEmpleadoEmpresarial("/" + idE, objEmpleadoA);
                 }
                 $("#estadoE").val("false");
+                $("#estadoCond").val("false");
             }
         }
 
