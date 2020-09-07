@@ -1,4 +1,4 @@
-//OCULTAR
+//EDITAR
 $('#customSwitchC1').prop('checked', true);
 $('#bodyModoControlR').show();
 $('#bodyModoControlA').hide();
@@ -39,7 +39,25 @@ $('#customSwitchCR2').on('change.bootstrapSwitch', function (event) {
     }
 });
 // VER
-
+$('#customSwitchCV1').prop('checked', true);
+$('#bodyModoControlRV').show();
+$('#bodyModoControlAV').hide();
+$('#customSwitchCV1').on('change.bootstrapSwitch', function (event) {
+    console.log(event.target.checked);
+    if (event.target.checked == true) {
+        $('#bodyModoControlRV').show();
+    } else {
+        $('#bodyModoControlRV').hide();
+    }
+});
+$('#customSwitchCV2').on('change.bootstrapSwitch', function (event) {
+    console.log(event.target.checked);
+    if (event.target.checked == true) {
+        $('#bodyModoControlAV').show();
+    } else {
+        $('#bodyModoControlAV').hide();
+    }
+});
 // FUNCIONES DE DISPOSITIVOS
 function inactivarLicencia(id) {
     $('#estadoLicencia').val(id);

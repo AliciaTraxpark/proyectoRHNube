@@ -4054,23 +4054,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="card-body border p-2" id="bodyModoControlRV">
-                                                        <div class="row">
-                                                            <div class="col-xl-12 col-sm-12">
-                                                                <button class="btn btn-sm dropdown-toggle"
-                                                                    style="background-color:#163552;"
-                                                                    data-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false" disabled>+
-                                                                    Agregar
-                                                                </button>
-                                                                <div class="dropdown-menu"
-                                                                    aria-labelledby="btnGroupDrop1">
-                                                                    <a class="dropdown-item">ANDROID</a>
-                                                                    <a class="dropdown-item">WINDOWS</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <br>
+                                                    <div class="card-body border p-3" id="bodyModoControlRV">
                                                         <div class="row">
                                                             <div class="col-xl-12 col-sm-12">
                                                                 <div class="table-responsive-xl">
@@ -4094,6 +4078,28 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <div class="row pb-1 pl-2">
+                                                            <div class="col">
+                                                                <div class="custom-control custom-switch mb-2">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                        id="customSwitchCV2">
+                                                                    <label class="custom-control-label"
+                                                                        for="customSwitchCV2"
+                                                                        style="font-weight: bold">Modo Control de
+                                                                        Asistencia en Puerta</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body border p-2" id="bodyModoControlAV">
                                                     </div>
                                                 </div>
                                             </div>

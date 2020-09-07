@@ -674,12 +674,7 @@ $("#smartwizardVer").on("showStep", function (
     stepNumber,
     stepDirection
 ) {
-    if (
-        stepNumber == 0 ||
-        stepNumber == 1 ||
-        stepNumber == 2 ||
-        stepNumber == 5
-    ) {
+    if (stepNumber == 0 || stepNumber == 1 || stepNumber == 2) {
         $("button.sw-btn-prev").show();
         $("button.sw-btn-next").show();
         $("#FinalizarEmpleadoVer").hide();
@@ -688,10 +683,11 @@ $("#smartwizardVer").on("showStep", function (
         $("button.sw-btn-next").attr("disabled", false);
     }
 
-    if (stepNumber == 3 || stepNumber == 4) {
+    if (stepNumber == 3 || stepNumber == 4 || stepNumber == 5) {
         $("button.sw-btn-prev").show();
         $("button.sw-btn-next").show();
         $("#FinalizarEmpleadoVer").hide();
+        $('#disab').css('pointer-events', 'none');
         $("button.sw-btn-prev").attr("disabled", false);
         $("button.sw-btn-next").attr("disabled", false);
         $("#smartwizardVer :input").attr("disabled", false);
