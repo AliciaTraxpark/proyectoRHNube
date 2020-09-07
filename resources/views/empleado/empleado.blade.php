@@ -3585,7 +3585,8 @@
                                                                         id="customSwitchC2">
                                                                     <label class="custom-control-label"
                                                                         for="customSwitchC2"
-                                                                        style="font-weight: bold">Modo Control de Asistencia en Puerta</label>
+                                                                        style="font-weight: bold">Modo Control de
+                                                                        Asistencia en Puerta</label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -3659,7 +3660,8 @@
                                                                         id="customSwitch2">
                                                                     <label class="custom-control-label"
                                                                         for="customSwitch2"
-                                                                        style="font-weight: bold">Modo Control de Asistencia en Puerta</label>
+                                                                        style="font-weight: bold">Modo Control de
+                                                                        Asistencia en Puerta</label>
                                                                 </div>
                                                             </div>
                                                         </div>
