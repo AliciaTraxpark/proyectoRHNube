@@ -3524,7 +3524,7 @@ function actualizarEmpleado(accion, objEmpleadoA) {
                     position: "fixed",
                     icon_type: "image",
                     newest_on_top: true,
-                    delay: 5000,
+                    delay: 1000,
                     template:
                         '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
@@ -3609,7 +3609,7 @@ function actualizarEmpleadoEmpresarial(accion, objEmpleadoA) {
                     position: "fixed",
                     icon_type: "image",
                     newest_on_top: true,
-                    delay: 5000,
+                    delay: 1000,
                     template:
                         '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
@@ -3653,7 +3653,7 @@ function actualizarEmpleadoFoto(accion) {
                     position: "fixed",
                     icon_type: "image",
                     newest_on_top: true,
-                    delay: 5000,
+                    delay: 1000,
                     template:
                         '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
