@@ -546,7 +546,6 @@
                     $('#v_codigoTelefono').val(telefonoSplit[0] + telefonoSplit[1]);
                     $('#v_telefono').val(telefonoSplit[2] + telefonoSplit[3] + telefonoSplit[4] + telefonoSplit[5] + telefonoSplit[6] + telefonoSplit[7]);
                 }
-
                 if(data[0].contrato.length >= 1){
                     $('#detalleContratoE').show();
                     $('#v_contrato').val(data[0].contrato[0].idTipoC);

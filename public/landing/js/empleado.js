@@ -1885,8 +1885,6 @@ $("#file").fileinput({
     showBrowse: false
 });
 
-
-
 //AREA
 function agregarArea() {
     objArea = datosArea("POST");
@@ -3325,14 +3323,6 @@ function enviarEmpleadoStore(accion, objEmpleado) {
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        statusCode: {
-            /*401: function () {
-                location.reload();
-            },*/
-            419: function () {
-                location.reload();
-            }
-        },
         success: function (data) {
             $.notify({
                 message: "\nDatos Modificados.",
@@ -3368,14 +3358,7 @@ $("#checkboxFechaIE").on("click", function () {
 
     }
 });
-/*$('#actualizarEmpleado').click(function () {
-    idE = $('#v_id').val();
-    console.log($('#v_fechaFC').text());
-    objEmpleadoA = datosPersonaA("PUT");
-    actualizarEmpleado('/' + idE, objEmpleadoA);
-});*/
-
-
+// DATOS PERSONALES
 function datosPersonaA(method) {
     var celularC = '';
     var telefonoC = '';
@@ -3395,6 +3378,73 @@ function datosPersonaA(method) {
     } else {
         var v_VFecha = '0000-00-00';
     }
+    nuevoEmpleadoA = {
+        nombres_v: $('#v_nombres').val(),
+        apPaterno_v: $('#v_apPaterno').val(),
+        apMaterno_v: $('#v_apMaterno').val(),
+        fechaN_v: v_VFecha,
+        tipo_v: $('input:radio[name=v_tipo]:checked').val(),
+        departamento_v: $('#v_departamento').val(),
+        provincia_v: $('#v_provincia').val(),
+        distrito_v: $('#v_distrito').val(),
+        dep_v: $('#v_dep').val(),
+        prov_v: $('#v_prov').val(),
+        dist_v: $('#v_dist').val(),
+        direccion_v: $('#v_direccion').val(),
+        celular_v: celularC,
+        telefono_v: telefonoC,
+        correo_v: $('#v_email').val(),
+        '_method': method
+    }
+    return (nuevoEmpleadoA);
+}
+
+function actualizarEmpleado(accion, objEmpleadoA) {
+
+    var formDataA = new FormData();
+    formDataA.append('file', $('#file2').prop('files')[0]);
+    formDataA.append('objEmpleadoA', JSON.stringify(objEmpleadoA));
+    console.log(objEmpleadoA);
+    $.ajax({
+
+        type: "POST",
+        url: "/empleadoA" + accion,
+        data: formDataA,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (msg) {
+            $.notifyClose();
+            $.notify({
+                message: "\nDatos Actualizado.",
+                icon: 'admin/images/checked.svg'
+            }, {
+                element: $('#form-ver'),
+                position: 'fixed',
+                icon_type: 'image',
+                newest_on_top: true,
+                delay: 5000,
+                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+        },
+        error: function (data, errorThrown) {
+            alert("Hay un error");
+            console.log(formDataA.get('objEmpleadoA'));
+        }
+    });
+}
+// DATOS EMPRESARIALES
+function datosEmpresarialA(method){
+
     //////////////////////////////////////
     var v_AnioIE = parseInt($('#m_ano_fechaIE').val());
     var v_MesIE = parseInt($('#m_mes_fechaIE').val() - 1);
@@ -3417,61 +3467,78 @@ function datosPersonaA(method) {
         var v_VFechaFE = '0000-00-00';
     }
     /////////////////////////////////////////////
-    nuevoEmpleadoA = {
-        nombres_v: $('#v_nombres').val(),
-        apPaterno_v: $('#v_apPaterno').val(),
-        apMaterno_v: $('#v_apMaterno').val(),
-        fechaN_v: v_VFecha,
-        tipo_v: $('input:radio[name=v_tipo]:checked').val(),
-        departamento_v: $('#v_departamento').val(),
-        provincia_v: $('#v_provincia').val(),
-        distrito_v: $('#v_distrito').val(),
-        cargo_v: $('#v_cargo').val(),
-        area_v: $('#v_area').val(),
-        centroc_v: $('#v_centroc').val(),
-        dep_v: $('#v_dep').val(),
-        prov_v: $('#v_prov').val(),
-        dist_v: $('#v_dist').val(),
-        contrato_v: $('#v_contrato').val(),
-        direccion_v: $('#v_direccion').val(),
-        nivel_v: $('#v_nivel').val(),
-        local_v: $('#v_local').val(),
-        celular_v: celularC,
-        telefono_v: telefonoC,
-        correo_v: $('#v_email').val(),
-        fechaI_v: v_VFechaIE,
-        fechaF_v: v_VFechaFE,
+
+    nuevoEmpleadoEA={
         codigoEmpleado_v: $('#v_codigoEmpleado').val(),
+        cargo_v: $('#v_cargo').val(),
+        centroc_v: $('#v_centroc').val(),
+        contrato_v: $('#v_contrato').val(),
         idContrato_v: $('#v_idContrato').val(),
         monto_v: $('#v_monto').val(),
         condicion_v: $('#v_condicion').val(),
+        fechaI_v: v_VFechaIE,
+        fechaF_v: v_VFechaFE,
+        nivel_v: $('#v_nivel').val(),
+        local_v: $('#v_local').val(),
+        area_v: $('#v_area').val(),
         '_method': method
     }
-    return (nuevoEmpleadoA);
+    return (nuevoEmpleadoEA);
 }
-
-function actualizarEmpleado(accion, objEmpleadoA) {
+function actualizarEmpleadoEmpresarial(accion, objEmpleadoA) {
 
     var formDataA = new FormData();
-    formDataA.append('file', $('#file2').prop('files')[0]);
     formDataA.append('objEmpleadoA', JSON.stringify(objEmpleadoA));
-    console.log(objEmpleadoA);
     $.ajax({
 
         type: "POST",
-        url: "/empleadoA" + accion,
+        url: "/empleadoAE" + accion,
         data: formDataA,
         contentType: false,
         processData: false,
         dataType: "json",
-        statusCode: {
-            /*401: function () {
-                location.reload();
-            },*/
-            419: function () {
-                location.reload();
-            }
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
+        success: function (msg) {
+            $.notifyClose();
+            $.notify({
+                message: "\nDatos Actualizado.",
+                icon: 'admin/images/checked.svg'
+            }, {
+                element: $('#form-ver'),
+                position: 'fixed',
+                icon_type: 'image',
+                newest_on_top: true,
+                delay: 5000,
+                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+        },
+        error: function (data, errorThrown) {
+            alert("Hay un error");
+            console.log(formDataA.get('objEmpleadoA'));
+        }
+    });
+}
+// FOTO
+function actualizarEmpleadoFoto(accion) {
+
+    var formDataA = new FormData();
+    formDataA.append('file', $('#file2').prop('files')[0]);
+    $.ajax({
+
+        type: "POST",
+        url: "/empleadoAF" + accion,
+        data: formDataA,
+        contentType: false,
+        processData: false,
+        dataType: "json",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -3684,7 +3751,8 @@ $('#cerrarEd').click(function () {
     limpiar();
     $('#selectCalendario').val("Asignar calendario");
     $('#selectHorario').val("Seleccionar horario");
-
+    $('#estadoP').val("false");
+    $('#estadoE').val("false");
 });
 $('#cerrarModalEmpleado').click(function () {
     RefreshTablaEmpleado();
@@ -3834,8 +3902,11 @@ function FinalizarEmpleado() {
 }
 // *******************************************************
 $('#persona-step-1').on("keyup change", function(){
-    console.log("ingreso");
     $('#estadoP').val("true");
+});
+$('#swE-default-step-2').on("keyup change",function(){
+    console.log("ingreso");
+    $('#estadoE').val("true");
 });
 //************************Editar en los modal de agregar */
 //*******AREA***/

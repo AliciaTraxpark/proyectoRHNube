@@ -2787,7 +2787,7 @@
                             <div id="smartwizard1" style="background: #ffffff; color:#3d3d3d;">
                                 <ul style="background: #fdfdfd!important;">
                                     <li><a href="#persona-step-1">Personales</a></li>
-                                    <li><a href="#sw-default-step-2">Empresarial</a></li>
+                                    <li><a href="#swE-default-step-2">Empresarial</a></li>
                                     <li><a href="#sw-default-step-3">Foto</a></li>
                                     <li><a href="#sw-default-step-4">Calendario</a></li>
                                     <li><a href="#sw-default-step-5">Horario</a></li>
@@ -3040,7 +3040,8 @@
                                             </div>
                                         </div> <!-- end row -->
                                     </div>
-                                    <div id="sw-default-step-2" style="font-size: 12px!important">
+                                    <div id="swE-default-step-2" style="font-size: 12px!important">
+                                        <input type="hidden" id="estadoE" value="false">
                                         <div class="row">
                                             <div class="col-4">
                                                 <div class="form-group">

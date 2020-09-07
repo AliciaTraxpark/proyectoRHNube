@@ -3,23 +3,25 @@ $(document).ready(function () {
         var isStepValid = true;
         // validate step 1
         if (stepnumber == 0) {
-            if ($('#numDocumento').val() == "") {
+            if ($("#numDocumento").val() == "") {
                 isStepValid = false;
-                $('#validDocumento').show();
+                $("#validDocumento").show();
             } else {
                 //VALIDAR NUMERO DOCUMENTO
-                var numeroD = $('#numDocumento').val();
-                idE = $('#idEmpleado').val();
-                if (idE == '') {
+                var numeroD = $("#numDocumento").val();
+                idE = $("#idEmpleado").val();
+                if (idE == "") {
                     $.ajax({
                         async: false,
                         type: "GET",
                         url: "numDoc",
                         data: {
-                            numeroD: numeroD
+                            numeroD: numeroD,
                         },
                         headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                                "content"
+                            ),
                         },
                         statusCode: {
                             /*401: function () {
@@ -27,26 +29,27 @@ $(document).ready(function () {
                             },*/
                             419: function () {
                                 location.reload();
-                            }
+                            },
                         },
                         success: function (data) {
                             if (data == 1) {
-                                $('#numR').show();
+                                $("#numR").show();
                                 isStepValid = false;
                                 return false;
                             }
                             if (data == 2) {
                                 bootbox.confirm({
-                                    message: "El empleado con este numero de documento existe, desea recuperarlo?",
+                                    message:
+                                        "El empleado con este numero de documento existe, desea recuperarlo?",
                                     buttons: {
                                         confirm: {
-                                            label: 'Aceptar',
-                                            className: 'btn-success'
+                                            label: "Aceptar",
+                                            className: "btn-success",
                                         },
                                         cancel: {
-                                            label: 'Cancelar',
-                                            className: 'btn-light'
-                                        }
+                                            label: "Cancelar",
+                                            className: "btn-light",
+                                        },
                                     },
                                     callback: function (result) {
                                         if (result == true) {
@@ -54,38 +57,38 @@ $(document).ready(function () {
                                                 type: "post",
                                                 url: "/empleado/cambiarEstado",
                                                 data: {
-                                                    ids: numeroD
+                                                    ids: numeroD,
                                                 },
                                                 statusCode: {
-
                                                     419: function () {
                                                         location.reload();
-                                                    }
+                                                    },
                                                 },
                                                 headers: {
-                                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                    "X-CSRF-TOKEN": $(
+                                                        'meta[name="csrf-token"]'
+                                                    ).attr("content"),
                                                 },
                                                 success: function (data) {
                                                     leertabla();
-                                                    $('#form-registrar').modal('hide');
-
+                                                    $("#form-registrar").modal(
+                                                        "hide"
+                                                    );
                                                 },
                                                 error: function (data) {
-                                                    alert('Ocurrio un error');
-                                                }
-
-
+                                                    alert("Ocurrio un error");
+                                                },
                                             });
                                         }
-                                    }
+                                    },
                                 });
                                 isStepValid = false;
                                 return false;
                             }
                             if (data == 3) {
-                                $('#numR').hide();
+                                $("#numR").hide();
                             }
-                        }
+                        },
                     });
                 } else {
                     $.ajax({
@@ -94,97 +97,103 @@ $(document).ready(function () {
                         url: "numDocStore",
                         data: {
                             numDoc: numeroD,
-                            idE: idE
+                            idE: idE,
                         },
                         headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                                "content"
+                            ),
                         },
                         statusCode: {
                             419: function () {
                                 location.reload();
-                            }
+                            },
                         },
                         success: function (data) {
                             if (data == 1) {
-                                $('#numR').show();
+                                $("#numR").show();
                                 isStepValid = false;
                                 return false;
                             }
                             if (data == 2) {
-                                alert('ya existe');
+                                alert("ya existe");
                                 isStepValid = false;
                                 return false;
                             }
                             if (data == 3) {
-                                $('#numR').hide();
+                                $("#numR").hide();
                             }
-                        }
+                        },
                     });
                 }
-                $('#validDocumento').hide();
+                $("#validDocumento").hide();
             }
-            if ($('#apPaterno').val() == "") {
+            if ($("#apPaterno").val() == "") {
                 isStepValid = false;
-                $('#validApPaterno').show();
+                $("#validApPaterno").show();
             } else {
-                $('#validApPaterno').hide();
+                $("#validApPaterno").hide();
             }
-            if ($('#numDocumento').val() == "") {
+            if ($("#numDocumento").val() == "") {
                 isStepValid = false;
-                $('#validNumDocumento').show();
+                $("#validNumDocumento").show();
             } else {
-                $('#validNumDocumento').hide();
+                $("#validNumDocumento").hide();
             }
-            if ($('#apMaterno').val() == "") {
+            if ($("#apMaterno").val() == "") {
                 isStepValid = false;
-                $('#validApMaterno').show();
+                $("#validApMaterno").show();
             } else {
-                $('#validApMaterno').hide();
+                $("#validApMaterno").hide();
             }
-            if ($('#nombres').val() == "") {
+            if ($("#nombres").val() == "") {
                 isStepValid = false;
-                $('#validNombres').show();
+                $("#validNombres").show();
             } else {
-                $('#validNombres').hide();
+                $("#validNombres").hide();
             }
 
             ///////////////////////////////////////
-            var Anio = parseInt($('#ano_fecha').val());
-            var Mes = parseInt($('#mes_fecha').val() - 1);
-            var Dia = parseInt($('#dia_fecha').val());
+            var Anio = parseInt($("#ano_fecha").val());
+            var Mes = parseInt($("#mes_fecha").val() - 1);
+            var Dia = parseInt($("#dia_fecha").val());
             if (Anio != 0 && Mes != -1 && Dia != 0) {
                 var VFecha = new Date(Anio, Mes, Dia);
-                if ((VFecha.getFullYear() == Anio) && (VFecha.getMonth() == Mes) && (VFecha.getDate() == Dia)) {
-                    $('#validFechaC').hide();
+                if (
+                    VFecha.getFullYear() == Anio &&
+                    VFecha.getMonth() == Mes &&
+                    VFecha.getDate() == Dia
+                ) {
+                    $("#validFechaC").hide();
                 } else {
                     isStepValid = false;
-                    $('#validFechaC').show();
-
+                    $("#validFechaC").show();
                 }
-
             }
             ///////////////////////////////////////
             if ($("input[type=radio]:checked").length == 0) {
                 isStepValid = false;
-                $('#validGenero').show();
+                $("#validGenero").show();
             } else {
-                $('#validGenero').hide();
+                $("#validGenero").hide();
             }
             if ($("#email").val() != "") {
                 //VALIDAR CORREO
-                var email = $('#email').val();
-                $('#validCorreo').hide();
-                idE = $('#idEmpleado').val();
-                if (idE == '') {
+                var email = $("#email").val();
+                $("#validCorreo").hide();
+                idE = $("#idEmpleado").val();
+                if (idE == "") {
                     $.ajax({
                         async: false,
                         type: "GET",
                         url: "email",
                         data: {
-                            email: email
+                            email: email,
                         },
                         headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                                "content"
+                            ),
                         },
                         statusCode: {
                             /*401: function () {
@@ -192,17 +201,17 @@ $(document).ready(function () {
                             },*/
                             419: function () {
                                 location.reload();
-                            }
+                            },
                         },
                         success: function (data) {
                             if (data == 1) {
-                                $('#emailR').show();
+                                $("#emailR").show();
                                 isStepValid = false;
                                 return false;
                             } else {
-                                $('#emailR').hide();
+                                $("#emailR").hide();
                             }
-                        }
+                        },
                     });
                 } else {
                     $.ajax({
@@ -211,190 +220,218 @@ $(document).ready(function () {
                         url: "emailE",
                         data: {
                             email: email,
-                            idE: idE
+                            idE: idE,
                         },
                         headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                                "content"
+                            ),
                         },
                         success: function (data) {
                             if (data == 1) {
-                                $('#v_emailR').show();
+                                $("#v_emailR").show();
                                 isStepValid = false;
                                 return false;
                             } else {
-                                $('#v_emailR').hide();
+                                $("#v_emailR").hide();
                             }
-                        }
+                        },
                     });
                 }
             } else {
-                $('#validCorreo').show();
+                $("#validCorreo").show();
                 isStepValid = false;
             }
-            if ($('#celular').val() != '') {
+            if ($("#celular").val() != "") {
                 var regex = RegExp("^9{1}[0-9]{8,8}");
-                if (regex.test($('#celular').val())) {
-                    console.log(regex.test($('#celular').val()));
-                    $('#validCel').hide();
+                if (regex.test($("#celular").val())) {
+                    console.log(regex.test($("#celular").val()));
+                    $("#validCel").hide();
                 } else {
                     isStepValid = false;
-                    $('#validCel').show();
-                    console.log(regex.test($('#celular').val()));
+                    $("#validCel").show();
+                    console.log(regex.test($("#celular").val()));
                 }
             }
             if (isStepValid == true) {
-                idE = $('#idEmpleado').val();
-                if (idE == '') {
+                idE = $("#idEmpleado").val();
+                if (idE == "") {
                     objEmpleado = datosPersona("POST");
-                    enviarEmpleado('', objEmpleado);
+                    enviarEmpleado("", objEmpleado);
                 } else {
                     objEmpleado = datosPersona("POST");
-                    enviarEmpleadoStore('/' + idE, objEmpleado);
+                    enviarEmpleadoStore("/" + idE, objEmpleado);
                 }
             }
         }
         if (stepnumber == 1) {
             if (isStepValid == true) {
-                idE = $('#idEmpleado').val();
+                idE = $("#idEmpleado").val();
                 objEmpleado = datosEmpresaEmpleado("POST");
-                enviarEmpresarialEmpleado('/' + idE, objEmpleado);
+                enviarEmpresarialEmpleado("/" + idE, objEmpleado);
             }
         }
         if (stepnumber == 2) {
             if (isStepValid == true) {
-                idE = $('#idEmpleado').val();
-                enviarFotoEmpleado('/' + idE);
+                idE = $("#idEmpleado").val();
+                enviarFotoEmpleado("/" + idE);
             }
         }
         if (stepnumber == 3) {
             if (isStepValid == true) {
-                idE = $('#idEmpleado').val();
+                idE = $("#idEmpleado").val();
                 objEmpleado = datosCalendarioEmpleado("POST");
-                enviarCalendarioEmpleado('/' + idE, objEmpleado);
+                enviarCalendarioEmpleado("/" + idE, objEmpleado);
             }
         }
         if (stepnumber == 4) {
             if (isStepValid == true) {
-                idE = $('#idEmpleado').val();
+                idE = $("#idEmpleado").val();
                 objEmpleado = datosHorarioEmpleado("POST");
-                enviarHorarioEmpleado('/' + idE, objEmpleado);
+                enviarHorarioEmpleado("/" + idE, objEmpleado);
             }
         }
         return isStepValid;
-
     }
 
     function validateSteps1(stepnumber) {
         var isStepValid = true;
         // validate step 1
         if (stepnumber == 0) {
-            if ($('#v_apPaterno').val() == "") {
+            if ($("#v_apPaterno").val() == "") {
                 isStepValid = false;
-                $('#v_validApPaterno').show();
+                $("#v_validApPaterno").show();
             } else {
-                $('#v_validApPaterno').hide();
+                $("#v_validApPaterno").hide();
             }
-            if ($('#v_numDocumento').val() == "") {
+            if ($("#v_numDocumento").val() == "") {
                 isStepValid = false;
-                $('#v_validNumDocumento').show();
+                $("#v_validNumDocumento").show();
             } else {
-                $('#v_validNumDocumento').hide();
+                $("#v_validNumDocumento").hide();
             }
-            if ($('#v_apMaterno').val() == "") {
+            if ($("#v_apMaterno").val() == "") {
                 isStepValid = false;
-                $('#v_validApMaterno').show();
+                $("#v_validApMaterno").show();
             } else {
-                $('#v_validApMaterno').hide();
+                $("#v_validApMaterno").hide();
             }
-            if ($('#v_nombres').val() == "") {
+            if ($("#v_nombres").val() == "") {
                 isStepValid = false;
-                $('#v_validNombres').show();
+                $("#v_validNombres").show();
             } else {
-                $('#v_validNombres').hide();
+                $("#v_validNombres").hide();
             }
             /////////////////////////////////
-            var v_Anio = parseInt($('#v_ano_fecha').val());
-            var v_Mes = parseInt($('#v_mes_fecha').val() - 1);
-            var v_Dia = parseInt($('#v_dia_fecha').val());
+            var v_Anio = parseInt($("#v_ano_fecha").val());
+            var v_Mes = parseInt($("#v_mes_fecha").val() - 1);
+            var v_Dia = parseInt($("#v_dia_fecha").val());
             if (v_Anio != 0 && v_Mes != -1 && v_Dia != 0) {
                 var v_VFecha = new Date(v_Anio, v_Mes, v_Dia);
-                if ((v_VFecha.getFullYear() == v_Anio) && (v_VFecha.getMonth() == v_Mes) && (v_VFecha.getDate() == v_Dia)) {
-                    $('#v_validFechaC').hide();
+                if (
+                    v_VFecha.getFullYear() == v_Anio &&
+                    v_VFecha.getMonth() == v_Mes &&
+                    v_VFecha.getDate() == v_Dia
+                ) {
+                    $("#v_validFechaC").hide();
                 } else {
                     isStepValid = false;
-                    $('#v_validFechaC').show();
-
+                    $("#v_validFechaC").show();
                 }
-
             }
             /////////////////////////////
             if ($("#v_email").val() != "") {
                 //VALIDAR CORREO
-                var email = $('#v_email').val();
-                var idE = $('#v_id').val();
-                $('#v_validCorreo').hide();
+                var email = $("#v_email").val();
+                var idE = $("#v_id").val();
+                $("#v_validCorreo").hide();
                 $.ajax({
                     async: false,
                     type: "GET",
                     url: "emailE",
                     data: {
                         email: email,
-                        idE: idE
+                        idE: idE,
                     },
                     headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                            "content"
+                        ),
                     },
                     success: function (data) {
                         if (data == 1) {
-                            $('#v_emailR').show();
+                            $("#v_emailR").show();
                             isStepValid = false;
                             return false;
                         } else {
-                            $('#v_emailR').hide();
+                            $("#v_emailR").hide();
                         }
-                    }
+                    },
                 });
             } else {
-                $('#v_validCorreo').show();
+                $("#v_validCorreo").show();
                 isStepValid = false;
             }
-            if ($('#v_celular').val() != '') {
+            if ($("#v_celular").val() != "") {
                 var regex = RegExp("^9{1}[0-9]{8,8}");
-                if (regex.test($('#v_celular').val())) {
-                    console.log(regex.test($('#v_celular').val()));
-                    $('#v_validCel').hide();
+                if (regex.test($("#v_celular").val())) {
+                    console.log(regex.test($("#v_celular").val()));
+                    $("#v_validCel").hide();
                 } else {
                     isStepValid = false;
-                    $('#v_validCel').show();
-                    console.log(regex.test($('#v_celular').val()));
+                    $("#v_validCel").show();
+                    console.log(regex.test($("#v_celular").val()));
                 }
             }
             if ($("input[type=radio]:checked").length == 0) {
                 isStepValid = false;
-                $('#v_validGenero').show();
+                $("#v_validGenero").show();
             } else {
-                $('#v_validGenero').hide();
+                $("#v_validGenero").hide();
+            }
+            if (isStepValid == true) {
+                console.log($("#estadoP").val());
+                if ($("#estadoP").val() == "true") {
+                    idE = $("#v_id").val();
+                    objEmpleadoA = datosPersonaA("PUT");
+                    actualizarEmpleado("/" + idE, objEmpleadoA);
+                }
+                $("#estadoP").val("false");
             }
         }
-        if (isStepValid == true) {
-            console.log($('#estadoP').val());
-            if ($('#estadoP').val() == "true") {
-                idE = $('#v_id').val();
-                console.log($('#v_fechaFC').text());
-                objEmpleadoA = datosPersonaA("PUT");
-                actualizarEmpleado('/' + idE, objEmpleadoA);
-                $('#estadoP').val("false")
+
+        if (stepnumber == 1) {
+            if (isStepValid == true) {
+                console.log($("#estadoE").val());
+                if ($("#estadoE").val() == "true") {
+                    idE = $("#v_id").val();
+                    objEmpleadoA = datosEmpresarialA("PUT");
+                    actualizarEmpleadoEmpresarial("/" + idE, objEmpleadoA);
+                }
+                $("#estadoE").val("false");
+            }
+        }
+
+        if (stepnumber == 2) {
+            if (isStepValid == true) {
+                console.log($("#estadoF").val());
+                if ($("#estadoF").val() == "true") {
+                    idE = $("#v_id").val();
+                    actualizarEmpleadoFoto("/" + idE);
+                }
+                $("#estadoF").val("false");
             }
         }
         return isStepValid;
     }
-    $('#smartwizard').smartWizard({
+    $("#smartwizard").smartWizard({
         selected: 0,
         keyNavigation: false,
         showStepURLhash: false,
-        lang: { // Language variables
-            next: 'Siguiente',
-            previous: 'Anterior'
+        lang: {
+            // Language variables
+            next: "Siguiente",
+            previous: "Anterior",
         },
         leaveStep: function () {
             return true;
@@ -404,26 +441,28 @@ $(document).ready(function () {
             anchorClickable: true, // Enable/Disable anchor navigation
             enableAllAnchors: true,
             markDoneStep: true,
-            enableAllAnchorOnDoneStep: true
+            enableAllAnchorOnDoneStep: true,
         },
         toolbarSettings: {
-            toolbarPosition: 'bottom', // none, top, bottom, both
-            toolbarButtonPosition: 'right', // left, right, center
+            toolbarPosition: "bottom", // none, top, bottom, both
+            toolbarButtonPosition: "right", // left, right, center
             toolbarExtraButtons: [
-                $(`<button></button>`).text('Finalizar')
-                .addClass('btn btn-secondary sw-btn-finish')
-                .attr("id", "FinalizarEmpleado")
-                .on('click', FinalizarEmpleado),
-            ]
+                $(`<button></button>`)
+                    .text("Finalizar")
+                    .addClass("btn btn-secondary sw-btn-finish")
+                    .attr("id", "FinalizarEmpleado")
+                    .on("click", FinalizarEmpleado),
+            ],
         },
     });
-    $('#smartwizard1').smartWizard({
+    $("#smartwizard1").smartWizard({
         selected: 0,
         keyNavigation: false,
         showStepURLhash: false,
-        lang: { // Language variables
-            next: 'Siguiente',
-            previous: 'Anterior'
+        lang: {
+            // Language variables
+            next: "Siguiente",
+            previous: "Anterior",
         },
         justified: true,
         autoAdjustHeight: true,
@@ -431,113 +470,155 @@ $(document).ready(function () {
             anchorClickable: true, // Enable/Disable anchor navigation
             enableAllAnchors: true,
             markDoneStep: true,
-            enableAllAnchorOnDoneStep: true
+            enableAllAnchorOnDoneStep: true,
         },
         leaveStep: function () {
             return true;
         },
         toolbarSettings: {
-            toolbarPosition: 'bottom', // none, top, bottom, both
-            toolbarButtonPosition: 'right', // left, right, center
+            toolbarPosition: "bottom", // none, top, bottom, both
+            toolbarButtonPosition: "right", // left, right, center
             toolbarExtraButtons: [
-                $(`<button></button>`).text('Finalizar')
-                .addClass('btn btn-secondary sw-btn-finish')
-                .attr("id", "FinalizarEmpleadoEditar")
-                .on('click', function () {
-                    RefreshTablaEmpleado();
-                    $('#smartwizard1').smartWizard("reset");
-                    $('#formNuevoEd').hide();
-                    $('#formNuevoEl').hide();
-                    $('#navActualizar').hide();
+                $(`<button></button>`)
+                    .text("Finalizar")
+                    .addClass("btn btn-secondary sw-btn-finish")
+                    .attr("id", "FinalizarEmpleadoEditar")
+                    .on("click", function () {
+                        RefreshTablaEmpleado();
+                        $("#smartwizard1").smartWizard("reset");
+                        $("#formNuevoEd").hide();
+                        $("#formNuevoEl").hide();
+                        $("#navActualizar").hide();
 
-                    $('#m_dia_fechaIE').val("0");
-                    $('#m_mes_fechaIE').val("0");
-                    $('#m_ano_fechaIE').val("0");
-                    $('#m_dia_fechaFE').val("0");
-                    $('#m_mes_fechaFE').val("0");
-                    $('#m_ano_fechaFE').val("0");
-                    $('#checkboxFechaIE').prop('checked', false);
-                    //************* */
-                    $('#v_validApPaterno').hide();
-                    $('#v_validNumDocumento').hide();
-                    $('#v_validApMaterno').hide();
-                    $('#v_validNombres').hide();
-                    $('#v_validCorreo').hide();
-                    $('#v_emailR').hide();
-                    $('#v_validCel').hide();
-                    $('input[type="date"]').val("");
-                    $('input[type="file"]').val("");
-                    $('input[type="email"]').val("");
-                    $('input[type="number"]').val("");
-                    $('#v_departamento').val("").trigger("change");
-                    $('#v_dep').val("").trigger("change");
-                    $('#v_prov').empty();
-                    $('#v_provincia').empty();
-                    $('#v_prov').append(`<option value="">Provincia</option>`);
-                    $('#v_provincia').append(`<option value="">Provincia</option>`);
-                    $('#v_dist').empty();
-                    $('#v_distrito').empty();
-                    $('#v_dist').append(`<option value="">Distrito</option>`);
-                    $('#v_distrito').append(`<<option value="">Distrito</option>`);
-                    $('#v_cargo').val("").trigger("change");
-                    $('#v_contrato').val("").trigger("change");
-                    $('#v_area').val("").trigger("change");
-                    $('#v_nivel').val("").trigger("change");
-                    $('#v_centroc').val("").trigger("change");
-                    $('#v_local').val("").trigger("change");
-                    $('#selectHorario_ed').val("Seleccionar horario");
-                    $('#codigoCelular').val("+51");
-                    $('#codigoTelefono').val("01");
-                    limpiar();
-                    $('#selectCalendario').val("Asignar calendario");
-                    $('#selectHorario').val("Seleccionar horario");
-                    $('#form-ver').modal('toggle');
-                }),
-            ]
+                        $("#m_dia_fechaIE").val("0");
+                        $("#m_mes_fechaIE").val("0");
+                        $("#m_ano_fechaIE").val("0");
+                        $("#m_dia_fechaFE").val("0");
+                        $("#m_mes_fechaFE").val("0");
+                        $("#m_ano_fechaFE").val("0");
+                        $("#checkboxFechaIE").prop("checked", false);
+                        //************* */
+                        $("#v_validApPaterno").hide();
+                        $("#v_validNumDocumento").hide();
+                        $("#v_validApMaterno").hide();
+                        $("#v_validNombres").hide();
+                        $("#v_validCorreo").hide();
+                        $("#v_emailR").hide();
+                        $("#v_validCel").hide();
+                        $('input[type="date"]').val("");
+                        $('input[type="file"]').val("");
+                        $('input[type="email"]').val("");
+                        $('input[type="number"]').val("");
+                        $("#v_departamento").val("").trigger("change");
+                        $("#v_dep").val("").trigger("change");
+                        $("#v_prov").empty();
+                        $("#v_provincia").empty();
+                        $("#v_prov").append(
+                            `<option value="">Provincia</option>`
+                        );
+                        $("#v_provincia").append(
+                            `<option value="">Provincia</option>`
+                        );
+                        $("#v_dist").empty();
+                        $("#v_distrito").empty();
+                        $("#v_dist").append(
+                            `<option value="">Distrito</option>`
+                        );
+                        $("#v_distrito").append(
+                            `<<option value="">Distrito</option>`
+                        );
+                        $("#v_cargo").val("").trigger("change");
+                        $("#v_contrato").val("").trigger("change");
+                        $("#v_area").val("").trigger("change");
+                        $("#v_nivel").val("").trigger("change");
+                        $("#v_centroc").val("").trigger("change");
+                        $("#v_local").val("").trigger("change");
+                        $("#selectHorario_ed").val("Seleccionar horario");
+                        $("#codigoCelular").val("+51");
+                        $("#codigoTelefono").val("01");
+                        limpiar();
+                        $("#selectCalendario").val("Asignar calendario");
+                        $("#selectHorario").val("Seleccionar horario");
+                        $("#form-ver").modal("toggle");
+                    }),
+            ],
         },
     });
     //************Validacion********//
-    $('#smartwizard').on("leaveStep", function leaveAStepCallback(event, obj, indice) {
+    $("#smartwizard").on("leaveStep", function leaveAStepCallback(
+        event,
+        obj,
+        indice
+    ) {
         return validateSteps(indice);
     });
-    $('#smartwizard1').on("leaveStep", function leaveAStepCallback(event, obj, indice) {
+    $("#smartwizard1").on("leaveStep", function leaveAStepCallback(
+        event,
+        obj,
+        indice
+    ) {
         console.log(indice);
         return validateSteps1(indice);
     });
-    $('#smartwizard').on("showStep", function (e, anchorObject, stepNumber, stepDirection) {
-        if (stepNumber == 0 || stepNumber == 1 || stepNumber == 2 || stepNumber == 3 || stepNumber == 4 || stepNumber == 5) {
-            $('button.sw-btn-prev').show();
-            $('button.sw-btn-next').show();
-            $('#FinalizarEmpleado').hide();
+    $("#smartwizard").on("showStep", function (
+        e,
+        anchorObject,
+        stepNumber,
+        stepDirection
+    ) {
+        if (
+            stepNumber == 0 ||
+            stepNumber == 1 ||
+            stepNumber == 2 ||
+            stepNumber == 3 ||
+            stepNumber == 4 ||
+            stepNumber == 5
+        ) {
+            $("button.sw-btn-prev").show();
+            $("button.sw-btn-next").show();
+            $("#FinalizarEmpleado").hide();
         }
         if (stepNumber == 6) {
-            $('button.sw-btn-prev').hide();
-            $('button.sw-btn-next').hide();
-            $('#FinalizarEmpleado').show();
-            actividad_empleado()
+            $("button.sw-btn-prev").hide();
+            $("button.sw-btn-next").hide();
+            $("#FinalizarEmpleado").show();
+            actividad_empleado();
         }
     });
-    $('#smartwizard1').on("showStep", function (e, anchorObject, stepNumber, stepDirection) {
-        if (stepNumber == 0 || stepNumber == 1 || stepNumber == 2 || stepNumber == 3 || stepNumber == 4 || stepNumber == 5) {
-            $('button.sw-btn-prev').show();
-            $('button.sw-btn-next').show();
-            $('#FinalizarEmpleadoEditar').hide();
+    $("#smartwizard1").on("showStep", function (
+        e,
+        anchorObject,
+        stepNumber,
+        stepDirection
+    ) {
+        if (
+            stepNumber == 0 ||
+            stepNumber == 1 ||
+            stepNumber == 2 ||
+            stepNumber == 3 ||
+            stepNumber == 4 ||
+            stepNumber == 5
+        ) {
+            $("button.sw-btn-prev").show();
+            $("button.sw-btn-next").show();
+            $("#FinalizarEmpleadoEditar").hide();
         }
         if (stepNumber == 6) {
-            $('button.sw-btn-prev').hide();
-            $('button.sw-btn-next').hide();
-            $('#FinalizarEmpleadoEditar').show();
+            $("button.sw-btn-prev").hide();
+            $("button.sw-btn-next").hide();
+            $("#FinalizarEmpleadoEditar").show();
             actividadEmp();
         }
-    })
+    });
 });
-$('#smartwizardVer').smartWizard({
+$("#smartwizardVer").smartWizard({
     selected: 0,
     keyNavigation: false,
     showStepURLhash: false,
-    lang: { // Language variables
-        next: 'Siguiente',
-        previous: 'Anterior'
+    lang: {
+        // Language variables
+        next: "Siguiente",
+        previous: "Anterior",
     },
     justified: true,
     autoAdjustHeight: true,
@@ -545,36 +626,49 @@ $('#smartwizardVer').smartWizard({
         anchorClickable: true, // Enable/Disable anchor navigation
         enableAllAnchors: true,
         markDoneStep: true,
-        enableAllAnchorOnDoneStep: true
+        enableAllAnchorOnDoneStep: true,
     },
     toolbarSettings: {
-        toolbarPosition: 'bottom', // none, top, bottom, both
-        toolbarButtonPosition: 'right', // left, right, center
+        toolbarPosition: "bottom", // none, top, bottom, both
+        toolbarButtonPosition: "right", // left, right, center
         toolbarExtraButtons: [
-            $(`<button></button>`).text('Finalizar')
-            .addClass('btn btn-secondary sw-btn-finish')
-            .attr("id", "FinalizarEmpleadoVer")
-            .on('click', function () {
-                cerrarVer();
-                $('#verEmpleadoDetalles').modal('toggle');
-            }),
-        ]
+            $(`<button></button>`)
+                .text("Finalizar")
+                .addClass("btn btn-secondary sw-btn-finish")
+                .attr("id", "FinalizarEmpleadoVer")
+                .on("click", function () {
+                    cerrarVer();
+                    $("#verEmpleadoDetalles").modal("toggle");
+                }),
+        ],
     },
 });
-$('#smartwizardVer').on("showStep", function (e, anchorObject, stepNumber, stepDirection) {
-    if (stepNumber == 0 || stepNumber == 1 || stepNumber == 2 || stepNumber == 3 || stepNumber == 4 || stepNumber == 5) {
-        $('button.sw-btn-prev').show();
-        $('button.sw-btn-next').show();
-        $('#FinalizarEmpleadoVer').hide();
-        $('#smartwizardVer :input').attr('disabled', true);
-        $('button.sw-btn-prev').attr('disabled', false);
-        $('button.sw-btn-next').attr('disabled', false);
+$("#smartwizardVer").on("showStep", function (
+    e,
+    anchorObject,
+    stepNumber,
+    stepDirection
+) {
+    if (
+        stepNumber == 0 ||
+        stepNumber == 1 ||
+        stepNumber == 2 ||
+        stepNumber == 3 ||
+        stepNumber == 4 ||
+        stepNumber == 5
+    ) {
+        $("button.sw-btn-prev").show();
+        $("button.sw-btn-next").show();
+        $("#FinalizarEmpleadoVer").hide();
+        $("#smartwizardVer :input").attr("disabled", true);
+        $("button.sw-btn-prev").attr("disabled", false);
+        $("button.sw-btn-next").attr("disabled", false);
     }
     if (stepNumber == 6) {
-        $('button.sw-btn-prev').hide();
-        $('button.sw-btn-next').hide();
-        $('#FinalizarEmpleadoVer').show();
-        $('#smartwizardVer :input').attr('disabled', false);
+        $("button.sw-btn-prev").hide();
+        $("button.sw-btn-next").hide();
+        $("#FinalizarEmpleadoVer").show();
+        $("#smartwizardVer :input").attr("disabled", false);
         actividadEmpVer();
     }
 });
