@@ -5,9 +5,18 @@ $('#customSwitchC1').on('change.bootstrapSwitch', function (event) {
     console.log(event.target.checked);
     if (event.target.checked == true) {
         $('#bodyModoControlR').show();
-        actividadEmp();
     } else {
         $('#bodyModoControlR').hide();
+    }
+});
+$('#customSwitchCR1').prop('checked', true);
+$('#bodyModoControlRR').show();
+$('#customSwitchCR1').on('change.bootstrapSwitch', function (event) {
+    console.log(event.target.checked);
+    if (event.target.checked == true) {
+        $('#bodyModoControlRR').show();
+    } else {
+        $('#bodyModoControlRR').hide();
     }
 });
 // FUNCIONES DE DISPOSITIVOS
