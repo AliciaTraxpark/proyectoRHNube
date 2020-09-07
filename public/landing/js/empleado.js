@@ -3787,6 +3787,15 @@ $("#formNuevoE").click(function () {
     $("#detallehorario").empty();
     $("#calendar2").hide();
     $("#FinalizarEmpleado").hide();
+    $("#estadoPR").val("false");
+    $("#estadoPE").val("false");
+    $("#estadoPF").val("false");
+    $("#estadoPC").val("false");
+    $("#estadoPH").val("false");
+    $("#estadoP").val("false");
+    $("#estadoE").val("false");
+    $("#estadoCond").val("false");
+    $("#estadoF").val("false");
     $.get("/empleado/vaciarcalend", {}, function (data, status) {
         $("#form-registrar").modal();
         $("#cerrarModalEmpleado").attr("disabled", false);
@@ -3794,6 +3803,15 @@ $("#formNuevoE").click(function () {
 });
 $("#formNuevoEd").click(function () {
     $("#FinalizarEmpleadoEditar").hide();
+    $("#estadoPR").val("false");
+    $("#estadoPE").val("false");
+    $("#estadoPF").val("false");
+    $("#estadoPC").val("false");
+    $("#estadoPH").val("false");
+    $("#estadoP").val("false");
+    $("#estadoE").val("false");
+    $("#estadoCond").val("false");
+    $("#estadoF").val("false");
     $.get("/empleado/vaciarcalend", {}, function (data, status) {
         $("#form-ver").modal();
     });
@@ -3919,6 +3937,8 @@ $("#cerrarModalEmpleado").click(function () {
     $("#estadoPR").val("false");
     $("#estadoPE").val("false");
     $("#estadoPF").val("false");
+    $("#estadoPC").val("false");
+    $("#estadoPH").val("false");
 });
 
 function cerrarVer() {
@@ -4011,6 +4031,8 @@ function FinalizarEmpleado() {
     $("#estadoPR").val("false");
     $("#estadoPE").val("false");
     $("#estadoPF").val("false");
+    $("#estadoPC").val("false");
+    $("#estadoPH").val("false");
     $("#form-registrar").modal("toggle");
 }
 // *******************************************************
@@ -4053,6 +4075,14 @@ $("#sw-default-step-2").on("keyup change", function () {
 $("#sw-default-step-3").on("keyup change", function () {
     $("#estadoPF").val("true");
     console.log($("#estadoPF").val());
+});
+$("#sw-default-step-4").on("keyup change", function () {
+    $("#estadoPC").val("true");
+    console.log($("#estadoPC").val());
+});
+$("#sw-default-step-5").on("keyup change", function () {
+    $("#estadoPH").val("true");
+    console.log($("#estadoPH").val());
 });
 //************************Editar en los modal de agregar */
 //*******AREA***/

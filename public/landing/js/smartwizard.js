@@ -279,8 +279,8 @@ $(document).ready(function () {
             }
         }
         if (stepnumber == 2) {
-            if ($("#estadoPF").val() == "true") {
-                if (isStepValid == true) {
+            if (isStepValid == true) {
+                if ($("#estadoPF").val() == "true") {
                     idE = $("#idEmpleado").val();
                     enviarFotoEmpleado("/" + idE);
                     $("#estadoPF").val("false");
@@ -289,16 +289,22 @@ $(document).ready(function () {
         }
         if (stepnumber == 3) {
             if (isStepValid == true) {
-                idE = $("#idEmpleado").val();
-                objEmpleado = datosCalendarioEmpleado("POST");
-                enviarCalendarioEmpleado("/" + idE, objEmpleado);
+                if ($("#estadoPC").val() == "true") {
+                    idE = $("#idEmpleado").val();
+                    objEmpleado = datosCalendarioEmpleado("POST");
+                    enviarCalendarioEmpleado("/" + idE, objEmpleado);
+                    $("#estadoPC").val("false");
+                }
             }
         }
         if (stepnumber == 4) {
             if (isStepValid == true) {
-                idE = $("#idEmpleado").val();
-                objEmpleado = datosHorarioEmpleado("POST");
-                enviarHorarioEmpleado("/" + idE, objEmpleado);
+                if ($("#estadoPH").val() == "true") {
+                    idE = $("#idEmpleado").val();
+                    objEmpleado = datosHorarioEmpleado("POST");
+                    enviarHorarioEmpleado("/" + idE, objEmpleado);
+                    $("#estadoPH").val("false");
+                }
             }
         }
         return isStepValid;
