@@ -395,8 +395,8 @@ $(document).ready(function () {
                     idE = $("#v_id").val();
                     objEmpleadoA = datosPersonaA("PUT");
                     actualizarEmpleado("/" + idE, objEmpleadoA);
+                    $("#estadoP").val("false");
                 }
-                $("#estadoP").val("false");
             }
         }
 
@@ -411,9 +411,9 @@ $(document).ready(function () {
                     idE = $("#v_id").val();
                     objEmpleadoA = datosEmpresarialA("PUT");
                     actualizarEmpleadoEmpresarial("/" + idE, objEmpleadoA);
+                    $("#estadoE").val("false");
+                    $("#estadoCond").val("false");
                 }
-                $("#estadoE").val("false");
-                $("#estadoCond").val("false");
             }
         }
 
@@ -423,8 +423,8 @@ $(document).ready(function () {
                 if ($("#estadoF").val() == "true") {
                     idE = $("#v_id").val();
                     actualizarEmpleadoFoto("/" + idE);
+                    $("#estadoF").val("false");
                 }
-                $("#estadoF").val("false");
             }
         }
         return isStepValid;
@@ -530,7 +530,7 @@ $(document).ready(function () {
                             `<option value="">Distrito</option>`
                         );
                         $("#v_distrito").append(
-                            `<<option value="">Distrito</option>`
+                            `<option value="">Distrito</option>`
                         );
                         $("#v_cargo").val("").trigger("change");
                         $("#v_contrato").val("").trigger("change");
@@ -544,6 +544,10 @@ $(document).ready(function () {
                         limpiar();
                         $("#selectCalendario").val("Asignar calendario");
                         $("#selectHorario").val("Seleccionar horario");
+                        $("#estadoP").val("false");
+                        $("#estadoE").val("false");
+                        $("#estadoCond").val("false");
+                        $("#estadoF").val("false");
                         $("#form-ver").modal("toggle");
                     }),
             ],

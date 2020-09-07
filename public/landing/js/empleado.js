@@ -3858,6 +3858,7 @@ $("#cerrarEd").click(function () {
     $("#estadoP").val("false");
     $("#estadoE").val("false");
     $("#estadoCond").val("false");
+    $("#estadoF").val("false");
 });
 $("#cerrarModalEmpleado").click(function () {
     RefreshTablaEmpleado();
@@ -4008,14 +4009,31 @@ function FinalizarEmpleado() {
 // *******************************************************
 $("#persona-step-1").on("keyup change", function () {
     $("#estadoP").val("true");
+    console.log($("#estadoP").val());
 });
 $("#swE-default-step-2").on("keyup change", function () {
-    console.log("ingreso");
     $("#estadoE").val("true");
+    console.log($("#estadoE").val());
 });
 $("#formContrato_v").on("keyup change", function () {
-    console.log("ingreso");
     $("#estadoCond").val("true");
+    console.log($("#estadoCond").val());
+});
+$("#swF-default-step-3").on("keyup change", function () {
+    $("#estadoF").val("true");
+    console.log($("#estadoF").val());
+});
+$("#file2").on("fileselect", function () {
+    $("#estadoF").val("true");
+    console.log($("#estadoF").val());
+});
+$("#file2").on("fileclear", function () {
+    $("#estadoF").val("true");
+    console.log($("#estadoF").val());
+});
+$("#file2").on("filedeleted", function () {
+    $("#estadoF").val("true");
+    console.log($("#estadoF").val());
 });
 //************************Editar en los modal de agregar */
 //*******AREA***/
