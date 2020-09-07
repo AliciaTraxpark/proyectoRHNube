@@ -4117,7 +4117,8 @@
                                                                         id="customSwitch5">
                                                                     <label class="custom-control-label"
                                                                         for="customSwitch5"
-                                                                        style="font-weight: bold">Modo TASK</label>
+                                                                        style="font-weight: bold">Modo Control
+                                                                        Remoto</label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -4158,28 +4159,13 @@
                                                                         id="customSwitch6">
                                                                     <label class="custom-control-label"
                                                                         for="customSwitch6"
-                                                                        style="font-weight: bold">Modo Proyecto</label>
+                                                                        style="font-weight: bold">Modo Control de
+                                                                        Asistencia en Puerta</label>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="card-body border p-2" id="bodyModoProyecto_ver">
-                                                        <div class="row pt-3">
-                                                            <div class="col-xl-12 col-sm-12">
-                                                                <div class="table-responsive-xl">
-                                                                    <table class="table"
-                                                                        style="font-size: 13px!important;">
-                                                                        <thead
-                                                                            style="background: #fafafa;font-size: 14px">
-                                                                            <tr>
-                                                                                <th>Actividad</th>
-                                                                                <th>Estado</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
