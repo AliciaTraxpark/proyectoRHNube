@@ -671,32 +671,75 @@ document.addEventListener('DOMContentLoaded', calendario);
 
 function agregarcalendario(){
    var nombrecal= $('#nombreCalen').val();
-   $.ajax({
-       type:"POST",
-    url: "/calendario/registrarnuevo",
-    data: {
-        nombrecal
-    },
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
-    statusCode: {
-        419: function () {
-            location.reload();
-        }
-    },
-    success: function (data) {
-        $('#nombreCalen').val('');
-    $('#selectCalendario').append($('<option>', { //agrego los valores que obtengo de una base de datos
-        value: data.calen_id,
-        text: data.calendario_nombre,
-        selected: true
-    }));
-    calendario();
-    $('#agregarCalendarioN').modal('hide');
-    },
-    error: function () {}
-});
+   if($("#clonarCheck").is(':checked') ){
+    var idcalenda=$("#selectClonar").val();
+
+    $.ajax({
+        type:"POST",
+        url: "/calendario/registrarnuevoClonado",
+        data: {
+            nombrecal,idcalenda
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            $('#nombreCalen').val('');
+        $('#selectCalendario').append($('<option>', { //agrego los valores que obtengo de una base de datos
+            value: data.calen_id,
+            text: data.calendario_nombre,
+            selected: true
+        }));
+        $('#selectClonar').append($('<option>', { //agrego los valores que obtengo de una base de datos
+            value: data.calen_id,
+            text: data.calendario_nombre,
+            selected: false
+        }));
+        calendario();
+        $('#agregarCalendarioN').modal('hide');
+        },
+        error: function () {}
+    });
+   }
+   else{
+        $.ajax({
+        type:"POST",
+        url: "/calendario/registrarnuevo",
+        data: {
+            nombrecal
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            $('#nombreCalen').val('');
+        $('#selectCalendario').append($('<option>', { //agrego los valores que obtengo de una base de datos
+            value: data.calen_id,
+            text: data.calendario_nombre,
+            selected: true
+        }));
+        $('#selectClonar').append($('<option>', { //agrego los valores que obtengo de una base de datos
+            value: data.calen_id,
+            text: data.calendario_nombre,
+            selected: false
+        }));
+        calendario();
+        $('#agregarCalendarioN').modal('hide');
+        },
+        error: function () {}
+    });
+   }
+
 }
 
 
@@ -721,5 +764,18 @@ $('#selectCalendario').change(function (){
 })
 //////////////////////////
 function abrirNcalendario(){
+    $('#nombreCalen').val('');
+    $('#clonarCheck').prop('checked',false);
+    $('#selectClonar').val('Seleccione calendario');
+     $('#selectClonar').prop('disabled',true);
     $('#agregarCalendarioN').modal('show');
 }
+
+//ckeck clonar
+$("#clonarCheck").click(function () {
+    if ($("#clonarCheck").is(":checked")) {
+        $('#selectClonar').prop('disabled',false);
+    } else {
+        $('#selectClonar').prop('disabled',true);
+    }
+});

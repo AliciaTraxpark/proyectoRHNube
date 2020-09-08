@@ -53,6 +53,7 @@ Route::get('calendario/showDep/confirmar', 'calendarioController@showDepconfirma
 Route::post('/calendarioe', 'calendarioController@destroy');
 Route::get('eliminarE/{id}', 'EventosUsuarioController@destroy');
 Route::post('/calendario/registrarnuevo', 'calendarioController@registrarnuevo');
+Route::post('/calendario/registrarnuevoClonado', 'calendarioController@registrarnuevoClonado');
 Route::post('/calendario/cargarcalendario', 'calendarioController@cargarcalendario');
 Route::post('/calendario/verificarID', 'calendarioController@verificarID');
 Route::post('/calendario/copiarevenEmpleado', 'calendarioController@copiarevenEmpleado');
