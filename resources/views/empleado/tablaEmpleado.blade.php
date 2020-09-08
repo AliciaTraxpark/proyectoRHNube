@@ -5,11 +5,11 @@
 
     .table {
         width: 100% !important;
-       
+
     }
 
     .dataTables_scrollHeadInner {
-        margin: 0 auto!important;
+        margin: 0 auto !important;
     }
 
     .table th,
@@ -932,6 +932,10 @@ function verDEmpleado(idempleadoVer){
                     });
                 });
             }
+        });
+        $(window).on('resize', function() {
+            $('#example').css('width', '100%');
+            table.draw(true);
         });
         $('#tablaEmpleado tbody #tdC').css('display', 'block');
 
