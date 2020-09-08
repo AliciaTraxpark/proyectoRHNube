@@ -315,21 +315,21 @@
             <td class="text-center">
                 <div class="text-wrap width-400">{{$tabla_empleados->emple_nDoc}}</div>
             </td>
-            <td class="p-2">
+            <td>
                 <div class="text-wrap width-400">{{$tabla_empleados->perso_nombre}}</div>
             </td>
-            <td class="p-2">
+            <td>
                 <div class="text-wrap width-400">{{$tabla_empleados->perso_apPaterno}}
                     {{$tabla_empleados->perso_apMaterno}}
                 </div>
             </td>
-            <td class="p-2">
+            <td>
                 <div class="text-wrap width-400">{{$tabla_empleados->cargo_descripcion}}</div>
             </td>
-            <td class="p-2">
+            <td>
                 <div class="text-wrap width-400">{{$tabla_empleados->area_descripcion}}</div>
             </td>
-            <td class="p-2">
+            <td>
                 <div class="text-wrap width-400">{{$tabla_empleados->centroC_descripcion}}</div>
             </td>
             @if(!in_array("1",$tabla_empleados->dispositivos))

@@ -27,8 +27,6 @@ function RefreshTablaEmpleado() {
         },
         success: function (data) {
             var tbody = "";
-            console.log(data);
-            console.log(data.length);
             for (var i = 0; i < data.length; i++) {
                 tbody +=
                     "<tr id=" +
@@ -36,7 +34,7 @@ function RefreshTablaEmpleado() {
                     " value=" +
                     data[i].emple_id +
                     '>\
-                            <td>\
+                            <td class="text-center">\
                                 <a id="formNuevoEd" onclick="javascript:editarEmpleado(' +
                     data[i].emple_id +
                     ')" style="cursor: pointer">\
@@ -61,31 +59,31 @@ function RefreshTablaEmpleado() {
                     '">\
                                 <img src="/admin/assets/images/users/empleado.png" alt="" />\
                             </td>\
-                            <td>' +
+                            <td class="text-center"> <div class="text-wrap width-400">' +
                     data[i].emple_nDoc +
-                    "</td>\
-                            <td>" +
+                    "</div></td>\
+                            <td> <div class=\"text-wrap width-400\">" +
                     data[i].perso_nombre +
-                    "</td>\
-                            <td>" +
+                    "</div></td>\
+                            <td> <div class=\"text-wrap width-400\">" +
                     data[i].perso_apPaterno +
                     " " +
                     data[i].perso_apMaterno +
-                    "</td>";
+                    "</div></td>";
                 if (data[i].cargo_descripcion == null) {
-                    tbody += "<td></td>";
+                    tbody += "<td><div class=\"text-wrap width-400\"></div></td>";
                 } else {
-                    tbody += "<td>" + data[i].cargo_descripcion + "</td>";
+                    tbody += "<td><div class=\"text-wrap width-400\">" + data[i].cargo_descripcion + "</div></td>";
                 }
                 if (data[i].area_descripcion == null) {
-                    tbody += "<td></td>";
+                    tbody += "<td><div class=\"text-wrap width-400\"></div></td>";
                 } else {
-                    tbody += "<td> " + data[i].area_descripcion + "</td>";
+                    tbody += "<td><div class=\"text-wrap width-400\">" + data[i].area_descripcion + "</div></td>";
                 }
                 if (data[i].centroC_descripcion == null) {
-                    tbody += "<td></td>";
+                    tbody += "<td><div class=\"text-wrap width-400\"></div></td>";
                 } else {
-                    tbody += "<td>" + data[i].centroC_descripcion + "</td>";
+                    tbody += "<td><div class=\"text-wrap width-400\">" + data[i].centroC_descripcion + "</div></td>";
                 }
                 console.log(data[i].dispositivos.includes(1));
                 if (data[i].dispositivos.includes(1) == false) {
@@ -171,13 +169,15 @@ function RefreshTablaEmpleado() {
             console.log(tbody);
             $("#tbodyr").html(tbody);
             $("#tablaEmpleado").DataTable({
+                scrollX: true,
+                responsive: false,
                 retrieve: true,
                 searching: true,
                 lengthChange: false,
-                scrollX: true,
+                scrollCollapse: false,
                 pageLength: 30,
-                fixedHeader: true,
                 processing: true,
+                bAutoWidth: true,
                 language: {
                     sProcessing: "Procesando...",
                     sLengthMenu: "Mostrar _MENU_ registros",
