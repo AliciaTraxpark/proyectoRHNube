@@ -705,6 +705,7 @@ function agregarCorreoE(id) {
 }
 
 function guardarCorreoE() {
+    console.log("ingreso");
     idEmpleado = $("#idEmpleCorreo").val();
     descripcion = $("#textCorreo").val();
     $.ajax({
@@ -713,33 +714,37 @@ function guardarCorreoE() {
         url: "/empleado/agregarCorreo",
         data: {
             idEmpleado: idEmpleado,
-            correo: descripcion
+            correo: descripcion,
         },
         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
             console.log(data);
             RefreshTablaEmpleado();
-            $('#modalCorreoElectronico').modal('toggle');
+            $("#modalCorreoElectronico").modal("toggle");
             $.notifyClose();
-            $.notify({
-                message: "\nModo Control Remoto Registrado con Exito.",
-                icon: 'admin/images/checked.svg'
-            }, {
-                position: 'fixed',
-                icon_type: 'image',
-                newest_on_top: true,
-                delay: 5000,
-                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                    '<span data-notify="title">{1}</span> ' +
-                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                    '</div>',
-                spacing: 35
-            });
+            $.notify(
+                {
+                    message: "\nModo Control Remoto Registrado con Exito.",
+                    icon: "admin/images/checked.svg",
+                },
+                {
+                    position: "fixed",
+                    icon_type: "image",
+                    newest_on_top: true,
+                    delay: 5000,
+                    template:
+                        '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        "</div>",
+                    spacing: 35,
+                }
+            );
         },
-        error: function () {}
+        error: function () {},
     });
 }
