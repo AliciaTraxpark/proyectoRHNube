@@ -234,6 +234,7 @@ class EmpleadoController extends Controller
             ->leftJoin('tipo_dispositivo as td', 'td.id', '=', 'md.idTipoDispositivo')
 
             ->select(
+                'e.emple_nDoc',
                 'p.perso_nombre',
                 'p.perso_apPaterno',
                 'p.perso_apMaterno',
@@ -294,6 +295,7 @@ class EmpleadoController extends Controller
             ->leftJoin('tipo_dispositivo as td', 'td.id', '=', 'md.idTipoDispositivo')
 
             ->select(
+                'e.emple_nDoc',
                 'p.perso_nombre',
                 'p.perso_apPaterno',
                 'p.perso_apMaterno',
@@ -389,6 +391,7 @@ class EmpleadoController extends Controller
         $empleado->emple_estado = '1';
         $empleado->users_id = Auth::user()->id;
         $empleado->organi_id = session('sesionidorg');
+        $empleado->emple_foto = '';
         $empleado->save();
         $idempleado = $empleado->emple_id;
 
@@ -444,6 +447,7 @@ class EmpleadoController extends Controller
             $empleado->emple_Correo = $objEmpleado['correo'];
         }
         $empleado->emple_pasword = Hash::make($objEmpleado['numDocumento']);
+        $empleado->emple_foto = '';
         $empleado->save();
         return json_encode(array('status' => true));
     }
@@ -704,7 +708,6 @@ class EmpleadoController extends Controller
             ->join('tipo_contrato as tc', 'tc.contrato_id', '=', 'c.id_tipoContrato')
             ->leftJoin('condicion_pago as cp', 'cp.id', '=', 'c.id_condicionPago')
             ->select('c.id as idC', 'c.fechaInicio', 'c.fechaFinal', 'c.monto', 'tc.contrato_id as idTipoC', 'tc.contrato_descripcion', 'cp.id as idCond', 'cp.condicion')
-            ->where('cp.organi_id', '=', session('sesionidorg'))
             ->where('c.idEmpleado', '=', $idempleado)
             ->where('c.estado', '=', 1)
             ->get();
@@ -739,14 +742,7 @@ class EmpleadoController extends Controller
         $objEmpleado = json_decode($request->get('objEmpleadoA'), true);
         if ($request == null) return false;
         $empleado = Empleado::findOrFail($idE);
-        $idContrato = '';
 
-        if ($objEmpleado['cargo_v'] != '') {
-            $empleado->emple_cargo = $objEmpleado['cargo_v'];
-        }
-        if ($objEmpleado['area_v'] != '') {
-            $empleado->emple_area = $objEmpleado['area_v'];
-        }
         if ($objEmpleado['departamento_v'] != '') {
             $empleado->emple_departamentoN = $objEmpleado['departamento_v'];
         }
@@ -755,9 +751,6 @@ class EmpleadoController extends Controller
         }
         if ($objEmpleado['distrito_v'] != '') {
             $empleado->emple_distritoN = $objEmpleado['distrito_v'];
-        }
-        if ($objEmpleado['centroc_v'] != '') {
-            $empleado->emple_centCosto = $objEmpleado['centroc_v'];
         }
         if ($objEmpleado['dep_v'] != '') {
             $empleado->emple_departamento = $objEmpleado['dep_v'];
@@ -768,6 +761,36 @@ class EmpleadoController extends Controller
         if ($objEmpleado['dist_v'] != '') {
             $empleado->emple_distrito = $objEmpleado['dist_v'];
         }
+
+        $empleado->emple_celular = $objEmpleado['celular_v'];
+
+        $empleado->emple_telefono = $objEmpleado['telefono_v'];
+        $empleado->emple_Correo = $objEmpleado['correo_v'];
+        $empleado->save();
+
+        $idpersona = DB::table('empleado as e')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->select('p.perso_id')
+            ->where('emple_id', '=', $idE)
+            ->get();
+
+        $persona = Persona::findOrFail($idpersona[0]->perso_id);
+        $persona->perso_nombre = $objEmpleado['nombres_v'];
+        $persona->perso_apPaterno = $objEmpleado['apPaterno_v'];
+        $persona->perso_apMaterno = $objEmpleado['apMaterno_v'];
+        $persona->perso_direccion = $objEmpleado['direccion_v'];
+        $persona->perso_fechaNacimiento = $objEmpleado['fechaN_v'];
+        $persona->perso_sexo = $objEmpleado['tipo_v'];
+        $persona->save();
+        return response()->json($empleado, 200);
+    }
+
+    public function updateEmpresarial(Request $request, $idE)
+    {
+        $objEmpleado = json_decode($request->get('objEmpleadoA'), true);
+        if ($request == null) return false;
+        $empleado = Empleado::findOrFail($idE);
+        $idContrato = '';
         if ($objEmpleado['contrato_v'] != '') {
             if ($objEmpleado['idContrato_v'] == '') {
                 $contrato = new contrato();
@@ -775,6 +798,7 @@ class EmpleadoController extends Controller
                 $contrato->fechaInicio = $objEmpleado['fechaI_v'];
                 $contrato->fechaFinal = $objEmpleado['fechaF_v'];
                 $contrato->idEmpleado = $idE;
+                $contrato->estado = 1;
                 if ($objEmpleado['condicion_v'] != '') {
                     $contrato->monto = $objEmpleado['monto_v'];
                     $contrato->id_condicionPago = $objEmpleado['condicion_v'];
@@ -798,18 +822,31 @@ class EmpleadoController extends Controller
                 $idContrato = $objEmpleado['idContrato_v'];
             }
         }
-        if ($objEmpleado['local_v'] != '') {
-            $empleado->emple_local = $objEmpleado['local_v'];
+        $empleado->emple_codigo = $objEmpleado['codigoEmpleado_v'];
+        if ($objEmpleado['cargo_v'] != '') {
+            $empleado->emple_cargo = $objEmpleado['cargo_v'];
+        }
+        if ($objEmpleado['area_v'] != '') {
+            $empleado->emple_area = $objEmpleado['area_v'];
+        }
+        if ($objEmpleado['centroc_v'] != '') {
+            $empleado->emple_centCosto = $objEmpleado['centroc_v'];
         }
         if ($objEmpleado['nivel_v'] != '') {
             $empleado->emple_nivel = $objEmpleado['nivel_v'];
         }
+        if ($objEmpleado['local_v'] != '') {
+            $empleado->emple_local = $objEmpleado['local_v'];
+        }
+        $empleado->save();
+        return response()->json($idContrato, 200);
+    }
 
-        $empleado->emple_celular = $objEmpleado['celular_v'];
-
-        $empleado->emple_telefono = $objEmpleado['telefono_v'];
-        $empleado->emple_Correo = $objEmpleado['correo_v'];
-        $empleado->emple_codigo = $objEmpleado['codigoEmpleado_v'];
+    public function updateFoto(Request $request, $idE)
+    {
+        $objEmpleado = json_decode($request->get('objEmpleadoA'), true);
+        if ($request == null) return false;
+        $empleado = Empleado::findOrFail($idE);
         if ($request->hasfile('file')) {
             $file = $request->file('file');
             $path = public_path() . '/fotosEmpleado';
@@ -818,22 +855,7 @@ class EmpleadoController extends Controller
             $empleado->emple_foto = $fileName;
         }
         $empleado->save();
-
-        $idpersona = DB::table('empleado as e')
-            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-            ->select('p.perso_id')
-            ->where('emple_id', '=', $idE)
-            ->get();
-
-        $persona = Persona::findOrFail($idpersona[0]->perso_id);
-        $persona->perso_nombre = $objEmpleado['nombres_v'];
-        $persona->perso_apPaterno = $objEmpleado['apPaterno_v'];
-        $persona->perso_apMaterno = $objEmpleado['apMaterno_v'];
-        $persona->perso_direccion = $objEmpleado['direccion_v'];
-        $persona->perso_fechaNacimiento = $objEmpleado['fechaN_v'];
-        $persona->perso_sexo = $objEmpleado['tipo_v'];
-        $persona->save();
-        return response()->json($idContrato, 200);
+        return response()->json($empleado, 200);
     }
 
     /**

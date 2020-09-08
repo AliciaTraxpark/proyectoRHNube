@@ -71,9 +71,9 @@
                                         </a>
                                     </div>
 
-                                    <h6 class="h5 mb-0 mt-4 text-center">Restablecer contraseña</h6>
+                                    <h6 class="h5 mb-0 mt-4 text-primary text-center">Recuperar Contraseña</h6>
                                     <p class="text-muted mt-1 mb-3">
-                                        Ingrese su dirección de correo electrónico y le enviaremos un correo electrónico con instrucciones para restablecer su contraseña.
+                                        <br>
                                     </p>
                                     <div class="alert alert-danger" role="alert" id="alert" style="display: none;">
                                         <strong><img src="{{asset('landing/images/alert1.svg')}}" height="20" class="mr-1 mt-0"></strong><span style="font-size: 14px;">Usuario no se encuentra registrado.</span>
@@ -84,7 +84,7 @@
                                     <form  action="javascript:enviarInstrucciones()" class="authentication-form">
                                         @csrf
                                         <div class="form-group">
-                                            <label class="form-control-label" style="font-weight: 500;">Usuario</label>
+                                            <label class="form-control-label" style="font-weight: 500;">Correo electrónico</label>
                                             <div class="input-group input-group-merge">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" style="background-color: #ffffff;">

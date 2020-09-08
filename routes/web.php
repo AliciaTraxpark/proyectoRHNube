@@ -100,6 +100,8 @@ Route::post('/empleado/file', 'EmpleadoController@upload');
 Route::get('tablaempleado/ver', 'EmpleadoController@tabla')->middleware('auth');
 Route::get('empleado/show', 'EmpleadoController@show')->middleware('auth');
 Route::post('/empleadoA/{idE}', 'EmpleadoController@update');
+Route::post('/empleadoAE/{idE}', 'EmpleadoController@updateEmpresarial');
+Route::post('/empleadoAF/{idE}', 'EmpleadoController@updateFoto');
 Route::post('/empleado/eliminar', 'EmpleadoController@destroy');
 Route::post('/eliminarFoto/{v_id}', 'EmpleadoController@eliminarFoto');
 Route::delete('/eliminarEmpleados', 'EmpleadoController@deleteAll');
