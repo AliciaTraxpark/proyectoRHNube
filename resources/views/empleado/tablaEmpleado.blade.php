@@ -5,10 +5,11 @@
 
     .table {
         width: 100% !important;
+       
     }
 
     .dataTables_scrollHeadInner {
-        width: 100% !important;
+        margin: 0 auto!important;
     }
 
     .table th,
@@ -25,11 +26,6 @@
     .hidetext {
         -webkit-text-security: disc;
         /* Default */
-    }
-
-    .table-responsive,
-    .dataTables_scrollBody {
-        overflow: visible !important;
     }
 </style>
 <div id="modalCorreo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCorreo" aria-hidden="true"
@@ -244,7 +240,7 @@
     </div>
 </div>
 
-<table id="tablaEmpleado" class="table table-drop dt-responsive nowrap">
+<table id="tablaEmpleado" class="table table-drop dt-responsive nowrap" style="width:100%!important">
     <thead style="background: #edf0f1;color: #6c757d;">
         <tr style="background: #ffffff">
             <th style="border-top: 1px solid #fdfdfd;"></th>
@@ -315,8 +311,10 @@
             @if(!in_array("1",$tabla_empleados->dispositivos))
             <td class="text-center">
                 <div class="custom-control custom-switch mb-2">
-                    <input type="checkbox" class="custom-control-input" id="customSwitchCR{{$tabla_empleados->emple_id}}">
-                    <label class="custom-control-label" for="customSwitchCR{{$tabla_empleados->emple_id}}" style="font-weight: bold"></label>
+                    <input type="checkbox" class="custom-control-input"
+                        id="customSwitchCR{{$tabla_empleados->emple_id}}">
+                    <label class="custom-control-label" for="customSwitchCR{{$tabla_empleados->emple_id}}"
+                        style="font-weight: bold"></label>
                 </div>
             </td>
             @else
@@ -875,10 +873,12 @@ function verDEmpleado(idempleadoVer){
     $(document).ready(function () {
 
         var table = $("#tablaEmpleado").DataTable({
+            scrollX: true,
+            responsive:false,
             retrieve: true,
             "searching": true,
             "lengthChange": false,
-            "scrollX": true,
+            scrollCollapse : false,
             "pageLength": 30,
             fixedHeader: true,
             "processing": true,
