@@ -174,8 +174,9 @@ class vinculacionDispositivoController extends Controller
             $encode = intval($codigoHash, 36);
             $vinc->hash = $encode;
             $vinc->save();
-
-            $email = $empleado->Correo;
+            $datos = [];
+            $datos["correo"] = $empleado->emple_Correo;
+            $email = array($datos["correo"]);
             $codigoP = DB::table('empleado as e')
                 ->select('emple_persona', 'e.users_id')
                 ->where('e.emple_id', '=', $idEmpleado)

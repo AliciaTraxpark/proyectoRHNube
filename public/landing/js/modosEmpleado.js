@@ -725,14 +725,17 @@ function guardarCorreoE() {
             console.log(data);
             RefreshTablaEmpleado();
             $("#modalCorreoElectronico").modal("toggle");
+            $("#modalControlR").modal();
+            $("#empleadoControlR").val(idEmpleado);
             $.notifyClose();
             $.notify(
                 {
-                    message: "\nModo Control Remoto Registrado con Exito.",
+                    message: "\nCorreo electrónico registrado.",
                     icon: "admin/images/checked.svg",
                 },
                 {
                     position: "fixed",
+                    element: $("#modalControlR"),
                     icon_type: "image",
                     newest_on_top: true,
                     delay: 5000,
