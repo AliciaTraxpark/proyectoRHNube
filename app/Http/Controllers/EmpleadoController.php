@@ -1563,4 +1563,15 @@ class EmpleadoController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
             ->update(['emple_estado' => 1]);
     }
+
+    public function agregarCorreoE(Request $request)
+    {
+        $empleado = empleado::find($request->get('idEmpleado'));
+        if ($empleado) {
+            $empleado->emple_Correo = $request->get('correo');
+            $empleado->save();
+        }
+
+        return response()->json($empleado, 200);
+    }
 }

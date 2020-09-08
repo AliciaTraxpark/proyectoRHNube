@@ -644,14 +644,23 @@ function agregarControlR(id) {
                 $.notifyClose();
                 $.notify(
                     {
-                        message: "\nAún no ha registrado correo electrónico.",
+                        message:
+                            '\nAún no ha registrado correo electrónico.<br>Para registrar correo electrónico cilick aqui.\
+                        <br><a onclick="javascript:agregarCorreoE(' +
+                            idEmpleado +
+                            ')" target="_blank" style="cursor: pointer;"><img src="/landing/images/source.gif" height="100"></a>',
                         icon: "admin/images/warning.svg",
                     },
                     {
                         position: "fixed",
+                        mouse_over: "pause",
+                        placement: {
+                            from: "top",
+                            align: "center",
+                        },
                         icon_type: "image",
                         newest_on_top: true,
-                        delay: 5000,
+                        delay: 10000,
                         template:
                             '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
                             '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
@@ -687,5 +696,50 @@ function agregarControlR(id) {
             console.log(data);
         },
         error: function () {},
+    });
+}
+
+function agregarCorreoE(id) {
+    $("#idEmpleCorreo").val(id);
+    $("#modalCorreoElectronico").modal();
+}
+
+function guardarCorreoE() {
+    idEmpleado = $("#idEmpleCorreo").val();
+    descripcion = $("#textCorreo").val();
+    $.ajax({
+        async: false,
+        type: "get",
+        url: "/empleado/agregarCorreo",
+        data: {
+            idEmpleado: idEmpleado,
+            correo: descripcion
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            console.log(data);
+            RefreshTablaEmpleado();
+            $('#modalCorreoElectronico').modal('toggle');
+            $.notifyClose();
+            $.notify({
+                message: "\nModo Control Remoto Registrado con Exito.",
+                icon: 'admin/images/checked.svg'
+            }, {
+                position: 'fixed',
+                icon_type: 'image',
+                newest_on_top: true,
+                delay: 5000,
+                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+        },
+        error: function () {}
     });
 }
