@@ -5,7 +5,6 @@
 
     .table {
         width: 100% !important;
-
     }
 
     .dataTables_scrollHeadInner {
@@ -26,6 +25,18 @@
     .hidetext {
         -webkit-text-security: disc;
         /* Default */
+    }
+
+    .text-wrap {
+        white-space: normal;
+    }
+
+    .width-400 {
+        width: 150px !important;
+    }
+
+    table.dataTable.dataTable_width_auto {
+        width: auto;
     }
 </style>
 <div id="modalCorreo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCorreo" aria-hidden="true"
@@ -239,7 +250,6 @@
         </td>
     </div>
 </div>
-
 <table id="tablaEmpleado" class="table table-drop dt-responsive nowrap" style="width:100%!important">
     <thead style="background: #edf0f1;color: #6c757d;">
         <tr style="background: #ffffff">
@@ -272,9 +282,9 @@
             </th>-->
         </tr>
         <tr>
-            <th></th>
             <th class="text-center"></th>
-            <th>Número Documento</th>
+            <th class="text-center"></th>
+            <th class="text-center">Número Documento</th>
             <th>Nombres</th>
             <th>Apellidos</th>
             <th>Cargo</th>
@@ -282,14 +292,14 @@
             <th>Centro de Costo</th>
             <th class="text-center">Control Remoto</th>
             <th class="text-center">Control de asistencia en puerta</th>
-            <th>&nbsp;<input type="checkbox" name="" id="selectT"></th>
+            <th class="text-center">&nbsp;<input type="checkbox" name="" id="selectT"></th>
 
         </tr>
     </thead>
     <tbody style="background:#ffffff;color: #585858;font-size: 12.5px" id="tbodyr">
         @foreach ($tabla_empleado as $tabla_empleados)
         <tr id="{{$tabla_empleados->emple_id}}" value="{{$tabla_empleados->emple_id}}">
-            <td><a id="formNuevoEd" onclick="editarEmpleado({{$tabla_empleados->emple_id}})"
+            <td class="text-center"><a id="formNuevoEd" onclick="editarEmpleado({{$tabla_empleados->emple_id}})"
                     style="cursor: pointer"><img src="{{asset('admin/images/edit.svg')}}"
                         height="15"></a>&nbsp;&nbsp;&nbsp;<a onclick="marcareliminar({{$tabla_empleados->emple_id}})"
                     style="cursor: pointer"><img src="{{asset('admin/images/delete.svg')}}" height="15"></a>&nbsp;&nbsp;
@@ -302,12 +312,26 @@
             <td class="text-center">&nbsp; <input type="hidden" id="codE" value="{{$tabla_empleados->emple_id}}"><img
                     src="{{ URL::asset('admin/assets/images/users/empleado.png')
                     }}" alt="" /></td>
-            <td>{{$tabla_empleados->emple_nDoc}}</td>
-            <td>{{$tabla_empleados->perso_nombre}}</td>
-            <td>{{$tabla_empleados->perso_apPaterno}} {{$tabla_empleados->perso_apMaterno}}</td>
-            <td>{{$tabla_empleados->cargo_descripcion}}</td>
-            <td>{{$tabla_empleados->area_descripcion}}</td>
-            <td>{{$tabla_empleados->centroC_descripcion}} </td>
+            <td class="text-center">
+                <div class="text-wrap width-400">{{$tabla_empleados->emple_nDoc}}</div>
+            </td>
+            <td class="p-2">
+                <div class="text-wrap width-400">{{$tabla_empleados->perso_nombre}}</div>
+            </td>
+            <td class="p-2">
+                <div class="text-wrap width-400">{{$tabla_empleados->perso_apPaterno}}
+                    {{$tabla_empleados->perso_apMaterno}}
+                </div>
+            </td>
+            <td class="p-2">
+                <div class="text-wrap width-400">{{$tabla_empleados->cargo_descripcion}}</div>
+            </td>
+            <td class="p-2">
+                <div class="text-wrap width-400">{{$tabla_empleados->area_descripcion}}</div>
+            </td>
+            <td class="p-2">
+                <div class="text-wrap width-400">{{$tabla_empleados->centroC_descripcion}}</div>
+            </td>
             @if(!in_array("1",$tabla_empleados->dispositivos))
             <td class="text-center">
                 <div class="custom-control custom-switch mb-2">
@@ -880,8 +904,8 @@ function verDEmpleado(idempleadoVer){
             "lengthChange": false,
             scrollCollapse : false,
             "pageLength": 30,
-            fixedHeader: true,
             "processing": true,
+            "bAutoWidth": true,
             language: {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
@@ -936,6 +960,10 @@ function verDEmpleado(idempleadoVer){
         $(window).on('resize', function() {
             $('#example').css('width', '100%');
             table.draw(true);
+        });
+        $('#tablaEmpleado').on('shown.bs.collapse', function () {
+            $($.fn.dataTable.tables(true)).DataTable()
+                .columns.adjust();
         });
         $('#tablaEmpleado tbody #tdC').css('display', 'block');
 
