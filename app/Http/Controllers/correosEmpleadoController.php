@@ -48,8 +48,6 @@ class correosEmpleadoController extends Controller
             $codP = [];
             $codP["id"] = $codigoP[0]->emple_persona;
             $persona = persona::find($codP["id"]);
-            $user = User::where('id', '=', $codigoP[0]->users_id)->get()->first();
-
             $organizacion = organizacion::where('organi_id', '=', session('sesionidorg'))->get()->first();
             Mail::to($email)->queue(new CorreoEmpleadoMail($vinculacion, $persona, $licencia_empleado, $organizacion));
             $vinculacion->fecha_entrega = Carbon::now();

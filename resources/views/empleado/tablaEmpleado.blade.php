@@ -39,150 +39,39 @@
         width: auto;
     }
 </style>
-<div id="modalCorreo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCorreo" aria-hidden="true"
-    data-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
-                    empleado
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <input style="display: none;" id="empleadoWindows">
-                <input style="display: none;" id="vinculaciónWindows">
-                <form class="form-horizontal">
-                    <h5 class="modal-title" id="myModalLabel" style="font-size:
-                        15px">¿Desea enviar correo al empleado?</h5>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-7 text-right">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
-                        </div>
-                        <div class="col-md-5 text-right" style="padding-right:
-                            38px;">
-                            <button type="button" id="enviarCorreo" name="enviarCorreo"
-                                style="background-color: #163552;" class="btn
-                                btn-sm">Enviar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<div id="modalCorreoM" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCorreo" aria-hidden="true"
-    data-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
-                    empleado
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal">
-                    <h5 class="modal-title" id="myModalLabel" style="font-size:
-                        15px">¿Desea enviar correo a los empleados
-                        seleccionados?</h5>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-7 text-right">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
-                        </div>
-                        <div class="col-md-5 text-right" style="padding-right:
-                            38px;">
-                            <button type="button" id="enviarCorreoM" name="enviarCorreo"
-                                style="background-color: #163552;" class="btn
-                                btn-sm">Enviar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<!-- Modal Android-->
-<div id="modalAndroid" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalAndroid" aria-hidden="true"
-    data-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
-                    empleado
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <input style="display: none;" id="empleadoAndroid">
-                <input style="display: none;" id="vinculaciónAndroid">
-                <form class="form-horizontal">
-                    <h5 class="modal-title" id="myModalLabel" style="font-size:
-                        15px">¿Desea enviar correo al empleado?</h5>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-7 text-right">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
-                        </div>
-                        <div class="col-md-5 text-right" style="padding-right:
-                            38px;">
-                            <button type="button" id="enviarAndroid" name="enviarCorreo"
-                                style="background-color: #163552;" class="btn
-                                btn-sm">Enviar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<div id="modalAndroidMasivo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalAndroidMasivo"
+<div id="modalControlR" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalControlR"
     aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
-                    empleado
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Registrar Dispositivo
+                    para Modo Control Remoto
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
+                <input type="hidden" id="empleadoControlR">
                 <form class="form-horizontal">
                     <h5 class="modal-title" id="myModalLabel" style="font-size:
-                        15px">¿Desea enviar correo a los empleados
-                        seleccionados?</h5>
+                        15px">
+                        <img src="{{asset('admin/images/tick.svg')}}" height="25" class="mr-1 mt-2">
+                        Se registrara un dispositivo para control remoto y enviaremos un correo electronico al
+                        empleado con dicha información.</h5>
                 </form>
             </div>
             <div class="modal-footer">
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-7 text-right">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-light btn-sm cancelar"
+                                data-dismiss="modal">Cancelar</button>
                         </div>
                         <div class="col-md-5 text-right" style="padding-right:
                             38px;">
-                            <button type="button" id="enviarAndroidMasivo" name="enviarAndroidMasivo"
-                                style="background-color: #163552;" class="btn
-                                btn-sm">Enviar</button>
+                            <button type="button" style="background-color: #163552;" class="btn btn-sm"
+                                onclick="javascript:agregarControlR($('#empleadoControlR').val());">Enviar</button>
                         </div>
                     </div>
                 </div>
@@ -205,9 +94,8 @@
                 <option value="2">Número Documento</option>
                 <option value="3">Nombre</option>
                 <option value="4">Apellidos</option>
-                <option value="5">Cargo</option>
-                <option value="6">Área</option>
-                <option value="7">Costo</option>
+                <option value="7">Cargo</option>
+                <option value="8">Área</option>
             </select>
         </td>
     </div>
@@ -249,11 +137,10 @@
             <th class="text-center">Número Documento</th>
             <th>Nombres</th>
             <th>Apellidos</th>
+            <th>Control Remoto</th>
+            <th class="text-center">Asistencia en puerta</th>
             <th>Cargo</th>
             <th>Área</th>
-            <th>Centro de Costo</th>
-            <th class="text-center">Control Remoto</th>
-            <th class="text-center">Control de asistencia en puerta</th>
             <th class="text-center">&nbsp;<input type="checkbox" name="" id="selectT"></th>
 
         </tr>
@@ -285,20 +172,12 @@
                     {{$tabla_empleados->perso_apMaterno}}
                 </div>
             </td>
-            <td>
-                <div class="text-wrap width-400">{{$tabla_empleados->cargo_descripcion}}</div>
-            </td>
-            <td>
-                <div class="text-wrap width-400">{{$tabla_empleados->area_descripcion}}</div>
-            </td>
-            <td>
-                <div class="text-wrap width-400">{{$tabla_empleados->centroC_descripcion}}</div>
-            </td>
             @if(!in_array("1",$tabla_empleados->dispositivos))
             <td class="text-center">
                 <div class="custom-control custom-switch mb-2">
                     <input type="checkbox" class="custom-control-input"
-                        id="customSwitchCR{{$tabla_empleados->emple_id}}" onchange="javascript:controlRemoto({{$tabla_empleados->emple_id}})">
+                        id="customSwitchCR{{$tabla_empleados->emple_id}}"
+                        onchange="javascript:controlRemoto({{$tabla_empleados->emple_id}})">
                     <label class="custom-control-label" for="customSwitchCR{{$tabla_empleados->emple_id}}"
                         style="font-weight: bold"></label>
                 </div>
@@ -308,7 +187,13 @@
                 <div class="dropdown" id="w{{$tabla_empleados->emple_id}}">
                     <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                         style="cursor: pointer">
-                        <img src="{{asset('landing/images/note.svg')}}" height="20">
+                        <div class="custom-control custom-switch mb-2">
+                            <input type="checkbox" class="custom-control-input"
+                                id="customSwitchCRW{{$tabla_empleados->emple_id}}"
+                                onchange="javascript:controlRemoto({{$tabla_empleados->emple_id}})">
+                            <label class="custom-control-label" for="customSwitchCRW{{$tabla_empleados->emple_id}}"
+                                style="font-weight: bold"></label>
+                        </div>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         @foreach($tabla_empleados->vinculacion as $tablaV)
@@ -323,7 +208,15 @@
             </td>
             @endif
             @if(!in_array("2",$tabla_empleados->dispositivos))
-            <td></td>
+            <td class="text-center">
+                <div class="custom-control custom-switch mb-2">
+                    <input type="checkbox" class="custom-control-input"
+                        id="customSwitchCR{{$tabla_empleados->emple_id}}"
+                        onchange="javascript:controlRemoto({{$tabla_empleados->emple_id}})">
+                    <label class="custom-control-label" for="customSwitchCR{{$tabla_empleados->emple_id}}"
+                        style="font-weight: bold"></label>
+                </div>
+            </td>
             @else
             <td class="text-center">
                 <div class="dropdown" id="a{{$tabla_empleados->emple_id}}">
@@ -342,6 +235,12 @@
                 </div>
             </td>
             @endif
+            <td>
+                <div class="text-wrap width-400">{{$tabla_empleados->cargo_descripcion}}</div>
+            </td>
+            <td>
+                <div class="text-wrap width-400">{{$tabla_empleados->area_descripcion}}</div>
+            </td>
             <td class="text-center"><input type="checkbox" id="tdC" style="margin-left:5.5px!important"
                     class="form-check-input sub_chk" data-id="{{$tabla_empleados->emple_id}}" $(this)$(this)$(this)>
             </td>

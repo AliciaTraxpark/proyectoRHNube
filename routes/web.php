@@ -259,6 +259,7 @@ Route::get('/dias/laborales', 'diasLaborablesController@indexMenu');
 //VINCULACION
 Route::get('vinculacionAndroid', 'vinculacionDispositivoController@vinculacionAndroid');
 Route::get('vinculacionWindows', 'vinculacionDispositivoController@vinculacionWindows');
+Route::get('vinculacionControlRemoto', 'vinculacionDispositivoController@vinculacionWindowsTabla');
 //WINDOWS
 Route::get('correoWindows', 'correosEmpleadoController@envioWindows');
 Route::get('envioMasivoW', 'correosEmpleadoController@envioMasivoWindows');

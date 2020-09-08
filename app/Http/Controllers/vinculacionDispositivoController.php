@@ -3,13 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\licencia_empleado;
+use App\Mail\CorreoEmpleadoMail;
 use App\modo;
+use App\organizacion;
+use App\persona;
 use App\tipo_dispositivo;
 use App\vinculacion;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class vinculacionDispositivoController extends Controller
 {
@@ -80,7 +85,7 @@ class vinculacionDispositivoController extends Controller
             $modo->save();
             $idModo = $modo->id;
             //LICENCIA
-            $codigoEmpresa =session('sesionidorg');
+            $codigoEmpresa = session('sesionidorg');
             $codigoEmpleado = DB::table('empleado as e')
                 ->select('e.emple_codigo', 'e.emple_persona', 'e.created_at')
                 ->where('e.emple_id', '=', $idEmpleado)
@@ -119,6 +124,78 @@ class vinculacionDispositivoController extends Controller
             $respuesta['idVinculacion'] = $idVinculacion;
 
             return response()->json($respuesta, 200);
+        }
+    }
+
+    public function vinculacionWindowsTabla(Request $request)
+    {
+        $idEmpleado = $request->get('idEmpleado');
+
+        $empleado = DB::table('empleado as e')
+            ->select('e.emple_Correo')
+            ->where('e.emple_id', '=', $idEmpleado)
+            ->get()->first();
+        if ($empleado->emple_Correo != "") {
+            //MODO
+            $modo = new modo();
+            $modo->idTipoModo = 1;
+            $modo->idTipoDispositivo = 1;
+            $modo->idEmpleado = $idEmpleado;
+            $modo->save();
+            $idModo = $modo->id;
+            //LICENCIA
+            $codigoEmpresa = session('sesionidorg');
+            $codigoEmpleado = DB::table('empleado as e')
+                ->select('e.emple_codigo', 'e.emple_persona', 'e.created_at')
+                ->where('e.emple_id', '=', $idEmpleado)
+                ->get();
+            $nuevaLivencia = STR::random(4);
+            $codigoLicencia = $idEmpleado . '.' . $codigoEmpleado[0]->created_at . $codigoEmpresa . $nuevaLivencia;
+            $encodeLicencia = rtrim(strtr(base64_encode($codigoLicencia), '+/', '-_'));
+            $licencia = new licencia_empleado();
+            $licencia->idEmpleado = $idEmpleado;
+            $licencia->licencia = $encodeLicencia;
+            $licencia->disponible = 'c';
+            $licencia->save();
+            $idLicencia = $licencia->id;
+            //VINCULACION
+            $vinculacion = new vinculacion();
+            $vinculacion->idEmpleado = $idEmpleado;
+            $vinculacion->envio = 0;
+            $vinculacion->idModo = $idModo;
+            $vinculacion->idLicencia = $idLicencia;
+            $vinculacion->save();
+
+            $idVinculacion = $vinculacion->id;
+
+            $vinc = vinculacion::where('id', '=', $idVinculacion)->get()->first();
+            $codigoU = Auth::user()->id;
+            $codigoHash = $codigoU . "s" . $idVinculacion . "s" . $codigoEmpresa . $idEmpleado;
+            $encode = intval($codigoHash, 36);
+            $vinc->hash = $encode;
+            $vinc->save();
+
+            $email = $empleado->Correo;
+            $codigoP = DB::table('empleado as e')
+                ->select('emple_persona', 'e.users_id')
+                ->where('e.emple_id', '=', $idEmpleado)
+                ->get()->first();
+            $persona = persona::find($codigoP->emple_persona);
+            $licencia_empleado = licencia_empleado::find($licencia->id);
+            $organizacion = organizacion::where('organi_id', '=', session('sesionidorg'))->get()->first();
+
+            Mail::to($email)->queue(new CorreoEmpleadoMail($vinculacion, $persona, $licencia_empleado, $organizacion));
+            $vinculacion->fecha_entrega = Carbon::now();
+            $envio = $vinculacion->envio;
+            $suma = $envio + 1;
+            $licencia_empleado->disponible = 'e';
+            $licencia_empleado->save();
+            $vinculacion->envio = $suma;
+            $vinculacion->save();
+
+            return response()->json($vinculacion, 200);
+        } else {
+            return 1;
         }
     }
 }
