@@ -176,7 +176,6 @@ function RefreshTablaEmpleado() {
                 lengthChange: false,
                 scrollCollapse: false,
                 pageLength: 30,
-                processing: true,
                 bAutoWidth: true,
                 language: {
                     sProcessing: "Procesando...",

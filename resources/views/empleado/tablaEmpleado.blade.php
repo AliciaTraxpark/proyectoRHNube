@@ -336,7 +336,7 @@
             <td class="text-center">
                 <div class="custom-control custom-switch mb-2">
                     <input type="checkbox" class="custom-control-input"
-                        id="customSwitchCR{{$tabla_empleados->emple_id}}">
+                        id="customSwitchCR{{$tabla_empleados->emple_id}}" onchange="javascript:controlRemoto({{$tabla_empleados->emple_id}})">
                     <label class="custom-control-label" for="customSwitchCR{{$tabla_empleados->emple_id}}"
                         style="font-weight: bold"></label>
                 </div>
@@ -406,14 +406,14 @@
     seleccionarTodos.on('click', function () {
         if (seleccionarTodos.is(":checked")) {
             CheckBoxs.prop('checked', true);
-            $('#enviarCorreosMasivos').show();
-            $('#enviarAndroidMasivos').show();
-            $('#enviarMasivo').show();
+            // $('#enviarCorreosMasivos').show();
+            // $('#enviarAndroidMasivos').show();
+            // $('#enviarMasivo').show();
         } else {
             CheckBoxs.prop('checked', false);
-            $('#enviarCorreosMasivos').hide();
-            $('#enviarAndroidMasivos').hide();
-            $('#enviarMasivo').hide();
+            // $('#enviarCorreosMasivos').hide();
+            // $('#enviarAndroidMasivos').hide();
+            // $('#enviarMasivo').hide();
         };
 
     });
@@ -421,37 +421,37 @@
 
     CheckBoxs.on('change', function (e) {
         CheckBoxMarcados = table.find('tbody input:checkbox:checked').length;
-        if (CheckBoxMarcados > 0) {
-            $('#enviarCorreosMasivos').show();
-            $('#enviarAndroidMasivos').show();
-            $('#enviarMasivo').show();
-        } else {
-            $('#enviarCorreosMasivos').hide();
-            $('#enviarAndroidMasivos').hide();
-            $('#enviarMasivo').hide();
-        }
+        // if (CheckBoxMarcados > 0) {
+        //     $('#enviarCorreosMasivos').show();
+        //     $('#enviarAndroidMasivos').show();
+        //     $('#enviarMasivo').show();
+        // } else {
+        //     $('#enviarCorreosMasivos').hide();
+        //     $('#enviarAndroidMasivos').hide();
+        //     $('#enviarMasivo').hide();
+        // }
         seleccionarTodos.prop('checked', (CheckBoxMarcados === CheckBoxs.length));
     });
-    $(".sub_chk").click(function () {
-        if($(this).prop('checked')){
-            $('#w'+$(this).attr('data-id')).hide();
-            $('#a'+$(this).attr('data-id')).hide();
-        }else{
-            $('#w'+$(this).attr('data-id')).show();
-            $('#a'+$(this).attr('data-id')).show();
-        }
-    });
-    seleccionarTodos.click(function(){
-        $(".sub_chk").each(function(){
-            if($(this).prop('checked')){
-            $('#w'+$(this).attr('data-id')).hide();
-            $('#a'+$(this).attr('data-id')).hide();
-            }else{
-                $('#w'+$(this).attr('data-id')).show();
-                $('#a'+$(this).attr('data-id')).show();
-            }
-        });
-    });
+    // $(".sub_chk").click(function () {
+    //     if($(this).prop('checked')){
+    //         $('#w'+$(this).attr('data-id')).hide();
+    //         $('#a'+$(this).attr('data-id')).hide();
+    //     }else{
+    //         $('#w'+$(this).attr('data-id')).show();
+    //         $('#a'+$(this).attr('data-id')).show();
+    //     }
+    // });
+    // seleccionarTodos.click(function(){
+    //     $(".sub_chk").each(function(){
+    //         if($(this).prop('checked')){
+    //         $('#w'+$(this).attr('data-id')).hide();
+    //         $('#a'+$(this).attr('data-id')).hide();
+    //         }else{
+    //             $('#w'+$(this).attr('data-id')).show();
+    //             $('#a'+$(this).attr('data-id')).show();
+    //         }
+    //     });
+    // });
 </script>
 <script>
     function editarEmpleado(idempleado){
@@ -904,7 +904,6 @@ function verDEmpleado(idempleadoVer){
             "lengthChange": false,
             scrollCollapse : false,
             "pageLength": 30,
-            "processing": true,
             "bAutoWidth": true,
             language: {
                 "sProcessing": "Procesando...",
