@@ -61,82 +61,90 @@ function RefreshTablaEmpleado() {
                             </td>\
                             <td class="text-center"> <div class="text-wrap width-400">' +
                     data[i].emple_nDoc +
-                    "</div></td>\
-                            <td> <div class=\"text-wrap width-400\">" +
+                    '</div></td>\
+                            <td> <div class="text-wrap width-400">' +
                     data[i].perso_nombre +
-                    "</div></td>\
-                            <td> <div class=\"text-wrap width-400\">" +
+                    '</div></td>\
+                            <td> <div class="text-wrap width-400">' +
                     data[i].perso_apPaterno +
                     " " +
                     data[i].perso_apMaterno +
                     "</div></td>";
-                if (data[i].cargo_descripcion == null) {
-                    tbody += "<td><div class=\"text-wrap width-400\"></div></td>";
-                } else {
-                    tbody += "<td><div class=\"text-wrap width-400\">" + data[i].cargo_descripcion + "</div></td>";
-                }
-                if (data[i].area_descripcion == null) {
-                    tbody += "<td><div class=\"text-wrap width-400\"></div></td>";
-                } else {
-                    tbody += "<td><div class=\"text-wrap width-400\">" + data[i].area_descripcion + "</div></td>";
-                }
-                if (data[i].centroC_descripcion == null) {
-                    tbody += "<td><div class=\"text-wrap width-400\"></div></td>";
-                } else {
-                    tbody += "<td><div class=\"text-wrap width-400\">" + data[i].centroC_descripcion + "</div></td>";
-                }
-                console.log(data[i].dispositivos.includes(1));
                 if (data[i].dispositivos.includes(1) == false) {
-                    tbody += "<td></td>";
+                    tbody +=
+                        '<td class="text-center">\
+                            <div class="custom-control custom-switch mb-2">\
+                                <input type="checkbox" class="custom-control-input"\
+                                    id="customSwitchCR' +
+                        data[i].emple_id +
+                        '"\
+                                    onchange="javascript:controlRemoto(' +
+                        data[i].emple_id +
+                        ')">\
+                                <label class="custom-control-label" for="customSwitchCR' +
+                        data[i].emple_id +
+                        '"\
+                                    style="font-weight: bold"></label>\
+                            </div>\
+                        </td>';
                 } else {
                     tbody +=
                         '<td class="text-center">\
-                                    <div class="dropdown" id="w' +
+                                        <div class="dropdown" id="w' +
                         data[i].emple_id +
                         '">\
-                                    <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"\
-                                        style="cursor: pointer">\
-                                        <img src="/landing/images/note.svg" height="20">\
-                                    </a>\
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
+                            <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor: pointer">\
+                                <div class="custom-control custom-switch mb-2">\
+                                    <input type="checkbox" class="custom-control-input" id="customSwitchCRW'+data[i].emple_id+'">\
+                                    <label class="custom-control-label" for="customSwitchCRW'+data[i].emple_id+'" style="font-weight: bold"></label>\
+                                </div>\
+                            </a>\
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
                     for (var j = 0; j < data[i].vinculacion.length; j++) {
                         if (data[i].vinculacion[j].dispositivoD == "WINDOWS") {
                             tbody +=
-                                '<a class="dropdown-item"\
-                                            onclick="javascript:enviarWindowsTabla(' +
+                                '<a class="dropdown-item" onclick="javascript:enviarWindowsTabla(' +
                                 data[i].emple_id +
                                 "," +
                                 data[i].vinculacion[j].idVinculacion +
                                 ')">PC ' +
-                                j +
-                                1 +
-                                "\
-                                        </a>";
+                                (j + 1) +
+                                "</a>";
                         }
                     }
                     tbody +=
                         "</ul>\
-                    </div>\
-                     </td>";
+                        </div>\
+                         </td>";
                 }
                 if (data[i].dispositivos.includes(2) == false) {
-                    tbody += "<td></td>";
+                    tbody +=
+                        '<td class="text-center">\
+                                <div class="custom-control custom-switch mb-2">\
+                                    <input type="checkbox" class="custom-control-input"\
+                                        id="customSwitchCP'+data[i].emple_id+'">\
+                                    <label class="custom-control-label" for="customSwitchCP'+data[i].emple_id+'"\
+                                        style="font-weight: bold"></label>\
+                                </div>\
+                    </td>';
                 } else {
                     tbody +=
                         '<td class="text-center">\
-                                    <div class="dropdown" id="a' +
+                                        <div class="dropdown" id="a' +
                         data[i].emple_id +
                         '">\
-                                    <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"\
-                                        style="cursor: pointer">\
-                                        <img src="/landing/images/note.svg" height="20">\
-                                    </a>\
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
+                            <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor: pointer">\
+                                <div class="custom-control custom-switch mb-2">\
+                                    <input type="checkbox" class="custom-control-input" id="customSwitchCRP'+data[i].emple_id+'">\
+                                    <label class="custom-control-label" for="customSwitchCRP'+data[i].emple_id+'" style="font-weight: bold"></label>\
+                                </div>\
+                            </a>\
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
                     for (var j = 0; j < data[i].vinculacion.length; j++) {
                         if (data[i].vinculacion[j].dispositivoD == "ANDROID") {
                             tbody +=
                                 '<a class="dropdown-item" \
-                                            onclick="javascript:enviarAndroidTabla(' +
+                                                onclick="javascript:enviarAndroidTabla(' +
                                 data[i].emple_id +
                                 "," +
                                 data[i].vinculacion[j].idVinculacion +
@@ -144,13 +152,29 @@ function RefreshTablaEmpleado() {
                                 j +
                                 1 +
                                 "\
-                                        </a>";
+                                            </a>";
                         }
                     }
                     tbody +=
                         "</ul>\
-                    </div>\
-                     </td>";
+                        </div>\
+                         </td>";
+                }
+                if (data[i].cargo_descripcion == null) {
+                    tbody += '<td><div class="text-wrap width-400"></div></td>';
+                } else {
+                    tbody +=
+                        '<td><div class="text-wrap width-400">' +
+                        data[i].cargo_descripcion +
+                        "</div></td>";
+                }
+                if (data[i].area_descripcion == null) {
+                    tbody += '<td><div class="text-wrap width-400"></div></td>';
+                } else {
+                    tbody +=
+                        '<td><div class="text-wrap width-400">' +
+                        data[i].area_descripcion +
+                        "</div></td>";
                 }
                 tbody +=
                     '<td class="text-center">\
@@ -248,29 +272,14 @@ function RefreshTablaEmpleado() {
             seleccionarTodos.on("click", function () {
                 if (seleccionarTodos.is(":checked")) {
                     CheckBoxs.prop("checked", true);
-                    $("#enviarCorreosMasivos").show();
-                    $("#enviarAndroidMasivos").show();
-                    $("#enviarMasivo").show();
                 } else {
                     CheckBoxs.prop("checked", false);
-                    $("#enviarCorreosMasivos").hide();
-                    $("#enviarAndroidMasivos").hide();
-                    $("#enviarMasivo").hide();
                 }
             });
 
             CheckBoxs.on("change", function (e) {
                 CheckBoxMarcados = table.find("tbody input:checkbox:checked")
                     .length;
-                if (CheckBoxMarcados > 0) {
-                    $("#enviarCorreosMasivos").show();
-                    $("#enviarAndroidMasivos").show();
-                    $("#enviarMasivo").show();
-                } else {
-                    $("#enviarCorreosMasivos").hide();
-                    $("#enviarAndroidMasivos").hide();
-                    $("#enviarMasivo").hide();
-                }
                 seleccionarTodos.prop(
                     "checked",
                     CheckBoxMarcados === CheckBoxs.length

@@ -470,7 +470,7 @@
                                                     <img src="{{asset('landing/images/email.svg')}}" height="20">
                                                 </span>
                                             </div>
-                                            <input id="email" type="text" class="form-control" id="textCorreo"
+                                            <input type="email" type="text" class="form-control" id="textCorreo"
                                                 name="email" required>
                                         </div>
                                     </div>

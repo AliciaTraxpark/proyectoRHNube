@@ -700,6 +700,7 @@ function agregarControlR(id) {
 }
 
 function agregarCorreoE(id) {
+    $.notifyClose();
     $("#idEmpleCorreo").val(id);
     $("#modalCorreoElectronico").modal();
 }
@@ -708,6 +709,7 @@ function guardarCorreoE() {
     console.log("ingreso");
     idEmpleado = $("#idEmpleCorreo").val();
     descripcion = $("#textCorreo").val();
+    console.log(descripcion, $("#textCorreo").val());
     $.ajax({
         async: false,
         type: "get",

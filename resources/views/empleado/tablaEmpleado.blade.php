@@ -66,7 +66,7 @@
                     <div class="row">
                         <div class="col-md-7 text-right">
                             <button type="button" class="btn btn-light btn-sm cancelar"
-                                data-dismiss="modal">Cancelar</button>
+                                data-dismiss="modal" onclick="javascript:RefreshTablaEmpleado()">Cancelar</button>
                         </div>
                         <div class="col-md-5 text-right" style="padding-right:
                             38px;">
@@ -189,8 +189,7 @@
                         style="cursor: pointer">
                         <div class="custom-control custom-switch mb-2">
                             <input type="checkbox" class="custom-control-input"
-                                id="customSwitchCRW{{$tabla_empleados->emple_id}}"
-                                onchange="javascript:controlRemoto({{$tabla_empleados->emple_id}})">
+                                id="customSwitchCRW{{$tabla_empleados->emple_id}}">
                             <label class="custom-control-label" for="customSwitchCRW{{$tabla_empleados->emple_id}}"
                                 style="font-weight: bold"></label>
                         </div>
@@ -211,9 +210,8 @@
             <td class="text-center">
                 <div class="custom-control custom-switch mb-2">
                     <input type="checkbox" class="custom-control-input"
-                        id="customSwitchCR{{$tabla_empleados->emple_id}}"
-                        onchange="javascript:controlRemoto({{$tabla_empleados->emple_id}})">
-                    <label class="custom-control-label" for="customSwitchCR{{$tabla_empleados->emple_id}}"
+                        id="customSwitchCP{{$tabla_empleados->emple_id}}">
+                    <label class="custom-control-label" for="customSwitchCP{{$tabla_empleados->emple_id}}"
                         style="font-weight: bold"></label>
                 </div>
             </td>
@@ -222,7 +220,12 @@
                 <div class="dropdown" id="a{{$tabla_empleados->emple_id}}">
                     <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                         style="cursor: pointer">
-                        <img src="{{asset('landing/images/note.svg')}}" height="20">
+                        <div class="custom-control custom-switch mb-2">
+                            <input type="checkbox" class="custom-control-input"
+                                id="customSwitchCRP{{$tabla_empleados->emple_id}}">
+                            <label class="custom-control-label" for="customSwitchCRP{{$tabla_empleados->emple_id}}"
+                                style="font-weight: bold"></label>
+                        </div>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         @foreach($tabla_empleados->vinculacion as $tablaV)
