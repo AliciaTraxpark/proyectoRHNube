@@ -104,6 +104,9 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
             <h5 style="color: #ffffff">Gestión de Calendarios</h5>
             <label for="" class="blanco font-italic">Calendario de Perú, puedes crear calendarios regionales o personalizados</label>
             </div>
+            <input type="hidden" name="idorgani" id="idorgani" value="{{session('sesionidorg')}}">
+        <input type="hidden" name="" id="AñoOrgani" value="{{$fechaEnvi}}">
+        <input type="hidden" id="fechaEnviF" value={{$fechaEnviFi}}>
             <div class="col-md-2 text-left">
                 <select name="" id="selectCalendario" class="form-control">
                     @foreach ($calendario as $calendarios)

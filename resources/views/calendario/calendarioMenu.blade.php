@@ -70,6 +70,9 @@ background-color: #ffffff;
     <div class="col-md-7">
 
         <h4 class="mb-1 mt-0">Calendarios</h4>
+        <input type="hidden" name="idorgani" id="idorgani" value="{{session('sesionidorg')}}">
+        <input type="hidden" name="" id="AñoOrgani" value="{{$fechaEnvi}}">
+        <input type="hidden" id="fechaEnviF" value={{$fechaEnviFi}}>
     </div>
 
     <div class="col-md-3 ">

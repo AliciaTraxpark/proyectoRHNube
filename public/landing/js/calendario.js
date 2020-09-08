@@ -1,7 +1,5 @@
 $(document).ready(function () {
 
-
-
 });
 
 
@@ -12,6 +10,8 @@ function calendario() {
     var fecha = new Date();
     var ano = fecha.getFullYear();
     var id;
+     var añoCal= $('#AñoOrgani').val();
+     var fechaFinalO= $('#fechaEnviF').val();
 
     var configuracionCalendario = {
         locale: 'es',
@@ -64,11 +64,16 @@ function calendario() {
             center: 'title',
             right: ''
         },
+        validRange: {
+            start: añoCal,
+            end: fechaFinalO
+          },
         footer: {
             left: 'Descanso',
             center: 'Feriado',
             right: 'NoLaborales'
         },
+
         events: function(info, successCallback, failureCallback) {
             var idcalendario=$('#selectCalendario').val();
             var datoscal;
@@ -117,8 +122,10 @@ function calendario() {
 
     }
     calendar = new FullCalendar.Calendar(calendarEl, configuracionCalendario);
+
     calendar.setOption('locale', "Es");
     //DESCANSO
+
 
     $('#eliminarDescanso').click(function () {
         objEvento = datos("DELETE");

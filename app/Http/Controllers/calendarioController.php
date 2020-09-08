@@ -10,6 +10,7 @@ use App\paises;
 use App\calendario;
 use App\eventos_empleado;
 use App\eventos_usuario;
+use App\organizacion;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 class calendarioController extends Controller
@@ -112,18 +113,30 @@ class calendarioController extends Controller
                 ->where('organi_id','=',session('sesionidorg'))
                 ->get()->first();
 
-                    if($invitadod){
-                        if ($invitadod->rol_id!=1){
-                            return redirect('/dashboard');
-                        }
-                        else{
-                            return view('calendario.calendario', ['pais' => $paises, 'calendario' => $calendarioSel]);
-                        }
+                $organizacion=organizacion::where('organi_id','=',session('sesionidorg'))
+            ->get() ->first();
+            /* dd($organizacion->created_at->format('Y-m-d')); */
+            $fechaOrga=Carbon::create($organizacion->created_at->format('Y-m-d'));
+            $mesOrga=$fechaOrga->month;
+            $yearOrga=$fechaOrga->year;
+            $fechaOrga2=Carbon::create($yearOrga.'-'.$mesOrga.'-01');
+            $añonn=$yearOrga+1;
+            $fechaOrga3=Carbon::create($añonn.'-01-01');
+            $fechaEnvi=$fechaOrga2->format('Y-m-d');
+            $fechaEnviFi=$fechaOrga3->format('Y-m-d');
+                if($invitadod){
+                    if ($invitadod->rol_id!=1){
+                        return redirect('/dashboard');
                     }
+                    else{
+                        return view('calendario.calendario', ['pais' => $paises, 'calendario' => $calendarioSel,
+                        'fechaEnvi' => $fechaEnvi,'fechaEnviFi' => $fechaEnviFi]);
+                    }
+                }
 
-                else{
-
-            return view('calendario.calendario', ['pais' => $paises, 'calendario' => $calendarioSel]);}
+            else{
+            return view('calendario.calendario', ['pais' => $paises, 'calendario' => $calendarioSel,
+            'fechaEnvi' => $fechaEnvi,'fechaEnviFi' => $fechaEnviFi]);}
         } else {
             return redirect(route('principal'));
         }
@@ -251,17 +264,30 @@ class calendarioController extends Controller
             ->where('organi_id','=',session('sesionidorg'))
             ->get()->first();
 
+            $organizacion=organizacion::where('organi_id','=',session('sesionidorg'))
+            ->get() ->first();
+            /* dd($organizacion->created_at->format('Y-m-d')); */
+            $fechaOrga=Carbon::create($organizacion->created_at->format('Y-m-d'));
+            $mesOrga=$fechaOrga->month;
+            $yearOrga=$fechaOrga->year;
+            $fechaOrga2=Carbon::create($yearOrga.'-'.$mesOrga.'-01');
+            $añonn=$yearOrga+1;
+            $fechaOrga3=Carbon::create($añonn.'-01-01');
+            $fechaEnvi=$fechaOrga2->format('Y-m-d');
+            $fechaEnviFi=$fechaOrga3->format('Y-m-d');
                 if($invitadod){
                     if ($invitadod->rol_id!=1){
                         return redirect('/dashboard');
                     }
                     else{
-                        return view('calendario.calendarioMenu', ['pais' => $paises, 'calendario' => $calendarioSel]);
+                        return view('calendario.calendarioMenu', ['pais' => $paises, 'calendario' => $calendarioSel,
+                        'fechaEnvi' => $fechaEnvi,'fechaEnviFi' => $fechaEnviFi]);
                     }
                 }
 
             else{
-            return view('calendario.calendarioMenu', ['pais' => $paises, 'calendario' => $calendarioSel]);}
+            return view('calendario.calendarioMenu', ['pais' => $paises, 'calendario' => $calendarioSel,
+            'fechaEnvi' => $fechaEnvi,'fechaEnviFi' => $fechaEnviFi]);}
         } else {
             return redirect(route('principal'));
         }
@@ -403,9 +429,11 @@ class calendarioController extends Controller
             $eventos_usuario->laborable =$eventos->laborable;
             $eventos_usuario->save();
         }
-      
+
 
         return $calendarioR;
 
     }
+
+  
 }
