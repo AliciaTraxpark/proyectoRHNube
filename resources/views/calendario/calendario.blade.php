@@ -48,14 +48,11 @@
         top: 100px;
     left: 75px;
     } */
-   div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content.fc-sun{
 
-background-color: rgb(255, 239, 239) !important;
-}
 div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content.fc-mon, td.fc-day.fc-widget-content.fc-tue, td.fc-day.fc-widget-content.fc-wed,
 td.fc-day.fc-widget-content.fc-thu, td.fc-day.fc-widget-content.fc-fri, td.fc-day.fc-widget-content.fc-sat{
 
-background-color: #ffffff !important;
+background-color: #ffffff;
 }
     .fc-time{
         display: none;

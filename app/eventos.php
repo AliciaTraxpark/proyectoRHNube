@@ -9,7 +9,7 @@ class eventos extends Model
     //
     protected $table = 'eventos';
     protected $primaryKey = 'id';
-    protected $fillable = ['id','title','color','textColor','start','end','tipo'];
+    protected $fillable = ['id','title','color','textColor','start','end','laborable','tipo','rendering'];
 
 }
 
