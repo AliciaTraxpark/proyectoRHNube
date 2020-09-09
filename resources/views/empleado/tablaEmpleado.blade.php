@@ -251,15 +251,9 @@
         if (seleccionarTodos.is(":checked")) {
             CheckBoxs.prop('checked', true);
             $('.custom-control-input').prop("checked", false);
-            // $('#enviarCorreosMasivos').show();
-            // $('#enviarAndroidMasivos').show();
-            // $('#enviarMasivo').show();
         } else {
             CheckBoxs.prop('checked', false);
             $('.custom-control-input').prop("checked", false);
-            // $('#enviarCorreosMasivos').hide();
-            // $('#enviarAndroidMasivos').hide();
-            // $('#enviarMasivo').hide();
         };
 
     });
@@ -267,37 +261,8 @@
 
     CheckBoxs.on('change', function (e) {
         CheckBoxMarcados = table.find('tbody input:checkbox:checked').length;
-        // if (CheckBoxMarcados > 0) {
-        //     $('#enviarCorreosMasivos').show();
-        //     $('#enviarAndroidMasivos').show();
-        //     $('#enviarMasivo').show();
-        // } else {
-        //     $('#enviarCorreosMasivos').hide();
-        //     $('#enviarAndroidMasivos').hide();
-        //     $('#enviarMasivo').hide();
-        // }
         seleccionarTodos.prop('checked', (CheckBoxMarcados === CheckBoxs.length));
     });
-    // $(".sub_chk").click(function () {
-    //     if($(this).prop('checked')){
-    //         $('#w'+$(this).attr('data-id')).hide();
-    //         $('#a'+$(this).attr('data-id')).hide();
-    //     }else{
-    //         $('#w'+$(this).attr('data-id')).show();
-    //         $('#a'+$(this).attr('data-id')).show();
-    //     }
-    // });
-    // seleccionarTodos.click(function(){
-    //     $(".sub_chk").each(function(){
-    //         if($(this).prop('checked')){
-    //         $('#w'+$(this).attr('data-id')).hide();
-    //         $('#a'+$(this).attr('data-id')).hide();
-    //         }else{
-    //             $('#w'+$(this).attr('data-id')).show();
-    //             $('#a'+$(this).attr('data-id')).show();
-    //         }
-    //     });
-    // });
 </script>
 <script>
     function editarEmpleado(idempleado){

@@ -36,7 +36,7 @@ function RefreshTablaEmpleado() {
                     ">";
                 tbody +=
                     '<td class="text-center">\
-                            <input type="checkbox" id="tdC" style="margin-right:5.6px!important"\
+                            <input type="checkbox" id="tdC" style="margin-right:5.7px!important"\
                             class="form-check-input sub_chk" data-id=' +
                     data[i].emple_id +
                     " " +
@@ -286,8 +286,10 @@ function RefreshTablaEmpleado() {
             seleccionarTodos.on("click", function () {
                 if (seleccionarTodos.is(":checked")) {
                     CheckBoxs.prop("checked", true);
+                    $('.custom-control-input').prop("checked", false);
                 } else {
                     CheckBoxs.prop("checked", false);
+                    $('.custom-control-input').prop("checked", false);
                 }
             });
 
