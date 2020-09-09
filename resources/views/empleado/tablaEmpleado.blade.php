@@ -111,26 +111,6 @@
             <th style="border-top: 1px solid #fdfdfd;"></th>
             <th style="border-top: 1px solid #fdfdfd;"></th>
             <th style="border-top: 1px solid #fdfdfd;"></th>
-            <th class="text-center" style="border-top: 1px solid #fdfdfd;" id="enviarCorreosMasivos">
-                <button type="button" class="btn btn-sm btn-rounded" style="color: #548ec7;border-color: #e7edf3; padding-left:
-                    4px; padding-right: 4px;" onclick="$('#modalCorreoM').modal()" data-toggle="tooltip"
-                    data-placement="right" title="Enviar a
-                    todos los empleados
-                    seleccionados." data-original-title=""><img src="{{asset('landing/images/note.svg')}}"
-                        height="20">&nbsp;&nbsp;Masivo</button></th>
-            <th class="text-center" style="border-top: 1px solid #fdfdfd;" id="enviarAndroidMasivos"> <button
-                    type="button" class="btn btn-sm btn-rounded" style="color:
-                    #548ec7;border-color: #e7edf3; padding-left:
-                    4px; padding-right: 4px;" onclick="$('#modalAndroidMasivo').modal()" data-toggle="tooltip"
-                    data-placement="right" title="Enviar a
-                    todos los empleados
-                    seleccionados." data-original-title=""><img src="{{asset('landing/images/note.svg')}}"
-                        height="20">&nbsp;&nbsp;Masivo</button></th>
-            <!--<th class="text-center" style="border-top: 1px solid #fdfdfd;" id="enviarMasivo">
-                <a style="cursor: pointer" data-toggle="tooltip" data-placement="right"
-                    title="Enviar para ambas plataformas Windows y Android" data-original-title=""><img
-                        src="{{asset('landing/images/mail (3).svg')}}" height="30"></a>
-            </th>-->
         </tr>
         <tr>
             <th class="text-center">&nbsp;<input type="checkbox" class="ml-4" name="" id="selectT"></th>
