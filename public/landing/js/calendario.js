@@ -32,7 +32,7 @@ var idcalendarioF=$('#selectCalendario').val();
         success: function (data) {
 
             $('#fechaEnviF').val(data);
-
+            $('#fechaHasta').text(moment(data).subtract(1, 'day').format('YYYY-MM-DD'));
 
         },
         error: function () {}})
@@ -100,11 +100,12 @@ var idcalendarioF=$('#selectCalendario').val();
                 text: "+ Nuevo año",
 
                 click: function () {
-                    var start = $('#pruebaStar').val();
-                    var end = $('#pruebaEnd').val();
-                    $('#start').val(start);
-                    $('#end').val(end);
-                    $('#myModal').modal('toggle');
+                    añoNuevo=$('#fechaEnviF').val();
+                    añoAc=new Date(añoNuevo);
+                    añoEnviado=añoAc.getFullYear()+1;
+                    $('#textoNuevoAño').val("¿Añadir año "+añoEnviado+" al calendario actual?");
+                    $('#añotNuevo').val(añoEnviado);
+                    $('#añadirNuevoa').modal('show');
                 }
             }
         },
@@ -821,3 +822,28 @@ $("#clonarCheck").click(function () {
         $('#selectClonar').prop('disabled',true);
     }
 });
+
+function editarfinC(){
+    var calendfEd=$('#selectCalendario').val();
+    var añoFed=$('#añotNuevo').val();
+
+    $.ajax({
+        type: "POST",
+        url: "/calendario/añadirFinCalenda",
+        data: {calendfEd,añoFed},
+        async: false,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            calendario();
+            $('#añadirNuevoa').modal('hide');
+        },
+        error: function () {}})
+
+}

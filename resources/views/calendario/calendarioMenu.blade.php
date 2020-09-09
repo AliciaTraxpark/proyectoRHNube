@@ -116,9 +116,9 @@ background-color: #ffffff;
         <div class="col-md-12"><label style="font-size: 12px;font-style:oblique;font-weight: 600" for="">De:</label></div>
         <div class="col-md-12"><label style="font-size: 12px" for="">{{$fechaEnvi}}</label></div>
         <div class="col-md-12"><label style="font-size: 12px;font-style:oblique;font-weight: 600" for="">Hasta:</label></div>
-        <div class="col-md-12"><label style="font-size: 12px" for="">{{$diaAnt}}</label></div>
+        <div class="col-md-12"><label style="font-size: 12px" for="" id="fechaHasta">{{$diaAnt}}</label></div>
         </div>
-       
+
 
     </div>
    {{--  <form action="javascript:agregarcalendario()"  class="col-md-5">
@@ -440,7 +440,90 @@ background-color: #ffffff;
      </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <div id="añadirNuevoa" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 550px;" >
 
+        <div class="modal-content">
+           <div class="modal-header" style="background-color:#163552;">
+               <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Añadir año</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+               </button>
+           </div>
+           <div class="modal-body" style="font-size:12px!important">
+               <div class="row">
+
+                   <div class="col-md-12">
+                    <form id="" action="javascript:editarfinC()">
+                       <div class="row">
+                        <div class="col-md-12" >
+                            <input type="text" id="textoNuevoAño" class="col-md-12" style="font-size: 15px; background-color: rgb(255, 255, 255);
+                            border: 0;">
+                            <input type="hidden" id="añotNuevo">
+                        </div>
+                       </div>
+
+                   </div>
+               </div>
+
+           </div>
+           <div class="modal-footer">
+               <div class="col-md-12">
+                   <div class="row">
+                       <div class="col-md-12 text-right" >
+                        <button type="button"  class="btn btn-light  " data-dismiss="modal">Cancelar</button>
+                        <button type="submit"  name="" style="background-color: #163552;" class="btn">Aceptar</button>
+                    </form>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div><!-- /.modal-content -->
+     </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+    <div id="añadirNuevoa" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 550px;" >
+
+        <div class="modal-content">
+           <div class="modal-header" style="background-color:#163552;">
+               <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Añadir año</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+               </button>
+           </div>
+           <div class="modal-body" style="font-size:12px!important">
+               <div class="row">
+
+                   <div class="col-md-12">
+                    <form id="" action="javascript:editarfinC()">
+                       <div class="row">
+                        <div class="col-md-12" >
+                            <input type="text" id="textoNuevoAño" class="col-md-12" style="font-size: 15px; background-color: rgb(255, 255, 255);
+                            border: 0;">
+                            <input type="hidden" id="añotNuevo">
+                        </div>
+                       </div>
+
+                   </div>
+               </div>
+
+           </div>
+           <div class="modal-footer">
+               <div class="col-md-12">
+                   <div class="row">
+                       <div class="col-md-12 text-right" >
+                        <button type="button"  class="btn btn-light  " data-dismiss="modal">Cancelar</button>
+                        <button type="submit"  name="" style="background-color: #163552;" class="btn">Aceptar</button>
+                    </form>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div><!-- /.modal-content -->
+     </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 <div class="row " >
 
 

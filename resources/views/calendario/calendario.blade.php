@@ -383,7 +383,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
                                                     <option class="" value="{{$calendarios->calen_id}}">{{$calendarios->calendario_nombre}}</option>
                                                 @endforeach
                                             </select>
-                
+
                                         </div>
                                        </div>
 
@@ -427,7 +427,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
         <div class="col-md-12"><label style="font-size: 12px;font-style:oblique;font-weight: 600" for="">De:</label></div>
         <div class="col-md-12"><label style="font-size: 12px" for="">{{$fechaEnvi}}</label></div>
         <div class="col-md-12"><label style="font-size: 12px;font-style:oblique;font-weight: 600" for="">Hasta:</label></div>
-        <div class="col-md-12"><label style="font-size: 12px" for="">{{$diaAnt}}</label></div>
+        <div class="col-md-12"><label style="font-size: 12px" for="" id="fechaHasta">{{$diaAnt}}</label></div>
         </div>
 
     </div>

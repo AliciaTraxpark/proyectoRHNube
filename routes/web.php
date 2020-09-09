@@ -57,6 +57,7 @@ Route::post('/calendario/cargarcalendario', 'calendarioController@cargarcalendar
 Route::post('/calendario/verificarID', 'calendarioController@verificarID');
 Route::post('/calendario/copiarevenEmpleado', 'calendarioController@copiarevenEmpleado');
 Route::post('/calendario/mostrarFCalend', 'calendarioController@mostrarFCalend');
+Route::post('/calendario/añadirFinCalenda', 'calendarioController@añadirFinCalenda');
 //PERSONA
 
 
