@@ -65,11 +65,9 @@
                                 <div class="col-md-12 p-5">
                                     <div class="mx-auto mb-5 text-center">
                                         <a href="{{route('logout')}}">
-                                            <img src="{{asset('landing/images/Recurso 13.png')}}" alt="" height="45" />
+                                            <img src="{{asset('landing/images/LogoAzul.png')}}" alt="" height="120" />
                                         </a>
                                     </div>
-
-                                    <h6 class="h5 mb-0 mt-4">Reestablecer Contraseña</h6>
                                     <div class="alert alert-danger" role="alert" style="display: none;"
                                         id="alertPaswword">
                                     </div>
