@@ -171,8 +171,13 @@
                     <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                         style="cursor: pointer">
                         <div class="custom-control custom-switch mb-2">
+                            @if($tabla_empleados->estadoCR == true)
+                            <input type="checkbox" class="custom-control-input"
+                                id="customSwitchCRW{{$tabla_empleados->emple_id}}" checked>
+                            @else
                             <input type="checkbox" class="custom-control-input"
                                 id="customSwitchCRW{{$tabla_empleados->emple_id}}">
+                            @endif
                             <label class="custom-control-label" for="customSwitchCRW{{$tabla_empleados->emple_id}}"
                                 style="font-weight: bold"></label>
                         </div>
