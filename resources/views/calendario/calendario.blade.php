@@ -370,10 +370,22 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
 
                                <div class="col-md-12">
                                 <form id="" action="javascript:agregarcalendario()">
-                                   <div class="row">
-                                    <div class="col-md-8"> <input type="text" class="form-control" id="nombreCalen" placeholder="Nombre nuevo calendario" required></div>
-
-                                   </div>
+                                    <div class="row">
+                                        <div class="col-md-12"> <input type="text" class="form-control" id="nombreCalen" placeholder="Nombre nuevo calendario" required><br></div>
+                                        <div class="col-md-5 form-check" style="padding-left: 32px; margin-top: 4px;">
+                                            <input type="checkbox"  class="form-check-input" id="clonarCheck">
+                                            <label class="form-check-label" for="clonarCheck" >Clonar calendario de:</label>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <select name="" id="selectClonar" class="form-control form-control-sm" disabled >
+                                                <option hidden selected>Seleccione calendario</option>
+                                                @foreach ($calendario as $calendarios)
+                                                    <option class="" value="{{$calendarios->calen_id}}">{{$calendarios->calendario_nombre}}</option>
+                                                @endforeach
+                                            </select>
+                
+                                        </div>
+                                       </div>
 
                                </div>
                            </div>
