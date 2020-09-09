@@ -1,9 +1,8 @@
-$(document).ready(function () {
-
-});
-
 
 function calendario() {
+    //
+
+
     var calendarEl = document.getElementById('calendar');
     calendarEl.innerHTML = "";
 
@@ -11,7 +10,35 @@ function calendario() {
     var ano = fecha.getFullYear();
     var id;
      var añoCal= $('#AñoOrgani').val();
-     var fechaFinalO= $('#fechaEnviF').val();
+
+
+var idcalendarioF=$('#selectCalendario').val();
+    $.ajax({
+        type: "POST",
+        url: "/calendario/mostrarFCalend",
+        data: {idcale:idcalendarioF},
+        async: false,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+
+            $('#fechaEnviF').val(data);
+
+
+        },
+        error: function () {}})
+    //
+    fechaFinalO=$('#fechaEnviF').val();
+
 
     var configuracionCalendario = {
         locale: 'es',
@@ -60,7 +87,7 @@ function calendario() {
         editable: false,
         eventLimit: true,
         header: {
-            left: 'prev,next today',
+            left: 'prev,next, today,nuevoAño',
             center: 'title',
             right: ''
         },
@@ -68,10 +95,18 @@ function calendario() {
             start: añoCal,
             end: fechaFinalO
           },
-        footer: {
-            left: 'Descanso',
-            center: 'Feriado',
-            right: 'NoLaborales'
+          customButtons: {
+            nuevoAño: {
+                text: "+ Nuevo año",
+
+                click: function () {
+                    var start = $('#pruebaStar').val();
+                    var end = $('#pruebaEnd').val();
+                    $('#start').val(start);
+                    $('#end').val(end);
+                    $('#myModal').modal('toggle');
+                }
+            }
         },
 
         events: function(info, successCallback, failureCallback) {

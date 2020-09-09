@@ -65,6 +65,14 @@ background-color: #ffffff;
     color: #fff;
     background-color: #162029;
     }
+    .fc-nuevoAño-button{
+    left: 10px;
+    background: #2c2d31;
+    color: #ffffff!important;
+    font-size: 12px;
+    padding-left: 6px;
+    padding-right: 6px;
+    }
 </style>
 <div class="row page-title" style="padding-right: 20px;">
     <div class="col-md-7">
@@ -72,7 +80,8 @@ background-color: #ffffff;
         <h4 class="mb-1 mt-0">Calendarios</h4>
         <input type="hidden" name="idorgani" id="idorgani" value="{{session('sesionidorg')}}">
         <input type="hidden" name="" id="AñoOrgani" value="{{$fechaEnvi}}">
-        <input type="hidden" id="fechaEnviF" value={{$fechaEnviFi}}>
+
+        <input type="hidden" id="fechaEnviF" >
     </div>
 
     <div class="col-md-3 ">
@@ -101,7 +110,15 @@ background-color: #ffffff;
             <div class="col-md-6" style="  background: #ffffff;border: 1px solid #d4d4d4;
             height: 35px;"><h1>&nbsp;</h1></div>
               <div class="col-md-6"><label style="font-size: 12px" for="">Dias laborables</label></div>
+        </div><br><br>
+        <div class="row">
+
+        <div class="col-md-12"><label style="font-size: 12px;font-style:oblique;font-weight: 600" for="">De:</label></div>
+        <div class="col-md-12"><label style="font-size: 12px" for="">{{$fechaEnvi}}</label></div>
+        <div class="col-md-12"><label style="font-size: 12px;font-style:oblique;font-weight: 600" for="">Hasta:</label></div>
+        <div class="col-md-12"><label style="font-size: 12px" for="">{{$diaAnt}}</label></div>
         </div>
+       
 
     </div>
    {{--  <form action="javascript:agregarcalendario()"  class="col-md-5">
@@ -485,7 +502,6 @@ background-color: #ffffff;
 <script src="{{asset('admin/assets/libs/moment/moment.min.js')}}"></script>
 <script src="{{asset('admin/packages/core/main.js')}}"></script>
 <script src="{{asset('admin/packages/core/locales/es.js')}}"></script>
-
 <script src="{{asset('admin/packages/daygrid/main.js')}}"></script>
 <script src="{{asset('admin/packages/timegrid/main.js')}}"></script>
 <script src="{{asset('admin/packages/interaction/main.js')}}"></script>
