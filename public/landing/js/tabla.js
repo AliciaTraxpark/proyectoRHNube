@@ -280,16 +280,14 @@ function RefreshTablaEmpleado() {
             });
             var seleccionarTodos = $("#selectT");
             var table = $("#tablaEmpleado");
-            var CheckBoxs = table.find("tbody input:checkbox");
+            var CheckBoxs = table.find('tbody input:checkbox[name=selec]');
             var CheckBoxMarcados = 0;
 
             seleccionarTodos.on("click", function () {
                 if (seleccionarTodos.is(":checked")) {
                     CheckBoxs.prop("checked", true);
-                    $('.custom-control-input').prop("checked", false);
                 } else {
                     CheckBoxs.prop("checked", false);
-                    $('.custom-control-input').prop("checked", false);
                 }
             });
 

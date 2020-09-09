@@ -128,7 +128,7 @@
     <tbody style="background:#ffffff;color: #585858;font-size: 12.5px" id="tbodyr">
         @foreach ($tabla_empleado as $tabla_empleados)
         <tr id="{{$tabla_empleados->emple_id}}" value="{{$tabla_empleados->emple_id}}">
-            <td class="text-center"><input type="checkbox" id="tdC" style="margin-left:5.5px!important"
+            <td class="text-center"><input type="checkbox" name="selec" id="tdC" style="margin-left:5.5px!important"
                     class="form-check-input sub_chk" data-id="{{$tabla_empleados->emple_id}}" $(this)$(this)$(this)>
             </td>
             <td class="text-center"><a id="formNuevoEd" onclick="editarEmpleado({{$tabla_empleados->emple_id}})"
@@ -244,23 +244,21 @@
     $('#filter_col6').hide();
     var seleccionarTodos = $('#selectT');
     var table = $('#tablaEmpleado');
-    var CheckBoxs = table.find('tbody input:checkbox');
+    var CheckBoxs = table.find('tbody input:checkbox[name=selec]');
     var CheckBoxMarcados = 0;
 
     seleccionarTodos.on('click', function () {
         if (seleccionarTodos.is(":checked")) {
             CheckBoxs.prop('checked', true);
-            $('.custom-control-input').prop("checked", false);
         } else {
             CheckBoxs.prop('checked', false);
-            $('.custom-control-input').prop("checked", false);
         };
 
     });
 
 
     CheckBoxs.on('change', function (e) {
-        CheckBoxMarcados = table.find('tbody input:checkbox:checked').length;
+        CheckBoxMarcados = table.find('tbody input:checkbox[name=selec]:checked').length;
         seleccionarTodos.prop('checked', (CheckBoxMarcados === CheckBoxs.length));
     });
 </script>
