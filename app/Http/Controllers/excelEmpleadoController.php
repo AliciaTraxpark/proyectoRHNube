@@ -21,6 +21,9 @@ use Illuminate\Http\Request;
 use App\Imports\EmpleadoImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\actividad;
+use App\calendario;
+use App\eventos_usuario;
+use App\eventos_empleado;
 class excelEmpleadoController extends Controller
 {
     //
@@ -308,7 +311,8 @@ class excelEmpleadoController extends Controller
                     'estado'    => 1,
 
                 ]);
-            contrato::create([
+                if($row['idtipo_contrato']!='' || $row['idtipo_contrato']!=null){
+                   contrato::create([
                 'id_tipoContrato'=>$row['idtipo_contrato'],
                 'id_condicionPago'=>$row['idcondicion_pago'],
                 'monto'=>$emp[23],
@@ -317,6 +321,27 @@ class excelEmpleadoController extends Controller
 
 
             ]);
+                }
+
+            $calendario=calendario::where('calendario_nombre','=','Perú')
+            ->where('organi_id','=',session('sesionidorg'))->get()->first();
+            $idcalendario=$calendario->calen_id;
+            $eventos_usuario = eventos_usuario::where('organi_id', '=', session('sesionidorg'))
+                ->where('id_calendario', '=', $idcalendario)->get();
+            if ($eventos_usuario) {
+                foreach ($eventos_usuario as $eventos_usuarios) {
+                    $eventos_empleado_r = new eventos_empleado();
+                    $eventos_empleado_r->id_empleado =  $empleadoId->emple_id;
+                    $eventos_empleado_r->title = $eventos_usuarios->title;
+                    $eventos_empleado_r->color = $eventos_usuarios->color;
+                    $eventos_empleado_r->textColor = $eventos_usuarios->textColor;
+                    $eventos_empleado_r->start = $eventos_usuarios->start;
+                    $eventos_empleado_r->end = $eventos_usuarios->end;
+                    $eventos_empleado_r->tipo_ev = $eventos_usuarios->tipo;
+                    $eventos_empleado_r->id_calendario = $idcalendario;
+                    $eventos_empleado_r->save();
+                }
+            }
             /*
             modo::create([
                 'idEmpleado'    => $empleadoId->emple_id,

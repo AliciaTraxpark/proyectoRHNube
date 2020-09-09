@@ -3873,8 +3873,8 @@ use App\proyecto_empleado;
                                         style="margin-top: 7px;font-weight: 600">Calendario:</label></div>
                                 <div class="col-md-4 text-center" id="divescond1_ver">
                                     <input type="hidden" id="idselect3_ver">
-                                    <select name="" id="selectCalendario_edit3_ver" class="form-control form-control-sm"
-                                        style="margin-top: 4px;">
+                                    <select name="" id="selectCalendario_edit3_ver"  class="form-control form-control-sm"
+                                        style="margin-top: 4px;" disabled>
                                         <option hidden selected>Asignar calendario</option>
                                         @foreach ($calendario as $calendarios)
                                         <option class="" value="{{ $calendarios->calen_id }}">

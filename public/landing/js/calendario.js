@@ -1,17 +1,44 @@
-$(document).ready(function () {
-
-
-
-});
-
 
 function calendario() {
+    //
+
+
     var calendarEl = document.getElementById('calendar');
     calendarEl.innerHTML = "";
 
     var fecha = new Date();
     var ano = fecha.getFullYear();
     var id;
+     var añoCal= $('#AñoOrgani').val();
+
+
+var idcalendarioF=$('#selectCalendario').val();
+    $.ajax({
+        type: "POST",
+        url: "/calendario/mostrarFCalend",
+        data: {idcale:idcalendarioF},
+        async: false,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+
+            $('#fechaEnviF').val(data);
+            $('#fechaHasta').text(moment(data).subtract(1, 'day').format('YYYY-MM-DD'));
+
+        },
+        error: function () {}})
+    //
+    fechaFinalO=$('#fechaEnviF').val();
+
 
     var configuracionCalendario = {
         locale: 'es',
@@ -33,7 +60,7 @@ function calendario() {
 
             $('#pruebaEnd').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
             $('#pruebaStar').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
-            console.log(arg);
+
             $('#calendarioAsignar').modal('show');
         },
         eventClick: function (info) {
@@ -60,15 +87,29 @@ function calendario() {
         editable: false,
         eventLimit: true,
         header: {
-            left: 'prev,next today',
+            left: 'prev,next, today,nuevoAño',
             center: 'title',
             right: ''
         },
-        footer: {
-            left: 'Descanso',
-            center: 'Feriado',
-            right: 'NoLaborales'
+        validRange: {
+            start: añoCal,
+            end: fechaFinalO
+          },
+          customButtons: {
+            nuevoAño: {
+                text: "+ Nuevo año",
+
+                click: function () {
+                    añoNuevo=$('#fechaEnviF').val();
+                    añoAc=new Date(añoNuevo);
+                    añoEnviado=añoAc.getFullYear()+1;
+                    $('#textoNuevoAño').val("¿Añadir año "+añoEnviado+" al calendario actual?");
+                    $('#añotNuevo').val(añoEnviado);
+                    $('#añadirNuevoa').modal('show');
+                }
+            }
         },
+
         events: function(info, successCallback, failureCallback) {
             var idcalendario=$('#selectCalendario').val();
             var datoscal;
@@ -89,8 +130,24 @@ function calendario() {
             }
         },
         success: function (data) {
+            $.each( data, function( index, value ){
+                successCallback(data);
+                if(value.laborable==0){
+                        var element = $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date]");
 
-            successCallback(data);
+                        var a = moment(value.end);
+                        c=a._i;
+                        var b = moment(value.start);
+                        d=b._i;
+
+                        if(a.diff(b, 'days')>1){
+                            $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(a).subtract(1, 'day').format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffefef");
+                        }
+
+                        $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(value.start).format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffefef");
+                }
+
+            });
 
         },
         error: function () {}
@@ -101,8 +158,10 @@ function calendario() {
 
     }
     calendar = new FullCalendar.Calendar(calendarEl, configuracionCalendario);
+
     calendar.setOption('locale', "Es");
     //DESCANSO
+
 
     $('#eliminarDescanso').click(function () {
         objEvento = datos("DELETE");
@@ -147,7 +206,7 @@ function calendario() {
             success: function (msg) {
                 $('#myModalEliminarD').modal('toggle');
                 calendar.refetchEvents();
-                console.log(msg);
+
             },
             error: function () {}
         });
@@ -209,7 +268,7 @@ function calendario() {
                 $('#myModalEliminarN').modal('hide');
                 $('#myModalEliminarFeriado').modal('hide');
                 calendar.refetchEvents();
-                console.log(msg);
+
             },
             error: function () {
                 alert("error");
@@ -228,17 +287,18 @@ function registrarDdescanso()  {
     $('#calendarioAsignar').modal('hide');
    var idevento;
     title= 'Descanso';
-    color='#4673a0';
-    textColor= '#ffffff';
+    color='#e6bdbd';
+    textColor= '#504545';
     start= $('#pruebaStar').val();
     end= $('#pruebaEnd').val();
     tipo= 1;
+    laborable=0;
     id_calendario=$('#selectCalendario').val();
     //$('#myModal').modal('show');
     $.ajax({
         type: "POST",
         url: "/eventos_usuario/store",
-        data: {title,color,textColor,start,end,tipo,id_calendario},
+        data: {title,color,textColor,start,end,tipo,id_calendario,laborable},
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -253,7 +313,7 @@ function registrarDdescanso()  {
         success: function (data) {
             //var date = calendar1.getDate();
             //alert("The current date of the calendar is " + date.toISOString());
-
+            console.log(data);
             calendar.refetchEvents();
             idevento=data;
 
@@ -337,12 +397,13 @@ function registrarDferiado()  {
     start= $('#pruebaStar').val();
     end= $('#pruebaEnd').val();
     tipo= 2;
+    laborable=0;
     id_calendario=$('#selectCalendario').val();
     //$('#myModal').modal('show');
     $.ajax({
         type: "POST",
         url: "/eventos_usuario/store",
-        data: {title,color,textColor,start,end,tipo,id_calendario},
+        data: {title,color,textColor,start,end,tipo,id_calendario,laborable},
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -414,7 +475,7 @@ function registrarDferiado()  {
                                 }
                             },
                             success: function (data) {
-                               console.log(data);
+
 
 
                             },
@@ -440,12 +501,13 @@ function registrarDnlaborables()  {
     start= $('#pruebaStar').val();
     end= $('#pruebaEnd').val();
     tipo= 0;
+    laborable=0;
     id_calendario=$('#selectCalendario').val();
     //$('#myModal').modal('show');
     $.ajax({
         type: "POST",
         url: "/eventos_usuario/store",
-        data: {title,color,textColor,start,end,tipo,id_calendario},
+        data: {title,color,textColor,start,end,tipo,id_calendario,laborable},
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -549,10 +611,22 @@ function EnviarDescansoE() {
                 location.reload();
             }
         },
-        success: function (msg) {
+        success: function (data) {
             $('#myModalEliminarD').modal('toggle');
+            var a = moment(data.end);
+            c=a._i;
+            var b = moment(data.start);
+            d=b._i;
+
+            if(a.diff(b, 'days')>1){
+                $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(a).subtract(1, 'day').format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffffff");
+            }
+
+            $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(data.start).format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffffff");
             calendar.refetchEvents();
-            console.log(msg);
+
+
+
         },
         error: function () {}
     });
@@ -575,10 +649,20 @@ function eliminarEvNL() {
                 location.reload();
             }
         },
-        success: function (msg) {
+        success: function (data) {
             $('#myModalEliminarN').modal('toggle');
+            var a = moment(data.end);
+            c=a._i;
+            var b = moment(data.start);
+            d=b._i;
+
+            if(a.diff(b, 'days')>1){
+                $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(a).subtract(1, 'day').format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffffff");
+            }
+
+            $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(data.start).format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffffff");
             calendar.refetchEvents();
-            console.log(msg);
+
         },
         error: function () {}
     });
@@ -602,10 +686,20 @@ function eliminarEvF() {
                 location.reload();
             }
         },
-        success: function (msg) {
+        success: function (data) {
             $('#myModalEliminarFeriado').modal('toggle');
+            var a = moment(data.end);
+            c=a._i;
+            var b = moment(data.start);
+            d=b._i;
+
+            if(a.diff(b, 'days')>1){
+                $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(a).subtract(1, 'day').format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffffff");
+            }
+
+            $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(data.start).format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffffff");
             calendar.refetchEvents();
-            console.log(msg);
+
         },
         error: function () {}
     });
@@ -620,32 +714,75 @@ document.addEventListener('DOMContentLoaded', calendario);
 
 function agregarcalendario(){
    var nombrecal= $('#nombreCalen').val();
-   $.ajax({
-       type:"POST",
-    url: "/calendario/registrarnuevo",
-    data: {
-        nombrecal
-    },
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
-    statusCode: {
-        419: function () {
-            location.reload();
-        }
-    },
-    success: function (data) {
-        $('#nombreCalen').val('');
-    $('#selectCalendario').append($('<option>', { //agrego los valores que obtengo de una base de datos
-        value: data.calen_id,
-        text: data.calendario_nombre,
-        selected: true
-    }));
-    calendario();
-    $('#agregarCalendarioN').modal('hide');
-    },
-    error: function () {}
-});
+   if($("#clonarCheck").is(':checked') ){
+    var idcalenda=$("#selectClonar").val();
+
+    $.ajax({
+        type:"POST",
+        url: "/calendario/registrarnuevoClonado",
+        data: {
+            nombrecal,idcalenda
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            $('#nombreCalen').val('');
+        $('#selectCalendario').append($('<option>', { //agrego los valores que obtengo de una base de datos
+            value: data.calen_id,
+            text: data.calendario_nombre,
+            selected: true
+        }));
+        $('#selectClonar').append($('<option>', { //agrego los valores que obtengo de una base de datos
+            value: data.calen_id,
+            text: data.calendario_nombre,
+            selected: false
+        }));
+        calendario();
+        $('#agregarCalendarioN').modal('hide');
+        },
+        error: function () {}
+    });
+   }
+   else{
+        $.ajax({
+        type:"POST",
+        url: "/calendario/registrarnuevo",
+        data: {
+            nombrecal
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            $('#nombreCalen').val('');
+        $('#selectCalendario').append($('<option>', { //agrego los valores que obtengo de una base de datos
+            value: data.calen_id,
+            text: data.calendario_nombre,
+            selected: true
+        }));
+        $('#selectClonar').append($('<option>', { //agrego los valores que obtengo de una base de datos
+            value: data.calen_id,
+            text: data.calendario_nombre,
+            selected: false
+        }));
+        calendario();
+        $('#agregarCalendarioN').modal('hide');
+        },
+        error: function () {}
+    });
+   }
+
 }
 
 
@@ -670,5 +807,43 @@ $('#selectCalendario').change(function (){
 })
 //////////////////////////
 function abrirNcalendario(){
+    $('#nombreCalen').val('');
+    $('#clonarCheck').prop('checked',false);
+    $('#selectClonar').val('Seleccione calendario');
+     $('#selectClonar').prop('disabled',true);
     $('#agregarCalendarioN').modal('show');
+}
+
+//ckeck clonar
+$("#clonarCheck").click(function () {
+    if ($("#clonarCheck").is(":checked")) {
+        $('#selectClonar').prop('disabled',false);
+    } else {
+        $('#selectClonar').prop('disabled',true);
+    }
+});
+
+function editarfinC(){
+    var calendfEd=$('#selectCalendario').val();
+    var añoFed=$('#añotNuevo').val();
+
+    $.ajax({
+        type: "POST",
+        url: "/calendario/añadirFinCalenda",
+        data: {calendfEd,añoFed},
+        async: false,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            calendario();
+            $('#añadirNuevoa').modal('hide');
+        },
+        error: function () {}})
+
 }

@@ -10,8 +10,9 @@ use App\paises;
 use App\calendario;
 use App\eventos_empleado;
 use App\eventos_usuario;
+use App\organizacion;
 use Illuminate\Support\Facades\DB;
-
+use Carbon\Carbon;
 class calendarioController extends Controller
 {
     public function __construct()
@@ -21,6 +22,8 @@ class calendarioController extends Controller
     //
     public function index()
     {
+
+
         if (Auth::check()) {
             $paises = paises::all();
             $departamento = ubigeo_peru_departments::all();
@@ -30,10 +33,19 @@ class calendarioController extends Controller
                 //copiar tabla
                 $evento = eventos::all();
 
+                $today = Carbon::now();
+                $año=$today->year;
+                $mes=$today->month;
+                $añoFinc=$año+1;
+                $comienzo=Carbon::create($año.'-'.$mes.'-01');
+                $fincale=Carbon::create($añoFinc.'-01-01');
+                $final=Carbon::create($año.'-12-31');
+
                 $calendarioR = new calendario();
                 $calendarioR->organi_id = session('sesionidorg');
                 $calendarioR->users_id = Auth::user()->id;
                 $calendarioR->calendario_nombre='Perú';
+                $calendarioR->fin_fecha=$fincale;
                 $calendarioR->save();
                  foreach ($evento as $eventos) {
                     $eventos_usuario = new eventos_usuario();
@@ -46,8 +58,55 @@ class calendarioController extends Controller
                     $eventos_usuario->end =$eventos->end;
                     $eventos_usuario->tipo =$eventos->tipo;
                     $eventos_usuario->id_calendario =$calendarioR->calen_id;
+                    $eventos_usuario->laborable =$eventos->laborable;
+                   /*  $eventos_usuario->backgroundColor =$calendarioR->backgroundColor; */
                     $eventos_usuario->save();
                 }
+
+                  ///
+
+
+                 $dates = [];
+                 $sundays = [];
+                /*        para todos lo disd
+                                while ($comienzo->lte($final)) {
+                                $dates[] = $comienzo->copy()->format('Y-m-d');
+
+                                    $comienzo->addDay();
+
+
+                                } */
+
+                 //para domigos
+                 $oneDay     = 60*60*24;
+                 for($i = strtotime($comienzo); $i <= strtotime($final); $i += $oneDay) {
+                     $day = date('N', $i);
+                     if($day == 7) {
+
+                         $sundays[] = date('Y-m-d', $i);
+
+                         $i += 6 * $oneDay;
+                     }
+                 }
+
+
+                 foreach ($sundays as $dates2) {
+                    $eventos_usuario2 = new eventos_usuario();
+                    $eventos_usuario2->organi_id = session('sesionidorg');
+                    $eventos_usuario2->users_id = Auth::user()->id;
+                    $eventos_usuario2->title ='Descanso';
+                    $eventos_usuario2->color ='#e6bdbd';
+                    $eventos_usuario2->textColor =  '#504545';
+                    $eventos_usuario2->start =$dates2;
+                    $eventos_usuario2->tipo =1;
+                    $eventos_usuario2->id_calendario =$calendarioR->calen_id;
+                    $eventos_usuario2->laborable =0;
+
+                    $eventos_usuario2->save();
+                     }
+
+
+
             }
 
             $calendarioSel = calendario::where('organi_id', '=', session('sesionidorg'))->get();
@@ -58,36 +117,36 @@ class calendarioController extends Controller
                 ->where('organi_id','=',session('sesionidorg'))
                 ->get()->first();
 
-                    if($invitadod){
-                        if ($invitadod->rol_id!=1){
-                            return redirect('/dashboard');
-                        }
-                        else{
-                            return view('calendario.calendario', ['pais' => $paises, 'calendario' => $calendarioSel]);
-                        }
+                $organizacion=organizacion::where('organi_id','=',session('sesionidorg'))
+            ->get() ->first();
+            /* dd($organizacion->created_at->format('Y-m-d')); */
+            $fechaOrga=Carbon::create($organizacion->created_at->format('Y-m-d'));
+            $mesOrga=$fechaOrga->month;
+            $yearOrga=$fechaOrga->year;
+            $fechaOrga2=Carbon::create($yearOrga.'-'.$mesOrga.'-01');
+            $añonn=$yearOrga+1;
+            $fechaOrga3=Carbon::create($añonn.'-01-01');
+            $fechaEnvi=$fechaOrga2->format('Y-m-d');
+            $fechaEnviFi=$fechaOrga3->format('Y-m-d');
+            $diaAnt=Carbon::create($fechaEnviFi)->subDays(1)->format('Y-m-d');
+                if($invitadod){
+                    if ($invitadod->rol_id!=1){
+                        return redirect('/dashboard');
                     }
+                    else{
+                        return view('calendario.calendario', ['pais' => $paises, 'calendario' => $calendarioSel,
+                        'fechaEnvi' => $fechaEnvi,'fechaEnviFi' => $fechaEnviFi,'diaAnt' => $diaAnt]);
+                    }
+                }
 
-                else{
-
-            return view('calendario.calendario', ['pais' => $paises, 'calendario' => $calendarioSel]);}
+            else{
+            return view('calendario.calendario', ['pais' => $paises, 'calendario' => $calendarioSel,
+            'fechaEnvi' => $fechaEnvi,'fechaEnviFi' => $fechaEnviFi,'diaAnt' => $diaAnt]);}
         } else {
             return redirect(route('principal'));
         }
     }
-    public function store(Request $request)
-    {
 
-        $evento = eventos::all();
-        $calendario = calendario::all();
-
-        foreach ($evento as $eventos) {
-            $calendarioR = new calendario();
-            $calendarioR->users_id = Auth::user()->id;
-            $calendarioR->eventos_id = $eventos->id;
-            $calendarioR->organi_id = session('sesionidorg');
-            $calendarioR->save();
-        }
-    }
     public function show()
     {
         $eventos = DB::table('eventos')->select(['id', 'title', 'color', 'textColor', 'start', 'end', 'tipo']);
@@ -106,7 +165,7 @@ class calendarioController extends Controller
         //calendario::where('eventos_id',$id)->delete();
         $eventos_usuario = eventos_usuario::findOrFail($id);
         eventos_usuario::destroy($id);
-        return response()->json($id);
+        return response()->json($eventos_usuario);
     }
     public function indexMenu()
     {
@@ -119,10 +178,19 @@ class calendarioController extends Controller
                 //copiar tabla
                 $evento = eventos::all();
 
+                $today = Carbon::now();
+                $año=$today->year;
+                $mes=$today->month;
+                $añoFinc=$año+1;
+                $comienzo=Carbon::create($año.'-'.$mes.'-01');
+                $fincale=Carbon::create($añoFinc.'-01-01');
+                $final=Carbon::create($año.'-12-31');
+
                 $calendarioR = new calendario();
                 $calendarioR->organi_id = session('sesionidorg');
                 $calendarioR->users_id = Auth::user()->id;
                 $calendarioR->calendario_nombre='Perú';
+                $calendarioR->fin_fecha=$fincale;
                 $calendarioR->save();
                  foreach ($evento as $eventos) {
                     $eventos_usuario = new eventos_usuario();
@@ -135,10 +203,54 @@ class calendarioController extends Controller
                     $eventos_usuario->end =$eventos->end;
                     $eventos_usuario->tipo =$eventos->tipo;
                     $eventos_usuario->id_calendario =$calendarioR->calen_id;
+                    $eventos_usuario->laborable =$eventos->laborable;
+                   /*  $eventos_usuario->backgroundColor =$calendarioR->backgroundColor; */
                     $eventos_usuario->save();
                 }
-            }
 
+                  ///
+
+
+                 $dates = [];
+                 $sundays = [];
+                /*        para todos lo disd
+                                while ($comienzo->lte($final)) {
+                                $dates[] = $comienzo->copy()->format('Y-m-d');
+
+                                    $comienzo->addDay();
+
+
+                                } */
+
+                 //para domigos
+                 $oneDay     = 60*60*24;
+                 for($i = strtotime($comienzo); $i <= strtotime($final); $i += $oneDay) {
+                     $day = date('N', $i);
+                     if($day == 7) {
+
+                         $sundays[] = date('Y-m-d', $i);
+
+                         $i += 6 * $oneDay;
+                     }
+                 }
+
+
+                 foreach ($sundays as $dates2) {
+                    $eventos_usuario2 = new eventos_usuario();
+                    $eventos_usuario2->organi_id = session('sesionidorg');
+                    $eventos_usuario2->users_id = Auth::user()->id;
+                    $eventos_usuario2->title ='Descanso';
+                    $eventos_usuario2->color ='#e6bdbd';
+                    $eventos_usuario2->textColor =  '#504545';
+                    $eventos_usuario2->start =$dates2;
+                    $eventos_usuario2->tipo =1;
+                    $eventos_usuario2->id_calendario =$calendarioR->calen_id;
+                    $eventos_usuario2->laborable =0;
+
+                    $eventos_usuario2->save();
+                     }
+
+            }
             $calendarioSel = calendario::where('organi_id', '=', session('sesionidorg'))->get();
             //FUNCIONA OK
 
@@ -148,17 +260,33 @@ class calendarioController extends Controller
             ->where('organi_id','=',session('sesionidorg'))
             ->get()->first();
 
+            $organizacion=organizacion::where('organi_id','=',session('sesionidorg'))
+            ->get() ->first();
+            /* dd($organizacion->created_at->format('Y-m-d')); */
+            $fechaOrga=Carbon::create($organizacion->created_at->format('Y-m-d'));
+            $mesOrga=$fechaOrga->month;
+            $yearOrga=$fechaOrga->year;
+            $fechaOrga2=Carbon::create($yearOrga.'-'.$mesOrga.'-01');
+            $añonn=$yearOrga+1;
+            $fechaOrga3=Carbon::create($añonn.'-01-01');
+            $fechaEnvi=$fechaOrga2->format('Y-m-d');
+            $fechaEnviFi=$fechaOrga3->format('Y-m-d');
+
+            $diaAnt=Carbon::create($fechaEnviFi)->subDays(1)->format('Y-m-d');
+
                 if($invitadod){
                     if ($invitadod->rol_id!=1){
                         return redirect('/dashboard');
                     }
                     else{
-                        return view('calendario.calendarioMenu', ['pais' => $paises, 'calendario' => $calendarioSel]);
+                        return view('calendario.calendarioMenu', ['pais' => $paises, 'calendario' => $calendarioSel,
+                        'fechaEnvi' => $fechaEnvi,'fechaEnviFi' => $fechaEnviFi,'diaAnt' => $diaAnt]);
                     }
                 }
 
             else{
-            return view('calendario.calendarioMenu', ['pais' => $paises, 'calendario' => $calendarioSel]);}
+            return view('calendario.calendarioMenu', ['pais' => $paises, 'calendario' => $calendarioSel,
+            'fechaEnvi' => $fechaEnvi,'fechaEnviFi' => $fechaEnviFi,'diaAnt' => $diaAnt]);}
         } else {
             return redirect(route('principal'));
         }
@@ -169,10 +297,19 @@ class calendarioController extends Controller
 
         $evento = eventos::all();
 
+        $today = Carbon::now();
+        $año=$today->year;
+        $mes=$today->month;
+        $añoFinc=$año+1;
+        $comienzo=Carbon::create($año.'-'.$mes.'-01');
+        $fincale=Carbon::create($añoFinc.'-01-01');
+        $final=Carbon::create($año.'-12-31');
+
         $calendarioR = new calendario();
         $calendarioR->organi_id = session('sesionidorg');
         $calendarioR->users_id = Auth::user()->id;
         $calendarioR->calendario_nombre=$nombrecal;
+        $calendarioR->fin_fecha=$fincale;
         $calendarioR->save();
 
             foreach ($evento as $eventos) {
@@ -186,8 +323,36 @@ class calendarioController extends Controller
             $eventos_usuario->end =$eventos->end;
             $eventos_usuario->tipo =$eventos->tipo;
             $eventos_usuario->id_calendario =$calendarioR->calen_id;
+            $eventos_usuario->laborable =$eventos->laborable;
             $eventos_usuario->save();
         }
+
+       $dates = [];
+       $sundays = [];
+
+       //para domigos
+       $oneDay     = 60*60*24;
+       for($i = strtotime($comienzo); $i <= strtotime($final); $i += $oneDay) {
+           $day = date('N', $i);
+           if($day == 7) {
+               $sundays[] = date('Y-m-d', $i);
+               $i += 6 * $oneDay;
+           }
+       }
+       foreach ($sundays as $dates2) {
+          $eventos_usuario2 = new eventos_usuario();
+          $eventos_usuario2->organi_id = session('sesionidorg');
+          $eventos_usuario2->users_id = Auth::user()->id;
+          $eventos_usuario2->title ='Descanso';
+          $eventos_usuario2->color ='#e6bdbd';
+          $eventos_usuario2->textColor =  '#504545';
+          $eventos_usuario2->start =$dates2;
+          $eventos_usuario2->tipo =1;
+          $eventos_usuario2->id_calendario =$calendarioR->calen_id;
+          $eventos_usuario2->laborable =0;
+
+          $eventos_usuario2->save();
+           }
 
         return $calendarioR;
 
@@ -197,6 +362,7 @@ class calendarioController extends Controller
         $idcalendario=$request->idcalendario;
         $eventos_usuario=eventos_usuario::where('organi_id', '=', session('sesionidorg'))
         ->where('id_calendario','=',$idcalendario)
+        ->select('id','start','end','title','color','textColor','tipo','laborable')
         ->get();
         return $eventos_usuario;
     }
@@ -240,4 +406,89 @@ class calendarioController extends Controller
         }
 
     }
+
+    public function registrarnuevoClonado(Request $request){
+        $nombrecal=$request->nombrecal;
+        $idcalenda=$request->idcalenda;
+        $eventos_usuarioClon = eventos_usuario::where('id_calendario','=',$idcalenda)->get();
+        $calendarioDup=calendario::where('calen_id','=',$idcalenda)->get()->first();
+        $calendarioR = new calendario();
+        $calendarioR->organi_id = session('sesionidorg');
+        $calendarioR->users_id = Auth::user()->id;
+        $calendarioR->calendario_nombre=$nombrecal;
+        $calendarioR->fin_fecha= $calendarioDup->fin_fecha;
+        $calendarioR->save();
+
+            foreach ($eventos_usuarioClon as $eventos) {
+            $eventos_usuario = new eventos_usuario();
+            $eventos_usuario->organi_id = session('sesionidorg');
+            $eventos_usuario->users_id = Auth::user()->id;
+            $eventos_usuario->title =$eventos->title;
+            $eventos_usuario->color =$eventos->color;
+            $eventos_usuario->textColor =$eventos->textColor;
+            $eventos_usuario->start =$eventos->start;
+            $eventos_usuario->end =$eventos->end;
+            $eventos_usuario->tipo =$eventos->tipo;
+            $eventos_usuario->id_calendario =$calendarioR->calen_id;
+            $eventos_usuario->laborable =$eventos->laborable;
+            $eventos_usuario->save();
+        }
+
+
+        return $calendarioR;
+
+    }
+
+    public function mostrarFCalend(Request $request){
+        $idcale=$request->idcale;
+        $calendarioF=calendario::where('calen_id','=',$idcale)
+        ->get()->first();
+        $finff=Carbon::create($calendarioF->fin_fecha);
+
+        $fechafin=$finff->format('Y-m-d');
+
+        return $fechafin;
+    }
+
+  public function añadirFinCalenda(Request $request){
+    $calendfEd=$request->añoFed;
+    $idcalenda=$request->calendfEd;
+
+    $añoFinc=$calendfEd;
+    $comienzo=Carbon::create($añoFinc.'-01-01');
+
+    $final=Carbon::create($añoFinc.'-12-31');
+
+    $sundays = [];
+
+       //para domigos
+       $oneDay     = 60*60*24;
+       for($i = strtotime($comienzo); $i <= strtotime($final); $i += $oneDay) {
+           $day = date('N', $i);
+           if($day == 7) {
+               $sundays[] = date('Y-m-d', $i);
+               $i += 6 * $oneDay;
+           }
+       }
+       //////////////////////////////////////
+       $añoCale=$añoFinc+1;
+       $fechaCal=Carbon::create($añoCale.'-01-01');
+       $calendario  = DB::table('calendario')
+            ->where('calen_id', '=', $idcalenda)
+               ->update(['fin_fecha' => $fechaCal]);
+       /////////////////
+       foreach ($sundays as $dates2) {
+          $eventos_usuario2 = new eventos_usuario();
+          $eventos_usuario2->organi_id = session('sesionidorg');
+          $eventos_usuario2->users_id = Auth::user()->id;
+          $eventos_usuario2->title ='Descanso';
+          $eventos_usuario2->color ='#e6bdbd';
+          $eventos_usuario2->textColor =  '#504545';
+          $eventos_usuario2->start =$dates2;
+          $eventos_usuario2->tipo =1;
+          $eventos_usuario2->id_calendario =$idcalenda;
+          $eventos_usuario2->laborable =0;
+          $eventos_usuario2->save();
+           }
+  }
 }

@@ -44,14 +44,11 @@ use App\proyecto_empleado;
         top: 100px;
     left: 75px;
     } */
-     div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content.fc-sun{
 
-background-color: rgb(255, 239, 239) !important;
-}
 div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content.fc-mon, td.fc-day.fc-widget-content.fc-tue, td.fc-day.fc-widget-content.fc-wed,
 td.fc-day.fc-widget-content.fc-thu, td.fc-day.fc-widget-content.fc-fri, td.fc-day.fc-widget-content.fc-sat{
 
-background-color: #ffffff !important;
+background-color: #ffffff;
 }
     .fc-time{
         display: none;
@@ -68,11 +65,23 @@ background-color: #ffffff !important;
     color: #fff;
     background-color: #162029;
     }
+    .fc-nuevoAño-button{
+    left: 10px;
+    background: #2c2d31;
+    color: #ffffff!important;
+    font-size: 12px;
+    padding-left: 6px;
+    padding-right: 6px;
+    }
 </style>
 <div class="row page-title" style="padding-right: 20px;">
     <div class="col-md-7">
 
         <h4 class="mb-1 mt-0">Calendarios</h4>
+        <input type="hidden" name="idorgani" id="idorgani" value="{{session('sesionidorg')}}">
+        <input type="hidden" name="" id="AñoOrgani" value="{{$fechaEnvi}}">
+
+        <input type="hidden" id="fechaEnviF" >
     </div>
 
     <div class="col-md-3 ">
@@ -101,7 +110,15 @@ background-color: #ffffff !important;
             <div class="col-md-6" style="  background: #ffffff;border: 1px solid #d4d4d4;
             height: 35px;"><h1>&nbsp;</h1></div>
               <div class="col-md-6"><label style="font-size: 12px" for="">Dias laborables</label></div>
+        </div><br><br>
+        <div class="row">
+
+        <div class="col-md-12"><label style="font-size: 12px;font-style:oblique;font-weight: 600" for="">De:</label></div>
+        <div class="col-md-12"><label style="font-size: 12px" for="">{{$fechaEnvi}}</label></div>
+        <div class="col-md-12"><label style="font-size: 12px;font-style:oblique;font-weight: 600" for="">Hasta:</label></div>
+        <div class="col-md-12"><label style="font-size: 12px" for="" id="fechaHasta">{{$diaAnt}}</label></div>
         </div>
+
 
     </div>
    {{--  <form action="javascript:agregarcalendario()"  class="col-md-5">
@@ -388,8 +405,20 @@ background-color: #ffffff !important;
                    <div class="col-md-12">
                     <form id="" action="javascript:agregarcalendario()">
                        <div class="row">
-                        <div class="col-md-8"> <input type="text" class="form-control" id="nombreCalen" placeholder="Nombre nuevo calendario" required></div>
+                        <div class="col-md-12"> <input type="text" class="form-control" id="nombreCalen" placeholder="Nombre nuevo calendario" required><br></div>
+                        <div class="col-md-5 form-check" style="padding-left: 32px; margin-top: 4px;">
+                            <input type="checkbox"  class="form-check-input" id="clonarCheck">
+                            <label class="form-check-label" for="clonarCheck" >Clonar calendario de:</label>
+                        </div>
+                        <div class="col-md-7">
+                            <select name="" id="selectClonar" class="form-control form-control-sm" disabled >
+                                <option hidden selected>Seleccione calendario</option>
+                                @foreach ($calendario as $calendarios)
+                                    <option class="" value="{{$calendarios->calen_id}}">{{$calendarios->calendario_nombre}}</option>
+                                @endforeach
+                            </select>
 
+                        </div>
                        </div>
 
                    </div>
@@ -411,7 +440,50 @@ background-color: #ffffff !important;
      </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <div id="añadirNuevoa" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 550px;" >
 
+        <div class="modal-content">
+           <div class="modal-header" style="background-color:#163552;">
+               <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Añadir año</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+               </button>
+           </div>
+           <div class="modal-body" style="font-size:12px!important">
+               <div class="row">
+
+                   <div class="col-md-12">
+                    <form id="" action="javascript:editarfinC()">
+                       <div class="row">
+                        <div class="col-md-12" >
+                            <input type="text" id="textoNuevoAño" class="col-md-12" style="font-size: 15px; background-color: rgb(255, 255, 255);
+                            border: 0;">
+                            <input type="hidden" id="añotNuevo">
+                        </div>
+                       </div>
+
+                   </div>
+               </div>
+
+           </div>
+           <div class="modal-footer">
+               <div class="col-md-12">
+                   <div class="row">
+                       <div class="col-md-12 text-right" >
+                        <button type="button"  class="btn btn-light  " data-dismiss="modal">Cancelar</button>
+                        <button type="submit"  name="" style="background-color: #163552;" class="btn">Aceptar</button>
+                    </form>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div><!-- /.modal-content -->
+     </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+    
 <div class="row " >
 
 
@@ -473,7 +545,6 @@ background-color: #ffffff !important;
 <script src="{{asset('admin/assets/libs/moment/moment.min.js')}}"></script>
 <script src="{{asset('admin/packages/core/main.js')}}"></script>
 <script src="{{asset('admin/packages/core/locales/es.js')}}"></script>
-
 <script src="{{asset('admin/packages/daygrid/main.js')}}"></script>
 <script src="{{asset('admin/packages/timegrid/main.js')}}"></script>
 <script src="{{asset('admin/packages/interaction/main.js')}}"></script>
