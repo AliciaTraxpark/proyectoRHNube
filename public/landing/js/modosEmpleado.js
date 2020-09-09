@@ -755,7 +755,7 @@ function guardarCorreoE() {
     });
 }
 
-function estadoDispositivoCR(id) {
+function estadoDispositivoCR(id, pc) {
     $("#customSwitchCRDisp" + id).on("change.bootstrapSwitch", function (
         event
     ) {
@@ -765,14 +765,11 @@ function estadoDispositivoCR(id) {
             var valor = "INACTIVAR";
         }
         alertify
-            .confirm(
-                "¿Desea " + valor + " el estado de la  actividad?",
-                function (e) {
-                    if (e) {
-                        // editarEstadoActividad(idA, valor);
-                    }
+            .confirm("¿DESEA " + valor + " PC " + pc + "?", function (e) {
+                if (e) {
+                    // editarEstadoActividad(idA, valor);
                 }
-            )
+            })
             .setting({
                 title: "Cambiar estado a Dispositvos de Control Remoto",
                 labels: {

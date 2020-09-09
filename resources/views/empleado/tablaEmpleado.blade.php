@@ -191,7 +191,7 @@
                             <div class="custom-control custom-switch mb-2">
                                 <input type="checkbox" class="custom-control-input"
                                     id="customSwitchCRDisp{{$tablaV['idVinculacion']}}" checked
-                                    onclick="javasscript:estadoDispositivoCR({{$tablaV['idVinculacion']}})">
+                                    onclick="javasscript:estadoDispositivoCR({{$tablaV['idVinculacion']}},{{$loop->index}})">
                                 <label class="custom-control-label" for="customSwitchCRDisp{{$tablaV['idVinculacion']}}"
                                     style="font-weight: bold">PC{{$loop->index}}</label>
                             </div>
