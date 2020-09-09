@@ -109,11 +109,20 @@ function RefreshTablaEmpleado() {
                         data[i].emple_id +
                         '">\
                             <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor: pointer">\
-                                <div class="custom-control custom-switch mb-2">\
-                                    <input type="checkbox" class="custom-control-input" id="customSwitchCRW' +
-                        data[i].emple_id +
-                        '">\
-                                    <label class="custom-control-label" for="customSwitchCRW' +
+                                <div class="custom-control custom-switch mb-2">';
+                    if (data[i].estadoCR == true) {
+                        tbody +=
+                            '<input type="checkbox" class="custom-control-input" id="customSwitchCRW' +
+                            data[i].emple_id +
+                            '" checked>';
+                    } else {
+                        tbody +=
+                            '<input type="checkbox" class="custom-control-input" id="customSwitchCRW' +
+                            data[i].emple_id +
+                            '">';
+                    }
+                    tbody +=
+                        '<label class="custom-control-label" for="customSwitchCRW' +
                         data[i].emple_id +
                         '" style="font-weight: bold"></label>\
                                 </div>\
@@ -121,14 +130,62 @@ function RefreshTablaEmpleado() {
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
                     for (var j = 0; j < data[i].vinculacion.length; j++) {
                         if (data[i].vinculacion[j].dispositivoD == "WINDOWS") {
-                            tbody +=
-                                '<a class="dropdown-item" onclick="javascript:enviarWindowsTabla(' +
-                                data[i].emple_id +
-                                "," +
-                                data[i].vinculacion[j].idVinculacion +
-                                ')">PC ' +
-                                (j + 1) +
-                                "</a>";
+                            tbody += '<div class="dropdown-item">';
+                            if (
+                                data[i].vinculacion[j].disponible == "c" ||
+                                data[i].vinculacion[j].disponible == "e" ||
+                                data[i].vinculacion[j].disponible == "a"
+                            ) {
+                                tbody +=
+                                    '<div class="custom-control custom-switch mb-2">\
+                                <input type="checkbox" class="custom-control-input"\
+                                    id="customSwitchCRDisp' +
+                                    data[i].vinculacion[j].idVinculacion +
+                                    ']" checked\
+                                    onclick="javasscript:estadoDispositivoCR(' +
+                                    data[i].emple_id +
+                                    "," +
+                                    data[i].vinculacion[j].idVinculacion +
+                                    "," +
+                                    j +
+                                    "," +
+                                    '"' +
+                                    data[i].perso_nombre +
+                                    '")">\
+                                <label class="custom-control-label" for="customSwitchCRDisp' +
+                                    data[i].vinculacion[j].idVinculacion +
+                                    '"\
+                                    style="font-weight: bold">PC' +
+                                    j +
+                                    "</label>\
+                            </div>";
+                            } else {
+                                tbody +=
+                                    '<div class="custom-control custom-switch mb-2">\
+                                <input type="checkbox" class="custom-control-input"\
+                                    id="customSwitchCRDisp' +
+                                    data[i].vinculacion[j].idVinculacion +
+                                    '"\
+                                    onclick="javasscript:estadoDispositivoCR(' +
+                                    data[i].emple_id +
+                                    "," +
+                                    data[i].vinculacion[j].idVinculacion +
+                                    "," +
+                                    j +
+                                    "," +
+                                    '"' +
+                                    data[i].perso_nombre +
+                                    '")">\
+                                    <label class="custom-control-label" for="customSwitchCRDisp' +
+                                    data[i].vinculacion[j].idVinculacion +
+                                    '"\
+                                    style="font-weight: bold">PC' +
+                                    j +
+                                    "</label>\
+                            </div>";
+                            }
+
+                            tbody += '</div>';
                         }
                     }
                     tbody +=
@@ -205,6 +262,7 @@ function RefreshTablaEmpleado() {
                         "</div></td></tr>";
                 }
             }
+            console.log(tbody);
             $("#tbodyr").html(tbody);
             $("#tablaEmpleado").DataTable({
                 scrollX: true,
@@ -280,7 +338,7 @@ function RefreshTablaEmpleado() {
             });
             var seleccionarTodos = $("#selectT");
             var table = $("#tablaEmpleado");
-            var CheckBoxs = table.find('tbody input:checkbox[name=selec]');
+            var CheckBoxs = table.find("tbody input:checkbox[name=selec]");
             var CheckBoxMarcados = 0;
 
             seleccionarTodos.on("click", function () {
