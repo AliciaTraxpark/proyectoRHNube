@@ -308,7 +308,8 @@ class excelEmpleadoController extends Controller
                     'estado'    => 1,
 
                 ]);
-            contrato::create([
+                if($row['idtipo_contrato']!='' || $row['idtipo_contrato']!=null){
+                   contrato::create([
                 'id_tipoContrato'=>$row['idtipo_contrato'],
                 'id_condicionPago'=>$row['idcondicion_pago'],
                 'monto'=>$emp[23],
@@ -317,6 +318,8 @@ class excelEmpleadoController extends Controller
 
 
             ]);
+                }
+
             /*
             modo::create([
                 'idEmpleado'    => $empleadoId->emple_id,
