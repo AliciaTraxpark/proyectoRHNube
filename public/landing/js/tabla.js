@@ -33,8 +33,22 @@ function RefreshTablaEmpleado() {
                     data[i].emple_id +
                     " value=" +
                     data[i].emple_id +
-                    '>\
-                            <td class="text-center">\
+                    ">";
+                tbody +=
+                    '<td class="text-center">\
+                            <input type="checkbox" id="tdC" style="margin-right:5.6px!important"\
+                            class="form-check-input sub_chk" data-id=' +
+                    data[i].emple_id +
+                    " " +
+                    this +
+                    "" +
+                    this +
+                    "" +
+                    this +
+                    ">\
+                        </td>";
+                tbody +=
+                    '<td class="text-center">\
                                 <a id="formNuevoEd" onclick="javascript:editarEmpleado(' +
                     data[i].emple_id +
                     ')" style="cursor: pointer">\
@@ -54,10 +68,10 @@ function RefreshTablaEmpleado() {
                                     <img src="/landing/images/see.svg" height="18">\
                                 </a>\
                             </td>\
-                            <td class="text-center">&nbsp; <input type="hidden" id="codE" value="' +
+                            <td class="text-center">&nbsp; <input type="hidden" id="codE" value=' +
                     data[i].emple_id +
-                    '">\
-                                <img src="/admin/assets/images/users/empleado.png" alt="" />\
+                    '>\
+                                <img src="/admin/assets/images/users/empleado.png"/>\
                             </td>\
                             <td class="text-center"> <div class="text-wrap width-400">' +
                     data[i].emple_nDoc +
@@ -95,8 +109,12 @@ function RefreshTablaEmpleado() {
                         '">\
                             <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor: pointer">\
                                 <div class="custom-control custom-switch mb-2">\
-                                    <input type="checkbox" class="custom-control-input" id="customSwitchCRW'+data[i].emple_id+'">\
-                                    <label class="custom-control-label" for="customSwitchCRW'+data[i].emple_id+'" style="font-weight: bold"></label>\
+                                    <input type="checkbox" class="custom-control-input" id="customSwitchCRW' +
+                        data[i].emple_id +
+                        '">\
+                                    <label class="custom-control-label" for="customSwitchCRW' +
+                        data[i].emple_id +
+                        '" style="font-weight: bold"></label>\
                                 </div>\
                             </a>\
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
@@ -122,8 +140,12 @@ function RefreshTablaEmpleado() {
                         '<td class="text-center">\
                                 <div class="custom-control custom-switch mb-2">\
                                     <input type="checkbox" class="custom-control-input"\
-                                        id="customSwitchCP'+data[i].emple_id+'">\
-                                    <label class="custom-control-label" for="customSwitchCP'+data[i].emple_id+'"\
+                                        id="customSwitchCP' +
+                        data[i].emple_id +
+                        '">\
+                                    <label class="custom-control-label" for="customSwitchCP' +
+                        data[i].emple_id +
+                        '"\
                                         style="font-weight: bold"></label>\
                                 </div>\
                     </td>';
@@ -135,8 +157,12 @@ function RefreshTablaEmpleado() {
                         '">\
                             <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor: pointer">\
                                 <div class="custom-control custom-switch mb-2">\
-                                    <input type="checkbox" class="custom-control-input" id="customSwitchCRP'+data[i].emple_id+'">\
-                                    <label class="custom-control-label" for="customSwitchCRP'+data[i].emple_id+'" style="font-weight: bold"></label>\
+                                    <input type="checkbox" class="custom-control-input" id="customSwitchCRP' +
+                        data[i].emple_id +
+                        '">\
+                                    <label class="custom-control-label" for="customSwitchCRP' +
+                        data[i].emple_id +
+                        '" style="font-weight: bold"></label>\
                                 </div>\
                             </a>\
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
@@ -169,32 +195,20 @@ function RefreshTablaEmpleado() {
                         "</div></td>";
                 }
                 if (data[i].area_descripcion == null) {
-                    tbody += '<td><div class="text-wrap width-400"></div></td>';
+                    tbody +=
+                        '<td><div class="text-wrap width-400"></div></td></tr>';
                 } else {
                     tbody +=
                         '<td><div class="text-wrap width-400">' +
                         data[i].area_descripcion +
-                        "</div></td>";
+                        "</div></td></tr>";
                 }
-                tbody +=
-                    '<td class="text-center">\
-                            <input type="checkbox" id="tdC" style="margin-right:5.6px!important"\
-                            class="form-check-input sub_chk" data-id=' +
-                    data[i].emple_id +
-                    " " +
-                    this +
-                    "" +
-                    this +
-                    "" +
-                    this +
-                    ">\
-                        </td></tr>";
             }
             console.log(tbody);
             $("#tbodyr").html(tbody);
             $("#tablaEmpleado").DataTable({
                 scrollX: true,
-                responsive: false,
+                responsive: true,
                 retrieve: true,
                 searching: true,
                 lengthChange: false,
