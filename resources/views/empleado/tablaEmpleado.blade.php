@@ -185,9 +185,26 @@
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         @foreach($tabla_empleados->vinculacion as $tablaV)
                         @if($tablaV["dispositivoD"] == "WINDOWS")
-                        <a class="dropdown-item"
-                            onclick="javascript:enviarWindowsTabla({{$tabla_empleados->emple_id}},{{$tablaV['idVinculacion']}})">PC
-                            {{$loop->index}}</a>
+                        <a class="dropdown-item">
+                            @if($tablaV['disponible'] == 'c' || $tablaV['disponible'] == 'e' || $tablaV['disponible'] ==
+                            'a')
+                            <div class="custom-control custom-switch mb-2">
+                                <input type="checkbox" class="custom-control-input"
+                                    id="customSwitchCRDisp{{$tablaV['idVinculacion']}}" checked>
+                                <label class="custom-control-label" for="customSwitchCRDisp{{$tablaV['idVinculacion']}}"
+                                    style="font-weight: bold">PC{{$loop->index}}</label>
+                            </div>
+                            @else
+                            <div class="custom-control custom-switch mb-2">
+                                <input type="checkbox" class="custom-control-input"
+                                    id="customSwitchCRDisp{{$tablaV['idVinculacion']}}">
+                                <label class="custom-control-label" for="customSwitchCRDisp{{$tablaV['idVinculacion']}}"
+                                    style="font-weight: bold">PC{{$loop->index}}</label>
+                            </div>
+                            @endif
+                            {{-- onclick="javascript:enviarWindowsTabla({{$tabla_empleados->emple_id}},{{$tablaV['idVinculacion']}})">PC
+                            {{$loop->index}} --}}
+                        </a>
                         @endif
                         @endforeach
                     </ul>
