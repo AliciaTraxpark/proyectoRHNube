@@ -4022,8 +4022,23 @@
                                     </div>
                                     <div id="sw-default-step-4" style="font-size: 12px!important">
                                         <div class="row">
+                                            <div class="col-md-4 text-right"><label for=""
+                                                    style="margin-top: 7px;font-weight: 600">Calendario:</label></div>
+                                            <div class="col-md-4 text-center" id="divescond1_ver">
+                                                <input type="hidden" id="idselect3_ver">
+                                                <select name="" id="selectCalendario_edit3_ver" disabled class="form-control form-control-sm"
+                                                    style="margin-top: 4px;">
+                                                    <option hidden selected>Asignar calendario</option>
+                                                    @foreach ($calendario as $calendarios)
+                                                    <option class="" value="{{ $calendarios->calen_id }}">
+                                                        {{ $calendarios->calendario_nombre }}</option>
+                                                    @endforeach
+                                                </select><br><br>
+                                            </div>
+                                            <div class="col-md-4"></div>
                                             <input type="hidden" name="" id="idempleado">
                                             <div class="col-md-1"><br></div>
+
                                             <div class="col-md-10" id="calendar3"></div>
                                             <div class="col-md-1"><br></div>
                                         </div>
