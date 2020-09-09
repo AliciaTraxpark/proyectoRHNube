@@ -885,7 +885,7 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
                         pc +
                         "</strong>  de <strong>" +
                         datos +
-                        "</strong>  se inhabilitará información del empleado en su PC.",
+                        "</strong>  recibira un correo electrónico con los datos necesarios.",
                     function (e) {
                         if (e) {
                             activarEstadoCR(idEmpleado, id);
@@ -914,7 +914,7 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
                         pc +
                         "</strong> de <strong>" +
                         datos +
-                        "</strong> recibira un correo electrónico con los datos necesarios.",
+                        "</strong> se inhabilitará información del empleado en su PC.",
                     function (e) {
                         if (e) {
                             inactivarEstadoCR(idEmpleado, id);
