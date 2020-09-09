@@ -133,7 +133,7 @@
             </th>-->
         </tr>
         <tr>
-            <th class="text-center"><input type="checkbox" class="ml-4" name="" id="selectT"></th>
+            <th class="text-center">&nbsp;<input type="checkbox" class="ml-4" name="" id="selectT"></th>
             <th class="text-center"></th>
             <th class="text-center"></th>
             <th class="text-center">Número Documento</th>
