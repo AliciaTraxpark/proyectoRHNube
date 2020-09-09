@@ -322,16 +322,26 @@ class EmpleadoController extends Controller
                 ->select('v.id as idV', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
                 ->where('v.idEmpleado', '=', $tab->emple_id)
                 ->get();
-            $estadoCR = false;
             foreach ($vinculacion as $vinc) {
                 array_push($vinculacionD, array("idVinculacion" => $vinc->idV, "idLicencia" => $vinc->idL, "licencia" => $vinc->licencia, "disponible" => $vinc->disponible, "dispositivoD" => $vinc->dispositivo_descripcion, "codigo" => $vinc->codigo, "envio" => $vinc->envio));
-                if ($vinc->disponible == 'c' || $vinc->disponible == 'e' || $vinc->disponible == 'a') {
-                    $estadoCR = true;
-                }
             }
             $tab->vinculacion = $vinculacionD;
             unset($vinculacionD);
             $vinculacionD = array();
+            $modoCR = DB::table('vinculacion as v')
+                ->join('modo as m', 'm.id', '=', 'v.idModo')
+                ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
+                ->join('licencia_empleado as le', 'le.id', '=', 'v.idLicencia')
+                ->select('v.id as idV', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
+                ->where('v.idEmpleado', '=', $tab->emple_id)
+                ->where('m.	idTipoModo','=',1)
+                ->get();
+            $estadoCR = false;
+            foreach($modoCR as $md){
+                if ($md->disponible == 'c' || $md->disponible == 'e' || $md->disponible == 'a') {
+                    $estadoCR = true;
+                }
+            }
             $tab->estadoCR = $estadoCR;
         }
         $result = agruparEmpleadosRefresh($tabla_empleado1);
