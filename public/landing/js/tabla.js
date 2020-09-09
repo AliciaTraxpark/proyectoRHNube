@@ -299,26 +299,6 @@ function RefreshTablaEmpleado() {
                     CheckBoxMarcados === CheckBoxs.length
                 );
             });
-            $(".sub_chk").click(function () {
-                if ($(this).prop("checked")) {
-                    $("#w" + $(this).attr("data-id")).hide();
-                    $("#a" + $(this).attr("data-id")).hide();
-                } else {
-                    $("#w" + $(this).attr("data-id")).show();
-                    $("#a" + $(this).attr("data-id")).show();
-                }
-            });
-            seleccionarTodos.click(function () {
-                $(".sub_chk").each(function () {
-                    if ($(this).prop("checked")) {
-                        $("#w" + $(this).attr("data-id")).hide();
-                        $("#a" + $(this).attr("data-id")).hide();
-                    } else {
-                        $("#w" + $(this).attr("data-id")).show();
-                        $("#a" + $(this).attr("data-id")).show();
-                    }
-                });
-            });
         },
     });
 }
