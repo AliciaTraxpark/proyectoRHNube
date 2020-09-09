@@ -67,7 +67,7 @@
                                 <div class="col-12 p-5">
                                     <div class="mx-auto mb-5 text-center">
                                         <a href="{{route('logout')}}">
-                                            <img src="{{asset('landing/images/Recurso 13.png')}}" alt="" height="45" />
+                                            <img src="{{asset('landing/images/LogoAzul.png')}}" alt="" height="120" />
                                         </a>
                                     </div>
 
