@@ -76,14 +76,6 @@ $.ajax({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
-    statusCode: {
-        /*401: function () {
-            location.reload();
-        },*/
-        419: function () {
-            location.reload();
-        }
-    },
     success: function (data) {
         var nombre = [];
         var total = [];
@@ -202,14 +194,6 @@ $.ajax({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
-    statusCode: {
-        /*401: function () {
-            location.reload();
-        },*/
-        419: function () {
-            location.reload();
-        }
-    },
     success: function (data) {
         var nombre = [];
         var total = [];
@@ -326,14 +310,6 @@ $.ajax({
     method: "GET",
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
-    statusCode: {
-        /*401: function () {
-            location.reload();
-        },*/
-        419: function () {
-            location.reload();
-        }
     },
     success: function (data) {
         var nombre = [];
@@ -452,14 +428,6 @@ $.ajax({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
-    statusCode: {
-        /*401: function () {
-            location.reload();
-        },*/
-        419: function () {
-            location.reload();
-        }
-    },
     success: function (data) {
         var nombre = [];
         var total = [];
@@ -575,14 +543,6 @@ $.ajax({
     method: "GET",
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
-    statusCode: {
-        /*401: function () {
-            location.reload();
-        },*/
-        419: function () {
-            location.reload();
-        }
     },
     success: function (data) {
         var nombre = [];
@@ -798,14 +758,6 @@ $.ajax({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
-    statusCode: {
-        /*401: function () {
-            location.reload();
-        },*/
-        419: function () {
-            location.reload();
-        }
-    },
     success: function (data) {
         var nombre = [];
         var total = [];
@@ -922,14 +874,6 @@ $.ajax({
     method: "GET",
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
-    statusCode: {
-        /*401: function () {
-            location.reload();
-        },*/
-        419: function () {
-            location.reload();
-        }
     },
     success: function (data) {
         var nombre = [];
