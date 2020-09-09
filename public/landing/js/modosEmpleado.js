@@ -881,11 +881,11 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
         if (event.target.checked == true) {
             alertify
                 .confirm(
-                    "Al <strong>ACTIVAR PC</strong>" +
+                    "Al <strong>ACTIVAR PC" +
                         pc +
-                        "  de " +
+                        "</strong>  de <strong>" +
                         datos +
-                        " recibira un correo electrónico con los datos necesarios.",
+                        "</strong>  recibira un correo electrónico con los datos necesarios.",
                     function (e) {
                         if (e) {
                             activarEstadoCR(idEmpleado, id);
@@ -910,11 +910,11 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
         } else {
             alertify
                 .confirm(
-                    "Al INACTIVAR PC " +
+                    "Al <strong> INACTIVAR PC " +
                         pc +
-                        " de " +
+                        "</strong> de <strong>" +
                         datos +
-                        "recibira un correo electrónico con los datos necesarios.",
+                        "</strong> recibira un correo electrónico con los datos necesarios.",
                     function (e) {
                         if (e) {
                             inactivarEstadoCR(idEmpleado, id);

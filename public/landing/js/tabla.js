@@ -141,17 +141,16 @@ function RefreshTablaEmpleado() {
                                 <input type="checkbox" class="custom-control-input"\
                                     id="customSwitchCRDisp' +
                                     data[i].vinculacion[j].idVinculacion +
-                                    ']" checked\
+                                    '" checked\
                                     onclick="javasscript:estadoDispositivoCR(' +
                                     data[i].emple_id +
                                     "," +
                                     data[i].vinculacion[j].idVinculacion +
                                     "," +
                                     j +
-                                    "," +
-                                    '"' +
+                                    ",'" +
                                     data[i].perso_nombre +
-                                    '")">\
+                                    '\')">\
                                 <label class="custom-control-label" for="customSwitchCRDisp' +
                                     data[i].vinculacion[j].idVinculacion +
                                     '"\
@@ -185,7 +184,7 @@ function RefreshTablaEmpleado() {
                             </div>";
                             }
 
-                            tbody += '</div>';
+                            tbody += "</div>";
                         }
                     }
                     tbody +=

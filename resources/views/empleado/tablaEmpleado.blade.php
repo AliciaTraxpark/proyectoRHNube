@@ -255,7 +255,6 @@
         @endforeach
     </tbody>
 </table>
-
 <script>
     $('[data-toggle="tooltip"]').tooltip();
     $('#enviarCorreosMasivos').hide();
