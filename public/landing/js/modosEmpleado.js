@@ -641,6 +641,7 @@ function agregarControlR(id) {
             console.log(data);
             if (data == 1) {
                 $("#modalControlR").modal("toggle");
+                RefreshTablaEmpleado();
                 $.notifyClose();
                 $.notify(
                     {

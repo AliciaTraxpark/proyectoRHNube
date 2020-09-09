@@ -35,8 +35,9 @@
         width: 150px !important;
     }
 
-    table.dataTable.dataTable_width_auto {
-        width: auto;
+    .table-responsive,
+    .dataTables_scrollBody {
+        overflow: visible !important;
     }
 </style>
 <div id="modalControlR" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalControlR"
@@ -65,8 +66,8 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-7 text-right">
-                            <button type="button" class="btn btn-light btn-sm cancelar"
-                                data-dismiss="modal" onclick="javascript:RefreshTablaEmpleado()">Cancelar</button>
+                            <button type="button" class="btn btn-light btn-sm cancelar" data-dismiss="modal"
+                                onclick="javascript:RefreshTablaEmpleado()">Cancelar</button>
                         </div>
                         <div class="col-md-5 text-right" style="padding-right:
                             38px;">
@@ -132,6 +133,7 @@
             </th>-->
         </tr>
         <tr>
+            <th class="text-center"><input type="checkbox" class="ml-4" name="" id="selectT"></th>
             <th class="text-center"></th>
             <th class="text-center"></th>
             <th class="text-center">Número Documento</th>
@@ -141,13 +143,14 @@
             <th class="text-center">Asistencia en puerta</th>
             <th>Cargo</th>
             <th>Área</th>
-            <th class="text-center">&nbsp;<input type="checkbox" name="" id="selectT"></th>
-
         </tr>
     </thead>
     <tbody style="background:#ffffff;color: #585858;font-size: 12.5px" id="tbodyr">
         @foreach ($tabla_empleado as $tabla_empleados)
         <tr id="{{$tabla_empleados->emple_id}}" value="{{$tabla_empleados->emple_id}}">
+            <td class="text-center"><input type="checkbox" id="tdC" style="margin-left:5.5px!important"
+                    class="form-check-input sub_chk" data-id="{{$tabla_empleados->emple_id}}" $(this)$(this)$(this)>
+            </td>
             <td class="text-center"><a id="formNuevoEd" onclick="editarEmpleado({{$tabla_empleados->emple_id}})"
                     style="cursor: pointer"><img src="{{asset('admin/images/edit.svg')}}"
                         height="15"></a>&nbsp;&nbsp;&nbsp;<a onclick="marcareliminar({{$tabla_empleados->emple_id}})"
@@ -243,9 +246,6 @@
             </td>
             <td>
                 <div class="text-wrap width-400">{{$tabla_empleados->area_descripcion}}</div>
-            </td>
-            <td class="text-center"><input type="checkbox" id="tdC" style="margin-left:5.5px!important"
-                    class="form-check-input sub_chk" data-id="{{$tabla_empleados->emple_id}}" $(this)$(this)$(this)>
             </td>
         </tr>
         @endforeach
@@ -764,7 +764,7 @@ function verDEmpleado(idempleadoVer){
 
         var table = $("#tablaEmpleado").DataTable({
             scrollX: true,
-            responsive:false,
+            responsive:true,
             retrieve: true,
             "searching": true,
             "lengthChange": false,
