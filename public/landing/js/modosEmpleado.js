@@ -755,6 +755,38 @@ function guardarCorreoE() {
     });
 }
 
-function estadoDispositivoCR(id){
-    console.log(id);
+function estadoDispositivoCR(id) {
+    $("#customSwitchCRDisp" + id).on("change.bootstrapSwitch", function (
+        event
+    ) {
+        if (event.target.checked == true) {
+            var valor = "ACTIVAR";
+        } else {
+            var valor = "INACTIVAR";
+        }
+        alertify
+            .confirm(
+                "¿Desea " + valor + " el estado de la  actividad?",
+                function (e) {
+                    if (e) {
+                        // editarEstadoActividad(idA, valor);
+                    }
+                }
+            )
+            .setting({
+                title: "Cambiar estado a Dispositvos de Control Remoto",
+                labels: {
+                    ok: "Aceptar",
+                    cancel: "Cancelar",
+                },
+                modal: true,
+                startMaximized: false,
+                reverseButtons: true,
+                resizable: false,
+                transition: "zoom",
+                // oncancel: function (closeEvent) {
+                //     actividadEmp();
+                // },
+            });
+    });
 }
