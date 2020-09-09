@@ -755,35 +755,187 @@ function guardarCorreoE() {
     });
 }
 
-function estadoDispositivoCR(id, pc) {
+//INACTIVAR
+function inactivarEstadoCR(idEmpleado, idVinculacion) {
+    //NOTIFICACION
+    $.ajax({
+        async: false,
+        type: "get",
+        url: "/cambiarEstadoLicencia",
+        data: {
+            idE: idEmpleado,
+            idV: idVinculacion,
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            },
+        },
+        success: function (data) {
+            RefreshTablaEmpleado();
+            $.notifyClose();
+            $.notify(
+                {
+                    message: "\nProceso con éxito.",
+                    icon: "admin/images/checked.svg",
+                },
+                {
+                    position: "fixed",
+                    icon_type: "image",
+                    newest_on_top: true,
+                    delay: 5000,
+                    template:
+                        '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        "</div>",
+                    spacing: 35,
+                }
+            );
+        },
+        error: function () {
+            $.notifyClose();
+            $.notify(
+                {
+                    message:
+                        '\nAún no ha registrado correo electrónico.<br>Para registrar correo electrónico cilick aqui.\
+                        <br><a onclick="javascript:agregarCorreoE(' +
+                        idEmpleado +
+                        ')" target="_blank" style="cursor: pointer;"><img src="/landing/images/source.gif" height="100"></a>',
+                    icon: "admin/images/warning.svg",
+                },
+                {
+                    position: "fixed",
+                    mouse_over: "pause",
+                    placement: {
+                        from: "top",
+                        align: "center",
+                    },
+                    icon_type: "image",
+                    newest_on_top: true,
+                    delay: 10000,
+                    template:
+                        '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                        "</div>",
+                    spacing: 35,
+                }
+            );
+        },
+    });
+}
+function activarEstadoCR(idEmpleado, idVinculacion) {
+    $.ajax({
+        async: false,
+        type: "get",
+        url: "correoWindows",
+        data: {
+            idEmpleado: idEmpleado,
+            idVinculacion: idVinculacion
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            RefreshTablaEmpleado();
+            $.notifyClose();
+            $.notify(
+                {
+                    message: "\nProceso con éxito.",
+                    icon: "admin/images/checked.svg",
+                },
+                {
+                    position: "fixed",
+                    icon_type: "image",
+                    newest_on_top: true,
+                    delay: 5000,
+                    template:
+                        '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        "</div>",
+                    spacing: 35,
+                }
+            );
+        },
+        error: function () {}
+    });
+}
+function estadoDispositivoCR(idEmpleado, id, pc, datos) {
     $("#customSwitchCRDisp" + id).on("change.bootstrapSwitch", function (
         event
     ) {
         if (event.target.checked == true) {
-            var valor = "ACTIVAR";
+            alertify
+                .confirm(
+                    "Al <strong>ACTIVAR PC</strong>" +
+                        pc +
+                        "  de " +
+                        datos +
+                        " recibira un correo electrónico con los datos necesarios.",
+                    function (e) {
+                        if (e) {
+                            activarEstadoCR(idEmpleado, id);
+                        }
+                    }
+                )
+                .setting({
+                    title: "Cambiar estado a Dispositvos de Control Remoto",
+                    labels: {
+                        ok: "Aceptar",
+                        cancel: "Cancelar",
+                    },
+                    modal: true,
+                    startMaximized: false,
+                    reverseButtons: true,
+                    resizable: false,
+                    transition: "zoom",
+                    oncancel: function (closeEvent) {
+                        RefreshTablaEmpleado();
+                    },
+                });
         } else {
-            var valor = "INACTIVAR";
+            alertify
+                .confirm(
+                    "Al INACTIVAR PC " +
+                        pc +
+                        " de " +
+                        datos +
+                        "recibira un correo electrónico con los datos necesarios.",
+                    function (e) {
+                        if (e) {
+                            inactivarEstadoCR(idEmpleado, id);
+                        }
+                    }
+                )
+                .setting({
+                    title: "Cambiar estado a Dispositvos de Control Remoto",
+                    labels: {
+                        ok: "Aceptar",
+                        cancel: "Cancelar",
+                    },
+                    modal: true,
+                    startMaximized: false,
+                    reverseButtons: true,
+                    resizable: false,
+                    transition: "zoom",
+                    oncancel: function (closeEvent) {
+                        RefreshTablaEmpleado();
+                    },
+                });
         }
-        alertify
-            .confirm("¿DESEA " + valor + " PC " + pc + "?", function (e) {
-                if (e) {
-                    // editarEstadoActividad(idA, valor);
-                }
-            })
-            .setting({
-                title: "Cambiar estado a Dispositvos de Control Remoto",
-                labels: {
-                    ok: "Aceptar",
-                    cancel: "Cancelar",
-                },
-                modal: true,
-                startMaximized: false,
-                reverseButtons: true,
-                resizable: false,
-                transition: "zoom",
-                // oncancel: function (closeEvent) {
-                //     actividadEmp();
-                // },
-            });
     });
 }

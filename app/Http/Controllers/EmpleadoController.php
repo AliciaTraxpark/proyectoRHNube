@@ -342,7 +342,7 @@ class EmpleadoController extends Controller
                 ->join('licencia_empleado as le', 'le.id', '=', 'v.idLicencia')
                 ->select('v.id as idV', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
                 ->where('v.idEmpleado', '=', $tab->emple_id)
-                ->where('m.	idTipoModo','=',1)
+                ->where('m.idTipoModo','=',1)
                 ->get();
             $estadoCR = false;
             foreach($modoCR as $md){
