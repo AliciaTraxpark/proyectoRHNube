@@ -1767,8 +1767,8 @@ use App\proyecto_empleado;
                             <li><a href="#sw-default-step-3">Foto</a></li>
                             <li><a href="#sw-default-step-4">Calendario</a></li>
                             <li><a href="#sw-default-step-5">Horario</a></li>
-                            <li><a href="#sw-default-step-6">Dispositivo</a></li>
-                            <li><a href="#sw-default-step-7">Modos de Control</a></li>
+                            <li><a href="#sw-default-step-6">Modos de Control</a></li>
+                            <li><a href="#sw-default-step-7">Dispositivo</a></li>
                         </ul>
                         <input type="hidden" id="estadoPR" value="false">
                         <input type="hidden" id="estadoPE" value="false">
@@ -2451,16 +2451,9 @@ use App\proyecto_empleado;
                                                                         class="form-control form-control-sm" required>
                                                                 </div>
                                                             </div>
-
-
                                                         </div>
-
                                                 </div>
-
-
-
                                             </div>
-
                                         </div>
                                         <div class="modal-footer">
                                             <div class="col-md-12">
@@ -2480,86 +2473,6 @@ use App\proyecto_empleado;
                             </div><!-- /.modal -->
                         </div>
                         <div id="sw-default-step-6" class="setup-content" style="font-size: 12px!important">
-                            <div class="row">
-                                <div class="col-xl-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <div class="row pb-1 pl-2">
-                                                <div class="col">
-                                                    <div class="custom-control custom-switch mb-2">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="customSwitchCR1">
-                                                        <label class="custom-control-label" for="customSwitchCR1"
-                                                            style="font-weight: bold">Modo Control
-                                                            Remoto</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body border p-2" id="bodyModoControlRR">
-                                            <div class="row">
-                                                <div class="col-xl-12 col-sm-12">
-                                                    <button class="btn btn-sm dropdown-toggle"
-                                                        style="background-color:#163552;" data-toggle="dropdown"
-                                                        aria-haspopup="true" aria-expanded="false">+
-                                                        Agregar
-                                                    </button>
-                                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                        <a class="dropdown-item" id="agregarWindows">WINDOWS</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-xl-12 col-sm-12">
-                                                    <div class="table-responsive-xl">
-                                                        <table id="tablaDispositivo" class="table"
-                                                            style="font-size: 13px!important;">
-                                                            <thead style="background: #fafafa;">
-                                                                <tr>
-                                                                    <th>Tipo Dispositivo</th>
-                                                                    <th>Activación de Dispositivo</th>
-                                                                    <th>Codigo</th>
-                                                                    <th>Enviado</th>
-                                                                    <th>Estado</th>
-                                                                    <th></th>
-                                                                    <th></th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody id="tbodyDispositivo"
-                                                                style="background:#ffffff;color: #585858;font-size: 12px">
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xl-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <div class="row pb-1 pl-2">
-                                                <div class="col">
-                                                    <div class="custom-control custom-switch mb-2">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="customSwitchCR2">
-                                                        <label class="custom-control-label" for="customSwitchCR2"
-                                                            style="font-weight: bold">Modo Control de
-                                                            Asistencia en Puerta</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body border p-2" id="bodyModoControlAR">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
                             <div class="row">
                                 <div class="col-xl-12">
                                     <div class="card">
@@ -2677,6 +2590,86 @@ use App\proyecto_empleado;
                                 </div><!-- /.modal-dialog -->
                             </div><!-- /.modal -->
                         </div>
+                        <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="row pb-1 pl-2">
+                                                <div class="col">
+                                                    <div class="custom-control custom-switch mb-2">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="customSwitchCR1">
+                                                        <label class="custom-control-label" for="customSwitchCR1"
+                                                            style="font-weight: bold">Modo Control
+                                                            Remoto</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body border p-2" id="bodyModoControlRR">
+                                            <div class="row">
+                                                <div class="col-xl-12 col-sm-12">
+                                                    <button class="btn btn-sm dropdown-toggle"
+                                                        style="background-color:#163552;" data-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">+
+                                                        Agregar
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <a class="dropdown-item" id="agregarWindows">WINDOWS</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-xl-12 col-sm-12">
+                                                    <div class="table-responsive-xl">
+                                                        <table id="tablaDispositivo" class="table"
+                                                            style="font-size: 13px!important;">
+                                                            <thead style="background: #fafafa;">
+                                                                <tr>
+                                                                    <th>Tipo Dispositivo</th>
+                                                                    <th>Activación de Dispositivo</th>
+                                                                    <th>Codigo</th>
+                                                                    <th>Enviado</th>
+                                                                    <th>Estado</th>
+                                                                    <th></th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="tbodyDispositivo"
+                                                                style="background:#ffffff;color: #585858;font-size: 12px">
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="row pb-1 pl-2">
+                                                <div class="col">
+                                                    <div class="custom-control custom-switch mb-2">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="customSwitchCR2">
+                                                        <label class="custom-control-label" for="customSwitchCR2"
+                                                            style="font-weight: bold">Modo Control de
+                                                            Asistencia en Puerta</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body border p-2" id="bodyModoControlAR">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2701,8 +2694,8 @@ use App\proyecto_empleado;
                         <li><a href="#swF-default-step-3">Foto</a></li>
                         <li><a href="#sw-default-step-4">Calendario</a></li>
                         <li><a href="#sw-default-step-5">Horario</a></li>
-                        <li><a href="#sw-default-step-6">Dispositivo</a></li>
-                        <li><a href="#sw-default-step-7">Modos de Control</a></li>
+                        <li><a href="#sw-default-step-6">Modos de Control</a></li>
+                        <li><a href="#sw-default-step-7">Dispositivo</a></li>
                     </ul>
                     <input type="hidden" id="estadoP" value="false">
                     <input type="hidden" id="estadoE" value="false">
@@ -3403,87 +3396,8 @@ use App\proyecto_empleado;
                                 </div><!-- /.modal-dialog -->
                             </div><!-- /.modal -->
                         </div>
+
                         <div id="sw-default-step-6" class="setup-content" style="font-size: 12px!important">
-                            <div class="row">
-                                <div class="col-xl-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <div class="row pb-1 pl-2">
-                                                <div class="col">
-                                                    <div class="custom-control custom-switch mb-2">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="customSwitchC1">
-                                                        <label class="custom-control-label" for="customSwitchC1"
-                                                            style="font-weight: bold">Modo Control
-                                                            Remoto</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body border p-2" id="bodyModoControlR">
-                                            <div class="row">
-                                                <div class="col-xl-12 col-sm-12">
-                                                    <button class="btn btn-sm dropdown-toggle"
-                                                        style="background-color:#163552;" data-toggle="dropdown"
-                                                        aria-haspopup="true" aria-expanded="false">+
-                                                        Agregar
-                                                    </button>
-                                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                        <a class="dropdown-item" id="v_agregarWindows">WINDOWS</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-xl-12 col-sm-12">
-                                                    <div class="table-responsive-xl">
-                                                        <table id="v_tablaDispositivo" class="table"
-                                                            style="font-size: 13px!important;">
-                                                            <thead style="background: #fafafa;font-size: 14px">
-                                                                <tr>
-                                                                    <th>Tipo Dispositivo</th>
-                                                                    <th>Activación de Dispositivo</th>
-                                                                    <th>Codigo</th>
-                                                                    <th>Enviado</th>
-                                                                    <th>Estado</th>
-                                                                    <th></th>
-                                                                    <th></th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody id="v_tbodyDispositivo"
-                                                                style="background:#ffffff;color: #585858;font-size: 12px">
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xl-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <div class="row pb-1 pl-2">
-                                                <div class="col">
-                                                    <div class="custom-control custom-switch mb-2">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="customSwitchC2">
-                                                        <label class="custom-control-label" for="customSwitchC2"
-                                                            style="font-weight: bold">Modo Control de
-                                                            Asistencia en Puerta</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body border p-2" id="bodyModoControlA">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
                             <div class="row">
                                 <div class="col-xl-12">
                                     <div class="card">
@@ -3601,6 +3515,86 @@ use App\proyecto_empleado;
                                 </div><!-- /.modal-dialog -->
                             </div><!-- /.modal -->
                         </div>
+                        <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="row pb-1 pl-2">
+                                                <div class="col">
+                                                    <div class="custom-control custom-switch mb-2">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="customSwitchC1">
+                                                        <label class="custom-control-label" for="customSwitchC1"
+                                                            style="font-weight: bold">Modo Control
+                                                            Remoto</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body border p-2" id="bodyModoControlR">
+                                            <div class="row">
+                                                <div class="col-xl-12 col-sm-12">
+                                                    <button class="btn btn-sm dropdown-toggle"
+                                                        style="background-color:#163552;" data-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">+
+                                                        Agregar
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <a class="dropdown-item" id="v_agregarWindows">WINDOWS</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-xl-12 col-sm-12">
+                                                    <div class="table-responsive-xl">
+                                                        <table id="v_tablaDispositivo" class="table"
+                                                            style="font-size: 13px!important;">
+                                                            <thead style="background: #fafafa;font-size: 14px">
+                                                                <tr>
+                                                                    <th>Tipo Dispositivo</th>
+                                                                    <th>Activación de Dispositivo</th>
+                                                                    <th>Codigo</th>
+                                                                    <th>Enviado</th>
+                                                                    <th>Estado</th>
+                                                                    <th></th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="v_tbodyDispositivo"
+                                                                style="background:#ffffff;color: #585858;font-size: 12px">
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="row pb-1 pl-2">
+                                                <div class="col">
+                                                    <div class="custom-control custom-switch mb-2">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="customSwitchC2">
+                                                        <label class="custom-control-label" for="customSwitchC2"
+                                                            style="font-weight: bold">Modo Control de
+                                                            Asistencia en Puerta</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body border p-2" id="bodyModoControlA">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -3634,8 +3628,8 @@ use App\proyecto_empleado;
                         <li><a href="#sw-default-step-3">Foto</a></li>
                         <li><a href="#sw-default-step-4">Calendario</a></li>
                         <li><a href="#sw-default-step-5">Horario</a></li>
-                        <li><a href="#sw-default-step-6">Dispositivo</a></li>
-                        <li><a href="#sw-default-step-7">Modos de Control</a></li>
+                        <li><a href="#sw-default-step-6">Modos de Control</a></li>
+                        <li><a href="#sw-default-step-7">Dispositivo</a></li>
                     </ul>
                     <div class="p-3" id="form-registrar">
                         <div id="persona-step-1" style="font-size: 12px!important">
@@ -3904,7 +3898,69 @@ use App\proyecto_empleado;
                                 <div class="col-md-1"><br></div>
                             </div>
                         </div>
-                        <div id="sw-default-step-6" style="font-size: 12px!important">
+                        <div id="sw-default-step-6" class="setup-content" style="font-size: 12px!important">
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="row pb-1 pl-2">
+                                                <div class="col">
+                                                    <div class="custom-control custom-switch mb-2">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="customSwitch5">
+                                                        <label class="custom-control-label" for="customSwitch5"
+                                                            style="font-weight: bold">Modo Control
+                                                            Remoto</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body border p-2" id="bodyModoTarea_ver">
+                                            <div class="row pt-3">
+                                                <div class="col-xl-12 col-sm-12">
+                                                    <div class="table-responsive-xl scroll">
+                                                        <table class="table" style="font-size: 13px!important;">
+                                                            <thead style="background: #fafafa;font-size: 14px">
+                                                                <tr>
+                                                                    <th>Actividad</th>
+                                                                    <th>Estado</th>
+                                                                    <th>Total</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="tablaBodyTarea_ver"
+                                                                style="background:#ffffff;color: #585858;font-size: 12px">
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="row pb-1 pl-2">
+                                                <div class="col">
+                                                    <div class="custom-control custom-switch mb-2">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="customSwitch6">
+                                                        <label class="custom-control-label" for="customSwitch6"
+                                                            style="font-weight: bold">Modo Control de
+                                                            Asistencia en Puerta</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body border p-2" id="bodyModoProyecto_ver">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="sw-default-step-7" style="font-size: 12px!important">
                             <div class="row">
                                 <div class="col-xl-12">
                                     <div class="card">
@@ -3966,68 +4022,6 @@ use App\proyecto_empleado;
                                             </div>
                                         </div>
                                         <div class="card-body border p-2" id="bodyModoControlAV">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
-                            <div class="row">
-                                <div class="col-xl-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <div class="row pb-1 pl-2">
-                                                <div class="col">
-                                                    <div class="custom-control custom-switch mb-2">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="customSwitch5">
-                                                        <label class="custom-control-label" for="customSwitch5"
-                                                            style="font-weight: bold">Modo Control
-                                                            Remoto</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body border p-2" id="bodyModoTarea_ver">
-                                            <div class="row pt-3">
-                                                <div class="col-xl-12 col-sm-12">
-                                                    <div class="table-responsive-xl scroll">
-                                                        <table class="table" style="font-size: 13px!important;">
-                                                            <thead style="background: #fafafa;font-size: 14px">
-                                                                <tr>
-                                                                    <th>Actividad</th>
-                                                                    <th>Estado</th>
-                                                                    <th>Total</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody id="tablaBodyTarea_ver"
-                                                                style="background:#ffffff;color: #585858;font-size: 12px">
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xl-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <div class="row pb-1 pl-2">
-                                                <div class="col">
-                                                    <div class="custom-control custom-switch mb-2">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="customSwitch6">
-                                                        <label class="custom-control-label" for="customSwitch6"
-                                                            style="font-weight: bold">Modo Control de
-                                                            Asistencia en Puerta</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body border p-2" id="bodyModoProyecto_ver">
                                         </div>
                                     </div>
                                 </div>
