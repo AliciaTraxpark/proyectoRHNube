@@ -754,3 +754,7 @@ function guardarCorreoE() {
         error: function () {},
     });
 }
+
+function estadoDispositivoCR(id){
+    console.log(id);
+}

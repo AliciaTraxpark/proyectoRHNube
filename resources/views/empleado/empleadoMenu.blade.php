@@ -588,7 +588,7 @@ use App\proyecto_empleado;
 
                     <img src="{{ asset('landing/images/loading.gif') }}" height="100">
                 </div>
-                <div class="table-responsive-xl" id="tabladiv">
+                <div id="tabladiv">
                 </div>
 
             </div> <!-- end card body-->
