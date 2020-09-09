@@ -191,17 +191,6 @@ $.ajax({
             document.getElementById('js-legendArea').innerHTML = grafico.generateLegend();
         } else {
             $('#divarea').hide();
-            $.notify({
-                message: "\n\nAún no has asignado empleados a una área.<br><a id=\"empleadoA\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></a>",
-                icon: 'admin/images/warning.svg',
-            }, {
-                mouse_over: "pause"
-            });
-            $('#empleadoA').click(function () {
-                window.location.replace(
-                    location.origin + "/empleado"
-                );
-            });
         }
     },
     error: function (data) {}
@@ -327,17 +316,6 @@ $.ajax({
             document.getElementById('js-legendNivel').innerHTML = grafico.generateLegend();
         } else {
             $('#divnivel').hide();
-            $.notify({
-                message: "\n\nAún no has asignado empleados a un nivel.<br><a id=\"empleadoN\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></a>",
-                icon: 'admin/images/warning.svg'
-            }, {
-                mouse_over: "pause"
-            });
-            $('#empleadoN').click(function () {
-                window.location.replace(
-                    location.origin + "/empleado"
-                );
-            });
         }
     },
     error: function (data) {}
@@ -463,17 +441,6 @@ $.ajax({
             document.getElementById('js-legendContrato').innerHTML = grafico.generateLegend();
         } else {
             $('#divcontrato').hide();
-            $.notify({
-                message: "\n\nAún no has asignado empleados a un tipo de contrato.<br><a id=\"empleadoC\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></a>",
-                icon: 'admin/images/warning.svg'
-            }, {
-                mouse_over: "pause"
-            });
-            $('#empleadoC').click(function () {
-                window.location.replace(
-                    location.origin + "/empleado"
-                );
-            });
         }
     },
     error: function (data) {}
@@ -598,17 +565,6 @@ $.ajax({
             document.getElementById('js-legendCentro').innerHTML = grafico.generateLegend();
         } else {
             $('#divcentro').hide();
-            $.notify({
-                message: "\n\nAún no has asignado empleados a un tipo de centro costo.<br><a id=\"empleadoCe\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></a>",
-                icon: 'admin/images/warning.svg'
-            }, {
-                mouse_over: "pause"
-            });
-            $('#empleadoCe').click(function () {
-                window.location.replace(
-                    location.origin + "/empleado"
-                );
-            });
         }
     },
     error: function (data) {}
@@ -734,17 +690,6 @@ $.ajax({
             document.getElementById('js-legendLocal').innerHTML = grafico.generateLegend();
         } else {
             $('#divlocal').hide();
-            $.notify({
-                message: "\n\nAún no has asignado empleados a un local.<br><a id=\"empleadoL\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></a>",
-                icon: 'admin/images/warning.svg'
-            }, {
-                mouse_over: "pause"
-            });
-            $('#empleadoL').click(function () {
-                window.location.replace(
-                    location.origin + "/empleado"
-                );
-            });
         }
     },
     error: function (data) {}
@@ -967,17 +912,6 @@ $.ajax({
             document.getElementById('js-legendDep').innerHTML = grafico.generateLegend();
         } else {
             $('#divdepartamento').hide();
-            $.notify({
-                message: "\n\nAún no has asignado empleados a una ciudad.<br><a id=\"empleadoD\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></a>",
-                icon: 'admin/images/warning.svg'
-            }, {
-                mouse_over: "pause"
-            });
-            $('#empleado').click(function () {
-                window.location.replace(
-                    location.origin + "/empleadoD"
-                );
-            });
         }
     },
     error: function (data) {}
@@ -1103,17 +1037,6 @@ $.ajax({
             document.getElementById('js-legendEdades').innerHTML = grafico.generateLegend();
         } else {
             $('#divedades').hide();
-            $.notify({
-                message: "\n\nAún no has asignado empleados fecha nacimiento.<br><a id=\"empleadoRE\" target=\"_blank\" style=\"cursor: pointer;\"><button class=\"boton btn btn-default mr-1 spinner-grow spinner-grow-sm\"></button></a>",
-                icon: 'admin/images/warning.svg'
-            }, {
-                mouse_over: "pause"
-            });
-            $('#empleadoRE').click(function () {
-                window.location.replace(
-                    location.origin + "/empleado"
-                );
-            });
         }
     },
     error: function (data) {}
