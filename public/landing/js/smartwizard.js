@@ -596,18 +596,23 @@ $(document).ready(function () {
             stepNumber == 1 ||
             stepNumber == 2 ||
             stepNumber == 3 ||
-            stepNumber == 4 ||
-            stepNumber == 5
+            stepNumber == 4
         ) {
             $("button.sw-btn-prev").show();
             $("button.sw-btn-next").show();
             $("#FinalizarEmpleado").hide();
         }
-        if (stepNumber == 6) {
+
+        if (stepNumber == 5) {
             $("button.sw-btn-prev").hide();
             $("button.sw-btn-next").hide();
             $("#FinalizarEmpleado").show();
             actividad_empleado();
+        }
+        if (stepNumber == 6) {
+            $("button.sw-btn-prev").hide();
+            $("button.sw-btn-next").hide();
+            $("#FinalizarEmpleado").show();
         }
     });
     $("#smartwizard1").on("showStep", function (
@@ -621,18 +626,22 @@ $(document).ready(function () {
             stepNumber == 1 ||
             stepNumber == 2 ||
             stepNumber == 3 ||
-            stepNumber == 4 ||
-            stepNumber == 5
+            stepNumber == 4
         ) {
             $("button.sw-btn-prev").show();
             $("button.sw-btn-next").show();
             $("#FinalizarEmpleadoEditar").hide();
         }
-        if (stepNumber == 6) {
+        if (stepNumber == 5) {
             $("button.sw-btn-prev").hide();
             $("button.sw-btn-next").hide();
             $("#FinalizarEmpleadoEditar").show();
             actividadEmp();
+        }
+        if (stepNumber == 6) {
+            $("button.sw-btn-prev").hide();
+            $("button.sw-btn-next").hide();
+            $("#FinalizarEmpleadoEditar").show();
         }
     });
 });
@@ -683,20 +692,26 @@ $("#smartwizardVer").on("showStep", function (
         $("button.sw-btn-next").attr("disabled", false);
     }
 
-    if (stepNumber == 3 || stepNumber == 4 || stepNumber == 5) {
+    if (stepNumber == 3 || stepNumber == 4) {
         $("button.sw-btn-prev").show();
         $("button.sw-btn-next").show();
         $("#FinalizarEmpleadoVer").hide();
-        $('#disab').css('pointer-events', 'none');
+        $("#disab").css("pointer-events", "none");
         $("button.sw-btn-prev").attr("disabled", false);
         $("button.sw-btn-next").attr("disabled", false);
         $("#smartwizardVer :input").attr("disabled", false);
+    }
+    if (stepNumber == 5) {
+        $("button.sw-btn-prev").hide();
+        $("button.sw-btn-next").hide();
+        $("#FinalizarEmpleadoVer").show();
+        $("#smartwizardVer :input").attr("disabled", false);
+        actividadEmpVer();
     }
     if (stepNumber == 6) {
         $("button.sw-btn-prev").hide();
         $("button.sw-btn-next").hide();
         $("#FinalizarEmpleadoVer").show();
         $("#smartwizardVer :input").attr("disabled", false);
-        actividadEmpVer();
     }
 });
