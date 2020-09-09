@@ -26,6 +26,7 @@ function RefreshTablaEmpleado() {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
+            console.log(data);
             var tbody = "";
             for (var i = 0; i < data.length; i++) {
                 tbody +=
@@ -204,7 +205,6 @@ function RefreshTablaEmpleado() {
                         "</div></td></tr>";
                 }
             }
-            console.log(tbody);
             $("#tbodyr").html(tbody);
             $("#tablaEmpleado").DataTable({
                 scrollX: true,

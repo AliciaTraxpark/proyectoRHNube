@@ -256,12 +256,17 @@ class EmpleadoController extends Controller
                 ->select('v.id as idV', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
                 ->where('v.idEmpleado', '=', $tab->emple_id)
                 ->get();
+            $estadoCR = false;
             foreach ($vinculacion as $vinc) {
                 array_push($vinculacionD, array("idVinculacion" => $vinc->idV, "idLicencia" => $vinc->idL, "licencia" => $vinc->licencia, "disponible" => $vinc->disponible, "dispositivoD" => $vinc->dispositivo_descripcion, "codigo" => $vinc->codigo, "envio" => $vinc->envio));
+                if ($vinc->disponible == 'c' || $vinc->disponible == 'e' || $vinc->disponible == 'a') {
+                    $estadoCR = true;
+                }
             }
             $tab->vinculacion = $vinculacionD;
             unset($vinculacionD);
             $vinculacionD = array();
+            $tab->estadoCR = $estadoCR;
         }
         $result = agruparEmpleados($tabla_empleado1);
         // dd($result);
@@ -317,12 +322,17 @@ class EmpleadoController extends Controller
                 ->select('v.id as idV', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
                 ->where('v.idEmpleado', '=', $tab->emple_id)
                 ->get();
+            $estadoCR = false;
             foreach ($vinculacion as $vinc) {
                 array_push($vinculacionD, array("idVinculacion" => $vinc->idV, "idLicencia" => $vinc->idL, "licencia" => $vinc->licencia, "disponible" => $vinc->disponible, "dispositivoD" => $vinc->dispositivo_descripcion, "codigo" => $vinc->codigo, "envio" => $vinc->envio));
+                if ($vinc->disponible == 'c' || $vinc->disponible == 'e' || $vinc->disponible == 'a') {
+                    $estadoCR = true;
+                }
             }
             $tab->vinculacion = $vinculacionD;
             unset($vinculacionD);
             $vinculacionD = array();
+            $tab->estadoCR = $estadoCR;
         }
         $result = agruparEmpleadosRefresh($tabla_empleado1);
 
@@ -903,46 +913,6 @@ class EmpleadoController extends Controller
             $t->save();
             $array[] = $t->emple_persona;
         }
-        /*$idem = implode(',', $array);
-
-
-        //dd($idem);
-
-
-        $actividad = actividad::whereIn('empleado_emple_id', explode(",", $ids))->get();
-        $actividad->each->delete();
-
-        $envio = envio::whereIn('idEmpleado', explode(",", $ids))->get();
-        $envio->each->delete();
-
-        $horario_empleado = horario_empleado::whereIn('empleado_emple_id', explode(",", $ids))->get();
-        $horario_empleado->each->delete();
-        $horario_empleado = eventos_empleado::whereIn('id_empleado', explode(",", $ids))->get();
-        $horario_empleado->each->delete();
-
-        $incidencias = incidencia_dias::whereIn('id_empleado', explode(",", $ids))->get();
-        $incidencias->each->delete();
-
-        $licencia_empleado = licencia_empleado::whereIn('idEmpleado', explode(",", $ids))->get();
-        $vinculacion = vinculacion::whereIn('idEmpleado', explode(",", $ids))->get();
-        $modo = modo::whereIn('idEmpleado', explode(",", $ids))->get();
-        $vinculacion->each->delete();
-        $modo->each->delete();
-        $licencia_empleado->each->delete();
-
-        $proyecto_empleado = proyecto_empleado::whereIn('empleado_emple_id', explode(",", $ids))->get();
-        $proyecto_empleado->each->delete();
-
-        $tarea = tarea::whereIn('empleado_emple_id', explode(",", $ids))->get();
-        $tarea->each->delete();
-
-
-
-        $empleado->each->delete();
-        $persona = persona::whereIn('perso_id', explode(",", $idem))->get();
-        $persona->each->delete();
-        //$persona= persona::where('perso_id','=',$empleado->emple_persona);
-        //dd($empleado->emple_persona);*/
     }
     public function indexMenu()
     {

@@ -92,11 +92,11 @@
         <td align="center">
             <select class="form-control" name="select" id="select">
                 <option value="-1">PERSONALIZADO</option>
-                <option value="2">Número Documento</option>
-                <option value="3">Nombre</option>
-                <option value="4">Apellidos</option>
-                <option value="7">Cargo</option>
-                <option value="8">Área</option>
+                <option value="3">Número Documento</option>
+                <option value="4">Nombre</option>
+                <option value="5">Apellidos</option>
+                <option value="8">Cargo</option>
+                <option value="9">Área</option>
             </select>
         </td>
     </div>
