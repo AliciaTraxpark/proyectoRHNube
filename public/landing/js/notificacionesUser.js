@@ -53,12 +53,6 @@ function showNotificaciones() {
                     } else {
                         a = `<a class="dropdown-item
                 notify-item border-bottom">
-                    <div class="badge float-right mt-0 mr-1">
-                        <button class="btn btn-sm" style="background-color: #163552;color:#ffffff;">
-                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                            <img src="/landing/images/flecha (1).svg" height="20">
-                        </button>
-                    </div>
                     <div class="notify-icon" style="background: #163552;">
                         <img src="/landing/images/campana.svg" height="20">
                     </div>
