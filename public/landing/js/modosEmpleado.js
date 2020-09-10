@@ -472,6 +472,7 @@ function RegeditarActE(idA) {
                             startMaximized: false,
                             reverseButtons: true,
                             resizable: false,
+                            closable: false,
                             transition: "zoom",
                             oncancel: function (closeEvent) {
                                 actividad_empleado();
@@ -515,6 +516,7 @@ function RegeditarActE(idA) {
                 startMaximized: false,
                 reverseButtons: true,
                 resizable: false,
+                closable: false,
                 transition: "zoom",
                 oncancel: function (closeEvent) {
                     actividad_empleado();
@@ -560,6 +562,7 @@ function editarActE(idA) {
                             startMaximized: false,
                             reverseButtons: true,
                             resizable: false,
+                            closable: false,
                             transition: "zoom",
                             oncancel: function (closeEvent) {
                                 actividadEmp();
@@ -601,6 +604,7 @@ function editarActE(idA) {
                 startMaximized: false,
                 reverseButtons: true,
                 resizable: false,
+                closable: false,
                 transition: "zoom",
                 oncancel: function (closeEvent) {
                     actividadEmp();
@@ -646,9 +650,10 @@ function agregarControlR(id) {
                 agregarCorreoE(idEmpleado);
             } else {
                 $("#modalControlR").modal("toggle");
+                RefreshTablaEmpleado();
                 $.notify(
                     {
-                        message: "\nCorreo enviado con exito a\n",
+                        message: "\nCorreo enviado con exito\n",
                         icon: "admin/images/checked.svg",
                     },
                     {
@@ -679,7 +684,7 @@ function agregarCorreoE(id) {
     $.notify(
         {
             message:
-                '\nPara registrar un dispositivo de Control Remoto necesitamos el correo electrónico del empleado.',
+                "\nPara registrar un dispositivo de Control Remoto necesitamos el correo electrónico del empleado.",
             icon: "admin/images/warning.svg",
         },
         {
@@ -841,10 +846,10 @@ function activarEstadoCR(idEmpleado, idVinculacion) {
         url: "correoWindows",
         data: {
             idEmpleado: idEmpleado,
-            idVinculacion: idVinculacion
+            idVinculacion: idVinculacion,
         },
         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
             RefreshTablaEmpleado();
@@ -870,7 +875,7 @@ function activarEstadoCR(idEmpleado, idVinculacion) {
                 }
             );
         },
-        error: function () {}
+        error: function () {},
     });
 }
 function estadoDispositivoCR(idEmpleado, id, pc, datos) {
@@ -902,6 +907,7 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
                     reverseButtons: true,
                     resizable: false,
                     transition: "zoom",
+                    closable: false,
                     oncancel: function (closeEvent) {
                         RefreshTablaEmpleado();
                     },
@@ -931,6 +937,7 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
                     reverseButtons: true,
                     resizable: false,
                     transition: "zoom",
+                    closable: false,
                     oncancel: function (closeEvent) {
                         RefreshTablaEmpleado();
                     },

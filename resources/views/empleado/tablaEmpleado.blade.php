@@ -39,6 +39,28 @@
     .dataTables_scrollBody {
         overflow: visible !important;
     }
+
+    .alertify .ajs-body .ajs-content {
+        padding: 16px 16px 16px 16px !important;
+    }
+
+    .ajs-body {
+        font: 12.8px !important;
+        padding: 0px !important;
+        font-family: 'Roboto', sans-serif !important;
+    }
+
+    .alertify .ajs-footer {
+        background: #ffffff;
+        border-top: 1px solid #f6f6f7;
+        border-radius: 0 0 4.8px 4.8px;
+    }
+
+    .alertify .ajs-footer .ajs-buttons .ajs-button {
+        min-width: 88px;
+        min-height: 35px;
+        padding: 4px 8px 4px 8px;
+    }
 </style>
 <div id="modalControlR" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalControlR"
     aria-hidden="true" data-backdrop="static">
@@ -48,7 +70,8 @@
                 <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Registrar Dispositivo
                     para Modo Control Remoto
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    onclick="javascript:RefreshTablaEmpleado()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>

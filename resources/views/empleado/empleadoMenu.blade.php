@@ -415,7 +415,54 @@ use App\proyecto_empleado;
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
+{{-- MODAL --}}
+<div id="modalCorreoElectronico" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCorreoElectronico"
+    aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Registrar Corro
+                    Empleado
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    onclick="javascript:RefreshTablaEmpleado()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <input type="hidden" id="idEmpleCorreo">
+                    <form class="form-horizontal col-lg-12" action="javascript:guardarCorreoE()">
+                        {{ csrf_field() }}
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" style="font-weight: 500;">Correo
+                                        electrónico</label>
+                                    <div class="input-group input-group-merge">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="background-color: #ffffff;">
+                                                <img src="{{asset('landing/images/at.svg')}}" height="13">
+                                            </span>
+                                        </div>
+                                        <input type="email" type="text" class="form-control" id="textCorreo"
+                                            name="email" required autofocus>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-light" data-dismiss="modal"
+                    onclick="javascript:RefreshTablaEmpleado()">Cerrar</button>
+                <button type="submit" style="background-color:#163552; border-color: #163552;"
+                    class="btn btn-sm btn-primary">Registrar</button>
+            </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <style>
     #calendarInv>div.fc-view-container>div>table>tbody {
         background: #f4f4f4;
@@ -3873,7 +3920,7 @@ use App\proyecto_empleado;
                                         style="margin-top: 7px;font-weight: 600">Calendario:</label></div>
                                 <div class="col-md-4 text-center" id="divescond1_ver">
                                     <input type="hidden" id="idselect3_ver">
-                                    <select name="" id="selectCalendario_edit3_ver"  class="form-control form-control-sm"
+                                    <select name="" id="selectCalendario_edit3_ver" class="form-control form-control-sm"
                                         style="margin-top: 4px;" disabled>
                                         <option hidden selected>Asignar calendario</option>
                                         @foreach ($calendario as $calendarios)

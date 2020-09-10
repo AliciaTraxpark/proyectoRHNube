@@ -66,9 +66,10 @@
     <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/alertify/alertify.css') }}" rel="stylesheet" type="text/css" />
-    {{-- <link href="{{ URL::asset('admin/assets/libs/alertify/bootstrap.css') }}" rel="stylesheet" type="text/css" /> --}}
+    {{-- <link href="{{ URL::asset('admin/assets/libs/alertify/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    --}}
     <!-- Semantic UI theme -->
-<link href="{{ URL::asset('admin/assets/libs/alertify/default.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('admin/assets/libs/alertify/default.css') }}" rel="stylesheet" type="text/css" />
 </head>
 
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100" style="background-color: #fdfdfd;">
@@ -644,7 +645,6 @@
                         id="cargaMasivaF"><img src="{{asset('admin/images/image.ico')}}" height="25" class="mr-1">Carga
                         masiva fotos</button>
                 </div>
-
             </div>
         </nav>
     </header>
@@ -4075,8 +4075,8 @@
                                                     style="margin-top: 7px;font-weight: 600">Calendario:</label></div>
                                             <div class="col-md-4 text-center" id="divescond1_ver">
                                                 <input type="hidden" id="idselect3_ver">
-                                                <select name="" id="selectCalendario_edit3_ver" disabled class="form-control form-control-sm"
-                                                    style="margin-top: 4px;">
+                                                <select name="" id="selectCalendario_edit3_ver" disabled
+                                                    class="form-control form-control-sm" style="margin-top: 4px;">
                                                     <option hidden selected>Asignar calendario</option>
                                                     @foreach ($calendario as $calendarios)
                                                     <option class="" value="{{ $calendarios->calen_id }}">
