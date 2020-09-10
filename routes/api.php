@@ -53,3 +53,6 @@ Route::post("logueoV", "apiController@verificacion")->middleware('apilogger');
 
 //LICENCIA
 Route::post("licencia", "apiController@licenciaProducto")->middleware('apilogger');
+
+//SEGUNDA VERSION
+Route::post("listaActividad", "apiVersionDosController@selectActividad")->middleware('token')->middleware('apilogger');
