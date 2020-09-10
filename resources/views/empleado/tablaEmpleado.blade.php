@@ -54,10 +54,10 @@
             </div>
             <div class="modal-body">
                 <input type="hidden" id="empleadoControlR">
-                <form class="form-horizontal">
+                <form class="form-horizontal text-center">
+                    <img src="{{asset('admin/images/tick.svg')}}" height="25" class="mr-1 mt-2 pb-1">
                     <h5 class="modal-title" id="myModalLabel" style="font-size:
                         15px">
-                        <img src="{{asset('admin/images/tick.svg')}}" height="25" class="mr-1 mt-2">
                         Se registrara un dispositivo para control remoto y enviaremos un correo electronico al
                         empleado con dicha información.</h5>
                 </form>
@@ -160,7 +160,7 @@
                 <div class="custom-control custom-switch mb-2">
                     <input type="checkbox" class="custom-control-input"
                         id="customSwitchCR{{$tabla_empleados->emple_id}}"
-                        onchange="javascript:controlRemoto({{$tabla_empleados->emple_id}})">
+                        onclick="javascript:controlRemoto({{$tabla_empleados->emple_id}})">
                     <label class="custom-control-label" for="customSwitchCR{{$tabla_empleados->emple_id}}"
                         style="font-weight: bold"></label>
                 </div>

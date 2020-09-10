@@ -93,7 +93,7 @@ function RefreshTablaEmpleado() {
                                     id="customSwitchCR' +
                         data[i].emple_id +
                         '"\
-                                    onchange="javascript:controlRemoto(' +
+                                    onclick="javascript:controlRemoto(' +
                         data[i].emple_id +
                         ')">\
                                 <label class="custom-control-label" for="customSwitchCR' +
