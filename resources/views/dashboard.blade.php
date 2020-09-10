@@ -27,7 +27,6 @@
 @endsection
 @if ($variable==0)
 @section('content')
-</style>
 <div class="row">
     <div class="col-md-12  text-center">
         <a href="{{route('calendario')}}"><button class="boton btn btn-default mr-1"><span
@@ -392,9 +391,7 @@
     <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
-    <script src="{{asset('landing/js/notificacionesCalendario.js')}}"></script>
     <script src="{{asset('landing/js/dashboard.js')}}"></script>
-    <script src="{{asset('landing/js/notificacionesHorario.js')}}"></script>
     <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
     @endsection
     @section('script-bottom')

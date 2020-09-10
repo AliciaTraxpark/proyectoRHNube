@@ -472,6 +472,7 @@ function RegeditarActE(idA) {
                             startMaximized: false,
                             reverseButtons: true,
                             resizable: false,
+                            closable: false,
                             transition: "zoom",
                             oncancel: function (closeEvent) {
                                 actividad_empleado();
@@ -515,6 +516,7 @@ function RegeditarActE(idA) {
                 startMaximized: false,
                 reverseButtons: true,
                 resizable: false,
+                closable: false,
                 transition: "zoom",
                 oncancel: function (closeEvent) {
                     actividad_empleado();
@@ -560,6 +562,7 @@ function editarActE(idA) {
                             startMaximized: false,
                             reverseButtons: true,
                             resizable: false,
+                            closable: false,
                             transition: "zoom",
                             oncancel: function (closeEvent) {
                                 actividadEmp();
@@ -601,6 +604,7 @@ function editarActE(idA) {
                 startMaximized: false,
                 reverseButtons: true,
                 resizable: false,
+                closable: false,
                 transition: "zoom",
                 oncancel: function (closeEvent) {
                     actividadEmp();
@@ -643,40 +647,13 @@ function agregarControlR(id) {
                 $("#modalControlR").modal("toggle");
                 RefreshTablaEmpleado();
                 $.notifyClose();
-                $.notify(
-                    {
-                        message:
-                            '\nAún no ha registrado correo electrónico.<br>Para registrar correo electrónico cilick aqui.\
-                        <br><a onclick="javascript:agregarCorreoE(' +
-                            idEmpleado +
-                            ')" target="_blank" style="cursor: pointer;"><img src="/landing/images/source.gif" height="100"></a>',
-                        icon: "admin/images/warning.svg",
-                    },
-                    {
-                        position: "fixed",
-                        mouse_over: "pause",
-                        placement: {
-                            from: "top",
-                            align: "center",
-                        },
-                        icon_type: "image",
-                        newest_on_top: true,
-                        delay: 10000,
-                        template:
-                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
-                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                            '<span data-notify="title">{1}</span> ' +
-                            '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
-                            "</div>",
-                        spacing: 35,
-                    }
-                );
+                agregarCorreoE(idEmpleado);
             } else {
                 $("#modalControlR").modal("toggle");
+                RefreshTablaEmpleado();
                 $.notify(
                     {
-                        message: "\nCorreo enviado con exito a\n",
+                        message: "\nCorreo enviado con exito\n",
                         icon: "admin/images/checked.svg",
                     },
                     {
@@ -704,6 +681,33 @@ function agregarCorreoE(id) {
     $.notifyClose();
     $("#idEmpleCorreo").val(id);
     $("#modalCorreoElectronico").modal();
+    $.notify(
+        {
+            message:
+                "\nPara registrar un dispositivo de Control Remoto necesitamos el correo electrónico del empleado.",
+            icon: "admin/images/warning.svg",
+        },
+        {
+            element: $("#modalCorreoElectronico"),
+            position: "fixed",
+            mouse_over: "pause",
+            placement: {
+                from: "top",
+                align: "center",
+            },
+            icon_type: "image",
+            newest_on_top: true,
+            delay: 2000,
+            template:
+                '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                '<span data-notify="title">{1}</span> ' +
+                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                "</div>",
+            spacing: 35,
+        }
+    );
 }
 
 function guardarCorreoE() {
@@ -842,10 +846,10 @@ function activarEstadoCR(idEmpleado, idVinculacion) {
         url: "correoWindows",
         data: {
             idEmpleado: idEmpleado,
-            idVinculacion: idVinculacion
+            idVinculacion: idVinculacion,
         },
         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
             RefreshTablaEmpleado();
@@ -871,7 +875,7 @@ function activarEstadoCR(idEmpleado, idVinculacion) {
                 }
             );
         },
-        error: function () {}
+        error: function () {},
     });
 }
 function estadoDispositivoCR(idEmpleado, id, pc, datos) {
@@ -885,7 +889,7 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
                         pc +
                         "</strong>  de <strong>" +
                         datos +
-                        "</strong>  se inhabilitará información del empleado en su PC.",
+                        "</strong> podrá usarla de desde este momento y recibira un correo electrónico con los datos necesarios.",
                     function (e) {
                         if (e) {
                             activarEstadoCR(idEmpleado, id);
@@ -893,7 +897,7 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
                     }
                 )
                 .setting({
-                    title: "Cambiar estado a Dispositvos de Control Remoto",
+                    title: "Activar Dispositivo",
                     labels: {
                         ok: "Aceptar",
                         cancel: "Cancelar",
@@ -903,6 +907,7 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
                     reverseButtons: true,
                     resizable: false,
                     transition: "zoom",
+                    closable: false,
                     oncancel: function (closeEvent) {
                         RefreshTablaEmpleado();
                     },
@@ -910,11 +915,11 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
         } else {
             alertify
                 .confirm(
-                    "Al <strong> INACTIVAR PC " +
+                    "Al <strong> DESACTIVAR PC " +
                         pc +
                         "</strong> de <strong>" +
                         datos +
-                        "</strong> recibira un correo electrónico con los datos necesarios.",
+                        "</strong> no podrá usarla de desde este momento.",
                     function (e) {
                         if (e) {
                             inactivarEstadoCR(idEmpleado, id);
@@ -922,7 +927,7 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
                     }
                 )
                 .setting({
-                    title: "Cambiar estado a Dispositvos de Control Remoto",
+                    title: "Desactivar Dispositivo",
                     labels: {
                         ok: "Aceptar",
                         cancel: "Cancelar",
@@ -932,10 +937,15 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
                     reverseButtons: true,
                     resizable: false,
                     transition: "zoom",
+                    closable: false,
                     oncancel: function (closeEvent) {
                         RefreshTablaEmpleado();
                     },
                 });
         }
     });
+}
+
+function limpiarCorreoE(){
+    $("#textCorreo").val("");
 }

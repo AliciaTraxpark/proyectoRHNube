@@ -83,20 +83,17 @@ class apiController extends Controller
             if ($vinculacion) {
                 if ($vinculacion->hash == $request->get('codigo')) {
                     if ($vinculacion->pc_mac !=  null) {
-                        if ($vinculacion->pc_mac == $request->get('pc_mac')) {
-                            $factory = JWTFactory::customClaims([
-                                'sub' => env('API_id'),
-                            ]);
-                            $payload = $factory->make();
-                            $token = JWTAuth::encode($payload);
-                            $user = User::where('id', '=', $idUser)->get()->first();
-                            return response()->json(array(
-                                "corte" => $user->corteCaptura, "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
-                                'idUser' => $idUser, 'token' => $token->get()
-                            ), 200);
-                        } else {
-                            return response()->json("Pc no coinciden", 400);
-                        }
+                        $vinculacion->pc_mac = $request->get('pc_mac');
+                        $factory = JWTFactory::customClaims([
+                            'sub' => env('API_id'),
+                        ]);
+                        $payload = $factory->make();
+                        $token = JWTAuth::encode($payload);
+                        $user = User::where('id', '=', $idUser)->get()->first();
+                        return response()->json(array(
+                            "corte" => $user->corteCaptura, "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                            'idUser' => $idUser, 'token' => $token->get()
+                        ), 200);
                     } else {
                         $vinculacion->pc_mac = $request->get('pc_mac');
                         $vinculacion->save();
@@ -105,8 +102,9 @@ class apiController extends Controller
                         ]);
                         $payload = $factory->make();
                         $token = JWTAuth::encode($payload);
+                        $user = User::where('id', '=', $idUser)->get()->first();
                         return response()->json(array(
-                            "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                            "corte" => $user->corteCaptura, "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
                             'idUser' => $idUser, 'token' => $token->get()
                         ), 200);
                     }

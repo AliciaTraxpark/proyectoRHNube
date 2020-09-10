@@ -39,6 +39,28 @@
     .dataTables_scrollBody {
         overflow: visible !important;
     }
+
+    .alertify .ajs-body .ajs-content {
+        padding: 16px 16px 16px 16px !important;
+    }
+
+    .ajs-body {
+        font: 12.8px !important;
+        padding: 0px !important;
+        font-family: 'Roboto', sans-serif !important;
+    }
+
+    .alertify .ajs-footer {
+        background: #ffffff;
+        border-top: 1px solid #f6f6f7;
+        border-radius: 0 0 4.8px 4.8px;
+    }
+
+    .alertify .ajs-footer .ajs-buttons .ajs-button {
+        min-width: 88px;
+        min-height: 35px;
+        padding: 4px 8px 4px 8px;
+    }
 </style>
 <div id="modalControlR" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalControlR"
     aria-hidden="true" data-backdrop="static">
@@ -48,16 +70,17 @@
                 <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Registrar Dispositivo
                     para Modo Control Remoto
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    onclick="javascript:RefreshTablaEmpleado()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <input type="hidden" id="empleadoControlR">
-                <form class="form-horizontal">
+                <form class="form-horizontal text-center">
+                    <img src="{{asset('admin/images/tick.svg')}}" height="25" class="mr-1 mt-2 pb-1">
                     <h5 class="modal-title" id="myModalLabel" style="font-size:
                         15px">
-                        <img src="{{asset('admin/images/tick.svg')}}" height="25" class="mr-1 mt-2">
                         Se registrara un dispositivo para control remoto y enviaremos un correo electronico al
                         empleado con dicha información.</h5>
                 </form>
@@ -160,7 +183,7 @@
                 <div class="custom-control custom-switch mb-2">
                     <input type="checkbox" class="custom-control-input"
                         id="customSwitchCR{{$tabla_empleados->emple_id}}"
-                        onchange="javascript:controlRemoto({{$tabla_empleados->emple_id}})">
+                        onclick="javascript:controlRemoto({{$tabla_empleados->emple_id}})">
                     <label class="custom-control-label" for="customSwitchCR{{$tabla_empleados->emple_id}}"
                         style="font-weight: bold"></label>
                 </div>
