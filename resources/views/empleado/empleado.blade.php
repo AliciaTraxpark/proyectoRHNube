@@ -469,11 +469,11 @@
                                         <div class="input-group input-group-merge">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" style="background-color: #ffffff;">
-                                                    <img src="{{asset('landing/images/email.svg')}}" height="20">
+                                                    <img src="{{asset('landing/images/at.svg')}}" height="13">
                                                 </span>
                                             </div>
                                             <input type="email" type="text" class="form-control" id="textCorreo"
-                                                name="email" required>
+                                                name="email" required autofocus>
                                         </div>
                                     </div>
                                 </div>

@@ -643,35 +643,7 @@ function agregarControlR(id) {
                 $("#modalControlR").modal("toggle");
                 RefreshTablaEmpleado();
                 $.notifyClose();
-                $.notify(
-                    {
-                        message:
-                            '\nAún no ha registrado correo electrónico.<br>Para registrar correo electrónico cilick aqui.\
-                        <br><a onclick="javascript:agregarCorreoE(' +
-                            idEmpleado +
-                            ')" target="_blank" style="cursor: pointer;"><img src="/landing/images/source.gif" height="100"></a>',
-                        icon: "admin/images/warning.svg",
-                    },
-                    {
-                        position: "fixed",
-                        mouse_over: "pause",
-                        placement: {
-                            from: "top",
-                            align: "center",
-                        },
-                        icon_type: "image",
-                        newest_on_top: true,
-                        delay: 10000,
-                        template:
-                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
-                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                            '<span data-notify="title">{1}</span> ' +
-                            '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
-                            "</div>",
-                        spacing: 35,
-                    }
-                );
+                agregarCorreoE(idEmpleado);
             } else {
                 $("#modalControlR").modal("toggle");
                 $.notify(
@@ -704,6 +676,33 @@ function agregarCorreoE(id) {
     $.notifyClose();
     $("#idEmpleCorreo").val(id);
     $("#modalCorreoElectronico").modal();
+    $.notify(
+        {
+            message:
+                '\nPara registrar un dispositivo de Control Remoto necesitamos el correo electrónico del empleado.',
+            icon: "admin/images/warning.svg",
+        },
+        {
+            element: $("#modalCorreoElectronico"),
+            position: "fixed",
+            mouse_over: "pause",
+            placement: {
+                from: "top",
+                align: "center",
+            },
+            icon_type: "image",
+            newest_on_top: true,
+            delay: 2000,
+            template:
+                '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                '<span data-notify="title">{1}</span> ' +
+                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                "</div>",
+            spacing: 35,
+        }
+    );
 }
 
 function guardarCorreoE() {
