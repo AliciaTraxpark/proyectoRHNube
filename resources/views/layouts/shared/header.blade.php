@@ -157,8 +157,8 @@ use App\persona;
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <input type="hidden" id="idEmpleCorreo">
-                    <form class="form-horizontal col-lg-12" action="javascript:guardarCorreoE()">
+                    <input type="hidden" id="idEmpleCorreoH">
+                    <form class="form-horizontal col-lg-12" action="javascript:guardarCorreoEH()">
                         {{ csrf_field() }}
                         <div class="row">
                             <div class="col-lg-12">
