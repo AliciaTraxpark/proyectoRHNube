@@ -885,7 +885,7 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
                         pc +
                         "</strong>  de <strong>" +
                         datos +
-                        "</strong>  recibira un correo electrónico con los datos necesarios.",
+                        "</strong> podrá usarla de desde este momento y recibira un correo electrónico con los datos necesarios.",
                     function (e) {
                         if (e) {
                             activarEstadoCR(idEmpleado, id);
@@ -893,7 +893,7 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
                     }
                 )
                 .setting({
-                    title: "Cambiar estado a Dispositvos de Control Remoto",
+                    title: "Activar Dispositivo",
                     labels: {
                         ok: "Aceptar",
                         cancel: "Cancelar",
@@ -910,11 +910,11 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
         } else {
             alertify
                 .confirm(
-                    "Al <strong> INACTIVAR PC " +
+                    "Al <strong> DESACTIVAR PC " +
                         pc +
                         "</strong> de <strong>" +
                         datos +
-                        "</strong> se inhabilitará información del empleado en su PC.",
+                        "</strong> no podrá usarla de desde este momento.",
                     function (e) {
                         if (e) {
                             inactivarEstadoCR(idEmpleado, id);
@@ -922,7 +922,7 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
                     }
                 )
                 .setting({
-                    title: "Cambiar estado a Dispositvos de Control Remoto",
+                    title: "Desactivar Dispositivo",
                     labels: {
                         ok: "Aceptar",
                         cancel: "Cancelar",
