@@ -24,7 +24,7 @@ function showNotificaciones() {
             var container = $("#notificacionesUser");
             var contador = 0;
             if (data.length == 0) {
-                img = `<div class="badge float-center mt-3" style="margin-left:30%;">
+                img = `<div class="badge float-center mt-3" style="margin-left:25%;">
                     <img src="/landing/images/bell_notification.gif" height="100">
                      <br> <label for=""
                     style="font-size:12px;color:#7d7d7d">Aún no tienes notificaciones nuevas</label> </div>`;
