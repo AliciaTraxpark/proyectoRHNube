@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\actividad;
 use App\captura;
+use App\promedio_captura;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class apiVersionDosController extends Controller
@@ -49,7 +51,8 @@ class apiVersionDosController extends Controller
         return response()->json($actividad, 200);
     }
 
-    public function captura(Request $request){
+    public function captura(Request $request)
+    {
 
         $captura = new captura();
         $captura->estado = $request->get('estado');
@@ -63,7 +66,38 @@ class apiVersionDosController extends Controller
         $captura->idActividad = $request->get('idActividad');
         $captura->save();
 
-        return response()->json($captura, 200);
+        $idCaptura = $captura->idCaptura;
+        $idHorario = $captura->idHorario_dias;
 
+        //  PROMEDIO CAPTURA
+        $capturaRegistrada = captura::where('idCaptura', '=', $idCaptura)->get()->first();
+        $idHorario_dias = $idHorario;
+        //RESTA POR FECHA HORA DE   CAPTURAS
+        $fecha = Carbon::create($capturaRegistrada->hora_ini)->format('H:i:s');
+        $explo = explode(":", $fecha);
+        $calSegund = $explo[0] * 3600 + $explo[1] * 60 + $explo[2];
+        $fecha1 = Carbon::create($capturaRegistrada->hora_fin)->format('H:i:s');
+        $explo1 = explode(":", $fecha1);
+        $calSegund1 = $explo1[0] * 3600 + $explo1[1] * 60 + $explo1[2];
+        $totalP = $calSegund1 - $calSegund;
+        // ACTIVIDAD DE CAPTURA
+        $activ = $capturaRegistrada->actividad;
+        //VALIDACION DE CERO
+        if ($totalP == 0) {
+            $round = 0;
+        } else {
+            //PROMEDIO
+            $promedio = floatval($activ / $totalP);
+            $promedioFinal = $promedio * 100;
+            $round = round($promedioFinal, 2);
+        }
+        $promedio_captura = new promedio_captura();
+        $promedio_captura->idCaptura = $idCaptura;
+        $promedio_captura->idHorario = $idHorario_dias;
+        $promedio_captura->promedio = $round;
+        $promedio_captura->tiempo_rango = $totalP;
+        $promedio_captura->save();
+
+        return response()->json($captura, 200);
     }
 }
