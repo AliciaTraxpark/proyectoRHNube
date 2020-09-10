@@ -129,19 +129,50 @@ class calendarioController extends Controller
             $fechaEnvi=$fechaOrga2->format('Y-m-d');
             $fechaEnviFi=$fechaOrga3->format('Y-m-d');
             $diaAnt=Carbon::create($fechaEnviFi)->subDays(1)->format('Y-m-d');
+            //////////////////////////////////////
+            $empleado = DB::table('empleado as e')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc', 'p.perso_id', 'e.emple_id')
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->where('e.emple_estado', '=', 1)
+            ->groupBy('e.emple_id')
+            ->get();
+
+            $area = DB::table('area as ar')
+            ->join('empleado as em', 'ar.area_id', '=', 'em.emple_area')
+            ->select(
+                'ar.area_id as idarea',
+                'area_descripcion as descripcion'
+            )
+            ->groupBy('ar.area_id')
+            ->get();
+
+            $cargo=DB::table('cargo as cr')
+            ->join('empleado as em', 'cr.cargo_id', '=', 'em.emple_cargo')
+            ->select('cr.cargo_id as idcargo', 'cargo_descripcion as descripcion')
+            ->groupBy('cr.cargo_id')
+            ->get();
+            $local=DB::table('local as lo')
+            ->join('empleado as em', 'lo.local_id', '=', 'em.emple_local')
+            ->select('lo.local_id as idlocal', 'local_descripcion as descripcion')
+            ->groupBy('lo.local_id')
+            ->get();
+            ////////////////////////////////////////
                 if($invitadod){
                     if ($invitadod->rol_id!=1){
                         return redirect('/dashboard');
                     }
                     else{
                         return view('calendario.calendario', ['pais' => $paises, 'calendario' => $calendarioSel,
-                        'fechaEnvi' => $fechaEnvi,'fechaEnviFi' => $fechaEnviFi,'diaAnt' => $diaAnt]);
+                        'fechaEnvi' => $fechaEnvi,'fechaEnviFi' => $fechaEnviFi,'diaAnt' => $diaAnt,'empleado' => $empleado,
+                        'area'=>$area,'cargo'=>$cargo,'local'=>$local]);
                     }
                 }
 
             else{
             return view('calendario.calendario', ['pais' => $paises, 'calendario' => $calendarioSel,
-            'fechaEnvi' => $fechaEnvi,'fechaEnviFi' => $fechaEnviFi,'diaAnt' => $diaAnt]);}
+            'fechaEnvi' => $fechaEnvi,'fechaEnviFi' => $fechaEnviFi,'diaAnt' => $diaAnt,'empleado' => $empleado,
+            'area'=>$area,'cargo'=>$cargo,'local'=>$local]);}
         } else {
             return redirect(route('principal'));
         }
@@ -273,20 +304,50 @@ class calendarioController extends Controller
             $fechaEnviFi=$fechaOrga3->format('Y-m-d');
 
             $diaAnt=Carbon::create($fechaEnviFi)->subDays(1)->format('Y-m-d');
+            //////////////////////////////////////
+            $empleado = DB::table('empleado as e')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc', 'p.perso_id', 'e.emple_id')
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->where('e.emple_estado', '=', 1)
+            ->groupBy('e.emple_id')
+            ->get();
 
+            $area = DB::table('area as ar')
+            ->join('empleado as em', 'ar.area_id', '=', 'em.emple_area')
+            ->select(
+                'ar.area_id as idarea',
+                'area_descripcion as descripcion'
+            )
+            ->groupBy('ar.area_id')
+            ->get();
+
+            $cargo=DB::table('cargo as cr')
+            ->join('empleado as em', 'cr.cargo_id', '=', 'em.emple_cargo')
+            ->select('cr.cargo_id as idcargo', 'cargo_descripcion as descripcion')
+            ->groupBy('cr.cargo_id')
+            ->get();
+            $local=DB::table('local as lo')
+            ->join('empleado as em', 'lo.local_id', '=', 'em.emple_local')
+            ->select('lo.local_id as idlocal', 'local_descripcion as descripcion')
+            ->groupBy('lo.local_id')
+            ->get();
+            ////////////////////////////////////////
                 if($invitadod){
                     if ($invitadod->rol_id!=1){
                         return redirect('/dashboard');
                     }
                     else{
                         return view('calendario.calendarioMenu', ['pais' => $paises, 'calendario' => $calendarioSel,
-                        'fechaEnvi' => $fechaEnvi,'fechaEnviFi' => $fechaEnviFi,'diaAnt' => $diaAnt]);
+                        'fechaEnvi' => $fechaEnvi,'fechaEnviFi' => $fechaEnviFi,'diaAnt' => $diaAnt,'empleado' => $empleado,
+                        'area'=>$area,'cargo'=>$cargo,'local'=>$local]);
                     }
                 }
 
             else{
             return view('calendario.calendarioMenu', ['pais' => $paises, 'calendario' => $calendarioSel,
-            'fechaEnvi' => $fechaEnvi,'fechaEnviFi' => $fechaEnviFi,'diaAnt' => $diaAnt]);}
+            'fechaEnvi' => $fechaEnvi,'fechaEnviFi' => $fechaEnviFi,'diaAnt' => $diaAnt,'empleado' => $empleado,
+            'area'=>$area,'cargo'=>$cargo,'local'=>$local]);}
         } else {
             return redirect(route('principal'));
         }
@@ -401,6 +462,7 @@ class calendarioController extends Controller
             $eventos_empleado->tipo_ev = $eventos_usuario->tipo;
             $eventos_empleado->id_calendario = $eventos_usuario->id_calendario;
             $eventos_usuario->organi_id = session('sesionidorg');
+            $eventos_empleado->laborable = $eventos_usuario->laborable;
             $eventos_empleado->save();
 
         }
@@ -490,5 +552,93 @@ class calendarioController extends Controller
           $eventos_usuario2->laborable =0;
           $eventos_usuario2->save();
            }
+  }
+
+  public function listaEmplCa(Request $request){
+    $idcalendar=$request->idcalendar;
+
+    $empleados = DB::table('empleado as e')
+    ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+    ->leftJoin('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
+    ->select(
+        'e.emple_id',
+        'p.perso_id',
+        'p.perso_nombre',
+        'p.perso_apPaterno',
+        'p.perso_apMaterno',
+        'eve.id_calendario as idcalendar'
+    )
+    ->where('eve.id_calendario', '=', $idcalendar)
+    ->where('e.emple_estado', '=', 1)
+    ->where('e.organi_id', '=', session('sesionidorg'))
+    ->groupBy('e.emple_id')
+    ->get();
+
+    return json_encode($empleados);
+
+  }
+
+  public function asignarCalendario(Request $request){
+    $idcalendario = $request->idcalenReg;
+        $idempleado = $request->idemples;
+        foreach($idempleado as $idempleados){
+         $eventos_empleado = eventos_empleado::where('id_empleado', '=', $idempleados)
+            ->get();
+
+        if ($eventos_empleado->isEmpty()) {
+
+            $eventos_usuario = eventos_usuario::where('organi_id', '=', session('sesionidorg'))
+                ->where('id_calendario', '=', $idcalendario)->get();
+            if ($eventos_usuario) {
+                foreach ($eventos_usuario as $eventos_usuarios) {
+                    $eventos_empleado_r = new eventos_empleado();
+                    $eventos_empleado_r->id_empleado = $idempleados;
+                    $eventos_empleado_r->title = $eventos_usuarios->title;
+                    $eventos_empleado_r->color = $eventos_usuarios->color;
+                    $eventos_empleado_r->textColor = $eventos_usuarios->textColor;
+                    $eventos_empleado_r->start = $eventos_usuarios->start;
+                    $eventos_empleado_r->end = $eventos_usuarios->end;
+                    $eventos_empleado_r->tipo_ev = $eventos_usuarios->tipo;
+                    $eventos_empleado_r->id_calendario = $idcalendario;
+                    $eventos_empleado_r->laborable =0;
+                    $eventos_empleado_r->save();
+                }
+            }
+        }
+        else{
+
+            $eventos_empleadoRep = eventos_empleado::where('id_empleado', '=', $idempleados)
+            ->where('id_calendario', '=', $idcalendario)
+            ->get();
+            if ($eventos_empleadoRep->isEmpty()) {
+                DB::table('eventos_empleado')
+            ->where('id_empleado', '=', $idempleados)
+            ->delete();
+            $eventos_usuario = eventos_usuario::where('organi_id', '=', session('sesionidorg'))
+                ->where('id_calendario', '=', $idcalendario)->get();
+            if ($eventos_usuario) {
+                foreach ($eventos_usuario as $eventos_usuarios) {
+                    $eventos_empleado_r = new eventos_empleado();
+                    $eventos_empleado_r->id_empleado = $idempleados;
+                    $eventos_empleado_r->title = $eventos_usuarios->title;
+                    $eventos_empleado_r->color = $eventos_usuarios->color;
+                    $eventos_empleado_r->textColor = $eventos_usuarios->textColor;
+                    $eventos_empleado_r->start = $eventos_usuarios->start;
+                    $eventos_empleado_r->end = $eventos_usuarios->end;
+                    $eventos_empleado_r->tipo_ev = $eventos_usuarios->tipo;
+                    $eventos_empleado_r->id_calendario = $idcalendario;
+                    $eventos_empleado_r->laborable =0;
+                    $eventos_empleado_r->save();
+                }
+            }
+
+            }
+
+
+
+        }
+        }
+
+
   }
 }
