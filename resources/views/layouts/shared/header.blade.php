@@ -74,7 +74,7 @@ use App\persona;
                     <i data-feather="bell"></i>
                     <span class="noti-icon-badge"></span>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right dropdown-xl">
+                <div class="dropdown-menu dropdown-menu-right dropdown-xl" style="width: 400px">
                     <!-- item-->
                     <div class="dropdown-item noti-title border-bottom" style="background-color: #163552;">
                         <div class="col-lg-12 col-sm-12 col-12 m-0">
@@ -88,7 +88,7 @@ use App\persona;
                     </div>
 
                     <div class="slimscroll noti-scroll" id="notificacionesUser"
-                        style="important;height: 150px!important">
+                        style="height: 150px!important;">
                     </div>
                 </div>
             </li>
