@@ -577,6 +577,7 @@ class EmpleadoController extends Controller
                 $eventos_empleado->id_empleado = $idempleado;
                 $eventos_empleado->tipo_ev = $eventos_empleado_tempEUs->tipo_ev;
                 $eventos_empleado->id_calendario = $eventos_empleado_tempEUs->calendario_calen_id;
+                $eventos_empleado->laborable =0;
                 $eventos_empleado->save();
             }
         }
@@ -1310,6 +1311,7 @@ class EmpleadoController extends Controller
                     $eventos_empleado_r->end = $eventos_usuarios->end;
                     $eventos_empleado_r->tipo_ev = $eventos_usuarios->tipo;
                     $eventos_empleado_r->id_calendario = $idcalendario;
+                    $eventos_empleado_r->laborable =0;
                     $eventos_empleado_r->save();
                 }
             }
@@ -1361,6 +1363,7 @@ class EmpleadoController extends Controller
         $eventos_empleado->tipo_ev = $request->get('tipo');
         $eventos_empleado->id_empleado = $request->get('idempleado');
         $eventos_empleado->id_calendario = $ev1->id_calendario;
+        $eventos_empleado->laborable =0;
         $eventos_empleado->save();
     }
     public function storeIncidempleado(Request $request)

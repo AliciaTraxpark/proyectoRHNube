@@ -53,6 +53,7 @@ class diasLaborablesController extends Controller
             $eventos_empleado->end =$request->get('end');
             $eventos_empleado->tipo_ev =$request->get('tipo');
             $eventos_empleado->id_empleado =$idempleados;
+            $eventos_empleado->laborable =0;
             $eventos_empleado->save();
             $arrayeve->push($eventos_empleado->evEmpleado_id);
         }

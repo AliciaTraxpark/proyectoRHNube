@@ -339,6 +339,7 @@ class excelEmpleadoController extends Controller
                     $eventos_empleado_r->end = $eventos_usuarios->end;
                     $eventos_empleado_r->tipo_ev = $eventos_usuarios->tipo;
                     $eventos_empleado_r->id_calendario = $idcalendario;
+                    $eventos_empleado_r->laborable =0;
                     $eventos_empleado_r->save();
                 }
             }

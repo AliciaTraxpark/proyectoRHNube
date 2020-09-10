@@ -89,7 +89,7 @@ var idcalendarioF=$('#selectCalendario').val();
         header: {
             left: 'prev,next, today,nuevoAño',
             center: 'title',
-            right: ''
+            right: 'Asignar'
         },
         validRange: {
             start: añoCal,
@@ -106,6 +106,23 @@ var idcalendarioF=$('#selectCalendario').val();
                     $('#textoNuevoAño').val("¿Añadir año "+añoEnviado+" al calendario actual?");
                     $('#añotNuevo').val(añoEnviado);
                     $('#añadirNuevoa').modal('show');
+                }
+            },
+            Asignar: {
+                text: "+ Asignar empleado(s)",
+
+                click: function () {
+                   var nombreca= $('select[id="selectCalendario"] option:selected').text();
+                    $("#nombreEmpleado > option").prop("selected",false);
+                    $("#nombreEmpleado").trigger("change");
+                    $("#selectEmpresarial > option").prop("selected",false);
+                    $("#selectEmpresarial").trigger("change");
+                   $('#textCalend').text("Calendario: "+nombreca);
+                    $("#tabEmpleado").dataTable().fnDestroy();
+                    /* $("#tabEmpleado").dataTable(); */
+                    listaempCal();
+
+                    $('#calendarioEmple').modal('show');
                 }
             }
         },
@@ -845,5 +862,220 @@ function editarfinC(){
             $('#añadirNuevoa').modal('hide');
         },
         error: function () {}})
+
+}
+///////////////////////
+//select todo empleado
+$("#selectTodoCheck").click(function(){
+    if($("#selectTodoCheck").is(':checked') ){
+        $("#nombreEmpleado > option").prop("selected","selected");
+        $("#nombreEmpleado").trigger("change");
+    }else{
+        $("#nombreEmpleado > option").prop("selected",false);
+         $("#nombreEmpleado").trigger("change");
+     }
+});
+//////////////////////
+//seleccionar por area, cargo, etc
+$('#selectEmpresarial').change(function(e){
+    var idempresarial=[];
+ idempresarial=$('#selectEmpresarial').val();
+ textSelec=$('select[name="selectEmpresarial"] option:selected:last').text();
+ textSelec2=$('select[name="selectEmpresarial"] option:selected:last').text();
+/*  palabrasepara=textSelec2.split('.')[0];
+ alert(palabrasepara);
+ return false; */
+ palabraEmpresarial=textSelec.split(' ')[0];
+ if(palabraEmpresarial=='Area'){
+    $.ajax({
+        type: "post",
+        url: "/horario/empleArea",
+        data: {
+            idarea: idempresarial
+        },
+        statusCode: {
+
+            419: function () {
+                location.reload();
+            }
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            $("#nombreEmpleado > option").prop("selected",false);
+            $("#nombreEmpleado").trigger("change");
+            $.each( data, function( index, value ){
+                 $("#nombreEmpleado > option[value='"+value.emple_id+"']").prop("selected","selected");
+                 $("#nombreEmpleado").trigger("change");
+            });
+        console.log(data);
+        },
+        error: function (data) {
+            alert('Ocurrio un error');
+        }
+    });
+ }
+ if(palabraEmpresarial=='Cargo'){
+    $.ajax({
+        type: "post",
+        url: "/horario/empleCargo",
+        data: {
+            idcargo: idempresarial
+        },
+        statusCode: {
+
+            419: function () {
+                location.reload();
+            }
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            $("#nombreEmpleado > option").prop("selected",false);
+            $("#nombreEmpleado").trigger("change");
+            $.each( data, function( index, value ){
+                 $("#nombreEmpleado > option[value='"+value.emple_id+"']").prop("selected","selected");
+                 $("#nombreEmpleado").trigger("change");
+            });
+        console.log(data);
+        },
+        error: function (data) {
+            alert('Ocurrio un error');
+        }
+    });
+    }
+
+if(palabraEmpresarial=='Local'){
+    $.ajax({
+        type: "post",
+        url: "/horario/empleLocal",
+        data: {
+            idlocal: idempresarial
+        },
+        statusCode: {
+
+            419: function () {
+                location.reload();
+            }
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            $("#nombreEmpleado > option").prop("selected",false);
+            $("#nombreEmpleado").trigger("change");
+            $.each( data, function( index, value ){
+                    $("#nombreEmpleado > option[value='"+value.emple_id+"']").prop("selected","selected");
+                    $("#nombreEmpleado").trigger("change");
+            });
+        console.log(data);
+        },
+        error: function (data) {
+            alert('Ocurrio un error');
+        }
+    });
+    }
+
+})
+/////////////////////////////////
+function listaempCal(){
+    var  idcalenLista=$('#selectCalendario').val();
+    // DataTable
+    $('#tabEmpleado').DataTable({
+        language: {
+            sProcessing: "Procesando...",
+            sLengthMenu: "Mostrar _MENU_ registros",
+            sZeroRecords: "No se encontraron resultados",
+            sEmptyTable: "Ningún dato disponible en esta tabla",
+            sInfo: "Mostrando registros del _START_ al _END_ ",
+            sInfoEmpty:
+                "Mostrando registros del 0 al 0 de un total de 0 registros",
+            sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+            sInfoPostFix: "",
+            sSearch: "Buscar:",
+            sUrl: "",
+            sInfoThousands: ",",
+            sLoadingRecords: "Cargando...",
+            oPaginate: {
+                sFirst: "Primero",
+                sLast: "Último",
+                sNext: ">",
+                sPrevious: "<",
+            },
+            oAria: {
+                sSortAscending:
+                    ": Activar para ordenar la columna de manera ascendente",
+                sSortDescending:
+                    ": Activar para ordenar la columna de manera descendente",
+            },
+            buttons: {
+                copy: "Copiar",
+                colvis: "Visibilidad",
+            },
+        },
+
+       ajax: {
+        type: "post",
+        url: "/calendario/listaEmplCa",
+        data: {
+            idcalendar: idcalenLista
+        },
+        statusCode: {
+
+            419: function () {
+                location.reload();
+            }
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        "dataSrc": ""
+       },
+
+       columns: [
+          { data: "perso_nombre" },
+          { data: "perso_apPaterno" },
+          { data: "perso_apMaterno" },
+
+       ]
+    });
+}
+function asignarCalendario(){
+    var  idcalenReg=$('#selectCalendario').val();
+    var  idemples = $('#nombreEmpleado').val();
+    $("#asignacionCa").hide();
+    $("#espera").show();
+    $.ajax({
+        type: "post",
+        url: "/calendario/asignarCalendario",
+        data: {
+            idcalenReg,idemples
+        },
+        statusCode: {
+
+            419: function () {
+                location.reload();
+            }
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            $("#tabEmpleado").dataTable().fnDestroy();
+            listaempCal();
+            $("#nombreEmpleado > option").prop("selected",false);
+            $("#nombreEmpleado").trigger("change");
+            $("#selectEmpresarial > option").prop("selected",false);
+            $("#selectEmpresarial").trigger("change");
+            $("#espera").hide();
+            $("#asignacionCa").show();
+
+        },
+        error: function (data) {
+            alert('Ocurrio un error');
+        }
+    });
 
 }

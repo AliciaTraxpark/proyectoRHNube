@@ -19,6 +19,9 @@
   <link href="{{asset('admin/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
   <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
   <link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
+  <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css') }}" rel="stylesheet" type="text/css" />
   <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
   <script src="{{asset('admin/assets/hopscotch/hopscotch.min.js')}}"></script>
   <link  href="{{asset('admin/assets/hopscotch/hopscotch.min.css')}}" rel="stylesheet" type="text/css">
@@ -91,11 +94,28 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
 }
 .fc-nuevoAño-button{
     left: 10px;
-    background: #2c2d31;
-    color: #ffffff!important;
+
     font-size: 12px;
     padding-left: 6px;
     padding-right: 6px;
+    }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice{
+        background-color: #52565b;
+    }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
+        color: #fdfdfd;
+    }
+    .col-md-6 .select2-container .select2-selection {
+    height: 50px;
+    font-size: 12.2px;
+    overflow-y: scroll;
+}
+.select2-container--default .select2-results__option[aria-selected=true]{
+        background: #ced0d3;
+    }
+    .table td{
+        padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
     }
 </style>
 
@@ -447,6 +467,111 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
                    </div><!-- /.modal-content -->
                  </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
+
+                <div id="calendarioEmple" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                    <div class="modal-dialog  modal-lg d-flex modal-dialog-scrollable justify-content-center " style="width: 750px;" >
+
+                    <div class="modal-content">
+                       <div class="modal-header" style="background-color:#163552;">
+                           <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Empleados de calendario</h5>
+                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                               <span aria-hidden="true">&times;</span>
+                           </button>
+                       </div>
+                       <div class="modal-body" style="font-size:12px!important">
+                           <div class="row">
+                                <div class="col-md-12">
+                                    <label for="" id="textCalend" style="font-size: 14px;  font-weight: 600;"></label>
+                                </div>
+                               <div class="col-md-12" style="border-bottom: 1px solid #f1f1f1;
+                               padding-bottom: 12px;">
+                                <label style="font-size: 14px; ">Asignar empleados a calendario</label>
+                                <form id="asignacionCa"  action="javascript:asignarCalendario()">
+                                   <div class="row">
+                                    <div class="col-md-9" style="zoom:90%;">
+                                        <input type="hidden" id="fechaDa" name="fechaDa">
+                                        <label for="" style="font-weight: 600;">Seleccionar empleado(s):</label>
+                                    </div>
+                                    <div class="col-md-7" style="zoom:90%;">
+                                        <div class="row" style="margin-left: 6px;">
+                                            <div class="col-md-5 form-check">
+                                                <input type="checkbox"  class="form-check-input" id="selectTodoCheck">
+                                                <label class="form-check-label" for="selectTodoCheck" style="font-style: oblique;margin-top: 2px;">Seleccionar todos.</label>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+                                           <select class="form-control wide" data-plugin="customselect" multiple id="nombreEmpleado" required>
+                                            @foreach ($empleado as  $empleados)
+                                            <option value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</option>
+                                          @endforeach
+                                        </select>
+
+                                     </div>
+                                     <div class="col-md-2">
+                                         <label for="" style="margin-top: 9px;" >Seleccionar por:</label>
+                                     </div>
+                                     <div class="row col-md-4">
+                                        <select data-plugin="customselect"  id="selectEmpresarial" name="selectEmpresarial" class="form-control" data-placeholder="seleccione">
+                                            <option value=""></option>
+                                            @foreach ($area as $areas)
+                                            <option value="{{$areas->idarea}}">Area : {{$areas->descripcion}}.</option>
+                                            @endforeach
+                                            @foreach ($cargo as $cargos)
+                                            <option value="{{$cargos->idcargo}}">Cargo : {{$cargos->descripcion}}.</option>
+                                            @endforeach
+                                            @foreach ($local as $locales)
+                                            <option value="{{$locales->idlocal}}">Local : {{$locales->descripcion}}.</option>
+                                            @endforeach
+                                        </select>
+                                     </div><br>
+                                     <div class="col-md-12 text-right" style="padding-right: 24px;"><button type="submit" class="btn btn-soft-primary btn-sm" >Asignar calendario</button></div>
+                                   </div>
+
+                               </div>
+                            </form>
+                            <div id="espera" class="col-md-12 text-center" style="display: none">
+
+                                <img src="{{ asset('landing/images/loading.gif') }}" height="100">
+                            </div>
+
+                               <div class="col-md-12">
+                                    <br><label style="font-size: 14px; ">Lista de empleados:</label>
+                                   <div class="col-md-12" style="    padding-left: 0px;">
+                                    <table id='tabEmpleado' width='100%'  class="table  nowrap">
+                                        <thead>
+                                          <tr>
+                                            <td>Nombres</td>
+                                            <td>Apellido paterno </td>
+                                            <td>Apellido materno </td>
+                                          </tr>
+                                        </thead>
+                                      </table>
+                                   </div>
+
+                               </div>
+                           </div>
+
+                       </div>
+                       <div class="modal-footer">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <button type="button" class="btn btn-light"
+                                        data-dismiss="modal">Cerrar</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                   </div><!-- /.modal-content -->
+                 </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
             <div class="row " >
                 <div class="col-md-1"></div>
     <div class="col-md-9" id="calendar">
@@ -533,7 +658,9 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
   <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
   <script src="{{asset('landing/js/landingpage.js')}}"></script>
   <script src="{{asset('landing/js/SeleccionarPais.js')}}"></script>
-
+  <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
+  <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
+  <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
   <!-- Vendor js -->
   {{-- <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script> --}}
 
@@ -546,6 +673,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
   <script src="{{asset('admin/packages/timegrid/main.js')}}"></script>
   <script src="{{asset('admin/packages/interaction/main.js')}}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+
    <script src="{{asset('landing/js/calendario.js')}}"></script>
   <script>
   $(document).ready(function(){
@@ -601,6 +729,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
       },7202000); // every minute
     });
   </script>
+  <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
 @endif
 </body>
 </html>

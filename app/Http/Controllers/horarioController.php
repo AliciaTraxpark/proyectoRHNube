@@ -511,6 +511,7 @@ class horarioController extends Controller
                         if($temporal_eventos->color='#dfe6f2'){
                             $eventos_empleado->tipo_ev=3;
                         } */
+                        $eventos_empleado->laborable =0;
                         $eventos_empleado->save();
 
 
@@ -534,6 +535,7 @@ class horarioController extends Controller
                         $eventos_empleado->end=$temporal_eventotextcs->end;
 
                         $eventos_empleado->id_empleado=$idempleados;
+                        $eventos_empleado->laborable =0;
                         $eventos_empleado->save();
 
 
@@ -726,6 +728,7 @@ class horarioController extends Controller
         $eventos_empleado->end=$end;
 
         $eventos_empleado->id_empleado=$idempl;
+        $eventos_empleado->laborable =0;
         $eventos_empleado->save();
 
         $eventos_empleado1 = DB::table('eventos_empleado')
@@ -765,6 +768,7 @@ class horarioController extends Controller
         $eventos_empleado->end=$end;
 
         $eventos_empleado->id_empleado=$idempl;
+        $eventos_empleado->laborable =0;
         $eventos_empleado->save();
 
         $eventos_empleado1 = DB::table('eventos_empleado')
