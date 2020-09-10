@@ -945,3 +945,7 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
         }
     });
 }
+
+function limpiarCorreoE(){
+    $("#textCorreo").val("");
+}

@@ -425,7 +425,7 @@ use App\proyecto_empleado;
                     Empleado
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                    onclick="javascript:RefreshTablaEmpleado()">
+                    onclick="javascript:RefreshTablaEmpleado();javascript:limpiarCorreoE()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>

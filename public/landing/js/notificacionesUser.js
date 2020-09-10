@@ -51,7 +51,7 @@ $.ajax({
                     a = `<a class="dropdown-item
                 notify-item border-bottom">
                     <div class="badge float-right mt-0 mr-1">
-                        <button class="btn btn-sm" style="background-color: #163552;color:#ffffff;" onclick="javascript:pagina('${data[i].data[0].idEmpleado}')">
+                        <button class="btn btn-sm" style="background-color: #163552;color:#ffffff;">
                             <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                             <img src="/landing/images/flecha (1).svg" height="20">
                         </button>
@@ -73,6 +73,10 @@ $.ajax({
     error: function () {},
 });
 
-function pagina(url) {
-    window.location.replace(location.origin + "/" + url);
+function agregarCorreoNotificacion(id) {
+    console.log(id);
+    $('#modalCorreoElectronicoHeader').modal();
+}
+function limpiarCorreoEH(){
+    $("#textCorreoH").val("");
 }

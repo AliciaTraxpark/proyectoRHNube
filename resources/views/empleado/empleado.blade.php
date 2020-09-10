@@ -453,7 +453,8 @@
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Registrar Corro
                         Empleado
                     </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="javascript:RefreshTablaEmpleado();javascript:limpiarCorreoE()">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
