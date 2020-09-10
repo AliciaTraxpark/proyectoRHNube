@@ -30,6 +30,7 @@ class registroPController extends Controller
         $persona->perso_apPaterno = $request->get('apPaterno');
         $persona->perso_apMaterno = $request->get('apMaterno');
         $persona->perso_direccion = $request->get('direccion');
+        $persona->perso_celular = $request->get('celular');
         $diaf = $request->get('dia_fecha');
         $mesf = $request->get('mes_fecha');
         $anof = $request->get('ano_fecha');
@@ -67,7 +68,8 @@ class registroPController extends Controller
             'fecha' => 'required|date',
             'email' => 'required',
             'password' => 'required',
-            'sexo' => 'required'
+            'sexo' => 'required',
+            'celular' => 'required'
         ]);
 
         return $request->all();
