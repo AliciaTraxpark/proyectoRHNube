@@ -220,15 +220,15 @@
                 <div class="row text-center">
                     <div class="col-md-3"></div>
                     <div class="col-md-2">
-                        <button class="btn botonAgru mr-1" value="idPerso">Personal</button>
+                        <button class="btn botonAgru mr-1" value="idPerso" style="background-color: #163552;color:#ffffff">Personal</button>
                     </div>
 
                     <div class="col-md-2">
-                        <button  class="btn botonAgru mr-1" value="idDisp" style="background-color: #246590;color:#ffffff">
+                        <button  class="btn botonAgru mr-1" value="idDisp" style="background-color: #38afff;color:#ffffff">
                             Dispositivos</button>
                     </div>
                     <div class="col-md-2">
-                        <button  class="btn botonAgru mr-1" value="idMoni">Monitoreo</button>
+                        <button  class="btn botonAgru mr-1" value="idMoni" style="background-color: #163552;color:#ffffff">Monitoreo</button>
                     </div>
                     <div class="col-md-3"></div>
                 </div><br><br>
@@ -438,11 +438,11 @@
     <script>
         $( ".botonAgru" ).click(function() {
             $(".botonAgru").css({
-            "background-color": "#ffffff",
-            "color": "#211f1f"
+            "background-color": "#163552",
+            "color": "#ffffff"
             });
             $( this ).css({
-                "background-color": "#246590",
+                "background-color": "#38afff",
             "color": "#ffffff"
             });
             var valor=$( this ).val();
