@@ -272,9 +272,10 @@
         <table class="es-wrapper" width="100%" cellspacing="0" cellpadding="0"
             style="border-collapse:collapse;border-spacing:0px;padding:0;Margin:0;width:100%;height:100%;background-repeat:repeat;background-position:center top">
             <tr style="border-collapse:collapse">
-                <td valign="top" style="padding:0;Margin:0">
+                <td valign="top" style="padding:0;Margin:0;background-color:#FAFAFA" bgcolor="#fafafa">
                     <table cellpadding="0" cellspacing="0" class="es-header" align="center"
-                        style="border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top">
+                        style="border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top"
+                        bgcolor="#ffffff">
                         <tr style="border-collapse:collapse">
                             <td class="es-adaptive" align="center" style="padding:0;Margin:0">
                                 <table class="es-header-body"
@@ -334,7 +335,8 @@
                         </tr>
                     </table>
                     <table class="es-content" cellspacing="0" cellpadding="0" align="center"
-                        style="border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%">
+                        style="border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%"
+                        bgcolor="#ffffff">
                         <tr style="border-collapse:collapse">
                             <td style="padding:0;Margin:0;background-color:#FAFAFA" bgcolor="#fafafa" align="center">
                                 <table class="es-content-body"
@@ -424,7 +426,8 @@
                         </tr>
                     </table>
                     <table class="es-footer" cellspacing="0" cellpadding="0" align="center"
-                        style="border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top">
+                        style="border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top"
+                        bgcolor="#ffffff">
                         <tr style="border-collapse:collapse">
                             <td style="padding:0;Margin:0;background-color:#FAFAFA" bgcolor="#fafafa" align="center">
                                 <table class="es-footer-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff"
