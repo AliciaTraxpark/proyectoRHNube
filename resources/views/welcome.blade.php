@@ -111,10 +111,10 @@
             <div class="modal-content">
                 <div class="modal-body text-center">
                     <img src="{{asset('landing/images/lanzamiento.svg')}}" height="100" >
-                    <h5 style="color: #c51516!important;" class="text-danger mt-4">Próximo lanzamiento</h5>
-                    <p class="w-75 mx-auto text-muted" style="color: black!important">¡Próximo lanzamientoen Perú!</p>
+                    <h5 style="color: #c51516!important;" class="text-danger mt-4">Próximo lanzamiento en Perú</h5>
+                    <p class="w-75 mx-auto text-muted" style="color: black!important">Salida programada 20 de Septiembre 2020</p>
                     <div class="mt-4">
-                        <button class="btn btn-opacity-primary mr-1"   data-dismiss="modal"><i class="uil uil-arrow-right mr-1"></i> Salida programada 20 de Septiembre 2020</button>
+                        <button class="btn btn-opacity-primary mr-1"   data-dismiss="modal"><i class="uil uil-arrow-right mr-1"></i> OK</button>
                     </div>
                 </div>
             </div><!-- /.modal-content -->
