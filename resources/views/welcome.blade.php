@@ -28,6 +28,11 @@
 </head>
 
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
+    <style>
+        body{
+            background-color: #f5f3fb!important;
+        }
+    </style>
     <header id="header-section">
         <nav class="navbar  pl-3 pl-sm-0" id="navbar">
             <div class="container pb-0 pt-2">
@@ -86,7 +91,7 @@
         </nav>
     </header>
     <div class="banner">
-        <div class="container" style="padding-top: 60px">
+        <div class="container" style="padding-top: 60px ; background-image: url(../landing/images/90135.jpg);">
             <h4 class="font-weight-semibold">Organicemos tu equipo de
                 trabajo en 10 minutos: Controla, mide y gestiona.
             </h4>
@@ -96,7 +101,7 @@
                     <a {{-- href="{{route('registroPersona')}} "--}}><button onclick="$('#modal-error').modal('show')" class="btn btn-opacity-primary mr-1">COMIENZA
                             AHORA</button></a>
                 </div>
-
+                <br>
             </div>
             <img src="{{asset('landing/images/i')}}" alt="" class="img-fluid">
         </div>
@@ -107,16 +112,16 @@
                 <div class="modal-body text-center">
                     <img src="{{asset('landing/images/lanzamiento.svg')}}" height="100" >
                     <h5 style="color: #c51516!important;" class="text-danger mt-4">Próximo lanzamiento</h5>
-                    <p class="w-75 mx-auto text-muted" style="color: black!important">¡Próximo lanzamiento muy pronto!</p>
+                    <p class="w-75 mx-auto text-muted" style="color: black!important">¡Próximo lanzamientoen Perú!</p>
                     <div class="mt-4">
-                        <button class="btn btn-opacity-primary mr-1"   data-dismiss="modal"><i class="uil uil-arrow-right mr-1"></i> OK</button>
+                        <button class="btn btn-opacity-primary mr-1"   data-dismiss="modal"><i class="uil uil-arrow-right mr-1"></i> Salida programada 20 de Septiembre 2020</button>
                     </div>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <div class="content-wrapper" style="padding-bottom: 0px;">
-        <div class="container">
+    <div class="content-wrapper" style="padding-bottom: 0px;padding-top: 0px;">
+        <div class="container" style=" background-image: url(../landing/images/90135.jpg);">
 
              <section class="digital-marketing-service" id="digital-marketing-section">
                 <div class="row align-items-center">
