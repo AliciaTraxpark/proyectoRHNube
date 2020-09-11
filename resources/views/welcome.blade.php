@@ -90,9 +90,9 @@
             </div>
         </nav>
     </header>
-    <div class="banner">
-        <div class="container" style="padding-top: 60px ; background-image: url(../landing/images/90135.jpg);">
-            <h4 class="font-weight-semibold">Organicemos tu equipo de
+    <div class="banner" style="background-color: #ffffff">
+        <div class="container" style="padding-top: 60px;">
+            <h4 class="font-weight-semibold" style="color: #204051">Organicemos tu equipo de
                 trabajo en 10 minutos: Controla, mide y gestiona.
             </h4>
 
@@ -125,8 +125,8 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <div class="content-wrapper" style="padding-bottom: 0px;padding-top: 0px;">
-        <div class="container" style=" background-image: url(../landing/images/90135.jpg);">
+    <div class="content-wrapper" style="padding-bottom: 0px;padding-top: 0px;background-color: #ffffff">
+        <div class="container">
 
              <section class="digital-marketing-service" id="digital-marketing-section">
                 <div class="row align-items-center">
