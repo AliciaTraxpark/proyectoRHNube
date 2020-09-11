@@ -63,7 +63,7 @@
                         <div class="card-body p-0">
                             <div class="row">
                                 <div class="col-md-12 p-5">
-                                    <div class="mx-auto mb-5 text-center">
+                                    <div class="mx-auto mb-3 text-center">
                                         <img src="{{asset('landing/images/LogoAzul.png')}}" alt="" height="120" />
                                     </div>
                                     <div class="alert alert-danger" role="alert" style="display: none;"
