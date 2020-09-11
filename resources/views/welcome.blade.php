@@ -109,9 +109,14 @@
     <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog ">
             <div class="modal-content">
+                <div class="modal-header text-center" style="padding-top: 8px;
+                            padding-bottom: 20px;background-color:
+                            #163552;color:#ffffff">
+                    <h6 style="font-size: 14px" class="modal-title"></h6>
+                </div>
                 <div class="modal-body text-center">
-                    <img src="{{asset('landing/images/lanzamiento.svg')}}" height="100" >
-                    <h5 style="color: #c51516!important;" class="text-danger mt-4">Próximo lanzamiento en Perú</h5>
+                    <img src="{{asset('landing/images/LogoAzul.png')}}" height="90" >
+                    <h5 style="color: #c51516!important;margin-top: 0px!important;" class="text-danger mt-4">Próximo lanzamiento en Perú</h5>
                     <p class="w-75 mx-auto text-muted" style="color: black!important">Salida programada 20 de Septiembre 2020</p>
                     <div class="mt-4">
                         <button class="btn btn-opacity-primary mr-1"   data-dismiss="modal"><i class="uil uil-arrow-right mr-1"></i> OK</button>
@@ -128,7 +133,7 @@
                     <div class="col-12 col-lg-1 p-0 img-digital grid-margin">
 
                     </div>
-                    <div class="col-12 col-lg-6 grid-margin
+                    <div class="col-12 col-lg-5 grid-margin
                             grid-margin-lg-0" data-aos="fade-right">
                         <h3 class=" m-0">¿Por qué usar RH Nube?</h3>
                         <div class="col-lg-8 col-xl-8 p-0">
@@ -138,9 +143,9 @@
                         </div>
                     </div>
 
-                    <div class="col-12 col-lg-5 p-0 img-digital grid-margin
+                    <div class="col-12 col-lg-6 p-0 img-digital grid-margin
                             grid-margin-lg-0" data-aos="fade-left">
-                            <iframe width="380" height="205" src="https://www.youtube.com/embed/GfRqwR8d2wU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <iframe width="520" height="340" src="https://www.youtube.com/embed/GfRqwR8d2wU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         {{-- <img src="{{asset('landing/images/Group1.png')}}" alt="" class="img-fluid"> --}}
                     </div>
                 </div>
@@ -216,7 +221,7 @@
                 </div>
 
             </section>
-            <section class="features-overview grid-margin" id="features-section">
+            <section class="features-overview" id="features-section">
                 <div class="row text-center">
                     <div class="col-md-3"></div>
                     <div class="col-md-2">
@@ -285,7 +290,7 @@
                         </div>
                         <div class="col-md-1"></div>
                     </div>
-                </div>
+                </div><br><br>
             </section>
 
 
