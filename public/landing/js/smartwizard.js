@@ -635,7 +635,7 @@ $(document).ready(function () {
         if (stepNumber == 5) {
             $("button.sw-btn-prev").show();
             $("button.sw-btn-next").show();
-            $("#FinalizarEmpleadoEditar").show();
+            $("#FinalizarEmpleadoEditar").hide();
             actividadEmp();
         }
         if (stepNumber == 6) {
