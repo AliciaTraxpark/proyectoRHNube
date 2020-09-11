@@ -604,9 +604,9 @@ $(document).ready(function () {
         }
 
         if (stepNumber == 5) {
-            $("button.sw-btn-prev").hide();
-            $("button.sw-btn-next").hide();
-            $("#FinalizarEmpleado").show();
+            $("button.sw-btn-prev").show();
+            $("button.sw-btn-next").show();
+            $("#FinalizarEmpleado").hide();
             actividad_empleado();
         }
         if (stepNumber == 6) {
@@ -633,9 +633,9 @@ $(document).ready(function () {
             $("#FinalizarEmpleadoEditar").hide();
         }
         if (stepNumber == 5) {
-            $("button.sw-btn-prev").hide();
-            $("button.sw-btn-next").hide();
-            $("#FinalizarEmpleadoEditar").show();
+            $("button.sw-btn-prev").show();
+            $("button.sw-btn-next").show();
+            $("#FinalizarEmpleadoEditar").hide();
             actividadEmp();
         }
         if (stepNumber == 6) {
@@ -702,9 +702,9 @@ $("#smartwizardVer").on("showStep", function (
         $("#smartwizardVer :input").attr("disabled", false);
     }
     if (stepNumber == 5) {
-        $("button.sw-btn-prev").hide();
-        $("button.sw-btn-next").hide();
-        $("#FinalizarEmpleadoVer").show();
+        $("button.sw-btn-prev").show();
+        $("button.sw-btn-next").show();
+        $("#FinalizarEmpleadoVer").hide();
         $("#smartwizardVer :input").attr("disabled", false);
         actividadEmpVer();
     }

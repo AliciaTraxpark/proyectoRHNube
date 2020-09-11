@@ -80,46 +80,100 @@ function guardarCorreoEH() {
     console.log("ingreso");
     idEmpleado = $("#idEmpleCorreoH").val();
     descripcion = $("#textCorreoH").val();
-    console.log(descripcion, $("#textCorreoH").val());
+    email = $("#textCorreoH").val();
     $.ajax({
         async: false,
-        type: "get",
-        url: "/empleado/agregarCorreo",
+        type: "GET",
+        url: "email",
         data: {
-            idEmpleado: idEmpleado,
-            correo: descripcion,
+            email: email,
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
-        success: function (data) {
-            console.log(data);
-            $("#modalCorreoElectronicoHeader").modal("toggle");
-            notification();
-            showNotificaciones();
-            $.notifyClose();
-            $.notify(
-                {
-                    message: "\nCorreo electrónico registrado.",
-                    icon: "admin/images/checked.svg",
-                },
-                {
-                    position: "fixed",
-                    icon_type: "image",
-                    newest_on_top: true,
-                    delay: 5000,
-                    template:
-                        '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                        '<span data-notify="title">{1}</span> ' +
-                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                        "</div>",
-                    spacing: 35,
-                }
-            );
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            },
         },
-        error: function () {},
+        success: function (data) {
+            if (data == 1) {
+                $.notify(
+                    {
+                        message:
+                            "\nCorreo Electrónico ya se encuentra registrado.",
+                        icon: "admin/images/warning.svg",
+                    },
+                    {
+                        element: $("#modalCorreoElectronicoHeader"),
+                        position: "fixed",
+                        placement: {
+                            from: "top",
+                            align: "center",
+                        },
+                        icon_type: "image",
+                        mouse_over: "pause",
+                        newest_on_top: true,
+                        delay: 3000,
+                        template:
+                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 35,
+                    }
+                );
+                return false;
+            } else {
+                $.ajax({
+                    async: false,
+                    type: "get",
+                    url: "/empleado/agregarCorreo",
+                    data: {
+                        idEmpleado: idEmpleado,
+                        correo: descripcion,
+                    },
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                            "content"
+                        ),
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        $("#modalCorreoElectronicoHeader").modal("toggle");
+                        notification();
+                        showNotificaciones();
+                        $.notifyClose();
+                        $.notify(
+                            {
+                                message: "\nCorreo electrónico registrado.",
+                                icon: "admin/images/checked.svg",
+                            },
+                            {
+                                position: "fixed",
+                                icon_type: "image",
+                                newest_on_top: true,
+                                delay: 5000,
+                                template:
+                                    '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                    "</div>",
+                                spacing: 35,
+                            }
+                        );
+                    },
+                    error: function () {},
+                });
+            }
+        },
     });
 }
 function limpiarCorreoEH() {

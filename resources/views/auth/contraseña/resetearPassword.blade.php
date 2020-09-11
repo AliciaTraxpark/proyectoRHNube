@@ -65,16 +65,14 @@
                         <div class="card-body p-0">
                             <div class="row">
                                 <div class="col-12 p-5">
-                                    <div class="mx-auto mb-5 text-center">
+                                    <div class="mx-auto mb-2 text-center">
                                         <a href="{{route('logout')}}">
                                             <img src="{{asset('landing/images/LogoAzul.png')}}" alt="" height="120" />
                                         </a>
                                     </div>
 
-                                    <h6 class="h5 mb-0 mt-4 text-primary text-center">Recuperar Contraseña</h6>
-                                    <p class="text-muted mt-1 mb-3">
-                                        <br>
-                                    </p>
+                                    <h6 class="h5 mb-0 mt-1 text-primary text-center">Recuperar Contraseña</h6>
+                                    <br>
                                     <div class="alert alert-danger" role="alert" id="alert" style="display: none;">
                                         <strong><img src="{{asset('landing/images/alert1.svg')}}" height="20" class="mr-1 mt-0"></strong><span style="font-size: 14px;">Usuario no se encuentra registrado.</span>
                                     </div>
@@ -84,14 +82,14 @@
                                     <form  action="javascript:enviarInstrucciones()" class="authentication-form">
                                         @csrf
                                         <div class="form-group">
-                                            <label class="form-control-label" style="font-weight: 500;">Correo electrónico</label>
+                                            <label class="form-control-label" style="font-weight: 100;">Correo electrónico</label>
                                             <div class="input-group input-group-merge">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" style="background-color: #ffffff;">
                                                         <img src="{{asset('landing/images/iconfinder-icon (1).svg')}}" height="20">
                                                     </span>
                                                 </div>
-                                                <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                                             </div>
                                         </div>
 

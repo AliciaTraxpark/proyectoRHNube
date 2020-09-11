@@ -714,48 +714,102 @@ function guardarCorreoE() {
     console.log("ingreso");
     idEmpleado = $("#idEmpleCorreo").val();
     descripcion = $("#textCorreo").val();
-    console.log(descripcion, $("#textCorreo").val());
+    email = $("#textCorreo").val();
     $.ajax({
         async: false,
-        type: "get",
-        url: "/empleado/agregarCorreo",
+        type: "GET",
+        url: "email",
         data: {
-            idEmpleado: idEmpleado,
-            correo: descripcion,
+            email: email,
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
-        success: function (data) {
-            console.log(data);
-            RefreshTablaEmpleado();
-            $("#modalCorreoElectronico").modal("toggle");
-            $("#modalControlR").modal();
-            $("#empleadoControlR").val(idEmpleado);
-            $.notifyClose();
-            $.notify(
-                {
-                    message: "\nCorreo electrónico registrado.",
-                    icon: "admin/images/checked.svg",
-                },
-                {
-                    position: "fixed",
-                    element: $("#modalControlR"),
-                    icon_type: "image",
-                    newest_on_top: true,
-                    delay: 5000,
-                    template:
-                        '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                        '<span data-notify="title">{1}</span> ' +
-                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                        "</div>",
-                    spacing: 35,
-                }
-            );
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            },
         },
-        error: function () {},
+        success: function (data) {
+            if (data == 1) {
+                $.notify(
+                    {
+                        message:
+                            "\nCorreo Electrónico ya se encuentra registrado.",
+                        icon: "admin/images/warning.svg",
+                    },
+                    {
+                        element: $("#modalCorreoElectronico"),
+                        position: "fixed",
+                        placement: {
+                            from: "top",
+                            align: "center",
+                        },
+                        icon_type: "image",
+                        mouse_over: "pause",
+                        newest_on_top: true,
+                        delay: 3000,
+                        template:
+                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 35,
+                    }
+                );
+                return false;
+            } else {
+                $.ajax({
+                    async: false,
+                    type: "get",
+                    url: "/empleado/agregarCorreo",
+                    data: {
+                        idEmpleado: idEmpleado,
+                        correo: descripcion,
+                    },
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                            "content"
+                        ),
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        RefreshTablaEmpleado();
+                        $("#modalCorreoElectronico").modal("toggle");
+                        $("#modalControlR").modal();
+                        $("#empleadoControlR").val(idEmpleado);
+                        $.notifyClose();
+                        $.notify(
+                            {
+                                message: "\nCorreo electrónico registrado.",
+                                icon: "admin/images/checked.svg",
+                            },
+                            {
+                                position: "fixed",
+                                element: $("#modalControlR"),
+                                icon_type: "image",
+                                newest_on_top: true,
+                                delay: 5000,
+                                template:
+                                    '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                    "</div>",
+                                spacing: 35,
+                            }
+                        );
+                    },
+                    error: function () {},
+                });
+            }
+        },
     });
 }
 
@@ -806,36 +860,9 @@ function inactivarEstadoCR(idEmpleado, idVinculacion) {
             );
         },
         error: function () {
+            RefreshTablaEmpleado();
             $.notifyClose();
-            $.notify(
-                {
-                    message:
-                        '\nAún no ha registrado correo electrónico.<br>Para registrar correo electrónico cilick aqui.\
-                        <br><a onclick="javascript:agregarCorreoE(' +
-                        idEmpleado +
-                        ')" target="_blank" style="cursor: pointer;"><img src="/landing/images/source.gif" height="100"></a>',
-                    icon: "admin/images/warning.svg",
-                },
-                {
-                    position: "fixed",
-                    mouse_over: "pause",
-                    placement: {
-                        from: "top",
-                        align: "center",
-                    },
-                    icon_type: "image",
-                    newest_on_top: true,
-                    delay: 10000,
-                    template:
-                        '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
-                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                        '<span data-notify="title">{1}</span> ' +
-                        '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
-                        "</div>",
-                    spacing: 35,
-                }
-            );
+            agregarCorreoE(idEmpleado);
         },
     });
 }
@@ -946,6 +973,6 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
     });
 }
 
-function limpiarCorreoE(){
+function limpiarCorreoE() {
     $("#textCorreo").val("");
 }
