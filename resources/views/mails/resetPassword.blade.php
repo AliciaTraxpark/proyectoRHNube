@@ -357,32 +357,20 @@
                                                                 <td align="center"
                                                                     style="padding:0;Margin:0;padding-top:5px;padding-bottom:5px;font-size:0px">
                                                                     <img class="adapt-img"
-                                                                        src="https://i.ibb.co/W0Z6grm/teamwork.png" alt
+                                                                        src="https://i.ibb.co/yVMy63b/key-1.png" alt
                                                                         style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
-                                                                        width="175"></td>
+                                                                        width="130"></td>
                                                             </tr>
                                                             <tr style="border-collapse:collapse">
                                                                 <td align="center"
                                                                     style="padding:0;Margin:0;padding-top:15px;padding-bottom:15px">
                                                                     <h1
-                                                                        style="Margin:0;line-height:24px;font-family:arial,
-                                                                            'helvetica
-                                                                            neue',
-                                                                            helvetica,
-                                                                            sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333">
-                                                                        <strong style="color:
-                                                                                #163552;">TE
-                                                                            DAMOS
-                                                                            LA
+                                                                        style="Margin:0;line-height:24px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333">
+                                                                        <strong style="color: #163552;">TE DAMOS LA
                                                                             BIENVENIDA</strong></h1>
                                                                     <h1
-                                                                        style="Margin:0;line-height:24px;font-family:arial,
-                                                                            'helvetica
-                                                                            neue',
-                                                                            helvetica,
-                                                                            sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333">
-                                                                        <strong style="color:
-                                                                                #163552;">&nbsp;RH
+                                                                        style="Margin:0;line-height:24px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333">
+                                                                        <strong style="color: #163552;">&nbsp;RH
                                                                             NUBE</strong></h1>
                                                                 </td>
                                                             </tr>
@@ -444,9 +432,8 @@
                                                                             sans-serif;line-height:24px;color:#666666;text-align:center">
                                                                         Este enlace para restablecer la contraseña
                                                                         caduca en 60 minutos. Si no has solicitado un
-                                                                        cambio de contraseña,
-                                                                        puedes ignorar o eliminar estee-mail.
-                                                                        Saludos,RHNUBE.</p>
+                                                                        cambio de contraseña, puedes ignorar o eliminar
+                                                                        este e-mail.</p>
                                                                 </td>
                                                             </tr>
                                                         </table>
