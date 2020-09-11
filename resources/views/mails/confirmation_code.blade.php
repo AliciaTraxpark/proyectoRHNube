@@ -258,7 +258,6 @@
             border-style: solid solid solid solid !important;
             border-color: #163552 #163552 #163552 #163552 !important;
         }
-
     </style>
 </head>
 
@@ -307,12 +306,18 @@
                                             <table class="es-right" cellspacing="0" cellpadding="0" align="right">
                                                 <tbody>
                                                     <tr>
-                                                        <td class="esd-container-frame" width="270" align="left" esdev-config="h18">
+                                                        <td class="esd-container-frame" width="270" align="left"
+                                                            esdev-config="h18">
                                                             <table width="100%" cellspacing="0" cellpadding="0">
                                                                 <tbody>
                                                                     <tr>
-                                                                        <td align="right" class="esd-block-text es-p40t es-p40b">
-                                                                            <p style="color: #ffffff;"><strong>{{$organizacion->organi_razonSocial}} - {{$organizacion->organi_ruc}}<span style="color:#FFFFFF;"></span></strong></p>
+                                                                        <td align="right"
+                                                                            class="esd-block-text es-p40t es-p40b">
+                                                                            <p style="color: #ffffff;">
+                                                                                <strong>{{$organizacion->organi_razonSocial}}
+                                                                                    - {{$organizacion->organi_ruc}}<span
+                                                                                        style="color:#FFFFFF;"></span></strong>
+                                                                            </p>
                                                                         </td>
                                                                     </tr>
                                                                 </tbody>
@@ -414,38 +419,6 @@
                                             </table>
                                         </td>
                                     </tr>
-
-                                    <tr style="border-collapse:collapse">
-                                        <td align="left"
-                                            style="Margin:0;padding-top:5px;padding-bottom:20px;padding-left:20px;padding-right:20px;background-position:left top">
-                                            <table cellpadding="0" cellspacing="0"
-                                                style="border-collapse:collapse;border-spacing:0px" width="100%">
-                                                <tr style="border-collapse:collapse">
-                                                    <td align="center" style="padding:0;Margin:0;width:560px"
-                                                        valign="top">
-                                                        <table cellpadding="0" cellspacing="0" role="presentation"
-                                                            style="border-collapse:collapse;border-spacing:0px"
-                                                            width="100%">
-                                                            <tr style="border-collapse:collapse">
-                                                                <td align="center" style="padding:0;Margin:0">
-                                                                    <p
-                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:14px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:21px;color:#666666">
-                                                                        Contacta con nosotros: <br><br>
-                                                                         <a href="tel:123456789"
-                                                                            style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;font-size:14px;text-decoration:none;color:#666666"
-                                                                            target="_blank">info@rhnube.com.pe</a> <br><br> <a
-                                                                            href="mailto:your@mail.com"
-                                                                            style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;font-size:14px;text-decoration:none;color:#666666"
-                                                                            target="_blank">www.rhnube.com.pe</a>
-                                                                    </p>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
                                 </table>
                             </td>
                         </tr>
@@ -458,8 +431,44 @@
                                     align="center"
                                     style="border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px">
                                     <tr style="border-collapse:collapse">
-                                        <td style="Margin:0;padding-top:10px;padding-left:20px;padding-right:20px;padding-bottom:30px;background-color:#163552;background-position:left top"
-                                            bgcolor="#163552" align="left">
+                                        <td style="Margin:0;padding-top:10px;padding-left:20px;padding-right:20px;padding-bottom:10px;background-color:#ffffff;background-position:left top"
+                                            bgcolor="#ffffff" align="center">
+                                            <a target="_blank">
+                                                <img class="adapt-img"
+                                                    src="http://rhnube.com.pe/landing/images/LogoAzul.png" alt
+                                                    style="display: block;" width="120">
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr style="border-collapse:collapse">
+                            <td style="padding:0;Margin:0;background-color:#FAFAFA" bgcolor="#fafafa" align="center">
+                                <table class="es-footer-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff"
+                                    align="center"
+                                    style="border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px">
+                                    <tr style="border-collapse:collapse">
+                                        <td style="Margin:0;padding-top:5px;padding-left:20px;padding-right:20px;padding-bottom:10px;background-color:#ffffff;background-position:left top"
+                                            bgcolor="#ffffff" align="center">
+                                            <span style="font-size: 14px; color: #333333; line-height: 120%;"><span>Contáctanos:
+                                                    https://www.rhnube.com.pe | info@rhnube.com.pe</span></h2>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr style="border-collapse:collapse">
+                            <td style="padding:0;Margin:0;background-color:#FAFAFA" bgcolor="#fafafa" align="center">
+                                <table class="es-footer-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff"
+                                    align="center"
+                                    style="border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px">
+                                    <tr style="border-collapse:collapse">
+                                        <td style="Margin:0;padding-top:10px;padding-left:20px;padding-right:20px;padding-bottom:10px;background-color:#163552;background-position:left top;border-top: 2px solid #ffffff;border-bottom: 2px solid #ffffff"
+                                            bgcolor="#163552" align="center">
+                                            <span style="font-size: 14px; color: #ffffff; line-height: 120%;"><span>©
+                                                    2020 RH nube Corp - USA | Todos los derechos
+                                                    reservados.</span></span>
                                         </td>
                                     </tr>
                                 </table>

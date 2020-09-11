@@ -459,17 +459,52 @@
                             </td>
                         </tr>
                     </table>
-                    <table class="es-footer" cellspacing="0" cellpadding="0" align="center" style="border-collapse:collapse;border-spacing:0px;table-layout:fixed
-                            !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center
-                            top">
+                    <table class="es-footer" cellspacing="0" cellpadding="0" align="center"
+                        style="border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top">
                         <tr style="border-collapse:collapse">
                             <td style="padding:0;Margin:0;background-color:#FAFAFA" bgcolor="#fafafa" align="center">
                                 <table class="es-footer-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff"
                                     align="center"
                                     style="border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px">
                                     <tr style="border-collapse:collapse">
-                                        <td style="Margin:0;padding-top:10px;padding-left:20px;padding-right:20px;padding-bottom:30px;background-color:#163552;background-position:left
-                                                top" bgcolor="#163552" align="left">
+                                        <td style="Margin:0;padding-top:10px;padding-left:20px;padding-right:20px;padding-bottom:10px;background-color:#ffffff;background-position:left top"
+                                            bgcolor="#ffffff" align="center">
+                                            <a target="_blank">
+                                                <img class="adapt-img"
+                                                    src="http://rhnube.com.pe/landing/images/LogoAzul.png" alt
+                                                    style="display: block;" width="120">
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr style="border-collapse:collapse">
+                            <td style="padding:0;Margin:0;background-color:#FAFAFA" bgcolor="#fafafa" align="center">
+                                <table class="es-footer-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff"
+                                    align="center"
+                                    style="border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px">
+                                    <tr style="border-collapse:collapse">
+                                        <td style="Margin:0;padding-top:5px;padding-left:20px;padding-right:20px;padding-bottom:10px;background-color:#ffffff;background-position:left top"
+                                            bgcolor="#ffffff" align="center">
+                                            <span style="font-size: 14px; color: #333333; line-height: 120%;"><span>Contáctanos:
+                                                    https://www.rhnube.com.pe | info@rhnube.com.pe</span></h2>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr style="border-collapse:collapse">
+                            <td style="padding:0;Margin:0;background-color:#FAFAFA" bgcolor="#fafafa" align="center">
+                                <table class="es-footer-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff"
+                                    align="center"
+                                    style="border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px">
+                                    <tr style="border-collapse:collapse">
+                                        <td style="Margin:0;padding-top:10px;padding-left:20px;padding-right:20px;padding-bottom:10px;background-color:#163552;background-position:left top;border-top: 2px solid #ffffff;border-bottom: 2px solid #ffffff"
+                                            bgcolor="#163552" align="center">
+                                            <span style="font-size: 14px; color: #ffffff; line-height: 120%;"><span>©
+                                                    2020 RH nube Corp - USA | Todos los derechos
+                                                    reservados.</span></span>
                                         </td>
                                     </tr>
                                 </table>

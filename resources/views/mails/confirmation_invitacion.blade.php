@@ -258,7 +258,6 @@
             border-style: solid solid solid solid !important;
             border-color: #163552 #163552 #163552 #163552 !important;
         }
-
     </style>
 </head>
 
@@ -307,12 +306,18 @@
                                             <table class="es-right" cellspacing="0" cellpadding="0" align="right">
                                                 <tbody>
                                                     <tr>
-                                                        <td class="esd-container-frame" width="270" align="left" esdev-config="h18">
+                                                        <td class="esd-container-frame" width="270" align="left"
+                                                            esdev-config="h18">
                                                             <table width="100%" cellspacing="0" cellpadding="0">
                                                                 <tbody>
                                                                     <tr>
-                                                                        <td align="right" class="esd-block-text es-p40t es-p40b">
-                                                                            <p style="color: #ffffff;"><strong>{{$organizacion->organi_razonSocial}} - {{$organizacion->organi_ruc}}<span style="color:#FFFFFF;"></span></strong></p>
+                                                                        <td align="right"
+                                                                            class="esd-block-text es-p40t es-p40b">
+                                                                            <p style="color: #ffffff;">
+                                                                                <strong>{{$organizacion->organi_razonSocial}}
+                                                                                    - {{$organizacion->organi_ruc}}<span
+                                                                                        style="color:#FFFFFF;"></span></strong>
+                                                                            </p>
                                                                         </td>
                                                                     </tr>
                                                                 </tbody>
@@ -361,28 +366,31 @@
                                                                         style="Margin:0;line-height:24px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333">
                                                                         @php
                                                                         if($invitado->rol_id==1){
-                                                                            $nombreirol='Administrador';
+                                                                        $nombreirol='Administrador';
                                                                         }
-                                                                            else {
-                                                                                if($invitado->rol_id==3){
-                                                                                    $nombreirol='Invitado';
-                                                                                }
+                                                                        else {
+                                                                        if($invitado->rol_id==3){
+                                                                        $nombreirol='Invitado';
+                                                                        }
 
-                                                                            }
+                                                                        }
                                                                         @endphp
-                                                                        <strong style="color: #163552;">Estas registrado como  {{$nombreirol}}</strong></h1>
+                                                                        <strong style="color: #163552;">Estas registrado
+                                                                            como {{$nombreirol}}</strong></h1>
                                                                     <h1
                                                                         style="Margin:0;line-height:24px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333">
                                                                         <strong style="color: #163552;">&nbsp;
-                                                                            de  {{$organizacion->organi_razonSocial}} </strong></h1>
+                                                                            de {{$organizacion->organi_razonSocial}}
+                                                                        </strong></h1>
                                                                 </td>
                                                             </tr>
                                                             <tr style="border-collapse:collapse">
                                                                 <td align="center"
                                                                     style="padding:0;Margin:0;padding-left:40px;padding-right:40px">
-                                                                    <strong style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center;">
+                                                                    <strong
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center;">
                                                                         Hola,&nbsp;{{$invitado->email_inv}}
-                                                                        </strong>
+                                                                    </strong>
                                                                 </td>
                                                             </tr>
                                                             <tr style="border-collapse:collapse">
@@ -398,7 +406,8 @@
                                                                     style="padding:0;Margin:0;padding-right:35px;padding-left:40px">
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center">
-                                                                        Entra al siguiente enlace para registrarte en la organizacion que estas invitado(a). </p>
+                                                                        Entra al siguiente enlace para registrarte en la
+                                                                        organizacion que estas invitado(a). </p>
 
                                                                 </td>
 
@@ -408,14 +417,14 @@
                                                                 <td align="center"
                                                                     style="Margin:0;padding-left:10px;padding-right:10px;padding-top:40px;padding-bottom:40px">
                                                                     @php
-                                                                         $idinEncr = Crypt::encrypt($invitado->idinvitado);
+                                                                    $idinEncr = Crypt::encrypt($invitado->idinvitado);
                                                                     @endphp
                                                                     <span class="es-button-border"
-                                                                         style="border-style:solid;border-color:#163552;background:#FFFFFF;border-width:2px;display:inline-block;border-radius:10px;width:auto"><a
-                                                                          href="{{url('registroInvitado/' .  $idinEncr)}}"
+                                                                        style="border-style:solid;border-color:#163552;background:#FFFFFF;border-width:2px;display:inline-block;border-radius:10px;width:auto"><a
+                                                                            href="{{url('registroInvitado/' .  $idinEncr)}}"
                                                                             class="es-button" target="_blank"
                                                                             style="text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:14px;color:#163552;border-style:solid;border-color:#FFFFFF;border-width:15px 20px 15px 20px;display:inline-block;background:#FFFFFF;border-radius:10px;font-weight:bold;font-style:normal;line-height:17px;width:auto;text-align:center">
-                                                                           Registrarme</a>
+                                                                            Registrarme</a>
                                                                     </span>
                                                                 </td>
                                                             </tr>
@@ -442,10 +451,10 @@
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:14px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:21px;color:#666666">
                                                                         Contacta con nosotros: <br><br>
-                                                                         <a href="tel:123456789"
+                                                                        <a href="tel:123456789"
                                                                             style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;font-size:14px;text-decoration:none;color:#666666"
-                                                                            target="_blank">info@rhnube.com.pe</a> <br><br> <a
-                                                                            href="mailto:your@mail.com"
+                                                                            target="_blank">info@rhnube.com.pe</a>
+                                                                        <br><br> <a href="mailto:your@mail.com"
                                                                             style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;font-size:14px;text-decoration:none;color:#666666"
                                                                             target="_blank">www.rhnube.com.pe</a>
                                                                     </p>
@@ -469,8 +478,44 @@
                                     align="center"
                                     style="border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px">
                                     <tr style="border-collapse:collapse">
-                                        <td style="Margin:0;padding-top:10px;padding-left:20px;padding-right:20px;padding-bottom:30px;background-color:#163552;background-position:left top"
-                                            bgcolor="#163552" align="left">
+                                        <td style="Margin:0;padding-top:10px;padding-left:20px;padding-right:20px;padding-bottom:10px;background-color:#ffffff;background-position:left top"
+                                            bgcolor="#ffffff" align="center">
+                                            <a target="_blank">
+                                                <img class="adapt-img"
+                                                    src="http://rhnube.com.pe/landing/images/LogoAzul.png" alt
+                                                    style="display: block;" width="120">
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr style="border-collapse:collapse">
+                            <td style="padding:0;Margin:0;background-color:#FAFAFA" bgcolor="#fafafa" align="center">
+                                <table class="es-footer-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff"
+                                    align="center"
+                                    style="border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px">
+                                    <tr style="border-collapse:collapse">
+                                        <td style="Margin:0;padding-top:5px;padding-left:20px;padding-right:20px;padding-bottom:10px;background-color:#ffffff;background-position:left top"
+                                            bgcolor="#ffffff" align="center">
+                                            <span style="font-size: 14px; color: #333333; line-height: 120%;"><span>Contáctanos:
+                                                    https://www.rhnube.com.pe | info@rhnube.com.pe</span></h2>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr style="border-collapse:collapse">
+                            <td style="padding:0;Margin:0;background-color:#FAFAFA" bgcolor="#fafafa" align="center">
+                                <table class="es-footer-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff"
+                                    align="center"
+                                    style="border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px">
+                                    <tr style="border-collapse:collapse">
+                                        <td style="Margin:0;padding-top:10px;padding-left:20px;padding-right:20px;padding-bottom:10px;background-color:#163552;background-position:left top;border-top: 2px solid #ffffff;border-bottom: 2px solid #ffffff"
+                                            bgcolor="#163552" align="center">
+                                            <span style="font-size: 14px; color: #ffffff; line-height: 120%;"><span>©
+                                                    2020 RH nube Corp - USA | Todos los derechos
+                                                    reservados.</span></span>
                                         </td>
                                     </tr>
                                 </table>
