@@ -1,18 +1,5 @@
-// HEADER ANIMATION
-window.onscroll = function() {scrollFunction()};
-var element = document.getElementById("body");
-function scrollFunction() {
-  if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
-      $(".navbar").addClass("fixed-top");
-      element.classList.add("header-small");
-      $("body").addClass("body-top-padding");
 
-  } else {
-      $(".navbar").removeClass("fixed-top");
-      element.classList.remove("header-small");
-      $("body").removeClass("body-top-padding");
-  }
-}
+var element = document.getElementById("body");
 
 // OWL-CAROUSAL
 $('.owl-carousel').owlCarousel({
@@ -53,13 +40,13 @@ $(document).ready(function() {
 
 // AOS
 AOS.init({
-    offset: 120, 
+    offset: 120,
     delay: 0,
-    duration: 1200, 
-    easing: 'ease', 
-    once: true, 
-    mirror: false, 
-    anchorPlacement: 'top-bottom', 
+    duration: 1200,
+    easing: 'ease',
+    once: true,
+    mirror: false,
+    anchorPlacement: 'top-bottom',
     disable: "mobile"
   });
 

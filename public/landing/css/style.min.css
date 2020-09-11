@@ -47,3 +47,9 @@
 .datepicker {
     margin-bottom: 2rem;
 }
+
+.botonAgru{
+    color: #211f1f;
+    background-color: #ffffff;
+    border: 2px solid rgb(251 248 248);
+}
