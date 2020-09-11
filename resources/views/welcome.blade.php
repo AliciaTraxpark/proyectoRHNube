@@ -101,9 +101,9 @@
                     <a {{-- href="{{route('registroPersona')}} "--}}><button onclick="$('#modal-error').modal('show')" class="btn btn-opacity-primary mr-1">COMIENZA
                             AHORA</button></a>
                 </div>
-                <br>
+                <br><br> 
             </div>
-            <img src="{{asset('landing/images/i')}}" alt="" class="img-fluid">
+
         </div>
     </div>
     <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
@@ -133,10 +133,10 @@
                     <div class="col-12 col-lg-1 p-0 img-digital grid-margin">
 
                     </div>
-                    <div class="col-12 col-lg-5 grid-margin
+                    <div class="col-12 col-lg-5 text-center grid-margin
                             grid-margin-lg-0" data-aos="fade-right">
                         <h3 class=" m-0">¿Por qué usar RH Nube?</h3>
-                        <div class="col-lg-8 col-xl-8 p-0">
+                        <div class="col-lg-12 col-xl-12 text-center p-0">
                             <p class="py-4 m-0 text-muted " style="font-size: 16px">Sencillamente porque ahorras mucho en inversión
                                 de personal y ahora puedes tomar decisiones más precisas.</p>
 
@@ -145,7 +145,7 @@
 
                     <div class="col-12 col-lg-6 p-0 img-digital grid-margin
                             grid-margin-lg-0" data-aos="fade-left">
-                            <iframe width="520" height="340" src="https://www.youtube.com/embed/GfRqwR8d2wU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <iframe width="590" height="360" src="https://www.youtube.com/embed/GfRqwR8d2wU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         {{-- <img src="{{asset('landing/images/Group1.png')}}" alt="" class="img-fluid"> --}}
                     </div>
                 </div>
@@ -353,7 +353,7 @@
         </div>
     </div>
     @endif
-    <footer class="border-top" style="background: #051d33">
+    <footer class="border-top" style="background:#163552">
         <div class="col-md-12 text-center" style="margin-top: 20px">
             <img src="{{asset('landing/images/Recurso_23.png')}}" width="10%" height="10%">
         </div>
