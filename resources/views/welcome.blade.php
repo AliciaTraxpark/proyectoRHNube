@@ -239,7 +239,7 @@
                             <h5 class=" m-0">Agregas dispositivos y puntos de control</h5>
 
                             <p  style="font-size: 14px">Agrega un punto de control de personal en
-                                cualquier plataforma Window o móvil Android y a partir del 2021 estarán disponibles para los equipos y relojes biométricos más usados de tu país.</p>
+                                cualquier plataforma Windows o móvil Android y a partir del 2021 estarán disponibles para los equipos y relojes biométricos más usados de tu país.</p>
 
 
                         </div>
@@ -348,7 +348,7 @@
         </div>
     </div>
     @endif
-    <footer class="border-top" style="background: #021825">
+    <footer class="border-top" style="background: #051d33">
         <div class="col-md-12 text-center" style="margin-top: 20px">
             <img src="{{asset('landing/images/Recurso_23.png')}}" width="10%" height="10%">
         </div>
