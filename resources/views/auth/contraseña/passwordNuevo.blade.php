@@ -36,7 +36,7 @@
         }
 
         .error {
-            box-shadow: 0 0 8px red!important;
+            box-shadow: 0 0 8px red !important;
         }
     </style>
     <header id="header-section">
@@ -64,15 +64,16 @@
                             <div class="row">
                                 <div class="col-md-12 p-5">
                                     <div class="mx-auto mb-5 text-center">
-                                        <a href="{{route('logout')}}">
-                                            <img src="{{asset('landing/images/LogoAzul.png')}}" alt="" height="120" />
-                                        </a>
+                                        <img src="{{asset('landing/images/LogoAzul.png')}}" alt="" height="120" />
                                     </div>
                                     <div class="alert alert-danger" role="alert" style="display: none;"
                                         id="alertPaswword">
                                     </div>
-                                    <div class="alert alert-success" style="display: none;" id="alertSuccess" style="display: none;" role="alert">
-                                        <strong><img src="{{asset('admin/images/checked.svg')}}" height="20" class="mr-1 mt-1"></strong><span style="font-size: 14px;">Reestablecimiento de contraseña con éxito.</span>
+                                    <div class="alert alert-success" style="display: none;" id="alertSuccess"
+                                        style="display: none;" role="alert">
+                                        <strong><img src="{{asset('admin/images/checked.svg')}}" height="20"
+                                                class="mr-1 mt-1"></strong><span
+                                            style="font-size: 14px;">Reestablecimiento de contraseña con éxito.</span>
                                     </div>
                                     <form action="javascript:enviarReset()" class="authentication-form">
                                         @csrf
@@ -82,7 +83,8 @@
                                             <div class="input-group input-group-merge">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" style="background-color: #ffffff;">
-                                                        <img src="{{asset('landing/images/iconfinder-icon (1).svg')}}" height="20">
+                                                        <img src="{{asset('landing/images/iconfinder-icon (1).svg')}}"
+                                                            height="20">
                                                     </span>
                                                 </div>
                                                 <input id="email" type="email"
@@ -93,11 +95,13 @@
                                         </div>
 
                                         <div class="form-group mt-4">
-                                            <label for="password" class="form-control-label" style="font-weight: 500;">Contraseña</label>
+                                            <label for="password" class="form-control-label"
+                                                style="font-weight: 500;">Contraseña</label>
                                             <div class="input-group input-group-merge">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" style="background-color: #ffffff;">
-                                                        <img src="{{asset('landing/images/iconfinder-icon (4).svg')}}" height="20">
+                                                        <img src="{{asset('landing/images/iconfinder-icon (4).svg')}}"
+                                                            height="20">
                                                     </span>
                                                 </div>
                                                 <input id="password" type="password"
@@ -112,12 +116,14 @@
                                         </div>
 
                                         <div class="form-group mt-4">
-                                            <label for="password-confirm" class="form-control-label" style="font-weight: 500;">Confirmar
+                                            <label for="password-confirm" class="form-control-label"
+                                                style="font-weight: 500;">Confirmar
                                                 contraseña</label>
                                             <div class="input-group input-group-merge">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" style="background-color: #ffffff;">
-                                                        <img src="{{asset('landing/images/iconfinder-icon (4).svg')}}" height="20">
+                                                        <img src="{{asset('landing/images/iconfinder-icon (4).svg')}}"
+                                                            height="20">
                                                     </span>
                                                 </div>
                                                 <input id="password-confirm" type="password" class="form-control"
