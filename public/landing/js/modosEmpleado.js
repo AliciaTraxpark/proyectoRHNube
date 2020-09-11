@@ -715,7 +715,6 @@ function guardarCorreoE() {
     idEmpleado = $("#idEmpleCorreo").val();
     descripcion = $("#textCorreo").val();
     email = $("#textCorreo").val();
-    console.log(descripcion, $("#textCorreo").val());
     $.ajax({
         async: false,
         type: "GET",
