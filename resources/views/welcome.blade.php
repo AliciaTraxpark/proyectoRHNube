@@ -29,7 +29,7 @@
 
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
     <header id="header-section">
-        <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
+        <nav class="navbar  pl-3 pl-sm-0" id="navbar">
             <div class="container pb-0 pt-2">
                 <div class="col-md-5" style="margin-bottom: 10px;">
                     <div class="navbar-brand-wrapper d-flex">
@@ -86,13 +86,13 @@
         </nav>
     </header>
     <div class="banner">
-        <div class="container" style="padding-top: 60px"> <br>
+        <div class="container" style="padding-top: 60px">
             <h4 class="font-weight-semibold">Organicemos tu equipo de
                 trabajo en 10 minutos: Controla, mide y gestiona.
             </h4>
 
             <div>
-                <div class="col-md-12"> <br><br>
+                <div class="col-md-12"> <br>
                     <a {{-- href="{{route('registroPersona')}} "--}}><button onclick="$('#modal-error').modal('show')" class="btn btn-opacity-primary mr-1">COMIENZA
                             AHORA</button></a>
                 </div>
@@ -107,7 +107,7 @@
                 <div class="modal-body text-center">
                     <img src="{{asset('landing/images/lanzamiento.svg')}}" height="100" >
                     <h5 style="color: #c51516!important;" class="text-danger mt-4">Próximo lanzamiento</h5>
-                    <p class="w-75 mx-auto text-muted" style="color: black!important">Próximo lanzamiento en vivo en Perú 15 de este mes.</p>
+                    <p class="w-75 mx-auto text-muted" style="color: black!important">¡Próximo lanzamiento muy pronto!</p>
                     <div class="mt-4">
                         <button class="btn btn-opacity-primary mr-1"   data-dismiss="modal"><i class="uil uil-arrow-right mr-1"></i> OK</button>
                     </div>
@@ -115,450 +115,175 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <div class="content-wrapper">
+    <div class="content-wrapper" style="padding-bottom: 0px;">
         <div class="container">
-            <section class="features-overview" id="features-section">
-                <div class="content-header">
-                    <h2>¿Cómo trabaja RHNube?</h2>
-                    <h6 class="section-subtitle text-muted">Es la plataforma de control de personal
-                         más sencilla y segura del mercado, contrata, agrega y controla personal en menos de 5 minutos.</h6>
-                </div>
-                <div class="d-md-flex justify-content-between">
-                    <div class="grid-margin d-flex justify-content-start">
-                        <div class="features-width">
-                            <img src="{{asset('landing/images/personal.svg')}}" height="80" alt="" class="img-icons">
-                            <h5 class="py-3">Agregar<br>personal</h5>
-                            <p class="text-muted">Puedes agregar personal de forma individual o desde un archivo de carga en Excel y luego enviarles una invitación.</p>
-                           {{--  <a href="#">
-                                <p class="readmore-link">Readmore</p>
-                            </a> --}}
-                        </div>
-                    </div>
-                    <div class="grid-margin d-flex justify-content-center">
-                        <div class="features-width">
-                            <img src="{{asset('landing/images/plataforma.svg')}}" height="80" alt="" class="img-icons">
-                            <h5 class="py-3">Dispositivos y <br>licencias</h5>
-                            <p class="text-muted">Agrega un punto de control de personal en cualquier plataforma PC, móvil Android o equipo biométrico homologado.</p>
-                           {{--  <a href="#">
-                                <p class="readmore-link">Readmore</p>
-                            </a> --}}
-                        </div>
-                    </div>
-                    <div class="grid-margin d-flex justify-content-end">
-                        <div class="features-width">
-                            <img src="{{asset('landing/images/reporte.svg')}}" height="80" alt="" class="img-icons">
-                            <h5 class="py-3">Monitorea y <br>controla</h5>
-                            <p class="text-muted">Obtén información de valor y controla el tiempo invertido en tu personal.</p>
-                            {{-- <a href="#">
-                                <p class="readmore-link">Readmore</p>
-                            </a> --}}
-                        </div>
-                    </div>
-                </div>
-            </section>
-            {{-- <section class="digital-marketing-service" id="digital-marketing-section">
+
+             <section class="digital-marketing-service" id="digital-marketing-section">
                 <div class="row align-items-center">
-                    <div class="col-12 col-lg-7 grid-margin
+                    <div class="col-12 col-lg-1 p-0 img-digital grid-margin">
+
+                    </div>
+                    <div class="col-12 col-lg-6 grid-margin
                             grid-margin-lg-0" data-aos="fade-right">
-                        <h3 class="m-0">We Offer a Full Range<br>of Digital
-                            Marketing Services!</h3>
-                        <div class="col-lg-7 col-xl-6 p-0">
-                            <p class="py-4 m-0 text-muted">Lorem ipsum dolor
-                                sit amet, tincidunt vestibulum. Fusce
-                                egeabus consectetuer turpis, suspendisse.</p>
-                            <p class="font-weight-medium text-muted">Lorem
-                                ipsum dolor sit amet, tincidunt vestibulum.
-                                Fusce egeabus consectetuer</p>
+                        <h3 class=" m-0">¿Por qué usar RH Nube?</h3>
+                        <div class="col-lg-8 col-xl-8 p-0">
+                            <p class="py-4 m-0 text-muted " style="font-size: 16px">Sencillamente porque ahorras mucho en inversión
+                                de personal y ahora puedes tomar decisiones más precisas.</p>
+
                         </div>
                     </div>
+
                     <div class="col-12 col-lg-5 p-0 img-digital grid-margin
                             grid-margin-lg-0" data-aos="fade-left">
-                        <img src="{{asset('landing/images/Group1.png')}}" alt="" class="img-fluid">
+                            <iframe width="380" height="205" src="https://www.youtube.com/embed/GfRqwR8d2wU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        {{-- <img src="{{asset('landing/images/Group1.png')}}" alt="" class="img-fluid"> --}}
                     </div>
                 </div>
-                <div class="row align-items-center">
-                    <div class="col-12 col-lg-7 text-center flex-item
-                            grid-margin" data-aos="fade-right">
-                        <img src="{{asset('landing/images/Group2.png')}}" alt="" class="img-fluid">
-                    </div>
-                    <div class="col-12 col-lg-5 flex-item grid-margin" data-aos="fade-left">
-                        <h3 class="m-0">Leading Digital Agency<br>for
-                            Business Solution.</h3>
-                        <div class="col-lg-9 col-xl-8 p-0">
-                            <p class="py-4 m-0 text-muted">Power-packed with
-                                impressive features and well-optimized,
-                                this template is designed to provide the
-                                best performance in all circumstances.</p>
-                            <p class="pb-2 font-weight-medium text-muted">Its
-                                smart features make it a powerful
-                                stand-alone website building tool.</p>
-                        </div>
-                        <button class="btn btn-info">Readmore</button>
-                    </div>
-                </div>
+
             </section>
-            <section class="case-studies" id="case-studies-section">
-                <div class="row grid-margin">
-                    <div class="col-12 text-center pb-5">
-                        <h2>Our case studies</h2>
-                        <h6 class="section-subtitle text-muted">Lorem ipsum
-                            dolor sit amet, tincidunt vestibulum.</h6>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-3 stretch-card mb-3
-                            mb-lg-0" data-aos="zoom-in">
-                        <div class="card color-cards">
-                            <div class="card-body p-0">
-                                <div class="bg-primary text-center
-                                        card-contents">
-                                    <div class="card-image">
-                                        <img src="{{asset('landing/images/Group95.svg')}}" class="case-studies-card-img"
-                                            alt="">
-                                    </div>
-                                    <div class="card-desc-box d-flex
-                                            align-items-center
-                                            justify-content-around">
-                                        <div>
-                                            <h6 class="text-white pb-2
-                                                    px-3">Know more about Online
-                                                marketing</h6>
-                                            <button class="btn btn-white">Read
-                                                More</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-details text-center pt-4">
-                                    <h6 class="m-0 pb-1">Online Marketing</h6>
-                                    <p>Seo, Marketing</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-3 stretch-card mb-3
-                            mb-lg-0" data-aos="zoom-in" data-aos-delay="200">
-                        <div class="card color-cards">
-                            <div class="card-body p-0">
-                                <div class="bg-warning text-center
-                                        card-contents">
-                                    <div class="card-image">
-                                        <img src="{{asset('landing/images/Group108.svg')}}"
-                                            class="case-studies-card-img" alt="">
-                                    </div>
-                                    <div class="card-desc-box d-flex
-                                            align-items-center
-                                            justify-content-around">
-                                        <div>
-                                            <h6 class="text-white pb-2
-                                                    px-3">Know more about Web
-                                                Development</h6>
-                                            <button class="btn btn-white">Read
-                                                More</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-details text-center pt-4">
-                                    <h6 class="m-0 pb-1">Web Development</h6>
-                                    <p>Developing, Designing</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-3 stretch-card mb-3
-                            mb-lg-0" data-aos="zoom-in" data-aos-delay="400">
-                        <div class="card color-cards">
-                            <div class="card-body p-0">
-                                <div class="bg-violet text-center
-                                        card-contents">
-                                    <div class="card-image">
-                                        <img src="{{asset('landing/images/Group126.svg')}}"
-                                            class="case-studies-card-img" alt="">
-                                    </div>
-                                    <div class="card-desc-box d-flex
-                                            align-items-center
-                                            justify-content-around">
-                                        <div>
-                                            <h6 class="text-white pb-2
-                                                    px-3">Know more about Web
-                                                Designing</h6>
-                                            <button class="btn btn-white">Read
-                                                More</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-details text-center pt-4">
-                                    <h6 class="m-0 pb-1">Web Designing</h6>
-                                    <p>Designing, Developing</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-3 stretch-card" data-aos="zoom-in" data-aos-delay="600">
-                        <div class="card color-cards">
-                            <div class="card-body p-0">
-                                <div class="bg-success text-center
-                                        card-contents">
-                                    <div class="card-image">
-                                        <img src="{{asset('landing/images/Group115.svg')}}"
-                                            class="case-studies-card-img" alt="">
-                                    </div>
-                                    <div class="card-desc-box d-flex
-                                            align-items-center
-                                            justify-content-around">
-                                        <div>
-                                            <h6 class="text-white pb-2
-                                                    px-3">Know more about
-                                                Software Development</h6>
-                                            <button class="btn btn-white">Read
-                                                More</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-details text-center pt-4">
-                                    <h6 class="m-0 pb-1">Software
-                                        Development</h6>
-                                    <p>Developing, Designing</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+
+            <br>
+
             <section class="customer-feedback" id="feedback-section">
                 <div class="row">
-                    <div class="col-12 text-center pb-5">
-                        <h2>What our customers have to say</h2>
-                        <h6 class="section-subtitle text-muted m-0">Lorem
-                            ipsum dolor sit amet, tincidunt vestibulum.
-                        </h6>
-                    </div>
-                    <div class="owl-carousel owl-theme grid-margin">
-                        <div class="card customer-cards">
-                            <div class="card-body">
-                                <div class="text-center">
-                                    <img src="{{asset('landing/images/face2.jpg')}}" width="89" height="89" alt=""
-                                        class="img-customer">
-                                    <p class="m-0 py-3 text-muted">Lorem
-                                        ipsum dolor sit amet, tincidunt
-                                        vestibulum.
-                                        Fusce egeabus consectetuer turpis,
-                                        suspendisse.</p>
-                                    <div class="content-divider m-auto"></div>
-                                    <h6 class="card-title pt-3">Tony
-                                        Martinez</h6>
-                                    <h6 class="customer-designation
-                                            text-muted m-0">Marketing Manager</h6>
+                    <div class="owl-carousel owl-theme grid-margin" style="margin-bottom: 10px;">
+                        <div class="card customer-cards" style="background: #38afff">
+                            <div class="card-body" style="padding-top: 0px;
+                            padding-bottom: 0px;">
+                                <div class="row">
+                                    <div class="col-md-2" style="padding-left: 0px"><br><br>
+                                        <img src="{{asset('landing/images/grafica.svg')}}" width="59" height="49" alt=""
+                                       >
+                                    </div>
+                                    <div class="col-md-10">
+                                        <h6 class="card-title pt-3" style="font-size: 14px!important;color:#ffffff">¿Qué ventajas adicionales
+                                            tienes ahora?</h6>
+                                            <p class="m-0 py-3 text-muted" style="font-size: 11.5px!important;color:#ffffff!important">RH nube te permite contratar personal
+                                                fuera de tu ciudad o país.
+                                                Ya puedes comparar la productividad entre puestos similares
+                                                y tomar decisiones.
+                                                </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card customer-cards">
-                            <div class="card-body">
-                                <div class="text-center">
-                                    <img src="{{asset('landing/images/face3.jpg')}}" width="89" height="89" alt=""
-                                        class="img-customer">
-                                    <p class="m-0 py-3 text-muted">Lorem
-                                        ipsum dolor sit amet, tincidunt
-                                        vestibulum.
-                                        Fusce egeabus consectetuer turpis,
-                                        suspendisse.</p>
-                                    <div class="content-divider m-auto"></div>
-                                    <h6 class="card-title pt-3">Sophia
-                                        Armstrong</h6>
-                                    <h6 class="customer-designation
-                                            text-muted m-0">Marketing Manager</h6>
+                        <div class="card customer-cards" style="background:  #013c64">
+                            <div class="card-body" style="padding-top: 0px;
+                            padding-bottom: 0px;">
+                                <div class="row">
+                                    <div class="col-md-2"  style="padding-left: 0px"><br><br>
+                                        <img src="{{asset('landing/images/la-seguridad.svg')}}" width="59" height="49" alt=""
+                                       >
+                                    </div>
+                                    <div class="col-md-10">
+                                        <h6 class="card-title pt-3" style="font-size: 14px!important;color:#ffffff">¿Trabajadores de campo?</h6>
+                                            <p class="m-0 py-3 text-muted" style="font-size: 11.5px!important;color:#ffffff!important">RH nube permite controlar la ruta de trabajo por GPS y marcar asistencia en campo.
+                                                Ya puedes saber que tareas realiza tu personal fuera de oficina y tomar decisiones.
+                                                </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card customer-cards">
-                            <div class="card-body">
-                                <div class="text-center">
-                                    <img src="{{asset('landing/images/face20.jpg')}}" width="89" height="89" alt=""
-                                        class="img-customer">
-                                    <p class="m-0 py-3 text-muted">Lorem
-                                        ipsum dolor sit amet, tincidunt
-                                        vestibulum.
-                                        Fusce egeabus consectetuer turpis,
-                                        suspendisse.</p>
-                                    <div class="content-divider m-auto"></div>
-                                    <h6 class="card-title pt-3">Cody Lambert</h6>
-                                    <h6 class="customer-designation
-                                            text-muted m-0">Marketing Manager</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card customer-cards">
-                            <div class="card-body">
-                                <div class="text-center">
-                                    <img src="{{asset('landing/images/face15.jpg')}}" width="89" height="89" alt=""
-                                        class="img-customer">
-                                    <p class="m-0 py-3 text-muted">Lorem
-                                        ipsum dolor sit amet, tincidunt
-                                        vestibulum.
-                                        Fusce egeabus consectetuer turpis,
-                                        suspendisse.</p>
-                                    <div class="content-divider m-auto"></div>
-                                    <h6 class="card-title pt-3">Cody Lambert</h6>
-                                    <h6 class="customer-designation
-                                            text-muted m-0">Marketing Manager</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card customer-cards">
-                            <div class="card-body">
-                                <div class="text-center">
-                                    <img src="{{asset('landing/images/face16.jpg')}}" width="89" height="89" alt=""
-                                        class="img-customer">
-                                    <p class="m-0 py-3 text-muted">Lorem
-                                        ipsum dolor sit amet, tincidunt
-                                        vestibulum.
-                                        Fusce egeabus consectetuer turpis,
-                                        suspendisse.</p>
-                                    <div class="content-divider m-auto"></div>
-                                    <h6 class="card-title pt-3">Cody Lambert</h6>
-                                    <h6 class="customer-designation
-                                            text-muted m-0">Marketing Manager</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card customer-cards">
-                            <div class="card-body">
-                                <div class="text-center">
-                                    <img src="{{asset('landing/images/face1.jpg')}}" width="89" height="89" alt=""
-                                        class="img-customer">
-                                    <p class="m-0 py-3 text-muted">Lorem
-                                        ipsum dolor sit amet, tincidunt
-                                        vestibulum.
-                                        Fusce egeabus consectetuer turpis,
-                                        suspendisse.</p>
-                                    <div class="content-divider m-auto"></div>
-                                    <h6 class="card-title pt-3">Tony
-                                        Martinez</h6>
-                                    <h6 class="customer-designation
-                                            text-muted m-0">Marketing Manager</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card customer-cards">
-                            <div class="card-body">
-                                <div class="text-center">
-                                    <img src="{{asset('landing/images/face2.jpg')}}" width="89" height="89" alt=""
-                                        class="img-customer">
-                                    <p class="m-0 py-3 text-muted">Lorem
-                                        ipsum dolor sit amet, tincidunt
-                                        vestibulum.
-                                        Fusce egeabus consectetuer turpis,
-                                        suspendisse.</p>
-                                    <div class="content-divider m-auto"></div>
-                                    <h6 class="card-title pt-3">Tony
-                                        Martinez</h6>
-                                    <h6 class="customer-designation
-                                            text-muted m-0">Marketing Manager</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card customer-cards">
-                            <div class="card-body">
-                                <div class="text-center">
-                                    <img src="{{asset('landing/images/face3.jpg')}}" width="89" height="89" alt=""
-                                        class="img-customer">
-                                    <p class="m-0 py-3 text-muted">Lorem
-                                        ipsum dolor sit amet, tincidunt
-                                        vestibulum.
-                                        Fusce egeabus consectetuer turpis,
-                                        suspendisse.</p>
-                                    <div class="content-divider m-auto"></div>
-                                    <h6 class="card-title pt-3">Sophia
-                                        Armstrong</h6>
-                                    <h6 class="customer-designation
-                                            text-muted m-0">Marketing Manager</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card customer-cards">
-                            <div class="card-body">
-                                <div class="text-center">
-                                    <img src="{{asset('landing/images/face20.jpg')}}" width="89" height="89" alt=""
-                                        class="img-customer">
-                                    <p class="m-0 py-3 text-muted">Lorem
-                                        ipsum dolor sit amet, tincidunt
-                                        vestibulum.
-                                        Fusce egeabus consectetuer turpis,
-                                        suspendisse.</p>
-                                    <div class="content-divider m-auto"></div>
-                                    <h6 class="card-title pt-3">Cody Lambert</h6>
-                                    <h6 class="customer-designation
-                                            text-muted m-0">Marketing Manager</h6>
+                        <div class="card customer-cards" style="background: #003253">
+                            <div class="card-body" style="padding-top: 0px;
+                            padding-bottom: 0px;">
+                                <div class="row">
+                                    <div class="col-md-2"  style="padding-left: 0px"><br><br>
+                                        <img src="{{asset('landing/images/api.svg')}}" width="59" height="49" alt=""
+                                       >
+                                    </div>
+                                    <div class="col-md-10">
+                                        <h6 class="card-title pt-3" style="font-size: 14px!important;color:#ffffff">¿Puedo usarlo con un software de planillas o de pagos?</h6>
+                                            <p class="m-0 py-3 text-muted" style="font-size: 11.5px!important;color:#ffffff!important">Claro que puedes, disponemos de la API de integración para el sistema de planillas de tu preferencia. Nos debe contactar tu desarrollador de software.
+                                                </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-            <section class="contact-us" id="contact-section">
-                <div class="contact-us-bgimage grid-margin">
-                    <div class="pb-4">
-                        <h4 class="px-3 px-md-0 m-0" data-aos="fade-down">Do
-                            you have any projects?</h4>
-                        <h4 class="pt-1" data-aos="fade-down">Contact us</h4>
+
+
+            <section class="features-overview" id="features-section" style="padding-top: 20px;">
+                <div class="content-header" style="padding-top: 0px;padding-bottom: 20px;">
+                    <h3>¿Cómo trabaja RH nube?</h3>
+                </div>
+
+            </section>
+            <section class="features-overview grid-margin" id="features-section">
+                <div class="row text-center">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-2">
+                        <button class="btn botonAgru mr-1" value="idPerso">Personal</button>
                     </div>
-                    <div data-aos="fade-up">
-                        <button class="btn btn-rounded btn-outline-danger">Contact
-                            us</button>
+
+                    <div class="col-md-2">
+                        <button  class="btn botonAgru mr-1" value="idDisp" style="background-color: #246590;color:#ffffff">
+                            Dispositivos</button>
+                    </div>
+                    <div class="col-md-2">
+                        <button  class="btn botonAgru mr-1" value="idMoni">Monitoreo</button>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div><br><br>
+                <div class="col-md-12" id="divDispo">
+                    <div class="row ">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-4" style="padding-left: 30px;  margin-top: 15px;">
+                            <h5 class=" m-0">Agregas dispositivos y puntos de control</h5>
+
+                            <p  style="font-size: 14px">Agrega un punto de control de personal en
+                                cualquier plataforma Window o móvil Android y a partir del 2021 estarán disponibles para los equipos y relojes biométricos más usados de tu país.</p>
+
+
+                        </div>
+                        <div class="col-md-5 text-center">
+                            <img src="{{asset('landing/images/img11.jpg')}}" width="300" height="170" alt=""
+                                       >
+                        </div>
+                        <div class="col-md-1"></div>
                     </div>
                 </div>
-            </section> --}}
-            {{-- <section class="contact-details" id="contact-details-section">
-                <div class="row text-center text-md-left">
-                    <div class="col-12 col-md-6 col-lg-3 grid-margin">
-                        <img src="{{asset('landing/images/Group2.svg')}}" alt="" class="pb-2">
-                        <div class="pt-2">
-                            <p class="text-muted m-0">mikayla_beer@feil.name</p>
-                            <p class="text-muted m-0">906-179-8309</p>
+                <div class="col-md-12" id="divPerso" style="display: none">
+                    <div class="row ">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-4" style="padding-left: 30px;  margin-top: 15px;">
+                            <h5 class=" m-0">Agregar personal de manera sencilla</h5>
+
+                            <p  style="font-size: 14px">Puedes agregar personal de forma individual o desde un archivo de carga en Excel y luego enviarles una invitación.</p>
+
+
                         </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-3 grid-margin">
-                        <h5 class="pb-2">Get in Touch</h5>
-                        <p class="text-muted">Don’t miss any updates of our
-                            new templates and extensions.!</p>
-                        <form>
-                            <input type="text" class="form-control" id="Email" placeholder="Email id">
-                        </form>
-                        <div class="pt-3">
-                            <button class="btn btn-dark">Subscribe</button>
+                        <div class="col-md-5 text-center">
+                            <img src="{{asset('landing/images/personal11.png')}}" width="300" height="170" alt=""
+                                       >
                         </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-3 grid-margin">
-                        <h5 class="pb-2">Our Guidelines</h5>
-                        <a href="#">
-                            <p class="m-0 pb-2">Terms</p>
-                        </a>
-                        <a href="#">
-                            <p class="m-0 pt-1 pb-2">Privacy policy</p>
-                        </a>
-                        <a href="#">
-                            <p class="m-0 pt-1 pb-2">Cookie Policy</p>
-                        </a>
-                        <a href="#">
-                            <p class="m-0 pt-1">Discover</p>
-                        </a>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-3 grid-margin">
-                        <h5 class="pb-2">Our address</h5>
-                        <p class="text-muted">518 Schmeler Neck<br>Bartlett.
-                            Illinois</p>
-                        <div class="d-flex justify-content-center
-                                justify-content-md-start">
-                            <a href="#"><span class="mdi mdi-facebook"></span></a>
-                            <a href="#"><span class="mdi mdi-twitter"></span></a>
-                            <a href="#"><span class="mdi mdi-instagram"></span></a>
-                            <a href="#"><span class="mdi mdi-linkedin"></span></a>
-                        </div>
+                        <div class="col-md-1"></div>
                     </div>
                 </div>
-            </section> --}}
-            <footer class="border-top">
-                <p class="text-center text-muted pt-4">© <?php echo date("
-                            Y" ); ?> - RH Solution | Todos los derechos
-                    reservados.</p>
-            </footer>
+                <div class="col-md-12" id="divMoni" style="display: none">
+                    <div class="row ">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-4" style="padding-left: 30px;  margin-top: 15px;">
+                            <br>
+                            <h5 class=" m-0">Monitorea y controla</h5>
+
+                            <p  style="font-size: 14px">Obtén información de valor como el control de asistencia, porcentaje
+                                 de actividad y tareas que realiza tu personal.</p>
+
+
+                        </div>
+                        <div class="col-md-5 text-center">
+                            <img src="{{asset('landing/images/moni11.jpg')}}" width="300" height="170" alt=""
+                                       >
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                </div>
+            </section>
+
+
             <!-- Modal for Contact - us Button -->
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
@@ -618,7 +343,22 @@
         </div>
     </div>
     @endif
+    <footer class="border-top" style="background: #021825">
+        <div class="col-md-12 text-center" style="margin-top: 20px">
+            <img src="{{asset('landing/images/Recurso_23.png')}}" width="10%" height="10%">
+        </div>
+        <div class="col-md-12 text-center" style="margin-top: 10px;margin-bottom: 20px">
+            <span class="mdi mdi-phone" style="color:#faf3f3;font-size: 12px!important"> (01) 238-8350 | <span class="mdi mdi-whatsapp" style="color: #ffffff;">+51 944 721 061</span></span>
+        </div>
+        <div class="col-md-12 text-center" style="margin-top: 10px;border-top: 1.5px solid #ded9d9;
+        padding-top: 10px;bottom: 10px;">
+        <span style="color: #faf3f3;font-size: 12px!important">
 
+            © <?php echo date("
+                    Y" ); ?> - RH nube Corp - USA | Todos los derechos
+            reservados.</span>
+        </div>
+    </footer>
     <script src="{{asset('landing/vendors/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('landing/vendors/bootstrap/bootstrap.min.js')}}"></script>
     <script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>
@@ -688,6 +428,35 @@
             document.getElementById("modalInv").style.display = "none";
             document.getElementById("modal").style.display = "none";
         }
+
+    </script>
+    <script>
+        $( ".botonAgru" ).click(function() {
+            $(".botonAgru").css({
+            "background-color": "#ffffff",
+            "color": "#211f1f"
+            });
+            $( this ).css({
+                "background-color": "#246590",
+            "color": "#ffffff"
+            });
+            var valor=$( this ).val();
+           if(valor=="idPerso"){
+               $('#divDispo').hide();
+               $('#divMoni').hide();
+               $('#divPerso').show();
+           }
+           if(valor=="idDisp"){
+               $('#divMoni').hide();
+               $('#divPerso').hide();
+               $('#divDispo').show();
+           }
+           if(valor=="idMoni"){
+               $('#divDispo').hide();
+               $('#divPerso').hide();
+               $('#divMoni').show();
+           }
+            });
 
     </script>
 </body>
