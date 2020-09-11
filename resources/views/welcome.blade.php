@@ -29,14 +29,14 @@
 
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
     <style>
-        body{
-            background-color: #f5f3fb!important;
+        body {
+            background-color: #f5f3fb !important;
         }
     </style>
     <header id="header-section">
         <nav class="navbar  pl-3 pl-sm-0" id="navbar">
             <div class="container pb-0 pt-2">
-                <div class="col-md-5" style="margin-bottom: 10px;">
+                <div class="col-md-5" style="margin-bottom: 10px;padding-left: 50px">
                     <div class="navbar-brand-wrapper d-flex">
                         <img src="{{asset('landing/images/Recurso_23.png')}}" width="35%" height="35%">
                     </div>
@@ -78,9 +78,10 @@
                             <div class="col-md-12 form-group row p-0 m-0 text-left">
                                 <div class="col-md-6 offset-md-5 p-0">
                                     @if (Route::has('password.request'))
-                                        <a class="btn btn-link" href="{{ route('password.request') }}" style="font-size:11.5px;color: #ffffff;padding-bottom: 0px;padding-top: 4px;padding-left: 14px;margin-left: 0px;">
-                                            ¿Olvidaste tu contraseña?
-                                        </a>
+                                    <a class="btn btn-link" href="{{ route('password.request') }}"
+                                        style="font-size:11.5px;color: #ffffff;padding-bottom: 0px;padding-top: 4px;padding-left: 14px;margin-left: 0px;">
+                                        ¿Olvidaste tu contraseña?
+                                    </a>
                                     @endif
                                 </div>
                             </div>
@@ -91,22 +92,24 @@
         </nav>
     </header>
     <div class="banner" style="background-color: #ffffff">
-        <div class="container" style="padding-top: 60px;">
+        <div class="container" style="padding-top: 60px;padding-bottom:30px">
             <h4 class="font-weight-semibold" style="color: #204051">Organicemos tu equipo de
                 trabajo en 10 minutos: Controla, mide y gestiona.
             </h4>
 
             <div>
                 <div class="col-md-12"> <br>
-                    <a {{-- href="{{route('registroPersona')}} "--}}><button onclick="$('#modal-error').modal('show')" class="btn btn-opacity-primary mr-1">COMIENZA
-                            AHORA</button></a>
+                    <a {{-- href="{{route('registroPersona')}} "--}}><button onclick=" $('#modal-error').modal('show')"
+                        class="btn btn-opacity-primary mr-1">COMIENZA
+                        AHORA</button></a>
                 </div>
-                <br><br> 
+                <br><br>
             </div>
 
         </div>
     </div>
-    <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel"
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-header text-center" style="padding-top: 8px;
@@ -115,11 +118,14 @@
                     <h6 style="font-size: 14px" class="modal-title"></h6>
                 </div>
                 <div class="modal-body text-center">
-                    <img src="{{asset('landing/images/LogoAzul.png')}}" height="90" >
-                    <h5 style="color: #c51516!important;margin-top: 0px!important;" class="text-danger mt-4">Próximo lanzamiento en Perú</h5>
-                    <p class="w-75 mx-auto text-muted" style="color: black!important">Salida programada 20 de Septiembre 2020</p>
+                    <img src="{{asset('landing/images/LogoAzul.png')}}" height="90">
+                    <h5 style="color: #c51516!important;margin-top: 0px!important;" class="text-danger mt-4">Próximo
+                        lanzamiento en Perú</h5>
+                    <p class="w-75 mx-auto text-muted" style="color: black!important">Salida programada 20 de Septiembre
+                        2020</p>
                     <div class="mt-4">
-                        <button class="btn btn-opacity-primary mr-1"   data-dismiss="modal"><i class="uil uil-arrow-right mr-1"></i> OK</button>
+                        <button class="btn btn-opacity-primary mr-1" data-dismiss="modal"><i
+                                class="uil uil-arrow-right mr-1"></i> OK</button>
                     </div>
                 </div>
             </div><!-- /.modal-content -->
@@ -128,7 +134,7 @@
     <div class="content-wrapper" style="padding-bottom: 0px;padding-top: 0px;background-color: #ffffff">
         <div class="container">
 
-             <section class="digital-marketing-service" id="digital-marketing-section">
+            <section class="digital-marketing-service" id="digital-marketing-section">
                 <div class="row align-items-center">
                     <div class="col-12 col-lg-1 p-0 img-digital grid-margin">
 
@@ -137,7 +143,8 @@
                             grid-margin-lg-0" data-aos="fade-right">
                         <h3 class=" m-0">¿Por qué usar RH Nube?</h3>
                         <div class="col-lg-12 col-xl-12 text-center p-0">
-                            <p class="py-4 m-0 text-muted " style="font-size: 16px">Sencillamente porque ahorras mucho en inversión
+                            <p class="py-4 m-0 text-muted " style="font-size: 16px">Sencillamente porque ahorras mucho
+                                en inversión
                                 de personal y ahora puedes tomar decisiones más precisas.</p>
 
                         </div>
@@ -145,7 +152,9 @@
 
                     <div class="col-12 col-lg-6 p-0 img-digital grid-margin
                             grid-margin-lg-0" data-aos="fade-left">
-                            <iframe width="590" height="360" src="https://www.youtube.com/embed/GfRqwR8d2wU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe width="590" height="360" src="https://www.youtube.com/embed/GfRqwR8d2wU" frameborder="0"
+                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
                         {{-- <img src="{{asset('landing/images/Group1.png')}}" alt="" class="img-fluid"> --}}
                     </div>
                 </div>
@@ -155,24 +164,27 @@
             <br>
 
             <section class="customer-feedback" id="feedback-section">
-                <div class="row">
+                <div class="row" style="padding-top: 30px">
                     <div class="owl-carousel owl-theme grid-margin" style="margin-bottom: 10px;">
                         <div class="card customer-cards" style="background: #38afff">
                             <div class="card-body" style="padding-top: 0px;
                             padding-bottom: 0px;">
                                 <div class="row">
                                     <div class="col-md-2" style="padding-left: 0px"><br><br>
-                                        <img src="{{asset('landing/images/grafica.svg')}}" width="59" height="49" alt=""
-                                       >
+                                        <img src="{{asset('landing/images/grafica.svg')}}" width="59" height="49"
+                                            alt="">
                                     </div>
                                     <div class="col-md-10">
-                                        <h6 class="card-title pt-3" style="font-size: 14px!important;color:#ffffff">¿Qué ventajas adicionales
+                                        <h6 class="card-title pt-3" style="font-size: 14px!important;color:#ffffff">¿Qué
+                                            ventajas adicionales
                                             tienes ahora?</h6>
-                                            <p class="m-0 py-3 text-muted" style="font-size: 11.5px!important;color:#ffffff!important">RH nube te permite contratar personal
-                                                fuera de tu ciudad o país.
-                                                Ya puedes comparar la productividad entre puestos similares
-                                                y tomar decisiones.
-                                                </p>
+                                        <p class="m-0 py-3 text-muted"
+                                            style="font-size: 11.5px!important;color:#ffffff!important">RH nube te
+                                            permite contratar personal
+                                            fuera de tu ciudad o país.
+                                            Ya puedes comparar la productividad entre puestos similares
+                                            y tomar decisiones.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -181,15 +193,19 @@
                             <div class="card-body" style="padding-top: 0px;
                             padding-bottom: 0px;">
                                 <div class="row">
-                                    <div class="col-md-2"  style="padding-left: 0px"><br><br>
-                                        <img src="{{asset('landing/images/la-seguridad.svg')}}" width="59" height="49" alt=""
-                                       >
+                                    <div class="col-md-2" style="padding-left: 0px"><br><br>
+                                        <img src="{{asset('landing/images/la-seguridad.svg')}}" width="59" height="49"
+                                            alt="">
                                     </div>
                                     <div class="col-md-10">
-                                        <h6 class="card-title pt-3" style="font-size: 14px!important;color:#ffffff">¿Trabajadores de campo?</h6>
-                                            <p class="m-0 py-3 text-muted" style="font-size: 11.5px!important;color:#ffffff!important">RH nube permite controlar la ruta de trabajo por GPS y marcar asistencia en campo.
-                                                Ya puedes saber que tareas realiza tu personal fuera de oficina y tomar decisiones.
-                                                </p>
+                                        <h6 class="card-title pt-3" style="font-size: 14px!important;color:#ffffff">
+                                            ¿Trabajadores de campo?</h6>
+                                        <p class="m-0 py-3 text-muted"
+                                            style="font-size: 11.5px!important;color:#ffffff!important">RH nube permite
+                                            controlar la ruta de trabajo por GPS y marcar asistencia en campo.
+                                            Ya puedes saber que tareas realiza tu personal fuera de oficina y tomar
+                                            decisiones.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -198,14 +214,17 @@
                             <div class="card-body" style="padding-top: 0px;
                             padding-bottom: 0px;">
                                 <div class="row">
-                                    <div class="col-md-2"  style="padding-left: 0px"><br><br>
-                                        <img src="{{asset('landing/images/api.svg')}}" width="59" height="49" alt=""
-                                       >
+                                    <div class="col-md-2" style="padding-left: 0px"><br><br>
+                                        <img src="{{asset('landing/images/api.svg')}}" width="59" height="49" alt="">
                                     </div>
                                     <div class="col-md-10">
-                                        <h6 class="card-title pt-3" style="font-size: 14px!important;color:#ffffff">¿Puedo usarlo con un software de planillas o de pagos?</h6>
-                                            <p class="m-0 py-3 text-muted" style="font-size: 11.5px!important;color:#ffffff!important">Claro que puedes, disponemos de la API de integración para el sistema de planillas de tu preferencia. Nos debe contactar tu desarrollador de software.
-                                                </p>
+                                        <h6 class="card-title pt-2" style="font-size: 13.2px!important;color:#ffffff">
+                                            ¿Puedo usarlo con un software de planillas o de pagos?</h6>
+                                        <p class="m-0 py-3 text-muted"
+                                            style="font-size: 10.8px!important;color:#ffffff!important">Claro que
+                                            puedes, disponemos de la API de integración para el sistema de planillas de
+                                            tu preferencia. Nos debe contactar tu desarrollador de software.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -216,7 +235,7 @@
 
 
             <section class="features-overview" id="features-section" style="padding-top: 20px;">
-                <div class="content-header" style="padding-top: 0px;padding-bottom: 20px;">
+                <div class="content-header" style="padding-top: 30px;padding-bottom: 20px;">
                     <h3>¿Cómo trabaja RH nube?</h3>
                 </div>
 
@@ -225,15 +244,18 @@
                 <div class="row text-center">
                     <div class="col-md-3"></div>
                     <div class="col-md-2">
-                        <button class="btn botonAgru mr-1" value="idPerso" style="background-color: #163552;color:#ffffff">Personal</button>
+                        <button class="btn botonAgru mr-1" value="idPerso"
+                            style="background-color: #163552;color:#ffffff">Personal</button>
                     </div>
 
                     <div class="col-md-2">
-                        <button  class="btn botonAgru mr-1" value="idDisp" style="background-color: #38afff;color:#ffffff">
+                        <button class="btn botonAgru mr-1" value="idDisp"
+                            style="background-color: #38afff;color:#ffffff">
                             Dispositivos</button>
                     </div>
                     <div class="col-md-2">
-                        <button  class="btn botonAgru mr-1" value="idMoni" style="background-color: #163552;color:#ffffff">Monitoreo</button>
+                        <button class="btn botonAgru mr-1" value="idMoni"
+                            style="background-color: #163552;color:#ffffff">Monitoreo</button>
                     </div>
                     <div class="col-md-3"></div>
                 </div><br><br>
@@ -243,14 +265,14 @@
                         <div class="col-md-4" style="padding-left: 30px;  margin-top: 15px;">
                             <h5 class=" m-0">Agregas dispositivos y puntos de control</h5>
 
-                            <p  style="font-size: 14px">Agrega un punto de control de personal en
-                                cualquier plataforma Windows o móvil Android y a partir del 2021 estarán disponibles para los equipos y relojes biométricos más usados de tu país.</p>
+                            <p style="font-size: 14px">Agrega un punto de control de personal en
+                                cualquier plataforma Windows o móvil Android y a partir del 2021 estarán disponibles
+                                para los equipos y relojes biométricos más usados de tu país.</p>
 
 
                         </div>
                         <div class="col-md-5 text-center">
-                            <img src="{{asset('landing/images/img11.jpg')}}" width="300" height="170" alt=""
-                                       >
+                            <img src="{{asset('landing/images/img11.jpg')}}" width="300" height="170" alt="">
                         </div>
                         <div class="col-md-1"></div>
                     </div>
@@ -261,13 +283,13 @@
                         <div class="col-md-4" style="padding-left: 30px;  margin-top: 15px;">
                             <h5 class=" m-0">Agregar personal de manera sencilla</h5>
 
-                            <p  style="font-size: 14px">Puedes agregar personal de forma individual o desde un archivo de carga en Excel y luego enviarles una invitación.</p>
+                            <p style="font-size: 14px">Puedes agregar personal de forma individual o desde un archivo de
+                                carga en Excel y luego enviarles una invitación.</p>
 
 
                         </div>
                         <div class="col-md-5 text-center">
-                            <img src="{{asset('landing/images/personal11.png')}}" width="300" height="170" alt=""
-                                       >
+                            <img src="{{asset('landing/images/personal11.png')}}" width="300" height="170" alt="">
                         </div>
                         <div class="col-md-1"></div>
                     </div>
@@ -279,14 +301,14 @@
                             <br>
                             <h5 class=" m-0">Monitorea y controla</h5>
 
-                            <p  style="font-size: 14px">Obtén información de valor como el control de asistencia, porcentaje
-                                 de actividad y tareas que realiza tu personal.</p>
+                            <p style="font-size: 14px">Obtén información de valor como el control de asistencia,
+                                porcentaje
+                                de actividad y tareas que realiza tu personal.</p>
 
 
                         </div>
                         <div class="col-md-5 text-center">
-                            <img src="{{asset('landing/images/moni11.jpg')}}" width="300" height="170" alt=""
-                                       >
+                            <img src="{{asset('landing/images/moni11.jpg')}}" width="300" height="170" alt="">
                         </div>
                         <div class="col-md-1"></div>
                     </div>
@@ -358,15 +380,16 @@
             <img src="{{asset('landing/images/Recurso_23.png')}}" width="10%" height="10%">
         </div>
         <div class="col-md-12 text-center" style="margin-top: 10px;margin-bottom: 20px">
-            <span class="mdi mdi-phone" style="color:#faf3f3;font-size: 12px!important"> (01) 238-8350 | <span class="mdi mdi-whatsapp" style="color: #ffffff;">+51 944 721 061</span></span>
+            <span class="mdi mdi-phone" style="color:#faf3f3;font-size: 12px!important"> (01) 238-8350 | <span
+                    class="mdi mdi-whatsapp" style="color: #ffffff;">+51 944 721 061</span></span>
         </div>
         <div class="col-md-12 text-center" style="margin-top: 10px;border-top: 1.5px solid #ded9d9;
         padding-top: 10px;bottom: 10px;">
-        <span style="color: #faf3f3;font-size: 12px!important">
+            <span style="color: #faf3f3;font-size: 12px!important">
 
-            © <?php echo date("
+                © <?php echo date("
                     Y" ); ?> - RH nube Corp - USA | Todos los derechos
-            reservados.</span>
+                reservados.</span>
         </div>
     </footer>
     <script src="{{asset('landing/vendors/jquery/jquery.min.js')}}"></script>
@@ -409,7 +432,7 @@
             document.getElementById("modal1").style.display = "none";
         }
     </script>
-      <div class="modal" id="modalInv" role="dialog" >
+    <div class="modal" id="modalInv" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header" style="padding-top: 8px;
