@@ -66,8 +66,8 @@
                         <div class="modal-content">
                             <div class="modal-header" style="padding-bottom:
                                     3px; padding-top:
-                                    10px;background: #ecebeb">
-                                <h5 class="" id="myModalLabel" style="font-size: 14px">Confirma tu
+                                    10px;background-color:#163552;">
+                                <h5 class="" id="myModalLabel" style="color:#ffffff;font-size:15px">Confirma tu
                                     fecha de nacimiento
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -88,11 +88,10 @@
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" style="background:
-                                            #f0f0f0" class="btn btn-sm" data-dismiss="modal">&nbsp; &nbsp;No
+                                <button type="button" class="btn btn-light btn-sm"  data-dismiss="modal">&nbsp; &nbsp;No
                                     &nbsp; &nbsp;</button>
                                 <button type="submit" style="background:
-                                            #302f56;color: #ecebeb" class="btn
+                                #163552;color: #ecebeb" class="btn
                                             btn-sm" id="confirmar"> &nbsp;
                                     &nbsp; Sí
                                     &nbsp; &nbsp; </button>
@@ -145,12 +144,11 @@
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" style="background:
-                                            #f0f0f0" class="btn btn-sm" onclick="$('#email').val('');"
+                                <button type="button" class="btn btn-light btn-sm" onclick="$('#email').val('');"
                                     data-dismiss="modal">&nbsp; &nbsp;Cambiar email
                                     &nbsp; &nbsp;</button>
                                 <button type="submit" style="background:
-                                            #302f56;color: #ecebeb" class="btn
+                                #163552;color: #ecebeb" class="btn
                                             btn-sm" id="confirmar"> &nbsp;
                                     &nbsp; Confirmar email
                                     &nbsp; &nbsp; </button>
@@ -165,8 +163,8 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="padding-bottom:3px;
-                                    padding-top:10px;background: #ecebeb">
-                                <h5 class="modal-title" id="myModalLabel" style="font-size: 14px">
+                                    padding-top:10px;background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
                                     Personalizar género</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="javascript:limpiartextSexo()">
@@ -183,11 +181,10 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-sm" style="background:
-                                        #f0f0f0" data-dismiss="modal"
+                                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                                     onclick="javascript:limpiartextSexo()">Cerrar</button>
                                 <button type="button" class="btn btn-sm" style="background:
-                                        #302f56;color: #ecebeb" class="btn
+                                #163552;color: #ecebeb" class="btn
                                         btn-sm" onclick="javascript:personalizadoGenero()"
                                     id="guardarPersonalizarSexo">Guardar</button>
                             </div>

@@ -17,15 +17,17 @@
 </head>
 
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
-<style>
-    input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+    <style>
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
 
-input[type=number] { -moz-appearance:textfield; }
-</style>
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
     <header id="header-section">
         <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
             <div class="container">
@@ -46,9 +48,10 @@ input[type=number] { -moz-appearance:textfield; }
         <div class="container">
             @if (session('errors'))
             <div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-size: 14px!important;
-            padding-top: 8px; padding-bottom: 8px;" >
-             {{ session('errors') }}
-                <button type="button" class="close" data-dismiss="alert"aria-label="Close" style="padding-top: 8px;  padding-bottom: 8px;">
+            padding-top: 8px; padding-bottom: 8px;">
+                {{ session('errors') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                    style="padding-top: 8px;  padding-bottom: 8px;">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -56,80 +59,78 @@ input[type=number] { -moz-appearance:textfield; }
             <section class="features-overview" id="features-section">
                 <!--MODAL ORGANIZACION-->
                 <div id="organizacionModal" class="modal fade" tabindex="-1" role="dialog"
-                aria-labelledby="organizacionModal"
-                aria-hidden="true" data-backdrop="static">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header" style="padding-bottom:3px;
+                    aria-labelledby="organizacionModal" aria-hidden="true" data-backdrop="static">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header" style="padding-bottom:3px;
                             padding-top:10px;background: #ecebeb">
-                            <h5 class="modal-title" id="myModalLabel" style="font-size:
+                                <h5 class="modal-title" id="myModalLabel" style="font-size:
                                 14px">
-                                Personalizar organización</h5>
-                            <button type="button" class="close" data-dismiss="modal"
-                                aria-label="Close"
-                                onclick="javascript:limpiartextOrganizacion()">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            {{ csrf_field() }}
-                            <div class="col-md-12">
-                                <label for="">Organización</label>
+                                    Personalizar organización</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                    onclick="javascript:limpiartextOrganizacion()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
-                            <div class="col-md-12">
-                                <input type="text" class="form-control"
-                                    id="textOrganizacion"
-                                    required>
+                            <div class="modal-body">
+                                {{ csrf_field() }}
+                                <div class="col-md-12">
+                                    <label for="">Organización</label>
+                                </div>
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" id="textOrganizacion" required>
+                                </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-sm" type="button" style="background:#f0f0f0" data-dismiss="modal"
-                                onclick="javascript:limpiartextOrganizacion()">Cerrar</button>
-                            <button type="button" style="background:#302f56;color: #ecebeb"
-                            class="btn btn-sm" onclick="javascript:personalizadoOrganizacion()"
-                                id="guardarPersonalizarOrganizacion">Guardar</button>
-                        </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                    onclick="javascript:limpiartextOrganizacion()">Cerrar</button>
+                                <button type="button" style="background:
+                            #163552;color: #ecebeb" class="btn btn-sm" onclick="javascript:personalizadoOrganizacion()"
+                                    id="guardarPersonalizarOrganizacion">Guardar</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
                 <!-- MODAL DE ENVIO -->
-                <div id="modalCargando" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCargando" aria-hidden="true" data-backdrop="static">
+                <div id="modalCargando" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCargando"
+                    aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog   modal-lg" style="padding-left: 9%;">
-                    <div class="modal-content" style="background: #ffffff;">
-                       <div class="modal-body" style="padding-top: 8px;  padding-bottom: 0px;">
-                           <div class="text-center">
-                                <h6 style="color: #163552;">Enviando datos, espere por favor.</h6>
-                                <div class="row">
-                                    <div class="col-3"></div>
-                                    <div class="col-6">
-                                        <img src="{{asset('landing/images/loading.gif')}}" height="100">
+                        <div class="modal-content" style="background: #ffffff;">
+                            <div class="modal-body" style="padding-top: 8px;  padding-bottom: 0px;">
+                                <div class="text-center">
+                                    <h6 style="color: #163552;">Enviando datos, espere por favor.</h6>
+                                    <div class="row">
+                                        <div class="col-3"></div>
+                                        <div class="col-6">
+                                            <img src="{{asset('landing/images/loading.gif')}}" height="100">
+                                        </div>
+                                        <div class="col-3"></div>
                                     </div>
-                                    <div class="col-3"></div>
                                 </div>
-                           </div>
-                       </div>
-                   </div><!-- /.modal-content -->
-                 </div><!-- /.modal-dialog -->
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
                 <form method="POST" action="{{route('registerOrganizacion')}}" onsubmit="javascript:validate(event)">
                     @csrf
                     <div class="row">
                         <div class="col-md-9">
-                            <label for="" style="color:rgb(204, 5, 5);font-size:14px;font-weight: 600;display:none" id="errorRUC">Ruc o ID ya registrado!</label>
+                            <label for="" style="color:rgb(204, 5, 5);font-size:14px;font-weight: 600;display:none"
+                                id="errorRUC">Ruc o ID ya registrado!</label>
                             <div class="row">
                                 <input type="hidden" name="iduser" id="iduser" value="{{$userid}}">
                                 <div class="col-md-4">
-                                    <input type="number" maxlength="11" min="1" max="" class="form-control "required
-                                        placeholder="RUC o ID" name="ruc" id="ruc" value="{{ old('ruc') }}"  onkeypress="return isNumeric(event)"
-                                        oninput="maxLengthCheck(this)">
+                                    <input type="number" maxlength="11" min="1" max="" class="form-control " required
+                                        placeholder="RUC o ID" name="ruc" id="ruc" value="{{ old('ruc') }}"
+                                        onkeypress="return isNumeric(event)" oninput="maxLengthCheck(this)">
                                 </div>
                                 <div class="col-md-5">
-                                    <input class="form-control" placeholder="Razón social " value="{{ old('razonSocial') }}" name="razonSocial"
-                                        id="razonSocial" required>
+                                    <input class="form-control" placeholder="Razón social "
+                                        value="{{ old('razonSocial') }}" name="razonSocial" id="razonSocial" required>
                                 </div> <br><br>
                                 <div class="col-md-9">
-                                    <input class="form-control " placeholder="Direccion legal " name="direccion"  value="{{ old('direccion') }}"
-                                        id="direccion" required>
+                                    <input class="form-control " placeholder="Direccion legal " name="direccion"
+                                        value="{{ old('direccion') }}" id="direccion" required>
                                 </div><br><br>
                             </div>
                             <div class="row">
@@ -166,7 +167,7 @@ input[type=number] { -moz-appearance:textfield; }
                             </div><br>
                             <div class="row">
                                 <div class="col-md-9">
-                                    <input class="form-control "  placeholder="Página web o dominio(opcional)"
+                                    <input class="form-control " placeholder="Página web o dominio(opcional)"
                                         name="pagWeb" id="pagWeb" value="{{ old('pagWeb') }}">
                                 </div>
                             </div><br>
@@ -214,11 +215,9 @@ input[type=number] { -moz-appearance:textfield; }
                                             Otros
                                         </label>
                                         &nbsp;
-                                        <a data-toggle="modal"
-                                            id="organizacionPersonalizado">
+                                        <a data-toggle="modal" id="organizacionPersonalizado">
                                             <img class="mt-0" style="cursor: pointer"
-                                                src="{{asset('landing/images/plus.svg')}}"
-                                                height="15">
+                                                src="{{asset('landing/images/plus.svg')}}" height="15">
                                         </a>
                                     </div>
                                 </div>
