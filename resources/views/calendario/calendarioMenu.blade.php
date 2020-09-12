@@ -92,6 +92,10 @@ background-color: #ffffff;
         padding-top: 0.3rem;
     padding-bottom: 0.3rem;
     }
+    .fc-button{
+        background: #163552;
+        color: #ffffff;
+    }
 </style>
 <div class="row page-title" style="padding-right: 20px;">
     <div class="col-md-7">
@@ -506,7 +510,7 @@ background-color: #ffffff;
 
         <div class="modal-content">
            <div class="modal-header" style="background-color:#163552;">
-               <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Empleados de calendario</h5>
+               <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Asignar empleados</h5>
                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                    <span aria-hidden="true">&times;</span>
                </button>

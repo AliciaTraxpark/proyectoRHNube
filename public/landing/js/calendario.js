@@ -109,7 +109,7 @@ var idcalendarioF=$('#selectCalendario').val();
                 }
             },
             Asignar: {
-                text: "+ Asignar empleado(s)",
+                text: "+ Asignar empleados",
 
                 click: function () {
                    var nombreca= $('select[id="selectCalendario"] option:selected').text();

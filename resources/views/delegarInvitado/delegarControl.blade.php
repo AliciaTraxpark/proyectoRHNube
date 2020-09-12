@@ -72,8 +72,8 @@
                                 Proyectos</label>
                         </div> --}}
                         <div class="col-md-5 text-left" style="bottom: 5px;">
-                            <button type="button" class="btn btn-secondary btn-sm"  onclick="abrirRegist()" style="background: #507394;
-                                        border-color: #507394;">+ Invitar miembro</button>
+                            <button type="button" class="btn btn-secondary btn-sm"  onclick="abrirRegist()" style="background: #163552;
+                                        border-color: #163552;">+ Invitar miembro</button>
 
                         </div>
                     </div>
