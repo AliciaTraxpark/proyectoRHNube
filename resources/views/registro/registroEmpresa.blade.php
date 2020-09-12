@@ -12,8 +12,7 @@
     <link rel="stylesheet" href="{{asset('landing/vendors/aos/css/aos.css')}}">
     <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon"
-        href="https://rhsolution.com.pe/wp-content/uploads/2019/06/small-logo-rh-solution-64x64.png" sizes="32x32">
+    <link rel="shortcut icon" href="https://i.ibb.co/b31CPDW/Recurso-13.png">
 </head>
 
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
@@ -31,12 +30,12 @@
     <header id="header-section">
         <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
             <div class="container">
-                <div class="col-md-3">
+                <div class="col-md-3 pl-5">
                     <div class="navbar-brand-wrapper d-flex w-100">
                         <img src="{{asset('landing/images/Recurso_23.png')}}" height="45">
                     </div>
                 </div>
-                <div class="col-md-9 text-left">
+                <div class="col-md-9 text-left pt-2">
                     <h5 style="color: #ffffff">Ahora registra tu organización: Empresarial, Gobierno, Ong…</h5>
                     <label for="" class="blanco font-italic">Tienes 2 minutos</label>
 
