@@ -94,18 +94,7 @@ function agregarempleado() {
         animationType: "drop"
     });
     //
-    var regex = RegExp("^9{1}[0-9]{8,8}");
-    var regex2 = RegExp("^[a-z0-9]+([-._][a-z0-9]+)*@([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,4}$");
-    if (regex.test($('#email').val()) || regex2.test($('#email').val())) {
-        console.log(regex.test($('#email').val()));
-        console.log(regex2.test($('#email').val()));
-        $('#validCelCorreo').hide();
-    } else {
-        console.log(regex.test($('#email').val()));
-        console.log(regex2.test($('#email').val()));
-        $('#validCelCorreo').show();
-        return false;
-    }
+    
     //validar usuario
     var emailCelular = $('#email').val().split("@");
     var email;
