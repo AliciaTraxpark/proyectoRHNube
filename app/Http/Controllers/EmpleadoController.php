@@ -241,7 +241,8 @@ class EmpleadoController extends Controller
                 'a.area_descripcion',
                 'cc.centroC_descripcion',
                 'e.emple_id',
-                'md.idTipoModo as dispositivo'
+                'md.idTipoModo as dispositivo',
+                'e.emple_foto'
             )
             ->where('e.organi_id', '=', session('sesionidorg'))
             ->where('e.emple_estado', '=', 1)
@@ -316,7 +317,8 @@ class EmpleadoController extends Controller
                 'a.area_descripcion',
                 'cc.centroC_descripcion',
                 'e.emple_id',
-                'md.idTipoModo as dispositivo'
+                'md.idTipoModo as dispositivo',
+                'e.emple_foto'
             )
             ->where('e.organi_id', '=', session('sesionidorg'))
             ->where('e.emple_estado', '=', 1)

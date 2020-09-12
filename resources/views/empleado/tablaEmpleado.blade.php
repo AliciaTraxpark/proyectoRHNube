@@ -81,7 +81,8 @@
                     <img src="{{asset('admin/images/tick.svg')}}" height="25" class="mr-1 mt-2 pb-1">
                     <h5 class="modal-title" id="myModalLabel" style="font-size:
                         15px">
-                        Se registrará un dispositivo para control remoto y se notificará al empleado con un correo electrónico.</h5>
+                        Se registrará un dispositivo para control remoto y se notificará al empleado con un correo
+                        electrónico.</h5>
                 </form>
             </div>
             <div class="modal-footer">
@@ -91,7 +92,7 @@
                             <button type="button" class="btn btn-light btn-sm cancelar" data-dismiss="modal"
                                 onclick="javascript:RefreshTablaEmpleado()">Cancelar</button>
                         </div>
-                        <div class="col-md-2 text-right" >
+                        <div class="col-md-2 text-right">
                             <button type="button" style="background-color: #163552;" class="btn btn-sm"
                                 onclick="javascript:agregarControlR($('#empleadoControlR').val());">Enviar</button>
                         </div>
@@ -162,9 +163,14 @@
                     <img src="{{asset('landing/images/see.svg')}}" height="18">
                 </a>
             </td>
-            <td class="text-center">&nbsp; <input type="hidden" id="codE" value="{{$tabla_empleados->emple_id}}"><img
-                    src="{{ URL::asset('admin/assets/images/users/empleado.png')
-                    }}" alt="" /></td>
+            <td class="text-center">&nbsp; <input type="hidden" id="codE" value="{{$tabla_empleados->emple_id}}">
+                @if (empty($tabla_empleados->emple_foto) === true)
+                <img src="{{ URL::asset('admin/assets/images/users/empleado.png')}}" alt="" />
+                @else
+                <img src="/fotosEmpleado/{{$tabla_empleados->emple_foto}}"
+                    class="avatar-xs rounded-circle"/>
+                @endif
+            </td>
             <td class="text-center">
                 <div class="text-wrap width-400">{{$tabla_empleados->emple_nDoc}}</div>
             </td>

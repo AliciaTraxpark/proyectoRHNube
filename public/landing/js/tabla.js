@@ -71,10 +71,19 @@ function RefreshTablaEmpleado() {
                             </td>\
                             <td class="text-center">&nbsp; <input type="hidden" id="codE" value=' +
                     data[i].emple_id +
-                    '>\
-                                <img src="/admin/assets/images/users/empleado.png"/>\
-                            </td>\
-                            <td class="text-center"> <div class="text-wrap width-400">' +
+                    ">";
+                if (!(data[i].emple_foto === '')) {
+                    tbody +=
+                        '<img src="/fotosEmpleado/' +
+                        data[i].emple_foto +
+                        '" class="avatar-xs rounded-circle"/>';
+                } else {
+                    tbody +=
+                        '<img src="/admin/assets/images/users/empleado.png"/>';
+                }
+                tbody += "</td>";
+                tbody +=
+                    '<td class="text-center"> <div class="text-wrap width-400">' +
                     data[i].emple_nDoc +
                     '</div></td>\
                             <td> <div class="text-wrap width-400">' +
