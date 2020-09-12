@@ -246,6 +246,7 @@ function limpiarDatosPersonales() {
 }
 
 function limpiarDatosEmpresarial() {
+    regreshOrgani();
     Datos();
     $("#disabledDatosE :input").attr("disabled", true);
     $('#disabledDatosE button[type="button"]').hide();
@@ -365,6 +366,7 @@ function enviarDatosE(accion, objDatosEmpresa) {
             console.log(data);
             var h6 = `${data.organi_razonSocial}`;
             actualizarDatos();
+            regreshOrgani();
             Datos();
             $("#h6Empresa").empty();
             $("#strongOrganizacion").empty();
@@ -469,6 +471,15 @@ function refreshGenero(){
     <option class="" value="Hombre">Hombre</option>\
     <option class="" value="Personalizado">Personalizado</option>';
     $('#genero').append(genero);
+}
+function regreshOrgani(){
+    $('#organizacion').empty();
+    organizacion = '<option class="" value="Empresa">Empresa</option>\
+    <option class="" value="Gobierno">Gobierno</option>\
+    <option class="" value="ONG">ONG</option>\
+    <option class="" value="Asociación">Asociación</option>\
+    <option class="" value="Otros">Otros</option>';
+    $('#organizacion').append(organizacion);
 }
 function cambiarCont() {
     $("#frmCamb")[0].reset();
