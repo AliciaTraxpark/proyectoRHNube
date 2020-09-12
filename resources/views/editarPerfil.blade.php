@@ -71,9 +71,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="padding-bottom:3px;
-                padding-top:10px;background: #ecebeb">
-                <h5 class="modal-title" id="myModalLabel" style="font-size:
-                    14px">
+                padding-top:10px;background-color:#163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
                     Personalizar sexo</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                     onclick="javascript:limpiartextSexo()">
@@ -90,8 +89,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm" style="background:
-                    #f0f0f0" data-dismiss="modal" onclick="javascript:limpiartextSexo()">Cerrar</button>
+                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" onclick="javascript:limpiartextSexo()">Cerrar</button>
                 <button type="button" class="btn btn-sm" style="background:
                     #163552;color: #ecebeb" class="btn
                     btn-sm" onclick="javascript:personalizadoGenero()" id="guardarPersonalizarSexo">Guardar</button>
@@ -105,9 +103,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="padding-bottom:3px;
-                padding-top:10px;background: #ecebeb">
-                <h5 class="modal-title" id="myModalLabel" style="font-size:
-                    14px">
+                padding-top:10px;background-color:#163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
                     Personalizar organización</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                     onclick="javascript:limpiartextOrganizacion()">
@@ -124,8 +121,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm" style="background:
-                    #f0f0f0" data-dismiss="modal" onclick="javascript:limpiartextOrganizacion()">Cerrar</button>
+                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                    onclick="javascript:limpiartextOrganizacion()">Cerrar</button>
                 <button type="button" class="btn btn-sm" style="background:
                     #163552;color: #ecebeb" class="btn
                     btn-sm" onclick="javascript:personalizadoOrganizacion()"
@@ -175,7 +172,7 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-12 text-right">
-                            <button type="button" class="btn btn-light btn-sm " data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
                             <button type="submit" name="" style="background-color: #163552;"
                                 class="btn btn-sm ">Guardar</button>
                             </form>
@@ -229,7 +226,8 @@
                     </h6>
                     <h6 class="text-muted font-weight-normal mt-1 mb-4" style="text-transform: capitalize;">
                         {{$organizacion->organi_ruc}}</h6>
-                    <button class="btn  btn-sm" style="background-color: #163552" onclick="cambiarCont()">Cambiar contraseña</button>
+                    <button class="btn  btn-sm" style="background-color: #163552" onclick="cambiarCont()">Cambiar
+                        contraseña</button>
                 </div>
             </div>
         </div>
