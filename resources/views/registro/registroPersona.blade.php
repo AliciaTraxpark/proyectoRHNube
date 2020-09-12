@@ -57,7 +57,7 @@
     </header>
 
     <div class="content-wrapper">
-        <div class="container">
+        <div class="container" style="padding-left: 5%">
             <section class="features-overview" id="features-section">
                 <!--MODAL FECHA-->
                 <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -88,7 +88,9 @@
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light btn-sm"  data-dismiss="modal">&nbsp; &nbsp;No
+                                <button type="button" class="btn btn-sm"
+                                    style="background-color: #f8f9fa!important;color: #343a40!important;"
+                                    data-dismiss="modal">&nbsp; &nbsp;No
                                     &nbsp; &nbsp;</button>
                                 <button type="submit" style="background:
                                 #163552;color: #ecebeb" class="btn
@@ -181,7 +183,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                <button type="button" class="btn btn-sm" style="background-color: #f8f9fa!important;color: #343a40!important;" data-dismiss="modal"
                                     onclick="javascript:limpiartextSexo()">Cerrar</button>
                                 <button type="button" class="btn btn-sm" style="background:
                                 #163552;color: #ecebeb" class="btn
