@@ -66,8 +66,8 @@
                         <div class="modal-content">
                             <div class="modal-header" style="padding-bottom:
                                     3px; padding-top:
-                                    10px;background-color:#163552;">
-                                <h5 class="" id="myModalLabel" style="color:#ffffff;font-size:15px">Confirma tu
+                                    10px;background: #ecebeb">
+                                <h5 class="" id="myModalLabel" style="font-size:14px">Confirma tu
                                     fecha de nacimiento
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -165,8 +165,8 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="padding-bottom:3px;
-                                    padding-top:10px;background-color:#163552;">
-                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                                    padding-top:10px;background: #ecebeb">
+                                <h5 class="modal-title" id="myModalLabel" style="font-size:14px">
                                     Personalizar género</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="javascript:limpiartextSexo()">

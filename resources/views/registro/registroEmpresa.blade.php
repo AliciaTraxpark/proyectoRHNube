@@ -62,8 +62,8 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="padding-bottom:3px;
-                            padding-top:10px;background-color:#163552;">
-                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                            padding-top:10px;background: #ecebeb">
+                                <h5 class="modal-title" id="myModalLabel" style="font-size:14px">
                                     Personalizar organización</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="javascript:limpiartextOrganizacion()">
