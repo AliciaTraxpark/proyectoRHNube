@@ -22,7 +22,7 @@
 @section('breadcrumb')
 <div class="row page-title">
     <div class="col-md-12">
-        <h4 class="header-title mt-0 "></i>Dias laborales y no laborales</h4>
+        <h4 class="header-title mt-0 "></i>Asignar dias no laborales</h4>
     </div>
 </div>
 @endsection
@@ -155,7 +155,6 @@
             color: #222222;   padding-left:0px; padding-right: 20px; ">
                 <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                 <div class="row">
-
                     <div class="col-md-6">
                         <div class="col-xl-12 col-sm-8">
                             <div class="form-group mt-3 mt-sm-0">
@@ -169,6 +168,32 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12 form-check" style="padding-left: 4px;">
+                                    <label for="" class="col-md-8">Seleccionar por area(s):</label>
+                                    <input type="checkbox" style="font-size: 11.4px" class="form-check-input"
+                                        id="selectAreaCheck">
+                                    <label class="form-check-label" for="selectAreaCheck"
+                                        style="font-style: oblique;margin-top: 2px;font-size: 11.4px">Seleccionar
+                                        todas.</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <select data-plugin="customselect" multiple id="selectArea" name="selectArea"
+                                class="form-control" data-placeholder="seleccione">
+
+                                @foreach ($area as $areas)
+                                    <option value="{{ $areas->idarea }}">Area : {{ $areas->descripcion }}.
+                                    </option>
+                                @endforeach
+
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="col-md-6 text-right" id="btnLabo" style="display: none"><br><br>
                         <button type="button"
                         style=" max-width: 18em!important;"

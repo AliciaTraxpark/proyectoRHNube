@@ -28,17 +28,26 @@ class diasLaborablesController extends Controller
         ->where('organi_id','=',session('sesionidorg'))
         ->get()->first();
 
+        $area = DB::table('area as ar')
+        ->join('empleado as em', 'ar.area_id', '=', 'em.emple_area')
+        ->select(
+            'ar.area_id as idarea',
+            'area_descripcion as descripcion'
+        )
+        ->groupBy('ar.area_id')
+        ->get();
+
             if($invitadod){
                 if ($invitadod->rol_id!=1){
                     return redirect('/dashboard');
                 }
                 else{
-                    return View('horarios.diasLaborales',['empleado'=>$empleado]);
+                    return View('horarios.diasLaborales',['empleado'=>$empleado,'area'=>$area]);
                 }
             }
 
         else{
-        return View('horarios.diasLaborales',['empleado'=>$empleado]);}
+        return View('horarios.diasLaborales',['empleado'=>$empleado, 'area'=>$area]);}
     }
     public function storeCalendario(Request $request){
 
