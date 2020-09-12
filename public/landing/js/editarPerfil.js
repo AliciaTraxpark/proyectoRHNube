@@ -1,6 +1,4 @@
 actualizarDatos();
-var valueGenero = "";
-var valueOrgani = "";
 
 function Datos() {
     $.ajax({
@@ -125,7 +123,11 @@ $("#editarDatosE").on("click", function () {
     $("#disabledDatosE :input").attr("disabled", false);
     $("#ruc").attr("disabled", true);
     $('#disabledDatosE button[type="button"]').show();
-    $("#organizacionPersonalizado").show();
+    if ($("#organizacion").val() == "Otros") {
+        $("#organizacionPersonalizado").show();
+    } else {
+        $("#organizacionPersonalizado").hide();
+    }
 });
 $("#razonS").keyup(function () {
     if ($("#razonS").val() == "") {
@@ -168,7 +170,13 @@ $("#distE").change(function () {
         $("#actualizarDatosEmpresa").attr("disabled", false);
     }
 });
-
+$("#organizacion").change(function () {
+    if ($("#organizacion").val() == "Otros") {
+        $("#organizacionPersonalizado").show();
+    } else {
+        $("#organizacionPersonalizado").hide();
+    }
+});
 function limpiartextSexo() {
     $("#textSexo").val("");
     $("#guardarPersonalizarSexo").prop("disabled", true);
@@ -209,12 +217,6 @@ function personalizadoGenero() {
             selected: true,
         })
     );
-    if (valueGenero != "") {
-        $("#genero")
-            .find("option[value='" + valueGenero + "']")
-            .remove();
-    }
-    valueGenero = sexo;
     $("#genero").val(sexo);
     $("#generoModal").modal("toggle");
     limpiartextSexo();
@@ -229,12 +231,6 @@ function personalizadoOrganizacion() {
             selected: true,
         })
     );
-    if (valueOrgani != "") {
-        $("#organizacion")
-            .find("option[value='" + valueOrgani + "']")
-            .remove();
-    }
-    valueOrgani = organi;
     $("#organizacion").val(organi);
     $("#organizacionModal").modal("toggle");
     limpiartextOrganizacion();
