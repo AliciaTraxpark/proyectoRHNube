@@ -651,9 +651,10 @@ function agregarControlR(id) {
             } else {
                 $("#modalControlR").modal("toggle");
                 RefreshTablaEmpleado();
+                showNotificaciones();
                 $.notify(
                     {
-                        message: "\nCorreo enviado con exito\n",
+                        message: "\nRegistro de dispositivo y correo enviado con exito\n",
                         icon: "admin/images/checked.svg",
                     },
                     {
