@@ -61,44 +61,6 @@ use App\proyecto_empleado;
         </div>
     </div>
 </div> --}}
-<div id="androidEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="androidEmpleado"
-    aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
-                    empleado
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                    onclick="$('#form-registrar').show();">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal">
-                    <h5 class="modal-title" id="myModalLabel" style="font-size:
-                        15px">¿Desea enviar correo al empleado?</h5>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-7 text-right">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                                onclick="$('#form-registrar').show();">Cancelar</button>
-                        </div>
-                        <div class="col-md-5 text-right" style="padding-right:
-                            38px;">
-                            <button type="button" id="enviarCorreoAndroidEmpleado" name="enviarCorreoAndroidEmpleado"
-                                style="background-color: #163552;" class="btn
-                                btn-sm">Enviar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 <div id="windowsEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="windowsEmpleado"
     aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
@@ -122,52 +84,14 @@ use App\proyecto_empleado;
             <div class="modal-footer">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-7 text-right">
+                        <div class="col-md-10 text-right" style="padding-right:
+                        50px;">
                             <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                                 onclick="$('#form-registrar').show();">Cancelar</button>
                         </div>
-                        <div class="col-md-5 text-right" style="padding-right:
-                            38px;">
+                        <div class="col-md-2 text-right">
                             <button type="button" id="enviarCorreoWindowsEmpleado" name="enviarCorreoWindowsEmpleado"
                                 style="background-color: #163552;" class="btn
-                                btn-sm">Enviar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<div id="v_androidEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="v_androidEmpleado"
-    aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
-                    empleado
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                    onclick="$('#form-ver').show();">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal">
-                    <h5 class="modal-title" id="myModalLabel" style="font-size:
-                        15px">¿Desea enviar correo al empleado?</h5>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-7 text-right">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                                onclick="$('#form-ver').show();">Cancelar</button>
-                        </div>
-                        <div class="col-md-5 text-right" style="padding-right:
-                            38px;">
-                            <button type="button" id="v_enviarCorreoAndroidEmpleado"
-                                name="v_enviarCorreoAndroidEmpleado" style="background-color: #163552;" class="btn
                                 btn-sm">Enviar</button>
                         </div>
                     </div>
@@ -199,65 +123,15 @@ use App\proyecto_empleado;
             <div class="modal-footer">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-7 text-right">
+                        <div class="col-md-10 text-right" style="padding-right:
+                        50px;">
                             <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                                 onclick="$('#form-ver').show();">Cancelar</button>
                         </div>
-                        <div class="col-md-5 text-right" style="padding-right:
-                            38px;">
+                        <div class="col-md-2 text-right">
                             <button type="button" id="v_enviarCorreoWindowsEmpleado"
                                 name="v_enviarCorreoWindowsEmpleado" style="background-color: #163552;" class="btn
                                 btn-sm">Enviar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<!------------CAMBIAR ESTADO LICENCIA-->
-<div id="estadoLicenciaC" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="estadoLicenciaC"
-    aria-hidden="true" data-backdrop="static">
-    <br><br><br><br>
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Cambiar Estado de
-                    Activacion de Dispositivo
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                    onclick="$('#form-registrar').show();">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <input style="display: none;" id="estadoLicencia">
-                <form class="form-horizontal">
-                    <div class="row">
-                        <div class="col-md-2 text-center">
-                            <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
-                        </div>
-                        <div class="col-md-8 text-center">
-                            <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
-                                Al cambiar el estado de la licencia se inhabilitará información del empleado en su
-                                PC.
-                            </h5>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-6 text-center">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                                onclick="$('#form-registrar').show();">Cancelar</button>
-                        </div>
-                        <div class="col-md-6 text-center" style="padding-right:
-                        38px;">
-                            <button type="button" id="CambiarEstadoL" name="CambiarEstadoL"
-                                style="background-color: #163552;" class="btn
-                            btn-sm">Aceptar</button>
                         </div>
                     </div>
                 </div>
@@ -299,65 +173,15 @@ use App\proyecto_empleado;
             <div class="modal-footer">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-6 text-center">
+                        <div class="col-md-2 text-right" style="padding-right:
+                        50px;">
                             <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                                 onclick="$('#form-registrar').show();">Cancelar</button>
                         </div>
-                        <div class="col-md-6 text-center" style="padding-right:
-                         38px;">
+                        <div class="col-md-10 text-right">
                             <button type="button" id="CambiarEstadoLW" name="CambiarEstadoLW"
                                 style="background-color: #163552;" class="btn
                              btn-sm">Aceptar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<!------------CAMBIAR ESTADO LICENCIA-->
-<div id="v_estadoLicenciaC" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="v_estadoLicenciaC"
-    aria-hidden="true" data-backdrop="static">
-    <br><br><br><br>
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Cambiar Estado de
-                    Activacion de Dispositivo
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                    onclick="$('#form-ver').show();">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <input style="display: none;" id="estadoLicencia">
-                <form class="form-horizontal">
-                    <div class="row">
-                        <div class="col-md-2 text-center">
-                            <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
-                        </div>
-                        <div class="col-md-8 text-center">
-                            <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
-                                Al cambiar el estado de la licencia se inhabilitará información del empleado en su
-                                PC.
-                            </h5>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-6 text-center">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                                onclick="$('#form-ver').show();">Cancelar</button>
-                        </div>
-                        <div class="col-md-6 text-center" style="padding-right:
-                        38px;">
-                            <button type="button" id="v_CambiarEstadoL" name="v_CambiarEstadoL"
-                                style="background-color: #163552;" class="btn
-                            btn-sm">Aceptar</button>
                         </div>
                     </div>
                 </div>
@@ -399,12 +223,12 @@ use App\proyecto_empleado;
             <div class="modal-footer">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-6 text-center">
+                        <div class="col-md-10 text-right" style="padding-right:
+                        50px;">
                             <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                                 onclick="$('#form-ver').show();">Cancelar</button>
                         </div>
-                        <div class="col-md-6 text-center" style="padding-right:
-                         38px;">
+                        <div class="col-md-2 text-right">
                             <button type="button" id="v_CambiarEstadoLW" name="v_CambiarEstadoLW"
                                 style="background-color: #163552;" class="btn
                              btn-sm">Aceptar</button>
@@ -421,7 +245,8 @@ use App\proyecto_empleado;
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Registrar Correo Electrónico
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Registrar Correo
+                    Electrónico
                     Empleado
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
