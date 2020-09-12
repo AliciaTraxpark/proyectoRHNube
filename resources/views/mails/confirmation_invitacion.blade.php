@@ -434,38 +434,6 @@
                                             </table>
                                         </td>
                                     </tr>
-
-                                    <tr style="border-collapse:collapse">
-                                        <td align="left"
-                                            style="Margin:0;padding-top:5px;padding-bottom:20px;padding-left:20px;padding-right:20px;background-position:left top">
-                                            <table cellpadding="0" cellspacing="0"
-                                                style="border-collapse:collapse;border-spacing:0px" width="100%">
-                                                <tr style="border-collapse:collapse">
-                                                    <td align="center" style="padding:0;Margin:0;width:560px"
-                                                        valign="top">
-                                                        <table cellpadding="0" cellspacing="0" role="presentation"
-                                                            style="border-collapse:collapse;border-spacing:0px"
-                                                            width="100%">
-                                                            <tr style="border-collapse:collapse">
-                                                                <td align="center" style="padding:0;Margin:0">
-                                                                    <p
-                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:14px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:21px;color:#666666">
-                                                                        Contacta con nosotros: <br><br>
-                                                                        <a href="tel:123456789"
-                                                                            style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;font-size:14px;text-decoration:none;color:#666666"
-                                                                            target="_blank">info@rhnube.com.pe</a>
-                                                                        <br><br> <a href="mailto:your@mail.com"
-                                                                            style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;font-size:14px;text-decoration:none;color:#666666"
-                                                                            target="_blank">www.rhnube.com.pe</a>
-                                                                    </p>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
                                 </table>
                             </td>
                         </tr>
