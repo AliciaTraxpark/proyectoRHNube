@@ -81,19 +81,17 @@
                     <img src="{{asset('admin/images/tick.svg')}}" height="25" class="mr-1 mt-2 pb-1">
                     <h5 class="modal-title" id="myModalLabel" style="font-size:
                         15px">
-                        Se registrara un dispositivo para control remoto y enviaremos un correo electronico al
-                        empleado con dicha información.</h5>
+                        Se registrará un dispositivo para control remoto y se notificará al empleado con un correo electrónico.</h5>
                 </form>
             </div>
             <div class="modal-footer">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-7 text-right">
+                        <div class="col-md-10 text-right" style="padding-left: 50px">
                             <button type="button" class="btn btn-light btn-sm cancelar" data-dismiss="modal"
                                 onclick="javascript:RefreshTablaEmpleado()">Cancelar</button>
                         </div>
-                        <div class="col-md-5 text-right" style="padding-right:
-                            38px;">
+                        <div class="col-md-2 text-right" >
                             <button type="button" style="background-color: #163552;" class="btn btn-sm"
                                 onclick="javascript:agregarControlR($('#empleadoControlR').val());">Enviar</button>
                         </div>

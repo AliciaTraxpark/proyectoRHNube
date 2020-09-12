@@ -42,7 +42,7 @@ function agregarempleado() {
     //
     var regex = RegExp("^9{1}[0-9]{8,8}");
     var regex2 = RegExp(
-        "^[a-z0-9]+([-._][a-z0-9]+)*@([a-z0-9]+(-[a-z0-9]+)*.)+[a-z]{2,4}$"
+        "^^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"
     );
     if (regex2.test($("#email").val())) {
         $("#validCorreo").hide();
