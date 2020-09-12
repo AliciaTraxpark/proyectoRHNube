@@ -754,11 +754,11 @@ use App\proyecto_empleado;
                 <div class="modal-footer">
                     <div class="col-md-12">
                         <div class="row">
-                            <div class="col-md-7 text-right">
+                            <div class="col-md-10 text-right" style="padding-left: 50px">
                                 <button type="button" id="cerrarE" class="btn btn-light btn-sm"
                                     data-dismiss="modal">Cancelar</button>
                             </div>
-                            <div class="col-md-5 text-right" style="padding-right: 38px;  ">
+                            <div class="col-md-2 text-right" style="padding-right: 38px;  ">
                                 <button type="button" id="confirmarE" name="confirmarE" onclick="confirmarEliminacion()"
                                     style="background-color: #163552;" class="btn btn-sm ">Eliminar</button>
                             </div>
