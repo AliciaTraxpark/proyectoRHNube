@@ -82,7 +82,7 @@
             <div class="modal-body">
                 {{ csrf_field() }}
                 <div class="col-md-12">
-                    <label for="">Sexo</label>
+                    <label for="">Género</label>
                 </div>
                 <div class="col-md-12">
                     <input type="text" class="form-control" id="textSexo" required>
