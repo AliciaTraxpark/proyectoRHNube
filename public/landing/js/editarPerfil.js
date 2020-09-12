@@ -291,6 +291,7 @@ function enviarDatosP(accion, objDatosPersonales) {
             var strong = `Bienvenido(a), ${data.perso_nombre}`;
             actualizarDatos();
             refreshGenero();
+            regreshOrgani();
             Datos();
             $("#h5Nombres").empty();
             $("#h6Nombres").empty();
@@ -366,6 +367,7 @@ function enviarDatosE(accion, objDatosEmpresa) {
             console.log(data);
             var h6 = `${data.organi_razonSocial}`;
             actualizarDatos();
+            refreshGenero();
             regreshOrgani();
             Datos();
             $("#h6Empresa").empty();
