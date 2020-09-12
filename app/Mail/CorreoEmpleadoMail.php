@@ -40,6 +40,6 @@ class CorreoEmpleadoMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.vinculacionF')->subject('RH NUBE');
+        return $this->view('mails.vinculacionF')->subject('RH nube');
     }
 }

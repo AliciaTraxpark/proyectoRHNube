@@ -355,8 +355,7 @@
         </section>
         <footer class="border-top">
             <p class="text-center text-muted pt-4">© <?php echo date("
-                            Y" ); ?> - RH Solution | Todos los derechos
-                reservados.</p>
+                            Y" ); ?> - RH nube Corp - USA | Todos los derechos reservados.</p>
         </footer>
 
     </div>

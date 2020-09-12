@@ -990,7 +990,7 @@ background-color: #ffffff !important;
                 </div>
             </div>
         <footer class="border-top">
-            <p class="text-center text-muted pt-4">© <?php echo date("Y"); ?> - RH Solution | Todos los derechos reservados.</p>
+            <p class="text-center text-muted pt-4">© <?php echo date("Y"); ?> - RH nube Corp - USA | Todos los derechos reservados.</p>
         </footer>
       </div>
     </div>
