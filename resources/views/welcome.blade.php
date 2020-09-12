@@ -99,7 +99,7 @@
 
             <div>
                 <div class="col-md-12"> <br>
-                    <a {{-- href="{{route('registroPersona')}} "--}}><button onclick=" $('#modal-error').modal('show')"
+                    <a href="{{route('registroPersona')}} "><button 
                         class="btn btn-opacity-primary mr-1">COMIENZA
                         AHORA</button></a>
                 </div>

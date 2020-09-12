@@ -45,7 +45,7 @@
         </nav>
     </header>
     <div class="content-wrapper">
-        <div class="container">
+        <div class="container" style="padding-left: 5%;padding-right: 4%">
             @if (session('errors'))
             <div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-size: 14px!important;
             padding-top: 8px; padding-bottom: 8px;">
@@ -63,9 +63,8 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="padding-bottom:3px;
-                            padding-top:10px;background: #ecebeb">
-                                <h5 class="modal-title" id="myModalLabel" style="font-size:
-                                14px">
+                            padding-top:10px;background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
                                     Personalizar organización</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="javascript:limpiartextOrganizacion()">
@@ -82,10 +81,12 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                <button type="button" class="btn btn-sm" style="background-color: #f8f9fa!important;color: #343a40!important;font-size:
+                                14px;padding: 4px 8px 4px 8px" data-dismiss="modal"
                                     onclick="javascript:limpiartextOrganizacion()">Cerrar</button>
                                 <button type="button" style="background:
-                            #163552;color: #ecebeb" class="btn btn-sm" onclick="javascript:personalizadoOrganizacion()"
+                            #163552;color: #ecebeb;font-size:
+                                14px;padding: 4px 8px 4px 8px" class="btn btn-sm" onclick="javascript:personalizadoOrganizacion()"
                                     id="guardarPersonalizarOrganizacion">Guardar</button>
                             </div>
                         </div><!-- /.modal-content -->
