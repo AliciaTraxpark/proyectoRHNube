@@ -9,8 +9,6 @@ $('#cerrarIF').click('change', function () {
 });
 $(document).ready(function () {
     var correcto;
-    var quitarIndividual;
-    var quitarTodo;
     $("#fileMasiva").fileinput({
         browseLabel: 'Seleccionar',
         allowedFileExtensions: ['jpg', 'jpeg', 'png'],
@@ -51,6 +49,7 @@ $(document).ready(function () {
             spacing: 35
         });
     }).on('fileuploaded', function (event, index, data, msg) {
+        RefreshTablaEmpleado();
         $.notify({
             message: "\nFoto registrada\n" + data,
             icon: 'admin/images/checked.svg'

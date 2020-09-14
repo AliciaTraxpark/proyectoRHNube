@@ -37,6 +37,6 @@ class CorreoInvitado extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->view('mails.confirmation_invitacion')->subject('RH SOLUTION');
+        return $this->view('mails.confirmation_invitacion')->subject('RH nube');
     }
 }

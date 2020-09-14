@@ -77,7 +77,7 @@
                             <div class="mx-auto">
                                 <a href="index.html">
                                     <h3 class="d-inline align-middle ml-1
-                                        text-logo">RH SOLUTION</h3>
+                                        text-logo">RH nube</h3>
                                 </a>
                             </div>
                             <br>

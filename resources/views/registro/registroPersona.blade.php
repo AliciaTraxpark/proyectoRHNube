@@ -41,12 +41,12 @@
     <header id="header-section">
         <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
             <div class="container">
-                <div class="col-md-3">
+                <div class="col-md-3 pl-5">
                     <div class="navbar-brand-wrapper d-flex w-100">
                         <img src="{{asset('landing/images/Recurso_23.png')}}" height="45">
                     </div>
                 </div>
-                <div class="col-md-9 text-left">
+                <div class="col-md-9 text-left pt-2">
                     <h5 style="color: #ffffff">Crear una cuenta</h5>
                     <label for="" class="blanco font-italic">Tienes 2
                         minutos</label>
@@ -57,7 +57,7 @@
     </header>
 
     <div class="content-wrapper">
-        <div class="container">
+        <div class="container" style="padding-left: 5%;padding-right: 4%">
             <section class="features-overview" id="features-section">
                 <!--MODAL FECHA-->
                 <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -67,7 +67,7 @@
                             <div class="modal-header" style="padding-bottom:
                                     3px; padding-top:
                                     10px;background: #ecebeb">
-                                <h5 class="" id="myModalLabel" style="font-size: 14px">Confirma tu
+                                <h5 class="" id="myModalLabel" style="font-size:14px">Confirma tu
                                     fecha de nacimiento
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -88,11 +88,12 @@
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" style="background:
-                                            #f0f0f0" class="btn btn-sm" data-dismiss="modal">&nbsp; &nbsp;No
+                                <button type="button" class="btn btn-sm"
+                                    style="background-color: #f8f9fa!important;color: #343a40!important;"
+                                    data-dismiss="modal">&nbsp; &nbsp;No
                                     &nbsp; &nbsp;</button>
                                 <button type="submit" style="background:
-                                            #302f56;color: #ecebeb" class="btn
+                                #163552;color: #ecebeb" class="btn
                                             btn-sm" id="confirmar"> &nbsp;
                                     &nbsp; Sí
                                     &nbsp; &nbsp; </button>
@@ -145,12 +146,11 @@
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" style="background:
-                                            #f0f0f0" class="btn btn-sm" onclick="$('#email').val('');"
+                                <button type="button" class="btn btn-light btn-sm" onclick="$('#email').val('');"
                                     data-dismiss="modal">&nbsp; &nbsp;Cambiar email
                                     &nbsp; &nbsp;</button>
                                 <button type="submit" style="background:
-                                            #302f56;color: #ecebeb" class="btn
+                                #163552;color: #ecebeb" class="btn
                                             btn-sm" id="confirmar"> &nbsp;
                                     &nbsp; Confirmar email
                                     &nbsp; &nbsp; </button>
@@ -166,7 +166,7 @@
                         <div class="modal-content">
                             <div class="modal-header" style="padding-bottom:3px;
                                     padding-top:10px;background: #ecebeb">
-                                <h5 class="modal-title" id="myModalLabel" style="font-size: 14px">
+                                <h5 class="modal-title" id="myModalLabel" style="font-size:14px">
                                     Personalizar género</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="javascript:limpiartextSexo()">
@@ -183,11 +183,10 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-sm" style="background:
-                                        #f0f0f0" data-dismiss="modal"
+                                <button type="button" class="btn btn-sm" style="background-color: #f8f9fa!important;color: #343a40!important;" data-dismiss="modal"
                                     onclick="javascript:limpiartextSexo()">Cerrar</button>
                                 <button type="button" class="btn btn-sm" style="background:
-                                        #302f56;color: #ecebeb" class="btn
+                                #163552;color: #ecebeb" class="btn
                                         btn-sm" onclick="javascript:personalizadoGenero()"
                                     id="guardarPersonalizarSexo">Guardar</button>
                             </div>
@@ -356,8 +355,7 @@
         </section>
         <footer class="border-top">
             <p class="text-center text-muted pt-4">© <?php echo date("
-                            Y" ); ?> - RH Solution | Todos los derechos
-                reservados.</p>
+                            Y" ); ?> - RH nube Corp - USA | Todos los derechos reservados.</p>
         </footer>
 
     </div>

@@ -225,7 +225,7 @@ function onSelectFechasMensual() {
                         className: 'btn btn-sm mt-1',
                         text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
                         pageSize: 'LEGAL',
-                        title: 'RH SOLUTION REPORTE SEMANAL'
+                        title: 'RH nube REPORTE SEMANAL'
                     }],
                     paging: true
                 });

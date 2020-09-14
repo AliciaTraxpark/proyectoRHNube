@@ -33,6 +33,6 @@ class AndroidMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.empleadoA')->subject('RH NUBE');
+        return $this->view('mails.empleadoA')->subject('RH nube');
     }
 }
