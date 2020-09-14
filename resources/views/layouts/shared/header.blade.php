@@ -131,6 +131,10 @@ use App\persona;
                         <span>Delegar control</span>
                     </a>
                     @endif
+                    <a href="/soporte" class="dropdown-item notify-item">
+                        <i data-feather="edit" class="icon-dual icon-xs mr-2"></i>
+                        <span>Ticket de Soporte</span>
+                    </a>
                     <!-- item-->
                     <a href="{{ route('logout') }}" class="dropdown-item
                         notify-item">
@@ -149,7 +153,8 @@ use App\persona;
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Registrar Correo Electrónico
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Registrar Correo
+                    Electrónico
                     Empleado
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
