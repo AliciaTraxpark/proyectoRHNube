@@ -1042,17 +1042,7 @@ function listaempCal(){
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-       /*  success: function (data) {
-          var array = [];
-
-         $.each(data, function (i, json) {
-             array[json.emple_id] = (parseInt(json.emple_id));
-
-             $('#nombreEmpleado').find('option[value="' + json.emple_id + '"]').remove();
-
-         });
-         $('#nombreEmpleado').select2({});;
-        }, */
+       
         "dataSrc": ""
        },
 
