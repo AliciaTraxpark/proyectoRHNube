@@ -1018,6 +1018,17 @@ function listaempCal(){
 
        ajax: {
         type: "post",
+        complete: function (data) {
+            dataD=data['responseJSON'];
+
+            $.each(dataD, function (index, value1) {
+                console.log(value1.emple_id);
+                $('#nombreEmpleado').find('option[value="' + value1.emple_id + '"]').remove();
+
+
+            $('#nombreEmpleado').select2({});
+             })
+        },
         url: "/calendario/listaEmplCa",
         data: {
             idcalendar: idcalenLista
@@ -1031,6 +1042,17 @@ function listaempCal(){
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
+       /*  success: function (data) {
+          var array = [];
+
+         $.each(data, function (i, json) {
+             array[json.emple_id] = (parseInt(json.emple_id));
+
+             $('#nombreEmpleado').find('option[value="' + json.emple_id + '"]').remove();
+
+         });
+         $('#nombreEmpleado').select2({});;
+        }, */
         "dataSrc": ""
        },
 
