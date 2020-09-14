@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\CorreoInvitado;
+use App\Mail\CorreoActivacion;
 use App\Mail\CorreoMail;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Redirect;
@@ -407,6 +408,24 @@ class delegarInvController extends Controller
     $invitadoAct  = DB::table('invitado')
         ->where('idinvitado', '=',  $idinvitado)
            ->update(['estado_condic' => $estadosw]);
+
+
+
+   }
+
+   public function notificarInv(Request $request){
+    $idinvitado=$request->idinvitado;
+    $estadosw=$request->estadosw;
+
+
+    if($estadosw==1){
+        $invitado  = invitado::find($idinvitado);
+           $emailInv=$invitado->email_inv;
+
+           $organi = organizacion::find(session('sesionidorg'));
+        Mail::to($emailInv)->queue(new CorreoActivacion($organi,$invitado));
+
+    }
 
    }
 }

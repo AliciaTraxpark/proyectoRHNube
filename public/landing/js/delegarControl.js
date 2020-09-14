@@ -426,6 +426,45 @@ function cambioswitch(idinvitado){
             },
         });
 
+        bootbox.confirm({
+            message: "¿Deseas  notificar por correo al invitado?",
+            buttons: {
+                confirm: {
+                    label: 'Enviar',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'Cancelar',
+                    className: 'btn-light'
+                }
+            },
+            callback: function (result) {
+                if (result == true) {
+                    $.ajax({
+                        type: "post",
+                        url: "/notificarInv",
+                        data: { idinvitado,
+                            estadosw
+                        },
+                        statusCode: {
+                            419: function () {
+                                location.reload();
+                            },
+                        },
+                        headers: {
+                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                        },
+                        success: function (data) {
+                           
+                        },
+                        error: function (data) {
+                            alert("Ocurrio un error");
+                        },
+                    });
+                   }
+            }
+        });
+
     }
     else{
 
