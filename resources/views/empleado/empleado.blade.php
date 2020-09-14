@@ -3628,7 +3628,7 @@
             <!--VER EMPLEADO-->
             <div id="verEmpleadoDetalles" class="modal fade" tabindex="-1" role="dialog"
                 aria-labelledby="verEmpleadoDetalles" aria-hidden="true" data-backdrop="static">
-                <div class="modal-dialog modal-dialog-scrollable modal-lg" style="max-width: 880px!important;">
+                <div class="modal-dialog modal-dialog-scrollable modal-lg">
                     <div class="modal-content">
                         <div class="modal-header" style="background: #163552;">
                             <h4 class="header-title mt-0 " style="color: #f0f0f0">Datos de empleado</h4><br>
@@ -3646,7 +3646,7 @@
                         </div>
                         <div class="modal-body" style="padding: 0px;">
                             <div id="smartwizardVer" style="background: #ffffff; color:#3d3d3d;">
-                                <ul style="background: #fdfdfd!important;">
+                                <ul style="background: #fdfdfd!important;font-size: 13px;">
                                     <li><a href="#persona-step-1">Personales</a></li>
                                     <li><a href="#sw-default-step-2">Empresarial</a></li>
                                     <li><a href="#sw-default-step-3">Foto</a></li>
