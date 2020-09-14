@@ -147,7 +147,7 @@ a:not([href]):not([tabindex]){
         border-color: #163552;
         zoom: 85%;
     }
-    .select2-container .select2-selection {
+    .col-md-6  .select2-container .select2-selection {
     height: 50px;
     font-size: 12.2px;
     overflow-y: scroll;
@@ -501,38 +501,37 @@ a:not([href]):not([tabindex]){
         <div id="horarioAsignar_ed" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog  modal-lg d-flex justify-content-center "
-            style="width:330px;  margin-top: 150px; left: 30px;">
+            style="width:390px;  margin-top: 150px; left: 30px;">
 
             <div class="modal-content">
 
                 <div class="modal-body"
                     style="font-size:12px!important;background: #f3f3f3;">
-                    <div class="col-md-12">
-
-                            <select class="form-control custom-select custom-select-sm  col-md-10" name="selectHorario" id="selectHorario">
-                                <option hidden selected>Asignar horario</option>
+                    <div class="row">
+                     <div class="col-md-9">
+                            <select data-plugin="customselect"  class="form-control custom-select custom-select-sm  col-md-10" name="selectHorario" id="selectHorario">
+                                <option hidden selected disabled>Asignar horario</option>
                                 @foreach ($horario as $horarios)
-                                <option class="" value="{{$horarios->horario_id}}">{{$horarios->horario_descripcion}}</option>
+                                <option class="" value="{{$horarios->horario_id}}">{{$horarios->horario_descripcion}} <span style="font-size: 11px;font-style: oblique">({{$horarios->horaI}}-{{$horarios->horaF}})</span> </option>
                                  @endforeach
                             </select> &nbsp;
-                            <button class="btn btn-primary btn-sm" style="background-color: #183b5d;border-color:#62778c" onclick="abrirHorario()">+</button>
 
+                     </div>
+                     <div class="col-md-3 text-right">
+                        <button class="btn btn-primary btn-sm" style="background-color: #183b5d;border-color:#62778c;margin-top: 5px;" onclick="abrirHorario()">+</button>
 
-
+                     </div>
                     </div>
+
 
                 </div>
                 <div class="modal-footer"
                     style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-12 text-right">
-                                <button type="button" class="btn btn-soft-primary btn-sm "
-                                    onclick="$('#horarioAsignar_ed').modal('hide')">Cancelar</button>
+                    <div class="col-md-12 text-right" style="padding-right: 0px;">
+                        <button type="button" class="btn btn-soft-primary btn-sm "
+                            onclick="$('#horarioAsignar_ed').modal('hide')">Cancelar</button>
 
-                                </form>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div><!-- /.modal-content -->

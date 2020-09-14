@@ -37,7 +37,7 @@ use App\proyecto_empleado;
 <link href="{{ asset('admin/packages/core/main.css') }}" rel="stylesheet" />
 <link href="{{ asset('admin/packages/daygrid/main.css') }}" rel="stylesheet" />
 <link href="{{ asset('admin/packages/timegrid/main.css') }}" rel="stylesheet" />
-
+<link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('admin/assets/libs/smartwizard/smart_wizard.min.css') }}" type="text/css" />
 <link href="{{ asset('admin/assets/libs/smartwizard/smart_wizard_theme_arrows.min.css') }}" type="text/css" />
@@ -2223,19 +2223,18 @@ use App\proyecto_empleado;
                             <div id="horarioAsignar" class="modal fade" tabindex="-1" role="dialog"
                                 aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                                 <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                    style="width:330px;  margin-top: 150px; left: 30px;">
+                                    style="width:400px;  margin-top: 150px; left: 30px;">
                                     <div class="modal-content">
                                         <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <div class="col-md-8">
-                                                        <select class="form-control custom-select custom-select-sm"
+                                                        <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
                                                             name="selectHorario" id="selectHorario">
-                                                            <option hidden selected>Seleccionar horario
+                                                            <option hidden selected disabled>Seleccionar horario
                                                             </option>
                                                             @foreach ($horario as $horarios)
-                                                            <option class="" value="{{ $horarios->horario_id }}">
-                                                                {{ $horarios->horario_descripcion }}
+                                                            <option class="" value="{{$horarios->horario_id}}">{{$horarios->horario_descripcion}} <span style="font-size: 11px;font-style: oblique">({{$horarios->horaI}}-{{$horarios->horaF}})</span>
                                                             </option>
                                                             @endforeach
                                                         </select>
@@ -3132,7 +3131,7 @@ use App\proyecto_empleado;
                             <div id="horarioAsignar_ed" class="modal fade" tabindex="-1" role="dialog"
                                 aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                                 <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                    style="width:330px;  margin-top: 150px; left: 30px;">
+                                    style="width:400px;  margin-top: 150px; left: 30px;">
 
                                     <div class="modal-content">
 
@@ -3140,13 +3139,12 @@ use App\proyecto_empleado;
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <div class="col-md-8">
-                                                        <select class="form-control custom-select custom-select-sm"
+                                                        <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
                                                             name="selectHorario_ed" id="selectHorario_ed">
-                                                            <option hidden selected>Seleccionar horario
+                                                            <option hidden selected disabled>Seleccionar horario
                                                             </option>
                                                             @foreach ($horario as $horarios)
-                                                            <option class="" value="{{ $horarios->horario_id }}">
-                                                                {{ $horarios->horario_descripcion }}</option>
+                                                            <option class="" value="{{$horarios->horario_id}}">{{$horarios->horario_descripcion}} <span style="font-size: 11px;font-style: oblique">({{$horarios->horaI}}-{{$horarios->horaF}})</span> </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -4081,7 +4079,7 @@ use App\proyecto_empleado;
 <script src="{{ asset('admin/packages/interaction/main.js') }}"></script>
 <script src="{{ asset('admin/assets/js/pages/form-wizard.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
-
+<script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
 <script src="{{ asset('landing/js/smartwizard.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/alertify/alertify.js') }}"></script>
@@ -4095,4 +4093,5 @@ use App\proyecto_empleado;
 <script src="{{ asset('landing/js/dispositivos.js') }}"></script>
 <script src="{{asset('landing/js/modosEmpleado.js')}}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
 @endsection
