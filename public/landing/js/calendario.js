@@ -112,6 +112,7 @@ var idcalendarioF=$('#selectCalendario').val();
                 text: "+ Asignar empleados",
 
                 click: function () {
+                    $('#nombreEmpleado').load(location.href + " #nombreEmpleado>*");
                    var nombreca= $('select[id="selectCalendario"] option:selected').text();
                     $("#nombreEmpleado > option").prop("selected",false);
                     $("#nombreEmpleado").trigger("change");
@@ -1042,7 +1043,7 @@ function listaempCal(){
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-       
+
         "dataSrc": ""
        },
 
