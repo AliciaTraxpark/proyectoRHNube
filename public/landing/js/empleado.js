@@ -628,7 +628,6 @@ $("#selectHorario_ed").change(function (e) {
             $("#horarioAsignar_ed").modal("hide");
         },
         error: function (data) {
-            alert("Ocurrio un error");
         },
     });
 });
@@ -730,7 +729,6 @@ function registrarHorario_ed() {
                     calendar2_ed.refetchEvents();
                 },
                 error: function (data) {
-                    alert("Ocurrio un error");
                 },
             });
 
@@ -1318,7 +1316,6 @@ function registrarHorario() {
                     calendar2.refetchEvents();
                 },
                 error: function (data) {
-                    alert("Ocurrio un error");
                 },
             });
 
@@ -1411,7 +1408,6 @@ $("#selectHorario").change(function (e) {
             $("#horarioAsignar").modal("hide");
         },
         error: function (data) {
-            alert("Ocurrio un error");
         },
     });
 });
