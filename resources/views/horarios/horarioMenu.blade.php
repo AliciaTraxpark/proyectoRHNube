@@ -153,6 +153,26 @@ a:not([href]):not([tabindex]){
     overflow-y: scroll;
 }
 </style>
+<style>
+    div.dataTables_wrapper div.dataTables_filter{
+        display: none;
+    }
+    .btnhora{
+    font-size: 12px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    }
+    .table{
+        width: 100%!important;
+    }
+    .dataTables_scrollHeadInner{
+        width: 100%!important;
+    }
+    .table th, .table td{
+        padding: 0.4rem;
+        border-top: 1px solid #edf0f1;
+    }
+</style>
 <div class="row row-divided">
     <div class="col-md-12 col-xl-12">
         <div class="card">
@@ -169,7 +189,24 @@ a:not([href]):not([tabindex]){
                        {{--  <button class="btn btn-sm btn-primary" id="btnasignarIncidencia" style="background-color: #183b5d;border-color:#62778c">Asignar incidencias</button> --}}
                     </div>
                 </div>
-                    <div id="tabladiv">
+                    <div id="tabladiv"> <br>
+                        <table id="tablaEmpleado" class="table dt-responsive nowrap" style="font-size: 12.8px;">
+                            <thead style=" background: #edf0f1;color: #6c757d;">
+
+                                <tr>
+                                    <th></th>
+                                    <th>Descripcion</th>
+                                    <th>Tolerancia</th>
+                                    <th>Hora inicio</th>
+                                    <th>Hora fin</th>
+                                    <th>En uso</th>
+                                    <th></th>
+
+
+                                </tr>
+                            </thead>
+
+                        </table>
                     </div><br><br><br><br>
             </div> <!-- end card body-->
         </div> <!-- end card -->

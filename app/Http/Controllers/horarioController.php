@@ -915,6 +915,15 @@ class horarioController extends Controller
         ->where('color', '=','#e6bdbd')->delete();
 
     }
+
+    public function horarioListar(){
+      $numero=0;
+        $horario=horario:: where('horario.organi_id', '=', session('sesionidorg'))
+        ->leftJoin('horario_empleado as he', 'horario.horario_id', '=', 'he.horario_horario_id')
+        ->groupBy('horario.horario_id')
+        ->get();
+        return json_encode($horario);
+    }
 }
 
 

@@ -3,7 +3,7 @@ $(document).ready(function () {
     $('#form-ver').hide();
     $('#divFfin').hide();
 
-    leertabla();
+
     $('#Datoscalendar1').css("display", "none");
     $('#aplicarHorario').prop('disabled', true);
 
@@ -12,14 +12,92 @@ $(document).ready(function () {
     })
     $('.flatpickr-input[readonly]').prop('readonly', false)
 
+    var table =  $("#tablaEmpleado").DataTable({
+        "searching": true,
+      /* "lengthChange": false,
+       "scrollX": true, */
+
+       language :
+       {
+           'url':'admin/assets/libs/datatables/Spanish.json'
+       },
+
+       ajax: {
+   type: "post",
+   url: "/horario/listar",
+   data: {
+
+   },
+   statusCode: {
+
+       419: function () {
+           location.reload();
+       }
+   },
+   headers: {
+       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+   },
+
+   "dataSrc": ""
+  },
+
+   "columnDefs": [ {
+               "searchable": false,
+               "orderable": false,
+               "targets": 0
+           }
+    ],
+           "order": [[ 1, 'asc' ]],
+  columns: [
+     { data: null },
+     { data: "horario_descripcion" },
+     { data: "horario_tolerancia",
+     "render": function (data, type, row) {
+
+       return row.horario_tolerancia+'&nbsp;&nbsp; minutos';
+
+     } },
+     { data: "horaI" },
+     { data: "horaF" },
+     { data: "horario_horario_id",
+     "render": function (data, type, row) {
+       if (row.horario_horario_id ==null) {
+           return '<img src="admin/images/borrarH.svg" height="11" />&nbsp;&nbsp;No';}
+           else {
+       return '<img src="admin/images/checkH.svg" height="13" />&nbsp;&nbsp;Si';
+              }
+     } },
+     { data: "horario_id",
+     "render": function (data, type, row) {
+
+       return '<a onclick=" editarHorarioLista('+row.horario_id+')" style="cursor: pointer"><img src="/admin/images/edit.svg" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a onclick="" style="cursor: pointer">'+
+           '<img src="/admin/images/delete.svg" onclick="eliminarHorario('+row.horario_id+')" height="15"></a>';
+
+     } },
+
+  ]
+
+
+   });
+   //$('#verf1').hide();
+   //$('#tablaEmpleado tbody #tdC').css('display', 'none');
+    table.on( 'order.dt search.dt', function () {
+   table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+       cell.innerHTML = i+1;
+   } );
+} ).draw();
+   $("#tablaEmpleado tbody tr").hover(function(){
+      //$('#verf1').css('display', 'block');
+       $('#tablaEmpleado tbody #tdC').css('display', 'block');
+
+   }, function(){
+
+   });
 });
 
-function leertabla() {
-    $.get("tablahorario/ver", {}, function (data, status) {
-        $('#tabladiv').html(data);
 
-    });
-}
+
+
 
 function verhorarioEmpleado(idempleado) {
     $("*").removeClass("fc-highlight");
@@ -621,7 +699,7 @@ $('#guardarHorarioEventos').click(function () {
         success: function (data) {
 
             $('#guardarHorarioEventos').prop('disabled', false);
-            leertabla();
+            $('#tablaEmpleado').DataTable().ajax.reload();
             $('#verhorarioEmpleado').modal('toggle');
             calendario();
 
@@ -663,7 +741,7 @@ $('#guardarTodoHorario').click(function () {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-            leertabla();
+            $('#tablaEmpleado').DataTable().ajax.reload();
             $('#guardarTodoHorario').prop('disabled', false);
 
             $('#asignarHorario').modal('toggle');
@@ -753,7 +831,7 @@ function marcarAsignacion(data){
     $('#btnasignar').click();
 }
 $('#cerrarHorario').click(function () {
-    leertabla();
+    $('#tablaEmpleado').DataTable().ajax.reload();
     $('#verhorarioEmpleado').modal('toggle');
 });
 function abrirHorario(){
@@ -808,7 +886,7 @@ function registrarHorario(){
         success: function (data) {
 
             $('#horarioAgregar').modal('hide');
-            leertabla();
+            $('#tablaEmpleado').DataTable().ajax.reload();
             $('#selectHorario').append($('<option>', { //agrego los valores que obtengo de una base de datos
                 value: data.horario_id,
                 text: data.horario_descripcion+' ('+data.horaI+'-'+data.horaF+')'
@@ -1817,7 +1895,7 @@ function editarHorario(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-            leertabla();
+            $('#tablaEmpleado').DataTable().ajax.reload();
             $('#selectHorario').empty();
 
             $.each(data, function (key, item) {
@@ -1905,7 +1983,7 @@ function editarHorario(){
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 },
                                 success: function (data) {
-                               leertabla();
+                                    $('#tablaEmpleado').DataTable().ajax.reload();
                                 },
                                 error: function (data) {
                                     alert('Ocurrio un error');
