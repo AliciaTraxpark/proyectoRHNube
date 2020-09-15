@@ -52,7 +52,9 @@ function disabledS() {
         },
         success: function (data) {
             console.log(data);
-            $("#summernote").summernote("destroy");
+            $("#summernote").summernote("reset");
+            $("#summernote").summernote("focus");
+            $("#mostrarBoton").hide();
             $.notifyClose();
             $.notify(
                 {
