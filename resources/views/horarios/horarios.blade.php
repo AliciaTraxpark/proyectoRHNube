@@ -144,9 +144,7 @@ background-color: #ffffff !important;
 }
 </style>
 <style>
-    div.dataTables_wrapper div.dataTables_filter{
-        display: none;
-    }
+   
     .btnhora{
     font-size: 12px;
     padding-top: 1px;
