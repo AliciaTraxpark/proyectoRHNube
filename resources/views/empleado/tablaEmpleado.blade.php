@@ -343,11 +343,11 @@
                 }
             },
             success: function (data) {
-                console.log(data);
+
                 $('#v_tipoDoc').val(data[0].tipoDoc_descripcion);
                 $('#v_apPaterno').val(data[0].perso_apPaterno);
                 $('#v_departamento').val(data[0].iddepaN);
-                console.log(data[0].iddepaN);
+
                 if(data[0].iddepaN != null){
                     onSelectVDepartamento('#v_departamento').then(function () {
                         $('#v_provincia').val(data[0].idproviN);
@@ -393,7 +393,7 @@
             });
                 $('#v_dep').val(data[0].depar);
 
-                console.log(data[0].depar);
+
                 if(data[0].depar != null){
                     onSelectVDepart('#v_dep').then(function () {
                         $('#v_prov').val(data[0].proviId);
@@ -581,7 +581,7 @@ function verDEmpleado(idempleadoVer){
                 }
             },
             success: function (data) {
-                console.log(data);
+
                 calendario3();
                 calendario4();
                 $.ajax({
@@ -799,7 +799,7 @@ function verDEmpleado(idempleadoVer){
                     var val1;
                     $('#select').on("keyup change", function(){
                         i = $.fn.dataTable.util.escapeRegex(this.value);
-                        console.log(i);
+
                         var val = $('#global_filter').val();
                         if(that.column(i).search() !== this.value){
                             that.column(this.value).search(val).draw();
@@ -838,7 +838,7 @@ function verDEmpleado(idempleadoVer){
 <script>
     function eliminarEmpleado() {
         var allVals = [];
-        console.log(allVals);
+
 
         $(".sub_chk:checked").each(function () {
             allVals.push($(this).attr('data-id'));
@@ -858,7 +858,7 @@ function verDEmpleado(idempleadoVer){
 
     function confirmarEliminacion() {
         var allVals = [];
-        console.log(allVals);
+
 
         $(".sub_chk:checked").each(function () {
             allVals.push($(this).attr('data-id'));
@@ -923,7 +923,7 @@ function verDEmpleado(idempleadoVer){
         $(".sub_chk:checked").each(function () {
             correoEmpleado.push($(this).attr('data-id'));
         });
-        console.log(correoEmpleado);
+
         var join_selected_values = correoEmpleado.join(",");
         $.ajax({
             async: false,
@@ -942,7 +942,7 @@ function verDEmpleado(idempleadoVer){
                 }
             },
             success: function (data) {
-                console.log(data);
+
                 for (var i = 0; i < data.length; i++) {
                     if (data[i].Correo == true && data[i].Vinculacion == true) {
                         $.notify({
@@ -1037,7 +1037,7 @@ function verDEmpleado(idempleadoVer){
                 }
             },
             success: function (data) {
-                console.log(data);
+
                 for (var i = 0; i < data.length; i++) {
                     if (data[i].Correo == true) {
                         $.notify({
@@ -1095,7 +1095,7 @@ function verDEmpleado(idempleadoVer){
         $(".sub_chk:checked").each(function () {
             correoEmpleado.push($(this).attr('data-id'));
         });
-        console.log(correoEmpleado);
+
         var join_selected_values = correoEmpleado.join(",");
         $.ajax({
             async: false,
@@ -1114,7 +1114,7 @@ function verDEmpleado(idempleadoVer){
                 }
             },
             success: function (data) {
-                console.log(data);
+               
                 for (var i = 0; i < data.length; i++) {
                     if (data[i].Correo == true && data[i].Reenvio == true) {
                         $.notify({

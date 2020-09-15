@@ -245,12 +245,12 @@ $(document).ready(function () {
             if ($("#celular").val() != "") {
                 var regex = RegExp("^9{1}[0-9]{8,8}");
                 if (regex.test($("#celular").val())) {
-                    console.log(regex.test($("#celular").val()));
+
                     $("#validCel").hide();
                 } else {
                     isStepValid = false;
                     $("#validCel").show();
-                    console.log(regex.test($("#celular").val()));
+
                 }
             }
             if (isStepValid == true) {
@@ -391,12 +391,12 @@ $(document).ready(function () {
             if ($("#v_celular").val() != "") {
                 var regex = RegExp("^9{1}[0-9]{8,8}");
                 if (regex.test($("#v_celular").val())) {
-                    console.log(regex.test($("#v_celular").val()));
+
                     $("#v_validCel").hide();
                 } else {
                     isStepValid = false;
                     $("#v_validCel").show();
-                    console.log(regex.test($("#v_celular").val()));
+
                 }
             }
             if ($("input[type=radio]:checked").length == 0) {
@@ -406,7 +406,7 @@ $(document).ready(function () {
                 $("#v_validGenero").hide();
             }
             if (isStepValid == true) {
-                console.log($("#estadoP").val());
+
                 if ($("#estadoP").val() == "true") {
                     idE = $("#v_id").val();
                     objEmpleadoA = datosPersonaA("PUT");
@@ -418,8 +418,7 @@ $(document).ready(function () {
 
         if (stepnumber == 1) {
             if (isStepValid == true) {
-                console.log($("#estadoE").val());
-                console.log($("#estadoCond").val());
+
                 if (
                     $("#estadoE").val() == "true" ||
                     $("#estadoCond").val() == "true"
@@ -435,7 +434,7 @@ $(document).ready(function () {
 
         if (stepnumber == 2) {
             if (isStepValid == true) {
-                console.log($("#estadoF").val());
+
                 if ($("#estadoF").val() == "true") {
                     idE = $("#v_id").val();
                     actualizarEmpleadoFoto("/" + idE);
@@ -582,7 +581,7 @@ $(document).ready(function () {
         obj,
         indice
     ) {
-        console.log(indice);
+        
         return validateSteps1(indice);
     });
     $("#smartwizard").on("showStep", function (

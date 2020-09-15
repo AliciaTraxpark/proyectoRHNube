@@ -239,7 +239,7 @@ function enviarCargoA(accion, objCargo) {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function (data) {
-                        console.log(data);
+
                         select += `<option value="">Seleccionar</option>`;
                         for (var i = 0; i < data.length; i++) {
                             select += `<option class="" value="${data[i].cargo_id}">${data[i].cargo_descripcion}</option>`;
@@ -977,7 +977,7 @@ $("#checkboxFechaIE").on("click", function () {
         $('#m_dia_fechaFE').val("0");
         $('#m_mes_fechaFE').val("0");
         $('#m_ano_fechaFE').val("0");
-        console.log($('#m_fechaFE').val());
+      
 
         $('#ocultarFechaE').hide();
     } else {

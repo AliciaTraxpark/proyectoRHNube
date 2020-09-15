@@ -26,7 +26,7 @@ function RefreshTablaEmpleado() {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            console.log(data);
+
             var tbody = "";
             for (var i = 0; i < data.length; i++) {
                 tbody +=
@@ -270,7 +270,7 @@ function RefreshTablaEmpleado() {
                         "</div></td></tr>";
                 }
             }
-            console.log(tbody);
+
             $("#tbodyr").html(tbody);
             $("#tablaEmpleado").DataTable({
                 scrollX: true,
@@ -321,7 +321,7 @@ function RefreshTablaEmpleado() {
                             var val1;
                             $("#select").on("keyup change", function () {
                                 i = $.fn.dataTable.util.escapeRegex(this.value);
-                                console.log(i);
+                               
                                 var val = $("#global_filter").val();
                                 if (that.column(i).search() !== this.value) {
                                     that.column(this.value).search(val).draw();
