@@ -165,14 +165,14 @@ class calendarioController extends Controller
                     else{
                         return view('calendario.calendario', ['pais' => $paises, 'calendario' => $calendarioSel,
                         'fechaEnvi' => $fechaEnvi,'fechaEnviFi' => $fechaEnviFi,'diaAnt' => $diaAnt,'empleado' => $empleado,
-                        'area'=>$area,'cargo'=>$cargo,'local'=>$local]);
+                        'area'=>$area,'cargo'=>$cargo,'local'=>$local,'fechaOrga'=>$fechaOrga]);
                     }
                 }
 
             else{
             return view('calendario.calendario', ['pais' => $paises, 'calendario' => $calendarioSel,
             'fechaEnvi' => $fechaEnvi,'fechaEnviFi' => $fechaEnviFi,'diaAnt' => $diaAnt,'empleado' => $empleado,
-            'area'=>$area,'cargo'=>$cargo,'local'=>$local]);}
+            'area'=>$area,'cargo'=>$cargo,'local'=>$local,'fechaOrga'=>$fechaOrga]);}
         } else {
             return redirect(route('principal'));
         }
@@ -340,14 +340,14 @@ class calendarioController extends Controller
                     else{
                         return view('calendario.calendarioMenu', ['pais' => $paises, 'calendario' => $calendarioSel,
                         'fechaEnvi' => $fechaEnvi,'fechaEnviFi' => $fechaEnviFi,'diaAnt' => $diaAnt,'empleado' => $empleado,
-                        'area'=>$area,'cargo'=>$cargo,'local'=>$local]);
+                        'area'=>$area,'cargo'=>$cargo,'local'=>$local,'fechaOrga'=>$fechaOrga]);
                     }
                 }
 
             else{
             return view('calendario.calendarioMenu', ['pais' => $paises, 'calendario' => $calendarioSel,
             'fechaEnvi' => $fechaEnvi,'fechaEnviFi' => $fechaEnviFi,'diaAnt' => $diaAnt,'empleado' => $empleado,
-            'area'=>$area,'cargo'=>$cargo,'local'=>$local]);}
+            'area'=>$area,'cargo'=>$cargo,'local'=>$local,'fechaOrga'=>$fechaOrga]);}
         } else {
             return redirect(route('principal'));
         }

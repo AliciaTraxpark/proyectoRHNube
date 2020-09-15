@@ -112,6 +112,7 @@ var idcalendarioF=$('#selectCalendario').val();
                 text: "+ Asignar empleados",
 
                 click: function () {
+                    $('#nombreEmpleado').load(location.href + " #nombreEmpleado>*");
                    var nombreca= $('select[id="selectCalendario"] option:selected').text();
                     $("#nombreEmpleado > option").prop("selected",false);
                     $("#nombreEmpleado").trigger("change");
@@ -1018,6 +1019,17 @@ function listaempCal(){
 
        ajax: {
         type: "post",
+        complete: function (data) {
+            dataD=data['responseJSON'];
+
+            $.each(dataD, function (index, value1) {
+                console.log(value1.emple_id);
+                $('#nombreEmpleado').find('option[value="' + value1.emple_id + '"]').remove();
+
+
+            $('#nombreEmpleado').select2({});
+             })
+        },
         url: "/calendario/listaEmplCa",
         data: {
             idcalendar: idcalenLista
@@ -1031,6 +1043,7 @@ function listaempCal(){
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
+
         "dataSrc": ""
        },
 

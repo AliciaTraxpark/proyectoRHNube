@@ -99,7 +99,7 @@ function calendario_edit() {
             right: ''
         },
         eventRender: function(info) {
-            $(info.el).tooltip({ title: info.event.title });
+            $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
         },
         events: function (info, successCallback, failureCallback) {
             var idcalendario = $('#selectCalendario_ed').val();

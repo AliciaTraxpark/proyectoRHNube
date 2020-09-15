@@ -28,9 +28,17 @@
             max-height: 90px;
         }
 
-        body > div.bootbox.modal.fade.show > div > div > div{
-        background: #131313;
-    color: #fbfbfb;
+        #body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-footer > button.btn.btn-light.bootbox-cancel{
+        background: #e2e1e1;
+        color: #000000;
+        border-color:#e2e1e1;
+        zoom: 85%;
+    }
+
+    body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-footer > button.btn.btn-success.bootbox-accept{
+        background-color: #163552;
+        border-color: #163552;
+       
     }
     body > div.bootbox.modal.fade.show > div{
         top: 100px;

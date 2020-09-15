@@ -160,9 +160,12 @@ function calendario() {
             right: "",
         },
         eventRender: function (info) {
-            $(info.el).tooltip({
-                title: info.event.title,
-            });
+            if(info.event.extendedProps.horaI===null){
+                 $(info.el).tooltip({  title: info.event.title});
+            } else{
+                $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
+            }
+
         },
         events: function (info, successCallback, failureCallback) {
             var idcalendario = $("#selectCalendario").val();
@@ -384,9 +387,7 @@ function calendario_edit() {
             right: "",
         },
         eventRender: function (info) {
-            $(info.el).tooltip({
-                title: info.event.title,
-            });
+            $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
         },
         events: function (info, successCallback, failureCallback) {
             var idcalendario = $("#selectCalendario_ed").val();
@@ -565,7 +566,10 @@ function modalIncidencia_ed() {
 $("#selectHorario_ed").change(function (e) {
     var H1 = $("#pruebaStar_ed").val();
     var H2 = $("#pruebaEnd_ed").val();
-    var textSelec = $('select[name="selectHorario_ed"] option:selected').text();
+    textSelec1=$('select[name="selectHorario_ed"] option:selected').text();
+    separador = "(";
+    textSelec2 = textSelec1.split(separador);
+    textSelec=textSelec2[0];
     var idhorar = $("#selectHorario_ed").val();
     var idempleado = $("#idempleado").val();
     var diasEntreFechas = function (desde, hasta) {
@@ -620,6 +624,7 @@ $("#selectHorario_ed").change(function (e) {
             calendarioedit.refetchEvents();
             calendar2_ed.refetchEvents();
             $("#selectHorario_ed").val("Seleccionar horario");
+            $("#selectHorario_ed").trigger("change");
             $("#horarioAsignar_ed").modal("hide");
         },
         error: function (data) {
@@ -735,11 +740,12 @@ function registrarHorario_ed() {
                 $("<option>", {
                     //agrego los valores que obtengo de una base de datos
                     value: data.horario_id,
-                    text: data.horario_descripcion,
+                    text: data.horario_descripcion+' ('+data.horaI+'-'+data.horaF+')',
                     selected: true,
                 })
             );
             $("#selectHorario_ed").val("Seleccionar horario");
+            $("#selectHorario_ed").trigger("change");
             /* $('#selectHorarioen').append($('<option>', { //agrego los valores que obtengo de una base de datos
                 value: data.horario_id,
                 text: data.horario_descripcion
@@ -1175,9 +1181,11 @@ function calendario2() {
             right: "",
         },
         eventRender: function (info) {
-            $(info.el).tooltip({
-                title: info.event.title,
-            });
+            if(info.event.extendedProps.horaI===null){
+                $(info.el).tooltip({  title: info.event.title});
+           } else{
+               $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
+           }
         },
         events: function (info, successCallback, failureCallback) {
             var idcalendario = $("#selectCalendario").val();
@@ -1320,11 +1328,12 @@ function registrarHorario() {
                 $("<option>", {
                     //agrego los valores que obtengo de una base de datos
                     value: data.horario_id,
-                    text: data.horario_descripcion,
+                    text: data.horario_descripcion+' ('+data.horaI+'-'+data.horaF+')',
                     selected: true,
                 })
             );
             $("#selectHorario").val("Seleccionar horario");
+            $("#selectHorario").trigger("change");
             /* $('#selectHorarioen').append($('<option>', { //agrego los valores que obtengo de una base de datos
                 value: data.horario_id,
                 text: data.horario_descripcion
@@ -1339,7 +1348,10 @@ function registrarHorario() {
 $("#selectHorario").change(function (e) {
     var H1 = $("#pruebaStar").val();
     var H2 = $("#pruebaEnd").val();
-    var textSelec = $('select[name="selectHorario"] option:selected').text();
+    textSelec1=$('select[name="selectHorario"] option:selected').text();
+    separador = "(";
+    textSelec2 = textSelec1.split(separador);
+    textSelec=textSelec2[0];
     var idhorar = $("#selectHorario").val();
     var idca = $("#selectCalendario").val();
     var diasEntreFechas = function (desde, hasta) {
@@ -1395,6 +1407,7 @@ $("#selectHorario").change(function (e) {
             calendar.refetchEvents();
             calendar2.refetchEvents();
             $("#selectHorario").val("Seleccionar horario");
+            $("#selectHorario").trigger("change");
             $("#horarioAsignar").modal("hide");
         },
         error: function (data) {
@@ -1437,9 +1450,7 @@ function calendario3() {
             right: "",
         },
         eventRender: function (info) {
-            $(info.el).tooltip({
-                title: info.event.title,
-            });
+            $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
         },
         events: function (info, successCallback, failureCallback) {
             var idempleado = $("#idempleado").val();
@@ -1508,9 +1519,7 @@ function calendario4() {
             right: "",
         },
         eventRender: function (info) {
-            $(info.el).tooltip({
-                title: info.event.title,
-            });
+            $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
         },
         events: function (info, successCallback, failureCallback) {
             var idempleado = $("#idempleado").val();
@@ -1787,9 +1796,7 @@ function calendario2_ed() {
             right: "",
         },
         eventRender: function (info) {
-            $(info.el).tooltip({
-                title: info.event.title,
-            });
+            $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
         },
         events: function (info, successCallback, failureCallback) {
             var idcalendario = $("#selectCalendario_ed").val();
@@ -3687,6 +3694,7 @@ function abrirnuevo() {
     $("#form-registrar").show();
     $("#selectCalendario").val("Asignar calendario");
     $("#selectHorario").val("Seleccionar horario");
+    $("#selectHorario").trigger("change");
 }
 
 //eliminar foto
@@ -3825,6 +3833,7 @@ $("#cerrarE").click(function () {
     $("#formNuevoEl").hide();
     $("#selectCalendario").val("Asignar calendario");
     $("#selectHorario").val("Seleccionar horario");
+    $("#selectHorario").trigger("change");
 });
 $("#cerrarEd").click(function () {
     RefreshTablaEmpleado();
@@ -3869,11 +3878,13 @@ $("#cerrarEd").click(function () {
     $("#v_centroc").val("").trigger("change");
     $("#v_local").val("").trigger("change");
     $("#selectHorario_ed").val("Seleccionar horario");
+    $("#selectHorario_ed").trigger("change");
     $("#v_codigoCelular").val("+51");
     $("#v_codigoTelefono").val("01");
     limpiar();
     $("#selectCalendario").val("Asignar calendario");
     $("#selectHorario").val("Seleccionar horario");
+    $("#selectHorario").trigger("change");
     $("#estadoP").val("false");
     $("#estadoE").val("false");
     $("#estadoCond").val("false");
@@ -3934,6 +3945,7 @@ $("#cerrarModalEmpleado").click(function () {
     limpiar();
     $("#selectCalendario").val("Asignar calendario");
     $("#selectHorario").val("Seleccionar horario");
+    $("#selectHorario").trigger("change");
     $("#estadoPR").val("false");
     $("#estadoPE").val("false");
     $("#estadoPF").val("false");
@@ -4026,6 +4038,7 @@ function FinalizarEmpleado() {
     $("#checkboxFechaI").prop("checked", false);
     $("#selectCalendario").val("Asignar calendario");
     $("#selectHorario").val("Seleccionar horario");
+    $("#selectHorario").trigger("change");
     $("#tbodyDispositivo").empty();
     $("#smartwizard").smartWizard("reset");
     $("#estadoPR").val("false");

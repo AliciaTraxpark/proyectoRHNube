@@ -454,7 +454,8 @@ function calendario() {
             right: ''
         },
         eventRender: function(info) {
-            $(info.el).tooltip({ title: info.event.title });
+
+            $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
         },
         events: function (info, successCallback, failureCallback) {
 
@@ -497,7 +498,11 @@ $('#selectHorario').change(function(e){
     e.stopPropagation();
     idpais = $('#pais').val();
     iddepartamento = $('#departamento').val();
-    textSelec=$('select[name="selectHorario"] option:selected').text();
+    textSelec1=$('select[name="selectHorario"] option:selected').text();
+    separador = "(";
+    textSelec2 = textSelec1.split(separador);
+    textSelec=textSelec2[0];
+
     var idhorar = $('#selectHorario').val();
 
     var diasEntreFechas = function (desde, hasta) {
@@ -558,6 +563,7 @@ $('#selectHorario').change(function(e){
         success: function (data) {
             $('#horarioAsignar_ed').modal('hide');
             $("#selectHorario").val("Asignar horario");
+            $("#selectHorario").trigger("change");
             var mesAg= $('#fechaDa').val();
         var d  =mesAg;
         var fechasM=new Date(d);
@@ -573,6 +579,7 @@ $('#selectHorario').change(function(e){
     });
    } else
    {  $("#selectHorario").val("Asignar horario");
+   $("#selectHorario").trigger("change");
     bootbox.alert({
         message: "Primero debe asignar dia(s) de calendario.",
 
@@ -804,7 +811,7 @@ function registrarHorario(){
             leertabla();
             $('#selectHorario').append($('<option>', { //agrego los valores que obtengo de una base de datos
                 value: data.horario_id,
-                text: data.horario_descripcion
+                text: data.horario_descripcion+' ('+data.horaI+'-'+data.horaF+')'
 
             }));
             if($('#asignarHorario').is(':visible')){
@@ -976,6 +983,7 @@ function registrarHorarioen(){
                 },
                 success: function (data) {
                     $("#selectHorarioen").val("Asignar horario");
+                    $("#selectHorarioen").trigger("change");
                     var mesAg2= $('#fechaDa2').val();
                     var d2  =mesAg2;
                     var fechasMh=new Date(d2);
@@ -1674,6 +1682,7 @@ $('#selectHorarioen').change(function(e){
         },
         success: function (data) {
             $("#selectHorarioen").val("Asignar horario");
+            $("#selectHorarioen").trigger("change");
             var mesAg2= $('#fechaDa2').val();
             var d2  =mesAg2;
             var fechasMh=new Date(d2);
@@ -1718,6 +1727,7 @@ $('#selectHorarioen').change(function(e){
     });
    } else
    {  $("#selectHorarioen").val("Asignar horario");
+   $("#selectHorarioen").trigger("change");
     bootbox.alert({
         message: "Primero debe asignar dia(s) de calendario.",
 

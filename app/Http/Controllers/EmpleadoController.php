@@ -1110,7 +1110,8 @@ class EmpleadoController extends Controller
 
 
         $eventos_empleado_temp = DB::table('eventos_empleado_temp as evt')
-            ->select(['evEmpleadoT_id as id', 'title', 'color', 'textColor', 'start', 'end', 'tipo_ev', 'users_id', 'calendario_calen_id'])
+            ->select(['evEmpleadoT_id as id', 'title', 'color', 'textColor', 'start', 'end', 'tipo_ev', 'users_id', 'calendario_calen_id', 'horaI','horaF'])
+            ->leftJoin('horario as h','evt.id_horario','=','h.horario_id')
             ->where('evt.users_id', '=', Auth::user()->id)
             ->where('evt.calendario_calen_id', '=', $idcalendario)
 
@@ -1234,20 +1235,22 @@ class EmpleadoController extends Controller
     public function vercalendarioEmpl(Request $request)
     {
         $horario_empleado = DB::table('horario_empleado as he')
-            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end'])
-            /*  ->where('users_id', '=', Auth::user()->id) */
+            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end','horaI','horaF'])
+            ->join('horario as h','he.horario_horario_id','=','h.horario_id')
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.empleado_emple_id', '=', $request->get('idempleado'));
 
         $incidencias = DB::table('incidencias as i')
-            ->select(['idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descuento as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
+            ->select(['idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color',
+             'i.inciden_descuento as textColor', 'idi.inciden_dias_fechaI as start',
+              'idi.inciden_dias_fechaF as end','i.inciden_descripcion as horaI','i.inciden_descripcion as horaF'])
             ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
             ->where('idi.id_empleado', '=', $request->get('idempleado'))
             ->union($horario_empleado);
 
 
         $eventos_empleado = DB::table('eventos_empleado')
-            ->select(['evEmpleado_id as id', 'title', 'color', 'textColor', 'start', 'end'])
+            ->select(['evEmpleado_id as id', 'title', 'color', 'textColor', 'start', 'end','title as horaI','title as horaF'])
             ->where('id_empleado', '=', $request->get('idempleado'))
             ->union($incidencias)
             ->get();
@@ -1322,20 +1325,21 @@ class EmpleadoController extends Controller
 
 
         $horario_empleado = DB::table('horario_empleado as he')
-            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end'])
-            /*  ->where('users_id', '=', Auth::user()->id) */
+            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end','horaI','horaF'])
+            ->join('horario as h','he.horario_horario_id','=','h.horario_id')
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.empleado_emple_id', '=', $idempleado);
 
         $incidencias = DB::table('incidencias as i')
-            ->select(['idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descuento as textColor', 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end'])
+            ->select(['idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descuento as textColor',
+             'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end','i.inciden_descripcion as horaI','i.inciden_descripcion as horaF'])
             ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
             ->where('idi.id_empleado', '=', $idempleado)
             ->union($horario_empleado);
 
 
         $eventos_empleado = DB::table('eventos_empleado')
-            ->select(['evEmpleado_id as id', 'title', 'color', 'textColor', 'start', 'end'])
+            ->select(['evEmpleado_id as id', 'title', 'color', 'textColor', 'start', 'end','title as horaI','title as horaF'])
             ->where('id_empleado', '=', $idempleado)
             ->union($incidencias)
             ->get();
