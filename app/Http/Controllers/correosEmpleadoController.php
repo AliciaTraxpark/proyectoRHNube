@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\empleado;
 use App\licencia_empleado;
 use App\Mail\AndroidMail;
+use App\Mail\correoAdministrativo;
 use App\Mail\CorreoEmpleadoMail;
 use App\Mail\CorreoMasivoMail;
 use App\Mail\MasivoWindowsMail;
@@ -228,7 +229,7 @@ class correosEmpleadoController extends Controller
                         array_push($resultado, array("Persona" => $persona, "Correo" => $c, "Reenvio" => $r));
                     }
                 } else {
-                  
+
                     $codigoEmpleado = DB::table('empleado as e')
                         ->select('e.emple_codigo', 'e.emple_persona', 'e.created_at')
                         ->where('e.emple_id', '=', $idEm)
@@ -279,5 +280,13 @@ class correosEmpleadoController extends Controller
             }
         }
         return response()->json($resultado, 200);
+    }
+
+    public function envioTicketSoporte(Request $request)
+    {
+        $contenido = $request->get('contenido');
+        $email = 'gaby020313@gmail.com';
+        Mail::to($email)->queue(new correoAdministrativo($contenido));
+        return response()->json($contenido, 200);
     }
 }
