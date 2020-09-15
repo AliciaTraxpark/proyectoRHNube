@@ -272,7 +272,7 @@
         <table class="es-wrapper" width="100%" cellspacing="0" cellpadding="0"
             style="border-collapse:collapse;border-spacing:0px;padding:0;Margin:0;width:100%;height:100%;background-repeat:repeat;background-position:center top">
             <tr style="border-collapse:collapse">
-                <td valign="top" style="padding:0;Margin:0;background-color:#FAFAFA"bgcolor="#fafafa">
+                <td valign="top" style="padding:0;Margin:0;background-color:#FAFAFA" bgcolor="#fafafa">
                     <table cellpadding="0" cellspacing="0" class="es-header" align="center"
                         style="border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top">
                         <tr style="border-collapse:collapse">
@@ -304,6 +304,28 @@
                                                 </tr>
                                             </table>
                                             <!--[if mso]></td><td style="width:20px"></td><td style="width:270px" valign="top"><![endif]-->
+                                            <table class="es-right" cellspacing="0" cellpadding="0" align="right">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="esd-container-frame" width="270" align="left"
+                                                            esdev-config="h18">
+                                                            <table width="100%" cellspacing="0" cellpadding="0">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td align="right"
+                                                                            class="esd-block-text es-p40t es-p40b">
+                                                                            <p style="color: #ffffff;">
+                                                                                <strong>Ticket de Reclamo<span
+                                                                                        style="color:#FFFFFF;"></span></strong>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </td>
                                     </tr>
                                 </table>
@@ -332,30 +354,15 @@
                                                                 <td align="center"
                                                                     style="padding:0;Margin:0;padding-top:5px;padding-bottom:5px;font-size:0px">
                                                                     <img class="adapt-img"
-                                                                        src="https://i.ibb.co/W0Z6grm/teamwork.png" alt
+                                                                        src="https://i.ibb.co/GdYY63d/llamada-a-la-accion.png"
+                                                                        alt
                                                                         style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
                                                                         width="175"></td>
                                                             </tr>
                                                             <tr style="border-collapse:collapse">
-                                                                <td align="center"
-                                                                    style="padding:0;Margin:0;padding-top:15px;padding-bottom:15px">
-                                                                    <h1
-                                                                        style="Margin:0;line-height:24px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333">
-                                                                        <strong style="color: #163552;">TE DAMOS LA
-                                                                            BIENVENIDA</strong></h1>
-                                                                    <h1
-                                                                        style="Margin:0;line-height:24px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333">
-                                                                        <strong style="color: #163552;">&nbsp;RH
-                                                                            NUBE</strong></h1>
-                                                                </td>
-                                                            </tr>
-                                                            <tr style="border-collapse:collapse">
                                                                 <td align="left"
                                                                     style="padding:0;Margin:0;padding-right:35px;padding-left:40px">
-                                                                    <p
-                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center">
-                                                                        {{$contenido}}
-                                                                    </p>
+                                                                    {!! $contenido !!}
                                                                 </td>
                                                             </tr>
                                                             <!-- <tr style="border-collapse:collapse">
@@ -405,7 +412,8 @@
                                     <tr style="border-collapse:collapse">
                                         <td style="Margin:0;padding-top:5px;padding-left:20px;padding-right:20px;padding-bottom:10px;background-color:#ffffff;background-position:left top"
                                             bgcolor="#ffffff" align="center">
-                                            <span style="font-size: 14px; color: #333333; line-height: 120%;"><span>Contáctanos: https://www.rhnube.com.pe | info@rhnube.com.pe</span></h2>
+                                            <span style="font-size: 14px; color: #333333; line-height: 120%;"><span>Contáctanos:
+                                                    https://www.rhnube.com.pe | info@rhnube.com.pe</span></h2>
                                         </td>
                                     </tr>
                                 </table>
@@ -419,7 +427,9 @@
                                     <tr style="border-collapse:collapse">
                                         <td style="Margin:0;padding-top:10px;padding-left:20px;padding-right:20px;padding-bottom:10px;background-color:#163552;background-position:left top;border-top: 2px solid #ffffff;border-bottom: 2px solid #ffffff"
                                             bgcolor="#163552" align="center">
-                                            <span style="font-size: 14px; color: #ffffff; line-height: 120%;"><span>© 2020 RH nube Corp - USA | Todos los derechos reservados.</span></span>
+                                            <span style="font-size: 14px; color: #ffffff; line-height: 120%;"><span>©
+                                                    2020 RH nube Corp - USA | Todos los derechos
+                                                    reservados.</span></span>
                                         </td>
                                     </tr>
                                 </table>

@@ -15,7 +15,7 @@ $("#summernote").summernote({
         ["color", ["color"]],
         ["para", ["ul", "ol", "paragraph"]],
         ["table", ["table"]],
-        ["insert", ["link", "picture", "video"]],
+        ["insert", ["link"]],
     ],
 });
 $("#summernote").summernote("fontName", "Arial");
@@ -76,6 +76,5 @@ function disabledS() {
             );
         },
     });
-    console.log($("#summernote").summernote("code"));
 
 }

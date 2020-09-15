@@ -18,7 +18,7 @@ class correoAdministrativo extends Mailable
      */
 
     public $contenido;
-    public function __construct(string $contenido)
+    public function __construct($contenido)
     {
         $this->contenido = $contenido;
     }

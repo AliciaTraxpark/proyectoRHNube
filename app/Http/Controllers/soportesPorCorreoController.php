@@ -19,9 +19,9 @@ class soportesPorCorreoController extends Controller
     }
     public function envioTicketSoporte(Request $request)
     {
-        $contenido = $request->get('contenido');
+        $valor = $request->get('contenido');
         $email = 'gaby020313@gmail.com';
-        Mail::to($email)->queue(new correoAdministrativo($contenido));
-        return response()->json($contenido, 200);
+        Mail::to($email)->queue(new correoAdministrativo($valor));
+        return response()->json($valor, 200);
     }
 }
