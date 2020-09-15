@@ -95,7 +95,7 @@
 }
 
 .file-loading:before {
-    content: " Loading...";
+    content: " Cargando...";
     display: inline-block;
     padding-left: 20px;
     line-height: 16px;

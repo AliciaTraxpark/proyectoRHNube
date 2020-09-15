@@ -1,40 +1,45 @@
 $(document).ready(function () {
-
-    $('#form-ver').hide();
-    $('#divFfin').hide();
-
-
-    $('#Datoscalendar1').css("display", "none");
-    $('#aplicarHorario').prop('disabled', true);
-
-    $('.flatpickr-input[readonly]').on('focus', function () {
-        $(this).blur()
-    })
-    $('.flatpickr-input[readonly]').prop('readonly', false)
-
     var table =  $("#tablaEmpleado").DataTable({
         "searching": true,
       /* "lengthChange": false,
        "scrollX": true, */
 
-       language :
-       {
-           'url':'admin/assets/libs/datatables/Spanish.json'
-       },
+       language: {
+        sProcessing: "Procesando...",
+        sLengthMenu: "Mostrar _MENU_ registros",
+        sZeroRecords: "No se encontraron resultados",
+        sEmptyTable: "...",
+        sInfo: "Mostrando registros del _START_ al _END_ ",
+        sInfoEmpty:
+            "Mostrando registros del 0 al 0 de un total de 0 registros",
+        sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+        sInfoPostFix: "",
+        sSearch: "Buscar:",
+        sUrl: "",
+        sInfoThousands: ",",
+        sLoadingRecords: "Cargando...",
+        oPaginate: {
+            sFirst: "Primero",
+            sLast: "Último",
+            sNext: ">",
+            sPrevious: "<",
+        },
+        oAria: {
+            sSortAscending:
+                ": Activar para ordenar la columna de manera ascendente",
+            sSortDescending:
+                ": Activar para ordenar la columna de manera descendente",
+        },
+        buttons: {
+            copy: "Copiar",
+            colvis: "Visibilidad",
+        },
+    },
 
        ajax: {
    type: "post",
    url: "/horario/listar",
-   data: {
-
-   },
-   statusCode: {
-
-       419: function () {
-           location.reload();
-       }
-   },
-   headers: {
+    headers: {
        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
    },
 
@@ -93,6 +98,18 @@ $(document).ready(function () {
    }, function(){
 
    });
+
+   $('#form-ver').hide();
+   $('#divFfin').hide();
+
+
+   $('#Datoscalendar1').css("display", "none");
+   $('#aplicarHorario').prop('disabled', true);
+
+   $('.flatpickr-input[readonly]').on('focus', function () {
+       $(this).blur()
+   })
+   $('.flatpickr-input[readonly]').prop('readonly', false)
 });
 
 
