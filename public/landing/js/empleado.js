@@ -627,8 +627,8 @@ $("#selectHorario_ed").change(function (e) {
             $("#selectHorario_ed").trigger("change");
             $("#horarioAsignar_ed").modal("hide");
         },
-        error: function (data) {
-        },
+        // error: function (data) {
+        // },
     });
 });
 
@@ -728,8 +728,8 @@ function registrarHorario_ed() {
                     calendarioedit.refetchEvents();
                     calendar2_ed.refetchEvents();
                 },
-                error: function (data) {
-                },
+                // error: function (data) {
+                // },
             });
 
             $("#horarioAgregar_ed").modal("hide");
@@ -1315,8 +1315,8 @@ function registrarHorario() {
                     calendar.refetchEvents();
                     calendar2.refetchEvents();
                 },
-                error: function (data) {
-                },
+                // error: function (data) {
+                // },
             });
 
             $("#horarioAgregar").modal("hide");
@@ -1407,8 +1407,8 @@ $("#selectHorario").change(function (e) {
             $("#selectHorario").trigger("change");
             $("#horarioAsignar").modal("hide");
         },
-        error: function (data) {
-        },
+        // error: function (data) {
+        // },
     });
 });
 
