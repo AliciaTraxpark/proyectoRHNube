@@ -9,7 +9,6 @@ $("#summernote").summernote({
         theme: "monokai",
     },
     toolbar: [
-        ["style", ["style"]],
         ["font", ["bold", "underline", "clear"]],
         ["fontname", ["fontname"]],
         ["color", ["color"]],
@@ -17,6 +16,13 @@ $("#summernote").summernote({
         ["table", ["table"]],
         ["insert", ["link"]],
     ],
+    popover: {
+        table: [
+            ["add", ["addRowDown", "addRowUp", "addColLeft", "addColRight"]],
+            ["delete", ["deleteRow", "deleteCol", "deleteTable"]],
+            ["custom", ["tableStyles"]],
+        ],
+    },
 });
 $("#summernote").summernote("fontName", "Arial");
 function disabledS() {
@@ -26,7 +32,7 @@ function disabledS() {
         type: "post",
         url: "/envioTicketCorreo",
         data: {
-            contenido:contenido
+            contenido: contenido,
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -76,5 +82,4 @@ function disabledS() {
             );
         },
     });
-
 }
