@@ -76,7 +76,7 @@
                 <div class="row justify-content-center pb-2">
                     <div class="inbox-rightbar">
                         <div>
-                            <form>
+                            <form action="javascript:disabledS();" onsubmit="return validarMensaje();">
                                 <div class="form-group">
                                     <label for="email" style="font-weight: bold">Para:</label>
                                     <input type="email" class="form-control" value="info@rhnube.com.pe" disabled>
@@ -93,8 +93,7 @@
 
                                 <div class="form-group pt-2">
                                     <div class="text-right">
-                                        <button type="button" class="btn" style="background-color: #163552"
-                                            onclick="javascript:disabledS();"> <span>Enviar</span> <i
+                                        <button type="submit" class="btn" style="background-color: #163552"> <span>Enviar</span> <i
                                                 class="uil uil-message ml-2"></i>
                                         </button>
                                     </div>
