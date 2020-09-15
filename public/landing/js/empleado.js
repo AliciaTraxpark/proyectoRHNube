@@ -99,14 +99,12 @@ function calendario() {
             $("#pruebaStar").val(
                 moment(arg.start).format("YYYY-MM-DD HH:mm:ss")
             );
-            console.log(arg);
+
             $("#calendarioAsignar").modal("show");
         },
         eventClick: function (info) {
             id = info.event.id;
-            console.log(info);
-            console.log(info.event.id);
-            console.log(info.event.title);
+
             var event = calendar.getEventById(id);
 
             bootbox.confirm({
@@ -226,15 +224,12 @@ function calendario_edit() {
             $("#pruebaStar_ed").val(
                 moment(arg.start).format("YYYY-MM-DD HH:mm:ss")
             );
-            console.log(arg);
+
             $("#calendarioAsignar_ed").modal("show");
         },
         eventClick: function (info) {
             id = info.event.id;
-            console.log(info);
-            console.log(info.event.id);
-            console.log(info.event.title);
-            console.log(info.event.textColor);
+
             var event = calendarioedit.getEventById(id);
             if (
                 info.event.textColor == "111111" ||
@@ -467,7 +462,7 @@ function laborable_ed() {
             calendarioedit.refetchEvents();
             calendar2_ed.refetchEvents();
 
-            console.log(msg);
+
         },
         error: function () {},
     });
@@ -513,7 +508,7 @@ function nolaborable_ed() {
             calendarioedit.refetchEvents();
             calendar2_ed.refetchEvents();
 
-            console.log(msg);
+
         },
         error: function () {},
     });
@@ -586,7 +581,7 @@ $("#selectHorario_ed").change(function (e) {
     hasta = moment(H2);
     var results = diasEntreFechas(desde, hasta);
     results.pop();
-    //console.log(results);
+
     var fechasArray = [];
     var fechastart = [];
 
@@ -601,7 +596,7 @@ $("#selectHorario_ed").change(function (e) {
             start: value,
         });
     });
-    console.log(fechasArray);
+
 
     $.ajax({
         type: "post",
@@ -689,7 +684,7 @@ function registrarHorario_ed() {
             hasta = moment(H2);
             var results = diasEntreFechas(desde, hasta);
             results.pop();
-            //console.log(results);
+
             var fechasArray = [];
             var fechastart = [];
             var objeto = [];
@@ -704,7 +699,7 @@ function registrarHorario_ed() {
                     start: value,
                 });
             });
-            console.log(fechasArray);
+
             $.ajax({
                 type: "post",
                 url: "/empleado/guardarhorarioempleado",
@@ -798,7 +793,7 @@ function laborableTem() {
             calendar.refetchEvents();
             calendar2.refetchEvents();
 
-            console.log(msg);
+
         },
         error: function () {},
     });
@@ -842,7 +837,7 @@ function diaferiadoTem() {
             calendar.refetchEvents();
             calendar2.refetchEvents();
 
-            console.log(msg);
+
         },
         error: function () {},
     });
@@ -889,7 +884,7 @@ function nolaborableTem() {
             calendar.refetchEvents();
             calendar2.refetchEvents();
 
-            console.log(msg);
+
         },
         error: function () {},
     });
@@ -941,7 +936,7 @@ function modalIncidencia() {
 
 $("#selectCalendario").change(function () {
     var idempleado = $("#idEmpleado").val();
-    console.log(idempleado);
+
     $.ajax({
         type: "post",
         url: "/empleado/vaciarbdempleado",
@@ -1118,14 +1113,12 @@ function calendario2() {
             $("#pruebaStar").val(
                 moment(arg.start).format("YYYY-MM-DD HH:mm:ss")
             );
-            console.log(arg);
+
             $("#horarioAsignar").modal("show");
         },
         eventClick: function (info) {
             id = info.event.id;
-            console.log(info);
-            console.log(info.event.id);
-            console.log(info.event.title);
+
             var event = calendar2.getEventById(id);
 
             bootbox.confirm({
@@ -1276,7 +1269,7 @@ function registrarHorario() {
             hasta = moment(H2);
             var results = diasEntreFechas(desde, hasta);
             results.pop();
-            //console.log(results);
+
             var fechasArray = [];
             var fechastart = [];
             var objeto = [];
@@ -1291,7 +1284,7 @@ function registrarHorario() {
                     start: value,
                 });
             });
-            console.log(fechasArray);
+
             $.ajax({
                 type: "post",
                 url: "/empleado/guardarhorarioTem",
@@ -1365,7 +1358,7 @@ $("#selectHorario").change(function (e) {
     hasta = moment(H2);
     var results = diasEntreFechas(desde, hasta);
     results.pop();
-    //console.log(results);
+
     var fechasArray = [];
     var fechastart = [];
 
@@ -1380,7 +1373,7 @@ $("#selectHorario").change(function (e) {
             start: value,
         });
     });
-    console.log(fechasArray);
+
 
     $.ajax({
         type: "post",
@@ -1434,7 +1427,7 @@ function calendario3() {
         /* select: function (arg) {
             $('#pruebaEnd').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
             $('#pruebaStar').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
-            console.log(arg);
+
             $('#horarioAsignar').modal('show');
         }, */
         eventClick: function (info) {},
@@ -1503,7 +1496,7 @@ function calendario4() {
         /* select: function (arg) {
             $('#pruebaEnd').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
             $('#pruebaStar').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
-            console.log(arg);
+
             $('#horarioAsignar').modal('show');
         }, */
         eventClick: function (info) {},
@@ -1631,15 +1624,12 @@ function calendario2_ed() {
             $("#pruebaStar_ed").val(
                 moment(arg.start).format("YYYY-MM-DD HH:mm:ss")
             );
-            console.log(arg);
+
             $("#horarioAsignar_ed").modal("show");
         },
         eventClick: function (info) {
             id = info.event.id;
-            console.log(info);
-            console.log(info.event.id);
-            console.log(info.event.title);
-            console.log(info.event.textColor);
+
             var event = calendarioedit.getEventById(id);
             if (
                 info.event.textColor == "111111" ||
@@ -2132,7 +2122,7 @@ function enviarCargo(accion, objCargo) {
                         ),
                     },
                     success: function (data) {
-                        console.log(data);
+
                         select += `<option value="">Seleccionar</option>`;
                         for (var i = 0; i < data.length; i++) {
                             select += `<option class="" value="${data[i].cargo_id}">${data[i].cargo_descripcion}</option>`;
@@ -3173,7 +3163,7 @@ function datosEmpresaEmpleado(method) {
     } else {
         fechaFn = "0000-00-00";
     }
-    console.log($("#idContrato").val());
+
     nuevoEmpresa = {
         codigoEmpleado: $("#codigoEmpleado").val(),
         cargo: $("#cargo").val(),
@@ -3214,7 +3204,7 @@ function enviarEmpresarialEmpleado(accion, objEmpleado) {
             },
         },
         success: function (data) {
-            console.log(data);
+
             $("#idContrato").val(data);
             $.notifyClose();
             $.notify(
@@ -3505,7 +3495,7 @@ function actualizarEmpleado(accion, objEmpleadoA) {
     var formDataA = new FormData();
     formDataA.append("file", $("#file2").prop("files")[0]);
     formDataA.append("objEmpleadoA", JSON.stringify(objEmpleadoA));
-    console.log(objEmpleadoA);
+
     $.ajax({
         type: "POST",
         url: "/empleadoA" + accion,
@@ -3542,7 +3532,7 @@ function actualizarEmpleado(accion, objEmpleadoA) {
         },
         error: function (data, errorThrown) {
             alert("Hay un error");
-            console.log(formDataA.get("objEmpleadoA"));
+
         },
     });
 }
@@ -3627,7 +3617,7 @@ function actualizarEmpleadoEmpresarial(accion, objEmpleadoA) {
         },
         error: function (data, errorThrown) {
             alert("Hay un error");
-            console.log(formDataA.get("objEmpleadoA"));
+
         },
     });
 }
@@ -3671,7 +3661,7 @@ function actualizarEmpleadoFoto(accion) {
         },
         error: function (data, errorThrown) {
             alert("Hay un error");
-            console.log(formDataA.get("objEmpleadoA"));
+
         },
     });
 }
@@ -4047,51 +4037,51 @@ function FinalizarEmpleado() {
 // *******************************************************
 $("#persona-step-1").on("keyup change", function () {
     $("#estadoP").val("true");
-    console.log($("#estadoP").val());
+
 });
 $("#swE-default-step-2").on("keyup change", function () {
     $("#estadoE").val("true");
-    console.log($("#estadoE").val());
+
 });
 $("#formContrato_v").on("keyup change", function () {
     $("#estadoCond").val("true");
-    console.log($("#estadoCond").val());
+
 });
 $("#swF-default-step-3").on("keyup change", function () {
     $("#estadoF").val("true");
-    console.log($("#estadoF").val());
+
 });
 $("#file2").on("fileselect", function () {
     $("#estadoF").val("true");
-    console.log($("#estadoF").val());
+
 });
 $("#file2").on("fileclear", function () {
     $("#estadoF").val("true");
-    console.log($("#estadoF").val());
+
 });
 $("#file2").on("filedeleted", function () {
     $("#estadoF").val("true");
-    console.log($("#estadoF").val());
+
 });
 $("#sw-default-step-1").on("keyup change", function () {
     $("#estadoPR").val("true");
-    console.log($("#estadoPR").val());
+
 });
 $("#sw-default-step-2").on("keyup change", function () {
     $("#estadoPE").val("true");
-    console.log($("#estadoPE").val());
+
 });
 $("#sw-default-step-3").on("keyup change", function () {
     $("#estadoPF").val("true");
-    console.log($("#estadoPF").val());
+
 });
 $("#sw-default-step-4").on("keyup change", function () {
     $("#estadoPC").val("true");
-    console.log($("#estadoPC").val());
+
 });
 $("#sw-default-step-5").on("keyup change", function () {
     $("#estadoPH").val("true");
-    console.log($("#estadoPH").val());
+   
 });
 //************************Editar en los modal de agregar */
 //*******AREA***/
@@ -4693,7 +4683,7 @@ function diaferiadoRe_ed() {
             calendarioedit.refetchEvents();
             calendar2_ed.refetchEvents();
 
-            console.log(msg);
+
         },
         error: function () {},
     });
@@ -4972,7 +4962,7 @@ $("#selectCalendario_edit3").change(function () {
                 var idempleado = $("#idempleado").val();
                 var idcalendario = $("#selectCalendario_edit3").val();
                 $("#idselect3").val(idcalendario);
-                console.log(idempleado);
+
                 $.ajax({
                     type: "post",
                     url: "/empleado/vaciarbdempleado",
