@@ -360,6 +360,14 @@
                                                                         width="175"></td>
                                                             </tr>
                                                             <tr style="border-collapse:collapse">
+                                                                <td align="center"
+                                                                    style="padding:0;Margin:0;padding-top:15px;padding-bottom:15px">
+                                                                    <h1
+                                                                        style="Margin:0;line-height:24px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333">
+                                                                        <strong style="color: #163552;">{{$asunto}}</strong></h1>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="border-collapse:collapse">
                                                                 <td align="left"
                                                                     style="padding:0;Margin:0;padding-right:35px;padding-left:40px">
                                                                     {!! $contenido !!}

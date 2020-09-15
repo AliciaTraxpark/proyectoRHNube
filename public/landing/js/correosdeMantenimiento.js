@@ -28,22 +28,24 @@ $("#summernote").summernote({
     callbacks: {
         onChange: function (contents) {
             obteniendoValor = $("#summernote").summernote("isEmpty");
-            if(obteniendoValor === false){
-                $('#mostrarBoton').show();
-            }else{
-                $('#mostrarBoton').hide();
+            if (obteniendoValor === false) {
+                $("#mostrarBoton").show();
+            } else {
+                $("#mostrarBoton").hide();
             }
         },
     },
 });
 function disabledS() {
     var contenido = $("#summernote").summernote("code");
+    var asunto = $("#asunto").val();
     $.ajax({
         async: false,
         type: "post",
         url: "/envioTicketCorreo",
         data: {
             contenido: contenido,
+            asunto: asunto,
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),

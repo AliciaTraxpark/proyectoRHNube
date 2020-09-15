@@ -83,7 +83,7 @@
 
                                 <div class="form-group">
                                     <label for="text" style="font-weight: bold">Asunto:</label>
-                                    <input type="text" class="form-control" maxlength="50" required>
+                                    <input type="text" class="form-control" maxlength="50" id="asunto" required>
                                 </div>
                                 <div class="form-group">
                                     <div class="summernote" id="summernote">
