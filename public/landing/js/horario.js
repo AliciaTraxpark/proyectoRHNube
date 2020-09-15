@@ -3,7 +3,8 @@ $(document).ready(function () {
         "searching": true,
       /* "lengthChange": false,
        "scrollX": true, */
-
+       "processing": true,
+      
        language: {
         sProcessing: "Procesando...",
         sLengthMenu: "Mostrar _MENU_ registros",
