@@ -6,8 +6,7 @@
 <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')}}" rel="stylesheet" />
-<link href="{{asset('admin/assets/libs/summernote/summernote.min.css')}}" rel="stylesheet" />
-<link href="{{asset('admin/assets/libs/summernote/monokai.css')}}" rel="stylesheet" />
+<link href="{{asset('admin/assets/libs/summernote/summernote-bs4.min.css')}}" rel="stylesheet" />
 <link href="{{asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -76,7 +75,7 @@
                 <div class="row justify-content-center pb-2">
                     <div class="inbox-rightbar">
                         <div>
-                            <form action="javascript:disabledS();" onsubmit="return validarMensaje();">
+                            <form action="javascript:disabledS();">
                                 <div class="form-group">
                                     <label for="email" style="font-weight: bold">Para:</label>
                                     <input type="email" class="form-control" value="info@rhnube.com.pe" disabled>
@@ -91,7 +90,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group pt-2">
+                                <div class="form-group pt-2" style="display: none" id="mostrarBoton">
                                     <div class="text-right">
                                         <button type="submit" class="btn" style="background-color: #163552"> <span>Enviar</span> <i
                                                 class="uil uil-message ml-2"></i>
@@ -112,7 +111,7 @@
 @section('script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
 <!--Summernote js-->
-<script src="{{URL::asset('admin/assets/libs/summernote/summernote.min.js')}}"></script>
+<script src="{{URL::asset('admin/assets/libs/summernote/summernote-bs4.min.js')}}"></script>
 <script src="{{URL::asset('admin/assets/libs/summernote/langsummernote-es-ES.js')}}"></script>
 <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')}}"></script>
 <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js')}}"></script>

@@ -1,3 +1,4 @@
+var estado = true;
 $("#summernote").summernote({
     lang: "es-ES",
     height: 230, // set editor height
@@ -5,12 +6,12 @@ $("#summernote").summernote({
     maxHeight: null, // set maximum height of editor
     focus: true, // set focus to editable area after initializing summernote
     disableDragAndDrop: false,
-    codemirror: {
-        // codemirror options
-        theme: "monokai",
-    },
+    fontNamesIgnoreCheck: ["Arial"],
+    codeviewFilter: false,
+    codeviewIframeFilter: true,
     toolbar: [
-        ["font", ["bold", "underline", "clear"]],
+        ["font", ["bold", "italic", "underline", "strikethrough", "clear"]],
+        ["fontsize", ["fontsize"]],
         ["fontname", ["fontname"]],
         ["color", ["color"]],
         ["para", ["ul", "ol", "paragraph"]],
@@ -24,35 +25,17 @@ $("#summernote").summernote({
             ["custom", ["tableStyles"]],
         ],
     },
-});
-$('#summernote').summernote('fontName', 'Arial');
-function validarMensaje() {
-    var contenido = $("#summernote").summernote("code");
-    console.log($(contenido).text());
-    if ($("#summernote").summernote("isEmpty") || $(contenido).text() === null) {
-        $.notifyClose();
-        $.notify(
-            {
-                message: "\nFalta redactar mensaje.",
-                icon: "admin/images/warning.svg",
-            },
-            {
-                icon_type: "image",
-                newest_on_top: true,
-                delay: 5000,
-                template:
-                    '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
-                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                    '<span data-notify="title">{1}</span> ' +
-                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
-                    "</div>",
-                spacing: 35,
+    callbacks: {
+        onChange: function (contents) {
+            obteniendoValor = $("#summernote").summernote("isEmpty");
+            if(obteniendoValor === false){
+                $('#mostrarBoton').show();
+            }else{
+                $('#mostrarBoton').hide();
             }
-        );
-        return false;
-    }
-}
+        },
+    },
+});
 function disabledS() {
     var contenido = $("#summernote").summernote("code");
     $.ajax({
