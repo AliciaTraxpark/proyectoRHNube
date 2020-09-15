@@ -54,6 +54,7 @@ function disabledS() {
             console.log(data);
             $("#summernote").summernote("reset");
             $("#summernote").summernote("focus");
+            $("#asunto").val("");
             $("#mostrarBoton").hide();
             $.notifyClose();
             $.notify(
