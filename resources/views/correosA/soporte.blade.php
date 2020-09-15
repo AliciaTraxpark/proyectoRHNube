@@ -67,7 +67,9 @@
             <div class="card-header"
                 style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1">
                 <div class="row pl-2">
-                    <span style="color: #6c757d;">Enviar Ticket de Soporte</span>
+                    <span style="color: #163552;font-weight: bold;font-size: 14px"><img
+                            src="{{asset('landing/images/email (1).svg')}}" height="20" class="mr-1">Enviar Ticket de
+                        Soporte</span>
                 </div>
             </div>
 
@@ -92,8 +94,8 @@
 
                                 <div class="form-group pt-2" style="display: none" id="mostrarBoton">
                                     <div class="text-right">
-                                        <button type="submit" class="btn" style="background-color: #163552"> <span>Enviar</span> <i
-                                                class="uil uil-message ml-2"></i>
+                                        <button type="submit" class="btn" style="background-color: #163552">
+                                            <span>Enviar</span> <i class="uil uil-message ml-2"></i>
                                         </button>
                                     </div>
                                 </div>

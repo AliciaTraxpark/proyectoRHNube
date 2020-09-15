@@ -25,40 +25,6 @@
     .form-control:disabled {
         background-color: #fcfcfc !important;
     }
-
-    .combodate {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .day {
-        max-width: 32%;
-    }
-
-    .month {
-        max-width: 38%;
-    }
-
-    .year {
-        max-width: 42%;
-    }
-
-    .file {
-        visibility: hidden;
-        position: absolute;
-    }
-
-    .rowAlert {
-        background-color: #ffffff;
-        box-shadow: 3px 3px 20px rgba(48, 48, 48, 0.5);
-    }
-
-
-    body>div.bootbox.modal.fade.bootbox-alert.show>div>div>div.modal-footer>button {
-        background-color: #163552;
-        border-color: #163552;
-        zoom: 85%;
-    }
 </style>
 <!-- compose -->
 <div class="row justify-content-center">
@@ -67,7 +33,7 @@
             <div class="card-header"
                 style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1">
                 <div class="row pl-2">
-                    <span style="color: #6c757d;">Enviar Sugerencia</span>
+                    <span style="color: #163552;font-weight: bold;font-size: 14px"><img src="{{asset('landing/images/email (1).svg')}}" height="20" class="mr-1">Enviar Sugerencia</span>
                 </div>
             </div>
 

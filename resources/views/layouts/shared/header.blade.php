@@ -132,11 +132,11 @@ use App\persona;
                     </a>
                     @endif
                     <a href="/soporte" class="dropdown-item notify-item">
-                        <i data-feather="edit" class="icon-dual icon-xs mr-2"></i>
+                        <i data-feather="mail" class="icon-dual icon-xs mr-2"></i>
                         <span>Ticket de Soporte</span>
                     </a>
                     <a href="/sugerencia" class="dropdown-item notify-item">
-                        <i data-feather="edit" class="icon-dual icon-xs mr-2"></i>
+                        <i data-feather="mail" class="icon-dual icon-xs mr-2"></i>
                         <span>Enviar Sugerencia</span>
                     </a>
                     <!-- item-->
