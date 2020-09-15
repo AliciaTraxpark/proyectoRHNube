@@ -135,6 +135,10 @@ use App\persona;
                         <i data-feather="edit" class="icon-dual icon-xs mr-2"></i>
                         <span>Ticket de Soporte</span>
                     </a>
+                    <a href="/sugerencia" class="dropdown-item notify-item">
+                        <i data-feather="edit" class="icon-dual icon-xs mr-2"></i>
+                        <span>Enviar Sugerencia</span>
+                    </a>
                     <!-- item-->
                     <a href="{{ route('logout') }}" class="dropdown-item
                         notify-item">
