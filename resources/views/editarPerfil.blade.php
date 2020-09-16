@@ -219,9 +219,8 @@
                                 </a>
                             </div>
                             <br>
-                            <div class="row" id="rowAlert">
-                                <div class="col-sm-4"></div>
-                                <div class="col-sm-4">
+                            <div class="row justify-content-center" id="rowAlert">
+                                <div class="col-sm-8">
                                     <div class="alert rowAlert" role="alert">
                                         <h6>¿Desea guardar foto
                                             en Perfil?</h6>
