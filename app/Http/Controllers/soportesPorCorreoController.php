@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\correoAdministrativo;
 use App\Mail\sugerenciaMail;
 use App\organizacion;
+use App\persona;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +33,8 @@ class soportesPorCorreoController extends Controller
         $organizacion = organizacion::find($idOrganizacion);
         $idEmpleado = Auth::user()->id;
         $usuario = User::find($idEmpleado);
-        Mail::to($email)->queue(new correoAdministrativo($valor, $asunto,$organizacion,$usuario));
+        $persona = persona::find($usuario->perso_id);
+        Mail::to($email)->queue(new correoAdministrativo($valor, $asunto,$organizacion,$persona,$usuario));
         return response()->json($valor, 200);
     }
 
