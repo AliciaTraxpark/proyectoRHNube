@@ -36,15 +36,15 @@
     }
 
     .day {
-        max-width: 32%;
+        max-width: 30%;
     }
 
     .month {
-        max-width: 38%;
+        max-width: 35%;
     }
 
     .year {
-        max-width: 42%;
+        max-width: 35%;
     }
 
     .file {
@@ -89,7 +89,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" onclick="javascript:limpiartextSexo()">Cerrar</button>
+                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                    onclick="javascript:limpiartextSexo()">Cerrar</button>
                 <button type="button" class="btn btn-sm" style="background:
                     #163552;color: #ecebeb" class="btn
                     btn-sm" onclick="javascript:personalizadoGenero()" id="guardarPersonalizarSexo">Guardar</button>
@@ -184,57 +185,131 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div class="row">
-    <div class="col-lg-12">
+<div class="row pt-5">
+    <div class="col-xl-12">
         <div class="card">
-            <div class="card-body">
-                <div class="text-center mt-3">
-                    <input style="display: none;" name="nameFoto" id="nameFoto">
-                    <img src="https://placehold.it/80x80" id="preview" class="avatar-xl rounded-circle img-thumbnail">
-                    <input type="file" name="img[]" class="file" accept="image/*">
-                    <div class="mr-6 ml-6 mt-1">
-                        &nbsp;
-                        <a class="browse" style="cursor: pointer" data-toggle="tooltip" data-placement="right"
-                            title="Seleccionar una imagen" data-original-title="">
-                            <img src="{{asset('landing/images/photograph.svg')}}" height="20">
-                        </a>
+            <div class="card-header" style="border-top-right-radius: 5px; border-top-left-radius: 5px;">
+                <div class="row">
+                    <div class="col-xl-6">
+                        <h6 class="header-title mt-0 mb-0" style="color: #4B4B5A;font-size: 14px">
+                            <img src="{{asset('landing/images/iconfinder-icon (1).svg')}}" height="20" class="mr-2">
+                            DATOS PERSONALES
+                        </h6>
                     </div>
-                    <br>
-                    <div class="row" id="rowAlert">
-                        <div class="col-sm-4"></div>
-                        <div class="col-sm-4">
-                            <div class="alert rowAlert" role="alert">
-                                <h6>¿Desea guardar foto
-                                    en Perfil?</h6>
-                                <button type="button" class="btn btn-light
+                    <div class="col-xl-6 text-right">
+                        <button type="button" id="editarDatosP" class="btn btn-sm" style="background-color: #163552">
+                            <span>Editar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body border">
+                <div class="row">
+                    <div class="col-xl-4">
+                        <div class="text-center">
+                            <input style="display: none;" name="nameFoto" id="nameFoto">
+                            <img src="https://placehold.it/80x80" id="preview"
+                                class="avatar-xl rounded-circle img-thumbnail">
+                            <input type="file" name="img[]" class="file" accept="image/*">
+                            <div class="mr-6 ml-6 mt-1">
+                                &nbsp;
+                                <a class="browse" style="cursor: pointer" data-toggle="tooltip" data-placement="right"
+                                    title="Cambiar foto de Perfil" data-original-title="">
+                                    <img src="{{asset('landing/images/photograph.svg')}}" height="20">
+                                </a>
+                            </div>
+                            <br>
+                            <div class="row" id="rowAlert">
+                                <div class="col-sm-4"></div>
+                                <div class="col-sm-4">
+                                    <div class="alert rowAlert" role="alert">
+                                        <h6>¿Desea guardar foto
+                                            en Perfil?</h6>
+                                        <button type="button" class="btn btn-light
                                     btn-sm"
-                                    onclick="$('#rowAlert').hide();javascript:actualizarDatos();">Cancelar</button>
-                                <button id="guardarFoto" style="background-color: #163552;" class="btn
+                                            onclick="$('#rowAlert').hide();javascript:actualizarDatos();">Cancelar</button>
+                                        <button id="guardarFoto" style="background-color: #163552;" class="btn
                                     btn-sm">Aceptar</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <button class="btn  btn-sm" style="background-color: #163552"
+                                onclick="cambiarCont()">Cambiar
+                                contraseña</button>
+                        </div>
+                    </div>
+                    <div class="col-xl-8" id="disabledDatosP">
+                        <div class="row">
+                            <input style="display: none;" name="id" id="id">
+                            <div class="col-xl-6">
+                                <div class="form-group pr-5 pl-5">
+                                    <label for="" class="mb-0">Nombre</label>
+                                    <input type="text" class="form-control text-center" id="nombre" required>
+                                </div>
+                                <div class="form-group pr-5 pl-5">
+                                    <label for="" class="mb-0">Apellido Paterno</label>
+                                    <input type="text" id="apPaternoP" class="form-control text-center" required>
+                                </div>
+                                <div class="form-group pr-5 pl-5">
+                                    <label for="" class="mb-0">Apellido Materno</label>
+                                    <input type="text" class="form-control text-center" id="apMaternoP" required>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="form-group pr-5 pl-5">
+                                    <label for="" class="mb-0">Fecha Nacimiento</label>
+                                    <input type="text" id="fechaNacimiento" data-custom-class="form-control col-12"
+                                        data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date" required>
+                                </div>
+                                <div class="form-group pr-5 pl-5">
+                                    <label for="" class="mb-0">Dirección</label>
+                                    <input type="text" class="form-control text-center" type="text" id="direccion"
+                                        required>
+                                </div>
+                                <div class="form-group pr-5 pl-5">
+                                    <label for="" class="mb-0">Género
+                                        &nbsp;&nbsp;&nbsp;
+                                        <a data-toggle="modal" id="generoPersonalizado">
+                                            <img style="cursor: pointer"
+                                                src="{{asset('landing/images/plus.svg')}}" height="15">
+                                        </a>
+                                    </label>
+                                    <select class="form-control text-center" name="genero" id="genero" required>
+                                        <option class="" value="Mujer">Mujer</option>
+                                        <option class="" value="Hombre">Hombre</option>
+                                        <option class="" value="Personalizado">Personalizado</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-
-                    </div>
-                    <h5 id="h5Nombres" class="mt-2 mb-0" style="text-transform:
-                        capitalize;color:
-                        #4B4B5A;font-weight: bold">
-                        {{$persona->perso_nombre}}
-                        {{$persona->perso_apPaterno}} {{$persona->perso_apMaterno}}</h5>
-                    <h6 id="h6Empresa" class="text-muted font-weight-normal mt-2
-                        mb-0">
-                        {{$organizacion->organi_razonSocial}}
-                    </h6>
-                    <h6 class="text-muted font-weight-normal mt-1 mb-4" style="text-transform: capitalize;">
-                        {{$organizacion->organi_ruc}}</h6>
-                    <button class="btn  btn-sm" style="background-color: #163552" onclick="cambiarCont()">Cambiar
-                        contraseña</button>
+                        <br>
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="form-group mb-0
+                            justify-content-end row">
+                                    <div class="col-12 text-right">
+                                        <button type="button" class="btn btn-light
+                                    btn-sm" onclick="javascript:limpiarDatosPersonales();">Cancelar
+                                        </button>
+                                        &nbsp;&nbsp;
+                                        <button type="button" id="actualizarDatosPersonales" class="btn
+                                    btn-light btn-sm" style="background-color:
+                                    #163552;color:
+                                    #ffffff;">Actualizar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- end col -->
                 </div>
             </div>
         </div>
     </div>
 </div>
 <!-- end row -->
-<div class="row">
+{{-- <div class="row">
     <div class="col-xl-12">
         <div class="card">
             <div class="card-body" id="disabledDatosP">
@@ -244,93 +319,92 @@
                     <a id="editarDatosP" data-toggle="tooltip" data-placement="right" title="Editar Datos"
                         data-original-title="" style="cursor: pointer;">
                         <img src="{{asset('admin/images/edit.svg')}}" height="15">
-                    </a>
-                </h4>
-                <div class="row">
-                    <input style="display: none;" name="id" id="id">
-                    <div class="col-xl-4">
-                        <div class="form-group row mb-3">
-                            <label for="" class="col-5 col-form-label">Nombre</label>
-                            <div class="col-7">
-                                <input type="text" class="form-control
+</a>
+</h4>
+<div class="row">
+    <input style="display: none;" name="id" id="id">
+    <div class="col-xl-4">
+        <div class="form-group row mb-3">
+            <label for="" class="col-5 col-form-label">Nombre</label>
+            <div class="col-7">
+                <input type="text" class="form-control
                                     text-center" id="nombre" required>
-                            </div>
-                        </div>
-                        <div class="form-group row mb-3 mr-1">
-                            <label for="" class="col-5 col-form-label">Fecha
-                                Nacimiento</label>
-                            <div class="col-7">
-                                <input type="text" id="fechaNacimiento" data-custom-class="form-control"
-                                    data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group row mb-3">
-                            <label for="" class="col-5 col-form-label">Apellido
-                                paterno</label>
-                            <div class="col-7">
-                                <input type="text" id="apPaternoP" class="form-control text-center" required>
-                            </div>
-                        </div>
-                        <div class="form-group row mb-3">
-                            <label for="" class="col-5 col-form-label">Dirección</label>
-                            <div class="col-7">
-                                <input type="text" class="form-control
+            </div>
+        </div>
+        <div class="form-group row mb-3 mr-1">
+            <label for="" class="col-5 col-form-label">Fecha
+                Nacimiento</label>
+            <div class="col-7">
+                <input type="text" id="fechaNacimiento" data-custom-class="form-control" data-format="YYYY-MM-DD"
+                    data-template="D MMM YYYY" name="date" required>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4">
+        <div class="form-group row mb-3">
+            <label for="" class="col-5 col-form-label">Apellido
+                paterno</label>
+            <div class="col-7">
+                <input type="text" id="apPaternoP" class="form-control text-center" required>
+            </div>
+        </div>
+        <div class="form-group row mb-3">
+            <label for="" class="col-5 col-form-label">Dirección</label>
+            <div class="col-7">
+                <input type="text" class="form-control
                                     text-center" type="text" id="direccion" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group row mb-3">
-                            <label for="" class="col-5 col-form-label">Apellido
-                                Materno</label>
-                            <div class="col-7">
-                                <input type="text" class="form-control
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4">
+        <div class="form-group row mb-3">
+            <label for="" class="col-5 col-form-label">Apellido
+                Materno</label>
+            <div class="col-7">
+                <input type="text" class="form-control
                                     text-center" id="apMaternoP" required>
-                            </div>
-                        </div>
-                        <div class="form-group row mb-3">
-                            <label for="" class="col-5 col-form-label">Sexo</label>
-                            <div class="col-5">
-                                <select class="form-control text-center" name="genero" id="genero" required>
-                                    <option class="" value="Mujer">Mujer</option>
-                                    <option class="" value="Hombre">Hombre</option>
-                                    <option class="" value="Personalizado">Personalizado</option>
-                                </select>
-                            </div>
-                            <div class="col-2 text-right">
-                                <a data-toggle="modal" id="generoPersonalizado">
-                                    <img class="mt-2" style="cursor: pointer" src="{{asset('landing/images/plus.svg')}}"
-                                        height="15">
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="form-group mb-0
+            </div>
+        </div>
+        <div class="form-group row mb-3">
+            <label for="" class="col-5 col-form-label">Sexo</label>
+            <div class="col-5">
+                <select class="form-control text-center" name="genero" id="genero" required>
+                    <option class="" value="Mujer">Mujer</option>
+                    <option class="" value="Hombre">Hombre</option>
+                    <option class="" value="Personalizado">Personalizado</option>
+                </select>
+            </div>
+            <div class="col-2 text-right">
+                <a data-toggle="modal" id="generoPersonalizado">
+                    <img class="mt-2" style="cursor: pointer" src="{{asset('landing/images/plus.svg')}}" height="15">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-xl-12">
+        <div class="form-group mb-0
                             justify-content-end row">
-                            <div class="col-12 text-right">
-                                <button type="button" class="btn btn-light
+            <div class="col-12 text-right">
+                <button type="button" class="btn btn-light
                                     btn-sm" onclick="javascript:limpiarDatosPersonales();">Cancelar
-                                </button>
-                                &nbsp;&nbsp;
-                                <button type="button" id="actualizarDatosPersonales" class="btn
+                </button>
+                &nbsp;&nbsp;
+                <button type="button" id="actualizarDatosPersonales" class="btn
                                     btn-light btn-sm" style="background-color:
                                     #163552;color:
                                     #ffffff;">Actualizar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> <!-- end card-body -->
-        </div> <!-- end card -->
-    </div> <!-- end col -->
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
+</div> <!-- end card-body -->
+</div> <!-- end card -->
+</div> <!-- end col -->
+</div> --}}
 <!-- end row -->
 <div class="row">
     <div class="col-xl-12">
