@@ -137,7 +137,7 @@ use App\persona;
                     </a>
                     <a href="/sugerencia" class="dropdown-item notify-item">
                         <i data-feather="mail" class="icon-dual icon-xs mr-2"></i>
-                        <span>Enviar Sugerencia</span>
+                        <span>Ticket de Sugerencia</span>
                     </a>
                     <!-- item-->
                     <a href="{{ route('logout') }}" class="dropdown-item
