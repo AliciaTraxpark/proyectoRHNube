@@ -88,7 +88,7 @@
                 <div class="row">
                     <div class="col-md-12">
                     </div>
-                    <div class="col-md-6"> <label><br> </label>
+                    <div class="col-md-4"> <label><br> </label>
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label">Fecha:</label>
                             <div class="input-group col-md-8"
@@ -110,6 +110,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-2"><br></div>
                     <div class="col-md-6"> <label><br> </label>
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label">Empleado:</label>

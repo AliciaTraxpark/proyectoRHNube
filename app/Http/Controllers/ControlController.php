@@ -189,8 +189,7 @@ class ControlController extends Controller
         if(DATEDIFF('" . $fechaF[1] . "',DATE(h.start)) >= 0,DATEDIFF('" . $fechaF[1] . "',DATE(h.start)), DAY(DATE(h.start)) )) as dia";
         $horasTrabajadas = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-            ->leftJoin('control as c', 'c.idEmpleado', '=', 'e.emple_id')
-            ->leftJoin('captura as cp', 'cp.idCaptura', '=', 'c.idCaptura')
+            ->leftJoin('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
             ->leftJoin('promedio_captura as promedio', 'promedio.idCaptura', '=', 'cp.idCaptura')
             ->leftJoin('horario_dias as h', 'h.id', '=', 'promedio.idHorario')
             ->select(
@@ -290,9 +289,8 @@ class ControlController extends Controller
         $idempleado = $request->get('value');
         $fecha = $request->get('fecha');
         $control = DB::table('empleado as e')
-            ->join('control as c', 'c.idEmpleado', '=', 'e.emple_id')
-            ->join('actividad as a', 'a.Activi_id', '=', 'c.Actividad_Activi_id')
-            ->join('captura as cp', 'cp.idCaptura', '=', 'c.idCaptura')
+            ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+            ->join('actividad as a', 'a.Activi_id', '=', 'cp.idActividad')
             ->join('promedio_captura as pc', 'pc.idCaptura', '=', 'cp.idCaptura')
             ->leftJoin('horario_dias as hd', 'hd.id', '=', 'pc.idHorario')
             ->select(
