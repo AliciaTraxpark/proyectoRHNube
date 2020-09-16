@@ -79,7 +79,7 @@
                             <form action="javascript:disabledS();">
                                 <div class="form-group">
                                     <label for="email" style="font-weight: bold">Para:</label>
-                                    <input type="email" class="form-control" value="info@rhnube.com.pe" disabled>
+                                    <input type="email" class="form-control" value="{{$correo}}" disabled>
                                 </div>
 
                                 <div class="form-group">
