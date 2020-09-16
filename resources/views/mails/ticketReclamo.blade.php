@@ -405,7 +405,7 @@
                                                             </tr>
                                                             <tr style="border-collapse:collapse">
                                                                 <td align="left"
-                                                                    style="padding:0;Margin:0;padding-right:35px;padding-left:40px;padding-top:20px">
+                                                                    style="padding:0;Margin:0;padding-right:35px;padding-left:40px;padding-top:20px;padding-bottom:20px">
                                                                     {!! $contenido !!}
                                                                 </td>
                                                             </tr>
