@@ -192,7 +192,7 @@
                 <div class="row">
                     <div class="col-xl-6">
                         <h6 class="header-title mt-0 mb-0" style="color: #4B4B5A;font-size: 14px">
-                            <img src="{{asset('landing/images/iconfinder-icon (1).svg')}}" height="20" class="mr-2">
+                            <img src="{{asset('landing/images/usuario.svg')}}" height="24" class="mr-2">
                             DATOS PERSONALES
                         </h6>
                     </div>
@@ -270,8 +270,8 @@
                                     <label for="" class="mb-0">Género
                                         &nbsp;&nbsp;&nbsp;
                                         <a data-toggle="modal" id="generoPersonalizado">
-                                            <img style="cursor: pointer"
-                                                src="{{asset('landing/images/plus.svg')}}" height="15">
+                                            <img style="cursor: pointer" src="{{asset('landing/images/plus.svg')}}"
+                                                height="15">
                                         </a>
                                     </label>
                                     <select class="form-control text-center" name="genero" id="genero" required>
@@ -307,206 +307,89 @@
         </div>
     </div>
 </div>
-<!-- end row -->
-{{-- <div class="row">
+<div class="row pt-5">
     <div class="col-xl-12">
         <div class="card">
-            <div class="card-body" id="disabledDatosP">
-                <h4 class="mb-3 header-title mt-0" style="color: #4B4B5A">DATOS
-                    PERSONALES
-                    &nbsp;&nbsp;&nbsp;
-                    <a id="editarDatosP" data-toggle="tooltip" data-placement="right" title="Editar Datos"
-                        data-original-title="" style="cursor: pointer;">
-                        <img src="{{asset('admin/images/edit.svg')}}" height="15">
-</a>
-</h4>
-<div class="row">
-    <input style="display: none;" name="id" id="id">
-    <div class="col-xl-4">
-        <div class="form-group row mb-3">
-            <label for="" class="col-5 col-form-label">Nombre</label>
-            <div class="col-7">
-                <input type="text" class="form-control
-                                    text-center" id="nombre" required>
+            <div class="card-header" style="border-top-right-radius: 5px; border-top-left-radius: 5px;">
+                <div class="row">
+                    <div class="col-xl-6">
+                        <h6 class="header-title mt-0 mb-0" style="color: #4B4B5A;font-size: 14px">
+                            <img src="{{asset('landing/images/rompecabezas.svg')}}" height="24" class="mr-2">
+                            DATOS DE LA EMPRESA
+                        </h6>
+                    </div>
+                    <div class="col-xl-6 text-right">
+                        <button type="button" id="editarDatosE" class="btn btn-sm" style="background-color: #163552">
+                            <span>Editar</span>
+                        </button>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="form-group row mb-3 mr-1">
-            <label for="" class="col-5 col-form-label">Fecha
-                Nacimiento</label>
-            <div class="col-7">
-                <input type="text" id="fechaNacimiento" data-custom-class="form-control" data-format="YYYY-MM-DD"
-                    data-template="D MMM YYYY" name="date" required>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-4">
-        <div class="form-group row mb-3">
-            <label for="" class="col-5 col-form-label">Apellido
-                paterno</label>
-            <div class="col-7">
-                <input type="text" id="apPaternoP" class="form-control text-center" required>
-            </div>
-        </div>
-        <div class="form-group row mb-3">
-            <label for="" class="col-5 col-form-label">Dirección</label>
-            <div class="col-7">
-                <input type="text" class="form-control
-                                    text-center" type="text" id="direccion" required>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-4">
-        <div class="form-group row mb-3">
-            <label for="" class="col-5 col-form-label">Apellido
-                Materno</label>
-            <div class="col-7">
-                <input type="text" class="form-control
-                                    text-center" id="apMaternoP" required>
-            </div>
-        </div>
-        <div class="form-group row mb-3">
-            <label for="" class="col-5 col-form-label">Sexo</label>
-            <div class="col-5">
-                <select class="form-control text-center" name="genero" id="genero" required>
-                    <option class="" value="Mujer">Mujer</option>
-                    <option class="" value="Hombre">Hombre</option>
-                    <option class="" value="Personalizado">Personalizado</option>
-                </select>
-            </div>
-            <div class="col-2 text-right">
-                <a data-toggle="modal" id="generoPersonalizado">
-                    <img class="mt-2" style="cursor: pointer" src="{{asset('landing/images/plus.svg')}}" height="15">
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-<br>
-<div class="row">
-    <div class="col-xl-12">
-        <div class="form-group mb-0
-                            justify-content-end row">
-            <div class="col-12 text-right">
-                <button type="button" class="btn btn-light
-                                    btn-sm" onclick="javascript:limpiarDatosPersonales();">Cancelar
-                </button>
-                &nbsp;&nbsp;
-                <button type="button" id="actualizarDatosPersonales" class="btn
-                                    btn-light btn-sm" style="background-color:
-                                    #163552;color:
-                                    #ffffff;">Actualizar
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-</div> <!-- end card-body -->
-</div> <!-- end card -->
-</div> <!-- end col -->
-</div> --}}
-<!-- end row -->
-<div class="row">
-    <div class="col-xl-12">
-        <div class="card">
-            <div class="card-body" id="disabledDatosE">
-                <h4 class="mb-3 header-title mt-0" style="color: #4B4B5A">DATOS
-                    DE LA EMPRESA
-                    &nbsp;&nbsp;&nbsp;
-                    <a id="editarDatosE" data-toggle="tooltip" data-placement="right" title="Editar Datos"
-                        data-original-title="" style="cursor: pointer;">
-                        <img src="{{asset('admin/images/edit.svg')}}" height="15">
-                    </a>
-                </h4>
+            <div class="card-body border" id="disabledDatosE">
                 <div class="row">
                     <div class="col-xl-4">
                         <input style="display: none;" name="idE" id="idE">
-                        <div class="form-group row mb-3">
-                            <label for="" class="col-5 col-form-label">RUC</label>
-                            <div class="col-7">
-                                <input type="text" class="form-control
-                                    text-center" id="ruc" required>
-                            </div>
+                        <div class="form-group pr-5 pl-5">
+                            <label for="" class="mb-0">RUC</label>
+                            <input type="text" class="form-control text-center" id="ruc" required>
                         </div>
-                        <div class="form-group row mb-3">
-                            <label for="" class="col-5 col-form-label">Número
-                                de Empleados</label>
-                            <div class="col-7">
-                                <input type="number" class="form-control
-                                    text-center" id="numE" disabled>
-                            </div>
+                        <div class="form-group pr-5 pl-5">
+                            <label for="" class="mb-0">Número de Empleados</label>
+                            <input type="number" class="form-control text-center" id="numE" disabled>
+
                         </div>
-                        <div class="form-group row mb-3">
-                            <label for="" class="col-5 col-form-label">Departamento</label>
-                            <div class="col-7">
-                                <select class="form-control text-center" name="depE" id="depE" required>
-                                    @foreach ($departamentoOrgani as
-                                    $departamentos)
-                                    <option class="" value="{{$departamentos->id}}">
-                                        {{$departamentos->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                        <div class="form-group pr-5 pl-5">
+                            <label for="" class="mb-0">Departamento</label>
+                            <select class="form-control text-center" name="depE" id="depE" required>
+                                @foreach ($departamentoOrgani as
+                                $departamentos)
+                                <option class="" value="{{$departamentos->id}}">
+                                    {{$departamentos->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="col-xl-4">
-                        <div class="form-group row mb-3">
-                            <label for="" class="col-5 col-form-label">Razón
-                                Social</label>
-                            <div class="col-7">
-                                <input type="text" class="form-control
-                                    text-center" id="razonS" required>
-                            </div>
+                        <div class="form-group pr-5 pl-5">
+                            <label for="" class="mb-0">Razón Social</label>
+                            <input type="text" class="form-control text-center" id="razonS" required>
                         </div>
-                        <div class="form-group row mb-3">
-                            <label for="" class="col-5 col-form-label">Página
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                Web</label>
-                            <div class="col-7">
-                                <input type="text" class="form-control
-                                    text-center" type="text" id="pagWeb">
-                            </div>
+                        <div class="form-group pr-5 pl-5">
+                            <label for="" class="mb-0">Página Web</label>
+                            <input type="text" class="form-control text-center" type="text" id="pagWeb">
                         </div>
-                        <div class="form-group row mb-3">
-                            <label for="" class="col-5 col-form-label">Provincia</label>
-                            <div class="col-7">
-                                <select class="form-control text-center" name="provE" id="provE" required>
-                                </select>
-                            </div>
+                        <div class="form-group pr-5 pl-5">
+                            <label for="" class="mb-0">Provincia</label>
+                            <select class="form-control text-center" name="provE" id="provE" required>
+                            </select>
                         </div>
                     </div>
                     <div class="col-xl-4">
-                        <div class="form-group row mb-3">
-                            <label for="" class="col-5 col-form-label">Dirección</label>
-                            <div class="col-7">
-                                <input type="text" class="form-control
-                                    text-center" id="direccionE" required>
-                            </div>
+                        <div class="form-group pr-5 pl-5">
+                            <label for="" class="mb-0">Dirección</label>
+                            <input type="text" class="form-control text-center" id="direccionE" required>
                         </div>
-                        <div class="form-group row mb-3">
-                            <label for="" class="col-5 col-form-label">Tipo de
-                                organización</label>
-                            <div class="col-5">
-                                <select class="form-control" name="organizacion" id="organizacion" required>
-                                    <option class="" value="Empresa">Empresa</option>
-                                    <option class="" value="Gobierno">Gobierno</option>
-                                    <option class="" value="ONG">ONG</option>
-                                    <option class="" value="Asociación">Asociación</option>
-                                    <option class="" value="Otros">Otros</option>
-                                </select>
-                            </div>
-                            <div class="col-2 text-right">
+                        <div class="form-group pr-5 pl-5">
+                            <label for="" class="mb-0">
+                                Tipo de Organización
+                                &nbsp;&nbsp;&nbsp;
                                 <a data-toggle="modal" id="organizacionPersonalizado">
-                                    <img class="mt-2" style="cursor: pointer" src="{{asset('landing/images/plus.svg')}}"
+                                    <img style="cursor: pointer" src="{{asset('landing/images/plus.svg')}}"
                                         height="15">
                                 </a>
-                            </div>
+                            </label>
+                            <select class="form-control" name="organizacion" id="organizacion" required>
+                                <option class="" value="Empresa">Empresa</option>
+                                <option class="" value="Gobierno">Gobierno</option>
+                                <option class="" value="ONG">ONG</option>
+                                <option class="" value="Asociación">Asociación</option>
+                                <option class="" value="Otros">Otros</option>
+                            </select>
                         </div>
-                        <div class="form-group row mb-3">
-                            <label for="" class="col-5 col-form-label">Distrito</label>
-                            <div class="col-7">
-                                <select class="form-control text-center" name="distE" id="distE" required>
-                                </select>
-                            </div>
+                        <div class="form-group pr-5 pl-5">
+                            <label for="" class="mb-0">Distrito</label>
+                            <select class="form-control text-center" name="distE" id="distE" required>
+                            </select>
                         </div>
                     </div>
                 </div>
