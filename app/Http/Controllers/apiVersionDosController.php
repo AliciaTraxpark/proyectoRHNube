@@ -64,6 +64,7 @@ class apiVersionDosController extends Controller
         $captura->acumulador = $request->get('acumulador');
         $captura->idHorario_dias = $request->get('idHorario_dias');
         $captura->idActividad = $request->get('idActividad');
+        $captura->idEmpleado = $request->get('idEmpleado');
         $captura->save();
 
         $idCaptura = $captura->idCaptura;
