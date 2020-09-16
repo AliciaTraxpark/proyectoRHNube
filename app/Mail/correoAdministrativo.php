@@ -2,6 +2,8 @@
 
 namespace App\Mail;
 
+use App\organizacion;
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -19,10 +21,14 @@ class correoAdministrativo extends Mailable
 
     public $contenido;
     public $asunto;
-    public function __construct($contenido, string $asunto)
+    public $organizacion;
+    public $user;
+    public function __construct($contenido, string $asunto,organizacion $organizacion, User $user)
     {
         $this->contenido = $contenido;
         $this->asunto = $asunto;
+        $this->organizacion = $organizacion;
+        $this->user = $user;
     }
 
     /**
