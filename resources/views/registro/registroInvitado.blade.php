@@ -49,16 +49,14 @@
         <header id="header-section">
             <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
                 <div class="container">
-                    <div class="col-md-3">
+                    <div class="col-md-3 pl-5">
                         <div class="navbar-brand-wrapper d-flex w-100">
-                            < <img src="{{asset('landing/images/Recurso_23.png')}}" alt=""
-                            height="35" />
+                            <img src="{{asset('landing/images/Recurso_23.png')}}" height="45">
                         </div>
                     </div>
-                    <div class="col-md-9 text-left">
+                    <div class="col-md-9 text-left pt-2">
                         <h5 style="color: #ffffff">Crear una cuenta</h5>
-                        <label for="" class="blanco font-italic">Tienes 2
-                            minutos</label>
+                        <label for="" class="blanco font-italic">Tienes 2 minutos</label>
 
                     </div>
                 </div>
@@ -66,7 +64,7 @@
         </header>
 
         <div class="content-wrapper">
-            <div class="container">
+            <div class="container" style="padding-left: 5%;padding-right: 4%">
                 <section class="features-overview" id="features-section">
                      {{--  Modal doble email --}}
                    <div id="myModalEmail" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" style="overflow-y: auto;">
