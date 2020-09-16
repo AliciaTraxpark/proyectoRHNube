@@ -126,7 +126,7 @@ class calendarioController extends Controller
             $fechaOrga2=Carbon::create($yearOrga.'-'.$mesOrga.'-01');
             $añonn=$yearOrga+1;
             $fechaOrga3=Carbon::create($añonn.'-01-01');
-            $fechaEnvi=$fechaOrga2->format('Y-m-d');
+            $fechaEnvi=$fechaOrga2->format('d/m/Y');
             $fechaEnviFi=$fechaOrga3->format('Y-m-d');
             $diaAnt=Carbon::create($fechaEnviFi)->subDays(1)->format('Y-m-d');
             //////////////////////////////////////
@@ -300,7 +300,7 @@ class calendarioController extends Controller
             $fechaOrga2=Carbon::create($yearOrga.'-'.$mesOrga.'-01');
             $añonn=$yearOrga+1;
             $fechaOrga3=Carbon::create($añonn.'-01-01');
-            $fechaEnvi=$fechaOrga2->format('Y-m-d');
+            $fechaEnvi=$fechaOrga2->format('d/m/Y');
             $fechaEnviFi=$fechaOrga3->format('Y-m-d');
 
             $diaAnt=Carbon::create($fechaEnviFi)->subDays(1)->format('Y-m-d');

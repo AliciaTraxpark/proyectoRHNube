@@ -32,7 +32,7 @@ var idcalendarioF=$('#selectCalendario').val();
         success: function (data) {
 
             $('#fechaEnviF').val(data);
-            $('#fechaHasta').text(moment(data).subtract(1, 'day').format('YYYY-MM-DD'));
+            $('#fechaHasta').text(moment(data).subtract(1, 'day').format('DD/MM/YYYY'));
 
         },
         error: function () {}})
