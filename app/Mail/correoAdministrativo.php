@@ -32,6 +32,6 @@ class correoAdministrativo extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.ticketReclamo');
+        return $this->view('mails.ticketReclamo')->subject('Ticket de Soporte');
     }
 }

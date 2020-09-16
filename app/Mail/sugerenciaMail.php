@@ -31,6 +31,6 @@ class sugerenciaMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.sugerencia');
+        return $this->view('mails.sugerencia')->subject('Ticket de Sugerencia');
     }
 }
