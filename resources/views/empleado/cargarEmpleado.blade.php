@@ -397,6 +397,7 @@ function agregar(){
       $.get('/check-session', function(data) {
         // if session was expired
         if (data.guest==false) {
+            $('.modal').modal('hide');
            $('#modal-error').modal('show');
 
         }

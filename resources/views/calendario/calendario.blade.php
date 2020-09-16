@@ -729,6 +729,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
 
           // if session was expired
           if (data.guest==false) {
+            $('.modal').modal('hide');
              $('#modal-error').modal('show');
              $( ".hopscotch-bubble-arrow-border" ).remove();
         $( ".hopscotch-bubble-container" ).remove();
