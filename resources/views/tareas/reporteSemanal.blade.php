@@ -57,13 +57,13 @@
         <div class="card">
             <div class="card-body">
                 <div class="row pb-2">
-                    <div class="col-md-8">
+                    <div class="col-md-9">
                         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
                             onclick="javascript:mostrarGrafica()"><i class="fa fa-eye mr-1"></i>VER GRAFICO
                         </button>
                     </div>
-                    <div class="col-md-4">
-                        <div class="input-group col-md-12">
+                    <div class="col-md-3 text-right">
+                        <div class="input-group col-md-12 pl-5">
                             <input type="text" id="fecha" class="form-control">
                             <div class="input-group-prepend">
                                 <div class="input-group-text form-control"><i class="uil uil-calender"></i></div>
