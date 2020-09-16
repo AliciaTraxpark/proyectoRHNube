@@ -30,7 +30,7 @@
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
     <style>
         body {
-            background-color: #f5f3fb !important;
+            background-color: #ffffff !important;
         }
     </style>
     <header id="header-section">
@@ -91,23 +91,7 @@
             </div>
         </nav>
     </header>
-    <div class="banner" style="background-color: #ffffff">
-        <div class="container" style="padding-top: 60px;padding-bottom:30px">
-            <h4 class="font-weight-semibold" style="color: #204051">Organicemos tu equipo de
-                trabajo en 10 minutos: Controla, mide y gestiona.
-            </h4>
 
-            <div>
-                <div class="col-md-12"> <br>
-                    <a {{-- href="{{route('registroPersona')}} "--}}><button onclick=" $('#modal-error').modal('show')"
-                        class="btn btn-opacity-primary mr-1">COMIENZA
-                        AHORA</button></a>
-                </div>
-                <br><br>
-            </div>
-
-        </div>
-    </div>
     <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel"
         aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog ">
@@ -135,17 +119,22 @@
         <div class="container">
 
             <section class="digital-marketing-service" id="digital-marketing-section">
-                <div class="row align-items-center">
+                <div class="row align-items-center"style="margin-top: 55px;">
                     <div class="col-12 col-lg-1 p-0 img-digital grid-margin">
 
                     </div>
                     <div class="col-12 col-lg-5 text-center grid-margin
-                            grid-margin-lg-0" data-aos="fade-right">
+                            grid-margin-lg-0" data-aos="fade-right" >
                         <h3 class=" m-0">¿Por qué usar RH Nube?</h3>
                         <div class="col-lg-12 col-xl-12 text-center p-0">
                             <p class="py-4 m-0 text-muted " style="font-size: 16px">Sencillamente porque ahorras mucho
                                 en inversión
                                 de personal y ahora puedes tomar decisiones más precisas.</p>
+                                <div class="col-md-12"> <br>
+                                    <a {{-- href="{{route('registroPersona')}} "--}}><button onclick=" $('#modal-error').modal('show')"
+                                        class="btn btn-opacity-primary mr-1">COMIENZA
+                                        AHORA</button></a>
+                                </div>
 
                         </div>
                     </div>
@@ -160,8 +149,20 @@
                 </div>
 
             </section>
+            <div class="banner" style="background-color: #ffffff">
+                <div class="container" style="padding-top: 40px;padding-bottom:0px">
+                    <h4 class="" style="color: #204051">Organicemos tu equipo de
+                        trabajo en 8 minutos: Controla, mide y gestiona.
+                    </h4>
 
-            <br>
+                    <div>
+
+
+                    </div>
+
+                </div>
+            </div>
+
 
             <section class="customer-feedback" id="feedback-section">
                 <div class="row" style="padding-top: 30px">
@@ -175,11 +176,11 @@
                                             alt="">
                                     </div>
                                     <div class="col-md-10">
-                                        <h6 class="card-title pt-3" style="font-size: 14px!important;color:#ffffff">¿Qué
+                                        <h6 class="card-title pt-3" style="font-size: 13.8px!important;color:#ffffff">¿Qué
                                             ventajas adicionales
                                             tienes ahora?</h6>
                                         <p class="m-0 py-3 text-muted"
-                                            style="font-size: 11.5px!important;color:#ffffff!important">RH nube te
+                                            style="font-size: 11.5px!important;color:#ffffff!important;padding-top: 16px!important;">RH nube te
                                             permite contratar personal
                                             fuera de tu ciudad o país.
                                             Ya puedes comparar la productividad entre puestos similares
@@ -218,7 +219,7 @@
                                         <img src="{{asset('landing/images/api.svg')}}" width="59" height="49" alt="">
                                     </div>
                                     <div class="col-md-10">
-                                        <h6 class="card-title pt-2" style="font-size: 13.2px!important;color:#ffffff">
+                                        <h6 class="card-title pt-2" style="font-size: 13px!important;color:#ffffff">
                                             ¿Puedo usarlo con un software de planillas o de pagos?</h6>
                                         <p class="m-0 py-3 text-muted"
                                             style="font-size: 10.8px!important;color:#ffffff!important">Claro que
@@ -234,13 +235,13 @@
             </section>
 
 
-            <section class="features-overview" id="features-section" style="padding-top: 20px;">
+           {{--  <section class="features-overview" id="features-section" style="padding-top: 20px;">
                 <div class="content-header" style="padding-top: 30px;padding-bottom: 20px;">
                     <h3>¿Cómo trabaja RH nube?</h3>
                 </div>
 
-            </section>
-            <section class="features-overview" id="features-section">
+            </section> --}}
+            {{-- <section class="features-overview" id="features-section">
                 <div class="row text-center">
                     <div class="col-md-3"></div>
                     <div class="col-md-2">
@@ -313,7 +314,7 @@
                         <div class="col-md-1"></div>
                     </div>
                 </div><br><br>
-            </section>
+            </section> --}}
 
 
             <!-- Modal for Contact - us Button -->
