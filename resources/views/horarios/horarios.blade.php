@@ -144,7 +144,7 @@ background-color: #ffffff !important;
 }
 </style>
 <style>
-   
+
     .btnhora{
     font-size: 12px;
     padding-top: 1px;
@@ -1169,6 +1169,7 @@ background-color: #ffffff !important;
       $.get('/check-session', function(data) {
         // if session was expired
         if (data.guest==false) {
+            $('.modal').modal('hide');
            $('#modal-error').modal('show');
 
         }
