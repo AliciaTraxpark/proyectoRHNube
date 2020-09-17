@@ -60,6 +60,7 @@ Route::post('/calendario/mostrarFCalend', 'calendarioController@mostrarFCalend')
 Route::post('/calendario/añadirFinCalenda', 'calendarioController@añadirFinCalenda');
 Route::post('/calendario/listaEmplCa', 'calendarioController@listaEmplCa');
 Route::post('/calendario/asignarCalendario', 'calendarioController@asignarCalendario');
+Route::post('/calendario/seleccionados', 'calendarioController@empSeleccionados');
 //PERSONA
 
 
