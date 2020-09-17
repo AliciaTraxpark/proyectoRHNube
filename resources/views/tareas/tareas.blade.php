@@ -1,42 +1,27 @@
 @extends('layouts.vertical')
 
 @section('css')
-<link rel="shortcut icon"
-    href="https://rhsolution.com.pe/wp-content/uploads/2019/06/small-logo-rh-solution-64x64.png"
-    sizes="32x32">
-<link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet"
-    type="text/css" />
+<link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{
     URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.css')
     }}" rel="stylesheet" />
-<link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}"
-    rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css')
     }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}"
-    rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{
     URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')
-    }}" rel="stylesheet"
-    type="text/css" />
-<link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet"
-    type="text/css" />
-<link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet"
-    type="text/css" />
-<link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet"
-    type="text/css" />
+    }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{
-    URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.css') }}"
-    rel="stylesheet"
-    type="text/css" />
+    URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{
-    URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.min.css') }}"
-    rel="stylesheet"
-    type="text/css" />
+    URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{
     URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')
-    }}" rel="stylesheet"
-    type="text/css" />
+    }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('breadcrumb')
@@ -56,18 +41,15 @@
     .carousel-control-next-icon {
         background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='403555' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
     }
-
 </style>
-<div id="modalZoom" class="modal fade" tabindex="-1" role="dialog"
-    aria-labelledby="myModalLabel" aria-hidden="true"
+<div id="modalZoom" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
     data-backdrop="static">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
                 <h5 class="modal-title" style="color:#ffffff;font-size:15px">Colección
                     de Imagenes</h5>
-                <button type="button" class="close" data-dismiss="modal"
-                    aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -88,13 +70,14 @@
                 <div class="row">
                     <div class="col-md-12">
                     </div>
-                    <div class="col-md-4"> <label><br> </label>
+                </div>
+                <div class="row">
+                    <div class="col-md-6"> <label><br> </label>
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label">Fecha:</label>
-                            <div class="input-group col-md-8"
-                                style="padding-left: 0px;padding-right: 0px;" id="fechaSelec">
-                                <input type="text" id="fecha"
-                                    class="form-control" data-input>
+                            <div class="input-group col-md-7" style="padding-left: 0px;padding-right: 0px;"
+                                id="fechaSelec">
+                                <input type="text" id="fecha" class="form-control" data-input>
                                 <div class="input-group-prepend">
                                     <div class="input-group-text form-control flatpickr">
                                         <a class="input-button" data-toggle>
@@ -103,20 +86,17 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-2">
-                                    <button type="button" class="btn btn-sm mt-1"
-                                        style="background-color: #163552;"
+                                    <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
                                         onclick="javascript:fechaHoy()">Hoy</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2"><br></div>
-                    <div class="col-md-6"> <label><br> </label>
+                    <div class="col-md-6"><label><br> </label>
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label">Empleado:</label>
                             <div class="col-lg-8">
-                                <select id="empleado" data-plugin="customselect"
-                                    class="form-control">
+                                <select id="empleado" data-plugin="customselect" class="form-control">
                                     <option value="" disabled selected>Seleccionar</option>
                                     @foreach ($empleado as $empleados)
                                     <option class="" value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}}
@@ -128,17 +108,14 @@
 
                         </div>
                     </div>
-                    <div class="col-md-2"></div>
                 </div>
                 <div id="espera" class="text-center" style="display: none">
-                    <img src="{{asset('landing/images/loading.gif')}}"
-                        height="100">
+                    <img src="{{asset('landing/images/loading.gif')}}" height="100">
                 </div>
                 <div class="col-xl-12" id="card">
                     <br>
                     <img id="VacioImg" style="margin-left:28%" src="{{
-                        URL::asset('admin/images/search-file.svg') }}"
-                        class="mr-2" height="220" /> <br> <label for=""
+                        URL::asset('admin/images/search-file.svg') }}" class="mr-2" height="220" /> <br> <label for=""
                         style="margin-left:30%;color:#7d7d7d">Realize una
                         búsqueda para ver Actividad</label>
                 </div>
@@ -167,8 +144,7 @@
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
 @endsection
 @section('script-bottom')
-<link rel="stylesheet"
-    href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
 <script src="{{
     URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.js') }}"></script>

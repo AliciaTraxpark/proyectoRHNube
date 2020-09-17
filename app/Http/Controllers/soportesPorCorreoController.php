@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Mail\correoAdministrativo;
 use App\Mail\sugerenciaMail;
+use App\organizacion;
+use App\persona;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class soportesPorCorreoController extends Controller
@@ -16,7 +20,8 @@ class soportesPorCorreoController extends Controller
 
     public function soporte()
     {
-        return view('correosA.soporte');
+        $correoAdministrativo = env('MAIL_FROM_ADDRESS');
+        return view('correosA.soporte', ["correo" => $correoAdministrativo]);
     }
 
     public function envioTicketSoporte(Request $request)
@@ -24,13 +29,19 @@ class soportesPorCorreoController extends Controller
         $valor = $request->get('contenido');
         $asunto = $request->get('asunto');
         $email = env('MAIL_FROM_ADDRESS');
-        Mail::to($email)->queue(new correoAdministrativo($valor,$asunto));
+        $idOrganizacion = session('sesionidorg');
+        $organizacion = organizacion::find($idOrganizacion);
+        $idEmpleado = Auth::user()->id;
+        $usuario = User::find($idEmpleado);
+        $persona = persona::find($usuario->perso_id);
+        Mail::to($email)->queue(new correoAdministrativo($valor, $asunto,$organizacion,$persona,$usuario));
         return response()->json($valor, 200);
     }
 
     public function sugerencia()
     {
-        return view('correosA.sugerencia');
+        $correoAdministrativo = env('MAIL_FROM_ADDRESS');
+        return view('correosA.sugerencia', ["correo" => $correoAdministrativo]);
     }
 
     public function envioSugerencia(Request $request)
@@ -38,7 +49,12 @@ class soportesPorCorreoController extends Controller
         $valor = $request->get('contenido');
         $asunto = $request->get('asunto');
         $email = env('MAIL_FROM_ADDRESS');
-        Mail::to($email)->queue(new sugerenciaMail($valor,$asunto));
+        $idOrganizacion = session('sesionidorg');
+        $organizacion = organizacion::find($idOrganizacion);
+        $idEmpleado = Auth::user()->id;
+        $usuario = User::find($idEmpleado);
+        $persona = persona::find($usuario->perso_id);
+        Mail::to($email)->queue(new sugerenciaMail($valor, $asunto,$organizacion,$persona,$usuario));
         return response()->json($valor, 200);
     }
 }

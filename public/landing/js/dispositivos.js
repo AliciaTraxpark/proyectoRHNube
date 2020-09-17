@@ -3,7 +3,6 @@ $('#customSwitchC1').prop('checked', true);
 $('#bodyModoControlR').show();
 $('#bodyModoControlA').hide();
 $('#customSwitchC1').on('change.bootstrapSwitch', function (event) {
-    console.log(event.target.checked);
     if (event.target.checked == true) {
         $('#bodyModoControlR').show();
     } else {
@@ -11,7 +10,6 @@ $('#customSwitchC1').on('change.bootstrapSwitch', function (event) {
     }
 });
 $('#customSwitchC2').on('change.bootstrapSwitch', function (event) {
-    console.log(event.target.checked);
     if (event.target.checked == true) {
         $('#bodyModoControlA').show();
     } else {
@@ -23,7 +21,6 @@ $('#customSwitchCR1').prop('checked', true);
 $('#bodyModoControlRR').show();
 $('#bodyModoControlAR').hide();
 $('#customSwitchCR1').on('change.bootstrapSwitch', function (event) {
-    console.log(event.target.checked);
     if (event.target.checked == true) {
         $('#bodyModoControlRR').show();
     } else {
@@ -31,7 +28,6 @@ $('#customSwitchCR1').on('change.bootstrapSwitch', function (event) {
     }
 });
 $('#customSwitchCR2').on('change.bootstrapSwitch', function (event) {
-    console.log(event.target.checked);
     if (event.target.checked == true) {
         $('#bodyModoControlAR').show();
     } else {
@@ -43,7 +39,6 @@ $('#customSwitchCV1').prop('checked', true);
 $('#bodyModoControlRV').show();
 $('#bodyModoControlAV').hide();
 $('#customSwitchCV1').on('change.bootstrapSwitch', function (event) {
-    console.log(event.target.checked);
     if (event.target.checked == true) {
         $('#bodyModoControlRV').show();
     } else {
@@ -51,7 +46,6 @@ $('#customSwitchCV1').on('change.bootstrapSwitch', function (event) {
     }
 });
 $('#customSwitchCV2').on('change.bootstrapSwitch', function (event) {
-    console.log(event.target.checked);
     if (event.target.checked == true) {
         $('#bodyModoControlAV').show();
     } else {
@@ -241,7 +235,6 @@ $('#v_tbodyDispositivo').empty();
 //WINDOWS
 //MODAL WINDOWS
 function modalWindows(id) {
-    console.log(id);
     $('#windows').val(id);
     $('#windowsEmpleado').modal();
 
@@ -260,7 +253,6 @@ function vinculacionWindows() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-            console.log(data);
             if (data == 1) {
                 $.notifyClose();
                 $.notify({
@@ -298,7 +290,6 @@ function vinculacionWindows() {
                 </tr>`;
                 container.append(tr);
             }
-            console.log(data);
         },
         error: function () {}
     });
@@ -309,7 +300,6 @@ function enviarCorreoWindows() {
     var idEmpleado = $('#idEmpleado').val();
 
     var idVinculacion = $('#windows').val();
-    console.log(idVinculacion);
     $.ajax({
         async: false,
         type: "get",
@@ -359,7 +349,6 @@ function enviarCorreoWindows() {
 $('#enviarCorreoWindowsEmpleado').on("click", enviarCorreoWindows);
 //EDITAR
 function modalWindowsEditar(id) {
-    console.log(id);
     $('#windows').val(id);
     $('#v_windowsEmpleado').modal();
 
@@ -367,7 +356,6 @@ function modalWindowsEditar(id) {
 
 function vinculacionWindowsEditar() {
     var idEmpleado = $('#v_id').val();
-    console.log(idEmpleado);
     $.ajax({
         async: false,
         type: "get",
@@ -416,7 +404,6 @@ function vinculacionWindowsEditar() {
                 </tr>`;
                 container.append(tr);
             }
-            console.log(data);
         },
         error: function () {}
     });
@@ -425,9 +412,7 @@ $('#v_agregarWindows').on("click", vinculacionWindowsEditar);
 
 function enviarCorreoWindowsEditar() {
     var idEmpleado = $('#v_id').val();
-    console.log(idEmpleado);
     var idVinculacion = $('#windows').val();
-    console.log(idEmpleado);
     $.ajax({
         async: false,
         type: "get",

@@ -68,8 +68,7 @@
                 style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1">
                 <div class="row pl-2">
                     <span style="color: #163552;font-weight: bold;font-size: 14px"><img
-                            src="{{asset('landing/images/email (1).svg')}}" height="20" class="mr-1">Enviar Ticket de
-                        Soporte</span>
+                            src="{{asset('landing/images/email (1).svg')}}" height="20" class="mr-1">Ticket de Soporte</span>
                 </div>
             </div>
 
@@ -80,7 +79,7 @@
                             <form action="javascript:disabledS();">
                                 <div class="form-group">
                                     <label for="email" style="font-weight: bold">Para:</label>
-                                    <input type="email" class="form-control" value="info@rhnube.com.pe" disabled>
+                                    <input type="email" class="form-control" value="{{$correo}}" disabled>
                                 </div>
 
                                 <div class="form-group">
@@ -120,6 +119,7 @@
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{asset('landing/js/app-menu.js')}}"></script>
 <script src="{{asset('landing/js/correosdeMantenimiento.js')}}"></script>
+<script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 @endsection
 @endsection

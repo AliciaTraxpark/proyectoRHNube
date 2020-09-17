@@ -18,7 +18,6 @@ function showNotificaciones() {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            console.log(data);
             $("#notificacionesUser").empty();
             var grupo = ``;
             var container = $("#notificacionesUser");
@@ -72,12 +71,10 @@ function showNotificaciones() {
 }
 showNotificaciones();
 function agregarCorreoNotificacion(id) {
-    console.log(id);
     $("#modalCorreoElectronicoHeader").modal();
     $("#idEmpleCorreoH").val(id);
 }
 function guardarCorreoEH() {
-    console.log("ingreso");
     idEmpleado = $("#idEmpleCorreoH").val();
     descripcion = $("#textCorreoH").val();
     email = $("#textCorreoH").val();
@@ -144,7 +141,6 @@ function guardarCorreoEH() {
                         ),
                     },
                     success: function (data) {
-                        console.log(data);
                         $("#modalCorreoElectronicoHeader").modal("toggle");
                         notification();
                         showNotificaciones();

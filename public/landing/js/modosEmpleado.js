@@ -11,7 +11,6 @@ function actividad_empleado() {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            console.log(data);
             $("#regtablaBodyTarea").empty();
             if (data != 0) {
                 var container = $("#regtablaBodyTarea");
@@ -52,7 +51,6 @@ function actividadEmp() {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            console.log(data);
             $("#tablaBodyTarea").empty();
             if (data != 0) {
                 var container = $("#tablaBodyTarea");
@@ -93,7 +91,6 @@ function actividadEmpVer() {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            console.log(data);
             $("#tablaBodyTarea_ver").empty();
             if (data != 0) {
                 var container = $("#tablaBodyTarea_ver");
@@ -126,7 +123,6 @@ $("#regbodyModoTarea").show();
 $("#customSwitch5").prop("checked", true);
 $("#bodyModoTarea_ver").show();
 $("#customSwitch1").on("change.bootstrapSwitch", function (event) {
-    console.log(event.target.checked);
     if (event.target.checked == true) {
         $("#bodyModoTarea").show();
         actividadEmp();
@@ -135,7 +131,6 @@ $("#customSwitch1").on("change.bootstrapSwitch", function (event) {
     }
 });
 $("#customSwitch3").on("change.bootstrapSwitch", function (event) {
-    console.log(event.target.checked);
     if (event.target.checked == true) {
         $("#regbodyModoTarea").show();
         actividad_empleado();
@@ -144,7 +139,6 @@ $("#customSwitch3").on("change.bootstrapSwitch", function (event) {
     }
 });
 $("#customSwitch5").on("change.bootstrapSwitch", function (event) {
-    console.log(event.target.checked);
     if (event.target.checked == true) {
         $("#bodyModoTarea_ver").show();
         actividadEmpVer();
@@ -156,7 +150,6 @@ $("#bodyModoProyecto").hide();
 $("#regbodyModoProyecto").hide();
 $("#bodyModoProyecto_ver").hide();
 $("#customSwitch2").on("change.bootstrapSwitch", function (event) {
-    console.log(event.target.checked);
     if (event.target.checked == true) {
         $("#bodyModoProyecto").show();
     } else {
@@ -165,7 +158,6 @@ $("#customSwitch2").on("change.bootstrapSwitch", function (event) {
 });
 
 $("#customSwitch4").on("change.bootstrapSwitch", function (event) {
-    console.log(event.target.checked);
     if (event.target.checked == true) {
         $("#regbodyModoProyecto").show();
     } else {
@@ -173,7 +165,6 @@ $("#customSwitch4").on("change.bootstrapSwitch", function (event) {
     }
 });
 $("#customSwitch6").on("change.bootstrapSwitch", function (event) {
-    console.log(event.target.checked);
     if (event.target.checked == true) {
         $("#bodyModoProyecto_ver").show();
     } else {
@@ -439,7 +430,6 @@ function editarEstadoActividad(id, estado) {
 function RegeditarActE(idA) {
     var OriginalContent = $("#idActReg" + idA).val();
     $("#tdActReg" + idA).on("click", function () {
-        console.log(OriginalContent);
         $(this).addClass("editable");
         $(this).html(
             '<input type="text" style="border-radius: 5px;border: 2px solid #8d93ab;" maxlength="15" />'
@@ -497,7 +487,6 @@ function RegeditarActE(idA) {
         } else {
             var valor = 0;
         }
-        console.log(valor);
         alertify
             .confirm("¿Desea modificar el estado de la  actividad?", function (
                 e
@@ -529,7 +518,6 @@ function RegeditarActE(idA) {
 function editarActE(idA) {
     var OriginalContent = $("#idAct" + idA).val();
     $("#tdAct" + idA).on("click", function () {
-        console.log(OriginalContent);
         $(this).addClass("editable");
         $(this).html(
             '<input type="text" style="border-radius: 5px;border: 2px solid #8d93ab;" maxlength="15" />'
@@ -585,7 +573,6 @@ function editarActE(idA) {
         } else {
             var valor = 0;
         }
-        console.log(valor);
         alertify
             .confirm("¿Desea modificar el estado de la  actividad?", function (
                 e
@@ -617,7 +604,6 @@ $('[data-toggle="tooltip"]').tooltip();
 // MODOS EN VISTA TABLA
 function controlRemoto(id) {
     var idEmpleado = id;
-    console.log(id);
     $("#customSwitchCR" + idEmpleado).on("change.bootstrapSwitch", function (
         event
     ) {
@@ -625,7 +611,6 @@ function controlRemoto(id) {
             $("#modalControlR").modal();
             $("#empleadoControlR").val(idEmpleado);
         }
-        console.log(event.target.checked);
     });
 }
 
@@ -642,7 +627,6 @@ function agregarControlR(id) {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            console.log(data);
             if (data == 1) {
                 $("#modalControlR").modal("toggle");
                 RefreshTablaEmpleado();
@@ -672,7 +656,6 @@ function agregarControlR(id) {
                     }
                 );
             }
-            console.log(data);
         },
         error: function () {},
     });
@@ -712,7 +695,6 @@ function agregarCorreoE(id) {
 }
 
 function guardarCorreoE() {
-    console.log("ingreso");
     idEmpleado = $("#idEmpleCorreo").val();
     descripcion = $("#textCorreo").val();
     email = $("#textCorreo").val();
@@ -779,7 +761,6 @@ function guardarCorreoE() {
                         ),
                     },
                     success: function (data) {
-                        console.log(data);
                         RefreshTablaEmpleado();
                         $("#modalCorreoElectronico").modal("toggle");
                         $("#modalControlR").modal();

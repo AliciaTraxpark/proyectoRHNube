@@ -110,7 +110,6 @@ $("#apMaternoP").keyup(function () {
     }
 });
 $("#genero").change(function () {
-    console.log("ingreso");
     if ($("#genero").val() == "Personalizado") {
         $("#generoPersonalizado").show();
     } else {
@@ -286,7 +285,6 @@ function enviarDatosP(accion, objDatosPersonales) {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            console.log(data);
             var h5 = `${data.perso_nombre} ${data.perso_apPaterno} ${data.perso_apMaterno}`;
             var strong = `Bienvenido(a), ${data.perso_nombre}`;
             actualizarDatos();
@@ -364,7 +362,6 @@ function enviarDatosE(accion, objDatosEmpresa) {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            console.log(data);
             var h6 = `${data.organi_razonSocial}`;
             actualizarDatos();
             refreshGenero();
@@ -420,10 +417,8 @@ $('input[type="file"]').change(function (e) {
     $("#rowAlert").show();
 });
 $("#guardarFoto").on("click", function () {
-    console.log($(".file").prop("files")[0]);
     var formData = new FormData();
     formData.append("file", $(".file").prop("files")[0]);
-    console.log(formData);
     $.ajax({
         contentType: false,
         processData: false,
@@ -435,7 +430,6 @@ $("#guardarFoto").on("click", function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            console.log(data);
             $("#rowAlert").hide();
             $("#preview").attr("src", "fotosUser/" + data[0].foto);
             $("#imgsm").attr("src", "fotosUser/" + data[0].foto);

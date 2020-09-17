@@ -1,5 +1,4 @@
 function enviarWindowsTabla(idEmpleado, idVinculacion) {
-    console.log(idEmpleado, idVinculacion);
     $('#empleadoWindows').val(idEmpleado);
     $('#vinculaciónWindows').val(idVinculacion);
     $('#modalCorreo').modal();

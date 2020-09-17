@@ -315,7 +315,7 @@
                                                                         <td align="right"
                                                                             class="esd-block-text es-p40t es-p40b">
                                                                             <p style="color: #ffffff;">
-                                                                                <strong>Sugerencia<span
+                                                                                <strong>Ticket de Sugerencia<span
                                                                                         style="color:#FFFFFF;"></span></strong>
                                                                             </p>
                                                                         </td>
@@ -370,18 +370,45 @@
                                                             <tr style="border-collapse:collapse">
                                                                 <td align="left"
                                                                     style="padding:0;Margin:0;padding-right:35px;padding-left:40px">
+                                                                    <p
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:14px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center">
+                                                                        <strong>Remitente:</strong> {{$persona->perso_nombre}} {{$persona->perso_apPaterno}} {{$persona->perso_apMaterno}}
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="border-collapse:collapse">
+                                                                <td align="left"
+                                                                    style="padding:0;Margin:0;padding-right:35px;padding-left:40px">
+                                                                    <p
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:14px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center">
+                                                                        <strong>Razón Social:</strong> {{$organizacion->organi_razonSocial}}
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="border-collapse:collapse">
+                                                                <td align="left"
+                                                                    style="padding:0;Margin:0;padding-right:35px;padding-left:40px">
+                                                                    <p
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:14px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center">
+                                                                        <strong>Correo electrónico:</strong> {{$user->email}}
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="border-collapse:collapse">
+                                                                <td align="left"
+                                                                    style="padding:0;Margin:0;padding-right:35px;padding-left:40px">
+                                                                    <p
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:14px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center">
+                                                                        <strong>Celular:</strong> {{$persona->perso_celular}}
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="border-collapse:collapse">
+                                                                <td align="left"
+                                                                    style="padding:0;Margin:0;padding-right:35px;padding-left:40px;padding-top:20px;padding-bottom:20px">
                                                                     {!! $contenido !!}
                                                                 </td>
                                                             </tr>
-                                                            <!-- <tr style="border-collapse:collapse">
-                                                                <td align="center"
-                                                                    style="padding:0;Margin:0;padding-right:35px;padding-left:40px;padding-bottom:40px">
-                                                                    <strong
-                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color: #163552;text-align:center">
-                                                                        Y no olvides GUARDAR tu código de seguridad.
-                                                                    </strong>
-                                                                </td>
-                                                            </tr> -->
                                                         </table>
                                                     </td>
                                                 </tr>
@@ -394,39 +421,6 @@
                     </table>
                     <table class="es-footer" cellspacing="0" cellpadding="0" align="center"
                         style="border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top">
-                        <tr style="border-collapse:collapse">
-                            <td style="padding:0;Margin:0;background-color:#FAFAFA" bgcolor="#fafafa" align="center">
-                                <table class="es-footer-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff"
-                                    align="center"
-                                    style="border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px">
-                                    <tr style="border-collapse:collapse">
-                                        <td style="Margin:0;padding-top:10px;padding-left:20px;padding-right:20px;padding-bottom:10px;background-color:#ffffff;background-position:left top"
-                                            bgcolor="#ffffff" align="center">
-                                            <a target="_blank">
-                                                <img class="adapt-img"
-                                                    src="http://rhnube.com.pe/landing/images/LogoAzul.png" alt
-                                                    style="display: block;" width="120">
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr style="border-collapse:collapse">
-                            <td style="padding:0;Margin:0;background-color:#FAFAFA" bgcolor="#fafafa" align="center">
-                                <table class="es-footer-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff"
-                                    align="center"
-                                    style="border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px">
-                                    <tr style="border-collapse:collapse">
-                                        <td style="Margin:0;padding-top:5px;padding-left:20px;padding-right:20px;padding-bottom:10px;background-color:#ffffff;background-position:left top"
-                                            bgcolor="#ffffff" align="center">
-                                            <span style="font-size: 14px; color: #333333; line-height: 120%;"><span>Contáctanos:
-                                                    https://www.rhnube.com.pe | info@rhnube.com.pe</span></h2>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
                         <tr style="border-collapse:collapse">
                             <td style="padding:0;Margin:0;background-color:#FAFAFA" bgcolor="#fafafa" align="center">
                                 <table class="es-footer-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff"

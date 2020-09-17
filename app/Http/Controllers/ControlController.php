@@ -190,6 +190,7 @@ class ControlController extends Controller
         $horasTrabajadas = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->leftJoin('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+            ->join('actividad as a', 'a.Activi_id', '=', 'cp.idActividad')
             ->leftJoin('promedio_captura as promedio', 'promedio.idCaptura', '=', 'cp.idCaptura')
             ->leftJoin('horario_dias as h', 'h.id', '=', 'promedio.idHorario')
             ->select(
@@ -209,7 +210,7 @@ class ControlController extends Controller
             ->where(DB::raw('IF(h.id is null, DATE(cp.hora_fin), DATE(h.start))'), '<=', $fechaF[1])
             ->where('e.organi_id', '=', session('sesionidorg'))
             ->where('e.emple_estado', '=', 1)
-            ->groupBy('cp.hora_ini', 'e.emple_id')
+            ->groupBy('e.emple_id')
             ->get();
 
         $respuesta = [];

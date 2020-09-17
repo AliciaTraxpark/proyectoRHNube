@@ -65,7 +65,6 @@ function calcularPromedio(a, b) {
     }
     let suma = parseFloat(a) + parseFloat(b);
     promedio = suma;
-    console.log(suma);
     if (acumulado != 0) {
         promedio = suma / acumulado;
     }
@@ -78,7 +77,6 @@ function totalContar(a, b) {
     let resultado = [];
     let suma = 0;
     suma += parseInt(a) + parseInt(b);
-    console.log(suma);
     resultado.push(suma);
     return resultado;
 }
@@ -134,7 +132,6 @@ function onSelectFechas() {
                     var promedio = data[i].promedio.reduce(function (a, b) {
                         return calcularPromedio(a, b);
                     });
-                    console.log(data[i].total);
                     var contar = data[i].total.reduce(function (a, b) {
                         return totalContar(a, b);
                     });
@@ -159,7 +156,6 @@ function onSelectFechas() {
                     }*/
                     html_tr += '<td>' + total + '</td>';
                     html_tr += '<td>' + sumaP + '%' + '</td>';
-                    console.log(total);
                     var decimal = parseFloat(total.split(":")[0] + "." + total.split(":")[1] + total.split(":")[2]);
                     horas.push(decimal);
                     html_tr += '</tr>';
@@ -286,7 +282,6 @@ function onSelectFechas() {
 
 $(function () {
     $('#zonaHoraria').empty();
-    console.log(Intl.DateTimeFormat().resolvedOptions().timeZone);
     var zona = Intl.DateTimeFormat().resolvedOptions().timeZone;
     var split = zona.split("/");
     nombre = `${split[0]} - ${split[1]}`;
@@ -297,7 +292,6 @@ $(function () {
     $('#fecha').on('change.dp', function (e) {
         dato = $('#fecha').val();
         value = moment(dato, ["DD-MM-YYYY"]).format("YYYY-MM-DD");
-        console.log(dato,value);
         firstDate = moment(value, 'YYYY-MM-DD').day(1).format('YYYY-MM-DD');
         lastDate = moment(value, 'YYYY-MM-DD').day(7).format('YYYY-MM-DD');
         $('#fecha').val(firstDate + "   a   " + lastDate);

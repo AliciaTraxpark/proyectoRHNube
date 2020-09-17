@@ -33,7 +33,9 @@
             <div class="card-header"
                 style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1">
                 <div class="row pl-2">
-                    <span style="color: #163552;font-weight: bold;font-size: 14px"><img src="{{asset('landing/images/email (1).svg')}}" height="20" class="mr-1">Enviar Sugerencia</span>
+                    <span style="color: #163552;font-weight: bold;font-size: 14px"><img
+                            src="{{asset('landing/images/email (1).svg')}}" height="20" class="mr-1">Ticket de
+                        Sugerencia</span>
                 </div>
             </div>
 
@@ -44,7 +46,7 @@
                             <form action="javascript:enviarS();">
                                 <div class="form-group">
                                     <label for="email" style="font-weight: bold">Para:</label>
-                                    <input type="email" class="form-control" value="info@rhnube.com.pe" disabled>
+                                    <input type="email" class="form-control" value="{{$correo}}" disabled>
                                 </div>
 
                                 <div class="form-group">
@@ -58,8 +60,8 @@
 
                                 <div class="form-group pt-2" style="display: none" id="mostrarBotonS">
                                     <div class="text-right">
-                                        <button type="submit" class="btn" style="background-color: #163552"> <span>Enviar</span> <i
-                                                class="uil uil-message ml-2"></i>
+                                        <button type="submit" class="btn" style="background-color: #163552">
+                                            <span>Enviar</span> <i class="uil uil-message ml-2"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -84,6 +86,7 @@
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{asset('landing/js/app-menu.js')}}"></script>
 <script src="{{asset('landing/js/correosdeMantenimiento.js')}}"></script>
+<script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 @endsection
 @endsection
