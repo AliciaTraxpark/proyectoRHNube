@@ -13,6 +13,8 @@ use App\eventos_usuario;
 use App\organizacion;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+
 class calendarioController extends Controller
 {
     public function __construct()
@@ -126,7 +128,7 @@ class calendarioController extends Controller
             $fechaOrga2=Carbon::create($yearOrga.'-'.$mesOrga.'-01');
             $añonn=$yearOrga+1;
             $fechaOrga3=Carbon::create($añonn.'-01-01');
-            $fechaEnvi=$fechaOrga2->format('Y-m-d');
+            $fechaEnvi=$fechaOrga2->format('d/m/Y');
             $fechaEnviFi=$fechaOrga3->format('Y-m-d');
             $diaAnt=Carbon::create($fechaEnviFi)->subDays(1)->format('Y-m-d');
             //////////////////////////////////////
@@ -300,7 +302,7 @@ class calendarioController extends Controller
             $fechaOrga2=Carbon::create($yearOrga.'-'.$mesOrga.'-01');
             $añonn=$yearOrga+1;
             $fechaOrga3=Carbon::create($añonn.'-01-01');
-            $fechaEnvi=$fechaOrga2->format('Y-m-d');
+            $fechaEnvi=$fechaOrga2->format('d/m/Y');
             $fechaEnviFi=$fechaOrga3->format('Y-m-d');
 
             $diaAnt=Carbon::create($fechaEnviFi)->subDays(1)->format('Y-m-d');
@@ -639,6 +641,34 @@ class calendarioController extends Controller
         }
         }
 
+
+  }
+
+  public function empSeleccionados(Request $request){
+    $idempleado = $request->ids;
+    $arrayeve = collect();
+    foreach($idempleado as $idempleados){
+            $emps=    DB::table('empleado as e')
+            ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->leftJoin('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
+            ->leftJoin('calendario as ca', 'eve.id_calendario', '=', 'ca.calen_id')
+            ->select(
+                'e.emple_id',
+                'p.perso_id',
+                'p.perso_nombre',
+                'p.perso_apPaterno',
+                'p.perso_apMaterno',
+                'eve.id_calendario as idcalendar',
+                'ca.calendario_nombre'
+            )
+            ->where('e.emple_id', '=', $idempleados)
+            ->where('e.emple_estado', '=', 1)
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->groupBy('e.emple_id')
+            ->get();
+            $arrayeve->push($emps);
+    }
+    return json_encode($arrayeve);
 
   }
 }

@@ -32,7 +32,7 @@ var idcalendarioF=$('#selectCalendario').val();
         success: function (data) {
 
             $('#fechaEnviF').val(data);
-            $('#fechaHasta').text(moment(data).subtract(1, 'day').format('YYYY-MM-DD'));
+            $('#fechaHasta').text(moment(data).subtract(1, 'day').format('DD/MM/YYYY'));
 
         },
         error: function () {}})
@@ -1056,8 +1056,25 @@ function listaempCal(){
     });
 }
 function asignarCalendario(){
+    var allVals = [];
+
+
+        $("input[name=idEmSelecto]:checked").each(function () {
+            allVals.push($(this).attr('data-id'));
+        });
+        var join_selected_values = allVals.join(",");
+        var  idemples = allVals;
+         console.log(allVals);
+         console.log(join_selected_values);
+         console.log(idemples);
+
+
+         if (allVals.length <= 0) {
+
+            bootbox.alert("Por favor seleccione una fila");
+                    return false;
+                }
     var  idcalenReg=$('#selectCalendario').val();
-    var  idemples = $('#nombreEmpleado').val();
     $("#asignacionCa").hide();
     $("#espera").show();
     $.ajax({
@@ -1084,6 +1101,8 @@ function asignarCalendario(){
             $("#selectEmpresarial").trigger("change");
             $("#espera").hide();
             $("#asignacionCa").show();
+            $("#empleadosSele>tbody>tr").remove();
+            $("input[type=checkbox]").prop("checked",false);
 
         },
         error: function (data) {
@@ -1092,3 +1111,74 @@ function asignarCalendario(){
     });
 
 }
+/* function mostrarSelect() {
+    var idselec=$( "#nombreEmpleado" ).val();
+   alert(idselec);
+        } */
+$('#nombreEmpleado').change(function(){
+    num=$('#nombreEmpleado').val().length;
+    if(num<1){
+        $("#empleadosSele>tbody>tr").remove();
+    }
+    var idsemp=$(this).val();
+    $.ajax({
+        type: "POST",
+        url: "/calendario/seleccionados",
+        dataType: "json",
+        data: {ids:idsemp},
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            $("#empleadosSele>tbody>tr").remove();
+            $.each(data, function (key, item) {
+                if(item[0].calendario_nombre==null){
+                    $("#empleadosSele>tbody").append(
+                        "<tr id='"+item[0].emple_id+"' ><td> <input type='checkbox' class='ml-4' name='idEmSelecto' id='idEmSelecto' data-id='"+item[0].emple_id+"'>&nbsp;&nbsp; <a style='cursor: pointer' class='borrar' onclick='quitars("+item[0].emple_id+")'  ><img style='margin-bottom: 6px;' src='admin/images/delete.svg' height='15'></a> </td>  <td >"+item[0].perso_nombre+
+                        "</td> <td >"+item[0].perso_apPaterno+"</td><td>"+item[0].perso_apMaterno+"</td><td>Ninguno</td></tr>"
+                        );
+                }else{
+                   $("#empleadosSele>tbody").append(
+                    "<tr id='"+item[0].emple_id+"' ><td> <input type='checkbox' class='ml-4' name='idEmSelecto' id='idEmSelecto' data-id='"+item[0].emple_id+"'>&nbsp;&nbsp; <a style='cursor: pointer' onclick='quitars("+item[0].emple_id+")' class='borrar' ><img style='margin-bottom: 6px;' src='admin/images/delete.svg' height='15'></a> </td>  <td >"+item[0].perso_nombre+
+                    "</td> <td >"+item[0].perso_apPaterno+"</td><td>"+item[0].perso_apMaterno+"</td><td>"+
+                    item[0].calendario_nombre+"</td></tr>"
+                    );
+                }
+
+            })
+
+
+
+        },
+        error: function () {}})
+});
+
+$('#selectEmps').click(function(event) {
+    if(this.checked) {
+        // Iterate each checkbox
+        $('input[name=idEmSelecto]').each(function() {
+            this.checked = true;
+        });
+    } else {
+        $('input[name=idEmSelecto]').each(function() {
+            this.checked = false;
+        });
+    }
+});
+
+   function quitars(data) {
+    $('#'+data+'').remove();
+    $("#nombreEmpleado option[value="+ data +"]").prop("selected",false);
+      $("#nombreEmpleado").trigger("change");
+        console.log(data);
+
+    };
+

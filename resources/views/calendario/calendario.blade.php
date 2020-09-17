@@ -94,10 +94,19 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
 }
 .fc-nuevoAño-button{
     left: 10px;
-
     font-size: 12px;
     padding-left: 6px;
     padding-right: 6px;
+
+    }
+     .fc-Asignar-button{
+    left: 10px;
+    font-size: 12px;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-bottom: 7px;
+    padding-top: 8px;
+
     }
     .select2-container--default .select2-selection--multiple .select2-selection__choice{
         background-color: #52565b;
@@ -599,13 +608,13 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
         <div class="col-md-12"><label style="font-size: 12px;font-style:oblique;font-weight: 600" for="">De:</label></div>
         <div class="col-md-12"><label style="font-size: 12px" for="">{{$fechaEnvi}}</label></div>
         <div class="col-md-12"><label style="font-size: 12px;font-style:oblique;font-weight: 600" for="">Hasta:</label></div>
-        <div class="col-md-12"><label style="font-size: 12px" for="" id="fechaHasta">{{$diaAnt}}</label></div>
+        <div class="col-md-12"><label style="font-size: 12px" for="" id="fechaHasta"></label></div>
         </div>
 
     </div>
     <div class="col-md-1"></div>
-    <div class="col-md-11">
-    <label for="" style="font-weight: 600">Fecha de creacion de empresa: {{$fechaOrga->format('Y-m-d')}}</label>
+    <div class="col-md-11"><br>
+        <label for="" style="font-style:oblique">Fecha de creacion de empresa: {{$fechaOrga->format('d/m/Y')}}</label>
     </div>
 
                    <input type="hidden" id="pruebaStar">
