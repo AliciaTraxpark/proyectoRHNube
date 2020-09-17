@@ -483,7 +483,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
                 </div><!-- /.modal -->
 
                 <div id="calendarioEmple" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-                    <div class="modal-dialog  modal-lg d-flex modal-dialog-scrollable justify-content-center " style="width: 750px;" >
+                    <div class="modal-dialog  modal-lg d-flex modal-dialog-scrollable justify-content-center " style="width: 790px;" >
 
                     <div class="modal-content">
                        <div class="modal-header" style="background-color:#163552;">
@@ -495,11 +495,28 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
                        <div class="modal-body" style="font-size:12px!important">
                            <div class="row">
                                 <div class="col-md-12">
-                                    <label for="" id="textCalend" style="font-size: 14px;  font-weight: 600;"></label>
+                                    <label for="" id="textCalend" style="font-size: 14px;  font-weight: 600;"></label> &nbsp;
+                                    <button type="button" class="btn btn-sm mt-1" onclick="$( '#tableDataem' ).toggle();" style="background-color: #163552;color: #f9f9f9;margin-bottom: 6px;" ><i style="height: 16px" data-feather="eye"></i>ver empleados
+                                    </button>
                                 </div>
+                                <div class="col-md-12" id="tableDataem" style="display: none">
+                                    <br><label style="font-size: 14px; ">Lista de empleados:</label>
+                                   <div class="col-md-12" style="    padding-left: 0px;">
+                                    <table id='tabEmpleado' width='100%'  class="table  nowrap">
+                                        <thead>
+                                          <tr>
+                                            <td>Nombres</td>
+                                            <td>Apellido paterno </td>
+                                            <td>Apellido materno </td>
+                                          </tr>
+                                        </thead>
+                                      </table>
+                                   </div>
+
+                               </div>
                                <div class="col-md-12" style="border-bottom: 1px solid #f1f1f1;
                                padding-bottom: 12px;">
-                                <label style="font-size: 14px; ">Asignar empleados a calendario</label>
+
                                 <form id="asignacionCa"  action="javascript:asignarCalendario()">
                                    <div class="row">
                                     <div class="col-md-9" style="zoom:90%;">
@@ -519,7 +536,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
                                     </div>
 
                                     <div class="col-md-6">
-                                           <select class="form-control wide" data-plugin="customselect" multiple id="nombreEmpleado" required>
+                                           <select class="form-control wide" data-plugin="customselect" multiple id="nombreEmpleado"  required>
                                             @foreach ($empleado as  $empleados)
                                             <option value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</option>
                                           @endforeach
@@ -543,31 +560,39 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
                                             @endforeach
                                         </select>
                                      </div><br>
-                                     <div class="col-md-12 text-right" style="padding-right: 24px;"><button type="submit" class="btn btn-soft-primary btn-sm" >Asignar calendario</button></div>
+
                                    </div>
 
                                </div>
-                            </form>
+
                             <div id="espera" class="col-md-12 text-center" style="display: none">
 
                                 <img src="{{ asset('landing/images/loading.gif') }}" height="100">
                             </div>
+                            <br><br>
+                            <div class="col-md-6"><br><label style="font-size: 14px; ">Empleados seleccionados:</label></div>
+                              <div class="col-md-6 text-right" style="padding-right: 24px;margin-bottom: 10px;"><br><button type="submit" class="btn  btn-sm" style="background-color: #163552;color: #f9f9f9;">Asignar calendario</button></div>
+                            <br><br> </form>
+                            <div class="col-md-12">
 
-                               <div class="col-md-12">
-                                    <br><label style="font-size: 14px; ">Lista de empleados:</label>
-                                   <div class="col-md-12" style="    padding-left: 0px;">
-                                    <table id='tabEmpleado' width='100%'  class="table  nowrap">
-                                        <thead>
-                                          <tr>
-                                            <td>Nombres</td>
-                                            <td>Apellido paterno </td>
-                                            <td>Apellido materno </td>
-                                          </tr>
-                                        </thead>
-                                      </table>
-                                   </div>
+                               <div class="col-md-12" style="    padding-left: 0px;">
+                                <table id='empleadosSele' width='100%'  class="table  nowrap">
+                                    <thead>
+                                      <tr>
+                                          <td><input type="checkbox" class="ml-4" name="" id="selectEmps"></td>
+                                        <td>Nombres</td>
+                                        <td>Apellido paterno </td>
+                                        <td>Apellido materno </td>
+                                        <td>Calendario</td>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
 
+                                    </tbody>
+                                  </table>
                                </div>
+                           </div>
+
                            </div>
 
                        </div>
