@@ -32,7 +32,8 @@ class downloadController extends Controller
             $vinculacion->fecha_entrega = Carbon::now();
             $vinculacion->save();
             return response()->download(app_path() . "/file/RH Nube.exe");
+        }else{
+            return view('Verificacion.link');
         }
-        return view('Verificacion.link');
     }
 }
