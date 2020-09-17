@@ -25,6 +25,7 @@ class downloadController extends Controller
 
     public function download($code)
     {
+
         $vinculacion = vinculacion::where('descarga', '=', $code)->first();
         if ($vinculacion) {
             //$this->downloadArchivo(app_path() . "/file/Debug.rar");
@@ -32,7 +33,7 @@ class downloadController extends Controller
             $vinculacion->fecha_entrega = Carbon::now();
             $vinculacion->save();
             return response()->download(app_path() . "/file/RH Nube.exe");
-        }else{
+        } else {
             return view('Verificacion.link');
         }
     }
