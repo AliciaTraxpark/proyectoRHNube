@@ -190,6 +190,7 @@ class ControlController extends Controller
         $horasTrabajadas = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->leftJoin('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+            ->join('actividad as a', 'a.Activi_id', '=', 'cp.idActividad')
             ->leftJoin('promedio_captura as promedio', 'promedio.idCaptura', '=', 'cp.idCaptura')
             ->leftJoin('horario_dias as h', 'h.id', '=', 'promedio.idHorario')
             ->select(
