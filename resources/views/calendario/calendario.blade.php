@@ -146,7 +146,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
             <label for="" class="blanco font-italic">Calendario de Perú, puedes crear calendarios regionales o personalizados</label>
             </div>
             <input type="hidden" name="idorgani" id="idorgani" value="{{session('sesionidorg')}}">
-        <input type="hidden" name="" id="AñoOrgani" value="{{$fechaEnvi}}">
+            <input type="hidden" name="" id="AñoOrgani" value="{{$fechaEnviJS}}">
         <input type="hidden" id="fechaEnviF" >
 
             <div class="col-md-2 text-left">
@@ -404,22 +404,25 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
 
                                <div class="col-md-12">
                                 <form id="" action="javascript:agregarcalendario()">
-                                    <div class="row">
-                                        <div class="col-md-12"> <input type="text" class="form-control" id="nombreCalen" placeholder="Nombre nuevo calendario" required><br></div>
-                                        <div class="col-md-5 form-check" style="padding-left: 32px; margin-top: 4px;">
-                                            <input type="checkbox"  class="form-check-input" id="clonarCheck">
-                                            <label class="form-check-label" for="clonarCheck" >Clonar calendario de:</label>
-                                        </div>
-                                        <div class="col-md-7">
-                                            <select name="" id="selectClonar" class="form-control form-control-sm" disabled >
-                                                <option hidden selected>Seleccione calendario</option>
-                                                @foreach ($calendario as $calendarios)
-                                                    <option class="" value="{{$calendarios->calen_id}}">{{$calendarios->calendario_nombre}}</option>
-                                                @endforeach
-                                            </select>
+                                   <div class="row">
+                                    <div class="col-md-12"> <input type="text" class="form-control" id="nombreCalen" placeholder="Nombre nuevo calendario" required><br></div>
+                                    <div class="col-md-4 form-check" style="padding-left: 32px; margin-top: 4px;">
+                                        <input type="checkbox"  class="form-check-input" id="clonarCheck">
+                                        <label class="form-check-label" for="clonarCheck" >Clonar calendario de:</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <select name="" id="selectClonar" class="form-control form-control-sm" disabled >
+                                            <option hidden selected>Seleccione calendario</option>
+                                            @foreach ($calendario as $calendarios)
+                                                <option class="" value="{{$calendarios->calen_id}}">{{$calendarios->calendario_nombre}}</option>
+                                            @endforeach
+                                        </select>
 
-                                        </div>
-                                       </div>
+                                    </div><br><br>
+                                    <div class="col-md-12" id="añosCalen">
+
+                                    </div>
+                                   </div>
 
                                </div>
                            </div>
@@ -430,7 +433,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
                                <div class="row">
                                    <div class="col-md-12 text-right" >
                                     <button type="button"  class="btn btn-light btn-sm " data-dismiss="modal">Cancelar</button>
-                                    <button type="submit"  name="" style="background-color: #163552;" class="btn btn-sm ">Guardar</button>
+                                    <button type="submit" id="guardarCalm" name="" style="background-color: #163552;" class="btn btn-sm ">Guardar</button>
                                 </form>
                                    </div>
                                </div>

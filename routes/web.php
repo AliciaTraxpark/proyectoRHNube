@@ -61,6 +61,7 @@ Route::post('/calendario/añadirFinCalenda', 'calendarioController@añadirFinCal
 Route::post('/calendario/listaEmplCa', 'calendarioController@listaEmplCa');
 Route::post('/calendario/asignarCalendario', 'calendarioController@asignarCalendario');
 Route::post('/calendario/seleccionados', 'calendarioController@empSeleccionados');
+Route::post('/calendario/yearCale', 'calendarioController@yearCale');
 //PERSONA
 
 

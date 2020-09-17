@@ -129,6 +129,7 @@ class calendarioController extends Controller
             $añonn=$yearOrga+1;
             $fechaOrga3=Carbon::create($añonn.'-01-01');
             $fechaEnvi=$fechaOrga2->format('d/m/Y');
+            $fechaEnviJS=$fechaOrga2->format('Y-m-d');
             $fechaEnviFi=$fechaOrga3->format('Y-m-d');
             $diaAnt=Carbon::create($fechaEnviFi)->subDays(1)->format('Y-m-d');
             //////////////////////////////////////
@@ -167,14 +168,14 @@ class calendarioController extends Controller
                     else{
                         return view('calendario.calendario', ['pais' => $paises, 'calendario' => $calendarioSel,
                         'fechaEnvi' => $fechaEnvi,'fechaEnviFi' => $fechaEnviFi,'diaAnt' => $diaAnt,'empleado' => $empleado,
-                        'area'=>$area,'cargo'=>$cargo,'local'=>$local,'fechaOrga'=>$fechaOrga]);
+                        'area'=>$area,'cargo'=>$cargo,'local'=>$local,'fechaOrga'=>$fechaOrga,'fechaEnviJS' => $fechaEnviJS]);
                     }
                 }
 
             else{
             return view('calendario.calendario', ['pais' => $paises, 'calendario' => $calendarioSel,
             'fechaEnvi' => $fechaEnvi,'fechaEnviFi' => $fechaEnviFi,'diaAnt' => $diaAnt,'empleado' => $empleado,
-            'area'=>$area,'cargo'=>$cargo,'local'=>$local,'fechaOrga'=>$fechaOrga]);}
+            'area'=>$area,'cargo'=>$cargo,'local'=>$local,'fechaOrga'=>$fechaOrga,'fechaEnviJS' => $fechaEnviJS]);}
         } else {
             return redirect(route('principal'));
         }
@@ -303,6 +304,7 @@ class calendarioController extends Controller
             $añonn=$yearOrga+1;
             $fechaOrga3=Carbon::create($añonn.'-01-01');
             $fechaEnvi=$fechaOrga2->format('d/m/Y');
+            $fechaEnviJS=$fechaOrga2->format('Y-m-d');
             $fechaEnviFi=$fechaOrga3->format('Y-m-d');
 
             $diaAnt=Carbon::create($fechaEnviFi)->subDays(1)->format('Y-m-d');
@@ -342,14 +344,14 @@ class calendarioController extends Controller
                     else{
                         return view('calendario.calendarioMenu', ['pais' => $paises, 'calendario' => $calendarioSel,
                         'fechaEnvi' => $fechaEnvi,'fechaEnviFi' => $fechaEnviFi,'diaAnt' => $diaAnt,'empleado' => $empleado,
-                        'area'=>$area,'cargo'=>$cargo,'local'=>$local,'fechaOrga'=>$fechaOrga]);
+                        'area'=>$area,'cargo'=>$cargo,'local'=>$local,'fechaOrga'=>$fechaOrga,'fechaEnviJS' => $fechaEnviJS]);
                     }
                 }
 
             else{
             return view('calendario.calendarioMenu', ['pais' => $paises, 'calendario' => $calendarioSel,
             'fechaEnvi' => $fechaEnvi,'fechaEnviFi' => $fechaEnviFi,'diaAnt' => $diaAnt,'empleado' => $empleado,
-            'area'=>$area,'cargo'=>$cargo,'local'=>$local,'fechaOrga'=>$fechaOrga]);}
+            'area'=>$area,'cargo'=>$cargo,'local'=>$local,'fechaOrga'=>$fechaOrga,'fechaEnviJS' => $fechaEnviJS]);}
         } else {
             return redirect(route('principal'));
         }
@@ -474,13 +476,19 @@ class calendarioController extends Controller
     public function registrarnuevoClonado(Request $request){
         $nombrecal=$request->nombrecal;
         $idcalenda=$request->idcalenda;
-        $eventos_usuarioClon = eventos_usuario::where('id_calendario','=',$idcalenda)->get();
+        $allValsAños=$request->allValsAños;
+        foreach($allValsAños as $allValsAñosx){
+           $eventos_usuarioClon = eventos_usuario::where('id_calendario','=',$idcalenda)->whereYear('start',$allValsAñosx)->get();
+
+        }
+       $añomax=max($allValsAños)+1;
+       $finNew=Carbon::create($añomax.'-01-01');
         $calendarioDup=calendario::where('calen_id','=',$idcalenda)->get()->first();
         $calendarioR = new calendario();
         $calendarioR->organi_id = session('sesionidorg');
         $calendarioR->users_id = Auth::user()->id;
         $calendarioR->calendario_nombre=$nombrecal;
-        $calendarioR->fin_fecha= $calendarioDup->fin_fecha;
+        $calendarioR->fin_fecha= $finNew;
         $calendarioR->save();
 
             foreach ($eventos_usuarioClon as $eventos) {
@@ -669,6 +677,27 @@ class calendarioController extends Controller
             $arrayeve->push($emps);
     }
     return json_encode($arrayeve);
+
+  }
+
+  public function yearCale(Request $request){
+      $idcale=$request->idcale;
+      $calendario = calendario::where('calen_id', '=', $idcale)
+                ->get()->first();
+
+      $fechaOrga=Carbon::create($calendario->created_at->format('Y-m-d'));
+      $inicio=$fechaOrga->year;
+      $fechamenosdi=Carbon::create($calendario->fin_fecha)->subDays(1);
+       $fechafin=Carbon::create($fechamenosdi->format('Y-m-d'));
+      $fin=$fechafin->year;
+
+      $arrayfec = collect();
+
+      for ($i=$inicio; $i <$fin+1 ; $i++) {
+           $i;
+           $arrayfec->push($i);
+      }
+      return $arrayfec;
 
   }
 }
