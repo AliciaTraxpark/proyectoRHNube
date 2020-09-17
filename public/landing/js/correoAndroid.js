@@ -1,5 +1,4 @@
 function enviarAndroidTabla(idEmpleado, idVinculacion) {
-    console.log(idEmpleado, idVinculacion);
     $('#empleadoAndroid').val(idEmpleado);
     $('#vinculaciónAndroid').val(idVinculacion);
     $('#modalAndroid').modal();

@@ -50,7 +50,6 @@ function disabledS() {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            console.log(data);
             $("#summernote").summernote("reset");
             $("#summernote").summernote("focus");
             $("#asunto").val("");
@@ -157,7 +156,6 @@ function enviarS() {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            console.log(data);
             $("#summernoteS").summernote("reset");
             $("#summernoteS").summernote("focus");
             $("#asuntoS").val("");

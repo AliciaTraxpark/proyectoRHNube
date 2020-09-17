@@ -42,7 +42,6 @@ $('#empleado').on("select2:opening", function () {
             }*/
         },
         success: function (data) {
-            console.log(data);
             var option = `<option value="" disabled selected>Seleccionar</option>`;
             for (var $i = 0; $i < data.length; $i++) {
                 option += `<option value="${data[$i].emple_id}">${data[$i].perso_nombre} ${data[$i].perso_apPaterno} ${data[$i].perso_apMaterno}</option>`
@@ -138,7 +137,6 @@ function onMostrarPantallas() {
                 style="margin-left:30%;color:#7d7d7d">Realize una búsqueda para ver Actividad</label>`;
             $('#espera').hide();
             datos = data;
-            console.log(data);
             if (data.length != 0) {
                 $.notifyClose();
                 $.notify({
@@ -159,7 +157,6 @@ function onMostrarPantallas() {
                 var container = $('#card');
                 var $i = 0;
                 for (let index = 0; index < data.length; index++) {
-                    console.log(data[index]);
                     $('#promHoras' + $i).empty();
                     var horaDelGrupo = data[index].horaCaptura;
                     var hora = data[index].horaCaptura;
@@ -423,7 +420,6 @@ function zoom(horayJ) {
     var carusel = `<p class="imglist" style="max-width: 1000px;">`;
     for (let index = 0; index < capturas.length; index++) {
         const element = capturas[index];
-        console.log(element);
         carusel += `<a href="data:image/jpeg;base64,${element.imagen}" data-fancybox="images" data-caption="Hora de captura a las ${element.hora_fin}"><img src="data:image/jpeg;base64,${element.imagen}" width="350" height="300" style="padding-right:10px;padding-bottom:10px"></a>`
     }
     carusel += `</p>`

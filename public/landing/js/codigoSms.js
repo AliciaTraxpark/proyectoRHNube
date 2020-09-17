@@ -2,7 +2,6 @@ $('#errorC').hide();
 $('#error').hide();
 $('#ComprobarC').click(function () {
     var codigo = $('#codigoV').val();
-    console.log(codigo);
     $.ajax({
         type: "GET",
         url: "/comprobarCodigo",
@@ -13,7 +12,6 @@ $('#ComprobarC').click(function () {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-            console.log(data);
             if (data[0].codigo == true && data[0].user) {
                 window.location.replace(
                     location.origin + "/dashboard"
