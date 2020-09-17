@@ -3750,7 +3750,7 @@ $("#documento").on("change", function () {
         $("#numDocumento").attr("maxlength", "8");
     }
     if ($("#documento").val() == 2) {
-        $("#numDocumento").attr("maxlength", "12");
+        $("#numDocumento").attr("maxlength", "8");
     }
     if ($("#documento").val() == 3) {
         $("#numDocumento").attr("maxlength", "12");
