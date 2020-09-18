@@ -385,7 +385,7 @@ function onMostrarPantallas() {
                     if(promTiempo == 0){
                         promedioHoras = 0;
                     }else{
-                        promedioHoras = (promActvidad / promTiempo).toFixed(2);
+                        promedioHoras = ((promActvidad / promTiempo)*100).toFixed(2);
                     }
                     var span = "";
                     span += `${promedioHoras}%`;
