@@ -320,7 +320,7 @@ function onMostrarPantallas() {
                                                             }</div>
                                                     </div>
                                                     </div>
-                                                    <label style="font-size: 12px;font-style: italic; bold;color:#1f4068;" for="">Total de ${totalCM} </label>
+                                                    <label style="font-size: 12px;font-style: italic; bold;color:#1f4068;" for="">Tiempo transcurrido ${totalCM} </label>
                                                     <br>
                                                 </div>
                                             </div>
