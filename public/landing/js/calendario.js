@@ -734,12 +734,22 @@ function agregarcalendario(){
    var nombrecal= $('#nombreCalen').val();
    if($("#clonarCheck").is(':checked') ){
     var idcalenda=$("#selectClonar").val();
+    ///
+    var allValsAños = [];
+        $("input[name=añosCheck]:checked").each(function () {
+            allValsAños.push($(this).attr('value'));
+        });
+        if (allValsAños.length <= 0) {
+
+            bootbox.alert("Por favor seleccione al menos un año");
+                    return false;
+                }
 
     $.ajax({
         type:"POST",
         url: "/calendario/registrarnuevoClonado",
         data: {
-            nombrecal,idcalenda
+            nombrecal,idcalenda,allValsAños
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -750,6 +760,8 @@ function agregarcalendario(){
             }
         },
         success: function (data) {
+            $('#guardarCalm').prop('disabled',true);
+
             $('#nombreCalen').val('');
         $('#selectCalendario').append($('<option>', { //agrego los valores que obtengo de una base de datos
             value: data.calen_id,
@@ -783,6 +795,7 @@ function agregarcalendario(){
             }
         },
         success: function (data) {
+            $('#guardarCalm').prop('disabled',true);
             $('#nombreCalen').val('');
         $('#selectCalendario').append($('<option>', { //agrego los valores que obtengo de una base de datos
             value: data.calen_id,
@@ -825,7 +838,9 @@ $('#selectCalendario').change(function (){
 })
 //////////////////////////
 function abrirNcalendario(){
+    $('#guardarCalm').prop('disabled',false);
     $('#nombreCalen').val('');
+    $("#añosCalen").empty();
     $('#clonarCheck').prop('checked',false);
     $('#selectClonar').val('Seleccione calendario');
      $('#selectClonar').prop('disabled',true);
@@ -1182,3 +1197,31 @@ $('#selectEmps').click(function(event) {
 
     };
 
+    $('#selectClonar').change(function (){
+        $("#añosCalen").empty();
+        var idcalendaSel=$("#selectClonar").val();
+        $.ajax({
+            type: "POST",
+            url: "/calendario/yearCale",
+            data: {idcale:idcalendaSel},
+            async: false,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            statusCode: {
+                419: function () {
+                    location.reload();
+                }
+            },
+            success: function (data) {
+                $.each( data, function( index, value ){
+                    $("#añosCalen").append(
+                        " &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox'  class='form-check-input' id='añosCheck' name='añosCheck' value='"+value+"'>"+
+                        "<label class='form-check-label' for='' style='margin-top: 2px;' >"+value+"</label>&nbsp;&nbsp;&nbsp;"
+                        );
+               });
+
+
+            },
+            error: function () {}})
+    })
