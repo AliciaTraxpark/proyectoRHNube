@@ -217,7 +217,7 @@ function onMostrarPantallas() {
                                 var totalR = enteroTime(
                                     data[index].minutos[j][0].rango
                                 );
-                                totalM = totalR;
+                                totalCM = totalR;
                                 promedio = data[index].minutos[j][0].prom;
                                 tiempoTranscurrido = data[index].minutos[j][0].rango;
                             } else {
@@ -226,7 +226,7 @@ function onMostrarPantallas() {
                                 } else {
                                     tiempoTranscurrido = sumaRangos;
                                     var totalR = enteroTime(sumaRangos);
-                                    totalM = totalR;
+                                    totalCM = totalR;
                                 }
                                 promedio = (
                                     promedios / data[index].minutos[j].length
