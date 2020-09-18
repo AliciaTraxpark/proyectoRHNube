@@ -64,13 +64,13 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-xl-12">
         <div>
             <div>
                 <div class="row mt-4">
-                    <div class="col-md-4">
+                    <div class="col-xl-4">
                         <div class="form-group row">
-                            <label class="col-lg-2 col-form-label">Fecha:</label>
+                            <label class="col-lg-3 col-form-label">Fecha:</label>
                             <div class="input-group col-md-8 text-center" style="padding-left: 0px;padding-right: 0px;"
                                 id="fechaSelec">
                                 <input type="text" id="fecha" class="form-control" data-input>
@@ -84,14 +84,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-2 text-center">
+                    <div class="col-xl-3 text-center">
                         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
                             onclick="javascript:refreshCapturas()"> <img src="{{asset('landing/images/refresh.svg')}}" height="18" class="mr-2">Refrescar</button>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-xl-5">
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label">Empleado:</label>
-                            <div class="col-lg-8">
+                            <div class="col-lg-10">
                                 <select id="empleado" data-plugin="customselect" class="form-control">
                                     <option value="" disabled selected>Seleccionar</option>
                                     @foreach ($empleado as $empleados)

@@ -153,7 +153,8 @@ function onMostrarPantallas() {
                     var hora = data[index].horaCaptura;
                     var promedios = 0;
                     var promedio = 0;
-                    var prom = 0;
+                    var promActvidad = 0;
+                    var promTiempo = 0;
                     var sumaRangos = 0;
                     var totalCM = 0;
                     var hora_inicial = "";
@@ -213,31 +214,19 @@ function onMostrarPantallas() {
                                 hora_inicial =
                                     data[index].minutos[j][0].hora_ini;
                                 hora_final = data[index].minutos[j][0].hora_fin;
-                                // var totalR = parseFloat(
-                                //     data[index].minutos[j][0].rango / 60
-                                // );
                                 var totalR = enteroTime(
                                     data[index].minutos[j][0].rango
                                 );
                                 totalM = totalR;
-                                if (totalM > 10) {
-                                    totalCM = 10;
-                                } else {
-                                    totalCM = totalM;
-                                }
                                 promedio = data[index].minutos[j][0].prom;
+                                tiempoTranscurrido = data[index].minutos[j][0].rango;
                             } else {
                                 if (sumaRangos == 0) {
                                     totalCM = 0;
                                 } else {
-                                    // var totalR = parseFloat(sumaRangos / 60);
+                                    tiempoTranscurrido = sumaRangos;
                                     var totalR = enteroTime(sumaRangos);
                                     totalM = totalR;
-                                    if (totalM > 10) {
-                                        totalCM = 10;
-                                    } else {
-                                        totalCM = totalM;
-                                    }
                                 }
                                 promedio = (
                                     promedios / data[index].minutos[j].length
@@ -365,7 +354,8 @@ function onMostrarPantallas() {
                                     </div>`;
                             }
                             grupo += card;
-                            prom = prom + parseFloat(promedio);
+                            promActvidad = promActvidad + parseFloat(promedio);
+                            promTiempo = promTiempo + parseFloat(tiempoTranscurrido)
                         } else {
                             card = `<div class="col-2" style="margin-left: 0px!important;justify-content:center;!important">
                         <br><br><br>
@@ -392,7 +382,11 @@ function onMostrarPantallas() {
                     }
                     grupo += `</div><br>`;
                     container.append(grupo);
-                    promedioHoras = (prom / 6).toFixed(2);
+                    if(promTiempo == 0){
+                        promedioHoras = 0;
+                    }else{
+                        promedioHoras = (promActvidad / promTiempo).toFixed(2);
+                    }
                     var span = "";
                     span += `${promedioHoras}%`;
                     $("#promHoras" + $i).append(span);
