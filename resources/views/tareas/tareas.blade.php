@@ -71,7 +71,7 @@
                     <div class="col-md-4">
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label">Fecha:</label>
-                            <div class="input-group col-md-8" style="padding-left: 0px;padding-right: 0px;"
+                            <div class="input-group col-md-8 text-center" style="padding-left: 0px;padding-right: 0px;"
                                 id="fechaSelec">
                                 <input type="text" id="fecha" class="form-control" data-input>
                                 <div class="input-group-prepend">
@@ -86,7 +86,7 @@
                     </div>
                     <div class="col-lg-2 text-center">
                         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
-                            onclick="javascript:refreshCapturas()">Refrescar</button>
+                            onclick="javascript:refreshCapturas()"> <img src="{{asset('landing/images/refresh.svg')}}" height="18" class="mr-2">Refrescar</button>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group row">
