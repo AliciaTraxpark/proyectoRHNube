@@ -120,7 +120,7 @@ class apiVersionDosController extends Controller
             $email = $email = env('MAIL_FROM_ADDRESS');
             if ($tipo == "soporte") {
                 Mail::to($email)->queue(new SoporteApi($contenido, $persona, $asunto, $celular));
-                return response()->json("Correo Enviado con exito", 200);
+                return response()->json("Correo Enviado con éxito", 200);
             }
         }
 
