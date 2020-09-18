@@ -144,16 +144,6 @@ function onSelectFechas() {
                     } else {
                         var sumaP = 0;
                     }
-                    /*var t1 = total.split(":");
-                    var sumaT = parseInt(t1[0]) * 3600 + parseInt(t1[1]) * 60 + parseInt(t1[2]);*/
-                    /*var sumaTotalP = 0;
-                    if (sumaT != 0) {
-                        sumaTotalP = Math.round((sumaP * 100) / sumaT);
-                        prom.push(sumaTotalP);
-                    } else {
-                        sumaTotalP = 0;
-                        prom.push(sumaTotalP);
-                    }*/
                     html_tr += '<td>' + total + '</td>';
                     html_tr += '<td>' + sumaP + '%' + '</td>';
                     var decimal = parseFloat(total.split(":")[0] + "." + total.split(":")[1] + total.split(":")[2]);
