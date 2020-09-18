@@ -87,7 +87,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                 </a>
                 <a href="/dias/laborales">
 
-                    <span>Asignar dias no laborales</span>
+                    <span>Asignar días no laborales</span>
                 </a>
                 @endif
 
@@ -111,7 +111,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             </li>
         </ul>
     </li>
-    {{-- 
+    {{--
         <li>
             <a href="javascript: void(0);">
                 <img src="{{asset('admin/images/growth (2).svg')}}" height="25"
