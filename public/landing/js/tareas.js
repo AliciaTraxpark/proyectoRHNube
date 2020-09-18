@@ -154,7 +154,7 @@ function onMostrarPantallas() {
                     var promedios = 0;
                     var promedio = 0;
                     var promActvidad = 0;
-                    var promTiempo = 0;
+                    var contarTiempo = 0;
                     var sumaRangos = 0;
                     var totalCM = 0;
                     var hora_inicial = "";
@@ -219,12 +219,10 @@ function onMostrarPantallas() {
                                 );
                                 totalCM = totalR;
                                 promedio = data[index].minutos[j][0].prom;
-                                tiempoTranscurrido = data[index].minutos[j][0].rango;
                             } else {
                                 if (sumaRangos == 0) {
                                     totalCM = 0;
                                 } else {
-                                    tiempoTranscurrido = sumaRangos;
                                     var totalR = enteroTime(sumaRangos);
                                     totalCM = totalR;
                                 }
@@ -355,7 +353,7 @@ function onMostrarPantallas() {
                             }
                             grupo += card;
                             promActvidad = promActvidad + parseFloat(promedio);
-                            promTiempo = promTiempo + parseFloat(tiempoTranscurrido)
+                            contarTiempo = contarTiempo + 1;
                         } else {
                             card = `<div class="col-2" style="margin-left: 0px!important;justify-content:center;!important">
                         <br><br><br>
@@ -382,10 +380,10 @@ function onMostrarPantallas() {
                     }
                     grupo += `</div><br>`;
                     container.append(grupo);
-                    if(promTiempo == 0){
+                    if(contarTiempo == 0){
                         promedioHoras = 0;
                     }else{
-                        promedioHoras = ((promActvidad / promTiempo)*100).toFixed(2);
+                        promedioHoras = (promActvidad / contarTiempo).toFixed(2);
                     }
                     var span = "";
                     span += `${promedioHoras}%`;
