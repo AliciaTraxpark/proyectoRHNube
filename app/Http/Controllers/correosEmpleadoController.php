@@ -282,11 +282,5 @@ class correosEmpleadoController extends Controller
         return response()->json($resultado, 200);
     }
 
-    public function envioTicketSoporte(Request $request)
-    {
-        $contenido = $request->get('contenido');
-        $email = 'gaby020313@gmail.com';
-        Mail::to($email)->queue(new correoAdministrativo($contenido));
-        return response()->json($contenido, 200);
-    }
+
 }
