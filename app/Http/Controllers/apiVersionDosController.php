@@ -6,6 +6,7 @@ use App\actividad;
 use App\captura;
 use App\empleado;
 use App\Mail\SoporteApi;
+use App\Mail\SugerenciaApi;
 use App\persona;
 use App\promedio_captura;
 use Carbon\Carbon;
@@ -109,17 +110,26 @@ class apiVersionDosController extends Controller
     public function ticketSoporte(Request $request)
     {
         $idEmpleado = $request->get('idEmpleado');
-        $asunto = $request->get('asunto');
-        $contenido = $request->get('contenido');
-        $celular = $request->get('celular');
         $tipo = $request->get('tipo');
+        $contenido = $request->get('contenido');
+        $asunto = $request->get('asunto');
+        $celular = $request->get('celular');
+        $cont = $request->get('contenido');
+        $asunt = $request->get('asunto');
+        $cel = $request->get('celular');
 
         $empleado = empleado::findOrFail($idEmpleado);
         if ($empleado) {
             $persona = persona::findOrFail($empleado->emple_persona);
             $email = $email = env('MAIL_FROM_ADDRESS');
+
             if ($tipo == "soporte") {
+
                 Mail::to($email)->queue(new SoporteApi($contenido, $persona, $asunto, $celular));
+                return response()->json("Correo Enviado con éxito", 200);
+            }
+            if ($tipo == "sugerencia") {
+                Mail::to($email)->queue(new SugerenciaApi($contenido, $persona, $asunto, $celular));
                 return response()->json("Correo Enviado con éxito", 200);
             }
         }
