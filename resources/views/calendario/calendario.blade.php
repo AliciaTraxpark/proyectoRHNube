@@ -221,7 +221,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
                         </div>
                         <div class="modal-body">
 
-                                <h5>¿Asignar dias no laborales?</h5>
+                                <h5>¿Asignar días no laborales?</h5>
                                 <input type="hidden" id="fechaDa2" name="fechaDa2">
 
                                         {{-- <label for="start" class="col-sm-4 col-form-label">Fecha Inicial:</label> --}}
@@ -637,10 +637,10 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
     <div class="col-md-1"></div>
     <div class="col-md-5">
         <div class="row">
-            <div class="col-md-5"><label style="font-size: 12px;font-style:oblique;font-weight: 600" for="">Calendario programado</label></div>
-            <div class="col-md-1"><label style="font-size: 12px;font-style:oblique;font-weight: 600" for="">De:</label></div>
+            <div class="col-md-3"><label style="font-size: 12px;font-style:oblique;" for="">Programación</label></div>
+            <div class="col-md-1"><label style="font-size: 12px;font-style:oblique;" for="">De:</label></div>
             <div class="col-md-2"><label style="font-size: 12px" for="">{{$fechaEnvi}}</label></div>
-            <div class="col-md-1"><label style="font-size: 12px;font-style:oblique;font-weight: 600" for="">Hasta: </label></div>
+            <div class="col-md-1"><label style="font-size: 12px;font-style:oblique;" for="">Hasta: </label></div>
             <div class="col-md-3 text-right"><label style="font-size: 12px" for="" id="fechaHasta"></label></div>
             </div>
     </div>

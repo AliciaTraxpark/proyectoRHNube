@@ -22,7 +22,7 @@
 @section('breadcrumb')
 <div class="row page-title">
     <div class="col-md-12">
-        <h4 class="header-title mt-0 "></i>Asignar dias no laborales</h4>
+        <h4 class="header-title mt-0 "></i>Asignar días no laborales</h4>
     </div>
 </div>
 @endsection
@@ -171,8 +171,12 @@
                     <div class="col-md-6">
                         <div class="col-md-12">
                             <div class="row">
-                                <div class="col-md-12 form-check" style="padding-left: 4px;">
+                                <div class="col-md-9 form-check" style="padding-left: 4px;">
                                     <label for="" class="col-md-8">Seleccionar por area(s):</label>
+
+
+                                </div>
+                                <div class="col-md-3 text-right">
                                     <input type="checkbox" style="font-size: 11.4px" class="form-check-input"
                                         id="selectAreaCheck">
                                     <label class="form-check-label" for="selectAreaCheck"
@@ -228,7 +232,7 @@
                     <div class="col-xl-12">
                         <div class="row">
                             <div class="col-xl-12" id="verinfo" style="display: none">
-                                <br><label style="font-weight: 600;color: #03345f">Seleccione dias para asignar a dias laborables o no laborales:</label>
+                                <br><label style="font-weight: 600;color: #03345f">Seleccione y asigne días no laborables, descansos e incidencias.</label>
                             </div>
                         <div id="calendar_ed" style="display: none" class="col-xl-10"> </div>
                         <div class="col-xl-2" id="calendar_ed_bt" style="display: none">
