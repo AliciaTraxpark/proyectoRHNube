@@ -100,7 +100,6 @@ function onMostrarPantallas() {
     $("#card").empty();
     $("#espera").show();
     $.ajax({
-        async:false,
         url: "tareas/show",
         method: "GET",
         data: {
