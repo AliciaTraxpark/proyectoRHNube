@@ -151,6 +151,7 @@ function onMostrarPantallas() {
                 var countA = 0;
                 var totalActividad = 0;
                 var actividadDiaria = `<span style="font-weight: bold;color:#163552;cursor:default"> --Actividad Diaria - <span id="totalActivi"></span></span><br>`;
+                container.append(actividadDiaria);
                 for (let index = 0; index < data.length; index++) {
                     $("#promHoras" + $i).empty();
                     var horaDelGrupo = data[index].horaCaptura;
@@ -383,7 +384,6 @@ function onMostrarPantallas() {
                         }
                     }
                     grupo += `</div><br>`;
-                    container.append(actividadDiaria);
                     container.append(grupo);
                     if (contarTiempo == 0) {
                         promedioHoras = 0;
