@@ -147,6 +147,9 @@ function onMostrarPantallas() {
                 );
                 var container = $("#card");
                 var $i = 0;
+                var actividadD = 0;
+                var countA = 0;
+                var totalActividad = 0;
                 for (let index = 0; index < data.length; index++) {
                     $("#promHoras" + $i).empty();
                     var horaDelGrupo = data[index].horaCaptura;
@@ -165,6 +168,7 @@ function onMostrarPantallas() {
                         " - " +
                         (parseInt(horaDelGrupo) + 1) +
                         ":00:00";
+                    var actividadDiaria = `<span style="font-weight: bold;color:#6c757d;cursor:default">Actividad Diaria - <span id="totalActivi"></span></span><br>`;
                     var grupo = `<span style="font-weight: bold;color:#6c757d;cursor:default">${labelDelGrupo}</span>&nbsp;&nbsp;<img src="landing/images/punt.gif" height="70">&nbsp;&nbsp;
                     <span class="promHoras" style="font-weight: bold;color:#6c757d;cursor:default" id="promHoras${$i}" data-toggle="tooltip" data-placement="right" title="Actividad por Hora"
                     data-original-title=""></span><br><br><div class="row">`;
@@ -379,18 +383,27 @@ function onMostrarPantallas() {
                         }
                     }
                     grupo += `</div><br>`;
+                    container.append(actividadDiaria);
                     container.append(grupo);
-                    if(contarTiempo == 0){
+                    if (contarTiempo == 0) {
                         promedioHoras = 0;
-                    }else{
-                        promedioHoras = (promActvidad / contarTiempo).toFixed(2);
+                    } else {
+                        promedioHoras = (promActvidad / contarTiempo).toFixed(
+                            2
+                        );
                     }
                     var span = "";
                     span += `${promedioHoras}%`;
                     $("#promHoras" + $i).append(span);
                     $('[data-toggle="tooltip"]').tooltip();
                     $i = $i + 1;
+                    actividadD = actividadD + promedioHoras;
+                    countA = countA + 1;
                 }
+                $("#totalActivi").empty();
+                totalActividad = (actividadD / countA).toFixed(2);
+                var cont = `${totalActividad}%`;
+                $("#totalActivi").append(cont);
             } else {
                 $("#card").empty();
                 if ($("#empleado").val() == null) {
