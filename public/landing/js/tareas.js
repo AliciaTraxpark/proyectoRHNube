@@ -21,7 +21,10 @@ var fechaValue = $("#fechaSelec").flatpickr({
     wrap: true,
     allowInput: true,
 });
-
+$(function () {
+    f = moment().format("YYYY-MM-DD");
+    fechaValue.setDate(f);
+});
 $("#empleado").select2();
 $("#empleado").on("select2:opening", function () {
     var value = $("#empleado").val();
@@ -67,10 +70,15 @@ function fechaHoy() {
 }
 
 function enteroTime(tiempo) {
-    var hora = Math.floor( tiempo / 3600 ); 
+    var hora = Math.floor(tiempo / 3600);
     var minutos = Math.floor(tiempo / 60);
     var segundos = tiempo % 60;
-    var resultado = ("0" + hora).slice(-2) + ":" + ("0" + minutos).slice(-2) + ":" + ("0" + segundos).slice(-2);
+    var resultado =
+        ("0" + hora).slice(-2) +
+        ":" +
+        ("0" + minutos).slice(-2) +
+        ":" +
+        ("0" + segundos).slice(-2);
     return resultado;
 }
 
@@ -237,7 +245,9 @@ function onMostrarPantallas() {
                                 // var totalR = parseFloat(
                                 //     data[index].minutos[j][0].rango / 60
                                 // );
-                                var totalR = enteroTime(data[index].minutos[j][0].rango);
+                                var totalR = enteroTime(
+                                    data[index].minutos[j][0].rango
+                                );
                                 totalM = totalR;
                                 if (totalM > 10) {
                                     totalCM = 10;
