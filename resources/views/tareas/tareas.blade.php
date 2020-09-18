@@ -67,15 +67,11 @@
     <div class="col-lg-12">
         <div>
             <div>
-                <div class="row">
-                    <div class="col-md-12">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6"> <label><br> </label>
+                <div class="row mt-4">
+                    <div class="col-md-4">
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label">Fecha:</label>
-                            <div class="input-group col-md-7" style="padding-left: 0px;padding-right: 0px;"
+                            <div class="input-group col-md-8" style="padding-left: 0px;padding-right: 0px;"
                                 id="fechaSelec">
                                 <input type="text" id="fecha" class="form-control" data-input>
                                 <div class="input-group-prepend">
@@ -85,14 +81,14 @@
                                         </a>
                                     </div>
                                 </div>
-                                <div class="col-lg-2">
-                                    <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
-                                        onclick="javascript:fechaHoy()">Hoy</button>
-                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6"><label><br> </label>
+                    <div class="col-lg-2 text-center">
+                        <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
+                            onclick="javascript:fechaHoy()">Hoy</button>
+                    </div>
+                    <div class="col-md-6">
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label">Empleado:</label>
                             <div class="col-lg-8">
