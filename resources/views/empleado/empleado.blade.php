@@ -1991,7 +1991,7 @@
                                                         <label class="normal" for=""><br></label>
                                                         <label class="custom-control custom-radio" data-toggle="tooltip"
                                                             data-placement="right" title=""
-                                                            data-original-title="Puedes elegir personalizado si no deseas especificar tu sexo.">
+                                                            data-original-title="Puedes elegir personalizado si no deseas especificar tu género.">
                                                             <input type="radio" name="tipo" id="tipo"
                                                                 value="Personalizado" required>
                                                             Personalizado
