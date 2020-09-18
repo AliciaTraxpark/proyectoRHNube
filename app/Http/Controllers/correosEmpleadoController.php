@@ -281,6 +281,4 @@ class correosEmpleadoController extends Controller
         }
         return response()->json($resultado, 200);
     }
-
-
 }
