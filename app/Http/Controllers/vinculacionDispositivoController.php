@@ -110,8 +110,7 @@ class vinculacionDispositivoController extends Controller
             $idVinculacion = $vinculacion->id;
 
             $vinc = vinculacion::where('id', '=', $idVinculacion)->get()->first();
-            $codigoU = Auth::user()->id;
-            $codigoHash = $codigoU . "s" . $idVinculacion . "s" . $codigoEmpresa . $idEmpleado;
+            $codigoHash = $codigoEmpresa . "s" . $idVinculacion . "s" . $codigoEmpresa . $idEmpleado;
             $encode = intval($codigoHash, 36);
             $vinc->hash = $encode;
             $vinc->save();
@@ -169,8 +168,7 @@ class vinculacionDispositivoController extends Controller
             $idVinculacion = $vinculacion->id;
 
             $vinc = vinculacion::where('id', '=', $idVinculacion)->get()->first();
-            $codigoU = Auth::user()->id;
-            $codigoHash = $codigoU . "s" . $idVinculacion . "s" . $codigoEmpresa . $idEmpleado;
+            $codigoHash = $codigoEmpresa. "s" . $idVinculacion . "s" . $codigoEmpresa . $idEmpleado;
             $encode = intval($codigoHash, 36);
             $vinc->hash = $encode;
             $vinc->save();

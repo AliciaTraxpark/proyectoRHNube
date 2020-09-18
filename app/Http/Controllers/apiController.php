@@ -11,6 +11,7 @@ use App\horario;
 use App\horario_dias;
 use App\horario_empleado;
 use App\licencia_empleado;
+use App\organizacion;
 use App\promedio_captura;
 use App\proyecto;
 use App\proyecto_empleado;
@@ -72,11 +73,11 @@ class apiController extends Controller
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
             ->where('emple_nDoc', '=', $nroD)
-            ->where('e.users_id', '=', $explode[0])
+            ->where('e.organi_id', '=', $explode[0])
             ->where('e.emple_estado', '=', 1)
             ->get()->first();
 
-        $idUser = $explode[0];
+        $idOrganizacion = $explode[0];
 
         if ($empleado) {
             $vinculacion = vinculacion::where('id', '=', $explode[1])->get()->first();
@@ -89,10 +90,10 @@ class apiController extends Controller
                         ]);
                         $payload = $factory->make();
                         $token = JWTAuth::encode($payload);
-                        $user = User::where('id', '=', $idUser)->get()->first();
+                        $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
                         return response()->json(array(
-                            "corte" => $user->corteCaptura, "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
-                            'idUser' => $idUser, 'token' => $token->get()
+                            "corte" => $organizacion->corteCaptura, "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                            'idUser' => $idOrganizacion, 'token' => $token->get()
                         ), 200);
                     } else {
                         $vinculacion->pc_mac = $request->get('pc_mac');
@@ -102,10 +103,10 @@ class apiController extends Controller
                         ]);
                         $payload = $factory->make();
                         $token = JWTAuth::encode($payload);
-                        $user = User::where('id', '=', $idUser)->get()->first();
+                        $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
                         return response()->json(array(
-                            "corte" => $user->corteCaptura, "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
-                            'idUser' => $idUser, 'token' => $token->get()
+                            "corte" => $organizacion->corteCaptura, "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                            'idUser' => $idOrganizacion, 'token' => $token->get()
                         ), 200);
                     }
                 }
