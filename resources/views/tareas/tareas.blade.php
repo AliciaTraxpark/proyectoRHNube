@@ -86,7 +86,7 @@
                     </div>
                     <div class="col-lg-2 text-center">
                         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
-                            onclick="javascript:fechaHoy()">Hoy</button>
+                            onclick="javascript:refreshCapturas()">Refrescar</button>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group row">
