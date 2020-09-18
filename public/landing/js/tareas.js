@@ -150,6 +150,7 @@ function onMostrarPantallas() {
                 var actividadD = 0;
                 var countA = 0;
                 var totalActividad = 0;
+                var actividadDiaria = `<span style="font-weight: bold;color:#163552;cursor:default"> --Actividad Diaria - <span id="totalActivi"></span></span><br>`;
                 for (let index = 0; index < data.length; index++) {
                     $("#promHoras" + $i).empty();
                     var horaDelGrupo = data[index].horaCaptura;
@@ -168,7 +169,6 @@ function onMostrarPantallas() {
                         " - " +
                         (parseInt(horaDelGrupo) + 1) +
                         ":00:00";
-                    var actividadDiaria = `<span style="font-weight: bold;color:#163552;cursor:default"> --Actividad Diaria - <span id="totalActivi"></span></span><br>`;
                     var grupo = `<span style="font-weight: bold;color:#6c757d;cursor:default">${labelDelGrupo}</span>&nbsp;&nbsp;<img src="landing/images/punt.gif" height="70">&nbsp;&nbsp;
                     <span class="promHoras" style="font-weight: bold;color:#6c757d;cursor:default" id="promHoras${$i}" data-toggle="tooltip" data-placement="right" title="Actividad por Hora"
                     data-original-title=""></span><br><br><div class="row">`;
