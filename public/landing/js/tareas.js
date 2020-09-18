@@ -100,6 +100,7 @@ function onMostrarPantallas() {
     $("#card").empty();
     $("#espera").show();
     $.ajax({
+        async:false,
         url: "tareas/show",
         method: "GET",
         data: {
@@ -168,7 +169,7 @@ function onMostrarPantallas() {
                         " - " +
                         (parseInt(horaDelGrupo) + 1) +
                         ":00:00";
-                    var actividadDiaria = `<span style="font-weight: bold;color:#6c757d;cursor:default">Actividad Diaria - <span id="totalActivi"></span></span><br>`;
+                    var actividadDiaria = `<span style="font-weight: bold;color:#163552;cursor:default"> --Actividad Diaria - <span id="totalActivi"></span></span><br>`;
                     var grupo = `<span style="font-weight: bold;color:#6c757d;cursor:default">${labelDelGrupo}</span>&nbsp;&nbsp;<img src="landing/images/punt.gif" height="70">&nbsp;&nbsp;
                     <span class="promHoras" style="font-weight: bold;color:#6c757d;cursor:default" id="promHoras${$i}" data-toggle="tooltip" data-placement="right" title="Actividad por Hora"
                     data-original-title=""></span><br><br><div class="row">`;
