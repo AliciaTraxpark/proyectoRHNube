@@ -486,6 +486,11 @@ function calendario() {
             $('#fechaDa').val(date1);
             $('#horario1').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
             $('#horario2').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
+            $("#selectHorario").val("Asignar horario");
+            $('#errorSel').hide();
+            $("#selectHorario").trigger("change");
+            $('#fueraHSwitch').prop('checked',false)
+
             $('#horarioAsignar_ed').modal('show');
 
         },
@@ -494,6 +499,7 @@ function calendario() {
             console.log(info);
             console.log(info.event.id);
             console.log(info.event.textColor);
+            console.log(info.event.borderColor);
            var event = calendar.getEventById(id);
             if(info.event.textColor=='111111'){
                 bootbox.confirm({
@@ -550,8 +556,20 @@ function calendario() {
             right: ''
         },
         eventRender: function(info) {
+             if(info.event.extendedProps.horaI===null){
+                $(info.el).tooltip({  title: info.event.title});
+           } else{
+            if(info.event.borderColor=='#5369f8'){
+                $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
 
-            $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
+            }
+                else{
+                    $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
+               }
+           }
+           /*if(info.event.borderColor=='#5369f8'){
+            $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.borderColor});
+         }*/
         },
         events: function (info, successCallback, failureCallback) {
 
@@ -589,17 +607,32 @@ function calendario() {
     calendar.render();
    /*  $("#calendar > div.fc-toolbar.fc-header-toolbar > div.fc-right").html(); */
 }
-$('#selectHorario').change(function(e){
+function agregarHorarioSe(){
     if($("*").hasClass("fc-highlight")){
-    e.stopPropagation();
-    idpais = $('#pais').val();
-    iddepartamento = $('#departamento').val();
+
     textSelec1=$('select[name="selectHorario"] option:selected').text();
     separador = "(";
     textSelec2 = textSelec1.split(separador);
     textSelec=textSelec2[0];
 
     var idhorar = $('#selectHorario').val();
+        console.log(idhorar);
+        if(idhorar==null){
+            $('#errorSel').show();
+            return false;
+        } else{
+            $('#errorSel').hide();
+        }
+        var fueraHora;
+        if( $('#fueraHSwitch').prop('checked') ){
+            fueraHora=1;
+            console.log(fueraHora);
+        } else{
+            fueraHora=0;
+            console.log(fueraHora);
+        }
+
+
 
     var diasEntreFechas = function (desde, hasta) {
         var dia_actual = desde;
@@ -642,9 +675,7 @@ $('#selectHorario').change(function(e){
         data: {
             fechasArray: fechastart,
             hora: textSelec,
-            pais: idpais,
-            departamento: iddepartamento,
-            idhorar:idhorar
+            idhorar:idhorar,fueraHora
 
         },
         statusCode: {
@@ -663,7 +694,7 @@ $('#selectHorario').change(function(e){
             var mesAg= $('#fechaDa').val();
         var d  =mesAg;
         var fechasM=new Date(d);
-            calendario(data,fechasM);
+        calendar.refetchEvents();
 
 
         },
@@ -681,7 +712,7 @@ $('#selectHorario').change(function(e){
 
     })
 }
-     });
+     };
 
 
 document.addEventListener('DOMContentLoaded', calendario);
@@ -719,7 +750,8 @@ $('#guardarHorarioEventos').click(function () {
             $('#guardarHorarioEventos').prop('disabled', false);
             $('#tablaEmpleado').DataTable().ajax.reload();
             $('#verhorarioEmpleado').modal('toggle');
-            calendario();
+            calendar.refetchEvents();
+
 
         },
         error: function () {
@@ -763,7 +795,8 @@ $('#guardarTodoHorario').click(function () {
             $('#guardarTodoHorario').prop('disabled', false);
 
             $('#asignarHorario').modal('toggle');
-            calendario();
+            calendar.refetchEvents();
+
 
         },
         error: function () {
@@ -873,11 +906,7 @@ function abrirHorarioen(){
 
 }
 function registrarHorario(){
-    if ($('#exampleCheck1').prop('checked')) {
-        sobretiempo = 1;
-    } else {
-        sobretiempo = 0;
-    }
+
 
     descripcion = $('#descripcionCa').val();
     toleranciaH = $('#toleranciaH').val();
@@ -888,7 +917,6 @@ function registrarHorario(){
         type: "post",
         url: "/guardarHorario",
         data: {
-            sobretiempo,
 
             descripcion,
             toleranciaH,inicio,fin
@@ -925,8 +953,14 @@ function registrarhDias(idhorar){
     H1=$('#horario1').val();
             H2=$('#horario2').val();
 
-            idpais = $('#pais').val();
-            iddepartamento = $('#departamento').val();
+            var fueraHora;
+            if( $('#fueraHSwitch').prop('checked') ){
+                fueraHora=1;
+                console.log(fueraHora);
+            } else{
+                fueraHora=0;
+                console.log(fueraHora);
+            }
         textSelec=$('#descripcionCa').val();
         var diasEntreFechas = function (desde, hasta) {
             var dia_actual = desde;
@@ -964,9 +998,8 @@ function registrarhDias(idhorar){
                 data: {
                     fechasArray: fechastart,
                     hora: textSelec,
-                    pais: idpais,
-                    departamento: iddepartamento,
-                    idhorar:idhorar
+
+                    idhorar:idhorar,fueraHora
                 },
                 statusCode: {
 
@@ -979,7 +1012,8 @@ function registrarhDias(idhorar){
                 },
                 success: function (data) {
 
-                    calendario();
+                    calendar.refetchEvents();
+
 
 
                 },
@@ -1187,7 +1221,8 @@ function asignarlabo(){
                           var mesAg= $('#fechaDa').val();
                         var d  =mesAg;
                         var fechasM=new Date(d);
-                          calendario(data,fechasM);
+                        calendar.refetchEvents();
+
 
                       },
                       error: function (data) {
@@ -1318,7 +1353,7 @@ function asignarNolabo(){
                       var mesAg= $('#fechaDa').val();
                       var d  =mesAg;
                       var fechasM=new Date(d);
-                      calendario(data,fechasM);
+                      calendar.refetchEvents();
 
                   },
                   error: function (data) {
@@ -1503,7 +1538,7 @@ function registrarIncidenciaHo(){
             var mesAg= $('#fechaDa').val();
         var d  =mesAg;
         var fechasM=new Date(d);
-            calendario(data,fechasM);
+        calendar.refetchEvents();
             $('#asignarIncidenciaHorario').modal('toggle');
 
         },
@@ -1534,7 +1569,7 @@ function vaciarcalendario(){
                     var mesAg= $('#fechaDa').val();
                     var d  =mesAg;
                     var fechasM=new Date(d);
-                    calendario(data,fechasM);
+                    calendar.refetchEvents();
                 });
 
             }
@@ -1561,7 +1596,7 @@ function vaciarhor(){
                     var mesAg= $('#fechaDa').val();
                     var d  =mesAg;
                     var fechasM=new Date(d);
-                    calendario(data,fechasM);
+                    calendar.refetchEvents();
                 });
 
             }
@@ -1588,7 +1623,7 @@ function vaciardl(){
                     var mesAg= $('#fechaDa').val();
                     var d  =mesAg;
                     var fechasM=new Date(d);
-                    calendario(data,fechasM);
+                    calendar.refetchEvents();
                 });
 
             }
@@ -1615,7 +1650,7 @@ function vaciarndl(){
                     var mesAg= $('#fechaDa').val();
                     var d  =mesAg;
                     var fechasM=new Date(d);
-                    calendario(data,fechasM);
+                    calendar.refetchEvents();
                 });
 
             }
@@ -1699,7 +1734,7 @@ function eliminarinctemporal(idinc){
             var mesAg= $('#fechaDa').val();
             var d  =mesAg;
             var fechasM=new Date(d);
-                calendario(data,fechasM);
+            calendar.refetchEvents();
 
         },
         error: function (data) {
@@ -1866,9 +1901,7 @@ function editarHorarioLista(idsedit){
 
             $('#descripcionCa_ed').val(data[0].horario_descripcion);
 
-             if(data[0].horario_sobretiempo==1){
-                $('#exampleCheck1_ed').prop('checked',true);
-            }
+
             $('#toleranciaH_ed').val(data[0].horario_tolerancia);
             $('#horaI_ed').val(data[0].horaI);
             $('#horaF_ed').val(data[0].horaF);
@@ -1886,12 +1919,6 @@ function editarHorarioLista(idsedit){
 function editarHorario(){
     var idhorario=$('#idhorario_ed').val();
 
-    var sobretiempo
-    if ($('#exampleCheck1_ed').prop('checked')) {
-        sobretiempo = 1;
-    } else {
-        sobretiempo = 0;
-    }
     var descried=$('#descripcionCa_ed').val();
     var toleed=$('#toleranciaH_ed').val();
     var horaIed=$('#horaI_ed').val();
@@ -1900,7 +1927,7 @@ function editarHorario(){
     $.ajax({
         type: "post",
         url: "/horario/actualizarhorario",
-        data: {idhorario,sobretiempo,descried,toleed,horaIed,horaFed},
+        data: {idhorario,descried,toleed,horaIed,horaFed},
         statusCode: {
             /*401: function () {
                 location.reload();
@@ -1919,7 +1946,7 @@ function editarHorario(){
             $.each(data, function (key, item) {
                 $('#selectHorario').append($('<option>', { //agrego los valores que obtengo de una base de datos
                     value: item.horario_id,
-                    text: item.horario_descripcion
+                    text: item.horario_descripcion+"("+item.horaI+"-"+item.horaF+")"
 
                      }));
 
@@ -1928,13 +1955,16 @@ function editarHorario(){
 
         $("#selectHorario").append($('<option >', { //agrego los valores que obtengo de una base de dato
                 text: "Asignar horario",
-                selected: true
+                disabled: true
+
             }));
+             $("#selectHorario").val("Asignar horario");
+   $("#selectHorario").trigger("change");
 
             var mesAg= $('#fechaDa').val();
             var d  =mesAg;
             var fechasM=new Date(d);
-                calendario(data[2],fechasM);
+            calendar.refetchEvents();
         $('#horarioEditar').modal('hide');
         },
         error: function (data) {

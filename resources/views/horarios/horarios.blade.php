@@ -33,9 +33,10 @@
     background-color: #d1c3c3;
     font-size: 10.5px!important;
     cursor:url("../landing/images/cruz1.svg"), auto;
-    font-weight: 600;
 
 }
+.fc-event-container> a{
+    border: 1px solid #fff;}
  .fc-toolbar.fc-header-toolbar{
     zoom:80%;
 }
@@ -326,7 +327,16 @@ background-color: #ffffff !important;
                                             <div class="col-md-6" style="  background: #ffffff;
                                             height: 35px;border: 1px solid #d4d4d4;"><h1>&nbsp;</h1></div>
                                               <div class="col-md-6"><label for=""style="font-size: 12px">Dias laborables</label></div>
-                                        </div> <br><br>
+                                        </div>
+
+                                        <div class="col-md-12" style="padding-left: 0px;">
+                                            <div class="col-md-12 form-check" style="padding-left: 10px;">
+                                                <input type="checkbox" style="" class="form-check-input" id="FeriadosCheck">
+                                                <label class="form-check-label" for="FeriadosCheck" style="color:#8a032c;font-weight: 600"
+                                                >Ver feriados.</label>
+                                            </div>
+                                        </div>
+                                        <br><br>
                                         {{-- <div class="row">
                                          <div class="col-6" style="padding-left: 0px;">
                                             <button style="background-color: #dddaee; border-color: #ffffff; color: #44444c;" onclick="vaciarcalendario()"  class="btn btn-xs btn-primary" ><img src="{{asset('admin/images/borrar.svg')}}" height="10" ></button>
@@ -355,21 +365,9 @@ background-color: #ffffff !important;
                                                 </div>
                                             </div><!-- /btn-group -->
                                         </div><br><br><br>
-                                        <div class="col-md-7" style="padding-left: 0px;">
-                                            <div class="form-check">
-                                                <input type="checkbox" style="" class="form-check-input" id="FeriadosCheck">
-                                                <label class="form-check-label" for="FeriadosCheck" style="font-style: oblique;color:#8a032c;font-weight: 600"
-                                                >Ver feriados.</label>
-                                            </div>
                                         </div>
-                                        </div>
-
-
-
                                     </div>
-
                                </div>
-
                            </div>
                            <div class="modal-footer" style="padding-top: 8px;
                            padding-bottom: 8px;">
@@ -399,6 +397,7 @@ background-color: #ffffff !important;
                     style="font-size:12px!important;background: #f3f3f3;">
                     <div class="row">
                      <div class="col-md-9">
+                        <span id=errorSel style="color: #8b3a1e;display:none">Seleccione un horario</span>
                             <select data-plugin="customselect"  class="form-control custom-select custom-select-sm  col-md-10" name="selectHorario" id="selectHorario">
                                 <option hidden selected disabled>Asignar horario</option>
                                 @foreach ($horario as $horarios)
@@ -411,6 +410,13 @@ background-color: #ffffff !important;
                         <button class="btn btn-primary btn-sm" style="background-color: #183b5d;border-color:#62778c;margin-top: 5px;" onclick="abrirHorario()">+</button>
 
                      </div>
+
+                     <div class="col-md-12">
+                        <div class="custom-control custom-switch mb-2">
+                            <input type="checkbox" class="custom-control-input" id="fueraHSwitch">
+                            <label class="custom-control-label" for="fueraHSwitch">Trabajar fuera de horario</label>
+                        </div>
+                     </div>
                     </div>
 
 
@@ -418,9 +424,10 @@ background-color: #ffffff !important;
                 <div class="modal-footer"
                     style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
                     <div class="col-md-12 text-right" style="padding-right: 0px;">
-                        <button type="button" class="btn btn-soft-primary btn-sm "
+                        <button type="button" class="btn btn-light  btn-sm " style="background: #f3f3f3;
+                         border-color: #f3f3f3;"
                             onclick="$('#horarioAsignar_ed').modal('hide')">Cancelar</button>
-
+                            <button type="button" class="btn btn-primary btn-sm" style="background-color: #183b5d;border-color:#62778c;" onclick="agregarHorarioSe()">Registrar</button>
                         </form>
                     </div>
                 </div>
@@ -771,13 +778,6 @@ background-color: #ffffff !important;
                                     <form id="frmHor" action="javascript:registrarHorario()">
                                        <div class="row">
 
-                                        <div class="col-md-12"><label for=""></label>
-                                            <div class="form-check">
-
-                                              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                              <label class="form-check-label" for="exampleCheck1">Aplicar sobretiempo</label><br><br>
-                                            </div>
-                                         </div>
 
                                          <div class="col-md-6">
                                             <div class="form-group">
@@ -974,13 +974,6 @@ background-color: #ffffff !important;
                                     <form id="frmHorEditar" action="javascript:editarHorario()">
                                        <div class="row"><input type="hidden" id="idhorario_ed">
 
-                                        <div class="col-md-12"><label for=""></label>
-                                            <div class="form-check">
-
-                                              <input type="checkbox" class="form-check-input" id="exampleCheck1_ed">
-                                              <label class="form-check-label" for="exampleCheck1_ed">Aplicar sobretiempo</label>
-                                            </div><br>
-                                         </div>
 
                                          <div class="col-md-6">
                                             <div class="form-group">
