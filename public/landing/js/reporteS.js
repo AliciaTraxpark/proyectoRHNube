@@ -5,7 +5,7 @@ $('#fecha').datetimepicker({
     minView: 2,
     pickTime: false,
     autoclose: true,
-    weekStart:1,
+    weekStart: 1,
     todayBtn: false,
 });
 var notify = $.notifyDefaults({
@@ -87,8 +87,12 @@ function onSelectFechas() {
     if ($.fn.DataTable.isDataTable("#Reporte")) {
         $('#Reporte').DataTable().destroy();
     }
+    if ($.fn.DataTable.isDataTable("#actividadD")) {
+        $('#actividadD').DataTable().destroy();
+    }
     $('#empleado').empty();
     $('#dias').empty();
+    $('#diasActvidad').empty();
     $('#myChartD').empty();
     $("#myChart").show();
     if (grafico.config != undefined) grafico.destroy();
@@ -120,15 +124,13 @@ function onSelectFechas() {
                 var borderColor = ['rgb(63,77,113)'];
                 var html_tr = "";
                 var html_trD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
+                var html_trAD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
                 for (var i = 0; i < data.length; i++) {
                     html_tr += '<tr><td>' + data[i].nombre + ' ' + data[i].apPaterno + ' ' + data[i].apMaterno + '</td>';
                     nombre.push(data[i].nombre.split('')[0] + data[i].apPaterno.split('')[0] + data[i].apMaterno.split('')[0]);
                     var total = data[i].horas.reduce(function (a, b) {
                         return sumarHora(a, b);
                     });
-                    /*var promedio = data[i].promedio.reduce(function (a, b) {
-                        return sumarHora(a, b);
-                    });*/
                     var promedio = data[i].promedio.reduce(function (a, b) {
                         return calcularPromedio(a, b);
                     });
@@ -154,20 +156,83 @@ function onSelectFechas() {
                     var momentValue = moment(data[0].fechaF[m]);
                     momentValue.toDate();
                     momentValue.format("ddd DD/MM");
+                    // TABLA DEFAULT
                     html_trD += '<th>' + momentValue.format("ddd DD/MM") + '</th>';
+                    // TABLA CON ACTIVIDAD DIARIA
+                    html_trAD += '<th>' + momentValue.format("ddd DD/MM") + '</th>';
+                    html_trAD += '<th>ACTIV. DIARIA</th>';
                 }
+                // TABLA DEFAULT
                 html_trD += '<th>TOTAL</th>';
                 html_trD += '<th>ACTIV.</th></tr>';
+                // TABLA CON ACTIVIDAD DIARIA
+                html_trAD += '<th>TOTAL</th>';
+                html_trAD += '<th>ACTIV.</th></tr>';
+                // TABLA DEFAULT
                 $("#dias").html(html_trD);
                 $("#empleado").html(html_tr);
-                //container.append(html_tr);
-                //containerD.append(html_trD);
+                //TABLA CON ACTIVIDAD DIARIA
+                $('#diasActvidad').html(html_trAD);
 
                 $("#Reporte").DataTable({
-                    "searching": true,
+                    "searching": false,
                     "scrollX": true,
                     retrieve: true,
                     "ordering": false,
+                    "pageLength": 15,
+                    language: {
+                        "sProcessing": "Procesando...",
+                        "sLengthMenu": "Mostrar _MENU_ registros",
+                        "sZeroRecords": "No se encontraron resultados",
+                        "sEmptyTable": "Ningún dato disponible en esta tabla",
+                        "sInfo": "Mostrando registros del _START_ al _END_ ",
+                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sSearch": "Buscar:",
+                        "sUrl": "",
+                        "sInfoThousands": ",",
+                        "sLoadingRecords": "Cargando...",
+                        "oPaginate": {
+                            "sFirst": "Primero",
+                            "sLast": "Último",
+                            "sNext": ">",
+                            "sPrevious": "<"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                        },
+                        "buttons": {
+                            "copy": "Copiar",
+                            "colvis": "Visibilidad"
+                        }
+                    },
+                    dom: 'Bfrtip',
+                    buttons: [{
+                        extend: 'excel',
+                        className: 'btn btn-sm mt-1',
+                        text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
+                        customize: function (xlsx) {
+                            var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                        },
+                        sheetName: 'Exported data',
+                        autoFilter: false
+                    }, {
+                        extend: "pdfHtml5",
+                        className: 'btn btn-sm mt-1',
+                        text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
+                        pageSize: 'LEGAL',
+                        title: 'RH nube REPORTE SEMANAL'
+                    }],
+                    paging: true
+                });
+                $("#actividadD").DataTable({
+                    "searching": false,
+                    "scrollX": true,
+                    retrieve: true,
+                    "ordering": false,
+                    "pageLength": 15,
                     language: {
                         "sProcessing": "Procesando...",
                         "sLengthMenu": "Mostrar _MENU_ registros",
@@ -266,7 +331,7 @@ function onSelectFechas() {
                 });
             }
         },
-        error: function (data) {}
+        error: function (data) { }
     })
 }
 
@@ -306,4 +371,19 @@ $(function () {
 
 function mostrarGrafica() {
     $('#graficaReporte').toggle();
+}
+
+function cambiarTabla() {
+    $("#customSwitchD").on("change.bootstrapSwitch", function (
+        event
+    ) {
+        console.log(event.target.checked);
+        if (event.target.checked == true) {
+            $('#tablaConActividadD').show();
+            $('#tablaSinActividadD').hide();
+        } else {
+            $('#tablaConActividadD').hide();
+            $('#tablaSinActividadD').show();
+        }
+    });
 }
