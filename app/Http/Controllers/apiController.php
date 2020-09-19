@@ -112,13 +112,13 @@ class apiController extends Controller
                             ), 200);
                         }
                     }
-                    return response()->json("Código erróneo", 400);
+                    return response()->json("codigo_erroneo", 400);
                 }
-                return response()->json("Licencia de Dispositvo de baja.", 400);
+                return response()->json("licencia_de_baja", 400);
             }
-            return response()->json("Empleado sin dispositvo asignado.", 400);
+            return response()->json("sin_dispositivo", 400);
         }
-        return response()->json("Empleado no registrado", 400);
+        return response()->json("empleado_no_exite", 400);
     }
 
     public function selectProyecto(Request $request)
