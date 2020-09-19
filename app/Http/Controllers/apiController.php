@@ -116,7 +116,7 @@ class apiController extends Controller
                 }
                 return response()->json("Licencia de Dispositvo de baja.", 400);
             }
-            return response()->json("Aún no a enviado correo empleado.", 400);
+            return response()->json("Empleado sin dispositvo asignado.", 400);
         }
         return response()->json("Empleado no registrado", 400);
     }
