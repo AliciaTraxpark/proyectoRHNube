@@ -82,35 +82,39 @@ class apiController extends Controller
         if ($empleado) {
             $vinculacion = vinculacion::where('id', '=', $explode[1])->get()->first();
             if ($vinculacion) {
-                if ($vinculacion->hash == $request->get('codigo')) {
-                    if ($vinculacion->pc_mac !=  null) {
-                        $vinculacion->pc_mac = $request->get('pc_mac');
-                        $factory = JWTFactory::customClaims([
-                            'sub' => env('API_id'),
-                        ]);
-                        $payload = $factory->make();
-                        $token = JWTAuth::encode($payload);
-                        $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
-                        return response()->json(array(
-                            "corte" => $organizacion->corteCaptura, "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
-                            'idUser' => $idOrganizacion, 'token' => $token->get()
-                        ), 200);
-                    } else {
-                        $vinculacion->pc_mac = $request->get('pc_mac');
-                        $vinculacion->save();
-                        $factory = JWTFactory::customClaims([
-                            'sub' => env('API_id'),
-                        ]);
-                        $payload = $factory->make();
-                        $token = JWTAuth::encode($payload);
-                        $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
-                        return response()->json(array(
-                            "corte" => $organizacion->corteCaptura, "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
-                            'idUser' => $idOrganizacion, 'token' => $token->get()
-                        ), 200);
+                $licencia = licencia_empleado::where('id', '=', $vinculacion->idLicencia)->where('disponible', '!=', 'i')->get()->first();
+                if ($licencia) {
+                    if ($vinculacion->hash == $request->get('codigo')) {
+                        if ($vinculacion->pc_mac !=  null) {
+                            $vinculacion->pc_mac = $request->get('pc_mac');
+                            $factory = JWTFactory::customClaims([
+                                'sub' => env('API_id'),
+                            ]);
+                            $payload = $factory->make();
+                            $token = JWTAuth::encode($payload);
+                            $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
+                            return response()->json(array(
+                                "corte" => $organizacion->corteCaptura, "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                                'idUser' => $idOrganizacion, 'token' => $token->get()
+                            ), 200);
+                        } else {
+                            $vinculacion->pc_mac = $request->get('pc_mac');
+                            $vinculacion->save();
+                            $factory = JWTFactory::customClaims([
+                                'sub' => env('API_id'),
+                            ]);
+                            $payload = $factory->make();
+                            $token = JWTAuth::encode($payload);
+                            $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
+                            return response()->json(array(
+                                "corte" => $organizacion->corteCaptura, "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                                'idUser' => $idOrganizacion, 'token' => $token->get()
+                            ), 200);
+                        }
                     }
+                    return response()->json("Código erróneo", 400);
                 }
-                return response()->json("Código erróneo", 400);
+                return response()->json("Licencia de Dispositvo de baja.", 400);
             }
             return response()->json("Aún no a enviado correo empleado.", 400);
         }
@@ -474,5 +478,3 @@ class apiController extends Controller
         return response()->json($control, 200);
     }
 }
-
-
