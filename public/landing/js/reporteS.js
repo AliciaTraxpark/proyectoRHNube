@@ -93,6 +93,7 @@ function onSelectFechas() {
     $('#empleado').empty();
     $('#dias').empty();
     $('#diasActvidad').empty();
+    $('#empleadoActividad').empty();
     $('#myChartD').empty();
     $("#myChart").show();
     if (grafico.config != undefined) grafico.destroy();
@@ -116,6 +117,7 @@ function onSelectFechas() {
         },
         success: function (data) {
             if (data.length > 0) {
+                console.log(data);
                 $('#myChartD').hide();
                 var nombre = [];
                 var horas = [];
@@ -123,10 +125,12 @@ function onSelectFechas() {
                 var color = ['rgb(63,77,113)'];
                 var borderColor = ['rgb(63,77,113)'];
                 var html_tr = "";
+                var html_trA = "";
                 var html_trD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
                 var html_trAD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
                 for (var i = 0; i < data.length; i++) {
                     html_tr += '<tr><td>' + data[i].nombre + ' ' + data[i].apPaterno + ' ' + data[i].apMaterno + '</td>';
+                    html_trA += '<tr><td>' + data[i].nombre + ' ' + data[i].apPaterno + ' ' + data[i].apMaterno + '</td>';
                     nombre.push(data[i].nombre.split('')[0] + data[i].apPaterno.split('')[0] + data[i].apMaterno.split('')[0]);
                     var total = data[i].horas.reduce(function (a, b) {
                         return sumarHora(a, b);
@@ -138,7 +142,19 @@ function onSelectFechas() {
                         return totalContar(a, b);
                     });
                     for (let j = 0; j < data[i].horas.length; j++) {
+                        // TABLA DEFAULT
                         html_tr += '<td>' + data[i].horas[j] + '</td>';
+                        // TABLA CON ACTIVIDAD DIARIA
+                        html_trA += '<td>' + data[i].horas[j] + '</td>';
+                        var totalA = parseFloat(data[i].total[j]);
+                        var actividadD = parseFloat(data[i].promedio[j]);
+                        if(totalA != 0){
+                            var promedioD = (actividadD/totalA).toFixed(2);
+                            html_trA += '<td>' + promedioD + '</td>';
+                        }else{
+                            var promedioD = (0).toFixed(2);
+                            html_trA += '<td>' + promedioD + '</td>';
+                        }
                     }
                     if (contar[0] != 0) {
                         var p1 = (promedio[0] / contar[0]).toFixed(2);
@@ -146,8 +162,13 @@ function onSelectFechas() {
                     } else {
                         var sumaP = 0;
                     }
+                    // TABLA DEFAULT
                     html_tr += '<td>' + total + '</td>';
                     html_tr += '<td>' + sumaP + '%' + '</td>';
+                    // TABLA CON ACTIVIDADES
+                    html_trA += '<td>' + total + '</td>';
+                    html_trA += '<td>' + sumaP + '%' + '</td>';
+                    // ********************
                     var decimal = parseFloat(total.split(":")[0] + "." + total.split(":")[1] + total.split(":")[2]);
                     horas.push(decimal);
                     html_tr += '</tr>';
@@ -173,6 +194,7 @@ function onSelectFechas() {
                 $("#empleado").html(html_tr);
                 //TABLA CON ACTIVIDAD DIARIA
                 $('#diasActvidad').html(html_trAD);
+                $('#empleadoActividad').html(html_trA);
 
                 $("#Reporte").DataTable({
                     "searching": false,
@@ -334,6 +356,7 @@ function onSelectFechas() {
         error: function (data) { }
     })
 }
+
 
 $(function () {
     $('#zonaHoraria').empty();
