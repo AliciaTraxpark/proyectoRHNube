@@ -127,14 +127,13 @@ function onMostrarPantallas() {
             style="margin-left:30%;color:#7d7d7d">Realize una búsqueda para ver Actividad</label>`;
             $("#espera").hide();
             datos = data;
-            console.log(data.length);
             if (data.length != 0) {
                 var container = $("#card");
                 var $i = 0;
                 var actividadD = 0;
                 var $countA = 0;
                 var totalActividad = 0;
-                var actividadDiaria = `<span style="font-weight: bold;color:#163552;cursor:default"> --Actividad Diaria - <span id="totalActivi"></span></span><br>`;
+                var actividadDiaria = `<div class="row justify-content-center p-3"><div class="col-xl-3"><span style="font-weight: bold;color:#163552;cursor:default;font-size:14px;"><img src="landing/images/velocimetro (1).svg" class="mr-2" height="20"/>Actividad Diaria - <span id="totalActivi"></span></span></div></div>`;
                 container.append(actividadDiaria);
                 for (let index = 0; index < data.length; index++) {
                     $("#promHoras" + $i).empty();
@@ -367,11 +366,12 @@ function onMostrarPantallas() {
                     $("#promHoras" + $i).append(span);
                     $('[data-toggle="tooltip"]').tooltip();
                     $i = $i + 1;
-                    actividadD = actividadD + promedioHoras;
+                    actividadD = actividadD + parseFloat(promedioHoras);
                     $countA = $countA + 1;
                 }
                 $("#totalActivi").empty();
                 totalActividad = (actividadD / $countA).toFixed(2);
+                console.log(actividadD,$countA,totalActividad);
                 var cont = `${totalActividad}%`;
                 $("#totalActivi").append(cont);
             } else {
