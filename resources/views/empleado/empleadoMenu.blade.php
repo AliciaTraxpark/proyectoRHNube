@@ -389,9 +389,11 @@ use App\proyecto_empleado;
         font-size: 12.2px !important;
         margin: 2px 2px;
         cursor: url("../landing/images/cruz1.svg"), auto !important;
-        font-weight: 600;
-    }
 
+    }
+    .fc-event-container> a{
+    border: 1px solid #fff;
+}
     a:not([href]):not([tabindex]) {
         color: #000;
         cursor: pointer;
@@ -2229,6 +2231,7 @@ use App\proyecto_empleado;
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <div class="col-md-8">
+                                                        <span id="errorSel_re" style="color: #8b3a1e;display:none">Seleccione un horario</span>
                                                         <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
                                                             name="selectHorario" id="selectHorario">
                                                             <option hidden selected disabled>Seleccionar horario
@@ -2244,20 +2247,24 @@ use App\proyecto_empleado;
                                                             style="background-color: #183b5d;border-color:#62778c"
                                                             onclick="abrirHorario()">+</button>
                                                     </div>
+                                                    <div class="col-md-12"><br>
+                                                        <div class="custom-control custom-switch mb-2">
+                                                            <input type="checkbox" class="custom-control-input" id="fueraHSwitch_re">
+                                                            <label class="custom-control-label" for="fueraHSwitch_re">Trabajar fuera de horario</label>
+                                                        </div>
+                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="modal-footer"
                                             style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
-                                            <div class="col-md-12">
-                                                <div class="row">
-                                                    <div class="col-md-12 text-right">
-                                                        <button type="button" class="btn btn-soft-primary btn-sm "
-                                                            onclick="$('#horarioAsignar').modal('hide')">Cancelar</button>
-
-                                                        </form>
-                                                    </div>
-                                                </div>
+                                            <div class="col-md-12 text-right" style="padding-right: 0px;">
+                                                <button type="button" class="btn btn-light  btn-sm " style="background: #f3f3f3;
+                                                border-color: #f3f3f3;"
+                                                    onclick="$('#horarioAsignar').modal('hide')">Cancelar</button>
+                                                    <button type="button" class="btn btn-primary btn-sm" style="background-color: #183b5d;border-color:#62778c;" onclick="agregarHorarioSe_regis()">Registrar</button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div><!-- /.modal-content -->
@@ -2281,16 +2288,7 @@ use App\proyecto_empleado;
                                                 <div class="col-md-12">
                                                     <form id="frmHor" action="javascript:registrarHorario()">
                                                         <div class="row">
-                                                            <div class="col-md-12"><label for=""><br></label>
-                                                                <div class="form-check">
-                                                                    <input type="checkbox" class="form-check-input"
-                                                                        id="exampleCheck1">
-                                                                    <label class="form-check-label"
-                                                                        for="exampleCheck1">Aplicar
-                                                                        sobretiempo</label>
-                                                                    <br><br>
-                                                                </div>
-                                                            </div>
+
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
                                                                     <label for="">Descripcion:</label>
@@ -3139,6 +3137,7 @@ use App\proyecto_empleado;
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <div class="col-md-8">
+                                                        <span id=errorSel style="color: #8b3a1e;display:none">Seleccione un horario</span>
                                                         <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
                                                             name="selectHorario_ed" id="selectHorario_ed">
                                                             <option hidden selected disabled>Seleccionar horario
@@ -3153,6 +3152,12 @@ use App\proyecto_empleado;
                                                             style="background-color: #183b5d;border-color:#62778c"
                                                             onclick="abrirHorario_ed()">+</button>
                                                     </div>
+                                                    <div class="col-md-12"><br>
+                                                        <div class="custom-control custom-switch mb-2">
+                                                            <input type="checkbox" class="custom-control-input" id="fueraHSwitch">
+                                                            <label class="custom-control-label" for="fueraHSwitch">Trabajar fuera de horario</label>
+                                                        </div>
+                                                     </div>
 
                                                 </div>
 
@@ -3161,15 +3166,12 @@ use App\proyecto_empleado;
                                         </div>
                                         <div class="modal-footer"
                                             style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
-                                            <div class="col-md-12">
-                                                <div class="row">
-                                                    <div class="col-md-12 text-right">
-                                                        <button type="button" class="btn btn-soft-primary btn-sm "
-                                                            onclick="$('#horarioAsignar_ed').modal('hide')">Cancelar</button>
-
-                                                        </form>
-                                                    </div>
-                                                </div>
+                                            <div class="col-md-12 text-right" style="padding-right: 0px;">
+                                                <button type="button" class="btn btn-light  btn-sm " style="background: #f3f3f3;
+                                                border-color: #f3f3f3;"
+                                                    onclick="$('#horarioAsignar_ed').modal('hide')">Cancelar</button>
+                                                    <button type="button" class="btn btn-primary btn-sm" style="background-color: #183b5d;border-color:#62778c;" onclick="agregarHorarioSe()">Registrar</button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div><!-- /.modal-content -->
@@ -3195,17 +3197,7 @@ use App\proyecto_empleado;
                                                     <form id="frmHor_ed" action="javascript:registrarHorario_ed()">
                                                         <div class="row">
 
-                                                            <div class="col-md-12"><label for=""><br></label>
-                                                                <div class="form-check">
 
-                                                                    <input type="checkbox" class="form-check-input"
-                                                                        id="exampleCheck1_ed">
-                                                                    <label class="form-check-label"
-                                                                        for="exampleCheck1_ed">Aplicar
-                                                                        sobretiempo</label>
-                                                                    <br><br>
-                                                                </div>
-                                                            </div>
 
                                                             <div class="col-md-6">
                                                                 <div class="form-group">

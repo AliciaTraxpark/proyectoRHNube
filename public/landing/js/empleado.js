@@ -159,10 +159,16 @@ function calendario() {
         },
         eventRender: function (info) {
             if(info.event.extendedProps.horaI===null){
-                 $(info.el).tooltip({  title: info.event.title});
-            } else{
-                $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
+                $(info.el).tooltip({  title: info.event.title});
+           } else{
+            if(info.event.borderColor=='#5369f8'){
+                $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+
             }
+                else{
+                    $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
+               }
+           }
 
         },
         events: function (info, successCallback, failureCallback) {
@@ -237,7 +243,11 @@ function calendario_edit() {
                 info.event.textColor == "0"
             ) {
                 if (info.event.textColor == "111111") {
-                    bootbox.confirm({
+                    bootbox.alert({
+                        message: "Puede eliminar horarios en la pestaña Horarios",
+
+                    })
+                   /*  bootbox.confirm({
                         message:
                             "¿Desea eliminar: " +
                             info.event.title +
@@ -280,7 +290,7 @@ function calendario_edit() {
                                 });
                             }
                         },
-                    });
+                    }); */
                 } else {
                     bootbox.confirm({
                         message:
@@ -382,7 +392,17 @@ function calendario_edit() {
             right: "",
         },
         eventRender: function (info) {
-            $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
+            if(info.event.extendedProps.horaI===null){
+                $(info.el).tooltip({  title: info.event.title});
+           } else{
+            if(info.event.borderColor=='#5369f8'){
+                $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+
+            }
+                else{
+                    $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
+               }
+           }
         },
         events: function (info, successCallback, failureCallback) {
             var idcalendario = $("#selectCalendario_ed").val();
@@ -558,7 +578,7 @@ function modalIncidencia_ed() {
     });
 }
 //////////////////////////
-$("#selectHorario_ed").change(function (e) {
+function agregarHorarioSe(){
     var H1 = $("#pruebaStar_ed").val();
     var H2 = $("#pruebaEnd_ed").val();
     textSelec1=$('select[name="selectHorario_ed"] option:selected').text();
@@ -566,6 +586,21 @@ $("#selectHorario_ed").change(function (e) {
     textSelec2 = textSelec1.split(separador);
     textSelec=textSelec2[0];
     var idhorar = $("#selectHorario_ed").val();
+    console.log(idhorar);
+    if(idhorar==null){
+        $('#errorSel').show();
+        return false;
+    } else{
+        $('#errorSel').hide();
+    }
+    var fueraHora;
+    if( $('#fueraHSwitch').prop('checked') ){
+        fueraHora=1;
+        console.log(fueraHora);
+    } else{
+        fueraHora=0;
+        console.log(fueraHora);
+    }
     var idempleado = $("#idempleado").val();
     var diasEntreFechas = function (desde, hasta) {
         var dia_actual = desde;
@@ -605,7 +640,7 @@ $("#selectHorario_ed").change(function (e) {
             fechasArray: fechastart,
             hora: textSelec,
             idhorar: idhorar,
-            idempleado,
+            idempleado,fueraHora
         },
         statusCode: {
             419: function () {
@@ -625,7 +660,7 @@ $("#selectHorario_ed").change(function (e) {
         // error: function (data) {
         // },
     });
-});
+};
 
 ////////////////////////////
 function abrirHorario_ed() {
@@ -634,11 +669,6 @@ function abrirHorario_ed() {
 }
 
 function registrarHorario_ed() {
-    if ($("#exampleCheck1_ed").prop("checked")) {
-        sobretiempo = 1;
-    } else {
-        sobretiempo = 0;
-    }
 
     var descripcion = $("#descripcionCa_ed").val();
     var toleranciaH = $("#toleranciaH_ed").val();
@@ -649,12 +679,10 @@ function registrarHorario_ed() {
         type: "post",
         url: "/empleado/registrarHorario",
         data: {
-            sobretiempo,
-
             descripcion,
             toleranciaH,
             inicio,
-            fin,
+            fin
         },
         statusCode: {
             419: function () {
@@ -699,7 +727,14 @@ function registrarHorario_ed() {
                     start: value,
                 });
             });
-
+            var fueraHora;
+            if( $('#fueraHSwitch').prop('checked') ){
+                fueraHora=1;
+                console.log(fueraHora);
+            } else{
+                fueraHora=0;
+                console.log(fueraHora);
+            }
             $.ajax({
                 type: "post",
                 url: "/empleado/guardarhorarioempleado",
@@ -707,7 +742,7 @@ function registrarHorario_ed() {
                     fechasArray: fechastart,
                     hora: textSelec,
                     idhorar: idhorar,
-                    idempleado,
+                    idempleado,fueraHora
                 },
                 statusCode: {
                     419: function () {
@@ -978,7 +1013,7 @@ $("#selectCalendario").change(function () {
                     "</option></select></div>" +
                     "<div class='col-md-2' ><div class='btn-group mt-2 mr-1'> <button type='button' onclick='eliminarhorariosTem()' class='btn btn-primary btn-sm dropdown-toggle' style='color: #fff; background-color: #4a5669;" +
                     "border-color: #485263;' > <img src='admin/images/borrador.svg' height='15'>" +
-                    " Borrar horarios </button> </div></div></div>"
+                    " Borrar</button> </div></div></div>"
             );
         },
         error: function (data) {
@@ -1113,7 +1148,10 @@ function calendario2() {
             $("#pruebaStar").val(
                 moment(arg.start).format("YYYY-MM-DD HH:mm:ss")
             );
-
+            $("#selectHorario").val("Seleccionar horario");
+            $('#errorSel_re').hide();
+            $("#selectHorario").trigger("change");
+            $('#fueraHSwitch_re').prop('checked',false)
             $("#horarioAsignar").modal("show");
         },
         eventClick: function (info) {
@@ -1175,7 +1213,13 @@ function calendario2() {
             if(info.event.extendedProps.horaI===null){
                 $(info.el).tooltip({  title: info.event.title});
            } else{
-               $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
+            if(info.event.borderColor=='#5369f8'){
+                $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+
+            }
+                else{
+                    $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
+               }
            }
         },
         events: function (info, successCallback, failureCallback) {
@@ -1219,11 +1263,6 @@ function abrirHorario() {
 }
 
 function registrarHorario() {
-    if ($("#exampleCheck1").prop("checked")) {
-        sobretiempo = 1;
-    } else {
-        sobretiempo = 0;
-    }
 
     var descripcion = $("#descripcionCa").val();
     var toleranciaH = $("#toleranciaH").val();
@@ -1234,8 +1273,6 @@ function registrarHorario() {
         type: "post",
         url: "/empleado/registrarHorario",
         data: {
-            sobretiempo,
-
             descripcion,
             toleranciaH,
             inicio,
@@ -1284,7 +1321,14 @@ function registrarHorario() {
                     start: value,
                 });
             });
-
+            var fueraHora;
+            if( $('#fueraHSwitch_re').prop('checked') ){
+                fueraHora=1;
+                console.log(fueraHora);
+            } else{
+                fueraHora=0;
+                console.log(fueraHora);
+            }
             $.ajax({
                 type: "post",
                 url: "/empleado/guardarhorarioTem",
@@ -1292,7 +1336,7 @@ function registrarHorario() {
                     fechasArray: fechastart,
                     hora: textSelec,
                     idhorar: idhorar,
-                    idca,
+                    idca,fueraHora
                 },
                 statusCode: {
                     419: function () {
@@ -1335,14 +1379,29 @@ function registrarHorario() {
         },
     });
 }
-$("#selectHorario").change(function (e) {
+function agregarHorarioSe_regis() {
     var H1 = $("#pruebaStar").val();
     var H2 = $("#pruebaEnd").val();
     textSelec1=$('select[name="selectHorario"] option:selected').text();
     separador = "(";
     textSelec2 = textSelec1.split(separador);
     textSelec=textSelec2[0];
+
+    var fueraHora;
+    if( $('#fueraHSwitch_re').prop('checked') ){
+        fueraHora=1;
+        console.log(fueraHora);
+    } else{
+        fueraHora=0;
+        console.log(fueraHora);
+    }
     var idhorar = $("#selectHorario").val();
+    if(idhorar==null){
+        $('#errorSel_re').show();
+        return false;
+    } else{
+        $('#errorSel_re').hide();
+    }
     var idca = $("#selectCalendario").val();
     var diasEntreFechas = function (desde, hasta) {
         var dia_actual = desde;
@@ -1383,7 +1442,7 @@ $("#selectHorario").change(function (e) {
             hora: textSelec,
 
             idhorar: idhorar,
-            idca,
+            idca,fueraHora
         },
         statusCode: {
             419: function () {
@@ -1403,7 +1462,7 @@ $("#selectHorario").change(function (e) {
         // error: function (data) {
         // },
     });
-});
+};
 
 //vercal
 
@@ -1439,7 +1498,18 @@ function calendario3() {
             right: "",
         },
         eventRender: function (info) {
-            $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
+           /*  $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF}); */
+           if(info.event.extendedProps.horaI===null){
+            $(info.el).tooltip({  title: info.event.title});
+       } else{
+        if(info.event.borderColor=='#5369f8'){
+            $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+
+        }
+            else{
+                $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
+           }
+       }
         },
         events: function (info, successCallback, failureCallback) {
             var idempleado = $("#idempleado").val();
@@ -1508,7 +1578,18 @@ function calendario4() {
             right: "",
         },
         eventRender: function (info) {
-            $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
+           /*  $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF}); */
+           if(info.event.extendedProps.horaI===null){
+            $(info.el).tooltip({  title: info.event.title});
+       } else{
+        if(info.event.borderColor=='#5369f8'){
+            $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+
+        }
+            else{
+                $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
+           }
+       }
         },
         events: function (info, successCallback, failureCallback) {
             var idempleado = $("#idempleado").val();
@@ -1624,7 +1705,10 @@ function calendario2_ed() {
             $("#pruebaStar_ed").val(
                 moment(arg.start).format("YYYY-MM-DD HH:mm:ss")
             );
-
+            $("#selectHorario_ed").val("Seleccionar horario");
+            $('#errorSel').hide();
+            $("#selectHorario_ed").trigger("change");
+            $('#fueraHSwitch').prop('checked',false)
             $("#horarioAsignar_ed").modal("show");
         },
         eventClick: function (info) {
@@ -1782,7 +1866,17 @@ function calendario2_ed() {
             right: "",
         },
         eventRender: function (info) {
-            $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
+            if(info.event.extendedProps.horaI===null){
+                $(info.el).tooltip({  title: info.event.title});
+           } else{
+            if(info.event.borderColor=='#5369f8'){
+                $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+
+            }
+                else{
+                    $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
+               }
+           }
         },
         events: function (info, successCallback, failureCallback) {
             var idcalendario = $("#selectCalendario_ed").val();
@@ -4081,7 +4175,7 @@ $("#sw-default-step-4").on("keyup change", function () {
 });
 $("#sw-default-step-5").on("keyup change", function () {
     $("#estadoPH").val("true");
-   
+
 });
 //************************Editar en los modal de agregar */
 //*******AREA***/

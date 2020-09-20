@@ -42,8 +42,8 @@ use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTFactory;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illiminate\Support\Facades\File;
-
-
+use Illuminate\Support\Arr;
+use Carbon\Carbon;
 class EmpleadoController extends Controller
 {
     /**
@@ -1110,7 +1110,7 @@ class EmpleadoController extends Controller
 
 
         $eventos_empleado_temp = DB::table('eventos_empleado_temp as evt')
-            ->select(['evEmpleadoT_id as id', 'title', 'color', 'textColor', 'start', 'end', 'tipo_ev', 'users_id', 'calendario_calen_id', 'horaI','horaF'])
+            ->select(['evEmpleadoT_id as id', 'title', 'color', 'textColor', 'start', 'end', 'tipo_ev', 'users_id', 'calendario_calen_id', 'horaI','horaF','borderColor'])
             ->leftJoin('horario as h','evt.id_horario','=','h.horario_id')
             ->where('evt.users_id', '=', Auth::user()->id)
             ->where('evt.calendario_calen_id', '=', $idcalendario)
@@ -1191,15 +1191,13 @@ class EmpleadoController extends Controller
     }
     public function registrarHorario(Request $request)
     {
-        $sobretiempo = $request->sobretiempo;
-
         $descripcion = $request->descripcion;
         $toleranciaH = $request->toleranciaH;
         $inicio = $request->inicio;
         $fin = $request->fin;
 
         $horario = new horario();
-        $horario->horario_sobretiempo = $sobretiempo;
+
         $horario->organi_id = session('sesionidorg');
         $horario->horario_descripcion = $descripcion;
         $horario->horario_tolerancia = $toleranciaH;
@@ -1216,8 +1214,32 @@ class EmpleadoController extends Controller
         $horas = $request->hora;
         $idhorar = $request->idhorar;
         $idca = $request->idca;
+        $fueraHora = $request->fueraHora;
         $arrayeve = collect();
+        $arrayrep = collect();
+
         foreach ($datafecha as $datafechas) {
+            $tempre = eventos_empleado_temp::
+           where('users_id', '=', Auth::user()->id)
+            ->where('start', '=', $datafechas)
+            ->where('id_horario', '=', $idhorar)
+            ->get()->first();
+            if( $tempre){
+                $startArre= carbon::create($tempre->start);
+                $arrayrep->push($startArre->format('Y-m-d'));
+            }
+
+
+        }
+
+       $datos = Arr::flatten($arrayrep);
+
+
+        //DIFERENCIA ARRAYS
+        $datafecha2=array_values(array_diff($datafecha, $datos));
+
+
+        foreach ($datafecha2 as $datafechas) {
             $eventos_empleado_tempSave = new eventos_empleado_temp();
             $eventos_empleado_tempSave->title = $horas;
             $eventos_empleado_tempSave->start = $datafechas;
@@ -1227,6 +1249,10 @@ class EmpleadoController extends Controller
             $eventos_empleado_tempSave->tipo_ev = 5;
             $eventos_empleado_tempSave->id_horario = $idhorar;
             $eventos_empleado_tempSave->calendario_calen_id = $idca;
+            $eventos_empleado_tempSave->fuera_horario = $fueraHora;
+            if($fueraHora==1){
+                $eventos_empleado_tempSave->borderColor = '#5369f8';
+            }
             $eventos_empleado_tempSave->save();
             $arrayeve->push($eventos_empleado_tempSave);
         }
@@ -1235,7 +1261,7 @@ class EmpleadoController extends Controller
     public function vercalendarioEmpl(Request $request)
     {
         $horario_empleado = DB::table('horario_empleado as he')
-            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end','horaI','horaF'])
+            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end','horaI','horaF','borderColor'])
             ->join('horario as h','he.horario_horario_id','=','h.horario_id')
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.empleado_emple_id', '=', $request->get('idempleado'));
@@ -1243,14 +1269,14 @@ class EmpleadoController extends Controller
         $incidencias = DB::table('incidencias as i')
             ->select(['idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color',
              'i.inciden_descuento as textColor', 'idi.inciden_dias_fechaI as start',
-              'idi.inciden_dias_fechaF as end','i.inciden_descripcion as horaI','i.inciden_descripcion as horaF'])
+              'idi.inciden_dias_fechaF as end','i.inciden_descripcion as horaI','i.inciden_descripcion as horaF','i.inciden_descripcion as borderColor'])
             ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
             ->where('idi.id_empleado', '=', $request->get('idempleado'))
             ->union($horario_empleado);
 
 
         $eventos_empleado = DB::table('eventos_empleado')
-            ->select(['evEmpleado_id as id', 'title', 'color', 'textColor', 'start', 'end','title as horaI','title as horaF'])
+            ->select(['evEmpleado_id as id', 'title', 'color', 'textColor', 'start', 'end','title as horaI','title as horaF','title as borderColor'])
             ->where('id_empleado', '=', $request->get('idempleado'))
             ->union($incidencias)
             ->get();
@@ -1325,21 +1351,21 @@ class EmpleadoController extends Controller
 
 
         $horario_empleado = DB::table('horario_empleado as he')
-            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end','horaI','horaF'])
+            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end','horaI','horaF','borderColor'])
             ->join('horario as h','he.horario_horario_id','=','h.horario_id')
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.empleado_emple_id', '=', $idempleado);
 
         $incidencias = DB::table('incidencias as i')
             ->select(['idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descuento as textColor',
-             'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end','i.inciden_descripcion as horaI','i.inciden_descripcion as horaF'])
+             'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end','i.inciden_descripcion as horaI','i.inciden_descripcion as horaF','i.inciden_descripcion as borderColor'])
             ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
             ->where('idi.id_empleado', '=', $idempleado)
             ->union($horario_empleado);
 
 
         $eventos_empleado = DB::table('eventos_empleado')
-            ->select(['evEmpleado_id as id', 'title', 'color', 'textColor', 'start', 'end','title as horaI','title as horaF'])
+            ->select(['evEmpleado_id as id', 'title', 'color', 'textColor', 'start', 'end','title as horaI','title as horaF','title as borderColor' ])
             ->where('id_empleado', '=', $idempleado)
             ->union($incidencias)
             ->get();
@@ -1397,8 +1423,33 @@ class EmpleadoController extends Controller
         $horas = $request->hora;
         $idhorar = $request->idhorar;
         $idempleado = $request->idempleado;
+        $fueraHora = $request->fueraHora;
         $arrayeve = collect();
+        $arrayrep = collect();
+
         foreach ($datafecha as $datafechas) {
+            $tempre= horario_empleado ::
+            select(['horario_empleado.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end','horaI','horaF','borderColor'])
+            ->join('horario as h','horario_empleado.horario_horario_id','=','h.horario_id')
+            ->join('horario_dias as hd', 'horario_empleado.horario_dias_id', '=', 'hd.id')
+            ->where('start', '=', $datafechas)
+            ->where('h.horario_id', '=',$idhorar)
+            ->where('horario_empleado.empleado_emple_id', '=', $idempleado)
+            ->get()->first();
+            if( $tempre){
+                $startArre= carbon::create($tempre->start);
+             $arrayrep->push($startArre->format('Y-m-d'));
+            }
+
+
+        }
+        $datos = Arr::flatten($arrayrep);
+
+        //DIFERENCIA ARRAYS
+        $datafecha2=array_values(array_diff($datafecha, $datos));
+
+
+        foreach ($datafecha2 as $datafechas) {
             $horario_dias = new horario_dias();
             $horario_dias->title = $horas;
             $horario_dias->start = $datafechas;
@@ -1413,6 +1464,10 @@ class EmpleadoController extends Controller
             $horario_empleados->horario_horario_id = $idhorar;
             $horario_empleados->empleado_emple_id = $idempleado;
             $horario_empleados->horario_dias_id = $horario_dias->id;
+            $horario_empleados->fuera_horario = $fueraHora;
+            if($fueraHora==1){
+                $horario_empleados->borderColor = '#5369f8';
+            }
             $horario_empleados->save();
         }
     }

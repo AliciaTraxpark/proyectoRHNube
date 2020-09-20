@@ -386,7 +386,7 @@
                 "<div class='col-md-3'></div>"+
                 "<div class='col-md-3' ><div class='btn-group mt-2 mr-1'> <button type='button' onclick='eliminarhorariosBD()' class='btn btn-primary btn-sm dropdown-toggle' style='color: #fff; background-color: #4a5669;"+
                 "border-color: #485263;' > <img src='admin/images/borrador.svg' height='15'>"+
-                " Borrar horarios </button> </div></div></div>");
+                " Borrar </button> </div></div></div>");
                     }
                 },
                 error: function () {}
@@ -1114,7 +1114,7 @@ function verDEmpleado(idempleadoVer){
                 }
             },
             success: function (data) {
-               
+
                 for (var i = 0; i < data.length; i++) {
                     if (data[i].Correo == true && data[i].Reenvio == true) {
                         $.notify({
