@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use App\actividad;
 use App\captura;
+use App\empleado;
+use App\Mail\SoporteApi;
+use App\Mail\SugerenciaApi;
+use App\persona;
 use App\promedio_captura;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class apiVersionDosController extends Controller
 {
@@ -100,5 +105,35 @@ class apiVersionDosController extends Controller
         $promedio_captura->save();
 
         return response()->json($captura, 200);
+    }
+
+    public function ticketSoporte(Request $request)
+    {
+        $idEmpleado = $request->get('idEmpleado');
+        $tipo = $request->get('tipo');
+        $contenido = $request->get('contenido');
+        $asunto = $request->get('asunto');
+        $celular = $request->get('celular');
+        $cont = $request->get('contenido');
+        $asunt = $request->get('asunto');
+        $cel = $request->get('celular');
+
+        $empleado = empleado::findOrFail($idEmpleado);
+        if ($empleado) {
+            $persona = persona::findOrFail($empleado->emple_persona);
+            $email = $email = env('MAIL_FROM_ADDRESS');
+
+            if ($tipo == "soporte") {
+
+                Mail::to($email)->queue(new SoporteApi($contenido, $persona, $asunto, $celular));
+                return response()->json("Correo Enviado con éxito", 200);
+            }
+            if ($tipo == "sugerencia") {
+                Mail::to($email)->queue(new SugerenciaApi($contenido, $persona, $asunto, $celular));
+                return response()->json("Correo Enviado con éxito", 200);
+            }
+        }
+
+        return response()->json("Empleado no se encuentra registrado.", 400);
     }
 }

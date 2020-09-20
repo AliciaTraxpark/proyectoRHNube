@@ -1,8 +1,6 @@
 @extends('layouts.vertical')
 
 @section('css')
-<link rel="shortcut icon" href="https://rhsolution.com.pe/wp-content/uploads/2019/06/small-logo-rh-solution-64x64.png"
-    sizes="32x32">
 <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{
     URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.css')
@@ -86,12 +84,24 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
+                            <div class="card-header" style="background-color: #ffffff">
+                                <div class="row">
+                                    <h4 class="header-title col-12 mt-0">TRAXPARK</h4>
+                                    <p class="sub-header col-12" style="margin-bottom: 0px" id="zonaHoraria">
+                                </div>
+                                <div class="row  mt-2">
+                                    <div class="col-md-12">
+                                        <div class="custom-control custom-switch">
+                                            <input type="checkbox" class="custom-control-input" id="customSwitchD"
+                                                onclick="javascript:cambiarTabla()">
+                                            <label class="custom-control-label" for="customSwitchD"
+                                                style="font-weight: bold">Mostrar Actividad Diaria</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="card-body">
-                                <h4 class="header-title mt-0 mb-1">TRAXPARK</h4>
-                                <p class="sub-header" style="margin-bottom:
-                                    0px" id="zonaHoraria">
-                                <br>
-                                <div class="table-responsive-xl">
+                                <div class="table-responsive-xl" id="tablaSinActividadD">
                                     <table id="Reporte" class="table nowrap" style="font-size: 13px!important;width:
                                         100%;">
                                         <thead style="background: #fafafa;" id="dias">
@@ -125,6 +135,15 @@
                                                 <td></td>
                                             </tr>
                                             @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="table-responsive-xl" style="display: none" id="tablaConActividadD">
+                                    <table id="actividadD" class="table nowrap"
+                                        style="font-size: 13px!important;width:100%;">
+                                        <thead style="background: #fafafa;" id="diasActvidad">
+                                        </thead>
+                                        <tbody id="empleadoActividad">
                                         </tbody>
                                     </table>
                                 </div>

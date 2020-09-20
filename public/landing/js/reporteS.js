@@ -5,7 +5,7 @@ $('#fecha').datetimepicker({
     minView: 2,
     pickTime: false,
     autoclose: true,
-    weekStart:1,
+    weekStart: 1,
     todayBtn: false,
 });
 var notify = $.notifyDefaults({
@@ -112,6 +112,7 @@ function onSelectFechas() {
         },
         success: function (data) {
             if (data.length > 0) {
+                console.log(data);
                 $('#myChartD').hide();
                 var nombre = [];
                 var horas = [];
@@ -126,9 +127,6 @@ function onSelectFechas() {
                     var total = data[i].horas.reduce(function (a, b) {
                         return sumarHora(a, b);
                     });
-                    /*var promedio = data[i].promedio.reduce(function (a, b) {
-                        return sumarHora(a, b);
-                    });*/
                     var promedio = data[i].promedio.reduce(function (a, b) {
                         return calcularPromedio(a, b);
                     });
@@ -136,7 +134,9 @@ function onSelectFechas() {
                         return totalContar(a, b);
                     });
                     for (let j = 0; j < data[i].horas.length; j++) {
+                        // TABLA DEFAULT
                         html_tr += '<td>' + data[i].horas[j] + '</td>';
+                       
                     }
                     if (contar[0] != 0) {
                         var p1 = (promedio[0] / contar[0]).toFixed(2);
@@ -144,16 +144,7 @@ function onSelectFechas() {
                     } else {
                         var sumaP = 0;
                     }
-                    /*var t1 = total.split(":");
-                    var sumaT = parseInt(t1[0]) * 3600 + parseInt(t1[1]) * 60 + parseInt(t1[2]);*/
-                    /*var sumaTotalP = 0;
-                    if (sumaT != 0) {
-                        sumaTotalP = Math.round((sumaP * 100) / sumaT);
-                        prom.push(sumaTotalP);
-                    } else {
-                        sumaTotalP = 0;
-                        prom.push(sumaTotalP);
-                    }*/
+                    // TABLA DEFAULT
                     html_tr += '<td>' + total + '</td>';
                     html_tr += '<td>' + sumaP + '%' + '</td>';
                     var decimal = parseFloat(total.split(":")[0] + "." + total.split(":")[1] + total.split(":")[2]);
@@ -164,20 +155,22 @@ function onSelectFechas() {
                     var momentValue = moment(data[0].fechaF[m]);
                     momentValue.toDate();
                     momentValue.format("ddd DD/MM");
+                    // TABLA DEFAULT
                     html_trD += '<th>' + momentValue.format("ddd DD/MM") + '</th>';
                 }
+                // TABLA DEFAULT
                 html_trD += '<th>TOTAL</th>';
                 html_trD += '<th>ACTIV.</th></tr>';
+                // TABLA DEFAULT
                 $("#dias").html(html_trD);
                 $("#empleado").html(html_tr);
-                //container.append(html_tr);
-                //containerD.append(html_trD);
 
                 $("#Reporte").DataTable({
-                    "searching": true,
+                    "searching": false,
                     "scrollX": true,
                     retrieve: true,
                     "ordering": false,
+                    "pageLength": 15,
                     language: {
                         "sProcessing": "Procesando...",
                         "sLengthMenu": "Mostrar _MENU_ registros",
@@ -276,7 +269,282 @@ function onSelectFechas() {
                 });
             }
         },
-        error: function (data) {}
+        error: function (data) { }
+    })
+}
+
+function fechasConActividad() {
+    var fecha = $('#fecha').val();
+    if ($.fn.DataTable.isDataTable("#Reporte")) {
+        $('#Reporte').DataTable().destroy();
+    }
+    if ($.fn.DataTable.isDataTable("#actividadD")) {
+        $('#actividadD').DataTable().destroy();
+    }
+    $('#empleado').empty();
+    $('#dias').empty();
+    $('#diasActvidad').empty();
+    $('#empleadoActividad').empty();
+    $('#myChartD').empty();
+    $("#myChart").show();
+    if (grafico.config != undefined) grafico.destroy();
+    $.ajax({
+        async: false,
+        url: "reporte/empleado",
+        method: "GET",
+        data: {
+            fecha: fecha
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            if (data.length > 0) {
+                console.log(data);
+                $('#myChartD').hide();
+                var nombre = [];
+                var horas = [];
+                var prom = [];
+                var color = ['rgb(63,77,113)'];
+                var borderColor = ['rgb(63,77,113)'];
+                var html_tr = "";
+                var html_trA = "";
+                var html_trD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
+                var html_trAD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
+                for (var i = 0; i < data.length; i++) {
+                    html_tr += '<tr><td>' + data[i].nombre + ' ' + data[i].apPaterno + ' ' + data[i].apMaterno + '</td>';
+                    html_trA += '<tr><td>' + data[i].nombre + ' ' + data[i].apPaterno + ' ' + data[i].apMaterno + '</td>';
+                    nombre.push(data[i].nombre.split('')[0] + data[i].apPaterno.split('')[0] + data[i].apMaterno.split('')[0]);
+                    var total = data[i].horas.reduce(function (a, b) {
+                        return sumarHora(a, b);
+                    });
+                    var promedio = data[i].promedio.reduce(function (a, b) {
+                        return calcularPromedio(a, b);
+                    });
+                    var contar = data[i].total.reduce(function (a, b) {
+                        return totalContar(a, b);
+                    });
+                    for (let j = 0; j < data[i].horas.length; j++) {
+                        // TABLA DEFAULT
+                        html_tr += '<td>' + data[i].horas[j] + '</td>';
+                        // TABLA CON ACTIVIDAD DIARIA
+                        html_trA += '<td>' + data[i].horas[j] + '</td>';
+                        var totalA = parseFloat(data[i].total[j]);
+                        var actividadD = parseFloat(data[i].promedio[j]);
+                        if(totalA != 0){
+                            var promedioD = (actividadD/totalA).toFixed(2);
+                            html_trA += '<td>' + promedioD + '</td>';
+                        }else{
+                            var promedioD = (0).toFixed(2);
+                            html_trA += '<td>' + promedioD + '</td>';
+                        }
+                    }
+                    if (contar[0] != 0) {
+                        var p1 = (promedio[0] / contar[0]).toFixed(2);
+                        var sumaP = p1;
+                    } else {
+                        var sumaP = 0;
+                    }
+                    // TABLA DEFAULT
+                    html_tr += '<td>' + total + '</td>';
+                    html_tr += '<td>' + sumaP + '%' + '</td>';
+                    // TABLA CON ACTIVIDADES
+                    html_trA += '<td>' + total + '</td>';
+                    html_trA += '<td>' + sumaP + '%' + '</td>';
+                    // ********************
+                    var decimal = parseFloat(total.split(":")[0] + "." + total.split(":")[1] + total.split(":")[2]);
+                    horas.push(decimal);
+                    html_tr += '</tr>';
+                }
+                for (var m = 0; m < data[0].fechaF.length; m++) {
+                    var momentValue = moment(data[0].fechaF[m]);
+                    momentValue.toDate();
+                    momentValue.format("ddd DD/MM");
+                    // TABLA DEFAULT
+                    html_trD += '<th>' + momentValue.format("ddd DD/MM") + '</th>';
+                    // TABLA CON ACTIVIDAD DIARIA
+                    html_trAD += '<th>' + momentValue.format("ddd DD/MM") + '</th>';
+                    html_trAD += '<th><img src="landing/images/velocimetro (1).svg" class="mr-2" height="17"/>DIARIA</th>';
+                }
+                // TABLA DEFAULT
+                html_trD += '<th>TOTAL</th>';
+                html_trD += '<th>ACTIV.</th></tr>';
+                // TABLA CON ACTIVIDAD DIARIA
+                html_trAD += '<th>TOTAL</th>';
+                html_trAD += '<th>ACTIV.</th></tr>';
+                // TABLA DEFAULT
+                $("#dias").html(html_trD);
+                $("#empleado").html(html_tr);
+                //TABLA CON ACTIVIDAD DIARIA
+                $('#diasActvidad').html(html_trAD);
+                $('#empleadoActividad').html(html_trA);
+
+                $("#Reporte").DataTable({
+                    "searching": false,
+                    "scrollX": true,
+                    retrieve: true,
+                    "ordering": false,
+                    "pageLength": 15,
+                    language: {
+                        "sProcessing": "Procesando...",
+                        "sLengthMenu": "Mostrar _MENU_ registros",
+                        "sZeroRecords": "No se encontraron resultados",
+                        "sEmptyTable": "Ningún dato disponible en esta tabla",
+                        "sInfo": "Mostrando registros del _START_ al _END_ ",
+                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sSearch": "Buscar:",
+                        "sUrl": "",
+                        "sInfoThousands": ",",
+                        "sLoadingRecords": "Cargando...",
+                        "oPaginate": {
+                            "sFirst": "Primero",
+                            "sLast": "Último",
+                            "sNext": ">",
+                            "sPrevious": "<"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                        },
+                        "buttons": {
+                            "copy": "Copiar",
+                            "colvis": "Visibilidad"
+                        }
+                    },
+                    dom: 'Bfrtip',
+                    buttons: [{
+                        extend: 'excel',
+                        className: 'btn btn-sm mt-1',
+                        text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
+                        customize: function (xlsx) {
+                            var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                        },
+                        sheetName: 'Exported data',
+                        autoFilter: false
+                    }, {
+                        extend: "pdfHtml5",
+                        className: 'btn btn-sm mt-1',
+                        text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
+                        pageSize: 'LEGAL',
+                        title: 'RH nube REPORTE SEMANAL'
+                    }],
+                    paging: true
+                });
+                $("#actividadD").DataTable({
+                    "searching": false,
+                    "scrollX": true,
+                    retrieve: true,
+                    "ordering": false,
+                    "pageLength": 15,
+                    language: {
+                        "sProcessing": "Procesando...",
+                        "sLengthMenu": "Mostrar _MENU_ registros",
+                        "sZeroRecords": "No se encontraron resultados",
+                        "sEmptyTable": "Ningún dato disponible en esta tabla",
+                        "sInfo": "Mostrando registros del _START_ al _END_ ",
+                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sSearch": "Buscar:",
+                        "sUrl": "",
+                        "sInfoThousands": ",",
+                        "sLoadingRecords": "Cargando...",
+                        "oPaginate": {
+                            "sFirst": "Primero",
+                            "sLast": "Último",
+                            "sNext": ">",
+                            "sPrevious": "<"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                        },
+                        "buttons": {
+                            "copy": "Copiar",
+                            "colvis": "Visibilidad"
+                        }
+                    },
+                    dom: 'Bfrtip',
+                    buttons: [{
+                        extend: 'excel',
+                        className: 'btn btn-sm mt-1',
+                        text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
+                        customize: function (xlsx) {
+                            var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                        },
+                        sheetName: 'Exported data',
+                        autoFilter: false
+                    }, {
+                        extend: "pdfHtml5",
+                        className: 'btn btn-sm mt-1',
+                        text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
+                        pageSize: 'LEGAL',
+                        title: 'RH nube REPORTE SEMANAL'
+                    }],
+                    paging: true
+                });
+                var chartdata = {
+                    labels: nombre,
+                    datasets: [{
+                        label: nombre,
+                        backgroundColor: color,
+                        borderColor: color,
+                        borderWidth: 2,
+                        hoverBackgroundColor: color,
+                        hoverBorderColor: borderColor,
+                        data: horas
+                    }]
+                };
+                var mostrar = $("#myChart");
+                grafico = new Chart(mostrar, {
+                    type: 'bar',
+                    data: chartdata,
+                    theme: "light2",
+                    options: {
+                        responsive: true,
+                        scales: {
+                            xAxes: [{
+                                stacked: true,
+                                gridLines: {
+                                    display: false
+                                }
+                            }],
+                            yAxes: [{
+                                stacked: true
+                            }]
+                        },
+                        tooltips: {
+                            callbacks: {
+                                title: function (tooltipItem, data) {
+                                    return data.labels[tooltipItem[0].index];
+                                },
+                                label: function (tooltipItem, data) {
+                                    var amount = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                                    // return amount + ' / ' + total + ' ( ' + parseFloat(amount * 100 / total).toFixed(2) + '% )';
+                                },
+                                //footer: function(tooltipItem, data) { return 'Total: 100 planos.'; }
+                            }
+                        },
+                    }
+                });
+            } else {
+                $.notify({
+                    message: "No se encontraron datos.",
+                    icon: 'admin/images/warning.svg'
+                });
+            }
+        },
+        error: function (data) { }
     })
 }
 
@@ -316,4 +584,19 @@ $(function () {
 
 function mostrarGrafica() {
     $('#graficaReporte').toggle();
+}
+
+function cambiarTabla() {
+    $("#customSwitchD").on("change.bootstrapSwitch", function (
+        event
+    ) {
+        console.log(event.target.checked);
+        if (event.target.checked == true) {
+            $('#tablaConActividadD').show();
+            $('#tablaSinActividadD').hide();
+        } else {
+            $('#tablaConActividadD').hide();
+            $('#tablaSinActividadD').show();
+        }
+    });
 }

@@ -58,3 +58,6 @@ Route::post("licencia", "apiController@licenciaProducto")->middleware('apilogger
 Route::post("listaActividad", "apiVersionDosController@selectActividad")->middleware('token')->middleware('apilogger');
 Route::post("captura2", "apiVersionDosController@captura")->middleware('token')->middleware('apilogger');
 Route::post("actividad2", "apiVersionDosController@actividad")->middleware('token')->middleware('apilogger');
+
+// TICKET DE SOPORTE Y SUGERENCIA
+Route::post("ticketSoporte","apiVersionDosController@ticketSoporte")->middleware('token')->middleware('apilogger');

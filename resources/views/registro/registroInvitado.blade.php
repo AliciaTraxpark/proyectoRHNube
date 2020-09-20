@@ -183,7 +183,7 @@
                                     padding-top:10px;background: #ecebeb">
                                     <h5 class="modal-title" id="myModalLabel"
                                         style="font-size: 14px">
-                                        Personalizar sexo</h5>
+                                        Personalizar género</h5>
                                     <button type="button" class="close"
                                         data-dismiss="modal" aria-label="Close"
                                         onclick="javascript:limpiartextSexo()">
@@ -193,7 +193,7 @@
                                 <div class="modal-body">
                                     {{ csrf_field() }}
                                     <div class="col-md-12">
-                                        <label for="">Sexo</label>
+                                        <label for="">Género</label>
                                     </div>
                                     <div class="col-md-12">
                                         <input type="text" class="form-control"
@@ -362,7 +362,7 @@
                                     </div>
                                    <br><br>
                                     <div class="col-md-12">
-                                        <label class="normal" for="">Sexo:</label>
+                                        <label class="normal" for="">Género:</label>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="control">

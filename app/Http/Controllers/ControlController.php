@@ -202,7 +202,7 @@ class ControlController extends Controller
                 DB::raw('TIME(cp.hora_fin) as hora_ini'),
                 DB::raw('TIME_FORMAT(SEC_TO_TIME(SUM(promedio.tiempo_rango)), "%H:%i:%s") as Total_Envio'),
                 DB::raw('SUM(promedio.promedio) as promedio'),
-                DB::raw('COUNT(promedio.id) as total'),
+                DB::raw('COUNT(promedio.idCaptura) as total'),
                 DB::raw($sql),
                 DB::raw('DATE(cp.hora_fin) as fecha_captura')
             )

@@ -180,10 +180,9 @@ function RefreshTablaEmpleado() {
                                     data[i].vinculacion[j].idVinculacion +
                                     "," +
                                     j +
-                                    "," +
-                                    '"' +
+                                    ",'" +
                                     data[i].perso_nombre +
-                                    '")">\
+                                    '\')">\
                                     <label class="custom-control-label" for="customSwitchCRDisp' +
                                     data[i].vinculacion[j].idVinculacion +
                                     '"\

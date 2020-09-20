@@ -194,7 +194,7 @@
                                         <th>Ap. Materno</th>
                                         <th>Correo</th>
                                         <th>Celular</th>
-                                        <th>Sexo</th>
+                                        <th>Género</th>
                                         <th>Fecha nacimiento</th>
                                         <th>Departamento Nac.</th>
                                         <th>Provincia Nac.</th>
