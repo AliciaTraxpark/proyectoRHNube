@@ -217,7 +217,7 @@ function onMostrarPantallas() {
                                 var totalR = enteroTime(sumaRangos);
                                 totalCM = totalR;
                                 promedio = (
-                                    promedios / sumaRangos
+                                    (promedios / sumaRangos)*100
                                 ).toFixed(2);
                                 if (promedios == 0) {
                                     promedio = 0;
@@ -357,7 +357,7 @@ function onMostrarPantallas() {
                     }
                     grupo += `</div><br>`;
                     container.append(grupo);
-                    totalActividadRango = (sumaActividadTotal / sumaRangosTotal).toFixed(
+                    totalActividadRango = ((sumaActividadTotal / sumaRangosTotal)*100).toFixed(
                         2
                     );
                     var span = "";
@@ -372,7 +372,7 @@ function onMostrarPantallas() {
                 }
                 $("#totalActivi").empty();
                 console.log(actividadDiariaTotal, rangoDiarioTotal);
-                promedioDiaria = (actividadDiariaTotal / rangoDiarioTotal).toFixed(2);
+                promedioDiaria = ((actividadDiariaTotal / rangoDiarioTotal)*100).toFixed(2);
                 var cont = `${promedioDiaria}%`;
                 $("#totalActivi").append(cont);
             } else {

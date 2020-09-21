@@ -7,6 +7,7 @@ $('#fecha').datetimepicker({
     autoclose: true,
     weekStart: 1,
     todayBtn: false,
+    pickerPosition: "bottom-left"
 });
 var notify = $.notifyDefaults({
     icon_type: 'image',
@@ -165,7 +166,7 @@ function onSelectFechas() {
                         var sumaA = data[i].sumaActividad[j];
                         var sumaR = data[i].sumaRango[j];
                         if (sumaR != 0) {
-                            var promedioD = (sumaA / sumaR).toFixed(2);
+                            var promedioD = ((sumaA / sumaR) * 100).toFixed(2);
                             html_trA += '<td>' + promedioD + '%' + '</td>';
                         } else {
                             var promedioD = (0).toFixed(2);
@@ -173,7 +174,7 @@ function onSelectFechas() {
                         }
                     }
                     if (sumaRTotal[0] != 0) {
-                        var p1 = (sumaATotal[0] / sumaRTotal[0]).toFixed(2);
+                        var p1 = ((sumaATotal[0] / sumaRTotal[0]) * 100).toFixed(2);
                         var sumaP = p1;
                     } else {
                         var sumaP = 0;
