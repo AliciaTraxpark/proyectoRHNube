@@ -62,6 +62,7 @@ class apiVersionDosController extends Controller
         $captura = new captura();
         $captura->estado = $request->get('estado');
         $captura->imagen = $request->get('imagen');
+        $captura->miniatura = $request->get('miniatura');
         $captura->actividad = $request->get('actividad');
         $captura->hora_ini = $request->get('hora_ini');
         $captura->hora_fin = $request->get('hora_fin');
