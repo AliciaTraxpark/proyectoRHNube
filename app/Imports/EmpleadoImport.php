@@ -28,6 +28,8 @@ use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Maatwebsite\Excel\Concerns\Importable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use LengthException;
+
 class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, WithBatchInserts, SkipsOnError
 {    use Importable, SkipsErrors;
     private $numRows = 0;
@@ -148,7 +150,7 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
 
                   //dd($busque, $busca[0]);
                 //departamento
-                $cadDep=$row['departamento'];
+               /*  $cadDep=$row['departamento'];
                 if(strlen($cadDep)>3){
                    $cadDep = substr ($cadDep, 0, -1);
                 }
@@ -159,11 +161,11 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                     $row['iddep'] = $dep->id;  $row['name_depArray'] = $dep->name; }
                     else{return redirect()->back()->with('alert', 'No se encontro el departamento:'.$row['departamento'].'.  El proceso se interrumpio en la fila:'.$filas); $row['iddep']=null;}
                 }
-                    else{ $row['name_depArray']=null; }
+                    else{ $row['name_depArray']=null; } */
 
 
                 //provincia
-                $cadProv=$row['provincia'];
+              /*   $cadProv=$row['provincia'];
                 if(strlen($cadProv)>3){
                     $cadProv = substr ($cadProv, 0, -1);
                 }
@@ -172,7 +174,7 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                     if( $provi!=null){
                         $row['idprov'] = $provi->id;  $row['provArray'] = $provi->name; }
                         else{return redirect()->back()->with('alert', 'No se encontro la provincia:'.$row['provincia'].'.  El proceso se interrumpio en la fila:'.$filas); $row['idprov']=null;}
-                } else{ $row['provArray']=null; }
+                } else{ $row['provArray']=null; } */
 
 
                //distrito
@@ -181,12 +183,27 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                     $cadDist = substr ($cadDist, 0, -1);
                 }
                 if($row['distrito']!=null){
-                    $idD = ubigeo_peru_districts::where("name", "like", "%".escape_like($cadDist)."%")->where("province_id", "=",$provi->id)->first();
-                     if($idD!=null){
-                        $row['id'] = $idD->id;   $row['distArray'] = $idD->name;
+                    $idD = ubigeo_peru_districts::where("name", "like", "%".escape_like($cadDist)."%")->get();
+
+                     if( $idD->isNotEmpty()){
+
+                        if($idD->count()>1){
+
+                            $row['id'] = $idD[0]->id;   $row['distArray'] = $idD[0]->name;
+                            $row['provArray'] = null; $row['name_depArray']=null;
+                        } else{
+
+                            $row['id'] = $idD[0]->id;   $row['distArray'] = $idD[0]->name;
+                        $provi = ubigeo_peru_provinces::where("id", "=", $idD[0]->province_id)->first();
+                        $row['provArray'] = $provi->name;
+
+                        $dep = ubigeo_peru_departments::where('id', '=',$provi->departamento_id)->first();
+                        $row['name_depArray']=$dep->name;
+
+                        }
                      }
                      else{return redirect()->back()->with('alert', 'No se encontro el distrito:'.$row['distrito'].'.  El proceso se interrumpio en la fila:'.$filas); $row['id']=null;}
-                    } else{$row['distArray'] = null; }
+                    } else{$row['distArray'] = null; $row['provArray'] = null; $row['name_depArray']=null;}
 
                 //cargo
                 $cargo = cargo::where("cargo_descripcion", "like", "%".$row['cargo']."%")->first();
@@ -217,7 +234,7 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                 } else{ $row['centro_costoArray']=null; }
 
                 //departamentoNac
-                $cadDepN=$row['departamento_nacimiento'];
+               /*  $cadDepN=$row['departamento_nacimiento'];
                 if(strlen($cadDepN)>3){
                     $cadDepN = substr ($cadDepN, 0, -1);
                 }
@@ -228,10 +245,10 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                     $row['iddepartamento_nacimiento'] = $depN->id; $row['name_depNArray'] = $depN->name;
                 }
                 else{return redirect()->back()->with('alert', 'No se encontro el departamento:'.$row['departamento_nacimiento'].'.  El proceso se interrumpio en la fila:'.$filas); $row['iddepartamento_nacimiento']=null;}
-                } else{ $row['name_depNArray']=null; }
+                } else{ $row['name_depNArray']=null; } */
 
                 //provinciaNac
-                $cadProvN=$row['provincia_nacimiento'];
+               /*  $cadProvN=$row['provincia_nacimiento'];
                 if(strlen($cadProvN)>3){
                     $cadProvN = substr ($cadProvN, 0, -1);
                 }
@@ -241,7 +258,7 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                     $row['idprovincia_nacimiento'] = $proviN->id; $row['provNArray'] = $proviN->name;
                 }
                 else{return redirect()->back()->with('alert', 'No se encontro la provincia:'.$row['provincia_nacimiento'].'.  El proceso se interrumpio en la fila:'.$filas); $row['idprovincia_nacimiento']=null;}
-                 } else{ $row['provNArray']=null; }
+                 } else{ $row['provNArray']=null; } */
 
                //distritoNac
                $cadDistN=$row['distrito_nacimiento'];
@@ -249,14 +266,26 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                    $cadDistN = substr ($cadDistN, 0, -1);
                }
                 if($row['distrito_nacimiento']!=null){
-                $idDN = ubigeo_peru_districts::where("name", "like", "%".escape_like($cadDistN)."%")->where("province_id", "=",$proviN->id)->first();
-                if($idDN!=null){
-                    $row['iddistrito_nacimiento'] = $idDN->id;  $row['distNArray'] = $idDN->name;
+                $idDN = ubigeo_peru_districts::where("name", "like", "%".escape_like($cadDistN)."%")->get();
+                if($idDN->isNotEmpty()){
+                    if($idDN->count()>1){
+                        $row['iddistrito_nacimiento'] = $idDN[0]->id;  $row['distNArray'] = $idDN[0]->name;
+                        $row['provNArray'] = null; $row['name_depNArray']=null;
+                    } else{
+
+                        $row['iddistrito_nacimiento'] = $idDN[0]->id;  $row['distNArray'] = $idDN[0]->name;
+                    $provi2 = ubigeo_peru_provinces::where("id", "=", $idDN[0]->province_id)->first();
+                    $row['provNArray'] = $provi2->name;
+
+                    $dep2 = ubigeo_peru_departments::where('id', '=',$provi2->departamento_id)->first();
+                    $row['name_depNArray']=$dep2->name;
+
+                    }
 
                 }
 
                 else{return redirect()->back()->with('alert', 'No se encontro el distrito:'.$row['distrito_nacimiento'].'.  El proceso se interrumpio en la fila:'.$filas); $row['iddistrito_nacimiento']=null;}
-                } else{$row['distNArray'] = null; }
+                } else{$row['distNArray'] = null; $row['provNArray'] = null; $row['name_depNArray']=null; }
 
                 //tipo_contrato
                 $tipo_contrato = tipo_contrato::where("contrato_descripcion", "like", "%".$row['tipo_contrato']."%")->first();

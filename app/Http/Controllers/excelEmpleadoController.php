@@ -110,7 +110,7 @@ class excelEmpleadoController extends Controller
                     $cadDist = substr ($cadDist, 0, -1);
                 }
                 if($emp[15]!=null){
-                    $idD = ubigeo_peru_districts::where("name", "like", "%".escape_like($cadDist)."%")->where("province_id", "=",$provi->id)->first();
+                    $idD = ubigeo_peru_districts::where("name", "like", "%".escape_like($cadDist)."%")->first();
                      if($idD!=null){
                         $row['id'] = $idD->id;
                      }
