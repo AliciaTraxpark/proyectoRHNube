@@ -43,7 +43,7 @@
 
     .datepicker,
     .table-condensed {
-        width: 300px !important;
+        width: 280px !important;
         height: 300px !important;
         min-width: 50% !important;
         min-height: 50% !important;
@@ -104,7 +104,7 @@
                                 <div class="table-responsive-xl" id="tablaSinActividadD">
                                     <table id="Reporte" class="table nowrap" style="font-size: 13px!important;width:
                                         100%;">
-                                        <thead style="background: #fafafa;" id="dias">
+                                        <thead style="background: #fafafa;" id="dias" style="width:100%!important">
                                             <tr>
                                                 <th><img src="{{
                                                         URL::asset('admin/assets/images/users/empleado.png')
@@ -139,9 +139,8 @@
                                     </table>
                                 </div>
                                 <div class="table-responsive-xl" style="display: none" id="tablaConActividadD">
-                                    <table id="actividadD" class="table nowrap"
-                                        style="font-size: 13px!important;width:100%;">
-                                        <thead style="background: #fafafa;" id="diasActvidad">
+                                    <table id="actividadD" class="table nowrap" style="font-size: 13px!important;width:100%;">
+                                        <thead style="background: #fafafa;" id="diasActvidad" style="width:100%!important">
                                         </thead>
                                         <tbody id="empleadoActividad">
                                         </tbody>

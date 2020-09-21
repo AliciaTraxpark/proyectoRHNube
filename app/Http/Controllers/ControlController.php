@@ -191,7 +191,7 @@ class ControlController extends Controller
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->leftJoin('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
             ->join('actividad as a', 'a.Activi_id', '=', 'cp.idActividad')
-            ->leftJoin('promedio_captura as promedio', 'promedio.idCaptura', '=', 'cp.idCaptura')
+            ->join('promedio_captura as promedio', 'promedio.idCaptura', '=', 'cp.idCaptura')
             ->leftJoin('horario_dias as h', 'h.id', '=', 'promedio.idHorario')
             ->select(
                 'e.emple_id',
@@ -203,6 +203,8 @@ class ControlController extends Controller
                 DB::raw('TIME_FORMAT(SEC_TO_TIME(SUM(promedio.tiempo_rango)), "%H:%i:%s") as Total_Envio'),
                 DB::raw('SUM(promedio.promedio) as promedio'),
                 DB::raw('COUNT(promedio.idCaptura) as total'),
+                DB::raw('SUM(cp.actividad) as sumaA'),
+                DB::raw('SUM(promedio.tiempo_rango) as sumaR'),
                 DB::raw($sql),
                 DB::raw('DATE(cp.hora_fin) as fecha_captura')
             )
@@ -223,11 +225,15 @@ class ControlController extends Controller
         $dias = array();
         $promedio = array();
         $total = array();
+        $sumaActividad = array();
+        $sumaRango = array();
 
         for ($i = 0; $i <= $diff->days; $i++) {
             array_push($horas, "00:00:00");
             array_push($promedio, "0.0");
             array_push($total, "0");
+            array_push($sumaActividad,"0");
+            array_push($sumaRango,"0");
             $dia = strtotime('+' . $i . 'day', strtotime($fechaF[0]));
 
             array_push($dias, date('Y-m-j', $dia));
@@ -236,20 +242,25 @@ class ControlController extends Controller
         foreach ($empleados as $empleado) {
             array_push($respuesta, array(
                 "id" => $empleado->emple_id, "nombre" => $empleado->nombre, "apPaterno" => $empleado->apPaterno,
-                "apMaterno" => $empleado->apMaterno, "horas" => $horas, "fechaF" => $dias, "promedio" => $promedio, "total" => $total
+                "apMaterno" => $empleado->apMaterno, "horas" => $horas, "fechaF" => $dias, "promedio" => $promedio, "total" => $total,
+                "sumaActividad" => $sumaActividad, "sumaRango" => $sumaRango
             ));
         }
         for ($j = 0; $j < sizeof($respuesta); $j++) {
             for ($i = 0; $i < sizeof($horasTrabajadas); $i++) {
                 if ($respuesta[$j]["id"] == $horasTrabajadas[$i]->emple_id) {
                     $respuesta[$j]["horas"][$horasTrabajadas[$i]->dia] = $horasTrabajadas[$i]->Total_Envio == null ? "00:00:00" : $horasTrabajadas[$i]->Total_Envio;
-                    $respuesta[$j]["promedio"][$horasTrabajadas[$i]->dia] = $horasTrabajadas[$i]->promedio == null ? "00:00:00" : $horasTrabajadas[$i]->promedio;
+                    $respuesta[$j]["promedio"][$horasTrabajadas[$i]->dia] = $horasTrabajadas[$i]->promedio == null ? "0.0" : $horasTrabajadas[$i]->promedio;
                     $respuesta[$j]["total"][$horasTrabajadas[$i]->dia] = $horasTrabajadas[$i]->total == null ? "0" : $horasTrabajadas[$i]->total;
+                    $respuesta[$j]["sumaActividad"][$horasTrabajadas[$i]->dia] = $horasTrabajadas[$i]->sumaA == null ? "0" : $horasTrabajadas[$i]->sumaA;
+                    $respuesta[$j]["sumaRango"][$horasTrabajadas[$i]->dia] = $horasTrabajadas[$i]->sumaR == null ? "0" : $horasTrabajadas[$i]->sumaR;
                 }
             }
             $respuesta[$j]['horas'] = array_reverse($respuesta[$j]['horas']);
             $respuesta[$j]['promedio'] = array_reverse($respuesta[$j]['promedio']);
             $respuesta[$j]['total'] = array_reverse($respuesta[$j]['total']);
+            $respuesta[$j]['sumaActividad'] = array_reverse($respuesta[$j]['sumaActividad']);
+            $respuesta[$j]['sumaRango'] = array_reverse($respuesta[$j]['sumaRango']);
         }
         return response()->json($respuesta, 200);
     }
@@ -307,7 +318,8 @@ class ControlController extends Controller
                 'pc.promedio as prom',
                 'pc.tiempo_rango as rango',
                 DB::raw('TIME(cp.hora_ini) as hora_ini'),
-                DB::raw('TIME(cp.hora_fin) as hora_fin')
+                DB::raw('TIME(cp.hora_fin) as hora_fin'),
+                'cp.actividad as tiempoA'
             )
             ->where(DB::raw('IF(hd.id is null, DATE(cp.hora_fin), DATE(hd.start))'), '=', $fecha)
             ->where('e.emple_id', '=', $idempleado)

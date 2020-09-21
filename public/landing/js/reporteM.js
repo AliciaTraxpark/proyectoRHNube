@@ -7,6 +7,7 @@ $('#fechaMensual').datetimepicker({
     pickTime: false,
     autoclose: true,
     todayBtn: false,
+    pickerPosition: "bottom-left"
 });
 var notify = $.notifyDefaults({
     icon_type: 'image',
