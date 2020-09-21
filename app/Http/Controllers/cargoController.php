@@ -18,10 +18,11 @@ class cargoController extends Controller
     {
         $this->middleware(['auth','verified']);
     }
-    
+
     public function store(Request $request){
         $cargo=new cargo();
         $cargo->cargo_descripcion=$request->get('cargo_descripcion');
+        $cargo->organi_id=session('sesionidorg');
         $cargo->save();
         return $cargo;
 

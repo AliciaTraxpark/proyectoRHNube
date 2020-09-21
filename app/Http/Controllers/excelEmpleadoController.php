@@ -118,26 +118,28 @@ class excelEmpleadoController extends Controller
                     } else{$row['id'] = null; }
 
                 //cargo
-                $cargo = cargo::where("cargo_descripcion", "like", "%".$emp[19]."%")->first();
+                $cargo = cargo::where("cargo_descripcion", "like", "%".$emp[19]."%")->where('organi_id','=',session('sesionidorg'))->get()->first();
                 if($emp[19]!=null){
                     if($cargo!=null){
                      $row['idcargo'] = $cargo->cargo_id;
                     } else{
                         $cargorow=new cargo();
                         $cargorow->cargo_descripcion=$emp[19];
+                        $cargorow->organi_id=session('sesionidorg');
                         $cargorow->save();
                         $row['idcargo']=$cargorow->cargo_id;
                     }
                  } else{ $row['idcargo']=null; }
 
                 //area
-                $area = area::where("area_descripcion", "like", "%".$emp[20]."%")->first();
+                $area = area::where("area_descripcion", "like", "%".$emp[20]."%")->where('organi_id','=',session('sesionidorg'))->first();
                 if($emp[20]!=null){
                     if($area!=null){
                      $row['idarea'] = $area->area_id;
                     } else{
                         $arearow = new area();
                         $arearow->area_descripcion=$emp[20];
+                        $arearow->organi_id=session('sesionidorg');
                         $arearow->save();
                         $row['idarea']= $arearow->area_id;
                     }

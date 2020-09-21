@@ -30,6 +30,7 @@ class diasLaborablesController extends Controller
 
         $area = DB::table('area as ar')
         ->join('empleado as em', 'ar.area_id', '=', 'em.emple_area')
+        ->where('ar.organi_id','=',session('sesionidorg'))
         ->select(
             'ar.area_id as idarea',
             'area_descripcion as descripcion'

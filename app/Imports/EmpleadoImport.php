@@ -206,7 +206,7 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                     } else{$row['distArray'] = null; $row['provArray'] = null; $row['name_depArray']=null;}
 
                 //cargo
-                $cargo = cargo::where("cargo_descripcion", "like", "%".$row['cargo']."%")->first();
+                $cargo = cargo::where("cargo_descripcion", "like", "%".$row['cargo']."%")->where('organi_id','=',session('sesionidorg'))->first();
                 if($row['cargo']!=null){
                     if($cargo!=null){
                      $row['idcargo'] = $cargo->cargo_id;    $row['cargoArray'] = $cargo->cargo_descripcion;
@@ -214,7 +214,7 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                  } else{ $row['cargoArray']=null; }
 
                 //area
-                $area = area::where("area_descripcion", "like", "%".$row['area']."%")->first();
+                $area = area::where("area_descripcion", "like", "%".$row['area']."%")->where('organi_id','=',session('sesionidorg'))->first();
                 if($row['area']!=null){
                     if($area!=null){
                      $row['idarea'] = $area->area_id;  $row['areaArray'] = $area->area_descripcion;

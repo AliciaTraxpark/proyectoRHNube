@@ -47,10 +47,11 @@ class horarioController extends Controller
         ->where('h.organi_id', '=', session('sesionidorg'))
         ->whereNull('he.horario_horario_id')
         ->get();
-        $area=DB::table('area')
+        $area=DB::table('area')->where('organi_id','=',session('sesionidorg'))
         ->select('area_id as idarea', 'area_descripcion as descripcion')
         ->get();
         $cargo=DB::table('cargo')
+        ->where('organi_id','=',session('sesionidorg'))
         ->select('cargo_id as idcargo', 'cargo_descripcion as descripcion')
         ->get();
         $local=DB::table('local')
@@ -333,10 +334,11 @@ class horarioController extends Controller
         ->where('h.organi_id', '=', session('sesionidorg'))
         ->whereNull('he.horario_horario_id')
         ->get();
-        $area=DB::table('area')
+        $area=DB::table('area')->where('organi_id','=',session('sesionidorg'))
         ->select('area_id as idarea', 'area_descripcion as descripcion')
         ->get();
         $cargo=DB::table('cargo')
+        ->where('organi_id','=',session('sesionidorg'))
         ->select('cargo_id as idcargo', 'cargo_descripcion as descripcion')
         ->get();
         $local=DB::table('local')
