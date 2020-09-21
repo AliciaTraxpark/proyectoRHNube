@@ -318,7 +318,8 @@ class ControlController extends Controller
                 'pc.promedio as prom',
                 'pc.tiempo_rango as rango',
                 DB::raw('TIME(cp.hora_ini) as hora_ini'),
-                DB::raw('TIME(cp.hora_fin) as hora_fin')
+                DB::raw('TIME(cp.hora_fin) as hora_fin'),
+                'cp.actividad as tiempoA'
             )
             ->where(DB::raw('IF(hd.id is null, DATE(cp.hora_fin), DATE(hd.start))'), '=', $fecha)
             ->where('e.emple_id', '=', $idempleado)

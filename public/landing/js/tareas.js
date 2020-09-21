@@ -117,11 +117,12 @@ function onMostrarPantallas() {
                     location.reload();
                 }*/
             },
-            beforeSend: function(){
+            beforeSend: function () {
 
                 $("#espera").show();
             }
         }).then(function (data) {
+            console.log(data);
             var vacio = `<img id="VacioImg" style="margin-left:28%" src="admin/images/search-file.svg"
             class="mr-2" height="220" /> <br> <label for=""
             style="margin-left:30%;color:#7d7d7d">Realize una búsqueda para ver Actividad</label>`;
@@ -130,9 +131,9 @@ function onMostrarPantallas() {
             if (data.length != 0) {
                 var container = $("#card");
                 var $i = 0;
-                var actividadD = 0;
-                var $countA = 0;
-                var totalActividad = 0;
+                var actividadDiariaTotal = 0;
+                var rangoDiarioTotal = 0;
+                var promedioDiaria = 0;
                 var actividadDiaria = `<div class="row justify-content-center p-3"><div class="col-xl-3"><span style="font-weight: bold;color:#163552;cursor:default;font-size:14px;"><img src="landing/images/velocimetro (1).svg" class="mr-2" height="20"/>Actividad Diaria - <span id="totalActivi"></span></span></div></div>`;
                 container.append(actividadDiaria);
                 for (let index = 0; index < data.length; index++) {
@@ -141,9 +142,11 @@ function onMostrarPantallas() {
                     var hora = data[index].horaCaptura;
                     var promedios = 0;
                     var promedio = 0;
-                    var promActvidad = 0;
-                    var contarTiempo = 0;
+                    var sumaRangosTotal = 0;
                     var sumaRangos = 0;
+                    var sumaActividad = 0;
+                    var sumaActividadTotal = 0;
+                    var totalActividadRango = 0;
                     var totalCM = 0;
                     var hora_inicial = "";
                     var hora_final = "";
@@ -168,11 +171,12 @@ function onMostrarPantallas() {
                                     promedios =
                                         promedios +
                                         data[index].minutos[j][indexMinutos]
-                                            .prom;
+                                            .tiempoA;
                                     sumaRangos =
                                         sumaRangos +
                                         data[index].minutos[j][indexMinutos]
                                             .rango;
+                                    sumaActividad = sumaActividad + data[index].minutos[j][indexMinutos].tiempoA;
                                     hora_inicial =
                                         data[index].minutos[j][0].hora_ini;
                                     hora_final =
@@ -203,23 +207,24 @@ function onMostrarPantallas() {
                                 var totalR = enteroTime(
                                     data[index].minutos[j][0].rango
                                 );
+                                sumaRangosTotal += data[index].minutos[j][0].rango;
                                 totalCM = totalR;
                                 promedio = data[index].minutos[j][0].prom;
+                                sumaActividadTotal += data[index].minutos[j][0].tiempoA;
                             } else {
-                                if (sumaRangos == 0) {
-                                    totalCM = 0;
-                                } else {
-                                    var totalR = enteroTime(sumaRangos);
-                                    totalCM = totalR;
-                                }
+                                sumaRangosTotal += sumaRangos;
+                                sumaActividadTotal += sumaActividad;
+                                var totalR = enteroTime(sumaRangos);
+                                totalCM = totalR;
                                 promedio = (
-                                    promedios / data[index].minutos[j].length
+                                    promedios / sumaRangos
                                 ).toFixed(2);
                                 if (promedios == 0) {
                                     promedio = 0;
                                 }
                                 promedios = 0;
                                 sumaRangos = 0;
+                                sumaActividad = 0;
                             }
                             var nivel;
                             if (promedio >= 50) nivel = "green";
@@ -326,8 +331,6 @@ function onMostrarPantallas() {
                                 </div>`;
                             }
                             grupo += card;
-                            promActvidad = promActvidad + parseFloat(promedio);
-                            contarTiempo = contarTiempo + 1;
                         } else {
                             card = `<div class="col-2" style="margin-left: 0px!important;justify-content:center;!important">
                     <br><br><br>
@@ -354,25 +357,23 @@ function onMostrarPantallas() {
                     }
                     grupo += `</div><br>`;
                     container.append(grupo);
-                    if (contarTiempo == 0) {
-                        promedioHoras = 0;
-                    } else {
-                        promedioHoras = (promActvidad / contarTiempo).toFixed(
-                            2
-                        );
-                    }
+                    totalActividadRango = (sumaActividadTotal / sumaRangosTotal).toFixed(
+                        2
+                    );
                     var span = "";
-                    span += `${promedioHoras}%`;
+                    span += `${totalActividadRango}%`;
                     $("#promHoras" + $i).append(span);
+                    actividadDiariaTotal = actividadDiariaTotal + sumaActividadTotal;
+                    rangoDiarioTotal = rangoDiarioTotal + sumaRangosTotal;
+                    sumaActividadTotal = 0;
+                    sumaRangosTotal = 0;
                     $('[data-toggle="tooltip"]').tooltip();
                     $i = $i + 1;
-                    actividadD = actividadD + parseFloat(promedioHoras);
-                    $countA = $countA + 1;
                 }
                 $("#totalActivi").empty();
-                totalActividad = (actividadD / $countA).toFixed(2);
-                console.log(actividadD,$countA,totalActividad);
-                var cont = `${totalActividad}%`;
+                console.log(actividadDiariaTotal, rangoDiarioTotal);
+                promedioDiaria = (actividadDiariaTotal / rangoDiarioTotal).toFixed(2);
+                var cont = `${promedioDiaria}%`;
                 $("#totalActivi").append(cont);
             } else {
                 $("#card").empty();
