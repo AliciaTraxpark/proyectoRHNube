@@ -99,35 +99,62 @@ class horarioController extends Controller
         $inicio = $request->inicio;
         $fin = $request->fin;
         $idhorar = $request->idhorar;
+        $fueraHora=$request->fueraHora;
+
+        $arrayrep = collect();
         $arrayeve = collect();
+
         foreach ($datafecha as $datafechas) {
-            $temporal_eventos = new temporal_eventos();
-            $temporal_eventos->title = $horas;
-            $temporal_eventos->start = $datafechas;
-            $temporal_eventos->color = '#ffffff';
-            $temporal_eventos->textColor = '111111';
-            $temporal_eventos->users_id = Auth::user()->id;
+            $tempre = temporal_eventos::
+           where('users_id', '=', Auth::user()->id)
+            ->where('start', '=', $datafechas)
+            ->where('id_horario', '=', $idhorar)
+            ->get()->first();
+            if( $tempre){
+                $startArre= $tempre->start;
+             $arrayrep->push($startArre);
+            }
 
 
-            $temporal_eventos->temp_horaI = $inicio;
-            $temporal_eventos->temp_horaF = $fin;
-            $temporal_eventos->id_horario = $idhorar;
-            $temporal_eventos->save();
-            $arrayeve->push($temporal_eventos);
         }
 
+       $datos = Arr::flatten($arrayrep);
 
-        $temp = DB::table('temporal_eventos as te')
-        ->select(['id', 'title', 'color', 'textColor', 'start', 'end'])
-            ->where('users_id', '=', Auth::user()->id)
-            ->get();
-       /*  return  response()->json($arrayeve); */
-       return  response()->json($temp);
+
+        //DIFERENCIA ARRAYS
+        $datafecha2=array_values(array_diff($datafecha, $datos));
+
+        foreach ($datafecha2 as $datafechas) {
+
+
+           $temporal_eventos = new temporal_eventos();
+          $temporal_eventos->title = $horas;
+          $temporal_eventos->start = $datafechas;
+          $temporal_eventos->color = '#ffffff';
+          $temporal_eventos->textColor = '111111';
+          $temporal_eventos->users_id = Auth::user()->id;
+
+
+          $temporal_eventos->temp_horaI = $inicio;
+          $temporal_eventos->temp_horaF = $fin;
+          $temporal_eventos->id_horario = $idhorar;
+          $temporal_eventos->fuera_horario = $fueraHora;
+          if($fueraHora==1){
+              $temporal_eventos->borderColor = '#5369f8';
+          }
+          $temporal_eventos->save();
+          $arrayeve->push($temporal_eventos);
+      }
+
+
+
+
+
     }
     public function eventos()
     {
-        $temporal_eventos = DB::table('temporal_eventos')->select(['id', 'title', 'textColor', 'start', 'end', 'color', 'horaI','horaF'])
-           ->join('horario as h','temporal_eventos.id_horario','=','h.horario_id')
+        $temporal_eventos = DB::table('temporal_eventos')->select(['id', 'title', 'textColor', 'start', 'end', 'color', 'horaI','horaF','borderColor'])
+           ->leftJoin('horario as h','temporal_eventos.id_horario','=','h.horario_id')
         ->where('users_id', '=', Auth::user()->id)
             ->get();
 
@@ -135,7 +162,7 @@ class horarioController extends Controller
     }
     public function guardarHorarioBD(Request $request)
     {
-        $sobretiempo = $request->sobretiempo;
+
 
         $descripcion = $request->descripcion;
         $toleranciaH = $request->toleranciaH;
@@ -143,7 +170,6 @@ class horarioController extends Controller
         $fin = $request->fin;
 
         $horario = new horario();
-        $horario->horario_sobretiempo = $sobretiempo;
 
         $horario->horario_descripcion = $descripcion;
         $horario->horario_tolerancia = $toleranciaH;
@@ -463,6 +489,10 @@ class horarioController extends Controller
                     $horario_empleado->horario_horario_id =  $temporal_eventosH->id_horario;
                     $horario_empleado->empleado_emple_id = $idempleados;
                     $horario_empleado->horario_dias_id = $horario_dias->id;
+                    $horario_empleado->fuera_horario= $temporal_eventosH->fuera_horario;
+                    if($temporal_eventosH->fuera_horario==1){
+                        $horario_empleado->borderColor = $temporal_eventosH->borderColor;
+                    }
                     $horario_empleado->save();
             }}
         }
@@ -820,22 +850,18 @@ class horarioController extends Controller
     public function actualizarhorarioed(Request $request){
         $idhorario=$request->idhorario;
 
-        $sobretiempo=$request->sobretiempo;
         $descried=$request->descried;
         $toleed=$request->toleed;
         $horaIed=$request->horaIed;
         $horaFed=$request->horaFed;
 
         $horario = horario::where('horario_id', '=',$idhorario)
-        ->update(['horario_sobretiempo' => $sobretiempo,
+        ->update([
         'horario_descripcion' =>$descried,'horario_tolerancia' =>$toleed,'horaI' => $horaIed,
         'horaF' => $horaFed]);
 
 
-       $horarion=DB::table('horario as h')
-        ->leftJoin('horario_empleado as he','h.horario_id','=','he.horario_horario_id')
-        ->where('h.organi_id', '=', session('sesionidorg'))
-        ->get();
+       $horarion=horario::where('organi_id', '=', session('sesionidorg'))->get();
 
         return($horarion);
 

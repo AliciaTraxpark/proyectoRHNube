@@ -44,13 +44,16 @@
       font-size: 12.2px!important;
       margin: 2px 2px;
       cursor:url("../landing/images/cruz1.svg"), auto;
-      font-weight: 600;
+
   }
   a:not([href]):not([tabindex]){
       color: #000;
       cursor: pointer;
       font-size: 12px;
   }
+  .fc-event-container> a{
+    border: 1px solid #fff;
+}
   .fc-toolbar.fc-header-toolbar{
       zoom:80%;
   }
