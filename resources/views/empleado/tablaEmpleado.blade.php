@@ -355,6 +355,13 @@
                             .val(data[0].iddistN))
                     });
                 }
+                if(data[0].iddepaN == null){
+                    if(data[0].iddistN!= null){
+                $('#v_distrito').append($('<option>', {
+                text : data[0].distN,
+                selected:true
+                  }));}
+                }
 
                 $.ajax({
                 type:"POST",
@@ -400,6 +407,13 @@
                         onSelectVProv('#v_prov').then((result) => $('#v_dist').val(data[0]
                             .distId))
                     });
+                }
+                if(data[0].depar == null){
+                    if(data[0].distId!= null){
+                $('#v_dist').append($('<option>', {
+                text : data[0].distNo,
+                selected:true
+                  }));}
                 }
                 $('#selectCalendario_edit3').val(data[0].idcalendar);
                 $('#idselect3').val(data[0].idcalendar);

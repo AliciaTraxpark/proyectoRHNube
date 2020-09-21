@@ -24,6 +24,8 @@ use App\ubigeo_peru_districts;
 use App\tipo_documento;
 use App\tipo_contrato;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
 {
     /**
@@ -39,8 +41,8 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
     {
         return [
             'tipo_documento', 'numero_documento', 'nombres', 'apellido_paterno',
-            'apellido_materno','correo','celular','sexo', 'fecha_nacimiento', 'departamento_nacimiento',
-            'provincia_nacimiento', 'distrito_nacimiento', 'direccion', 'departamento', 'provincia', 'distrito',
+            'apellido_materno','correo','celular','sexo', 'fecha_nacimiento', /* 'departamento_nacimiento',
+            'provincia_nacimiento', */ 'distrito_nacimiento', 'direccion', /* 'departamento', 'provincia', */ 'distrito',
             'tipo_contrato', 'local', 'nivel','cargo', 'area', 'centro_costo','condicion_pago','monto_pago'
         ];
     }
@@ -68,15 +70,17 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                     ],
                 ];
 
-                $event->sheet->getStyle('A1:X1')->applyFromArray($styleArray);
+                $event->sheet->getStyle('A1:T1')->applyFromArray($styleArray);
                 $event->sheet->getDelegate()->setTitle("Empleado");
-                foreach (range('A', 'X') as $columnID) {
+                foreach (range('A', 'T') as $columnID) {
                     $event->sheet->getColumnDimension($columnID)->setAutoSize(false);
                     $event->sheet->getColumnDimension($columnID)
                         ->setWidth(25);
                 }
-                $departamentos = ubigeo_peru_departments::all();
-                $provincias = ubigeo_peru_provinces::all();
+              /*   $departamentos = ubigeo_peru_departments::all();
+                $provincias = ubigeo_peru_provinces::all(); */
+                $distrito = DB::table('ubigeo_peru_districts')->groupBy('name')
+                ->orderBy('name','ASC')->get();
                 $tipoDocumento = tipo_documento::all();
                 $tipoContrato = tipo_contrato::all();
                 $cargo = cargo::all();
@@ -86,24 +90,27 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $nivel = nivel::all();
                 $condicion_pago=condicion_pago::where('organi_id','=',session('sesionidorg'))->get();
 
-                $drop_column = 'N';
-                $drop_columnP = 'o';
+               /*  $drop_column = 'N';
+                $drop_columnP = 'o'; */
                 $drop_columnD = 'A';
-                $drop_columnC = 'Q';
-                $drop_columnN = 'J';
-                $drop_columnPN = 'K';
-                $drop_columnCargo = 'T';
-                $drop_columnArea = 'U';
-                $drop_columnCentro = 'V';
-                $drop_columnLocal = 'R';
-                $drop_columnNivel = 'S';
+                $drop_columnC = 'M';
+              /*   $drop_columnN = 'J';
+                $drop_columnPN = 'K'; */
+                $drop_columnCargo = 'P';
+                $drop_columnArea = 'Q';
+                $drop_columnCentro = 'R';
+                $drop_columnLocal = 'N';
+                $drop_columnNivel = 'O';
                 $drop_columnGenero = 'H';
 
                 $drop_columnFecha = 'I';
-                $drop_columnCondicionP = 'W';
+                $drop_columnCondicionP = 'S';
 
-                $row = 1;
-                $rowP = 1;
+                $drop_columnDisritoN = 'J';
+                $drop_columnDisritoVive = 'L';
+
+               /*  $row = 1;
+                $rowP = 1; */
                 $rowD = 1;
                 $rowC = 1;
                 $rowCargo = 1;
@@ -112,6 +119,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $rowLocal = 1;
                 $rowNivel = 1;
                 $rowCondP=1;
+                $rowConDist=1;
                 //TIPODOCUMENTO
                 foreach ($tipoDocumento as $tipoDocumentos) {
                     $event->sheet->getDelegate()->setCellValue('BC' . $rowD++, $tipoDocumentos->tipoDoc_descripcion);
@@ -131,7 +139,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $validationD->setFormula1('Empleado!$BC$1:$BC$3');
 
                 //DEPARTAMENTO
-                foreach ($departamentos as $departamento) {
+              /*   foreach ($departamentos as $departamento) {
                     $event->sheet->getDelegate()->setCellValue('BA' . $row++, $departamento->name);
                 }
 
@@ -146,10 +154,10 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $validation->setError('Departamento no se encuentra en la lista.');
                 $validation->setPromptTitle('Departamentos');
                 $validation->setPrompt('Elegir una opción');
-                $validation->setFormula1('Empleado!$BA$1:$BA$25');
+                $validation->setFormula1('Empleado!$BA$1:$BA$25'); */
 
                 //PROVINCIA
-                foreach ($provincias as $provincia) {
+               /*  foreach ($provincias as $provincia) {
                     $event->sheet->getDelegate()->setCellValue('BF' . $rowP++, $provincia->name);
                 }
 
@@ -164,7 +172,25 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $validationP->setError('Provincia no se encuentra en la lista.');
                 $validationP->setPromptTitle('Provincias');
                 $validationP->setPrompt('Elegir una opción');
-                $validationP->setFormula1('Empleado!$BF$1:$BF$193');
+                $validationP->setFormula1('Empleado!$BF$1:$BF$193'); */
+
+                 //DISTRITO
+                foreach ($distrito as $distritos) {
+                    $event->sheet->getDelegate()->setCellValue('CJ' . $rowConDist++, $distritos->name);
+                }
+
+                $validationDist = $event->sheet->getDelegate()->getCell("{$drop_columnDisritoN}2")->getDataValidation();
+                $validationDist->setType(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::TYPE_LIST);
+                $validationDist->setErrorStyle(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::STYLE_INFORMATION);
+                 $validationDist->setAllowBlank(false);
+                $validationDist->setShowInputMessage(true);
+                $validationDist->setShowErrorMessage(true);
+                $validationDist->setShowDropDown(true);
+                $validationDist->setErrorTitle('Error');
+                $validationDist->setError('Distrito no se encuentra en la lista.');
+                $validationDist->setPromptTitle('Distritos');
+                $validationDist->setPrompt('Elegir una opción');
+                $validationDist->setFormula1('Empleado!$CJ$1:$CJ$1679');
 
                 //TIPO CONTRATO
                 foreach ($tipoContrato as $tipoContratos) {
@@ -182,7 +208,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $validationC->setError('tipo de Contrato no se encuentra en la lista.');
                 $validationC->setPromptTitle('Tipo de Documento');
                 $validationC->setPrompt('Elegir una opción o agregar nuevo');
-                $validationC->setFormula1('Empleado!$BJ$1:$BJ$2');
+                $validationC->setFormula1('Empleado!$BJ$1:$BJ$5');
 
                 //CARGO
                 foreach ($cargo as $cargos) {
@@ -200,7 +226,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $validationCargo->setError('Cargo no se encuentra en la lista.');
                 $validationCargo->setPromptTitle('Cargo');
                 $validationCargo->setPrompt('Elegir una opción o agregar nuevo');
-                $validationCargo->setFormula1('Empleado!$BN$1:$BN$8');
+                $validationCargo->setFormula1('Empleado!$BN$1:$BN$10');
 
                 //AREA
                 foreach ($area as $areas) {
@@ -218,7 +244,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $validationArea->setError('Área no se encuentra en la lista.');
                 $validationArea->setPromptTitle('Área');
                 $validationArea->setPrompt('Elegir una opción o agregar nuevo');
-                $validationArea->setFormula1('Empleado!$BQ$1:$BQ$8');
+                $validationArea->setFormula1('Empleado!$BQ$1:$BQ$10');
 
                 //CENTRO
                 foreach ($centroC as $centroCs) {
@@ -236,7 +262,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $validationCentro->setError('Centro no se encuentra en la lista.');
                 $validationCentro->setPromptTitle('Centro');
                 $validationCentro->setPrompt('Elegir una opción o agregar nuevo');
-                $validationCentro->setFormula1('Empleado!$BT$1:$BT$8');
+                $validationCentro->setFormula1('Empleado!$BT$1:$BT$10');
 
                 //LOCAL
                 foreach ($local as $locals) {
@@ -254,7 +280,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $validationLocal->setError('Local no se encuentra en la lista.');
                 $validationLocal->setPromptTitle('Local');
                 $validationLocal->setPrompt('Elegir una opción o agregar nuevo');
-                $validationLocal->setFormula1('Empleado!$CA$1:$CA$8');
+                $validationLocal->setFormula1('Empleado!$CA$1:$CA$10');
 
                 //NIVEL
                 foreach ($nivel as $nivels) {
@@ -272,7 +298,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $validationNivel->setError('Nivel no se encuentra en la lista.');
                 $validationNivel->setPromptTitle('Nivel');
                 $validationNivel->setPrompt('Elegir una opción o agregar nuevo');
-                $validationNivel->setFormula1('Empleado!$CC$1:$CC$8');
+                $validationNivel->setFormula1('Empleado!$CC$1:$CC$10');
 
                 //Genero
 
@@ -305,14 +331,16 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $validationCondiP->setError('Condicion no se encuentra en la lista.');
                 $validationCondiP->setPromptTitle('CondicionPago');
                 $validationCondiP->setPrompt('Elegir una opción o agregar nuevo');
-                $validationCondiP->setFormula1('Empleado!$CD$1:$CD$8');
+                $validationCondiP->setFormula1('Empleado!$CD$1:$CD$10');
 
                 for ($i = 2; $i <= $this->total; $i++) {
                     $event->sheet->getCell("{$drop_columnD}{$i}")->setDataValidation(clone $validationD);
-                    $event->sheet->getCell("{$drop_column}{$i}")->setDataValidation(clone $validation);
+                   /*  $event->sheet->getCell("{$drop_column}{$i}")->setDataValidation(clone $validation);
                     $event->sheet->getCell("{$drop_columnP}{$i}")->setDataValidation(clone $validationP);
                     $event->sheet->getCell("{$drop_columnN}{$i}")->setDataValidation(clone $validation);
-                    $event->sheet->getCell("{$drop_columnPN}{$i}")->setDataValidation(clone $validationP);
+                    $event->sheet->getCell("{$drop_columnPN}{$i}")->setDataValidation(clone $validationP); */
+                    $event->sheet->getCell("{$drop_columnDisritoN}{$i}")->setDataValidation(clone $validationDist);
+                    $event->sheet->getCell("{$drop_columnDisritoVive}{$i}")->setDataValidation(clone $validationDist);
                     $event->sheet->getCell("{$drop_columnC}{$i}")->setDataValidation(clone $validationC);
                     $event->sheet->getCell("{$drop_columnCargo}{$i}")->setDataValidation(clone $validationCargo);
                     $event->sheet->getCell("{$drop_columnArea}{$i}")->setDataValidation(clone $validationArea);
@@ -333,6 +361,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $event->sheet->getColumnDimension('CA')->setVisible(false);
                 $event->sheet->getColumnDimension('CC')->setVisible(false);
                 $event->sheet->getColumnDimension('CD')->setVisible(false);
+                $event->sheet->getColumnDimension('CJ')->setVisible(false);
                 //
 
             }
