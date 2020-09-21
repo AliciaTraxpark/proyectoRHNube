@@ -146,13 +146,14 @@ class excelEmpleadoController extends Controller
                  } else{ $row['idarea']=null; }
 
                 //centro_costo
-                $centro_costo = centro_costo::where("centroC_descripcion", "like", "%".$emp[21]."%")->first();
+                $centro_costo = centro_costo::where("centroC_descripcion", "like", "%".$emp[21]."%")->where('organi_id','=',session('sesionidorg'))->first();
                 if($emp[21]!=null){
                     if($centro_costo!=null){
                      $row['idcentro_costo'] = $centro_costo->centroC_id;
                     } else{
                         $centrorow = new centro_costo();
                         $centrorow->centroC_descripcion=$emp[21];
+                        $centrorow->organi_id=session('sesionidorg');
                         $centrorow->save();
                         $row['idcentro_costo']= $centrorow->centroC_id;
                     }
@@ -211,13 +212,14 @@ class excelEmpleadoController extends Controller
                  } else{ $row['idtipo_contrato']=null; }
 
                 //local
-                $local = local::where("local_descripcion", "like", "%".$emp[17]."%")->first();
+                $local = local::where("local_descripcion", "like", "%".$emp[17]."%")->where('organi_id', '=', session('sesionidorg'))->first();
                 if($emp[17]!=null){
                     if ($local!=null){
                         $row['idlocal'] = $local->local_id;
                     } else{
                         $localrow = new local();
                         $localrow->local_descripcion=$emp[17];
+                        $localrow->organi_id=session('sesionidorg');
                         $localrow->save();
                         $row['idlocal'] = $localrow->local_id;
 
@@ -225,13 +227,14 @@ class excelEmpleadoController extends Controller
                  } else{ $row['idlocal']=null; }
 
                 //nivel
-                $nivel = nivel::where("nivel_descripcion", "like", "%".$emp[18]."%")->first();
+                $nivel = nivel::where("nivel_descripcion", "like", "%".$emp[18]."%")->where('organi_id', '=', session('sesionidorg'))->first();
                 if($emp[18]!=null){
                     if ($nivel!=null){
                     $row['idnivel'] = $nivel->nivel_id;
                     } else{
                         $nivelrow = new nivel();
                         $nivelrow->nivel_descripcion=$emp[18];
+                        $nivelrow->organi_id=session('sesionidorg');
                         $nivelrow->save();
                        $row['idnivel'] =  $nivelrow->nivel_id;
                    }

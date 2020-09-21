@@ -55,6 +55,7 @@ class horarioController extends Controller
         ->select('cargo_id as idcargo', 'cargo_descripcion as descripcion')
         ->get();
         $local=DB::table('local')
+        ->where('organi_id','=',session('sesionidorg'))
         ->select('local_id as idlocal', 'local_descripcion as descripcion')
         ->get();
 
@@ -342,6 +343,7 @@ class horarioController extends Controller
         ->select('cargo_id as idcargo', 'cargo_descripcion as descripcion')
         ->get();
         $local=DB::table('local')
+        ->where('organi_id','=',session('sesionidorg'))
         ->select('local_id as idlocal', 'local_descripcion as descripcion')
         ->get();
 

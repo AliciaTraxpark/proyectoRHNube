@@ -224,7 +224,7 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                  } else{ $row['areaArray']=null;  }
 
                 //centro_costo
-                $centro_costo = centro_costo::where("centroC_descripcion", "like", "%".$row['centro_costo']."%")->first();
+                $centro_costo = centro_costo::where("centroC_descripcion", "like", "%".$row['centro_costo']."%")->where('organi_id','=',session('sesionidorg'))->get()->first();
                 if($row['centro_costo']!=null){
                     if($centro_costo!=null){
                      $row['idcentro_costo'] = $centro_costo->centroC_id;  $row['centro_costoArray'] = $centro_costo->centroC_descripcion;
@@ -298,7 +298,7 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                  } else{ $row['tipo_contratoArray']=null; }
 
                 //local
-                $local = local::where("local_descripcion", "like", "%".$row['local']."%")->first();
+                $local = local::where("local_descripcion", "like", "%".$row['local']."%")->where('organi_id', '=', session('sesionidorg'))->first();
                 if($row['local']!=null){
                     if ($local!=null){
                         $row['idlocal'] = $local->local_id;  $row['localArray'] = $local->local_descripcion;
@@ -309,7 +309,7 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                  } else{ $row['localArray']=null; }
 
                 //nivel
-                $nivel = nivel::where("nivel_descripcion", "like", "%".$row['nivel']."%")->first();
+                $nivel = nivel::where("nivel_descripcion", "like", "%".$row['nivel']."%")->where('organi_id', '=', session('sesionidorg'))->first();
                 if($row['nivel']!=null){
                     if ($nivel!=null){
                     $row['idnivel'] = $nivel->nivel_id;  $row['nivelArray'] = $nivel->nivel_descripcion;

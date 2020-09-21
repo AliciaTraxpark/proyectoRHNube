@@ -15,6 +15,7 @@ class nivelController extends Controller
     {
         $nivel = new nivel();
         $nivel->nivel_descripcion = $request->get('nivel_descripcion');
+        $nivel->organi_id=session('sesionidorg');
         $nivel->save();
         return  $nivel;
     }

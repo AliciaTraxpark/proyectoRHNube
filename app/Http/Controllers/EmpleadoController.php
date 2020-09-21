@@ -78,9 +78,9 @@ class EmpleadoController extends Controller
         $tipo_cont = tipo_contrato::all();
         $area = area::where('organi_id','=',session('sesionidorg'))->get();
         $cargo = cargo::where('organi_id','=',session('sesionidorg'))->get();
-        $centro_costo = centro_costo::all();
-        $nivel = nivel::all();
-        $local = local::all();
+        $centro_costo = centro_costo::where('organi_id','=',session('sesionidorg'))->get();
+        $nivel = nivel::where('organi_id', '=', session('sesionidorg'))->get();
+        $local = local::where('organi_id', '=', session('sesionidorg'))->get();
         $empleado = empleado::where('emple_estado', '=', 1)->get();
         $dispositivo = tipo_dispositivo::all();
         $tabla_empleado = DB::table('empleado as e')
@@ -944,9 +944,9 @@ class EmpleadoController extends Controller
         $tipo_cont = tipo_contrato::all();
         $area = area::where('organi_id','=',session('sesionidorg'))->get();
         $cargo = cargo::where('organi_id','=',session('sesionidorg'))->get();
-        $centro_costo = centro_costo::all();
-        $nivel = nivel::all();
-        $local = local::all();
+        $centro_costo = centro_costo::where('organi_id','=',session('sesionidorg'))->get();
+        $nivel = nivel::where('organi_id', '=', session('sesionidorg'))->get();
+        $local = local::where('organi_id', '=', session('sesionidorg'))->get();
         $empleado = empleado::all();
         $dispositivo = tipo_dispositivo::all();
         $tabla_empleado = DB::table('empleado as e')

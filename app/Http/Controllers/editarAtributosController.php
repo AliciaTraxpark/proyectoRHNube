@@ -66,13 +66,13 @@ class editarAtributosController extends Controller
 
     public function centro()
     {
-        $centro = centro_costo::all();
+        $centro = centro_costo::where('organi_id', '=', session('sesionidorg'))->get();
         return response()->json($centro, 200);
     }
 
     public function buscarCentro(Request $request)
     {
-        $centro = centro_costo::where('centroC_id', '=', $request->get('id'))->get()->first();
+        $centro = centro_costo::where('centroC_id', '=', $request->get('id'))->where('organi_id', '=', session('sesionidorg'))->get()->first();
         if ($centro) {
             return response()->json($centro->centroC_descripcion, 200);
         }
@@ -81,7 +81,7 @@ class editarAtributosController extends Controller
 
     public function editarCentro(Request $request)
     {
-        $centro = centro_costo::where('centroC_id', '=', $request->get('id'))->get()->first();
+        $centro = centro_costo::where('centroC_id', '=', $request->get('id'))->where('organi_id', '=', session('sesionidorg'))->get()->first();
         if ($centro) {
             $centro->centroC_descripcion = $request->get('objCentroC')['centroC_descripcion'];
             $centro->save();
@@ -91,13 +91,13 @@ class editarAtributosController extends Controller
 
     public function local()
     {
-        $local = local::all();
+        $local = local::where('organi_id', '=', session('sesionidorg'))->get();
         return response()->json($local, 200);
     }
 
     public function buscarLocal(Request $request)
     {
-        $local = local::where('local_id', '=', $request->get('id'))->get()->first();
+        $local = local::where('local_id', '=', $request->get('id'))->where('organi_id', '=', session('sesionidorg'))->get()->first();
         if ($local) {
             return response()->json($local->local_descripcion, 200);
         }
@@ -106,7 +106,7 @@ class editarAtributosController extends Controller
 
     public function editarLocal(Request $request)
     {
-        $local = local::where('local_id', '=', $request->get('id'))->get()->first();
+        $local = local::where('local_id', '=', $request->get('id'))->where('organi_id', '=', session('sesionidorg'))->get()->first();
         if ($local) {
             $local->local_descripcion = $request->get('objLocal')['local_descripcion'];
             $local->save();
@@ -116,13 +116,13 @@ class editarAtributosController extends Controller
 
     public function nivel()
     {
-        $nivel = nivel::all();
+        $nivel = nivel::where('organi_id', '=', session('sesionidorg'))->get();
         return response()->json($nivel, 200);
     }
 
     public function buscarNivel(Request $request)
     {
-        $nivel = nivel::where('nivel_id', '=', $request->get('id'))->get()->first();
+        $nivel = nivel::where('nivel_id', '=', $request->get('id'))->where('organi_id', '=', session('sesionidorg'))->get()->first();
         if ($nivel) {
             return response()->json($nivel->nivel_descripcion, 200);
         }
@@ -131,7 +131,7 @@ class editarAtributosController extends Controller
 
     public function editarNivel(Request $request)
     {
-        $nivel = nivel::where('nivel_id', '=', $request->get('id'))->get()->first();
+        $nivel = nivel::where('nivel_id', '=', $request->get('id'))->where('organi_id', '=', session('sesionidorg'))->get()->first();
         if ($nivel) {
             $nivel->nivel_descripcion = $request->get('objNivel')['nivel_descripcion'];
             $nivel->save();

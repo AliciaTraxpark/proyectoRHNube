@@ -158,6 +158,7 @@ class calendarioController extends Controller
             ->groupBy('cr.cargo_id')
             ->get();
             $local=DB::table('local as lo')
+            ->where('lo.organi_id','=',session('sesionidorg'))
             ->join('empleado as em', 'lo.local_id', '=', 'em.emple_local')
             ->select('lo.local_id as idlocal', 'local_descripcion as descripcion')
             ->groupBy('lo.local_id')
@@ -336,6 +337,7 @@ class calendarioController extends Controller
             ->groupBy('cr.cargo_id')
             ->get();
             $local=DB::table('local as lo')
+            ->where('lo.organi_id','=',session('sesionidorg'))
             ->join('empleado as em', 'lo.local_id', '=', 'em.emple_local')
             ->select('lo.local_id as idlocal', 'local_descripcion as descripcion')
             ->groupBy('lo.local_id')
