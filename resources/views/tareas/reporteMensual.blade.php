@@ -1,13 +1,14 @@
 @extends('layouts.vertical')
 
 @section('css')
-<link rel="shortcut icon" href="https://rhsolution.com.pe/wp-content/uploads/2019/06/small-logo-rh-solution-64x64.png"
-    sizes="32x32">
 <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{
     URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.css')
     }}" rel="stylesheet" />
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css')
+    }}" rel="stylesheet" type="text/css" />
 <link href="{{
     URL::asset('admin/assets/libs/bootstrap-datetimepicker-master/bootstrap-datetimepicker.css')
     }}" rel="stylesheet" type="text/css" />
@@ -86,12 +87,57 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
-                            <div class="card-body">
-                                <h4 class="header-title mt-0 mb-1">TRAXPARK</h4>
-                                <p class="sub-header" style="margin-bottom:
+                            <div class="card-header" style="background-color: #ffffff">
+                                <div class="row">
+                                    <h4 class="header-title col-12 mt-0">TRAXPARK</h4>
+                                    <p class="sub-header col-12" style="margin-bottom:
                                     0px" id="zonaHoraria">
-                                </p>
-                                <br>
+                                    </p>
+                                </div>
+                                <div class="row pt-2">
+                                    <div class="col-xl-6">
+                                        <div class="form-group row">
+                                            <label class="col-lg-2 col-form-label">Área:</label>
+                                            <div class="col-lg-10 pl-0">
+                                                <select id="area" data-plugin="customselect" class="form-control"
+                                                    multiple="multiple">
+                                                    @foreach ($areas as $area)
+                                                    <option value="{{$area->area_id}}">
+                                                        {{$area->area_descripcion}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <div class="form-group row">
+                                            <label class="col-lg-2 col-form-label">Cargo:</label>
+                                            <div class="col-lg-10 pl-0">
+                                                <select id="cargo" data-plugin="customselect" class="form-control"
+                                                    multiple="multiple">
+                                                    @foreach ($cargos as $cargo)
+                                                    <option value="{{$cargo->cargo_id}}">
+                                                        {{$cargo->cargo_descripcion}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row  mt-2">
+                                    <div class="col-md-12">
+                                        <div class="custom-control custom-switch">
+                                            <input type="checkbox" class="custom-control-input" id="customSwitchD"
+                                                onclick="javascript:cambiarTabla()">
+                                            <label class="custom-control-label" for="customSwitchD"
+                                                style="font-weight: bold">Mostrar Actividad Diaria</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body" id="tablaSinActividadD">
                                 <div class="table-responsive-xl">
                                     <table id="ReporteMensual" class="table nowrap" style="font-size: 13px!important;width:
                                         100%;">
@@ -130,6 +176,18 @@
                                     </table>
                                 </div>
                             </div> <!-- end card body-->
+                            <div class="card-body" id="tablaConActividadD" style="display: none">
+                                <div class="table-responsive-xl">
+                                    <table id="actividadDM" class="table nowrap"
+                                        style="font-size: 13px!important;width:100%;">
+                                        <thead style="background: #fafafa;" id="diasActvidad"
+                                            style="width:100%!important">
+                                        </thead>
+                                        <tbody id="empleadoActividad">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div> <!-- end card body-->
                         </div>
                     </div>
                 </div>
@@ -144,10 +202,9 @@
 <script src="{{
     URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js')
     }}"></script>
-<!-- Vendor js -->
-{{-- <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script> --}}
-<!-- App js -->
-{{-- <script src="{{asset('admin/assets/js/app.min.js')}}"></script> --}}
+<script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js')
+    }}"></script>
 <!-- datatable js -->
 <script src="{{ URL::asset('admin/assets/libs/chart/Chart.min.js') }}"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">

@@ -151,12 +151,6 @@ function onSelectFechas() {
                     var total = data[i].horas.reduce(function (a, b) {
                         return sumarHora(a, b);
                     });
-                    // var promedio = data[i].promedio.reduce(function (a, b) {
-                    //     return calcularPromedio(a, b);
-                    // });
-                    // var contar = data[i].total.reduce(function (a, b) {
-                    //     return totalContar(a, b);
-                    // });
                     var sumaATotal = data[i].sumaActividad.reduce(function (a, b) {
                         return sumarTotales(a, b);
                     });
@@ -493,7 +487,6 @@ function cambiarTabla() {
         console.log(event.target.checked);
         if (event.target.checked == true) {
             dato = $('#fecha').val();
-            $('#fecha').val(dato);
             $('#container').css('display', 'block');
             tableActividad.columns.adjust().draw(true);
             $('#fecha').trigger("change.dp");
@@ -502,7 +495,6 @@ function cambiarTabla() {
             $('#tablaSinActividadD').hide();
         } else {
             dato = $('#fecha').val();
-            $('#fecha').val(dato);
             $('#container').css('display', 'block');
             table.columns.adjust().draw(true);
             $('#fecha').trigger("change.dp");

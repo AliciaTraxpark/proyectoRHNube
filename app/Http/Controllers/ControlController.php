@@ -124,8 +124,18 @@ class ControlController extends Controller
                 ->get();
         }
 
+        $areas = DB::table('area as a')
+            ->select('a.area_id', 'a.area_descripcion')
+            ->where('a.organi_id', '=', session('sesionidorg'))
+            ->get();
 
-        return view('tareas.reporteMensual', ['empleado' => $empleado]);
+        $cargos = DB::table('cargo as c')
+            ->select('c.cargo_id', 'c.cargo_descripcion')
+            ->where('c.organi_id', '=', session('sesionidorg'))
+            ->get();
+
+
+        return view('tareas.reporteMensual', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos]);
     }
 
     public function empleadoRefresh()
@@ -299,8 +309,6 @@ class ControlController extends Controller
                     DB::raw('IF(h.id is null, DATE(cp.hora_fin), DATE(h.start)) as fecha'),
                     DB::raw('TIME(cp.hora_fin) as hora_ini'),
                     DB::raw('TIME_FORMAT(SEC_TO_TIME(SUM(promedio.tiempo_rango)), "%H:%i:%s") as Total_Envio'),
-                    DB::raw('SUM(promedio.promedio) as promedio'),
-                    DB::raw('COUNT(promedio.idCaptura) as total'),
                     DB::raw('SUM(cp.actividad) as sumaA'),
                     DB::raw('SUM(promedio.tiempo_rango) as sumaR'),
                     DB::raw($sql),
@@ -319,15 +327,11 @@ class ControlController extends Controller
             //Array
             $horas = array();
             $dias = array();
-            $promedio = array();
-            $total = array();
             $sumaActividad = array();
             $sumaRango = array();
 
             for ($i = 0; $i <= $diff->days; $i++) {
                 array_push($horas, "00:00:00");
-                array_push($promedio, "0.0");
-                array_push($total, "0");
                 array_push($sumaActividad, "0");
                 array_push($sumaRango, "0");
                 $dia = strtotime('+' . $i . 'day', strtotime($fechaF[0]));
@@ -338,23 +342,18 @@ class ControlController extends Controller
             foreach ($empleados as $empleado) {
                 array_push($respuesta, array(
                     "id" => $empleado->emple_id, "nombre" => $empleado->nombre, "apPaterno" => $empleado->apPaterno,
-                    "apMaterno" => $empleado->apMaterno, "horas" => $horas, "fechaF" => $dias, "promedio" => $promedio, "total" => $total,
-                    "sumaActividad" => $sumaActividad, "sumaRango" => $sumaRango
+                    "apMaterno" => $empleado->apMaterno, "horas" => $horas, "fechaF" => $dias, "sumaActividad" => $sumaActividad, "sumaRango" => $sumaRango
                 ));
             }
             for ($j = 0; $j < sizeof($respuesta); $j++) {
                 for ($i = 0; $i < sizeof($horasTrabajadas); $i++) {
                     if ($respuesta[$j]["id"] == $horasTrabajadas[$i]->emple_id) {
                         $respuesta[$j]["horas"][$horasTrabajadas[$i]->dia] = $horasTrabajadas[$i]->Total_Envio == null ? "00:00:00" : $horasTrabajadas[$i]->Total_Envio;
-                        $respuesta[$j]["promedio"][$horasTrabajadas[$i]->dia] = $horasTrabajadas[$i]->promedio == null ? "0.0" : $horasTrabajadas[$i]->promedio;
-                        $respuesta[$j]["total"][$horasTrabajadas[$i]->dia] = $horasTrabajadas[$i]->total == null ? "0" : $horasTrabajadas[$i]->total;
                         $respuesta[$j]["sumaActividad"][$horasTrabajadas[$i]->dia] = $horasTrabajadas[$i]->sumaA == null ? "0" : $horasTrabajadas[$i]->sumaA;
                         $respuesta[$j]["sumaRango"][$horasTrabajadas[$i]->dia] = $horasTrabajadas[$i]->sumaR == null ? "0" : $horasTrabajadas[$i]->sumaR;
                     }
                 }
                 $respuesta[$j]['horas'] = array_reverse($respuesta[$j]['horas']);
-                $respuesta[$j]['promedio'] = array_reverse($respuesta[$j]['promedio']);
-                $respuesta[$j]['total'] = array_reverse($respuesta[$j]['total']);
                 $respuesta[$j]['sumaActividad'] = array_reverse($respuesta[$j]['sumaActividad']);
                 $respuesta[$j]['sumaRango'] = array_reverse($respuesta[$j]['sumaRango']);
             }
