@@ -91,6 +91,8 @@ function sumarTotales(a, b) {
     return resultado;
 }
 var grafico = {};
+var table = {};
+var tableActividad = {};
 
 function onSelectFechas() {
     var fecha = $('#fecha').val();
@@ -217,12 +219,13 @@ function onSelectFechas() {
                 $('#diasActvidad').html(html_trAD);
                 $('#empleadoActividad').html(html_trA);
 
-                $("#Reporte").DataTable({
+                table = $("#Reporte").DataTable({
                     "searching": false,
                     "scrollX": true,
                     retrieve: true,
                     "ordering": false,
                     "pageLength": 15,
+                    "autoWidth": true,
                     language: {
                         "sProcessing": "Procesando...",
                         "sLengthMenu": "Mostrar _MENU_ registros",
@@ -270,12 +273,13 @@ function onSelectFechas() {
                     }],
                     paging: true
                 });
-                $("#actividadD").DataTable({
+                tableActividad = $("#actividadD").DataTable({
                     "searching": false,
                     "scrollX": true,
                     retrieve: true,
                     "ordering": false,
                     "pageLength": 15,
+                    "autoWidth": true,
                     language: {
                         "sProcessing": "Procesando...",
                         "sLengthMenu": "Mostrar _MENU_ registros",
@@ -408,8 +412,13 @@ $(function () {
 });
 
 $(function () {
-    $('#area').select2();
-    $('#cargo').select2();
+    $('#area').select2({
+        placeholder: 'Seleccionar áreas'
+    });
+    $('#cargo').select2({
+        placeholder: 'Seleccionar cargos',
+        language: "es"
+    });
     $('#area').on("change", function (e) {
         fechaDefecto();
     });
@@ -445,6 +454,8 @@ function cambiarTabla() {
         if (event.target.checked == true) {
             dato = $('#fecha').val();
             $('#fecha').val(dato);
+            $('#container').css( 'display', 'block' );
+            tableActividad.columns.adjust().draw(true);
             $('#fecha').trigger("change.dp");
             $('#fecha').val(dato);
             $('#tablaConActividadD').show();
@@ -452,6 +463,8 @@ function cambiarTabla() {
         } else {
             dato = $('#fecha').val();
             $('#fecha').val(dato);
+            $('#container').css( 'display', 'block' );
+            table.columns.adjust().draw(true);
             $('#fecha').trigger("change.dp");
             $('#fecha').val(dato);
             $('#tablaConActividadD').hide();

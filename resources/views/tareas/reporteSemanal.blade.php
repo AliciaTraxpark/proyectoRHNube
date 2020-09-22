@@ -95,7 +95,7 @@
                                 <div class="row pt-2">
                                     <div class="col-xl-6">
                                         <div class="form-group row">
-                                            <label class="col-lg-2 col-form-label">Áreas:</label>
+                                            <label class="col-lg-2 col-form-label">Área:</label>
                                             <div class="col-lg-10 pl-0">
                                                 <select id="area" data-plugin="customselect" class="form-control"
                                                     multiple="multiple">
