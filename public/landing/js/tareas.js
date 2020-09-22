@@ -156,8 +156,9 @@ function onMostrarPantallas() {
                         " - " +
                         (parseInt(horaDelGrupo) + 1) +
                         ":00:00";
-                    var grupo = `<span style="font-weight: bold;color:#6c757d;cursor:default">${labelDelGrupo}</span>&nbsp;&nbsp;<img src="landing/images/punt.gif" height="70">&nbsp;&nbsp;
-                <span class="promHoras" style="font-weight: bold;color:#6c757d;cursor:default" id="promHoras${$i}" data-toggle="tooltip" data-placement="right" title="Actividad por Hora"
+                    var grupo = `<span style="font-weight: bold;color:#163552;cursor:default">${labelDelGrupo}</span>&nbsp;&nbsp;<img src="landing/images/punt.gif" height="70">&nbsp;&nbsp;
+                <span class="promHoras" style="font-weight: bold;color:#163552;cursor:default" id="totalHoras${$i}" data-toggle="tooltip" data-placement="right" title="Tiempo por Hora"
+                data-original-title=""></span>&nbsp;&nbsp;---&nbsp;&nbsp;<span class="promHoras" style="font-weight: bold;color:#163552;cursor:default" id="promHoras${$i}" data-toggle="tooltip" data-placement="right" title="Actividad por Hora"
                 data-original-title=""></span><br><br><div class="row">`;
                     for (var j = 0; j < 6; j++) {
                         if (data[index].minutos[j] != undefined) {
@@ -217,7 +218,7 @@ function onMostrarPantallas() {
                                 var totalR = enteroTime(sumaRangos);
                                 totalCM = totalR;
                                 promedio = (
-                                    (promedios / sumaRangos)*100
+                                    (promedios / sumaRangos) * 100
                                 ).toFixed(2);
                                 if (promedios == 0) {
                                     promedio = 0;
@@ -357,12 +358,16 @@ function onMostrarPantallas() {
                     }
                     grupo += `</div><br>`;
                     container.append(grupo);
-                    totalActividadRango = ((sumaActividadTotal / sumaRangosTotal)*100).toFixed(
+                    totalActividadRango = ((sumaActividadTotal / sumaRangosTotal) * 100).toFixed(
                         2
                     );
                     var span = "";
                     span += `${totalActividadRango}%`;
                     $("#promHoras" + $i).append(span);
+                    var spanH = "";
+                    var valorH = enteroTime(sumaRangosTotal);
+                    spanH += `${valorH}`;
+                    $("#totalHoras" + $i).append(spanH);
                     actividadDiariaTotal = actividadDiariaTotal + sumaActividadTotal;
                     rangoDiarioTotal = rangoDiarioTotal + sumaRangosTotal;
                     sumaActividadTotal = 0;
@@ -372,7 +377,7 @@ function onMostrarPantallas() {
                 }
                 $("#totalActivi").empty();
                 console.log(actividadDiariaTotal, rangoDiarioTotal);
-                promedioDiaria = ((actividadDiariaTotal / rangoDiarioTotal)*100).toFixed(2);
+                promedioDiaria = ((actividadDiariaTotal / rangoDiarioTotal) * 100).toFixed(2);
                 var cont = `${promedioDiaria}%`;
                 $("#totalActivi").append(cont);
             } else {
