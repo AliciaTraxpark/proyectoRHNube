@@ -99,6 +99,7 @@ function calendario_edit() {
             right: ''
         },
         eventRender: function(info) {
+            $('.tooltip').remove();
             /* $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF}); */
             if(info.event.extendedProps.horaI===null){
                 $(info.el).tooltip({  title: info.event.title});

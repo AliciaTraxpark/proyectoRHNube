@@ -556,6 +556,7 @@ function calendario() {
             right: ''
         },
         eventRender: function(info) {
+            $('.tooltip').remove();
              if(info.event.extendedProps.horaI===null){
                 $(info.el).tooltip({  title: info.event.title});
            } else{

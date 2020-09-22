@@ -1351,21 +1351,22 @@ class EmpleadoController extends Controller
 
 
         $horario_empleado = DB::table('horario_empleado as he')
-            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end','horaI','horaF','borderColor'])
+            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end','horaI','horaF','borderColor','laborable'])
             ->join('horario as h','he.horario_horario_id','=','h.horario_id')
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.empleado_emple_id', '=', $idempleado);
 
+
         $incidencias = DB::table('incidencias as i')
             ->select(['idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descuento as textColor',
-             'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end','i.inciden_descripcion as horaI','i.inciden_descripcion as horaF','i.inciden_descripcion as borderColor'])
+             'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end','i.inciden_descripcion as horaI','i.inciden_descripcion as horaF','i.inciden_descripcion as borderColor','laborable'])
             ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
             ->where('idi.id_empleado', '=', $idempleado)
             ->union($horario_empleado);
 
 
         $eventos_empleado = DB::table('eventos_empleado')
-            ->select(['evEmpleado_id as id', 'title', 'color', 'textColor', 'start', 'end','title as horaI','title as horaF','title as borderColor' ])
+            ->select(['evEmpleado_id as id', 'title', 'color', 'textColor', 'start', 'end','title as horaI','title as horaF','title as borderColor','laborable' ])
             ->where('id_empleado', '=', $idempleado)
             ->union($incidencias)
             ->get();
@@ -1507,22 +1508,30 @@ class EmpleadoController extends Controller
             ->whereYear('start', $request->get('aniocalen'))
             ->whereMonth('start', $request->get('mescale'))
             ->delete();
+
     }
     public function eliminareventBD(Request $request)
     {
         $ideve = $request->ideve;
-        $eventos_empleado = eventos_empleado::where('evEmpleado_id', '=', $ideve)->delete();
+       /*  $eventos_empleado = eventos_empleado::where('evEmpleado_id', '=', $ideve)->delete(); */
+        $eventos_empleado = eventos_empleado::findOrFail($ideve);
+        eventos_empleado::destroy($ideve);
+        return response()->json($eventos_empleado);
     }
 
     public function eliminarHorariosEdit(Request $request)
     {
         $ideve = $request->ideve;
         $horario_empleado1 = horario_empleado::where('horarioEmp_id', '=', $ideve)->delete();
+        return response()->json($horario_empleado1);
     }
     public function eliminarInciEdit(Request $request)
     {
         $ideve = $request->ideve;
-        $incidencia_dias = incidencia_dias::where('inciden_dias_id', '=', $ideve)->delete();
+
+        $incidencia_dias = incidencia_dias::findOrFail($ideve);
+        incidencia_dias::destroy($ideve);
+        return response()->json($incidencia_dias);
     }
 
     public function vaciardescansoTem(Request $request)
@@ -1545,13 +1554,21 @@ class EmpleadoController extends Controller
     }
     public function vaciarFdescansoBD(Request $request)
     {
-        DB::table('eventos_empleado')
-            ->where('id_empleado', '=', $request->get('idempleado'))
-            ->where('color', '=', '#4673a0')
-            ->where('textColor', '=', '#ffffff')
+        $eliDescaso= eventos_empleado::where('id_empleado', '=', $request->get('idempleado'))
+           /*  ->where('color', '=', '#4673a0')
+            ->where('textColor', '=', '#ffffff') */
+            ->whereIn('tipo_ev',[1,3])
+
             ->whereYear('start', $request->get('aniocalen'))
-            ->whereMonth('start', $request->get('mescale'))
-            ->delete();
+            ->whereMonth('start', $request->get('mescale'))->get()
+            ;
+        foreach($eliDescaso as $eliDescasos){
+             $eliDescasos->delete();
+        }
+
+
+           /*  $eliDescaso->delete(); */
+            return response()->json($eliDescaso);
     }
     public function vaciardnlaBD(Request $request)
     {
