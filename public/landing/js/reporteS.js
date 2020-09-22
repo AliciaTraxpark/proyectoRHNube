@@ -487,7 +487,6 @@ function cambiarTabla() {
         console.log(event.target.checked);
         if (event.target.checked == true) {
             dato = $('#fecha').val();
-            $('#container').css('display', 'block');
             tableActividad.columns.adjust().draw(true);
             $('#fecha').trigger("change.dp");
             $('#fecha').val(dato);
@@ -495,7 +494,6 @@ function cambiarTabla() {
             $('#tablaSinActividadD').hide();
         } else {
             dato = $('#fecha').val();
-            $('#container').css('display', 'block');
             table.columns.adjust().draw(true);
             $('#fecha').trigger("change.dp");
             $('#fecha').val(dato);
