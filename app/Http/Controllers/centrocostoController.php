@@ -18,10 +18,11 @@ class centrocostoController extends Controller
     {
         $this->middleware(['auth','verified']);
     }
-    
+
     public function store(Request $request){
         $centro_costo=new centro_costo();
         $centro_costo->centroC_descripcion=$request->get('centroC_descripcion');
+        $centro_costo->organi_id=session('sesionidorg');
         $centro_costo->save();
         return $centro_costo;
     }

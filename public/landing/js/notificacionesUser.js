@@ -34,7 +34,8 @@ function showNotificaciones() {
                 for (var i = 0; i < data.length; i++) {
                     if (data[i].read_at == null) {
                         contador++;
-                        a = `<a class="dropdown-item
+                        if(data[i].data[0].mensaje=='Empleado no tiene registrado un correo electrónico.'){
+                           a = `<a class="dropdown-item
                 notify-item border-bottom" style="background: #f1f2f3;">
                     <div class="badge float-right mt-0 mr-1">
                         <button class="btn btn-sm" style="background-color: #163552;color:#fdfdfd;" onclick="javascript:agregarCorreoNotificacion('${data[i].data[0].idEmpleado}')">
@@ -49,6 +50,24 @@ function showNotificaciones() {
                         <span style="font-weight:200;color:#28292f">${data[i].data[0].mensaje}</span>
                     </p>
                 </a>`;
+                        } else{
+                            a = `<a class="dropdown-item
+                            notify-item border-bottom" style="background: #f1f2f3;">
+                                <div class="badge float-right mt-0 mr-1">
+                                    <button class="btn btn-sm" style="background-color: #163552;color:#fdfdfd;" onclick="javascript:agregardepart('${data[i].data[0].idEmpleado}')">
+                                        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                        <img src="/landing/images/flecha (1).svg" height="20">
+                                    </button>
+                                </div>
+                                <div class="notify-icon" style="background: #163552;">
+                                    <img src="/landing/images/campana.svg" height="20">
+                                </div>
+                                <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6"> ${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
+                                    <span style="font-weight:200;color:#28292f">${data[i].data[0].mensaje}</span>
+                                </p>
+                            </a>`;
+                        }
+
                     } else {
                         a = `<a class="dropdown-item
                 notify-item border-bottom">
@@ -174,4 +193,8 @@ function guardarCorreoEH() {
 }
 function limpiarCorreoEH() {
     $("#textCorreoH").val("");
+}
+function agregardepart(id)
+{
+alert(id);
 }

@@ -143,6 +143,7 @@ class calendarioController extends Controller
 
             $area = DB::table('area as ar')
             ->join('empleado as em', 'ar.area_id', '=', 'em.emple_area')
+            ->where('ar.organi_id','=',session('sesionidorg'))
             ->select(
                 'ar.area_id as idarea',
                 'area_descripcion as descripcion'
@@ -151,11 +152,13 @@ class calendarioController extends Controller
             ->get();
 
             $cargo=DB::table('cargo as cr')
+            ->where('cr.organi_id','=',session('sesionidorg'))
             ->join('empleado as em', 'cr.cargo_id', '=', 'em.emple_cargo')
             ->select('cr.cargo_id as idcargo', 'cargo_descripcion as descripcion')
             ->groupBy('cr.cargo_id')
             ->get();
             $local=DB::table('local as lo')
+            ->where('lo.organi_id','=',session('sesionidorg'))
             ->join('empleado as em', 'lo.local_id', '=', 'em.emple_local')
             ->select('lo.local_id as idlocal', 'local_descripcion as descripcion')
             ->groupBy('lo.local_id')
@@ -319,6 +322,7 @@ class calendarioController extends Controller
 
             $area = DB::table('area as ar')
             ->join('empleado as em', 'ar.area_id', '=', 'em.emple_area')
+            ->where('ar.organi_id','=',session('sesionidorg'))
             ->select(
                 'ar.area_id as idarea',
                 'area_descripcion as descripcion'
@@ -327,11 +331,13 @@ class calendarioController extends Controller
             ->get();
 
             $cargo=DB::table('cargo as cr')
+            ->where('cr.organi_id','=',session('sesionidorg'))
             ->join('empleado as em', 'cr.cargo_id', '=', 'em.emple_cargo')
             ->select('cr.cargo_id as idcargo', 'cargo_descripcion as descripcion')
             ->groupBy('cr.cargo_id')
             ->get();
             $local=DB::table('local as lo')
+            ->where('lo.organi_id','=',session('sesionidorg'))
             ->join('empleado as em', 'lo.local_id', '=', 'em.emple_local')
             ->select('lo.local_id as idlocal', 'local_descripcion as descripcion')
             ->groupBy('lo.local_id')

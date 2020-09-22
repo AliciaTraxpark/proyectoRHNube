@@ -9,5 +9,5 @@ class local extends Model
     //
     protected $table = 'local';
     protected $primaryKey = 'local_id';
-    protected $fillable = ['local_id','local_descripcion'];
+    protected $fillable = ['local_id','local_descripcion','organi_id'];
 }

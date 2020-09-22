@@ -9,5 +9,5 @@ class area extends Model
     //
     protected $table = 'area';
     protected $primaryKey = 'area_id';
-    protected $fillable = ['area_id','area_descripcion'];
+    protected $fillable = ['area_id','area_descripcion','organi_id'];
 }

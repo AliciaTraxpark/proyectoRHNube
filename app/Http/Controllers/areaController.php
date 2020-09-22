@@ -44,6 +44,7 @@ class areaController extends Controller
         //
         $area=new area();
         $area->area_descripcion=$request->get('area_descripcion');
+        $area->organi_id=session('sesionidorg');
         $area->save();
         return  $area;
     }

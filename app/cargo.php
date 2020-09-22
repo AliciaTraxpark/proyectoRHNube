@@ -8,5 +8,5 @@ class cargo extends Model
 {
     protected $table = 'cargo';
     protected $primaryKey = 'cargo_id';
-    protected $fillable = ['cargo_id','cargo_descripcion'];
+    protected $fillable = ['cargo_id','cargo_descripcion','organi_id'];
 }
