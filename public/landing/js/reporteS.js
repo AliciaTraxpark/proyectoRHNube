@@ -112,6 +112,7 @@ function onSelectFechas() {
     $("#myChart").show();
     if (grafico.config != undefined) grafico.destroy();
     $.ajax({
+        async: false,
         url: "reporte/empleado",
         method: "GET",
         data: {
@@ -150,12 +151,6 @@ function onSelectFechas() {
                     var total = data[i].horas.reduce(function (a, b) {
                         return sumarHora(a, b);
                     });
-                    // var promedio = data[i].promedio.reduce(function (a, b) {
-                    //     return calcularPromedio(a, b);
-                    // });
-                    // var contar = data[i].total.reduce(function (a, b) {
-                    //     return totalContar(a, b);
-                    // });
                     var sumaATotal = data[i].sumaActividad.reduce(function (a, b) {
                         return sumarTotales(a, b);
                     });
@@ -268,8 +263,28 @@ function onSelectFechas() {
                         extend: "pdfHtml5",
                         className: 'btn btn-sm mt-1',
                         text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
+                        orientation: 'landscape',
                         pageSize: 'LEGAL',
-                        title: 'RH nube REPORTE SEMANAL'
+                        title: 'REPORTE SEMANAL',
+                        customize: function (doc) {
+                            doc['styles'] = {
+                                userTable: {
+                                    margin: [0, 15, 0, 15]
+                                },
+                                title: {
+                                    color: '#163552',
+                                    fontSize: '20',
+                                    alignment: 'center'
+                                },
+                                tableHeader: {
+                                    bold: !0,
+                                    fontSize: 11,
+                                    color: '#FFFFFF',
+                                    fillColor: '#163552',
+                                    alignment: 'center'
+                                }
+                            };
+                        }
                     }],
                     paging: true
                 });
@@ -278,7 +293,6 @@ function onSelectFechas() {
                     "scrollX": true,
                     retrieve: true,
                     "ordering": false,
-                    "pageLength": 15,
                     "autoWidth": true,
                     language: {
                         "sProcessing": "Procesando...",
@@ -322,8 +336,28 @@ function onSelectFechas() {
                         extend: "pdfHtml5",
                         className: 'btn btn-sm mt-1',
                         text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
+                        orientation: 'landscape',
                         pageSize: 'LEGAL',
-                        title: 'RH nube REPORTE SEMANAL'
+                        title: 'REPORTE SEMANAL',
+                        customize: function (doc) {
+                            doc['styles'] = {
+                                userTable: {
+                                    margin: [0, 15, 0, 15]
+                                },
+                                title: {
+                                    color: '#163552',
+                                    fontSize: '20',
+                                    alignment: 'center'
+                                },
+                                tableHeader: {
+                                    bold: !0,
+                                    fontSize: 11,
+                                    color: '#FFFFFF',
+                                    fillColor: '#163552',
+                                    alignment: 'center'
+                                }
+                            };
+                        }
                     }],
                     paging: true
                 });
@@ -453,8 +487,6 @@ function cambiarTabla() {
         console.log(event.target.checked);
         if (event.target.checked == true) {
             dato = $('#fecha').val();
-            $('#fecha').val(dato);
-            $('#container').css( 'display', 'block' );
             tableActividad.columns.adjust().draw(true);
             $('#fecha').trigger("change.dp");
             $('#fecha').val(dato);
@@ -462,8 +494,6 @@ function cambiarTabla() {
             $('#tablaSinActividadD').hide();
         } else {
             dato = $('#fecha').val();
-            $('#fecha').val(dato);
-            $('#container').css( 'display', 'block' );
             table.columns.adjust().draw(true);
             $('#fecha').trigger("change.dp");
             $('#fecha').val(dato);

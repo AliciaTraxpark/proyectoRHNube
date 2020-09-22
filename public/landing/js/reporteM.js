@@ -81,15 +81,33 @@ function totalContar(a, b) {
     resultado.push(suma);
     return resultado;
 }
+
+function sumarTotales(a, b) {
+    if (!a) return b;
+    let resultado = [];
+    let suma = 0;
+    suma += parseFloat(a) + parseFloat(b);
+    resultado.push(suma);
+    return resultado;
+}
 var grafico = {};
+var table = {};
+var tableActividad = {};
 
 function onSelectFechasMensual() {
     var fecha = $('#fechaMensual').val();
+    var area = $('#area').val();
+    var cargo = $('#cargo').val();
     if ($.fn.DataTable.isDataTable("#ReporteMensual")) {
         $('#ReporteMensual').DataTable().destroy();
     }
+    if ($.fn.DataTable.isDataTable("#actividadDM")) {
+        $('#actividadDM').DataTable().destroy();
+    }
     $('#empleadoMensual').empty();
     $('#diasMensual').empty();
+    $('#diasActvidad').empty();
+    $('#empleadoActividad').empty();
     $('#myChartDMensual').empty();
     $("#myChartMensual").show();
     if (grafico.config != undefined) grafico.destroy();
@@ -98,7 +116,9 @@ function onSelectFechasMensual() {
         url: "reporte/empleado",
         method: "GET",
         data: {
-            fecha: fecha
+            fecha: fecha,
+            area: area,
+            cargo: cargo
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -120,43 +140,52 @@ function onSelectFechasMensual() {
                 var color = ['rgb(63,77,113)'];
                 var borderColor = ['rgb(63,77,113)'];
                 var html_tr = "";
+                var html_trA = "";
                 var html_trD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
+                var html_trAD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
                 for (var i = 0; i < data.length; i++) {
                     html_tr += '<tr><td>' + data[i].nombre + ' ' + data[i].apPaterno + ' ' + data[i].apMaterno + '</td>';
+                    html_trA += '<tr><td>' + data[i].nombre + ' ' + data[i].apPaterno + ' ' + data[i].apMaterno + '</td>';
                     nombre.push(data[i].nombre.split('')[0] + data[i].apPaterno.split('')[0] + data[i].apMaterno.split('')[0]);
                     var total = data[i].horas.reduce(function (a, b) {
                         return sumarHora(a, b);
                     });
-                    /*var promedio = data[i].promedio.reduce(function (a, b) {
-                        return sumarHora(a, b);
-                    });*/
-                    var promedio = data[i].promedio.reduce(function (a, b) {
-                        return calcularPromedio(a, b);
+                    var sumaATotal = data[i].sumaActividad.reduce(function (a, b) {
+                        return sumarTotales(a, b);
                     });
-                    var contar = data[i].total.reduce(function (a, b) {
-                        return totalContar(a, b);
+
+                    var sumaRTotal = data[i].sumaRango.reduce(function (a, b) {
+                        return sumarTotales(a, b);
                     });
+                    console.log(sumaATotal, sumaRTotal);
                     for (let j = 0; j < data[i].horas.length; j++) {
+                        // TABLA DEFAULT
                         html_tr += '<td>' + data[i].horas[j] + '</td>';
+                        // TABLA CON ACTIVIDAD DIARIA
+                        html_trA += '<td>' + data[i].horas[j] + '</td>';
+                        var sumaA = data[i].sumaActividad[j];
+                        var sumaR = data[i].sumaRango[j];
+                        if (sumaR != 0) {
+                            var promedioD = ((sumaA / sumaR) * 100).toFixed(2);
+                            html_trA += '<td>' + promedioD + '%' + '</td>';
+                        } else {
+                            var promedioD = (0).toFixed(2);
+                            html_trA += '<td>' + promedioD + '%' + '</td>';
+                        }
                     }
-                    if (contar[0] != 0) {
-                        var p1 = (promedio[0] / contar[0]).toFixed(2);
+                    if (sumaRTotal[0] != 0) {
+                        var p1 = ((sumaATotal[0] / sumaRTotal[0]) * 100).toFixed(2);
                         var sumaP = p1;
                     } else {
                         var sumaP = 0;
                     }
-                    /*var t1 = total.split(":");
-                    var sumaT = parseInt(t1[0]) * 3600 + parseInt(t1[1]) * 60 + parseInt(t1[2]);*/
-                    /*var sumaTotalP = 0;
-                    if (sumaT != 0) {
-                        sumaTotalP = Math.round((sumaP * 100) / sumaT);
-                        prom.push(sumaTotalP);
-                    } else {
-                        sumaTotalP = 0;
-                        prom.push(sumaTotalP);
-                    }*/
+                    // TABLA DEFAULT
                     html_tr += '<td>' + total + '</td>';
                     html_tr += '<td>' + sumaP + '%' + '</td>';
+                    // TABLA CO ACTIVIDADES
+                    html_trA += '<td>' + total + '</td>';
+                    html_trA += '<td>' + sumaP + '%' + '</td>';
+                    // *********************
                     var decimal = parseFloat(total.split(":")[0] + "." + total.split(":")[1] + total.split(":")[2]);
                     horas.push(decimal);
                     html_tr += '</tr>';
@@ -165,20 +194,31 @@ function onSelectFechasMensual() {
                     var momentValue = moment(data[0].fechaF[m]);
                     momentValue.toDate();
                     momentValue.format("ddd DD/MM");
+                    // TABLA DEFAULT
                     html_trD += '<th>' + momentValue.format("ddd DD/MM") + '</th>';
+                    // TABLA CON ACTIVIDAD DIARIA
+                    html_trAD += '<th>' + momentValue.format("ddd DD/MM") + '</th>';
+                    html_trAD += '<th><img src="landing/images/velocimetro (1).svg" class="mr-2" height="17"/>DIARIA</th>';
                 }
+                // TABLA DEFAULT
                 html_trD += '<th>TOTAL</th>';
                 html_trD += '<th>ACTIV.</th></tr>';
+                // TABLA CON ACTIVIDAD DIARIA
+                html_trAD += '<th>TOTAL</th>';
+                html_trAD += '<th>ACTIV.</th></tr>';
+                // TABLA DEFAULT
                 $("#diasMensual").html(html_trD);
                 $("#empleadoMensual").html(html_tr);
-                //container.append(html_tr);
-                //containerD.append(html_trD);
+                // TABLA CON ACTIVIDAD DIARIA
+                $('#diasActvidad').html(html_trAD);
+                $('#empleadoActividad').html(html_trA);
 
-                $("#ReporteMensual").DataTable({
-                    "searching": true,
+                table = $("#ReporteMensual").DataTable({
+                    "searching": false,
                     "scrollX": true,
                     retrieve: true,
                     "ordering": false,
+                    "autoWidth": true,
                     language: {
                         "sProcessing": "Procesando...",
                         "sLengthMenu": "Mostrar _MENU_ registros",
@@ -221,8 +261,101 @@ function onSelectFechasMensual() {
                         extend: "pdfHtml5",
                         className: 'btn btn-sm mt-1',
                         text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
+                        orientation: 'landscape',
                         pageSize: 'LEGAL',
-                        title: 'RH nube REPORTE SEMANAL'
+                        title: 'REPORTE MENSUAL',
+                        customize: function (doc) {
+                            doc['styles'] = {
+                                userTable: {
+                                    margin: [0, 15, 0, 15]
+                                },
+                                title: {
+                                    color: '#163552',
+                                    fontSize: '20',
+                                    alignment: 'center'
+                                },
+                                tableHeader: {
+                                    bold: !0,
+                                    fontSize: 11,
+                                    color: '#FFFFFF',
+                                    fillColor: '#163552',
+                                    alignment: 'center'
+                                }
+                            };
+                        }
+                    }],
+                    paging: true
+                });
+                tableActividad = $("#actividadDM").DataTable({
+                    "searching": false,
+                    "scrollX": true,
+                    retrieve: true,
+                    "ordering": false,
+                    "autoWidth": true,
+                    language: {
+                        "sProcessing": "Procesando...",
+                        "sLengthMenu": "Mostrar _MENU_ registros",
+                        "sZeroRecords": "No se encontraron resultados",
+                        "sEmptyTable": "Ningún dato disponible en esta tabla",
+                        "sInfo": "Mostrando registros del _START_ al _END_ ",
+                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sSearch": "Buscar:",
+                        "sUrl": "",
+                        "sInfoThousands": ",",
+                        "sLoadingRecords": "Cargando...",
+                        "oPaginate": {
+                            "sFirst": "Primero",
+                            "sLast": "Último",
+                            "sNext": ">",
+                            "sPrevious": "<"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                        },
+                        "buttons": {
+                            "copy": "Copiar",
+                            "colvis": "Visibilidad"
+                        }
+                    },
+                    dom: 'Bfrtip',
+                    buttons: [{
+                        extend: 'excel',
+                        className: 'btn btn-sm mt-1',
+                        text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
+                        customize: function (xlsx) {
+                            var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                        },
+                        sheetName: 'Exported data',
+                        autoFilter: false
+                    }, {
+                        extend: "pdfHtml5",
+                        className: 'btn btn-sm mt-1',
+                        text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
+                        orientation: 'landscape',
+                        pageSize: 'LEGAL',
+                        title: 'REPORTE MENSUAL',
+                        customize: function (doc) {
+                            doc['styles'] = {
+                                userTable: {
+                                    margin: [0, 15, 0, 15]
+                                },
+                                title: {
+                                    color: '#163552',
+                                    fontSize: '20',
+                                    alignment: 'center'
+                                },
+                                tableHeader: {
+                                    bold: !0,
+                                    fontSize: 11,
+                                    color: '#FFFFFF',
+                                    fillColor: '#163552',
+                                    alignment: 'center'
+                                }
+                            };
+                        }
                     }],
                     paging: true
                 });
@@ -277,7 +410,7 @@ function onSelectFechasMensual() {
                 });
             }
         },
-        error: function (data) {}
+        error: function (data) { }
     })
 }
 $(function () {
@@ -290,17 +423,38 @@ $(function () {
 $(function () {
     $('#fechaMensual').on('change.dp', function (e) {
         dato = $('#fechaMensual').val();
-        value = moment(dato, ["MMMM-YYYY","MMM-YYYY","MM-YYYY"]).format("MM-YYYY");
+        value = moment(dato, ["MMMM-YYYY", "MMM-YYYY", "MM-YYYY"]).format("MM-YYYY");
         firstDate = moment(value, 'MM-YYYY').startOf('month').format('YYYY-MM-DD');
         lastDate = moment(value, 'MM-YYYY').endOf('month').format('YYYY-MM-DD');
         $('#fechaMensual').val(firstDate + "   a   " + lastDate);
         onSelectFechasMensual();
-        // var valor = moment(dato, ["MMMM-YYYY","MM-YYYY"]).format("MMMM YYYY");
-        // console.log(valor);
-        // $('#fechaMensual').val(valor);
     });
 });
-
+function fechaDefecto() {
+    dato = $('#fechaMensual').val();
+    value = moment(dato, ["MMMM-YYYY", "MMM-YYYY", "MM-YYYY"]).format("MM-YYYY");
+    firstDate = moment(value, 'MM-YYYY').startOf('month').format('YYYY-MM-DD');
+    lastDate = moment(value, 'MM-YYYY').endOf('month').format('YYYY-MM-DD');
+    $('#fechaMensual').val(firstDate + "   a   " + lastDate);
+    onSelectFechasMensual();
+    $('#fechaMensual').val(dato);
+}
+$(function () {
+    $('#area').select2({
+        placeholder: 'Seleccionar áreas'
+    });
+    $('#cargo').select2({
+        placeholder: 'Seleccionar cargos',
+        language: "es"
+    });
+    $('#area').on("change", function (e) {
+        console.log("ingreso");
+        fechaDefecto();
+    });
+    $('#cargo').on("change", function (e) {
+        fechaDefecto();
+    });
+});
 $(function () {
     var hoy = moment().format("MMMM - YYYY");
     $('#fechaMensual').val(hoy);
@@ -310,4 +464,29 @@ $(function () {
 
 function mostrarGraficaMensual() {
     $('#graficaReporteMensual').toggle();
+}
+
+function cambiarTabla() {
+    $("#customSwitchD").on("change.bootstrapSwitch", function (
+        event
+    ) {
+        console.log(event.target.checked);
+        if (event.target.checked == true) {
+            dato = $('#fechaMensual').val();
+            $('#container').css('display', 'block');
+            tableActividad.columns.adjust().draw(true);
+            $('#fechaMensual').trigger("change.dp");
+            $('#fechaMensual').val(dato);
+            $('#tablaConActividadD').show();
+            $('#tablaSinActividadD').hide();
+        } else {
+            dato = $('#fecha').val();
+            $('#container').css('display', 'block');
+            table.columns.adjust().draw(true);
+            $('#fechaMensual').trigger("change.dp");
+            $('#fechaMensual').val(dato);
+            $('#tablaConActividadD').hide();
+            $('#tablaSinActividadD').show();
+        }
+    });
 }

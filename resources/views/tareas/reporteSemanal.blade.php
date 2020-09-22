@@ -135,7 +135,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body" id="tablaSinActividadD">
+                            <div class="card-body"  id="tablaSinActividadD">
                                 <div class="table-responsive-xl">
                                     <table id="Reporte" class="table nowrap" style="font-size: 13px!important;width:
                                         100%;">
