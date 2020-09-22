@@ -93,15 +93,30 @@
                                     <p class="sub-header col-12" style="margin-bottom: 0px" id="zonaHoraria">
                                 </div>
                                 <div class="row pt-2">
-                                    <div class="col-xl-5">
+                                    <div class="col-xl-6">
                                         <div class="form-group row">
                                             <label class="col-lg-2 col-form-label">Áreas:</label>
-                                            <div class="col-lg-10">
+                                            <div class="col-lg-10 pl-0">
                                                 <select id="area" data-plugin="customselect" class="form-control"
                                                     multiple="multiple">
                                                     @foreach ($areas as $area)
                                                     <option value="{{$area->area_id}}">
                                                         {{$area->area_descripcion}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <div class="form-group row">
+                                            <label class="col-lg-2 col-form-label">Cargo:</label>
+                                            <div class="col-lg-10 pl-0">
+                                                <select id="cargo" data-plugin="customselect" class="form-control"
+                                                    multiple="multiple">
+                                                    @foreach ($cargos as $cargo)
+                                                    <option value="{{$cargo->cargo_id}}">
+                                                        {{$cargo->cargo_descripcion}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>

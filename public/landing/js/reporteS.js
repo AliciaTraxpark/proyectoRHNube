@@ -95,6 +95,7 @@ var grafico = {};
 function onSelectFechas() {
     var fecha = $('#fecha').val();
     var area = $('#area').val();
+    var cargo = $('#cargo').val();
     if ($.fn.DataTable.isDataTable("#Reporte")) {
         $('#Reporte').DataTable().destroy();
     }
@@ -113,7 +114,8 @@ function onSelectFechas() {
         method: "GET",
         data: {
             fecha: fecha,
-            area: area
+            area: area,
+            cargo:cargo
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -407,7 +409,8 @@ $(function () {
 
 $(function () {
     $('#area').select2();
-    $('#area').on("change",function(e){
+    $('#cargo').select2();
+    $('#area').on("change", function (e) {
         console.log($('#area').val());
         fechaDefecto();
     });

@@ -85,8 +85,13 @@ class ControlController extends Controller
             ->where('a.organi_id', '=', session('sesionidorg'))
             ->get();
 
+        $cargos = DB::table('cargo as c')
+            ->select('c.cargo_id', 'c.cargo_descripcion')
+            ->where('c.organi_id', '=', session('sesionidorg'))
+            ->get();
 
-        return view('tareas.reporteSemanal', ['empleado' => $empleado, 'areas' => $areas]);
+
+        return view('tareas.reporteSemanal', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos]);
     }
 
     public function ReporteM()
@@ -167,7 +172,8 @@ class ControlController extends Controller
         $fecha = $request->get('fecha');
         $fechaF = explode("a", $fecha);
         $area = $request->get('area');
-        if (is_null($area) === true) {
+        $cargo = $request->get('cargo');
+        if (is_null($area) === true && is_null($cargo)) {
             if ($usuario_organizacion->rol_id == 3) {
                 $empleados = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
