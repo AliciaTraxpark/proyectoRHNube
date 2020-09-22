@@ -134,8 +134,9 @@ function onMostrarPantallas() {
                 var actividadDiariaTotal = 0;
                 var rangoDiarioTotal = 0;
                 var promedioDiaria = 0;
-                var actividadDiaria = `<div class="row justify-content-center p-3"><div class="col-xl-3"><span style="font-weight: bold;color:#163552;cursor:default;font-size:14px;"><img src="landing/images/velocimetro (1).svg" class="mr-2" height="20"/>Actividad Diaria - <span id="totalActivi"></span></span></div></div>`;
+                var actividadDiaria = `<div class="row justify-content-center p-3"><div class="col-xl-4"><span style="font-weight: bold;color:#163552;cursor:default;font-size:14px;"><img src="landing/images/velocimetro (1).svg" class="mr-2" height="20"/>Actividad Diaria | <span id="totalActivi"></span> - <span id="totalH"></span></span></div></div>`;
                 container.append(actividadDiaria);
+                console.log(actividadDiaria);
                 for (let index = 0; index < data.length; index++) {
                     $("#promHoras" + $i).empty();
                     var horaDelGrupo = data[index].horaCaptura;
@@ -158,7 +159,7 @@ function onMostrarPantallas() {
                         ":00:00";
                     var grupo = `<span style="font-weight: bold;color:#163552;cursor:default">${labelDelGrupo}</span>&nbsp;&nbsp;<img src="landing/images/punt.gif" height="70">&nbsp;&nbsp;
                 <span class="promHoras" style="font-weight: bold;color:#163552;cursor:default" id="totalHoras${$i}" data-toggle="tooltip" data-placement="right" title="Tiempo por Hora"
-                data-original-title=""></span>&nbsp;&nbsp;---&nbsp;&nbsp;<span class="promHoras" style="font-weight: bold;color:#163552;cursor:default" id="promHoras${$i}" data-toggle="tooltip" data-placement="right" title="Actividad por Hora"
+                data-original-title=""></span>&nbsp;&nbsp;-&nbsp;&nbsp;<span class="promHoras" style="font-weight: bold;color:#163552;cursor:default" id="promHoras${$i}" data-toggle="tooltip" data-placement="right" title="Actividad por Hora"
                 data-original-title=""></span><br><br><div class="row">`;
                     for (var j = 0; j < 6; j++) {
                         if (data[index].minutos[j] != undefined) {
@@ -376,10 +377,14 @@ function onMostrarPantallas() {
                     $i = $i + 1;
                 }
                 $("#totalActivi").empty();
+                $("#totalH").empty();
                 console.log(actividadDiariaTotal, rangoDiarioTotal);
                 promedioDiaria = ((actividadDiariaTotal / rangoDiarioTotal) * 100).toFixed(2);
                 var cont = `${promedioDiaria}%`;
+                var enteroT = enteroTime(rangoDiarioTotal);
+                var contE = `${enteroT}`;
                 $("#totalActivi").append(cont);
+                $("#totalH").append(contE);
             } else {
                 $("#card").empty();
                 if ($("#empleado").val() == null) {
