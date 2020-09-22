@@ -54,7 +54,7 @@ function showNotificaciones() {
                             a = `<a class="dropdown-item
                             notify-item border-bottom" style="background: #f1f2f3;">
                                 <div class="badge float-right mt-0 mr-1">
-                                    <button class="btn btn-sm" style="background-color: #163552;color:#fdfdfd;" onclick="javascript:agregardepart('${data[i].data[0].idEmpleado}')">
+                                    <button class="btn btn-sm" style="background-color: #163552;color:#fdfdfd;" >
                                         <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                                         <img src="/landing/images/flecha (1).svg" height="20">
                                     </button>
