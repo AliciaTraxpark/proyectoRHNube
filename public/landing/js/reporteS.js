@@ -94,6 +94,7 @@ var grafico = {};
 
 function onSelectFechas() {
     var fecha = $('#fecha').val();
+    var area = $('#area').val();
     if ($.fn.DataTable.isDataTable("#Reporte")) {
         $('#Reporte').DataTable().destroy();
     }
@@ -111,7 +112,8 @@ function onSelectFechas() {
         url: "reporte/empleado",
         method: "GET",
         data: {
-            fecha: fecha
+            fecha: fecha,
+            area:area
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

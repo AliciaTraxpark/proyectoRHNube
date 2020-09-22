@@ -89,6 +89,19 @@
                                     <h4 class="header-title col-12 mt-0">TRAXPARK</h4>
                                     <p class="sub-header col-12" style="margin-bottom: 0px" id="zonaHoraria">
                                 </div>
+                                <div class="row pt-2">
+                                    <div class="col-xl-5">
+                                        <div class="form-group row">
+                                            <label class="col-lg-2 col-form-label">Áreas:</label>
+                                            <div class="col-lg-10">
+                                                <select id="area" data-plugin="customselect" class="form-control">
+                                                    <option value="" selected>Todas las áreas</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row  mt-2">
                                     <div class="col-md-12">
                                         <div class="custom-control custom-switch">
@@ -100,8 +113,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body">
-                                <div class="table-responsive-xl" id="tablaSinActividadD">
+                            <div class="card-body" id="tablaSinActividadD">
+                                <div class="table-responsive-xl">
                                     <table id="Reporte" class="table nowrap" style="font-size: 13px!important;width:
                                         100%;">
                                         <thead style="background: #fafafa;" id="dias" style="width:100%!important">
@@ -138,9 +151,13 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="table-responsive-xl" style="display: none" id="tablaConActividadD">
-                                    <table id="actividadD" class="table nowrap" style="font-size: 13px!important;width:100%;">
-                                        <thead style="background: #fafafa;" id="diasActvidad" style="width:100%!important">
+                            </div> <!-- end card body-->
+                            <div class="card-body" id="tablaConActividadD" style="display: none">
+                                <div class="table-responsive-xl">
+                                    <table id="actividadD" class="table nowrap"
+                                        style="font-size: 13px!important;width:100%;">
+                                        <thead style="background: #fafafa;" id="diasActvidad"
+                                            style="width:100%!important">
                                         </thead>
                                         <tbody id="empleadoActividad">
                                         </tbody>
