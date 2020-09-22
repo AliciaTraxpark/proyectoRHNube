@@ -389,11 +389,11 @@
                         $('#divescond1').show();
                         $('#divescond2').show();
                        $('#detallehorario_ed2').empty();
-                        $("#detallehorario_ed2").append("<div class='form-group row'><div class='col-md-1'></div><label class='col-lg-4 col-form-label' style='color:#163552;margin-top: 5px;'>Se muestra calendario de empleado </label>" +
+                       /*  $("#detallehorario_ed2").append("<div class='form-group row'><div class='col-md-1'></div><label class='col-lg-4 col-form-label' style='color:#163552;margin-top: 5px;'> </label>" +
                 "<div class='col-md-3'></div>"+
-                "<div class='col-md-3' ><div class='btn-group mt-2 mr-1'> <button type='button' onclick='eliminarhorariosBD()' class='btn btn-primary btn-sm dropdown-toggle' style='color: #fff; background-color: #4a5669;"+
+                "<div class='col-md-3' style='' ><div class='btn-group mt-2 mr-1'> <button type='button' onclick='eliminarhorariosBD()' class='btn btn-primary btn-sm dropdown-toggle' style='color: #fff; background-color: #4a5669;"+
                 "border-color: #485263;' > <img src='admin/images/borrador.svg' height='15'>"+
-                " Borrar </button> </div></div></div>");
+                " Borrar </button> </div></div></div>"); */
                     }
                 },
                 error: function () {}
@@ -625,11 +625,11 @@ function verDEmpleado(idempleadoVer){
                         $('#divescond1_ver').show();
                         $('#divescond2').show();
                        $('#detallehorario_ed2').empty();
-                        $("#detallehorario_ed2").append("<div class='form-group row'><div class='col-md-1'></div><label class='col-lg-4 col-form-label' style='color:#163552;margin-top: 5px;'>Se muestra calendario de empleado </label>" +
+                       /*  $("#detallehorario_ed2").append("<div class='form-group row'><div class='col-md-1'></div><label class='col-lg-4 col-form-label' style='color:#163552;margin-top: 5px;'></label>" +
                 "<div class='col-md-3'></div>"+
                 "<div class='col-md-3' ><div class='btn-group mt-2 mr-1'> <button type='button' onclick='eliminarhorariosBD()' class='btn btn-primary btn-sm dropdown-toggle' style='color: #fff; background-color: #4a5669;"+
                 "border-color: #485263;' > <img src='admin/images/borrador.svg' height='15'>"+
-                " Borrar horarios </button> </div></div></div>");
+                " Borrar horarios </button> </div></div></div>"); */
                     }
                 },
                 error: function () {}

@@ -158,6 +158,7 @@ function calendario() {
             right: "",
         },
         eventRender: function (info) {
+            $('.tooltip').remove();
             if(info.event.extendedProps.horaI===null){
                 $(info.el).tooltip({  title: info.event.title});
            } else{
@@ -327,6 +328,16 @@ function calendario_edit() {
                                     },
                                     success: function (data) {
                                         info.event.remove();
+                                        var a = moment(data.inciden_dias_fechaF);
+                                        c=a._i;
+                                        var b = moment(data.inciden_dias_fechaI);
+                                        d=b._i;
+
+                                        if(a.diff(b, 'days')>1){
+                                            $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(a).subtract(1, 'day').format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffffff");
+                                        }
+
+                                        $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(data.inciden_dias_fechaI).format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffffff");
                                         calendar2_ed.refetchEvents();
                                     },
                                     error: function (data) {
@@ -373,6 +384,17 @@ function calendario_edit() {
                                 },
                                 success: function (data) {
                                     info.event.remove();
+                                    var a = moment(data.end);
+                                    c=a._i;
+                                    var b = moment(data.start);
+                                    d=b._i;
+
+                                    if(a.diff(b, 'days')>1){
+                                        $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(a).subtract(1, 'day').format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffffff");
+                                    }
+
+                                     $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(data.start).format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffffff");
+
                                     calendar2_ed.refetchEvents();
                                 },
                                 error: function (data) {
@@ -392,6 +414,7 @@ function calendario_edit() {
             right: "",
         },
         eventRender: function (info) {
+            $('.tooltip').remove();
             if(info.event.extendedProps.horaI===null){
                 $(info.el).tooltip({  title: info.event.title});
            } else{
@@ -426,6 +449,25 @@ function calendario_edit() {
                 },
                 success: function (data) {
                     successCallback(data);
+                    $.each( data, function( index, value ){
+
+                        if(value.laborable==0){
+                                var element = $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date]");
+
+                                var a = moment(value.end);
+                                c=a._i;
+                                var b = moment(value.start);
+                                d=b._i;
+
+                                if(a.diff(b, 'days')>1){
+                                    $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(a).subtract(1, 'day').format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffefef");
+                                }
+
+                                $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(value.start).format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffefef");
+                        }
+
+
+                    });
                 },
                 error: function () {},
             });
@@ -1210,6 +1252,7 @@ function calendario2() {
             right: "",
         },
         eventRender: function (info) {
+            $('.tooltip').remove();
             if(info.event.extendedProps.horaI===null){
                 $(info.el).tooltip({  title: info.event.title});
            } else{
@@ -1498,6 +1541,7 @@ function calendario3() {
             right: "",
         },
         eventRender: function (info) {
+            $('.tooltip').remove();
            /*  $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF}); */
            if(info.event.extendedProps.horaI===null){
             $(info.el).tooltip({  title: info.event.title});
@@ -1578,6 +1622,7 @@ function calendario4() {
             right: "",
         },
         eventRender: function (info) {
+            $('.tooltip').remove();
            /*  $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF}); */
            if(info.event.extendedProps.horaI===null){
             $(info.el).tooltip({  title: info.event.title});
@@ -1801,6 +1846,16 @@ function calendario2_ed() {
                                     },
                                     success: function (data) {
                                         info.event.remove();
+                                        var a = moment(data.inciden_dias_fechaF);
+                                        c=a._i;
+                                        var b = moment(data.inciden_dias_fechaI);
+                                        d=b._i;
+
+                                        if(a.diff(b, 'days')>1){
+                                            $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(a).subtract(1, 'day').format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffffff");
+                                        }
+
+                                        $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(data.inciden_dias_fechaI).format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffffff");
                                         calendar2_ed.refetchEvents();
                                     },
                                     error: function (data) {
@@ -1847,6 +1902,17 @@ function calendario2_ed() {
                                 },
                                 success: function (data) {
                                     info.event.remove();
+                                    var a = moment(data.end);
+                                    c=a._i;
+                                    var b = moment(data.start);
+                                    d=b._i;
+
+                                    if(a.diff(b, 'days')>1){
+                                        $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(a).subtract(1, 'day').format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffffff");
+                                    }
+
+                                     $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(data.start).format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffffff");
+
                                     calendar2_ed.refetchEvents();
                                 },
                                 error: function (data) {
@@ -1863,9 +1929,10 @@ function calendario2_ed() {
         header: {
             left: "prev,next today",
             center: "title",
-            right: "",
+            right: "borrarHorarios",
         },
         eventRender: function (info) {
+            $('.tooltip').remove();
             if(info.event.extendedProps.horaI===null){
                 $(info.el).tooltip({  title: info.event.title});
            } else{
@@ -1877,6 +1944,16 @@ function calendario2_ed() {
                     $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
                }
            }
+        },
+        customButtons: {
+            borrarHorarios: {
+                text: "Borrar H.",
+               /*  icon:"right-double-arrow", */
+
+                click: function () {
+                    eliminarhorariosBD();
+                }
+            },
         },
         events: function (info, successCallback, failureCallback) {
             var idcalendario = $("#selectCalendario_ed").val();
@@ -1900,7 +1977,25 @@ function calendario2_ed() {
                     },
                 },
                 success: function (data) {
-                    successCallback(data);
+                    $.each( data, function( index, value ){
+                        successCallback(data);
+                        if(value.laborable==0){
+                                var element = $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date]");
+
+                                var a = moment(value.end);
+                                c=a._i;
+                                var b = moment(value.start);
+                                d=b._i;
+
+                                if(a.diff(b, 'days')>1){
+                                    $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(a).subtract(1, 'day').format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffefef");
+                                }
+
+                                $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(value.start).format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffefef");
+                        }
+
+                    });
+
                 },
                 error: function () {},
             });
@@ -4877,6 +4972,16 @@ function vaciarddescansoBD() {
                     success: function (data) {
                         calendarioedit.refetchEvents();
                         calendar2_ed.refetchEvents();
+                        $.each( data, function( index, value ){
+                                    var a = moment(value.end);
+                                    c=a._i;
+                                    var b = moment(value.start);
+                                    d=b._i;
+                                    if(a.diff(b, 'days')>1){
+                                        $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(a).subtract(1, 'day').format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffffff");
+                                    }
+                                    $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(value.start).format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffffff");
+                        });
                     },
                     error: function (data) {
                         alert("Ocurrio un error");
