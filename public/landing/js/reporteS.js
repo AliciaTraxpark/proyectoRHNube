@@ -113,7 +113,7 @@ function onSelectFechas() {
         method: "GET",
         data: {
             fecha: fecha,
-            area:area
+            area: area
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -370,6 +370,16 @@ function onSelectFechas() {
                     message: "No se encontraron datos.",
                     icon: 'admin/images/warning.svg'
                 });
+                var html_trD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
+                var html_trAD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
+                // TABLA DEFAULT
+                html_trD += '<th>TOTAL</th>';
+                html_trD += '<th>ACTIV.</th></tr>';
+                // TABLA CON ACTIVIDAD DIARIA
+                html_trAD += '<th>TOTAL</th>';
+                html_trAD += '<th>ACTIV.</th></tr>';
+                // TABLA DEFAULT
+                $("#dias").html(html_trD);
             }
         },
         error: function (data) { }
@@ -395,6 +405,13 @@ $(function () {
     });
 });
 
+$(function () {
+    $('#area').select2();
+    $('#area').on("change",function(e){
+        console.log($('#area').val());
+        fechaDefecto();
+    });
+});
 function fechaDefecto() {
     dato = $('#fecha').val();
     value = moment(dato, ["DD-MM-YYYY"]).format("YYYY-MM-DD");
@@ -402,6 +419,7 @@ function fechaDefecto() {
     lastDate = moment(value, 'YYYY-MM-DD').day(7).format('YYYY-MM-DD');
     $('#fecha').val(firstDate + "   a   " + lastDate);
     onSelectFechas();
+    $('#fecha').val(dato);
 }
 $(function () {
     var hoy = moment().format("DD/MM/YYYY");

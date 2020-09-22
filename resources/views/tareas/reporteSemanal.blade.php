@@ -6,6 +6,9 @@
     URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.css')
     }}" rel="stylesheet" />
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css')
+    }}" rel="stylesheet" type="text/css" />
 <link href="{{
     URL::asset('admin/assets/libs/bootstrap-datetimepicker-master/bootstrap-datetimepicker.css')
     }}" rel="stylesheet" type="text/css" />
@@ -94,8 +97,12 @@
                                         <div class="form-group row">
                                             <label class="col-lg-2 col-form-label">Áreas:</label>
                                             <div class="col-lg-10">
-                                                <select id="area" data-plugin="customselect" class="form-control">
-                                                    <option value="" selected>Todas las áreas</option>
+                                                <select id="area" data-plugin="customselect" class="form-control"
+                                                    multiple="multiple">
+                                                    @foreach ($areas as $area)
+                                                    <option value="{{$area->area_id}}">
+                                                        {{$area->area_descripcion}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
 
@@ -178,10 +185,9 @@
 <script src="{{
     URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js')
     }}"></script>
-<!-- Vendor js -->
-{{-- <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script> --}}
-<!-- App js -->
-{{-- <script src="{{asset('admin/assets/js/app.min.js')}}"></script> --}}
+<script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js')
+    }}"></script>
 <!-- datatable js -->
 <script src="{{ URL::asset('admin/assets/libs/chart/Chart.min.js') }}"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
