@@ -4135,6 +4135,7 @@ $("#persona-step-1").on("keyup change", function () {
 });
 $("#swE-default-step-2").on("keyup change", function () {
     $("#estadoE").val("true");
+    console.log($("#estadoE").val());
 
 });
 $("#formContrato_v").on("keyup change", function () {
@@ -4161,8 +4162,9 @@ $("#sw-default-step-1").on("keyup change", function () {
     $("#estadoPR").val("true");
 
 });
-$("#sw-default-step-2").on("keyup change", function () {
+$("#sw-default-step-2").on("keyup change click", function () {
     $("#estadoPE").val("true");
+    console.log($("#estadoPE").val());
 
 });
 $("#sw-default-step-3").on("keyup change", function () {
