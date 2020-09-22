@@ -268,8 +268,28 @@ function onSelectFechas() {
                         extend: "pdfHtml5",
                         className: 'btn btn-sm mt-1',
                         text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
+                        orientation: 'landscape',
                         pageSize: 'LEGAL',
-                        title: 'RH nube REPORTE SEMANAL'
+                        title: 'REPORTE SEMANAL',
+                        customize: function (doc) {
+                            doc['styles'] = {
+                                userTable: {
+                                    margin: [0, 15, 0, 15]
+                                },
+                                title: {
+                                    color: '#163552',
+                                    fontSize: '20',
+                                    alignment: 'center'
+                                },
+                                tableHeader: {
+                                    bold: !0,
+                                    fontSize: 11,
+                                    color: '#FFFFFF',
+                                    fillColor: '#163552',
+                                    alignment: 'center'
+                                }
+                            };
+                        }
                     }],
                     paging: true
                 });
@@ -322,8 +342,28 @@ function onSelectFechas() {
                         extend: "pdfHtml5",
                         className: 'btn btn-sm mt-1',
                         text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
+                        orientation: 'landscape',
                         pageSize: 'LEGAL',
-                        title: 'RH nube REPORTE SEMANAL'
+                        title: 'REPORTE SEMANAL',
+                        customize: function (doc) {
+                            doc['styles'] = {
+                                userTable: {
+                                    margin: [0, 15, 0, 15]
+                                },
+                                title: {
+                                    color: '#163552',
+                                    fontSize: '20',
+                                    alignment: 'center'
+                                },
+                                tableHeader: {
+                                    bold: !0,
+                                    fontSize: 11,
+                                    color: '#FFFFFF',
+                                    fillColor: '#163552',
+                                    alignment: 'center'
+                                }
+                            };
+                        }
                     }],
                     paging: true
                 });
@@ -454,7 +494,7 @@ function cambiarTabla() {
         if (event.target.checked == true) {
             dato = $('#fecha').val();
             $('#fecha').val(dato);
-            $('#container').css( 'display', 'block' );
+            $('#container').css('display', 'block');
             tableActividad.columns.adjust().draw(true);
             $('#fecha').trigger("change.dp");
             $('#fecha').val(dato);
@@ -463,7 +503,7 @@ function cambiarTabla() {
         } else {
             dato = $('#fecha').val();
             $('#fecha').val(dato);
-            $('#container').css( 'display', 'block' );
+            $('#container').css('display', 'block');
             table.columns.adjust().draw(true);
             $('#fecha').trigger("change.dp");
             $('#fecha').val(dato);
