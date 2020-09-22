@@ -112,6 +112,7 @@ function onSelectFechas() {
     $("#myChart").show();
     if (grafico.config != undefined) grafico.destroy();
     $.ajax({
+        async: false,
         url: "reporte/empleado",
         method: "GET",
         data: {
@@ -298,7 +299,6 @@ function onSelectFechas() {
                     "scrollX": true,
                     retrieve: true,
                     "ordering": false,
-                    "pageLength": 15,
                     "autoWidth": true,
                     language: {
                         "sProcessing": "Procesando...",
