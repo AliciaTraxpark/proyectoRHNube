@@ -177,7 +177,7 @@ Route::get('/tareas/proyecto', 'ControlController@proyecto');
 Route::get('/reporteSemanal', 'ControlController@reporteS');
 Route::get('/reporteMensual', 'ControlController@reporteM');
 Route::get('/reporte/empleado', 'ControlController@EmpleadoReporte');
-
+Route::get('/mostrarCapturas', 'ControlController@mostrarCapturas');
 
 //probando excel
 Route::get('/export', 'MyController@export')->name('export');
@@ -342,7 +342,7 @@ Route::post('/cambInvitadoswit', 'delegarInvController@cambInvitadoswit');
 Route::post('/notificarInv', 'delegarInvController@notificarInv');
 
 //SOPORTE POR CORREOS
-Route::get('/soporte','soportesPorCorreoController@soporte');
-Route::post('/envioTicketCorreo','soportesPorCorreoController@envioTicketSoporte');
-Route::get('/sugerencia','soportesPorCorreoController@sugerencia');
-Route::post('/envioSugerenciaCorreo','soportesPorCorreoController@envioSugerencia');
+Route::get('/soporte', 'soportesPorCorreoController@soporte');
+Route::post('/envioTicketCorreo', 'soportesPorCorreoController@envioTicketSoporte');
+Route::get('/sugerencia', 'soportesPorCorreoController@sugerencia');
+Route::post('/envioSugerenciaCorreo', 'soportesPorCorreoController@envioSugerencia');

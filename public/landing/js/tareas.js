@@ -458,44 +458,6 @@ function onMostrarPantallas() {
     }
 }
 
-//PROYECTO
-$(function () {
-    $("#empleado").on("change", onMostrarProyecto);
-});
-
-function onMostrarProyecto() {
-    var value = $("#empleado").val();
-    $.ajax({
-        url: "tareas/proyecto",
-        method: "GET",
-        data: {
-            value: value,
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        statusCode: {
-            401: function () {
-                location.reload();
-            },
-            /*419: function () {
-                location.reload();
-            }*/
-        },
-        success: function (data) {
-            var html_select = '<option value="">Seleccionar</option>';
-            for (var i = 0; i < data.length; i++)
-                html_select +=
-                    '<option value="' +
-                    data[i].Proye_id +
-                    '">' +
-                    data[i].Proye_Nombre +
-                    "</option>";
-            $("#proyecto").html(html_select);
-        },
-    });
-}
-
 function zoom(horayJ) {
     var onlyHora = horayJ.split(",")[0];
     var j = horayJ.split(",")[1];
@@ -505,12 +467,43 @@ function zoom(horayJ) {
             capturas = hora.minutos[j];
         }
     });
-    var carusel = `<p class="imglist" style="max-width: 1000px;">`;
+    var carusel = "";
     for (let index = 0; index < capturas.length; index++) {
         const element = capturas[index];
-        carusel += `<a href="data:image/jpeg;base64,${element.imagen}" data-fancybox="images" data-caption="Hora de captura a las ${element.hora_fin}"><img src="data:image/jpeg;base64,${element.imagen}" width="350" height="300" style="padding-right:10px;padding-bottom:10px"></a>`;
+        var $contador = 0;
+        $.ajax({
+            url: "/mostrarCapturas",
+            method: "GET",
+            data: {
+                idCaptura: element.idCaptura,
+            },
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            statusCode: {
+                401: function () {
+                    location.reload();
+                }
+            },
+            success: function (data) {
+                console.log(data);
+                $contador = $contador + 1;
+                if (data.length > 0) {
+                    if($contador == 0){
+                    }
+                    if ($contador != (capturas.length - 1)) {
+                        carusel = `<a href="data:image/jpeg;base64,${data[0].imagen}" data-fancybox="images" data-caption="Hora de captura a las ${data[0].hora_fin}"><img src="data:image/jpeg;base64,${data[0].imagen}" width="350" height="300" style="padding-right:10px;padding-bottom:10px"></a>`;
+
+                    } else {
+                        carusel = `<a href="data:image/jpeg;base64,${data[0].imagen}" data-fancybox="images" data-caption="Hora de captura a las ${data[0].hora_fin}"><img src="data:image/jpeg;base64,${data[0].imagen}" width="350" height="300" style="padding-right:10px;padding-bottom:10px"></a>`;
+                    }
+                    document.getElementById("zoom").innerHTML += carusel;
+                }
+            },
+            error: function () {
+            }
+        });
     }
-    carusel += `</p>`;
     document.getElementById("zoom").innerHTML = carusel;
     $("#modalZoom").modal();
 }
