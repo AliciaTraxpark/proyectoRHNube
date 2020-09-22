@@ -115,7 +115,7 @@ function onSelectFechas() {
         data: {
             fecha: fecha,
             area: area,
-            cargo:cargo
+            cargo: cargo
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -411,7 +411,9 @@ $(function () {
     $('#area').select2();
     $('#cargo').select2();
     $('#area').on("change", function (e) {
-        console.log($('#area').val());
+        fechaDefecto();
+    });
+    $('#cargo').on("change", function (e) {
         fechaDefecto();
     });
 });
