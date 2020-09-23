@@ -178,22 +178,22 @@ function RefreshTablaEmpleado() {
                                 }
                                 tbody += "</div>";
                             } else {
-                                tbody +=
-                                    '<div class="custom-control custom-switch mb-2">\
+                                if (data[i].vinculacion[j].pc === null) {
+                                    tbody +=
+                                        '<div class="custom-control custom-switch mb-2">\
                                 <input type="checkbox" class="custom-control-input"\
                                     id="customSwitchCRDisp' +
-                                    data[i].vinculacion[j].idVinculacion +
-                                    '"\
+                                        data[i].vinculacion[j].idVinculacion +
+                                        '"\
                                     onclick="javasscript:estadoDispositivoCR(' +
-                                    data[i].emple_id +
-                                    "," +
-                                    data[i].vinculacion[j].idVinculacion +
-                                    "," +
-                                    j +
-                                    ",'" +
-                                    data[i].perso_nombre +
-                                    '\')">';
-                                if (data[i].vinculacion[j].pc === null) {
+                                        data[i].emple_id +
+                                        "," +
+                                        data[i].vinculacion[j].idVinculacion +
+                                        "," + "'" +
+                                        j + "'" +
+                                        ",'" +
+                                        data[i].perso_nombre +
+                                        '\')">';
                                     tbody += '<label class="custom-control-label" for="customSwitchCRDisp' +
                                         data[i].vinculacion[j].idVinculacion +
                                         '"\
@@ -201,6 +201,21 @@ function RefreshTablaEmpleado() {
                                         j +
                                         "</label>";
                                 } else {
+                                    tbody +=
+                                        '<div class="custom-control custom-switch mb-2">\
+                                <input type="checkbox" class="custom-control-input"\
+                                    id="customSwitchCRDisp' +
+                                        data[i].vinculacion[j].idVinculacion +
+                                        '"\
+                                    onclick="javasscript:estadoDispositivoCR(' +
+                                        data[i].emple_id +
+                                        "," +
+                                        data[i].vinculacion[j].idVinculacion +
+                                        "," + "'" +
+                                        data[i].vinculacion[j].pc + "'" +
+                                        ",'" +
+                                        data[i].perso_nombre +
+                                        '\')">';
                                     tbody += '<label class="custom-control-label" for="customSwitchCRDisp' +
                                         data[i].vinculacion[j].idVinculacion +
                                         '"\
