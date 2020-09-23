@@ -288,6 +288,14 @@ $(document).ready(function () {
             }
         }
         if (stepnumber == 3) {
+            
+            console.log($("#selectCalendario").val());
+            if ($("#selectCalendario").val() == "Asignar calendario") {
+                isStepValid = false;
+                $("#vallidCalend").show();
+            } else {
+                $("#vallidCalend").hide();
+            }
             if (isStepValid == true) {
                 if ($("#estadoPC").val() == "true") {
                     idE = $("#idEmpleado").val();
@@ -581,7 +589,7 @@ $(document).ready(function () {
         obj,
         indice
     ) {
-        
+
         return validateSteps1(indice);
     });
     $("#smartwizard").on("showStep", function (

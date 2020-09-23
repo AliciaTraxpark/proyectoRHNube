@@ -2053,6 +2053,7 @@ use App\proyecto_empleado;
                                             for="simpleinput">Calendario
                                             de empleado:</label>
                                         <div class="col-lg-5">
+                                            <span id="vallidCalend" style="color: red;display:none">Eliga calendario</span>
                                             <select name="" id="selectCalendario"
                                                 class="form-control col-lg-6 form-control-sm" style="margin-top: 4px;">
                                                 <option hidden selected>Asignar calendario</option>

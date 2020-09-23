@@ -1145,10 +1145,10 @@ background-color: #ffffff !important;
             <div class="modal-content">
                 <div class="modal-body text-center">
                     <img src="{{asset('landing/images/notification.svg')}}" height="100" >
-                    <h4 class="text-danger mt-4">Su sesion expiró</h4>
-                    <p class="w-75 mx-auto text-muted">Por favor inicie sesion nuevamente.</p>
+                    <h4 class="text-danger mt-4">Su sesión expiró</h4>
+                    <p class="w-75 mx-auto text-muted">Por favor inicie sesión nuevamente.</p>
                     <div class="mt-4">
-                        <a href="{{('/')}}" class="btn btn-outline-primary btn-rounded width-md"><i class="uil uil-arrow-right mr-1"></i> Iniciar sesion</a>
+                        <a href="{{('/')}}" class="btn btn-outline-primary btn-rounded width-md"><i class="uil uil-arrow-right mr-1"></i> Iniciar sesión</a>
                     </div>
                 </div>
             </div><!-- /.modal-content -->
