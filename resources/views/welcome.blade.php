@@ -153,7 +153,7 @@
             </section>
             <div class="banner" style="background-color: #ffffff">
                 <div class="container" style="padding-top: 40px;padding-bottom:0px">
-                    <h4 class="" style="color: #204051">Organicemos tu equipo de
+                    <h4 class="" style="color: #204051">Organicemos tú equipo de
                         trabajo en 8 minutos: Controla, mide y gestiona.
                     </h4>
 
