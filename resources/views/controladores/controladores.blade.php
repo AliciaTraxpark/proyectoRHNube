@@ -32,7 +32,7 @@
     <div class="row page-title">
         <div class="col-md-12">
             {{-- <h4 class="mb-1 mt-0">Horarios</h4> --}}
-            <h4 class="header-title mt-0 "></i>Dispositivos</h4>
+            <h4 class="header-title mt-0 "></i>Controladores</h4>
         </div>
     </div>
 @endsection
@@ -108,8 +108,8 @@
                     <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                     <div class="row">
                         <div class=" col-md-6 col-xl-6 text-left">
-                            <button class="btn btn-sm btn-primary" onclick="NuevoDispo()"
-                                style="background-color: #183b5d;border-color:#62778c">+ Nuevo Dispositivo</button>
+                            <button class="btn btn-sm btn-primary" onclick="NuevoContr()"
+                                style="background-color: #183b5d;border-color:#62778c">+ Nuevo Controlador</button>
 
                             {{-- <button class="btn btn-sm btn-primary"
                                 id="btnasignarIncidencia" style="background-color: #183b5d;border-color:#62778c">Asignar
@@ -117,32 +117,31 @@
                         </div>
                     </div>
                     <div id="tabladiv"> <br>
-                        <table id="tablaDips" class="table dt-responsive nowrap" style="font-size: 12.8px;">
+                        <table id="tablaContr" class="table dt-responsive nowrap" style="font-size: 12.8px;">
                             <thead style=" background: #edf0f1;color: #6c757d;">
 
                                 <tr>
                                     <th></th>
-                                    <th>Descripción de ubicación</th>
-                                    <th>Móvil vinculado</th>
-                                    <th>Enviar SMS</th>
                                     <th>Código</th>
-                                    <th>Enviado</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
+                                    <th>Dispositivo(s)</th>
+                                    <th>Correo</th>
                                     <th>Estado</th>
-                                    <th>Sig. marcación</th>
-                                    <th>Tiempo de sincron.</th>
+
                                 </tr>
                             </thead>
                            <tbody>
                                 <tr>
                                     <td></td>
-                                    <td>Vigilancia Condor</td>
-                                    <td>+51968009336</td>
-                                    <td><img src="landing/images/note.svg" height="20"></td>
-                                    <td>(devuelde android)</td>
-                                    <td>SI</td>
-                                    <td>Creado</td>
-                                    <td>5 min</td>
-                                    <td>12 min</td>
+                                    <td>777666</td>
+                                    <td>Juan Manuel</td>
+                                    <td>Santos Cruz</td>
+                                    <td><img
+                                        src="{{asset('landing/images/telefono-inteligente.svg')}}" height="18">+51968009336</td>
+                                    <td>juanmar@gmail.com</td>
+                                    <td><button type="button" class="btn btn-soft-info btn-sm">Activo</button></td>
+
                                 </tr>
                             </tbody>
 
@@ -152,14 +151,14 @@
             </div> <!-- end card -->
 
 
-            {{-- Modal nuevoDispositivo --}}
-            <div id="nuevoDispositivo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            {{-- Modal nuevoControlador --}}
+            <div id="nuevoControlador" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                 aria-hidden="true" data-backdrop="static">
-                <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 540px;">
+                <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 620px;">
 
                     <div class="modal-content">
                         <div class="modal-header" style="background-color:#163552;">
-                            <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Nuevo Dispositivo
+                            <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Nuevo Controlador
                             </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -169,42 +168,52 @@
                             <div class="row">
 
                                 <div class="col-md-12">
-                                    <form id="frmHorNuevo" action="javascript:RegistraDispo()">
+                                    <form id="frmHorNuevo" action="javascript:RegistraContro()">
                                         <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label >Código de controlador:</label>
+                                                    <input type="text" class="form-control form-control-sm" id="" >
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="">Correo:</label>
+                                                    <input type="text"  class="form-control form-control-sm"
+                                                        required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="">Nombres:</label>
+                                                    <input type="text"  class="form-control form-control-sm"
+                                                        id="" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="">Ap. Paterno:</label>
+                                                    <input type="text"  class="form-control form-control-sm"
+                                                        id="" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="">Ap. Materno:</label>
+                                                    <input type="text"  class="form-control form-control-sm"
+                                                        id="" required>
+                                                </div>
+                                            </div>
+
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label for="">Descripción de ubicación:</label>
-                                                    <input type="text" class="form-control form-control-sm"
-                                                        id="descripcionCa_ed" maxlength="40" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="">Móvil vinculado:</label>
-                                                    <input type="number"  class="form-control form-control-sm"
-                                                        id="toleranciaH_ed" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="">Tiempo de sincronización(Min):</label>
-                                                    <input type="number" id="tiempoSin" class="form-control form-control-sm"
-                                                        required>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
+                                                    <label for="">Seleccione dispositivo:</label>
+                                                    <select data-plugin="customselect"
+                                                    class="form-control" data-placeholder="seleccione dispositivo">
+                                                    <option></option>
+                                                    <option >+51968009336 (Vigilancia Condor)</option>
 
-                                                <div class="form-group">
-                                                    <label for="">Siguiente marcación(Min):</label> <span id="errorMarca" style="color: #690f0f;display: none">El valor min es 5.</span>
-                                                    <input type="number" id="smarcacion" min="5" value="5"  class="form-control form-control-sm"
-                                                        required>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label for=""><br></label>
-                                                <div class="form-check">
-                                                    <input type="checkbox"  class="form-check-input" id="smsCheck" checked>
-                                                    <label class="form-check-label" for="smsCheck" style="margin-top: 2px;">Enviar SMS ahora.</label>
+                                                </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -240,7 +249,7 @@
     <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
-    <script src="{{ asset('landing/js/dispositivosMenu.js') }}"></script>
+    <script src="{{ asset('landing/js/controladMenu.js') }}"></script>
 
     <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>

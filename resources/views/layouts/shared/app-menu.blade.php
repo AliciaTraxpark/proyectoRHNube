@@ -123,7 +123,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
         <ul class="nav-second-level" aria-expanded="false">
             <li>
                 <a href="/dispositivos">Dispositivos</a>
-                <a href="/reporteSemanal">Controladores</a>
+                <a href="/controladores">Controladores</a>
 
             </li>
         </ul>

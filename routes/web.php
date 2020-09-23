@@ -353,3 +353,6 @@ Route::get('/capturasPersonalizadas', 'ControlController@retornarDatos');
 
 //DISPOSITIVOS
 Route::get('/dispositivos', 'dispositivosController@index');
+
+//CONTROLADORES
+Route::get('/controladores', 'controladoresController@index');
