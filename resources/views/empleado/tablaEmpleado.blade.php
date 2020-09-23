@@ -490,9 +490,11 @@
                 var container = $('#v_tbodyDispositivo');
 
                 for (var i = 0; i < data[0].vinculacion.length; i++) {
+                    console.log(data[0].vinculacion[i].pc);
                     if(data[0].vinculacion[i].dispositivoD == 'WINDOWS'){
                             var tr = `<tr id="tr${data[0].vinculacion[i].idVinculacion}">
                             <td>${data[0].vinculacion[i].dispositivoD}</td>
+                            <td> PC ${i}</td>
                             <td>${data[0].vinculacion[i].licencia}</td>
                             <td class="hidetext">${data[0].vinculacion[i].codigo}</td>
                             <td id="enviadoW${data[0].vinculacion[i].idVinculacion}">${data[0].vinculacion[i].envio}</td>
@@ -525,6 +527,8 @@
                     }
                     container.append(tr);
 
+                    // ESTADO DE LICENCIAS
+
                     if(data[0].vinculacion[i].disponible == 'c'){
                         $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Creado");
                     }
@@ -551,6 +555,13 @@
                                         </a>`;
                         }
                         $('#correo' + data[0].vinculacion[i].idVinculacion).append(td);
+                    }
+
+                    // NOMBRE DE PC
+                    if(data[0].vinculacion[i].pc != null){
+                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(1)").text(data[0].vinculacion[i].pc);
+                    }else{
+                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(1)").text("pc" + i);
                     }
                 }
             },

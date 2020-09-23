@@ -276,6 +276,7 @@ function vinculacionWindows() {
                 var container = $('#tbodyDispositivo');
                 var tr = `<tr>
                 <td>${data.dispositivo_descripcion}</td>
+                <td> PC ${data.contar}</td>
                 <td>${data.licencia}</td>
                 <td class="hidetext">${data.codigo}</td>
                 <td id="enviadoW${data.idVinculacion}">${data.envio}</td>
@@ -390,6 +391,7 @@ function vinculacionWindowsEditar() {
                 var container = $('#v_tbodyDispositivo');
                 var tr = `<tr>
                 <td>${data.dispositivo_descripcion}</td>
+                <td> PC ${data.contar}</td>
                 <td>${data.licencia}</td>
                 <td class="hidetext">${data.codigo}</td>
                 <td id="enviadoW${data.idVinculacion}">${data.envio}</td>

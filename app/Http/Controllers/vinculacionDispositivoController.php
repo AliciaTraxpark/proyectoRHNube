@@ -121,6 +121,7 @@ class vinculacionDispositivoController extends Controller
             $respuesta['codigo'] = $encode;
             $respuesta['envio'] = 0;
             $respuesta['idVinculacion'] = $idVinculacion;
+            $respuesta['contar'] = $contar[0]->total;
 
             return response()->json($respuesta, 200);
         }

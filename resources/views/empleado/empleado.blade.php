@@ -2624,6 +2624,7 @@
                                                                         <thead style="background: #fafafa;">
                                                                             <tr>
                                                                                 <th>Tipo Dispositivo</th>
+                                                                                <th>Nombre</th>
                                                                                 <th>Activación de Dispositivo</th>
                                                                                 <th>Codigo</th>
                                                                                 <th>Enviado</th>
@@ -3557,6 +3558,7 @@
                                                                             style="background: #fafafa;font-size: 14px">
                                                                             <tr>
                                                                                 <th>Tipo Dispositivo</th>
+                                                                                <th>Nombre</th>
                                                                                 <th>Activación de Dispositivo</th>
                                                                                 <th>Codigo</th>
                                                                                 <th>Enviado</th>
