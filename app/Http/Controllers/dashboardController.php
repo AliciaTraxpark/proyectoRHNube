@@ -105,13 +105,13 @@ class dashboardController extends Controller
 
             $nivel = DB::table('empleado as e')
                 ->join('nivel as n', 'e.emple_nivel', '=', 'n.nivel_id')
-                ->select('n.nivel_descripcion', DB::raw('COUNT(n.nivel_descripcion) as Total'))
+                ->select('n.nivel_descripcion', DB::raw('COUNT(e.emple_id) as Total'))
                 ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                 ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                 ->where('invi.estado', '=', 1)
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
-                ->groupBy('n.nivel_id')
+                ->groupBy('e.emple_nivel')
                 ->get();
         } else {
             $empleado = DB::table('empleado as e')
