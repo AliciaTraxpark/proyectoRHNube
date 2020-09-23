@@ -82,10 +82,8 @@ $.ajax({
         var color = ['#b6eb7a', '#f9d56e', '#e84a5f'];
         var suma = 0;
         var totalP = 0;
-        $('#cantidadArea').empty();
         $('#fechaArea').empty();
         $('#panel1002A').empty();
-        var containerCantidadA = $('#cantidadArea');
         var containerFecha = $('#fechaArea');
         var containerDetalle = $('#panel1002A');
         if (data[0].area.length != 0) {
@@ -103,7 +101,6 @@ $.ajax({
                 color.push(getRandomColor());
             }
             // CARD
-            p = `<img src="landing/images/grupo.svg" height="18" class="mr-2"> Total de ${suma} empleado(s)`;
             f = new Date();
             var options = {
                 weekday: 'long',
@@ -113,7 +110,6 @@ $.ajax({
             };
             var fecha = f.toLocaleDateString("es-PE", options)
             fechaF = `<img src="admin/images/calendarioHor.svg" height="20" class="mr-2"> ${fecha}`;
-            containerCantidadA.append(p);
             containerFecha.append(fechaF);
             var detalle = ``;
             for (var l = 0; l < nombre.length; l++) {
@@ -204,10 +200,8 @@ $.ajax({
         var color = ['#b6eb7a', '#f9d56e', '#e84a5f'];
         var suma = 0;
         var totalP = 0;
-        $('#cantidadNivel').empty();
         $('#fechaNivel').empty();
         $('#panel1002N').empty();
-        var containerCantidadA = $('#cantidadNivel');
         var containerFecha = $('#fechaNivel');
         var containerDetalle = $('#panel1002N');
         if (data[0].nivel.length != 0) {
@@ -225,7 +219,6 @@ $.ajax({
                 color.push(getRandomColor());
             }
             // CARD
-            p = `<img src="landing/images/grupo.svg" height="18" class="mr-2"> Total de ${suma} empleado(s)`;
             f = new Date();
             var options = {
                 weekday: 'long',
@@ -235,7 +228,6 @@ $.ajax({
             };
             var fecha = f.toLocaleDateString("es-PE", options)
             fechaF = `<img src="admin/images/calendarioHor.svg" height="20" class="mr-2"> ${fecha}`;
-            containerCantidadA.append(p);
             containerFecha.append(fechaF);
             var detalle = ``;
             for (var l = 0; l < nombre.length; l++) {
@@ -325,10 +317,8 @@ $.ajax({
         var color = ['#b6eb7a', '#f9d56e', '#e84a5f'];
         var suma = 0;
         var totalP = 0;
-        $('#cantidadContrato').empty();
         $('#fechaContrato').empty();
         $('#panel1002C').empty();
-        var containerCantidadA = $('#cantidadContrato');
         var containerFecha = $('#fechaContrato');
         var containerDetalle = $('#panel1002C');
         if (data[0].contrato.length != 0) {
@@ -346,7 +336,6 @@ $.ajax({
                 color.push(getRandomColor());
             }
             // CARD
-            p = `<img src="landing/images/grupo.svg" height="18" class="mr-2"> Total de ${suma} empleado(s)`;
             f = new Date();
             var options = {
                 weekday: 'long',
@@ -356,7 +345,6 @@ $.ajax({
             };
             var fecha = f.toLocaleDateString("es-PE", options)
             fechaF = `<img src="admin/images/calendarioHor.svg" height="20" class="mr-2"> ${fecha}`;
-            containerCantidadA.append(p);
             containerFecha.append(fechaF);
             var detalle = ``;
             for (var l = 0; l < nombre.length; l++) {
@@ -445,10 +433,9 @@ $.ajax({
         var total = [];
         var color = ['#b6eb7a', '#f9d56e', '#e84a5f'];
         var suma = 0;
-        $('#cantidadCentro').empty();
+        var totalP = 0;
         $('#fechaCentro').empty();
         $('#panel1002CC').empty();
-        var containerCantidadA = $('#cantidadCentro');
         var containerFecha = $('#fechaCentro');
         var containerDetalle = $('#panel1002CC');
         if (data[0].centro.length != 0) {
@@ -466,7 +453,6 @@ $.ajax({
                 color.push(getRandomColor());
             }
             // CARD
-            p = `<img src="landing/images/grupo.svg" height="18" class="mr-2"> Total de ${suma} empleado(s)`;
             f = new Date();
             var options = {
                 weekday: 'long',
@@ -476,7 +462,6 @@ $.ajax({
             };
             var fecha = f.toLocaleDateString("es-PE", options)
             fechaF = `<img src="admin/images/calendarioHor.svg" height="20" class="mr-2"> ${fecha}`;
-            containerCantidadA.append(p);
             containerFecha.append(fechaF);
             var detalle = ``;
             for (var l = 0; l < nombre.length; l++) {
@@ -566,10 +551,8 @@ $.ajax({
         var color = ['#b6eb7a', '#f9d56e', '#e84a5f'];
         var suma = 0;
         var totalP = 0;
-        $('#cantidadLocal').empty();
         $('#fechaLocal').empty();
         $('#panel1002L').empty();
-        var containerCantidadA = $('#cantidadLocal');
         var containerFecha = $('#fechaLocal');
         var containerDetalle = $('#panel1002L');
         if (data[0].local.length != 0) {
@@ -587,7 +570,6 @@ $.ajax({
                 color.push(getRandomColor());
             }
             // CARD
-            p = `<img src="landing/images/grupo.svg" height="18" class="mr-2"> Total de ${suma} empleado(s)`;
             f = new Date();
             var options = {
                 weekday: 'long',
@@ -597,7 +579,6 @@ $.ajax({
             };
             var fecha = f.toLocaleDateString("es-PE", options)
             fechaF = `<img src="admin/images/calendarioHor.svg" height="20" class="mr-2"> ${fecha}`;
-            containerCantidadA.append(p);
             containerFecha.append(fechaF);
             var detalle = ``;
             for (var l = 0; l < nombre.length; l++) {
@@ -687,10 +668,8 @@ $.ajax({
         var color = ['#b6eb7a', '#f9d56e', '#e84a5f'];
         var suma = 0;
         var totalP = 0;
-        $('#cantidadDepartamento').empty();
         $('#fechaDepartamento').empty();
         $('#panel1002D').empty();
-        var containerCantidadA = $('#cantidadDepartamento');
         var containerFecha = $('#fechaDepartamento');
         var containerDetalle = $('#panel1002D');
         if (data[0].departamento.length != 0) {
@@ -708,7 +687,6 @@ $.ajax({
                 color.push(getRandomColor());
             }
             // CARD
-            p = `<img src="landing/images/grupo.svg" height="18" class="mr-2"> Total de ${suma} empleado(s)`;
             f = new Date();
             var options = {
                 weekday: 'long',
@@ -718,7 +696,6 @@ $.ajax({
             };
             var fecha = f.toLocaleDateString("es-PE", options)
             fechaF = `<img src="admin/images/calendarioHor.svg" height="20" class="mr-2"> ${fecha}`;
-            containerCantidadA.append(p);
             containerFecha.append(fechaF);
             var detalle = ``;
             for (var l = 0; l < nombre.length; l++) {
@@ -808,10 +785,8 @@ $.ajax({
         var color = ['#b6eb7a', '#f9d56e', '#e84a5f'];
         var suma = 0;
         var totalP = 0;
-        $('#cantidadEdades').empty();
         $('#fechaEdades').empty();
         $('#panel1002E').empty();
-        var containerCantidadA = $('#cantidadEdades');
         var containerFecha = $('#fechaEdades');
         var containerDetalle = $('#panel1002E');
         if (data[0].edad.length != 0) {
@@ -829,7 +804,6 @@ $.ajax({
                 color.push(getRandomColor());
             }
             // CARD
-            p = `<img src="landing/images/grupo.svg" height="18" class="mr-2"> Total de ${suma} empleado(s)`;
             f = new Date();
             var options = {
                 weekday: 'long',
@@ -839,7 +813,6 @@ $.ajax({
             };
             var fecha = f.toLocaleDateString("es-PE", options)
             fechaF = `<img src="admin/images/calendarioHor.svg" height="20" class="mr-2"> ${fecha}`;
-            containerCantidadA.append(p);
             containerFecha.append(fechaF);
             var detalle = ``;
             for (var l = 0; l < nombre.length; l++) {
