@@ -2,7 +2,7 @@ $( "#idempleado" ).change(function() {
     num=$('#idempleado').val().length;
     console.log(num);
     $('#imgV').hide();
-    $('#btnLabo').hide();
+    $('#btnLabo').modal('hide');
     $('#calendar_ed').show();
     $('#calendar_ed_bt').show();
     $('#verinfo').show();
@@ -33,7 +33,7 @@ function calendario_edit() {
             $('#pruebaEnd_ed').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
             $('#pruebaStar_ed').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
             console.log(arg);
-            $('#btnLabo').show();
+            $('#btnLabo').modal('show');
         },
         eventClick: function (info) {
             id = info.event.id;
@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', calendario_edit); ///////////
 ///////////////////////////
 ////////////////////////
 function laborable_ed() {
-    $('#btnLabo').hide();
+    $('#btnLabo').modal('hide');
     title = 'Descanso';
     color = '#4673a0';
     textColor = '#ffffff';
@@ -225,7 +225,7 @@ function laborable_ed() {
 };
 /////////////
 function nolaborable_ed() {
-    $('#btnLabo').hide();
+    $('#btnLabo').modal('hide');
     title = 'No laborable';
     color = '#a34141';
     textColor = '#ffffff';
@@ -295,7 +295,7 @@ $('#horaIncidenCa_ed').flatpickr({
 });
 //////////////////7
 function IncidenciaEmpleados(){
-    $('#btnLabo').hide();
+    $('#btnLabo').modal('hide');
     $("#frmIncidenciaCa_ed")[0].reset();
     $('#modalIncidencia_ed').modal('show');
 }

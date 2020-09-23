@@ -202,27 +202,7 @@
                     </div>
 
 
-                    <div class="col-md-6 text-right" id="btnLabo" style="display: none"><br><br>
-                        <button type="button"
-                        style=" max-width: 18em!important;"
-                        class="btn btn-secondary btn-sm"
-                        onclick="laborable_ed()"><img
-                            src="{{asset('admin/images/dormir.svg')}}"
-                            height="20"> Descanso</button>
-                        <button type="button"
-                        style=" max-width: 18em!important;"
-                        class="btn btn-secondary btn-sm"
-                        onclick="nolaborable_ed()"><img
-                            src="{{asset('admin/images/evento.svg')}}"
-                            height="20"> Dia no laborable</button>
-                        <button type="button"
-                        style=" max-width: 18em!important;"
-                        class="btn btn-secondary btn-sm"
-                        onclick="IncidenciaEmpleados()"><img
-                        src="{{asset('admin/images/calendarioInc.svg')}}"
-                            height="20"> Incidencia</button>
 
-                    </div>
                     <div class="col-xl-12" id="imgV">
                         <br><br><br>
                         <img id="VacioImg" style="margin-left:33%" src="{{
@@ -322,7 +302,51 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    <div id="btnLabo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 720px;  margin-top: 185px; left: 94px;" >
 
+        <div class="modal-content">
+           <div class="modal-header" style="background-color:#163552; padding-bottom: 4px;
+           padding-top: 4px;">
+               <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Asignar dia a calendario</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+               </button>
+           </div>
+           <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
+            <div class="col-md-12 " id="btnLabo" >
+                <div class="row">
+                    <div class="col-md-4">
+                    <button type="button"
+                    style=" max-width: 18em!important;"
+                    class="btn btn-secondary btn-sm"
+                    onclick="laborable_ed()"><img
+                        src="{{asset('admin/images/dormir.svg')}}"
+                        height="20"> Descanso</button>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button"
+                        style=" max-width: 18em!important;"
+                        class="btn btn-secondary btn-sm"
+                        onclick="nolaborable_ed()"><img
+                            src="{{asset('admin/images/evento.svg')}}"
+                            height="20"> Dia no laborable</button>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button"
+                        style=" max-width: 18em!important;"
+                        class="btn btn-secondary btn-sm"
+                        onclick="IncidenciaEmpleados()"><img
+                        src="{{asset('admin/images/calendarioInc.svg')}}"
+                            height="20"> Incidencia</button>
+                    </div>
+                </div>
+            </div>
+           </div>
+
+       </div><!-- /.modal-content -->
+     </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     </div>
 </div>
 @endsection
