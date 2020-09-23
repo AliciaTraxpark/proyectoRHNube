@@ -18,7 +18,7 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js">
     </script>
-    <link rel="shortcut icon" href="https://i.ibb.co/b31CPDW/Recurso-13.png">
+    <link rel="shortcut icon" href="https://i.ibb.co/Pt7wKJf/CUADRADO-NUBE-SOLA.png">
 </head>
 
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
