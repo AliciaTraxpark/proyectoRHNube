@@ -653,18 +653,20 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
                    <input type="hidden" id="pruebaStar">
                    <input type="hidden" id="pruebaEnd">
 
-                <div id="calendarioAsignar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-                    <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 720px;  margin-top: 150px; left: 94px;" >
+                   <div id="calendarioAsignar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                    <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 720px;  margin-top: 185px; left: 94px;" >
 
                     <div class="modal-content">
-                       {{-- <div class="modal-header" style="background-color:#163552;">
-                           <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Asignar</h5>
+                       <div class="modal-header" style="background-color:#163552; padding-bottom: 4px;
+                       padding-top: 4px;">
+                           <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Asignar dia a calendario</h5>
                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                <span aria-hidden="true">&times;</span>
                            </button>
-                       </div> --}}
+                       </div>
                        <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
                            <div class="row">
+                               <br>
                                <div class="col-md-4">
                                 <button type="button" class="btn btn-secondary btn-sm" onclick="registrarDdescanso()" ><img src="{{asset('admin/images/dormir.svg')}}" height="20"> Dia de descanso</button>
                                </div>
@@ -676,7 +678,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
                                </div>
                            </div>
                        </div>
-                       <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
+                      {{--  <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
                            <div class="col-md-12">
                                <div class="row">
                                    <div class="col-md-12 text-right" >
@@ -686,7 +688,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
                                    </div>
                                </div>
                            </div>
-                       </div>
+                       </div> --}}
                    </div><!-- /.modal-content -->
                  </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
