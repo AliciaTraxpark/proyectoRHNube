@@ -213,10 +213,10 @@ class dashboardController extends Controller
                 ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                 ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                 ->where('invi.estado', '=', 1)
-                ->select('cc.centroC_descripcion', DB::raw('COUNT(cc.centroC_descripcion) as Total'))
+                ->select('cc.centroC_descripcion', DB::raw('COUNT(e.emple_id) as Total'))
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
-                ->groupBy('cc.centroC_id')
+                ->groupBy('e.emple_centCosto')
                 ->get();
         } else {
             $empleado = DB::table('empleado as e')
@@ -226,11 +226,11 @@ class dashboardController extends Controller
                 ->get();
 
             $centro = DB::table('empleado as e')
-                ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
-                ->select('cc.centroC_descripcion', DB::raw('COUNT(cc.centroC_descripcion) as Total'))
+                ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+                ->select('cc.centroC_descripcion', DB::raw('COUNT(e.emple_id) as Total'))
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
-                ->groupBy('cc.centroC_id')
+                ->groupBy('e.emple_centCosto')
                 ->get();
         }
 

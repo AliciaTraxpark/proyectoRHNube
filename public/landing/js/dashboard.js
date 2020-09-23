@@ -454,7 +454,11 @@ $.ajax({
         if (data[0].centro.length != 0) {
             $('#divcentro').show();
             for (var i = 0; i < data[0].centro.length; i++) {
-                nombre.push(data[0].centro[i].centroC_descripcion);
+                if(data[0].centro[i].centroC_descripcion == null){
+                    nombre.push("NO DEFINIDO");
+                }else{
+                    nombre.push(data[0].centro[i].centroC_descripcion);
+                }
                 total.push(data[0].centro[i].Total);
                 suma += data[0].centro[i].Total;
             }
