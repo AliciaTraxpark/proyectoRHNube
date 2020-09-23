@@ -318,7 +318,7 @@ class ControlController extends Controller
                 ->where(DB::raw('IF(h.id is null, DATE(cp.hora_fin), DATE(h.start))'), '<=', $fechaF[1])
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
-                ->groupBy('e.emple_id',DB::raw('DATE(cp.hora_fin)'))
+                ->groupBy('e.emple_id', DB::raw('DATE(cp.hora_fin)'))
                 ->get();
 
             $date1 = new DateTime($fechaF[0]);
@@ -406,7 +406,8 @@ class ControlController extends Controller
                 'a.Activi_id',
                 'a.Activi_Nombre',
                 'a.estado',
-                'cp.imagen',
+                'cp.idCaptura',
+                'cp.miniatura as imagen',
                 'cp.actividad',
                 'cp.hora_fin',
                 DB::raw('DATE(cp.hora_fin) as fecha'),
@@ -425,5 +426,47 @@ class ControlController extends Controller
             ->get();
         $control = controlAJson($control);
         return response()->json($control, 200);
+    }
+
+    public function mostrarCapturas(Request $request)
+    {
+        $idCaptura = $request->get('idCaptura');
+        $respuesta = [];
+        $captura = DB::table('captura as cp')
+            ->select('cp.imagen', 'cp.hora_fin')
+            ->where('cp.idCaptura', '=', $idCaptura)
+            ->get()
+            ->first();
+        array_push($respuesta, $captura);
+
+        return response()->json($respuesta, 200);
+    }
+
+    // REPORTE
+    public function vistaReporte()
+    {
+        return view('tareas.reportePersonalizado');
+    }
+    public function vistaReporteEmpleado()
+    {
+        $empleado = DB::table('empleado as e')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+            ->get();
+
+        return response()->json($empleado, 200);
+    }
+    public function retornarDatos(Request $request)
+    {
+        $idEmpleado = $request->get('idEmpleado');
+        $fecha = $request->get('fecha');
+
+        $captura = DB::table('captura as cp')
+            ->select('cp.idCaptura', 'cp.hora_ini', 'cp.hora_fin', 'cp.actividad')
+            ->where('cp.idEmpleado', '=', $idEmpleado)
+            ->where(DB::raw('DATE(cp.hora_fin)'), '=', $fecha)
+            ->get();
+
+        return response()->json($captura, 200);
     }
 }

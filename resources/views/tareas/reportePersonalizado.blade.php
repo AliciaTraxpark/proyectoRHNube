@@ -5,6 +5,7 @@
 <link href="{{
     URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.css')
     }}" rel="stylesheet" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css')
     }}" rel="stylesheet" type="text/css" />
@@ -12,60 +13,25 @@
 <link href="{{
     URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')
     }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/chart/Chart.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{
-    URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{
-    URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{
     URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')
-    }}" rel="stylesheet" type="text/css" />
+    }}" rel="stylesheet" />
 @endsection
 
 @section('breadcrumb')
 <div class="row page-title">
     <div class="col-md-12">
-        <h4 class="mb-1 mt-0">Actividad de Captura de Pantalla</h4>
+        <h4 class="mb-1 mt-0">Reporte Personalizado</h4>
     </div>
 </div>
 @endsection
 
 @section('content')
-<style>
-    .carousel-control-prev-icon {
-        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='403555' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
-    }
-
-    .carousel-control-next-icon {
-        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='403555' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
-    }
-</style>
-<div id="modalZoom" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-    data-backdrop="static">
-    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" style="color:#ffffff;font-size:15px">Colección
-                    de Imagenes</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div id="esperaImg" class="text-center" style="display: none">
-                    <img src="{{asset('landing/images/punt.gif')}}" height="150">
-                </div>
-                <div class="row">
-                    <div id="zoom" class="col-xl-12 text-center album">
-                        <hr class="my-5" />
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 <div class="row">
     <div class="col-xl-12">
         <div>
@@ -97,42 +63,59 @@
                             <label class="col-lg-2 col-form-label">Empleado:</label>
                             <div class="col-lg-10">
                                 <select id="empleado" data-plugin="customselect" class="form-control">
-                                    <option value="" disabled selected>Seleccionar</option>
-                                    @foreach ($empleado as $empleados)
-                                    <option class="" value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}}
-                                        {{$empleados->perso_apPaterno}}
-                                        {{$empleados->perso_apMaterno}}</option>
-                                    @endforeach
                                 </select>
                             </div>
 
                         </div>
                     </div>
                 </div>
-                <div id="espera" class="text-center" style="display: none">
-                    <img src="{{asset('landing/images/loading.gif')}}" height="100">
-                </div>
-                <div class="col-xl-12" id="card">
-                    <br>
-                    <img id="VacioImg" style="margin-left:28%" src="{{
-                        URL::asset('admin/images/search-file.svg') }}" class="mr-2" height="220" /> <br> <label for=""
-                        style="margin-left:30%;color:#7d7d7d">Realize una
-                        búsqueda para ver Actividad</label>
-                </div>
             </div> <!-- end card-body-->
         </div> <!-- end card-->
     </div> <!-- end col-->
 </div>
 <!-- end row -->
+<div class="row justify-content-center pt-5">
+    <div class="card">
+        <div class="card-header" style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1">
+            <div class="row">
+                <h4 class="header-title col-12 mt-0">Resultado</h4>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive-xl">
+                <table id="Reporte" class="table nowrap" style="font-size: 13px!important;width:
+                    100%;">
+                    <thead style="background: #fafafa;" id="dias" style="width:100%!important">
+                        <tr>
+                            <th>Id Captura</th>
+                            <th>Hora Inicio</th>
+                            <th>Hora Fin</th>
+                            <th>Actividad</th>
+                        </tr>
+                    </thead>
+                    <tbody id="datos">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @section('script')
-<!-- Plugins Js -->
+<script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
 <script src="{{
     URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js')
     }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js')
     }}"></script>
+<!-- datatable js -->
+<script src="{{ URL::asset('admin/assets/libs/chart/Chart.min.js') }}"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<script src="{{
+    URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')
+    }}"></script>
+<script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
 <script src="{{
@@ -142,22 +125,13 @@
     URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js')
     }}"></script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
-@endsection
-@section('script-bottom')
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-<script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
-<script src="{{
-    URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.js') }}"></script>
-<script src="{{
-    URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.min.js') }}"></script>
-<script src="{{
-    URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js')
+<script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js')
     }}"></script>
-<script src="{{
-    URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')
+<script src="{{ URL::asset('admin/assets/libs/datatables/buttons.html5.min.js')
     }}"></script>
-<script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
-<script src="{{asset('landing/js/tareas.js')}}"></script>
-<script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/datatables/pdfmake.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/datatables/vfs_fonts.js') }}"></script>
+<script src="{{asset('landing/js/reportePersonalizado.js')}}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 @endsection

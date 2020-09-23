@@ -458,44 +458,6 @@ function onMostrarPantallas() {
     }
 }
 
-//PROYECTO
-$(function () {
-    $("#empleado").on("change", onMostrarProyecto);
-});
-
-function onMostrarProyecto() {
-    var value = $("#empleado").val();
-    $.ajax({
-        url: "tareas/proyecto",
-        method: "GET",
-        data: {
-            value: value,
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        statusCode: {
-            401: function () {
-                location.reload();
-            },
-            /*419: function () {
-                location.reload();
-            }*/
-        },
-        success: function (data) {
-            var html_select = '<option value="">Seleccionar</option>';
-            for (var i = 0; i < data.length; i++)
-                html_select +=
-                    '<option value="' +
-                    data[i].Proye_id +
-                    '">' +
-                    data[i].Proye_Nombre +
-                    "</option>";
-            $("#proyecto").html(html_select);
-        },
-    });
-}
-
 function zoom(horayJ) {
     var onlyHora = horayJ.split(",")[0];
     var j = horayJ.split(",")[1];
@@ -505,12 +467,53 @@ function zoom(horayJ) {
             capturas = hora.minutos[j];
         }
     });
-    var carusel = `<p class="imglist" style="max-width: 1000px;">`;
+    var carusel = "";
     for (let index = 0; index < capturas.length; index++) {
         const element = capturas[index];
-        carusel += `<a href="data:image/jpeg;base64,${element.imagen}" data-fancybox="images" data-caption="Hora de captura a las ${element.hora_fin}"><img src="data:image/jpeg;base64,${element.imagen}" width="350" height="300" style="padding-right:10px;padding-bottom:10px"></a>`;
+        $.ajax({
+            url: "/mostrarCapturas",
+            method: "GET",
+            data: {
+                idCaptura: element.idCaptura,
+            },
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            statusCode: {
+                401: function () {
+                    location.reload();
+                }
+            },
+            beforeSend: function () {
+
+                $("#esperaImg").show();
+            },
+        }).then(function (data) {
+            $("#esperaImg").hide();
+            if (data.length > 0) {
+                carusel = `<a href="data:image/jpeg;base64,${data[0].imagen}" data-fancybox="images" data-caption="Hora de captura a las ${data[0].hora_fin}" data-width="2048" data-height="1365"><img src="data:image/jpeg;base64,${data[0].imagen}" width="350" height="300" style="padding-right:10px;padding-bottom:10px"></a>`;
+                document.getElementById("zoom").innerHTML += carusel;
+            }
+        }).fail(function () {
+            $("#esperaImg").hide();
+            $.notify({
+                message: '\nSurgio un error.',
+                icon: 'landing/images/bell.svg',
+            }, {
+                icon_type: 'image',
+                allow_dismiss: true,
+                newest_on_top: true,
+                delay: 6000,
+                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+        });
     }
-    carusel += `</p>`;
     document.getElementById("zoom").innerHTML = carusel;
     $("#modalZoom").modal();
 }
