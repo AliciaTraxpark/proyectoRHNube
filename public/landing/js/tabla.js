@@ -159,14 +159,24 @@ function RefreshTablaEmpleado() {
                                     j +
                                     ",'" +
                                     data[i].perso_nombre +
-                                    '\')">\
-                                <label class="custom-control-label" for="customSwitchCRDisp' +
-                                    data[i].vinculacion[j].idVinculacion +
-                                    '"\
+                                    '\')">';
+
+                                if (data[i].vinculacion[j].pc === null) {
+                                    tbody += '<label class="custom-control-label" for="customSwitchCRDisp' +
+                                        data[i].vinculacion[j].idVinculacion +
+                                        '"\
                                     style="font-weight: bold">PC' +
-                                    j +
-                                    "</label>\
-                            </div>";
+                                        j +
+                                        "</label>";
+                                } else {
+                                    tbody += '<label class="custom-control-label" for="customSwitchCRDisp' +
+                                        data[i].vinculacion[j].idVinculacion +
+                                        '"\
+                                    style="font-weight: bold">' +
+                                        data[i].vinculacion[j].pc +
+                                        "</label>";
+                                }
+                                tbody += "</div>";
                             } else {
                                 tbody +=
                                     '<div class="custom-control custom-switch mb-2">\
@@ -182,14 +192,23 @@ function RefreshTablaEmpleado() {
                                     j +
                                     ",'" +
                                     data[i].perso_nombre +
-                                    '\')">\
-                                    <label class="custom-control-label" for="customSwitchCRDisp' +
-                                    data[i].vinculacion[j].idVinculacion +
-                                    '"\
+                                    '\')">';
+                                if (data[i].vinculacion[j].pc === null) {
+                                    tbody += '<label class="custom-control-label" for="customSwitchCRDisp' +
+                                        data[i].vinculacion[j].idVinculacion +
+                                        '"\
                                     style="font-weight: bold">PC' +
-                                    j +
-                                    "</label>\
-                            </div>";
+                                        j +
+                                        "</label>";
+                                } else {
+                                    tbody += '<label class="custom-control-label" for="customSwitchCRDisp' +
+                                        data[i].vinculacion[j].idVinculacion +
+                                        '"\
+                                    style="font-weight: bold">' +
+                                        data[i].vinculacion[j].pc +
+                                        "</label>";
+                                }
+                                tbody += "</div>";
                             }
 
                             tbody += "</div>";
@@ -320,7 +339,7 @@ function RefreshTablaEmpleado() {
                             var val1;
                             $("#select").on("keyup change", function () {
                                 i = $.fn.dataTable.util.escapeRegex(this.value);
-                               
+
                                 var val = $("#global_filter").val();
                                 if (that.column(i).search() !== this.value) {
                                     that.column(this.value).search(val).draw();

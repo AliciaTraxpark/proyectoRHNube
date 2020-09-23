@@ -215,26 +215,32 @@
                             @if($tablaV['disponible'] == 'c' || $tablaV['disponible'] == 'e' || $tablaV['disponible'] ==
                             'a')
                             <div class="custom-control custom-switch mb-2">
+                                @if(empty($tablaV['pc']) === true)
                                 <input type="checkbox" class="custom-control-input"
                                     id="customSwitchCRDisp{{$tablaV['idVinculacion']}}" checked
-                                    onclick="javasscript:estadoDispositivoCR({{$tabla_empleados->emple_id}},{{$tablaV['idVinculacion']}},{{$loop->index}},'{{$tabla_empleados->perso_nombre}}')">
-                                @if(empty($tablaV['pc']) === true)
+                                    onclick="javasscript:estadoDispositivoCR({{$tabla_empleados->emple_id}},{{$tablaV['idVinculacion']}},'PC {{$loop->index}}','{{$tabla_empleados->perso_nombre}}')">
                                 <label class="custom-control-label" for="customSwitchCRDisp{{$tablaV['idVinculacion']}}"
                                     style="font-weight: bold">PC{{$loop->index}}</label>
                                 @else
+                                <input type="checkbox" class="custom-control-input"
+                                    id="customSwitchCRDisp{{$tablaV['idVinculacion']}}" checked
+                                    onclick="javasscript:estadoDispositivoCR({{$tabla_empleados->emple_id}},{{$tablaV['idVinculacion']}},'{{$tablaV['pc']}}','{{$tabla_empleados->perso_nombre}}')">
                                 <label class="custom-control-label" for="customSwitchCRDisp{{$tablaV['idVinculacion']}}"
                                     style="font-weight: bold">{{$tablaV['pc']}}</label>
                                 @endif
                             </div>
                             @else
                             <div class="custom-control custom-switch mb-2">
+                                @if(empty($tablaV['pc']) === true)
                                 <input type="checkbox" class="custom-control-input"
                                     id="customSwitchCRDisp{{$tablaV['idVinculacion']}}"
-                                    onclick="javasscript:estadoDispositivoCR({{$tabla_empleados->emple_id}},{{$tablaV['idVinculacion']}},{{$loop->index}},'{{$tabla_empleados->perso_nombre}}')">
-                                @if(empty($tablaV['pc']) === true)
+                                    onclick="javasscript:estadoDispositivoCR({{$tabla_empleados->emple_id}},{{$tablaV['idVinculacion']}},'PC {{$loop->index}}','{{$tabla_empleados->perso_nombre}}')">
                                 <label class="custom-control-label" for="customSwitchCRDisp{{$tablaV['idVinculacion']}}"
                                     style="font-weight: bold">PC{{$loop->index}}</label>
                                 @else 
+                                <input type="checkbox" class="custom-control-input"
+                                    id="customSwitchCRDisp{{$tablaV['idVinculacion']}}"
+                                    onclick="javasscript:estadoDispositivoCR({{$tabla_empleados->emple_id}},{{$tablaV['idVinculacion']}},'{{$tablaV['pc']}}','{{$tabla_empleados->perso_nombre}}')">
                                 <label class="custom-control-label" for="customSwitchCRDisp{{$tablaV['idVinculacion']}}"
                                     style="font-weight: bold">{{$tablaV['pc']}}</label>
                                 @endif
