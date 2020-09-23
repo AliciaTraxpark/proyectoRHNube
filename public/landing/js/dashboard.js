@@ -90,9 +90,14 @@ $.ajax({
         var containerDetalle = $('#panel1002A');
         if (data[0].area.length != 0) {
             $('#divarea').show();
+            console.log(data[0].area);
             for (var i = 0; i < data[0].area.length; i++) {
                 suma += data[0].area[i].Total;
-                nombre.push(data[0].area[i].area_descripcion);
+                if(data[0].area[i].area_descripcion == null){
+                    nombre.push("NO DEFINIDO");
+                }else{
+                    nombre.push(data[0].area[i].area_descripcion);
+                }
                 total.push(data[0].area[i].Total);
             }
             for (var j = 3; j < data[0].area.length; j++) {
