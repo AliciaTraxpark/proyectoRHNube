@@ -41,7 +41,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
     {
         return [
             'tipo_documento', 'numero_documento', 'nombres', 'apellido_paterno',
-            'apellido_materno','correo','celular','género', 'fecha_nacimiento', /* 'departamento_nacimiento',
+            'apellido_materno','correo','celular','genero', 'fecha_nacimiento', /* 'departamento_nacimiento',
             'provincia_nacimiento', */ 'distrito_nacimiento', 'direccion', /* 'departamento', 'provincia', */ 'distrito',
             'tipo_contrato', 'local', 'nivel','cargo', 'area', 'centro_costo','condicion_pago','monto_pago'
         ];

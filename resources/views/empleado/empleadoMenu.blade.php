@@ -2243,9 +2243,9 @@ use App\proyecto_empleado;
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-4 text-left">
+                                                    <div class="col-md-4 text-left" style="padding-left: 0px;">
                                                         <button class="btn btn-primary btn-sm"
-                                                            style="background-color: #183b5d;border-color:#62778c"
+                                                            style="background-color: #183b5d;border-color:#62778c;margin-top: 5px"
                                                             onclick="abrirHorario()">+</button>
                                                     </div>
                                                     <div class="col-md-12"><br>
@@ -3148,9 +3148,9 @@ use App\proyecto_empleado;
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-4 text-left">
+                                                    <div class="col-md-4 text-left" style="padding-left: 0px;">
                                                         <button class="btn btn-primary btn-sm"
-                                                            style="background-color: #183b5d;border-color:#62778c"
+                                                            style="background-color: #183b5d;border-color:#62778c;margin-top: 5px"
                                                             onclick="abrirHorario_ed()">+</button>
                                                     </div>
                                                     <div class="col-md-12"><br>

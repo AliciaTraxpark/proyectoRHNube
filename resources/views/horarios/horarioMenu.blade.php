@@ -555,7 +555,7 @@ a:not([href]):not([tabindex]){
                             </select> &nbsp;
 
                      </div>
-                     <div class="col-md-3 text-right">
+                     <div class="col-md-3 text-left" style="padding-left: 0px;">
                         <button class="btn btn-primary btn-sm" style="background-color: #183b5d;border-color:#62778c;margin-top: 5px;" onclick="abrirHorario()">+</button>
 
                      </div>
@@ -931,7 +931,7 @@ a:not([href]):not([tabindex]){
                              <div class="col-md-6">
                                 <div class="form-group">
                                    <label for="">Descripcion:</label>
-                                   <input type="text" class="form-control form-control-sm" id="descripcionCa" required>
+                                   <input type="text" class="form-control form-control-sm" id="descripcionCa" maxlength="40" required>
                                 </div>
                              </div>
                              <div class="col-md-6">
@@ -1130,7 +1130,7 @@ a:not([href]):not([tabindex]){
                              <div class="col-md-6">
                                 <div class="form-group">
                                    <label for="">Descripcion:</label>
-                                   <input type="text" class="form-control form-control-sm" id="descripcionCa_ed" required>
+                                   <input type="text" class="form-control form-control-sm" id="descripcionCa_ed" maxlength="40" required>
                                 </div>
                              </div>
                              <div class="col-md-6">
