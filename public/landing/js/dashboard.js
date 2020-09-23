@@ -213,7 +213,11 @@ $.ajax({
         if (data[0].nivel.length != 0) {
             $('#divnivel').show();
             for (var i = 0; i < data[0].nivel.length; i++) {
-                nombre.push(data[0].nivel[i].nivel_descripcion);
+                if(data[0].nivel[i].nivel_descripcion == null){
+                    nombre.push("NO DEFINIDO");
+                }else{
+                    nombre.push(data[0].nivel[i].nivel_descripcion);
+                }
                 total.push(data[0].nivel[i].Total);
                 suma += data[0].nivel[i].Total;
             }

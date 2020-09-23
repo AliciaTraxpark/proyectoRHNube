@@ -57,7 +57,7 @@ class dashboardController extends Controller
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
                 ->where('invi.estado', '=', 1)
-                ->groupBy('a.area_id')
+                ->groupBy('e.emple_area')
                 ->get();
         } else {
             $empleado = DB::table('empleado as e')
@@ -121,11 +121,11 @@ class dashboardController extends Controller
                 ->get();
 
             $nivel = DB::table('empleado as e')
-                ->join('nivel as n', 'e.emple_nivel', '=', 'n.nivel_id')
-                ->select('n.nivel_descripcion', DB::raw('COUNT(n.nivel_descripcion) as Total'))
+                ->leftJoin('nivel as n', 'e.emple_nivel', '=', 'n.nivel_id')
+                ->select('n.nivel_descripcion', DB::raw('COUNT(e.emple_id) as Total'))
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
-                ->groupBy('n.nivel_id')
+                ->groupBy('e.emple_nivel')
                 ->get();
         }
 
@@ -419,13 +419,12 @@ class dashboardController extends Controller
                     ELSE CASE WHEN(YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento) BETWEEN 25 AND 30) THEN "DE 25 A 30"
                     ELSE CASE WHEN(YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento) BETWEEN 31 AND 40) THEN "DE 31 A 40"
                     ELSE CASE WHEN(YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento) BETWEEN 41 AND 50) THEN "DE 41 A 50"
-                     ELSE CASE WHEN(YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento) > 50) THEN "DE 50 A MÁS "END END END END END as rango'
+                     ELSE CASE WHEN(YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento) BETWEEN 50 AND 100) THEN "DE 50 A MÁS "END END END END END as rango'
                     ),
                     DB::raw('COUNT(*) as total')
                 )
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
-                ->where('p.perso_fechaNacimiento', '!=', '0000-00-00')
                 ->groupBy('rango')
                 ->get();
         } else {
