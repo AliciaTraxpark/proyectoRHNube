@@ -27,7 +27,7 @@ class dispositivosController extends Controller
                "country":"PE",
                "dial":38383,
                "message":"' . $mensaje . '",
-               "msisdns":[+51968009336 ],
+               "msisdns":[51968009336],
                "tag":"tag-prueba"
             }',
            CURLOPT_HTTPHEADER => array(
