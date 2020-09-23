@@ -92,9 +92,9 @@ $.ajax({
             $('#divarea').show();
             for (var i = 0; i < data[0].area.length; i++) {
                 suma += data[0].area[i].Total;
-                if(data[0].area[i].area_descripcion == null){
+                if (data[0].area[i].area_descripcion == null) {
                     nombre.push("NO DEFINIDO");
-                }else{
+                } else {
                     nombre.push(data[0].area[i].area_descripcion);
                 }
                 total.push(data[0].area[i].Total);
@@ -189,7 +189,7 @@ $.ajax({
             $('#divarea').hide();
         }
     },
-    error: function (data) {}
+    error: function (data) { }
 });
 //NIVEL
 $.ajax({
@@ -213,9 +213,9 @@ $.ajax({
         if (data[0].nivel.length != 0) {
             $('#divnivel').show();
             for (var i = 0; i < data[0].nivel.length; i++) {
-                if(data[0].nivel[i].nivel_descripcion == null){
+                if (data[0].nivel[i].nivel_descripcion == null) {
                     nombre.push("NO DEFINIDO");
-                }else{
+                } else {
                     nombre.push(data[0].nivel[i].nivel_descripcion);
                 }
                 total.push(data[0].nivel[i].Total);
@@ -310,7 +310,7 @@ $.ajax({
             $('#divnivel').hide();
         }
     },
-    error: function (data) {}
+    error: function (data) { }
 });
 //CONTRATO
 $.ajax({
@@ -334,7 +334,11 @@ $.ajax({
         if (data[0].contrato.length != 0) {
             $('#divcontrato').show();
             for (var i = 0; i < data[0].contrato.length; i++) {
-                nombre.push(data[0].contrato[i].contrato_descripcion);
+                if (data[0].contrato[i].contrato_descripcion == null) {
+                    nombre.push("NO DEFINIDO");
+                } else {
+                    nombre.push(data[0].contrato[i].contrato_descripcion);
+                }
                 total.push(data[0].contrato[i].Total);
                 suma += data[0].contrato[i].Total;
             }
@@ -427,7 +431,7 @@ $.ajax({
             $('#divcontrato').hide();
         }
     },
-    error: function (data) {}
+    error: function (data) { }
 });
 //CENTRO
 $.ajax({
@@ -543,7 +547,7 @@ $.ajax({
             $('#divcentro').hide();
         }
     },
-    error: function (data) {}
+    error: function (data) { }
 });
 //LOCAL
 $.ajax({
@@ -660,7 +664,7 @@ $.ajax({
             $('#divlocal').hide();
         }
     },
-    error: function (data) {}
+    error: function (data) { }
 });
 //DEPARTAMENTO
 $.ajax({
@@ -777,7 +781,7 @@ $.ajax({
             $('#divdepartamento').hide();
         }
     },
-    error: function (data) {}
+    error: function (data) { }
 });
 //RANGO DE EDAD
 $.ajax({
@@ -801,10 +805,10 @@ $.ajax({
         if (data[0].edad.length != 0) {
             $('#divedades').show();
             for (var i = 0; i < data[0].edad.length; i++) {
-                if(data[0].edad[i].rango == null){
+                if (data[0].edad[i].rango == null) {
                     nombre.push("NO DEFINIDO");
-                }else{
-                nombre.push(data[0].edad[i].rango);
+                } else {
+                    nombre.push(data[0].edad[i].rango);
                 }
                 total.push(data[0].edad[i].total);
                 suma += data[0].edad[i].total;
@@ -898,5 +902,5 @@ $.ajax({
             $('#divedades').hide();
         }
     },
-    error: function (data) {}
+    error: function (data) { }
 });

@@ -155,15 +155,15 @@ class dashboardController extends Controller
                 ->get();
 
             $contrato = DB::table('empleado as e')
-                ->join('contrato as c', 'c.idEmpleado', '=', 'e.emple_id')
-                ->join('tipo_contrato as tc', 'tc.contrato_id', '=', 'c.id_tipoContrato')
+                ->leftJoin('contrato as c', 'c.idEmpleado', '=', 'e.emple_id')
+                ->leftJoin('tipo_contrato as tc', 'tc.contrato_id', '=', 'c.id_tipoContrato')
                 ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                 ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                ->where('invi.estado', '=', 1)
-                ->select('tc.contrato_descripcion', DB::raw('COUNT(tc.contrato_descripcion) as Total'))
+                ->select('tc.contrato_descripcion', DB::raw('COUNT(e.emple_id) as Total'))
                 ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('invi.estado', '=', 1)
                 ->where('e.emple_estado', '=', 1)
-                ->groupBy('tc.contrato_id')
+                ->groupBy('c.idEmpleado')
                 ->get();
         } else {
 
@@ -174,12 +174,12 @@ class dashboardController extends Controller
                 ->get();
 
             $contrato = DB::table('empleado as e')
-                ->join('contrato as c', 'c.idEmpleado', '=', 'e.emple_id')
-                ->join('tipo_contrato as tc', 'tc.contrato_id', '=', 'c.id_tipoContrato')
-                ->select('tc.contrato_descripcion', DB::raw('COUNT(tc.contrato_descripcion) as Total'))
+                ->leftJoin('contrato as c', 'c.idEmpleado', '=', 'e.emple_id')
+                ->leftJoin('tipo_contrato as tc', 'tc.contrato_id', '=', 'c.id_tipoContrato')
+                ->select('tc.contrato_descripcion', DB::raw('COUNT(e.emple_id) as Total'))
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
-                ->groupBy('tc.contrato_id')
+                ->groupBy('c.idEmpleado')
                 ->get();
         }
 
