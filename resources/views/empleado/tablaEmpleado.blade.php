@@ -167,8 +167,7 @@
                 @if (empty($tabla_empleados->emple_foto) === true)
                 <img src="{{ URL::asset('admin/assets/images/users/empleado.png')}}" alt="" />
                 @else
-                <img src="/fotosEmpleado/{{$tabla_empleados->emple_foto}}"
-                    class="avatar-xs rounded-circle"/>
+                <img src="/fotosEmpleado/{{$tabla_empleados->emple_foto}}" class="avatar-xs rounded-circle" />
                 @endif
             </td>
             <td class="text-center">
@@ -216,23 +215,37 @@
                             @if($tablaV['disponible'] == 'c' || $tablaV['disponible'] == 'e' || $tablaV['disponible'] ==
                             'a')
                             <div class="custom-control custom-switch mb-2">
+                                @if(empty($tablaV['pc']) === true)
                                 <input type="checkbox" class="custom-control-input"
                                     id="customSwitchCRDisp{{$tablaV['idVinculacion']}}" checked
-                                    onclick="javasscript:estadoDispositivoCR({{$tabla_empleados->emple_id}},{{$tablaV['idVinculacion']}},{{$loop->index}},'{{$tabla_empleados->perso_nombre}}')">
+                                    onclick="javasscript:estadoDispositivoCR({{$tabla_empleados->emple_id}},{{$tablaV['idVinculacion']}},'PC {{$loop->index}}','{{$tabla_empleados->perso_nombre}}')">
                                 <label class="custom-control-label" for="customSwitchCRDisp{{$tablaV['idVinculacion']}}"
                                     style="font-weight: bold">PC{{$loop->index}}</label>
+                                @else
+                                <input type="checkbox" class="custom-control-input"
+                                    id="customSwitchCRDisp{{$tablaV['idVinculacion']}}" checked
+                                    onclick="javasscript:estadoDispositivoCR({{$tabla_empleados->emple_id}},{{$tablaV['idVinculacion']}},'{{$tablaV['pc']}}','{{$tabla_empleados->perso_nombre}}')">
+                                <label class="custom-control-label" for="customSwitchCRDisp{{$tablaV['idVinculacion']}}"
+                                    style="font-weight: bold">{{$tablaV['pc']}}</label>
+                                @endif
                             </div>
                             @else
                             <div class="custom-control custom-switch mb-2">
+                                @if(empty($tablaV['pc']) === true)
                                 <input type="checkbox" class="custom-control-input"
                                     id="customSwitchCRDisp{{$tablaV['idVinculacion']}}"
-                                    onclick="javasscript:estadoDispositivoCR({{$tabla_empleados->emple_id}},{{$tablaV['idVinculacion']}},{{$loop->index}},'{{$tabla_empleados->perso_nombre}}')">
+                                    onclick="javasscript:estadoDispositivoCR({{$tabla_empleados->emple_id}},{{$tablaV['idVinculacion']}},'PC {{$loop->index}}','{{$tabla_empleados->perso_nombre}}')">
                                 <label class="custom-control-label" for="customSwitchCRDisp{{$tablaV['idVinculacion']}}"
                                     style="font-weight: bold">PC{{$loop->index}}</label>
+                                @else 
+                                <input type="checkbox" class="custom-control-input"
+                                    id="customSwitchCRDisp{{$tablaV['idVinculacion']}}"
+                                    onclick="javasscript:estadoDispositivoCR({{$tabla_empleados->emple_id}},{{$tablaV['idVinculacion']}},'{{$tablaV['pc']}}','{{$tabla_empleados->perso_nombre}}')">
+                                <label class="custom-control-label" for="customSwitchCRDisp{{$tablaV['idVinculacion']}}"
+                                    style="font-weight: bold">{{$tablaV['pc']}}</label>
+                                @endif
                             </div>
                             @endif
-                            {{-- onclick="javascript:enviarWindowsTabla({{$tabla_empleados->emple_id}},{{$tablaV['idVinculacion']}})">PC
-                            {{$loop->index}} --}}
                         </div>
                         @endif
                         @endforeach
@@ -490,9 +503,11 @@
                 var container = $('#v_tbodyDispositivo');
 
                 for (var i = 0; i < data[0].vinculacion.length; i++) {
+                    console.log(data[0].vinculacion[i].pc);
                     if(data[0].vinculacion[i].dispositivoD == 'WINDOWS'){
                             var tr = `<tr id="tr${data[0].vinculacion[i].idVinculacion}">
                             <td>${data[0].vinculacion[i].dispositivoD}</td>
+                            <td> PC ${i}</td>
                             <td>${data[0].vinculacion[i].licencia}</td>
                             <td class="hidetext">${data[0].vinculacion[i].codigo}</td>
                             <td id="enviadoW${data[0].vinculacion[i].idVinculacion}">${data[0].vinculacion[i].envio}</td>
@@ -525,14 +540,16 @@
                     }
                     container.append(tr);
 
+                    // ESTADO DE LICENCIAS
+
                     if(data[0].vinculacion[i].disponible == 'c'){
-                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Creado");
+                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(5)").text("Creado");
                     }
                     if(data[0].vinculacion[i].disponible == 'e'){
-                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Enviado");
+                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(5)").text("Enviado");
                     }
                     if(data[0].vinculacion[i].disponible == 'a'){
-                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Activado");
+                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(5)").text("Activado");
                     }
                     if(data[0].vinculacion[i].disponible == 'i'){
                         $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Inactivo");
@@ -551,6 +568,13 @@
                                         </a>`;
                         }
                         $('#correo' + data[0].vinculacion[i].idVinculacion).append(td);
+                    }
+
+                    // NOMBRE DE PC
+                    if(data[0].vinculacion[i].pc != null){
+                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(1)").text(data[0].vinculacion[i].pc);
+                    }else{
+                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(1)").text("pc" + i);
                     }
                 }
             },
@@ -644,6 +668,7 @@ function verDEmpleado(idempleadoVer){
                     if(data[0].vinculacion[i].dispositivoD == 'WINDOWS'){
                             var trVer = `<tr id="trVer${data[0].vinculacion[i].idVinculacion}">
                             <td>${data[0].vinculacion[i].dispositivoD}</td>
+                            <td> PC ${i}</td>
                             <td>${data[0].vinculacion[i].licencia}</td>
                             <td class="hidetext">${data[0].vinculacion[i].codigo}</td>
                             <td id="enviadoW${data[0].vinculacion[i].idVinculacion}">${data[0].vinculacion[i].envio}</td>
@@ -671,17 +696,18 @@ function verDEmpleado(idempleadoVer){
 
                     }
                     containerVer.append(trVer);
+                    //ESTADO DE LICENCIA
                     if(data[0].vinculacion[i].disponible == 'c'){
-                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Creado");
+                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(5)").text("Creado");
                     }
                     if(data[0].vinculacion[i].disponible == 'e'){
-                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Enviado");
+                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(5)").text("Enviado");
                     }
                     if(data[0].vinculacion[i].disponible == 'a'){
-                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Activado");
+                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(5)").text("Activado");
                     }
                     if(data[0].vinculacion[i].disponible == 'i'){
-                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Inactivo");
+                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(5)").text("Inactivo");
                         $('#inactivarVer'+data[0].vinculacion[i].idVinculacion).empty();
                         $('#correoVer' + data[0].vinculacion[i].idVinculacion).empty();
                         if(data[0].vinculacion[i].dispositivoD == 'WINDOWS'){
@@ -693,6 +719,12 @@ function verDEmpleado(idempleadoVer){
                                         </a>`;
                         }
                         $('#correoVer' + data[0].vinculacion[i].idVinculacion).append(tdV);
+                    }
+                     // NOMBRE DE PC
+                     if(data[0].vinculacion[i].pc != null){
+                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(1)").text(data[0].vinculacion[i].pc);
+                    }else{
+                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(1)").text("pc" + i);
                     }
                 }
                 //VER

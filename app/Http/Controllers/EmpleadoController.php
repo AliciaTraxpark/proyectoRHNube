@@ -44,6 +44,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Illiminate\Support\Facades\File;
 use Illuminate\Support\Arr;
 use Carbon\Carbon;
+
 class EmpleadoController extends Controller
 {
     /**
@@ -76,9 +77,9 @@ class EmpleadoController extends Controller
         $distrito = ubigeo_peru_districts::all();
         $tipo_doc = tipo_documento::all();
         $tipo_cont = tipo_contrato::all();
-        $area = area::where('organi_id','=',session('sesionidorg'))->get();
-        $cargo = cargo::where('organi_id','=',session('sesionidorg'))->get();
-        $centro_costo = centro_costo::where('organi_id','=',session('sesionidorg'))->get();
+        $area = area::where('organi_id', '=', session('sesionidorg'))->get();
+        $cargo = cargo::where('organi_id', '=', session('sesionidorg'))->get();
+        $centro_costo = centro_costo::where('organi_id', '=', session('sesionidorg'))->get();
         $nivel = nivel::where('organi_id', '=', session('sesionidorg'))->get();
         $local = local::where('organi_id', '=', session('sesionidorg'))->get();
         $empleado = empleado::where('emple_estado', '=', 1)->get();
@@ -253,11 +254,11 @@ class EmpleadoController extends Controller
                 ->join('modo as m', 'm.id', '=', 'v.idModo')
                 ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
                 ->join('licencia_empleado as le', 'le.id', '=', 'v.idLicencia')
-                ->select('v.id as idV', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
+                ->select('v.id as idV', 'v.pc_mac as pc', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
                 ->where('v.idEmpleado', '=', $tab->emple_id)
                 ->get();
             foreach ($vinculacion as $vinc) {
-                array_push($vinculacionD, array("idVinculacion" => $vinc->idV, "idLicencia" => $vinc->idL, "licencia" => $vinc->licencia, "disponible" => $vinc->disponible, "dispositivoD" => $vinc->dispositivo_descripcion, "codigo" => $vinc->codigo, "envio" => $vinc->envio));
+                array_push($vinculacionD, array("idVinculacion" => $vinc->idV, "pc" => $vinc->pc, "idLicencia" => $vinc->idL, "licencia" => $vinc->licencia, "disponible" => $vinc->disponible, "dispositivoD" => $vinc->dispositivo_descripcion, "codigo" => $vinc->codigo, "envio" => $vinc->envio));
             }
             $tab->vinculacion = $vinculacionD;
             unset($vinculacionD);
@@ -268,10 +269,10 @@ class EmpleadoController extends Controller
                 ->join('licencia_empleado as le', 'le.id', '=', 'v.idLicencia')
                 ->select('v.id as idV', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
                 ->where('v.idEmpleado', '=', $tab->emple_id)
-                ->where('m.idTipoModo','=',1)
+                ->where('m.idTipoModo', '=', 1)
                 ->get();
             $estadoCR = false;
-            foreach($modoCR as $md){
+            foreach ($modoCR as $md) {
                 if ($md->disponible == 'c' || $md->disponible == 'e' || $md->disponible == 'a') {
                     $estadoCR = true;
                 }
@@ -329,11 +330,11 @@ class EmpleadoController extends Controller
                 ->join('modo as m', 'm.id', '=', 'v.idModo')
                 ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
                 ->join('licencia_empleado as le', 'le.id', '=', 'v.idLicencia')
-                ->select('v.id as idV', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
+                ->select('v.id as idV', 'v.pc_mac as pc', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
                 ->where('v.idEmpleado', '=', $tab->emple_id)
                 ->get();
             foreach ($vinculacion as $vinc) {
-                array_push($vinculacionD, array("idVinculacion" => $vinc->idV, "idLicencia" => $vinc->idL, "licencia" => $vinc->licencia, "disponible" => $vinc->disponible, "dispositivoD" => $vinc->dispositivo_descripcion, "codigo" => $vinc->codigo, "envio" => $vinc->envio));
+                array_push($vinculacionD, array("idVinculacion" => $vinc->idV, "pc" => $vinc->pc, "idLicencia" => $vinc->idL, "licencia" => $vinc->licencia, "disponible" => $vinc->disponible, "dispositivoD" => $vinc->dispositivo_descripcion, "codigo" => $vinc->codigo, "envio" => $vinc->envio));
             }
             $tab->vinculacion = $vinculacionD;
             unset($vinculacionD);
@@ -344,10 +345,10 @@ class EmpleadoController extends Controller
                 ->join('licencia_empleado as le', 'le.id', '=', 'v.idLicencia')
                 ->select('v.id as idV', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
                 ->where('v.idEmpleado', '=', $tab->emple_id)
-                ->where('m.idTipoModo','=',1)
+                ->where('m.idTipoModo', '=', 1)
                 ->get();
             $estadoCR = false;
-            foreach($modoCR as $md){
+            foreach ($modoCR as $md) {
                 if ($md->disponible == 'c' || $md->disponible == 'e' || $md->disponible == 'a') {
                     $estadoCR = true;
                 }
@@ -579,7 +580,7 @@ class EmpleadoController extends Controller
                 $eventos_empleado->id_empleado = $idempleado;
                 $eventos_empleado->tipo_ev = $eventos_empleado_tempEUs->tipo_ev;
                 $eventos_empleado->id_calendario = $eventos_empleado_tempEUs->calendario_calen_id;
-                $eventos_empleado->laborable =0;
+                $eventos_empleado->laborable = 0;
                 $eventos_empleado->save();
             }
         }
@@ -727,12 +728,12 @@ class EmpleadoController extends Controller
             ->join('modo as m', 'm.id', '=', 'v.idModo')
             ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
             ->join('licencia_empleado as le', 'le.id', '=', 'v.idLicencia')
-            ->select('v.id as idV', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
+            ->select('v.id as idV', 'v.pc_mac as pc', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
             ->where('v.idEmpleado', '=', $idempleado)
             ->get();
         $vinculacionD = [];
         foreach ($vinculacion as $lic) {
-            array_push($vinculacionD, array("idVinculacion" => $lic->idV, "idLicencia" => $lic->idL, "licencia" => $lic->licencia, "disponible" => $lic->disponible, "dispositivoD" => $lic->dispositivo_descripcion, "codigo" => $lic->codigo, "envio" => $lic->envio));
+            array_push($vinculacionD, array("idVinculacion" => $lic->idV, "pc" => $lic->pc, "idLicencia" => $lic->idL, "licencia" => $lic->licencia, "disponible" => $lic->disponible, "dispositivoD" => $lic->dispositivo_descripcion, "codigo" => $lic->codigo, "envio" => $lic->envio));
         }
         $empleados[0]->vinculacion = $vinculacionD;
         $contrato = DB::table('contrato as c')
@@ -942,9 +943,9 @@ class EmpleadoController extends Controller
         $distrito = ubigeo_peru_districts::all();
         $tipo_doc = tipo_documento::all();
         $tipo_cont = tipo_contrato::all();
-        $area = area::where('organi_id','=',session('sesionidorg'))->get();
-        $cargo = cargo::where('organi_id','=',session('sesionidorg'))->get();
-        $centro_costo = centro_costo::where('organi_id','=',session('sesionidorg'))->get();
+        $area = area::where('organi_id', '=', session('sesionidorg'))->get();
+        $cargo = cargo::where('organi_id', '=', session('sesionidorg'))->get();
+        $centro_costo = centro_costo::where('organi_id', '=', session('sesionidorg'))->get();
         $nivel = nivel::where('organi_id', '=', session('sesionidorg'))->get();
         $local = local::where('organi_id', '=', session('sesionidorg'))->get();
         $empleado = empleado::all();
@@ -1110,8 +1111,8 @@ class EmpleadoController extends Controller
 
 
         $eventos_empleado_temp = DB::table('eventos_empleado_temp as evt')
-            ->select(['evEmpleadoT_id as id', 'title', 'color', 'textColor', 'start', 'end', 'tipo_ev', 'users_id', 'calendario_calen_id', 'horaI','horaF','borderColor'])
-            ->leftJoin('horario as h','evt.id_horario','=','h.horario_id')
+            ->select(['evEmpleadoT_id as id', 'title', 'color', 'textColor', 'start', 'end', 'tipo_ev', 'users_id', 'calendario_calen_id', 'horaI', 'horaF', 'borderColor'])
+            ->leftJoin('horario as h', 'evt.id_horario', '=', 'h.horario_id')
             ->where('evt.users_id', '=', Auth::user()->id)
             ->where('evt.calendario_calen_id', '=', $idcalendario)
 
@@ -1219,24 +1220,21 @@ class EmpleadoController extends Controller
         $arrayrep = collect();
 
         foreach ($datafecha as $datafechas) {
-            $tempre = eventos_empleado_temp::
-           where('users_id', '=', Auth::user()->id)
-            ->where('start', '=', $datafechas)
-            ->where('id_horario', '=', $idhorar)
-            ->get()->first();
-            if( $tempre){
-                $startArre= carbon::create($tempre->start);
+            $tempre = eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
+                ->where('start', '=', $datafechas)
+                ->where('id_horario', '=', $idhorar)
+                ->get()->first();
+            if ($tempre) {
+                $startArre = carbon::create($tempre->start);
                 $arrayrep->push($startArre->format('Y-m-d'));
             }
-
-
         }
 
-       $datos = Arr::flatten($arrayrep);
+        $datos = Arr::flatten($arrayrep);
 
 
         //DIFERENCIA ARRAYS
-        $datafecha2=array_values(array_diff($datafecha, $datos));
+        $datafecha2 = array_values(array_diff($datafecha, $datos));
 
 
         foreach ($datafecha2 as $datafechas) {
@@ -1250,7 +1248,7 @@ class EmpleadoController extends Controller
             $eventos_empleado_tempSave->id_horario = $idhorar;
             $eventos_empleado_tempSave->calendario_calen_id = $idca;
             $eventos_empleado_tempSave->fuera_horario = $fueraHora;
-            if($fueraHora==1){
+            if ($fueraHora == 1) {
                 $eventos_empleado_tempSave->borderColor = '#5369f8';
             }
             $eventos_empleado_tempSave->save();
@@ -1261,22 +1259,24 @@ class EmpleadoController extends Controller
     public function vercalendarioEmpl(Request $request)
     {
         $horario_empleado = DB::table('horario_empleado as he')
-            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end','horaI','horaF','borderColor'])
-            ->join('horario as h','he.horario_horario_id','=','h.horario_id')
+            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor'])
+            ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.empleado_emple_id', '=', $request->get('idempleado'));
 
         $incidencias = DB::table('incidencias as i')
-            ->select(['idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color',
-             'i.inciden_descuento as textColor', 'idi.inciden_dias_fechaI as start',
-              'idi.inciden_dias_fechaF as end','i.inciden_descripcion as horaI','i.inciden_descripcion as horaF','i.inciden_descripcion as borderColor'])
+            ->select([
+                'idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color',
+                'i.inciden_descuento as textColor', 'idi.inciden_dias_fechaI as start',
+                'idi.inciden_dias_fechaF as end', 'i.inciden_descripcion as horaI', 'i.inciden_descripcion as horaF', 'i.inciden_descripcion as borderColor'
+            ])
             ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
             ->where('idi.id_empleado', '=', $request->get('idempleado'))
             ->union($horario_empleado);
 
 
         $eventos_empleado = DB::table('eventos_empleado')
-            ->select(['evEmpleado_id as id', 'title', 'color', 'textColor', 'start', 'end','title as horaI','title as horaF','title as borderColor'])
+            ->select(['evEmpleado_id as id', 'title', 'color', 'textColor', 'start', 'end', 'title as horaI', 'title as horaF', 'title as borderColor'])
             ->where('id_empleado', '=', $request->get('idempleado'))
             ->union($incidencias)
             ->get();
@@ -1342,7 +1342,7 @@ class EmpleadoController extends Controller
                     $eventos_empleado_r->end = $eventos_usuarios->end;
                     $eventos_empleado_r->tipo_ev = $eventos_usuarios->tipo;
                     $eventos_empleado_r->id_calendario = $idcalendario;
-                    $eventos_empleado_r->laborable =0;
+                    $eventos_empleado_r->laborable = 0;
                     $eventos_empleado_r->save();
                 }
             }
@@ -1351,22 +1351,24 @@ class EmpleadoController extends Controller
 
 
         $horario_empleado = DB::table('horario_empleado as he')
-            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end','horaI','horaF','borderColor','laborable'])
-            ->join('horario as h','he.horario_horario_id','=','h.horario_id')
+            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor', 'laborable'])
+            ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.empleado_emple_id', '=', $idempleado);
 
 
         $incidencias = DB::table('incidencias as i')
-            ->select(['idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descuento as textColor',
-             'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end','i.inciden_descripcion as horaI','i.inciden_descripcion as horaF','i.inciden_descripcion as borderColor','laborable'])
+            ->select([
+                'idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descuento as textColor',
+                'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end', 'i.inciden_descripcion as horaI', 'i.inciden_descripcion as horaF', 'i.inciden_descripcion as borderColor', 'laborable'
+            ])
             ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
             ->where('idi.id_empleado', '=', $idempleado)
             ->union($horario_empleado);
 
 
         $eventos_empleado = DB::table('eventos_empleado')
-            ->select(['evEmpleado_id as id', 'title', 'color', 'textColor', 'start', 'end','title as horaI','title as horaF','title as borderColor','laborable' ])
+            ->select(['evEmpleado_id as id', 'title', 'color', 'textColor', 'start', 'end', 'title as horaI', 'title as horaF', 'title as borderColor', 'laborable'])
             ->where('id_empleado', '=', $idempleado)
             ->union($incidencias)
             ->get();
@@ -1396,7 +1398,7 @@ class EmpleadoController extends Controller
         $eventos_empleado->tipo_ev = $request->get('tipo');
         $eventos_empleado->id_empleado = $request->get('idempleado');
         $eventos_empleado->id_calendario = $ev1->id_calendario;
-        $eventos_empleado->laborable =0;
+        $eventos_empleado->laborable = 0;
         $eventos_empleado->save();
     }
     public function storeIncidempleado(Request $request)
@@ -1429,25 +1431,22 @@ class EmpleadoController extends Controller
         $arrayrep = collect();
 
         foreach ($datafecha as $datafechas) {
-            $tempre= horario_empleado ::
-            select(['horario_empleado.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end','horaI','horaF','borderColor'])
-            ->join('horario as h','horario_empleado.horario_horario_id','=','h.horario_id')
-            ->join('horario_dias as hd', 'horario_empleado.horario_dias_id', '=', 'hd.id')
-            ->where('start', '=', $datafechas)
-            ->where('h.horario_id', '=',$idhorar)
-            ->where('horario_empleado.empleado_emple_id', '=', $idempleado)
-            ->get()->first();
-            if( $tempre){
-                $startArre= carbon::create($tempre->start);
-             $arrayrep->push($startArre->format('Y-m-d'));
+            $tempre = horario_empleado::select(['horario_empleado.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor'])
+                ->join('horario as h', 'horario_empleado.horario_horario_id', '=', 'h.horario_id')
+                ->join('horario_dias as hd', 'horario_empleado.horario_dias_id', '=', 'hd.id')
+                ->where('start', '=', $datafechas)
+                ->where('h.horario_id', '=', $idhorar)
+                ->where('horario_empleado.empleado_emple_id', '=', $idempleado)
+                ->get()->first();
+            if ($tempre) {
+                $startArre = carbon::create($tempre->start);
+                $arrayrep->push($startArre->format('Y-m-d'));
             }
-
-
         }
         $datos = Arr::flatten($arrayrep);
 
         //DIFERENCIA ARRAYS
-        $datafecha2=array_values(array_diff($datafecha, $datos));
+        $datafecha2 = array_values(array_diff($datafecha, $datos));
 
 
         foreach ($datafecha2 as $datafechas) {
@@ -1466,7 +1465,7 @@ class EmpleadoController extends Controller
             $horario_empleados->empleado_emple_id = $idempleado;
             $horario_empleados->horario_dias_id = $horario_dias->id;
             $horario_empleados->fuera_horario = $fueraHora;
-            if($fueraHora==1){
+            if ($fueraHora == 1) {
                 $horario_empleados->borderColor = '#5369f8';
             }
             $horario_empleados->save();
@@ -1508,12 +1507,11 @@ class EmpleadoController extends Controller
             ->whereYear('start', $request->get('aniocalen'))
             ->whereMonth('start', $request->get('mescale'))
             ->delete();
-
     }
     public function eliminareventBD(Request $request)
     {
         $ideve = $request->ideve;
-       /*  $eventos_empleado = eventos_empleado::where('evEmpleado_id', '=', $ideve)->delete(); */
+        /*  $eventos_empleado = eventos_empleado::where('evEmpleado_id', '=', $ideve)->delete(); */
         $eventos_empleado = eventos_empleado::findOrFail($ideve);
         eventos_empleado::destroy($ideve);
         return response()->json($eventos_empleado);
@@ -1554,21 +1552,20 @@ class EmpleadoController extends Controller
     }
     public function vaciarFdescansoBD(Request $request)
     {
-        $eliDescaso= eventos_empleado::where('id_empleado', '=', $request->get('idempleado'))
-           /*  ->where('color', '=', '#4673a0')
+        $eliDescaso = eventos_empleado::where('id_empleado', '=', $request->get('idempleado'))
+            /*  ->where('color', '=', '#4673a0')
             ->where('textColor', '=', '#ffffff') */
-            ->whereIn('tipo_ev',[1,3])
+            ->whereIn('tipo_ev', [1, 3])
 
             ->whereYear('start', $request->get('aniocalen'))
-            ->whereMonth('start', $request->get('mescale'))->get()
-            ;
-        foreach($eliDescaso as $eliDescasos){
-             $eliDescasos->delete();
+            ->whereMonth('start', $request->get('mescale'))->get();
+        foreach ($eliDescaso as $eliDescasos) {
+            $eliDescasos->delete();
         }
 
 
-           /*  $eliDescaso->delete(); */
-            return response()->json($eliDescaso);
+        /*  $eliDescaso->delete(); */
+        return response()->json($eliDescaso);
     }
     public function vaciardnlaBD(Request $request)
     {

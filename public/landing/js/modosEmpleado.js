@@ -894,7 +894,7 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
         if (event.target.checked == true) {
             alertify
                 .confirm(
-                    "Al <strong>ACTIVAR PC" +
+                    "Al <strong>ACTIVAR COMPUTADOR " +
                         pc +
                         "</strong>  de <strong>" +
                         datos +
@@ -924,7 +924,7 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
         } else {
             alertify
                 .confirm(
-                    "Al <strong> DESACTIVAR PC " +
+                    "Al <strong> DESACTIVAR COMPUTADOR " +
                         pc +
                         "</strong> de <strong>" +
                         datos +

@@ -199,7 +199,7 @@ function onSelectFechas() {
                     html_trD += '<th>' + momentValue.format("ddd DD/MM") + '</th>';
                     // TABLA CON ACTIVIDAD DIARIA
                     html_trAD += '<th>' + momentValue.format("ddd DD/MM") + '</th>';
-                    html_trAD += '<th><img src="landing/images/velocimetro (1).svg" class="mr-2" height="17"/>DIARIA</th>';
+                    html_trAD += '<th class="text-center"><img src="landing/images/velocimetro (1).svg" class="mr-2" height="17"/></th>';
                 }
                 // TABLA DEFAULT
                 html_trD += '<th>TOTAL</th>';
@@ -220,7 +220,7 @@ function onSelectFechas() {
                     retrieve: true,
                     "ordering": false,
                     "pageLength": 15,
-                    "autoWidth": true,
+                    "autoWidth": false,
                     language: {
                         "sProcessing": "Procesando...",
                         "sLengthMenu": "Mostrar _MENU_ registros",
@@ -293,7 +293,7 @@ function onSelectFechas() {
                     "scrollX": true,
                     retrieve: true,
                     "ordering": false,
-                    "autoWidth": true,
+                    "autoWidth": false,
                     language: {
                         "sProcessing": "Procesando...",
                         "sLengthMenu": "Mostrar _MENU_ registros",

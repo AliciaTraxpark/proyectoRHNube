@@ -2,7 +2,7 @@
 <html lang="en">
 
     <head>
-        <title>nube</title>
+        <title>RH nube</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -18,8 +18,7 @@
         <link href="{{
             URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')
             }}" rel="stylesheet" />
-        <link rel="shortcut icon"
-            href="https://i.ibb.co/b31CPDW/Recurso-13.png">
+        <link rel="shortcut icon" href="https://i.ibb.co/Pt7wKJf/CUADRADO-NUBE-SOLA.png">
     </head>
 
     <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100"

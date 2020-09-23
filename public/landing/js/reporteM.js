@@ -198,7 +198,7 @@ function onSelectFechasMensual() {
                     html_trD += '<th>' + momentValue.format("ddd DD/MM") + '</th>';
                     // TABLA CON ACTIVIDAD DIARIA
                     html_trAD += '<th>' + momentValue.format("ddd DD/MM") + '</th>';
-                    html_trAD += '<th><img src="landing/images/velocimetro (1).svg" class="mr-2" height="17"/>DIARIA</th>';
+                    html_trAD += '<th><img src="landing/images/velocimetro (1).svg" class="mr-2" height="17"/></th>';
                 }
                 // TABLA DEFAULT
                 html_trD += '<th>TOTAL</th>';
