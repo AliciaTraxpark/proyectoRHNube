@@ -167,8 +167,7 @@
                 @if (empty($tabla_empleados->emple_foto) === true)
                 <img src="{{ URL::asset('admin/assets/images/users/empleado.png')}}" alt="" />
                 @else
-                <img src="/fotosEmpleado/{{$tabla_empleados->emple_foto}}"
-                    class="avatar-xs rounded-circle"/>
+                <img src="/fotosEmpleado/{{$tabla_empleados->emple_foto}}" class="avatar-xs rounded-circle" />
                 @endif
             </td>
             <td class="text-center">
@@ -655,6 +654,7 @@ function verDEmpleado(idempleadoVer){
                     if(data[0].vinculacion[i].dispositivoD == 'WINDOWS'){
                             var trVer = `<tr id="trVer${data[0].vinculacion[i].idVinculacion}">
                             <td>${data[0].vinculacion[i].dispositivoD}</td>
+                            <td> PC ${i}</td>
                             <td>${data[0].vinculacion[i].licencia}</td>
                             <td class="hidetext">${data[0].vinculacion[i].codigo}</td>
                             <td id="enviadoW${data[0].vinculacion[i].idVinculacion}">${data[0].vinculacion[i].envio}</td>
@@ -682,6 +682,7 @@ function verDEmpleado(idempleadoVer){
 
                     }
                     containerVer.append(trVer);
+                    //ESTADO DE LICENCIA
                     if(data[0].vinculacion[i].disponible == 'c'){
                         $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Creado");
                     }
@@ -704,6 +705,12 @@ function verDEmpleado(idempleadoVer){
                                         </a>`;
                         }
                         $('#correoVer' + data[0].vinculacion[i].idVinculacion).append(tdV);
+                    }
+                     // NOMBRE DE PC
+                     if(data[0].vinculacion[i].pc != null){
+                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(1)").text(data[0].vinculacion[i].pc);
+                    }else{
+                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(1)").text("pc" + i);
                     }
                 }
                 //VER

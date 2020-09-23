@@ -4000,6 +4000,7 @@
                                                                         <thead style="background: #fafafa;">
                                                                             <tr>
                                                                                 <th>Tipo Dispositivo</th>
+                                                                                <th>Nombre</th>
                                                                                 <th>Activación de Dispositivo</th>
                                                                                 <th>Codigo</th>
                                                                                 <th>Enviado</th>
