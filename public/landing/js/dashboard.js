@@ -82,24 +82,25 @@ $.ajax({
         var color = ['#b6eb7a', '#f9d56e', '#e84a5f'];
         var suma = 0;
         var totalP = 0;
-        $('#cantidadArea').empty();
         $('#fechaArea').empty();
         $('#panel1002A').empty();
-        var containerCantidadA = $('#cantidadArea');
         var containerFecha = $('#fechaArea');
         var containerDetalle = $('#panel1002A');
         if (data[0].area.length != 0) {
             $('#divarea').show();
             for (var i = 0; i < data[0].area.length; i++) {
                 suma += data[0].area[i].Total;
-                nombre.push(data[0].area[i].area_descripcion);
+                if (data[0].area[i].area_descripcion == null) {
+                    nombre.push("NO DEFINIDO");
+                } else {
+                    nombre.push(data[0].area[i].area_descripcion);
+                }
                 total.push(data[0].area[i].Total);
             }
             for (var j = 3; j < data[0].area.length; j++) {
                 color.push(getRandomColor());
             }
             // CARD
-            p = `<img src="landing/images/grupo.svg" height="18" class="mr-2"> Total de ${suma} empleado(s)`;
             f = new Date();
             var options = {
                 weekday: 'long',
@@ -109,7 +110,6 @@ $.ajax({
             };
             var fecha = f.toLocaleDateString("es-PE", options)
             fechaF = `<img src="admin/images/calendarioHor.svg" height="20" class="mr-2"> ${fecha}`;
-            containerCantidadA.append(p);
             containerFecha.append(fechaF);
             var detalle = ``;
             for (var l = 0; l < nombre.length; l++) {
@@ -185,7 +185,7 @@ $.ajax({
             $('#divarea').hide();
         }
     },
-    error: function (data) {}
+    error: function (data) { }
 });
 //NIVEL
 $.ajax({
@@ -200,16 +200,18 @@ $.ajax({
         var color = ['#b6eb7a', '#f9d56e', '#e84a5f'];
         var suma = 0;
         var totalP = 0;
-        $('#cantidadNivel').empty();
         $('#fechaNivel').empty();
         $('#panel1002N').empty();
-        var containerCantidadA = $('#cantidadNivel');
         var containerFecha = $('#fechaNivel');
         var containerDetalle = $('#panel1002N');
         if (data[0].nivel.length != 0) {
             $('#divnivel').show();
             for (var i = 0; i < data[0].nivel.length; i++) {
-                nombre.push(data[0].nivel[i].nivel_descripcion);
+                if (data[0].nivel[i].nivel_descripcion == null) {
+                    nombre.push("NO DEFINIDO");
+                } else {
+                    nombre.push(data[0].nivel[i].nivel_descripcion);
+                }
                 total.push(data[0].nivel[i].Total);
                 suma += data[0].nivel[i].Total;
             }
@@ -217,7 +219,6 @@ $.ajax({
                 color.push(getRandomColor());
             }
             // CARD
-            p = `<img src="landing/images/grupo.svg" height="18" class="mr-2"> Total de ${suma} empleado(s)`;
             f = new Date();
             var options = {
                 weekday: 'long',
@@ -227,7 +228,6 @@ $.ajax({
             };
             var fecha = f.toLocaleDateString("es-PE", options)
             fechaF = `<img src="admin/images/calendarioHor.svg" height="20" class="mr-2"> ${fecha}`;
-            containerCantidadA.append(p);
             containerFecha.append(fechaF);
             var detalle = ``;
             for (var l = 0; l < nombre.length; l++) {
@@ -302,7 +302,7 @@ $.ajax({
             $('#divnivel').hide();
         }
     },
-    error: function (data) {}
+    error: function (data) { }
 });
 //CONTRATO
 $.ajax({
@@ -317,16 +317,18 @@ $.ajax({
         var color = ['#b6eb7a', '#f9d56e', '#e84a5f'];
         var suma = 0;
         var totalP = 0;
-        $('#cantidadContrato').empty();
         $('#fechaContrato').empty();
         $('#panel1002C').empty();
-        var containerCantidadA = $('#cantidadContrato');
         var containerFecha = $('#fechaContrato');
         var containerDetalle = $('#panel1002C');
         if (data[0].contrato.length != 0) {
             $('#divcontrato').show();
             for (var i = 0; i < data[0].contrato.length; i++) {
-                nombre.push(data[0].contrato[i].contrato_descripcion);
+                if (data[0].contrato[i].contrato_descripcion == null) {
+                    nombre.push("NO DEFINIDO");
+                } else {
+                    nombre.push(data[0].contrato[i].contrato_descripcion);
+                }
                 total.push(data[0].contrato[i].Total);
                 suma += data[0].contrato[i].Total;
             }
@@ -334,7 +336,6 @@ $.ajax({
                 color.push(getRandomColor());
             }
             // CARD
-            p = `<img src="landing/images/grupo.svg" height="18" class="mr-2"> Total de ${suma} empleado(s)`;
             f = new Date();
             var options = {
                 weekday: 'long',
@@ -344,7 +345,6 @@ $.ajax({
             };
             var fecha = f.toLocaleDateString("es-PE", options)
             fechaF = `<img src="admin/images/calendarioHor.svg" height="20" class="mr-2"> ${fecha}`;
-            containerCantidadA.append(p);
             containerFecha.append(fechaF);
             var detalle = ``;
             for (var l = 0; l < nombre.length; l++) {
@@ -419,7 +419,7 @@ $.ajax({
             $('#divcontrato').hide();
         }
     },
-    error: function (data) {}
+    error: function (data) { }
 });
 //CENTRO
 $.ajax({
@@ -433,16 +433,19 @@ $.ajax({
         var total = [];
         var color = ['#b6eb7a', '#f9d56e', '#e84a5f'];
         var suma = 0;
-        $('#cantidadCentro').empty();
+        var totalP = 0;
         $('#fechaCentro').empty();
         $('#panel1002CC').empty();
-        var containerCantidadA = $('#cantidadCentro');
         var containerFecha = $('#fechaCentro');
         var containerDetalle = $('#panel1002CC');
         if (data[0].centro.length != 0) {
             $('#divcentro').show();
             for (var i = 0; i < data[0].centro.length; i++) {
-                nombre.push(data[0].centro[i].centroC_descripcion);
+                if (data[0].centro[i].centroC_descripcion == null) {
+                    nombre.push("NO DEFINIDO");
+                } else {
+                    nombre.push(data[0].centro[i].centroC_descripcion);
+                }
                 total.push(data[0].centro[i].Total);
                 suma += data[0].centro[i].Total;
             }
@@ -450,7 +453,6 @@ $.ajax({
                 color.push(getRandomColor());
             }
             // CARD
-            p = `<img src="landing/images/grupo.svg" height="18" class="mr-2"> Total de ${suma} empleado(s)`;
             f = new Date();
             var options = {
                 weekday: 'long',
@@ -460,7 +462,6 @@ $.ajax({
             };
             var fecha = f.toLocaleDateString("es-PE", options)
             fechaF = `<img src="admin/images/calendarioHor.svg" height="20" class="mr-2"> ${fecha}`;
-            containerCantidadA.append(p);
             containerFecha.append(fechaF);
             var detalle = ``;
             for (var l = 0; l < nombre.length; l++) {
@@ -535,7 +536,7 @@ $.ajax({
             $('#divcentro').hide();
         }
     },
-    error: function (data) {}
+    error: function (data) { }
 });
 //LOCAL
 $.ajax({
@@ -550,16 +551,18 @@ $.ajax({
         var color = ['#b6eb7a', '#f9d56e', '#e84a5f'];
         var suma = 0;
         var totalP = 0;
-        $('#cantidadLocal').empty();
         $('#fechaLocal').empty();
         $('#panel1002L').empty();
-        var containerCantidadA = $('#cantidadLocal');
         var containerFecha = $('#fechaLocal');
         var containerDetalle = $('#panel1002L');
         if (data[0].local.length != 0) {
             $('#divlocal').show();
             for (var i = 0; i < data[0].local.length; i++) {
-                nombre.push(data[0].local[i].local_descripcion);
+                if (data[0].local[i].local_descripcion == null) {
+                    nombre.push("NO DEFINIDO");
+                } else {
+                    nombre.push(data[0].local[i].local_descripcion);
+                }
                 total.push(data[0].local[i].Total);
                 suma += data[0].local[i].Total;
             }
@@ -567,7 +570,6 @@ $.ajax({
                 color.push(getRandomColor());
             }
             // CARD
-            p = `<img src="landing/images/grupo.svg" height="18" class="mr-2"> Total de ${suma} empleado(s)`;
             f = new Date();
             var options = {
                 weekday: 'long',
@@ -577,7 +579,6 @@ $.ajax({
             };
             var fecha = f.toLocaleDateString("es-PE", options)
             fechaF = `<img src="admin/images/calendarioHor.svg" height="20" class="mr-2"> ${fecha}`;
-            containerCantidadA.append(p);
             containerFecha.append(fechaF);
             var detalle = ``;
             for (var l = 0; l < nombre.length; l++) {
@@ -652,105 +653,8 @@ $.ajax({
             $('#divlocal').hide();
         }
     },
-    error: function (data) {}
+    error: function (data) { }
 });
-//EDAD
-/*$.ajax({
-    url: "totalE",
-    method: "GET",
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
-    success: function (data) {
-        var nombre = [];
-        var total = [];
-        var color = ['#21bf73', '#5A7D9E', '#eb4559'];
-        var suma = 0;
-        var totalP = 0;
-        if (data[0].edad.length != 0) {
-            for (var i = 0; i < data[0].edad.length; i++) {
-                nombre.push(data[0].edad[i].edad);
-                total.push(data[0].edad[i].total);
-                suma += data[0].edad[i].total;
-            }
-            for (var j = 3; j < data[0].edad.length; j++) {
-                color.push(getRandomColor());
-            }
-            var promedio = (suma * 100) / data[0].empleado[0].totalE;
-            totalP = Math.round(promedio);
-            var chartdata = {
-                labels: nombre,
-                datasets: [{
-                    data: total,
-                    backgroundColor: color,
-                    borderWidth: 0
-                }]
-            };
-            var mostrar = $('#edades');
-            var grafico = new Chart(mostrar, {
-                type: 'doughnut',
-                data: chartdata,
-                options: {
-                    layout: {
-                        padding: {
-                            bottom: 40,
-                            top: 40
-                        }
-                    },
-                    responsive: true,
-                    cutoutPercentage: 80,
-                    maintainAspectRatio: false,
-                    legend: {
-                        display: false
-                    },
-                    plugins: {
-                        datalabels: {
-                            formatter: function (value, context) {
-                                var label = context.chart.data.labels[context.dataIndex];
-                                var mostrar = [];
-                                mostrar.push(label);
-                                return mostrar;
-                            },
-                            color: '#323232',
-                            anchor: 'end',
-                            align: 'end',
-                            font: {
-                                weight: 'bold',
-                                fontSize: 24
-                            }
-                        }
-                    },
-                    tooltips: {
-                        callbacks: {
-                            afterLabel: function (tooltipItem, data) {
-                                var dataset = data["datasets"][0];
-                                var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 / suma));
-                                grafico.options.elements.center.text = percent + "%" + data["labels"][tooltipItem["index"]];
-                            }
-                        }
-                    },
-                    elements: {
-                        center: {
-                            text: suma + '\nempleados por rango',
-                            color: '#424874', //Default black
-                            fontFamily: 'Arial', //Default Arial
-                            sidePadding: 20,
-                        }
-                    }
-                }
-            });
-        } else {
-            $('#divedades').hide();
-            $.notify({
-                message: " Aún no has asignado empleados a un local.",
-                icon: 'admin/images/warning.svg'
-            });
-        }
-    },
-    error: function (data) {
-        $.notify(" Aún no has asignado empleados a un local.");
-    }
-});*/
 //DEPARTAMENTO
 $.ajax({
     url: "totalDepartamento",
@@ -764,16 +668,18 @@ $.ajax({
         var color = ['#b6eb7a', '#f9d56e', '#e84a5f'];
         var suma = 0;
         var totalP = 0;
-        $('#cantidadDepartamento').empty();
         $('#fechaDepartamento').empty();
         $('#panel1002D').empty();
-        var containerCantidadA = $('#cantidadDepartamento');
         var containerFecha = $('#fechaDepartamento');
         var containerDetalle = $('#panel1002D');
         if (data[0].departamento.length != 0) {
             $('#divdepartamento').show();
             for (var i = 0; i < data[0].departamento.length; i++) {
-                nombre.push(data[0].departamento[i].name);
+                if (data[0].departamento[i].name == null) {
+                    nombre.push("NO DEFINIDO");
+                } else {
+                    nombre.push(data[0].departamento[i].name);
+                }
                 total.push(data[0].departamento[i].total);
                 suma += data[0].departamento[i].total;
             }
@@ -781,7 +687,6 @@ $.ajax({
                 color.push(getRandomColor());
             }
             // CARD
-            p = `<img src="landing/images/grupo.svg" height="18" class="mr-2"> Total de ${suma} empleado(s)`;
             f = new Date();
             var options = {
                 weekday: 'long',
@@ -791,7 +696,6 @@ $.ajax({
             };
             var fecha = f.toLocaleDateString("es-PE", options)
             fechaF = `<img src="admin/images/calendarioHor.svg" height="20" class="mr-2"> ${fecha}`;
-            containerCantidadA.append(p);
             containerFecha.append(fechaF);
             var detalle = ``;
             for (var l = 0; l < nombre.length; l++) {
@@ -866,7 +770,7 @@ $.ajax({
             $('#divdepartamento').hide();
         }
     },
-    error: function (data) {}
+    error: function (data) { }
 });
 //RANGO DE EDAD
 $.ajax({
@@ -881,16 +785,18 @@ $.ajax({
         var color = ['#b6eb7a', '#f9d56e', '#e84a5f'];
         var suma = 0;
         var totalP = 0;
-        $('#cantidadEdades').empty();
         $('#fechaEdades').empty();
         $('#panel1002E').empty();
-        var containerCantidadA = $('#cantidadEdades');
         var containerFecha = $('#fechaEdades');
         var containerDetalle = $('#panel1002E');
         if (data[0].edad.length != 0) {
             $('#divedades').show();
             for (var i = 0; i < data[0].edad.length; i++) {
-                nombre.push(data[0].edad[i].rango);
+                if (data[0].edad[i].rango == null) {
+                    nombre.push("NO DEFINIDO");
+                } else {
+                    nombre.push(data[0].edad[i].rango);
+                }
                 total.push(data[0].edad[i].total);
                 suma += data[0].edad[i].total;
             }
@@ -898,7 +804,6 @@ $.ajax({
                 color.push(getRandomColor());
             }
             // CARD
-            p = `<img src="landing/images/grupo.svg" height="18" class="mr-2"> Total de ${suma} empleado(s)`;
             f = new Date();
             var options = {
                 weekday: 'long',
@@ -908,7 +813,6 @@ $.ajax({
             };
             var fecha = f.toLocaleDateString("es-PE", options)
             fechaF = `<img src="admin/images/calendarioHor.svg" height="20" class="mr-2"> ${fecha}`;
-            containerCantidadA.append(p);
             containerFecha.append(fechaF);
             var detalle = ``;
             for (var l = 0; l < nombre.length; l++) {
@@ -983,5 +887,5 @@ $.ajax({
             $('#divedades').hide();
         }
     },
-    error: function (data) {}
+    error: function (data) { }
 });

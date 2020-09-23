@@ -247,7 +247,6 @@ Route::post('/horario/borrarferiados', 'horarioController@borrarferiados');
 Route::post('/horario/listar', 'horarioController@horarioListar');
 //DASHBOARD
 Route::get('/respuestaC', 'dashboardController@respuestaCalendario');
-Route::get('/eventosU', 'dashboardController@eventosUsuario');
 Route::get('/totalA', 'dashboardController@area');
 Route::get('/totalN', 'dashboardController@nivel');
 Route::get('/totalC', 'dashboardController@contrato');

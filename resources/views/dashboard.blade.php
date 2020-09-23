@@ -116,15 +116,14 @@
         /* add background-color to active links */
     }
 </style>
-<div class="row">
+<div class="row justify-content-center">
     <div class="col-md-6 pl-5" id="divarea" style="min-height: 460px">
         <div class="card chart-card">
-            <div class="card-body pb-0">
+            <div class="card-body pb-0 text-center">
                 <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
                         src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Área(s)</h5>
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-center">
                     <p class="align-self-end mt-2" id="fechaArea"></p>
-                    <p class="align-self-end" id="cantidadArea"></p>
                 </div>
             </div>
             <div class="classic-tabs">
@@ -155,13 +154,12 @@
     </div>
     <div class="col-md-6 pl-5" id="divnivel" style="min-height: 460px">
         <div class="card chart-card">
-            <div class="card-body pb-0">
+            <div class="card-body pb-0 text-center">
                 <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
                         src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Nivel(es) del
                     colaborador</h5>
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-center">
                     <p class="align-self-end mt-2" id="fechaNivel"></p>
-                    <p class="align-self-end" id="cantidadNivel"></p>
                 </div>
             </div>
             <div class="classic-tabs">
@@ -193,12 +191,11 @@
     <br><br><br>
     <div class="col-md-6 pl-5" id="divcontrato" style="min-height: 460px">
         <div class="card chart-card">
-            <div class="card-body pb-0">
+            <div class="card-body pb-0 text-center">
                 <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
                         src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Tipo de Contrato</h5>
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-center">
                     <p class="align-self-end mt-2" id="fechaContrato"></p>
-                    <p class="align-self-end" id="cantidadContrato"></p>
                 </div>
             </div>
             <div class="classic-tabs">
@@ -229,12 +226,11 @@
     </div>
     <div class="col-md-6 pl-5" id="divcentro" style="min-height: 460px">
         <div class="card chart-card">
-            <div class="card-body pb-0">
+            <div class="card-body pb-0 text-center">
                 <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
                         src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Centro de Costos</h5>
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-center">
                     <p class="align-self-end mt-2" id="fechaCentro"></p>
-                    <p class="align-self-end" id="cantidadCentro"></p>
                 </div>
             </div>
             <div class="classic-tabs">
@@ -266,12 +262,11 @@
     <br><br><br>
     <div class="col-md-6 pl-5" id="divlocal" style="min-height: 460px">
         <div class="card chart-card">
-            <div class="card-body pb-0">
+            <div class="card-body pb-0 text-center">
                 <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
                         src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Local(es)</h5>
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-center">
                     <p class="align-self-end mt-2" id="fechaLocal"></p>
-                    <p class="align-self-end" id="cantidadLocal"></p>
                 </div>
             </div>
             <div class="classic-tabs">
@@ -302,12 +297,11 @@
     </div>
     <div class="col-md-6 pl-5" id="divdepartamento" style="min-height: 460px">
         <div class="card chart-card">
-            <div class="card-body pb-0">
+            <div class="card-body pb-0 text-center">
                 <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
                         src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Ciudad domiciliaria</h5>
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-center">
                     <p class="align-self-end mt-2" id="fechaDepartamento"></p>
-                    <p class="align-self-end" id="cantidadDepartamento"></p>
                 </div>
             </div>
             <div class="classic-tabs">
@@ -339,12 +333,12 @@
     <br><br><br>
     <div class="col-md-6 pl-5" id="divedades" style="min-height:460px">
         <div class="card chart-card">
-            <div class="card-body pb-0">
+            <div class="card-body pb-0 text-center">
                 <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
-                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Rangos de Edades</h5>
-                <div class="d-flex justify-content-between">
+                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Rangos de Edades
+                </h5>
+                <div class="d-flex justify-content-center">
                     <p class="align-self-end mt-2" id="fechaEdades"></p>
-                    <p class="align-self-end" id="cantidadEdades"></p>
                 </div>
             </div>
             <div class="classic-tabs">
@@ -373,23 +367,25 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel"
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body text-center">
-                    <img src="{{asset('landing/images/notification.svg')}}" height="100" >
+                    <img src="{{asset('landing/images/notification.svg')}}" height="100">
                     <h4 class="text-danger mt-4">Su sesión expiró</h4>
                     <p class="w-75 mx-auto text-muted">Por favor inicie sesión nuevamente.</p>
                     <div class="mt-4">
-                        <a href="{{('/')}}" class="btn btn-outline-primary btn-rounded width-md"><i class="uil uil-arrow-right mr-1"></i> Iniciar sesión</a>
+                        <a href="{{('/')}}" class="btn btn-outline-primary btn-rounded width-md"><i
+                                class="uil uil-arrow-right mr-1"></i> Iniciar sesión</a>
                     </div>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
- @if (Auth::user())
-<script>
-  $(function() {
+    @if (Auth::user())
+    <script>
+        $(function() {
     setInterval(function checkSession() {
       $.get('/check-session', function(data) {
         // if session was expired
@@ -401,8 +397,8 @@
       });
     },7202000);
   });
-</script>
-@endif
+    </script>
+    @endif
     @endsection
     @endif
     @section('script')
