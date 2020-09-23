@@ -351,3 +351,6 @@ Route::post('/envioSugerenciaCorreo', 'soportesPorCorreoController@envioSugerenc
 Route::get('/reportePersonalizado', 'ControlController@vistaReporte');
 Route::get('/empleadoPersonalizado', 'ControlController@vistaReporteEmpleado');
 Route::get('/capturasPersonalizadas', 'ControlController@retornarDatos');
+
+//DISPOSITIVOS
+Route::get('/dispositivos', 'dispositivosController@index');

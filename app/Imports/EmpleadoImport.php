@@ -365,7 +365,7 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                /*   dd(date_format( $fechaNacimieB, 'Y-m-d')); */
                  //////////MANDA DATOS A VISTA
                  $din=[$row['tipo_docArray'],$row['numero_documento'],$row['nombres'],$row['apellido_paterno'],$row['apellido_materno'],$row['correo'],$row['celular'],
-                 $row['sexo'],$fechaNacimieB, $row['name_depNArray'],$row['provNArray'],
+                 $row['genero'],$fechaNacimieB, $row['name_depNArray'],$row['provNArray'],
                  $row['distNArray'], $row['direccion'],$row['name_depArray'], $row['provArray'],$row['distArray'],$row['tipo_contratoArray'],$row['localArray'],$row['nivelArray'],
                   $row['cargoArray'],$row['areaArray'],$row['centro_costoArray'], $row['condicionArray'],$row['monto_pago']];
                   array_push($this->dnias,$din);

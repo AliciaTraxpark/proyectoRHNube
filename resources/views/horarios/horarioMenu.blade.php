@@ -385,7 +385,7 @@ a:not([href]):not([tabindex]){
 
             <div class="modal-content" >
                 <div class="modal-header" style="background-color:#163552;">
-                   <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Asignar horario</h5>
+                   <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Asignar horarios masivamente</h5>
                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                        <span aria-hidden="true">&times;</span>
                    </button>
@@ -402,27 +402,7 @@ a:not([href]):not([tabindex]){
                                 <input type="hidden" id="fechaDa" name="fechaDa">
                                 <label for="" style="font-weight: 600;">Seleccionar empleado(s):</label>
                             </div>
-                            <div class="col-md-6" >
-                                <div class="row" style="margin-left: 6px;">
-                                    <div class="col-md-5 form-check">
-                                        <input type="checkbox"  class="form-check-input" id="selectTodoCheck">
-                                        <label class="form-check-label" for="selectTodoCheck" style="font-style: oblique;margin-top: 2px;">Seleccionar todos.</label>
 
-                                    </div>
-                                    <div class="col-md-7">
-                                        <span style="font-size: 11px!important">*Se visualizará empleados con calendario</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-12" style="padding-left: 5px;">
-                                    <select class="form-control wide" data-plugin="customselect" multiple id="nombreEmpleado" >
-                                     @foreach ($empleado as  $empleados)
-                                     <option value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</option>
-                                   @endforeach
-                                 </select>
-
-                              </div>
-
-                            </div>
 
 
                              <div class="col-md-6" >
@@ -448,6 +428,27 @@ a:not([href]):not([tabindex]){
                                     </select>
                                  </div>
                              </div>
+                             <div class="col-md-6" >
+                                <div class="row" style="margin-left: 6px;">
+                                    <div class="col-md-5 form-check">
+                                        <input type="checkbox"  class="form-check-input" id="selectTodoCheck">
+                                        <label class="form-check-label" for="selectTodoCheck" style="font-style: oblique;margin-top: 2px;">Seleccionar todos.</label>
+
+                                    </div>
+                                    <div class="col-md-7">
+                                        <span style="font-size: 11px!important">*Se visualizará empleados con calendario</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="padding-left: 5px;">
+                                    <select class="form-control wide" data-plugin="customselect" multiple id="nombreEmpleado" >
+                                     @foreach ($empleado as  $empleados)
+                                     <option value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</option>
+                                   @endforeach
+                                 </select>
+
+                              </div>
+
+                            </div>
 
 
                             </div><br> </div>
@@ -457,6 +458,10 @@ a:not([href]):not([tabindex]){
                         <div class="col-md-12 text-center" id="DatoscalendarOculto" style=" display: none">
                             <img src="{{asset('landing/images/loading.gif')}}" height="100">
                         </div>
+                        <div class="col-md-12">
+                        <label for="" style="font-weight: 600">Seleccionar dias de calendario</label>
+                        </div>
+
                           <div class="col-md-12 text-center" id="Datoscalendar" style=" max-width: 100%;">
 
                             <div id="calendar" style="">
@@ -466,22 +471,13 @@ a:not([href]):not([tabindex]){
                           <input type="hidden" id="horarioEnd">
                           <input type="hidden" id="horarioStart">
                         </div>
-                        <div class="col-md-1" style="margin-top: 100px;">
-                            <div class="row">
-                                <div class="col-md-6" style="  background: #f9e9e9;
-                                height: 35px;"><h1>&nbsp;</h1></div>
-                                <div class="col-md-6"><label for=""style="font-size: 12px">Dias no laborales</label></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6" style="  background: #ffffff;
-                                height: 35px;border: 1px solid #d4d4d4;"><h1>&nbsp;</h1></div>
-                                  <div class="col-md-6"><label for=""style="font-size: 12px">Dias laborables</label></div>
-                            </div>
+                        <div class="col-md-2" style="margin-top: 100px;">
+
 
                             <div class="col-md-12" style="padding-left: 0px;">
                                 <div class="col-md-12 form-check" style="padding-left: 10px;">
                                     <input type="checkbox" style="" class="form-check-input" id="FeriadosCheck">
-                                    <label class="form-check-label" for="FeriadosCheck" style="color:#8a032c;font-weight: 600"
+                                    <label class="form-check-label" for="FeriadosCheck"
                                     >Ver feriados.</label>
                                 </div>
                             </div>
@@ -555,7 +551,7 @@ a:not([href]):not([tabindex]){
                             </select> &nbsp;
 
                      </div>
-                     <div class="col-md-3 text-right">
+                     <div class="col-md-3 text-left" style="padding-left: 0px;">
                         <button class="btn btn-primary btn-sm" style="background-color: #183b5d;border-color:#62778c;margin-top: 5px;" onclick="abrirHorario()">+</button>
 
                      </div>
@@ -931,7 +927,7 @@ a:not([href]):not([tabindex]){
                              <div class="col-md-6">
                                 <div class="form-group">
                                    <label for="">Descripcion:</label>
-                                   <input type="text" class="form-control form-control-sm" id="descripcionCa" required>
+                                   <input type="text" class="form-control form-control-sm" id="descripcionCa" maxlength="40" required>
                                 </div>
                              </div>
                              <div class="col-md-6">
@@ -1130,7 +1126,7 @@ a:not([href]):not([tabindex]){
                              <div class="col-md-6">
                                 <div class="form-group">
                                    <label for="">Descripcion:</label>
-                                   <input type="text" class="form-control form-control-sm" id="descripcionCa_ed" required>
+                                   <input type="text" class="form-control form-control-sm" id="descripcionCa_ed" maxlength="40" required>
                                 </div>
                              </div>
                              <div class="col-md-6">
