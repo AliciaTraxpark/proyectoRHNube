@@ -470,7 +470,6 @@ function zoom(horayJ) {
     var carusel = "";
     for (let index = 0; index < capturas.length; index++) {
         const element = capturas[index];
-        var $contador = 0;
         $.ajax({
             url: "/mostrarCapturas",
             method: "GET",
@@ -485,23 +484,34 @@ function zoom(horayJ) {
                     location.reload();
                 }
             },
-            success: function (data) {
-                console.log(data);
-                $contador = $contador + 1;
-                if (data.length > 0) {
-                    if($contador == 0){
-                    }
-                    if ($contador != (capturas.length - 1)) {
-                        carusel = `<a href="data:image/jpeg;base64,${data[0].imagen}" data-fancybox="images" data-caption="Hora de captura a las ${data[0].hora_fin}" data-width="2048" data-height="1365"><img src="data:image/jpeg;base64,${data[0].imagen}" width="350" height="300" style="padding-right:10px;padding-bottom:10px"></a>`;
+            beforeSend: function () {
 
-                    } else {
-                        carusel = `<a href="data:image/jpeg;base64,${data[0].imagen}" data-fancybox="images" data-caption="Hora de captura a las ${data[0].hora_fin}" data-width="2048" data-height="1365"><img src="data:image/jpeg;base64,${data[0].imagen}" width="350" height="300" style="padding-right:10px;padding-bottom:10px"></a>`;
-                    }
-                    document.getElementById("zoom").innerHTML += carusel;
-                }
+                $("#esperaImg").show();
             },
-            error: function () {
+        }).then(function (data) {
+            $("#esperaImg").hide();
+            if (data.length > 0) {
+                carusel = `<a href="data:image/jpeg;base64,${data[0].imagen}" data-fancybox="images" data-caption="Hora de captura a las ${data[0].hora_fin}" data-width="2048" data-height="1365"><img src="data:image/jpeg;base64,${data[0].imagen}" width="350" height="300" style="padding-right:10px;padding-bottom:10px"></a>`;
+                document.getElementById("zoom").innerHTML += carusel;
             }
+        }).fail(function () {
+            $("#esperaImg").hide();
+            $.notify({
+                message: '\nSurgio un error.',
+                icon: 'landing/images/bell.svg',
+            }, {
+                icon_type: 'image',
+                allow_dismiss: true,
+                newest_on_top: true,
+                delay: 6000,
+                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
         });
     }
     document.getElementById("zoom").innerHTML = carusel;

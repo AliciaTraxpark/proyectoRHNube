@@ -44,7 +44,7 @@
 </style>
 <div id="modalZoom" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
     data-backdrop="static">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
                 <h5 class="modal-title" style="color:#ffffff;font-size:15px">Colección
@@ -54,6 +54,9 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div id="esperaImg" class="text-center" style="display: none">
+                    <img src="{{asset('landing/images/punt.gif')}}" height="150">
+                </div>
                 <div class="row">
                     <div id="zoom" class="col-xl-12 text-center album">
                         <hr class="my-5" />
@@ -86,7 +89,8 @@
                     </div>
                     <div class="col-xl-3 text-center">
                         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
-                            onclick="javascript:refreshCapturas()"> <img src="{{asset('landing/images/refresh.svg')}}" height="18" class="mr-2">Refrescar</button>
+                            onclick="javascript:refreshCapturas()"> <img src="{{asset('landing/images/refresh.svg')}}"
+                                height="18" class="mr-2">Refrescar</button>
                     </div>
                     <div class="col-xl-5">
                         <div class="form-group row">
