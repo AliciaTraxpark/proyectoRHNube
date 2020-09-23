@@ -2353,7 +2353,7 @@
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
-                                                                <div class="col-md-4 text-right">
+                                                                <div class="col-md-4 text-left">
                                                                     <button class="btn btn-primary btn-sm"
                                                                         style="background-color: #183b5d;border-color:#62778c"
                                                                         onclick="abrirHorario()">+</button>
@@ -2406,7 +2406,7 @@
                                                                                 <label for="">Descripcion:</label>
                                                                                 <input type="text"
                                                                                     class="form-control form-control-sm"
-                                                                                    id="descripcionCa" required>
+                                                                                    id="descripcionCa" maxlength="40" required>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-6">
@@ -3282,7 +3282,7 @@
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
-                                                                <div class="col-md-4 text-right">
+                                                                <div class="col-md-4 text-left">
                                                                     <button class="btn btn-primary btn-sm"
                                                                         style="background-color: #183b5d;border-color:#62778c"
                                                                         onclick="abrirHorario_ed()">+</button>
@@ -3338,7 +3338,7 @@
                                                                                 <label for="">Descripcion:</label>
                                                                                 <input type="text"
                                                                                     class="form-control form-control-sm"
-                                                                                    id="descripcionCa_ed" required>
+                                                                                    id="descripcionCa_ed" maxlength="40" required>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-6">

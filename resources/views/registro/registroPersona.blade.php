@@ -110,7 +110,7 @@
                         <div class="modal-content">
                             <div class="modal-header" style="padding-bottom:
                                     3px; padding-top:
-                                    10px;background: #ecebeb">
+                                    10px;background-color:#163552;">
                                 <h5 class="" id="myModalLabel" style="font-size: 14px">Email ya registrado
                                 </h5>
                                 {{--  <button type="button" class="close"
@@ -146,8 +146,8 @@
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light btn-sm" onclick="$('#email').val('');"
-                                    data-dismiss="modal">&nbsp; &nbsp;Cambiar email
+                                <button type="button" class="btn btn-sm" onclick="$('#email').val('');"
+                                    data-dismiss="modal" style="background-color: #e9ecef;">&nbsp; &nbsp;Cambiar email
                                     &nbsp; &nbsp;</button>
                                 <button type="submit" style="background:
                                 #163552;color: #ecebeb" class="btn
