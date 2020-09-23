@@ -187,7 +187,7 @@ function onSelectFechas() {
                     html_trA += '<td>' + total + '</td>';
                     html_trA += '<td>' + sumaP + '%' + '</td>';
                     // ********************
-                    var decimal = parseFloat(total.split(":")[0] + "." + total.split(":")[1] + total.split(":")[2]);
+                    var decimal = parseFloat(sumaP);
                     horas.push(decimal);
                     html_tr += '</tr>';
                 }
@@ -377,19 +377,53 @@ function onSelectFechas() {
                 grafico = new Chart(mostrar, {
                     type: 'bar',
                     data: chartdata,
-                    theme: "light2",
                     options: {
                         responsive: true,
                         scales: {
                             xAxes: [{
                                 stacked: true,
                                 gridLines: {
-                                    display: false
+                                    display: false,
+                                    color: "black"
+                                },
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: "Empleados",
+                                    fontColor: "#163552",
                                 }
                             }],
                             yAxes: [{
-                                stacked: true
+                                stacked: true,
+                                gridLines: {
+                                    color: "black",
+                                    borderDash: [2, 5],
+                                },
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: "Actividad Semanal",
+                                    fontColor: "#163552",
+                                    fontSize: 13,
+                                }
+
                             }]
+                        },
+                        legend: {
+                            labels: {
+                                generateLabels: function (chart) {
+                                    var labels = chart.data.labels;
+                                    var dataset = chart.data.datasets[0];
+                                    var legend = labels.map(function (label, index) {
+                                        return {
+                                            datasetIndex: 0,
+                                            fillStyle: dataset.backgroundColor && dataset.backgroundColor[index],
+                                            strokeStyle: dataset.borderColor && dataset.borderColor[index],
+                                            lineWidth: dataset.borderWidth,
+                                            text: label
+                                        }
+                                    });
+                                    return legend;
+                                }
+                            }
                         },
                         tooltips: {
                             callbacks: {
