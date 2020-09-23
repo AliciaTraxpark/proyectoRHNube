@@ -111,6 +111,24 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             </li>
         </ul>
     </li>
+
+    <li>
+
+        <a href="javascript: void(0);">
+            <i data-feather="check-circle"></i>
+            <span>Modo: Control Asist.</span>
+            <span class="menu-arrow"></span>
+        </a>
+
+        <ul class="nav-second-level" aria-expanded="false">
+            <li>
+                <a href="/dispositivos">Dispositivos</a>
+                <a href="/reporteSemanal">Controladores</a>
+
+            </li>
+        </ul>
+    </li>
+
     {{--
         <li>
             <a href="javascript: void(0);">

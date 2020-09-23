@@ -105,7 +105,7 @@
                     <img src="{{asset('landing/images/LogoAzul.png')}}" height="90">
                     <h5 style="color: #c51516!important;margin-top: 0px!important;" class="text-danger mt-4">Próximo
                         lanzamiento en Perú</h5>
-                    <p class="w-75 mx-auto text-muted" style="color: black!important">Salida programada 20 de Septiembre
+                    <p class="w-75 mx-auto text-muted" style="color: black!important">Salida programada 01 de octubre
                         2020</p>
                     <div class="mt-4">
                         <button class="btn btn-opacity-primary mr-1" data-dismiss="modal"><i
@@ -141,9 +141,11 @@
 
                     <div class="col-12 col-lg-6 p-0 img-digital grid-margin
                             grid-margin-lg-0" data-aos="fade-left">
-                        <iframe width="590" height="360" src="https://www.youtube.com/embed/GfRqwR8d2wU" frameborder="0"
+                            <div style="padding:50.46% 0 0 0;"><iframe width="590" height="360" src="https://player.vimeo.com/video/460820175?color=ffffff&title=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
+
+                       {{--  <iframe width="590" height="360" src="https://www.youtube.com/embed/GfRqwR8d2wU" frameborder="0"
                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen></iframe>
+                            allowfullscreen></iframe> --}}
                         {{-- <img src="{{asset('landing/images/Group1.png')}}" alt="" class="img-fluid"> --}}
                     </div>
                 </div>

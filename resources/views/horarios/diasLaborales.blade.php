@@ -22,7 +22,7 @@
 @section('breadcrumb')
 <div class="row page-title">
     <div class="col-md-12">
-        <h4 class="header-title mt-0 "></i>Asignar días no laborales</h4>
+        <h4 class="header-title mt-0 "></i>Asignación masiva de días no laborales</h4>
     </div>
 </div>
 @endsection
@@ -159,19 +159,6 @@
                 <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="col-xl-12 col-sm-8">
-                            <div class="form-group mt-3 mt-sm-0">
-                                <label>Empleado</label>
-                                <select id="idempleado" data-plugin="customselect" multiple class="form-control form-control-sm" data-placeholder="Seleccione empleado">
-                                    <option></option>
-                                    @foreach ($empleado as  $empleados)
-                                      <option value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-9 form-check" style="padding-left: 4px;">
@@ -200,6 +187,20 @@
                             </select>
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="col-xl-12 col-sm-8">
+                            <div class="form-group mt-3 mt-sm-0">
+                                <label>Empleado</label>
+                                <select id="idempleado" data-plugin="customselect" multiple class="form-control form-control-sm" data-placeholder="Seleccione empleado">
+                                    <option></option>
+                                    @foreach ($empleado as  $empleados)
+                                      <option value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
 
                     <div class="col-md-6 text-right" id="btnLabo" style="display: none"><br><br>
                         <button type="button"
