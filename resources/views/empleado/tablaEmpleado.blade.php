@@ -543,13 +543,13 @@
                     // ESTADO DE LICENCIAS
 
                     if(data[0].vinculacion[i].disponible == 'c'){
-                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Creado");
+                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(5)").text("Creado");
                     }
                     if(data[0].vinculacion[i].disponible == 'e'){
-                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Enviado");
+                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(5)").text("Enviado");
                     }
                     if(data[0].vinculacion[i].disponible == 'a'){
-                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Activado");
+                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(5)").text("Activado");
                     }
                     if(data[0].vinculacion[i].disponible == 'i'){
                         $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Inactivo");
@@ -698,16 +698,16 @@ function verDEmpleado(idempleadoVer){
                     containerVer.append(trVer);
                     //ESTADO DE LICENCIA
                     if(data[0].vinculacion[i].disponible == 'c'){
-                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Creado");
+                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(5)").text("Creado");
                     }
                     if(data[0].vinculacion[i].disponible == 'e'){
-                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Enviado");
+                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(5)").text("Enviado");
                     }
                     if(data[0].vinculacion[i].disponible == 'a'){
-                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Activado");
+                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(5)").text("Activado");
                     }
                     if(data[0].vinculacion[i].disponible == 'i'){
-                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Inactivo");
+                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(5)").text("Inactivo");
                         $('#inactivarVer'+data[0].vinculacion[i].idVinculacion).empty();
                         $('#correoVer' + data[0].vinculacion[i].idVinculacion).empty();
                         if(data[0].vinculacion[i].dispositivoD == 'WINDOWS'){
