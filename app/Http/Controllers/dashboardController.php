@@ -209,7 +209,7 @@ class dashboardController extends Controller
                 ->get();
 
             $centro = DB::table('empleado as e')
-                ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+                ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                 ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                 ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                 ->where('invi.estado', '=', 1)
