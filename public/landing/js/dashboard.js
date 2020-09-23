@@ -454,9 +454,9 @@ $.ajax({
         if (data[0].centro.length != 0) {
             $('#divcentro').show();
             for (var i = 0; i < data[0].centro.length; i++) {
-                if(data[0].centro[i].centroC_descripcion == null){
+                if (data[0].centro[i].centroC_descripcion == null) {
                     nombre.push("NO DEFINIDO");
-                }else{
+                } else {
                     nombre.push(data[0].centro[i].centroC_descripcion);
                 }
                 total.push(data[0].centro[i].Total);
@@ -575,9 +575,9 @@ $.ajax({
         if (data[0].local.length != 0) {
             $('#divlocal').show();
             for (var i = 0; i < data[0].local.length; i++) {
-                if(data[0].local[i].local_descripcion == null){
-                nombre.push("NO DEFINIDO");
-                }else{
+                if (data[0].local[i].local_descripcion == null) {
+                    nombre.push("NO DEFINIDO");
+                } else {
                     nombre.push(data[0].local[i].local_descripcion);
                 }
                 total.push(data[0].local[i].Total);
@@ -696,7 +696,11 @@ $.ajax({
         if (data[0].departamento.length != 0) {
             $('#divdepartamento').show();
             for (var i = 0; i < data[0].departamento.length; i++) {
-                nombre.push(data[0].departamento[i].name);
+                if (data[0].departamento[i].name == null) {
+                    nombre.push("NO DEFINIDO");
+                } else {
+                    nombre.push(data[0].departamento[i].name);
+                }
                 total.push(data[0].departamento[i].total);
                 suma += data[0].departamento[i].total;
             }

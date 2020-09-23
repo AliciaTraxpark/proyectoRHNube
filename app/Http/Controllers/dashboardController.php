@@ -311,14 +311,14 @@ class dashboardController extends Controller
                 ->where('e.emple_estado', '=', 1)
                 ->get();
             $departamento = DB::table('empleado as e')
-                ->join('ubigeo_peru_departments as d', 'd.id', '=', 'e.emple_departamento')
+                ->leftJoin('ubigeo_peru_departments as d', 'd.id', '=', 'e.emple_departamento')
                 ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                 ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                 ->where('invi.estado', '=', 1)
-                ->select('d.name', DB::raw('COUNT(d.name) as total'))
+                ->select('d.name', DB::raw('COUNT(e.emple_id) as total'))
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
-                ->groupBy('d.id')
+                ->groupBy('e.emple_departamento')
                 ->get();
         } else {
             $empleado = DB::table('empleado as e')
@@ -327,65 +327,16 @@ class dashboardController extends Controller
                 ->where('e.emple_estado', '=', 1)
                 ->get();
             $departamento = DB::table('empleado as e')
-                ->join('ubigeo_peru_departments as d', 'd.id', '=', 'e.emple_departamento')
-                ->select('d.name', DB::raw('COUNT(d.name) as total'))
+                ->leftJoin('ubigeo_peru_departments as d', 'd.id', '=', 'e.emple_departamento')
+                ->select('d.name', DB::raw('COUNT(e.emple_id) as total'))
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
-                ->groupBy('d.id')
+                ->groupBy('e.emple_departamento')
                 ->get();
         }
 
 
         array_push($datos, array("empleado" => $empleado, "departamento" => $departamento, "organizacion" => $organizacion));
-        return response()->json($datos, 200);
-    }
-
-    public function edad()
-    {
-        $datos = [];
-
-        $usuario_organizacion = DB::table('usuario_organizacion as uso')
-            ->where('uso.organi_id', '=', session('sesionidorg'))
-            ->where('uso.user_id', '=', Auth::user()->id)
-            ->get()->first();
-        if ($usuario_organizacion->rol_id == 3) {
-            $empleado = DB::table('empleado as e')
-                ->select(DB::raw('COUNT(e.emple_id) as totalE'))
-                ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
-                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                ->where('invi.estado', '=', 1)
-                ->where('e.organi_id', '=', session('sesionidorg'))
-                ->where('e.emple_estado', '=', 1)
-                ->get();
-
-            $edad = DB::table('empleado as e')
-                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
-                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                ->where('invi.estado', '=', 1)
-                ->select(DB::raw('YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento) as edad'), DB::raw('COUNT(YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento)) as total'))
-                ->where('e.organi_id', '=', session('sesionidorg'))
-                ->where('e.emple_estado', '=', 1)
-                ->groupBy('edad')
-                ->get();
-        } else {
-            $empleado = DB::table('empleado as e')
-                ->select(DB::raw('COUNT(e.emple_id) as totalE'))
-                ->where('e.organi_id', '=', session('sesionidorg'))
-                ->where('e.emple_estado', '=', 1)
-                ->get();
-
-            $edad = DB::table('empleado as e')
-                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                ->select(DB::raw('YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento) as edad'), DB::raw('COUNT(YEAR(CURDATE()) - YEAR(p.perso_fechaNacimiento)) as total'))
-                ->where('e.organi_id', '=', session('sesionidorg'))
-                ->where('e.emple_estado', '=', 1)
-                ->groupBy('edad')
-                ->get();
-        }
-
-
-        array_push($datos, array("empleado" => $empleado, "edad" => $edad));
         return response()->json($datos, 200);
     }
 
