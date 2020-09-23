@@ -57,6 +57,7 @@ Route::post("licencia", "apiController@licenciaProducto")->middleware('apilogger
 //SEGUNDA VERSION
 Route::post("listaActividad", "apiVersionDosController@selectActividad")->middleware('token')->middleware('apilogger');
 Route::post("captura2", "apiVersionDosController@captura")->middleware('token')->middleware('apilogger');
+Route::post("capturaArray", "apiVersionDosController@capturaArray")->middleware('token')->middleware('apilogger');
 Route::post("actividad2", "apiVersionDosController@actividad")->middleware('token')->middleware('apilogger');
 
 // TICKET DE SOPORTE Y SUGERENCIA
