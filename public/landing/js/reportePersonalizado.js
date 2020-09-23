@@ -102,9 +102,10 @@ function reporteEmpleado() {
                     "searching": false,
                     "scrollX": true,
                     retrieve: true,
-                    "ordering": false,
+                    "ordering": true,
                     "pageLength": 15,
                     "autoWidth": true,
+                    "order": [[ 3, "desc" ]],
                     language: {
                         "sProcessing": "Procesando...",
                         "sLengthMenu": "Mostrar _MENU_ registros",
