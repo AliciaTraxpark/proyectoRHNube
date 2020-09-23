@@ -437,8 +437,36 @@ class ControlController extends Controller
             ->where('cp.idCaptura', '=', $idCaptura)
             ->get()
             ->first();
-        array_push($respuesta,$captura);
+        array_push($respuesta, $captura);
 
         return response()->json($respuesta, 200);
+    }
+
+    // REPORTE
+    public function vistaReporte()
+    {
+        return view('tareas.reportePersonalizado');
+    }
+    public function vistaReporteEmpleado()
+    {
+        $empleado = DB::table('empleado as e')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+            ->get();
+
+        return response()->json($empleado, 200);
+    }
+    public function retornarDatos(Request $request)
+    {
+        $idEmpleado = $request->get('idEmpleado');
+        $fecha = $request->get('fecha');
+
+        $captura = DB::table('captura as cp')
+            ->select('cp.idCaptura', 'cp.hora_ini', 'cp.hora_fin', 'cp.actividad')
+            ->where('cp.idEmpleado', '=', $idEmpleado)
+            ->where(DB::raw('DATE(cp.hora_fin)'), '=', $fecha)
+            ->get();
+
+        return response()->json($captura, 200);
     }
 }
