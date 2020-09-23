@@ -144,7 +144,7 @@ use App\persona;
                         notify-item">
                         <i data-feather="log-out" class="icon-dual icon-xs
                             mr-2" style="color: #163552"></i>
-                        <span>Cerrar sesion</span>
+                        <span>Cerrar sesión</span>
                     </a>
                 </div>
             </li>

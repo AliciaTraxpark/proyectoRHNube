@@ -80,11 +80,11 @@
             <div class="modal-content">
                 <div class="modal-body text-center">
                     <img src="{{asset('landing/images/notification.svg')}}" height="100">
-                    <h4 class="text-danger mt-4">Su sesion expiró</h4>
-                    <p class="w-75 mx-auto text-muted">Por favor inicie sesion nuevamente.</p>
+                    <h4 class="text-danger mt-4">Su sesión expiró</h4>
+                    <p class="w-75 mx-auto text-muted">Por favor inicie sesión nuevamente.</p>
                     <div class="mt-4">
                         <a href="{{('/')}}" class="btn btn-outline-primary btn-rounded width-md"><i
-                                class="uil uil-arrow-right mr-1"></i> Iniciar sesion</a>
+                                class="uil uil-arrow-right mr-1"></i> Iniciar sesión</a>
                     </div>
                 </div>
             </div><!-- /.modal-content -->
@@ -2158,6 +2158,7 @@
                                                         class="col-lg-3 col-form-label" for="simpleinput">Calendario
                                                         de empleado:</label>
                                                     <div class="col-lg-5">
+                                                        <span id="vallidCalend" style="color: red;display:none">Eliga calendario</span>
                                                         <select name="" id="selectCalendario"
                                                             class="form-control col-lg-6 form-control-sm"
                                                             style="margin-top: 4px;">
@@ -3331,7 +3332,7 @@
                                                                     action="javascript:registrarHorario_ed()">
                                                                     <div class="row">
 
-                                                                       
+
                                                                         <div class="col-md-6">
                                                                             <div class="form-group">
                                                                                 <label for="">Descripcion:</label>
