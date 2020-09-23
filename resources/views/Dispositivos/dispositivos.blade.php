@@ -181,8 +181,13 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="">Móvil vinculado:</label>
-                                                    <input type="number"  class="form-control form-control-sm"
-                                                        id="toleranciaH_ed" required>
+
+                                                        <div class="input-group mb-2 form-control-sm">
+                                                            <div class="input-group-prepend ">
+                                                                <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 2px);" >+51</div>
+                                                            </div>
+                                                            <input type="number" class="form-control form-control-sm" id="inlineFormInputGroup" maxlength="9"  onkeypress="return isNumeric(event)" oninput="maxLengthCheck(this)">
+                                                        </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">

@@ -92,10 +92,22 @@ $(document).ready(function () {
        cell.innerHTML = i+1;
    } );
 } ).draw();
-
-
-
 });
+function maxLengthCheck(object) {
+    if (object.value.length > object.maxLength)
+        object.value = object.value.slice(0, object.maxLength)
+}
+
+function isNumeric(evt) {
+    var theEvent = evt || window.event;
+    var key = theEvent.keyCode || theEvent.which;
+    key = String.fromCharCode(key);
+    var regex = /[0-9]|\./;
+    if (!regex.test(key)) {
+        theEvent.returnValue = false;
+        if (theEvent.preventDefault) theEvent.preventDefault();
+    }
+}
 $(function() {
 	$(document).on('keyup', '#smarcacion', function(event) {
     	let min= parseInt(this.min);
@@ -108,6 +120,28 @@ $(function() {
 	});
 });
 function NuevoDispo(){
+    $.ajax({
+        type: "post",
+        url: "/enviarMensajePru",
+        data: {
+
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+
+            console.log(data);
+        },
+        error: function (data) {
+            alert("Ocurrio un error");
+        },
+    });
 $('#nuevoDispositivo').modal('show');
 }
 

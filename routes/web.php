@@ -354,6 +354,8 @@ Route::get('/capturasPersonalizadas', 'ControlController@retornarDatos');
 
 //DISPOSITIVOS
 Route::get('/dispositivos', 'dispositivosController@index');
+Route::post('/enviarMensajePru', 'dispositivosController@enviarmensaje');
 
 //CONTROLADORES
 Route::get('/controladores', 'controladoresController@index');
+
