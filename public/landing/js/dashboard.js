@@ -575,7 +575,11 @@ $.ajax({
         if (data[0].local.length != 0) {
             $('#divlocal').show();
             for (var i = 0; i < data[0].local.length; i++) {
-                nombre.push(data[0].local[i].local_descripcion);
+                if(data[0].local[i].local_descripcion == null){
+                nombre.push("NO DEFINIDO");
+                }else{
+                    nombre.push(data[0].local[i].local_descripcion);
+                }
                 total.push(data[0].local[i].Total);
                 suma += data[0].local[i].Total;
             }

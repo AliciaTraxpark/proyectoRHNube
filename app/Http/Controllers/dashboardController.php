@@ -261,14 +261,14 @@ class dashboardController extends Controller
                 ->get();
 
             $local = DB::table('empleado as e')
-                ->join('local as l', 'e.emple_local', '=', 'l.local_id')
+                ->leftJoin('local as l', 'e.emple_local', '=', 'l.local_id')
                 ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                 ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                 ->where('invi.estado', '=', 1)
-                ->select('l.local_descripcion', DB::raw('COUNT(l.local_descripcion) as Total'))
+                ->select('l.local_descripcion', DB::raw('COUNT(e.emple_id) as Total'))
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
-                ->groupBy('l.local_id')
+                ->groupBy('e.emple_local')
                 ->get();
         } else {
             $empleado = DB::table('empleado as e')
@@ -278,11 +278,11 @@ class dashboardController extends Controller
                 ->get();
 
             $local = DB::table('empleado as e')
-                ->join('local as l', 'e.emple_local', '=', 'l.local_id')
-                ->select('l.local_descripcion', DB::raw('COUNT(l.local_descripcion) as Total'))
+                ->leftJoin('local as l', 'e.emple_local', '=', 'l.local_id')
+                ->select('l.local_descripcion', DB::raw('COUNT(e.emple_id) as Total'))
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
-                ->groupBy('l.local_id')
+                ->groupBy('e.emple_local')
                 ->get();
         }
 
