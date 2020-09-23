@@ -254,11 +254,11 @@ class EmpleadoController extends Controller
                 ->join('modo as m', 'm.id', '=', 'v.idModo')
                 ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
                 ->join('licencia_empleado as le', 'le.id', '=', 'v.idLicencia')
-                ->select('v.id as idV', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
+                ->select('v.id as idV', 'v.pc_mac as pc', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
                 ->where('v.idEmpleado', '=', $tab->emple_id)
                 ->get();
             foreach ($vinculacion as $vinc) {
-                array_push($vinculacionD, array("idVinculacion" => $vinc->idV, "idLicencia" => $vinc->idL, "licencia" => $vinc->licencia, "disponible" => $vinc->disponible, "dispositivoD" => $vinc->dispositivo_descripcion, "codigo" => $vinc->codigo, "envio" => $vinc->envio));
+                array_push($vinculacionD, array("idVinculacion" => $vinc->idV, "pc" => $vinc->pc, "idLicencia" => $vinc->idL, "licencia" => $vinc->licencia, "disponible" => $vinc->disponible, "dispositivoD" => $vinc->dispositivo_descripcion, "codigo" => $vinc->codigo, "envio" => $vinc->envio));
             }
             $tab->vinculacion = $vinculacionD;
             unset($vinculacionD);
@@ -330,11 +330,11 @@ class EmpleadoController extends Controller
                 ->join('modo as m', 'm.id', '=', 'v.idModo')
                 ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
                 ->join('licencia_empleado as le', 'le.id', '=', 'v.idLicencia')
-                ->select('v.id as idV', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
+                ->select('v.id as idV', 'v.pc_mac as pc', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
                 ->where('v.idEmpleado', '=', $tab->emple_id)
                 ->get();
             foreach ($vinculacion as $vinc) {
-                array_push($vinculacionD, array("idVinculacion" => $vinc->idV, "idLicencia" => $vinc->idL, "licencia" => $vinc->licencia, "disponible" => $vinc->disponible, "dispositivoD" => $vinc->dispositivo_descripcion, "codigo" => $vinc->codigo, "envio" => $vinc->envio));
+                array_push($vinculacionD, array("idVinculacion" => $vinc->idV, "pc" => $vinc->pc, "idLicencia" => $vinc->idL, "licencia" => $vinc->licencia, "disponible" => $vinc->disponible, "dispositivoD" => $vinc->dispositivo_descripcion, "codigo" => $vinc->codigo, "envio" => $vinc->envio));
             }
             $tab->vinculacion = $vinculacionD;
             unset($vinculacionD);
@@ -733,7 +733,7 @@ class EmpleadoController extends Controller
             ->get();
         $vinculacionD = [];
         foreach ($vinculacion as $lic) {
-            array_push($vinculacionD, array("idVinculacion" => $lic->idV, "pc" => $lic->pc ,"idLicencia" => $lic->idL, "licencia" => $lic->licencia, "disponible" => $lic->disponible, "dispositivoD" => $lic->dispositivo_descripcion, "codigo" => $lic->codigo, "envio" => $lic->envio));
+            array_push($vinculacionD, array("idVinculacion" => $lic->idV, "pc" => $lic->pc, "idLicencia" => $lic->idL, "licencia" => $lic->licencia, "disponible" => $lic->disponible, "dispositivoD" => $lic->dispositivo_descripcion, "codigo" => $lic->codigo, "envio" => $lic->envio));
         }
         $empleados[0]->vinculacion = $vinculacionD;
         $contrato = DB::table('contrato as c')
