@@ -1887,7 +1887,7 @@ $('#selectHorarioen').change(function(e){
 }
  */
 function editarHorarioLista(idsedit){
-
+    $('#divOtrodia_ed').hide();
 
     $("#frmHorEditar")[0].reset();
     $.ajax({
@@ -1915,7 +1915,11 @@ function editarHorarioLista(idsedit){
             $('#horaI_ed').val(data[0].horaI);
             $('#horaF_ed').val(data[0].horaF);
             $('#horarioEditar').modal('show');
-
+            if(data[0].horaI>data[0].horaF){
+                $('#divOtrodia_ed').show();
+            } else{
+                $('#divOtrodia_ed').hide();
+            }
         },
         error: function (data) {
             alert('Ocurrio un error');
@@ -2254,6 +2258,35 @@ $(function() {
            event.stopPropagation();
     	} else{
             $('#divOtrodia').hide();
+        }
+
+	});
+});
+
+$(function() {
+	$(document).on('change', '#horaF_ed', function(event) {
+        let horaF=$('#horaF_ed').val();
+        let horaI=$('#horaI_ed').val();
+
+    	if(horaF<horaI){
+           $('#divOtrodia_ed').show();
+           event.stopPropagation();
+    	} else{
+            $('#divOtrodia_ed').hide();
+        }
+
+	});
+});
+$(function() {
+	$(document).on('change', '#horaI_ed', function(event) {
+        let horaF=$('#horaF_ed').val();
+        let horaI=$('#horaI_ed').val();
+
+    	if(horaF<horaI){
+           $('#divOtrodia_ed').show();
+           event.stopPropagation();
+    	} else{
+            $('#divOtrodia_ed').hide();
         }
 
 	});

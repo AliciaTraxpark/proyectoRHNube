@@ -1001,6 +1001,12 @@ background-color: #ffffff !important;
                                                <input type="text" id="horaF_ed" class="form-control form-control-sm" required>
                                             </div>
                                          </div>
+                                         <div class="col-md-12" id="divOtrodia_ed" style="display: none">
+                                            <div class="form-check">
+                                                <input type="checkbox"  class="form-check-input" id="smsCheck_ed" checked disabled>
+                                                <label class="form-check-label" for="smsCheck_ed" style="margin-top: 2px;">Hora hasta el dia siguiente.</label>
+                                            </div>
+                                        </div>
 
 
                                        </div>
