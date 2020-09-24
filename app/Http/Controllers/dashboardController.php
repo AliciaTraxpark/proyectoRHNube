@@ -420,4 +420,21 @@ class dashboardController extends Controller
         }
         return response()->json($respuesta, 200);
     }
+
+    // DASHBOARD PARA CONTROL REMOTO
+    public function globalControlRemoto()
+    {
+        $actividadCR = DB::table('empleado as e')
+            ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+            ->join('promedio_captura as pc', 'pc.idCaptura', '=', 'cp.idCaptura')
+            ->select(
+                DB::raw('SUM(pc.tiempo_rango) as totalRango'),
+                DB::raw('SUM(cp.actividad) as totalActividad')
+            )
+            ->where('e.organi_id','=',session('sesionidorg'))
+            ->get()
+            ->first();
+
+        return response()->json($actividadCR, 200);
+    }
 }

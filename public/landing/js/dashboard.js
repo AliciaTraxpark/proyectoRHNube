@@ -889,3 +889,50 @@ $.ajax({
     },
     error: function (data) { }
 });
+
+//Define gauge options here...
+var opts = {
+    lines: 12,
+    angle: 0.15,
+    lineWidth: 0.44,
+    pointer: {
+        length: 0.9,
+        strokeWidth: 0.035,
+        color: '#444444'
+    },
+    limitMax: 'false',
+    percentColors: [[0.0, "#60F060"], [0.60, "#80C020"], [1.0, "#FF0000"]],
+    strokeColor: '#E0E0E0',
+    generateGradient: true,
+    highDpiSupport: true
+};
+
+function resultadoCR(){
+    var resultado = 0;
+    $.ajax({
+        async:false,
+        url: "/dashboardCR",
+        method: "GET",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            var promedio = parseFloat((data.totalActividad/data.totalRango)*100);
+            resultado = promedio;
+        }
+    });
+
+    return resultado;
+}
+function myTimer() {
+    var valor = resultadoCR();
+    gauge.maxValue = 100;
+    gauge.animationSpeed = 10;
+    gauge.set(valor);   
+}
+
+var target = document.getElementById('foo');
+var gauge = new Gauge(target).setOptions(opts);
+
+//---------------------------------------------------------------------
+setInterval(myTimer, 1000);
