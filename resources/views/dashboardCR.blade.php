@@ -74,7 +74,12 @@
                 </h5>
             </div>
             <div class="card-body">
-                <canvas id="foo"></canvas>
+                <div class="col-md-4">
+                    <div class="wrapper" style="display: flex;flex-flow: column;align-items: center">
+                        <div id="gauge-value" style="font-size: 24px;font-weight: bold;padding-bottom: 5px"></div>
+                        <canvas id="foo"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -128,7 +133,7 @@
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
-<script src="{{asset('landing/js/dashboard.js')}}"></script>
+<script src="{{asset('landing/js/dashboardCR.js')}}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 @endsection
 @section('script-bottom')
