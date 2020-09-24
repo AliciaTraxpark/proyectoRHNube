@@ -2,14 +2,12 @@
 
 
 @section('css')
-<link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
-<link href="{{ URL::asset('admin/assets/libs/chart/Chart.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{
     URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')
     }}" rel="stylesheet" />
+<link href="{{ URL::asset('admin/assets/libs/apexcharts/apexcharts.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -122,13 +120,8 @@
 <script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
 <script src="{{asset('landing/js/app-menu.js')}}"></script>
 <!-- optional plugins -->
-<script src="{{ URL::asset('admin/assets/libs/moment/moment.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/chart/Chart.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/chart/Chart.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/gauge/gauge.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/apexcharts/apexcharts.js') }}"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>

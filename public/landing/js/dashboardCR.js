@@ -31,7 +31,8 @@ function resultadoCR() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-            var promedio = parseFloat((data.totalActividad / data.totalRango) * 100).toFixed(2);
+            var promedio = ((data.totalActividad / data.totalRango) * 100).toFixed(2);
+            console.log(promedio);
             resultado = promedio;
         }
     });
