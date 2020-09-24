@@ -145,7 +145,7 @@ class registroEmpresaController extends Controller
                     ));
                     $response = curl_exec($curl);
                     $err = curl_error($curl);
-                    if ($response) {
+                    if ($err) {
                         return Redirect::to('/')->with('mensaje', "Error.!");
                     } else {
                         return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado.!");

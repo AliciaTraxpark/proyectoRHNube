@@ -61,7 +61,8 @@ class dispositivosController extends Controller
            ),
        ));
        $err = curl_error($curl);
-       dd($err);
+       $response = curl_exec($curl);
+       dd($response);
                     if ($err) {
                         return 0;
                     } else {
