@@ -21,7 +21,6 @@ class dispositivosController extends Controller
         $dispositivos->dispo_movil=$request->numeroM;
         $dispositivos->dispo_tSincro=$request->tSincron;
         $dispositivos->dispo_tMarca=$request->tMarcac;
-       $dispositivos->dispo_codigo=$codigo;
         $dispositivos->dispo_estado=0;
         $dispositivos->organi_id=session('sesionidorg');
         $dispositivos->save();
@@ -29,6 +28,7 @@ class dispositivosController extends Controller
         if($request->smsCh==1){
             $dispositivosAc = dispositivos::findOrFail($dispositivos->idDispositivos);
             $dispositivosAc->dispo_estado=1;
+            $dispositivosAc->dispo_codigo=$codigo;
             $dispositivosAc->save();
 
            $mensaje = "RH nube - Codigo de validacion " . $codigo;
@@ -56,15 +56,18 @@ class dispositivosController extends Controller
            ));
            $err = curl_error($curl);
            $response = curl_exec($curl);
-          dd($err);
+
         }
 
 
     }
-    public function enviarmensaje(){
-        $codigo = "12";
-        $codigoI = intval($codigo, 36);
-       $mensaje = "RH nube - Codigo de validacion " . $codigoI;
+    public function enviarmensaje(Request $request){
+        $codigo=STR::random(4);
+        $dispositivosAc = dispositivos::findOrFail($request->idDis);
+        $dispositivosAc->dispo_estado=1;
+        $dispositivosAc->dispo_codigo=$codigo;
+        $dispositivosAc->save();
+       $mensaje = "RH nube - Codigo de validacion " . $codigo;
        $curl = curl_init();
        curl_setopt_array($curl, array(
            CURLOPT_URL => "https://api.broadcastermobile.com/brdcstr-endpoint-web/services/messaging/",
@@ -78,7 +81,7 @@ class dispositivosController extends Controller
                "country":"PE",
                "dial":38383,
                "message":"' . $mensaje . '",
-               "msisdns":[51968009336],
+               "msisdns":[' .  $dispositivosAc->dispo_movil . '],
                "tag":"tag-prueba"
             }',
            CURLOPT_HTTPHEADER => array(
@@ -89,12 +92,41 @@ class dispositivosController extends Controller
        ));
        $err = curl_error($curl);
        $response = curl_exec($curl);
-      dd($err);
-                   /*   if ($err) {
-                        return 0;
-                    } else {
-                        return 1;
-                    } */
+
+
+    }
+
+    public function reenviarmensaje(Request $request){
+        
+        $dispositivosAc = dispositivos::findOrFail($request->idDis);
+        $codigo=$dispositivosAc->dispo_codigo;
+       $mensaje = "RH nube - Codigo de validacion " . $codigo;
+       $curl = curl_init();
+       curl_setopt_array($curl, array(
+           CURLOPT_URL => "https://api.broadcastermobile.com/brdcstr-endpoint-web/services/messaging/",
+           CURLOPT_RETURNTRANSFER => true,
+           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+           CURLOPT_FOLLOWLOCATION => TRUE,
+           CURLOPT_SSL_VERIFYPEER => false,
+           CURLOPT_CUSTOMREQUEST => "POST",
+           CURLOPT_POSTFIELDS => '{
+               "apiKey":2308,
+               "country":"PE",
+               "dial":38383,
+               "message":"' . $mensaje . '",
+               "msisdns":[' .  $dispositivosAc->dispo_movil . '],
+               "tag":"tag-prueba"
+            }',
+           CURLOPT_HTTPHEADER => array(
+               "Content-Type: application/json",
+               "Authorization:67p7e5ONkalvrKLDQh3RaONgSFs=",
+               "Cache-Control: no-cache"
+           ),
+       ));
+       $err = curl_error($curl);
+       $response = curl_exec($curl);
+
+
     }
 
     public function tablaDisposit(){
