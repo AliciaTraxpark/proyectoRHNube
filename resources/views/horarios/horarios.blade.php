@@ -403,7 +403,7 @@ background-color: #ffffff !important;
 
                      </div>
                      <div class="col-md-3 text-left" style="padding-left: 0px;">
-                        <button class="btn btn-primary btn-sm" style="background-color: #183b5d;border-color:#62778c;margin-top: 5px;" onclick="abrirHorario()">+</button>
+                        <button class="btn btn-primary btn-sm" style="background-color: #183b5d;border-color:#62778c;" onclick="abrirHorario()">+</button>
 
                      </div>
 

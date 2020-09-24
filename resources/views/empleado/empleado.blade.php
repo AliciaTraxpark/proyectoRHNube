@@ -2332,7 +2332,7 @@
                                             <div class="col-md-10" id="calendar2" style="display: none"></div>
                                             <div class="col-md-1"><br></div>
                                         </div>
-                                        <div id="horarioAsignar" class="modal fade" tabindex="-1" role="dialog"
+                                        <div id="horarioAsignar" class="modal fade"  role="dialog"
                                             aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                                             <div class="modal-dialog  modal-lg d-flex justify-content-center "
                                                 style="width:400px;  margin-top: 150px; left: 30px;">
@@ -2355,7 +2355,7 @@
                                                                 </div>
                                                                 <div class="col-md-4 text-left" style="padding-left: 0px;">
                                                                     <button class="btn btn-primary btn-sm"
-                                                                        style="background-color: #183b5d;border-color:#62778c;margin-top: 5px;"
+                                                                        style="background-color: #183b5d;border-color:#62778c;"
                                                                         onclick="abrirHorario()">+</button>
                                                                 </div>
                                                                 <div class="col-md-12"><br>
@@ -2380,7 +2380,7 @@
                                                 </div><!-- /.modal-content -->
                                             </div><!-- /.modal-dialog -->
                                         </div><!-- /.modal -->
-                                        <div id="horarioAgregar" class="modal fade" tabindex="-1" role="dialog"
+                                        <div id="horarioAgregar" class="modal fade"  role="dialog"
                                             aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                                             <div class="modal-dialog  modal-lg d-flex justify-content-center "
                                                 style="width: 550px;">
@@ -2388,8 +2388,7 @@
                                                     <div class="modal-header" style="background-color:#163552;">
                                                         <h5 class="modal-title" id="myModalLabel"
                                                             style="color:#ffffff;font-size:15px">Asignar horario</h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
+                                                            <button type="button" class="close"  onclick="$('#horarioAgregar').modal('hide')" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
@@ -2432,6 +2431,12 @@
                                                                                 <input type="text" id="horaF"
                                                                                     class="form-control form-control-sm"
                                                                                     required>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-12" id="divOtrodia" style="display: none">
+                                                                            <div class="form-check">
+                                                                                <input type="checkbox"  class="form-check-input" id="otroDCh" checked disabled>
+                                                                                <label class="form-check-label" for="otroDCh" style="margin-top: 2px;">Hora hasta el dia siguiente.</label>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -3263,7 +3268,7 @@
                                             <div class="col-md-10" id="calendar2_ed" style="display: none"></div>
                                             <div class="col-md-1"><br></div>
                                         </div>
-                                        <div id="horarioAsignar_ed" class="modal fade" tabindex="-1" role="dialog"
+                                        <div id="horarioAsignar_ed" class="modal fade"  role="dialog"
                                             aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                                             <div class="modal-dialog  modal-lg d-flex justify-content-center "
                                                 style="width:400px;  margin-top: 150px; left: 30px;">
@@ -3285,7 +3290,7 @@
                                                                 </div>
                                                                 <div class="col-md-4 text-left" style="padding-left: 0px;">
                                                                     <button class="btn btn-primary btn-sm"
-                                                                        style="background-color: #183b5d;border-color:#62778c;margin-top: 5px"
+                                                                        style="background-color: #183b5d;border-color:#62778c;"
                                                                         onclick="abrirHorario_ed()">+</button>
                                                                 </div>
                                                                 <div class="col-md-12"><br>
@@ -3310,7 +3315,7 @@
                                                 </div><!-- /.modal-content -->
                                             </div><!-- /.modal-dialog -->
                                         </div><!-- /.modal -->
-                                        <div id="horarioAgregar_ed" class="modal fade" tabindex="-1" role="dialog"
+                                        <div id="horarioAgregar_ed" class="modal fade" role="dialog"
                                             aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                                             <div class="modal-dialog  modal-lg d-flex justify-content-center "
                                                 style="width: 550px;">
@@ -3320,7 +3325,7 @@
                                                         <h5 class="modal-title" id="myModalLabel"
                                                             style="color:#ffffff;font-size:15px">Asignar horario
                                                         </h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
+                                                        <button type="button" class="close"  onclick="$('#horarioAgregar_ed').modal('hide')"
                                                             aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
@@ -3369,6 +3374,12 @@
                                                                                     required>
                                                                             </div>
                                                                         </div>
+                                                                        <div class="col-md-12" id="divOtrodia_ed" style="display: none">
+                                                                            <div class="form-check">
+                                                                               <input type="checkbox"  class="form-check-input" id="otroDC_ed" checked disabled>
+                                                                               <label class="form-check-label" for="otroDC_ed" style="margin-top: 2px;">Hora hasta el dia siguiente.</label>
+                                                                            </div>
+                                                                           </div>
                                                                     </div>
                                                             </div>
                                                         </div>
