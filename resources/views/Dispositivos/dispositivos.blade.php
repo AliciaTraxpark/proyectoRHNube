@@ -3,15 +3,11 @@
 @section('css')
 
     <!-- App css -->
-    <link href="{{ asset('admin/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('admin/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- Plugin css  CALENDAR-->
 
 
     <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
@@ -132,19 +128,7 @@
                                     <th>Tiempo de sincron.</th>
                                 </tr>
                             </thead>
-                           <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td>Vigilancia Condor</td>
-                                    <td>+51968009336</td>
-                                    <td><img src="landing/images/note.svg" height="20"></td>
-                                    <td>(devuelde android)</td>
-                                    <td>SI</td>
-                                    <td>Creado</td>
-                                    <td>5 min</td>
-                                    <td>12 min</td>
-                                </tr>
-                            </tbody>
+                          
 
                         </table>
                     </div><br><br><br><br>
@@ -175,7 +159,7 @@
                                                 <div class="form-group">
                                                     <label for="">Descripción de ubicación:</label>
                                                     <input type="text" class="form-control form-control-sm"
-                                                        id="descripcionCa_ed" maxlength="40" required>
+                                                        id="descripcionDis" maxlength="80" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -186,14 +170,14 @@
                                                             <div class="input-group-prepend ">
                                                                 <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 2px);" >+51</div>
                                                             </div>
-                                                            <input type="number" class="form-control form-control-sm" id="inlineFormInputGroup" maxlength="9"  onkeypress="return isNumeric(event)" oninput="maxLengthCheck(this)">
+                                                            <input type="number" required class="form-control form-control-sm" id="numeroMovil" maxlength="9"  onkeypress="return isNumeric(event)" oninput="maxLengthCheck(this)">
                                                         </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="">Tiempo de sincronización(Min):</label>
-                                                    <input type="number" id="tiempoSin" class="form-control form-control-sm"
+                                                    <input type="number" id="tiempoSin" required class="form-control form-control-sm"
                                                         required>
                                                 </div>
                                             </div>
@@ -201,7 +185,7 @@
 
                                                 <div class="form-group">
                                                     <label for="">Siguiente marcación(Min):</label> <span id="errorMarca" style="color: #690f0f;display: none">El valor min es 5.</span>
-                                                    <input type="number" id="smarcacion" min="5" value="5"  class="form-control form-control-sm"
+                                                    <input type="number" id="smarcacion" min="5" value="5" required class="form-control form-control-sm"
                                                         required>
                                                 </div>
                                             </div>
@@ -247,11 +231,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
     <script src="{{ asset('landing/js/dispositivosMenu.js') }}"></script>
 
-    <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
-    <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/libs/moment/moment.min.js') }}"></script>
 
+    <script src="{{ URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js') }}"></script>
 
 
 

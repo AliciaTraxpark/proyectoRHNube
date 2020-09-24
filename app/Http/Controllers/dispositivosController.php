@@ -2,13 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use App\dispositivos;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Str;
 class dispositivosController extends Controller
 {
     //
     public function index(){
+
         return view('Dispositivos.dispositivos');
+    }
+    public function store(Request $request){
+        $codigo=STR::random(4);
+
+        $dispositivos=new dispositivos();
+        $dispositivos->dispo_descripUbicacion=$request->descripccionUb;
+        $dispositivos->dispo_movil=$request->numeroM;
+        $dispositivos->dispo_tSincro=$request->tSincron;
+        $dispositivos->dispo_tMarca=$request->tMarcac;
+       $dispositivos->dispo_codigo=$codigo;
+        $dispositivos->dispo_estado=0;
+        $dispositivos->organi_id=session('sesionidorg');
+        $dispositivos->save();
+
+        if($request->smsCh==1){
+            $dispositivosAc = dispositivos::findOrFail($dispositivos->idDispositivos);
+            $dispositivosAc->dispo_estado=1;
+            $dispositivosAc->save();
+        }
+
+
     }
     public function enviarmensaje(){
         $codigo = "12";
@@ -36,5 +60,16 @@ class dispositivosController extends Controller
                "Cache-Control: no-cache"
            ),
        ));
+       $err = curl_error($curl);
+                    if ($err) {
+                        return 0;
+                    } else {
+                        return 1;
+                    }
+    }
+
+    public function tablaDisposit(){
+        $dispositivos=dispositivos::where('organi_id','=',session('sesionidorg'))->get();
+        return json_encode($dispositivos);
     }
 }

@@ -37,17 +37,17 @@ $(document).ready(function () {
         },
     },
 
-      /*  ajax: {
+ ajax: {
    type: "post",
-   url: "/horario/listar",
+   url: "/tablaDisposito",
     headers: {
        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
    },
 
    "dataSrc": ""
   },
- */
-  /*  "columnDefs": [ {
+
+   "columnDefs": [ {
                "searchable": false,
                "orderable": false,
                "targets": 0
@@ -56,32 +56,27 @@ $(document).ready(function () {
            "order": [[ 1, 'asc' ]],
   columns: [
      { data: null },
-     { data: "horario_descripcion" },
-     { data: "horario_tolerancia",
+     { data: "dispo_descripUbicacion" },
+     { data: "dispo_movil"},
+     { data: "dispo_tSincro",
      "render": function (data, type, row) {
 
-       return row.horario_tolerancia+'&nbsp;&nbsp; minutos';
+       return row.dispo_tSincro+'&nbsp;&nbsp; minutos';
 
      } },
-     { data: "horaI" },
-     { data: "horaF" },
-     { data: "horario_horario_id",
-     "render": function (data, type, row) {
-       if (row.horario_horario_id ==null) {
-           return '<img src="admin/images/borrarH.svg" height="11" />&nbsp;&nbsp;No';}
-           else {
-       return '<img src="admin/images/checkH.svg" height="13" />&nbsp;&nbsp;Si';
-              }
-     } },
-     { data: "horario_id",
+     { data: "dispo_dispo_tMarca",
      "render": function (data, type, row) {
 
-       return '<a onclick=" editarHorarioLista('+row.horario_id+')" style="cursor: pointer"><img src="/admin/images/edit.svg" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a onclick="" style="cursor: pointer">'+
-           '<img src="/admin/images/delete.svg" onclick="eliminarHorario('+row.horario_id+')" height="15"></a>';
+       return row.dispo_dispo_tMarca+'&nbsp;&nbsp; minutos';
 
      } },
+    { data: "dispo_movil"},
+     { data: "dispo_movil"},
+     { data: "dispo_movil"},
+    { data: "dispo_movil"},
 
-  ] */
+
+  ]
 
 
    });
@@ -141,8 +136,44 @@ function NuevoDispo(){
         error: function (data) {
             alert("Ocurrio un error");
         },
-    });
+    }); 
+    $("#frmHorNuevo")[0].reset();
 $('#nuevoDispositivo').modal('show');
 }
+function RegistraDispo(){
+    var descripccionUb=$('#descripcionDis').val();
+    var numeroM='51'+$('#numeroMovil').val();
+    var tSincron=$('#tiempoSin').val();
+    var tMarcac=$('#smarcacion').val();
+    var smsCh
+   if($('#smsCheck').is(':checked') ){
+    smsCh=1;
+   } else{
+       smsCh=0;
+   }
+    $.ajax({
+        type: "post",
+        url: "/dispoStore",
+        data: {
+            descripccionUb,numeroM,tSincron,tMarcac,smsCh
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
 
+            console.log(data);
+        },
+        error: function (data) {
+            alert("Ocurrio un error");
+        },
+    });
+
+
+}
 
