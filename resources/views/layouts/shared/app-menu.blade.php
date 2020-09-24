@@ -34,7 +34,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
         <ul class="nav-second-level" aria-expanded="false">
             <li>
                 <a href="/dashboard" id="menuD">General</a>
-                <a href="/reporteSemanal">Control Remoto</a>
+                <a href="/controlRemoto">Control Remoto</a>
             </li>
         </ul>
     </li>

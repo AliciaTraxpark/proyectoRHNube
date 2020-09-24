@@ -422,6 +422,10 @@ class dashboardController extends Controller
     }
 
     // DASHBOARD PARA CONTROL REMOTO
+    public function dashboardCR()
+    {
+        return view('dashboardCR');
+    }
     public function globalControlRemoto()
     {
         $actividadCR = DB::table('empleado as e')
@@ -431,7 +435,7 @@ class dashboardController extends Controller
                 DB::raw('SUM(pc.tiempo_rango) as totalRango'),
                 DB::raw('SUM(cp.actividad) as totalActividad')
             )
-            ->where('e.organi_id','=',session('sesionidorg'))
+            ->where('e.organi_id', '=', session('sesionidorg'))
             ->get()
             ->first();
 
