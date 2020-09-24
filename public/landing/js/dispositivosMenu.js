@@ -87,7 +87,7 @@ $(document).ready(function () {
         if (row.dispo_estado ==1) {
             return '<span class="badge badge-soft-info">Enviado</span>';
        }
-       if (row.dispo_estado ==1) {
+       if (row.dispo_estado ==2) {
         return '<span class="badge badge-soft-success">Confirmado</span>';
    }
 
