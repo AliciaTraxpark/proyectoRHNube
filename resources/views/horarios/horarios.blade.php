@@ -247,7 +247,7 @@ background-color: #ffffff !important;
                             <input type="hidden" id="horario2">
                                <div class="row">
                                    <div class="col-md-12" style="padding-left: 24px;">
-                                    <form id="formulario" action="javascript:agregarHoras()">
+
                                        <div class="row">
                                         <div class="col-md-9" style="zoom:90%;">
                                             <input type="hidden" id="fechaDa" name="fechaDa">
@@ -757,7 +757,7 @@ background-color: #ffffff !important;
                      </div><!-- /.modal-dialog -->
                     </div><!-- /.modal -->
 
-                    <div id="horarioAgregar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                    <div id="horarioAgregar" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                         <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 550px;" >
 
                         <div class="modal-content">
@@ -799,6 +799,12 @@ background-color: #ffffff !important;
                                                <input type="text" id="horaF" class="form-control form-control-sm" required>
                                             </div>
                                          </div>
+                                         <div class="col-md-12" id="divOtrodia" style="display: none">
+                                            <div class="form-check">
+                                                <input type="checkbox"  class="form-check-input" id="smsCheck" checked disabled>
+                                                <label class="form-check-label" for="smsCheck" style="margin-top: 2px;">Hora hasta el dia siguiente.</label>
+                                            </div>
+                                        </div>
 
 
                                        </div>
