@@ -437,7 +437,7 @@
                     <div class="col-xl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">Control Remoto
+                                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">Detalle General
                                 </h5>
                             </div>
                             <div class="card-body">
