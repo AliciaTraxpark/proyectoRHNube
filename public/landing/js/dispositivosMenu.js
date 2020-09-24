@@ -58,24 +58,52 @@ $(document).ready(function () {
      { data: null },
      { data: "dispo_descripUbicacion" },
      { data: "dispo_movil"},
+     { data: "dispo_estado",
+     "render": function (data, type, row) {
+        if (row.dispo_estado ==0) {
+            return '&nbsp; <button class="btn btn-sm  botonsms" >Enviar <img src="landing/images/note.svg" height="20" ></button>';
+        }
+         else{
+            return '&nbsp; <button class="btn btn-sm botonsms">Reenviar <img src="landing/images/note.svg" height="20" ></button>';
+         }
+
+
+     } },
+     { data: "dispo_codigoNombre",
+     "render": function (data, type, row) {
+        if(row.dispo_codigoNombre==null){
+            return '----';
+        }
+        else{
+            return row.dispo_codigoNombre;
+        }
+      }
+          },
+     { data: "dispo_estado",
+     "render": function (data, type, row) {
+        if (row.dispo_estado ==0) {
+             return '<span class="badge badge-soft-primary">Creado</span>';
+        }
+        if (row.dispo_estado ==1) {
+            return '<span class="badge badge-soft-info">Enviado</span>';
+       }
+       if (row.dispo_estado ==1) {
+        return '<span class="badge badge-soft-success">Confirmado</span>';
+   }
+
+     } },
+    { data: "dispo_tMarca",
+    "render": function (data, type, row) {
+
+        return row.dispo_tMarca+'&nbsp; minutos';
+
+      }},
      { data: "dispo_tSincro",
      "render": function (data, type, row) {
 
-       return row.dispo_tSincro+'&nbsp;&nbsp; minutos';
+        return row.dispo_tSincro+'&nbsp; minutos';
 
-     } },
-     { data: "dispo_dispo_tMarca",
-     "render": function (data, type, row) {
-
-       return row.dispo_dispo_tMarca+'&nbsp;&nbsp; minutos';
-
-     } },
-    { data: "dispo_movil"},
-     { data: "dispo_movil"},
-     { data: "dispo_movil"},
-    { data: "dispo_movil"},
-
-
+      }},
   ]
 
 
@@ -136,7 +164,7 @@ function NuevoDispo(){
         error: function (data) {
             alert("Ocurrio un error");
         },
-    }); 
+    });
     $("#frmHorNuevo")[0].reset();
 $('#nuevoDispositivo').modal('show');
 }
@@ -166,8 +194,8 @@ function RegistraDispo(){
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-
-            console.log(data);
+            $('#tablaDips').DataTable().ajax.reload();
+            $('#nuevoDispositivo').modal('hide');
         },
         error: function (data) {
             alert("Ocurrio un error");

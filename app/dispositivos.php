@@ -17,6 +17,7 @@ class dispositivos extends Model
         'dispo_tMarca',
         'dispo_codigo',
         'dispo_estado',
-        'organi_id'
+        'organi_id',
+       'dispo_codigoNombre'
     ];
 }

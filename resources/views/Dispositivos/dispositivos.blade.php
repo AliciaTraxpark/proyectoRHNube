@@ -39,7 +39,17 @@
         body {
             background-color: #ffffff;
         }
-
+        .botonsms{
+            background-color: #ffffff;
+            border-color: #ffffff;
+            color: #62778c;
+            padding-top: 0px;
+            padding-bottom: 0px;
+            border-top-width: 0px;
+            border-bottom-width: 0px;
+            padding-right: 0px;
+            padding-left: 0px;
+        }
         .select2-container--default .select2-selection--multiple .select2-selection__choice {
             background-color: #52565b;
         }
@@ -58,7 +68,10 @@
         .select2-container--default .select2-results__option[aria-selected=true] {
             background: #ced0d3;
         }
-
+        .badge{
+            font-size: 11.5px!important;
+            font-weight: 500!important;
+        }
         body>div.bootbox.modal.fade.bootbox-confirm.show>div>div>div.modal-footer>button.btn.btn-light.bootbox-cancel {
             background: #e2e1e1;
             color: #000000;
@@ -121,14 +134,25 @@
                                     <th>Descripción de ubicación</th>
                                     <th>Móvil vinculado</th>
                                     <th>Enviar SMS</th>
-                                    <th>Código</th>
-                                    <th>Enviado</th>
+                                    <th>Código/Nombre</th>
                                     <th>Estado</th>
                                     <th>Sig. marcación</th>
                                     <th>Tiempo de sincron.</th>
                                 </tr>
                             </thead>
-                          
+                          {{--  <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td>Vigilancia Condor</td>
+                                    <td>+51968009336</td>
+                                    <td><img src="landing/images/note.svg" height="20"></td>
+                                    <td>(devuelde android)</td>
+                                    <td>SI</td>
+                                    <td>Creado</td>
+                                    <td>5 min</td>
+                                    <td>12 min</td>
+                                </tr>
+                            </tbody> --}}
 
                         </table>
                     </div><br><br><br><br>
