@@ -62,12 +62,12 @@ class dispositivosController extends Controller
        ));
        $err = curl_error($curl);
        $response = curl_exec($curl);
-       dd($response);
+     /*   dd($response);
                     if ($err) {
                         return 0;
                     } else {
                         return 1;
-                    }
+                    } */
     }
 
     public function tablaDisposit(){
