@@ -143,7 +143,7 @@ $(function() {
 	});
 });
 function NuevoDispo(){
-    $.ajax({
+   /*  $.ajax({
         type: "post",
         url: "/enviarMensajePru",
         data: {
@@ -164,7 +164,7 @@ function NuevoDispo(){
         error: function (data) {
             alert("Ocurrio un error");
         },
-    });
+    }); */
     $("#frmHorNuevo")[0].reset();
 $('#nuevoDispositivo').modal('show');
 }
