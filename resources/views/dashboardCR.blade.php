@@ -72,10 +72,28 @@
                 </h5>
             </div>
             <div class="card-body">
-                <div class="col-md-4">
-                    <div class="wrapper" style="display: flex;flex-flow: column;align-items: center">
-                        <div id="gauge-value" style="font-size: 24px;font-weight: bold;padding-bottom: 5px"></div>
-                        <canvas id="foo"></canvas>
+                <div class="row justify-content-center">
+                    <div class="col-xl-5">
+                        <div class="wrapper" style="display: flex;flex-flow: column;align-items: center">
+                            <div id="gauge-value" style="font-size: 24px;font-weight: bold;padding-bottom: 5px"></div>
+                            <canvas id="foo"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">Detalle General
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row justify-content-center">
+                    <div class="col-xl-12">
+                        <div id="chart">
+                        </div>
                     </div>
                 </div>
             </div>
