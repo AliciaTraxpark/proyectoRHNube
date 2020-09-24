@@ -61,10 +61,10 @@ $(document).ready(function () {
      { data: "dispo_estado",
      "render": function (data, type, row) {
         if (row.dispo_estado ==0) {
-            return '&nbsp; <button class="btn btn-sm  botonsms" >Enviar <img src="landing/images/note.svg" height="20" ></button>';
+            return '&nbsp; <button class="btn btn-sm  botonsms" onclick="enviarSMS('+row.idDispositivos+')" >Enviar <img src="landing/images/note.svg" height="20"  ></button>';
         }
          else{
-            return '&nbsp; <button class="btn btn-sm botonsms">Reenviar <img src="landing/images/note.svg" height="20" ></button>';
+            return '&nbsp; <button class="btn btn-sm botonsms" onclick="reenviarSMS('+row.idDispositivos+')">Reenviar <img src="landing/images/note.svg" height="20"  ></button>';
          }
 
 
@@ -143,28 +143,7 @@ $(function() {
 	});
 });
 function NuevoDispo(){
-   /*  $.ajax({
-        type: "post",
-        url: "/enviarMensajePru",
-        data: {
 
-        },
-        statusCode: {
-            419: function () {
-                location.reload();
-            },
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        success: function (data) {
-
-            console.log(data);
-        },
-        error: function (data) {
-            alert("Ocurrio un error");
-        },
-    }); */
     $("#frmHorNuevo")[0].reset();
 $('#nuevoDispositivo').modal('show');
 }
@@ -205,3 +184,87 @@ function RegistraDispo(){
 
 }
 
+function enviarSMS(idDis){
+    bootbox.confirm({
+        message: "¿Enviar código al dispositivo?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            if (result == true) {
+                $.ajax({
+                    type: "post",
+                    url: "/enviarMensajePru",
+                    data: {
+                        idDis
+                    },
+                    statusCode: {
+                        419: function () {
+                            location.reload();
+                        },
+                    },
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    },
+                    success: function (data) {
+                        $('#tablaDips').DataTable().ajax.reload();
+                       
+                    },
+                    error: function (data) {
+                        alert("Ocurrio un error");
+                    },
+                });
+            }
+        }
+    });
+      
+   
+}
+function reenviarSMS(idDis){
+    bootbox.confirm({
+        message: "¿Reenviar código al dispositivo?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            if (result == true) {
+                $.ajax({
+                    type: "post",
+                    url: "/reenviarmensajeDis",
+                    data: {
+                        idDis
+                    },
+                    statusCode: {
+                        419: function () {
+                            location.reload();
+                        },
+                    },
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    },
+                    success: function (data) {
+                        $('#tablaDips').DataTable().ajax.reload();
+                       
+                    },
+                    error: function (data) {
+                        alert("Ocurrio un error");
+                    },
+                });
+            }
+        }
+    });
+}

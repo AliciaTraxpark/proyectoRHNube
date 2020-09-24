@@ -356,7 +356,7 @@ Route::get('/dispositivos', 'dispositivosController@index');
 Route::post('/enviarMensajePru', 'dispositivosController@enviarmensaje');
 Route::post('/dispoStore', 'dispositivosController@store');
 Route::post('/tablaDisposito', 'dispositivosController@tablaDisposit');
-
+Route::post('/reenviarmensajeDis', 'dispositivosController@reenviarmensaje');
 //CONTROLADORES
 Route::get('/controladores', 'controladoresController@index');
 
