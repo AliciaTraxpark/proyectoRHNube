@@ -137,4 +137,16 @@ class dispositivosController extends Controller
         $dispositivos=dispositivos::where('organi_id','=',session('sesionidorg'))->get();
         return json_encode($dispositivos);
     }
+
+    public function comprobarMovil(Request $request){
+
+        $dispositivos=dispositivos::where('dispo_movil','=',$request->numeroM)->get()->first();
+       
+        if($dispositivos!= null){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
 }

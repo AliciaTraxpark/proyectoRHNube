@@ -143,11 +143,12 @@ $(function() {
 	});
 });
 function NuevoDispo(){
-
+    $("#errorMovil").hide();
     $("#frmHorNuevo")[0].reset();
 $('#nuevoDispositivo').modal('show');
 }
 function RegistraDispo(){
+    $("#numeroMovil").blur();
     var descripccionUb=$('#descripcionDis').val();
     var numeroM='51'+$('#numeroMovil').val();
     var tSincron=$('#tiempoSin').val();
@@ -215,7 +216,7 @@ function enviarSMS(idDis){
                     },
                     success: function (data) {
                         $('#tablaDips').DataTable().ajax.reload();
-                       
+
                     },
                     error: function (data) {
                         alert("Ocurrio un error");
@@ -224,8 +225,8 @@ function enviarSMS(idDis){
             }
         }
     });
-      
-   
+
+
 }
 function reenviarSMS(idDis){
     bootbox.confirm({
@@ -258,7 +259,7 @@ function reenviarSMS(idDis){
                     },
                     success: function (data) {
                         $('#tablaDips').DataTable().ajax.reload();
-                       
+
                     },
                     error: function (data) {
                         alert("Ocurrio un error");
@@ -266,5 +267,30 @@ function reenviarSMS(idDis){
                 });
             }
         }
+    });
+}
+function comprobarMovil() {
+
+    var numeroM='51'+$('#numeroMovil').val();
+
+    $.ajax({
+        type: "post",
+        url: "/comprobarMovil",
+        data: {
+            numeroM
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            if (data == 1) {
+
+                $("#errorMovil").show();
+                $('#numeroMovil').val('');
+
+            } else {
+                $("#errorMovil").hide();
+            }
+        },
     });
 }
