@@ -363,4 +363,6 @@ Route::post('/tablaDisposito', 'dispositivosController@tablaDisposit');
 Route::post('/reenviarmensajeDis', 'dispositivosController@reenviarmensaje');
 //CONTROLADORES
 Route::get('/controladores', 'controladoresController@index');
-
+Route::post('/controladStore', 'controladoresController@store');
+Route::post('/listaControladores', 'controladoresController@tablaControladores');
+Route::post('/disposiControladores', 'controladoresController@disposiControladores');
