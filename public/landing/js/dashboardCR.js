@@ -32,7 +32,7 @@ function resultadoCR() {
     },
     success: function (data) {
       var promedio = ((data.totalActividad / data.totalRango) * 100).toFixed(2);
-      console.log(promedio);
+      console.log(data.totalActividad,data.totalRango,promedio);
       resultado = promedio;
     }
   });
