@@ -1,50 +1,51 @@
 //Define gauge options here...
 var opts = {
-    lines: 12,
-    angle: 0.15,
-    lineWidth: 0.44,
-    pointer: {
-        length: 0.5,
-        strokeWidth: 0.035,
-        color: '#444444'
-    },
-    limitMax: 'false',
-    percentColors: [[0.0, "#ff0000"], [0.50, "#f9c802"], [1.0, "#a9d70b"]],
-    strokeColor: '#E0E0E0',
-    generateGradient: true,
-    highDpiSupport: true,
-    staticLabels: {
-        font: "14px sans-serif",  // Specifies font
-        labels: [0, 50, 100],  // Print labels at these values
-        color: "#000000",  // Optional: Label text color
-        fractionDigits: 0  // Optional: Numerical precision. 0=round off.
-    },
+  lines: 12,
+  angle: 0.15,
+  lineWidth: 0.44,
+  pointer: {
+    length: 0.5,
+    strokeWidth: 0.035,
+    color: '#444444'
+  },
+  limitMax: 'false',
+  percentColors: [[0.0, "#ff0000"], [0.50, "#f9c802"], [1.0, "#a9d70b"]],
+  strokeColor: '#E0E0E0',
+  generateGradient: true,
+  highDpiSupport: true,
+  staticLabels: {
+    font: "14px sans-serif",  // Specifies font
+    labels: [0, 50, 100],  // Print labels at these values
+    color: "#000000",  // Optional: Label text color
+    fractionDigits: 0  // Optional: Numerical precision. 0=round off.
+  },
 };
 
 function resultadoCR() {
-    var resultado = 0;
-    $.ajax({
-        async: false,
-        url: "/dashboardCR",
-        method: "GET",
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function (data) {
-            var promedio = ((data.totalActividad / data.totalRango) * 100).toFixed(2);
-            console.log(promedio);
-            resultado = promedio;
-        }
-    });
+  var resultado = 0;
+  $.ajax({
+    async: false,
+    url: "/dashboardCR",
+    method: "GET",
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function (data) {
+      var promedio = ((data.totalActividad / data.totalRango) * 100).toFixed(2);
+      console.log(promedio);
+      resultado = promedio;
+    }
+  });
 
-    return resultado;
+  return resultado;
 }
+
 function myTimer() {
-    var valor = resultadoCR();
-    gauge.setMinValue(0);
-    gauge.maxValue = 100;
-    gauge.animationSpeed = 50;
-    gauge.set(valor);
+  var valor = resultadoCR();
+  gauge.setMinValue(0);
+  gauge.maxValue = 100;
+  gauge.animationSpeed = 50;
+  gauge.set(valor);
 }
 
 var target = document.getElementById('foo');
@@ -55,52 +56,112 @@ gauge.setTextField(document.getElementById("gauge-value"));
 myTimer();
 
 // apex
-var options = {
-    series: [{
-    name: 'Área',
-    data: [44, 55, 41, 37, 22, 43, 21]
-  }, {
-    name: 'Centro Costo',
-    data: [53, 32, 33, 52, 13, 43, 32]
-  }, {
-    name: 'Local',
-    data: [12, 17, 11, 9, 15, 11, 20]
-  }],
-    chart: {
-    type: 'bar',
-    height: 350,
-    stacked: true,
-    stackType: '100%'
-  },
-  plotOptions: {
-    bar: {
-      horizontal: true,
+function fechas() {
+  var respuesta = [];
+  var hoy = moment().format("DD/MM/YYYY");
+  value = moment(hoy, ["DD-MM-YYYY"]).format("YYYY-MM-DD");
+  for (let index = 1; index < 8; index++) {
+    fecha = moment(value, 'YYYY-MM-DD').day(index).format('DD-MMM');
+    respuesta.push(fecha);
+  }
+  return respuesta;
+}
+function fechasSemanal() {
+  var respuesta = [];
+  var hoy = moment().format("DD/MM/YYYY");
+  value = moment(hoy, ["DD-MM-YYYY"]).format("YYYY-MM-DD");
+  for (let index = 1; index < 8; index++) {
+    fecha = moment(value, 'YYYY-MM-DD').day(index).format('YYYY-MM-DD');
+    respuesta.push(fecha);
+  }
+  return respuesta;
+}
+function dataFechas() {
+  var respuesta = fechasSemanal();
+  $.ajax({
+    url: "/fechasDataDashboard",
+    data: {
+      fechas: respuesta
     },
-  },
-  stroke: {
-    width: 1,
-    colors: ['#fff']
-  },
-  xaxis: {
-    categories: [2008, 2009, 2010, 2011, 2012, 2013, 2014],
-  },
-  tooltip: {
-    y: {
-      formatter: function (val) {
-        return val + "K"
-      }
+    method: "GET",
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function (data) {
+      console.log(data);
+    }
+  });
+}
+var options = {
+  series: [
+    {
+      name: "High - 2013",
+      data: [28, 29, 33, 36, 32, 32, 33]
+    },
+    {
+      name: "Low - 2013",
+      data: [12, 11, 14, 18, 17, 13, 13]
+    }
+  ],
+  chart: {
+    height: 350,
+    type: 'line',
+    dropShadow: {
+      enabled: true,
+      color: '#000',
+      top: 18,
+      left: 7,
+      blur: 10,
+      opacity: 0.2
+    },
+    toolbar: {
+      show: false
     }
   },
-  fill: {
-    opacity: 1
-  
+  colors: ['#77B6EA', '#545454'],
+  dataLabels: {
+    enabled: true,
+  },
+  stroke: {
+    curve: 'smooth'
+  },
+  title: {
+    text: 'Average High & Low Temperature',
+    align: 'left'
+  },
+  grid: {
+    borderColor: '#e7e7e7',
+    row: {
+      colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+      opacity: 0.5
+    },
+  },
+  markers: {
+    size: 1
+  },
+  xaxis: {
+    categories: fechas(),
+    title: {
+      text: 'Month'
+    }
+  },
+  yaxis: {
+    title: {
+      text: 'Temperature'
+    },
+    min: 5,
+    max: 40
   },
   legend: {
     position: 'top',
-    horizontalAlign: 'left',
-    offsetX: 40
+    horizontalAlign: 'right',
+    floating: true,
+    offsetY: -25,
+    offsetX: -5
   }
-  };
+};
 
-  var chart = new ApexCharts(document.querySelector("#chart"), options);
-  chart.render();
+var chart = new ApexCharts(document.querySelector("#chart"), options);
+chart.render();
+
+dataFechas();

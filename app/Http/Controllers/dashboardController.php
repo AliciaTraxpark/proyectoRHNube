@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\organizacion;
 use App\usuario_organizacion;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -440,5 +441,57 @@ class dashboardController extends Controller
             ->first();
 
         return response()->json($actividadCR, 200);
+    }
+
+    public function actividadArea(Request $request)
+    {
+        $fechas = $request->get('fechas');
+        $area = DB::table('empleado as e')
+            ->join('area as a', 'e.emple_area', '=', 'a.area_id')
+            ->select(
+                'a.area_descripcion',
+                'a.area_id',
+                'e.emple_id'
+            )
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->where('e.emple_estado', '=', 1)
+            ->groupBy('a.area_id')
+            ->get();
+
+        $respuesta = [];
+        $data = [];
+        foreach ($area as $a) {
+            array_push($respuesta, array("idArea" => $a->area_id, "area" => $a->area_descripcion, "data" => $data));
+        }
+        for ($i = 0; $i < sizeof($respuesta); $i++) {
+            foreach ($fechas as $fecha) {
+                // DB::enableQueryLog();
+                $actividadArea = DB::table('empleado as e')
+                    ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                    ->join('promedio_captura as pc', 'pc.idCaptura', '=', 'cp.idCaptura')
+                    ->select(
+                        'e.emple_id',
+                        DB::raw('SUM(pc.tiempo_rango) as totalRango'),
+                        DB::raw('SUM(cp.actividad) as totalActividad'),
+                        DB::raw('((SUM(cp.actividad)/SUM(pc.tiempo_rango))*100) as division')
+                    )
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.emple_area', '=', $respuesta[$i]['idArea'])
+                    ->whereRaw("DATE(cp.hora_fin) ='$fecha'")
+                    ->get()
+                    ->first();
+                // dd(DB::getQueryLog());
+                if (is_null($actividadArea->division) === false) {
+                    array_push($data, $actividadArea->division);
+                } else {
+                    array_push($data, 0);
+                }
+            }
+            $respuesta[$i]["data"] = $data;
+            unset($data);
+            $data = array();
+        }
+
+        return response()->json($respuesta, 200);
     }
 }

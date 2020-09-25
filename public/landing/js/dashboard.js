@@ -109,7 +109,7 @@ $.ajax({
                 day: 'numeric'
             };
             var fecha = f.toLocaleDateString("es-PE", options)
-            fechaF = `<img src="admin/images/calendarioHor.svg" height="20" class="mr-2"> ${fecha}`;
+            fechaF = `<img src="/admin/images/calendarioHor.svg" height="20" class="mr-2"> ${fecha}`;
             containerFecha.append(fechaF);
             var detalle = ``;
             for (var l = 0; l < nombre.length; l++) {

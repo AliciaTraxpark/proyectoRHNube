@@ -86,7 +86,7 @@
     <div class="col-xl-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">Detalle General
+                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">Detalle Semanal por áreas
                 </h5>
             </div>
             <div class="card-body">
@@ -142,6 +142,8 @@
 <script src="{{ URL::asset('admin/assets/libs/apexcharts/apexcharts.js') }}"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
+<script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
+<script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
 <script src="{{asset('landing/js/dashboardCR.js')}}"></script>
