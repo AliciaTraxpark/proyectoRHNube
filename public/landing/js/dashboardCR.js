@@ -80,7 +80,7 @@ function dataFechas() {
   var resp = [];
   var respuesta = fechasSemanal();
   $.ajax({
-    async:false,
+    async: false,
     url: "/fechasDataDashboard",
     data: {
       fechas: respuesta
@@ -92,7 +92,7 @@ function dataFechas() {
     success: function (data) {
       for (let index = 0; index < data.length; index++) {
         let result = data[index].data.map(a => a.toFixed(2));
-        let serie = {"name":data[index].area,"data":result}
+        let serie = { "name": data[index].area, "data": result }
         resp.push(serie);
       }
     }
@@ -101,16 +101,6 @@ function dataFechas() {
   return resp;
 }
 var options = {
-  // series: [
-  //   {
-  //     name: "High - 2013",
-  //     data: [28, 29, 33, 36, 32, 32, 33]
-  //   },
-  //   {
-  //     name: "Low - 2013",
-  //     data: [12, 11, 14, 18, 17, 13, 13]
-  //   }
-  // ],
   series: dataFechas(),
   chart: {
     height: 350,
@@ -130,13 +120,12 @@ var options = {
   colors: ['#77B6EA', '#545454'],
   dataLabels: {
     enabled: true,
+    style: {
+      fontSize: '10px',
+    },
   },
   stroke: {
     curve: 'smooth'
-  },
-  title: {
-    text: 'Average High & Low Temperature',
-    align: 'left'
   },
   grid: {
     borderColor: '#e7e7e7',
@@ -151,15 +140,23 @@ var options = {
   xaxis: {
     categories: fechas(),
     title: {
-      text: 'Month'
+      text: 'Día'
     }
   },
   yaxis: {
     title: {
-      text: 'Temperature'
+      offsetX: 3,
+      text: 'Actividad'
     },
     min: 0,
-    max: 100
+    max: 100,
+    labels: {
+      offsetX: -8
+    },
+  },
+  title: {
+    text: 'Actividad y Día',
+    align: 'left'
   },
   legend: {
     position: 'top',
