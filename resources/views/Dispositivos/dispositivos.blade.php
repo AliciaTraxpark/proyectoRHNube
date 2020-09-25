@@ -185,13 +185,15 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="">Móvil vinculado:</label>
 
-                                                        <div class="input-group mb-2 form-control-sm">
+                                                    <label for="">Móvil vinculado:</label> <span id="errorMovil" style="color: #690f0f;display: none;">Movil ya registrado.</span>
+
+                                                        <div class="input-group form-control-sm" style="bottom: 4px;
+                                                        padding-left: 0px;">
                                                             <div class="input-group-prepend ">
                                                                 <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 2px);" >+51</div>
                                                             </div>
-                                                            <input type="number" required class="form-control form-control-sm" id="numeroMovil" maxlength="9"  onkeypress="return isNumeric(event)" oninput="maxLengthCheck(this)">
+                                                            <input type="number" required class="form-control form-control-sm" id="numeroMovil" maxlength="9"  onkeypress="return isNumeric(event)" oninput="maxLengthCheck(this)" onblur="comprobarMovil()">
                                                         </div>
                                                 </div>
                                             </div>
