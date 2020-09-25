@@ -135,7 +135,7 @@ var options = {
       opacity: 0.2
     },
     toolbar: {
-      show: false
+      show: true
     }
   },
   colors: ['#77B6EA', '#545454'],
@@ -181,7 +181,7 @@ var options = {
   },
   legend: {
     position: 'top',
-    horizontalAlign: 'right',
+    horizontalAlign: 'center',
     floating: true,
     offsetY: -25,
     offsetX: -5
