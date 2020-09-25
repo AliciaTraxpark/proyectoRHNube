@@ -9,6 +9,10 @@ use Illuminate\Support\Str;
 class dispositivosController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
     public function index(){
 
         return view('Dispositivos.dispositivos');
@@ -97,7 +101,7 @@ class dispositivosController extends Controller
     }
 
     public function reenviarmensaje(Request $request){
-        
+
         $dispositivosAc = dispositivos::findOrFail($request->idDis);
         $codigo=$dispositivosAc->dispo_codigo;
        $mensaje = "RH nube - Codigo de validacion " . $codigo;

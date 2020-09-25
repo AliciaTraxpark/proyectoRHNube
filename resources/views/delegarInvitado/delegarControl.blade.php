@@ -1,15 +1,12 @@
 @extends('layouts.vertical')
 @section('css')
 
-    <link href="{{ asset('admin/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     {{-- <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     --}}
     <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('admin/assets/libs/alertify/alertify.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('admin/assets/libs/alertify/bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
@@ -38,7 +35,7 @@
     body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-footer > button.btn.btn-success.bootbox-accept{
         background-color: #163552;
         border-color: #163552;
-       
+
     }
     body > div.bootbox.modal.fade.show > div{
         top: 100px;
@@ -358,9 +355,6 @@
     <script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js') }}"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
-    <script src="{{ URL::asset('admin/assets/libs/alertify/alertify.js') }}"></script>
-    <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
-    <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
     <script src="{{ asset('landing/js/delegarControl.js') }}"></script>

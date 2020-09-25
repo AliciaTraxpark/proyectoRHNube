@@ -3,18 +3,12 @@
 
 @section('css')
 
-    <!-- App css -->
-    <link href="{{asset('admin/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
      <!-- Plugin css  CALENDAR-->
     <link href="{{asset('admin/packages/core/main.css')}}" rel="stylesheet" />
     <link href="{{asset('admin/packages/daygrid/main.css')}}" rel="stylesheet" />
     <link href="{{asset('admin/packages/timegrid/main.css')}}" rel="stylesheet" />
 
     <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />

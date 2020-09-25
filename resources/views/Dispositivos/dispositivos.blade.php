@@ -1,9 +1,6 @@
 @extends('layouts.vertical')
 
 @section('css')
-
-    <!-- App css -->
-    <link href="{{ asset('admin/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- Plugin css  CALENDAR-->
 
 
