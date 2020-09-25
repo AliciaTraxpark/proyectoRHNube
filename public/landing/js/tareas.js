@@ -70,16 +70,13 @@ function fechaHoy() {
 }
 
 function enteroTime(tiempo) {
-    var hora = Math.floor(tiempo / 3600);
-    var minutos = Math.floor(tiempo / 60);
-    var segundos = tiempo % 60;
-    var resultado =
-        ("0" + hora).slice(-2) +
-        ":" +
-        ("0" + minutos).slice(-2) +
-        ":" +
-        ("0" + segundos).slice(-2);
-    return resultado;
+    var hour = Math.floor(tiempo / 3600);
+    hour = (hour < 10) ? '0' + hour : hour;
+    var minute = Math.floor((tiempo / 60) % 60);
+    minute = (minute < 10) ? '0' + minute : minute;
+    var second = tiempo % 60;
+    second = (second < 10) ? '0' + second : second;
+    return hour + ':' + minute + ':' + second;
 }
 
 function refreshCapturas() {
