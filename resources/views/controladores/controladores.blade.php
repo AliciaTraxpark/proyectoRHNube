@@ -208,7 +208,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="">Seleccione dispositivo:</label>
-                                                    <select data-plugin="customselect"
+                                                    <select data-plugin="customselect" multiple
                                                     class="form-control" data-placeholder="seleccione dispositivo">
                                                     <option></option>
                                                     <option >+51968009336 (Vigilancia Condor)</option>

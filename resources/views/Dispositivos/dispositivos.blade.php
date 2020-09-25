@@ -1,17 +1,10 @@
 @extends('layouts.vertical')
 
 @section('css')
-
-    <!-- App css -->
-    <link href="{{ asset('admin/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('admin/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('admin/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- Plugin css  CALENDAR-->
 
 
     <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
@@ -43,7 +36,17 @@
         body {
             background-color: #ffffff;
         }
-
+        .botonsms{
+            background-color: #ffffff;
+            border-color: #ffffff;
+            color: #62778c;
+            padding-top: 0px;
+            padding-bottom: 0px;
+            border-top-width: 0px;
+            border-bottom-width: 0px;
+            padding-right: 0px;
+            padding-left: 0px;
+        }
         .select2-container--default .select2-selection--multiple .select2-selection__choice {
             background-color: #52565b;
         }
@@ -62,7 +65,10 @@
         .select2-container--default .select2-results__option[aria-selected=true] {
             background: #ced0d3;
         }
-
+        .badge{
+            font-size: 11.5px!important;
+            font-weight: 500!important;
+        }
         body>div.bootbox.modal.fade.bootbox-confirm.show>div>div>div.modal-footer>button.btn.btn-light.bootbox-cancel {
             background: #e2e1e1;
             color: #000000;
@@ -125,14 +131,13 @@
                                     <th>Descripción de ubicación</th>
                                     <th>Móvil vinculado</th>
                                     <th>Enviar SMS</th>
-                                    <th>Código</th>
-                                    <th>Enviado</th>
+                                    <th>Código/Nombre</th>
                                     <th>Estado</th>
                                     <th>Sig. marcación</th>
                                     <th>Tiempo de sincron.</th>
                                 </tr>
                             </thead>
-                           <tbody>
+                          {{--  <tbody>
                                 <tr>
                                     <td></td>
                                     <td>Vigilancia Condor</td>
@@ -144,7 +149,7 @@
                                     <td>5 min</td>
                                     <td>12 min</td>
                                 </tr>
-                            </tbody>
+                            </tbody> --}}
 
                         </table>
                     </div><br><br><br><br>
@@ -175,20 +180,25 @@
                                                 <div class="form-group">
                                                     <label for="">Descripción de ubicación:</label>
                                                     <input type="text" class="form-control form-control-sm"
-                                                        id="descripcionCa_ed" maxlength="40" required>
+                                                        id="descripcionDis" maxlength="80" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="">Móvil vinculado:</label>
-                                                    <input type="number"  class="form-control form-control-sm"
-                                                        id="toleranciaH_ed" required>
+
+                                                        <div class="input-group mb-2 form-control-sm">
+                                                            <div class="input-group-prepend ">
+                                                                <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 2px);" >+51</div>
+                                                            </div>
+                                                            <input type="number" required class="form-control form-control-sm" id="numeroMovil" maxlength="9"  onkeypress="return isNumeric(event)" oninput="maxLengthCheck(this)">
+                                                        </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="">Tiempo de sincronización(Min):</label>
-                                                    <input type="number" id="tiempoSin" class="form-control form-control-sm"
+                                                    <input type="number" id="tiempoSin" required class="form-control form-control-sm"
                                                         required>
                                                 </div>
                                             </div>
@@ -196,7 +206,7 @@
 
                                                 <div class="form-group">
                                                     <label for="">Siguiente marcación(Min):</label> <span id="errorMarca" style="color: #690f0f;display: none">El valor min es 5.</span>
-                                                    <input type="number" id="smarcacion" min="5" value="5"  class="form-control form-control-sm"
+                                                    <input type="number" id="smarcacion" min="5" value="5" required class="form-control form-control-sm"
                                                         required>
                                                 </div>
                                             </div>
@@ -242,11 +252,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
     <script src="{{ asset('landing/js/dispositivosMenu.js') }}"></script>
 
-    <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
-    <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/libs/moment/moment.min.js') }}"></script>
 
+    <script src="{{ URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js') }}"></script>
 
 
 

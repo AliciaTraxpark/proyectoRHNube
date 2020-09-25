@@ -5,12 +5,7 @@ use App\proyecto_empleado;
 @extends('layouts.vertical')
 
 @section('css')
-<link href="{{asset('admin/assets/css/bootstrap.min.css')}}" rel="stylesheet"
-    type="text/css" />
-<link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet"
-    type="text/css" />
-<link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet"
-    type="text/css" />
+
 
 {{-- <link
     href="{{asset('admin/assets/libs/bootstrap-fileinput/fileinput.min.css')}}"

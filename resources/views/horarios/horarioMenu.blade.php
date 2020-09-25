@@ -3,18 +3,12 @@
 
 @section('css')
 
-    <!-- App css -->
-    <link href="{{asset('admin/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
      <!-- Plugin css  CALENDAR-->
     <link href="{{asset('admin/packages/core/main.css')}}" rel="stylesheet" />
     <link href="{{asset('admin/packages/daygrid/main.css')}}" rel="stylesheet" />
     <link href="{{asset('admin/packages/timegrid/main.css')}}" rel="stylesheet" />
 
     <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
@@ -396,7 +390,7 @@ a:not([href]):not([tabindex]){
                 <input type="hidden" id="horario2">
                    <div class="row">
                        <div class="col-md-12" style="padding-left: 24px;">
-                        <form id="formulario" action="javascript:agregarHoras()">
+
                            <div class="row">
                             <div class="col-md-9" style="zoom:90%;">
                                 <input type="hidden" id="fechaDa" name="fechaDa">
@@ -905,7 +899,7 @@ a:not([href]):not([tabindex]){
          </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
-        <div id="horarioAgregar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+        <div id="horarioAgregar" class="modal fade"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 550px;" >
 
             <div class="modal-content">
@@ -948,6 +942,12 @@ a:not([href]):not([tabindex]){
                                    <input type="text" id="horaF" class="form-control form-control-sm" required>
                                 </div>
                              </div>
+                             <div class="col-md-12" id="divOtrodia" style="display: none">
+                                <div class="form-check">
+                                    <input type="checkbox"  class="form-check-input" id="smsCheck" checked disabled>
+                                    <label class="form-check-label" for="smsCheck" style="margin-top: 2px;">Hora hasta el dia siguiente.</label>
+                                </div>
+                            </div>
 
 
                            </div>
@@ -1147,6 +1147,12 @@ a:not([href]):not([tabindex]){
                                    <input type="text" id="horaF_ed" class="form-control form-control-sm" required>
                                 </div>
                              </div>
+                             <div class="col-md-12" id="divOtrodia_ed" style="display: none">
+                                <div class="form-check">
+                                    <input type="checkbox"  class="form-check-input" id="smsCheck_ed" checked disabled>
+                                    <label class="form-check-label" for="smsCheck_ed" style="margin-top: 2px;">Hora hasta el dia siguiente.</label>
+                                </div>
+                            </div>
 
 
                            </div>

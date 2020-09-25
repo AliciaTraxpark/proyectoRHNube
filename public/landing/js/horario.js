@@ -386,6 +386,7 @@ $('#horaF_ed').flatpickr({
     time_24hr: true
 });
 $('#btnasignar').on('click', function(e) {
+    $('#divOtrodia').hide();
     $('input[type=checkbox]').prop('checked',false);
     $.get("/vaciartemporal", {}, function (data, status) {
      calendar.refetchEvents();
@@ -887,9 +888,9 @@ $('#cerrarHorario').click(function () {
     $('#verhorarioEmpleado').modal('toggle');
 });
 function abrirHorario(){
-
+    $('#divOtrodia').hide();
     $("#frmHor")[0].reset();
-    $('#horarioAsignar_ed').modal('hide');
+
     $('#horarioAgregar').modal('show');
 
 
@@ -934,13 +935,20 @@ function registrarHorario(){
 
             $('#horarioAgregar').modal('hide');
             $('#tablaEmpleado').DataTable().ajax.reload();
-            $('#selectHorario').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                value: data.horario_id,
-                text: data.horario_descripcion+' ('+data.horaI+'-'+data.horaF+')'
 
-            }));
             if($('#asignarHorario').is(':visible')){
-                registrarhDias(data.horario_id);
+                $('#selectHorario').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                    value: data.horario_id,
+                    text: data.horario_descripcion+' ('+data.horaI+'-'+data.horaF+')',
+                    selected:true
+
+                }));
+            }else{
+                $('#selectHorario').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                    value: data.horario_id,
+                    text: data.horario_descripcion+' ('+data.horaI+'-'+data.horaF+')'
+
+                }));
             }
 
 
@@ -1879,7 +1887,7 @@ $('#selectHorarioen').change(function(e){
 }
  */
 function editarHorarioLista(idsedit){
-
+    $('#divOtrodia_ed').hide();
 
     $("#frmHorEditar")[0].reset();
     $.ajax({
@@ -1907,7 +1915,11 @@ function editarHorarioLista(idsedit){
             $('#horaI_ed').val(data[0].horaI);
             $('#horaF_ed').val(data[0].horaF);
             $('#horarioEditar').modal('show');
-
+            if(data[0].horaI>data[0].horaF){
+                $('#divOtrodia_ed').show();
+            } else{
+                $('#divOtrodia_ed').hide();
+            }
         },
         error: function (data) {
             alert('Ocurrio un error');
@@ -2221,4 +2233,61 @@ $("#FeriadosCheck").click(function(){
         });
 
      }
+});
+$(function() {
+	$(document).on('change', '#horaF', function(event) {
+        let horaF=$('#horaF').val();
+        let horaI=$('#horaI').val();
+
+    	if(horaF<horaI){
+           $('#divOtrodia').show();
+           event.stopPropagation();
+    	} else{
+            $('#divOtrodia').hide();
+        }
+
+	});
+});
+$(function() {
+	$(document).on('change', '#horaI', function(event) {
+        let horaF=$('#horaF').val();
+        let horaI=$('#horaI').val();
+
+    	if(horaF<horaI){
+           $('#divOtrodia').show();
+           event.stopPropagation();
+    	} else{
+            $('#divOtrodia').hide();
+        }
+
+	});
+});
+
+$(function() {
+	$(document).on('change', '#horaF_ed', function(event) {
+        let horaF=$('#horaF_ed').val();
+        let horaI=$('#horaI_ed').val();
+
+    	if(horaF<horaI){
+           $('#divOtrodia_ed').show();
+           event.stopPropagation();
+    	} else{
+            $('#divOtrodia_ed').hide();
+        }
+
+	});
+});
+$(function() {
+	$(document).on('change', '#horaI_ed', function(event) {
+        let horaF=$('#horaF_ed').val();
+        let horaI=$('#horaI_ed').val();
+
+    	if(horaF<horaI){
+           $('#divOtrodia_ed').show();
+           event.stopPropagation();
+    	} else{
+            $('#divOtrodia_ed').hide();
+        }
+
+	});
 });

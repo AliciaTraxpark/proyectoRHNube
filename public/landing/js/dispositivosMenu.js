@@ -37,17 +37,17 @@ $(document).ready(function () {
         },
     },
 
-      /*  ajax: {
+ ajax: {
    type: "post",
-   url: "/horario/listar",
+   url: "/tablaDisposito",
     headers: {
        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
    },
 
    "dataSrc": ""
   },
- */
-  /*  "columnDefs": [ {
+
+   "columnDefs": [ {
                "searchable": false,
                "orderable": false,
                "targets": 0
@@ -56,32 +56,55 @@ $(document).ready(function () {
            "order": [[ 1, 'asc' ]],
   columns: [
      { data: null },
-     { data: "horario_descripcion" },
-     { data: "horario_tolerancia",
+     { data: "dispo_descripUbicacion" },
+     { data: "dispo_movil"},
+     { data: "dispo_estado",
      "render": function (data, type, row) {
+        if (row.dispo_estado ==0) {
+            return '&nbsp; <button class="btn btn-sm  botonsms" onclick="enviarSMS('+row.idDispositivos+')" >Enviar <img src="landing/images/note.svg" height="20"  ></button>';
+        }
+         else{
+            return '&nbsp; <button class="btn btn-sm botonsms" onclick="reenviarSMS('+row.idDispositivos+')">Reenviar <img src="landing/images/note.svg" height="20"  ></button>';
+         }
 
-       return row.horario_tolerancia+'&nbsp;&nbsp; minutos';
 
      } },
-     { data: "horaI" },
-     { data: "horaF" },
-     { data: "horario_horario_id",
+     { data: "dispo_codigoNombre",
      "render": function (data, type, row) {
-       if (row.horario_horario_id ==null) {
-           return '<img src="admin/images/borrarH.svg" height="11" />&nbsp;&nbsp;No';}
-           else {
-       return '<img src="admin/images/checkH.svg" height="13" />&nbsp;&nbsp;Si';
-              }
+        if(row.dispo_codigoNombre==null){
+            return '----';
+        }
+        else{
+            return row.dispo_codigoNombre;
+        }
+      }
+          },
+     { data: "dispo_estado",
+     "render": function (data, type, row) {
+        if (row.dispo_estado ==0) {
+             return '<span class="badge badge-soft-primary">Creado</span>';
+        }
+        if (row.dispo_estado ==1) {
+            return '<span class="badge badge-soft-info">Enviado</span>';
+       }
+       if (row.dispo_estado ==2) {
+        return '<span class="badge badge-soft-success">Confirmado</span>';
+   }
+
      } },
-     { data: "horario_id",
+    { data: "dispo_tMarca",
+    "render": function (data, type, row) {
+
+        return row.dispo_tMarca+'&nbsp; minutos';
+
+      }},
+     { data: "dispo_tSincro",
      "render": function (data, type, row) {
 
-       return '<a onclick=" editarHorarioLista('+row.horario_id+')" style="cursor: pointer"><img src="/admin/images/edit.svg" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a onclick="" style="cursor: pointer">'+
-           '<img src="/admin/images/delete.svg" onclick="eliminarHorario('+row.horario_id+')" height="15"></a>';
+        return row.dispo_tSincro+'&nbsp; minutos';
 
-     } },
-
-  ] */
+      }},
+  ]
 
 
    });
@@ -92,10 +115,22 @@ $(document).ready(function () {
        cell.innerHTML = i+1;
    } );
 } ).draw();
-
-
-
 });
+function maxLengthCheck(object) {
+    if (object.value.length > object.maxLength)
+        object.value = object.value.slice(0, object.maxLength)
+}
+
+function isNumeric(evt) {
+    var theEvent = evt || window.event;
+    var key = theEvent.keyCode || theEvent.which;
+    key = String.fromCharCode(key);
+    var regex = /[0-9]|\./;
+    if (!regex.test(key)) {
+        theEvent.returnValue = false;
+        if (theEvent.preventDefault) theEvent.preventDefault();
+    }
+}
 $(function() {
 	$(document).on('keyup', '#smarcacion', function(event) {
     	let min= parseInt(this.min);
@@ -108,7 +143,128 @@ $(function() {
 	});
 });
 function NuevoDispo(){
+
+    $("#frmHorNuevo")[0].reset();
 $('#nuevoDispositivo').modal('show');
 }
+function RegistraDispo(){
+    var descripccionUb=$('#descripcionDis').val();
+    var numeroM='51'+$('#numeroMovil').val();
+    var tSincron=$('#tiempoSin').val();
+    var tMarcac=$('#smarcacion').val();
+    var smsCh
+   if($('#smsCheck').is(':checked') ){
+    smsCh=1;
+   } else{
+       smsCh=0;
+   }
+    $.ajax({
+        type: "post",
+        url: "/dispoStore",
+        data: {
+            descripccionUb,numeroM,tSincron,tMarcac,smsCh
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            $('#tablaDips').DataTable().ajax.reload();
+            $('#nuevoDispositivo').modal('hide');
+        },
+        error: function (data) {
+            alert("Ocurrio un error");
+        },
+    });
 
 
+}
+
+function enviarSMS(idDis){
+    bootbox.confirm({
+        message: "¿Enviar código al dispositivo?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            if (result == true) {
+                $.ajax({
+                    type: "post",
+                    url: "/enviarMensajePru",
+                    data: {
+                        idDis
+                    },
+                    statusCode: {
+                        419: function () {
+                            location.reload();
+                        },
+                    },
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    },
+                    success: function (data) {
+                        $('#tablaDips').DataTable().ajax.reload();
+                       
+                    },
+                    error: function (data) {
+                        alert("Ocurrio un error");
+                    },
+                });
+            }
+        }
+    });
+      
+   
+}
+function reenviarSMS(idDis){
+    bootbox.confirm({
+        message: "¿Reenviar código al dispositivo?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            if (result == true) {
+                $.ajax({
+                    type: "post",
+                    url: "/reenviarmensajeDis",
+                    data: {
+                        idDis
+                    },
+                    statusCode: {
+                        419: function () {
+                            location.reload();
+                        },
+                    },
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    },
+                    success: function (data) {
+                        $('#tablaDips').DataTable().ajax.reload();
+                       
+                    },
+                    error: function (data) {
+                        alert("Ocurrio un error");
+                    },
+                });
+            }
+        }
+    });
+}

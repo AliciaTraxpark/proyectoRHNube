@@ -2280,7 +2280,7 @@ use App\proyecto_empleado;
                                         <div class="modal-header" style="background-color:#163552;">
                                             <h5 class="modal-title" id="myModalLabel"
                                                 style="color:#ffffff;font-size:15px">Asignar horario</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <button type="button" class="close"  onclick="$('#horarioAgregar').modal('hide')" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
@@ -2321,6 +2321,12 @@ use App\proyecto_empleado;
                                                                         class="form-control form-control-sm" required>
                                                                 </div>
                                                             </div>
+                                                            <div class="col-md-12" id="divOtrodia" style="display: none">
+                                                                <div class="form-check">
+                                                                   <input type="checkbox"  class="form-check-input" id="otroDCh" checked disabled>
+                                                                   <label class="form-check-label" for="otroDCh" style="margin-top: 2px;">Hora hasta el dia siguiente.</label>
+                                                                </div>
+                                                               </div>
                                                         </div>
                                                 </div>
                                             </div>
@@ -3128,7 +3134,7 @@ use App\proyecto_empleado;
                                 <div class="col-md-1"><br></div>
                             </div>
 
-                            <div id="horarioAsignar_ed" class="modal fade" tabindex="-1" role="dialog"
+                            <div id="horarioAsignar_ed" class="modal fade"  role="dialog"
                                 aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                                 <div class="modal-dialog  modal-lg d-flex justify-content-center "
                                     style="width:400px;  margin-top: 150px; left: 30px;">
@@ -3179,7 +3185,7 @@ use App\proyecto_empleado;
                                     </div><!-- /.modal-content -->
                                 </div><!-- /.modal-dialog -->
                             </div><!-- /.modal -->
-                            <div id="horarioAgregar_ed" class="modal fade" tabindex="-1" role="dialog"
+                            <div id="horarioAgregar_ed" class="modal fade"  role="dialog"
                                 aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                                 <div class="modal-dialog  modal-lg d-flex justify-content-center "
                                     style="width: 550px;">
@@ -3188,8 +3194,8 @@ use App\proyecto_empleado;
                                         <div class="modal-header" style="background-color:#163552;">
                                             <h5 class="modal-title" id="myModalLabel"
                                                 style="color:#ffffff;font-size:15px">Asignar horario</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
+                                            <button type="button" class="close" onclick="$('#horarioAgregar_ed').modal('hide')" aria-label="Close">
+                                                <span  aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body" style="font-size:12px!important">
@@ -3231,6 +3237,12 @@ use App\proyecto_empleado;
                                                                     <input type="text" id="horaF_ed"
                                                                         class="form-control form-control-sm" required>
                                                                 </div>
+                                                            </div>
+                                                            <div class="col-md-12" id="divOtrodia_ed" style="display: none">
+                                                             <div class="form-check">
+                                                                <input type="checkbox"  class="form-check-input" id="otroDC_ed" checked disabled>
+                                                                <label class="form-check-label" for="otroDC_ed" style="margin-top: 2px;">Hora hasta el dia siguiente.</label>
+                                                             </div>
                                                             </div>
 
 
