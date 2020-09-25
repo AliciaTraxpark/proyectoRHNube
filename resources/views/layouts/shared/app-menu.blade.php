@@ -105,6 +105,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
 
         <ul class="nav-second-level" aria-expanded="false">
             <li>
+                <a href="/controlRemoto">Dashboard</a>
                 <a href="/tareas">Detalle Diario</a>
                 <a href="/reporteSemanal">Reporte Semanal</a>
                 <a href="/reporteMensual">Reporte Mensual</a>
