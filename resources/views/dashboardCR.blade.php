@@ -67,13 +67,25 @@
 <div class="row justify-content-center p-5">
     <div class="col-xl-12">
         <div class="card">
-            <div class="card-header">
-                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">Detalle General
+            <div class="card-header"
+                style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1">
+                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">Actividad Total
                 </h5>
             </div>
-            <div class="card-body">
+            <div class="card-body border">
                 <div class="row justify-content-center">
-                    <div class="col-xl-5">
+                    <div class="col-xl-4">
+                        <div class="col-md-12">
+                            <div class="card bg-c-green order-card p-2" style="background: linear-gradient(45deg, #2ed8b6, #59e0c5);">
+                                <div class="card-block">
+                                    <h6 class="m-b-20" style="color: #ffffff">Fecha Inicio</h6>
+                                    <h2 class="text-right"><i class="fa fa-calendar f-left" style="color: #ffffff"></i><span></span></h2>
+                                    <p class="m-b-0" style="color: #ffffff" id="fechaO"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-8">
                         <div class="wrapper" style="display: flex;flex-flow: column;align-items: center">
                             <div id="gauge-value" style="font-size: 24px;font-weight: bold;padding-bottom: 5px"></div>
                             <canvas id="foo"></canvas>
@@ -83,13 +95,14 @@
             </div>
         </div>
     </div>
-    <div class="col-xl-12">
+    <div class="col-xl-12" id="divArea" style="display: none">
         <div class="card">
-            <div class="card-header">
-                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">Detalle semanal por áreas
+            <div class="card-header"
+                style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1">
+                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">Detalle diario por áreas
                 </h5>
             </div>
-            <div class="card-body">
+            <div class="card-body border">
                 <div class="row justify-content-center">
                     <div class="col-xl-12">
                         <div id="chart">

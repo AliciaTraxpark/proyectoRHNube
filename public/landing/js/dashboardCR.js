@@ -56,6 +56,22 @@ gauge.setTextField(document.getElementById("gauge-value"));
 myTimer();
 
 // apex
+$(function () {
+  $('#fechaO').empty();
+  var hoy = moment().format("YYYY-MM-DD");
+  $.ajax({
+    url: "/fechaOD",
+    method: "GET",
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function (data) {
+      console.log(data);
+      var fecha = `${data.created_at}`;
+      $('#fechaO').append(fecha);
+    }
+  });
+});
 function fechas() {
   var respuesta = [];
   var hoy = moment().format("DD/MM/YYYY");
@@ -90,10 +106,15 @@ function dataFechas() {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     success: function (data) {
-      for (let index = 0; index < data.length; index++) {
-        let result = data[index].data.map(a => a.toFixed(2));
-        let serie = { "name": data[index].area, "data": result }
-        resp.push(serie);
+      if (data.length == 0) {
+        $('#divArea').hide();
+      } else {
+        $('#divArea').show();
+        for (let index = 0; index < data.length; index++) {
+          let result = data[index].data.map(a => a.toFixed(2));
+          let serie = { "name": data[index].area, "data": result }
+          resp.push(serie);
+        }
       }
     }
   });

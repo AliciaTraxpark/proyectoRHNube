@@ -494,4 +494,11 @@ class dashboardController extends Controller
 
         return response()->json($respuesta, 200);
     }
+
+    public function fechaOrganizacion()
+    {
+        $organizacion = DB::table('organizacion as o')->select(DB::raw('DATE(o.created_at) as created_at'))->where('o.organi_id', '=', session('sesionidorg'))->get()->first();
+
+        return response()->json($organizacion, 200);
+    }
 }
