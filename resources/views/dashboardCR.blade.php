@@ -86,7 +86,7 @@
     <div class="col-xl-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">Detalle Semanal por áreas
+                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">Detalle semanal por áreas
                 </h5>
             </div>
             <div class="card-body">

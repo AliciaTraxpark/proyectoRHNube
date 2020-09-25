@@ -77,8 +77,10 @@ function fechasSemanal() {
   return respuesta;
 }
 function dataFechas() {
+  var resp = [];
   var respuesta = fechasSemanal();
   $.ajax({
+    async:false,
     url: "/fechasDataDashboard",
     data: {
       fechas: respuesta
@@ -88,21 +90,28 @@ function dataFechas() {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     success: function (data) {
-      console.log(data);
+      for (let index = 0; index < data.length; index++) {
+        let result = data[index].data.map(a => a.toFixed(2));
+        let serie = {"name":data[index].area,"data":result}
+        resp.push(serie);
+      }
     }
   });
+
+  return resp;
 }
 var options = {
-  series: [
-    {
-      name: "High - 2013",
-      data: [28, 29, 33, 36, 32, 32, 33]
-    },
-    {
-      name: "Low - 2013",
-      data: [12, 11, 14, 18, 17, 13, 13]
-    }
-  ],
+  // series: [
+  //   {
+  //     name: "High - 2013",
+  //     data: [28, 29, 33, 36, 32, 32, 33]
+  //   },
+  //   {
+  //     name: "Low - 2013",
+  //     data: [12, 11, 14, 18, 17, 13, 13]
+  //   }
+  // ],
+  series: dataFechas(),
   chart: {
     height: 350,
     type: 'line',
@@ -149,8 +158,8 @@ var options = {
     title: {
       text: 'Temperature'
     },
-    min: 5,
-    max: 40
+    min: 0,
+    max: 100
   },
   legend: {
     position: 'top',
