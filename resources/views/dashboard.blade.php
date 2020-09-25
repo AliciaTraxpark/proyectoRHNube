@@ -116,12 +116,13 @@
         /* add background-color to active links */
     }
 </style>
-<div class="row justify-content-center">
-    <div class="col-md-6 pl-5" id="divarea" style="min-height: 460px">
+<div class="row justify-content-center ml-3">
+    <div class="col-md-6" id="divarea" style="min-height: 460px">
         <div class="card chart-card">
             <div class="card-body pb-0 text-center">
                 <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
-                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Área(s)</h5>
+                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Área(s)
+                </h5>
                 <div class="d-flex justify-content-center">
                     <p class="align-self-end mt-2" id="fechaArea"></p>
                 </div>
@@ -152,11 +153,12 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6 pl-5" id="divnivel" style="min-height: 460px">
+    <div class="col-md-6" id="divnivel" style="min-height: 460px">
         <div class="card chart-card">
             <div class="card-body pb-0 text-center">
                 <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
-                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Nivel(es) del
+                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Nivel(es)
+                    del
                     colaborador</h5>
                 <div class="d-flex justify-content-center">
                     <p class="align-self-end mt-2" id="fechaNivel"></p>
@@ -188,12 +190,14 @@
             </div>
         </div>
     </div>
-    <br><br><br>
-    <div class="col-md-6 pl-5" id="divcontrato" style="min-height: 460px">
+    <div class="col-md-6" id="divcontrato" style="min-height: 460px">
         <div class="card chart-card">
             <div class="card-body pb-0 text-center">
                 <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
-                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Tipo de Contrato</h5>
+                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Tipo
+                    de
+                    Contrato
+                </h5>
                 <div class="d-flex justify-content-center">
                     <p class="align-self-end mt-2" id="fechaContrato"></p>
                 </div>
@@ -224,11 +228,14 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6 pl-5" id="divcentro" style="min-height: 460px">
+    <div class="col-md-6" id="divcentro" style="min-height: 460px">
         <div class="card chart-card">
             <div class="card-body pb-0 text-center">
                 <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
-                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Centro de Costos</h5>
+                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Centro
+                    de
+                    Costos
+                </h5>
                 <div class="d-flex justify-content-center">
                     <p class="align-self-end mt-2" id="fechaCentro"></p>
                 </div>
@@ -259,12 +266,12 @@
             </div>
         </div>
     </div>
-    <br><br><br>
-    <div class="col-md-6 pl-5" id="divlocal" style="min-height: 460px">
+    <div class="col-md-6" id="divlocal" style="min-height: 460px">
         <div class="card chart-card">
             <div class="card-body pb-0 text-center">
                 <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
-                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Local(es)</h5>
+                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Local(es)
+                </h5>
                 <div class="d-flex justify-content-center">
                     <p class="align-self-end mt-2" id="fechaLocal"></p>
                 </div>
@@ -295,11 +302,13 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6 pl-5" id="divdepartamento" style="min-height: 460px">
+    <div class="col-md-6" id="divdepartamento" style="min-height: 460px">
         <div class="card chart-card">
             <div class="card-body pb-0 text-center">
                 <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
-                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Ciudad domiciliaria</h5>
+                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Ciudad
+                    domiciliaria
+                </h5>
                 <div class="d-flex justify-content-center">
                     <p class="align-self-end mt-2" id="fechaDepartamento"></p>
                 </div>
@@ -330,12 +339,13 @@
             </div>
         </div>
     </div>
-    <br><br><br>
-    <div class="col-md-6 pl-5" id="divedades" style="min-height:460px">
+    <div class="col-md-6" id="divedades" style="min-height:460px">
         <div class="card chart-card">
             <div class="card-body pb-0 text-center">
                 <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
-                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Rangos de Edades
+                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Rangos
+                    de
+                    Edades
                 </h5>
                 <div class="d-flex justify-content-center">
                     <p class="align-self-end mt-2" id="fechaEdades"></p>
@@ -367,25 +377,26 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel"
-        aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body text-center">
-                    <img src="{{asset('landing/images/notification.svg')}}" height="100">
-                    <h4 class="text-danger mt-4">Su sesión expiró</h4>
-                    <p class="w-75 mx-auto text-muted">Por favor inicie sesión nuevamente.</p>
-                    <div class="mt-4">
-                        <a href="{{('/')}}" class="btn btn-outline-primary btn-rounded width-md"><i
-                                class="uil uil-arrow-right mr-1"></i> Iniciar sesión</a>
-                    </div>
+</div>
+<div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel"
+    aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img src="{{asset('landing/images/notification.svg')}}" height="100">
+                <h4 class="text-danger mt-4">Su sesión expiró</h4>
+                <p class="w-75 mx-auto text-muted">Por favor inicie sesión nuevamente.</p>
+                <div class="mt-4">
+                    <a href="{{('/')}}" class="btn btn-outline-primary btn-rounded width-md"><i
+                            class="uil uil-arrow-right mr-1"></i> Iniciar sesión</a>
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-    @if (Auth::user())
-    <script>
-        $(function() {
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+@if (Auth::user())
+<script>
+    $(function() {
     setInterval(function checkSession() {
       $.get('/check-session', function(data) {
         // if session was expired
@@ -397,28 +408,28 @@
       });
     },7202000);
   });
-    </script>
-    @endif
-    @endsection
-    @endif
-    @section('script')
-    <script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
-    <script src="{{asset('landing/js/app-menu.js')}}"></script>
-    <!-- optional plugins -->
-    <script src="{{ URL::asset('admin/assets/libs/moment/moment.min.js') }}"></script>
-    <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
-    <script src="{{ URL::asset('admin/assets/libs/chart/Chart.min.js') }}"></script>
-    <script src="{{ URL::asset('admin/assets/libs/chart/Chart.js') }}"></script>
-    <script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.js') }}"></script>
-    <script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.min.js') }}"></script>
-    <!--<script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-piechart-outlabels.js') }}"></script>-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
-    <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
-    <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
-    <script src="{{asset('landing/js/dashboard.js')}}"></script>
-    <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
-    @endsection
-    @section('script-bottom')
-    <!-- init js -->
-    @endsection
+</script>
+@endif
+@endsection
+@endif
+@section('script')
+<script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
+<script src="{{asset('landing/js/app-menu.js')}}"></script>
+<!-- optional plugins -->
+<script src="{{ URL::asset('admin/assets/libs/moment/moment.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/chart/Chart.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/chart/Chart.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/gauge/gauge.js') }}"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
+<script src="{{asset('landing/js/dashboard.js')}}"></script>
+<script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
+@endsection
+@section('script-bottom')
+<!-- init js -->
+@endsection

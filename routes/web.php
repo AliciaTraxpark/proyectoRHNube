@@ -256,6 +256,10 @@ Route::get('/totalDepartamento', 'dashboardController@departamento');
 Route::get('/totalE', 'dashboardController@edad');
 Route::get('/totalRE', 'dashboardController@rangoE');
 Route::get('/horarioU', 'dashboardController@horarioDias');
+Route::get('/controlRemoto', 'dashboardController@dashboardCR');
+Route::get('/dashboardCR', 'dashboardController@globalControlRemoto');
+Route::get('/fechasDataDashboard', 'dashboardController@actividadArea');
+Route::get('/fechaOD', 'dashboardController@fechaOrganizacion');
 
 //MENU
 Route::get('/empleados', 'EmpleadoController@indexMenu');

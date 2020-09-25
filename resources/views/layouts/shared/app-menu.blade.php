@@ -26,11 +26,17 @@ $usuario_organizacion=DB::table('usuario_organizacion')
 @if ($usuario_organizacion[0]->rol_id==1)
 <ul class="metismenu" id="menu-bar">
     <li>
-        <a href="/dashboard" id="menuD">
+        <a href="javascript: void(0);">
             <i data-feather="home"></i>
-            <span class="badge badge-success float-right">1</span>
             <span> Dashboard </span>
+            <span class="menu-arrow"></span>
         </a>
+        <ul class="nav-second-level" aria-expanded="false">
+            <li>
+                <a href="/dashboard" id="menuD">General</a>
+                <a href="/controlRemoto">Control Remoto</a>
+            </li>
+        </ul>
     </li>
 
     <li>
