@@ -398,6 +398,7 @@ class ControlController extends Controller
         $fecha = $request->get('fecha');
         $control = DB::table('empleado as e')
             ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+            ->join('captura_imagen as ci','ci.idCaptura','=','cp.idCaptura')
             ->join('actividad as a', 'a.Activi_id', '=', 'cp.idActividad')
             ->join('promedio_captura as pc', 'pc.idCaptura', '=', 'cp.idCaptura')
             ->leftJoin('horario_dias as hd', 'hd.id', '=', 'pc.idHorario')
@@ -407,11 +408,11 @@ class ControlController extends Controller
                 'a.Activi_Nombre',
                 'a.estado',
                 'cp.idCaptura',
-                'cp.miniatura as imagen',
+                'ci.miniatura as imagen',
                 'cp.actividad',
                 'cp.hora_fin',
                 DB::raw('DATE(cp.hora_fin) as fecha'),
-                DB::raw('TIME(cp.hora_fin) as hora'),
+                DB::raw('TIME(cp.hora_ini) as hora'),
                 'pc.promedio as prom',
                 'pc.tiempo_rango as rango',
                 DB::raw('TIME(cp.hora_ini) as hora_ini'),

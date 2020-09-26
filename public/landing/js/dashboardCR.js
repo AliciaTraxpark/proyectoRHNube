@@ -32,7 +32,7 @@ function resultadoCR() {
     },
     success: function (data) {
       var promedio = ((data.totalActividad / data.totalRango) * 100).toFixed(2);
-      console.log(data.totalActividad,data.totalRango,promedio);
+      console.log(data.totalActividad, data.totalRango, promedio);
       resultado = promedio;
     }
   });
@@ -58,7 +58,6 @@ myTimer();
 // apex
 $(function () {
   $('#fechaO').empty();
-  var hoy = moment().format("YYYY-MM-DD");
   $.ajax({
     url: "/fechaOD",
     method: "GET",
@@ -135,7 +134,7 @@ var options = {
       opacity: 0.2
     },
     toolbar: {
-      show: false
+      show: true
     }
   },
   colors: ['#77B6EA', '#545454'],
@@ -181,7 +180,7 @@ var options = {
   },
   legend: {
     position: 'top',
-    horizontalAlign: 'right',
+    horizontalAlign: 'center',
     floating: true,
     offsetY: -25,
     offsetX: -5
@@ -191,4 +190,126 @@ var options = {
 var chart = new ApexCharts(document.querySelector("#chart"), options);
 chart.render();
 
-dataFechas();
+//TABLA DASHBOARD
+$(function () {
+  $("#dashboardEmpleado").DataTable({
+    scrollX: true,
+    responsive: true,
+    retrieve: true,
+    "searching": false,
+    "lengthChange": false,
+    scrollCollapse: false,
+    "pageLength": 30,
+    "bAutoWidth": true,
+    language: {
+      "sProcessing": "Procesando...",
+      "sLengthMenu": "Mostrar _MENU_ registros",
+      "sZeroRecords": "No se encontraron resultados",
+      "sEmptyTable": "Ningún dato disponible en esta tabla",
+      "sInfo": "Mostrando registros del _START_ al _END_ ",
+      "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+      "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+      "sInfoPostFix": "",
+      "sSearch": "Buscar:",
+      "sUrl": "",
+      "sInfoThousands": ",",
+      "sLoadingRecords": "Cargando...",
+      "oPaginate": {
+        "sFirst": "Primero",
+        "sLast": "Último",
+        "sNext": ">",
+        "sPrevious": "<"
+      },
+      "oAria": {
+        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+      },
+      "buttons": {
+        "copy": "Copiar",
+        "colvis": "Visibilidad"
+      }
+    }
+  });
+});
+
+// FECHA
+var fechaValue = $("#fechaSelec").flatpickr({
+  mode: "single",
+  dateFormat: "Y-m-d",
+  altInput: true,
+  altFormat: "D, j F",
+  locale: "es",
+  maxDate: "today",
+  wrap: true,
+  allowInput: true,
+});
+$(function () {
+  f = moment().format("YYYY-MM-DD");
+  fechaValue.setDate(f);
+  empleadosControlRemoto();
+});
+//DATOS PARA TABLA
+function empleadosControlRemoto() {
+  var fecha = $("#fechaInput").val();
+  $('#empleadosCR').empty();
+  $.ajax({
+    url: "/empleadoCR",
+    method: "GET",
+    data: {
+      fecha: fecha
+    },
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function (data) {
+      var tr = "<tr>";
+      for(let index =0; index < data.length; index++){
+        tr += "<td>" + data[index].nombre+" "+data[index].apPaterno+" "+data[index].apMaterno+ "</td>\
+        <td>"+data[index].tiempoT + "</td><td>" + data[index].division + "</td>";
+      }
+      tr += "</tr>";
+      $('#empleadosCR').html(tr);
+      $("#dashboardEmpleado").DataTable({
+        scrollX: true,
+        responsive: true,
+        retrieve: true,
+        "searching": false,
+        "lengthChange": false,
+        scrollCollapse: false,
+        "pageLength": 30,
+        "bAutoWidth": true,
+        language: {
+          "sProcessing": "Procesando...",
+          "sLengthMenu": "Mostrar _MENU_ registros",
+          "sZeroRecords": "No se encontraron resultados",
+          "sEmptyTable": "Ningún dato disponible en esta tabla",
+          "sInfo": "Mostrando registros del _START_ al _END_ ",
+          "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+          "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+          "sInfoPostFix": "",
+          "sSearch": "Buscar:",
+          "sUrl": "",
+          "sInfoThousands": ",",
+          "sLoadingRecords": "Cargando...",
+          "oPaginate": {
+            "sFirst": "Primero",
+            "sLast": "Último",
+            "sNext": ">",
+            "sPrevious": "<"
+          },
+          "oAria": {
+            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+          },
+          "buttons": {
+            "copy": "Copiar",
+            "colvis": "Visibilidad"
+          }
+        }
+      });
+    }
+  });
+}
+$(function(){
+  $("#fechaInput").on("change", empleadosControlRemoto);
+});
