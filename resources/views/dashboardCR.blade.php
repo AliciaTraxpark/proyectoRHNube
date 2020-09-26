@@ -4,10 +4,9 @@
 @section('css')
 <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{
-    URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')
-    }}" rel="stylesheet" />
+<link href="{{URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')}}" rel="stylesheet" />
 <link href="{{ URL::asset('admin/assets/libs/apexcharts/apexcharts.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -76,10 +75,12 @@
                 <div class="row justify-content-center">
                     <div class="col-xl-4">
                         <div class="col-md-12">
-                            <div class="card bg-c-green order-card p-2" style="background: linear-gradient(45deg, #2ed8b6, #59e0c5);">
+                            <div class="card bg-c-green order-card p-2"
+                                style="background: linear-gradient(45deg, #2ed8b6, #59e0c5);">
                                 <div class="card-block">
                                     <h6 class="m-b-20" style="color: #ffffff">Fecha Inicio</h6>
-                                    <h2 class="text-right"><i class="fa fa-calendar f-left" style="color: #ffffff"></i><span></span></h2>
+                                    <h2 class="text-right"><i class="fa fa-calendar f-left"
+                                            style="color: #ffffff"></i><span></span></h2>
                                     <p class="m-b-0" style="color: #ffffff" id="fechaO"></p>
                                 </div>
                             </div>
@@ -107,6 +108,34 @@
                     <div class="col-xl-12">
                         <div id="chart">
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-header"
+                style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1">
+                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">Detalle diario por usuario
+                </h5>
+            </div>
+            <div class="card-body border">
+                <div class="row justify-content-center">
+                    <div class="col-xl-12">
+                        <table id="dashboardEmpleado" class="table nowrap" style="font-size: 13px!important;width:
+                                        100%;">
+                            <thead style="background: #fafafa;" id="dias" style="width:100%!important">
+                                <tr>
+                                    <th><img src="{{URL::asset('admin/assets/images/users/empleado.png')}}" class="mr-2"
+                                            alt="" /></th>
+                                    <th>MIEMBRO</th>
+                                    <th>ACTIVIDAD</th>
+                                </tr>
+                            </thead>
+                            <tbody id="empleados">
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -150,6 +179,8 @@
 @section('script')
 <script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
 <script src="{{asset('landing/js/app-menu.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <!-- optional plugins -->
 <script src="{{ URL::asset('admin/assets/libs/gauge/gauge.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/apexcharts/apexcharts.js') }}"></script>
