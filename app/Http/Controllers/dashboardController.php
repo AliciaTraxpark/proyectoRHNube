@@ -437,6 +437,7 @@ class dashboardController extends Controller
                 DB::raw('SUM(cp.actividad) as totalActividad')
             )
             ->where('e.organi_id', '=', session('sesionidorg'))
+            ->where('e.emple_estado', '=', 1)
             ->get()
             ->first();
 
@@ -476,6 +477,7 @@ class dashboardController extends Controller
                         DB::raw('((SUM(cp.actividad)/SUM(pc.tiempo_rango))*100) as division')
                     )
                     ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.emple_estado', '=', 1)
                     ->where('e.emple_area', '=', $respuesta[$i]['idArea'])
                     ->whereRaw("DATE(cp.hora_fin) ='$fecha'")
                     ->get()
@@ -500,5 +502,74 @@ class dashboardController extends Controller
         $organizacion = DB::table('organizacion as o')->select(DB::raw('DATE(o.created_at) as created_at'))->where('o.organi_id', '=', session('sesionidorg'))->get()->first();
 
         return response()->json($organizacion, 200);
+    }
+
+    public function empleadosControlRemoto(Request $request)
+    {
+        $fecha = $request->get('fecha');
+        $respuesta = [];
+        // DB::enableQueryLog();
+        $empleado = DB::table('empleado as e')
+            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+            ->join('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
+            ->select(
+                'e.emple_id',
+                'p.perso_nombre',
+                'p.perso_apPaterno',
+                'p.perso_apMaterno'
+            )
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->where('e.emple_estado', '=', 1)
+            ->whereNotNull('v.pc_mac')
+            ->groupBy('e.emple_id')
+            ->get();
+        foreach ($empleado as $emple) {
+            $actividad = DB::table('empleado as e')
+                ->leftJoin('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                ->leftJoin('promedio_captura as pc', 'pc.idCaptura', '=', 'cp.idCaptura')
+                ->select(
+                    'e.emple_id',
+                    DB::raw('SUM(cp.actividad) as totalActividad'),
+                    DB::raw('SUM(pc.tiempo_rango) as totalRango'),
+                    DB::raw('((SUM(cp.actividad)/SUM(pc.tiempo_rango))*100) as division')
+                )
+                ->where('e.emple_id', '=', $emple->emple_id)
+                ->where(DB::raw('DATE(cp.hora_fin)'), '=', $fecha)
+                ->get()->first();
+            if (is_null($actividad->totalRango) === true) {
+                array_push($respuesta, array(
+                    "idEmpleado" => $emple->emple_id,
+                    "nombre" => $emple->perso_nombre,
+                    "apPaterno" => $emple->perso_apPaterno,
+                    "apMaterno" => $emple->perso_apMaterno,
+                    "tiempoT" => 0,
+                    "division" => 0
+                ));
+            } else {
+                if (is_null($actividad->division) === true) {
+                    array_push($respuesta, array(
+                        "idEmpleado" => $emple->emple_id,
+                        "nombre" => $emple->perso_nombre,
+                        "apPaterno" => $emple->perso_apPaterno,
+                        "apMaterno" => $emple->perso_apMaterno,
+                        "tiempoT" => $actividad->totalRango,
+                        "division" => 0
+                    ));
+                } else {
+                    array_push($respuesta, array(
+                        "idEmpleado" => $emple->emple_id,
+                        "nombre" => $emple->perso_nombre,
+                        "apPaterno" => $emple->perso_apPaterno,
+                        "apMaterno" => $emple->perso_apMaterno,
+                        "tiempoT" => $actividad->totalRango,
+                        "division" => $actividad->division
+                    ));
+                }
+            }
+        }
+        // dd($empleado);
+        // dd(DB::getQueryLog());
+
+        return response()->json($respuesta, 200);
     }
 }
