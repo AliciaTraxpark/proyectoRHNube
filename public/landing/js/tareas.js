@@ -245,12 +245,8 @@ function onMostrarPantallas() {
                                                     <div  id="myCarousel${hora + j
                                 }" class = "carousel carousel-fade" data-ride = "carousel">
                                                         <div class = "carousel-inner">
-                                                            <div class = "carousel-item active">`;
-                            // data[index].minutos[j][0].imagen.forEach(dato => {
-                            //     card += `<img src="data:image/jpeg;base64,${dato.imagen}" height="120" width="200" class="img-responsive">`;
-                            // });
-                                    card += `<img src="data:image/jpeg;base64,${data[index].minutos[j][0].imagen[0].imagen}" height="120" width="200" class="img-responsive">`;
-                            card += `<div class="overlay">
+                                                            <div class = "carousel-item active"><img src="data:image/jpeg;base64,${data[index].minutos[j][0].imagen[0].imagen}" height="120" width="200" class="img-responsive">
+                                                            <div class="overlay">
                                     <a class="info" onclick="zoom('${hora + "," + j}')" style="color:#fdfdfd">
                                     <i class="fa fa-eye"></i> Colección</a>
                                     </div>
@@ -420,48 +416,50 @@ function zoom(horayJ) {
     });
     var carusel = "";
     for (let index = 0; index < capturas.length; index++) {
-        const element = capturas[index];
-        $.ajax({
-            url: "/mostrarCapturas",
-            method: "GET",
-            data: {
-                idCaptura: element.idImagen,
-            },
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            statusCode: {
-                401: function () {
-                    location.reload();
-                }
-            },
-            beforeSend: function () {
+        const element = capturas[index].imagen;
+        element.forEach(dato => {
+            $.ajax({
+                url: "/mostrarCapturas",
+                method: "GET",
+                data: {
+                    idCaptura: dato.idImagen,
+                },
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+                statusCode: {
+                    401: function () {
+                        location.reload();
+                    }
+                },
+                beforeSend: function () {
 
-                $("#esperaImg").show();
-            },
-        }).then(function (data) {
-            $("#esperaImg").hide();
-            if (data.length > 0) {
-                carusel = `<a href="data:image/jpeg;base64,${data[0].imagen}" data-fancybox="images" data-caption="Hora de captura a las ${data[0].hora_fin}" data-width="2048" data-height="1365"><img src="data:image/jpeg;base64,${data[0].imagen}" width="350" height="300" style="padding-right:10px;padding-bottom:10px"></a>`;
-                document.getElementById("zoom").innerHTML += carusel;
-            }
-        }).fail(function () {
-            $("#esperaImg").hide();
-            $.notify({
-                message: '\nSurgio un error.',
-                icon: 'landing/images/bell.svg',
-            }, {
-                icon_type: 'image',
-                allow_dismiss: true,
-                newest_on_top: true,
-                delay: 6000,
-                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #f2dede;" role="alert">' +
-                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                    '<span data-notify="title">{1}</span> ' +
-                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
-                    '</div>',
-                spacing: 35
+                    $("#esperaImg").show();
+                },
+            }).then(function (data) {
+                $("#esperaImg").hide();
+                if (data.length > 0) {
+                    carusel = `<a href="data:image/jpeg;base64,${data[0].imagen}" data-fancybox="images" data-caption="Hora de captura a las ${data[0].hora_ini}" data-width="2048" data-height="1365"><img src="data:image/jpeg;base64,${data[0].imagen}" width="350" height="300" style="padding-right:10px;padding-bottom:10px"></a>`;
+                    document.getElementById("zoom").innerHTML += carusel;
+                }
+            }).fail(function () {
+                $("#esperaImg").hide();
+                $.notify({
+                    message: '\nSurgio un error.',
+                    icon: 'landing/images/bell.svg',
+                }, {
+                    icon_type: 'image',
+                    allow_dismiss: true,
+                    newest_on_top: true,
+                    delay: 6000,
+                    template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
             });
         });
     }
