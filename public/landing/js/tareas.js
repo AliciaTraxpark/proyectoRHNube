@@ -133,7 +133,6 @@ function onMostrarPantallas() {
                 var promedioDiaria = 0;
                 var actividadDiaria = `<div class="row justify-content-center p-3"><div class="col-xl-4"><span style="font-weight: bold;color:#163552;cursor:default;font-size:14px;"><img src="landing/images/velocimetro (1).svg" class="mr-2" height="20"/>Actividad Diaria | <span id="totalActivi"></span> - <span id="totalH"></span></span></div></div>`;
                 container.append(actividadDiaria);
-                console.log(actividadDiaria);
                 for (let index = 0; index < data.length; index++) {
                     $("#promHoras" + $i).empty();
                     var horaDelGrupo = data[index].horaCaptura;
@@ -471,7 +470,7 @@ function zoom(horayJ) {
             url: "/mostrarCapturas",
             method: "GET",
             data: {
-                idCaptura: element.idCaptura,
+                idCaptura: element.idImagen,
             },
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),

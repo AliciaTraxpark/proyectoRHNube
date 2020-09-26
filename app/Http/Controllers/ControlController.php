@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\captura;
+use App\captura_imagen;
 use Illuminate\Http\Request;
 use App\control;
 use Illuminate\Support\Facades\DB;
@@ -398,7 +399,6 @@ class ControlController extends Controller
         $fecha = $request->get('fecha');
         $control = DB::table('empleado as e')
             ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
-            ->join('captura_imagen as ci','ci.idCaptura','=','cp.idCaptura')
             ->join('actividad as a', 'a.Activi_id', '=', 'cp.idActividad')
             ->join('promedio_captura as pc', 'pc.idCaptura', '=', 'cp.idCaptura')
             ->leftJoin('horario_dias as hd', 'hd.id', '=', 'pc.idHorario')
@@ -408,7 +408,6 @@ class ControlController extends Controller
                 'a.Activi_Nombre',
                 'a.estado',
                 'cp.idCaptura',
-                'ci.miniatura as imagen',
                 'cp.actividad',
                 'cp.hora_fin',
                 DB::raw('DATE(cp.hora_fin) as fecha'),
@@ -422,9 +421,20 @@ class ControlController extends Controller
             ->where(DB::raw('IF(hd.id is null, DATE(cp.hora_fin), DATE(hd.start))'), '=', $fecha)
             ->where('e.emple_id', '=', $idempleado)
             ->where('e.organi_id', '=', session('sesionidorg'))
-            ->groupBy('cp.idCaptura')
             ->orderBy('cp.hora_ini', 'asc')
             ->get();
+        foreach ($control as $c) {
+            // $capturas = captura_imagen::where('idCaptura', '=', $c->idCaptura)->get();
+            $capturas = DB::table('captura_imagen as ci')
+                ->select('ci.id as idImagen', 'ci.miniatura as imagen')
+                ->where('ci.idCaptura', '=', $c->idCaptura)
+                ->get();
+            $datos = [];
+            foreach ($capturas as $cp) {
+                array_push($datos, $cp);
+            }
+            $c->imagen = $datos;
+        }
         $control = controlAJson($control);
         return response()->json($control, 200);
     }
@@ -433,9 +443,9 @@ class ControlController extends Controller
     {
         $idCaptura = $request->get('idCaptura');
         $respuesta = [];
-        $captura = DB::table('captura as cp')
-            ->select('cp.imagen', 'cp.hora_fin')
-            ->where('cp.idCaptura', '=', $idCaptura)
+        $captura = DB::table('captura_imagen as ci')
+            ->select('ci.imagen', 'ci.hora_ini')
+            ->where('ci.id', '=', $idCaptura)
             ->get()
             ->first();
         array_push($respuesta, $captura);
