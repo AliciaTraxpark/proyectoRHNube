@@ -111,7 +111,7 @@
                                 <th>ACTIVIDAD</th>
                             </tr>
                         </thead>
-                        <tbody id="empleados">
+                        <tbody id="empleadosCR">
                         </tbody>
                     </table>
                 </div>
