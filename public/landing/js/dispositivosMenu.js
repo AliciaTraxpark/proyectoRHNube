@@ -148,7 +148,7 @@ function NuevoDispo(){
 $('#nuevoDispositivo').modal('show');
 }
 function RegistraDispo(){
-    $("#numeroMovil").blur();
+
     var descripccionUb=$('#descripcionDis').val();
     var numeroM='51'+$('#numeroMovil').val();
     var tSincron=$('#tiempoSin').val();
@@ -159,28 +159,49 @@ function RegistraDispo(){
    } else{
        smsCh=0;
    }
-    $.ajax({
-        type: "post",
-        url: "/dispoStore",
-        data: {
-            descripccionUb,numeroM,tSincron,tMarcac,smsCh
-        },
-        statusCode: {
-            419: function () {
-                location.reload();
-            },
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        success: function (data) {
-            $('#tablaDips').DataTable().ajax.reload();
-            $('#nuevoDispositivo').modal('hide');
-        },
-        error: function (data) {
-            alert("Ocurrio un error");
-        },
-    });
+   $.ajax({
+    type: "post",
+    url: "/comprobarMovil",
+    data: {
+        numeroM
+    },
+    headers: {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+    },
+    success: function (data) {
+        if (data == 1) {
+
+            $("#errorMovil").show();
+            return false;
+
+        } else {
+            $("#errorMovil").hide();
+            $.ajax({
+                type: "post",
+                url: "/dispoStore",
+                data: {
+                    descripccionUb,numeroM,tSincron,tMarcac,smsCh
+                },
+                statusCode: {
+                    419: function () {
+                        location.reload();
+                    },
+                },
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+                success: function (data) {
+                    $('#tablaDips').DataTable().ajax.reload();
+                    $('#nuevoDispositivo').modal('hide');
+                },
+                error: function (data) {
+                    alert("Ocurrio un error");
+                },
+            });
+        }
+    },
+});
+
 
 
 }
