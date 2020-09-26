@@ -11,7 +11,6 @@ class captura extends Model
     protected $fillable = [
         'idCaptura',
         'estado',
-        'imagen',
         'actividad',
         'hora_ini',
         'hora_fin',
