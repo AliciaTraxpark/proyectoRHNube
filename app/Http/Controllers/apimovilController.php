@@ -20,7 +20,8 @@ class apimovilController extends Controller
 
         if($dispositivo!=null){
             if($dispositivo->dispo_estado==2){
-                return response()->json("Dispositivo ya verificado");
+                return response()->json(array('status'=>400,'title' => 'Dispositivo ya verificado',
+                'description' => 'El Dispositivo ya fue verificado.'));
             } else{
                 if($dispositivo->dispo_estado==1){
                     $dispositivosAc = dispositivos::findOrFail($dispositivo->idDispositivos);
@@ -31,8 +32,8 @@ class apimovilController extends Controller
                         'sub' => env('API_id'),
                     ]);
                     $payload = $factory->make();
-                    $token = JWTAuth::encode($payload); 
-                    
+                    $token = JWTAuth::encode($payload);
+
                     $dispositivo_Controlador=DB::table('dispositivo_controlador as dc')
                     ->join('dispositivos as dis', 'dc.idDispositivos', '=', 'dis.idDispositivos')
                     ->join('controladores as con', 'dc.idControladores', '=', 'con.idControladores')
@@ -50,19 +51,24 @@ class apimovilController extends Controller
                     ->groupBy('e.emple_id')
                     ->get();
 
-                    return response()->json(array("dispositivo" =>$dispositivosAc,"controladores" => $dispositivo_Controlador,
-                    "empleados" => $empleado,"token" =>$token->get()), 200);
+                    return response()->json(array('status'=>200,"dispositivo" =>$dispositivosAc,"controladores" => $dispositivo_Controlador,
+                    "empleados" => $empleado,"token" =>$token->get()));
                     /* return response()->json($dispositivo,200);     */
                 }
-            }          
+            }
         }
         else{
             $dispositivo1=dispositivos::where('dispo_movil','=',$nroMovil)
             ->get()->first();
             if($dispositivo1!=null){
-                return response()->json("clave incorrecta");
+                return response()->json(array('status'=>400,'title' => 'Clave incorrecta',
+                'description' => 'Asegúrate de escribir la clave correcta'));
+
             } else{
-                return response()->json("Dispositivo no existe");
+                return response()->json(array('status'=>400,'title' => 'Dispositivo no existe',
+                'description' => 'Asegúrate de registrar el dispositivo desde la plataforma web'));
+
+
             }
         }
     }
@@ -84,13 +90,13 @@ class apimovilController extends Controller
         ->get()->first();
 
        /*  if($dispositivo_Controlador!=null){
-            return response()->json($dispositivo_Controlador,200);    
+            return response()->json($dispositivo_Controlador,200);
         }
         else{
             return response()->json("Los datos no coinciden");
         } */
-        
-        return response()->json($dispositivo_Controlador,200);  
+
+        return response()->json($dispositivo_Controlador,200);
 
     }
 }
