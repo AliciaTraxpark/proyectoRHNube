@@ -58,7 +58,11 @@ $(document).ready(function () {
      { data: null },
      { data: "cont_codigo" },
      { data: "cont_nombres" },
-     { data: "cont_ApPaterno" },
+     { data: "cont_ApPaterno",
+        "render": function (data, type, row) {
+            return row.cont_ApPaterno+' '+row.cont_ApMaterno;
+        }
+         },
 
      { data:"ids" ,
         "render": function (data, type, row) {

@@ -16,7 +16,7 @@ class controladoresController extends Controller
     }
     public function index(){
         $dispositivo=dispositivos::where('organi_id','=',session('sesionidorg'))
-        ->where('dispo_estado','=',2)->get();
+        ->get();
         return view('controladores.controladores',['dispositivo' => $dispositivo]);
     }
     public function store(Request $request){
