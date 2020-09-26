@@ -37,17 +37,17 @@ $(document).ready(function () {
         },
     },
 
-      /*  ajax: {
+      ajax: {
    type: "post",
-   url: "/horario/listar",
+   url: "/listaControladores",
     headers: {
        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
    },
 
    "dataSrc": ""
   },
- */
-  /*  "columnDefs": [ {
+
+    "columnDefs": [ {
                "searchable": false,
                "orderable": false,
                "targets": 0
@@ -56,37 +56,48 @@ $(document).ready(function () {
            "order": [[ 1, 'asc' ]],
   columns: [
      { data: null },
-     { data: "horario_descripcion" },
-     { data: "horario_tolerancia",
-     "render": function (data, type, row) {
+     { data: "cont_codigo" },
+     { data: "cont_nombres" },
+     { data: "cont_ApPaterno",
+        "render": function (data, type, row) {
+            return row.cont_ApPaterno+' '+row.cont_ApMaterno;
+        }
+         },
 
-       return row.horario_tolerancia+'&nbsp;&nbsp; minutos';
+     { data:"ids" ,
+        "render": function (data, type, row) {
+        var valores=row.ids;
+        idsV=valores.split(',');
+        var variableResult=[];
+        $.each( idsV, function( index, value ){
+            variableResult1=  '<img src="landing/images/telefono-inteligente.svg" height="14">'+value;
 
-     } },
-     { data: "horaI" },
-     { data: "horaF" },
-     { data: "horario_horario_id",
-     "render": function (data, type, row) {
-       if (row.horario_horario_id ==null) {
-           return '<img src="admin/images/borrarH.svg" height="11" />&nbsp;&nbsp;No';}
-           else {
-       return '<img src="admin/images/checkH.svg" height="13" />&nbsp;&nbsp;Si';
-              }
-     } },
-     { data: "horario_id",
-     "render": function (data, type, row) {
+            variableResult.push(variableResult1);
 
-       return '<a onclick=" editarHorarioLista('+row.horario_id+')" style="cursor: pointer"><img src="/admin/images/edit.svg" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a onclick="" style="cursor: pointer">'+
-           '<img src="/admin/images/delete.svg" onclick="eliminarHorario('+row.horario_id+')" height="15"></a>';
+        })
+       return variableResult;
 
      } },
+     { data: "cont_correo" },
+     { data: "cont_estado",
+     "render": function (data, type, row) {
+        if (row.cont_estado ==0) {
+             return '<span class="badge badge-soft-danger">Inactivo</span>';
+        }
+        if (row.cont_estado ==1) {
+            return '<span class="badge badge-soft-info">Activo</span>';
+       }
+     
 
-  ] */
+     } },
+
+
+  ]
+
 
 
    });
-   //$('#verf1').hide();
-   //$('#tablaEmpleado tbody #tdC').css('display', 'none');
+
     table.on( 'order.dt search.dt', function () {
    table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
        cell.innerHTML = i+1;
@@ -98,7 +109,41 @@ $(document).ready(function () {
 });
 
 function NuevoContr(){
+$('#frmConNuevo')[0].reset();
+$("#selectDispo").select2({
+    placeholder: "Seleccione dispositivo"
+});
+$('#selectDispo').val('').trigger("change");
 $('#nuevoControlador').modal('show');
 }
 
-
+function RegistraContro(){
+    var codigoCon=$('#codContro').val();
+    var correoCon=$('#codCorreo').val();
+    var nombresCon=$('#codNombres').val();
+    var paternoCon=$('#codPaterno').val();
+    var maternoCon=$('#codMaterno').val();
+    var dispoCon=$('#selectDispo').val();
+    $.ajax({
+        type: "post",
+        url: "/controladStore",
+        data: {
+            codigoCon,correoCon,nombresCon,paternoCon,maternoCon,dispoCon
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+             $('#tablaContr').DataTable().ajax.reload();
+            $('#nuevoControlador').modal('hide');
+        },
+        error: function (data) {
+            alert("Ocurrio un error");
+        },
+    });
+}

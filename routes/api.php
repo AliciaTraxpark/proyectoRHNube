@@ -62,3 +62,7 @@ Route::post("actividad2", "apiVersionDosController@actividad")->middleware('toke
 
 // TICKET DE SOPORTE Y SUGERENCIA
 Route::post("ticketSoporte","apiVersionDosController@ticketSoporte")->middleware('token')->middleware('apilogger');
+
+//API MOVILES
+Route::post("verificacionMovil","apimovilController@apiActivacion")->middleware('apilogger');
+Route::post("loginMovil","apimovilController@loginMovil")->middleware('apilogger');

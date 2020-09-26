@@ -2,16 +2,10 @@
 
 @section('css')
 
-    <!-- App css -->
-    <link href="{{ asset('admin/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('admin/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('admin/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- Plugin css  CALENDAR-->
 
 
     <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
@@ -131,7 +125,7 @@
 
                                 </tr>
                             </thead>
-                           <tbody>
+                          {{--  <tbody>
                                 <tr>
                                     <td></td>
                                     <td>777666</td>
@@ -143,7 +137,7 @@
                                     <td><button type="button" class="btn btn-soft-info btn-sm">Activo</button></td>
 
                                 </tr>
-                            </tbody>
+                            </tbody> --}}
 
                         </table>
                     </div><br><br><br><br>
@@ -168,50 +162,55 @@
                             <div class="row">
 
                                 <div class="col-md-12">
-                                    <form id="frmHorNuevo" action="javascript:RegistraContro()">
+                                    <form id="frmConNuevo" action="javascript:RegistraContro()">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label >Código de controlador:</label>
-                                                    <input type="text" class="form-control form-control-sm" id="" >
+                                                    <input type="text" class="form-control form-control-sm" id="codContro" required >
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="">Correo:</label>
-                                                    <input type="text"  class="form-control form-control-sm"
-                                                        required>
+                                                    <input type="text"  class="form-control form-control-sm" id="codCorreo"
+                                                        >
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="">Nombres:</label>
-                                                    <input type="text"  class="form-control form-control-sm"
-                                                        id="" required>
+                                                    <input type="text"  class="form-control form-control-sm" id="codNombres"
+                                                         required>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="">Ap. Paterno:</label>
-                                                    <input type="text"  class="form-control form-control-sm"
-                                                        id="" required>
+                                                    <input type="text"  class="form-control form-control-sm" id="codPaterno"
+                                                        required>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="">Ap. Materno:</label>
-                                                    <input type="text"  class="form-control form-control-sm"
-                                                        id="" required>
+                                                    <input type="text"  class="form-control form-control-sm" id="codMaterno"
+                                                        required>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="">Seleccione dispositivo:</label>
-                                                    <select data-plugin="customselect" multiple
-                                                    class="form-control" data-placeholder="seleccione dispositivo">
-                                                    <option></option>
-                                                    <option >+51968009336 (Vigilancia Condor)</option>
+                                                    <select data-plugin="customselect" multiple="multiple" id="selectDispo"
+                                                    class="form-control"  required>
+                                                    @foreach ($dispositivo as $dispositivos)
+                                                    <option class="" value="{{$dispositivos->idDispositivos}}">{{$dispositivos->dispo_descripUbicacion}}
+                                                    @if ($dispositivos->dispo_estado!=2)
+                                                        (No confirmado)
+                                                        @endif
+                                                           </option>
+                                                    @endforeach
 
                                                 </select>
                                                 </div>
@@ -251,8 +250,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
     <script src="{{ asset('landing/js/controladMenu.js') }}"></script>
 
-    <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
-    <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
     <script src="{{ asset('admin/assets/libs/moment/moment.min.js') }}"></script>
 
