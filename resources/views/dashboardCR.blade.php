@@ -7,6 +7,10 @@
 <link href="{{URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')}}" rel="stylesheet" />
 <link href="{{ URL::asset('admin/assets/libs/apexcharts/apexcharts.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')}}" rel="stylesheet"
+    type="text/css" />
+<link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -19,50 +23,6 @@
         </div>
     </div>
 </div>
-<style>
-    .chart-legend li span {
-        display: inline-block;
-        width: 12px;
-        height: 12px;
-        margin-right: 3px;
-        -moz-border-radius: 50px;
-        -webkit-border-radius: 50px;
-        border-radius: 50px;
-    }
-
-    .chart-legend ul {
-        list-style: none;
-        width: 140px;
-    }
-
-    .chart-legend {
-        height: 250px;
-        overflow: auto;
-        margin-top: 15px;
-        margin-bottom: 15px;
-    }
-
-    #wrapper>div.content-page>div.content>div {
-        padding-left: 0px;
-        padding-right: 45px;
-    }
-
-    .chart-card {
-        background-color: #ffffff;
-        box-shadow: 1px 1px 10px rgba(87, 87, 87, 0.5);
-    }
-
-    .classic-tabs>ul.nav>li.nav-item>a {
-        color: #dce4eb !important;
-    }
-
-    .classic-tabs>ul.nav>li.nav-item>a.active {
-        color: #85a2b6 !important;
-        border-bottom: 2px solid #f1f2f3 !important;
-        font-weight: bold !important;
-        /* add background-color to active links */
-    }
-</style>
 <div class="row justify-content-center p-5">
     <div class="col-xl-12">
         <div class="card">
@@ -122,20 +82,38 @@
             </div>
             <div class="card-body border">
                 <div class="row justify-content-center">
-                    <div class="col-xl-12">
-                        <table id="dashboardEmpleado" class="table nowrap" style="font-size: 13px!important;width:
-                                        100%;">
-                            <thead style="background: #fafafa;" id="dias" style="width:100%!important">
-                                <tr>
-                                    <th>MIENBRO</th>
-                                    <th>TIEMPO</th>
-                                    <th>ACTIVIDAD</th>
-                                </tr>
-                            </thead>
-                            <tbody id="empleados">
-                            </tbody>
-                        </table>
+                    <div class="col-xl-4">
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label">Fecha:</label>
+                            <div class="input-group col-md-8 text-center" style="padding-left: 0px;padding-right: 0px;"
+                                id="fechaSelec">
+                                <input type="text" id="fecha" class="form-control" data-input>
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text form-control flatpickr">
+                                        <a class="input-button" data-toggle>
+                                            <i class="uil uil-calender"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-xl-12">
+                    <table id="dashboardEmpleado" class="table nowrap" style="font-size: 13px!important;width:
+                                        100%;">
+                        <thead style="background: #fafafa;" id="dias" style="width:100%!important">
+                            <tr>
+                                <th>MIENBRO</th>
+                                <th>TIEMPO</th>
+                                <th>ACTIVIDAD</th>
+                            </tr>
+                        </thead>
+                        <tbody id="empleados">
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -181,6 +159,9 @@
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <!-- optional plugins -->
+<script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
+<script src="{{URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/gauge/gauge.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/apexcharts/apexcharts.js') }}"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
