@@ -245,12 +245,8 @@ function onMostrarPantallas() {
                                                     <div  id="myCarousel${hora + j
                                 }" class = "carousel carousel-fade" data-ride = "carousel">
                                                         <div class = "carousel-inner">
-                                                            <div class = "carousel-item active">`;
-                            // data[index].minutos[j][0].imagen.forEach(dato => {
-                            //     card += `<img src="data:image/jpeg;base64,${dato.imagen}" height="120" width="200" class="img-responsive">`;
-                            // });
-                                    card += `<img src="data:image/jpeg;base64,${data[index].minutos[j][0].imagen[0].imagen}" height="120" width="200" class="img-responsive">`;
-                            card += `<div class="overlay">
+                                                            <div class = "carousel-item active"><img src="data:image/jpeg;base64,${data[index].minutos[j][0].imagen[0].imagen}" height="120" width="200" class="img-responsive">
+                                                            <div class="overlay">
                                     <a class="info" onclick="zoom('${hora + "," + j}')" style="color:#fdfdfd">
                                     <i class="fa fa-eye"></i> Colección</a>
                                     </div>
