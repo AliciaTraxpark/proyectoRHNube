@@ -58,7 +58,6 @@ myTimer();
 // apex
 $(function () {
   $('#fechaO').empty();
-  var hoy = moment().format("YYYY-MM-DD");
   $.ajax({
     url: "/fechaOD",
     method: "GET",
@@ -200,7 +199,7 @@ $(function () {
     scrollX: true,
     responsive: true,
     retrieve: true,
-    "searching": true,
+    "searching": false,
     "lengthChange": false,
     scrollCollapse: false,
     "pageLength": 30,
@@ -235,3 +234,18 @@ $(function () {
     }
   });
 });
+
+function empleadosControlRemoto() {
+  $.ajax({
+    url: "/empleadoCR",
+    method: "GET",
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function (data) {
+      console.log(data);
+    }
+  });
+}
+
+empleadosControlRemoto();

@@ -127,9 +127,8 @@
                                         100%;">
                             <thead style="background: #fafafa;" id="dias" style="width:100%!important">
                                 <tr>
-                                    <th><img src="{{URL::asset('admin/assets/images/users/empleado.png')}}" class="mr-2"
-                                            alt="" /></th>
-                                    <th>MIEMBRO</th>
+                                    <th>MIENBRO</th>
+                                    <th>TIEMPO</th>
                                     <th>ACTIVIDAD</th>
                                 </tr>
                             </thead>

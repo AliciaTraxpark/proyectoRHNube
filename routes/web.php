@@ -256,10 +256,12 @@ Route::get('/totalDepartamento', 'dashboardController@departamento');
 Route::get('/totalE', 'dashboardController@edad');
 Route::get('/totalRE', 'dashboardController@rangoE');
 Route::get('/horarioU', 'dashboardController@horarioDias');
+// DASHBOARD DE CONTROL REMOTO
 Route::get('/controlRemoto', 'dashboardController@dashboardCR');
 Route::get('/dashboardCR', 'dashboardController@globalControlRemoto');
 Route::get('/fechasDataDashboard', 'dashboardController@actividadArea');
 Route::get('/fechaOD', 'dashboardController@fechaOrganizacion');
+Route::get('/empleadoCR', 'dashboardController@empleadosControlRemoto');
 
 //MENU
 Route::get('/empleados', 'EmpleadoController@indexMenu');
@@ -363,4 +365,3 @@ Route::post('/tablaDisposito', 'dispositivosController@tablaDisposit');
 Route::post('/reenviarmensajeDis', 'dispositivosController@reenviarmensaje');
 //CONTROLADORES
 Route::get('/controladores', 'controladoresController@index');
-

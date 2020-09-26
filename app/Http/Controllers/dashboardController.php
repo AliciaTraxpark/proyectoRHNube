@@ -437,6 +437,7 @@ class dashboardController extends Controller
                 DB::raw('SUM(cp.actividad) as totalActividad')
             )
             ->where('e.organi_id', '=', session('sesionidorg'))
+            ->where('e.emple_estado', '=', 1)
             ->get()
             ->first();
 
@@ -476,6 +477,7 @@ class dashboardController extends Controller
                         DB::raw('((SUM(cp.actividad)/SUM(pc.tiempo_rango))*100) as division')
                     )
                     ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.emple_estado', '=', 1)
                     ->where('e.emple_area', '=', $respuesta[$i]['idArea'])
                     ->whereRaw("DATE(cp.hora_fin) ='$fecha'")
                     ->get()
@@ -500,5 +502,20 @@ class dashboardController extends Controller
         $organizacion = DB::table('organizacion as o')->select(DB::raw('DATE(o.created_at) as created_at'))->where('o.organi_id', '=', session('sesionidorg'))->get()->first();
 
         return response()->json($organizacion, 200);
+    }
+
+    public function empleadosControlRemoto()
+    {
+        $empleado = DB::table('empleado as e')
+            ->join('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
+            ->leftJoin('captura as cp', 'cp.idEmpleado', 'e.emple_id')
+            ->leftJoin('promedio_captura as pc', 'pc.idCaptura', '=', 'cp.idCaptura')
+            ->select(DB::raw('SUM(cp.actividad) as totalActividad'), DB::raw('SUM(pc.tiempo_rango) as totalRango'), DB::raw('((SUM(cp.actividad)/SUM(pc.tiempo_rango))*100) as division'))
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->where('e.emple_estado', '=', 1)
+            ->groupBy('e.emple_id')
+            ->get();
+
+        return response()->json($empleado, 200);
     }
 }
