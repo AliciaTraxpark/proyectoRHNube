@@ -504,17 +504,42 @@ class dashboardController extends Controller
         return response()->json($organizacion, 200);
     }
 
-    public function empleadosControlRemoto()
+    public function empleadosControlRemoto(Request $request)
     {
+        $fecha = $request->get('fecha');
+        $respuesta = [];
+        // DB::enableQueryLog();
         $empleado = DB::table('empleado as e')
+            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
             ->join('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
-            ->leftJoin('captura as cp', 'cp.idEmpleado', 'e.emple_id')
-            ->leftJoin('promedio_captura as pc', 'pc.idCaptura', '=', 'cp.idCaptura')
-            ->select(DB::raw('SUM(cp.actividad) as totalActividad'), DB::raw('SUM(pc.tiempo_rango) as totalRango'), DB::raw('((SUM(cp.actividad)/SUM(pc.tiempo_rango))*100) as division'))
+            ->select(
+                'e.emple_id',
+                'p.perso_nombre',
+                'p.perso_apPaterno',
+                'p.perso_apMaterno'
+            )
             ->where('e.organi_id', '=', session('sesionidorg'))
             ->where('e.emple_estado', '=', 1)
+            ->whereNotNull('v.pc_mac')
             ->groupBy('e.emple_id')
             ->get();
+        dd($empleado);
+        foreach ($empleado as $emple) {
+            $actividad = DB::table('empleado as e')
+                ->leftJoin('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                ->leftJoin('promedio_captura as pc', 'pc.idCaptura', '=', 'cp.idCaptura')
+                ->select(
+                    'e.emple_id',
+                    DB::raw('SUM(cp.actividad) as totalActividad'),
+                    DB::raw('SUM(pc.tiempo_rango) as totalRango'),
+                    DB::raw('((SUM(cp.actividad)/SUM(pc.tiempo_rango))*100) as division')
+                )
+                ->where('e.emple_id', '=', '')
+                ->where(DB::raw('DATE(cp.hora_fin)'), '=', $fecha)
+                ->get()->first();
+        }
+        // dd($empleado);
+        // dd(DB::getQueryLog());
 
         return response()->json($empleado, 200);
     }

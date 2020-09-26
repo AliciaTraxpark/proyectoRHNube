@@ -190,24 +190,7 @@ var options = {
 var chart = new ApexCharts(document.querySelector("#chart"), options);
 chart.render();
 
-dataFechas();
-
 //TABLA DASHBOARD
-//FECHA
-var fechaValue = $("#fechaSelec").flatpickr({
-  mode: "single",
-  dateFormat: "Y-m-d",
-  altInput: true,
-  altFormat: "D, j F",
-  locale: "es",
-  maxDate: "today",
-  wrap: true,
-  allowInput: true,
-});
-$(function () {
-  f = moment().format("YYYY-MM-DD");
-  fechaValue.setDate(f);
-});
 $(function () {
   $("#dashboardEmpleado").DataTable({
     scrollX: true,
@@ -249,10 +232,31 @@ $(function () {
   });
 });
 
+// FECHA
+var fechaValue = $("#fechaSelec").flatpickr({
+  mode: "single",
+  dateFormat: "Y-m-d",
+  altInput: true,
+  altFormat: "D, j F",
+  locale: "es",
+  maxDate: "today",
+  wrap: true,
+  allowInput: true,
+});
+$(function () {
+  f = moment().format("YYYY-MM-DD");
+  fechaValue.setDate(f);
+  empleadosControlRemoto();
+});
+//DATOS PARA TABLA
 function empleadosControlRemoto() {
+  var fecha = $("#fechaInput").val();
   $.ajax({
     url: "/empleadoCR",
     method: "GET",
+    data: {
+      fecha: fecha
+    },
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
@@ -261,5 +265,6 @@ function empleadosControlRemoto() {
     }
   });
 }
-
-empleadosControlRemoto();
+$(function(){
+  $("#fechaInput").on("change", empleadosControlRemoto);
+});

@@ -87,7 +87,7 @@
                             <label class="col-lg-3 col-form-label">Fecha:</label>
                             <div class="input-group col-md-8 text-center" style="padding-left: 0px;padding-right: 0px;"
                                 id="fechaSelec">
-                                <input type="text" id="fecha" class="form-control" data-input>
+                                <input type="text" id="fechaInput" class="form-control" data-input>
                                 <div class="input-group-prepend">
                                     <div class="input-group-text form-control flatpickr">
                                         <a class="input-button" data-toggle>
