@@ -130,51 +130,69 @@ class apiVersionDosController extends Controller
     public function capturaArray(Request $request)
     {
         foreach ($request->all() as $key => $value) {
-            $captura = new captura();
-            $captura->estado = $value['estado'];
-            $captura->imagen = $value['imagen'];
-            $captura->miniatura = $value['miniatura'];
-            $captura->actividad = $value['actividad'];
-            $captura->hora_ini = $value['hora_ini'];
-            $captura->hora_fin = $value['hora_fin'];
-            $captura->ultimo_acumulado = $value['ultimo_acumulado'];
-            $captura->acumulador = $value['acumulador'];
-            $captura->idHorario_dias = $value['idHorario_dias'];
-            $captura->idActividad = $value['idActividad'];
-            $captura->idEmpleado = $value['idEmpleado'];
-            $captura->save();
-
-            $idCaptura = $captura->idCaptura;
-            $idHorario = $captura->idHorario_dias;
-
-            //  PROMEDIO CAPTURA
-            $capturaRegistrada = captura::where('idCaptura', '=', $idCaptura)->get()->first();
-            $idHorario_dias = $idHorario;
-            //RESTA POR FECHA HORA DE   CAPTURAS
-            $fecha = Carbon::create($capturaRegistrada->hora_ini)->format('H:i:s');
-            $explo = explode(":", $fecha);
-            $calSegund = $explo[0] * 3600 + $explo[1] * 60 + $explo[2];
-            $fecha1 = Carbon::create($capturaRegistrada->hora_fin)->format('H:i:s');
-            $explo1 = explode(":", $fecha1);
-            $calSegund1 = $explo1[0] * 3600 + $explo1[1] * 60 + $explo1[2];
-            $totalP = $calSegund1 - $calSegund;
-            // ACTIVIDAD DE CAPTURA
-            $activ = $capturaRegistrada->actividad;
-            //VALIDACION DE CERO
-            if ($totalP == 0) {
-                $round = 0;
+            $capturaBuscar = captura::where("idEmpleado", "=", $value['idEmpleado'])
+                ->where('hora_ini', '=', $value['hora_ini'])
+                ->where('actividad', '=', $value['actividad'])
+                ->get()
+                ->first();
+            if ($capturaBuscar) {
+                $captura_imagen = new captura_imagen();
+                $captura_imagen->idCaptura = $capturaBuscar->idCaptura;
+                $captura_imagen->miniatura = $value['miniatura'];
+                $captura_imagen->imagen = $value['imagen'];
+                $captura_imagen->save();
             } else {
-                //PROMEDIO
-                $promedio = floatval($activ / $totalP);
-                $promedioFinal = $promedio * 100;
-                $round = round($promedioFinal, 2);
+                $captura = new captura();
+                $captura->estado = $value['estado'];
+                $captura->actividad = $value['actividad'];
+                $captura->hora_ini = $value['hora_ini'];
+                $captura->hora_fin = $value['hora_fin'];
+                $captura->ultimo_acumulado = $value['ultimo_acumulado'];
+                $captura->acumulador = $value['acumulador'];
+                $captura->idHorario_dias = $value['idHorario_dias'];
+                $captura->idActividad = $value['idActividad'];
+                $captura->idEmpleado = $value['idEmpleado'];
+                $captura->save();
+
+                $idCaptura = $captura->idCaptura;
+                $idHorario = $captura->idHorario_dias;
+
+                //CAPTURA_IMAGEN
+                $captura_imagen = new captura_imagen();
+                $captura_imagen->idCaptura = $idCaptura;
+                $captura_imagen->miniatura = $value['miniatura'];
+                $captura_imagen->imagen = $value['imagen'];
+                $captura_imagen->save();
+
+                //  PROMEDIO CAPTURA
+                $capturaRegistrada = captura::where('idCaptura', '=', $idCaptura)->get()->first();
+                $idHorario_dias = $idHorario;
+                //RESTA POR FECHA HORA DE   CAPTURAS
+                $fecha = Carbon::create($capturaRegistrada->hora_ini)->format('H:i:s');
+                $explo = explode(":", $fecha);
+                $calSegund = $explo[0] * 3600 + $explo[1] * 60 + $explo[2];
+                $fecha1 = Carbon::create($capturaRegistrada->hora_fin)->format('H:i:s');
+                $explo1 = explode(":", $fecha1);
+                $calSegund1 = $explo1[0] * 3600 + $explo1[1] * 60 + $explo1[2];
+                $totalP = $calSegund1 - $calSegund;
+                // ACTIVIDAD DE CAPTURA
+                $activ = $capturaRegistrada->actividad;
+                //VALIDACION DE CERO
+                if ($totalP == 0) {
+                    $round = 0;
+                } else {
+                    //PROMEDIO
+                    $promedio = floatval($activ / $totalP);
+                    $promedioFinal = $promedio * 100;
+                    $round = round($promedioFinal, 2);
+                }
+                $promedio_captura = new promedio_captura();
+                $promedio_captura->idCaptura = $idCaptura;
+                $promedio_captura->idHorario = $idHorario_dias;
+                $promedio_captura->promedio = $round;
+                $promedio_captura->tiempo_rango = $totalP;
+                $promedio_captura->save();
             }
-            $promedio_captura = new promedio_captura();
-            $promedio_captura->idCaptura = $idCaptura;
-            $promedio_captura->idHorario = $idHorario_dias;
-            $promedio_captura->promedio = $round;
-            $promedio_captura->tiempo_rango = $totalP;
-            $promedio_captura->save();
         }
         return response()->json($request->all(), 200);
     }
