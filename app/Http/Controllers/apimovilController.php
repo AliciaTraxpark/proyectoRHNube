@@ -21,7 +21,7 @@ class apimovilController extends Controller
         if($dispositivo!=null){
             if($dispositivo->dispo_estado==2){
                 return response()->json(array('status'=>400,'title' => 'Dispositivo ya verificado',
-                'description' => 'El Dispositivo ya fue verificado.'));
+                'detail' => 'El Dispositivo ya fue verificado.'));
             } else{
                 if($dispositivo->dispo_estado==1){
                     $dispositivosAc = dispositivos::findOrFail($dispositivo->idDispositivos);
@@ -49,7 +49,7 @@ class apimovilController extends Controller
                     ->where('e.organi_id', '=',  $dispositivosAc->organi_id)
                     ->where('e.emple_estado', '=', 1)
                     ->groupBy('e.emple_id')
-                    ->get();
+                    ->paginate();
 
                     return response()->json(array('status'=>200,"dispositivo" =>$dispositivosAc,"controladores" => $dispositivo_Controlador,
                     "empleados" => $empleado,"token" =>$token->get()));
@@ -62,11 +62,11 @@ class apimovilController extends Controller
             ->get()->first();
             if($dispositivo1!=null){
                 return response()->json(array('status'=>400,'title' => 'Clave incorrecta',
-                'description' => 'Asegúrate de escribir la clave correcta'));
+                'detail' => 'Asegúrate de escribir la clave correcta'));
 
             } else{
                 return response()->json(array('status'=>400,'title' => 'Dispositivo no existe',
-                'description' => 'Asegúrate de registrar el dispositivo desde la plataforma web'));
+                'detail' => 'Asegúrate de registrar el dispositivo desde la plataforma web'));
 
 
             }
