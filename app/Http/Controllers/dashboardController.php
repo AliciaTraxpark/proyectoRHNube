@@ -523,7 +523,6 @@ class dashboardController extends Controller
             ->whereNotNull('v.pc_mac')
             ->groupBy('e.emple_id')
             ->get();
-        dd($empleado);
         foreach ($empleado as $emple) {
             $actividad = DB::table('empleado as e')
                 ->leftJoin('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
@@ -534,13 +533,43 @@ class dashboardController extends Controller
                     DB::raw('SUM(pc.tiempo_rango) as totalRango'),
                     DB::raw('((SUM(cp.actividad)/SUM(pc.tiempo_rango))*100) as division')
                 )
-                ->where('e.emple_id', '=', '')
+                ->where('e.emple_id', '=', $emple->emple_id)
                 ->where(DB::raw('DATE(cp.hora_fin)'), '=', $fecha)
                 ->get()->first();
+            if (is_null($actividad->totalRango) === true) {
+                array_push($respuesta, array(
+                    "idEmpleado" => $emple->emple_id,
+                    "nombre" => $emple->perso_nombre,
+                    "apPaterno" => $emple->perso_apPaterno,
+                    "apMaterno" => $emple->perso_apMaterno,
+                    "tiempoT" => 0,
+                    "division" => 0
+                ));
+            } else {
+                if (is_null($actividad->division) === true) {
+                    array_push($respuesta, array(
+                        "idEmpleado" => $emple->emple_id,
+                        "nombre" => $emple->perso_nombre,
+                        "apPaterno" => $emple->perso_apPaterno,
+                        "apMaterno" => $emple->perso_apMaterno,
+                        "tiempoT" => $actividad->totalRango,
+                        "division" => 0
+                    ));
+                } else {
+                    array_push($respuesta, array(
+                        "idEmpleado" => $emple->emple_id,
+                        "nombre" => $emple->perso_nombre,
+                        "apPaterno" => $emple->perso_apPaterno,
+                        "apMaterno" => $emple->perso_apMaterno,
+                        "tiempoT" => $actividad->totalRango,
+                        "division" => $actividad->division
+                    ));
+                }
+            }
         }
         // dd($empleado);
         // dd(DB::getQueryLog());
 
-        return response()->json($empleado, 200);
+        return response()->json($respuesta, 200);
     }
 }
