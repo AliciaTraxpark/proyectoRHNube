@@ -205,7 +205,11 @@
                                                     <select data-plugin="customselect" multiple="multiple" id="selectDispo"
                                                     class="form-control"  required>
                                                     @foreach ($dispositivo as $dispositivos)
-                                                    <option class="" value="{{$dispositivos->idDispositivos}}">{{$dispositivos->dispo_movil}}</option>
+                                                    <option class="" value="{{$dispositivos->idDispositivos}}">{{$dispositivos->dispo_descripUbicacion}}
+                                                    @if ($dispositivos->dispo_estado!=2)
+                                                        (No confirmado)
+                                                        @endif
+                                                           </option>
                                                     @endforeach
 
                                                 </select>
