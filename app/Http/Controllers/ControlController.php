@@ -443,8 +443,9 @@ class ControlController extends Controller
     {
         $idCaptura = $request->get('idCaptura');
         $respuesta = [];
-        $captura = DB::table('captura_imagen as ci')
-            ->select('ci.imagen', 'ci.hora_ini')
+        $captura = DB::table('captura as cp')
+            ->join('captura_imagen as ci', 'ci.idCaptura', '=', 'cp.idCaptura')
+            ->select('ci.imagen', 'cp.hora_ini')
             ->where('ci.id', '=', $idCaptura)
             ->get()
             ->first();
