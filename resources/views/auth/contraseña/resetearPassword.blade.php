@@ -18,7 +18,7 @@
         <link href="{{
             URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')
             }}" rel="stylesheet" />
-        <link rel="shortcut icon" href="https://i.ibb.co/Pt7wKJf/CUADRADO-NUBE-SOLA.png">
+        <link rel="shortcut icon" href="https://i.ibb.co/r4SyJxm/CUADRADO-RH.png">
     </head>
 
     <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100"
