@@ -292,8 +292,8 @@ function empleadosControlRemoto() {
         angle: 0.26,
         lineWidth: 0.12,
         pointer: {
-          length: 0.59,
-          strokeWidth: 0.051,
+          length: 0.24,
+          strokeWidth: 0.073,
           color: '#444444'
         },
         limitMax: 'false',
