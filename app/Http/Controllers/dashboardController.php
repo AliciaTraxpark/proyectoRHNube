@@ -425,22 +425,32 @@ class dashboardController extends Controller
     // DASHBOARD PARA CONTROL REMOTO
     public function dashboardCR()
     {
-        return view('dashboardCR');
+        $areas = DB::table('area as a')
+            ->select('a.area_id', 'a.area_descripcion')
+            ->where('a.organi_id', '=', session('sesionidorg'))
+            ->get();
+        return view('dashboardCR', ['areas' => $areas]);
     }
-    public function globalControlRemoto()
+    public function globalControlRemoto(Request $request)
     {
+        $fecha = $request->get('fecha');
         $actividadCR = DB::table('empleado as e')
             ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
             ->join('promedio_captura as pc', 'pc.idCaptura', '=', 'cp.idCaptura')
             ->select(
                 DB::raw('SUM(pc.tiempo_rango) as totalRango'),
-                DB::raw('SUM(cp.actividad) as totalActividad')
+                DB::raw('SUM(cp.actividad) as totalActividad'),
+                DB::raw('(((SUM(cp.actividad)) / SUM(pc.tiempo_rango))*100) as resultado')
             )
             ->where('e.organi_id', '=', session('sesionidorg'))
+            ->where(DB::raw('DATE(cp.hora_fin)'), '=', $fecha)
             ->where('e.emple_estado', '=', 1)
             ->get()
             ->first();
 
+        if(is_null($actividadCR->resultado) === true){
+            $actividadCR->resultado = 0;
+        }
         return response()->json($actividadCR, 200);
     }
 
@@ -507,22 +517,41 @@ class dashboardController extends Controller
     public function empleadosControlRemoto(Request $request)
     {
         $fecha = $request->get('fecha');
+        $area = $request->get('area');
         $respuesta = [];
         // DB::enableQueryLog();
-        $empleado = DB::table('empleado as e')
-            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-            ->join('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
-            ->select(
-                'e.emple_id',
-                'p.perso_nombre',
-                'p.perso_apPaterno',
-                'p.perso_apMaterno'
-            )
-            ->where('e.organi_id', '=', session('sesionidorg'))
-            ->where('e.emple_estado', '=', 1)
-            ->whereNotNull('v.pc_mac')
-            ->groupBy('e.emple_id')
-            ->get();
+        if (is_null($area) === true) {
+            $empleado = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->join('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
+                ->select(
+                    'e.emple_id',
+                    'p.perso_nombre',
+                    'p.perso_apPaterno',
+                    'p.perso_apMaterno'
+                )
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.emple_estado', '=', 1)
+                ->whereNotNull('v.pc_mac')
+                ->groupBy('e.emple_id')
+                ->get();
+        } else {
+            $empleado = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->join('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
+                ->select(
+                    'e.emple_id',
+                    'p.perso_nombre',
+                    'p.perso_apPaterno',
+                    'p.perso_apMaterno'
+                )
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.emple_estado', '=', 1)
+                ->whereNotNull('v.pc_mac')
+                ->whereIn('e.emple_area', $area)
+                ->groupBy('e.emple_id')
+                ->get();
+        }
         foreach ($empleado as $emple) {
             $actividad = DB::table('empleado as e')
                 ->leftJoin('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
@@ -569,6 +598,21 @@ class dashboardController extends Controller
         }
         // dd($empleado);
         // dd(DB::getQueryLog());
+
+        return response()->json($respuesta, 200);
+    }
+
+    public function selctAreas()
+    {
+        $respuesta = [];
+        $areas = DB::table('area as a')
+            ->select('a.area_id', 'a.area_descripcion')
+            ->where('a.organi_id', '=', session('sesionidorg'))
+            ->get();
+
+        foreach ($areas as $area) {
+            array_push($respuesta, array("id" => $area->area_id, "text" => $area->area_descripcion));
+        }
 
         return response()->json($respuesta, 200);
     }

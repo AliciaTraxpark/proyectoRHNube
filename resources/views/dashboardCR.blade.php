@@ -11,6 +11,8 @@
 <link href="{{URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')}}" rel="stylesheet"
     type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -26,22 +28,31 @@
 <div class="row justify-content-center p-5">
     <div class="col-xl-12">
         <div class="card">
-            <div class="card-header"
+            <div class="card-header pb-0"
                 style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1">
-                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">Actividad Total
+                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">
+                    <img src="{{asset('landing/images/velocímetro.gif')}}" height="25" class="mr-2">
+                    Actividad Total
                 </h5>
             </div>
             <div class="card-body border">
                 <div class="row justify-content-center">
                     <div class="col-xl-4">
-                        <div class="col-md-12">
-                            <div class="card bg-c-green order-card p-2"
-                                style="background: linear-gradient(45deg, #2ed8b6, #59e0c5);">
-                                <div class="card-block">
-                                    <h6 class="m-b-20" style="color: #ffffff">Fecha Inicio</h6>
-                                    <h2 class="text-right"><i class="fa fa-calendar f-left"
-                                            style="color: #ffffff"></i><span></span></h2>
-                                    <p class="m-b-0" style="color: #ffffff" id="fechaO"></p>
+                        <div class="row justify-content-center">
+                            <div class="col-xl-12">
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Fecha</label>
+                                    <div class="input-group col-md-8 text-center"
+                                        style="padding-left: 0px;padding-right: 0px;" id="fechaSelecG">
+                                        <input type="text" id="fechaInputG" class="form-control" data-input>
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text form-control flatpickr">
+                                                <a class="input-button" data-toggle>
+                                                    <i class="uil uil-calender"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -58,9 +69,11 @@
     </div>
     <div class="col-xl-12" id="divArea" style="display: none">
         <div class="card">
-            <div class="card-header"
+            <div class="card-header pb-0"
                 style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1">
-                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">Detalle diario por áreas
+                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">
+                    <img src="{{asset('landing/images/velocímetro.gif')}}" height="25" class="mr-2">
+                    Detalle diario por áreas
                 </h5>
             </div>
             <div class="card-body border">
@@ -75,9 +88,11 @@
     </div>
     <div class="col-xl-12">
         <div class="card">
-            <div class="card-header"
+            <div class="card-header pb-0"
                 style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1">
-                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">Detalle diario por usuario
+                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">
+                    <img src="{{asset('landing/images/velocímetro.gif')}}" height="25" class="mr-2">
+                    Detalle diario por usuario
                 </h5>
             </div>
             <div class="card-body border">
@@ -98,22 +113,37 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-xl-2"><br></div>
+                    <div class="col-xl-6">
+                        <div class="form-group row">
+                            <label class="col-lg-2 col-form-label">Área:</label>
+                            <div class="col-lg-10">
+                                <select id="area" data-plugin="customselect" class="form-control" multiple="multiple">
+                                    @foreach ($areas as $area)
+                                    <option value="{{$area->area_id}}">
+                                        {{$area->area_descripcion}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-xl-12">
-                    <table id="dashboardEmpleado" class="table nowrap" style="font-size: 13px!important;width:
+                <div class="row justify-content-center">
+                    <div class="col-xl-12">
+                        <table id="dashboardEmpleado" class="table nowrap" style="font-size: 13px!important;width:
                                         100%;">
-                        <thead style="background: #fafafa;" id="dias" style="width:100%!important">
-                            <tr>
-                                <th>MIENBRO</th>
-                                <th>TIEMPO</th>
-                                <th>ACTIVIDAD</th>
-                            </tr>
-                        </thead>
-                        <tbody id="empleadosCR">
-                        </tbody>
-                    </table>
+                            <thead style="background: #fafafa;" id="dias" style="width:100%!important">
+                                <tr>
+                                    <th>EMPLEADO</th>
+                                    <th class="text-center">TIEMPO</th>
+                                    <th class="text-center">ACTIVIDAD</th>
+                                </tr>
+                            </thead>
+                            <tbody id="empleadosCR">
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -159,6 +189,8 @@
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <!-- optional plugins -->
+<script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
 <script src="{{URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js')}}"></script>

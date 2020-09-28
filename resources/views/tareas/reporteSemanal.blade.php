@@ -7,8 +7,7 @@
     }}" rel="stylesheet" />
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css')
-    }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{
     URL::asset('admin/assets/libs/bootstrap-datetimepicker-master/bootstrap-datetimepicker.css')
     }}" rel="stylesheet" type="text/css" />
@@ -135,7 +134,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body"  id="tablaSinActividadD">
+                            <div class="card-body" id="tablaSinActividadD">
                                 <div class="table-responsive-xl">
                                     <table id="Reporte" class="table nowrap" style="font-size: 13px!important;width:
                                         100%;">
@@ -201,8 +200,7 @@
     URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js')
     }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js')
-    }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js')}}"></script>
 <!-- datatable js -->
 <script src="{{ URL::asset('admin/assets/libs/chart/Chart.min.js') }}"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
