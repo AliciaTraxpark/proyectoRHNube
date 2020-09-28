@@ -208,6 +208,7 @@ $(function () {
   empleadosControlRemoto();
 });
 //DATOS PARA TABLA
+var datos = {};
 function empleadosControlRemoto() {
   var fecha = $("#fechaInput").val();
   $('#empleadosCR').empty();
@@ -221,13 +222,28 @@ function empleadosControlRemoto() {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     success: function (data) {
+      console.log(data);
+      datos = data;
       var tr = "<tr>";
-      for(let index =0; index < data.length; index++){
-        tr += "<td>" + data[index].nombre+" "+data[index].apPaterno+" "+data[index].apMaterno+ "</td>\
-        <td>"+data[index].tiempoT + "</td><td>" + data[index].division + "</td>";
+      for (let index = 0; index < data.length; index++) {
+        tr += "<td>" + data[index].nombre + " " + data[index].apPaterno + " " + data[index].apMaterno + "</td>\
+        <td>"+ data[index].tiempoT + "</td><td><div class=\"col-xl-8\">\
+        <div class=\"wrapper\" style=\"display: flex;flex-flow: column;align-items: center\">\
+            <div id=\"gauge-value\" style=\"font-size: 24px;font-weight: bold;padding-bottom: 5px\"></div>\
+            <canvas id=\"foo"+ data[index].idEmpleado + "\"></canvas>\
+        </div>\
+    </div></td>";
       }
       tr += "</tr>";
       $('#empleadosCR').html(tr);
+      for (let i = 0; i < datos.length; i++) {
+        var target = document.getElementById('foo' + datos[i].idEmpleado);
+        var gauge = new Gauge(target).setOptions(opts);
+        gauge.setMinValue(0);
+        gauge.maxValue = 100;
+        gauge.animationSpeed = 50;
+        gauge.set(datos[i].division);
+      }
       $("#dashboardEmpleado").DataTable({
         scrollX: true,
         responsive: true,
@@ -269,6 +285,6 @@ function empleadosControlRemoto() {
     }
   });
 }
-$(function(){
+$(function () {
   $("#fechaInput").on("change", empleadosControlRemoto);
 });
