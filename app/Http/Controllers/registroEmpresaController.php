@@ -114,7 +114,7 @@ class registroEmpresaController extends Controller
             /////////////////////////////////
             $comusuario_organizacion=usuario_organizacion::where('user_id','=', $users->id)->count();
             if($comusuario_organizacion>1){
-                return Redirect::to('/')->with('mensaje', "Nueva organizacion creada exitoxamente!");
+                return Redirect::to('/')->with('mensaje', "Nueva organizacion creada exitosamente!");
 
             }else{
                 if (sizeof($datoNuevo) != 2) {
