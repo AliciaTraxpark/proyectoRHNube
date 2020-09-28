@@ -138,7 +138,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
         <div class="container pb-3">
             <div class="col-md-2 col-xl-2 mr-4 p-0">
                 <div class="navbar-brand-wrapper d-flex w-200">
-                    <img src="{{asset('landing/images/Recurso_23.png')}}" height="45" >
+                    <img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="69" >
                 </div>
             </div>
             <div class="col-md-6 text-left">

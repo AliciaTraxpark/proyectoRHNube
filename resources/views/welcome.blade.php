@@ -38,7 +38,7 @@
             <div class="container pb-0 pt-2">
                 <div class="col-md-5" style="margin-bottom: 10px;padding-left: 50px">
                     <div class="navbar-brand-wrapper d-flex">
-                        <img src="{{asset('landing/images/Recurso_23.png')}}" width="35%" height="35%">
+                        <img src="{{asset('landing/images/NUBE_SOLA.png')}}" width="35%"  height="35%" >
                     </div>
                 </div>
 
@@ -378,7 +378,7 @@
     @endif
     <footer class="border-top" style="background:#163552">
         <div class="col-md-12 text-center" style="margin-top: 20px">
-            <img src="{{asset('landing/images/Recurso_23.png')}}" width="10%" height="10%">
+            <img src="{{asset('landing/images/NUBE_SOLA.png')}}" width="10%" height="10%">
         </div>
         <div class="col-md-12 text-center" style="margin-top: 10px;margin-bottom: 20px">
             <span class="mdi mdi-phone" style="color:#faf3f3;font-size: 12px!important"> (01) 238-8350 | <span

@@ -105,7 +105,7 @@ class apimovilController extends Controller
         }
         else{
             return response()->json(array('status'=>400,'title' => 'Empleados no encontrados',
-            'detail' => 'No se encontro empleados relacionados con este dispositivo'));
+            'detail' => 'No se encontro empleados relacionados con este dispositivo'),400);
         }
 
 

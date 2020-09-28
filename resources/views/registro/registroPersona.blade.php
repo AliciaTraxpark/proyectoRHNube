@@ -43,7 +43,7 @@
             <div class="container">
                 <div class="col-md-3 pl-5">
                     <div class="navbar-brand-wrapper d-flex w-100">
-                        <img src="{{asset('landing/images/Recurso_23.png')}}" height="45">
+                        <img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="69" >
                     </div>
                 </div>
                 <div class="col-md-9 text-left pt-2">
