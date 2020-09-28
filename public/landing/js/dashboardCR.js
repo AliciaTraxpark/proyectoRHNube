@@ -278,16 +278,15 @@ function empleadosControlRemoto() {
     success: function (data) {
       console.log(data);
       datos = data;
-      var tr = "<tr>";
+      var tr = "";
       for (let index = 0; index < data.length; index++) {
-        tr += "<td style=\"vertical-align: middle;\">" + data[index].nombre + " " + data[index].apPaterno + " " + data[index].apMaterno + "</td>\
+        tr += "<tr><td style=\"vertical-align: middle;\">" + data[index].nombre + " " + data[index].apPaterno + " " + data[index].apMaterno + "</td>\
         <td class=\"text-center\" style=\"vertical-align: middle;\">"+ enteroTime(data[index].tiempoT) + "</td><td>\
         <div class=\"wrapper\" style=\"display: flex;flex-flow: column;align-items: center\">\
             <div id=\"gauge-value"+ data[index].idEmpleado + "\" style=\"font-size: 14px;font-weight: bold;padding-bottom: 5px\"></div>\
             <canvas id=\"foo"+ data[index].idEmpleado + "\"></canvas>\
-        </div>\</td>";
+        </div>\</td></tr>";
       }
-      tr += "</tr>";
       $('#empleadosCR').html(tr);
       var opciones = {
         angle: 0.26,
@@ -304,6 +303,7 @@ function empleadosControlRemoto() {
         highDpiSupport: true
       };
       for (let i = 0; i < datos.length; i++) {
+        console.log(datos);
         var val = datos[i].division.toFixed(2);
         document.getElementById('foo' + datos[i].idEmpleado).setAttribute('width', '100px');
         document.getElementById('foo' + datos[i].idEmpleado).setAttribute('height', '40px');
