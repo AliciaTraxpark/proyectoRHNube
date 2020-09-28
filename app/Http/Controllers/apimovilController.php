@@ -20,8 +20,31 @@ class apimovilController extends Controller
 
         if($dispositivo!=null){
             if($dispositivo->dispo_estado==2){
-                return response()->json(array('status'=>400,'title' => 'Dispositivo ya verificado',
+                if($dispositivo->dispo_codigoNombre==$nombreDisp){
+                    $factory = JWTFactory::customClaims([
+                        'sub' => env('API_id'),
+                    ]);
+                    $payload = $factory->make();
+                    $token = JWTAuth::encode($payload);
+
+                    $dispositivo_Controlador=DB::table('dispositivo_controlador as dc')
+                    ->join('dispositivos as dis', 'dc.idDispositivos', '=', 'dis.idDispositivos')
+                    ->join('controladores as con', 'dc.idControladores', '=', 'con.idControladores')
+                    ->select('dis.dispo_descripUbicacion','dis.dispo_movil','dis.dispo_tSincro','dis.dispo_tMarca',
+                    'con.cont_nombres','con.cont_ApPaterno','con.cont_ApMaterno')
+                    ->where('dis.dispo_movil', '=',$nroMovil)
+                    ->where('dis.dispo_codigo', '=', $codigo)
+                    ->get();
+
+
+
+                    return response()->json(array('status'=>200,"dispositivo" =>$dispositivo,"controladores" => $dispositivo_Controlador,
+                    "token" =>$token->get()));
+                } else{
+                     return response()->json(array('status'=>400,'title' => 'Ya esta activado en otro dispositivo',
                 'detail' => 'El Dispositivo ya fue verificado.'),400);
+                }
+
             } else{
                 if($dispositivo->dispo_estado==1){
                     $dispositivosAc = dispositivos::findOrFail($dispositivo->idDispositivos);
