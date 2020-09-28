@@ -507,22 +507,41 @@ class dashboardController extends Controller
     public function empleadosControlRemoto(Request $request)
     {
         $fecha = $request->get('fecha');
+        $area = $request->get('area');
         $respuesta = [];
         // DB::enableQueryLog();
-        $empleado = DB::table('empleado as e')
-            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-            ->join('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
-            ->select(
-                'e.emple_id',
-                'p.perso_nombre',
-                'p.perso_apPaterno',
-                'p.perso_apMaterno'
-            )
-            ->where('e.organi_id', '=', session('sesionidorg'))
-            ->where('e.emple_estado', '=', 1)
-            ->whereNotNull('v.pc_mac')
-            ->groupBy('e.emple_id')
-            ->get();
+        if (is_null($area) === true) {
+            $empleado = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->join('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
+                ->select(
+                    'e.emple_id',
+                    'p.perso_nombre',
+                    'p.perso_apPaterno',
+                    'p.perso_apMaterno'
+                )
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.emple_estado', '=', 1)
+                ->whereNotNull('v.pc_mac')
+                ->groupBy('e.emple_id')
+                ->get();
+        } else {
+            $empleado = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->join('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
+                ->select(
+                    'e.emple_id',
+                    'p.perso_nombre',
+                    'p.perso_apPaterno',
+                    'p.perso_apMaterno'
+                )
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.emple_estado', '=', 1)
+                ->whereNotNull('v.pc_mac')
+                ->whereIn('e.emple_area', $area)
+                ->groupBy('e.emple_id')
+                ->get();
+        }
         foreach ($empleado as $emple) {
             $actividad = DB::table('empleado as e')
                 ->leftJoin('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')

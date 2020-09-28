@@ -220,6 +220,7 @@ $('#area').select2({
 
 $('#area').on("change", function (e) {
   console.log($('#area').val());
+  empleadosControlRemoto();
 });
 // FECHA
 var fechaValue = $("#fechaSelec").flatpickr({
@@ -241,6 +242,7 @@ $(function () {
 var datos = {};
 function empleadosControlRemoto() {
   var fecha = $("#fechaInput").val();
+  var area = $('#area').val();
   $('#empleadosCR').empty();
   $.ajax({
     url: "/empleadoCR",
