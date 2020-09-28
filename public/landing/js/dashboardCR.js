@@ -10,7 +10,7 @@ var opts = {
   },
   limitMax: 'false',
   percentColors: [[0.0, "#ff0000"], [0.50, "#f9c802"], [1.0, "#a9d70b"]],
-  strokeColor: '#E0E0E0',
+  strokeColor: '#f4f4f4',
   generateGradient: true,
   highDpiSupport: true,
   staticLabels: {
@@ -20,26 +20,49 @@ var opts = {
     fractionDigits: 0  // Optional: Numerical precision. 0=round off.
   },
 };
-
+// FECHA
+var fechaG = $("#fechaSelecG").flatpickr({
+  mode: "single",
+  dateFormat: "Y-m-d",
+  altInput: true,
+  altFormat: "D, j F",
+  locale: "es",
+  maxDate: "today",
+  wrap: true,
+  allowInput: true,
+});
+$(function () {
+  f = moment().format("YYYY-MM-DD");
+  fechaG.setDate(f);
+  myTimer();
+});
 function resultadoCR() {
   var resultado = 0;
+  var fecha = $('#fechaInputG').val();
   $.ajax({
     async: false,
     url: "/dashboardCR",
     method: "GET",
+    data: {
+      fecha: fecha
+    },
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     success: function (data) {
-      var promedio = ((data.totalActividad / data.totalRango) * 100).toFixed(2);
-      console.log(data.totalActividad, data.totalRango, promedio);
+      var promedio = data.resultado.toFixed(2);
       resultado = promedio;
     }
   });
 
   return resultado;
 }
-
+$(function () {
+  $("#fechaInputG").on("change", function () {
+    resultadoCR();
+    myTimer();
+  });
+});
 function myTimer() {
   var valor = resultadoCR();
   gauge.setMinValue(0);
@@ -53,7 +76,6 @@ var gauge = new Gauge(target).setOptions(opts);
 gauge.setTextField(document.getElementById("gauge-value"));
 
 //---------------------------------------------------------------------
-myTimer();
 
 // apex
 $(function () {

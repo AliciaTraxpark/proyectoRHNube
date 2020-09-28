@@ -431,20 +431,26 @@ class dashboardController extends Controller
             ->get();
         return view('dashboardCR', ['areas' => $areas]);
     }
-    public function globalControlRemoto()
+    public function globalControlRemoto(Request $request)
     {
+        $fecha = $request->get('fecha');
         $actividadCR = DB::table('empleado as e')
             ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
             ->join('promedio_captura as pc', 'pc.idCaptura', '=', 'cp.idCaptura')
             ->select(
                 DB::raw('SUM(pc.tiempo_rango) as totalRango'),
-                DB::raw('SUM(cp.actividad) as totalActividad')
+                DB::raw('SUM(cp.actividad) as totalActividad'),
+                DB::raw('(((SUM(cp.actividad)) / SUM(pc.tiempo_rango))*100) as resultado')
             )
             ->where('e.organi_id', '=', session('sesionidorg'))
+            ->where(DB::raw('DATE(cp.hora_fin)'), '=', $fecha)
             ->where('e.emple_estado', '=', 1)
             ->get()
             ->first();
 
+        if(is_null($actividadCR->resultado) === true){
+            $actividadCR->resultado = 0;
+        }
         return response()->json($actividadCR, 200);
     }
 
