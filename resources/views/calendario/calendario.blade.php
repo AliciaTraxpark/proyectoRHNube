@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- App favicon -->
-  <link rel="shortcut icon" href="https://i.ibb.co/r4SyJxm/CUADRADO-RH.png">
+  <link rel="shortcut icon" href="{{asset('landing/images/ICONO-LOGO-NUBE-RH.ico')}}">
 
   <!-- Plugin css  CALENDAR-->
   <link href="{{asset('admin/packages/core/main.css')}}" rel="stylesheet" />

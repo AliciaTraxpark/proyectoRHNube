@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{asset('landing/vendors/mdi/css/materialdesignicons.min.css')}}">
     <link rel="stylesheet" href="{{asset('landing/vendors/aos/css/aos.css')}}">
     <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
-    <link rel="shortcut icon" href="https://i.ibb.co/r4SyJxm/CUADRADO-RH.png">
+    <link rel="shortcut icon" href="{{asset('landing/images/ICONO-LOGO-NUBE-RH.ico')}}">
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-169261172-1"></script>
     <script>

@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{asset('landing/vendors/aos/css/aos.css')}}">
     <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" href="https://i.ibb.co/r4SyJxm/CUADRADO-RH.png">
+    <link rel="shortcut icon" href="{{asset('landing/images/ICONO-LOGO-NUBE-RH.ico')}}">
 </head>
 
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
