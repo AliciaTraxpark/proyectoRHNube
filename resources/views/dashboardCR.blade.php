@@ -16,6 +16,33 @@
 @endsection
 
 @section('content')
+<style>
+    .avatarsul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .liImg {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid white;
+        display: inline-block;
+        position: relative;
+        box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2);
+        -webkit-transition: .2s ease;
+        transition: .2s ease;
+    }
+
+    .liImg:nth-child(n+2) {
+        margin-left: -50px;
+    }
+
+    .avatarsul .liImg:nth-child(n+2) {
+        margin-left: -10px;
+    }
+</style>
 <div id="preloader">
     <div id="status">
         <div class="spinner">
@@ -54,6 +81,9 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <ul class="avatarsul" id="avatars"></ul>
                             </div>
                         </div>
                     </div>

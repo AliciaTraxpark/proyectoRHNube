@@ -50,8 +50,18 @@ function resultadoCR() {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     success: function (data) {
-      var promedio = data.resultado.toFixed(2);
+      var promedio = data.actvidadCR.resultado.toFixed(2);
       resultado = promedio;
+      console.log(data.empleado);
+      $('#avatars').empty();
+      var li = "";
+      for (let index = 0; index < data.empleado.length; index++) {
+        console.log(data.empleado[index].foto);
+        if (data.empleado[index].foto === "") {
+          li += `<img class="liImg" src="admin/assets//images/users/avatar-7.png" title="${data.empleado[index].perso_nombre} ${data.empleado[index].perso_apPaterno}"/>`;
+        }
+      }
+      $('#avatars').append(li);
     }
   });
 
@@ -271,7 +281,7 @@ function empleadosControlRemoto() {
     method: "GET",
     data: {
       fecha: fecha,
-      area:area
+      area: area
     },
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
