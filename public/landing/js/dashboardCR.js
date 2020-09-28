@@ -191,6 +191,16 @@ var chart = new ApexCharts(document.querySelector("#chart"), options);
 chart.render();
 
 //*****************TABLA DASHBOARD**********
+//TIEMPO
+function enteroTime(tiempo) {
+  var hour = Math.floor(tiempo / 3600);
+  hour = (hour < 10) ? '0' + hour : hour;
+  var minute = Math.floor((tiempo / 60) % 60);
+  minute = (minute < 10) ? '0' + minute : minute;
+  var second = tiempo % 60;
+  second = (second < 10) ? '0' + second : second;
+  return hour + ':' + minute + ':' + second;
+}
 // FECHA
 var fechaValue = $("#fechaSelec").flatpickr({
   mode: "single",
@@ -226,8 +236,8 @@ function empleadosControlRemoto() {
       datos = data;
       var tr = "<tr>";
       for (let index = 0; index < data.length; index++) {
-        tr += "<td>" + data[index].nombre + " " + data[index].apPaterno + " " + data[index].apMaterno + "</td>\
-        <td class=\"text-center\">"+ data[index].tiempoT + "</td><td>\
+        tr += "<td style=\"vertical-align: middle;\">" + data[index].nombre + " " + data[index].apPaterno + " " + data[index].apMaterno + "</td>\
+        <td class=\"text-center\" style=\"vertical-align: middle;\">"+ enteroTime(data[index].tiempoT) + "</td><td>\
         <div class=\"wrapper\" style=\"display: flex;flex-flow: column;align-items: center\">\
             <div id=\"gauge-value"+ data[index].idEmpleado + "\" style=\"font-size: 14px;font-weight: bold;padding-bottom: 5px\"></div>\
             <canvas id=\"foo"+ data[index].idEmpleado + "\"></canvas>\
