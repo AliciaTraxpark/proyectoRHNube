@@ -11,6 +11,8 @@
 <link href="{{URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')}}" rel="stylesheet"
     type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -98,6 +100,16 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-xl-6">
+                        <div class="form-group row">
+                            <label class="col-lg-2 col-form-label">Área:</label>
+                            <div class="col-lg-6">
+                                <select id="area" data-plugin="customselect" class="form-control" multiple="multiple">
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-xl-12">
@@ -159,6 +171,8 @@
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <!-- optional plugins -->
+<script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
 <script src="{{URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js')}}"></script>

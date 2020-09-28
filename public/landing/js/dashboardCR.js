@@ -201,6 +201,26 @@ function enteroTime(tiempo) {
   second = (second < 10) ? '0' + second : second;
   return hour + ':' + minute + ':' + second;
 }
+// ÀREA 
+$('#area').select2({
+  ajax: {
+    url: '/areasCR',
+    dataType: 'json',
+    processResults: function (data, params) {
+      return {
+        results: data,
+        pagination: {
+          more: (params.page * 30) < data.total_count
+        }
+      };
+    }
+  },
+  placeholder: 'Seleccionar áreas'
+});
+
+$('#area').on("change", function (e) {
+  console.log($('#area').val());
+});
 // FECHA
 var fechaValue = $("#fechaSelec").flatpickr({
   mode: "single",

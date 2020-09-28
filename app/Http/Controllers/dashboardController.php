@@ -572,4 +572,19 @@ class dashboardController extends Controller
 
         return response()->json($respuesta, 200);
     }
+
+    public function selctAreas()
+    {
+        $respuesta = [];
+        $areas = DB::table('area as a')
+            ->select('a.area_id', 'a.area_descripcion')
+            ->where('a.organi_id', '=', session('sesionidorg'))
+            ->get();
+
+        foreach ($areas as $area) {
+            array_push($respuesta, array("id" => $area->area_id, "text" => $area->area_descripcion));
+        }
+
+        return response()->json($respuesta, 200);
+    }
 }
