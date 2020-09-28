@@ -43,12 +43,12 @@
         <header id="header-section">
             <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
                 <div class="container pb-3 pt-3" style="color: #ffffff;">
-                    <div class="col-md-2 col-xl-2 mr-4 p-0">
+                    <div class="col-md-2 col-xl-2 mr-4 pl-5">
                         <div class="navbar-brand-wrapper d-flex w-100">
                             <img src="{{asset('landing/images/Recurso_23.png')}}" height="50">
                         </div>
                     </div>
-                    <div class="col-md-4 text-left">
+                    <div class="col-md-4 pt-2 text-left">
                         <h5 style="color: #ffffff;font-size: 15px!important">Recuperar Contraseña.</h5>
                     </div>
                     <div class="col-md-6 text-left"></div>
