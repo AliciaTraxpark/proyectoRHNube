@@ -58,10 +58,13 @@ function resultadoCR() {
       for (let index = 0; index < data.empleado.length; index++) {
         console.log(data.empleado[index].foto);
         if (data.empleado[index].foto === "") {
-          li += `<img class="liImg" src="admin/assets//images/users/avatar-7.png" title="${data.empleado[index].perso_nombre} ${data.empleado[index].perso_apPaterno}"/>`;
+          li += `<img class="liImg" src="admin/assets//images/users/avatar-7.png"  data-toggle="tooltip" data-placement="right" title="${data.empleado[index].perso_nombre} ${data.empleado[index].perso_apPaterno}"/>`;
+        }else{
+          li += `<img class="liImg" src="/fotosEmpleado/${data.empleado[index].foto}"  data-toggle="tooltip" data-placement="right" title="${data.empleado[index].perso_nombre} ${data.empleado[index].perso_apPaterno}"/>`;
         }
       }
       $('#avatars').append(li);
+      $('[data-toggle="tooltip"]').tooltip();
     }
   });
 
