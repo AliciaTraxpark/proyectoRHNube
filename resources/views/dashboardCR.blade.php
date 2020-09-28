@@ -82,7 +82,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-12">
+                            <div class="col-xl-12 text-center">
                                 <ul class="avatarsul" id="avatars"></ul>
                             </div>
                         </div>
