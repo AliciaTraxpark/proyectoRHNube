@@ -150,7 +150,7 @@
   {{-- <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script> --}}
 
   <!-- plugin js -->
->
+
   <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>

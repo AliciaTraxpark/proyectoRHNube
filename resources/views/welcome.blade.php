@@ -164,7 +164,8 @@
             </div>
 
 
-            <section class="customer-feedback" id="feedback-section">
+            <section class="customer-feedback" id="feedback-section" style="    margin-left: 50px;
+            margin-right: 71px;">
                 <div class="row" style="padding-top: 30px">
                     <div class="owl-carousel owl-theme grid-margin" style="margin-bottom: 10px;">
                         <div class="card customer-cards" style="background: #38afff">
@@ -202,7 +203,7 @@
                                         <h6 class="card-title pt-3" style="font-size: 14px!important;color:#ffffff">
                                             ¿Trabajadores de campo?</h6>
                                         <p class="m-0 py-3 text-muted"
-                                            style="font-size: 11.5px!important;color:#ffffff!important">RH nube permite
+                                            style="font-size: 11.9px!important;color:#ffffff!important">RH nube permite
                                             controlar la ruta de trabajo por GPS y marcar asistencia en campo.
                                             Ya puedes saber que tareas realiza tu personal fuera de oficina y tomar
                                             decisiones.
@@ -212,17 +213,17 @@
                             </div>
                         </div>
                         <div class="card customer-cards" style="background: #003253">
-                            <div class="card-body" style="padding-top: 0px;
-                            padding-bottom: 0px;">
+                            <div class="card-body" style="padding-top: 3px;
+                            padding-bottom: 5px;">
                                 <div class="row">
                                     <div class="col-md-2" style="padding-left: 0px"><br><br>
                                         <img src="{{asset('landing/images/api.svg')}}" width="59" height="49" alt="">
                                     </div>
                                     <div class="col-md-10">
-                                        <h6 class="card-title pt-2" style="font-size: 13px!important;color:#ffffff">
+                                        <h6 class="card-title pt-2" style="font-size: 13.4px!important;color:#ffffff">
                                             ¿Puedo usarlo con un software de planillas o de pagos?</h6>
                                         <p class="m-0 py-3 text-muted"
-                                            style="font-size: 10.8px!important;color:#ffffff!important">Claro que
+                                            style="font-size: 11.7px!important;color:#ffffff!important">Claro que
                                             puedes, disponemos de la API de integración para el sistema de planillas de
                                             tu preferencia. Nos debe contactar tu desarrollador de software.
                                         </p>
