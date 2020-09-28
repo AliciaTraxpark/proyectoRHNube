@@ -99,21 +99,21 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-xl-12">
-                    <table id="dashboardEmpleado" class="table nowrap" style="font-size: 13px!important;width:
+                <div class="row justify-content-center">
+                    <div class="col-xl-12">
+                        <table id="dashboardEmpleado" class="table nowrap" style="font-size: 13px!important;width:
                                         100%;">
-                        <thead style="background: #fafafa;" id="dias" style="width:100%!important">
-                            <tr>
-                                <th>MIENBRO</th>
-                                <th>TIEMPO</th>
-                                <th>ACTIVIDAD</th>
-                            </tr>
-                        </thead>
-                        <tbody id="empleadosCR">
-                        </tbody>
-                    </table>
+                            <thead style="background: #fafafa;" id="dias" style="width:100%!important">
+                                <tr>
+                                    <th>MIENBRO</th>
+                                    <th class="text-center">TIEMPO</th>
+                                    <th class="text-center">ACTIVIDAD</th>
+                                </tr>
+                            </thead>
+                            <tbody id="empleadosCR">
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
