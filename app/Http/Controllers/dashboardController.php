@@ -552,6 +552,7 @@ class dashboardController extends Controller
                 ->groupBy('e.emple_id')
                 ->get();
         }
+
         foreach ($empleado as $emple) {
             $actividad = DB::table('empleado as e')
                 ->leftJoin('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')

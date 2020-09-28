@@ -270,7 +270,8 @@ function empleadosControlRemoto() {
     url: "/empleadoCR",
     method: "GET",
     data: {
-      fecha: fecha
+      fecha: fecha,
+      area:area
     },
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
