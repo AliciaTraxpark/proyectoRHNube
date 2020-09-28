@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- App favicon -->
-    <link rel="shortcut icon" href="https://i.ibb.co/r4SyJxm/CUADRADO-RH.png">
+    <link rel="shortcut icon" href="{{asset('landing/images/ICONO-LOGO-NUBE-RH.ico')}}">
 
     <!-- App css -->
     <link href="{{asset('admin/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
@@ -176,7 +176,7 @@ background-color: #ffffff !important;
         <div class="container pb-3">
             <div class="col-md-2 col-xl-2">
                 <div class="navbar-brand-wrapper d-flex w-100">
-                    <img src="{{asset('landing/images/Recurso_23.png')}}" height="50">
+                    <img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="69">
                 </div>
             </div>
             <div class="col-md-7 col-xl-7 text-left pl-5">

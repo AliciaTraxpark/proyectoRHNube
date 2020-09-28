@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{asset('landing/vendors/aos/css/aos.css')}}">
     <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" href="https://i.ibb.co/r4SyJxm/CUADRADO-RH.png">
+    <link rel="shortcut icon" href="{{asset('landing/images/ICONO-LOGO-NUBE-RH.ico')}}">
 </head>
 
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
@@ -32,7 +32,7 @@
             <div class="container">
                 <div class="col-md-3 pl-5">
                     <div class="navbar-brand-wrapper d-flex w-100">
-                        <img src="{{asset('landing/images/Recurso_23.png')}}" height="45">
+                        <img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="69">
                     </div>
                 </div>
                 <div class="col-md-9 text-left pt-2">

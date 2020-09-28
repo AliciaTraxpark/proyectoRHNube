@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="shortcut icon" href="https://i.ibb.co/r4SyJxm/CUADRADO-RH.png">
+    <link rel="shortcut icon" href="{{asset('landing/images/ICONO-LOGO-NUBE-RH.ico')}}">
     <style>
         .pace {
             -webkit-pointer-events: none;
@@ -456,7 +456,7 @@
             <div class="container pb-3">
                 <div class="col-md-2 col-xl-2 mr-4 p-0">
                     <div class="navbar-brand-wrapper d-flex w-100">
-                        <img src="{{asset('landing/images/Recurso_23.png')}}" height="50">
+                        <img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="69">
                     </div>
                 </div>
                 <div class="col-md-7 col-xl-7 text-left">

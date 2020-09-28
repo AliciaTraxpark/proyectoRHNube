@@ -60,8 +60,7 @@
         <div class="container">
             <div class="col-md-2">
                 <div class="navbar-brand-wrapper d-flex w-100">
-                    <img src="{{asset('landing/images/Recurso_23.png')}}" alt=""
-                    height="45" />
+                    <img src="{{asset('landing/images/NUBE_SOLA.png')}}"  height="69" >
                 </div>
             </div>
             <div class="col-md-6 text-left">
@@ -151,7 +150,7 @@
   {{-- <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script> --}}
 
   <!-- plugin js -->
->
+
   <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>

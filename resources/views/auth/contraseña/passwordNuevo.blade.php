@@ -15,7 +15,7 @@
     <link href="{{
             URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')
             }}" rel="stylesheet" />
-    <link rel="shortcut icon" href="https://i.ibb.co/r4SyJxm/CUADRADO-RH.png">
+    <link rel="shortcut icon" href="{{asset('landing/images/ICONO-LOGO-NUBE-RH.ico')}}">
 </head>
 
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100" style="background: #f7f8fa;">
@@ -44,7 +44,7 @@
             <div class="container pb-3 pt-3" style="color: #ffffff;">
                 <div class="col-md-2 col-xl-2 mr-4 p-0">
                     <div class="navbar-brand-wrapper d-flex w-100">
-                        <img src="{{asset('landing/images/Recurso_23.png')}}" height="50">
+                        <img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="69">
                     </div>
                 </div>
                 <div class="col-md-4 text-left">

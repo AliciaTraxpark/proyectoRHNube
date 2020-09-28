@@ -25,11 +25,11 @@ use App\persona;
         <!-- LOGO -->
         <a href="/" class="navbar-brand mr-0 mr-md-2 logo">
             <span class="logo-lg text-center">
-                <img src="{{asset('landing/images/Recurso_23.png')}}" alt="" height="35" />
+                <img src="{{asset('landing/images/NUBE_SOLA.png')}}" alt="" height="60" />
 
             </span>
             <span class="logo-sm">
-                <img src="{{asset('landing/images/Recurso_23.png')}}" alt="" height="25">
+                <img src="{{asset('landing/images/NUBE_SOLA.png')}}" alt="" height="45">
             </span>
         </a>
 

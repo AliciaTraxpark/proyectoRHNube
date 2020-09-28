@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{asset('landing/vendors/mdi/css/materialdesignicons.min.css')}}">
     <link rel="stylesheet" href="{{asset('landing/vendors/aos/css/aos.css')}}">
     <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
-    <link rel="shortcut icon" href="https://i.ibb.co/r4SyJxm/CUADRADO-RH.png">
+    <link rel="shortcut icon" href="{{asset('landing/images/ICONO-LOGO-NUBE-RH.ico')}}">
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-169261172-1"></script>
     <script>
@@ -38,7 +38,7 @@
             <div class="container pb-0 pt-2">
                 <div class="col-md-5" style="margin-bottom: 10px;padding-left: 50px">
                     <div class="navbar-brand-wrapper d-flex">
-                        <img src="{{asset('landing/images/Recurso_23.png')}}" width="35%" height="35%">
+                        <img src="{{asset('landing/images/NUBE_SOLA.png')}}" width="35%"  height="35%" >
                     </div>
                 </div>
 
@@ -164,7 +164,8 @@
             </div>
 
 
-            <section class="customer-feedback" id="feedback-section">
+            <section class="customer-feedback" id="feedback-section" style="    margin-left: 50px;
+            margin-right: 71px;">
                 <div class="row" style="padding-top: 30px">
                     <div class="owl-carousel owl-theme grid-margin" style="margin-bottom: 10px;">
                         <div class="card customer-cards" style="background: #38afff">
@@ -202,7 +203,7 @@
                                         <h6 class="card-title pt-3" style="font-size: 14px!important;color:#ffffff">
                                             ¿Trabajadores de campo?</h6>
                                         <p class="m-0 py-3 text-muted"
-                                            style="font-size: 11.5px!important;color:#ffffff!important">RH nube permite
+                                            style="font-size: 11.9px!important;color:#ffffff!important">RH nube permite
                                             controlar la ruta de trabajo por GPS y marcar asistencia en campo.
                                             Ya puedes saber que tareas realiza tu personal fuera de oficina y tomar
                                             decisiones.
@@ -212,17 +213,17 @@
                             </div>
                         </div>
                         <div class="card customer-cards" style="background: #003253">
-                            <div class="card-body" style="padding-top: 0px;
-                            padding-bottom: 0px;">
+                            <div class="card-body" style="padding-top: 3px;
+                            padding-bottom: 5px;">
                                 <div class="row">
                                     <div class="col-md-2" style="padding-left: 0px"><br><br>
                                         <img src="{{asset('landing/images/api.svg')}}" width="59" height="49" alt="">
                                     </div>
                                     <div class="col-md-10">
-                                        <h6 class="card-title pt-2" style="font-size: 13px!important;color:#ffffff">
+                                        <h6 class="card-title pt-2" style="font-size: 13.4px!important;color:#ffffff">
                                             ¿Puedo usarlo con un software de planillas o de pagos?</h6>
                                         <p class="m-0 py-3 text-muted"
-                                            style="font-size: 10.8px!important;color:#ffffff!important">Claro que
+                                            style="font-size: 11.7px!important;color:#ffffff!important">Claro que
                                             puedes, disponemos de la API de integración para el sistema de planillas de
                                             tu preferencia. Nos debe contactar tu desarrollador de software.
                                         </p>
@@ -378,7 +379,7 @@
     @endif
     <footer class="border-top" style="background:#163552">
         <div class="col-md-12 text-center" style="margin-top: 20px">
-            <img src="{{asset('landing/images/Recurso_23.png')}}" width="10%" height="10%">
+            <img src="{{asset('landing/images/NUBE_SOLA.png')}}" width="10%" height="10%">
         </div>
         <div class="col-md-12 text-center" style="margin-top: 10px;margin-bottom: 20px">
             <span class="mdi mdi-phone" style="color:#faf3f3;font-size: 12px!important"> (01) 238-8350 | <span
