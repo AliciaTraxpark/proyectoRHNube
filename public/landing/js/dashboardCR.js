@@ -227,22 +227,39 @@ function empleadosControlRemoto() {
       var tr = "<tr>";
       for (let index = 0; index < data.length; index++) {
         tr += "<td>" + data[index].nombre + " " + data[index].apPaterno + " " + data[index].apMaterno + "</td>\
-        <td>"+ data[index].tiempoT + "</td><td><div class=\"col-xl-8\">\
+        <td>"+ data[index].tiempoT + "</td><td>\
         <div class=\"wrapper\" style=\"display: flex;flex-flow: column;align-items: center\">\
-            <div id=\"gauge-value\" style=\"font-size: 24px;font-weight: bold;padding-bottom: 5px\"></div>\
+            <div id=\"gauge-value"+ data[index].idEmpleado + "\" style=\"font-size: 14px;font-weight: bold;padding-bottom: 5px\"></div>\
             <canvas id=\"foo"+ data[index].idEmpleado + "\"></canvas>\
-        </div>\
-    </div></td>";
+        </div>\</td>";
       }
       tr += "</tr>";
       $('#empleadosCR').html(tr);
+      var opciones = {
+        angle: 0.26,
+        lineWidth: 0.12,
+        pointer: {
+          length: 0.59,
+          strokeWidth: 0.051,
+          color: '#444444'
+        },
+        limitMax: 'false',
+        percentColors: [[0.0, "#ff0000"], [0.50, "#f9c802"], [1.0, "#a9d70b"]],
+        strokeColor: '#E0E0E0',
+        generateGradient: true,
+        highDpiSupport: true
+      };
       for (let i = 0; i < datos.length; i++) {
+        var val = datos[i].division.toFixed(2);
+        document.getElementById('foo' + datos[i].idEmpleado).setAttribute('width', '100px');
+        document.getElementById('foo' + datos[i].idEmpleado).setAttribute('height', '40px');
         var target = document.getElementById('foo' + datos[i].idEmpleado);
-        var gauge = new Gauge(target).setOptions(opts);
+        var gauge = new Gauge(target).setOptions(opciones);
         gauge.setMinValue(0);
         gauge.maxValue = 100;
         gauge.animationSpeed = 50;
-        gauge.set(datos[i].division);
+        gauge.set(val);
+        gauge.setTextField(document.getElementById("gauge-value" + datos[i].idEmpleado));
       }
       $("#dashboardEmpleado").DataTable({
         scrollX: true,
