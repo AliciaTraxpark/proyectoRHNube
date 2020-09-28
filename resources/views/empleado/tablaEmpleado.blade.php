@@ -237,7 +237,7 @@
                                     onclick="javasscript:estadoDispositivoCR({{$tabla_empleados->emple_id}},{{$tablaV['idVinculacion']}},'PC {{$loop->index}}','{{$tabla_empleados->perso_nombre}}')">
                                 <label class="custom-control-label" for="customSwitchCRDisp{{$tablaV['idVinculacion']}}"
                                     style="font-weight: bold">PC{{$loop->index}}</label>
-                                @else 
+                                @else
                                 <input type="checkbox" class="custom-control-input"
                                     id="customSwitchCRDisp{{$tablaV['idVinculacion']}}"
                                     onclick="javasscript:estadoDispositivoCR({{$tabla_empleados->emple_id}},{{$tablaV['idVinculacion']}},'{{$tablaV['pc']}}','{{$tabla_empleados->perso_nombre}}')">
@@ -372,7 +372,8 @@
                     if(data[0].iddistN!= null){
                 $('#v_distrito').append($('<option>', {
                 text : data[0].distN,
-                selected:true
+                selected:true,
+                value:data[0].iddistN
                   }));}
                 }
 
@@ -425,7 +426,8 @@
                     if(data[0].distId!= null){
                 $('#v_dist').append($('<option>', {
                 text : data[0].distNo,
-                selected:true
+                selected:true,
+                value:data[0].distId
                   }));}
                 }
                 $('#selectCalendario_edit3').val(data[0].idcalendar);
