@@ -203,18 +203,18 @@ function enteroTime(tiempo) {
 }
 // ÀREA 
 $('#area').select2({
-  ajax: {
-    url: '/areasCR',
-    dataType: 'json',
-    processResults: function (data, params) {
-      return {
-        results: data,
-        pagination: {
-          more: (params.page * 30) < data.total_count
-        }
-      };
-    }
-  },
+  // ajax: {
+  //   url: '/areasCR',
+  //   dataType: 'json',
+  //   processResults: function (data, params) {
+  //     return {
+  //       results: data,
+  //       pagination: {
+  //         more: (params.page * 30) < data.total_count
+  //       }
+  //     };
+  //   }
+  // },
   placeholder: 'Seleccionar áreas'
 });
 

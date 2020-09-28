@@ -100,11 +100,16 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-xl-2"><br></div>
                     <div class="col-xl-6">
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label">Área:</label>
-                            <div class="col-lg-6">
+                            <div class="col-lg-10">
                                 <select id="area" data-plugin="customselect" class="form-control" multiple="multiple">
+                                    @foreach ($areas as $area)
+                                    <option value="{{$area->area_id}}">
+                                        {{$area->area_descripcion}}</option>
+                                    @endforeach
                                 </select>
                             </div>
 

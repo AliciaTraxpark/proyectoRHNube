@@ -425,7 +425,11 @@ class dashboardController extends Controller
     // DASHBOARD PARA CONTROL REMOTO
     public function dashboardCR()
     {
-        return view('dashboardCR');
+        $areas = DB::table('area as a')
+            ->select('a.area_id', 'a.area_descripcion')
+            ->where('a.organi_id', '=', session('sesionidorg'))
+            ->get();
+        return view('dashboardCR', ['areas' => $areas]);
     }
     public function globalControlRemoto()
     {
