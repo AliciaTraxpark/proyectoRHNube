@@ -262,6 +262,7 @@ Route::get('/dashboardCR', 'dashboardController@globalControlRemoto');
 Route::get('/fechasDataDashboard', 'dashboardController@actividadArea');
 Route::get('/fechaOD', 'dashboardController@fechaOrganizacion');
 Route::get('/empleadoCR', 'dashboardController@empleadosControlRemoto');
+Route::get('/areasCR', 'dashboardController@selctAreas');
 
 //MENU
 Route::get('/empleados', 'EmpleadoController@indexMenu');
