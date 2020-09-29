@@ -7,6 +7,7 @@ function leertabla() {
     $("#tabladiv").hide();
     $("#espera").show();
     $.get("tablaempleado/ver", {}, function (data, status) {
+        console.log(data);
         $("#tabladiv").html(data);
         $("#espera").hide();
         $("#tabladiv").show();
@@ -26,7 +27,7 @@ function RefreshTablaEmpleado() {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-
+            console.log(data);
             var tbody = "";
             for (var i = 0; i < data.length; i++) {
                 tbody +=
