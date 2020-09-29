@@ -138,8 +138,8 @@ function onSelectFechas() {
                 var nombre = [];
                 var horas = [];
                 var prom = [];
-                var color = ['rgb(63,77,113)'];
-                var borderColor = ['rgb(63,77,113)'];
+                var color = 'rgb(63,77,113)';
+                var borderColor = 'rgb(63,77,113)';
                 var html_tr = "";
                 var html_trA = "";
                 var html_trD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
