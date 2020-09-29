@@ -413,6 +413,7 @@ function onSelectFechas() {
                                     var labels = chart.data.labels;
                                     var dataset = chart.data.datasets[0];
                                     var legend = labels.map(function (label, index) {
+                                        console.log(dataset.backgroundColor, dataset.backgroundColor[index]);
                                         return {
                                             datasetIndex: 0,
                                             fillStyle: dataset.backgroundColor && dataset.backgroundColor[index],

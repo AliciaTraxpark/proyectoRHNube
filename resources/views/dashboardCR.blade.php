@@ -16,6 +16,33 @@
 @endsection
 
 @section('content')
+<style>
+    .avatarsul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .liImg {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid white;
+        display: inline-block;
+        position: relative;
+        box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2);
+        -webkit-transition: .2s ease;
+        transition: .2s ease;
+    }
+
+    .liImg:nth-child(n+2) {
+        margin-left: -50px;
+    }
+
+    .avatarsul .liImg:nth-child(n+2) {
+        margin-left: -10px;
+    }
+</style>
 <div id="preloader">
     <div id="status">
         <div class="spinner">
@@ -25,7 +52,14 @@
         </div>
     </div>
 </div>
-<div class="row justify-content-center p-5">
+<div class="row pr-5 pt-3 pb-0">
+    <div class="col-xl-12 text-right">
+        <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
+            onclick="javascript:refreshReporte()"> <img src="{{asset('landing/images/refresh.svg')}}" height="18"
+                class="mr-2">Refrescar</button>
+    </div>
+</div>
+<div class="row justify-content-center pt-2 pr-5 pl-5 pb-5">
     <div class="col-xl-12">
         <div class="card">
             <div class="card-header pb-0"
@@ -54,6 +88,9 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-xl-12 text-center">
+                                <ul class="avatarsul" id="avatars"></ul>
                             </div>
                         </div>
                     </div>

@@ -447,11 +447,20 @@ class dashboardController extends Controller
             ->where('e.emple_estado', '=', 1)
             ->get()
             ->first();
+        $empleado = DB::table('empleado as e')
+            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+            ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+            ->select('e.emple_foto as foto', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->where(DB::raw('DATE(cp.hora_fin)'), '=', $fecha)
+            ->where('e.emple_estado', '=', 1)
+            ->groupBy('e.emple_id')
+            ->get();
 
-        if(is_null($actividadCR->resultado) === true){
+        if (is_null($actividadCR->resultado) === true) {
             $actividadCR->resultado = 0;
         }
-        return response()->json($actividadCR, 200);
+        return response()->json(array("actvidadCR" => $actividadCR, "empleado" => $empleado), 200);
     }
 
     public function actividadArea(Request $request)
