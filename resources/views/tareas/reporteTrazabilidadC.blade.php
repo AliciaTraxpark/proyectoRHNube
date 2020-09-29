@@ -32,11 +32,17 @@
 @endsection
 
 @section('content')
-<div class="row">
-    <div class="col-xl-12">
-        <div>
-            <div>
-                <div class="row mt-4">
+<div class="row justify-content-center pt-5">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header"
+                style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1">
+                <div class="row">
+                    <h4 class="header-title col-12 mt-0">Trazabilidad de capturas</h4>
+                </div>
+            </div>
+            <div class="card-body border">
+                <div class="row justify-content-center">
                     <div class="col-xl-4">
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Fecha:</label>
@@ -53,49 +59,38 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3 text-center">
-                        <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
-                            onclick="javascript:refreshCapturas()"> <img src="{{asset('landing/images/refresh.svg')}}"
-                                height="18" class="mr-2">Refrescar</button>
-                    </div>
-                    <div class="col-xl-5">
-                        <div class="form-group row">
-                            <label class="col-lg-2 col-form-label">Empleado:</label>
-                            <div class="col-lg-10">
-                                <select id="empleado" data-plugin="customselect" class="form-control">
-                                </select>
+                    <div class="col-md-4 text-right">
+                        <div class="input-group col-md-12 pl-5">
+                            <input type="text" id="horaI" class="form-control">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text form-control"><i class="uil uil-calender"></i></div>
                             </div>
-
                         </div>
                     </div>
                 </div>
-            </div> <!-- end card-body-->
-        </div> <!-- end card-->
-    </div> <!-- end col-->
-</div>
-<!-- end row -->
-<div class="row justify-content-center pt-5">
-    <div class="card">
-        <div class="card-header" style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1">
-            <div class="row">
-                <h4 class="header-title col-12 mt-0">Resultado</h4>
-            </div>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive-xl">
-                <table id="Reporte" class="table nowrap" style="font-size: 13px!important;width:
-                    100%;">
-                    <thead style="background: #fafafa;" id="dias" style="width:100%!important">
-                        <tr>
-                            <th>Id Captura</th>
-                            <th>Hora Inicio</th>
-                            <th>Hora Fin</th>
-                            <th>Actividad</th>
-                        </tr>
-                    </thead>
-                    <tbody id="datos">
-                    </tbody>
-                </table>
+                <div class="row justify-content-center">
+                    <div class="col-md-12">
+                        <div class="table-responsive-xl">
+                            <table id="Reporte" class="table nowrap" style="font-size: 13px!important;width:100%;">
+                                <thead style="background: #fafafa;" id="dias" style="width:100%!important">
+                                    <tr>
+                                        <th>idEmpleado</th>
+                                        <th>Empleado</th>
+                                        <th>Hora 00:00:00</th>
+                                        <th>Hora 01:00:00</th>
+                                        <th>Hora 02:00:00</th>
+                                        <th>Hora 03:00:00</th>
+                                        <th>Hora 04:00:00</th>
+                                        <th>Hora 05:00:00</th>
+                                        <th>Hora 06:00:00</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="datos">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -132,6 +127,6 @@
     }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/pdfmake.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/vfs_fonts.js') }}"></script>
-<script src="{{asset('landing/js/reportePersonalizado.js')}}"></script>
+<script src="{{asset('landing/js/trazabilidadC.js')}}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 @endsection
