@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 
-use App\captura;
-use App\captura_imagen;
 use Illuminate\Http\Request;
 use App\control;
 use Illuminate\Support\Facades\DB;
@@ -454,7 +452,7 @@ class ControlController extends Controller
         return response()->json($respuesta, 200);
     }
 
-    // REPORTE
+    // REPORTES PERSONALIZADOS
     public function vistaReporte()
     {
         return view('tareas.reportePersonalizado');
@@ -480,5 +478,11 @@ class ControlController extends Controller
             ->get();
 
         return response()->json($captura, 200);
+    }
+
+    // REPORTE PEROSNALIZADO TRAZABILIDAD DE CAPTURAS
+    public function vistaTrazabilidad()
+    {
+        return view('tareas.reporteTrazabilidadC');
     }
 }
