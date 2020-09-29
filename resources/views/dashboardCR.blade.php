@@ -52,7 +52,14 @@
         </div>
     </div>
 </div>
-<div class="row justify-content-center p-5">
+<div class="row pr-5 pt-3 pb-0">
+    <div class="col-xl-12 text-right">
+        <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
+            onclick="javascript:refreshReporte()"> <img src="{{asset('landing/images/refresh.svg')}}" height="18"
+                class="mr-2">Refrescar</button>
+    </div>
+</div>
+<div class="row justify-content-center pt-2 pr-5 pl-5 pb-5">
     <div class="col-xl-12">
         <div class="card">
             <div class="card-header pb-0"

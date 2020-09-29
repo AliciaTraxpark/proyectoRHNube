@@ -224,7 +224,6 @@ var options = {
 
 var chart = new ApexCharts(document.querySelector("#chart"), options);
 chart.render();
-
 //*****************TABLA DASHBOARD**********
 //TIEMPO
 function enteroTime(tiempo) {
@@ -386,3 +385,28 @@ function empleadosControlRemoto() {
 $(function () {
   $("#fechaInput").on("change", empleadosControlRemoto);
 });
+
+function refreshReporte() {
+  resultadoCR();
+  myTimer();
+  chart.updateOptions({
+    xaxis: {
+      categories: fechas(),
+      title: {
+        text: 'Día'
+      }
+    },
+    yaxis: {
+      title: {
+        offsetX: 3,
+        text: 'Actividad'
+      },
+      min: 0,
+      max: 100,
+      labels: {
+        offsetX: -8
+      },
+    },
+  });
+  empleadosControlRemoto();
+}
