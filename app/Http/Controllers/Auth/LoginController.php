@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-header("Refresh:7200");
+header("Refresh:3600");
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
