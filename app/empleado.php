@@ -34,6 +34,7 @@ class empleado extends Model
         'users_id',
         'emple_codigo',
         'id_contrato',
+        'asistencia_puerta',
         'organi_id'
     ];
 }

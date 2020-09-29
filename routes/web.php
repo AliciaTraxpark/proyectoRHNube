@@ -148,6 +148,7 @@ Route::post('/empleado/vaciarhorariosBD', 'EmpleadoController@vaciarhorariosBD')
 Route::post('/empleado/cambiarEstado', 'EmpleadoController@cambiarEstadoEmp');
 Route::get('tablaempleado/refresh', 'EmpleadoController@refresTabla');
 Route::get('/empleado/agregarCorreo', 'EmpleadoController@agregarCorreoE');
+Route::post('/empleado/asisPuerta', 'EmpleadoController@asisPuerta');
 //AREA
 Route::post('/registrar/area', 'areaController@store');
 
