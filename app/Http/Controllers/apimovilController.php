@@ -95,7 +95,7 @@ class apimovilController extends Controller
         $organi_id=$request->organi_id;
         $empleado = DB::table('empleado as e')
         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-        ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc', 'p.perso_id', 'e.emple_id')
+        ->select('e.emple_id','p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc', 'p.perso_id', 'e.emple_id')
         ->where('e.organi_id', '=', $organi_id)
         ->where('e.emple_estado', '=', 1)
         ->where('e.asistencia_puerta', '=', 1)
@@ -118,7 +118,7 @@ class apimovilController extends Controller
         $dispositivo_Controlador=DB::table('dispositivo_controlador as dc')
         ->join('controladores as con', 'dc.idControladores', '=', 'con.idControladores')
         ->join('dispositivos as dis', 'dc.idDispositivos', '=', 'dis.idDispositivos')
-        ->select('con.cont_codigo','con.cont_nombres','con.cont_ApPaterno','con.cont_ApMaterno','con.cont_correo',
+        ->select('con.idControladores','con.cont_codigo','con.cont_nombres','con.cont_ApPaterno','con.cont_ApMaterno','con.cont_correo',
         'con.cont_estado')
         ->where('dis.idDispositivos', '=',$idDispo)
         ->where('dis.organi_id', '=',$organi_id)
