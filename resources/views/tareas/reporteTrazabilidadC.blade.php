@@ -87,11 +87,12 @@
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Empresa:</label>
                             <div class="col-lg-7">
-                                <select id="empresa" data-plugin="customselect" class="form-control" multiple="multiple">
-                                    {{-- @foreach ($areas as $area)
-                                    <option value="{{$area->area_id}}">
-                                        {{$area->area_descripcion}}</option>
-                                    @endforeach --}}
+                                <select id="empresa" data-plugin="customselect" class="form-control"
+                                    multiple="multiple">
+                                    @foreach ($organizacion as $org)
+                                    <option value="{{$org->organi_id}}">
+                                        {{$org->organi_razonSocial}}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
@@ -101,10 +102,11 @@
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Empleado:</label>
                             <div class="col-lg-7">
-                                <select id="empleado" data-plugin="customselect" class="form-control" multiple="multiple">
+                                <select id="empleado" data-plugin="customselect" class="form-control"
+                                    multiple="multiple">
                                     {{-- @foreach ($areas as $area)
                                     <option value="{{$area->area_id}}">
-                                        {{$area->area_descripcion}}</option>
+                                    {{$area->area_descripcion}}</option>
                                     @endforeach --}}
                                 </select>
                             </div>

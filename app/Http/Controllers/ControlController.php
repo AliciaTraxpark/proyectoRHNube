@@ -8,6 +8,7 @@ use App\control;
 use Illuminate\Support\Facades\DB;
 use App\empleado;
 use App\envio;
+use App\organizacion;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
 
@@ -483,6 +484,7 @@ class ControlController extends Controller
     // REPORTE PEROSNALIZADO TRAZABILIDAD DE CAPTURAS
     public function vistaTrazabilidad()
     {
-        return view('tareas.reporteTrazabilidadC');
+        $organizacion = organizacion::all('organi_id', 'organi_razonSocial');
+        return view('tareas.reporteTrazabilidadC', ['organizacion' => $organizacion]);
     }
 }
