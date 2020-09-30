@@ -171,13 +171,9 @@ class apiVersionDosController extends Controller
                 $capturaRegistrada = captura::where('idCaptura', '=', $idCaptura)->get()->first();
                 $idHorario_dias = $idHorario;
                 //RESTA POR FECHA HORA DE   CAPTURAS
-                $fecha = Carbon::create($capturaRegistrada->hora_ini)->format('H:i:s');
-                $explo = explode(":", $fecha);
-                $calSegund = $explo[0] * 3600 + $explo[1] * 60 + $explo[2];
-                $fecha1 = Carbon::create($capturaRegistrada->hora_fin)->format('H:i:s');
-                $explo1 = explode(":", $fecha1);
-                $calSegund1 = $explo1[0] * 3600 + $explo1[1] * 60 + $explo1[2];
-                $totalP = $calSegund1 - $calSegund;
+                $fecha = Carbon::parse($capturaRegistrada->hora_ini);
+                $fecha1 = Carbon::parse($capturaRegistrada->hora_fin);
+                $totalP = $fecha1->diffInSeconds($fecha);
                 // ACTIVIDAD DE CAPTURA
                 $activ = $capturaRegistrada->actividad;
                 //VALIDACION DE CERO
