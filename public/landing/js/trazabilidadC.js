@@ -30,9 +30,6 @@ $('#horaF').flatpickr({
 $('#empresa').select2({
     placeholder: 'Seleccionar empresa'
 });
-$('#empleado').select2({
-    placeholder: 'Seleccionar empleado'
-});
 function datosOrganizacion() {
     var fechaI = $('#fecha').val() + $('#horaI').val();
     var fechaF = $('#fecha').val() + $('#horaF').val();

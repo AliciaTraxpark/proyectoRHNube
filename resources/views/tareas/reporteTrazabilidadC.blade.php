@@ -85,29 +85,14 @@
                 <div class="row justify-content-center">
                     <div class="col-xl-4">
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Empresa:</label>
-                            <div class="col-lg-7">
+                            <label class="col-lg-3 col-form-label">Organización:</label>
+                            <div class="col-lg-9">
                                 <select id="empresa" data-plugin="customselect" class="form-control"
                                     multiple="multiple">
                                     @foreach ($organizacion as $org)
                                     <option value="{{$org->organi_id}}">
                                         {{$org->organi_razonSocial}}</option>
                                     @endforeach
-                                </select>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Empleado:</label>
-                            <div class="col-lg-7">
-                                <select id="empleado" data-plugin="customselect" class="form-control"
-                                    multiple="multiple">
-                                    {{-- @foreach ($areas as $area)
-                                    <option value="{{$area->area_id}}">
-                                    {{$area->area_descripcion}}</option>
-                                    @endforeach --}}
                                 </select>
                             </div>
 
