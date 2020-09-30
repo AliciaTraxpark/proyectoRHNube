@@ -59,11 +59,25 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 text-right">
-                        <div class="input-group col-md-12 pl-5">
-                            <input type="text" id="horaI" class="form-control">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text form-control"><i class="uil uil-calender"></i></div>
+                    <div class="col-xl-4">
+                        <div class="form-group row">
+                            <label class="col-lg-4 col-form-label">Hora Inicio:</label>
+                            <div class="input-group col-md-6">
+                                <input type="text" id="horaI" class="form-control">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text form-control"><i class="uil uil-clock-three"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="form-group row">
+                            <label class="col-lg-4 col-form-label">Hora Fin:</label>
+                            <div class="input-group col-md-6">
+                                <input type="text" id="horaF" class="form-control">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text form-control"><i class="uil uil-clock-three"></i></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -77,12 +91,6 @@
                                         <th>idEmpleado</th>
                                         <th>Empleado</th>
                                         <th>Hora 00:00:00</th>
-                                        <th>Hora 01:00:00</th>
-                                        <th>Hora 02:00:00</th>
-                                        <th>Hora 03:00:00</th>
-                                        <th>Hora 04:00:00</th>
-                                        <th>Hora 05:00:00</th>
-                                        <th>Hora 06:00:00</th>
                                     </tr>
                                 </thead>
                                 <tbody id="datos">

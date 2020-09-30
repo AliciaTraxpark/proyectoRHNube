@@ -19,3 +19,9 @@ $('#horaI').flatpickr({
     dateFormat: "H:i",
     time_24hr: true
 });
+$('#horaF').flatpickr({
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i",
+    time_24hr: true
+});
