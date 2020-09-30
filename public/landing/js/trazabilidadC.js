@@ -52,6 +52,7 @@ function datosOrganizacion() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
+            console.log(data);
             var html_th = "<tr><th>idEmpleado</th><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
             for (let index = 0; index < data["horas"].length; index++) {
                 html_th += "<th>" + data["horas"][index] + "</th>"
