@@ -111,6 +111,17 @@ function datosOrganizacion() {
         }
     });
 }
-$('#empresa').on("change", function (e) {
-    datosOrganizacion();
+$(function () {
+    $('#empresa').on("change", function (e) {
+        datosOrganizacion();
+    });
+    $('#fecha').on("change", function () {
+        datosOrganizacion();
+    });
+    $('#horaI').on("change", function () {
+        datosOrganizacion();
+    });
+    $('#horaF').on("change", function () {
+        datosOrganizacion();
+    });
 });
