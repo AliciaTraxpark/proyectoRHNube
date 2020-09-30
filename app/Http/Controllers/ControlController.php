@@ -29,7 +29,7 @@ class ControlController extends Controller
             $invitado= DB::table('invitado as in')
             ->where('organi_id', '=', session('sesionidorg'))
                 ->where('rol_id', '=', 3)
-                ->where('invi.user_Invitado', '=', Auth::user()->id)
+                ->where('in.user_Invitado', '=', Auth::user()->id)
                 ->get();
             $empleado = DB::table('empleado as e')
                 ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
@@ -67,7 +67,7 @@ class ControlController extends Controller
             $invitado= DB::table('invitado as in')
             ->where('organi_id', '=', session('sesionidorg'))
                 ->where('rol_id', '=', 3)
-                ->where('invi.user_Invitado', '=', Auth::user()->id)
+                ->where('in.user_Invitado', '=', Auth::user()->id)
                 ->get();
             $empleado = DB::table('empleado as e')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
@@ -116,7 +116,7 @@ class ControlController extends Controller
             $invitado= DB::table('invitado as in')
             ->where('organi_id', '=', session('sesionidorg'))
                 ->where('rol_id', '=', 3)
-                ->where('invi.user_Invitado', '=', Auth::user()->id)
+                ->where('in.user_Invitado', '=', Auth::user()->id)
                 ->get();
             $empleado = DB::table('empleado as e')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
@@ -165,7 +165,7 @@ class ControlController extends Controller
             $invitado= DB::table('invitado as in')
             ->where('organi_id', '=', session('sesionidorg'))
                 ->where('rol_id', '=', 3)
-                ->where('invi.user_Invitado', '=', Auth::user()->id)
+                ->where('in.user_Invitado', '=', Auth::user()->id)
                 ->get();
             $empleado = DB::table('empleado as e')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
@@ -210,7 +210,7 @@ class ControlController extends Controller
                 $invitado= DB::table('invitado as in')
             ->where('organi_id', '=', session('sesionidorg'))
                 ->where('rol_id', '=', 3)
-                ->where('invi.user_Invitado', '=', Auth::user()->id)
+                ->where('in.user_Invitado', '=', Auth::user()->id)
                 ->get();
                 $empleados = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
@@ -240,7 +240,7 @@ class ControlController extends Controller
                     $invitado= DB::table('invitado as in')
                     ->where('organi_id', '=', session('sesionidorg'))
                         ->where('rol_id', '=', 3)
-                        ->where('invi.user_Invitado', '=', Auth::user()->id)
+                        ->where('in.user_Invitado', '=', Auth::user()->id)
                         ->get();
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
@@ -272,7 +272,7 @@ class ControlController extends Controller
                     $invitado= DB::table('invitado as in')
                     ->where('organi_id', '=', session('sesionidorg'))
                         ->where('rol_id', '=', 3)
-                        ->where('invi.user_Invitado', '=', Auth::user()->id)
+                        ->where('in.user_Invitado', '=', Auth::user()->id)
                         ->get();
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
@@ -304,7 +304,7 @@ class ControlController extends Controller
                     $invitado= DB::table('invitado as in')
                     ->where('organi_id', '=', session('sesionidorg'))
                         ->where('rol_id', '=', 3)
-                        ->where('invi.user_Invitado', '=', Auth::user()->id)
+                        ->where('in.user_Invitado', '=', Auth::user()->id)
                         ->get();
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
