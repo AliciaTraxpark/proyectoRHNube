@@ -243,7 +243,8 @@ class EmpleadoController extends Controller
                 'cc.centroC_descripcion',
                 'e.emple_id',
                 'md.idTipoModo as dispositivo',
-                'e.emple_foto'
+                'e.emple_foto',
+                'e.asistencia_puerta'
             )
             ->where('e.organi_id', '=', session('sesionidorg'))
             ->where('e.emple_estado', '=', 1)
@@ -319,7 +320,8 @@ class EmpleadoController extends Controller
                 'cc.centroC_descripcion',
                 'e.emple_id',
                 'md.idTipoModo as dispositivo',
-                'e.emple_foto'
+                'e.emple_foto',
+                'e.asistencia_puerta'
             )
             ->where('e.organi_id', '=', session('sesionidorg'))
             ->where('e.emple_estado', '=', 1)
@@ -1639,5 +1641,13 @@ class EmpleadoController extends Controller
         }
 
         return response()->json($empleado, 200);
+    }
+
+    public function asisPuerta(Request $request){
+        $empleado = empleado::find($request->get('idPuerta'));
+        if ($empleado) {
+            $empleado->asistencia_puerta = $request->get('estadoP');
+            $empleado->save();
+        }
     }
 }

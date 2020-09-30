@@ -462,3 +462,57 @@ function enviarCorreoWindowsEditar() {
     });
 }
 $('#v_enviarCorreoWindowsEmpleado').on("click", enviarCorreoWindowsEditar);
+function controlPuerta(idPuerta){
+    var estadoP;
+    if( $('#customSwitchCP'+idPuerta).is(':checked')) {
+        estadoP=1;
+
+        $.ajax({
+            type: "post",
+            url: "/empleado/asisPuerta",
+            data: { idPuerta,
+                estadoP
+            },
+            statusCode: {
+                419: function () {
+                    location.reload();
+                },
+            },
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (data) {
+                $('#customSwitchCP'+idPuerta).prop('checked',true);
+            },
+            error: function (data) {
+                alert("Ocurrio un error");
+            },
+        });
+    }
+    else{
+        estadoP=0;
+
+        $.ajax({
+            type: "post",
+            url: "/empleado/asisPuerta",
+            data: { idPuerta,
+                estadoP
+            },
+            statusCode: {
+                419: function () {
+                    location.reload();
+                },
+            },
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (data) {
+                $('#customSwitchCP'+idPuerta).prop('checked',false);
+            },
+            error: function (data) {
+                alert("Ocurrio un error");
+            },
+        });
+
+    }
+}

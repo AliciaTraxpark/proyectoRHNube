@@ -235,14 +235,14 @@ function RefreshTablaEmpleado() {
                         </div>\
                          </td>";
                 }
-                if (data[i].dispositivos.includes(2) == false) {
+                if (data[i].asistencia_puerta==1) {
                     tbody +=
                         '<td class="text-center">\
                                 <div class="custom-control custom-switch mb-2">\
                                     <input type="checkbox" class="custom-control-input"\
                                         id="customSwitchCP' +
                         data[i].emple_id +
-                        '">\
+                        '" onclick="controlPuerta('+ data[i].emple_id +')" checked>\
                                     <label class="custom-control-label" for="customSwitchCP' +
                         data[i].emple_id +
                         '"\
@@ -251,40 +251,19 @@ function RefreshTablaEmpleado() {
                     </td>';
                 } else {
                     tbody +=
-                        '<td class="text-center">\
-                                        <div class="dropdown" id="a' +
-                        data[i].emple_id +
-                        '">\
-                            <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor: pointer">\
-                                <div class="custom-control custom-switch mb-2">\
-                                    <input type="checkbox" class="custom-control-input" id="customSwitchCRP' +
-                        data[i].emple_id +
-                        '">\
-                                    <label class="custom-control-label" for="customSwitchCRP' +
-                        data[i].emple_id +
-                        '" style="font-weight: bold"></label>\
-                                </div>\
-                            </a>\
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
-                    for (var j = 0; j < data[i].vinculacion.length; j++) {
-                        if (data[i].vinculacion[j].dispositivoD == "ANDROID") {
-                            tbody +=
-                                '<a class="dropdown-item" \
-                                                onclick="javascript:enviarAndroidTabla(' +
-                                data[i].emple_id +
-                                "," +
-                                data[i].vinculacion[j].idVinculacion +
-                                ')">PC ' +
-                                j +
-                                1 +
-                                "\
-                                            </a>";
-                        }
-                    }
-                    tbody +=
-                        "</ul>\
-                        </div>\
-                         </td>";
+                    '<td class="text-center">\
+                            <div class="custom-control custom-switch mb-2">\
+                                <input type="checkbox" class="custom-control-input"\
+                                    id="customSwitchCP' +
+                    data[i].emple_id +
+                    '" onclick="controlPuerta('+ data[i].emple_id +')">\
+                                <label class="custom-control-label" for="customSwitchCP' +
+                    data[i].emple_id +
+                    '"\
+                                    style="font-weight: bold"></label>\
+                            </div>\
+                </td>';
+
                 }
                 if (data[i].cargo_descripcion == null) {
                     tbody += '<td><div class="text-wrap width-400"></div></td>';

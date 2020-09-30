@@ -253,35 +253,22 @@
                 </div>
             </td>
             @endif
-            @if(!in_array("2",$tabla_empleados->dispositivos))
+            @if($tabla_empleados->asistencia_puerta==1)
             <td class="text-center">
                 <div class="custom-control custom-switch mb-2">
                     <input type="checkbox" class="custom-control-input"
-                        id="customSwitchCP{{$tabla_empleados->emple_id}}">
+                        id="customSwitchCP{{$tabla_empleados->emple_id}}" onclick="controlPuerta({{$tabla_empleados->emple_id}})" checked>
                     <label class="custom-control-label" for="customSwitchCP{{$tabla_empleados->emple_id}}"
                         style="font-weight: bold"></label>
                 </div>
             </td>
             @else
             <td class="text-center">
-                <div class="dropdown" id="a{{$tabla_empleados->emple_id}}">
-                    <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                        style="cursor: pointer">
-                        <div class="custom-control custom-switch mb-2">
-                            <input type="checkbox" class="custom-control-input"
-                                id="customSwitchCRP{{$tabla_empleados->emple_id}}">
-                            <label class="custom-control-label" for="customSwitchCRP{{$tabla_empleados->emple_id}}"
-                                style="font-weight: bold"></label>
-                        </div>
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        @foreach($tabla_empleados->vinculacion as $tablaV)
-                        @if($tablaV["dispositivoD"] == "ANDROID")
-                        <a class="dropdown-item"
-                            onclick="enviarAndroidTabla({{$tabla_empleados->emple_id}},{{$tablaV['idVinculacion']}})">ANDROID</a>
-                        @endif
-                        @endforeach
-                    </ul>
+                <div class="custom-control custom-switch mb-2">
+                    <input type="checkbox" class="custom-control-input"
+                        id="customSwitchCP{{$tabla_empleados->emple_id}}" onclick="controlPuerta({{$tabla_empleados->emple_id}})">
+                    <label class="custom-control-label" for="customSwitchCP{{$tabla_empleados->emple_id}}"
+                        style="font-weight: bold"></label>
                 </div>
             </td>
             @endif
