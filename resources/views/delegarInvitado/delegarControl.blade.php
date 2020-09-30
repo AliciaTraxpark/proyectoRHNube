@@ -173,7 +173,7 @@
                                         <div class="col-md-8 ">
                                             <div class="form-check">
                                                 <input type="checkbox" class="form-check-input" id="dashboardCheck">
-                                                <label class="form-check-label" for="dashboardCheck" style="margin-top: 2px;font-style: oblique;">Ver Dashboard</label><br><br>
+                                                <label class="form-check-label" for="dashboardCheck" style="margin-top: 2px;font-style: oblique;">Ver Dashboard general</label><br><br>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -277,7 +277,7 @@
                                     <div class="col-md-8 ">
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input" id="dashboardCheck_edit">
-                                            <label class="form-check-label" for="dashboardCheck_edit" style="margin-top: 2px;font-style: oblique;">Ver Dashboard</label><br><br>
+                                            <label class="form-check-label" for="dashboardCheck_edit" style="margin-top: 2px;font-style: oblique;">Ver Dashboard general</label><br><br>
                                         </div>
                                     </div>
                                     <div class="col-md-12">

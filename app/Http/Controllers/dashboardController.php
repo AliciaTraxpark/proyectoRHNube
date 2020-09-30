@@ -64,6 +64,7 @@ class dashboardController extends Controller
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
                 ->where('invi.estado', '=', 1)
+                ->where('invi.idinvitado', '=',$invitado->idinvitado)
                 ->groupBy('e.emple_area')
                 ->get();
         } else {
@@ -124,6 +125,7 @@ class dashboardController extends Controller
                 ->where('invi.estado', '=', 1)
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
+                ->where('invi.idinvitado', '=',$invitado->idinvitado)
                 ->groupBy('e.emple_nivel')
                 ->get();
         } else {
@@ -182,6 +184,7 @@ class dashboardController extends Controller
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('invi.estado', '=', 1)
                 ->where('e.emple_estado', '=', 1)
+                ->where('invi.idinvitado', '=',$invitado->idinvitado)
                 ->groupBy('c.idEmpleado')
                 ->get();
         } else {
@@ -241,6 +244,7 @@ class dashboardController extends Controller
                 ->select('cc.centroC_descripcion', DB::raw('COUNT(e.emple_id) as Total'))
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
+                ->where('invi.idinvitado', '=',$invitado->idinvitado)
                 ->groupBy('e.emple_centCosto')
                 ->get();
         } else {
@@ -298,6 +302,7 @@ class dashboardController extends Controller
                 ->where('invi.estado', '=', 1)
                 ->select('l.local_descripcion', DB::raw('COUNT(e.emple_id) as Total'))
                 ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('invi.idinvitado', '=',$invitado->idinvitado)
                 ->where('e.emple_estado', '=', 1)
                 ->groupBy('e.emple_local')
                 ->get();
@@ -355,6 +360,7 @@ class dashboardController extends Controller
                 ->select('d.name', DB::raw('COUNT(e.emple_id) as total'))
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
+                ->where('invi.idinvitado', '=',$invitado->idinvitado)
                 ->groupBy('e.emple_departamento')
                 ->get();
         } else {
@@ -419,6 +425,7 @@ class dashboardController extends Controller
                 )
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
+                ->where('invi.idinvitado', '=',$invitado->idinvitado)
                 ->groupBy('rango')
                 ->get();
         } else {

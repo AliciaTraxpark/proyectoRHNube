@@ -33,15 +33,16 @@ $('#empresa').select2({
 $('#empleado').select2({
     placeholder: 'Seleccionar empleado'
 });
-
-$(function () {
+function datosOrganizacion() {
     var fechaI = $('#fecha').val() + $('#horaI').val();
     var fechaF = $('#fecha').val() + $('#horaF').val();
+    var organizacion = $('#empresa').val();
     $.ajax({
         url: "/datosCapturas",
         data: {
             fecha_horaI: fechaI,
-            fecha_horaF: fechaF
+            fecha_horaF: fechaF,
+            organizacion: organizacion
         },
         method: "GET",
         headers: {
@@ -51,4 +52,7 @@ $(function () {
             console.log(data);
         }
     });
+}
+$('#empresa').on("change", function (e) {
+    datosOrganizacion();
 });
