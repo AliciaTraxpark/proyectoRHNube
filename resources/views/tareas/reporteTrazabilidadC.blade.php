@@ -126,6 +126,9 @@
                                     </tr>
                                 </thead>
                                 <tbody id="datos">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
                                 </tbody>
                             </table>
                         </div>
