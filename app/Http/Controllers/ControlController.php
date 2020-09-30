@@ -26,6 +26,11 @@ class ControlController extends Controller
             ->where('uso.user_id', '=', Auth::user()->id)
             ->get()->first();
         if ($usuario_organizacion->rol_id == 3) {
+            $invitado= DB::table('invitado as in')
+            ->where('organi_id', '=', session('sesionidorg'))
+                ->where('rol_id', '=', 3)
+                ->where('invi.user_Invitado', '=', Auth::user()->id)
+                ->get();
             $empleado = DB::table('empleado as e')
                 ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
@@ -35,6 +40,7 @@ class ControlController extends Controller
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
                 ->where('invi.estado', '=', 1)
+                ->where('invi.idinvitado', '=',$invitado->idinvitado)
                 ->groupBy('p.perso_id')
                 ->get();
         } else {
@@ -58,7 +64,11 @@ class ControlController extends Controller
             ->where('uso.user_id', '=', Auth::user()->id)
             ->get()->first();
         if ($usuario_organizacion->rol_id == 3) {
-
+            $invitado= DB::table('invitado as in')
+            ->where('organi_id', '=', session('sesionidorg'))
+                ->where('rol_id', '=', 3)
+                ->where('invi.user_Invitado', '=', Auth::user()->id)
+                ->get();
             $empleado = DB::table('empleado as e')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                 ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
@@ -68,6 +78,7 @@ class ControlController extends Controller
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
                 ->where('invi.estado', '=', 1)
+                ->where('invi.idinvitado', '=',$invitado->idinvitado)
                 ->groupBy('e.emple_id')
                 ->get();
         } else {
@@ -102,7 +113,11 @@ class ControlController extends Controller
             ->where('uso.user_id', '=', Auth::user()->id)
             ->get()->first();
         if ($usuario_organizacion->rol_id == 3) {
-
+            $invitado= DB::table('invitado as in')
+            ->where('organi_id', '=', session('sesionidorg'))
+                ->where('rol_id', '=', 3)
+                ->where('invi.user_Invitado', '=', Auth::user()->id)
+                ->get();
             $empleado = DB::table('empleado as e')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                 ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
@@ -112,6 +127,7 @@ class ControlController extends Controller
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
                 ->where('invi.estado', '=', 1)
+                ->where('invi.idinvitado', '=',$invitado->idinvitado)
                 ->groupBy('e.emple_id')
                 ->get();
         } else {
@@ -146,7 +162,11 @@ class ControlController extends Controller
             ->where('uso.user_id', '=', Auth::user()->id)
             ->get()->first();
         if ($usuario_organizacion->rol_id == 3) {
-
+            $invitado= DB::table('invitado as in')
+            ->where('organi_id', '=', session('sesionidorg'))
+                ->where('rol_id', '=', 3)
+                ->where('invi.user_Invitado', '=', Auth::user()->id)
+                ->get();
             $empleado = DB::table('empleado as e')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                 ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
@@ -156,6 +176,7 @@ class ControlController extends Controller
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
                 ->where('invi.estado', '=', 1)
+                ->where('invi.idinvitado', '=',$invitado->idinvitado)
                 ->groupBy('e.emple_id')
                 ->get();
         } else {
@@ -186,6 +207,11 @@ class ControlController extends Controller
         $cargo = $request->get('cargo');
         if (is_null($area) === true && is_null($cargo) === true) {
             if ($usuario_organizacion->rol_id == 3) {
+                $invitado= DB::table('invitado as in')
+            ->where('organi_id', '=', session('sesionidorg'))
+                ->where('rol_id', '=', 3)
+                ->where('invi.user_Invitado', '=', Auth::user()->id)
+                ->get();
                 $empleados = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
@@ -196,6 +222,7 @@ class ControlController extends Controller
                     ->where('e.emple_estado', '=', 1)
                     ->where('invi.estado', '=', 1)
                     ->groupBy('e.emple_id')
+                    ->where('invi.idinvitado', '=',$invitado->idinvitado)
                     ->get();
             } else {
                 $empleados = DB::table('empleado as e')
@@ -210,6 +237,11 @@ class ControlController extends Controller
         } else {
             if (is_null($area) === false && is_null($cargo) === true) {
                 if ($usuario_organizacion->rol_id == 3) {
+                    $invitado= DB::table('invitado as in')
+                    ->where('organi_id', '=', session('sesionidorg'))
+                        ->where('rol_id', '=', 3)
+                        ->where('invi.user_Invitado', '=', Auth::user()->id)
+                        ->get();
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
@@ -220,6 +252,7 @@ class ControlController extends Controller
                         ->where('e.emple_estado', '=', 1)
                         ->whereIn('e.emple_area', $area)
                         ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=',$invitado->idinvitado)
                         ->groupBy('e.emple_id')
                         ->get();
                 } else {
@@ -236,6 +269,11 @@ class ControlController extends Controller
             }
             if (is_null($area) === true && is_null($cargo) === false) {
                 if ($usuario_organizacion->rol_id == 3) {
+                    $invitado= DB::table('invitado as in')
+                    ->where('organi_id', '=', session('sesionidorg'))
+                        ->where('rol_id', '=', 3)
+                        ->where('invi.user_Invitado', '=', Auth::user()->id)
+                        ->get();
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
@@ -246,6 +284,7 @@ class ControlController extends Controller
                         ->where('e.emple_estado', '=', 1)
                         ->whereIn('e.emple_cargo', $cargo)
                         ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=',$invitado->idinvitado)
                         ->groupBy('e.emple_id')
                         ->get();
                 } else {
@@ -262,6 +301,11 @@ class ControlController extends Controller
             }
             if (is_null($area) === false && is_null($cargo) === false) {
                 if ($usuario_organizacion->rol_id == 3) {
+                    $invitado= DB::table('invitado as in')
+                    ->where('organi_id', '=', session('sesionidorg'))
+                        ->where('rol_id', '=', 3)
+                        ->where('invi.user_Invitado', '=', Auth::user()->id)
+                        ->get();
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
@@ -273,6 +317,7 @@ class ControlController extends Controller
                         ->whereIn('e.emple_area', $area)
                         ->whereIn('e.emple_cargo', $cargo)
                         ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=',$invitado->idinvitado)
                         ->groupBy('e.emple_id')
                         ->get();
                 } else {
