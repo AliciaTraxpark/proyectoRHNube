@@ -25,3 +25,9 @@ $('#horaF').flatpickr({
     dateFormat: "H:i",
     time_24hr: true
 });
+$('#empresa').select2({
+    placeholder: 'Seleccionar empresa'
+});
+$('#empleado').select2({
+    placeholder: 'Seleccionar empleado'
+});
