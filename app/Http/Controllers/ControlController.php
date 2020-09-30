@@ -551,7 +551,7 @@ class ControlController extends Controller
         $empleado = DB::table('empleado as e')
             ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
             ->join('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
-            ->select('e.emple_id')
+            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
             ->where('e.organi_id', '=', $organizacion)
             ->whereNotNull('v.pc_mac')
             ->groupBy('e.emple_id')
@@ -568,7 +568,7 @@ class ControlController extends Controller
         // array_push($respuesta, ["horas" => $horas]);
         $respuesta["horas"] = $horas;
         foreach ($empleado as $emple) {
-            array_push($respuesta, array("idEmpleado" => $emple->emple_id, "cantidad" => $cantidad));
+            array_push($respuesta, array("idEmpleado" => $emple->emple_id, "nombre_apellido" => $emple->nombre . " " . $emple->apPaterno . " " . $emple->apMaterno, "cantidad" => $cantidad));
         }
         // DB::enableQueryLog();
         $horasCapturas = DB::table('empleado as e')
