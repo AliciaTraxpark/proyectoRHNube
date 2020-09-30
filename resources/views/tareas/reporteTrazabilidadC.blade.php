@@ -61,8 +61,8 @@
                     </div>
                     <div class="col-xl-4">
                         <div class="form-group row">
-                            <label class="col-lg-4 col-form-label">Hora Inicio:</label>
-                            <div class="input-group col-md-6">
+                            <label class="col-lg-5 col-form-label">Hora Inicio (24H):</label>
+                            <div class="input-group col-md-7">
                                 <input type="text" id="horaI" class="form-control">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text form-control"><i class="uil uil-clock-three"></i></div>
@@ -72,8 +72,8 @@
                     </div>
                     <div class="col-xl-4">
                         <div class="form-group row">
-                            <label class="col-lg-4 col-form-label">Hora Fin:</label>
-                            <div class="input-group col-md-6">
+                            <label class="col-lg-5 col-form-label">Hora Fin (24H):</label>
+                            <div class="input-group col-md-7">
                                 <input type="text" id="horaF" class="form-control">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text form-control"><i class="uil uil-clock-three"></i></div>
@@ -122,7 +122,7 @@
                                     <tr>
                                         <th>idEmpleado</th>
                                         <th>Empleado</th>
-                                        <th>Hora 00:00:00</th>
+                                        <th>Hora</th>
                                     </tr>
                                 </thead>
                                 <tbody id="datos">
