@@ -45,7 +45,7 @@ class dashboardController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
                 ->where('rol_id', '=', 3)
                 ->where('in.user_Invitado', '=', Auth::user()->id)
-                ->get();
+                ->get()->first();
             $empleado = DB::table('empleado as e')
                 ->select(DB::raw('COUNT(e.emple_id) as totalE'))
                 ->where('e.organi_id', '=', session('sesionidorg'))
@@ -105,7 +105,7 @@ class dashboardController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
                 ->where('rol_id', '=', 3)
                 ->where('in.user_Invitado', '=', Auth::user()->id)
-                ->get();
+                ->get()->first();
             $empleado = DB::table('empleado as e')
                 ->select(DB::raw('COUNT(e.emple_id) as totalE'))
                 ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
@@ -162,7 +162,7 @@ class dashboardController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
                 ->where('rol_id', '=', 3)
                 ->where('in.user_Invitado', '=', Auth::user()->id)
-                ->get();
+                ->get()->first();
             $empleado = DB::table('empleado as e')
                 ->select(DB::raw('COUNT(e.emple_id) as totalE'))
                 ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
@@ -222,7 +222,7 @@ class dashboardController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
                 ->where('rol_id', '=', 3)
                 ->where('in.user_Invitado', '=', Auth::user()->id)
-                ->get();
+                ->get()->first();
             $empleado = DB::table('empleado as e')
                 ->select(DB::raw('COUNT(e.emple_id) as totalE'))
                 ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
@@ -280,7 +280,7 @@ class dashboardController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
                 ->where('rol_id', '=', 3)
                 ->where('in.user_Invitado', '=', Auth::user()->id)
-                ->get();
+                ->get()->first();
             $empleado = DB::table('empleado as e')
                 ->select(DB::raw('COUNT(e.emple_id) as totalE'))
                 ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
@@ -337,7 +337,7 @@ class dashboardController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
                 ->where('rol_id', '=', 3)
                 ->where('in.user_Invitado', '=', Auth::user()->id)
-                ->get();
+                ->get()->first();
             $empleado = DB::table('empleado as e')
                 ->select(DB::raw('COUNT(e.emple_id) as totalE'))
                 ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
@@ -392,7 +392,7 @@ class dashboardController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
                 ->where('rol_id', '=', 3)
                 ->where('in.user_Invitado', '=', Auth::user()->id)
-                ->get();
+                ->get()->first();
             $empleado = DB::table('empleado as e')
                 ->select(DB::raw('COUNT(e.emple_id) as totalE'))
                 ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')

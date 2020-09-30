@@ -30,7 +30,7 @@ class ControlController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
                 ->where('rol_id', '=', 3)
                 ->where('in.user_Invitado', '=', Auth::user()->id)
-                ->get();
+                ->get()->first();
             $empleado = DB::table('empleado as e')
                 ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
@@ -68,7 +68,7 @@ class ControlController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
                 ->where('rol_id', '=', 3)
                 ->where('in.user_Invitado', '=', Auth::user()->id)
-                ->get();
+                ->get()->first();
             $empleado = DB::table('empleado as e')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                 ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
@@ -117,7 +117,7 @@ class ControlController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
                 ->where('rol_id', '=', 3)
                 ->where('in.user_Invitado', '=', Auth::user()->id)
-                ->get();
+                ->get()->first();
             $empleado = DB::table('empleado as e')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                 ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
@@ -166,7 +166,7 @@ class ControlController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
                 ->where('rol_id', '=', 3)
                 ->where('in.user_Invitado', '=', Auth::user()->id)
-                ->get();
+                ->get()->first();
             $empleado = DB::table('empleado as e')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                 ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
@@ -211,7 +211,7 @@ class ControlController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
                 ->where('rol_id', '=', 3)
                 ->where('in.user_Invitado', '=', Auth::user()->id)
-                ->get();
+                ->get()->first();
                 $empleados = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
@@ -241,7 +241,7 @@ class ControlController extends Controller
                     ->where('organi_id', '=', session('sesionidorg'))
                         ->where('rol_id', '=', 3)
                         ->where('in.user_Invitado', '=', Auth::user()->id)
-                        ->get();
+                        ->get()->first();
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
@@ -273,7 +273,7 @@ class ControlController extends Controller
                     ->where('organi_id', '=', session('sesionidorg'))
                         ->where('rol_id', '=', 3)
                         ->where('in.user_Invitado', '=', Auth::user()->id)
-                        ->get();
+                        ->get()->first();
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
@@ -305,7 +305,7 @@ class ControlController extends Controller
                     ->where('organi_id', '=', session('sesionidorg'))
                         ->where('rol_id', '=', 3)
                         ->where('in.user_Invitado', '=', Auth::user()->id)
-                        ->get();
+                        ->get()->first();
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
