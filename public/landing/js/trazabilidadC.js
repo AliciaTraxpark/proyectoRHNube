@@ -17,13 +17,15 @@ $('#horaI').flatpickr({
     enableTime: true,
     noCalendar: true,
     dateFormat: "H:i",
-    time_24hr: true
+    time_24hr: true,
+    defaultDate: "09:00"
 });
 $('#horaF').flatpickr({
     enableTime: true,
     noCalendar: true,
     dateFormat: "H:i",
-    time_24hr: true
+    time_24hr: true,
+    defaultDate: "10:00"
 });
 $('#empresa').select2({
     placeholder: 'Seleccionar empresa'
