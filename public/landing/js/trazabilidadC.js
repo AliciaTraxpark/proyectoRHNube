@@ -1,3 +1,4 @@
+$.fn.select2.defaults.set('language', 'es');
 var fechaValue = $("#fechaSelec").flatpickr({
     mode: "single",
     dateFormat: "Y-m-d",
@@ -28,7 +29,9 @@ $('#horaF').flatpickr({
     defaultDate: "10:00"
 });
 $('#empresa').select2({
-    placeholder: 'Seleccionar empresa'
+    placeholder: 'Seleccionar empresa',
+    tags: true,
+    maximumSelectionLength: 1
 });
 function datosOrganizacion() {
     var fechaI = $('#fecha').val() + $('#horaI').val();

@@ -85,8 +85,8 @@
                 <div class="row justify-content-center">
                     <div class="col-xl-4">
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Organización:</label>
-                            <div class="col-lg-9">
+                            <label class="col-lg-4 col-form-label">Organización:</label>
+                            <div class="col-lg-8">
                                 <select id="empresa" data-plugin="customselect" class="form-control"
                                     multiple="multiple">
                                     @foreach ($organizacion as $org)
@@ -132,6 +132,7 @@
 <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js')
     }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/multiselect/es.js')}}"></script>
 <!-- datatable js -->
 <script src="{{ URL::asset('admin/assets/libs/chart/Chart.min.js') }}"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
