@@ -566,6 +566,7 @@ class EmpleadoController extends Controller
         ///CALENDARIO
 
         $eventos_empleado_tempEU = eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
+        ->where('organi_id', '=', session('sesionidorg'))
             ->where('id_horario', '=', null)->where('color', '!=', '#9E9E9E')
             ->where('calendario_calen_id', '=', $objEmpleado['idca'])->get();
 
@@ -590,7 +591,7 @@ class EmpleadoController extends Controller
         $incidenciasborrar = incidencia_dias::where('id_empleado', '=', $idempleado)
             ->delete();
         $eventos_empleado_tempInc = eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
-            ->where('id_horario', '=', null)->where('color', '=', '#9E9E9E')->where('textColor', '=', '#313131')
+        ->where('organi_id', '=', session('sesionidorg'))  ->where('id_horario', '=', null)->where('color', '=', '#9E9E9E')->where('textColor', '=', '#313131')
             ->where('calendario_calen_id', '=', $objEmpleado['idca'])->get();
 
         foreach ($eventos_empleado_tempInc as $eventos_empleado_tempIncs) {
@@ -613,7 +614,7 @@ class EmpleadoController extends Controller
         $horario_empleadoBor = horario_empleado::where('empleado_emple_id', '=', $idempleado)
             ->delete();
         $eventos_empleado_tempHor = eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
-            ->where('id_horario', '!=', null)->where('color', '=', '#ffffff')->where('textColor', '=', '111111')
+        ->where('organi_id', '=', session('sesionidorg'))  ->where('id_horario', '!=', null)->where('color', '=', '#ffffff')->where('textColor', '=', '111111')
             ->where('calendario_calen_id', '=', $objEmpleado['idca'])->get();
 
 
@@ -1091,7 +1092,7 @@ class EmpleadoController extends Controller
         $idcalendario = $request->idcalendario;
 
         $eventos_empleado_tempCop = eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
-            ->where('calendario_calen_id', '=', $idcalendario)->get();
+        ->where('organi_id', '=', session('sesionidorg')) ->where('calendario_calen_id', '=', $idcalendario)->get();
         if ($eventos_empleado_tempCop->isEmpty()) {
             $eventos_usuario = eventos_usuario::where('organi_id', '=', session('sesionidorg'))
                 ->where('id_calendario', '=', $idcalendario)->get();
@@ -1106,6 +1107,7 @@ class EmpleadoController extends Controller
                     $eventos_empleado_tempSave->end = $eventos_usuarios->end;
                     $eventos_empleado_tempSave->tipo_ev = $eventos_usuarios->tipo;
                     $eventos_empleado_tempSave->calendario_calen_id = $idcalendario;
+                    $eventos_empleado_tempSave->organi_id=session('sesionidorg');
                     $eventos_empleado_tempSave->save();
                 }
             }
@@ -1117,7 +1119,7 @@ class EmpleadoController extends Controller
             ->leftJoin('horario as h', 'evt.id_horario', '=', 'h.horario_id')
             ->where('evt.users_id', '=', Auth::user()->id)
             ->where('evt.calendario_calen_id', '=', $idcalendario)
-
+            ->where('evt.organi_id', '=', session('sesionidorg'))
             ->get();
 
         return $eventos_empleado_temp;
@@ -1133,6 +1135,7 @@ class EmpleadoController extends Controller
         $eventos_empleado_tempSave->end = $request->get('end');
         $eventos_empleado_tempSave->tipo_ev = $request->get('tipo');
         $eventos_empleado_tempSave->calendario_calen_id = $request->get('id_calendario');
+        $eventos_empleado_tempSave->organi_id=session('sesionidorg');
         $eventos_empleado_tempSave->save();
 
 
@@ -1141,7 +1144,7 @@ class EmpleadoController extends Controller
             ->select(['evEmpleadoT_id as id', 'title', 'color', 'textColor', 'start', 'end', 'tipo_ev', 'users_id', 'calendario_calen_id'])
             ->where('evt.users_id', '=', Auth::user()->id)
             ->where('evt.calendario_calen_id', '=', $request->get('id_calendario'))
-
+            ->where('evt.organi_id', '=', session('sesionidorg'))
             ->get();
 
         return $eventos_empleado_temp;
@@ -1167,6 +1170,7 @@ class EmpleadoController extends Controller
         $eventos_empleado_tempSave->end = $request->get('end');
         $eventos_empleado_tempSave->tipo_ev = $incidencia->inciden_id;
         $eventos_empleado_tempSave->calendario_calen_id = $request->get('id_calendario');
+        $eventos_empleado_tempSave->organi_id=session('sesionidorg');
         $eventos_empleado_tempSave->save();
 
 
@@ -1175,7 +1179,7 @@ class EmpleadoController extends Controller
             ->select(['evEmpleadoT_id as id', 'title', 'color', 'textColor', 'start', 'end', 'tipo_ev', 'users_id', 'calendario_calen_id'])
             ->where('evt.users_id', '=', Auth::user()->id)
             ->where('evt.calendario_calen_id', '=', $request->get('id_calendario'))
-
+            ->where('evt.organi_id', '=', session('sesionidorg'))
             ->get();
 
         return $eventos_empleado_temp;
@@ -1183,12 +1187,13 @@ class EmpleadoController extends Controller
     public function vaciarcalend()
     {
         DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
+        ->where('organi_id', '=', session('sesionidorg'))
             ->delete();
     }
     public function vaciarcalendId(Request $request)
     {
         DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
-            ->where('calendario_calen_id', '=', $request->get('idca'))
+        ->where('organi_id', '=', session('sesionidorg')) ->where('calendario_calen_id', '=', $request->get('idca'))
 
             ->delete();
     }
@@ -1223,6 +1228,7 @@ class EmpleadoController extends Controller
 
         foreach ($datafecha as $datafechas) {
             $tempre = eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
+            ->where('organi_id', '=', session('sesionidorg'))
                 ->where('start', '=', $datafechas)
                 ->where('id_horario', '=', $idhorar)
                 ->get()->first();
@@ -1250,6 +1256,7 @@ class EmpleadoController extends Controller
             $eventos_empleado_tempSave->id_horario = $idhorar;
             $eventos_empleado_tempSave->calendario_calen_id = $idca;
             $eventos_empleado_tempSave->fuera_horario = $fueraHora;
+            $eventos_empleado_tempSave->organi_id=session('sesionidorg');
             if ($fueraHora == 1) {
                 $eventos_empleado_tempSave->borderColor = '#5369f8';
             }
@@ -1480,12 +1487,14 @@ class EmpleadoController extends Controller
             ->where('color', '=', '#e6bdbd')
             ->whereYear('start', $request->get('aniocalen'))
             ->whereMonth('start', $request->get('mescale'))
+            ->where('organi_id', '=', session('sesionidorg'))
             ->delete();
     }
 
     public function vaciardlabTem(Request $request)
     {
         DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
+        ->where('organi_id', '=', session('sesionidorg'))
             ->where('color', '=', '#dfe6f2')
             ->where('textColor', '=', '#0b1b29')
             ->whereYear('start', $request->get('aniocalen'))
@@ -1495,6 +1504,7 @@ class EmpleadoController extends Controller
     public function vaciardNlabTem(Request $request)
     {
         DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
+        ->where('organi_id', '=', session('sesionidorg'))
             ->where('color', '=', '#a34141')
             ->where('textColor', '=', '#ffffff')
             ->whereYear('start', $request->get('aniocalen'))
@@ -1504,6 +1514,7 @@ class EmpleadoController extends Controller
     public function vaciardIncidTem(Request $request)
     {
         DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
+        ->where('organi_id', '=', session('sesionidorg'))
             ->where('color', '=', '#9E9E9E')
             ->where('textColor', '=', '#313131')
             ->whereYear('start', $request->get('aniocalen'))
@@ -1537,6 +1548,7 @@ class EmpleadoController extends Controller
     public function vaciardescansoTem(Request $request)
     {
         DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
+        ->where('organi_id', '=', session('sesionidorg'))
             ->where('color', '=', '#4673a0')
             ->where('textColor', '=', '#ffffff')
             ->whereYear('start', $request->get('aniocalen'))
@@ -1590,6 +1602,7 @@ class EmpleadoController extends Controller
     public function vaciarhorarioTem(Request $request)
     {
         DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
+        ->where('organi_id', '=', session('sesionidorg'))
             ->where('color', '=', '#ffffff')
             ->where('textColor', '=', '111111')
             ->whereYear('start', $request->get('aniocalen'))

@@ -297,7 +297,7 @@
                                                                         class="adapt-img"
                                                                         src="http://rhnube.com.pe/landing/images/NUBE_SOLA.png"
                                                                         style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
-                                                                        width="183"></td>
+                                                                        width="193"></td>
                                                             </tr>
                                                         </table>
                                                     </td>
@@ -464,8 +464,8 @@
                                             bgcolor="#ffffff" align="center">
                                             <a target="_blank">
                                                 <img class="adapt-img"
-                                                    src="http://rhnube.com.pe/landing/images/LogoAzul.png" alt
-                                                    style="display: block;" width="120">
+                                                src="http://rhnube.com.pe/landing/images/NUBE_SOLA.png" alt
+                                                    style="display: block;" width="150">
                                             </a>
                                         </td>
                                     </tr>
