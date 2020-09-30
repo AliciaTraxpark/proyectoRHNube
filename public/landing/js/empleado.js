@@ -205,7 +205,7 @@ function calendario() {
 
     calendar.render();
 }
-document.addEventListener("DOMContentLoaded", calendario);
+ document.addEventListener("DOMContentLoaded", calendario);
 ///calendario e n edit
 function calendario_edit() {
     var calendarEl = document.getElementById("calendar_ed");
@@ -483,7 +483,7 @@ function calendario_edit() {
 
     calendarioedit.render();
 }
-document.addEventListener("DOMContentLoaded", calendario_edit); ///////////
+/* document.addEventListener("DOMContentLoaded", calendario_edit); */ ///////////
 function laborable_ed() {
     $("#calendarioAsignar_ed").modal("hide");
     title = "Descanso";
@@ -1459,7 +1459,7 @@ function calendario3() {
 
     calendar3.render();
 }
-document.addEventListener("DOMContentLoaded", calendario3);
+/* document.addEventListener("DOMContentLoaded", calendario3); */
 ////////////////
 function calendario4() {
     var calendarEl = document.getElementById("calendar4");
@@ -1540,7 +1540,7 @@ function calendario4() {
 
     calendar4.render();
 }
-document.addEventListener("DOMContentLoaded", calendario4);
+/* document.addEventListener("DOMContentLoaded", calendario4); */
 //************* */
 $("#checkboxFechaI").on("click", function () {
     if ($("#checkboxFechaI").is(":checked")) {
@@ -1558,7 +1558,7 @@ $("#checkboxFechaI").on("click", function () {
         $("#mf_ano_fecha").show();
     }
 });
-document.addEventListener("DOMContentLoaded", calendario3);
+/* document.addEventListener("DOMContentLoaded", calendario3); */
 
 ///inv
 function calendarioInv_ed() {
@@ -1595,7 +1595,7 @@ function calendarioInv_ed() {
 
     calendarInv_ed.render();
 }
-document.addEventListener("DOMContentLoaded", calendarioInv_ed);
+/* document.addEventListener("DOMContentLoaded", calendarioInv_ed); */
 ////////////////////////////
 function calendario2_ed() {
     var calendarEl = document.getElementById("calendar2_ed");
@@ -1882,7 +1882,7 @@ function calendario2_ed() {
 
     calendar2_ed.render();
 }
-document.addEventListener("DOMContentLoaded", calendario2_ed);
+/* document.addEventListener("DOMContentLoaded", calendario2_ed); */
 //************* */
 $("#checkboxFechaI").on("click", function () {
     if ($("#checkboxFechaI").is(":checked")) {
