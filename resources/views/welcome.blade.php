@@ -36,9 +36,9 @@
     <header id="header-section">
         <nav class="navbar  pl-3 pl-sm-0" id="navbar">
             <div class="container pb-0 pt-2">
-                <div class="col-md-5" style="margin-bottom: 10px;padding-left: 50px">
+                <div class="col-md-5" style="margin-bottom: 10px;padding-left: 60px">
                     <div class="navbar-brand-wrapper d-flex">
-                        <img src="{{asset('landing/images/NUBE_SOLA.png')}}" width="35%"  height="35%" >
+                        <img src="{{asset('landing/images/NUBE_SOLA.png')}}" width="30%"  height="30%" >
                     </div>
                 </div>
 
@@ -127,7 +127,7 @@
                             grid-margin-lg-0" data-aos="fade-right" >
                         <h3 class=" m-0">¿Por qué usar RH Nube?</h3>
                         <div class="col-lg-12 col-xl-12 text-center p-0">
-                            <p class="py-4 m-0 text-muted " style="font-size: 16px">Sencillamente porque  te brindamos un alto Retorno de Inversión (ROI) en administración de personal desde el primer mes. Haz la prueba :)</p>
+                            <p class="py-4 m-0 text-muted " style="font-size: 16px">Sencillamente porque  te brindamos un alto Retorno de Inversión (ROI) en administración de personal desde el primer mes.</p>
                                 <div class="col-md-12"> <br>
                                     <a {{-- href="{{route('registroPersona')}} "--}}><button onclick=" $('#modal-error').modal('show')"
                                         class="btn btn-opacity-primary mr-1">COMIENZA
@@ -149,19 +149,7 @@
                 </div>
 
             </section>
-            <div class="banner" style="background-color: #ffffff">
-                <div class="container" style="padding-top: 40px;padding-bottom:0px">
-                    <h4 class="" style="color: #204051">Organicemos tú equipo de
-                        trabajo en 8 minutos: Controla, mide y gestiona.
-                    </h4>
 
-                    <div>
-
-
-                    </div>
-
-                </div>
-            </div>
 
 
             <section class="customer-feedback" id="feedback-section" style="    margin-left: 50px;
@@ -201,12 +189,9 @@
                                     </div>
                                     <div class="col-md-10">
                                         <h6 class="card-title pt-3" style="font-size: 14px!important;color:#ffffff">
-                                            ¿Trabajadores de campo?</h6>
+                                            Asegura tu inversión</h6>
                                         <p class="m-0 py-3 text-muted"
-                                            style="font-size: 11.9px!important;color:#ffffff!important">RH nube permite
-                                            controlar la ruta de trabajo por GPS y marcar asistencia en campo.
-                                            Ya puedes saber que tareas realiza tu personal fuera de oficina y tomar
-                                            decisiones.
+                                            style="font-size: 11.9px!important;color:#ffffff!important">RH nube permite llevar un control detallado de la actividad laboral en oficina y en casa, así como KPIs de administración de personal para asegurar la inversión en personal interno o externo a la organización.
                                         </p>
                                     </div>
                                 </div>
@@ -382,8 +367,9 @@
             <img src="{{asset('landing/images/NUBE_SOLA.png')}}" width="10%" height="10%">
         </div>
         <div class="col-md-12 text-center" style="margin-top: 10px;margin-bottom: 20px">
-            <span class="mdi mdi-phone" style="color:#faf3f3;font-size: 12px!important"> (01) 238-8350 | <span
-                    class="mdi mdi-whatsapp" style="color: #ffffff;">+51 944 721 061</span></span>
+            <img src="{{asset('landing/images/peru.svg')}}"  height="17"> <span  style="color:#faf3f3;font-size: 12px!important"> (01) 238-8350 | &nbsp;&nbsp;<span
+                    class="mdi mdi-whatsapp" style="color: #ffffff;">+51 914 480 786 |&nbsp;&nbsp;</span> <span
+                    class="mdi mdi-email-outline" style="color: #ffffff;"></span>info@rhnube.com.pe</span>
         </div>
         <div class="col-md-12 text-center" style="margin-top: 10px;border-top: 1.5px solid #ded9d9;
         padding-top: 10px;bottom: 10px;">
