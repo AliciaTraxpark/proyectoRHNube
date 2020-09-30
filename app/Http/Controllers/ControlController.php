@@ -538,21 +538,59 @@ class ControlController extends Controller
     {
         $fecha_horaI = $request->get('fecha_horaI');
         $fecha_horaF = $request->get('fecha_horaF');
+        $organizacion = $request->get('organizacion');
+        $respuesta = [];
 
-        $horaI = Carbon::create($request->get('fecha_horaI'))->format('H:i');
-        $horaF = Carbon::create($request->get('fecha_horaF'))->format('H:i');
+        $horaI = Carbon::create($request->get('fecha_horaI'))->format('H:i:s');
+        $horaF = Carbon::create($request->get('fecha_horaF'))->format('H:i:s');
+        $fecha = Carbon::create($request->get('fecha_horaI'))->format('Y-m-d');
         $date1 = new DateTime($fecha_horaI);
         $date2 = new DateTime($fecha_horaF);
         $diff = $date1->diff($date2);
-        // $diff->h;
-        DB::enableQueryLog();
+        // DB::enableQueryLog();
+        $empleado = DB::table('empleado as e')
+            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+            ->join('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
+            ->select('e.emple_id')
+            ->where('e.organi_id', '=', $organizacion)
+            ->whereNotNull('v.pc_mac')
+            ->groupBy('e.emple_id')
+            ->get();
+        // dd(DB::getQueryLog());
+        $horas = array();
+        for ($i = 0; $i <= $diff->h; $i++) {
+            $hora = strtotime('+' . $i . 'hours', strtotime($horaI));
+
+            array_push($horas, date('H:i', $hora));
+        }
+        foreach ($empleado as $emple) {
+            array_push($respuesta, array("idEmpleado" => $emple->emple_id, "horas" => $horas));
+        }
+        // DB::enableQueryLog();
         $horasCapturas = DB::table('empleado as e')
             ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
-            ->select(DB::raw('e.emple_id', 'TIME(cp.hora_ini) as hora'))
-            ->whereRaw("TIME(cp.hora_ini) >= '$horaI'")
-            ->whereRaw("TIME(cp.hora_ini) <= '$horaF'")
+            ->select('e.emple_id', DB::raw('TIME(cp.hora_ini) as hora'))
+            ->where('e.organi_id', '=', $organizacion)
+            ->WhereRaw("DATE(cp.hora_ini) ='$fecha'")
+            ->groupBy('cp.idCaptura')
             ->get();
-        dd(DB::getQueryLog());
-        dd($horasCapturas);
+        // dd(DB::getQueryLog());
+        for ($index = 0; $index < sizeof($respuesta); $index++) {
+            $arrayHoras = $respuesta[$index]["horas"];
+            $idEmpleado = $respuesta[$index]["idEmpleado"];
+
+            foreach ($arrayHoras as $hora) {
+                $contador = 0;
+                foreach ($horasCapturas as $hc) {
+                    if ($idEmpleado == $hc->emple_id) {
+                        if ($hc->hora >= $horaI && $hc <= $horaF) {
+                            $contador = $contador + 1;
+                        }
+                    }
+                }
+                $hora->cant = $contador;
+            }
+        }
+        dd($respuesta);
     }
 }
