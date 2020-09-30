@@ -118,7 +118,7 @@
                     <div class="col-md-12">
                         <div class="table-responsive-xl">
                             <table id="Reporte" class="table nowrap" style="font-size: 13px!important;width:100%;">
-                                <thead style="background: #fafafa;" id="dias" style="width:100%!important">
+                                <thead style="background: #fafafa;" id="horas" style="width:100%!important">
                                     <tr>
                                         <th>idEmpleado</th>
                                         <th>Empleado</th>

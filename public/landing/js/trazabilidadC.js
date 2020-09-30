@@ -37,6 +37,9 @@ function datosOrganizacion() {
     var fechaI = $('#fecha').val() + $('#horaI').val();
     var fechaF = $('#fecha').val() + $('#horaF').val();
     var organizacion = $('#empresa').val();
+    if ($.fn.DataTable.isDataTable("#Reporte")) {
+        $('#Reporte').DataTable().destroy();
+    }
     $.ajax({
         url: "/datosCapturas",
         data: {
@@ -49,7 +52,12 @@ function datosOrganizacion() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-            console.log(data);
+            var html_th = "<tr><th>idEmpleado</th><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
+            for (let index = 0; index < data["horas"].length; index++) {
+                html_th += "<th>" + data["horas"][index] + "</th>"
+            }
+            html_th += "</tr>";
+            $('#horas').html(html_th);
         }
     });
 }
