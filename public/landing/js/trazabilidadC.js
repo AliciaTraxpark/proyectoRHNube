@@ -33,3 +33,22 @@ $('#empresa').select2({
 $('#empleado').select2({
     placeholder: 'Seleccionar empleado'
 });
+
+$(function () {
+    var fechaI = $('#fecha').val() + $('#horaI').val();
+    var fechaF = $('#fecha').val() + $('#horaF').val();
+    $.ajax({
+        url: "/datosCapturas",
+        data: {
+            fecha_horaI: fechaI,
+            fecha_horaF: fechaF
+        },
+        method: "GET",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            console.log(data);
+        }
+    });
+});

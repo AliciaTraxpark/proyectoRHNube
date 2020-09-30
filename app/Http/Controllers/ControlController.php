@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\empleado;
 use App\envio;
 use App\organizacion;
+use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
 
@@ -486,5 +487,27 @@ class ControlController extends Controller
     {
         $organizacion = organizacion::all('organi_id', 'organi_razonSocial');
         return view('tareas.reporteTrazabilidadC', ['organizacion' => $organizacion]);
+    }
+
+    public function capturasTrazabilidad(Request $request)
+    {
+        $fecha_horaI = $request->get('fecha_horaI');
+        $fecha_horaF = $request->get('fecha_horaF');
+
+        $horaI = Carbon::create($request->get('fecha_horaI'))->format('H:i');
+        $horaF = Carbon::create($request->get('fecha_horaF'))->format('H:i');
+        $date1 = new DateTime($fecha_horaI);
+        $date2 = new DateTime($fecha_horaF);
+        $diff = $date1->diff($date2);
+        // $diff->h;
+        DB::enableQueryLog();
+        $horasCapturas = DB::table('empleado as e')
+            ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+            ->select(DB::raw('e.emple_id', 'TIME(cp.hora_ini) as hora'))
+            ->whereRaw("TIME(cp.hora_ini) >= '$horaI'")
+            ->whereRaw("TIME(cp.hora_ini) <= '$horaF'")
+            ->get();
+        dd(DB::getQueryLog());
+        dd($horasCapturas);
     }
 }

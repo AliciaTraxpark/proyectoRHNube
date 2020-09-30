@@ -359,6 +359,7 @@ Route::get('/empleadoPersonalizado', 'ControlController@vistaReporteEmpleado');
 Route::get('/capturasPersonalizadas', 'ControlController@retornarDatos');
 // TRAZABILIDAD DE CAPTURAS
 Route::get('/trazabilidadCapturas', 'ControlController@vistaTrazabilidad');
+Route::get('/datosCapturas', 'ControlController@capturasTrazabilidad');
 
 //DISPOSITIVOS
 Route::get('/dispositivos', 'dispositivosController@index');
