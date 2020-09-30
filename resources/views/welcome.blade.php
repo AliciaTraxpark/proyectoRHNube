@@ -191,7 +191,7 @@
                                         <h6 class="card-title pt-3" style="font-size: 14px!important;color:#ffffff">
                                             Asegura tu inversión</h6>
                                         <p class="m-0 py-3 text-muted"
-                                            style="font-size: 11.9px!important;color:#ffffff!important">RH nube permite llevar un control detallado de la actividad laboral en oficina y en casa, así como KPIs de administración de personal para asegurar la inversión en personal interno o externo a la organización.
+                                            style="font-size: 11.4px!important;color:#ffffff!important">RH nube permite llevar un control detallado de la actividad laboral en oficina y en casa, así como KPIs de administración de personal para asegurar la inversión en personal interno o externo a la organización.
                                         </p>
                                     </div>
                                 </div>
