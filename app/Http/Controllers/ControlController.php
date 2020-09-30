@@ -597,6 +597,6 @@ class ControlController extends Controller
                 $contador = 0;
             }
         }
-        dd($respuesta);
+        return response()->json($respuesta, 200);
     }
 }
