@@ -26,8 +26,8 @@ class ControlController extends Controller
             ->where('uso.user_id', '=', Auth::user()->id)
             ->get()->first();
         if ($usuario_organizacion->rol_id == 3) {
-            $invitado= DB::table('invitado as in')
-            ->where('organi_id', '=', session('sesionidorg'))
+            $invitado = DB::table('invitado as in')
+                ->where('organi_id', '=', session('sesionidorg'))
                 ->where('rol_id', '=', 3)
                 ->where('in.user_Invitado', '=', Auth::user()->id)
                 ->get()->first();
@@ -40,7 +40,7 @@ class ControlController extends Controller
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
                 ->where('invi.estado', '=', 1)
-                ->where('invi.idinvitado', '=',$invitado->idinvitado)
+                ->where('invi.idinvitado', '=', $invitado->idinvitado)
                 ->groupBy('p.perso_id')
                 ->get();
         } else {
@@ -64,8 +64,8 @@ class ControlController extends Controller
             ->where('uso.user_id', '=', Auth::user()->id)
             ->get()->first();
         if ($usuario_organizacion->rol_id == 3) {
-            $invitado= DB::table('invitado as in')
-            ->where('organi_id', '=', session('sesionidorg'))
+            $invitado = DB::table('invitado as in')
+                ->where('organi_id', '=', session('sesionidorg'))
                 ->where('rol_id', '=', 3)
                 ->where('in.user_Invitado', '=', Auth::user()->id)
                 ->get()->first();
@@ -78,7 +78,7 @@ class ControlController extends Controller
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
                 ->where('invi.estado', '=', 1)
-                ->where('invi.idinvitado', '=',$invitado->idinvitado)
+                ->where('invi.idinvitado', '=', $invitado->idinvitado)
                 ->groupBy('e.emple_id')
                 ->get();
         } else {
@@ -113,8 +113,8 @@ class ControlController extends Controller
             ->where('uso.user_id', '=', Auth::user()->id)
             ->get()->first();
         if ($usuario_organizacion->rol_id == 3) {
-            $invitado= DB::table('invitado as in')
-            ->where('organi_id', '=', session('sesionidorg'))
+            $invitado = DB::table('invitado as in')
+                ->where('organi_id', '=', session('sesionidorg'))
                 ->where('rol_id', '=', 3)
                 ->where('in.user_Invitado', '=', Auth::user()->id)
                 ->get()->first();
@@ -127,7 +127,7 @@ class ControlController extends Controller
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
                 ->where('invi.estado', '=', 1)
-                ->where('invi.idinvitado', '=',$invitado->idinvitado)
+                ->where('invi.idinvitado', '=', $invitado->idinvitado)
                 ->groupBy('e.emple_id')
                 ->get();
         } else {
@@ -162,8 +162,8 @@ class ControlController extends Controller
             ->where('uso.user_id', '=', Auth::user()->id)
             ->get()->first();
         if ($usuario_organizacion->rol_id == 3) {
-            $invitado= DB::table('invitado as in')
-            ->where('organi_id', '=', session('sesionidorg'))
+            $invitado = DB::table('invitado as in')
+                ->where('organi_id', '=', session('sesionidorg'))
                 ->where('rol_id', '=', 3)
                 ->where('in.user_Invitado', '=', Auth::user()->id)
                 ->get()->first();
@@ -176,7 +176,7 @@ class ControlController extends Controller
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
                 ->where('invi.estado', '=', 1)
-                ->where('invi.idinvitado', '=',$invitado->idinvitado)
+                ->where('invi.idinvitado', '=', $invitado->idinvitado)
                 ->groupBy('e.emple_id')
                 ->get();
         } else {
@@ -207,11 +207,11 @@ class ControlController extends Controller
         $cargo = $request->get('cargo');
         if (is_null($area) === true && is_null($cargo) === true) {
             if ($usuario_organizacion->rol_id == 3) {
-                $invitado= DB::table('invitado as in')
-            ->where('organi_id', '=', session('sesionidorg'))
-                ->where('rol_id', '=', 3)
-                ->where('in.user_Invitado', '=', Auth::user()->id)
-                ->get()->first();
+                $invitado = DB::table('invitado as in')
+                    ->where('organi_id', '=', session('sesionidorg'))
+                    ->where('rol_id', '=', 3)
+                    ->where('in.user_Invitado', '=', Auth::user()->id)
+                    ->get()->first();
                 $empleados = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
@@ -222,7 +222,7 @@ class ControlController extends Controller
                     ->where('e.emple_estado', '=', 1)
                     ->where('invi.estado', '=', 1)
                     ->groupBy('e.emple_id')
-                    ->where('invi.idinvitado', '=',$invitado->idinvitado)
+                    ->where('invi.idinvitado', '=', $invitado->idinvitado)
                     ->get();
             } else {
                 $empleados = DB::table('empleado as e')
@@ -237,8 +237,8 @@ class ControlController extends Controller
         } else {
             if (is_null($area) === false && is_null($cargo) === true) {
                 if ($usuario_organizacion->rol_id == 3) {
-                    $invitado= DB::table('invitado as in')
-                    ->where('organi_id', '=', session('sesionidorg'))
+                    $invitado = DB::table('invitado as in')
+                        ->where('organi_id', '=', session('sesionidorg'))
                         ->where('rol_id', '=', 3)
                         ->where('in.user_Invitado', '=', Auth::user()->id)
                         ->get()->first();
@@ -252,7 +252,7 @@ class ControlController extends Controller
                         ->where('e.emple_estado', '=', 1)
                         ->whereIn('e.emple_area', $area)
                         ->where('invi.estado', '=', 1)
-                        ->where('invi.idinvitado', '=',$invitado->idinvitado)
+                        ->where('invi.idinvitado', '=', $invitado->idinvitado)
                         ->groupBy('e.emple_id')
                         ->get();
                 } else {
@@ -269,8 +269,8 @@ class ControlController extends Controller
             }
             if (is_null($area) === true && is_null($cargo) === false) {
                 if ($usuario_organizacion->rol_id == 3) {
-                    $invitado= DB::table('invitado as in')
-                    ->where('organi_id', '=', session('sesionidorg'))
+                    $invitado = DB::table('invitado as in')
+                        ->where('organi_id', '=', session('sesionidorg'))
                         ->where('rol_id', '=', 3)
                         ->where('in.user_Invitado', '=', Auth::user()->id)
                         ->get()->first();
@@ -284,7 +284,7 @@ class ControlController extends Controller
                         ->where('e.emple_estado', '=', 1)
                         ->whereIn('e.emple_cargo', $cargo)
                         ->where('invi.estado', '=', 1)
-                        ->where('invi.idinvitado', '=',$invitado->idinvitado)
+                        ->where('invi.idinvitado', '=', $invitado->idinvitado)
                         ->groupBy('e.emple_id')
                         ->get();
                 } else {
@@ -301,8 +301,8 @@ class ControlController extends Controller
             }
             if (is_null($area) === false && is_null($cargo) === false) {
                 if ($usuario_organizacion->rol_id == 3) {
-                    $invitado= DB::table('invitado as in')
-                    ->where('organi_id', '=', session('sesionidorg'))
+                    $invitado = DB::table('invitado as in')
+                        ->where('organi_id', '=', session('sesionidorg'))
                         ->where('rol_id', '=', 3)
                         ->where('in.user_Invitado', '=', Auth::user()->id)
                         ->get()->first();
@@ -317,7 +317,7 @@ class ControlController extends Controller
                         ->whereIn('e.emple_area', $area)
                         ->whereIn('e.emple_cargo', $cargo)
                         ->where('invi.estado', '=', 1)
-                        ->where('invi.idinvitado', '=',$invitado->idinvitado)
+                        ->where('invi.idinvitado', '=', $invitado->idinvitado)
                         ->groupBy('e.emple_id')
                         ->get();
                 } else {
@@ -558,13 +558,15 @@ class ControlController extends Controller
             ->get();
         // dd(DB::getQueryLog());
         $horas = array();
+        $cantidad = array();
         for ($i = 0; $i <= $diff->h; $i++) {
             $hora = strtotime('+' . $i . 'hours', strtotime($horaI));
 
             array_push($horas, date('H:i', $hora));
+            array_push($cantidad, 0);
         }
         foreach ($empleado as $emple) {
-            array_push($respuesta, array("idEmpleado" => $emple->emple_id, "horas" => $horas));
+            array_push($respuesta, array("idEmpleado" => $emple->emple_id, "horas" => $horas, "cantidad" => $cantidad));
         }
         // DB::enableQueryLog();
         $horasCapturas = DB::table('empleado as e')
@@ -579,16 +581,20 @@ class ControlController extends Controller
             $arrayHoras = $respuesta[$index]["horas"];
             $idEmpleado = $respuesta[$index]["idEmpleado"];
 
-            foreach ($arrayHoras as $hora) {
+            for ($j = 0; $j < sizeof($arrayHoras); $j++) {
                 $contador = 0;
                 foreach ($horasCapturas as $hc) {
                     if ($idEmpleado == $hc->emple_id) {
-                        if ($hc->hora >= $horaI && $hc <= $horaF) {
+                        $formato = Carbon::create($respuesta[$index]["horas"][$j])->format('H:i:s');
+                        $hora = strtotime('+1 hours', strtotime($formato));
+                        $resultado = date('H:i:s', $hora);
+                        if ($hc->hora >= $formato && $hc->hora < $resultado) {
                             $contador = $contador + 1;
                         }
                     }
                 }
-                $hora->cant = $contador;
+                $respuesta[$index]["cantidad"][$j] = $contador;
+                $contador = 0;
             }
         }
         dd($respuesta);
