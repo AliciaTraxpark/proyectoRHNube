@@ -971,6 +971,7 @@ $("#selectCalendario").change(function () {
         data: {
             idca,
         },
+        async: false,
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
@@ -5041,6 +5042,7 @@ $("#selectCalendario_edit3").change(function () {
                     data: {
                         idempleado,
                     },
+                    async: false,
                     headers: {
                         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
                             "content"
