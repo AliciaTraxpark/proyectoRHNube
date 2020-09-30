@@ -85,7 +85,7 @@ use App\proyecto_empleado;
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-10 text-right" style="padding-right:
-                        50px;">
+                        0px;">
                             <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                                 onclick="$('#form-registrar').show();">Cancelar</button>
                         </div>
@@ -124,7 +124,7 @@ use App\proyecto_empleado;
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-10 text-right" style="padding-right:
-                        50px;">
+                        0px;">
                             <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                                 onclick="$('#form-ver').show();">Cancelar</button>
                         </div>
@@ -574,8 +574,7 @@ use App\proyecto_empleado;
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
-                        <h5 class="modal-title" id="myModalLabel" style="font-size: 15px">¿Desea eliminar al
-                            empleado?</h5>
+                        <h5 class="modal-title" id="myModalLabel" style="font-size: 15px">¿ Desea dar de baja al empleado?</h5>
                     </form>
                 </div>
                 <div class="modal-footer">
