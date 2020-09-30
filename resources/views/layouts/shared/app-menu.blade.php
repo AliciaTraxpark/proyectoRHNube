@@ -181,22 +181,18 @@ $usuario_organizacion=DB::table('usuario_organizacion')
 
         <a href="javascript: void(0);">
             <i data-feather="activity"></i>
-            <span>Modulo TASK</span>
+            <span>Modo: Control Remoto</span>
             <span class="menu-arrow"></span>
         </a>
 
         <ul class="nav-second-level" aria-expanded="false">
             <li>
-                <a href="/tareas">Detalle diario</a>
+                <a href="/controlRemoto">Dashboard</a>
+                <a href="/tareas">Detalle Diario</a>
+                <a href="/reporteSemanal">Reporte Semanal</a>
+                <a href="/reporteMensual">Reporte Mensual</a>
             </li>
         </ul>
-    </li>
-
-    <li>
-        <a href="/reporteSemanal">
-            <img src="{{asset('admin/images/growth (2).svg')}}" height="25" class="mr-1">
-            <span>Informe semanal</span>
-        </a>
     </li>
 </ul>
 @endif
