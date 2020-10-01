@@ -65,7 +65,7 @@ function disabledS() {
                     newest_on_top: true,
                     delay: 5000,
                     template:
-                        '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<div data-notify="container" class="col-xs-9 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                         '<span data-notify="title">{1}</span> ' +
@@ -88,7 +88,7 @@ function disabledS() {
                     newest_on_top: true,
                     delay: 6000,
                     template:
-                        '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                        '<div data-notify="container" class="col-xs-9 col-sm-3 text-center alert" style="background-color: #f2dede;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                         '<img data-notify="icon" class="img-circle pull-left" height="15">' +
                         '<span data-notify="title">{1}</span> ' +
@@ -171,7 +171,7 @@ function enviarS() {
                     newest_on_top: true,
                     delay: 5000,
                     template:
-                        '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<div data-notify="container" class="col-xs-9 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                         '<span data-notify="title">{1}</span> ' +
@@ -194,7 +194,7 @@ function enviarS() {
                     newest_on_top: true,
                     delay: 6000,
                     template:
-                        '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                        '<div data-notify="container" class="col-xs-9 col-sm-3 text-center alert" style="background-color: #f2dede;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                         '<img data-notify="icon" class="img-circle pull-left" height="15">' +
                         '<span data-notify="title">{1}</span> ' +
