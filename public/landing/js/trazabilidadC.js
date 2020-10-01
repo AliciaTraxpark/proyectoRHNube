@@ -14,19 +14,39 @@ $(function () {
     f = moment().format("YYYY-MM-DD");
     fechaValue.setDate(f);
 });
+Date.prototype.addHours = function (h) {
+    this.setHours(this.getHours() + h);
+    return this;
+}
+h = new Date();
+// var hora = h.toLocaleDateString("es-PE", options);
+var hi = h.getHours();
+var hf = h.addHours(1).getHours();
 $('#horaI').flatpickr({
     enableTime: true,
     noCalendar: true,
     dateFormat: "H:i",
     time_24hr: true,
-    defaultDate: "09:00"
+    defaultDate: hi + ":00",
+    onClose: function (selectedDates, dateStr, instance) {
+        horaFinal.set("minTime", minHoraF());
+        datosOrganizacion();
+    }
 });
-$('#horaF').flatpickr({
+function minHoraF() {
+    return $('#horaI').val();
+}
+console.log(minHoraF());
+var horaFinal = $('#horaF').flatpickr({
     enableTime: true,
     noCalendar: true,
     dateFormat: "H:i",
     time_24hr: true,
-    defaultDate: "10:00"
+    defaultDate: hf + ":00",
+    minTime: minHoraF(),
+    onClose: function (selectedDates, dateStr, instance) {
+        datosOrganizacion();
+    }
 });
 $('#empresa').select2({
     placeholder: 'Seleccionar empresa',
@@ -118,10 +138,11 @@ $(function () {
     $('#fecha').on("change", function () {
         datosOrganizacion();
     });
-    $('#horaI').on("change", function () {
-        datosOrganizacion();
-    });
-    $('#horaF').on("change", function () {
-        datosOrganizacion();
-    });
+    // $('#horaI').onClose(function () {
+    //     horaFinal.set("minTime", minHoraF());
+    //     datosOrganizacion();
+    // });
+    // $('#horaF').onClose(function () {
+    //     datosOrganizacion();
+    // });
 });
