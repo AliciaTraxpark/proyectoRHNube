@@ -43,10 +43,10 @@
             </div>
             <div class="card-body border">
                 <div class="row justify-content-center">
-                    <div class="col-xl-4">
+                    <div class="col-xl-6">
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Fecha:</label>
-                            <div class="input-group col-md-8 text-center" style="padding-left: 0px;padding-right: 0px;"
+                            <label class="col-md-3 col-form-label">Fecha:</label>
+                            <div class="input-group col-md-6 text-center" style="padding-left: 0px;padding-right: 0px;"
                                 id="fechaSelec">
                                 <input type="text" id="fecha" class="form-control" data-input>
                                 <div class="input-group-prepend">
@@ -59,34 +59,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-4">
+                    <div class="col-xl-6">
                         <div class="form-group row">
-                            <label class="col-lg-5 col-form-label">Hora Inicio (24H):</label>
-                            <div class="input-group col-md-7">
-                                <input type="text" id="horaI" class="form-control">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text form-control"><i class="uil uil-clock-three"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group row">
-                            <label class="col-lg-5 col-form-label">Hora Fin (24H):</label>
-                            <div class="input-group col-md-7">
-                                <input type="text" id="horaF" class="form-control">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text form-control"><i class="uil uil-clock-three"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-xl-4">
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Empresa:</label>
-                            <div class="col-lg-7">
+                            <label class="col-md-3 col-form-label">Empresa:</label>
+                            <div class="col-md-8" style="padding-left: 0px;padding-right: 0px;">
                                 <select id="empresa" data-plugin="customselect" class="form-control"
                                     multiple="multiple">
                                     @foreach ($organizacion as $org)
@@ -98,19 +74,28 @@
 
                         </div>
                     </div>
-                    <div class="col-xl-4">
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-xl-6">
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Empleado:</label>
-                            <div class="col-lg-7">
-                                <select id="empleado" data-plugin="customselect" class="form-control"
-                                    multiple="multiple">
-                                    {{-- @foreach ($areas as $area)
-                                    <option value="{{$area->area_id}}">
-                                    {{$area->area_descripcion}}</option>
-                                    @endforeach --}}
-                                </select>
+                            <label class="col-md-3 col-form-label">Inicio(24H):</label>
+                            <div class="input-group col-md-4" style="padding-left: 0px;padding-right: 0px;">
+                                <input type="text" id="horaI" class="form-control">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text form-control"><i class="uil uil-clock-three"></i></div>
+                                </div>
                             </div>
-
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Fin(24H):</label>
+                            <div class="input-group col-md-4" style="padding-left: 0px;padding-right: 0px;">
+                                <input type="text" id="horaF" class="form-control">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text form-control"><i class="uil uil-clock-three"></i></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -118,7 +103,7 @@
                     <div class="col-md-12">
                         <div class="table-responsive-xl">
                             <table id="Reporte" class="table nowrap" style="font-size: 13px!important;width:100%;">
-                                <thead style="background: #fafafa;" id="dias" style="width:100%!important">
+                                <thead style="background: #fafafa;" id="horas" style="width:100%!important">
                                     <tr>
                                         <th>idEmpleado</th>
                                         <th>Empleado</th>
@@ -126,6 +111,9 @@
                                     </tr>
                                 </thead>
                                 <tbody id="datos">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
                                 </tbody>
                             </table>
                         </div>
@@ -144,6 +132,7 @@
 <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js')
     }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/multiselect/es.js')}}"></script>
 <!-- datatable js -->
 <script src="{{ URL::asset('admin/assets/libs/chart/Chart.min.js') }}"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">

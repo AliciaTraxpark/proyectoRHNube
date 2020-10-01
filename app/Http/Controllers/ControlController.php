@@ -551,7 +551,7 @@ class ControlController extends Controller
         $empleado = DB::table('empleado as e')
             ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
             ->join('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
-            ->select('e.emple_id')
+            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
             ->where('e.organi_id', '=', $organizacion)
             ->whereNotNull('v.pc_mac')
             ->groupBy('e.emple_id')
@@ -566,9 +566,8 @@ class ControlController extends Controller
             array_push($cantidad, 0);
         }
         // array_push($respuesta, ["horas" => $horas]);
-        $respuesta["horas"] = $horas;
         foreach ($empleado as $emple) {
-            array_push($respuesta, array("idEmpleado" => $emple->emple_id, "cantidad" => $cantidad));
+            array_push($respuesta, array("idEmpleado" => $emple->emple_id, "nombre_apellido" => $emple->nombre . " " . $emple->apPaterno . " " . $emple->apMaterno, "cantidad" => $cantidad));
         }
         // DB::enableQueryLog();
         $horasCapturas = DB::table('empleado as e')
@@ -579,15 +578,15 @@ class ControlController extends Controller
             ->groupBy('cp.idCaptura')
             ->get();
         // dd(DB::getQueryLog());
-        for ($index = 0; $index < sizeof($respuesta) - 1; $index++) {
-            $arrayHoras = $respuesta["horas"];
+        for ($index = 0; $index < sizeof($respuesta); $index++) {
+            $arrayHoras = $horas;
             $idEmpleado = $respuesta[$index]["idEmpleado"];
 
             for ($j = 0; $j < sizeof($arrayHoras); $j++) {
                 $contador = 0;
                 foreach ($horasCapturas as $hc) {
                     if ($idEmpleado == $hc->emple_id) {
-                        $formato = Carbon::create($respuesta["horas"][$j])->format('H:i:s');
+                        $formato = Carbon::create($horas[$j])->format('H:i:s');
                         $hora = strtotime('+1 hours', strtotime($formato));
                         $resultado = date('H:i:s', $hora);
                         if ($hc->hora >= $formato && $hc->hora < $resultado) {
@@ -599,6 +598,6 @@ class ControlController extends Controller
                 $contador = 0;
             }
         }
-        return response()->json($respuesta, 200);
+        return response()->json(array("horas" => $horas, "datos" => $respuesta), 200);
     }
 }
