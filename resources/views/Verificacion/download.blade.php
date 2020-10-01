@@ -114,4 +114,5 @@
     <script src="{{asset('landing/vendors/bootstrap/bootstrap.min.js')}}"></script>
     <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
     <script src="{{asset('landing/js/landingpage.js')}}"></script>
+    <script src="{{asset('landing/js/descargaRHbox.js')}}"></script>
 </body>
