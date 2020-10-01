@@ -43,7 +43,9 @@ $('#horaI').flatpickr({
     onClose: function (selectedDates, dateStr, instance) {
         horaFinal.set("minTime", minHoraF());
         horaFinal.set("defaultDate", defaultHora());
-        datosOrganizacion();
+        if ($('#empresa :selected').text() != '') {
+            datosOrganizacion();
+        }
     }
 });
 function minHoraF() {
@@ -58,7 +60,10 @@ var horaFinal = $('#horaF').flatpickr({
     defaultDate: hf + ":00",
     minTime: minHoraF(),
     onClose: function (selectedDates, dateStr, instance) {
-        datosOrganizacion();
+        console.log($('#empresa :selected').text());
+        if ($('#empresa :selected').text() != '') {
+            datosOrganizacion();
+        }
     }
 });
 $('#empresa').select2({
@@ -149,7 +154,9 @@ $(function () {
         datosOrganizacion();
     });
     $('#fecha').on("change", function () {
-        datosOrganizacion();
+        if ($('#empresa :selected').text() != '') {
+            datosOrganizacion();
+        }
     });
     // $('#horaI').onClose(function () {
     //     horaFinal.set("minTime", minHoraF());
