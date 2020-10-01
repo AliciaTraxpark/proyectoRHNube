@@ -81,7 +81,7 @@
                                         </div>
                                     </form>
                                     <div class="col-xl-12 col-md-12">
-                                        <div class="p-2 border rounded mb-2">
+                                        <div class="p-1 border rounded mb-2">
                                             <div class="media">
                                                 <div class="avatar-sm font-weight-bold mr-3">
                                                     <span class="avatar-title rounded bg-soft-primary text-primary">
@@ -89,11 +89,12 @@
                                                     </span>
                                                 </div>
                                                 <div class="media-body">
-                                                    <a href="#" class="d-inline-block mt-2">Landing 1.psd</a>
+                                                    <a href="#" class="d-inline-block mt-2">RH box.exe</a>
                                                 </div>
                                                 <div class="float-right mt-1">
-                                                    <a href="#" class="p-2"><i
-                                                            class="uil-download-alt font-size-18"></i></a>
+                                                    <a href="#" class="p-2">
+                                                        <img src="{{asset('landing/images/bandeja-de-entrada.svg')}}" height="25" class="mr-1">
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
