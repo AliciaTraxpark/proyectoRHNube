@@ -23,6 +23,7 @@ function enviarLicencia() {
             $("#enviarLicencia").prop("disabled", true);
         },
         success: function (data) {
+            $('#alertSuccess').show();
             $("#media").css('pointer-events', 'auto');
             $('#licencia').prop("disabled", true);
         }

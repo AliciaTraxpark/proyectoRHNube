@@ -56,7 +56,7 @@
     <div class="account-pages my-5">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-xl-4">
+                <div class="col-xl-5">
                     <div class="card">
                         <div class="card-body p-0">
                             <div class="row">
@@ -66,10 +66,15 @@
                                             <img src="{{asset('landing/images/ICONO-LOGO-NUBE-RH.ico')}}" height="90" />
                                         </a>
                                     </div>
+                                    <div class="alert alert-success" id="alertSuccess" style="display: none" role="alert">
+                                        <strong><img src="{{asset('admin/images/checked.svg')}}" height="20"
+                                                class="mr-1 mt-1"></strong><span style="font-size: 14px;">Descarga
+                                            Activada.Ya puedes descargar <strong>RH box</strong></span>
+                                    </div>
                                     <form action="javascript:enviarInstrucciones()" class="authentication-form">
                                         @csrf
                                         <div class="form-group">
-                                            <label class="form-control-label" style="font-weight: 80;">Código de
+                                            <label class="form-control-label" style="font-size: 15px">Código de
                                                 descarga</label>
                                             <div class="input-group mb-3">
                                                 <input id="licencia" type="text" class="form-control" name="licencia"
