@@ -83,8 +83,8 @@
                                                 <input id="licencia" type="text" class="form-control" name="licencia"
                                                     required autofocus>
                                                 <div class="input-group-prepend">
-                                                    <button type="button" class="btn  btn-sm"
-                                                        style="background-color: #163552;color:#ffffff;font-size: 12px;border-bottom-right-radius: 5px; border-top-right-radius: 5px;"
+                                                    <button type="button" class="btn  btn-sm btn-opacity-primary"
+                                                        style="font-size: 12px;border-bottom-right-radius: 5px; border-top-right-radius: 5px;"
                                                         aria-label="Default"
                                                         aria-describedby="inputGroup-sizing-default"
                                                         id="enviarLicencia">Enviar</button>
@@ -94,26 +94,12 @@
                                     </form>
                                 </div>
                             </div>
-                            {{-- <div class="row justify-content-center pb-3">
-                                <div class="col-xl-4 col-md-4">
-                                    <div class="p-1 border rounded mb-2"
-                                        style="background-color: #163552;color:#ffffff;font-size: 13.5px;">
-                                        <div class="float-left mt-1">
-                                            <a id="enlace1" class="p-2">
-                                                <img src="{{asset('landing/images/bandeja-de-entrada.svg')}}"
-                                                    height="25" class="mr-1">
-                                            </a>
-                                        </div>
-                                        <div class="media" id="media">
-                                            <div class="media-body">
-                                                <a id="enlace" class="d-inline-block mt-2 ml-2">Descargar</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
-                            <div class="row justify-content-center">
-                                <a id="enlace"><button type="button" class="btn btn-sm btn-rounded" style="background-color: #163552;color:#ffffff;font-size: 13.5px;">Descargar</button></a>
+                            <div class="row justify-content-center pb-5">
+                                <a id="enlace"><button type="button" class="btn btn-sm btn-opacity-primary  btn-rounded"
+                                        style="font-size: 13.5px;">
+                                        <img src="{{asset('landing/images/cloud-computing.svg')}}" height="24"
+                                            class="mr-2">
+                                        Descargar</button></a>
                             </div>
                         </div> <!-- end card-body -->
                     </div>
