@@ -105,7 +105,7 @@
                     <img src="{{asset('landing/images/LogoAzul.png')}}" height="90">
                     <h5 style="color: #c51516!important;margin-top: 0px!important;" class="text-danger mt-4">Próximo
                         lanzamiento en Perú</h5>
-                    <p class="w-75 mx-auto text-muted" style="color: black!important">Salida programada 01 de octubre
+                    <p class="w-75 mx-auto text-muted" style="color: black!important">Domingo 4 de Octubre
                         2020</p>
                     <div class="mt-4">
                         <button class="btn btn-opacity-primary mr-1" data-dismiss="modal"><i
