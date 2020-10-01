@@ -35,4 +35,8 @@ class downloadController extends Controller
             return view('Verificacion.link');
         }
     }
+
+    public function vistaPrueba(){
+        return view('Verificacion.download');
+    }
 }
