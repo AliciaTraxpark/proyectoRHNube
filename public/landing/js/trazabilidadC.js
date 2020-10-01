@@ -88,7 +88,7 @@ function datosOrganizacion() {
             console.log(data);
             var html_th = "<tr><th>idEmpleado</th><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
             for (let index = 0; index < data["horas"].length; index++) {
-                html_th += "<th>" + data["horas"][index] + "</th>"
+                html_th += "<th class=\"text-center\">" + data["horas"][index] + "</th>"
             }
             html_th += "</tr>";
             $('#horas').html(html_th);
@@ -97,7 +97,7 @@ function datosOrganizacion() {
                 html_td += "<tr><td>" + data["datos"][index].idEmpleado + "</td>"
                 html_td += "<td>" + data["datos"][index].nombre_apellido + "</td>";
                 data["datos"][index].cantidad.forEach(element => {
-                    html_td += "<td>" + element + "</td>";
+                    html_td += "<td class=\"text-center\">" + element + "</td>";
                 });
                 html_td += "</tr>"
             }
