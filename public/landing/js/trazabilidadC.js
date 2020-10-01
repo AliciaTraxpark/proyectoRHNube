@@ -14,14 +14,26 @@ $(function () {
     f = moment().format("YYYY-MM-DD");
     fechaValue.setDate(f);
 });
+// HORAS
 Date.prototype.addHours = function (h) {
     this.setHours(this.getHours() + h);
     return this;
 }
 h = new Date();
-// var hora = h.toLocaleDateString("es-PE", options);
 var hi = h.getHours();
 var hf = h.addHours(1).getHours();
+// *****************
+function defaultHora() {
+    Date.prototype.addHours = function (h) {
+        this.setHours(this.getHours() + h);
+        return this;
+    }
+    var hC = new Date($('#horaI').val());
+    var horF = hC.addHours(1).getHours();
+
+    return horF;
+}
+console.log(defaultHora());
 $('#horaI').flatpickr({
     enableTime: true,
     noCalendar: true,
@@ -30,6 +42,7 @@ $('#horaI').flatpickr({
     defaultDate: hi + ":00",
     onClose: function (selectedDates, dateStr, instance) {
         horaFinal.set("minTime", minHoraF());
+        horaFinal.set("defaultDate", defaultHora());
         datosOrganizacion();
     }
 });
@@ -92,7 +105,7 @@ function datosOrganizacion() {
             $('#datos').html(html_td);
             $("#Reporte").DataTable({
                 scrollX: true,
-                responsive: true,
+                responsive: false,
                 retrieve: true,
                 "searching": true,
                 "lengthChange": false,
