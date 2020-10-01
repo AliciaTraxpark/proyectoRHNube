@@ -281,8 +281,12 @@ class EmpleadoController extends Controller
             $tab->estadoCR = $estadoCR;
         }
         $result = agruparEmpleados($tabla_empleado1);
+        $area = DB::table('area as a')
+            ->select('a.area_id', 'a.area_descripcion')
+            ->where('a.organi_id', '=', session('sesionidorg'))
+            ->get();
         // dd($result);
-        return view('empleado.tablaEmpleado', ['tabla_empleado' => $result]);
+        return view('empleado.tablaEmpleado', ['tabla_empleado' => $result,'areas' => $area]);
     }
 
     public function refresTabla()
@@ -1663,4 +1667,154 @@ class EmpleadoController extends Controller
             $empleado->save();
         }
     }
+    public function refresTablaAre(Request $request)
+    {
+        function agruparEmpleadosRefreshArea($array)
+        {
+            $resultado = array();
+
+            foreach ($array as $empleado) {
+                if (!isset($resultado[$empleado->emple_id])) {
+                    $resultado[$empleado->emple_id] = $empleado;
+                }
+                if (!isset($resultado[$empleado->emple_id]->dispositivos)) {
+                    $resultado[$empleado->emple_id]->dispositivos = array();
+                }
+                array_push($resultado[$empleado->emple_id]->dispositivos, $empleado->dispositivo);
+            }
+            return array_values($resultado);
+        }
+        $idarea=$request->idarea;
+        $arrayem = collect();
+        if($idarea!=null){
+            foreach($idarea as $idareas){
+                $tabla_empleado1 = DB::table('empleado as e')
+                    ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                    ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                    ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+                    ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+                    ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
+                    ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
+
+                    ->select(
+                        'e.emple_nDoc',
+                        'p.perso_nombre',
+                        'p.perso_apPaterno',
+                        'p.perso_apMaterno',
+                        'c.cargo_descripcion',
+                        'a.area_descripcion',
+                        'cc.centroC_descripcion',
+                        'e.emple_id',
+                        'md.idTipoModo as dispositivo',
+                        'e.emple_foto',
+                        'e.asistencia_puerta'
+                    )
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.emple_estado', '=', 1)
+                    ->where('e.emple_area', '=', $idareas)
+                    ->get();
+                    $arrayem->push( $tabla_empleado1);
+                }
+
+                $vinculacionD = [];
+                foreach (array_flatten($arrayem) as $tab) {
+                    $vinculacion = DB::table('vinculacion as v')
+                        ->join('modo as m', 'm.id', '=', 'v.idModo')
+                        ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
+                        ->join('licencia_empleado as le', 'le.id', '=', 'v.idLicencia')
+                        ->select('v.id as idV', 'v.pc_mac as pc', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
+                        ->where('v.idEmpleado', '=', $tab->emple_id)
+                        ->get();
+                    foreach ($vinculacion as $vinc) {
+                        array_push($vinculacionD, array("idVinculacion" => $vinc->idV, "pc" => $vinc->pc, "idLicencia" => $vinc->idL, "licencia" => $vinc->licencia, "disponible" => $vinc->disponible, "dispositivoD" => $vinc->dispositivo_descripcion, "codigo" => $vinc->codigo, "envio" => $vinc->envio));
+                    }
+                    $tab->vinculacion = $vinculacionD;
+                    unset($vinculacionD);
+                    $vinculacionD = array();
+                    $modoCR = DB::table('vinculacion as v')
+                        ->join('modo as m', 'm.id', '=', 'v.idModo')
+                        ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
+                        ->join('licencia_empleado as le', 'le.id', '=', 'v.idLicencia')
+                        ->select('v.id as idV', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
+                        ->where('v.idEmpleado', '=', $tab->emple_id)
+                        ->where('m.idTipoModo', '=', 1)
+                        ->get();
+                    $estadoCR = false;
+                    foreach ($modoCR as $md) {
+                        if ($md->disponible == 'c' || $md->disponible == 'e' || $md->disponible == 'a') {
+                            $estadoCR = true;
+                        }
+                    }
+                    $tab->estadoCR = $estadoCR;
+                }
+                $result = agruparEmpleadosRefreshArea(array_flatten($arrayem));
+        }
+        else{
+            $arrayem = DB::table('empleado as e')
+            ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+            ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+            ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+            ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
+            ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
+
+            ->select(
+                'e.emple_nDoc',
+                'p.perso_nombre',
+                'p.perso_apPaterno',
+                'p.perso_apMaterno',
+                'c.cargo_descripcion',
+                'a.area_descripcion',
+                'cc.centroC_descripcion',
+                'e.emple_id',
+                'md.idTipoModo as dispositivo',
+                'e.emple_foto',
+                'e.asistencia_puerta'
+            )
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->where('e.emple_estado', '=', 1)
+
+            ->get();
+            $vinculacionD = [];
+            foreach ($arrayem as $tab) {
+                $vinculacion = DB::table('vinculacion as v')
+                    ->join('modo as m', 'm.id', '=', 'v.idModo')
+                    ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
+                    ->join('licencia_empleado as le', 'le.id', '=', 'v.idLicencia')
+                    ->select('v.id as idV', 'v.pc_mac as pc', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
+                    ->where('v.idEmpleado', '=', $tab->emple_id)
+                    ->get();
+                foreach ($vinculacion as $vinc) {
+                    array_push($vinculacionD, array("idVinculacion" => $vinc->idV, "pc" => $vinc->pc, "idLicencia" => $vinc->idL, "licencia" => $vinc->licencia, "disponible" => $vinc->disponible, "dispositivoD" => $vinc->dispositivo_descripcion, "codigo" => $vinc->codigo, "envio" => $vinc->envio));
+                }
+                $tab->vinculacion = $vinculacionD;
+                unset($vinculacionD);
+                $vinculacionD = array();
+                $modoCR = DB::table('vinculacion as v')
+                    ->join('modo as m', 'm.id', '=', 'v.idModo')
+                    ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
+                    ->join('licencia_empleado as le', 'le.id', '=', 'v.idLicencia')
+                    ->select('v.id as idV', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
+                    ->where('v.idEmpleado', '=', $tab->emple_id)
+                    ->where('m.idTipoModo', '=', 1)
+                    ->get();
+                $estadoCR = false;
+                foreach ($modoCR as $md) {
+                    if ($md->disponible == 'c' || $md->disponible == 'e' || $md->disponible == 'a') {
+                        $estadoCR = true;
+                    }
+                }
+                $tab->estadoCR = $estadoCR;
+            }
+            $result = agruparEmpleadosRefreshArea($arrayem);
+        }
+
+
+
+
+
+        return response()->json($result, 200);
+    }
+
+
 }
