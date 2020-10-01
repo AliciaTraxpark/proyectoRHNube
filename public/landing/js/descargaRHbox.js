@@ -1,5 +1,5 @@
 $("#enviarLicencia").prop("disabled", true);
-$("#media").css('pointer-events', 'none');
+$("#enlace").css('pointer-events', 'none');
 $("#licencia").keyup(function () {
     if ($('#licencia').val() != "") {
         $("#enviarLicencia").prop("disabled", false);
@@ -24,8 +24,11 @@ function enviarLicencia() {
             $('#alertError').hide();
         },
         success: function (data) {
+            var code = data.descarga;
+            document.getElementById('enlace').setAttribute('href', location.origin + '/download/' + code);
+            // document.getElementById('enlace1').setAttribute('href', location.origin + '/download/' + code);
             $('#alertSuccess').show();
-            $("#media").css('pointer-events', 'auto');
+            $("#enlace").css('pointer-events', 'auto');
             $('#licencia').prop("disabled", true);
         },
         error: function (error) {

@@ -60,19 +60,19 @@
                     <div class="card">
                         <div class="card-body p-0">
                             <div class="row">
-                                <div class="col-12 p-5">
+                                <div class="col-12 pr-5 pl-5 pt-5 pb-2">
                                     <div class="mx-auto mb-2 text-center">
                                         <a href="{{route('logout')}}">
                                             <img src="{{asset('landing/images/ICONO-LOGO-NUBE-RH.ico')}}" height="90" />
                                         </a>
                                     </div>
-                                    <div class="alert alert-success" id="alertSuccess" style="display: none" role="alert">
+                                    <div class="alert alert-success" id="alertSuccess" style="display: none"
+                                        role="alert">
                                         <strong><img src="{{asset('admin/images/checked.svg')}}" height="20"
                                                 class="mr-1 mt-1"></strong><span style="font-size: 14px;">Descarga
                                             Activada.Ya puedes descargar <strong>RH box</strong></span>
                                     </div>
-                                    <div class="alert alert-danger" role="alert" style="display: none;"
-                                        id="alertError">
+                                    <div class="alert alert-danger" role="alert" style="display: none;" id="alertError">
                                     </div>
                                     <form action="javascript:enviarInstrucciones()" class="authentication-form">
                                         @csrf
@@ -92,27 +92,28 @@
                                             </div>
                                         </div>
                                     </form>
-                                    <div class="col-xl-12 col-md-12">
-                                        <div class="p-1 border rounded mb-2">
-                                            <div class="media" id="media">
-                                                <div class="avatar-sm font-weight-bold mr-3">
-                                                    <span class="avatar-title rounded bg-soft-primary text-primary">
-                                                        <i class="uil-file-plus-alt font-size-18"></i>
-                                                    </span>
-                                                </div>
-                                                <div class="media-body">
-                                                    <a href="#" class="d-inline-block mt-2">RH box.exe</a>
-                                                </div>
-                                                <div class="float-right mt-1">
-                                                    <a href="#" class="p-2">
-                                                        <img src="{{asset('landing/images/bandeja-de-entrada.svg')}}"
-                                                            height="25" class="mr-1">
-                                                    </a>
-                                                </div>
+                                </div>
+                            </div>
+                            {{-- <div class="row justify-content-center pb-3">
+                                <div class="col-xl-4 col-md-4">
+                                    <div class="p-1 border rounded mb-2"
+                                        style="background-color: #163552;color:#ffffff;font-size: 13.5px;">
+                                        <div class="float-left mt-1">
+                                            <a id="enlace1" class="p-2">
+                                                <img src="{{asset('landing/images/bandeja-de-entrada.svg')}}"
+                                                    height="25" class="mr-1">
+                                            </a>
+                                        </div>
+                                        <div class="media" id="media">
+                                            <div class="media-body">
+                                                <a id="enlace" class="d-inline-block mt-2 ml-2">Descargar</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div> --}}
+                            <div class="row justify-content-center">
+                                <a id="enlace"><button type="button" class="btn btn-sm btn-rounded" style="background-color: #163552;color:#ffffff;font-size: 13.5px;">Descargar</button></a>
                             </div>
                         </div> <!-- end card-body -->
                     </div>
