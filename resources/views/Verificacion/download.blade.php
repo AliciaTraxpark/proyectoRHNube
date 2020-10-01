@@ -8,6 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <link rel="stylesheet" href="{{asset('landing/vendors/mdi/css/materialdesignicons.min.css')}}">
+    <link rel="stylesheet" href="{{asset('landing/vendors/owl-carousel/css/owl.carousel.min.css')}}">
+    <link rel="stylesheet" href="{{asset('landing/vendors/owl-carousel/css/owl.theme.default.css')}}">
+    <link rel="stylesheet" href="{{asset('landing/vendors/mdi/css/materialdesignicons.min.css')}}">
     <link rel="stylesheet" href="{{asset('landing/vendors/aos/css/aos.css')}}">
     <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -75,14 +78,15 @@
                                                     <button type="button" class="btn  btn-sm"
                                                         style="background-color: #163552;color:#ffffff;font-size: 12px;border-bottom-right-radius: 5px; border-top-right-radius: 5px;"
                                                         aria-label="Default"
-                                                        aria-describedby="inputGroup-sizing-default">Enviar</button>
+                                                        aria-describedby="inputGroup-sizing-default"
+                                                        id="enviarLicencia">Enviar</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </form>
                                     <div class="col-xl-12 col-md-12">
                                         <div class="p-1 border rounded mb-2">
-                                            <div class="media">
+                                            <div class="media" id="media">
                                                 <div class="avatar-sm font-weight-bold mr-3">
                                                     <span class="avatar-title rounded bg-soft-primary text-primary">
                                                         <i class="uil-file-plus-alt font-size-18"></i>
@@ -93,7 +97,8 @@
                                                 </div>
                                                 <div class="float-right mt-1">
                                                     <a href="#" class="p-2">
-                                                        <img src="{{asset('landing/images/bandeja-de-entrada.svg')}}" height="25" class="mr-1">
+                                                        <img src="{{asset('landing/images/bandeja-de-entrada.svg')}}"
+                                                            height="25" class="mr-1">
                                                     </a>
                                                 </div>
                                             </div>
@@ -112,6 +117,7 @@
     </div>
     <script src="{{asset('landing/vendors/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('landing/vendors/bootstrap/bootstrap.min.js')}}"></script>
+    <script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>
     <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
     <script src="{{asset('landing/js/landingpage.js')}}"></script>
     <script src="{{asset('landing/js/descargaRHbox.js')}}"></script>

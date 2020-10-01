@@ -284,6 +284,7 @@ Route::get('empleadoAndroidMasivo', 'correosEmpleadoController@envioAndroidM');
 //DOWNLOAD
 Route::get('download/{code}', 'downloadController@download');
 Route::get('descarga', 'downloadController@vistaPrueba');
+Route::get('verificarLicencia', 'downloadController@buscarLicencia');
 ///verif
 Route::get('check-session', 'verificarUsuarioController@checkSession');
 
