@@ -283,6 +283,7 @@ Route::get('correoAndroid', 'correosEmpleadoController@envioAndroid');
 Route::get('empleadoAndroidMasivo', 'correosEmpleadoController@envioAndroidM');
 //DOWNLOAD
 Route::get('download/{code}', 'downloadController@download');
+Route::get('descarga', 'downloadController@vistaPrueba');
 ///verif
 Route::get('check-session', 'verificarUsuarioController@checkSession');
 
