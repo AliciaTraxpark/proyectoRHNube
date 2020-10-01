@@ -50,10 +50,15 @@ class downloadController extends Controller
             if ($licencia_empleado->disponible == 'e') {
                 $licencia_empleado->disponible = 'a';
                 $licencia_empleado->save();
-                return response()->json("Licencia Correcta", 200);
+                return response()->json("lic_correcta", 200);
             }
-            return response()->json("Licencia no disponible", 400);
+            if ($licencia_empleado->disponible  == 'a') {
+                return response()->json("lic_no_disponible", 400);
+            }
+            if ($licencia_empleado->disponible  == 'i') {
+                return response()->json("lic_inactiva", 400);
+            }
         }
-        return response()->json("Licencia incorrecta", 400);
+        return response()->json("lic_incorrecta", 400);
     }
 }

@@ -21,11 +21,28 @@ function enviarLicencia() {
         },
         beforeSend: function () {
             $("#enviarLicencia").prop("disabled", true);
+            $('#alertError').hide();
         },
         success: function (data) {
             $('#alertSuccess').show();
             $("#media").css('pointer-events', 'auto');
             $('#licencia').prop("disabled", true);
+        },
+        error: function (error) {
+            console.log(error.responseJSON);
+            $('#alertError').empty();
+            if (error.responseJSON === "lic_no_disponible") {
+                mensaje = `<strong><img src="/landing/images/alert1.svg" height="20" class="mr-1 mt-0"></strong> 
+                    <span style="font-size: 14px;">Licencia se encuentra activa.Si desea desargar denuevo el RH box, solicitar a su administrador reenvio de correo.</span>`;
+                $('#alertError').append(mensaje);
+                $('#alertError').show();
+            }
+            if (error.responseJSON === "lic_incorrecta") {
+                mensaje = `<strong><img src="/landing/images/alert1.svg" height="20" class="mr-1 mt-0"></strong> 
+                    <span style="font-size: 14px;">Licencia incorrecta.</span>`;
+                $('#alertError').append(mensaje);
+                $('#alertError').show();
+            }
         }
     });
 }

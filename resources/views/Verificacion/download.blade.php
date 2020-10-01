@@ -71,6 +71,9 @@
                                                 class="mr-1 mt-1"></strong><span style="font-size: 14px;">Descarga
                                             Activada.Ya puedes descargar <strong>RH box</strong></span>
                                     </div>
+                                    <div class="alert alert-danger" role="alert" style="display: none;"
+                                        id="alertError">
+                                    </div>
                                     <form action="javascript:enviarInstrucciones()" class="authentication-form">
                                         @csrf
                                         <div class="form-group">
