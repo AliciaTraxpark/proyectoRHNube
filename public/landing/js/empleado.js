@@ -5155,3 +5155,7 @@ $(function() {
 
 	});
 });
+$('#selectarea').on("change", function (e) {
+    console.log($('#selectarea').val());
+    RefreshTablaEmpleadoArea();
+  });

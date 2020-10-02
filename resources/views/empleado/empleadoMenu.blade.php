@@ -40,6 +40,7 @@ use App\proyecto_empleado;
 <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('admin/assets/libs/smartwizard/smart_wizard.min.css') }}" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('admin/assets/libs/smartwizard/smart_wizard_theme_arrows.min.css') }}" type="text/css" />
 <link href="{{ asset('admin/assets/libs/smartwizard/smart_wizard_theme_circles.min.css') }}" type="text/css" />
 <link href="{{ asset('admin/assets/libs/smartwizard/smart_wizard_theme_dots.min.css') }}" type="text/css" />
@@ -61,6 +62,7 @@ use App\proyecto_empleado;
         </div>
     </div>
 </div> --}}
+
 <div id="windowsEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="windowsEmpleado"
     aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
@@ -418,6 +420,25 @@ use App\proyecto_empleado;
         max-height: 100px;
         overflow-y: auto;
     }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice{
+        background-color: #52565b;
+    }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
+        color: #fdfdfd;
+    }
+    .col-lg-10 .select2-container .select2-selection {
+    height: 20px;
+    font-size: 12.2px;
+    overflow-y: scroll;
+}
+.custom-select:disabled {
+            color: #3f3a3a;
+            background-color: #fcfcfc;
+        }
+        .select2-container--default .select2-results__option[aria-selected=true] {
+            background: #ced0d3;
+        }
+
 </style>
 <div class="row page-title" style="padding-right: 20px;">
     <div class="col-md-7">
@@ -446,7 +467,9 @@ use App\proyecto_empleado;
                 color: #222222;   padding-left: 0px;  ">
                 <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                 <div class="row">
+
                     <div class="col-md-6">
+                        <h5 style="font-size: 16px!important">Búsqueda personalizada</h5>
                     </div>
                     <div class=" col-md-6 col-xl-6 text-right">
 
@@ -454,10 +477,45 @@ use App\proyecto_empleado;
                             style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
                             class="btn btn-sm btn-primary delete_all" data-url="">Eliminar
                         </button>
-                        <button class="btn btn-sm btn-primary" id="formNuevoEd"
-                            style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"> Editar</button>
+                       {{--  <button class="btn btn-sm btn-primary" id="formNuevoEd"
+                            style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"> Editar</button> --}}
                         <button class="btn btn-sm btn-primary" id="formNuevoE"
                             style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"> Nuevo</button>
+                    </div>
+
+                        <div class="col-md-4" id="filter_global">
+                            <td align="center"><input type="text" class="global_filter form-control
+                                    " id="global_filter"  style="height: 35px; " placeholder="Buscar por...">
+                            </td>
+                        </div>
+                        <div class="col-md-2">
+                            <td align="center">
+                                <select class="form-control" name="select" id="select" style="height: 35.5px;">
+                                    <option value="-1">PERSONALIZADO</option>
+                                    <option value="3">Número Documento</option>
+                                    <option value="4">Nombre</option>
+                                    <option value="5">Apellidos</option>
+                                    <option value="8">Cargo</option>
+                                    <option value="9">Área</option>
+                                </select>
+                            </td>
+                        </div>
+
+
+                    <div class="col-xl-6">
+                        <div class="form-group row">
+                            <label class="col-lg-2 col-form-label">Área:</label>
+                            <div class="col-lg-10">
+                                <select id="selectarea" data-plugin="customselect" class="form-control form-control-sm" multiple="multiple" data-placeholder="Seleccionar áreas">
+
+                                    @foreach ($area as $areas)
+                                                <option class="" value="{{ $areas->area_id }}">
+                                                    {{ $areas->area_descripcion }}</option>
+                                                @endforeach
+                                </select>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
                 <div id="espera" class="text-center" style="display: none">
@@ -4087,6 +4145,7 @@ use App\proyecto_empleado;
 <script src="{{ asset('admin/assets/js/pages/form-wizard.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js')}}"></script>
 <script src="{{ asset('landing/js/smartwizard.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/alertify/alertify.js') }}"></script>

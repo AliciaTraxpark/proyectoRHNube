@@ -49,7 +49,7 @@
     <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
-
+    <link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('admin/assets/libs/bootstrap-fileinput/fileinput.min.css')}}" rel="stylesheet"
         type="text/css" />
 
@@ -449,6 +449,24 @@
             max-height: 100px;
             overflow-y: auto;
         }
+        .select2-container--default .select2-selection--multiple .select2-selection__choice{
+        background-color: #52565b;
+    }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
+        color: #fdfdfd;
+    }
+  .col-lg-10 .select2-container .select2-selection {
+    height: 20px;
+    font-size: 12.2px;
+    overflow-y: scroll;
+}
+.custom-select:disabled {
+            color: #3f3a3a;
+            background-color: #fcfcfc;
+        }
+        .select2-container--default .select2-results__option[aria-selected=true] {
+            background: #ced0d3;
+        }
     </style>
 
     <header id="header-section">
@@ -480,34 +498,68 @@
             <div class="row row-divided">
                 <div class="col-md-12 col-xl-12">
                     <div class="card">
-                        <div class="card-body" style="padding-top: 0px; background: #fdfdfd; font-size: 12.8px;
-                        color: #222222;   padding-left: 60px; padding-right: 80px; ">
+                        <div class="card-body" style="padding-top: 0px; background: #ffffff; font-size: 12.8px;
+                            color: #222222;   padding-left: 0px;  ">
                             <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                             <div class="row">
+
                                 <div class="col-md-6">
+                                    <h5 style="font-size: 16px!important">Búsqueda personalizada</h5>
                                 </div>
                                 <div class=" col-md-6 col-xl-6 text-right">
 
-                                    <button id="" style="background-color: #183b5d;border-color:#62778c"
-                                        onclick="eliminarEmpleado()" class="btn btn-sm btn-primary delete_all"
-                                        data-url="">Eliminar
+                                    <button onclick="eliminarEmpleado()" id=""
+                                        style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
+                                        class="btn btn-sm btn-primary delete_all" data-url="">Eliminar
                                     </button>
-                                    <button class="btn btn-sm btn-primary" id="formNuevoEd"
-                                        style="background-color: #183b5d;border-color:#62778c">Editar</button>
+                                   {{--  <button class="btn btn-sm btn-primary" id="formNuevoEd"
+                                        style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"> Editar</button> --}}
                                     <button class="btn btn-sm btn-primary" id="formNuevoE"
-                                        style="background-color: #183b5d;border-color:#62778c">Nuevo</button>
+                                        style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"> Nuevo</button>
+                                </div>
+
+                                    <div class="col-md-4" id="filter_global">
+                                        <td align="center"><input type="text" class="global_filter form-control
+                                                " id="global_filter"  style="height: 35px; " placeholder="Buscar por...">
+                                        </td>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <td align="center">
+                                            <select class="form-control" name="select" id="select" style="height: 35.5px;">
+                                                <option value="-1">PERSONALIZADO</option>
+                                                <option value="3">Número Documento</option>
+                                                <option value="4">Nombre</option>
+                                                <option value="5">Apellidos</option>
+                                                <option value="8">Cargo</option>
+                                                <option value="9">Área</option>
+                                            </select>
+                                        </td>
+                                    </div>
+
+
+                                <div class="col-xl-6">
+                                    <div class="form-group row">
+                                        <label class="col-lg-2 col-form-label">Área:</label>
+                                        <div class="col-lg-10">
+                                            <select id="selectarea" data-plugin="customselect" class="form-control form-control-sm" multiple="multiple" data-placeholder="Seleccionar áreas">
+
+                                                @foreach ($area as $areas)
+                                                            <option class="" value="{{ $areas->area_id }}">
+                                                                {{ $areas->area_descripcion }}</option>
+                                                            @endforeach
+                                            </select>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
                             <div id="espera" class="text-center" style="display: none">
 
-                                <img src="{{asset('landing/images/loading.gif')}}" height="100">
+                                <img src="{{ asset('landing/images/loading.gif') }}" height="100">
                             </div>
                             <div id="tabladiv">
                             </div>
-                            <div class="text-right"><br><br>
-                                <a href="{{('/horario')}}"><button
-                                        class="boton btn btn-default mr-1">CONTINUAR</button></a>
-                            </div>
+
                         </div> <!-- end card body-->
                     </div> <!-- end card -->
                 </div>
@@ -4252,6 +4304,7 @@
     <script src="{{asset('landing/js/cargaMasivaF.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
     <script src="{{asset('landing/js/empleado.js')}}"></script>
+    <script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js')}}"></script>
     <script src="{{asset('landing/js/empleadoA.js')}}"></script>
     <script src="{{asset('landing/js/dispositivos.js')}}"></script>
     <script src="{{asset('landing/js/modosEmpleado.js')}}"></script>

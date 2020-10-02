@@ -62,6 +62,7 @@ class LoginController extends Controller
 
 
         if (Auth::attempt($credentials)) {
+            Auth::logoutOtherDevices(request()->input('password'));
             $usuario_organizacion=usuario_organizacion::where('user_id','=', Auth::user()->id)->get()->first();
 
              $comusuario_organizacion=usuario_organizacion::where('user_id','=', Auth::user()->id)->count();

@@ -104,25 +104,7 @@
 </div><!-- /.modal -->
 <!---->
 <input type="hidden" id="csrf_token" name="_token" value="{{ csrf_token() }}">
-<div class="row">
-    <div class="col-md-4" id="filter_global">
-        <td align="center"><input type="text" class="global_filter form-control
-                form-control-sm" id="global_filter">
-        </td>
-    </div>
-    <div class="col-md-2">
-        <td align="center">
-            <select class="form-control" name="select" id="select">
-                <option value="-1">PERSONALIZADO</option>
-                <option value="3">Número Documento</option>
-                <option value="4">Nombre</option>
-                <option value="5">Apellidos</option>
-                <option value="8">Cargo</option>
-                <option value="9">Área</option>
-            </select>
-        </td>
-    </div>
-</div>
+
 <table id="tablaEmpleado" class="table table-drop dt-responsive nowrap" style="width:100%!important">
     <thead style="background: #edf0f1;color: #6c757d;">
         <tr style="background: #ffffff">

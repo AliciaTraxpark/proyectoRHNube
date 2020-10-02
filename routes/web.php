@@ -149,6 +149,7 @@ Route::post('/empleado/cambiarEstado', 'EmpleadoController@cambiarEstadoEmp');
 Route::get('tablaempleado/refresh', 'EmpleadoController@refresTabla');
 Route::get('/empleado/agregarCorreo', 'EmpleadoController@agregarCorreoE');
 Route::post('/empleado/asisPuerta', 'EmpleadoController@asisPuerta');
+Route::post('tablaempleado/refreshArea', 'EmpleadoController@refresTablaAre');
 //AREA
 Route::post('/registrar/area', 'areaController@store');
 
