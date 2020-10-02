@@ -428,6 +428,66 @@
                 </div>
             </div>
         </div>
+        <div class="row pt-3">
+            <div class="col-md-3">
+                <strong style="color: #797a7e">Permitir actividad fuera de horario</strong>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
+                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #dae1e7;height: 30px;">
+                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #b9ceeb;height: 30px;">
+                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+        </div>
+        <div class="row pt-3">
+            <div class="col-md-3">
+                <strong style="color: #797a7e">Control intensivo (cada 5min)</strong>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #f1fff1;height: 30px;">
+                    <img src="{{asset('landing/images/close (4).svg')}}" height="15" class="mt-2">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #f1fff1;height: 30px;">
+                    <p class="mt-1" style="color:#797a7e">2 emp.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #f1fff1;height: 30px;">
+                    <p class="mt-1" style="color:#797a7e">10 emp.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-3">
+            <div class="col-md-3">
+                <strong style="color: #797a7e">Control superintensivo (cada1min)</strong>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
+                    <img src="{{asset('landing/images/close (4).svg')}}" height="15" class="mt-2">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #dae1e7;height: 30px;">
+                    <p class="mt-1" style="color:#797a7e">1 emp.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #b9ceeb;height: 30px;">
+                    <p class="mt-1" style="color:#797a7e">1 emp.</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
