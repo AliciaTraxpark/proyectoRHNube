@@ -528,6 +528,59 @@
                 </div>
             </div>
         </div>
+        <div class="row pt-3">
+            <div class="col-md-3">
+                <strong style="color: #797a7e">Control de tareas diarias</strong>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <div class="pricing-divider ">
+                        <h6 class="text-light text-center" style="font-weight: bold">DISPONIBLE
+                            A PARTIR DE DICIEMBRE
+                        </h6>
+                        <svg class='pricing-divider-img' enable-background='new 0 0 300 100' height='40px' id='Layer_1'
+                            preserveAspectRatio='none' version='1.1' viewBox='0 0 300 100' width='60px' x='0px'
+                            xml:space='preserve' y='0px'>
+                            <path class='deco-layer deco-layer--4'
+                                d='M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428	c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z'
+                                fill='#FFFFFF'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <div class="pricing-dividerD">
+                        <h6 class="text-light text-center" style="font-weight: bold">DISPONIBLE
+                            A PARTIR DE DICIEMBRE
+                        </h6>
+                        <svg class='pricing-divider-img' enable-background='new 0 0 300 100' height='40px' id='Layer_1'
+                            preserveAspectRatio='none' version='1.1' viewBox='0 0 300 100' width='60px' x='0px'
+                            xml:space='preserve' y='0px'>
+                            <path class='deco-layer deco-layer--4'
+                                d='M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428	c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z'
+                                fill='#FFFFFF'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <div class="pricing-dividerT">
+                        <h6 class="text-light text-center" style="font-weight: bold">DISPONIBLE
+                            A PARTIR DE DICIEMBRE
+                        </h6>
+                        <svg class='pricing-divider-img' enable-background='new 0 0 300 100' height='40px' id='Layer_1'
+                            preserveAspectRatio='none' version='1.1' viewBox='0 0 300 100' width='60px' x='0px'
+                            xml:space='preserve' y='0px'>
+                            <path class='deco-layer deco-layer--4'
+                                d='M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428	c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z'
+                                fill='#FFFFFF'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
