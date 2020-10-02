@@ -529,7 +529,7 @@
             </div>
         </div>
         <div class="row pt-5">
-            <div class="col-md-3 pt-5">
+            <div class="col-md-3 pt-4">
                 <strong style="color: #797a7e">Control de tareas diarias</strong>
             </div>
             <div class="col-md-3">
@@ -580,6 +580,12 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row pt-5">
+            <div class="col-md-3">
+                <strong style="color: #163552">Modo: Control de asistencia en Puerta</strong>
+            </div>
+            <div class="col-md-9 mb-3" style="border-bottom: 3px solid #0ea5c6"></div>
         </div>
     </div>
 </div>
