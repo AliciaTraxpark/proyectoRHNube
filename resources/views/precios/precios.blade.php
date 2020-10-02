@@ -22,7 +22,8 @@
     }
 
     .pricing-divider {
-        border-radius: 20px;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
         background: #448ef6;
         padding: 1em 0 4em;
         position: relative
@@ -107,29 +108,22 @@
         </div>
     </div>
 </div>
-<div class="row justify-content-center pt-5 pr-5 pl-5 pb-5">
+<div class="row justify-content-center pt-5 pl-5 pb-5">
     <div class="col-xl-12">
-        <div class="row">
+        <div class="row pr-5">
             <div class="col-md-3 pt-2">
                 <strong style="color: #163552">PRICING RH NUBE</strong>
             </div>
             <div class="col-md-9" style="border-bottom: 3px solid #12cad6"></div>
         </div>
-        <div class="row p-4">
-            <div class="container-fluid">
-                <div class="row m-auto text-center w-40">
+        <div class="row justify-content-end pb-5 pt-5">
+            <div class="container-fluid" style="padding-left: 22%">
+                <div class="row m-auto text-center" style="width: 56vw;">
                     <div class="col-4 princing-item">
-                        <div class="pricing-divider ">
+                        <div class="pricing-divider">
                             <h5 class="text-light">PYME</h5>
                             <h6 class="my-0 display-2 text-light font-weight-normal mb-2" style="font-size: 45px"> $3
-                            </h6> <span class="h6 mb-2" style="color: #ffffff">AL MES-HASTA 200 EMP</span> <svg
-                                class='pricing-divider-img' enable-background='new 0 0 300 100' height='100px'
-                                id='Layer_1' preserveAspectRatio='none' version='1.1' viewBox='0 0 300 100'
-                                width='300px' x='0px' xml:space='preserve' y='0px'>
-                                <path class='deco-layer deco-layer--4'
-                                    d='M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428	c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z'
-                                    fill='#FFFFFF'></path>
-                            </svg>
+                            </h6> <span class="h6 mb-2" style="color: #ffffff">AL MES-HASTA 200 EMP</span>
                         </div>
                         <div class="card-body bg-white mt-0 shadow">
                             <ul class="list-unstyled mb-3 position-relative ulC">
