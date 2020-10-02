@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\dispositivos;
+use App\marcacion_movil;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Facades\JWTFactory;
 use Illuminate\Support\Facades\DB;
@@ -133,6 +134,40 @@ class apimovilController extends Controller
             return response()->json(array('status'=>400,'title' => 'Controladores no encontrados',
             'detail' => 'No se encontro controladores relacionados con este dispositivo'),400);
         }
+
+
+    }
+
+    public function marcacionMovil(Request $request){
+       /*  $organi_id=$request->organi_id;
+        $tipoMarcacion=$request->tipoMarcacion;
+        $fechaMarcacion=$request->fechaMarcacion;
+        $idControlador=$request->idControlador;
+        $idDisposi=$request->idDisposi;
+        $idEmpleado=$request->idEmpleado;
+        $idHoraEmp=$request->idHoraEmp; */
+        foreach($request->all() as $req){
+            $marcacion_movil=new marcacion_movil();
+            $marcacion_movil->marcaMov_tipo=$req['tipoMarcacion'];
+            $marcacion_movil->marcaMov_fecha= $req['fechaMarcacion'];
+            $marcacion_movil->marcaMov_emple_id=$req['idEmpleado'];
+            $marcacion_movil->controladores_idControladores=$req['idControlador'];
+            $marcacion_movil->dispositivos_idDispositivos=$req['idDisposi'];
+            $marcacion_movil->organi_id=$req['organi_id'];
+            $marcacion_movil->horarioEmp_id=$req['idHoraEmp'];
+            $marcacion_movil->save();
+        }
+
+
+        if($marcacion_movil){
+            return response()->json(array('status'=>200,'title' => 'Marcacion registrada correctamente',
+            'detail' => 'Marcacion registrada correctamente en la base de datos'),200);
+        }
+        else{
+            return response()->json(array('status'=>400,'title' => 'No se pudo registrar marcacion',
+            'detail' => 'No se pudo registrar marcacion, compruebe que los datos sean validos'),400);
+        }
+
 
 
     }
