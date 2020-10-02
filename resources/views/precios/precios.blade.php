@@ -136,12 +136,29 @@
         </div>
         <div class="row">
             <div class="col-md-3">
-                <strong style="color: #163552">Administradores de personal</strong>
+                <strong style="color: #797a7e">Administradores de personal</strong>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3 mb-3" style="background-color: #e1ffc2;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">Ilimitado</p>
                 </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3 mb-3" style="background-color: #def4f0;height: 30px;">
+                    <p class="mt-1" style="color:#797a7e">Ilimitado</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3 mb-3" style="background-color: #dae1e7;height: 30px;">
+                    <p class="mt-1" style="color:#797a7e">Ilimitado</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 pt-2">
+                <strong style="color: #797a7e">Multiempresa</strong>
+            </div>
+            <div class="col-md-3">
                 <div class="row justify-content-center pr-4 pl-4">
                     <p class="text-center" style="color: #797a7e;font-size: 13px">5$ Por cada empresa nueva administrada
                         por la misma cuenta
@@ -149,18 +166,12 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3 mb-3" style="background-color: #def4f0;height: 30px;">
-                    <p class="mt-1" style="color:#797a7e">Ilimitado</p>
-                </div>
                 <div class="row justify-content-center pr-4 pl-4 pt-2">
                     <p class="text-center" style="color: #797a7e;font-size: 13px">Ilimitado
                     </p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3 mb-3" style="background-color: #dae1e7;height: 30px;">
-                    <p class="mt-1" style="color:#797a7e">Ilimitado</p>
-                </div>
                 <div class="row justify-content-center pr-4 pl-4 pt-2">
                     <p class="text-center" style="color: #797a7e;font-size: 13px">Ilimitado
                     </p>
