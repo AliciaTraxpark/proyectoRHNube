@@ -393,17 +393,17 @@
                 <strong style="color: #797a7e">Calidad de captura</strong>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3 mb-3" style="background-color: #def4f0;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">Estándar</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3 mb-3" style="background-color: #dae1e7;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #dae1e7;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">Estándar</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3 mb-3" style="background-color: #b9ceeb;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #b9ceeb;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">Estándar</p>
                 </div>
             </div>
@@ -485,6 +485,46 @@
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #b9ceeb;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">1 emp.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-3">
+            <div class="col-md-3">
+                <strong style="color: #797a7e">Control de tareas diarias</strong>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #f1fff1;height: 30px;">
+                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #f1fff1;height: 30px;">
+                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #f1fff1;height: 30px;">
+                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+        </div>
+        <div class="row pt-3">
+            <div class="col-md-3">
+                <strong style="color: #797a7e">Capturas en video basic (*v)Aleatorio</strong>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
+                    <img src="{{asset('landing/images/close (4).svg')}}" height="15" class="mt-2">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #dae1e7;height: 30px;">
+                    <p class="mt-1" style="color:#797a7e">2 emp.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #b9ceeb;height: 30px;">
+                    <p class="mt-1" style="color:#797a7e">4 emp.</p>
                 </div>
             </div>
         </div>
