@@ -350,7 +350,7 @@
         </div>
         <div class="row pt-5">
             <div class="col-md-3">
-                <strong style="color: #797a7e">Captura de actividad diaria</strong>
+                <p style="color: #163552;">Captura de actividad diaria</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
@@ -370,7 +370,7 @@
         </div>
         <div class="row pt-3">
             <div class="col-md-3">
-                <strong style="color: #797a7e">Control normal (cada 10 min)</strong>
+                <p style="color: #163552;">Control normal (cada 10 min)</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
@@ -390,7 +390,7 @@
         </div>
         <div class="row pt-3">
             <div class="col-md-3">
-                <strong style="color: #797a7e">Calidad de captura</strong>
+                <p style="color: #163552;">Calidad de captura</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
@@ -410,7 +410,7 @@
         </div>
         <div class="row pt-3">
             <div class="col-md-3">
-                <strong style="color: #797a7e">Eliminación de capturas (*e)</strong>
+                <p style="color: #163552;">Eliminación de capturas (*e)</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
@@ -430,7 +430,7 @@
         </div>
         <div class="row pt-3">
             <div class="col-md-3">
-                <strong style="color: #797a7e">Permitir actividad fuera de horario</strong>
+                <p style="color: #163552;">Permitir actividad fuera de horario</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
@@ -450,7 +450,7 @@
         </div>
         <div class="row pt-3">
             <div class="col-md-3">
-                <strong style="color: #797a7e">Control intensivo (cada 5min)</strong>
+                <p style="color: #163552;">Control intensivo (cada 5min)</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
@@ -470,7 +470,7 @@
         </div>
         <div class="row pt-3">
             <div class="col-md-3">
-                <strong style="color: #797a7e">Control superintensivo (cada1min)</strong>
+                <p style="color: #163552;">Control superintensivo (cada1min)</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
@@ -490,7 +490,7 @@
         </div>
         <div class="row pt-3">
             <div class="col-md-3">
-                <strong style="color: #797a7e">Control de tareas diarias</strong>
+                <p style="color: #163552;">Control de tareas diarias</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
@@ -510,7 +510,7 @@
         </div>
         <div class="row pt-3">
             <div class="col-md-3">
-                <strong style="color: #797a7e">Capturas en video basic (*v)Aleatorio</strong>
+                <p style="color: #163552;">Capturas en video basic (*v)Aleatorio</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
@@ -530,7 +530,7 @@
         </div>
         <div class="row pt-5">
             <div class="col-md-3 pt-4">
-                <strong style="color: #797a7e">Control de tareas diarias</strong>
+                <p style="color: #163552;">Control de tareas diarias</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
@@ -589,7 +589,7 @@
         </div>
         <div class="row pt-5">
             <div class="col-md-3">
-                <strong style="color: #797a7e">En dispositivos Android</strong>
+                <p style="color: #163552;">En dispositivos Android</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
@@ -609,7 +609,7 @@
         </div>
         <div class="row pt-3">
             <div class="col-md-3">
-                <strong style="color: #797a7e">Biométricos ZKTECO</strong>
+                <p style="color: #163552;">Biométricos ZKTECO</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
@@ -629,7 +629,7 @@
         </div>
         <div class="row pt-3">
             <div class="col-md-3">
-                <strong style="color: #797a7e">Biométricos Suprema V1 y V2</strong>
+                <p style="color: #163552;">Biométricos Suprema V1 y V2</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
@@ -652,13 +652,14 @@
                 <strong style="color: #163552">Opciones de pago</strong>
             </div>
             <div class="col-md-9 pb-2 pt-2 text-center" style="background-color:#12cad6">
-                <strong class="mt-2" style="color:#ffffff">CUANDO REQUIERE MAYOR AUDITORÍA A UN EMPLEADO ESPECÍFICO (MENSUAL)
+                <strong class="mt-2" style="color:#ffffff">CUANDO REQUIERE MAYOR AUDITORÍA A UN EMPLEADO ESPECÍFICO
+                    (MENSUAL)
                 </strong>
             </div>
         </div>
         <div class="row pt-5">
             <div class="col-md-3">
-                <strong style="color: #797a7e">Control intensivo</strong>
+                <p style="color: #163552;">Control intensivo</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
@@ -678,7 +679,7 @@
         </div>
         <div class="row pt-3">
             <div class="col-md-3">
-                <strong style="color: #797a7e">Control superintensivo</strong>
+                <p style="color: #163552;">Control superintensivo</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
@@ -698,7 +699,7 @@
         </div>
         <div class="row pt-3">
             <div class="col-md-3">
-                <strong style="color: #797a7e">Capturas en video basic (*) Aleatorio</strong>
+                <p style="color: #163552;">Capturas en video basic (*) Aleatorio</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
@@ -718,7 +719,7 @@
         </div>
         <div class="row pt-3">
             <div class="col-md-3">
-                <strong style="color: #797a7e">Calidad de captura HD</strong>
+                <p style="color: #163552;">Calidad de captura HD</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
@@ -744,7 +745,7 @@
         </div>
         <div class="row pt-5">
             <div class="col-md-3">
-                <strong style="color: #797a7e">Factura de origen, USA</strong>
+                <p style="color: #163552;">Factura de origen, USA</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
@@ -764,7 +765,7 @@
         </div>
         <div class="row pt-3">
             <div class="col-md-3">
-                <strong style="color: #797a7e">Facturación local (*f)</strong>
+                <p style="color: #163552;">Facturación local (*f)</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
@@ -784,7 +785,7 @@
         </div>
         <div class="row pt-3">
             <div class="col-md-3">
-                <strong style="color: #797a7e">Soporte local</strong>
+                <p style="color: #163552;">Soporte local</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
