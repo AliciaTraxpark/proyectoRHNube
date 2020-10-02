@@ -178,6 +178,32 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-3 pt-2">
+                <strong style="color: #163552">Modo: Control Remoto / Home and office</strong>
+            </div>
+            <div class="col-md-9" style="border-bottom: 3px solid #0ea5c6"></div>
+        </div>
+        <div class="row pt-5">
+            <div class="col-md-3">
+                <strong style="color: #797a7e">Captura de actividad diaria</strong>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #e1ffc2;height: 30px;">
+                    <img src="{{asset('landing/images/tick.svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
+                    <img src="{{asset('landing/images/tick (1).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #dae1e7;height: 30px;">
+                    <img src="{{asset('landing/images/tick (2).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
