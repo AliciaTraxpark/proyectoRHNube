@@ -204,6 +204,26 @@
                 </div>
             </div>
         </div>
+        <div class="row pt-3">
+            <div class="col-md-3">
+                <strong style="color: #797a7e">Control normal (cada 10 min)</strong>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick.svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (1).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (2).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
