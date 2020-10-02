@@ -17,30 +17,85 @@
 
 @section('content')
 <style>
-    .avatarsul {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
+    .ulC .liC {
+        margin-bottom: 1.4rem
     }
 
-    .liImg {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        border: 2px solid white;
-        display: inline-block;
-        position: relative;
-        box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2);
-        -webkit-transition: .2s ease;
-        transition: .2s ease;
+    .pricing-divider {
+        border-radius: 20px;
+        background: #448ef6;
+        padding: 1em 0 4em;
+        position: relative
     }
 
-    .liImg:nth-child(n+2) {
-        margin-left: -50px;
+    .pricing-dividerD {
+        border-radius: 20px;
+        background: #3161a3;
+        padding: 1em 0 4em;
+        position: relative
     }
 
-    .avatarsul .liImg:nth-child(n+2) {
-        margin-left: -10px;
+    .pricing-dividerT {
+        border-radius: 20px;
+        background: #264e70;
+        padding: 1em 0 4em;
+        position: relative
+    }
+
+    .pricing-divider-img {
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 80px
+    }
+
+    .deco-layer {
+        -webkit-transition: -webkit-transform 0.5s;
+        transition: transform 0.5s
+    }
+
+    .btn-custom {
+        background: #448ef6;
+        color: #fff;
+        border-radius: 20px
+    }
+
+    .btn-customD {
+        background: #3161a3;
+        color: #fff;
+        border-radius: 20px
+    }
+
+    .btn-customT {
+        background: #264e70;
+        color: #fff;
+        border-radius: 20px
+    }
+
+    .img-float {
+        width: 50px;
+        position: absolute;
+        top: -3.5rem;
+        right: 1rem
+    }
+
+    .princing-item {
+        transition: all 150ms ease-out
+    }
+
+    .princing-item:hover {
+        transform: scale(1.05)
+    }
+
+    .princing-item:hover .deco-layer--1 {
+        -webkit-transform: translate3d(15px, 0, 0);
+        transform: translate3d(15px, 0, 0)
+    }
+
+    .princing-item:hover .deco-layer--2 {
+        -webkit-transform: translate3d(-15px, 0, 0);
+        transform: translate3d(-15px, 0, 0)
     }
 </style>
 <div id="preloader">
@@ -55,6 +110,112 @@
 <div class="row justify-content-center pt-5 pr-5 pl-5 pb-5">
     <div class="col-xl-12">
         <div class="row">
+            <div class="col-md-3 pt-2">
+                <strong style="color: #163552">PRICING RH NUBE</strong>
+            </div>
+            <div class="col-md-9" style="border-bottom: 3px solid #0ea5c6"></div>
+        </div>
+        <div class="row p-4">
+            <div class="container-fluid">
+                <div class="row m-auto text-center w-40">
+                    <div class="col-4 princing-item">
+                        <div class="pricing-divider ">
+                            <h5 class="text-light">PYME</h5>
+                            <h6 class="my-0 display-2 text-light font-weight-normal mb-2" style="font-size: 45px"> $3
+                            </h6> <span class="h6 mb-2" style="color: #ffffff">AL MES-HASTA 200 EMP</span> <svg
+                                class='pricing-divider-img' enable-background='new 0 0 300 100' height='100px'
+                                id='Layer_1' preserveAspectRatio='none' version='1.1' viewBox='0 0 300 100'
+                                width='300px' x='0px' xml:space='preserve' y='0px'>
+                                <path class='deco-layer deco-layer--4'
+                                    d='M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428	c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z'
+                                    fill='#FFFFFF'></path>
+                            </svg>
+                        </div>
+                        <div class="card-body bg-white mt-0 shadow">
+                            <ul class="list-unstyled mb-3 position-relative ulC">
+                                <li class="ilC text-left" style="color: #448ef6"><img
+                                        src="{{asset('landing/images/check.svg')}}" height="18" class="mr-1">$2.5 un
+                                    pago semestral</li>
+                                <li class="ilC text-left" style="color: #448ef6"><img
+                                        src="{{asset('landing/images/check.svg')}}" height="18" class="mr-1">$2 un pago
+                                    anual</li>
+                                <li class="ilC text-left" style="color: #448ef6"><img
+                                        src="{{asset('landing/images/check.svg')}}" height="18"
+                                        class="mr-1">Administrador de personal Ilimitado</li>
+                                <li class="ilC text-left" style="color: #448ef6;"><img
+                                        src="{{asset('landing/images/check.svg')}}" height="18"
+                                        class="mr-1">Multiempresa
+                                </li>
+                                <li class="ilC" style="color: #448ef6;font-size: 9px">(5$Por cada empresa nueva
+                                    administrada por la misma cuenta)
+                                </li>
+                            </ul> <button type="button" class="btn btn-lg btn-block btn-custom" style="font-size: 16px">SUSCRIBIRSE</button>
+                        </div>
+                    </div>
+                    <div class="col-4 princing-item">
+                        <div class="pricing-dividerD">
+                            <h5 class="text-light">PROFESIONAL</h5>
+                            <h6 class="my-0 display-2 text-light font-weight-normal mb-2" style="font-size: 45px">$2.5
+                            </h6> <span class="h6" style="color: #ffffff">AL MES - DE 200 A 5000 EMP</span> <svg
+                                class='pricing-divider-img' enable-background='new 0 0 300 100' height='100px'
+                                id='Layer_1' preserveAspectRatio='none' version='1.1' viewBox='0 0 300 100'
+                                width='300px' x='0px' xml:space='preserve' y='0px'>
+                                <path class='deco-layer deco-layer--4'
+                                    d='M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428	c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z'
+                                    fill='#FFFFFF'></path>
+                            </svg>
+                        </div>
+                        <div class="card-body bg-white mt-0 shadow">
+                            <ul class="list-unstyled mb-3 pb-4 position-relative ulC">
+                                <li class="ilC text-left" style="color: #3161a3"><img
+                                        src="{{asset('landing/images/check.svg')}}" height="18" class="mr-1">$2 un pago
+                                    semestral</b></li>
+                                <li class="ilC text-left" style="color: #3161a3"><img
+                                        src="{{asset('landing/images/check.svg')}}" height="18" class="mr-1">$1.8 un
+                                    pago anual</li>
+                                <li class="ilC text-left" style="color: #3161a3"><img
+                                        src="{{asset('landing/images/check.svg')}}" height="18"
+                                        class="mr-1">Administrador de personal Ilimitado</li>
+                                <li class="ilC text-left" style="color: #3161a3"><img
+                                        src="{{asset('landing/images/check.svg')}}" height="18"
+                                        class="mr-1">Multiempresa Ilimitado</li>
+                            </ul> <button type="button" class="btn btn-lg btn-block btn-customD" style="font-size: 16px">SUSCRIBIRSE</button>
+                        </div>
+                    </div>
+                    <div class="col-4 princing-item">
+                        <div class="pricing-dividerT">
+                            <h5 class="text-light">ENTERPRISE</h5>
+                            <h6 class="my-0 display-2 text-light font-weight-normal mb-2" style="font-size: 45px">$2
+                            </h6><span class="h6" style="color: #ffffff">AL MES-MAYOR A 5000 EMP</span> <svg
+                                class='pricing-divider-img' enable-background='new 0 0 300 100' height='100px'
+                                preserveAspectRatio='none' version='1.1' viewBox='0 0 300 100' width='300px' x='0px'
+                                xml:space='preserve' y='0px'>
+                                <path class='deco-layer deco-layer--4'
+                                    d='M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428	c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z'
+                                    fill='#FFFFFF'></path>
+                            </svg>
+                        </div>
+                        <div class="card-body bg-white mt-0 shadow">
+                            <ul class="list-unstyled mb-3 pb-4 position-relative ulC">
+                                <li class="ilC text-left" style="color: #264e70"><img
+                                        src="{{asset('landing/images/check.svg')}}" height="18" class="mr-1">$1.8 un
+                                    pago semestral</li>
+                                <li class="ilC text-left" style="color: #264e70"><img
+                                        src="{{asset('landing/images/check.svg')}}" height="18" class="mr-1">$1.5 un
+                                    pago anual</li>
+                                <li class="ilC text-left" style="color: #264e70"><img
+                                        src="{{asset('landing/images/check.svg')}}" height="18"
+                                        class="mr-1">Administrador de personal Ilimitado</li>
+                                <li class="ilC text-left" style="color: #264e70"><img
+                                        src="{{asset('landing/images/check.svg')}}" height="18"
+                                        class="mr-1">Multiempresa Ilimitado</li>
+                            </ul> <button type="button" class="btn btn-lg btn-block btn-customT" style="font-size: 16px">SUSCRIBIRSE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- <div class="row">
             <div class="col-md-3">
                 <strong style="color: #163552">Modalidad de Control</strong>
             </div>
@@ -177,30 +338,30 @@
                     </p>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <div class="row">
-            <div class="col-md-3 pt-2">
+            <div class="col-md-3">
                 <strong style="color: #163552">Modo: Control Remoto / Home and office</strong>
             </div>
-            <div class="col-md-9" style="border-bottom: 3px solid #0ea5c6"></div>
+            <div class="col-md-9 mb-3" style="border-bottom: 3px solid #0ea5c6"></div>
         </div>
         <div class="row pt-5">
             <div class="col-md-3">
                 <strong style="color: #797a7e">Captura de actividad diaria</strong>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #e1ffc2;height: 30px;">
-                    <img src="{{asset('landing/images/tick.svg')}}" height="22" class="mt-1">
-                </div>
-            </div>
-            <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
-                    <img src="{{asset('landing/images/tick (1).svg')}}" height="22" class="mt-1">
+                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #dae1e7;height: 30px;">
-                    <img src="{{asset('landing/images/tick (2).svg')}}" height="22" class="mt-1">
+                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #b9ceeb;height: 30px;">
+                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
         </div>
