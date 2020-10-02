@@ -455,7 +455,7 @@
     .select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
         color: #fdfdfd;
     }
-   .select2-container .select2-selection {
+  .col-lg-10 .select2-container .select2-selection {
     height: 20px;
     font-size: 12.2px;
     overflow-y: scroll;
