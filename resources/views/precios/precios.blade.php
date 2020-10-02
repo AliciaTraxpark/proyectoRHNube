@@ -149,7 +149,8 @@
                                 <li class="ilC" style="color: #448ef6;font-size: 9px">(5$Por cada empresa nueva
                                     administrada por la misma cuenta)
                                 </li>
-                            </ul> <button type="button" class="btn btn-lg btn-block btn-custom" style="font-size: 16px">SUSCRIBIRSE</button>
+                            </ul> <button type="button" class="btn btn-lg btn-block btn-custom"
+                                style="font-size: 16px">SUSCRIBIRSE</button>
                         </div>
                     </div>
                     <div class="col-4 princing-item">
@@ -179,7 +180,8 @@
                                 <li class="ilC text-left" style="color: #3161a3"><img
                                         src="{{asset('landing/images/check.svg')}}" height="18"
                                         class="mr-1">Multiempresa Ilimitado</li>
-                            </ul> <button type="button" class="btn btn-lg btn-block btn-customD" style="font-size: 16px">SUSCRIBIRSE</button>
+                            </ul> <button type="button" class="btn btn-lg btn-block btn-customD"
+                                style="font-size: 16px">SUSCRIBIRSE</button>
                         </div>
                     </div>
                     <div class="col-4 princing-item">
@@ -209,7 +211,8 @@
                                 <li class="ilC text-left" style="color: #264e70"><img
                                         src="{{asset('landing/images/check.svg')}}" height="18"
                                         class="mr-1">Multiempresa Ilimitado</li>
-                            </ul> <button type="button" class="btn btn-lg btn-block btn-customT" style="font-size: 16px">SUSCRIBIRSE</button>
+                            </ul> <button type="button" class="btn btn-lg btn-block btn-customT"
+                                style="font-size: 16px">SUSCRIBIRSE</button>
                         </div>
                     </div>
                 </div>
@@ -370,29 +373,24 @@
                 <strong style="color: #797a7e">Control normal (cada 10 min)</strong>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <img src="{{asset('landing/images/tick.svg')}}" height="22" class="mt-1">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #f1fff1;height: 30px;">
+                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <img src="{{asset('landing/images/tick (1).svg')}}" height="22" class="mt-1">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #f1fff1;height: 30px;">
+                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <img src="{{asset('landing/images/tick (2).svg')}}" height="22" class="mt-1">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #f1fff1;height: 30px;">
+                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
         </div>
         <div class="row pt-3">
             <div class="col-md-3">
                 <strong style="color: #797a7e">Calidad de captura</strong>
-            </div>
-            <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3 mb-3" style="background-color: #e1ffc2;height: 30px;">
-                    <p class="mt-1" style="color:#797a7e">Estándar</p>
-                </div>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3 mb-3" style="background-color: #def4f0;height: 30px;">
@@ -404,23 +402,28 @@
                     <p class="mt-1" style="color:#797a7e">Estándar</p>
                 </div>
             </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3 mb-3" style="background-color: #b9ceeb;height: 30px;">
+                    <p class="mt-1" style="color:#797a7e">Estándar</p>
+                </div>
+            </div>
         </div>
         <div class="row pt-3">
             <div class="col-md-3">
                 <strong style="color: #797a7e">Eliminación de capturas (*e)</strong>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <img src="{{asset('landing/images/close (3).svg')}}" height="22" class="mt-1">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #f1fff1;height: 30px;">
+                    <img src="{{asset('landing/images/close (4).svg')}}" height="15" class="mt-2">
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #f1fff1;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">Estándar</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #f1fff1;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">Estándar</p>
                 </div>
             </div>
@@ -480,7 +483,6 @@
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
-<script src="{{asset('landing/js/dashboardCR.js')}}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 @endsection
 @section('script-bottom')
