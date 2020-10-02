@@ -528,8 +528,8 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
-            <div class="col-md-3">
+        <div class="row pt-5">
+            <div class="col-md-3 pt-5">
                 <strong style="color: #797a7e">Control de tareas diarias</strong>
             </div>
             <div class="col-md-3">
