@@ -8,6 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <link rel="stylesheet" href="{{asset('landing/vendors/mdi/css/materialdesignicons.min.css')}}">
+    <link rel="stylesheet" href="{{asset('landing/vendors/owl-carousel/css/owl.carousel.min.css')}}">
+    <link rel="stylesheet" href="{{asset('landing/vendors/owl-carousel/css/owl.theme.default.css')}}">
+    <link rel="stylesheet" href="{{asset('landing/vendors/mdi/css/materialdesignicons.min.css')}}">
     <link rel="stylesheet" href="{{asset('landing/vendors/aos/css/aos.css')}}">
     <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -53,53 +56,50 @@
     <div class="account-pages my-5">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-xl-4">
+                <div class="col-xl-5">
                     <div class="card">
                         <div class="card-body p-0">
                             <div class="row">
-                                <div class="col-12 p-5">
+                                <div class="col-12 pr-5 pl-5 pt-5 pb-2">
                                     <div class="mx-auto mb-2 text-center">
                                         <a href="{{route('logout')}}">
                                             <img src="{{asset('landing/images/ICONO-LOGO-NUBE-RH.ico')}}" height="90" />
                                         </a>
                                     </div>
+                                    <div class="alert alert-success" id="alertSuccess" style="display: none"
+                                        role="alert">
+                                        <strong><img src="{{asset('admin/images/checked.svg')}}" height="20"
+                                                class="mr-1 mt-1"></strong><span style="font-size: 14px;">Descarga
+                                            Activada.Ya puedes descargar <strong>RH box</strong></span>
+                                    </div>
+                                    <div class="alert alert-danger" role="alert" style="display: none;" id="alertError">
+                                    </div>
                                     <form action="javascript:enviarInstrucciones()" class="authentication-form">
                                         @csrf
                                         <div class="form-group">
-                                            <label class="form-control-label" style="font-weight: 80;">Código de
+                                            <label class="form-control-label" style="font-size: 15px">Código de
                                                 descarga</label>
                                             <div class="input-group mb-3">
                                                 <input id="licencia" type="text" class="form-control" name="licencia"
                                                     required autofocus>
                                                 <div class="input-group-prepend">
-                                                    <button type="button" class="btn  btn-sm"
-                                                        style="background-color: #163552;color:#ffffff;font-size: 12px;border-bottom-right-radius: 5px; border-top-right-radius: 5px;"
+                                                    <button type="button" class="btn  btn-sm btn-opacity-primary"
+                                                        style="font-size: 12px;border-bottom-right-radius: 5px; border-top-right-radius: 5px;"
                                                         aria-label="Default"
-                                                        aria-describedby="inputGroup-sizing-default">Enviar</button>
+                                                        aria-describedby="inputGroup-sizing-default"
+                                                        id="enviarLicencia">Enviar</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </form>
-                                    <div class="col-xl-12 col-md-12">
-                                        <div class="p-1 border rounded mb-2">
-                                            <div class="media">
-                                                <div class="avatar-sm font-weight-bold mr-3">
-                                                    <span class="avatar-title rounded bg-soft-primary text-primary">
-                                                        <i class="uil-file-plus-alt font-size-18"></i>
-                                                    </span>
-                                                </div>
-                                                <div class="media-body">
-                                                    <a href="#" class="d-inline-block mt-2">RH box.exe</a>
-                                                </div>
-                                                <div class="float-right mt-1">
-                                                    <a href="#" class="p-2">
-                                                        <img src="{{asset('landing/images/bandeja-de-entrada.svg')}}" height="25" class="mr-1">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
+                            </div>
+                            <div class="row justify-content-center pb-5">
+                                <a id="enlace"><button type="button" class="btn btn-sm btn-opacity-primary  btn-rounded"
+                                        style="font-size: 13.5px;">
+                                        <img src="{{asset('landing/images/cloud-computing.svg')}}" height="24"
+                                            class="mr-2">
+                                        Descargar</button></a>
                             </div>
                         </div> <!-- end card-body -->
                     </div>
@@ -112,6 +112,7 @@
     </div>
     <script src="{{asset('landing/vendors/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('landing/vendors/bootstrap/bootstrap.min.js')}}"></script>
+    <script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>
     <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
     <script src="{{asset('landing/js/landingpage.js')}}"></script>
     <script src="{{asset('landing/js/descargaRHbox.js')}}"></script>

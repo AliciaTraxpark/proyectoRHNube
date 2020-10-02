@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\licencia_empleado;
 use App\vinculacion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -36,7 +37,30 @@ class downloadController extends Controller
         }
     }
 
-    public function vistaPrueba(){
+    public function vistaPrueba()
+    {
         return view('Verificacion.download');
+    }
+
+    public function buscarLicencia(Request $request)
+    {
+        $licencia = $request->get('licencia');
+        $licencia_empleado = licencia_empleado::where('licencia', '=', $licencia)->get()->first();
+        if ($licencia_empleado) {
+            if ($licencia_empleado->disponible == 'e') {
+                $licencia_empleado->disponible = 'a';
+                $licencia_empleado->save();
+
+                $vinculacion = vinculacion::where('idLicencia', '=', $licencia_empleado->idEmpleado)->get()->first();
+                return response()->json($vinculacion, 200);
+            }
+            if ($licencia_empleado->disponible  == 'a') {
+                return response()->json("lic_no_disponible", 400);
+            }
+            if ($licencia_empleado->disponible  == 'i') {
+                return response()->json("lic_inactiva", 400);
+            }
+        }
+        return response()->json("lic_incorrecta", 400);
     }
 }
