@@ -130,6 +130,13 @@ $usuario_organizacion=DB::table('usuario_organizacion')
         </ul>
     </li>
 
+    <li>
+        <a href="/planes">
+            <i data-feather="home"></i>
+            <span> Planes y Precios </span>
+        </a>
+    </li>
+
     {{--
         <li>
             <a href="javascript: void(0);">
