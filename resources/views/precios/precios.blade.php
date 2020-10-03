@@ -24,7 +24,7 @@
     .pricing-divider {
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
-        background: #5fdde5;
+        background: #44b1cc;
         padding: 1em 0 4em;
         position: relative;
     }
@@ -57,7 +57,7 @@
     }
 
     .btn-custom {
-        background: #5fdde5;
+        background: #44b1cc;
         color: #fff;
         border-radius: 20px
     }
@@ -113,7 +113,7 @@
         outline: none;
         color: #407088;
         font-size: 36px;
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+        box-shadow: 0 8px 6px rgba(0, 0, 0, 0.16), 0 8px 6px rgba(0, 0, 0, 0.23);
         transition: .3s;
     }
 
@@ -147,30 +147,33 @@
                 <div class="row m-auto text-center" style="width: 56vw;">
                     <div class="col-4 princing-item">
                         <div class="pricing-divider">
-                            <h6 class="font-weight-normal botonF1 pt-3" style="font-size: 40px;color:#407088">$3</h6>
-                            <h5 class="text-light pt-5">PYME</h5>
-                            <span class="h6 mb-1" style="color: #ffffff">AL MES-HASTA 200 EMP</span>
-                            <svg class="svgTriangulo" width="100%" height="100" viewBox="0 0 100 102" preserveAspectRatio="none">
+                            <h6 class="font-weight-normal botonF1 pt-3 pb-1"
+                                style="font-size: 43px;color:#407088;font-family: 'Calibri'">$3</h6>
+                            <h5 class="text-light pt-5" style="font-family: 'Poppins'">PYME</h5>
+                            <span class="h6 mb-1" style="color: #ffffff;font-family: 'Poppins'">AL MES-HASTA 200
+                                EMP</span>
+                            <svg class="svgTriangulo" width="100%" height="100" viewBox="0 0 100 102"
+                                preserveAspectRatio="none">
                                 <path d="M0 0 L50 90 L100 0 V100 H0" fill="#ffffff" />
                             </svg>
                         </div>
                         <div class="card-body bg-white mt-0 shadow"
                             style="border-bottom-left-radius: 25px;border-bottom-right-radius: 25px">
-                            <ul class="list-unstyled mb-3 position-relative ulC">
-                                <li class="ilC text-left" style="color: #448ef6"><img
+                            <ul class="list-unstyled mb-3 position-relative ulC" style="font-family: 'Roboto';">
+                                <li class="ilC text-left" style="color: #163552"><img
                                         src="{{asset('landing/images/check.svg')}}" height="18" class="mr-1">$2.5 un
                                     pago semestral</li>
-                                <li class="ilC text-left" style="color: #448ef6"><img
+                                <li class="ilC text-left" style="color: #163552"><img
                                         src="{{asset('landing/images/check.svg')}}" height="18" class="mr-1">$2 un pago
                                     anual</li>
-                                <li class="ilC text-left" style="color: #448ef6"><img
+                                <li class="ilC text-left" style="color: #163552"><img
                                         src="{{asset('landing/images/check.svg')}}" height="18"
                                         class="mr-1">Administrador de personal Ilimitado</li>
-                                <li class="ilC text-left" style="color: #448ef6;"><img
+                                <li class="ilC text-left" style="color: #163552;"><img
                                         src="{{asset('landing/images/check.svg')}}" height="18"
                                         class="mr-1">Multiempresa
                                 </li>
-                                <li class="ilC" style="color: #448ef6;font-size: 9px">(5$Por cada empresa nueva
+                                <li class="ilC" style="color: #163552;font-size: 9px">(5$Por cada empresa nueva
                                     administrada por la misma cuenta)
                                 </li>
                             </ul> <button type="button" class="btn btn-lg btn-block btn-custom"
@@ -179,18 +182,19 @@
                     </div>
                     <div class="col-4 princing-item">
                         <div class="pricing-dividerD">
-                            <h5 class="text-light">PROFESIONAL</h5>
-                            <h6 class="my-0 display-2 text-light font-weight-normal" style="font-size: 45px">$2.5
-                            </h6> <span class="h6" style="color: #ffffff">AL MES - DE 200 A 5000 EMP</span> <svg
-                                class='pricing-divider-img' enable-background='new 0 0 300 100' height='100px'
-                                id='Layer_1' preserveAspectRatio='none' version='1.1' viewBox='0 0 300 100'
-                                width='300px' x='0px' xml:space='preserve' y='0px'>
-                                <path class='deco-layer deco-layer--4'
-                                    d='M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428	c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z'
-                                    fill='#FFFFFF'></path>
+                            <h6 class="font-weight-normal botonF1 pt-3 pb-1"
+                                style="font-size: 43px;color:#407088;font-family: 'Calibri'">$2.5
+                            </h6>
+                            <h5 class="text-light pt-5" style="font-family: 'Poppins'">PROFESIONAL</h5>
+                            <span class="h6" style="color: #ffffff;font-family: 'Poppins'">AL MES - DE 200 A 5000
+                                EMP</span>
+                            <svg class="svgTriangulo" width="100%" height="100" viewBox="0 0 100 102"
+                                preserveAspectRatio="none">
+                                <path d="M0 0 L50 90 L100 0 V100 H0" fill="#ffffff" />
                             </svg>
                         </div>
-                        <div class="card-body bg-white mt-0 shadow">
+                        <div class="card-body bg-white mt-0 shadow"
+                            style="border-bottom-left-radius: 25px;border-bottom-right-radius: 25px">
                             <ul class="list-unstyled mb-3 pb-4 position-relative ulC">
                                 <li class="ilC text-left" style="color: #3161a3"><img
                                         src="{{asset('landing/images/check.svg')}}" height="18" class="mr-1">$2 un pago
