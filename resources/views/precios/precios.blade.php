@@ -24,21 +24,24 @@
     .pricing-divider {
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
-        background: #44b1cc;
+        background: rgb(34, 193, 195);
+        background: linear-gradient(0deg, rgba(34, 193, 195, 1) 0%, rgba(68, 177, 204, 1) 100%);
         padding: 1em 0 4em;
         position: relative;
     }
 
     .pricing-dividerD {
         border-radius: 20px;
-        background: #3c6f9c;
+        background: rgb(43, 89, 187);
+        background: linear-gradient(0deg, rgba(43, 89, 187, 1) 0%, rgba(60, 111, 156, 1) 100%);
         padding: 1em 0 4em;
         position: relative
     }
 
     .pricing-dividerT {
         border-radius: 20px;
-        background: #407088;
+        background: rgb(51, 75, 125);
+        background: linear-gradient(0deg, rgba(51, 75, 125, 1) 0%, rgba(64, 112, 136, 1) 100%);
         padding: 1em 0 4em;
         position: relative
     }
@@ -57,7 +60,8 @@
     }
 
     .btn-custom {
-        background: #44b1cc;
+        background: rgb(34, 193, 195);
+        background: linear-gradient(0deg, rgba(34, 193, 195, 1) 0%, rgba(68, 177, 204, 1) 100%);
         color: #fff;
         border-radius: 20px
     }
@@ -71,11 +75,13 @@
         transition: color 0.5s ease-in-out;
     }
 
-    .btn-custom::after{
+    .btn-custom::after {
         -webkit-transition: height 0.5s ease-in-out;
     }
+
     .btn-customD {
-        background: #3c6f9c;
+        background: rgb(43, 89, 187);
+        background: linear-gradient(0deg, rgba(43, 89, 187, 1) 0%, rgba(60, 111, 156, 1) 100%);
         color: #fff;
         border-radius: 20px
     }
@@ -88,7 +94,8 @@
     }
 
     .btn-customT {
-        background: #407088;
+        background: rgb(51, 75, 125);
+        background: linear-gradient(0deg, rgba(51, 75, 125, 1) 0%, rgba(64, 112, 136, 1) 100%);
         color: #fff;
         border-radius: 20px
     }
@@ -129,7 +136,7 @@
         width: 80px;
         height: 80px;
         border-radius: 100%;
-        background: #e8e8e8;
+        background: #f4eeff;
         right: 0;
         bottom: 0;
         position: absolute;
@@ -137,7 +144,7 @@
         left: 80px;
         border: none;
         outline: none;
-        color: #407088;
+        color: #30475e;
         font-size: 36px;
         box-shadow: 0 8px 6px rgba(0, 0, 0, 0.16), 0 8px 6px rgba(0, 0, 0, 0.23);
         transition: .3s;
@@ -164,7 +171,7 @@
     <div class="col-xl-12">
         <div class="row pr-5">
             <div class="col-md-3 pt-2">
-                <strong style="color: #163552">PLANES Y PRECIOS - PERÚ</strong>
+                <strong style="color: #000839">PLANES Y PRECIOS - PERÚ</strong>
             </div>
             <div class="col-md-9" style="border-bottom: 3px solid #12cad6"></div>
         </div>
@@ -187,17 +194,18 @@
                             style="border-bottom-left-radius: 25px;border-bottom-right-radius: 25px">
                             <ul class="list-unstyled mb-3 position-relative ulC" style="font-family: 'Roboto';">
                                 <li class="ilC text-left" style="color: #44b1cc"><img
-                                        src="{{asset('landing/images/check.svg')}}" height="18" class="mr-1">$2.5 un
+                                        src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">$2.5 un
                                     pago semestral</li>
                                 <li class="ilC text-left" style="color: #44b1cc"><img
-                                        src="{{asset('landing/images/check.svg')}}" height="18" class="mr-1">$2 un pago
+                                        src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">$2 un
+                                    pago
                                     anual</li>
                                 <li class="ilC text-left" style="color: #44b1cc"><img
-                                        src="{{asset('landing/images/check.svg')}}" height="18"
-                                        class="mr-1">Administrador de personal Ilimitado</li>
+                                        src="{{asset('landing/images/tick (4).svg')}}" height="15"
+                                        class="mr-2">Administrador de personal Ilimitado</li>
                                 <li class="ilC text-left" style="color: #44b1cc;"><img
-                                        src="{{asset('landing/images/check.svg')}}" height="18"
-                                        class="mr-1">Multiempresa
+                                        src="{{asset('landing/images/tick (4).svg')}}" height="15"
+                                        class="mr-2">Multiempresa
                                 </li>
                                 <li class="ilC" style="color: #44b1cc;font-size: 9px">(5$Por cada empresa nueva
                                     administrada por la misma cuenta)
@@ -223,17 +231,18 @@
                             style="border-bottom-left-radius: 25px;border-bottom-right-radius: 25px">
                             <ul class="list-unstyled mb-3 pb-4 position-relative ulC">
                                 <li class="ilC text-left" style="color: #3161a3"><img
-                                        src="{{asset('landing/images/check.svg')}}" height="18" class="mr-1">$2 un pago
+                                        src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">$2 un
+                                    pago
                                     semestral</b></li>
                                 <li class="ilC text-left" style="color: #3161a3"><img
-                                        src="{{asset('landing/images/check.svg')}}" height="18" class="mr-1">$1.8 un
+                                        src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">$1.8 un
                                     pago anual</li>
                                 <li class="ilC text-left" style="color: #3161a3"><img
-                                        src="{{asset('landing/images/check.svg')}}" height="18"
-                                        class="mr-1">Administrador de personal Ilimitado</li>
+                                        src="{{asset('landing/images/tick (4).svg')}}" height="15"
+                                        class="mr-2">Administrador de personal Ilimitado</li>
                                 <li class="ilC text-left" style="color: #3161a3"><img
-                                        src="{{asset('landing/images/check.svg')}}" height="18"
-                                        class="mr-1">Multiempresa Ilimitado</li>
+                                        src="{{asset('landing/images/tick (4).svg')}}" height="15"
+                                        class="mr-2">Multiempresa Ilimitado</li>
                             </ul> <button type="button" class="btn btn-lg btn-block btn-customD"
                                 style="font-size: 16px;font-weight: bold">SUSCRIBIRSE</button>
                         </div>
@@ -255,17 +264,17 @@
                             style="border-bottom-left-radius: 25px;border-bottom-right-radius: 25px">
                             <ul class="list-unstyled mb-3 pb-4 position-relative ulC">
                                 <li class="ilC text-left" style="color: #264e70"><img
-                                        src="{{asset('landing/images/check.svg')}}" height="18" class="mr-1">$1.8 un
+                                        src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">$1.8 un
                                     pago semestral</li>
                                 <li class="ilC text-left" style="color: #264e70"><img
-                                        src="{{asset('landing/images/check.svg')}}" height="18" class="mr-1">$1.5 un
+                                        src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">$1.5 un
                                     pago anual</li>
                                 <li class="ilC text-left" style="color: #264e70"><img
-                                        src="{{asset('landing/images/check.svg')}}" height="18"
-                                        class="mr-1">Administrador de personal Ilimitado</li>
+                                        src="{{asset('landing/images/tick (4).svg')}}" height="15"
+                                        class="mr-2">Administrador de personal Ilimitado</li>
                                 <li class="ilC text-left" style="color: #264e70"><img
-                                        src="{{asset('landing/images/check.svg')}}" height="18"
-                                        class="mr-1">Multiempresa Ilimitado</li>
+                                        src="{{asset('landing/images/tick (4).svg')}}" height="15"
+                                        class="mr-2">Multiempresa Ilimitado</li>
                             </ul> <button type="button" class="btn btn-lg btn-block btn-customT"
                                 style="font-size: 16px;font-weight: bold">SUSCRIBIRSE</button>
                         </div>
@@ -399,53 +408,53 @@
         </div> --}}
         <div class="row pr-5">
             <div class="col-md-3">
-                <strong style="color: #163552">Modo: Control Remoto / Home and office</strong>
+                <strong style="color: #000839">Modo: Control Remoto / Home and office</strong>
             </div>
             <div class="col-md-9 mb-3" style="border-bottom: 3px solid #12cad6"></div>
         </div>
         <div class="row pt-3 pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Captura de actividad diaria</p>
+                <p style="color: #000839;">Captura de actividad diaria</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #3c6f9c60;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #40708860;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
         </div>
         <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Control normal (cada 10 min)</p>
+                <p style="color: #000839;">Control normal (cada 10 min)</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
         </div>
         <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Calidad de captura</p>
+                <p style="color: #000839;">Calidad de captura</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
@@ -465,11 +474,11 @@
         </div>
         <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Eliminación de capturas (*e)</p>
+                <p style="color: #000839;">Eliminación de capturas (*e)</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <img src="{{asset('landing/images/close (4).svg')}}" height="15" class="mt-2">
+                    <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mt-2">
                 </div>
             </div>
             <div class="col-md-3">
@@ -485,31 +494,31 @@
         </div>
         <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Permitir actividad fuera de horario</p>
+                <p style="color: #000839;">Permitir actividad fuera de horario</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #3c6f9c60;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #40708860;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
         </div>
         <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Control intensivo (cada 5min)</p>
+                <p style="color: #000839;">Control intensivo (cada 5min)</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <img src="{{asset('landing/images/close (4).svg')}}" height="15" class="mt-2">
+                    <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mt-2">
                 </div>
             </div>
             <div class="col-md-3">
@@ -525,11 +534,11 @@
         </div>
         <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Control superintensivo (cada1min)</p>
+                <p style="color: #000839;">Control superintensivo (cada1min)</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
-                    <img src="{{asset('landing/images/close (4).svg')}}" height="15" class="mt-2">
+                    <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mt-2">
                 </div>
             </div>
             <div class="col-md-3">
@@ -545,31 +554,31 @@
         </div>
         <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Control de tareas diarias</p>
+                <p style="color: #000839;">Control de tareas diarias</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
         </div>
         <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Capturas en video basic (*v)Aleatorio</p>
+                <p style="color: #000839;">Capturas en video basic (*v)Aleatorio</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
-                    <img src="{{asset('landing/images/close (4).svg')}}" height="15" class="mt-2">
+                    <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mt-2">
                 </div>
             </div>
             <div class="col-md-3">
@@ -585,7 +594,7 @@
         </div>
         <div class="row pt-3 pr-5">
             <div class="col-md-3 pt-4">
-                <strong style="color: #163552;">Modo:Control en móvil en ruta
+                <strong style="color: #000839;">Modo:Control en móvil en ruta
                     (Disponible en Android)</strong>
             </div>
             <div class="col-md-3">
@@ -630,33 +639,33 @@
         </div>
         <div class="row pt-5 pr-5">
             <div class="col-md-3">
-                <strong style="color: #163552">Modo: Control de asistencia en Puerta</strong>
+                <strong style="color: #000839">Modo: Control de asistencia en Puerta</strong>
             </div>
             <div class="col-md-9 mb-3" style="border-bottom: 3px solid #12cad6"></div>
         </div>
         <div class="row pt-3 pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">En dispositivos Android</p>
+                <p style="color: #000839;">En dispositivos Android</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #3c6f9c60;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color:#40708860;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
         </div>
         <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Biométricos ZKTECO</p>
+                <p style="color: #000839;">Biométricos ZKTECO</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
@@ -676,7 +685,7 @@
         </div>
         <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Biométricos Suprema V1 y V2</p>
+                <p style="color: #000839;">Biométricos Suprema V1 y V2</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
@@ -696,7 +705,7 @@
         </div>
         <div class="row pt-2 pr-5">
             <div class="col-md-3 mt-2">
-                <strong style="color: #163552">Opciones de pago</strong>
+                <strong style="color: #000839">Opciones de pago</strong>
             </div>
             <div class="col-md-9 pb-2 pt-2 text-center" style="background-color:#12cad6">
                 <strong class="mt-2" style="color:#ffffff">CUANDO REQUIERE MAYOR AUDITORÍA A UN EMPLEADO ESPECÍFICO
@@ -706,7 +715,7 @@
         </div>
         <div class="row pt-3 pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Control intensivo</p>
+                <p style="color: #000839;">Control intensivo</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color:#44b1cc60;height: 30px;">
@@ -726,7 +735,7 @@
         </div>
         <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Control superintensivo</p>
+                <p style="color: #000839;">Control superintensivo</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
@@ -746,7 +755,7 @@
         </div>
         <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Capturas en video basic (*) Aleatorio</p>
+                <p style="color: #000839;">Capturas en video basic (*) Aleatorio</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
@@ -766,7 +775,7 @@
         </div>
         <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Calidad de captura HD</p>
+                <p style="color: #000839;">Calidad de captura HD</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
@@ -784,69 +793,69 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-2 pr-5">
+        <div class="row pr-5">
             <div class="col-md-3">
-                <strong style="color: #163552">Facturación</strong>
+                <strong style="color: #000839">Facturación</strong>
             </div>
             <div class="col-md-9 mb-2" style="border-bottom: 3px solid #12cad6"></div>
         </div>
         <div class="row pt-3 pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Factura de origen, USA</p>
+                <p style="color: #000839;">Factura de origen, USA</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color:#44b1cc60;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #3c6f9c60;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #40708860;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
         </div>
         <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Facturación local (*f)</p>
+                <p style="color: #000839;">Facturación local (*f)</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <img src="{{asset('landing/images/close (4).svg')}}" height="15" class="mt-2">
+                    <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mt-2">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
         </div>
         <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Soporte local</p>
+                <p style="color: #000839;">Soporte local</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
-                    <img src="{{asset('landing/images/close (4).svg')}}" height="15" class="mt-2">
+                    <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mt-2">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color:#3c6f9c60;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #40708860;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
         </div>
