@@ -138,7 +138,7 @@
     <div class="col-xl-12">
         <div class="row pr-5">
             <div class="col-md-3 pt-2">
-                <strong style="color: #163552">PRICING RH NUBE</strong>
+                <strong style="color: #163552">PLANES Y PRECIOS - PERÚ</strong>
             </div>
             <div class="col-md-9" style="border-bottom: 3px solid #12cad6"></div>
         </div>
