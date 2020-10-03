@@ -31,14 +31,14 @@
 
     .pricing-dividerD {
         border-radius: 20px;
-        background: #3161a3;
+        background: #3c6f9c;
         padding: 1em 0 4em;
         position: relative
     }
 
     .pricing-dividerT {
         border-radius: 20px;
-        background: #264e70;
+        background: #407088;
         padding: 1em 0 4em;
         position: relative
     }
@@ -62,14 +62,21 @@
         border-radius: 20px
     }
 
+    .btn-custom:hover {
+        background: #fff;
+        color: #44b1cc;
+        border-color:  #44b1cc;
+        border-radius: 20px
+    }
+
     .btn-customD {
-        background: #3161a3;
+        background: #3c6f9c;
         color: #fff;
         border-radius: 20px
     }
 
     .btn-customT {
-        background: #264e70;
+        background: #407088;
         color: #fff;
         border-radius: 20px
     }
@@ -177,7 +184,7 @@
                                     administrada por la misma cuenta)
                                 </li>
                             </ul> <button type="button" class="btn btn-lg btn-block btn-custom"
-                                style="font-size: 16px">SUSCRIBIRSE</button>
+                                style="font-size: 16px;font-weight: bold">SUSCRIBIRSE</button>
                         </div>
                     </div>
                     <div class="col-4 princing-item">
@@ -209,7 +216,7 @@
                                         src="{{asset('landing/images/check.svg')}}" height="18"
                                         class="mr-1">Multiempresa Ilimitado</li>
                             </ul> <button type="button" class="btn btn-lg btn-block btn-customD"
-                                style="font-size: 16px">SUSCRIBIRSE</button>
+                                style="font-size: 16px;font-weight: bold">SUSCRIBIRSE</button>
                         </div>
                     </div>
                     <div class="col-4 princing-item">
@@ -241,7 +248,7 @@
                                         src="{{asset('landing/images/check.svg')}}" height="18"
                                         class="mr-1">Multiempresa Ilimitado</li>
                             </ul> <button type="button" class="btn btn-lg btn-block btn-customT"
-                                style="font-size: 16px">SUSCRIBIRSE</button>
+                                style="font-size: 16px;font-weight: bold">SUSCRIBIRSE</button>
                         </div>
                     </div>
                 </div>
