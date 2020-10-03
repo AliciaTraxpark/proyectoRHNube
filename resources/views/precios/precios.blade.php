@@ -65,7 +65,7 @@
     .btn-custom:hover {
         background: #fff;
         color: #44b1cc;
-        border-color:  #44b1cc;
+        border-color: #44b1cc;
         border-radius: 20px
     }
 
@@ -378,13 +378,13 @@
                 </div>
             </div>
         </div> --}}
-        <div class="row">
+        <div class="row pr-5">
             <div class="col-md-3">
                 <strong style="color: #163552">Modo: Control Remoto / Home and office</strong>
             </div>
             <div class="col-md-9 mb-3" style="border-bottom: 3px solid #12cad6"></div>
         </div>
-        <div class="row pt-5">
+        <div class="row pt-3 pr-5">
             <div class="col-md-3">
                 <p style="color: #163552;">Captura de actividad diaria</p>
             </div>
@@ -404,7 +404,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
                 <p style="color: #163552;">Control normal (cada 10 min)</p>
             </div>
@@ -424,7 +424,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
                 <p style="color: #163552;">Calidad de captura</p>
             </div>
@@ -444,7 +444,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
                 <p style="color: #163552;">Eliminación de capturas (*e)</p>
             </div>
@@ -464,7 +464,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
                 <p style="color: #163552;">Permitir actividad fuera de horario</p>
             </div>
@@ -484,7 +484,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
                 <p style="color: #163552;">Control intensivo (cada 5min)</p>
             </div>
@@ -504,7 +504,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
                 <p style="color: #163552;">Control superintensivo (cada1min)</p>
             </div>
@@ -524,7 +524,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
                 <p style="color: #163552;">Control de tareas diarias</p>
             </div>
@@ -544,7 +544,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
                 <p style="color: #163552;">Capturas en video basic (*v)Aleatorio</p>
             </div>
@@ -564,22 +564,20 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-5">
+        <div class="row pt-3 pr-5">
             <div class="col-md-3 pt-4">
-                <p style="color: #163552;">Control de tareas diarias</p>
+                <strong style="color: #163552;">Modo:Control en móvil en ruta
+                    (Disponible en Android)</strong>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <div class="pricing-divider ">
-                        <h6 class="text-light text-center" style="font-weight: bold">DISPONIBLE
+                    <div class="pricing-divider">
+                        <h6 class="text-light text-center m-0" style="font-weight: bold">DISPONIBLE
                             A PARTIR DE DICIEMBRE
                         </h6>
-                        <svg class='pricing-divider-img' enable-background='new 0 0 300 100' height='40px' id='Layer_1'
-                            preserveAspectRatio='none' version='1.1' viewBox='0 0 300 100' width='60px' x='0px'
-                            xml:space='preserve' y='0px'>
-                            <path class='deco-layer deco-layer--4'
-                                d='M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428	c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z'
-                                fill='#FFFFFF'></path>
+                        <svg class="svgTriangulo" width="100%" height="100" viewBox="0 0 100 102"
+                            preserveAspectRatio="none">
+                            <path d="M0 0 L50 90 L100 0 V100 H0" fill="#ffffff" />
                         </svg>
                     </div>
                 </div>
@@ -587,15 +585,12 @@
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
                     <div class="pricing-dividerD">
-                        <h6 class="text-light text-center" style="font-weight: bold">DISPONIBLE
+                        <h6 class="text-light text-center m-0" style="font-weight: bold">DISPONIBLE
                             A PARTIR DE DICIEMBRE
                         </h6>
-                        <svg class='pricing-divider-img' enable-background='new 0 0 300 100' height='40px' id='Layer_1'
-                            preserveAspectRatio='none' version='1.1' viewBox='0 0 300 100' width='60px' x='0px'
-                            xml:space='preserve' y='0px'>
-                            <path class='deco-layer deco-layer--4'
-                                d='M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428	c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z'
-                                fill='#FFFFFF'></path>
+                        <svg class="svgTriangulo" width="100%" height="100" viewBox="0 0 100 102"
+                            preserveAspectRatio="none">
+                            <path d="M0 0 L50 90 L100 0 V100 H0" fill="#ffffff" />
                         </svg>
                     </div>
                 </div>
@@ -603,27 +598,24 @@
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
                     <div class="pricing-dividerT">
-                        <h6 class="text-light text-center" style="font-weight: bold">DISPONIBLE
+                        <h6 class="text-light text-center m-0" style="font-weight: bold">DISPONIBLE
                             A PARTIR DE DICIEMBRE
                         </h6>
-                        <svg class='pricing-divider-img' enable-background='new 0 0 300 100' height='40px' id='Layer_1'
-                            preserveAspectRatio='none' version='1.1' viewBox='0 0 300 100' width='60px' x='0px'
-                            xml:space='preserve' y='0px'>
-                            <path class='deco-layer deco-layer--4'
-                                d='M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428	c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z'
-                                fill='#FFFFFF'></path>
+                        <svg class="svgTriangulo" width="100%" height="100" viewBox="0 0 100 102"
+                            preserveAspectRatio="none">
+                            <path d="M0 0 L50 90 L100 0 V100 H0" fill="#ffffff" />
                         </svg>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row pt-5">
+        <div class="row pt-5 pr-5">
             <div class="col-md-3">
                 <strong style="color: #163552">Modo: Control de asistencia en Puerta</strong>
             </div>
             <div class="col-md-9 mb-3" style="border-bottom: 3px solid #12cad6"></div>
         </div>
-        <div class="row pt-5">
+        <div class="row pt-3 pr-5">
             <div class="col-md-3">
                 <p style="color: #163552;">En dispositivos Android</p>
             </div>
@@ -643,7 +635,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
                 <p style="color: #163552;">Biométricos ZKTECO</p>
             </div>
@@ -663,7 +655,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
                 <p style="color: #163552;">Biométricos Suprema V1 y V2</p>
             </div>
@@ -683,7 +675,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-5">
+        <div class="row pt-2 pr-5">
             <div class="col-md-3 mt-2">
                 <strong style="color: #163552">Opciones de pago</strong>
             </div>
@@ -693,7 +685,7 @@
                 </strong>
             </div>
         </div>
-        <div class="row pt-5">
+        <div class="row pt-3 pr-5">
             <div class="col-md-3">
                 <p style="color: #163552;">Control intensivo</p>
             </div>
@@ -713,7 +705,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
                 <p style="color: #163552;">Control superintensivo</p>
             </div>
@@ -733,7 +725,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
                 <p style="color: #163552;">Capturas en video basic (*) Aleatorio</p>
             </div>
@@ -753,7 +745,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
                 <p style="color: #163552;">Calidad de captura HD</p>
             </div>
@@ -773,13 +765,13 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pt-2 pr-5">
             <div class="col-md-3">
                 <strong style="color: #163552">Facturación</strong>
             </div>
             <div class="col-md-9 mb-2" style="border-bottom: 3px solid #12cad6"></div>
         </div>
-        <div class="row pt-5">
+        <div class="row pt-3 pr-5">
             <div class="col-md-3">
                 <p style="color: #163552;">Factura de origen, USA</p>
             </div>
@@ -799,7 +791,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
                 <p style="color: #163552;">Facturación local (*f)</p>
             </div>
@@ -819,7 +811,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
                 <p style="color: #163552;">Soporte local</p>
             </div>
