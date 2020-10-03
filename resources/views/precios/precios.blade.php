@@ -24,9 +24,9 @@
     .pricing-divider {
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
-        background: #448ef6;
+        background: #5fdde5;
         padding: 1em 0 4em;
-        position: relative
+        position: relative;
     }
 
     .pricing-dividerD {
@@ -57,7 +57,7 @@
     }
 
     .btn-custom {
-        background: #448ef6;
+        background: #5fdde5;
         color: #fff;
         border-radius: 20px
     }
@@ -98,6 +98,32 @@
         -webkit-transform: translate3d(-15px, 0, 0);
         transform: translate3d(-15px, 0, 0)
     }
+
+    .botonF1 {
+        width: 80px;
+        height: 80px;
+        border-radius: 100%;
+        background: #e8e8e8;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+        top: -40px;
+        left: 80px;
+        border: none;
+        outline: none;
+        color: #407088;
+        font-size: 36px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+        transition: .3s;
+    }
+
+    .svgTriangulo {
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 40px
+    }
 </style>
 <div id="preloader">
     <div id="status">
@@ -121,11 +147,15 @@
                 <div class="row m-auto text-center" style="width: 56vw;">
                     <div class="col-4 princing-item">
                         <div class="pricing-divider">
-                            <h5 class="text-light">PYME</h5>
-                            <h6 class="my-0 display-2 text-light font-weight-normal mb-2" style="font-size: 45px"> $3
-                            </h6> <span class="h6 mb-2" style="color: #ffffff">AL MES-HASTA 200 EMP</span>
+                            <h6 class="font-weight-normal botonF1 pt-3" style="font-size: 40px;color:#407088">$3</h6>
+                            <h5 class="text-light pt-5">PYME</h5>
+                            <span class="h6 mb-1" style="color: #ffffff">AL MES-HASTA 200 EMP</span>
+                            <svg class="svgTriangulo" width="100%" height="100" viewBox="0 0 100 102" preserveAspectRatio="none">
+                                <path d="M0 0 L50 90 L100 0 V100 H0" fill="#ffffff" />
+                            </svg>
                         </div>
-                        <div class="card-body bg-white mt-0 shadow">
+                        <div class="card-body bg-white mt-0 shadow"
+                            style="border-bottom-left-radius: 25px;border-bottom-right-radius: 25px">
                             <ul class="list-unstyled mb-3 position-relative ulC">
                                 <li class="ilC text-left" style="color: #448ef6"><img
                                         src="{{asset('landing/images/check.svg')}}" height="18" class="mr-1">$2.5 un
@@ -150,7 +180,7 @@
                     <div class="col-4 princing-item">
                         <div class="pricing-dividerD">
                             <h5 class="text-light">PROFESIONAL</h5>
-                            <h6 class="my-0 display-2 text-light font-weight-normal mb-2" style="font-size: 45px">$2.5
+                            <h6 class="my-0 display-2 text-light font-weight-normal" style="font-size: 45px">$2.5
                             </h6> <span class="h6" style="color: #ffffff">AL MES - DE 200 A 5000 EMP</span> <svg
                                 class='pricing-divider-img' enable-background='new 0 0 300 100' height='100px'
                                 id='Layer_1' preserveAspectRatio='none' version='1.1' viewBox='0 0 300 100'
