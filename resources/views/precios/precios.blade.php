@@ -214,18 +214,19 @@
                     </div>
                     <div class="col-4 princing-item">
                         <div class="pricing-dividerT">
-                            <h5 class="text-light">ENTERPRISE</h5>
-                            <h6 class="my-0 display-2 text-light font-weight-normal mb-2" style="font-size: 45px">$2
-                            </h6><span class="h6" style="color: #ffffff">AL MES-MAYOR A 5000 EMP</span> <svg
-                                class='pricing-divider-img' enable-background='new 0 0 300 100' height='100px'
-                                preserveAspectRatio='none' version='1.1' viewBox='0 0 300 100' width='300px' x='0px'
-                                xml:space='preserve' y='0px'>
-                                <path class='deco-layer deco-layer--4'
-                                    d='M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428	c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z'
-                                    fill='#FFFFFF'></path>
+                            <h6 class="font-weight-normal botonF1 pt-3 pb-1"
+                                style="font-size: 43px;color:#407088;font-family: 'Calibri'">$2
+                            </h6>
+                            <h5 class="text-light pt-5" style="font-family: 'Poppins'">ENTERPRISE</h5>
+                            <span class="h6" style="color: #ffffff;font-family: 'Poppins'">AL MES-MAYOR A 5000
+                                EMP</span>
+                            <svg class="svgTriangulo" width="100%" height="100" viewBox="0 0 100 102"
+                                preserveAspectRatio="none">
+                                <path d="M0 0 L50 90 L100 0 V100 H0" fill="#ffffff" />
                             </svg>
                         </div>
-                        <div class="card-body bg-white mt-0 shadow">
+                        <div class="card-body bg-white mt-0 shadow"
+                            style="border-bottom-left-radius: 25px;border-bottom-right-radius: 25px">
                             <ul class="list-unstyled mb-3 pb-4 position-relative ulC">
                                 <li class="ilC text-left" style="color: #264e70"><img
                                         src="{{asset('landing/images/check.svg')}}" height="18" class="mr-1">$1.8 un
