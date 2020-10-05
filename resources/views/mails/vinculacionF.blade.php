@@ -385,7 +385,7 @@
                                                             style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666;text-align:center">
                                                             Hola&nbsp;{{$persona->perso_nombre}} para empezar usar
                                                             nuestra plataforma, descargue
-                                                            la aplicación <strong>RHBOX</strong> que se
+                                                            la aplicación <strong>RH box</strong> que se
                                                             encuentra disponible para <strong>Window 32/64bits</strong>
                                                             en el siguiente enlace.
                                                         </p>
