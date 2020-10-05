@@ -143,20 +143,18 @@ background-color: #ffffff;
 
 
     </div>
+    <div class="col-md-12"><br></div>
         <div class="col-md-1"></div>
         <div class="col-md-5">
             <div class="row">
-                <div class="col-md-3"><label style="font-size: 12px;font-style:oblique;" for="">Programación</label></div>
-                <div class="col-md-1"><label style="font-size: 12px;font-style:oblique;" for="">De:</label></div>
-                <div class="col-md-2"><label style="font-size: 12px" for="">{{$fechaEnvi}}</label></div>
-                <div class="col-md-1"><label style="font-size: 12px;font-style:oblique;" for="">Hasta: </label></div>
+                <div class="col-md-9"><label style="font-size: 13px; font-weight:600 " for="">Programación de:  {{$fechaEnvi}}   hasta:   <label style="font-size: 13px;font-weight:600" for="" id="fechaHasta"></label></label></div>
                 <div class="col-md-3 text-right"><label style="font-size: 12px" for="" id="fechaHasta"></label></div>
                 </div>
         </div>
 
 
     <div class="col-md-4 text-right">
-    <label for="" style="font-style:oblique">Creacion de la empresa: {{$fechaOrga->format('d/m/Y')}}</label>
+    <label for="" style="font-style:oblique">Creación de la empresa: {{$fechaOrga->format('d/m/Y')}}</label>
     </div>
    {{--  <form action="javascript:agregarcalendario()"  class="col-md-5">
         <div class="row">
