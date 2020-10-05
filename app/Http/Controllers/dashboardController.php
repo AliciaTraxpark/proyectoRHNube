@@ -798,7 +798,7 @@ class dashboardController extends Controller
                         DB::raw('((SUM(cp.actividad)/SUM(pc.tiempo_rango))*100) as division')
                     )
                     ->where('e.emple_id', '=', $emple->emple_id)
-                    ->where(DB::raw('DATE(cp.hora_fin)'), '=', $fecha)
+                    ->where(DB::raw('DATE(cp.hora_ini)'), '=', $fecha)
                     ->where('invi.estado', '=', 1)
                    ->where('invi.idinvitado', '=',$invitado->idinvitado)
                     ->get()->first();
@@ -814,7 +814,7 @@ class dashboardController extends Controller
                     DB::raw('((SUM(cp.actividad)/SUM(pc.tiempo_rango))*100) as division')
                 )
                 ->where('e.emple_id', '=', $emple->emple_id)
-                ->where(DB::raw('DATE(cp.hora_fin)'), '=', $fecha)
+                ->where(DB::raw('DATE(cp.hora_ini)'), '=', $fecha)
                 ->get()->first();
                     }
 
