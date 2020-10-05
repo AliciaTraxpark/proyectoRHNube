@@ -490,7 +490,7 @@ class ControlController extends Controller
         $respuesta = [];
         $captura = DB::table('captura as cp')
             ->join('captura_imagen as ci', 'ci.idCaptura', '=', 'cp.idCaptura')
-            ->select('ci.imagen', 'cp.hora_ini')
+            ->select('ci.imagen', 'cp.hora_fin')
             ->where('ci.id', '=', $idCaptura)
             ->get()
             ->first();
