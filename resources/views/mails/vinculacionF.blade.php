@@ -1,7 +1,7 @@
 <!DOCTYPE html
     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office"
-    style="width:100%;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0">
+    style="width:100%;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0">
 
 <head>
     <meta charset="UTF-8">
@@ -262,7 +262,7 @@
 </head>
 
 <body
-    style="width:100%;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0">
+    style="width:100%;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0">
     <div class="es-wrapper-color" style="background-color:#FAFAFA">
         <!--[if gte mso 9]>
 			<v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
@@ -372,17 +372,17 @@
                                                 <tr style="border-collapse:collapse">
                                                     <td align="center"
                                                         style="padding:0;Margin:0;padding-left:40px;padding-right:40px">
-                                                        <strong style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center;text-transform:
-                                                                        uppercase;">
+                                                        <p
+                                                            style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666;text-align:center;font-weight: bold">
                                                             Te damos la bienvenida a RH NUBE
-                                                        </strong>
+                                                        </p>
                                                     </td>
                                                 </tr>
                                                 <tr style="border-collapse:collapse">
                                                     <td align="left"
                                                         style="padding:0;Margin:0;padding-right:35px;padding-left:40px">
                                                         <p
-                                                            style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center">
+                                                            style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666;text-align:center">
                                                             Hola,&nbsp;{{$persona->perso_nombre}} para empezar usar
                                                             nuestra plataforma, descargue
                                                             la aplicación <strong>RHBOX</strong> que se
@@ -418,19 +418,22 @@
                                     <tr style="border-collapse:collapse">
                                         <td align="center"
                                             style="padding:0;Margin:0;padding-top:25px;padding-left:40px;padding-right:40px">
-                                            <a
-                                                style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center">
-                                                <?php echo e(url("descargar")) ?></a>
+                                            <strong
+                                                style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666">
+                                                Puedes copiar y pegar en tu explorador favorito:</strong>
+                                            <a href="{{url('descarga')}}"
+                                                style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#15c;text-align:center">
+                                                <?php echo e(url("descarga")) ?></a>
                                         </td>
                                     </tr>
                                     <tr style="border-collapse:collapse">
                                         <td align="center"
                                             style="padding:0;Margin:0;padding-top:25px;padding-left:40px;padding-right:40px">
                                             <strong
-                                                style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666">
+                                                style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666">
                                                 Código de descarga</strong>
                                             <p
-                                                style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center">
+                                                style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666;text-align:center">
                                                 &nbsp;{{$licencia_empleado->licencia}}</p>
                                         </td>
                                     </tr>
@@ -439,10 +442,10 @@
                                         <td align="center"
                                             style="padding:0;Margin:0;padding-top:25px;padding-left:40px;padding-right:40px;padding-bottom:40px">
                                             <strong
-                                                style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666">
+                                                style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666">
                                                 Código interno</strong>
                                             <p
-                                                style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center">
+                                                style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666;text-align:center">
                                                 &nbsp;{{$vinculacion->hash}}</p>
                                         </td>
                                     </tr>
@@ -450,7 +453,7 @@
                                         <td align="center"
                                             style="padding:0;Margin:0;padding-top:25px;padding-left:40px;padding-right:40px">
                                             <strong
-                                                style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666">
+                                                style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666">
                                                 Soporte en Perú</strong>
                                         </td>
                                     </tr>
@@ -519,7 +522,8 @@
                                 bgcolor="#163552" align="center">
                                 <span style="font-size: 14px; color: #ffffff; line-height: 120%;"><span>© 2020 RH nube
                                         Corp - USA | Todos los derechos reservados.</span></span>
-                                <span style="font-size: 14px; color: #333333; line-height: 120%;"><span>www.rhnube.com.pe</span></span>
+                                <span
+                                    style="font-size: 14px; color: #333333; line-height: 120%;"><span>www.rhnube.com.pe</span></span>
                             </td>
                         </tr>
                     </table>
