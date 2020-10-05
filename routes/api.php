@@ -66,7 +66,7 @@ Route::post("ticketSoporte","apiVersionDosController@ticketSoporte")->middleware
 
 //API MOVILES
 Route::post("verificacionMovil","apimovilController@apiActivacion")->middleware('apilogger');
-Route::post("EmpleadoMovil","apimovilController@EmpleadoMovil"->middleware('token'))->middleware('apilogger');
+Route::post("EmpleadoMovil","apimovilController@EmpleadoMovil")->middleware('token')->middleware('apilogger');
 Route::post("controladoresAct","apimovilController@controladoresAct")->middleware('token')->middleware('apilogger');
 Route::post("marcacionMovil","apimovilController@marcacionMovil")->middleware('token')->middleware('apilogger');
 Route::post("empleadoHorario","apimovilController@empleadoHorario")->middleware('token')->middleware('apilogger');
