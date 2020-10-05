@@ -46,7 +46,7 @@ class apiVersionDosController extends Controller
                 $licencia = licencia_empleado::where('id', '=', $vinculacion->idLicencia)->where('disponible', '!=', 'i')->get()->first();
                 if ($licencia) {
                     if ($vinculacion->hash == $request->get('codigo')) {
-                        if ($vinculacion->serieDisco !=  null) {
+                        if ($vinculacion->serieDisco ==  null) {
                             $vinculacion->pc_mac = $request->get('pc_mac');
                             $vinculacion->serieDisco = $serieD;
                             $factory = JWTFactory::customClaims([
