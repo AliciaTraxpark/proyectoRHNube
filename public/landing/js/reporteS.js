@@ -469,17 +469,26 @@ $(function () {
     $('#zonaHoraria').append(nombre);
 });
 
-$(function () {
-    $('#fecha').on('change.dp', function (e) {
-        dato = $('#fecha').val();
-        value = moment(dato, ["DD-MM-YYYY"]).format("YYYY-MM-DD");
-        firstDate = moment(value, 'YYYY-MM-DD').day(1).format('YYYY-MM-DD');
-        lastDate = moment(value, 'YYYY-MM-DD').day(7).format('YYYY-MM-DD');
-        $('#fecha').val(firstDate + "   a   " + lastDate);
-        onSelectFechas();
-    });
-});
-
+// $(function () {
+//     $('#fecha').on('change.dp', function (e) {
+//         dato = $('#fecha').val();
+//         value = moment(dato, ["DD-MM-YYYY"]).format("YYYY-MM-DD");
+//         firstDate = moment(value, 'YYYY-MM-DD').day(1).format('YYYY-MM-DD');
+//         lastDate = moment(value, 'YYYY-MM-DD').day(7).format('YYYY-MM-DD');
+//         $('#fecha').val(firstDate + "   a   " + lastDate);
+//         onSelectFechas();
+//         $('#fecha').val(dato);
+//     });
+// });
+function changeFecha() {
+    dato = $('#fecha').val();
+    value = moment(dato, ["DD-MM-YYYY"]).format("YYYY-MM-DD");
+    firstDate = moment(value, 'YYYY-MM-DD').day(1).format('YYYY-MM-DD');
+    lastDate = moment(value, 'YYYY-MM-DD').day(7).format('YYYY-MM-DD');
+    $('#fecha').val(firstDate + "   a   " + lastDate);
+    onSelectFechas();
+    $('#fecha').val(dato);
+}
 $(function () {
     $('#area').select2({
         placeholder: 'Seleccionar áreas'
@@ -507,10 +516,14 @@ function fechaDefecto() {
 $(function () {
     var hoy = moment().format("DD/MM/YYYY");
     $('#fecha').val(hoy);
-    $('#fecha').trigger("change.dp");
+    // $('#fecha').trigger("change.dp");
     $('#fecha').val(hoy);
 });
-
+function buscarReporte() {
+    changeFecha();
+    $('#busquedaP').show();
+    $('#busquedaA').show();
+}
 function mostrarGrafica() {
     $('#graficaReporte').toggle();
 }
@@ -523,14 +536,14 @@ function cambiarTabla() {
         if (event.target.checked == true) {
             dato = $('#fecha').val();
             tableActividad.columns.adjust().draw(true);
-            $('#fecha').trigger("change.dp");
+            changeFecha();
             $('#fecha').val(dato);
             $('#tablaConActividadD').show();
             $('#tablaSinActividadD').hide();
         } else {
             dato = $('#fecha').val();
             table.columns.adjust().draw(true);
-            $('#fecha').trigger("change.dp");
+            changeFecha();
             $('#fecha').val(dato);
             $('#tablaConActividadD').hide();
             $('#tablaSinActividadD').show();

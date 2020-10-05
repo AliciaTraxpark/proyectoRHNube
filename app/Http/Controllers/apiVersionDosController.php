@@ -6,16 +6,87 @@ use App\actividad;
 use App\captura;
 use App\captura_imagen;
 use App\empleado;
+use App\licencia_empleado;
 use App\Mail\SoporteApi;
 use App\Mail\SugerenciaApi;
+use App\organizacion;
 use App\persona;
 use App\promedio_captura;
+use App\vinculacion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Facades\JWTFactory;
 
 class apiVersionDosController extends Controller
 {
+
+    public function verificacion(Request $request)
+    {
+        $nroD = $request->get('nroDocumento');
+        $codigo = $request->get('codigo');
+        $decode = base_convert(intval($codigo), 10, 36);
+        $explode = explode("s", $decode);
+        $empleado = DB::table('empleado as e')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+            ->where('emple_nDoc', '=', $nroD)
+            ->where('e.organi_id', '=', $explode[0])
+            ->where('e.emple_estado', '=', 1)
+            ->get()->first();
+
+        $idOrganizacion = $explode[0];
+
+        if ($empleado) {
+            $vinculacion = vinculacion::where('id', '=', $explode[1])->get()->first();
+            if ($vinculacion) {
+                $licencia = licencia_empleado::where('id', '=', $vinculacion->idLicencia)->where('disponible', '!=', 'i')->get()->first();
+                if ($licencia) {
+                    if ($vinculacion->hash == $request->get('codigo')) {
+                        if ($vinculacion->serieDisco ==  null) {
+                            $vinculacion->pc_mac = $request->get('pc_mac');
+                            $vinculacion->serieDisco = $request->get('serieD');
+                            $vinculacion->save();
+                            $factory = JWTFactory::customClaims([
+                                'sub' => env('API_id'),
+                            ]);
+                            $payload = $factory->make();
+                            $token = JWTAuth::encode($payload);
+                            $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
+                            return response()->json(array(
+                                "corte" => $organizacion->corteCaptura, "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                                'idUser' => $idOrganizacion, 'token' => $token->get()
+                            ), 200);
+                        } else {
+                            if ($vinculacion->serieDisco == $request->get('serieD')) {
+                                $vinculacion->pc_mac = $request->get('pc_mac');
+                                $vinculacion->save();
+                                $factory = JWTFactory::customClaims([
+                                    'sub' => env('API_id'),
+                                ]);
+                                $payload = $factory->make();
+                                $token = JWTAuth::encode($payload);
+                                $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
+                                return response()->json(array(
+                                    "corte" => $organizacion->corteCaptura, "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                                    'idUser' => $idOrganizacion, 'token' => $token->get()
+                                ), 200);
+                            }else{
+                                return response()->json("disco_erroneo", 400);
+                            }
+                        }
+                    }
+                    return response()->json("codigo_erroneo", 400);
+                }
+                return response()->json("licencia_de_baja", 400);
+            }
+            return response()->json("sin_dispositivo", 400);
+        }
+        return response()->json("empleado_no_exite", 400);
+    }
+
     function selectActividad(Request $request)
     {
         $empleado = $request->get('emple_id');
