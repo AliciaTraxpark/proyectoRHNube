@@ -28,6 +28,10 @@ class delegarInvController extends Controller
         $this->middleware(['auth', 'verified']);
     }
     // */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+    }
     public function index(){
         if (Auth::check()) {
             $invitado=DB::table('invitado as i')
