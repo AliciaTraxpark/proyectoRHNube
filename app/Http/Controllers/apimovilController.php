@@ -8,6 +8,7 @@ use App\marcacion_movil;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Facades\JWTFactory;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 class apimovilController extends Controller
 {
     //ACTIVACION DISPOSITIVO
@@ -97,10 +98,11 @@ class apimovilController extends Controller
         $empleado = DB::table('empleado as e')
         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
         ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc', 'e.emple_id')
+
         ->where('e.organi_id', '=', $organi_id)
         ->where('e.emple_estado', '=', 1)
         ->where('e.asistencia_puerta', '=', 1)
-        ->groupBy('e.emple_id')
+
         ->paginate();
         if($empleado!=null){
              return response()->json(array('status'=>200,"empleados"=>$empleado));
@@ -169,6 +171,32 @@ class apimovilController extends Controller
         }
 
 
+
+    }
+    public function empleadoHorario(Request $request){
+
+        $organi_id=$request->organi_id;
+        $fecha = Carbon::now();
+        $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
+        $empleado = DB::table('empleado as e')
+        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+        ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc as dni',
+         'e.emple_id as idempleado','h.horaI','h.horaF','h.horario_tolerancia as toleranciaIni','h.horario_toleranciaF as toleranciaFin','he.horarioEmp_id','hd.start as diaActual','he.fuera_horario as trabajafueraHor')
+        ->join('horario_empleado as he','e.emple_id','=','he.empleado_emple_id')
+        ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
+        ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+        ->where('e.organi_id', '=', $organi_id)
+        ->where('e.emple_estado', '=', 1)
+        ->where('e.asistencia_puerta', '=', 1)
+        ->where('hd.start', '=',  $fechaHoy)
+        ->paginate();
+        if($empleado!=null){
+             return response()->json(array('status'=>200,"empleados"=>$empleado));
+        }
+        else{
+            return response()->json(array('status'=>400,'title' => 'Empleados no encontrados',
+            'detail' => 'No se encontro empleados relacionados con este dispositivo'),400);
+        }
 
     }
 }
