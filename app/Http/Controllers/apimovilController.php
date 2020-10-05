@@ -97,8 +97,8 @@ class apimovilController extends Controller
         $organi_id=$request->organi_id;
         $empleado = DB::table('empleado as e')
         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-        ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc', 'e.emple_id','he.horarioEmp_id')
-        ->join('horario_empleado as he','e.emple_id','=','he.empleado_emple_id')
+        ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc', 'e.emple_id')
+
         ->where('e.organi_id', '=', $organi_id)
         ->where('e.emple_estado', '=', 1)
         ->where('e.asistencia_puerta', '=', 1)
