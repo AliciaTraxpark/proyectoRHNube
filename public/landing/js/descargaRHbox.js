@@ -10,6 +10,7 @@ $("#licencia").keyup(function () {
 });
 
 function enviarLicencia() {
+    console.log($('#licencia').val());
     var licencia = $('#licencia').val();
     $.ajax({
         url: "/verificarLicencia",
