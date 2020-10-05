@@ -448,14 +448,14 @@ class ControlController extends Controller
             ->join('promedio_captura as pc', 'pc.idCaptura', '=', 'cp.idCaptura')
             ->leftJoin('horario_dias as hd', 'hd.id', '=', 'pc.idHorario')
             ->select(
-                DB::raw('IF(hd.id is null, DATE(cp.hora_fin), DATE(hd.start))'),
+                DB::raw('IF(hd.id is null, DATE(cp.hora_ini), DATE(hd.start))'),
                 'a.Activi_id',
                 'a.Activi_Nombre',
                 'a.estado',
                 'cp.idCaptura',
                 'cp.actividad',
                 'cp.hora_fin',
-                DB::raw('DATE(cp.hora_fin) as fecha'),
+                DB::raw('DATE(cp.hora_ini) as fecha'),
                 DB::raw('TIME(cp.hora_ini) as hora'),
                 'pc.promedio as prom',
                 'pc.tiempo_rango as rango',
@@ -463,7 +463,7 @@ class ControlController extends Controller
                 DB::raw('TIME(cp.hora_fin) as hora_fin'),
                 'cp.actividad as tiempoA'
             )
-            ->where(DB::raw('IF(hd.id is null, DATE(cp.hora_fin), DATE(hd.start))'), '=', $fecha)
+            ->where(DB::raw('IF(hd.id is null, DATE(cp.hora_ini), DATE(hd.start))'), '=', $fecha)
             ->where('e.emple_id', '=', $idempleado)
             ->where('e.organi_id', '=', session('sesionidorg'))
             ->orderBy('cp.hora_ini', 'asc')
