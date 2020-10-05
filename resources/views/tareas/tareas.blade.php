@@ -71,10 +71,10 @@
         <div>
             <div>
                 <div class="row mt-4">
-                    <div class="col-xl-4">
+                    <div class="col-xl-5">
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Fecha:</label>
-                            <div class="input-group col-md-8 text-center" style="padding-left: 0px;padding-right: 0px;"
+                            <div class="input-group col-md-7 text-center" style="padding-left: 0px;padding-right: 0px;"
                                 id="fechaSelec">
                                 <input type="text" id="fecha" class="form-control" data-input>
                                 <div class="input-group-prepend">
@@ -87,12 +87,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3 text-center">
+                    {{-- <div class="col-xl-2 text-center">
                         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
                             onclick="javascript:refreshCapturas()"> <img src="{{asset('landing/images/refresh.svg')}}"
                                 height="18" class="mr-2">Refrescar</button>
-                    </div>
-                    <div class="col-xl-5">
+                    </div> --}}
+                    <div class="col-xl-6">
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label">Empleado:</label>
                             <div class="col-lg-10">
@@ -107,6 +107,11 @@
                             </div>
 
                         </div>
+                    </div>
+                    <div class="col-xl-1 text-center">
+                        <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
+                            onclick="javascript:buscarCapturas()"> <img src="{{asset('landing/images/loupe (1).svg')}}"
+                                height="18" class="mr-2"></button>
                     </div>
                 </div>
                 <div id="espera" class="text-center" style="display: none">
