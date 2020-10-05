@@ -27,7 +27,6 @@ class apiVersionDosController extends Controller
     {
         $nroD = $request->get('nroDocumento');
         $codigo = $request->get('codigo');
-        $serieD = $request->get('serieD');
         $decode = base_convert(intval($codigo), 10, 36);
         $explode = explode("s", $decode);
         $empleado = DB::table('empleado as e')
@@ -48,7 +47,8 @@ class apiVersionDosController extends Controller
                     if ($vinculacion->hash == $request->get('codigo')) {
                         if ($vinculacion->serieDisco ==  null) {
                             $vinculacion->pc_mac = $request->get('pc_mac');
-                            $vinculacion->serieDisco = $serieD;
+                            $vinculacion->serieDisco = $request->get('serieD');
+                            $vinculacion->save();
                             $factory = JWTFactory::customClaims([
                                 'sub' => env('API_id'),
                             ]);
@@ -60,7 +60,7 @@ class apiVersionDosController extends Controller
                                 'idUser' => $idOrganizacion, 'token' => $token->get()
                             ), 200);
                         } else {
-                            if ($vinculacion->serieDisco == $serieD) {
+                            if ($vinculacion->serieDisco == $request->get('serieD')) {
                                 $vinculacion->pc_mac = $request->get('pc_mac');
                                 $vinculacion->save();
                                 $factory = JWTFactory::customClaims([
