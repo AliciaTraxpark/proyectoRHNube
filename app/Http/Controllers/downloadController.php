@@ -31,7 +31,19 @@ class downloadController extends Controller
         if ($vinculacion) {
             $vinculacion->fecha_entrega = Carbon::now();
             $vinculacion->save();
-            return response()->download(app_path() . "/file/RH box.exe");
+            return response()->download(app_path() . "/file/x64/RH box.exe");
+        } else {
+            return view('Verificacion.link');
+        }
+    }
+
+    public function downloadx32($code)
+    {
+        $vinculacion = vinculacion::where('descarga', '=', $code)->first();
+        if ($vinculacion) {
+            $vinculacion->fecha_entrega = Carbon::now();
+            $vinculacion->save();
+            return response()->download(app_path() . "/file/x32/RH box.exe");
         } else {
             return view('Verificacion.link');
         }

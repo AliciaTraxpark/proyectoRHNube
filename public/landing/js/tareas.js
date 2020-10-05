@@ -57,11 +57,11 @@ $("#empleado").on("select2:opening", function () {
     });
 });
 
-$("#empleado").on("select2:close", function () {
-    if ($(this).val() != "") {
-        onMostrarPantallas();
-    }
-});
+// $("#empleado").on("select2:close", function () {
+//     if ($(this).val() != "") {
+//         onMostrarPantallas();
+//     }
+// });
 
 function fechaHoy() {
     f = moment().format("YYYY-MM-DD");
@@ -82,11 +82,23 @@ function enteroTime(tiempo) {
 function refreshCapturas() {
     onMostrarPantallas();
 }
+function buscarCapturas() {
+    var empleado = $("#empleado").val();
+    if (empleado != null) {
+        onMostrarPantallas();
+    } else {
+        $.notifyClose();
+        $.notify({
+            message: "Elegir empleado.",
+            icon: "admin/images/warning.svg",
+        });
+    }
+}
 //CAPTURAS
-$(function () {
-    $("#fecha").on("change", onMostrarPantallas);
-    $("#proyecto").on("change", onMostrarPantallas);
-});
+// $(function () {
+//     $("#fecha").on("change", onMostrarPantallas);
+//     $("#proyecto").on("change", onMostrarPantallas);
+// });
 var datos;
 var promedioHoras = 0;
 

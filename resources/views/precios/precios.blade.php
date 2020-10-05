@@ -22,22 +22,26 @@
     }
 
     .pricing-divider {
-        border-radius: 20px;
-        background: #448ef6;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        background: rgb(34, 193, 195);
+        background: linear-gradient(0deg, rgba(34, 193, 195, 1) 0%, rgba(68, 177, 204, 1) 100%);
         padding: 1em 0 4em;
-        position: relative
+        position: relative;
     }
 
     .pricing-dividerD {
         border-radius: 20px;
-        background: #3161a3;
+        background: rgb(43, 89, 187);
+        background: linear-gradient(0deg, rgba(43, 89, 187, 1) 0%, rgba(60, 111, 156, 1) 100%);
         padding: 1em 0 4em;
         position: relative
     }
 
     .pricing-dividerT {
         border-radius: 20px;
-        background: #264e70;
+        background: rgb(51, 75, 125);
+        background: linear-gradient(0deg, rgba(51, 75, 125, 1) 0%, rgba(64, 112, 136, 1) 100%);
         padding: 1em 0 4em;
         position: relative
     }
@@ -56,21 +60,51 @@
     }
 
     .btn-custom {
-        background: #448ef6;
+        background: rgb(34, 193, 195);
+        background: linear-gradient(0deg, rgba(34, 193, 195, 1) 0%, rgba(68, 177, 204, 1) 100%);
         color: #fff;
         border-radius: 20px
+    }
+
+    .btn-custom:hover {
+        background: #fff;
+        color: #44b1cc;
+        border-color: #44b1cc;
+        border-radius: 20px;
+        -webkit-transition: color 0.5s ease-in-out;
+        transition: color 0.5s ease-in-out;
+    }
+
+    .btn-custom::after {
+        -webkit-transition: height 0.5s ease-in-out;
     }
 
     .btn-customD {
-        background: #3161a3;
+        background: rgb(43, 89, 187);
+        background: linear-gradient(0deg, rgba(43, 89, 187, 1) 0%, rgba(60, 111, 156, 1) 100%);
         color: #fff;
         border-radius: 20px
     }
 
+    .btn-customD:hover {
+        color: #3c6f9c;
+        background: #fff;
+        border-radius: 20px;
+        border-color: #3c6f9c;
+    }
+
     .btn-customT {
-        background: #264e70;
+        background: rgb(51, 75, 125);
+        background: linear-gradient(0deg, rgba(51, 75, 125, 1) 0%, rgba(64, 112, 136, 1) 100%);
         color: #fff;
         border-radius: 20px
+    }
+
+    .btn-customT:hover {
+        color: #407088;
+        background: #fff;
+        border-radius: 20px;
+        border-color: #407088;
     }
 
     .img-float {
@@ -97,6 +131,32 @@
         -webkit-transform: translate3d(-15px, 0, 0);
         transform: translate3d(-15px, 0, 0)
     }
+
+    .botonF1 {
+        width: 80px;
+        height: 80px;
+        border-radius: 100%;
+        background: #f4eeff;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+        top: -40px;
+        left: 80px;
+        border: none;
+        outline: none;
+        color: #30475e;
+        font-size: 36px;
+        box-shadow: 0 8px 6px rgba(0, 0, 0, 0.16), 0 8px 6px rgba(0, 0, 0, 0.23);
+        transition: .3s;
+    }
+
+    .svgTriangulo {
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 40px
+    }
 </style>
 <div id="preloader">
     <div id="status">
@@ -107,112 +167,116 @@
         </div>
     </div>
 </div>
-<div class="row justify-content-center pt-5 pr-5 pl-5 pb-5">
+<div class="row justify-content-center pt-5 pl-5 pb-5">
     <div class="col-xl-12">
-        <div class="row">
+        <div class="row pr-5">
             <div class="col-md-3 pt-2">
-                <strong style="color: #163552">PRICING RH NUBE</strong>
+                <strong style="color: #000839">PLANES Y PRECIOS - PERÚ</strong>
             </div>
             <div class="col-md-9" style="border-bottom: 3px solid #12cad6"></div>
         </div>
-        <div class="row p-4">
-            <div class="container-fluid">
-                <div class="row m-auto text-center w-40">
+        <div class="row justify-content-end pb-5 pt-5">
+            <div class="container-fluid" style="padding-left: 22%">
+                <div class="row m-auto text-center" style="width: 56vw;">
                     <div class="col-4 princing-item">
-                        <div class="pricing-divider ">
-                            <h5 class="text-light">PYME</h5>
-                            <h6 class="my-0 display-2 text-light font-weight-normal mb-2" style="font-size: 45px"> $3
-                            </h6> <span class="h6 mb-2" style="color: #ffffff">AL MES-HASTA 200 EMP</span> <svg
-                                class='pricing-divider-img' enable-background='new 0 0 300 100' height='100px'
-                                id='Layer_1' preserveAspectRatio='none' version='1.1' viewBox='0 0 300 100'
-                                width='300px' x='0px' xml:space='preserve' y='0px'>
-                                <path class='deco-layer deco-layer--4'
-                                    d='M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428	c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z'
-                                    fill='#FFFFFF'></path>
+                        <div class="pricing-divider">
+                            <h6 class="font-weight-normal botonF1 pt-3 pb-1"
+                                style="font-size: 43px;color:#407088;font-family: 'Calibri'">$3</h6>
+                            <h5 class="text-light pt-5" style="font-family: 'Poppins'">PYME</h5>
+                            <span class="h6 mb-1" style="color: #ffffff;font-family: 'Poppins'">AL MES-HASTA 200
+                                EMP</span>
+                            <svg class="svgTriangulo" width="100%" height="100" viewBox="0 0 100 102"
+                                preserveAspectRatio="none">
+                                <path d="M0 0 L50 90 L100 0 V100 H0" fill="#ffffff" />
                             </svg>
                         </div>
-                        <div class="card-body bg-white mt-0 shadow">
-                            <ul class="list-unstyled mb-3 position-relative ulC">
-                                <li class="ilC text-left" style="color: #448ef6"><img
-                                        src="{{asset('landing/images/check.svg')}}" height="18" class="mr-1">$2.5 un
+                        <div class="card-body bg-white mt-0 shadow"
+                            style="border-bottom-left-radius: 25px;border-bottom-right-radius: 25px">
+                            <ul class="list-unstyled mb-3 position-relative ulC" style="font-family: 'Roboto';">
+                                <li class="ilC text-left" style="color: #44b1cc"><img
+                                        src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">$2.5 un
                                     pago semestral</li>
-                                <li class="ilC text-left" style="color: #448ef6"><img
-                                        src="{{asset('landing/images/check.svg')}}" height="18" class="mr-1">$2 un pago
+                                <li class="ilC text-left" style="color: #44b1cc"><img
+                                        src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">$2 un
+                                    pago
                                     anual</li>
-                                <li class="ilC text-left" style="color: #448ef6"><img
-                                        src="{{asset('landing/images/check.svg')}}" height="18"
-                                        class="mr-1">Administrador de personal Ilimitado</li>
-                                <li class="ilC text-left" style="color: #448ef6;"><img
-                                        src="{{asset('landing/images/check.svg')}}" height="18"
-                                        class="mr-1">Multiempresa
+                                <li class="ilC text-left" style="color: #44b1cc"><img
+                                        src="{{asset('landing/images/tick (4).svg')}}" height="15"
+                                        class="mr-2">Administrador de personal Ilimitado</li>
+                                <li class="ilC text-left" style="color: #44b1cc;"><img
+                                        src="{{asset('landing/images/tick (4).svg')}}" height="15"
+                                        class="mr-2">Multiempresa
                                 </li>
-                                <li class="ilC" style="color: #448ef6;font-size: 9px">(5$Por cada empresa nueva
+                                <li class="ilC" style="color: #44b1cc;font-size: 9px">(5$Por cada empresa nueva
                                     administrada por la misma cuenta)
                                 </li>
                             </ul> <button type="button" class="btn btn-lg btn-block btn-custom"
-                                style="font-size: 16px">SUSCRIBIRSE</button>
+                                style="font-size: 16px;font-weight: bold">SUSCRIBIRSE</button>
                         </div>
                     </div>
                     <div class="col-4 princing-item">
                         <div class="pricing-dividerD">
-                            <h5 class="text-light">PROFESIONAL</h5>
-                            <h6 class="my-0 display-2 text-light font-weight-normal mb-2" style="font-size: 45px">$2.5
-                            </h6> <span class="h6" style="color: #ffffff">AL MES - DE 200 A 5000 EMP</span> <svg
-                                class='pricing-divider-img' enable-background='new 0 0 300 100' height='100px'
-                                id='Layer_1' preserveAspectRatio='none' version='1.1' viewBox='0 0 300 100'
-                                width='300px' x='0px' xml:space='preserve' y='0px'>
-                                <path class='deco-layer deco-layer--4'
-                                    d='M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428	c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z'
-                                    fill='#FFFFFF'></path>
+                            <h6 class="font-weight-normal botonF1 pt-3 pb-1"
+                                style="font-size: 43px;color:#407088;font-family: 'Calibri'">$2.5
+                            </h6>
+                            <h5 class="text-light pt-5" style="font-family: 'Poppins'">PROFESIONAL</h5>
+                            <span class="h6" style="color: #ffffff;font-family: 'Poppins'">AL MES - DE 200 A 5000
+                                EMP</span>
+                            <svg class="svgTriangulo" width="100%" height="100" viewBox="0 0 100 102"
+                                preserveAspectRatio="none">
+                                <path d="M0 0 L50 90 L100 0 V100 H0" fill="#ffffff" />
                             </svg>
                         </div>
-                        <div class="card-body bg-white mt-0 shadow">
+                        <div class="card-body bg-white mt-0 shadow"
+                            style="border-bottom-left-radius: 25px;border-bottom-right-radius: 25px">
                             <ul class="list-unstyled mb-3 pb-4 position-relative ulC">
                                 <li class="ilC text-left" style="color: #3161a3"><img
-                                        src="{{asset('landing/images/check.svg')}}" height="18" class="mr-1">$2 un pago
+                                        src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">$2 un
+                                    pago
                                     semestral</b></li>
                                 <li class="ilC text-left" style="color: #3161a3"><img
-                                        src="{{asset('landing/images/check.svg')}}" height="18" class="mr-1">$1.8 un
+                                        src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">$1.8 un
                                     pago anual</li>
                                 <li class="ilC text-left" style="color: #3161a3"><img
-                                        src="{{asset('landing/images/check.svg')}}" height="18"
-                                        class="mr-1">Administrador de personal Ilimitado</li>
+                                        src="{{asset('landing/images/tick (4).svg')}}" height="15"
+                                        class="mr-2">Administrador de personal Ilimitado</li>
                                 <li class="ilC text-left" style="color: #3161a3"><img
-                                        src="{{asset('landing/images/check.svg')}}" height="18"
-                                        class="mr-1">Multiempresa Ilimitado</li>
+                                        src="{{asset('landing/images/tick (4).svg')}}" height="15"
+                                        class="mr-2">Multiempresa Ilimitado</li>
                             </ul> <button type="button" class="btn btn-lg btn-block btn-customD"
-                                style="font-size: 16px">SUSCRIBIRSE</button>
+                                style="font-size: 16px;font-weight: bold">SUSCRIBIRSE</button>
                         </div>
                     </div>
                     <div class="col-4 princing-item">
                         <div class="pricing-dividerT">
-                            <h5 class="text-light">ENTERPRISE</h5>
-                            <h6 class="my-0 display-2 text-light font-weight-normal mb-2" style="font-size: 45px">$2
-                            </h6><span class="h6" style="color: #ffffff">AL MES-MAYOR A 5000 EMP</span> <svg
-                                class='pricing-divider-img' enable-background='new 0 0 300 100' height='100px'
-                                preserveAspectRatio='none' version='1.1' viewBox='0 0 300 100' width='300px' x='0px'
-                                xml:space='preserve' y='0px'>
-                                <path class='deco-layer deco-layer--4'
-                                    d='M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428	c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z'
-                                    fill='#FFFFFF'></path>
+                            <h6 class="font-weight-normal botonF1 pt-3 pb-1"
+                                style="font-size: 43px;color:#407088;font-family: 'Calibri'">$2
+                            </h6>
+                            <h5 class="text-light pt-5" style="font-family: 'Poppins'">ENTERPRISE</h5>
+                            <span class="h6" style="color: #ffffff;font-family: 'Poppins'">AL MES-MAYOR A 5000
+                                EMP</span>
+                            <svg class="svgTriangulo" width="100%" height="100" viewBox="0 0 100 102"
+                                preserveAspectRatio="none">
+                                <path d="M0 0 L50 90 L100 0 V100 H0" fill="#ffffff" />
                             </svg>
                         </div>
-                        <div class="card-body bg-white mt-0 shadow">
+                        <div class="card-body bg-white mt-0 shadow"
+                            style="border-bottom-left-radius: 25px;border-bottom-right-radius: 25px">
                             <ul class="list-unstyled mb-3 pb-4 position-relative ulC">
                                 <li class="ilC text-left" style="color: #264e70"><img
-                                        src="{{asset('landing/images/check.svg')}}" height="18" class="mr-1">$1.8 un
+                                        src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">$1.8 un
                                     pago semestral</li>
                                 <li class="ilC text-left" style="color: #264e70"><img
-                                        src="{{asset('landing/images/check.svg')}}" height="18" class="mr-1">$1.5 un
+                                        src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">$1.5 un
                                     pago anual</li>
                                 <li class="ilC text-left" style="color: #264e70"><img
-                                        src="{{asset('landing/images/check.svg')}}" height="18"
-                                        class="mr-1">Administrador de personal Ilimitado</li>
+                                        src="{{asset('landing/images/tick (4).svg')}}" height="15"
+                                        class="mr-2">Administrador de personal Ilimitado</li>
                                 <li class="ilC text-left" style="color: #264e70"><img
-                                        src="{{asset('landing/images/check.svg')}}" height="18"
-                                        class="mr-1">Multiempresa Ilimitado</li>
+                                        src="{{asset('landing/images/tick (4).svg')}}" height="15"
+                                        class="mr-2">Multiempresa Ilimitado</li>
                             </ul> <button type="button" class="btn btn-lg btn-block btn-customT"
-                                style="font-size: 16px">SUSCRIBIRSE</button>
+                                style="font-size: 16px;font-weight: bold">SUSCRIBIRSE</button>
                         </div>
                     </div>
                 </div>
@@ -342,84 +406,79 @@
                 </div>
             </div>
         </div> --}}
-        <div class="row">
+        <div class="row pr-5">
             <div class="col-md-3">
-                <strong style="color: #163552">Modo: Control Remoto / Home and office</strong>
+                <strong style="color: #000839">Modo: Control Remoto / Home and office</strong>
             </div>
             <div class="col-md-9 mb-3" style="border-bottom: 3px solid #12cad6"></div>
         </div>
-        <div class="row pt-5">
+        <div class="row pt-3 pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Captura de actividad diaria</p>
+                <p style="color: #000839;">Captura de actividad diaria</p>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #dae1e7;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #3c6f9c60;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #b9ceeb;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
-                </div>
-            </div>
-        </div>
-        <div class="row pt-3">
-            <div class="col-md-3">
-                <p style="color: #163552;">Control normal (cada 10 min)</p>
-            </div>
-            <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #40708860;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Calidad de captura</p>
+                <p style="color: #000839;">Control normal (cada 10 min)</p>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+        </div>
+        <div class="row pr-5">
+            <div class="col-md-3">
+                <p style="color: #000839;">Calidad de captura</p>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">Estándar</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #dae1e7;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #3c6f9c60;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">Estándar</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #b9ceeb;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color:#40708860;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">Estándar</p>
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Eliminación de capturas (*e)</p>
+                <p style="color: #000839;">Eliminación de capturas (*e)</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <img src="{{asset('landing/images/close (4).svg')}}" height="15" class="mt-2">
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <p class="mt-1" style="color:#797a7e">Estándar</p>
+                    <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mt-2">
                 </div>
             </div>
             <div class="col-md-3">
@@ -427,34 +486,39 @@
                     <p class="mt-1" style="color:#797a7e">Estándar</p>
                 </div>
             </div>
-        </div>
-        <div class="row pt-3">
             <div class="col-md-3">
-                <p style="color: #163552;">Permitir actividad fuera de horario</p>
-            </div>
-            <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #dae1e7;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #b9ceeb;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <p class="mt-1" style="color:#797a7e">Estándar</p>
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Control intensivo (cada 5min)</p>
+                <p style="color: #000839;">Permitir actividad fuera de horario</p>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #3c6f9c60;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #40708860;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+        </div>
+        <div class="row pr-5">
+            <div class="col-md-3">
+                <p style="color: #000839;">Control intensivo (cada 5min)</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <img src="{{asset('landing/images/close (4).svg')}}" height="15" class="mt-2">
+                    <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mt-2">
                 </div>
             </div>
             <div class="col-md-3">
@@ -468,82 +532,80 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Control superintensivo (cada1min)</p>
+                <p style="color: #000839;">Control superintensivo (cada1min)</p>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
-                    <img src="{{asset('landing/images/close (4).svg')}}" height="15" class="mt-2">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
+                    <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mt-2">
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #dae1e7;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #3c6f9c60;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">1 emp.</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #b9ceeb;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #40708860;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">1 emp.</p>
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Control de tareas diarias</p>
+                <p style="color: #000839;">Control de tareas diarias</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Capturas en video basic (*v)Aleatorio</p>
+                <p style="color: #000839;">Capturas en video basic (*v)Aleatorio</p>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
-                    <img src="{{asset('landing/images/close (4).svg')}}" height="15" class="mt-2">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
+                    <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mt-2">
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #dae1e7;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color:#3c6f9c60;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">2 emp.</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #b9ceeb;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #40708860;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">4 emp.</p>
                 </div>
             </div>
         </div>
-        <div class="row pt-5">
+        <div class="row pt-3 pr-5">
             <div class="col-md-3 pt-4">
-                <p style="color: #163552;">Control de tareas diarias</p>
+                <strong style="color: #000839;">Modo:Control en móvil en ruta
+                    (Disponible en Android)</strong>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <div class="pricing-divider ">
-                        <h6 class="text-light text-center" style="font-weight: bold">DISPONIBLE
+                    <div class="pricing-divider">
+                        <h6 class="text-light text-center m-0" style="font-weight: bold">DISPONIBLE
                             A PARTIR DE DICIEMBRE
                         </h6>
-                        <svg class='pricing-divider-img' enable-background='new 0 0 300 100' height='40px' id='Layer_1'
-                            preserveAspectRatio='none' version='1.1' viewBox='0 0 300 100' width='60px' x='0px'
-                            xml:space='preserve' y='0px'>
-                            <path class='deco-layer deco-layer--4'
-                                d='M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428	c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z'
-                                fill='#FFFFFF'></path>
+                        <svg class="svgTriangulo" width="100%" height="100" viewBox="0 0 100 102"
+                            preserveAspectRatio="none">
+                            <path d="M0 0 L50 90 L100 0 V100 H0" fill="#ffffff" />
                         </svg>
                     </div>
                 </div>
@@ -551,15 +613,12 @@
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
                     <div class="pricing-dividerD">
-                        <h6 class="text-light text-center" style="font-weight: bold">DISPONIBLE
+                        <h6 class="text-light text-center m-0" style="font-weight: bold">DISPONIBLE
                             A PARTIR DE DICIEMBRE
                         </h6>
-                        <svg class='pricing-divider-img' enable-background='new 0 0 300 100' height='40px' id='Layer_1'
-                            preserveAspectRatio='none' version='1.1' viewBox='0 0 300 100' width='60px' x='0px'
-                            xml:space='preserve' y='0px'>
-                            <path class='deco-layer deco-layer--4'
-                                d='M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428	c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z'
-                                fill='#FFFFFF'></path>
+                        <svg class="svgTriangulo" width="100%" height="100" viewBox="0 0 100 102"
+                            preserveAspectRatio="none">
+                            <path d="M0 0 L50 90 L100 0 V100 H0" fill="#ffffff" />
                         </svg>
                     </div>
                 </div>
@@ -567,49 +626,46 @@
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
                     <div class="pricing-dividerT">
-                        <h6 class="text-light text-center" style="font-weight: bold">DISPONIBLE
+                        <h6 class="text-light text-center m-0" style="font-weight: bold">DISPONIBLE
                             A PARTIR DE DICIEMBRE
                         </h6>
-                        <svg class='pricing-divider-img' enable-background='new 0 0 300 100' height='40px' id='Layer_1'
-                            preserveAspectRatio='none' version='1.1' viewBox='0 0 300 100' width='60px' x='0px'
-                            xml:space='preserve' y='0px'>
-                            <path class='deco-layer deco-layer--4'
-                                d='M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428	c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z'
-                                fill='#FFFFFF'></path>
+                        <svg class="svgTriangulo" width="100%" height="100" viewBox="0 0 100 102"
+                            preserveAspectRatio="none">
+                            <path d="M0 0 L50 90 L100 0 V100 H0" fill="#ffffff" />
                         </svg>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row pt-5">
+        <div class="row pt-5 pr-5">
             <div class="col-md-3">
-                <strong style="color: #163552">Modo: Control de asistencia en Puerta</strong>
+                <strong style="color: #000839">Modo: Control de asistencia en Puerta</strong>
             </div>
             <div class="col-md-9 mb-3" style="border-bottom: 3px solid #12cad6"></div>
         </div>
-        <div class="row pt-5">
+        <div class="row pt-3 pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">En dispositivos Android</p>
+                <p style="color: #000839;">En dispositivos Android</p>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #dae1e7;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #3c6f9c60;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #b9ceeb;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color:#40708860;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Biométricos ZKTECO</p>
+                <p style="color: #000839;">Biométricos ZKTECO</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
@@ -627,29 +683,29 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Biométricos Suprema V1 y V2</p>
+                <p style="color: #000839;">Biométricos Suprema V1 y V2</p>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">Próximamente</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #dae1e7;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #3c6f9c60;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">Próximamente</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #b9ceeb;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #40708860;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">Próximamente</p>
                 </div>
             </div>
         </div>
-        <div class="row pt-5">
+        <div class="row pt-2 pr-5">
             <div class="col-md-3 mt-2">
-                <strong style="color: #163552">Opciones de pago</strong>
+                <strong style="color: #000839">Opciones de pago</strong>
             </div>
             <div class="col-md-9 pb-2 pt-2 text-center" style="background-color:#12cad6">
                 <strong class="mt-2" style="color:#ffffff">CUANDO REQUIERE MAYOR AUDITORÍA A UN EMPLEADO ESPECÍFICO
@@ -657,29 +713,29 @@
                 </strong>
             </div>
         </div>
-        <div class="row pt-5">
+        <div class="row pt-3 pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Control intensivo</p>
+                <p style="color: #000839;">Control intensivo</p>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color:#44b1cc60;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">$1.5</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #dae1e7;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #3c6f9c60;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">$1.5</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #b9ceeb;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #40708860;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">$1.5</p>
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Control superintensivo</p>
+                <p style="color: #000839;">Control superintensivo</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
@@ -697,29 +753,29 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Capturas en video basic (*) Aleatorio</p>
+                <p style="color: #000839;">Capturas en video basic (*) Aleatorio</p>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">$20</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #dae1e7;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color:#3c6f9c60;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">$20</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #b9ceeb;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #40708860;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">$20</p>
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Calidad de captura HD</p>
+                <p style="color: #000839;">Calidad de captura HD</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
@@ -737,69 +793,69 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
-                <strong style="color: #163552">Facturación</strong>
+                <strong style="color: #000839">Facturación</strong>
             </div>
             <div class="col-md-9 mb-2" style="border-bottom: 3px solid #12cad6"></div>
         </div>
-        <div class="row pt-5">
+        <div class="row pt-3 pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Factura de origen, USA</p>
+                <p style="color: #000839;">Factura de origen, USA</p>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color:#44b1cc60;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #dae1e7;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #3c6f9c60;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #b9ceeb;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
-                </div>
-            </div>
-        </div>
-        <div class="row pt-3">
-            <div class="col-md-3">
-                <p style="color: #163552;">Facturación local (*f)</p>
-            </div>
-            <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <img src="{{asset('landing/images/close (4).svg')}}" height="15" class="mt-2">
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #40708860;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
+        <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #163552;">Soporte local</p>
+                <p style="color: #000839;">Facturación local (*f)</p>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #def4f0;height: 30px;">
-                    <img src="{{asset('landing/images/close (4).svg')}}" height="15" class="mt-2">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mt-2">
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #dae1e7;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #b9ceeb;height: 30px;">
-                    <img src="{{asset('landing/images/tick (3).svg')}}" height="22" class="mt-1">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+        </div>
+        <div class="row pr-5">
+            <div class="col-md-3">
+                <p style="color: #000839;">Soporte local</p>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
+                    <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mt-2">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color:#3c6f9c60;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #40708860;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
         </div>
