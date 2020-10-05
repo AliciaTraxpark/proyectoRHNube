@@ -99,7 +99,7 @@
                                     <a id="enlace32">
                                         <button type="button" class="btn btn-sm btn-opacity-primary"
                                             style="font-size: 13.5px;border-radius: 10px;font-weight: 500">
-                                            <img src="{{asset('landing/images/iso-file.svg')}}" height="26"
+                                            <img src="{{asset('landing/images/folder.svg')}}" height="26"
                                                 class="mr-2">
                                             RHbox X32
                                         </button>
@@ -109,7 +109,7 @@
                                     <a id="enlace64">
                                         <button type="button" class="btn btn-sm btn-opacity-primary"
                                             style="font-size: 13.5px;border-radius: 10px;font-weight: 500">
-                                            <img src="{{asset('landing/images/iso-file.svg')}}" height="26"
+                                            <img src="{{asset('landing/images/folder.svg')}}" height="26"
                                                 class="mr-2">
                                             RHbox X64
                                         </button>

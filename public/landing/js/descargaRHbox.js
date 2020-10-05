@@ -1,5 +1,6 @@
 $("#enviarLicencia").prop("disabled", true);
-$("#enlace").css('pointer-events', 'none');
+$("#enlace32").css('pointer-events', 'none');
+$("#enlace64").css('pointer-events', 'none');
 $("#licencia").keyup(function () {
     if ($('#licencia').val() != "") {
         $("#enviarLicencia").prop("disabled", false);
@@ -25,10 +26,12 @@ function enviarLicencia() {
         },
         success: function (data) {
             var code = data.descarga;
-            document.getElementById('enlace').setAttribute('href', location.origin + '/download/' + code);
+            document.getElementById('enlace64').setAttribute('href', location.origin + '/download/' + code);
+            document.getElementById('enlace32').setAttribute('href', location.origin + '/downloadx32/' + code);
             // document.getElementById('enlace1').setAttribute('href', location.origin + '/download/' + code);
             $('#alertSuccess').show();
-            $("#enlace").css('pointer-events', 'auto');
+            $("#enlace64").css('pointer-events', 'auto');
+            $("#enlace32").css('pointer-events', 'auto');
             $('#licencia').prop("disabled", true);
         },
         error: function (error) {
