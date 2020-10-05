@@ -63,7 +63,7 @@ class downloadController extends Controller
                 $licencia_empleado->disponible = 'a';
                 $licencia_empleado->save();
 
-                $vinculacion = vinculacion::where('idLicencia', '=', $licencia_empleado->idEmpleado)->get()->first();
+                $vinculacion = vinculacion::where('idLicencia', '=', $licencia_empleado->id)->get()->first();
                 return response()->json($vinculacion, 200);
             }
             if ($licencia_empleado->disponible  == 'a') {

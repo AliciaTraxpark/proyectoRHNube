@@ -10,6 +10,7 @@ $("#licencia").keyup(function () {
 });
 
 function enviarLicencia() {
+    console.log($('#licencia').val());
     var licencia = $('#licencia').val();
     $.ajax({
         url: "/verificarLicencia",
@@ -25,6 +26,7 @@ function enviarLicencia() {
             $('#alertError').hide();
         },
         success: function (data) {
+            console.log(data);
             var code = data.descarga;
             document.getElementById('enlace64').setAttribute('href', location.origin + '/download/' + code);
             document.getElementById('enlace32').setAttribute('href', location.origin + '/downloadx32/' + code);
