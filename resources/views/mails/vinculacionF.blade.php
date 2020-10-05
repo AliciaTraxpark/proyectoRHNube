@@ -371,9 +371,9 @@
                                                             </tr> --}}
                                                 <tr style="border-collapse:collapse">
                                                     <td align="center"
-                                                        style="padding:0;Margin:0;padding-left:40px;padding-right:40px">
+                                                        style="padding:0;Margin:0;padding-left:40px;padding-right:40px;padding-bottom:10px">
                                                         <p
-                                                            style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666;text-align:center;font-weight: bold">
+                                                            style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:20px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#163552;text-align:center;font-weight: bold">
                                                             Te damos la bienvenida a RH NUBE
                                                         </p>
                                                     </td>
@@ -383,7 +383,7 @@
                                                         style="padding:0;Margin:0;padding-right:35px;padding-left:40px">
                                                         <p
                                                             style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666;text-align:center">
-                                                            Hola,&nbsp;{{$persona->perso_nombre}} para empezar usar
+                                                            Hola&nbsp;{{$persona->perso_nombre}} para empezar usar
                                                             nuestra plataforma, descargue
                                                             la aplicación <strong>RHBOX</strong> que se
                                                             encuentra disponible para <strong>Window 32/64bits</strong>
@@ -405,56 +405,59 @@
                                                         style="Margin:0;padding-left:10px;padding-right:10px;padding-top:40px;padding-bottom:40px">
                                                         <span class="es-button-border"
                                                             style="border-style:solid;border-color:#163552;background:#FFFFFF;border-width:2px;display:inline-block;border-radius:10px;width:auto"><a
-                                                                href="{{url('descarga')}}"
-                                                class="es-button" target="_blank"
-                                                style="text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-family:arial,
+                                                                href="{{url('descarga')}}" class="es-button"
+                                                                target="_blank"
+                                                                style="text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-family:arial,
                                                 'helvetica neue', helvetica,
                                                 sans-serif;font-size:14px;color:#163552;border-style:solid;border-color:#FFFFFF;border-width:15px
                                                 20px 15px
                                                 20px;display:inline-block;background:#FFFFFF;border-radius:10px;font-weight:bold;font-style:normal;line-height:17px;width:auto;text-align:center">
-                                                DESCARGAR</a></span>
-                                        </td>
-                                    </tr>
-                                    <tr style="border-collapse:collapse">
-                                        <td align="center"
-                                            style="padding:0;Margin:0;padding-top:25px;padding-left:40px;padding-right:40px">
-                                            <strong
-                                                style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666">
-                                                Puedes copiar y pegar en tu explorador favorito:</strong>
-                                            <a href="{{url('descarga')}}"
-                                                style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#15c;text-align:center;font-weight: bold">
-                                                <?php echo e(url("descarga")) ?></a>
-                                        </td>
-                                    </tr>
-                                    <tr style="border-collapse:collapse">
-                                        <td align="center"
-                                            style="padding:0;Margin:0;padding-top:25px;padding-left:40px;padding-right:40px">
-                                            <strong
-                                                style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666">
-                                                Código de descarga</strong>
-                                            <p
-                                                style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666;text-align:center">
-                                                &nbsp;{{$licencia_empleado->licencia}}</p>
-                                        </td>
-                                    </tr>
+                                                                DESCARGAR</a></span>
+                                                    </td>
+                                                </tr>
+                                                <tr style="border-collapse:collapse">
+                                                    <td align="center"
+                                                        style="padding:0;Margin:0;padding-top:25px;padding-left:40px;padding-right:40px">
+                                                        <strong
+                                                            style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666">
+                                                            Puedes copiar y pegar en tu explorador favorito:</strong>
+                                                        <a href="{{url('descarga')}}"
+                                                            style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#15c;text-align:center;font-weight: bold">
+                                                            <?php echo e(url("descarga")) ?></a>
+                                                    </td>
+                                                </tr>
+                                                <tr style="border-collapse:collapse">
+                                                    <td align="center"
+                                                        style="padding:0;Margin:0;padding-top:25px;padding-left:40px;padding-right:40px">
+                                                        <strong
+                                                            style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666">
+                                                            Código de descarga</strong>
+                                                        <p
+                                                            style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666;text-align:center">
+                                                            &nbsp;{{$licencia_empleado->licencia}}</p>
+                                                    </td>
+                                                </tr>
 
-                                    <tr style="border-collapse:collapse">
-                                        <td align="center"
-                                            style="padding:0;Margin:0;padding-top:25px;padding-left:40px;padding-right:40px;padding-bottom:40px">
-                                            <strong
-                                                style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666">
-                                                Código interno</strong>
-                                            <p
-                                                style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666;text-align:center">
-                                                &nbsp;{{$vinculacion->hash}}</p>
-                                        </td>
-                                    </tr>
-                                    <tr style="border-collapse:collapse">
-                                        <td align="center"
-                                            style="padding:0;Margin:0;padding-top:25px;padding-left:40px;padding-right:40px">
-                                            <strong
-                                                style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666">
-                                                Soporte en Perú</strong>
+                                                <tr style="border-collapse:collapse">
+                                                    <td align="center"
+                                                        style="padding:0;Margin:0;padding-top:25px;padding-left:40px;padding-right:40px;padding-bottom:40px">
+                                                        <strong
+                                                            style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666">
+                                                            Código interno</strong>
+                                                        <p
+                                                            style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666;text-align:center">
+                                                            &nbsp;{{$vinculacion->hash}}</p>
+                                                    </td>
+                                                </tr>
+                                                <tr style="border-collapse:collapse">
+                                                    <td align="center"
+                                                        style="padding:0;Margin:0;padding-top:25px;padding-left:40px;padding-right:40px">
+                                                        <strong
+                                                            style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666">
+                                                            Soporte en Perú</strong>
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </td>
                                     </tr>
                                 </table>
@@ -463,9 +466,6 @@
                     </table>
                 </td>
             </tr>
-        </table>
-        </td>
-        </tr>
         </table>
         <table class="es-footer" cellspacing="0" cellpadding="0" align="center"
             style="border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top">
