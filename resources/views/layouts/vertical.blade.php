@@ -68,6 +68,27 @@
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
+            <div class="modal fade" id="modal-errorAler" role="dialog"
+        aria-hidden="true" data-keyboard="false">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header text-center" style="padding-top: 8px;
+                            padding-bottom: 20px;background-color:
+                            #163552;color:#ffffff">
+                    <h6 style="font-size: 14px" class="modal-title"></h6>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="{{asset('landing/images/LogoAzul.png')}}" height="90">
+
+                    <p class="w-75 mx-auto text-muted" style="color: black!important;font-weight: 600">Disponible en Perú a partir del 15 de octubre del 2020.</p>
+                    <div class="mt-4">
+                        <button class="btn  mr-1" data-dismiss="modal" style="background-color:
+                        #163552;color:#ffffff"> OK</button>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
             <div class="content">
                 <!-- Start Content-->
                 <div class="container-fluid">

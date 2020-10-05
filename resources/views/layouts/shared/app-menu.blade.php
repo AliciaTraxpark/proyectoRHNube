@@ -115,16 +115,16 @@ $usuario_organizacion=DB::table('usuario_organizacion')
 
     <li>
 
-        <a href="javascript: void(0);">
+        <a href="/">
             <i data-feather="check-circle"></i>
-            <span>Modo: Control Asist.</span>
+            <span onclick=" $('#modal-errorAler').modal('show');">Modo: Asistencia en puerta</span>
             <span class="menu-arrow"></span>
         </a>
 
         <ul class="nav-second-level" aria-expanded="false">
             <li>
-                <a href="/dispositivos">Dispositivos</a>
-                <a href="/controladores">Controladores</a>
+                <a {{-- href="/dispositivos" --}}>Dispositivos</a>
+                <a {{-- href="/controladores" --}}>Controladores</a>
 
             </li>
         </ul>
@@ -153,6 +153,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
     </ul>
     </li> --}}
 </ul>
+
 @endif
 @if ($usuario_organizacion[0]->rol_id==3)
 
@@ -203,3 +204,5 @@ $usuario_organizacion=DB::table('usuario_organizacion')
     </li>
 </ul>
 @endif
+
+

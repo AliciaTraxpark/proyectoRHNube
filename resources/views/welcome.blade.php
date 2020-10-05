@@ -105,8 +105,8 @@
                     <img src="{{asset('landing/images/LogoAzul.png')}}" height="90">
                     <h5 style="color: #c51516!important;margin-top: 0px!important;" class="text-danger mt-4">Próximo
                         lanzamiento en Perú</h5>
-                    <p class="w-75 mx-auto text-muted" style="color: black!important">Domingo 4 de Octubre
-                        2020</p>
+                    <p class="w-75 mx-auto text-muted" style="color: black!important">07 de Octubre
+                        2020.</p>
                     <div class="mt-4">
                         <button class="btn btn-opacity-primary mr-1" data-dismiss="modal"><i
                                 class="uil uil-arrow-right mr-1"></i> OK</button>
@@ -367,7 +367,7 @@
             <img src="{{asset('landing/images/NUBE_SOLA.png')}}" width="10%" height="10%">
         </div>
         <div class="col-md-12 text-center" style="margin-top: 10px;margin-bottom: 20px">
-            <img src="{{asset('landing/images/peru.svg')}}"  height="17"> <span  style="color:#faf3f3;font-size: 12px!important"> (01) 238-8350 | &nbsp;&nbsp;<span
+            <img src="{{asset('landing/images/peru.svg')}}"  height="17"> <span  style="color:#faf3f3;font-size: 12px!important"> 017482415| &nbsp;&nbsp;<span
                     class="mdi mdi-whatsapp" style="color: #ffffff;">+51 914 480 786 |&nbsp;&nbsp;</span> <span
                     class="mdi mdi-email-outline" style="color: #ffffff;"></span>info@rhnube.com.pe</span>
         </div>
