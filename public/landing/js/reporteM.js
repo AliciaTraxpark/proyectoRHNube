@@ -455,16 +455,25 @@ $(function () {
     nombre = `${split[0]} - ${split[1]}`;
     $('#zonaHoraria').append(nombre);
 });
-$(function () {
-    $('#fechaMensual').on('change.dp', function (e) {
-        dato = $('#fechaMensual').val();
-        value = moment(dato, ["MMMM-YYYY", "MMM-YYYY", "MM-YYYY"]).format("MM-YYYY");
-        firstDate = moment(value, 'MM-YYYY').startOf('month').format('YYYY-MM-DD');
-        lastDate = moment(value, 'MM-YYYY').endOf('month').format('YYYY-MM-DD');
-        $('#fechaMensual').val(firstDate + "   a   " + lastDate);
-        onSelectFechasMensual();
-    });
-});
+// $(function () {
+//     $('#fechaMensual').on('change.dp', function (e) {
+//         dato = $('#fechaMensual').val();
+//         value = moment(dato, ["MMMM-YYYY", "MMM-YYYY", "MM-YYYY"]).format("MM-YYYY");
+//         firstDate = moment(value, 'MM-YYYY').startOf('month').format('YYYY-MM-DD');
+//         lastDate = moment(value, 'MM-YYYY').endOf('month').format('YYYY-MM-DD');
+//         $('#fechaMensual').val(firstDate + "   a   " + lastDate);
+//         onSelectFechasMensual();
+//     });
+// });
+function changeFecha() {
+    dato = $('#fechaMensual').val();
+    value = moment(dato, ["MMMM-YYYY", "MMM-YYYY", "MM-YYYY"]).format("MM-YYYY");
+    firstDate = moment(value, 'MM-YYYY').startOf('month').format('YYYY-MM-DD');
+    lastDate = moment(value, 'MM-YYYY').endOf('month').format('YYYY-MM-DD');
+    $('#fechaMensual').val(firstDate + "   a   " + lastDate);
+    onSelectFechasMensual();
+    $('#fechaMensual').val(dato)
+}
 function fechaDefecto() {
     dato = $('#fechaMensual').val();
     value = moment(dato, ["MMMM-YYYY", "MMM-YYYY", "MM-YYYY"]).format("MM-YYYY");
@@ -493,10 +502,12 @@ $(function () {
 $(function () {
     var hoy = moment().format("MMMM - YYYY");
     $('#fechaMensual').val(hoy);
-    $('#fechaMensual').trigger("change.dp");
-    $('#fechaMensual').val(hoy);
 });
-
+function buscarReporte() {
+    changeFecha();
+    $('#busquedaP').show();
+    $('#busquedaA').show();
+}
 function mostrarGraficaMensual() {
     $('#graficaReporteMensual').toggle();
 }
@@ -510,7 +521,7 @@ function cambiarTabla() {
             dato = $('#fechaMensual').val();
             $('#container').css('display', 'block');
             tableActividad.columns.adjust().draw(true);
-            $('#fechaMensual').trigger("change.dp");
+            changeFecha();
             $('#fechaMensual').val(dato);
             $('#tablaConActividadD').show();
             $('#tablaSinActividadD').hide();
@@ -518,7 +529,7 @@ function cambiarTabla() {
             dato = $('#fecha').val();
             $('#container').css('display', 'block');
             table.columns.adjust().draw(true);
-            $('#fechaMensual').trigger("change.dp");
+            changeFecha();
             $('#fechaMensual').val(dato);
             $('#tablaConActividadD').hide();
             $('#tablaSinActividadD').show();

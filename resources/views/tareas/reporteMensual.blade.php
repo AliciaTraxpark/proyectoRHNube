@@ -58,7 +58,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="row pb-2">
-                    <div class="col-md-9">
+                    <div class="col-md-8">
                         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
                             onclick="javascript:mostrarGraficaMensual()"><i class="fa fa-eye mr-1"></i>VER GRAFICO
                         </button>
@@ -70,6 +70,11 @@
                                 <div class="input-group-text form-control"><i class="uil uil-calender"></i></div>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-xl-1 text-center">
+                        <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
+                            onclick="javascript:buscarReporte()"> <img src="{{asset('landing/images/loupe (1).svg')}}"
+                                height="18"></button>
                     </div>
                 </div>
                 <br>
@@ -94,7 +99,7 @@
                                     0px" id="zonaHoraria">
                                     </p>
                                 </div>
-                                <div class="row pt-2">
+                                <div class="row pt-2" id="busquedaP" style="display: none">
                                     <div class="col-xl-6">
                                         <div class="form-group row">
                                             <label class="col-lg-2 col-form-label">Área:</label>
@@ -126,7 +131,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row  mt-2">
+                                <div class="row  mt-2" id="busquedaA" style="display: none">
                                     <div class="col-md-12">
                                         <div class="custom-control custom-switch">
                                             <input type="checkbox" class="custom-control-input" id="customSwitchD"
