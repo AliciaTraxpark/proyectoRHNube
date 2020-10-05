@@ -339,7 +339,7 @@ class ControlController extends Controller
 
         if (sizeof($empleados) > 0) {
 
-            $sql = "IF(h.id is null,if(DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_fin)) >= 0 , DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_fin)), DAY(DATE(cp.hora_fin)) ),
+            $sql = "IF(h.id is null,if(DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_ini)) >= 0 , DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_ini)), DAY(DATE(cp.hora_ini)) ),
         if(DATEDIFF('" . $fechaF[1] . "',DATE(h.start)) >= 0,DATEDIFF('" . $fechaF[1] . "',DATE(h.start)), DAY(DATE(h.start)) )) as dia";
             $horasTrabajadas = DB::table('empleado as e')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
@@ -352,16 +352,16 @@ class ControlController extends Controller
                     'p.perso_nombre',
                     'p.perso_apPaterno',
                     'p.perso_apMaterno',
-                    DB::raw('IF(h.id is null, DATE(cp.hora_fin), DATE(h.start)) as fecha'),
-                    DB::raw('TIME(cp.hora_fin) as hora_ini'),
+                    DB::raw('IF(h.id is null, DATE(cp.hora_ini), DATE(h.start)) as fecha'),
+                    DB::raw('TIME(cp.hora_ini) as hora_ini'),
                     DB::raw('TIME_FORMAT(SEC_TO_TIME(SUM(promedio.tiempo_rango)), "%H:%i:%s") as Total_Envio'),
                     DB::raw('SUM(cp.actividad) as sumaA'),
                     DB::raw('SUM(promedio.tiempo_rango) as sumaR'),
                     DB::raw($sql),
                     DB::raw('DATE(cp.hora_fin) as fecha_captura')
                 )
-                ->where(DB::raw('IF(h.id is null, DATE(cp.hora_fin), DATE(h.start))'), '>=', $fechaF[0])
-                ->where(DB::raw('IF(h.id is null, DATE(cp.hora_fin), DATE(h.start))'), '<=', $fechaF[1])
+                ->where(DB::raw('IF(h.id is null, DATE(cp.hora_ini), DATE(h.start))'), '>=', $fechaF[0])
+                ->where(DB::raw('IF(h.id is null, DATE(cp.hora_ini), DATE(h.start))'), '<=', $fechaF[1])
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
                 ->groupBy('e.emple_id', DB::raw('DATE(cp.hora_fin)'))
