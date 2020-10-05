@@ -505,7 +505,7 @@ class dashboardController extends Controller
                 DB::raw('(((SUM(cp.actividad)) / SUM(pc.tiempo_rango))*100) as resultado')
             )
             ->where('e.organi_id', '=', session('sesionidorg'))
-            ->where(DB::raw('DATE(cp.hora_fin)'), '=', $fecha)
+            ->where(DB::raw('DATE(cp.hora_ini)'), '=', $fecha)
             ->where('e.emple_estado', '=', 1)
             ->where('invi.estado', '=', 1)
             ->where('invi.idinvitado', '=',$invitado->idinvitado)
@@ -535,7 +535,7 @@ class dashboardController extends Controller
                 DB::raw('(((SUM(cp.actividad)) / SUM(pc.tiempo_rango))*100) as resultado')
             )
             ->where('e.organi_id', '=', session('sesionidorg'))
-            ->where(DB::raw('DATE(cp.hora_fin)'), '=', $fecha)
+            ->where(DB::raw('DATE(cp.hora_ini)'), '=', $fecha)
             ->where('e.emple_estado', '=', 1)
             ->get()
             ->first();
@@ -544,7 +544,7 @@ class dashboardController extends Controller
             ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
             ->select('e.emple_foto as foto', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
             ->where('e.organi_id', '=', session('sesionidorg'))
-            ->where(DB::raw('DATE(cp.hora_fin)'), '=', $fecha)
+            ->where(DB::raw('DATE(cp.hora_ini)'), '=', $fecha)
             ->where('e.emple_estado', '=', 1)
             ->groupBy('e.emple_id')
             ->get();
@@ -632,7 +632,7 @@ class dashboardController extends Controller
                         ->where('e.emple_area', '=', $respuesta[$i]['idArea'])
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=',$invitado->idinvitado)
-                        ->whereRaw("DATE(cp.hora_fin) ='$fecha'")
+                        ->whereRaw("DATE(cp.hora_ini) ='$fecha'")
                         ->get()
                         ->first();
 
@@ -650,7 +650,7 @@ class dashboardController extends Controller
                     ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
                     ->where('e.emple_area', '=', $respuesta[$i]['idArea'])
-                    ->whereRaw("DATE(cp.hora_fin) ='$fecha'")
+                    ->whereRaw("DATE(cp.hora_ini) ='$fecha'")
                     ->get()
                     ->first();
                         }
