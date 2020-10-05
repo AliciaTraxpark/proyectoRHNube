@@ -95,11 +95,26 @@
                                 </div>
                             </div>
                             <div class="row justify-content-center pb-5">
-                                <a id="enlace"><button type="button" class="btn btn-sm btn-opacity-primary  btn-rounded"
-                                        style="font-size: 13.5px;">
-                                        <img src="{{asset('landing/images/cloud-computing.svg')}}" height="24"
-                                            class="mr-2">
-                                        Descargar</button></a>
+                                <div class="col-md-6 text-center">
+                                    <a id="enlace32">
+                                        <button type="button" class="btn btn-sm btn-opacity-primary"
+                                            style="font-size: 13.5px;border-radius: 10px;font-weight: 500">
+                                            <img src="{{asset('landing/images/iso-file.svg')}}" height="26"
+                                                class="mr-2">
+                                            RHbox X32
+                                        </button>
+                                    </a>
+                                </div>
+                                <div class="col-md-6 text-center">
+                                    <a id="enlace64">
+                                        <button type="button" class="btn btn-sm btn-opacity-primary"
+                                            style="font-size: 13.5px;border-radius: 10px;font-weight: 500">
+                                            <img src="{{asset('landing/images/iso-file.svg')}}" height="26"
+                                                class="mr-2">
+                                            RHbox X64
+                                        </button>
+                                    </a>
+                                </div>
                             </div>
                         </div> <!-- end card-body -->
                     </div>
