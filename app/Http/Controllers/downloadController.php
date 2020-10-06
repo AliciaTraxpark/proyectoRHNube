@@ -49,6 +49,11 @@ class downloadController extends Controller
         }
     }
 
+    public function downloadActualizacion()
+    {
+        return response()->download(app_path() . "/file/RH box/RHbox.zip");
+    }
+
     public function vistaPrueba()
     {
         return view('Verificacion.download');

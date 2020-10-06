@@ -287,6 +287,7 @@ Route::get('download/{code}', 'downloadController@download');
 Route::get('downloadx32/{code}', 'downloadController@downloadx32');
 Route::get('descarga', 'downloadController@vistaPrueba');
 Route::get('verificarLicencia', 'downloadController@buscarLicencia');
+Route::get('updateD', 'downloadController@downloadActualizacion');
 ///verif
 Route::get('check-session', 'verificarUsuarioController@checkSession');
 
