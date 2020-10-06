@@ -23,12 +23,11 @@ function RefreshTablaEmpleadoArea() {
         async: false,
         type: "post",
         url: "tablaempleado/refreshArea",
-        data:{idarea:areaselect},
+        data: { idarea: areaselect },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            console.log(data);
             var tbody = "";
             for (var i = 0; i < data.length; i++) {
                 tbody +=
@@ -105,8 +104,9 @@ function RefreshTablaEmpleadoArea() {
                         data[i].emple_id +
                         '"\
                                     onclick="javascript:controlRemoto(' +
-                        data[i].emple_id +
-                        ')">\
+                        data[i].emple_id + ",'" +
+                        data[i].perso_nombre +
+                        '\')">\
                                 <label class="custom-control-label" for="customSwitchCR' +
                         data[i].emple_id +
                         '"\
@@ -236,14 +236,14 @@ function RefreshTablaEmpleadoArea() {
                         </div>\
                          </td>";
                 }
-                if (data[i].asistencia_puerta==1) {
+                if (data[i].asistencia_puerta == 1) {
                     tbody +=
                         '<td class="text-center">\
                                 <div class="custom-control custom-switch mb-2">\
                                     <input type="checkbox" class="custom-control-input"\
                                         id="customSwitchCP' +
                         data[i].emple_id +
-                        '" onclick="controlPuerta('+ data[i].emple_id +')" checked>\
+                        '" onclick="controlPuerta(' + data[i].emple_id + ')" checked>\
                                     <label class="custom-control-label" for="customSwitchCP' +
                         data[i].emple_id +
                         '"\
@@ -252,15 +252,15 @@ function RefreshTablaEmpleadoArea() {
                     </td>';
                 } else {
                     tbody +=
-                    '<td class="text-center">\
+                        '<td class="text-center">\
                             <div class="custom-control custom-switch mb-2">\
                                 <input type="checkbox" class="custom-control-input"\
                                     id="customSwitchCP' +
-                    data[i].emple_id +
-                    '" onclick="controlPuerta('+ data[i].emple_id +')">\
+                        data[i].emple_id +
+                        '" onclick="controlPuerta(' + data[i].emple_id + ')">\
                                 <label class="custom-control-label" for="customSwitchCP' +
-                    data[i].emple_id +
-                    '"\
+                        data[i].emple_id +
+                        '"\
                                     style="font-weight: bold"></label>\
                             </div>\
                 </td>';
@@ -284,7 +284,7 @@ function RefreshTablaEmpleadoArea() {
                         "</div></td></tr>";
                 }
             }
-
+            console.log(tbody);
             $("#tbodyr").html(tbody);
             $("#tablaEmpleado").DataTable({
                 scrollX: true,
@@ -395,7 +395,6 @@ function RefreshTablaEmpleado() {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            console.log(data);
             var tbody = "";
             for (var i = 0; i < data.length; i++) {
                 tbody +=
@@ -473,7 +472,9 @@ function RefreshTablaEmpleado() {
                         '"\
                                     onclick="javascript:controlRemoto(' +
                         data[i].emple_id +
-                        ')">\
+                        ",'" +
+                        data[i].perso_nombre +
+                        '\')">\
                                 <label class="custom-control-label" for="customSwitchCR' +
                         data[i].emple_id +
                         '"\
@@ -603,14 +604,14 @@ function RefreshTablaEmpleado() {
                         </div>\
                          </td>";
                 }
-                if (data[i].asistencia_puerta==1) {
+                if (data[i].asistencia_puerta == 1) {
                     tbody +=
                         '<td class="text-center">\
                                 <div class="custom-control custom-switch mb-2">\
                                     <input type="checkbox" class="custom-control-input"\
                                         id="customSwitchCP' +
                         data[i].emple_id +
-                        '" onclick="controlPuerta('+ data[i].emple_id +')" checked>\
+                        '" onclick="controlPuerta(' + data[i].emple_id + ')" checked>\
                                     <label class="custom-control-label" for="customSwitchCP' +
                         data[i].emple_id +
                         '"\
@@ -619,15 +620,15 @@ function RefreshTablaEmpleado() {
                     </td>';
                 } else {
                     tbody +=
-                    '<td class="text-center">\
+                        '<td class="text-center">\
                             <div class="custom-control custom-switch mb-2">\
                                 <input type="checkbox" class="custom-control-input"\
                                     id="customSwitchCP' +
-                    data[i].emple_id +
-                    '" onclick="controlPuerta('+ data[i].emple_id +')">\
+                        data[i].emple_id +
+                        '" onclick="controlPuerta(' + data[i].emple_id + ')">\
                                 <label class="custom-control-label" for="customSwitchCP' +
-                    data[i].emple_id +
-                    '"\
+                        data[i].emple_id +
+                        '"\
                                     style="font-weight: bold"></label>\
                             </div>\
                 </td>';

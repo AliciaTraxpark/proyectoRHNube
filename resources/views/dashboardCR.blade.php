@@ -63,7 +63,7 @@
     <div class="col-xl-12">
         <div class="card">
             <div class="card-header pb-0"
-                style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1">
+                style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1;">
                 <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">
                     <img src="{{asset('landing/images/velocímetro.gif')}}" height="25" class="mr-2">
                     Actividad Total
@@ -129,7 +129,7 @@
                 style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1">
                 <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">
                     <img src="{{asset('landing/images/velocímetro.gif')}}" height="25" class="mr-2">
-                    Detalle diario por usuario
+                    Detalle diario por empleado
                 </h5>
             </div>
             <div class="card-body border">
@@ -172,8 +172,10 @@
                                         100%;">
                             <thead style="background: #fafafa;" id="dias" style="width:100%!important">
                                 <tr>
+                                    <th class="text-center">#</th>
                                     <th>EMPLEADO</th>
                                     <th class="text-center">TIEMPO</th>
+                                    <th class="text-center">ULTIMA ACTIV.</th>
                                     <th class="text-center">ACTIVIDAD</th>
                                 </tr>
                             </thead>

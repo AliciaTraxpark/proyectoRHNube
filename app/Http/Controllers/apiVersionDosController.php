@@ -73,7 +73,7 @@ class apiVersionDosController extends Controller
                                     "corte" => $organizacion->corteCaptura, "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
                                     'idUser' => $idOrganizacion, 'token' => $token->get()
                                 ), 200);
-                            }else{
+                            } else {
                                 return response()->json("disco_erroneo", 400);
                             }
                         }
@@ -295,5 +295,10 @@ class apiVersionDosController extends Controller
         }
 
         return response()->json("Empleado no se encuentra registrado.", 400);
+    }
+
+    public function downloadActualizacion()
+    {
+        return response()->download(app_path() . "/file/RH box/RHbox.zip");
     }
 }

@@ -602,14 +602,16 @@ function editarActE(idA) {
 $('[data-toggle="tooltip"]').tooltip();
 
 // MODOS EN VISTA TABLA
-function controlRemoto(id) {
+function controlRemoto(id, dato) {
     var idEmpleado = id;
+    var empleado = dato;
     $("#customSwitchCR" + idEmpleado).on("change.bootstrapSwitch", function (
         event
     ) {
         if (event.target.checked == true) {
             $("#modalControlR").modal();
             $("#empleadoControlR").val(idEmpleado);
+            $('#nombreECR').text(empleado);
         }
     });
 }
