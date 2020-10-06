@@ -300,7 +300,7 @@ function empleadosControlRemoto() {
         tr += "<tr><td class=\"text-center\" style=\"vertical-align: middle;\">" + (index + 1) + "</td><td style=\"vertical-align: middle;\">" + data[index].nombre + " " + data[index].apPaterno + " " + data[index].apMaterno + "</td>\
         <td class=\"text-center\" style=\"vertical-align: middle;\">"+ enteroTime(data[index].tiempoT) + "</td>\
         <td class=\"text-center\" style=\"vertical-align: middle;\"><a class=\"badge badge-soft-danger mr-2\">" + data[index].ultimaA + "</a></td><td>\
-        <div class=\"progress\" style=\"background-color: #d4d4d4;box-shadow: 1px 1px 5px rgba(104, 134, 197, 0.5);\">\
+        <div class=\"progress\" style=\"background-color: #d9dee9;\">\
           <div class=\"progress-bar\" role=\"progressbar\" style=\"width:"+ data[index].division.toFixed(2) + "%;background:" + nivel + "\" aria-valuenow=" + data[index].division.toFixed(2) + " aria-valuemin=\"0\" aria-valuemax=\"100\">" + data[index].division.toFixed(2) + "%\
           </div>\
           </div>\
