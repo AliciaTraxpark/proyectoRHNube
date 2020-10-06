@@ -1984,7 +1984,7 @@ function enviarArea(accion, objArea) {
                         newest_on_top: true,
                         delay: 5000,
                         template:
-                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                             '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                             '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                             '<span data-notify="title">{1}</span> ' +
@@ -2057,7 +2057,7 @@ function enviarArea(accion, objArea) {
                         newest_on_top: true,
                         delay: 5000,
                         template:
-                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                             '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                             '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                             '<span data-notify="title">{1}</span> ' +
@@ -2138,7 +2138,7 @@ function enviarCargo(accion, objCargo) {
                         newest_on_top: true,
                         delay: 5000,
                         template:
-                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                             '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                             '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                             '<span data-notify="title">{1}</span> ' +
@@ -2212,7 +2212,7 @@ function enviarCargo(accion, objCargo) {
                         newest_on_top: true,
                         delay: 5000,
                         template:
-                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                             '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                             '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                             '<span data-notify="title">{1}</span> ' +
@@ -2293,7 +2293,7 @@ function enviarCentro(accion, objCentroC) {
                         newest_on_top: true,
                         delay: 5000,
                         template:
-                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                             '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                             '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                             '<span data-notify="title">{1}</span> ' +
@@ -2366,7 +2366,7 @@ function enviarCentro(accion, objCentroC) {
                         newest_on_top: true,
                         delay: 5000,
                         template:
-                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                             '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                             '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                             '<span data-notify="title">{1}</span> ' +
@@ -2447,7 +2447,7 @@ function enviarLocal(accion, objLocal) {
                         newest_on_top: true,
                         delay: 5000,
                         template:
-                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                             '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                             '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                             '<span data-notify="title">{1}</span> ' +
@@ -2520,7 +2520,7 @@ function enviarLocal(accion, objLocal) {
                         newest_on_top: true,
                         delay: 5000,
                         template:
-                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                             '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                             '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                             '<span data-notify="title">{1}</span> ' +
@@ -2601,7 +2601,7 @@ function enviarNivel(accion, objNivel) {
                         newest_on_top: true,
                         delay: 5000,
                         template:
-                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                             '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                             '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                             '<span data-notify="title">{1}</span> ' +
@@ -2674,7 +2674,7 @@ function enviarNivel(accion, objNivel) {
                         newest_on_top: true,
                         delay: 5000,
                         template:
-                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                             '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                             '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                             '<span data-notify="title">{1}</span> ' +
@@ -2756,7 +2756,7 @@ function enviarContrato(accion, objContrato) {
                         newest_on_top: true,
                         delay: 5000,
                         template:
-                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                             '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                             '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                             '<span data-notify="title">{1}</span> ' +
@@ -2829,7 +2829,7 @@ function enviarContrato(accion, objContrato) {
                         newest_on_top: true,
                         delay: 5000,
                         template:
-                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                             '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                             '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                             '<span data-notify="title">{1}</span> ' +
@@ -2910,7 +2910,7 @@ function enviarCondicion(accion, objCondicion) {
                         newest_on_top: true,
                         delay: 5000,
                         template:
-                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                             '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                             '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                             '<span data-notify="title">{1}</span> ' +
@@ -2983,7 +2983,7 @@ function enviarCondicion(accion, objCondicion) {
                         newest_on_top: true,
                         delay: 5000,
                         template:
-                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                             '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                             '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                             '<span data-notify="title">{1}</span> ' +
@@ -3141,7 +3141,7 @@ function enviarEmpleado(accion, objEmpleado) {
                     newest_on_top: true,
                     delay: 1000,
                     template:
-                        '<div data-notify="container" class="col-xs-9 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                         '<span data-notify="title">{1}</span> ' +
@@ -3190,7 +3190,7 @@ function enviarEmpleadoStore(accion, objEmpleado) {
                     newest_on_top: true,
                     delay: 1000,
                     template:
-                        '<div data-notify="container" class="col-xs-9 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                         '<span data-notify="title">{1}</span> ' +
@@ -3280,7 +3280,7 @@ function enviarEmpresarialEmpleado(accion, objEmpleado) {
                     newest_on_top: true,
                     delay: 1000,
                     template:
-                        '<div data-notify="container" class="col-xs-9 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                         '<span data-notify="title">{1}</span> ' +
@@ -3331,7 +3331,7 @@ function enviarFotoEmpleado(accion) {
                     newest_on_top: true,
                     delay: 1000,
                     template:
-                        '<div data-notify="container" class="col-xs-9 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                         '<span data-notify="title">{1}</span> ' +
@@ -3388,7 +3388,7 @@ function enviarCalendarioEmpleado(accion, objEmpleado) {
                     newest_on_top: true,
                     delay: 1000,
                     template:
-                        '<div data-notify="container" class="col-xs-9 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                         '<span data-notify="title">{1}</span> ' +
@@ -3445,7 +3445,7 @@ function enviarHorarioEmpleado(accion, objEmpleado) {
                     newest_on_top: true,
                     delay: 1000,
                     template:
-                        '<div data-notify="container" class="col-xs-9 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                         '<span data-notify="title">{1}</span> ' +
@@ -3487,7 +3487,7 @@ function enviarEmpleadoStore(accion, objEmpleado) {
                     newest_on_top: true,
                     delay: 1000,
                     template:
-                        '<div data-notify="container" class="col-xs-9 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                         '<span data-notify="title">{1}</span> ' +
@@ -3581,7 +3581,7 @@ function actualizarEmpleado(accion, objEmpleadoA) {
                     newest_on_top: true,
                     delay: 1000,
                     template:
-                        '<div data-notify="container" class="col-xs-9 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                         '<span data-notify="title">{1}</span> ' +
@@ -3666,7 +3666,7 @@ function actualizarEmpleadoEmpresarial(accion, objEmpleadoA) {
                     newest_on_top: true,
                     delay: 1000,
                     template:
-                        '<div data-notify="container" class="col-xs-9 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                         '<span data-notify="title">{1}</span> ' +
@@ -3710,7 +3710,7 @@ function actualizarEmpleadoFoto(accion) {
                     newest_on_top: true,
                     delay: 1000,
                     template:
-                        '<div data-notify="container" class="col-xs-9 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                         '<span data-notify="title">{1}</span> ' +
