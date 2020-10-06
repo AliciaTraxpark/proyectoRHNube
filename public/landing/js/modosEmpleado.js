@@ -35,7 +35,7 @@ function actividad_empleado() {
                 container.append(td);
             }
         },
-        error: function () {},
+        error: function () { },
     });
 }
 // MOSTRAR DATOS EN TABLA DEL FORMULARIO EDITAR
@@ -75,7 +75,7 @@ function actividadEmp() {
                 container.append(td);
             }
         },
-        error: function () {},
+        error: function () { },
     });
 }
 // MOSTRAR DATOS EN TABLA DEL FORMULARIO VER
@@ -112,7 +112,7 @@ function actividadEmpVer() {
                 container.append(td);
             }
         },
-        error: function () {},
+        error: function () { },
     });
 }
 // ***********************************
@@ -213,7 +213,7 @@ function registrarActividadTarea() {
             );
             $("#actividadTarea").modal("toggle");
         },
-        error: function () {},
+        error: function () { },
     });
 }
 // MODAL REGISTRAR
@@ -257,7 +257,7 @@ function registrarNuevaActividadTarea() {
             );
             $("#regactividadTarea").modal("toggle");
         },
-        error: function () {},
+        error: function () { },
     });
 }
 
@@ -303,7 +303,7 @@ function editarActividadReg(id, actividad) {
                 }
             );
         },
-        error: function () {},
+        error: function () { },
     });
 }
 // MODAL REGISTRAR
@@ -343,7 +343,7 @@ function editarEstadoActividadReg(id, estado) {
                 }
             );
         },
-        error: function () {},
+        error: function () { },
     });
 }
 // MODAL EDITAR
@@ -383,7 +383,7 @@ function editarActividad(id, actividad) {
                 }
             );
         },
-        error: function () {},
+        error: function () { },
     });
 }
 // MODAL EDITAR
@@ -423,7 +423,7 @@ function editarEstadoActividad(id, estado) {
                 }
             );
         },
-        error: function () {},
+        error: function () { },
     });
 }
 // MODAL REGISTRAR
@@ -657,7 +657,7 @@ function agregarControlR(id) {
                 );
             }
         },
-        error: function () {},
+        error: function () { },
     });
 }
 
@@ -788,7 +788,7 @@ function guardarCorreoE() {
                             }
                         );
                     },
-                    error: function () {},
+                    error: function () { },
                 });
             }
         },
@@ -884,7 +884,7 @@ function activarEstadoCR(idEmpleado, idVinculacion) {
                 }
             );
         },
-        error: function () {},
+        error: function () { },
     });
 }
 function estadoDispositivoCR(idEmpleado, id, pc, datos) {
@@ -894,11 +894,11 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
         if (event.target.checked == true) {
             alertify
                 .confirm(
-                    "Al <strong>ACTIVAR COMPUTADOR " +
-                        pc +
-                        "</strong>  de <strong>" +
-                        datos +
-                        "</strong> podrá usarla de desde este momento y recibira un correo electrónico con los datos necesarios.",
+                    "¿Activar el computador <strong>" +
+                    pc +
+                    "</strong> de&nbsp;" +
+                    datos +
+                    "&nbsp;y enviar un correo con sus credenciales?",
                     function (e) {
                         if (e) {
                             activarEstadoCR(idEmpleado, id);
@@ -924,11 +924,12 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
         } else {
             alertify
                 .confirm(
-                    "Al <strong> DESACTIVAR COMPUTADOR " +
-                        pc +
-                        "</strong> de <strong>" +
-                        datos +
-                        "</strong> no podrá usarla de desde este momento.",
+                    // "Al <strong> DESACTIVAR COMPUTADOR " +
+                    //     pc +
+                    //     "</strong> de <strong>" +
+                    //     datos +
+                    //     "</strong> no podrá usarla de desde este momento.",
+                    "El empleado no pódra usar esta licencia.<br>Tiempo estimado: 60 minutos.",
                     function (e) {
                         if (e) {
                             inactivarEstadoCR(idEmpleado, id);
