@@ -187,8 +187,36 @@
                                         style="font-size: 13px!important;width:100%;">
                                         <thead style="background: #fafafa;" id="diasActvidad"
                                             style="width:100%!important">
+                                            <tr>
+                                                <th><img src="{{
+                                                        URL::asset('admin/assets/images/users/empleado.png')
+                                                        }}" class="mr-2" alt="" />Miembro</th>
+                                                <th>LUN.</th>
+                                                <th>MAR.</th>
+                                                <th>MIÉ.</th>
+                                                <th>JUE.</th>
+                                                <th>VIE.</th>
+                                                <th>SÁB.</th>
+                                                <th>TOTAL</th>
+                                                <th>ACTIV.</th>
+                                            </tr>
                                         </thead>
                                         <tbody id="empleadoActividad">
+                                            @foreach ($empleado as $empleados)
+                                            <tr>
+                                                <td>{{$empleados->perso_nombre}}
+                                                    {{$empleados->perso_apPaterno}}
+                                                    {{$empleados->perso_apMaterno}}</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
