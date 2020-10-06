@@ -80,7 +80,7 @@
                 <form class="form-horizontal text-center">
                     <img src="{{asset('admin/images/tick.svg')}}" height="25" class="mr-1 mt-2 pb-1">
                     <h5 class="modal-title" id="myModalLabel" style="font-size:
-                        15px">Activar el computador y enviar un correo con sus credenciales</h5>
+                        15px">Activar el computador de <span id="nombreECR"></span> y enviar un correo con sus credenciales</h5>
                 </form>
             </div>
             <div class="modal-footer">
@@ -166,7 +166,7 @@
                 <div class="custom-control custom-switch mb-2">
                     <input type="checkbox" class="custom-control-input"
                         id="customSwitchCR{{$tabla_empleados->emple_id}}"
-                        onclick="javascript:controlRemoto({{$tabla_empleados->emple_id}})">
+                        onclick="javascript:controlRemoto({{$tabla_empleados->emple_id}},'{{$tabla_empleados->perso_nombre}}')">
                     <label class="custom-control-label" for="customSwitchCR{{$tabla_empleados->emple_id}}"
                         style="font-weight: bold"></label>
                 </div>
@@ -237,7 +237,8 @@
             <td class="text-center">
                 <div class="custom-control custom-switch mb-2">
                     <input type="checkbox" class="custom-control-input"
-                        id="customSwitchCP{{$tabla_empleados->emple_id}}" onclick="controlPuerta({{$tabla_empleados->emple_id}})" checked>
+                        id="customSwitchCP{{$tabla_empleados->emple_id}}"
+                        onclick="controlPuerta({{$tabla_empleados->emple_id}})" checked>
                     <label class="custom-control-label" for="customSwitchCP{{$tabla_empleados->emple_id}}"
                         style="font-weight: bold"></label>
                 </div>
@@ -246,7 +247,8 @@
             <td class="text-center">
                 <div class="custom-control custom-switch mb-2">
                     <input type="checkbox" class="custom-control-input"
-                        id="customSwitchCP{{$tabla_empleados->emple_id}}" onclick="controlPuerta({{$tabla_empleados->emple_id}})">
+                        id="customSwitchCP{{$tabla_empleados->emple_id}}"
+                        onclick="controlPuerta({{$tabla_empleados->emple_id}})">
                     <label class="custom-control-label" for="customSwitchCP{{$tabla_empleados->emple_id}}"
                         style="font-weight: bold"></label>
                 </div>
