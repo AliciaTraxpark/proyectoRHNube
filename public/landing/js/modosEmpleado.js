@@ -35,7 +35,7 @@ function actividad_empleado() {
                 container.append(td);
             }
         },
-        error: function () {},
+        error: function () { },
     });
 }
 // MOSTRAR DATOS EN TABLA DEL FORMULARIO EDITAR
@@ -75,7 +75,7 @@ function actividadEmp() {
                 container.append(td);
             }
         },
-        error: function () {},
+        error: function () { },
     });
 }
 // MOSTRAR DATOS EN TABLA DEL FORMULARIO VER
@@ -112,7 +112,7 @@ function actividadEmpVer() {
                 container.append(td);
             }
         },
-        error: function () {},
+        error: function () { },
     });
 }
 // ***********************************
@@ -202,7 +202,7 @@ function registrarActividadTarea() {
                     newest_on_top: true,
                     delay: 5000,
                     template:
-                        '<div data-notify="container" class="col-xs-9 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                         '<span data-notify="title">{1}</span> ' +
@@ -213,7 +213,7 @@ function registrarActividadTarea() {
             );
             $("#actividadTarea").modal("toggle");
         },
-        error: function () {},
+        error: function () { },
     });
 }
 // MODAL REGISTRAR
@@ -246,7 +246,7 @@ function registrarNuevaActividadTarea() {
                     newest_on_top: true,
                     delay: 5000,
                     template:
-                        '<div data-notify="container" class="col-xs-9 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                         '<span data-notify="title">{1}</span> ' +
@@ -257,7 +257,7 @@ function registrarNuevaActividadTarea() {
             );
             $("#regactividadTarea").modal("toggle");
         },
-        error: function () {},
+        error: function () { },
     });
 }
 
@@ -293,7 +293,7 @@ function editarActividadReg(id, actividad) {
                     newest_on_top: true,
                     delay: 5000,
                     template:
-                        '<div data-notify="container" class="col-xs-9 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                         '<span data-notify="title">{1}</span> ' +
@@ -303,7 +303,7 @@ function editarActividadReg(id, actividad) {
                 }
             );
         },
-        error: function () {},
+        error: function () { },
     });
 }
 // MODAL REGISTRAR
@@ -333,7 +333,7 @@ function editarEstadoActividadReg(id, estado) {
                     newest_on_top: true,
                     delay: 5000,
                     template:
-                        '<div data-notify="container" class="col-xs-9 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                         '<span data-notify="title">{1}</span> ' +
@@ -343,7 +343,7 @@ function editarEstadoActividadReg(id, estado) {
                 }
             );
         },
-        error: function () {},
+        error: function () { },
     });
 }
 // MODAL EDITAR
@@ -373,7 +373,7 @@ function editarActividad(id, actividad) {
                     newest_on_top: true,
                     delay: 5000,
                     template:
-                        '<div data-notify="container" class="col-xs-9 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                         '<span data-notify="title">{1}</span> ' +
@@ -383,7 +383,7 @@ function editarActividad(id, actividad) {
                 }
             );
         },
-        error: function () {},
+        error: function () { },
     });
 }
 // MODAL EDITAR
@@ -413,7 +413,7 @@ function editarEstadoActividad(id, estado) {
                     newest_on_top: true,
                     delay: 5000,
                     template:
-                        '<div data-notify="container" class="col-xs-9 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                         '<span data-notify="title">{1}</span> ' +
@@ -423,7 +423,7 @@ function editarEstadoActividad(id, estado) {
                 }
             );
         },
-        error: function () {},
+        error: function () { },
     });
 }
 // MODAL REGISTRAR
@@ -646,7 +646,7 @@ function agregarControlR(id) {
                         newest_on_top: true,
                         delay: 5000,
                         template:
-                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                             '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                             '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                             '<span data-notify="title">{1}</span> ' +
@@ -657,7 +657,7 @@ function agregarControlR(id) {
                 );
             }
         },
-        error: function () {},
+        error: function () { },
     });
 }
 
@@ -736,7 +736,7 @@ function guardarCorreoE() {
                         newest_on_top: true,
                         delay: 3000,
                         template:
-                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
                             '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                             '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                             '<span data-notify="title">{1}</span> ' +
@@ -778,7 +778,7 @@ function guardarCorreoE() {
                                 newest_on_top: true,
                                 delay: 5000,
                                 template:
-                                    '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                    '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                                     '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                                     '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                                     '<span data-notify="title">{1}</span> ' +
@@ -788,7 +788,7 @@ function guardarCorreoE() {
                             }
                         );
                     },
-                    error: function () {},
+                    error: function () { },
                 });
             }
         },
@@ -831,7 +831,7 @@ function inactivarEstadoCR(idEmpleado, idVinculacion) {
                     newest_on_top: true,
                     delay: 5000,
                     template:
-                        '<div data-notify="container" class="col-xs-9 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                         '<span data-notify="title">{1}</span> ' +
@@ -874,7 +874,7 @@ function activarEstadoCR(idEmpleado, idVinculacion) {
                     newest_on_top: true,
                     delay: 5000,
                     template:
-                        '<div data-notify="container" class="col-xs-9 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<div data-notify="container" class="col-xs-8 col-sm-2  text-center alert" style="background-color: #dff0d8;" role="alert">' +
                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                         '<span data-notify="title">{1}</span> ' +
@@ -884,7 +884,7 @@ function activarEstadoCR(idEmpleado, idVinculacion) {
                 }
             );
         },
-        error: function () {},
+        error: function () { },
     });
 }
 function estadoDispositivoCR(idEmpleado, id, pc, datos) {
@@ -894,11 +894,11 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
         if (event.target.checked == true) {
             alertify
                 .confirm(
-                    "Al <strong>ACTIVAR COMPUTADOR " +
-                        pc +
-                        "</strong>  de <strong>" +
-                        datos +
-                        "</strong> podrá usarla de desde este momento y recibira un correo electrónico con los datos necesarios.",
+                    "¿Activar el computador <strong>" +
+                    pc +
+                    "</strong> de&nbsp;" +
+                    datos +
+                    "&nbsp;y enviar un correo con sus credenciales?",
                     function (e) {
                         if (e) {
                             activarEstadoCR(idEmpleado, id);
@@ -924,11 +924,12 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
         } else {
             alertify
                 .confirm(
-                    "Al <strong> DESACTIVAR COMPUTADOR " +
-                        pc +
-                        "</strong> de <strong>" +
-                        datos +
-                        "</strong> no podrá usarla de desde este momento.",
+                    // "Al <strong> DESACTIVAR COMPUTADOR " +
+                    //     pc +
+                    //     "</strong> de <strong>" +
+                    //     datos +
+                    //     "</strong> no podrá usarla de desde este momento.",
+                    "El empleado no pódra usar esta licencia.<br>Tiempo estimado: 60 minutos.",
                     function (e) {
                         if (e) {
                             inactivarEstadoCR(idEmpleado, id);

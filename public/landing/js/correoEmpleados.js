@@ -37,7 +37,7 @@ function enviar() {
                 icon_type: 'image',
                 newest_on_top: true,
                 delay: 5000,
-                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                     '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                     '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                     '<span data-notify="title">{1}</span> ' +
@@ -55,7 +55,7 @@ function enviar() {
                 icon_type: 'image',
                 newest_on_top: true,
                 delay: 5000,
-                template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
                     '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                     '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                     '<span data-notify="title">{1}</span> ' +
