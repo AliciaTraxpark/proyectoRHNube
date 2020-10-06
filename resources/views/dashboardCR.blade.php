@@ -172,8 +172,10 @@
                                         100%;">
                             <thead style="background: #fafafa;" id="dias" style="width:100%!important">
                                 <tr>
+                                    <th class="text-center">#</th>
                                     <th>EMPLEADO</th>
                                     <th class="text-center">TIEMPO</th>
+                                    <th class="text-center">ULTIMA ACTIV.</th>
                                     <th class="text-center">ACTIVIDAD</th>
                                 </tr>
                             </thead>

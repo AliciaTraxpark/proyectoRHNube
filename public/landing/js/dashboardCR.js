@@ -297,15 +297,9 @@ function empleadosControlRemoto() {
         if (data[index].division.toFixed(2) >= 50) nivel = "green";
         else if (data[index].division.toFixed(2) > 35) nivel = "#f3c623";
         else nivel = "red";
-        // tr += "<tr><td style=\"vertical-align: middle;\">" + data[index].nombre + " " + data[index].apPaterno + " " + data[index].apMaterno + "</td>\
-        // <td class=\"text-center\" style=\"vertical-align: middle;\">"+ enteroTime(data[index].tiempoT) + "</td><td>\
-        // <div class=\"wrapper\" style=\"display: flex;flex-flow: column;align-items: center\">\
-        //     <div id=\"gauge-value"+ data[index].idEmpleado + "\" style=\"font-size: 14px;font-weight: bold;padding-bottom: 5px\"></div>\
-        //     <canvas id=\"foo"+ data[index].idEmpleado + "\"></canvas>\
-        // </div>\</td></tr>";
-
-        tr += "<tr><td style=\"vertical-align: middle;\">" + data[index].nombre + " " + data[index].apPaterno + " " + data[index].apMaterno + "</td>\
-        <td class=\"text-center\" style=\"vertical-align: middle;\">"+ enteroTime(data[index].tiempoT) + "</td><td>\
+        tr += "<tr><td class=\"text-center\" style=\"vertical-align: middle;\">" + (index + 1) + "</td><td style=\"vertical-align: middle;\">" + data[index].nombre + " " + data[index].apPaterno + " " + data[index].apMaterno + "</td>\
+        <td class=\"text-center\" style=\"vertical-align: middle;\">"+ enteroTime(data[index].tiempoT) + "</td>\
+        <td class=\"text-center\" style=\"vertical-align: middle;\"><a class=\"badge badge-soft-danger mr-2\">" + data[index].ultimaA + "</a></td><td>\
         <div class=\"progress\" style=\"background-color: #d4d4d4;box-shadow: 1px 1px 5px rgba(104, 134, 197, 0.5);\">\
           <div class=\"progress-bar\" role=\"progressbar\" style=\"width:"+ data[index].division.toFixed(2) + "%;background:" + nivel + "\" aria-valuenow=" + data[index].division.toFixed(2) + " aria-valuemin=\"0\" aria-valuemax=\"100\">" + data[index].division.toFixed(2) + "%\
           </div>\
@@ -314,33 +308,6 @@ function empleadosControlRemoto() {
 
       }
       $('#empleadosCR').html(tr);
-      // var opciones = {
-      //   angle: 0.26,
-      //   lineWidth: 0.12,
-      //   pointer: {
-      //     length: 0.24,
-      //     strokeWidth: 0.073,
-      //     color: '#444444'
-      //   },
-      //   limitMax: 'false',
-      //   percentColors: [[0.0, "#ff0000"], [0.50, "#f9c802"], [1.0, "#a9d70b"]],
-      //   strokeColor: '#E0E0E0',
-      //   generateGradient: true,
-      //   highDpiSupport: true
-      // };
-      // for (let i = 0; i < datos.length; i++) {
-      //   console.log(datos);
-      //   var val = datos[i].division.toFixed(2);
-      //   document.getElementById('foo' + datos[i].idEmpleado).setAttribute('width', '100px');
-      //   document.getElementById('foo' + datos[i].idEmpleado).setAttribute('height', '40px');
-      //   var target = document.getElementById('foo' + datos[i].idEmpleado);
-      //   var gauge = new Gauge(target).setOptions(opciones);
-      //   gauge.setMinValue(0);
-      //   gauge.maxValue = 100;
-      //   gauge.animationSpeed = 50;
-      //   gauge.set(val);
-      //   gauge.setTextField(document.getElementById("gauge-value" + datos[i].idEmpleado));
-      // }
       $("#dashboardEmpleado").DataTable({
         scrollX: true,
         responsive: true,
