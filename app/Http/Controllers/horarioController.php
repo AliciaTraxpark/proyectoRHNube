@@ -20,7 +20,7 @@ use App\incidencia_dias;
 use App\User;
 use App\eventos_empleado;
 use Illuminate\Support\Facades\Auth;
-
+use App\pausas_horario;
 class horarioController extends Controller
 {
     public function __construct()
@@ -170,6 +170,8 @@ class horarioController extends Controller
         $toleranciaH = $request->toleranciaH;
         $inicio = $request->inicio;
         $fin = $request->fin;
+        $toleranciaF = $request->toleranciaF;
+        $horaOblig = $request->horaOblig;
 
         $horario = new horario();
 
@@ -179,7 +181,31 @@ class horarioController extends Controller
         $horario->horaF = $fin;
         $horario->user_id = Auth::user()->id;
         $horario->organi_id= session('sesionidorg');
+        $horario->horario_toleranciaF = $toleranciaF;
+        $horario->horasObliga = $horaOblig;
         $horario->save();
+
+        $descPausa=$request->get('descPausa');
+        $IniPausa=$request->get('pausaInicio');
+        $FinPausa=$request->get('finPausa');
+        if ($descPausa) {
+
+            if($descPausa!=null || $descPausa!='' ){
+                for ($i=0; $i < sizeof($descPausa) ; $i++) {
+                    if($descPausa[$i]!=null){
+                    $pausas_horario=new pausas_horario();
+                    $pausas_horario->pausH_descripcion=$descPausa[$i];
+                    $pausas_horario->pausH_Inicio=$IniPausa[$i];
+                    $pausas_horario->pausH_Fin=$FinPausa[$i];
+                    $pausas_horario->horario_id= $horario->horario_id;
+                    $pausas_horario->save();
+                }
+            }
+
+
+       }
+    }
+
         return $horario;
 
     }
@@ -372,6 +398,7 @@ class horarioController extends Controller
         $idHora = $request->idHora;
 
             $temporal_evento = temporal_eventos::where('id', '=', $idHora)->delete();
+
 
 
     }
@@ -848,21 +875,28 @@ class horarioController extends Controller
     $horario=horario::where('organi_id', '=', session('sesionidorg'))
     ->where('horario_id', '=',$idsedit)
     ->get();
-    return $horario;
+    $pausas_horario=pausas_horario::where('horario_id', '=', $idsedit)->get();
+    if($pausas_horario){
+        return [$horario[0],$pausas_horario];
+    } else{
+       return $horario;
+    }
+
     }
 
     public function actualizarhorarioed(Request $request){
         $idhorario=$request->idhorario;
-
         $descried=$request->descried;
         $toleed=$request->toleed;
         $horaIed=$request->horaIed;
         $horaFed=$request->horaFed;
+        $toleranciaFed=$request->toleranciaFed;
+        $horaObed=$request->horaObed;
 
         $horario = horario::where('horario_id', '=',$idhorario)
         ->update([
         'horario_descripcion' =>$descried,'horario_tolerancia' =>$toleed,'horaI' => $horaIed,
-        'horaF' => $horaFed]);
+        'horaF' => $horaFed,'horario_toleranciaF' => $toleranciaFed, 'horasObliga' =>$horaObed]);
 
 
        $horarion=horario::where('organi_id', '=', session('sesionidorg'))->get();
@@ -887,7 +921,10 @@ class horarioController extends Controller
 
     public function eliminarHorario(Request $request){
         $idhorario=$request->idhorario;
+        $pausas_horario=pausas_horario::where('horario_id', '=', $idhorario)->delete();
         $horario = horario::where('horario_id', '=', $idhorario)->delete();
+
+
 
     }
 

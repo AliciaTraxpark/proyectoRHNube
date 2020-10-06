@@ -1,4 +1,7 @@
 $(document).ready(function () {
+    $(".bt_plus").each(function (el){
+        $(this).bind("click",addField);
+      });
     var table =  $("#tablaEmpleado").DataTable({
         "searching": true,
       /* "lengthChange": false,
@@ -385,6 +388,7 @@ $('#horaF_ed').flatpickr({
     dateFormat: "H:i",
     time_24hr: true
 });
+
 $('#btnasignar').on('click', function(e) {
     $('#divOtrodia').hide();
     $('input[type=checkbox]').prop('checked',false);
@@ -889,6 +893,37 @@ $('#cerrarHorario').click(function () {
 });
 function abrirHorario(){
     $('#divOtrodia').hide();
+    $('#divPausa').hide();
+    $('#inputPausa').empty();
+    $('#inputPausa').append('<div id="div_100" class="row col-md-12" style=" margin-bottom: 8px;">'+
+    '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa[]" id="descPausa" >'+
+    '<input type="text"  class="form-control form-control-sm col-sm-3" name="InicioPausa[]"  id="InicioPausa" >'+
+    '<input type="text"  class="form-control form-control-sm col-sm-3" name="FinPausa[]"  id="FinPausa" >'+
+        '&nbsp; <button class="btn btn-sm bt_plus" id="100" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;'+
+        ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>'+
+     '</div>');
+     $('.flatpickr-input[readonly]').on('focus', function () {
+        $(this).blur()
+    })
+    $('.flatpickr-input[readonly]').prop('readonly', false)
+     $(".bt_plus").each(function (el){
+        $(this).bind("click",addField);
+      });
+      $('#InicioPausa').flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true
+    });
+    $('#FinPausa').flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true
+    });
+    $('input[name="descPausa[]"]').prop('required',false);
+        $('input[name="InicioPausa[]"]').prop('required',false);
+        $('input[name="FinPausa[]"]').prop('required',false);
     $("#frmHor")[0].reset();
 
     $('#horarioAgregar').modal('show');
@@ -912,8 +947,27 @@ function registrarHorario(){
 
     descripcion = $('#descripcionCa').val();
     toleranciaH = $('#toleranciaH').val();
+    toleranciaF = $('#toleranciaSalida').val();
+    horaOblig = $('#horaOblig').val();
     inicio = $('#horaI').val();
     fin = $('#horaF').val();
+
+    if( $('#SwitchPausa').is(":checked") ){
+        var descPausa=[];
+        var pausaInicio=[];
+        var finPausa=[];
+        $('input[name="descPausa[]"]').each(function() {
+            descPausa.push($(this).val());
+   });
+   $('input[name="InicioPausa[]"]').each(function() {
+       pausaInicio.push($(this).val());
+   });
+   $('input[name="FinPausa[]"]').each(function() {
+       finPausa.push($(this).val());
+   });
+    }
+
+
 
     $.ajax({
         type: "post",
@@ -921,7 +975,7 @@ function registrarHorario(){
         data: {
 
             descripcion,
-            toleranciaH,inicio,fin
+            toleranciaH,inicio,fin,descPausa,pausaInicio,finPausa,toleranciaF,horaOblig
         },
         statusCode: {
             419: function () {
@@ -1887,6 +1941,8 @@ $('#selectHorarioen').change(function(e){
 }
  */
 function editarHorarioLista(idsedit){
+    $('#pausas_edit').hide();
+    $("#PausasHorar_ed").empty();
     $('#divOtrodia_ed').hide();
 
     $("#frmHorEditar")[0].reset();
@@ -1907,11 +1963,10 @@ function editarHorarioLista(idsedit){
         },
         success: function (data) {
             $('#idhorario_ed').val(data[0].horario_id);
-
             $('#descripcionCa_ed').val(data[0].horario_descripcion);
-
-
             $('#toleranciaH_ed').val(data[0].horario_tolerancia);
+            $('#toleranciaSalida_ed').val(data[0].horario_toleranciaF);
+            $('#horaOblig_ed').val(data[0].horasObliga);
             $('#horaI_ed').val(data[0].horaI);
             $('#horaF_ed').val(data[0].horaF);
             $('#horarioEditar').modal('show');
@@ -1919,6 +1974,20 @@ function editarHorarioLista(idsedit){
                 $('#divOtrodia_ed').show();
             } else{
                 $('#divOtrodia_ed').hide();
+            }
+            if(data[1]==null || data[1]==''){
+                console.log('vacio');
+            }
+            else{
+                $('#pausas_edit').show();
+                $.each(data[1], function (key, item) {
+                    $("#PausasHorar_ed").append('<div id="divEd_100" class="row col-md-12" style=" margin-bottom: 8px;">'+
+                    '<input type="text" disabled value="'+item.pausH_descripcion+'"  class="form-control form-control-sm col-sm-6" name="descPausa_ed[]" id="descPausa_ed" >'+
+                    '<input type="text" disabled value="'+item.pausH_Inicio+'"   class="form-control form-control-sm col-sm-3" name="InicioPausa_ed[]"  id="InicioPausa_ed" >'+
+                    '<input type="text" disabled value="'+item.pausH_Fin+'"   class="form-control form-control-sm col-sm-3" name="FinPausa_ed[]"  id="FinPausa_ed" >'+
+                        ' '+
+                     '</div>');
+                   });
             }
         },
         error: function (data) {
@@ -1936,11 +2005,13 @@ function editarHorario(){
     var toleed=$('#toleranciaH_ed').val();
     var horaIed=$('#horaI_ed').val();
     var horaFed=$('#horaF_ed').val();
+    var toleranciaFed=$('#toleranciaSalida_ed').val();
+    var horaObed=$('#horaOblig_ed').val();
 
     $.ajax({
         type: "post",
         url: "/horario/actualizarhorario",
-        data: {idhorario,descried,toleed,horaIed,horaFed},
+        data: {idhorario,descried,toleed,horaIed,horaFed,toleranciaFed,horaObed},
         statusCode: {
             /*401: function () {
                 location.reload();
@@ -2291,3 +2362,102 @@ $(function() {
 
 	});
 });
+$('#SwitchPausa').change(function (event) {
+    if( $('#SwitchPausa').prop('checked') ){
+        $('input[name="descPausa[]"]').prop('required',true);
+        $('#InicioPausa').prop('required',true);
+        $('#FinPausa').prop('required',true);
+        $('#divPausa').show();
+    }
+    else{
+
+        $('input[name="descPausa[]"]').val('');
+        $('input[name="InicioPausa[]"]').val('');
+        $('input[name="FinPausa[]"]').val('');
+        $('#divPausa').hide();
+        $('input[name="descPausa[]"]').prop('required',false);
+        $('input[name="InicioPausa[]"]').prop('required',false);
+        $('input[name="FinPausa[]"]').prop('required',false);
+    }
+event.preventDefault();
+});
+/* $(function() {
+
+    $('#btnClonarP').on('click', function() {
+
+        $('#divaClonar').append('<div class="col-md-6 text-center"> <div class="form-group">'+
+           ' <label for="">Descripcion:</label> <input type="text"  class="form-control form-control-sm" id="descPausa2" required>'+
+        '</div> </div>'+
+        '<div class="col-md-3"> <div class="form-group"> <label for="">Inicio pausa:</label>'+
+           '<input type="text"  class="form-control form-control-sm"  id="InicioPausa2" required> </div> </div>'+
+           '<div class="col-md-3"> <div class="form-group"> <label for="">Fin pausa:</label>'+
+              '<input type="text"  class="form-control form-control-sm"  id="FinPausa2" required></div></div>');
+    });
+});
+ function guardarClonacion(){
+     var i=1;
+
+  var descrip=$('#descPausa'+i++).val();
+  console
+ } */
+ function addField(){
+
+    // ID del elemento div quitandole la palabra "div_" de delante. Pasi asi poder aumentar el número.
+    // Esta parte no es necesaria pero yo la utilizaba ya que cada campo de mi formulario tenia un autosuggest,
+    // así que dejo como seria por si a alguien le hace falta.
+    var clickID = parseInt($(this).parent('div').attr('id').replace('div_',''));
+    // Genero el nuevo numero id
+    var newID = (clickID+1);
+    // Creo un clon del elemento div que contiene los campos de texto
+    $newClone = $('#div_'+clickID).clone(true);
+    //Le asigno el nuevo numero id
+    $newClone.attr("id",'div_'+newID);
+
+    //Asigno nuevo id al primer campo input dentro del div y le borro cualquier valor
+    // que tenga asi no copia lo ultimo que hayas escrito.(igual que antes no es necesario tener un id)
+    $newClone.children("input").eq(0).attr("id",'descPausa'+newID).val('');
+    //Borro el valor del segundo campo input(este caso es el campo de cantidad)
+    $newClone.children("input").eq(1).attr("id",'InicioPausa'+newID).val('').prop('required',true).flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true
+    });
+    $newClone.children("input").eq(2).attr("id",'FinPausa'+newID).val('').prop('required',true).flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true
+    });;
+
+   /*  $newClone.children("input").eq(3).attr("id",'PROVECONT_email'+newID).val(''); */
+    //Asigno nuevo id al boton
+    $newClone.children("button").attr("id",newID)
+    //Inserto el div clonado y modificado despues del div original
+    $newClone.insertAfter($('#div_'+clickID));
+    //Cambio el signo "+" por el signo "-" y le quito el evento addfield
+    //$("#"+clickID-1).remove();
+    $("#"+clickID).css("backgroundColor","#f6cfcf");
+    $("#"+clickID).css("border-Color","#f6cfcf");
+    $("#"+clickID).css("color","#d11010");
+    $("#"+clickID).css("height","22px");
+    $("#"+clickID).css("font-weight","600");
+    $("#"+clickID).css("margin-top","5px");
+    $("#"+clickID).css("font-size","12px");
+    $("#"+clickID).css("width","19px");
+    $("#"+clickID).css("margin-left","20-px");
+    $('input[name="descPausa[]"]').prop('required',true);
+    $('input[name="InicioPausa[]"]').prop('required',true);
+    $('input[name="FinPausa[]"]').prop('required',true);
+    $("#"+clickID).html('-').unbind("click",addField);
+    $('.flatpickr-input[readonly]').on('focus', function () {
+        $(this).blur()
+    })
+    $('.flatpickr-input[readonly]').prop('readonly', false)
+    //Ahora le asigno el evento delRow para que borre la fial en caso de hacer click
+    $("#"+clickID).bind("click",delRow);
+    }
+    function delRow() {
+    // Funcion que destruye el elemento actual una vez echo el click
+    $(this).parent('div').remove();
+    }
