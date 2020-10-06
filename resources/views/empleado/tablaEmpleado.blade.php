@@ -80,9 +80,7 @@
                 <form class="form-horizontal text-center">
                     <img src="{{asset('admin/images/tick.svg')}}" height="25" class="mr-1 mt-2 pb-1">
                     <h5 class="modal-title" id="myModalLabel" style="font-size:
-                        15px">
-                        Se registrará un dispositivo para control remoto y se notificará al empleado con un correo
-                        electrónico.</h5>
+                        15px">Activar el computador y enviar un correo con sus credenciales</h5>
                 </form>
             </div>
             <div class="modal-footer">
