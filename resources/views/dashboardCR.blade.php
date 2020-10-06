@@ -129,7 +129,7 @@
                 style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1">
                 <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">
                     <img src="{{asset('landing/images/velocímetro.gif')}}" height="25" class="mr-2">
-                    Detalle diario por usuario
+                    Detalle diario por empleado
                 </h5>
             </div>
             <div class="card-body border">
