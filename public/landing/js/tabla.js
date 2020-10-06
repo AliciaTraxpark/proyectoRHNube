@@ -53,7 +53,7 @@ function RefreshTablaEmpleadoArea() {
                         </td>";
                 tbody +=
                     '<td class="text-center">\
-                                <a id="formNuevoEd" onclick="javascript:editarEmpleado(' +
+                                <a  onclick="javascript:editarEmpleado(' +
                     data[i].emple_id +
                     ')" style="cursor: pointer">\
                                 <img src="/admin/images/edit.svg" height="15">\
@@ -420,7 +420,7 @@ function RefreshTablaEmpleado() {
                         </td>";
                 tbody +=
                     '<td class="text-center">\
-                                <a id="formNuevoEd" onclick="javascript:editarEmpleado(' +
+                                <a  onclick="javascript:editarEmpleado(' +
                     data[i].emple_id +
                     ')" style="cursor: pointer">\
                                 <img src="/admin/images/edit.svg" height="15">\
