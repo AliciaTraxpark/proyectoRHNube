@@ -11,6 +11,6 @@ class temporal_eventos extends Model
     protected $primaryKey = 'id';
     protected $fillable = ['id','title','color','textColor','start','end',
     'users_id','temp_horaI','temp_horaF','id_horario','fuera_horario',
-      'borderColor'];
+      'borderColor','horarioComp','horaAdic'];
     public $timestamps = false;
 }
