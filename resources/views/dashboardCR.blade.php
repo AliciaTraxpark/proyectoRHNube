@@ -63,7 +63,7 @@
     <div class="col-xl-12">
         <div class="card">
             <div class="card-header pb-0"
-                style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1">
+                style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1;">
                 <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">
                     <img src="{{asset('landing/images/velocímetro.gif')}}" height="25" class="mr-2">
                     Actividad Total
