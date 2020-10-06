@@ -653,6 +653,13 @@ function agregarHorarioSe() {
             horarioC = 0;
         }
 
+        // HORA ADICIONAL
+        var horarioA;
+        if ($('#horAdicSwitch').prop('checked')) {
+            horarioA = 1;
+        } else {
+            horarioA = 0;
+        }
         var diasEntreFechas = function (desde, hasta) {
             var dia_actual = desde;
             var fechas = [];
@@ -696,7 +703,8 @@ function agregarHorarioSe() {
                 fechasArray: fechastart,
                 hora: textSelec,
                 idhorar: idhorar, fueraHora,
-                horarioC: horarioC
+                horaC: horarioC,
+                horaA:horarioA
 
             },
             statusCode: {
@@ -713,6 +721,7 @@ function agregarHorarioSe() {
                 $("#selectHorario").val("Asignar horario");
                 $("#selectHorario").trigger("change");
                 $('#horCompSwitch').prop("checked", false);
+                $('#horAdicSwitch').prop("checked", false);
                 var mesAg = $('#fechaDa').val();
                 var d = mesAg;
                 var fechasM = new Date(d);

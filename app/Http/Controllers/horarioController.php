@@ -104,7 +104,8 @@ class horarioController extends Controller
         $fin = $request->fin;
         $idhorar = $request->idhorar;
         $fueraHora = $request->fueraHora;
-        $horaC = $request->horarioC;
+        $horaC = $request->horaC;
+        $horaA = $request->horaA;
 
         $arrayrep = collect();
         $arrayeve = collect();
@@ -142,6 +143,7 @@ class horarioController extends Controller
             $temporal_eventos->id_horario = $idhorar;
             $temporal_eventos->fuera_horario = $fueraHora;
             $temporal_eventos->horarioComp = $horaC;
+            $temporal_eventos->horaAdic = $horaA;
             if ($fueraHora == 1) {
                 $temporal_eventos->borderColor = '#5369f8';
             }
