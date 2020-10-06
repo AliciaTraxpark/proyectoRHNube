@@ -90,43 +90,43 @@
                     {{-- <div class="col-xl-2 text-center">
                         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
                             onclick="javascript:refreshCapturas()"> <img src="{{asset('landing/images/refresh.svg')}}"
-                                height="18" class="mr-2">Refrescar</button>
-                    </div> --}}
-                    <div class="col-xl-6">
-                        <div class="form-group row">
-                            <label class="col-lg-2 col-form-label">Empleado:</label>
-                            <div class="col-lg-10">
-                                <select id="empleado" data-plugin="customselect" class="form-control">
-                                    <option value="" disabled selected>Seleccionar</option>
-                                    @foreach ($empleado as $empleados)
-                                    <option class="" value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}}
-                                        {{$empleados->perso_apPaterno}}
-                                        {{$empleados->perso_apMaterno}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
+                    height="18" class="mr-2">Refrescar</button>
+                </div> --}}
+                <div class="col-xl-6">
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">Empleado:</label>
+                        <div class="col-lg-10">
+                            <select id="empleado" data-plugin="customselect" class="form-control">
+                                <option value="" disabled selected>Seleccionar</option>
+                                @foreach ($empleado as $empleados)
+                                <option class="" value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}}
+                                    {{$empleados->perso_apPaterno}}
+                                    {{$empleados->perso_apMaterno}}</option>
+                                @endforeach
+                            </select>
                         </div>
-                    </div>
-                    <div class="col-xl-1 text-center">
-                        <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
-                            onclick="javascript:buscarCapturas()"> <img src="{{asset('landing/images/loupe (1).svg')}}"
-                                height="18"></button>
+
                     </div>
                 </div>
-                <div id="espera" class="text-center" style="display: none">
-                    <img src="{{asset('landing/images/loading.gif')}}" height="100">
+                <div class="col-xl-1 text-center">
+                    <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
+                        onclick="javascript:buscarCapturas()"> <img src="{{asset('landing/images/loupe (1).svg')}}"
+                            height="18"></button>
                 </div>
-                <div class="col-xl-12" id="card">
-                    <br>
-                    <img id="VacioImg" style="margin-left:28%" src="{{
+            </div>
+            <div id="espera" class="text-center" style="display: none">
+                <img src="{{asset('landing/images/loading.gif')}}" height="100">
+            </div>
+            <div class="col-xl-12" id="card">
+                <br>
+                <img id="VacioImg" style="margin-left:28%" src="{{
                         URL::asset('admin/images/search-file.svg') }}" class="mr-2" height="220" /> <br> <label for=""
-                        style="margin-left:30%;color:#7d7d7d">Realize una
-                        búsqueda para ver Actividad</label>
-                </div>
-            </div> <!-- end card-body-->
-        </div> <!-- end card-->
-    </div> <!-- end col-->
+                    style="margin-left:30%;color:#7d7d7d">Realize una
+                    búsqueda para ver Actividad</label>
+            </div>
+        </div> <!-- end card-body-->
+    </div> <!-- end card-->
+</div> <!-- end col-->
 </div>
 <!-- end row -->
 @endsection
@@ -138,6 +138,7 @@
 <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js')
     }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/multiselect/es.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
 <script src="{{
