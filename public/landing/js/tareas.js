@@ -1,3 +1,4 @@
+$.fn.select2.defaults.set('language', 'es');
 var notify = $.notifyDefaults({
     icon_type: "image",
     newest_on_top: true,
@@ -25,7 +26,16 @@ $(function () {
     f = moment().format("YYYY-MM-DD");
     fechaValue.setDate(f);
 });
-$("#empleado").select2();
+$("#empleado").select2({
+    minimumInputLength: 1,
+    language: {
+        inputTooShort: function (e) {
+            return "Escribir coincidencias...";
+        },
+        loadingMore: function () { return "Cargando más resultados…" },
+        noResults: function () { return "No se encontraron resultados" }
+    }
+});
 $("#empleado").on("select2:opening", function () {
     var value = $("#empleado").val();
     $("#empleado").empty();
