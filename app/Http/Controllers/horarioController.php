@@ -516,6 +516,8 @@ class horarioController extends Controller
                     $horario_empleado->empleado_emple_id = $idempleados;
                     $horario_empleado->horario_dias_id = $horario_dias->id;
                     $horario_empleado->fuera_horario = $temporal_eventosH->fuera_horario;
+                    $horario_empleado->horarioComp = $temporal_eventosH->horarioComp;
+                    $horario_empleado->horaAdic = $temporal_eventosH->horaAdic;
                     if ($temporal_eventosH->fuera_horario == 1) {
                         $horario_empleado->borderColor = $temporal_eventosH->borderColor;
                     }
