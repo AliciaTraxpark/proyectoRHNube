@@ -26,7 +26,7 @@ $(function () {
         "scrollX": true,
         retrieve: true,
         "ordering": false,
-        "pageLength": 15,
+        "pageLength": 5,
         "autoWidth": false,
         "lengthChange": false,
         language: {
@@ -63,7 +63,7 @@ $(function () {
         "scrollX": true,
         retrieve: true,
         "ordering": false,
-        "pageLength": 15,
+        "pageLength": 5,
         "autoWidth": false,
         "lengthChange": false,
         language: {
