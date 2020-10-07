@@ -106,10 +106,12 @@ class LoginController extends Controller
 
     public function logout()
     {
+
         Auth::logout();
         session()->forget('sesionidorg');
+        session()->flush();
         /* return view ('welcome'); */
-        return redirect(route('principal'));
+        return redirect('/');
     }
 
     public function principal()
