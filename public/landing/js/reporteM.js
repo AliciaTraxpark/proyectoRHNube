@@ -27,7 +27,7 @@ $(function () {
         "scrollX": true,
         retrieve: true,
         "ordering": false,
-        "pageLength": 15,
+        "pageLength": 10,
         "autoWidth": false,
         "lengthChange": false,
         language: {
@@ -64,7 +64,7 @@ $(function () {
         "scrollX": true,
         retrieve: true,
         "ordering": false,
-        "pageLength": 15,
+        "pageLength": 10,
         "autoWidth": false,
         "lengthChange": false,
         language: {
@@ -218,11 +218,11 @@ function onSelectFechasMensual() {
                 var borderColor = ['rgb(63,77,113)'];
                 var html_tr = "";
                 var html_trA = "";
-                var html_trD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
-                var html_trAD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
+                var html_trD = "<tr><th>#</th><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</>";
+                var html_trAD = "<tr><th>#</th><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
                 for (var i = 0; i < data.length; i++) {
-                    html_tr += '<tr><td>' + data[i].nombre + ' ' + data[i].apPaterno + ' ' + data[i].apMaterno + '</td>';
-                    html_trA += '<tr><td>' + data[i].nombre + ' ' + data[i].apPaterno + ' ' + data[i].apMaterno + '</td>';
+                    html_tr += '<tr><td>' + (i + 1) + '</td><td>' + data[i].nombre + ' ' + data[i].apPaterno + ' ' + data[i].apMaterno + '</td>';
+                    html_trA += '<tr><td>' + (i + 1) + '</td><td>' + data[i].nombre + ' ' + data[i].apPaterno + ' ' + data[i].apMaterno + '</td>';
                     nombre.push(data[i].nombre.split('')[0] + data[i].apPaterno.split('')[0] + data[i].apMaterno.split('')[0]);
                     var total = data[i].horas.reduce(function (a, b) {
                         return sumarHora(a, b);

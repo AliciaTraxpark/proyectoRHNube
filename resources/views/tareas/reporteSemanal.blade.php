@@ -145,9 +145,12 @@
                                         100%;">
                                         <thead style="background: #fafafa;" id="dias" style="width:100%!important">
                                             <tr>
-                                                <th><img src="{{
+                                                <th>#</th>
+                                                <th>
+                                                    <img src="{{
                                                         URL::asset('admin/assets/images/users/empleado.png')
-                                                        }}" class="mr-2" alt="" />Miembro</th>
+                                                        }}" class="mr-2" alt="" />Miembro
+                                                </th>
                                                 <th>LUN.</th>
                                                 <th>MAR.</th>
                                                 <th>MIÉ.</th>
@@ -161,6 +164,7 @@
                                         <tbody id="empleado">
                                             @foreach ($empleado as $empleados)
                                             <tr>
+                                                <td>{{$loop->index + 1}}</td>
                                                 <td>{{$empleados->perso_nombre}}
                                                     {{$empleados->perso_apPaterno}}
                                                     {{$empleados->perso_apMaterno}}</td>
@@ -185,9 +189,12 @@
                                         <thead style="background: #fafafa;" id="diasActvidad"
                                             style="width:100%!important">
                                             <tr>
-                                                <th><img src="{{
+                                                <th>#</th>
+                                                <th>
+                                                    <img src="{{
                                                         URL::asset('admin/assets/images/users/empleado.png')
-                                                        }}" class="mr-2" alt="" />Miembro</th>
+                                                        }}" class="mr-2" alt="" />Miembro
+                                                </th>
                                                 <th>LUN.</th>
                                                 <th>MAR.</th>
                                                 <th>MIÉ.</th>
@@ -201,6 +208,7 @@
                                         <tbody id="empleadoActividad">
                                             @foreach ($empleado as $empleados)
                                             <tr>
+                                                <td>{{$loop->index + 1}}</td>
                                                 <td>{{$empleados->perso_nombre}}
                                                     {{$empleados->perso_apPaterno}}
                                                     {{$empleados->perso_apMaterno}}</td>
