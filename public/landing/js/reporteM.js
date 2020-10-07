@@ -27,7 +27,7 @@ $(function () {
         "scrollX": true,
         retrieve: true,
         "ordering": false,
-        "pageLength": 15,
+        "pageLength": 10,
         "autoWidth": false,
         "lengthChange": false,
         language: {
@@ -64,7 +64,7 @@ $(function () {
         "scrollX": true,
         retrieve: true,
         "ordering": false,
-        "pageLength": 15,
+        "pageLength": 10,
         "autoWidth": false,
         "lengthChange": false,
         language: {
