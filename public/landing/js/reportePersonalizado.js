@@ -105,7 +105,7 @@ $('#empresa').on("change", function () {
         // });
     });
 });
-$(function () {
+function tablaR() {
     $("#Reporte").DataTable({
         "searching": false,
         "scrollX": true,
@@ -143,12 +143,17 @@ $(function () {
             }
         }
     });
-});
+}
+
+tablaR();
 
 function reporteEmpleado() {
     console.log("ingreso");
     var fecha = $('#fecha').val();
     var idEmpleado = $('#empleado').val();
+    if ($.fn.DataTable.isDataTable("#Reporte")) {
+        $('#Reporte').DataTable().destroy();
+    }
     $('#datos').empty();
     $.ajax({
         async: false,
@@ -170,6 +175,7 @@ function reporteEmpleado() {
             }*/
         },
         success: function (data) {
+            console.log(data);
             if (data.length != 0) {
                 var html_tr = '';
                 for (var i = 0; i < data.length; i++) {
@@ -254,6 +260,7 @@ function reporteEmpleado() {
                     paging: true
                 });
             } else {
+                tablaR();
                 $.notify({
                     message: "No se encontraron datos.",
                     icon: 'admin/images/warning.svg'
