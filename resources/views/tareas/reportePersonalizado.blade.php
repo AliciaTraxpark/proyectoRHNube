@@ -109,10 +109,13 @@
                     100%;">
                         <thead style="background: #fafafa;" id="dias" style="width:100%!important">
                             <tr>
-                                <th>Id Captura</th>
-                                <th>Hora Inicio</th>
-                                <th>Hora Fin</th>
-                                <th>Actividad</th>
+                                <th class="text-center">Id Captura</th>
+                                <th class="text-center">Hora Inicio</th>
+                                <th class="text-center">Hora Fin</th>
+                                <th class="text-center">Actividad</th>
+                                <th class="text-center">Imagen</th>
+                                <th class="text-center">Miniatura</th>
+                                <th class="text-center">Cantidad Imagenes</th>
                             </tr>
                         </thead>
                         <tbody id="datos">

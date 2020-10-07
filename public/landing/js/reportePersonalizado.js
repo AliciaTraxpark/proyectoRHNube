@@ -179,10 +179,21 @@ function reporteEmpleado() {
             if (data.length != 0) {
                 var html_tr = '';
                 for (var i = 0; i < data.length; i++) {
-                    html_tr += '<tr><td>' + data[i].idCaptura + '</td>';
-                    html_tr += '<td>' + data[i].hora_ini + '</td>';
-                    html_tr += '<td>' + data[i].hora_fin + '</td>';
-                    html_tr += '<td>' + data[i].actividad + '</td></tr>';
+                    html_tr += '<tr><td class="text-center">' + data[i].idCaptura + '</td>';
+                    html_tr += '<td class="text-center">' + data[i].hora_ini + '</td>';
+                    html_tr += '<td class="text-center">' + data[i].hora_fin + '</td>';
+                    html_tr += '<td class="text-center">' + data[i].actividad + '</td>';
+                    if(data[i].respuestaI === 'SI'){
+                        html_tr += '<td class="text-center"><a class=\"badge badge-soft-primary\">' + data[i].respuestaI + '</a></td>';
+                    }else{
+                        html_tr += '<td class="text-center"><a class=\"badge badge-soft-danger\">' + data[i].respuestaI + '</a></td>';
+                    }
+                    if(data[i].respuestaM === 'SI'){
+                        html_tr += '<td class="text-center"><a class=\"badge badge-soft-primary\">' + data[i].respuestaM + '</a></td>';
+                    }else{
+                        html_tr += '<td class="text-center"><a class=\"badge badge-soft-danger\">' + data[i].respuestaM + '</a></td>';
+                    }
+                    html_tr += '<td class="text-center">' + data[i].cantidadI + '</td></tr>';
                 }
                 $('#datos').html(html_tr);
                 $("#Reporte").DataTable({
