@@ -32,27 +32,77 @@ $('#empresa').select2({
     tags: true,
     maximumSelectionLength: 1
 });
-$('#empleado').select2();
-$('#empresa').on("change", function () {
-    console.log($('#empresa').val());
-    var $idOrganizacion = $('#empresa').val();
-    $("#empleado").select2({
-        ajax: {
-            url: function () {
-                var $idOrganizacion = $('#empresa :selected').val();
-                console.log($idOrganizacion);
-                return '/empleadosOrg/' + $idOrganizacion;
-            },
-            dataType: 'json',
-            processResults: function (data, params) {
-                return {
-                    results: data,
-                    pagination: {
-                        more: (params.page * 30) < data.total_count
-                    }
-                };
-            }
+$('#empleado').select2({
+    placeholder: 'Seleccionar',
+    minimumInputLength: 1,
+    language: {
+        inputTooShort: function (e) {
+            return "Escribir coincidencias...";
         },
+        loadingMore: function () { return "Cargando más resultados…" },
+        noResults: function () { return "No se encontraron resultados" }
+    }
+});
+$('#empresa').on("change", function () {
+    $('#empleado').val(null).trigger("change");
+    $("#empleado").on("select2:opening", function () {
+        var value = $("#empleado").val();
+        $("#empleado").empty();
+        var container = $("#empleado");
+        var $idOrganizacion = $('#empresa :selected').val();
+        $.ajax({
+            async: false,
+            url: '/empleadosOrg/' + $idOrganizacion,
+            method: "GET",
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            statusCode: {
+                401: function () {
+                    location.reload();
+                },
+                /*419: function () {
+                    location.reload();
+                }*/
+            },
+            success: function (data) {
+                if (data.length == 0) {
+                    var option = `<option value="" disabled selected>No se encontraron datos</option>`;
+                } else {
+                    var option = `<option value="" disabled selected>Seleccionar</option>`;
+                    for (var $i = 0; $i < data.length; $i++) {
+                        option += `<option value="${data[$i].emple_id}">${data[$i].nombre} ${data[$i].apPaterno} ${data[$i].apMaterno}</option>`;
+                    }
+                }
+                container.append(option);
+                $("#empleado").val(value);
+            },
+            error: function () { },
+        });
+        // $("#empleado").select2({
+        //     ajax: {
+        //         url: function () {
+        //             var $idOrganizacion = $('#empresa :selected').val();
+        //             console.log($idOrganizacion);
+        //             return '/empleadosOrg/' + $idOrganizacion;
+        //         },
+        //         dataType: 'json',
+        //         processResults: function (data, params) {
+        //             return {
+        //                 results: data,
+        //                 pagination: {
+        //                     more: (params.page * 30) < data.total_count
+        //                 }
+        //             };
+        //         },
+        //         transport: function (params, success, failure) {
+        //             var request = new AjaxRequest(params.url, params);
+        //             request.on('success', success);
+        //             request.on('failure', failure);
+        //         },
+        //         cache: false,
+        //     },
+        // });
     });
 });
 $(function () {

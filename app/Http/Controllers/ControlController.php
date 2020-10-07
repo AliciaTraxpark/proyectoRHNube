@@ -507,18 +507,18 @@ class ControlController extends Controller
     }
     public function selctEmpleado($id)
     {
-        $respuesta = [];
+        // $respuesta = [];
         $empleados = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
             ->where('e.organi_id', '=', $id)
             ->get();
 
-        foreach ($empleados as $empleado) {
-            array_push($respuesta, array("id" => $empleado->emple_id, "text" => $empleado->nombre . " " . $empleado->apPaterno . " " . $empleado->apMaterno));
-        }
+        // foreach ($empleados as $empleado) {
+        //     array_push($respuesta, array("id" => $empleado->emple_id, "text" => $empleado->nombre . " " . $empleado->apPaterno . " " . $empleado->apMaterno));
+        // }
 
-        return response()->json($respuesta, 200);
+        return response()->json($empleados, 200);
     }
     public function vistaReporteEmpleado()
     {
