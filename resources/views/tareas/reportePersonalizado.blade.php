@@ -75,27 +75,34 @@
 </div>
 <!-- end row -->
 <div class="row justify-content-center pt-5">
-    <div class="card">
-        <div class="card-header" style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1">
-            <div class="row">
-                <h4 class="header-title col-12 mt-0">Resultado</h4>
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-header"
+                style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1">
+                <div class="row">
+                    <h4 class="header-title col-12 mt-0">Resultado</h4>
+                </div>
             </div>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive-xl">
-                <table id="Reporte" class="table nowrap" style="font-size: 13px!important;width:
+            <div class="card-body">
+                <div class="table-responsive-xl">
+                    <table id="Reporte" class="table nowrap" style="font-size: 13px!important;width:
                     100%;">
-                    <thead style="background: #fafafa;" id="dias" style="width:100%!important">
-                        <tr>
-                            <th>Id Captura</th>
-                            <th>Hora Inicio</th>
-                            <th>Hora Fin</th>
-                            <th>Actividad</th>
-                        </tr>
-                    </thead>
-                    <tbody id="datos">
-                    </tbody>
-                </table>
+                        <thead style="background: #fafafa;" id="dias" style="width:100%!important">
+                            <tr>
+                                <th>Id Captura</th>
+                                <th>Hora Inicio</th>
+                                <th>Hora Fin</th>
+                                <th>Actividad</th>
+                            </tr>
+                        </thead>
+                        <tbody id="datos">
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
