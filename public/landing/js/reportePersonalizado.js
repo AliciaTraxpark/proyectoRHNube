@@ -1,3 +1,4 @@
+$.fn.select2.defaults.set('language', 'es');
 var notify = $.notifyDefaults({
     icon_type: "image",
     newest_on_top: true,
@@ -26,8 +27,35 @@ $(function () {
     f = moment().format("YYYY-MM-DD");
     fechaValue.setDate(f);
 });
-
-$(function(){
+$('#empresa').select2({
+    placeholder: 'Seleccionar empresa',
+    tags: true,
+    maximumSelectionLength: 1
+});
+$('#empleado').select2();
+$('#empresa').on("change", function () {
+    console.log($('#empresa').val());
+    var $idOrganizacion = $('#empresa').val();
+    $("#empleado").select2({
+        ajax: {
+            url: function () {
+                var $idOrganizacion = $('#empresa :selected').val();
+                console.log($idOrganizacion);
+                return '/empleadosOrg/' + $idOrganizacion;
+            },
+            dataType: 'json',
+            processResults: function (data, params) {
+                return {
+                    results: data,
+                    pagination: {
+                        more: (params.page * 30) < data.total_count
+                    }
+                };
+            }
+        },
+    });
+});
+$(function () {
     $("#Reporte").DataTable({
         "searching": false,
         "scrollX": true,
@@ -67,47 +95,10 @@ $(function(){
     });
 });
 
-$("#empleado").select2();
-$("#empleado").on("select2:opening", function () {
-    var value = $("#empleado").val();
-    $("#empleado").empty();
-    var container = $("#empleado");
-    $.ajax({
-        async: false,
-        url: "/empleadoPersonalizado",
-        method: "GET",
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        statusCode: {
-            401: function () {
-                location.reload();
-            },
-            /*419: function () {
-                location.reload();
-            }*/
-        },
-        success: function (data) {
-            var option = `<option value="" disabled selected>Seleccionar</option>`;
-            for (var $i = 0; $i < data.length; $i++) {
-                option += `<option value="${data[$i].emple_id}">${data[$i].nombre} ${data[$i].apPaterno} ${data[$i].apMaterno}</option>`;
-            }
-            container.append(option);
-            $("#empleado").val(value);
-        },
-        error: function () { },
-    });
-});
-function refreshCapturas() {
-    reporteEmpleado();
-}
 function reporteEmpleado() {
     console.log("ingreso");
     var fecha = $('#fecha').val();
     var idEmpleado = $('#empleado').val();
-    if ($.fn.DataTable.isDataTable("#Reporte")) {
-        $('#Reporte').DataTable().destroy();
-    }
     $('#datos').empty();
     $.ajax({
         async: false,
@@ -222,18 +213,7 @@ function reporteEmpleado() {
         error: function () { },
     });
 }
-$("#empleado").on("select2:close", function () {
-    console.log("ingreso");
-    if ($(this).val() != "") {
-        reporteEmpleado();
-    }
-});
 //CAPTURAS
-$(function () {
-    $("#fecha").on("change", function () {
-        console.log($('#empleado').val());
-        if ($('#empleado').val() != null) {
-            reporteEmpleado();
-        }
-    });
-});
+function buscarCapturas() {
+    reporteEmpleado();
+}

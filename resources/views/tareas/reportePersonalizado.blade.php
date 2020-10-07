@@ -37,7 +37,7 @@
         <div>
             <div>
                 <div class="row mt-4">
-                    <div class="col-xl-4">
+                    <div class="col-xl-3">
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Fecha:</label>
                             <div class="input-group col-md-8 text-center" style="padding-left: 0px;padding-right: 0px;"
@@ -53,20 +53,40 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3 text-center">
+                    <div class="col-xl-4">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Organización:</label>
+                            <div class="col-md-8">
+                                <select id="empresa" data-plugin="customselect" class="form-control"
+                                    multiple="multiple">
+                                    @foreach ($organizacion as $org)
+                                    <option value="{{$org->organi_id}}">
+                                        {{$org->organi_razonSocial}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                    {{-- <div class="col-xl-3 text-center">
                         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
                             onclick="javascript:refreshCapturas()"> <img src="{{asset('landing/images/refresh.svg')}}"
                                 height="18" class="mr-2">Refrescar</button>
-                    </div>
-                    <div class="col-xl-5">
+                    </div> --}}
+                    <div class="col-xl-4">
                         <div class="form-group row">
-                            <label class="col-lg-2 col-form-label">Empleado:</label>
-                            <div class="col-lg-10">
+                            <label class="col-lg-3 col-form-label">Empleado:</label>
+                            <div class="col-lg-9">
                                 <select id="empleado" data-plugin="customselect" class="form-control">
                                 </select>
                             </div>
 
                         </div>
+                    </div>
+                    <div class="col-xl-1 text-center">
+                        <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
+                            onclick="javascript:buscarCapturas()"> <img src="{{asset('landing/images/loupe (1).svg')}}"
+                                height="18"></button>
                     </div>
                 </div>
             </div> <!-- end card-body-->
@@ -96,10 +116,6 @@
                             </tr>
                         </thead>
                         <tbody id="datos">
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
                         </tbody>
                     </table>
                 </div>
@@ -114,8 +130,8 @@
     URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js')
     }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js')
-    }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/multiselect/es.js')}}"></script>
 <!-- datatable js -->
 <script src="{{ URL::asset('admin/assets/libs/chart/Chart.min.js') }}"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">

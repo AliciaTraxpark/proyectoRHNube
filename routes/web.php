@@ -361,6 +361,7 @@ Route::post('/envioSugerenciaCorreo', 'soportesPorCorreoController@envioSugerenc
 
 // REPORTE PERSONALIZADO
 Route::get('/reportePersonalizado', 'ControlController@vistaReporte');
+Route::get('/empleadosOrg/{id}', 'ControlController@selctEmpleado');
 Route::get('/empleadoPersonalizado', 'ControlController@vistaReporteEmpleado');
 Route::get('/capturasPersonalizadas', 'ControlController@retornarDatos');
 // TRAZABILIDAD DE CAPTURAS

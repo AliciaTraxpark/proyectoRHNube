@@ -502,7 +502,23 @@ class ControlController extends Controller
     // REPORTES PERSONALIZADOS
     public function vistaReporte()
     {
-        return view('tareas.reportePersonalizado');
+        $organizacion = organizacion::all('organi_id', 'organi_razonSocial');
+        return view('tareas.reportePersonalizado', ['organizacion' => $organizacion]);
+    }
+    public function selctEmpleado($id)
+    {
+        $respuesta = [];
+        $empleados = DB::table('empleado as e')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+            ->where('e.organi_id', '=', $id)
+            ->get();
+
+        foreach ($empleados as $empleado) {
+            array_push($respuesta, array("id" => $empleado->emple_id, "text" => $empleado->nombre . " " . $empleado->apPaterno . " " . $empleado->apMaterno));
+        }
+
+        return response()->json($respuesta, 200);
     }
     public function vistaReporteEmpleado()
     {
