@@ -38,6 +38,7 @@ use App\horario;
 use App\eventos_empleado;
 use App\incidencia_dias;
 use App\horario_dias;
+use App\pausas_horario;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTFactory;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -637,6 +638,13 @@ class EmpleadoController extends Controller
             $horario_empleados->horario_horario_id = $eventos_empleado_tempHors->id_horario;
             $horario_empleados->empleado_emple_id = $idempleado;
             $horario_empleados->horario_dias_id = $horario_dias->id;
+            $horario_empleados->fuera_horario =  $eventos_empleado_tempHors->fuera_horario;
+            $horario_empleados->horarioComp =  $eventos_empleado_tempHors->horarioComp;
+            $horario_empleados->horaAdic =  $eventos_empleado_tempHors->horaAdic;
+
+            if ($eventos_empleado_tempHors->fuera_horario == 1) {
+                $horario_empleados->borderColor = '#5369f8';
+            }
             $horario_empleados->save();
         }
         ///////////FIN CALENDARIO
@@ -1207,7 +1215,8 @@ class EmpleadoController extends Controller
         $toleranciaH = $request->toleranciaH;
         $inicio = $request->inicio;
         $fin = $request->fin;
-
+        $toleranciaF = $request->toleranciaF;
+        $horaOblig = $request->horaOblig;
         $horario = new horario();
 
         $horario->organi_id = session('sesionidorg');
@@ -1216,7 +1225,30 @@ class EmpleadoController extends Controller
         $horario->horaI = $inicio;
         $horario->horaF = $fin;
         $horario->user_id = Auth::user()->id;
+        $horario->horario_toleranciaF = $toleranciaF;
+        $horario->horasObliga = $horaOblig;
         $horario->save();
+
+        $descPausa = $request->get('descPausa');
+        $IniPausa = $request->get('pausaInicio');
+        $FinPausa = $request->get('finPausa');
+
+        if ($descPausa) {
+
+            if ($descPausa != null || $descPausa != '') {
+                for ($i = 0; $i < sizeof($descPausa); $i++) {
+                    if ($descPausa[$i] != null) {
+                        $pausas_horario = new pausas_horario();
+                        $pausas_horario->pausH_descripcion = $descPausa[$i];
+                        $pausas_horario->pausH_Inicio = $IniPausa[$i];
+                        $pausas_horario->pausH_Fin = $FinPausa[$i];
+                        $pausas_horario->horario_id = $horario->horario_id;
+                        $pausas_horario->save();
+                    }
+                }
+            }
+        }
+
         return $horario;
     }
 
@@ -1227,6 +1259,8 @@ class EmpleadoController extends Controller
         $idhorar = $request->idhorar;
         $idca = $request->idca;
         $fueraHora = $request->fueraHora;
+        $horaC = $request->horarioC;
+        $horaA = $request->horarioA;
         $arrayeve = collect();
         $arrayrep = collect();
 
@@ -1260,6 +1294,8 @@ class EmpleadoController extends Controller
             $eventos_empleado_tempSave->id_horario = $idhorar;
             $eventos_empleado_tempSave->calendario_calen_id = $idca;
             $eventos_empleado_tempSave->fuera_horario = $fueraHora;
+            $eventos_empleado_tempSave->horarioComp = $horaC;
+            $eventos_empleado_tempSave->horaAdic = $horaA;
             $eventos_empleado_tempSave->organi_id=session('sesionidorg');
             if ($fueraHora == 1) {
                 $eventos_empleado_tempSave->borderColor = '#5369f8';
@@ -1440,6 +1476,9 @@ class EmpleadoController extends Controller
         $idhorar = $request->idhorar;
         $idempleado = $request->idempleado;
         $fueraHora = $request->fueraHora;
+        $horaC = $request->horarioC;
+        $horaA = $request->horarioA;
+
         $arrayeve = collect();
         $arrayrep = collect();
 
@@ -1478,6 +1517,9 @@ class EmpleadoController extends Controller
             $horario_empleados->empleado_emple_id = $idempleado;
             $horario_empleados->horario_dias_id = $horario_dias->id;
             $horario_empleados->fuera_horario = $fueraHora;
+            $horario_empleados->horarioComp = $horaC;
+            $horario_empleados->horaAdic = $horaA;
+
             if ($fueraHora == 1) {
                 $horario_empleados->borderColor = '#5369f8';
             }
