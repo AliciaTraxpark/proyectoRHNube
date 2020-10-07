@@ -51,7 +51,6 @@ $('#horaI').flatpickr({
 function minHoraF() {
     return $('#horaI').val();
 }
-console.log(minHoraF());
 var horaFinal = $('#horaF').flatpickr({
     enableTime: true,
     noCalendar: true,
@@ -66,6 +65,96 @@ var horaFinal = $('#horaF').flatpickr({
         }
     }
 });
+$('#empleado').select2({
+    placeholder: 'Seleccionar',
+    minimumInputLength: 1,
+    language: {
+        inputTooShort: function (e) {
+            return "Escribir coincidencias...";
+        },
+        loadingMore: function () { return "Cargando más resultados…" },
+        noResults: function () { return "No se encontraron resultados" }
+    }
+});
+$('#empresa').on("change", function () {
+    $('#empleado').val(null).trigger("change");
+    $("#empleado").on("select2:opening", function () {
+        var value = $("#empleado").val();
+        $("#empleado").empty();
+        var container = $("#empleado");
+        var $idOrganizacion = $('#empresa :selected').val();
+        $.ajax({
+            async: false,
+            url: '/empleadosOrg/' + $idOrganizacion,
+            method: "GET",
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            statusCode: {
+                401: function () {
+                    location.reload();
+                },
+                /*419: function () {
+                    location.reload();
+                }*/
+            },
+            success: function (data) {
+                if (data.length == 0) {
+                    var option = `<option value="" disabled selected>No se encontraron datos</option>`;
+                } else {
+                    var option = `<option value="" disabled selected>Seleccionar</option>`;
+                    for (var $i = 0; $i < data.length; $i++) {
+                        option += `<option value="${data[$i].emple_id}">${data[$i].nombre} ${data[$i].apPaterno} ${data[$i].apMaterno}</option>`;
+                    }
+                }
+                container.append(option);
+                $("#empleado").val(value);
+            },
+            error: function () { },
+        });
+    });
+});
+function tablaRe() {
+    $("#Reporte").DataTable({
+        scrollX: true,
+        responsive: false,
+        retrieve: true,
+        "searching": false,
+        "lengthChange": false,
+        scrollCollapse: false,
+        "pageLength": 30,
+        "bAutoWidth": true,
+        language: {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando registros del _START_ al _END_ ",
+            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": ">",
+                "sPrevious": "<"
+            },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            },
+            "buttons": {
+                "copy": "Copiar",
+                "colvis": "Visibilidad"
+            }
+        }
+    });
+}
+tablaRe();
 $('#empresa').select2({
     placeholder: 'Seleccionar empresa',
     tags: true,
@@ -112,7 +201,7 @@ function datosOrganizacion() {
                 scrollX: true,
                 responsive: false,
                 retrieve: true,
-                "searching": true,
+                "searching": false,
                 "lengthChange": false,
                 scrollCollapse: false,
                 "pageLength": 30,
