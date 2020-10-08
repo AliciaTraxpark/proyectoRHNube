@@ -31,6 +31,9 @@ class horarioController extends Controller
     //
     public function index()
     {
+        if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+            return redirect('/elegirorganizacion');
+        } else{
         $paises = paises::all();
         $departamento = ubigeo_peru_departments::all();
         $empleado = DB::table('empleado as e')
@@ -81,6 +84,7 @@ class horarioController extends Controller
             ]);
         }
     }
+}
     public function verTodEmpleado(Request $request)
     {
         $empleados = DB::table('empleado as e')
@@ -340,6 +344,9 @@ class horarioController extends Controller
     }
     public function indexMenu()
     {
+        if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+            return redirect('/elegirorganizacion');
+        } else{
         $paises = paises::all();
         $departamento = ubigeo_peru_departments::all();
         $empleado = DB::table('empleado as e')
@@ -389,6 +396,7 @@ class horarioController extends Controller
                 'area' => $area, 'cargo' => $cargo, 'local' => $local
             ]);
         }
+    }
     }
 
     public function eliminarHora(Request $request)

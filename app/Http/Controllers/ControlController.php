@@ -21,6 +21,9 @@ class ControlController extends Controller
     }
     public function index()
     {
+        if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+            return redirect('/elegirorganizacion');
+        } else{
         $usuario_organizacion = DB::table('usuario_organizacion as uso')
             ->where('uso.organi_id', '=', session('sesionidorg'))
             ->where('uso.user_id', '=', Auth::user()->id)
@@ -56,9 +59,13 @@ class ControlController extends Controller
 
         return view('tareas.tareas', ['empleado' => $empleado]);
     }
+    }
 
     public function ReporteS()
     {
+        if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+            return redirect('/elegirorganizacion');
+        } else{
         $usuario_organizacion = DB::table('usuario_organizacion as uso')
             ->where('uso.organi_id', '=', session('sesionidorg'))
             ->where('uso.user_id', '=', Auth::user()->id)
@@ -105,9 +112,13 @@ class ControlController extends Controller
 
         return view('tareas.reporteSemanal', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos]);
     }
+}
 
     public function ReporteM()
     {
+        if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+            return redirect('/elegirorganizacion');
+        } else{
         $usuario_organizacion = DB::table('usuario_organizacion as uso')
             ->where('uso.organi_id', '=', session('sesionidorg'))
             ->where('uso.user_id', '=', Auth::user()->id)
@@ -154,6 +165,7 @@ class ControlController extends Controller
 
         return view('tareas.reporteMensual', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos]);
     }
+}
 
     public function empleadoRefresh()
     {
@@ -502,8 +514,12 @@ class ControlController extends Controller
     // REPORTES PERSONALIZADOS
     public function vistaReporte()
     {
+        if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+            return redirect('/elegirorganizacion');
+        } else{
         $organizacion = organizacion::all('organi_id', 'organi_razonSocial');
         return view('tareas.reportePersonalizado', ['organizacion' => $organizacion]);
+        }
     }
     public function selctEmpleado($id)
     {
@@ -556,9 +572,12 @@ class ControlController extends Controller
 
     // REPORTE PEROSNALIZADO TRAZABILIDAD DE CAPTURAS
     public function vistaTrazabilidad()
-    {
+    { if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+        return redirect('/elegirorganizacion');
+    } else{
         $organizacion = organizacion::all('organi_id', 'organi_razonSocial');
         return view('tareas.reporteTrazabilidadC', ['organizacion' => $organizacion]);
+    }
     }
 
     public function capturasTrazabilidad(Request $request)

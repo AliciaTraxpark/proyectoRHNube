@@ -72,7 +72,9 @@ class EmpleadoController extends Controller
     }
     public function index()
     {
-
+        if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+            return redirect('/elegirorganizacion');
+        } else{
         $departamento = ubigeo_peru_departments::all();
         $provincia = ubigeo_peru_provinces::all();
         $distrito = ubigeo_peru_districts::all();
@@ -133,9 +135,12 @@ class EmpleadoController extends Controller
             ]);
         }
     }
+    }
     public function cargarDatos()
     {   //DATOS DE TABLA PARA CARGAR EXCEL
-
+        if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+            return redirect('/elegirorganizacion');
+        } else{
         $empleado = DB::table('empleado as e')
             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->leftJoin('tipo_documento as tipoD', 'e.emple_tipoDoc', '=', 'tipoD.tipoDoc_id')
@@ -202,6 +207,7 @@ class EmpleadoController extends Controller
 
         return view('empleado.cargarEmpleado', ['empleado' => $empleado, 'usuario' => $usuario[0]->user_estado]);
     }
+}
 
 
     /**
@@ -953,6 +959,9 @@ class EmpleadoController extends Controller
     }
     public function indexMenu()
     {
+        if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+            return redirect('/elegirorganizacion');
+        } else{
         $departamento = ubigeo_peru_departments::all();
         $provincia = ubigeo_peru_provinces::all();
         $distrito = ubigeo_peru_districts::all();
@@ -1014,6 +1023,7 @@ class EmpleadoController extends Controller
             ]);
         }
     }
+}
 
     public function comprobarNumD(Request $request)
     {
