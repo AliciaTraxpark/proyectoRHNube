@@ -29,8 +29,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-
-        //$calendario=calendario::all();
+        if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+            return redirect('/elegirorganizacion');
+        } else{
+            //$calendario=calendario::all();
         $calendario = calendario::where('organi_id', '=', session('sesionidorg'))->get();
         //dd($calendario);
         if ($calendario->first()) {
@@ -56,6 +58,10 @@ class HomeController extends Controller
         else{
             return view('dashboard', ['variable' => $variable]);
         }
+
+
+        }
+
 
 
 

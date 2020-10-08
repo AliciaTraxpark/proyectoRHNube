@@ -24,7 +24,9 @@ class calendarioController extends Controller
     //
     public function index()
     {
-
+        if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+            return redirect('/elegirorganizacion');
+        } else{
 
         if (Auth::check()) {
             $paises = paises::all();
@@ -183,6 +185,7 @@ class calendarioController extends Controller
             return redirect(route('principal'));
         }
     }
+    }
 
     public function show()
     {
@@ -206,6 +209,9 @@ class calendarioController extends Controller
     }
     public function indexMenu()
     {
+        if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+            return redirect('/elegirorganizacion');
+        } else{
         if (Auth::check()) {
             $paises = paises::all();
             $departamento = ubigeo_peru_departments::all();
@@ -361,6 +367,7 @@ class calendarioController extends Controller
         } else {
             return redirect(route('principal'));
         }
+    }
     }
 
     public function registrarnuevo(Request $request){

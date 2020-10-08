@@ -78,7 +78,8 @@
                     <h6 style="font-size: 14px" class="modal-title"></h6>
                 </div>
                 <div class="modal-body text-center">
-                    <img src="{{asset('landing/images/LogoAzul.png')}}" height="90">
+                    
+                    <img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="70">
 
                     <p class="w-75 mx-auto text-muted" style="color: black!important;font-weight: 600">Disponible en Perú a partir del 15 de octubre del 2020.</p>
                     <div class="mt-4">

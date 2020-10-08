@@ -19,6 +19,9 @@ class editarPerfilController extends Controller
     }
     public function index()
     {
+        if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+            return redirect('/elegirorganizacion');
+        } else{
         $user = Auth::user();
         $persona = persona::where('perso_id', '=', $user->perso_id)->get()->first();
       /*   $usuarioOrg = usuario_organizacion::where('user_id', '=', $user->id)->get()->first(); */
@@ -45,6 +48,7 @@ class editarPerfilController extends Controller
 
         return view('editarPerfil', ['persona' => $persona, 'organizacion' => $organizacion, 'departamentoOrgani' => $departamentoOrgani]);}
     }
+   }
     public function show()
     {
         $user = DB::table('users as u')
