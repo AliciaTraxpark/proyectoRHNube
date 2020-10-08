@@ -43,11 +43,10 @@
             </div>
             <div class="card-body border">
                 <div class="row justify-content-center">
-                    <div class="col-xl-6">
+                    <div class="col-xl-4">
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label">Fecha:</label>
-                            <div class="input-group col-md-6 text-center" style="padding-left: 0px;padding-right: 0px;"
-                                id="fechaSelec">
+                            <label class="col-md-2 col-form-label" style="padding-right: 0px;">Fecha:</label>
+                            <div class="input-group col-md-8 text-center" id="fechaSelec">
                                 <input type="text" id="fecha" class="form-control" data-input>
                                 <div class="input-group-prepend">
                                     <div class="input-group-text form-control flatpickr">
@@ -59,9 +58,33 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-6">
+                    <div class="col-xl-4">
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label">Empresa:</label>
+                            <label class="col-md-3 col-form-label" style="padding-right: 0px;">Inicio(24H):</label>
+                            <div class="input-group col-md-6">
+                                <input type="text" id="horaI" class="form-control">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text form-control"><i class="uil uil-clock-three"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" style="padding-right: 0px;">Fin(24H):</label>
+                            <div class="input-group col-md-6">
+                                <input type="text" id="horaF" class="form-control">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text form-control"><i class="uil uil-clock-three"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-xl-4">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Empresa</label>
                             <div class="col-md-8" style="padding-left: 0px;padding-right: 0px;">
                                 <select id="empresa" data-plugin="customselect" class="form-control"
                                     multiple="multiple">
@@ -71,32 +94,22 @@
                                     @endforeach
                                 </select>
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label">Empleado</label>
+                            <div class="col-lg-9">
+                                <select id="empleado" data-plugin="customselect" class="form-control">
+                                </select>
+                            </div>
 
                         </div>
                     </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-xl-6">
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label">Inicio(24H):</label>
-                            <div class="input-group col-md-4" style="padding-left: 0px;padding-right: 0px;">
-                                <input type="text" id="horaI" class="form-control">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text form-control"><i class="uil uil-clock-three"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label">Fin(24H):</label>
-                            <div class="input-group col-md-4" style="padding-left: 0px;padding-right: 0px;">
-                                <input type="text" id="horaF" class="form-control">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text form-control"><i class="uil uil-clock-three"></i></div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-xl-4 text-center">
+                        <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
+                            onclick="javascript:buscarCapturas()"> <img src="{{asset('landing/images/loupe (1).svg')}}"
+                                height="18"></button>
                     </div>
                 </div>
                 <div class="row justify-content-center">
@@ -111,9 +124,6 @@
                                     </tr>
                                 </thead>
                                 <tbody id="datos">
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
                                 </tbody>
                             </table>
                         </div>

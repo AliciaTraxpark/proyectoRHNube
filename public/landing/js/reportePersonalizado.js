@@ -79,30 +79,6 @@ $('#empresa').on("change", function () {
             },
             error: function () { },
         });
-        // $("#empleado").select2({
-        //     ajax: {
-        //         url: function () {
-        //             var $idOrganizacion = $('#empresa :selected').val();
-        //             console.log($idOrganizacion);
-        //             return '/empleadosOrg/' + $idOrganizacion;
-        //         },
-        //         dataType: 'json',
-        //         processResults: function (data, params) {
-        //             return {
-        //                 results: data,
-        //                 pagination: {
-        //                     more: (params.page * 30) < data.total_count
-        //                 }
-        //             };
-        //         },
-        //         transport: function (params, success, failure) {
-        //             var request = new AjaxRequest(params.url, params);
-        //             request.on('success', success);
-        //             request.on('failure', failure);
-        //         },
-        //         cache: false,
-        //     },
-        // });
     });
 });
 function tablaR() {
