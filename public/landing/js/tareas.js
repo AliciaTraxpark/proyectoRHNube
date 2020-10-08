@@ -247,7 +247,9 @@ function onMostrarPantallas() {
                             if (promedio >= 50) nivel = "green";
                             else if (promedio > 35) nivel = "#f3c623";
                             else nivel = "red";
-                            card = `<div class="col-2" style="margin-left: 0px!important;">
+                            console.log(data[index].minutos[j][0].imagen.length);
+                            if (data[index].minutos[j][0].imagen.length) {
+                                card = `<div class="col-2" style="margin-left: 0px!important;">
                                     <div class="mb-0 text-center" style="padding-left: 0px;">
                                         <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
                                             aria-expanded="true" aria-controls="customaccorcollapseOne">
@@ -258,14 +260,14 @@ function onMostrarPantallas() {
                                                 <div class=" text-center col-md-12 col-sm-6" style="padding-top: 4px;
                                                 padding-bottom: 4px;">
                                                     <h5 class="m-0 font-size-16" style="color:#1f4068;font-weight:bold;"><img src="landing/images/2143150.png" class="mr-2" height="20"/>${data[index].minutos[
-                                    j
-                                ][0].Activi_Nombre
-                                } </h5>
+                                        j
+                                    ][0].Activi_Nombre
+                                    } </h5>
                                                 </div><br>
                                                 <div class="col-md-12 col-sm-6" style="padding-left: 0px;;padding-right: 0px">
                                                 <div class="hovereffect">
                                                     <div  id="myCarousel${hora + j
-                                }" class = "carousel carousel-fade" data-ride = "carousel">
+                                    }" class = "carousel carousel-fade" data-ride = "carousel">
                                                         <div class = "carousel-inner">
                                                             <div class = "carousel-item active"><img src="data:image/jpeg;base64,${data[index].minutos[j][0].imagen[0].imagen}" height="120" width="200" class="img-responsive">
                                                             <div class="overlay">
@@ -291,7 +293,7 @@ function onMostrarPantallas() {
                                                 data-original-title="">
                                                     <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:${nivel}" aria-valuenow=${promedio}
                                                         aria-valuemin="0" aria-valuemax="100">${promedio + "%"
-                                }</div>
+                                    }</div>
                                                 </div>
                                                 </div>
                                                 <label style="font-size: 12px;font-style: italic; bold;color:#1f4068;" for="">Tiempo transcurrido ${totalCM} </label>
@@ -301,7 +303,46 @@ function onMostrarPantallas() {
                                         </div>
                                     </div>
                                 </div>`;
-                            grupo += card;
+                                grupo += card;
+                            } else {
+                                card = `<div class="col-2" style="margin-left: 0px!important;">
+                                    <div class="mb-0 text-center" style="padding-left: 0px;">
+                                        <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
+                                            aria-expanded="true" aria-controls="customaccorcollapseOne">
+                                        </a>
+                                        <div class="collapse show" aria-labelledby="customaccorheadingOne" data-parent="#customaccordion_exa">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class=" text-center col-md-12 col-sm-6" style="padding-top: 4px;
+                                                padding-bottom: 4px;">
+                                                    <h5 class="m-0 font-size-16" style="color:#1f4068;font-weight:bold;"><img src="landing/images/2143150.png" class="mr-2" height="20"/>${data[index].minutos[
+                                        j
+                                    ][0].Activi_Nombre
+                                    } </h5>
+                                                </div><br>
+                                                <div class="col-md-12 col-sm-6" style="padding-left: 0px;;padding-right: 0px">
+                                                <div class=" text-center col-md-12 col-sm-12" style="padding-top: 1px;
+                                                padding-bottom: 4px;">
+                                                <img src="landing/images/3155773.png" height="100">
+                                                </div>
+                                                &nbsp;
+                                                <label style="font-size: 12px" for="">${hora_inicial} - ${hora_final}</label>
+                                                <div class="progress" style="background-color: #d4d4d4;" data-toggle="tooltip" data-placement="bottom" title="Actividad por Rango de Tiempo"
+                                                data-original-title="">
+                                                    <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:${nivel}" aria-valuenow=${promedio}
+                                                        aria-valuemin="0" aria-valuemax="100">${promedio + "%"
+                                    }</div>
+                                                </div>
+                                                </div>
+                                                <label style="font-size: 12px;font-style: italic; bold;color:#1f4068;" for="">Tiempo transcurrido ${totalCM} </label>
+                                                <br>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>`;
+                                grupo += card;
+                            }
                         } else {
                             card = `<div class="col-2" style="margin-left: 0px!important;justify-content:center;!important">
                     <br><br><br>
