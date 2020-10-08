@@ -13,6 +13,9 @@ class PrecioPlanesController extends Controller
 
     public function vistaPrecios()
     {
-        return view('precios.precios');
+        if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+            return redirect('/elegirorganizacion');
+        } else{
+        return view('precios.precios');}
     }
 }

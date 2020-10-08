@@ -33,6 +33,9 @@ class delegarInvController extends Controller
         $this->middleware(['auth','verified']);
     }
     public function index(){
+        if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+            return redirect('/elegirorganizacion');
+        } else{
         if (Auth::check()) {
             $invitado=DB::table('invitado as i')
             ->where('i.organi_id', '=',session('sesionidorg'))
@@ -87,6 +90,7 @@ class delegarInvController extends Controller
     else {
         return redirect(route('principal'));
     }
+}
 }
     public function empleAreaIn(Request $request){
         $idarea=$request->idarea;

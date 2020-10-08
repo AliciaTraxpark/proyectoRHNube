@@ -17,6 +17,9 @@ class diasLaborablesController extends Controller
     }
     //
     public function indexMenu(){
+        if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+            return redirect('/elegirorganizacion');
+        } else{
         $empleado = DB::table('empleado as e')
         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
         ->where('e.emple_estado', '=', 1)
@@ -50,6 +53,7 @@ class diasLaborablesController extends Controller
         else{
         return View('horarios.diasLaborales',['empleado'=>$empleado, 'area'=>$area]);}
     }
+}
     public function storeCalendario(Request $request){
 
         $idempleado=$request->idempleado;
