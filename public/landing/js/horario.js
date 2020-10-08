@@ -437,20 +437,20 @@ $('#btnasignar').on('click', function (e) {
         },
         success: function (data) {
             /*  json1 = JSON.parse(JSON.stringify(data));
- 
+
              for (var i in json1) {
- 
+
              $('#nombreEmpleado').append('<option value="' + json1[i].emple_id + '" >' + json1[i].perso_nombre + " " + json1[i].perso_apPaterno + '</option>');
               }
- 
- 
+
+
               if (allVals.length > 0) {
- 
+
                  $.each( allVals, function( index, value ){
                      $("#nombreEmpleado option[value='"+ value +"']").attr("selected",true);
                  });
                  num2=$('#nombreEmpleado').val().length;
- 
+
              } */
 
         },
@@ -501,8 +501,9 @@ function calendario() {
             $("#selectHorario").val("Asignar horario");
             $('#errorSel').hide();
             $("#selectHorario").trigger("change");
-            $('#fueraHSwitch').prop('checked', false)
-
+            $('#fueraHSwitch').prop('checked', true)
+            $('#horAdicSwitch').prop('checked', false)
+            $('#horCompSwitch').prop('checked', true)
             $('#horarioAsignar_ed').modal('show');
 
         },

@@ -39,6 +39,7 @@ $(document).ready(function () {
         $(this).blur();
     });
     $(".flatpickr-input[readonly]").prop("readonly", false);
+
 });
 
 function calendarioInv() {
@@ -643,6 +644,21 @@ function agregarHorarioSe(){
         fueraHora=0;
         console.log(fueraHora);
     }
+    // HORARIO COMPENSABLE
+    var horarioC;
+    if ($('#horCompSwitch').prop('checked')) {
+        horarioC = 1;
+    } else {
+        horarioC = 0;
+    }
+
+    // HORA ADICIONAL
+    var horarioA;
+    if ($('#horAdicSwitch').prop('checked')) {
+        horarioA = 1;
+    } else {
+        horarioA = 0;
+    }
     var idempleado = $("#idempleado").val();
     var diasEntreFechas = function (desde, hasta) {
         var dia_actual = desde;
@@ -682,7 +698,7 @@ function agregarHorarioSe(){
             fechasArray: fechastart,
             hora: textSelec,
             idhorar: idhorar,
-            idempleado,fueraHora
+            idempleado,fueraHora,horarioC,horarioA
         },
         statusCode: {
             419: function () {
@@ -707,6 +723,37 @@ function agregarHorarioSe(){
 ////////////////////////////
 function abrirHorario_ed() {
     $('#divOtrodia_ed').hide();
+    $('#divPausa_ed').hide();
+    $('#inputPausa_ed').empty();
+    $('#inputPausa_ed').append('<div id="divEd_100" class="row col-md-12" style=" margin-bottom: 8px;">'+
+    '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa_ed[]" id="descPausa_ed" >'+
+    '<input type="text"  class="form-control form-control-sm col-sm-3" name="InicioPausa_ed[]"  id="InicioPausa_ed" >'+
+    '<input type="text"  class="form-control form-control-sm col-sm-3" name="FinPausa_ed[]"  id="FinPausa_ed" >'+
+        '&nbsp; <button class="btn btn-sm bt_ed" id="100" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;'+
+        ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>'+
+     '</div>');
+     $('.flatpickr-input[readonly]').on('focus', function () {
+        $(this).blur()
+    })
+    $('.flatpickr-input[readonly]').prop('readonly', false)
+     $(".bt_ed").each(function (el){
+        $(this).bind("click",addField);
+      });
+      $('#InicioPausa_ed').flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true
+    });
+    $('#FinPausa_ed').flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true
+    });
+    $('input[name="descPausa_ed[]"]').prop('required',false);
+        $('input[name="InicioPausa_ed[]"]').prop('required',false);
+        $('input[name="FinPausa_ed[]"]').prop('required',false);
     $("#frmHor_ed")[0].reset();
     $("#horarioAgregar_ed").modal("show");
 }
@@ -717,6 +764,22 @@ function registrarHorario_ed() {
     var toleranciaH = $("#toleranciaH_ed").val();
     var inicio = $("#horaI_ed").val();
     var fin = $("#horaF_ed").val();
+    toleranciaF = $('#toleranciaSalida_ed').val();
+    horaOblig = $('#horaOblig_ed').val();
+    if ($('#SwitchPausa_ed').is(":checked")) {
+        var descPausa = [];
+        var pausaInicio = [];
+        var finPausa = [];
+        $('input[name="descPausa_ed[]"]').each(function () {
+            descPausa.push($(this).val());
+        });
+        $('input[name="InicioPausa_ed[]"]').each(function () {
+            pausaInicio.push($(this).val());
+        });
+        $('input[name="FinPausa_ed[]"]').each(function () {
+            finPausa.push($(this).val());
+        });
+    }
 
     $.ajax({
         type: "post",
@@ -725,7 +788,7 @@ function registrarHorario_ed() {
             descripcion,
             toleranciaH,
             inicio,
-            fin
+            fin,descPausa, pausaInicio, finPausa, toleranciaF, horaOblig
         },
         statusCode: {
             419: function () {
@@ -1129,7 +1192,9 @@ function calendario2() {
             $("#selectHorario").val("Seleccionar horario");
             $('#errorSel_re').hide();
             $("#selectHorario").trigger("change");
-            $('#fueraHSwitch_re').prop('checked',false)
+            $('#fueraHSwitch_re').prop('checked',true)
+            $('#horAdicSwitch_re').prop('checked', false)
+            $('#horCompSwitch_re').prop('checked', true)
             $("#horarioAsignar").modal("show");
         },
         eventClick: function (info) {
@@ -1238,6 +1303,37 @@ document.addEventListener("DOMContentLoaded", calendario2);
 
 function abrirHorario() {
     $('#divOtrodia').hide();
+    $('#divPausa').hide();
+    $('#inputPausa').empty();
+    $('#inputPausa').append('<div id="div_100" class="row col-md-12" style=" margin-bottom: 8px;">'+
+    '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa[]" id="descPausa" >'+
+    '<input type="text"  class="form-control form-control-sm col-sm-3" name="InicioPausa[]"  id="InicioPausa" >'+
+    '<input type="text"  class="form-control form-control-sm col-sm-3" name="FinPausa[]"  id="FinPausa" >'+
+        '&nbsp; <button class="btn btn-sm bt_re" id="400" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;'+
+        ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>'+
+     '</div>');
+     $('.flatpickr-input[readonly]').on('focus', function () {
+        $(this).blur()
+    })
+    $('.flatpickr-input[readonly]').prop('readonly', false)
+     $(".bt_re").each(function (el){
+        $(this).bind("click",addFieldRe);
+      });
+      $('#InicioPausa').flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true
+    });
+    $('#FinPausa').flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true
+    });
+    $('input[name="descPausa[]"]').prop('required',false);
+        $('input[name="InicioPausa[]"]').prop('required',false);
+        $('input[name="FinPausa[]"]').prop('required',false);
     $("#frmHor")[0].reset();
     $("#horarioAgregar").modal("show");
 }
@@ -1248,6 +1344,22 @@ function registrarHorario() {
     var toleranciaH = $("#toleranciaH").val();
     var inicio = $("#horaI").val();
     var fin = $("#horaF").val();
+    toleranciaF = $('#toleranciaSalida').val();
+    horaOblig = $('#horaOblig').val();
+    if ($('#SwitchPausa').is(":checked")) {
+        var descPausa = [];
+        var pausaInicio = [];
+        var finPausa = [];
+        $('input[name="descPausa[]"]').each(function () {
+            descPausa.push($(this).val());
+        });
+        $('input[name="InicioPausa[]"]').each(function () {
+            pausaInicio.push($(this).val());
+        });
+        $('input[name="FinPausa[]"]').each(function () {
+            finPausa.push($(this).val());
+        });
+    }
 
     $.ajax({
         type: "post",
@@ -1256,7 +1368,7 @@ function registrarHorario() {
             descripcion,
             toleranciaH,
             inicio,
-            fin,
+            fin,descPausa, pausaInicio, finPausa, toleranciaF, horaOblig
         },
         statusCode: {
             419: function () {
@@ -1310,6 +1422,21 @@ function agregarHorarioSe_regis() {
         fueraHora=0;
         console.log(fueraHora);
     }
+     // HORARIO COMPENSABLE
+     var horarioC;
+     if ($('#horCompSwitch_re').prop('checked')) {
+         horarioC = 1;
+     } else {
+         horarioC = 0;
+     }
+
+     // HORA ADICIONAL
+     var horarioA;
+     if ($('#horAdicSwitch_re').prop('checked')) {
+         horarioA = 1;
+     } else {
+         horarioA = 0;
+     }
     var idhorar = $("#selectHorario").val();
     if(idhorar==null){
         $('#errorSel_re').show();
@@ -1357,7 +1484,7 @@ function agregarHorarioSe_regis() {
             hora: textSelec,
 
             idhorar: idhorar,
-            idca,fueraHora
+            idca,fueraHora,horarioC,horarioA
         },
         statusCode: {
             419: function () {
@@ -1625,7 +1752,9 @@ function calendario2_ed() {
             $("#selectHorario_ed").val("Seleccionar horario");
             $('#errorSel').hide();
             $("#selectHorario_ed").trigger("change");
-            $('#fueraHSwitch').prop('checked',false)
+            $('#fueraHSwitch').prop('checked', true)
+            $('#horAdicSwitch').prop('checked', false)
+            $('#horCompSwitch').prop('checked', true)
             $("#horarioAsignar_ed").modal("show");
         },
         eventClick: function (info) {
@@ -5159,3 +5288,152 @@ $('#selectarea').on("change", function (e) {
     console.log($('#selectarea').val());
     RefreshTablaEmpleadoArea();
   });
+
+///PAUSAS HORARIO EDITAR
+$('#SwitchPausa_ed').change(function (event) {
+    if ($('#SwitchPausa_ed').prop('checked')) {
+        $('input[name="descPausa_ed[]"]').prop('required', true);
+        $('#InicioPausa_ed').prop('required', true);
+        $('#FinPausa_ed').prop('required', true);
+        $('#divPausa_ed').show();
+    }
+    else {
+
+        $('input[name="descPausa_ed[]"]').val('');
+        $('input[name="InicioPausa_ed[]"]').val('');
+        $('input[name="FinPausa_ed[]"]').val('');
+        $('#divPausa_ed').hide();
+        $('input[name="descPausa_ed[]"]').prop('required', false);
+        $('input[name="InicioPausa_ed[]"]').prop('required', false);
+        $('input[name="FinPausa_ed[]"]').prop('required', false);
+    }
+    event.preventDefault();
+});
+function addField(){
+
+    var clickID = parseInt($(this).parent('div').attr('id').replace('divEd_',''));
+    // Genero el nuevo numero id
+    var newID = (clickID+1);
+    // Creo un clon del elemento div que contiene los campos de texto
+    $newClone = $('#divEd_'+clickID).clone(true);
+    //Le asigno el nuevo numero id
+    $newClone.attr("id",'divEd_'+newID);
+    $newClone.children("input").eq(0).attr("id",'descPausa_ed'+newID).val('');
+    //Borro el valor del segundo campo input(este caso es el campo de cantidad)
+    $newClone.children("input").eq(1).attr("id",'InicioPausa_ed'+newID).val('').prop('required',true).flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true
+    });
+    $newClone.children("input").eq(2).attr("id",'FinPausa_ed'+newID).val('').prop('required',true).flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true
+    });;
+
+
+    $newClone.children("button").attr("id",newID)
+    //Inserto el div clonado y modificado despues del div original
+    $newClone.insertAfter($('#divEd_'+clickID));
+    //Cambio el signo "+" por el signo "-" y le quito el evento addfield
+    //$("#"+clickID-1).remove();
+    $("#"+clickID).css("backgroundColor","#f6cfcf");
+    $("#"+clickID).css("border-Color","#f6cfcf");
+    $("#"+clickID).css("color","#d11010");
+    $("#"+clickID).css("height","22px");
+    $("#"+clickID).css("font-weight","600");
+    $("#"+clickID).css("margin-top","5px");
+    $("#"+clickID).css("font-size","12px");
+    $("#"+clickID).css("width","19px");
+    $("#"+clickID).css("margin-left","20-px");
+    $('input[name="descPausa_ed[]"]').prop('required',true);
+    $('input[name="InicioPausa_ed[]"]').prop('required',true);
+    $('input[name="FinPausa_ed[]"]').prop('required',true);
+    $("#"+clickID).html('-').unbind("click",addField);
+    $('.flatpickr-input[readonly]').on('focus', function () {
+        $(this).blur()
+    })
+    $('.flatpickr-input[readonly]').prop('readonly', false)
+    //Ahora le asigno el evento delRow para que borre la fial en caso de hacer click
+    $("#"+clickID).bind("click",delRow);
+    }
+    function delRow() {
+    // Funcion que destruye el elemento actual una vez echo el click
+    $(this).parent('div').remove();
+    }
+///PAUSAS HORARIO AGREGAR
+$('#SwitchPausa').change(function (event) {
+    if ($('#SwitchPausa').prop('checked')) {
+        $('input[name="descPausa[]"]').prop('required', true);
+        $('#InicioPausa').prop('required', true);
+        $('#FinPausa').prop('required', true);
+        $('#divPausa').show();
+    }
+    else {
+
+        $('input[name="descPausa[]"]').val('');
+        $('input[name="InicioPausa[]"]').val('');
+        $('input[name="FinPausa[]"]').val('');
+        $('#divPausa').hide();
+        $('input[name="descPausa[]"]').prop('required', false);
+        $('input[name="InicioPausa[]"]').prop('required', false);
+        $('input[name="FinPausa[]"]').prop('required', false);
+    }
+    event.preventDefault();
+});
+function addFieldRe(){
+
+    var clickID = parseInt($(this).parent('div').attr('id').replace('div_',''));
+    // Genero el nuevo numero id
+    var newID = (clickID+1);
+    // Creo un clon del elemento div que contiene los campos de texto
+    $newClone = $('#div_'+clickID).clone(true);
+    //Le asigno el nuevo numero id
+    $newClone.attr("id",'div_'+newID);
+    $newClone.children("input").eq(0).attr("id",'descPausa'+newID).val('');
+    //Borro el valor del segundo campo input(este caso es el campo de cantidad)
+    $newClone.children("input").eq(1).attr("id",'InicioPausa'+newID).val('').prop('required',true).flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true
+    });
+    $newClone.children("input").eq(2).attr("id",'FinPausa'+newID).val('').prop('required',true).flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true
+    });;
+
+
+    $newClone.children("button").attr("id",newID)
+    //Inserto el div clonado y modificado despues del div original
+    $newClone.insertAfter($('#div_'+clickID));
+    //Cambio el signo "+" por el signo "-" y le quito el evento addfield
+    //$("#"+clickID-1).remove();
+    $("#"+clickID).css("backgroundColor","#f6cfcf");
+    $("#"+clickID).css("border-Color","#f6cfcf");
+    $("#"+clickID).css("color","#d11010");
+    $("#"+clickID).css("height","22px");
+    $("#"+clickID).css("font-weight","600");
+    $("#"+clickID).css("margin-top","5px");
+    $("#"+clickID).css("font-size","12px");
+    $("#"+clickID).css("width","19px");
+    $("#"+clickID).css("margin-left","20-px");
+    $('input[name="descPausa[]"]').prop('required',true);
+    $('input[name="InicioPausa[]"]').prop('required',true);
+    $('input[name="FinPausa[]"]').prop('required',true);
+    $("#"+clickID).html('-').unbind("click",addField);
+    $('.flatpickr-input[readonly]').on('focus', function () {
+        $(this).blur()
+    })
+    $('.flatpickr-input[readonly]').prop('readonly', false)
+    //Ahora le asigno el evento delRow para que borre la fial en caso de hacer click
+    $("#"+clickID).bind("click",delRow);
+    }
+    function delRow() {
+    // Funcion que destruye el elemento actual una vez echo el click
+    $(this).parent('div').remove();
+    }
