@@ -56,6 +56,7 @@ Route::post("licencia", "apiController@licenciaProducto")->middleware('apilogger
 
 //SEGUNDA VERSION
 Route::post("logueoV2", "apiVersionDosController@verificacion")->middleware('apilogger');
+Route::post("logueoE500", "apiVersionDosController@verificacionError500")->middleware('apilogger');
 Route::post("listaActividad", "apiVersionDosController@selectActividad")->middleware('token')->middleware('apilogger');
 Route::post("captura2", "apiVersionDosController@captura")->middleware('token')->middleware('apilogger');
 Route::post("capturaArray", "apiVersionDosController@capturaArray")->middleware('token')->middleware('apilogger');
@@ -71,4 +72,3 @@ Route::post("EmpleadoMovil", "apimovilController@EmpleadoMovil")->middleware('to
 Route::post("controladoresAct", "apimovilController@controladoresAct")->middleware('token')->middleware('apilogger');
 Route::post("marcacionMovil", "apimovilController@marcacionMovil")->middleware('token')->middleware('apilogger');
 Route::post("empleadoHorario", "apimovilController@empleadoHorario")->middleware('token')->middleware('apilogger');
-
