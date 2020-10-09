@@ -14,6 +14,7 @@ use App\persona;
 use App\promedio_captura;
 use App\vinculacion;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -45,6 +46,21 @@ class apiVersionDosController extends Controller
                 $licencia = licencia_empleado::where('id', '=', $vinculacion->idLicencia)->where('disponible', '!=', 'i')->get()->first();
                 if ($licencia) {
                     if ($vinculacion->hash == $request->get('codigo')) {
+                        // OBTENER HORAS
+                        $fecha = Carbon::now();
+                        $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
+                        $horas = DB::table('empleado as e')
+                            ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                            ->join('promedio_captura as promedio', 'promedio.idCaptura', '=', 'cp.idCaptura')
+                            ->leftJoin('horario_dias as h', 'h.id', '=', 'promedio.idHorario')
+                            ->select(
+                                DB::raw('TIME_FORMAT(SEC_TO_TIME(SUM(promedio.tiempo_rango)), "%H:%i:%s") as Total_Envio')
+                            )
+                            ->where(DB::raw('IF(h.id is null, DATE(cp.hora_ini), DATE(h.start))'), '=', $fechaHoy)
+                            ->where('e.emple_id', '=', $empleado->emple_id)
+                            ->get()
+                            ->first();
+                        // *****************
                         if ($vinculacion->serieDisco ==  null) {
                             $vinculacion->pc_mac = $request->get('pc_mac');
                             $vinculacion->serieDisco = $request->get('serieD');
@@ -57,7 +73,7 @@ class apiVersionDosController extends Controller
                             $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
                             return response()->json(array(
                                 "corte" => $organizacion->corteCaptura, "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
-                                'idUser' => $idOrganizacion, 'token' => $token->get()
+                                'idUser' => $idOrganizacion, 'tiempo' => $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio, 'token' => $token->get()
                             ), 200);
                         } else {
                             if ($vinculacion->serieDisco == $request->get('serieD')) {
@@ -71,7 +87,7 @@ class apiVersionDosController extends Controller
                                 $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
                                 return response()->json(array(
                                     "corte" => $organizacion->corteCaptura, "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
-                                    'idUser' => $idOrganizacion, 'token' => $token->get()
+                                    'idUser' => $idOrganizacion, 'tiempo' => $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio, 'token' => $token->get()
                                 ), 200);
                             } else {
                                 return response()->json("disco_erroneo", 400);
@@ -128,8 +144,41 @@ class apiVersionDosController extends Controller
         return response()->json($actividad, 200);
     }
 
+
     public function captura(Request $request)
     {
+        function carpetaImg($miniatura, $idEmpleado, $horaI, $nombre)
+        {
+            $orgCarpeta = DB::table('empleado as e')
+                ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                ->select('o.organi_id', 'o.organi_ruc')
+                ->where('e.emple_id', '=', $idEmpleado)
+                ->get()->first();
+            $codigoHashO = $orgCarpeta->organi_id . "s" . $orgCarpeta->organi_ruc;
+            $encodeO = intval($codigoHashO, 36);
+            $empCarpeta = DB::table('empleado as e')
+                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                ->select('p.perso_id')
+                ->where('e.emple_id', '=', $idEmpleado)
+                ->get()
+                ->first();
+            $codigoHashE = $idEmpleado . "s" . $empCarpeta->perso_id;
+            $encodeE = intval($codigoHashE, 36);
+            $fechaC = Carbon::parse($horaI)->isoFormat('YYYYMMDD');
+            // dd($fechaC);
+            if (!file_exists(app_path() . '/images/' . $encodeO . '/' . $encodeE . '/' . $fechaC . '/' . $nombre)) {
+                File::makeDirectory(app_path() . '/images/' . $encodeO . '/' . $encodeE . '/' . $fechaC . '/' . $nombre, $mode = 0777, true, true);
+            }
+            $data = $miniatura;
+            $data = str_replace('data:image/png;base64,', '', $data);
+            $data = str_replace(' ', '+', $data);
+            $path = app_path();
+            $image = base64_decode($data);
+            $fileName =  '/images/' . $encodeO . '/' . $encodeE . '/' . $fechaC . '/' . $nombre . '/' . uniqid() . '.jpeg';
+            $success = file_put_contents($path . $fileName, $image);
+
+            return $fileName;
+        }
         $capturaBuscar = captura::where("idEmpleado", "=", $request->get('idEmpleado'))
             ->where('hora_ini', '=', $request->get('hora_ini'))
             ->where('actividad', '=', $request->get('actividad'))
@@ -137,13 +186,19 @@ class apiVersionDosController extends Controller
             ->first();
 
         if ($capturaBuscar) {
+            $nombreM = carpetaImg($request->get('miniatura'), $request->get('idEmpleado'), $request->get('hora_ini'), 'miniatura');
+            $nombreI = carpetaImg($request->get('imagen'), $request->get('idEmpleado'), $request->get('hora_ini'), 'captura');
             $captura_imagen = new captura_imagen();
             $captura_imagen->idCaptura = $capturaBuscar->idCaptura;
-            $captura_imagen->miniatura = $request->get('miniatura');
-            $captura_imagen->imagen = $request->get('imagen');
+            // $captura_imagen->miniatura = $request->get('miniatura');
+            // $captura_imagen->imagen = $request->get('imagen');
+            $captura_imagen->miniatura = $nombreM;
+            $captura_imagen->imagen = $nombreI;
             $captura_imagen->save();
             return response()->json($capturaBuscar, 200);
         } else {
+            $nombreM = carpetaImg($request->get('miniatura'), $request->get('idEmpleado'), $request->get('hora_ini'), 'miniatura');
+            $nombreI = carpetaImg($request->get('imagen'), $request->get('idEmpleado'), $request->get('hora_ini'), 'captura');
             $captura = new captura();
             $captura->estado = $request->get('estado');
             $captura->actividad = $request->get('actividad');
@@ -160,8 +215,10 @@ class apiVersionDosController extends Controller
 
             $captura_imagen = new captura_imagen();
             $captura_imagen->idCaptura = $idCaptura;
-            $captura_imagen->miniatura = $request->get('miniatura');
-            $captura_imagen->imagen = $request->get('imagen');
+            // $captura_imagen->miniatura = $request->get('miniatura');
+            // $captura_imagen->imagen = $request->get('imagen');
+            $captura_imagen->miniatura = $nombreM;
+            $captura_imagen->imagen = $nombreI;
             $captura_imagen->save();
 
             $idHorario = $captura->idHorario_dias;
@@ -203,6 +260,38 @@ class apiVersionDosController extends Controller
 
     public function capturaArray(Request $request)
     {
+        function carpetaImgA($miniatura, $idEmpleado, $horaI, $nombre)
+        {
+            $orgCarpeta = DB::table('empleado as e')
+                ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                ->select('o.organi_id', 'o.organi_ruc')
+                ->where('e.emple_id', '=', $idEmpleado)
+                ->get()->first();
+            $codigoHashO = $orgCarpeta->organi_id . "s" . $orgCarpeta->organi_ruc;
+            $encodeO = intval($codigoHashO, 36);
+            $empCarpeta = DB::table('empleado as e')
+                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                ->select('p.perso_id')
+                ->where('e.emple_id', '=', $idEmpleado)
+                ->get()
+                ->first();
+            $codigoHashE = $idEmpleado . "s" . $empCarpeta->perso_id;
+            $encodeE = intval($codigoHashE, 36);
+            $fechaC = Carbon::parse($horaI)->isoFormat('YYYYMMDD');
+            // dd($fechaC);
+            if (!file_exists(app_path() . '/images/' . $encodeO . '/' . $encodeE . '/' . $fechaC . '/' . $nombre)) {
+                File::makeDirectory(app_path() . '/images/' . $encodeO . '/' . $encodeE . '/' . $fechaC . '/' . $nombre, $mode = 0777, true, true);
+            }
+            $data = $miniatura;
+            $data = str_replace('data:image/png;base64,', '', $data);
+            $data = str_replace(' ', '+', $data);
+            $path = app_path();
+            $image = base64_decode($data);
+            $fileName =  '/images/' . $encodeO . '/' . $encodeE . '/' . $fechaC . '/' . $nombre . '/' . uniqid() . '.jpeg';
+            $success = file_put_contents($path . $fileName, $image);
+
+            return $fileName;
+        }
         foreach ($request->all() as $key => $value) {
             $capturaBuscar = captura::where("idEmpleado", "=", $value['idEmpleado'])
                 ->where('hora_ini', '=', $value['hora_ini'])
@@ -210,12 +299,18 @@ class apiVersionDosController extends Controller
                 ->get()
                 ->first();
             if ($capturaBuscar) {
+                $nombreM = carpetaImgA($value['miniatura'], $value['idEmpleado'], $value['hora_ini'], 'miniatura');
+                $nombreI = carpetaImgA($value['imagen'], $value['idEmpleado'], $value['hora_ini'], 'captura');
                 $captura_imagen = new captura_imagen();
                 $captura_imagen->idCaptura = $capturaBuscar->idCaptura;
-                $captura_imagen->miniatura = $value['miniatura'];
-                $captura_imagen->imagen = $value['imagen'];
+                // $captura_imagen->miniatura = $value['miniatura'];
+                // $captura_imagen->imagen = $value['imagen'];
+                $captura_imagen->miniatura = $nombreM;
+                $captura_imagen->imagen = $nombreI;
                 $captura_imagen->save();
             } else {
+                $nombreM = carpetaImgA($value['miniatura'], $value['idEmpleado'], $value['hora_ini'], 'miniatura');
+                $nombreI = carpetaImgA($value['imagen'], $value['idEmpleado'], $value['hora_ini'], 'captura');
                 $captura = new captura();
                 $captura->estado = $value['estado'];
                 $captura->actividad = $value['actividad'];
@@ -234,8 +329,10 @@ class apiVersionDosController extends Controller
                 //CAPTURA_IMAGEN
                 $captura_imagen = new captura_imagen();
                 $captura_imagen->idCaptura = $idCaptura;
-                $captura_imagen->miniatura = $value['miniatura'];
-                $captura_imagen->imagen = $value['imagen'];
+                // $captura_imagen->miniatura = $value['miniatura'];
+                // $captura_imagen->imagen = $value['imagen'];
+                $captura_imagen->miniatura = $nombreM;
+                $captura_imagen->imagen = $nombreI;
                 $captura_imagen->save();
 
                 //  PROMEDIO CAPTURA
