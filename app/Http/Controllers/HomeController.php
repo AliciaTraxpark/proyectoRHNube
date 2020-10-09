@@ -68,14 +68,26 @@ class HomeController extends Controller
     }
 
     public function elegirEmpresa(){
+        $usuario_organizacion = DB::table('usuario_organizacion as uso')
+            ->where('uso.organi_id', '=', null)
+            ->where('uso.user_id', '=', Auth::user()->id)
+            ->get()->first();
+            if($usuario_organizacion){
+                if($usuario_organizacion->rol_id==4){
+                    return redirect('/superadmin');
+                 }
+            }
 
-        $organizacion = DB::table('organizacion as o')
-        ->join('usuario_organizacion as uo', 'o.organi_id', '=', 'uo.organi_id')
-        ->join('rol as r', 'uo.rol_id', '=', 'r.rol_id')
-        ->where('uo.user_id','=',Auth::user()->id)
-        ->get();
-       /*  dd($organizacion); */
-        return view('elegirEmpresa', ['organizacion' => $organizacion]);
+         else{
+            $organizacion = DB::table('organizacion as o')
+            ->join('usuario_organizacion as uo', 'o.organi_id', '=', 'uo.organi_id')
+            ->join('rol as r', 'uo.rol_id', '=', 'r.rol_id')
+            ->where('uo.user_id','=',Auth::user()->id)
+            ->get();
+           /*  dd($organizacion); */
+            return view('elegirEmpresa', ['organizacion' => $organizacion]);
+         }
+
 
     }
 
