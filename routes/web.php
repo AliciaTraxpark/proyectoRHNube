@@ -181,6 +181,9 @@ Route::get('/reporteMensual', 'ControlController@reporteM');
 Route::get('/reporte/empleado', 'ControlController@EmpleadoReporte');
 Route::get('/mostrarCapturas', 'ControlController@mostrarCapturas');
 
+//FUNCION PARA MOSTRAR CAPTURAS Y MINIATURAS
+Route::get("mostrarMiniatura/{url}", "ControlController@apiMostrarCapturas");
+
 //probando excel
 Route::get('/export', 'MyController@export')->name('export');
 Route::get('importExportView', 'MyController@importExportView');
