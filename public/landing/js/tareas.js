@@ -205,8 +205,10 @@ function onMostrarPantallas() {
                                         ].hora_fin;
                                     for (let indexC = 0; indexC < data[index].minutos[j][indexMinutos].imagen.length; indexC++) {
                                         if (data[index].minutos[j][indexMinutos].imagen[indexC].imagen != null) {
+                                            var imgR = data[index].minutos[j][indexMinutos].imagen[indexC].imagen;
+                                            var rspI = imgR.replace(/\//g, "-");
                                             capturas += `<div class = "carousel-item">
-                                    <img src="data:image/jpeg;base64,${data[index].minutos[j][indexMinutos].imagen[indexC].imagen}" height="120" width="200" class="img-responsive">
+                                    <img src="api/mostrarMiniatura/${rspI}" height="120" width="200" class="img-responsive">
                                     <div class="overlay">
                                     <a class="info" onclick="zoom('${hora + "," + j
                                                 }')" style="color:#fdfdfd">
@@ -247,8 +249,11 @@ function onMostrarPantallas() {
                             if (promedio >= 50) nivel = "green";
                             else if (promedio > 35) nivel = "#f3c623";
                             else nivel = "red";
-                            console.log(data[index].minutos[j][0].imagen.length);
                             if (data[index].minutos[j][0].imagen.length) {
+
+                                var imgR = data[index].minutos[j][0].imagen[0].imagen;
+                                var rspI = imgR.replace(/\//g, "-");
+
                                 card = `<div class="col-2" style="margin-left: 0px!important;">
                                     <div class="mb-0 text-center" style="padding-left: 0px;">
                                         <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
@@ -269,7 +274,7 @@ function onMostrarPantallas() {
                                                     <div  id="myCarousel${hora + j
                                     }" class = "carousel carousel-fade" data-ride = "carousel">
                                                         <div class = "carousel-inner">
-                                                            <div class = "carousel-item active"><img src="data:image/jpeg;base64,${data[index].minutos[j][0].imagen[0].imagen}" height="120" width="200" class="img-responsive">
+                                                            <div class = "carousel-item active"><img src="api/mostrarMiniatura/${rspI}" height="120" width="200" class="img-responsive">
                                                             <div class="overlay">
                                     <a class="info" onclick="zoom('${hora + "," + j}')" style="color:#fdfdfd">
                                     <i class="fa fa-eye"></i> Colección</a>
