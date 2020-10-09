@@ -2,170 +2,167 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
-use App\control;
 use Illuminate\Support\Facades\DB;
-use App\empleado;
-use App\envio;
 use App\organizacion;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
+use Image;
 
 class ControlController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'verified']);
+        $this->middleware(['auth', 'verified'])->except('apiMostrarCapturas');
     }
     public function index()
     {
-        if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+        if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
             return redirect('/elegirorganizacion');
-        } else{
-        $usuario_organizacion = DB::table('usuario_organizacion as uso')
-            ->where('uso.organi_id', '=', session('sesionidorg'))
-            ->where('uso.user_id', '=', Auth::user()->id)
-            ->get()->first();
-        if ($usuario_organizacion->rol_id == 3) {
-            $invitado = DB::table('invitado as in')
-                ->where('organi_id', '=', session('sesionidorg'))
-                ->where('rol_id', '=', 3)
-                ->where('in.user_Invitado', '=', Auth::user()->id)
-                ->get()->first();
-            $empleado = DB::table('empleado as e')
-                ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
-                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
-                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                ->where('e.organi_id', '=', session('sesionidorg'))
-                ->where('e.emple_estado', '=', 1)
-                ->where('invi.estado', '=', 1)
-                ->where('invi.idinvitado', '=', $invitado->idinvitado)
-                ->groupBy('p.perso_id')
-                ->get();
         } else {
-            $empleado = DB::table('empleado as e')
-                ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
-                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                ->where('e.organi_id', '=', session('sesionidorg'))
-                ->where('e.emple_estado', '=', 1)
-                ->groupBy('p.perso_id')
-                ->get();
-        }
+            $usuario_organizacion = DB::table('usuario_organizacion as uso')
+                ->where('uso.organi_id', '=', session('sesionidorg'))
+                ->where('uso.user_id', '=', Auth::user()->id)
+                ->get()->first();
+            if ($usuario_organizacion->rol_id == 3) {
+                $invitado = DB::table('invitado as in')
+                    ->where('organi_id', '=', session('sesionidorg'))
+                    ->where('rol_id', '=', 3)
+                    ->where('in.user_Invitado', '=', Auth::user()->id)
+                    ->get()->first();
+                $empleado = DB::table('empleado as e')
+                    ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
+                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                    ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                    ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                    ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.emple_estado', '=', 1)
+                    ->where('invi.estado', '=', 1)
+                    ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                    ->groupBy('p.perso_id')
+                    ->get();
+            } else {
+                $empleado = DB::table('empleado as e')
+                    ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
+                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                    ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.emple_estado', '=', 1)
+                    ->groupBy('p.perso_id')
+                    ->get();
+            }
 
-        return view('tareas.tareas', ['empleado' => $empleado]);
-    }
+            return view('tareas.tareas', ['empleado' => $empleado]);
+        }
     }
 
     public function ReporteS()
     {
-        if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+        if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
             return redirect('/elegirorganizacion');
-        } else{
-        $usuario_organizacion = DB::table('usuario_organizacion as uso')
-            ->where('uso.organi_id', '=', session('sesionidorg'))
-            ->where('uso.user_id', '=', Auth::user()->id)
-            ->get()->first();
-        if ($usuario_organizacion->rol_id == 3) {
-            $invitado = DB::table('invitado as in')
-                ->where('organi_id', '=', session('sesionidorg'))
-                ->where('rol_id', '=', 3)
-                ->where('in.user_Invitado', '=', Auth::user()->id)
-                ->get()->first();
-            $empleado = DB::table('empleado as e')
-                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
-                ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
-                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                ->where('e.organi_id', '=', session('sesionidorg'))
-                ->where('e.emple_estado', '=', 1)
-                ->where('invi.estado', '=', 1)
-                ->where('invi.idinvitado', '=', $invitado->idinvitado)
-                ->groupBy('e.emple_id')
-                ->get();
         } else {
-            $empleado = DB::table('empleado as e')
-                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
-                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                ->where('e.organi_id', '=', session('sesionidorg'))
-                ->where('e.emple_estado', '=', 1)
-                ->groupBy('e.emple_id')
+            $usuario_organizacion = DB::table('usuario_organizacion as uso')
+                ->where('uso.organi_id', '=', session('sesionidorg'))
+                ->where('uso.user_id', '=', Auth::user()->id)
+                ->get()->first();
+            if ($usuario_organizacion->rol_id == 3) {
+                $invitado = DB::table('invitado as in')
+                    ->where('organi_id', '=', session('sesionidorg'))
+                    ->where('rol_id', '=', 3)
+                    ->where('in.user_Invitado', '=', Auth::user()->id)
+                    ->get()->first();
+                $empleado = DB::table('empleado as e')
+                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                    ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
+                    ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                    ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                    ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.emple_estado', '=', 1)
+                    ->where('invi.estado', '=', 1)
+                    ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                    ->groupBy('e.emple_id')
+                    ->get();
+            } else {
+                $empleado = DB::table('empleado as e')
+                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                    ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
+                    ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.emple_estado', '=', 1)
+                    ->groupBy('e.emple_id')
+                    ->get();
+            }
+
+            $areas = DB::table('area as a')
+                ->select('a.area_id', 'a.area_descripcion')
+                ->where('a.organi_id', '=', session('sesionidorg'))
                 ->get();
+
+            $cargos = DB::table('cargo as c')
+                ->select('c.cargo_id', 'c.cargo_descripcion')
+                ->where('c.organi_id', '=', session('sesionidorg'))
+                ->get();
+
+
+            return view('tareas.reporteSemanal', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos]);
         }
-
-        $areas = DB::table('area as a')
-            ->select('a.area_id', 'a.area_descripcion')
-            ->where('a.organi_id', '=', session('sesionidorg'))
-            ->get();
-
-        $cargos = DB::table('cargo as c')
-            ->select('c.cargo_id', 'c.cargo_descripcion')
-            ->where('c.organi_id', '=', session('sesionidorg'))
-            ->get();
-
-
-        return view('tareas.reporteSemanal', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos]);
     }
-}
 
     public function ReporteM()
     {
-        if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+        if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
             return redirect('/elegirorganizacion');
-        } else{
-        $usuario_organizacion = DB::table('usuario_organizacion as uso')
-            ->where('uso.organi_id', '=', session('sesionidorg'))
-            ->where('uso.user_id', '=', Auth::user()->id)
-            ->get()->first();
-        if ($usuario_organizacion->rol_id == 3) {
-            $invitado = DB::table('invitado as in')
-                ->where('organi_id', '=', session('sesionidorg'))
-                ->where('rol_id', '=', 3)
-                ->where('in.user_Invitado', '=', Auth::user()->id)
-                ->get()->first();
-            $empleado = DB::table('empleado as e')
-                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
-                ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
-                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                ->where('e.organi_id', '=', session('sesionidorg'))
-                ->where('e.emple_estado', '=', 1)
-                ->where('invi.estado', '=', 1)
-                ->where('invi.idinvitado', '=', $invitado->idinvitado)
-                ->groupBy('e.emple_id')
-                ->get();
         } else {
-            $empleado = DB::table('empleado as e')
-                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
-                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                ->where('e.organi_id', '=', session('sesionidorg'))
-                ->where('e.emple_estado', '=', 1)
-                ->groupBy('e.emple_id')
+            $usuario_organizacion = DB::table('usuario_organizacion as uso')
+                ->where('uso.organi_id', '=', session('sesionidorg'))
+                ->where('uso.user_id', '=', Auth::user()->id)
+                ->get()->first();
+            if ($usuario_organizacion->rol_id == 3) {
+                $invitado = DB::table('invitado as in')
+                    ->where('organi_id', '=', session('sesionidorg'))
+                    ->where('rol_id', '=', 3)
+                    ->where('in.user_Invitado', '=', Auth::user()->id)
+                    ->get()->first();
+                $empleado = DB::table('empleado as e')
+                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                    ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
+                    ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                    ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                    ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.emple_estado', '=', 1)
+                    ->where('invi.estado', '=', 1)
+                    ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                    ->groupBy('e.emple_id')
+                    ->get();
+            } else {
+                $empleado = DB::table('empleado as e')
+                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                    ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
+                    ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.emple_estado', '=', 1)
+                    ->groupBy('e.emple_id')
+                    ->get();
+            }
+
+            $areas = DB::table('area as a')
+                ->select('a.area_id', 'a.area_descripcion')
+                ->where('a.organi_id', '=', session('sesionidorg'))
                 ->get();
+
+            $cargos = DB::table('cargo as c')
+                ->select('c.cargo_id', 'c.cargo_descripcion')
+                ->where('c.organi_id', '=', session('sesionidorg'))
+                ->get();
+
+
+            return view('tareas.reporteMensual', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos]);
         }
-
-        $areas = DB::table('area as a')
-            ->select('a.area_id', 'a.area_descripcion')
-            ->where('a.organi_id', '=', session('sesionidorg'))
-            ->get();
-
-        $cargos = DB::table('cargo as c')
-            ->select('c.cargo_id', 'c.cargo_descripcion')
-            ->where('c.organi_id', '=', session('sesionidorg'))
-            ->get();
-
-
-        return view('tareas.reporteMensual', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos]);
     }
-}
 
     public function empleadoRefresh()
     {
@@ -452,6 +449,11 @@ class ControlController extends Controller
             return array_values($resultado);
         }
 
+        // function profilePicture($url)
+        // {
+        //     $appPath = app_path($url);
+        //     return Image::make($appPath)->response();
+        // }
         $idempleado = $request->get('value');
         $fecha = $request->get('fecha');
         $control = DB::table('empleado as e')
@@ -488,12 +490,23 @@ class ControlController extends Controller
                 ->get();
             $datos = [];
             foreach ($capturas as $cp) {
+                // dd(storage_path($cp->imagen));
+                // $url = base_path() . $cp->imagen;
+                // $cp->imagen = $url;
+                // dd($url);
                 array_push($datos, $cp);
             }
             $c->imagen = $datos;
         }
         $control = controlAJson($control);
         return response()->json($control, 200);
+    }
+
+    public function apiMostrarCapturas($url)
+    {
+        $resultado = str_replace("-", "/", $url);
+        $appPath = app_path($resultado);
+        return Image::make($appPath)->response();
     }
 
     public function mostrarCapturas(Request $request)
@@ -514,11 +527,11 @@ class ControlController extends Controller
     // REPORTES PERSONALIZADOS
     public function vistaReporte()
     {
-        if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+        if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
             return redirect('/elegirorganizacion');
-        } else{
-        $organizacion = organizacion::all('organi_id', 'organi_razonSocial');
-        return view('tareas.reportePersonalizado', ['organizacion' => $organizacion]);
+        } else {
+            $organizacion = organizacion::all('organi_id', 'organi_razonSocial');
+            return view('tareas.reportePersonalizado', ['organizacion' => $organizacion]);
         }
     }
     public function selctEmpleado($id)
@@ -572,12 +585,13 @@ class ControlController extends Controller
 
     // REPORTE PEROSNALIZADO TRAZABILIDAD DE CAPTURAS
     public function vistaTrazabilidad()
-    { if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
-        return redirect('/elegirorganizacion');
-    } else{
-        $organizacion = organizacion::all('organi_id', 'organi_razonSocial');
-        return view('tareas.reporteTrazabilidadC', ['organizacion' => $organizacion]);
-    }
+    {
+        if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
+            return redirect('/elegirorganizacion');
+        } else {
+            $organizacion = organizacion::all('organi_id', 'organi_razonSocial');
+            return view('tareas.reporteTrazabilidadC', ['organizacion' => $organizacion]);
+        }
     }
 
     public function capturasTrazabilidad(Request $request)
