@@ -543,8 +543,10 @@ class ControlController extends Controller
         // $respuesta = [];
         $empleados = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->join('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
             ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
             ->where('e.organi_id', '=', $id)
+            ->whereNotNull('v.pc_mac')
             ->get();
 
         // foreach ($empleados as $empleado) {
@@ -603,6 +605,7 @@ class ControlController extends Controller
         $fecha_horaI = $request->get('fecha_horaI');
         $fecha_horaF = $request->get('fecha_horaF');
         $organizacion = $request->get('organizacion');
+        $empleado = $request->get('empleado');
         $respuesta = [];
 
         $horaI = Carbon::create($request->get('fecha_horaI'))->format('H:i:s');
@@ -612,14 +615,26 @@ class ControlController extends Controller
         $date2 = new DateTime($fecha_horaF);
         $diff = $date1->diff($date2);
         // DB::enableQueryLog();
-        $empleado = DB::table('empleado as e')
-            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-            ->join('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
-            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-            ->where('e.organi_id', '=', $organizacion)
-            ->whereNotNull('v.pc_mac')
-            ->groupBy('e.emple_id')
-            ->get();
+        if (is_null($empleado) === true) {
+            $empleado = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->join('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
+                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                ->where('e.organi_id', '=', $organizacion)
+                ->whereNotNull('v.pc_mac')
+                ->groupBy('e.emple_id')
+                ->get();
+        } else {
+            $empleado = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->join('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
+                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                ->where('e.organi_id', '=', $organizacion)
+                ->whereIn('e.emple_id', $empleado)
+                ->whereNotNull('v.pc_mac')
+                ->groupBy('e.emple_id')
+                ->get();
+        }
         // dd(DB::getQueryLog());
         $horas = array();
         $cantidad = array();
