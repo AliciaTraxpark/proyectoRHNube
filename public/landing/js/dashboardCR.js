@@ -126,6 +126,7 @@ function fechasSemanal() {
   }
   return respuesta;
 }
+var colores = ['#77B6EA', '#545454'];
 function dataFechas() {
   var resp = [];
   var respuesta = fechasSemanal();
@@ -149,11 +150,22 @@ function dataFechas() {
           let serie = { "name": data[index].area, "data": result }
           resp.push(serie);
         }
+        for (let j = 3; j < data.length; j++) {
+          colores.push(getRandomColor());
+      }
       }
     }
   });
 
   return resp;
+}
+function getRandomColor() {
+  var letters = 'ABCDE'.split('');
+  var color = '#';
+  for (var i = 0; i < 3; i++) {
+      color += letters[Math.floor(Math.random() * letters.length)];
+  }
+  return color;
 }
 var options = {
   series: dataFechas(),
@@ -172,7 +184,7 @@ var options = {
       show: true
     }
   },
-  colors: ['#77B6EA', '#545454'],
+  colors: colores,
   dataLabels: {
     enabled: true,
     style: {
