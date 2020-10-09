@@ -507,7 +507,9 @@ function zoom(horayJ) {
             }).then(function (data) {
                 $("#esperaImg").hide();
                 if (data.length > 0) {
-                    carusel = `<a href="data:image/jpeg;base64,${data[0].imagen}" data-fancybox="images" data-caption="Hora de captura a las ${data[0].hora_fin}" data-width="2048" data-height="1365"><img src="data:image/jpeg;base64,${data[0].imagen}" width="350" height="300" style="padding-right:10px;padding-bottom:10px"></a>`;
+                    var imgR = data[0].imagen;
+                    var rspI = imgR.replace(/\//g, "-");
+                    carusel = `<a href="api/mostrarMiniatura/${rspI}" data-fancybox="images" data-caption="Hora de captura a las ${data[0].hora_fin}" data-width="2048" data-height="1365"><img src="api/mostrarMiniatura/${rspI}" width="350" height="300" style="padding-right:10px;padding-bottom:10px"></a>`;
                     document.getElementById("zoom").innerHTML += carusel;
                 }
             }).fail(function () {
