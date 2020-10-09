@@ -108,7 +108,7 @@
                     </div>
                     <div class="col-xl-4 text-center">
                         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
-                            onclick="javascript:buscarCapturas()"> <img src="{{asset('landing/images/loupe (1).svg')}}"
+                            onclick="javascript:buscarTrazabilidad()"> <img src="{{asset('landing/images/loupe (1).svg')}}"
                                 height="18"></button>
                     </div>
                 </div>

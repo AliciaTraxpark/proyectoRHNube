@@ -43,9 +43,6 @@ $('#horaI').flatpickr({
     onClose: function (selectedDates, dateStr, instance) {
         horaFinal.set("minTime", minHoraF());
         horaFinal.set("defaultDate", defaultHora());
-        if ($('#empresa :selected').text() != '') {
-            datosOrganizacion();
-        }
     }
 });
 function minHoraF() {
@@ -58,12 +55,6 @@ var horaFinal = $('#horaF').flatpickr({
     time_24hr: true,
     defaultDate: hf + ":00",
     minTime: minHoraF(),
-    onClose: function (selectedDates, dateStr, instance) {
-        console.log($('#empresa :selected').text());
-        if ($('#empresa :selected').text() != '') {
-            datosOrganizacion();
-        }
-    }
 });
 $('#empleado').select2({
     placeholder: 'Seleccionar',
@@ -238,20 +229,7 @@ function datosOrganizacion() {
         }
     });
 }
-$(function () {
-    $('#empresa').on("change", function (e) {
-        datosOrganizacion();
-    });
-    $('#fecha').on("change", function () {
-        if ($('#empresa :selected').text() != '') {
-            datosOrganizacion();
-        }
-    });
-    // $('#horaI').onClose(function () {
-    //     horaFinal.set("minTime", minHoraF());
-    //     datosOrganizacion();
-    // });
-    // $('#horaF').onClose(function () {
-    //     datosOrganizacion();
-    // });
-});
+
+function buscarTrazabilidad() {
+    datosOrganizacion();
+}
