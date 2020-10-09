@@ -57,15 +57,11 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-xl-5">
-                    <div class="card">
+                    <div class="card border"
+                        style="border-radius: 15px;border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
                         <div class="card-body p-0">
                             <div class="row">
                                 <div class="col-12 pr-5 pl-5 pt-5 pb-2">
-                                    <div class="mx-auto mb-2 text-center">
-                                        <a href="{{route('logout')}}">
-                                            <img src="{{asset('landing/images/ICONO-LOGO-NUBE-RH.ico')}}" height="90" />
-                                        </a>
-                                    </div>
                                     <div class="alert alert-success" id="alertSuccess" style="display: none"
                                         role="alert">
                                         <strong><img src="{{asset('admin/images/checked.svg')}}" height="20"
@@ -99,8 +95,7 @@
                                     <a id="enlace32">
                                         <button type="button" class="btn btn-sm btn-opacity-primary"
                                             style="font-size: 13.5px;border-radius: 10px;font-weight: 500">
-                                            <img src="{{asset('landing/images/folder.svg')}}" height="26"
-                                                class="mr-2">
+                                            <img src="{{asset('landing/images/folder.svg')}}" height="26" class="mr-2">
                                             RHbox X32
                                         </button>
                                     </a>
@@ -109,8 +104,7 @@
                                     <a id="enlace64">
                                         <button type="button" class="btn btn-sm btn-opacity-primary"
                                             style="font-size: 13.5px;border-radius: 10px;font-weight: 500">
-                                            <img src="{{asset('landing/images/folder.svg')}}" height="26"
-                                                class="mr-2">
+                                            <img src="{{asset('landing/images/folder.svg')}}" height="26" class="mr-2">
                                             RHbox X64
                                         </button>
                                     </a>
