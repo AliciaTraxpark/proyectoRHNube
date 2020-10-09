@@ -54,7 +54,7 @@ class apiVersionDosController extends Controller
                             ->join('promedio_captura as promedio', 'promedio.idCaptura', '=', 'cp.idCaptura')
                             ->leftJoin('horario_dias as h', 'h.id', '=', 'promedio.idHorario')
                             ->select(
-                                DB::raw('TIME_FORMAT(SEC_TO_TIME(SUM(promedio.tiempo_rango)), "%H:%i:%s") as Total_Envio'),
+                                DB::raw('TIME_FORMAT(SEC_TO_TIME(SUM(promedio.tiempo_rango)), "%H:%i:%s") as Total_Envio')
                             )
                             ->where(DB::raw('IF(h.id is null, DATE(cp.hora_ini), DATE(h.start))'), '=', $fechaHoy)
                             ->where('e.emple_id', '=', $empleado->emple_id)
