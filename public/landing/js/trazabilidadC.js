@@ -56,16 +56,10 @@ var horaFinal = $('#horaF').flatpickr({
     defaultDate: hf + ":00",
     minTime: minHoraF(),
 });
-$('#empleado').select2({
-    placeholder: 'Seleccionar',
-    minimumInputLength: 1,
-    language: {
-        inputTooShort: function (e) {
-            return "Escribir coincidencias...";
-        },
-        loadingMore: function () { return "Cargando más resultados…" },
-        noResults: function () { return "No se encontraron resultados" }
-    }
+$('#empresa').select2({
+    placeholder: 'Seleccionar empresa',
+    tags: true,
+    maximumSelectionLength: 1
 });
 $('#empresa').on("change", function () {
     $('#empleado').val(null).trigger("change");
@@ -104,6 +98,16 @@ $('#empresa').on("change", function () {
             error: function () { },
         });
     });
+});
+$('#empleado').select2({
+    placeholder: 'Seleccionar',
+    language: {
+        inputTooShort: function (e) {
+            return "Escribir coincidencias...";
+        },
+        loadingMore: function () { return "Cargando más resultados…" },
+        noResults: function () { return "No se encontraron resultados" }
+    }
 });
 function tablaRe() {
     $("#Reporte").DataTable({
@@ -146,15 +150,12 @@ function tablaRe() {
     });
 }
 tablaRe();
-$('#empresa').select2({
-    placeholder: 'Seleccionar empresa',
-    tags: true,
-    maximumSelectionLength: 1
-});
 function datosOrganizacion() {
     var fechaI = $('#fecha').val() + $('#horaI').val();
     var fechaF = $('#fecha').val() + $('#horaF').val();
     var organizacion = $('#empresa').val();
+    var empleado = $("#empleado").val();
+    console.log(empleado);
     if ($.fn.DataTable.isDataTable("#Reporte")) {
         $('#Reporte').DataTable().destroy();
     }
@@ -163,7 +164,8 @@ function datosOrganizacion() {
         data: {
             fecha_horaI: fechaI,
             fecha_horaF: fechaF,
-            organizacion: organizacion
+            organizacion: organizacion,
+            empleado: empleado
         },
         method: "GET",
         headers: {
