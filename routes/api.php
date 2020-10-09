@@ -72,5 +72,3 @@ Route::post("controladoresAct", "apimovilController@controladoresAct")->middlewa
 Route::post("marcacionMovil", "apimovilController@marcacionMovil")->middleware('token')->middleware('apilogger');
 Route::post("empleadoHorario", "apimovilController@empleadoHorario")->middleware('token')->middleware('apilogger');
 
-//API PARA MOSTRAR CAPTURAS Y MINIATURAS
-Route::get("mostrarMiniatura/{url}", "ControlController@apiMostrarCapturas");

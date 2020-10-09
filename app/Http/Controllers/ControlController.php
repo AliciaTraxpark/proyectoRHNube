@@ -14,7 +14,7 @@ class ControlController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'verified'])->except('apiMostrarCapturas');
+        $this->middleware(['auth', 'verified']);
     }
     public function index()
     {

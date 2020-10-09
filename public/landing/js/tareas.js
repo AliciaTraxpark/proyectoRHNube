@@ -208,7 +208,7 @@ function onMostrarPantallas() {
                                             var imgR = data[index].minutos[j][indexMinutos].imagen[indexC].imagen;
                                             var rspI = imgR.replace(/\//g, "-");
                                             capturas += `<div class = "carousel-item">
-                                    <img src="api/mostrarMiniatura/${rspI}" height="120" width="200" class="img-responsive">
+                                    <img src="mostrarMiniatura/${rspI}" height="120" width="200" class="img-responsive">
                                     <div class="overlay">
                                     <a class="info" onclick="zoom('${hora + "," + j
                                                 }')" style="color:#fdfdfd">
@@ -274,7 +274,7 @@ function onMostrarPantallas() {
                                                     <div  id="myCarousel${hora + j
                                     }" class = "carousel carousel-fade" data-ride = "carousel">
                                                         <div class = "carousel-inner">
-                                                            <div class = "carousel-item active"><img src="api/mostrarMiniatura/${rspI}" height="120" width="200" class="img-responsive">
+                                                            <div class = "carousel-item active"><img src="mostrarMiniatura/${rspI}" height="120" width="200" class="img-responsive">
                                                             <div class="overlay">
                                     <a class="info" onclick="zoom('${hora + "," + j}')" style="color:#fdfdfd">
                                     <i class="fa fa-eye"></i> Colección</a>
@@ -509,7 +509,7 @@ function zoom(horayJ) {
                 if (data.length > 0) {
                     var imgR = data[0].imagen;
                     var rspI = imgR.replace(/\//g, "-");
-                    carusel = `<a href="api/mostrarMiniatura/${rspI}" data-fancybox="images" data-caption="Hora de captura a las ${data[0].hora_fin}" data-width="2048" data-height="1365"><img src="api/mostrarMiniatura/${rspI}" width="350" height="300" style="padding-right:10px;padding-bottom:10px"></a>`;
+                    carusel = `<a href="mostrarMiniatura/${rspI}" data-fancybox="images" data-caption="Hora de captura a las ${data[0].hora_fin}" data-width="2048" data-height="1365"><img src="mostrarMiniatura/${rspI}" width="350" height="300" style="padding-right:10px;padding-bottom:10px"></a>`;
                     document.getElementById("zoom").innerHTML += carusel;
                 }
             }).fail(function () {
