@@ -555,6 +555,7 @@ class ControlController extends Controller
             ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
             ->where('e.organi_id', '=', $id)
             ->whereNotNull('v.pc_mac')
+            ->groupBy('e.emple_id')
             ->get();
 
         // foreach ($empleados as $empleado) {
