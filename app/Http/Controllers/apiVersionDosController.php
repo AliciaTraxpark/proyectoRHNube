@@ -46,6 +46,21 @@ class apiVersionDosController extends Controller
                 $licencia = licencia_empleado::where('id', '=', $vinculacion->idLicencia)->where('disponible', '!=', 'i')->get()->first();
                 if ($licencia) {
                     if ($vinculacion->hash == $request->get('codigo')) {
+                        // OBTENER HORAS
+                        $fecha = Carbon::now();
+                        $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
+                        $horas = DB::table('empleado as e')
+                            ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                            ->join('promedio_captura as promedio', 'promedio.idCaptura', '=', 'cp.idCaptura')
+                            ->leftJoin('horario_dias as h', 'h.id', '=', 'promedio.idHorario')
+                            ->select(
+                                DB::raw('TIME_FORMAT(SEC_TO_TIME(SUM(promedio.tiempo_rango)), "%H:%i:%s") as Total_Envio'),
+                            )
+                            ->where(DB::raw('IF(h.id is null, DATE(cp.hora_ini), DATE(h.start))'), '=', $fechaHoy)
+                            ->where('e.emple_id', '=', $empleado->emple_id)
+                            ->get()
+                            ->first();
+                        // *****************
                         if ($vinculacion->serieDisco ==  null) {
                             $vinculacion->pc_mac = $request->get('pc_mac');
                             $vinculacion->serieDisco = $request->get('serieD');
@@ -58,7 +73,7 @@ class apiVersionDosController extends Controller
                             $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
                             return response()->json(array(
                                 "corte" => $organizacion->corteCaptura, "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
-                                'idUser' => $idOrganizacion, 'token' => $token->get()
+                                'idUser' => $idOrganizacion, 'tiempo' => $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio, 'token' => $token->get()
                             ), 200);
                         } else {
                             if ($vinculacion->serieDisco == $request->get('serieD')) {
@@ -72,7 +87,7 @@ class apiVersionDosController extends Controller
                                 $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
                                 return response()->json(array(
                                     "corte" => $organizacion->corteCaptura, "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
-                                    'idUser' => $idOrganizacion, 'token' => $token->get()
+                                    'idUser' => $idOrganizacion, 'tiempo' => $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio, 'token' => $token->get()
                                 ), 200);
                             } else {
                                 return response()->json("disco_erroneo", 400);
