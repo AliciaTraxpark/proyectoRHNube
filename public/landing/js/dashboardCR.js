@@ -52,11 +52,9 @@ function resultadoCR() {
     success: function (data) {
       var promedio = data.actvidadCR.resultado.toFixed(2);
       resultado = promedio;
-      console.log(data.empleado);
       $('#avatars').empty();
       var li = "";
       for (let index = 0; index < data.empleado.length; index++) {
-        console.log(data.empleado[index].foto);
         if (data.empleado[index].foto === "") {
           li += `<img class="liImg" src="admin/assets//images/users/avatar-7.png"  data-toggle="tooltip" data-placement="right" title="${data.empleado[index].perso_nombre} ${data.empleado[index].perso_apPaterno}"/>`;
         } else {
@@ -100,7 +98,6 @@ $(function () {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     success: function (data) {
-      console.log(data);
       var fecha = `${data.created_at}`;
       $('#fechaO').append(fecha);
     }
@@ -265,7 +262,6 @@ $('#area').select2({
 });
 
 $('#area').on("change", function (e) {
-  console.log($('#area').val());
   empleadosControlRemoto();
 });
 // FECHA
@@ -301,7 +297,6 @@ function empleadosControlRemoto() {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     success: function (data) {
-      console.log(data);
       datos = data;
       var tr = "";
       for (let index = 0; index < data.length; index++) {
