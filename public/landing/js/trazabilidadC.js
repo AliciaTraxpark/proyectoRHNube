@@ -103,7 +103,7 @@ $('#empleado').select2({
     placeholder: 'Seleccionar',
     language: {
         inputTooShort: function (e) {
-            return "Escribir coincidencias...";
+            return "Escribir nombre o apellido";
         },
         loadingMore: function () { return "Cargando más resultados…" },
         noResults: function () { return "No se encontraron resultados" }
