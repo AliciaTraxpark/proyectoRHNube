@@ -26,7 +26,7 @@
 @section('breadcrumb')
 <div class="row page-title">
     <div class="col-md-12">
-        <h4 class="mb-1 mt-0">Reporte Semanal - Búsqueda por fecha</h4>
+        <h4 class="mb-1 mt-0">Reporte semanal - Búsqueda por fecha</h4>
     </div>
 </div>
 @endsection
@@ -52,31 +52,35 @@
         font-size: small !important;
     }
 </style>
+<div class="row justify-content-center p-5">
+    <div class="col-xl-3" style="padding-left: 2%;padding-right: 0%;">
+        <div class="input-group col-xl-12">
+            <input type="text" id="fecha" class="form-control">
+            <div class="input-group-prepend">
+                <div class="input-group-text form-control"><i class="uil uil-calender"></i></div>
+            </div>
+            <div class="pl-2">
+                <button type="button" class="btn btn-sm pb-2" style="background-color: #163552;"
+                    onclick="javascript:buscarReporte()"> <img src="{{asset('landing/images/loupe (1).svg')}}"
+                        height="18" class="text-center"></button>
+            </div>
+        </div>
+        {{-- <div class="col-xl-1" style="padding-left: 0%;padding-right: 0%">
+        <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
+            onclick="javascript:buscarReporte()"> <img src="{{asset('landing/images/loupe (1).svg')}}"
+        height="18"></button>
+    </div> --}}
+</div>
+<div class="col-xl-2" style="margin-right: 5%;">
+    <button type="button" class="btn btn-sm pb-2" style="background-color: #163552;"
+        onclick="javascript:mostrarGrafica()"><i class="fa fa-eye mr-1"></i>VER GRAFICO
+    </button>
+</div>
+</div>
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
-                <div class="row pb-2">
-                    <div class="col-md-8">
-                        <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
-                            onclick="javascript:mostrarGrafica()"><i class="fa fa-eye mr-1"></i>VER GRAFICO
-                        </button>
-                    </div>
-                    <div class="col-md-3 text-right">
-                        <div class="input-group col-md-12 pl-5">
-                            <input type="text" id="fecha" class="form-control">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text form-control"><i class="uil uil-calender"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-1 text-center">
-                        <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
-                            onclick="javascript:buscarReporte()"> <img src="{{asset('landing/images/loupe (1).svg')}}"
-                                height="18"></button>
-                    </div>
-                </div>
-                <br>
                 <div class="row" id="graficaReporte" style="display: none">
                     <div class="col-lg-12">
                         <!-- Portlet card -->
