@@ -147,7 +147,7 @@ function dataFechas() {
           let serie = { "name": data[index].area, "data": result }
           resp.push(serie);
         }
-        for (let j = 3; j < data.length; j++) {
+        for (let j = 2; j < data.length; j++) {
           colores.push(getRandomColor());
       }
       }
