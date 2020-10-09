@@ -164,6 +164,8 @@
     URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')
     }}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
+<script src="{{URL::asset('admin/assets/libs/CryptoJS/md5.js') }}"></script>
+<script src="{{URL::asset('admin/assets/libs/CryptoJS/enc-base64.js') }}"></script>
 <script src="{{asset('landing/js/tareas.js')}}"></script>
 <script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
