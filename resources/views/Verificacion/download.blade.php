@@ -62,14 +62,6 @@
                         <div class="card-body p-0">
                             <div class="row">
                                 <div class="col-12 pr-5 pl-5 pt-5 pb-2">
-                                    <div class="alert alert-success" id="alertSuccess" style="display: none"
-                                        role="alert">
-                                        <strong><img src="{{asset('admin/images/checked.svg')}}" height="20"
-                                                class="mr-1 mt-1"></strong><span style="font-size: 14px;">Descarga
-                                            Activada.Ya puedes descargar <strong>RH box</strong></span>
-                                    </div>
-                                    <div class="alert alert-danger" role="alert" style="display: none;" id="alertError">
-                                    </div>
                                     <form action="javascript:enviarInstrucciones()" class="authentication-form">
                                         @csrf
                                         <div class="form-group">
@@ -83,15 +75,25 @@
                                                         style="font-size: 12px;border-bottom-right-radius: 5px; border-top-right-radius: 5px;"
                                                         aria-label="Default"
                                                         aria-describedby="inputGroup-sizing-default"
-                                                        id="enviarLicencia">Enviar</button>
+                                                        id="enviarLicencia"><img
+                                                            src="{{asset('landing/images/loupe (1).svg')}}" height="18"
+                                                            class="text-center mb-1"></button>
                                                 </div>
                                             </div>
                                         </div>
                                     </form>
+                                    <div class="alert alert-success" id="alertSuccess" role="alert" style="display: none;">
+                                        <strong><img src="{{asset('admin/images/checked.svg')}}" height="20"
+                                                class="mr-1 mt-1"></strong><span style="font-size: 14px;">Licencia
+                                            Valida.
+                                            Selecciona y descarga.</span>
+                                    </div>
+                                    <div class="alert alert-danger text-center" role="alert" style="display: none;" id="alertError">
+                                    </div>
                                 </div>
                             </div>
                             <div class="row justify-content-center pb-5">
-                                <div class="col-md-6 text-center">
+                                <div class="col-md-6 text-right">
                                     <a id="enlace32">
                                         <button type="button" class="btn btn-sm btn-opacity-primary"
                                             style="font-size: 13.5px;border-radius: 10px;font-weight: 500">
@@ -100,7 +102,7 @@
                                         </button>
                                     </a>
                                 </div>
-                                <div class="col-md-6 text-center">
+                                <div class="col-md-6 text-left">
                                     <a id="enlace64">
                                         <button type="button" class="btn btn-sm btn-opacity-primary"
                                             style="font-size: 13.5px;border-radius: 10px;font-weight: 500">
