@@ -398,4 +398,47 @@ class apiVersionDosController extends Controller
     {
         return response()->download(app_path() . "/file/RH box/RHbox.zip");
     }
+    public function horario(Request $request)
+    {
+        $respuesta = [];
+        $horario_empleado = DB::table('empleado as e')
+            ->where('e.emple_id', '=', $request->get('idEmpleado'))
+            ->get()
+            ->first();
+        if ($horario_empleado) {
+            $horario = DB::table('horario_empleado as he')
+                ->select('he.horario_dias_id', 'he.horario_horario_id', 'he.horarioComp', 'he.fuera_horario', 'he.horaAdic')
+                ->where('he.empleado_emple_id', '=', $request->get('idEmpleado'))
+                ->get();
+
+            foreach ($horario as $resp) {
+                $horario_dias = DB::table('horario_dias  as hd')
+                    ->select(DB::raw('DATE(hd.start) as start'), 'hd.id')
+                    ->where('hd.id', '=', $resp->horario_dias_id)
+                    ->get()->first();
+                $horario = DB::table('horario as h')
+                    ->select('h.horario_id', 'h.horario_descripcion', 'h.horaI', 'h.horaF', 'h.horasObliga as horasObligadas')
+                    ->where('h.horario_id', '=', $resp->horario_horario_id)
+                    ->get()->first();
+                $pausas = DB::table('pausas_horario as ph')
+                    ->select('ph.pausH_Inicio as pausaI', 'ph.pausH_Fin as pausaF')
+                    ->where('ph.horario_id', '=', $horario->horario_id)
+                    ->get()
+                    ->first();
+                $horario->idHorario_dias = $horario_dias->id;
+                $horario->horarioCompensable = $resp->horarioComp;
+                $horario->fueraHorario = $resp->fuera_horario;
+                $horario->horaAdicional = $resp->horaAdic;
+                $horario->pausaI = $pausas->pausaI;
+                $horario->pausaF = $pausas->pausaF;
+                $fecha = Carbon::now();
+                $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
+                if ($horario_dias->start == $fechaHoy) {
+                    array_push($respuesta, $horario);
+                }
+            }
+            return response()->json($respuesta, 200);
+        }
+        return response()->json("Empleado no encontrado", 400);
+    }
 }
