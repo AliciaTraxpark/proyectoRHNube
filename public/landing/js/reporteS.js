@@ -183,7 +183,7 @@ function onSelectFechas() {
     $('#dias').empty();
     $('#diasActvidad').empty();
     $('#empleadoActividad').empty();
-    $('#myChartD').empty();
+    $('#VacioImg').empty();
     $("#myChart").show();
     if (grafico.config != undefined) grafico.destroy();
     $.ajax({
@@ -536,14 +536,6 @@ function onSelectFechas() {
     })
 }
 
-$(function () {
-    $('#zonaHoraria').empty();
-    var zona = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    var split = zona.split("/");
-    nombre = `${split[0]} - ${split[1]}`;
-    $('#zonaHoraria').append(nombre);
-});
-
 // $(function () {
 //     $('#fecha').on('change.dp', function (e) {
 //         dato = $('#fecha').val();
@@ -600,6 +592,7 @@ function buscarReporte() {
     $('#busquedaA').show();
 }
 function mostrarGrafica() {
+    $('#VacioImg').toggle();
     $('#graficaReporte').toggle();
 }
 
