@@ -231,6 +231,7 @@ class ControlController extends Controller
                     ->where('e.emple_estado', '=', 1)
                     ->where('invi.estado', '=', 1)
                     ->groupBy('e.emple_id')
+                    ->orderBy('p.perso_nombre')
                     ->where('invi.idinvitado', '=', $invitado->idinvitado)
                     ->get();
             } else {
@@ -241,6 +242,7 @@ class ControlController extends Controller
                     ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
                     ->groupBy('e.emple_id')
+                    ->orderBy('p.perso_nombre')
                     ->get();
             }
         } else {
@@ -263,6 +265,7 @@ class ControlController extends Controller
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitado->idinvitado)
                         ->groupBy('e.emple_id')
+                        ->orderBy('p.perso_nombre')
                         ->get();
                 } else {
                     $empleados = DB::table('empleado as e')
@@ -273,6 +276,7 @@ class ControlController extends Controller
                         ->where('e.emple_estado', '=', 1)
                         ->whereIn('e.emple_area', $area)
                         ->groupBy('e.emple_id')
+                        ->orderBy('p.perso_nombre')
                         ->get();
                 }
             }
@@ -295,6 +299,7 @@ class ControlController extends Controller
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitado->idinvitado)
                         ->groupBy('e.emple_id')
+                        ->orderBy('p.perso_nombre')
                         ->get();
                 } else {
                     $empleados = DB::table('empleado as e')
@@ -305,6 +310,7 @@ class ControlController extends Controller
                         ->where('e.emple_estado', '=', 1)
                         ->whereIn('e.emple_cargo', $cargo)
                         ->groupBy('e.emple_id')
+                        ->orderBy('p.perso_nombre')
                         ->get();
                 }
             }
@@ -328,6 +334,7 @@ class ControlController extends Controller
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitado->idinvitado)
                         ->groupBy('e.emple_id')
+                        ->orderBy('p.perso_nombre')
                         ->get();
                 } else {
                     $empleados = DB::table('empleado as e')
@@ -339,6 +346,7 @@ class ControlController extends Controller
                         ->whereIn('e.emple_area', $area)
                         ->whereIn('e.emple_cargo', $cargo)
                         ->groupBy('e.emple_id')
+                        ->orderBy('p.perso_nombre')
                         ->get();
                 }
             }
