@@ -185,7 +185,7 @@ function onSelectFechasMensual() {
     $('#diasMensual').empty();
     $('#diasActvidad').empty();
     $('#empleadoActividad').empty();
-    $('#myChartDMensual').empty();
+    $('#VacioImg').empty();
     $("#myChartMensual").show();
     if (grafico.config != undefined) grafico.destroy();
     $.ajax({
@@ -210,7 +210,7 @@ function onSelectFechasMensual() {
         },
         success: function (data) {
             if (data.length > 0) {
-                $('#myChartDMensual').hide();
+                $('#VacioImg').hide();
                 var nombre = [];
                 var horas = [];
                 var prom = [];
@@ -525,13 +525,6 @@ function onSelectFechasMensual() {
         error: function (data) { }
     })
 }
-$(function () {
-    $('#zonaHoraria').empty();
-    var zona = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    var split = zona.split("/");
-    nombre = `${split[0]} - ${split[1]}`;
-    $('#zonaHoraria').append(nombre);
-});
 // $(function () {
 //     $('#fechaMensual').on('change.dp', function (e) {
 //         dato = $('#fechaMensual').val();
@@ -586,6 +579,7 @@ function buscarReporte() {
     $('#busquedaA').show();
 }
 function mostrarGraficaMensual() {
+    $('#VacioImg').toggle();
     $('#graficaReporteMensual').toggle();
 }
 

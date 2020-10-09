@@ -65,17 +65,12 @@
                         height="18" class="text-center mb-1"></button>
             </div>
         </div>
-        {{-- <div class="col-xl-1" style="padding-left: 0%;padding-right: 0%">
-        <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
-            onclick="javascript:buscarReporte()"> <img src="{{asset('landing/images/loupe (1).svg')}}"
-        height="18"></button>
-    </div> --}}
-</div>
-<div class="col-xl-2" style="margin-right: 5%;">
-    <button type="button" class="btn btn-sm pb-2" style="background-color: #163552;"
-        onclick="javascript:mostrarGrafica()"><i class="fa fa-eye mr-1"></i>VER GRAFICO
-    </button>
-</div>
+    </div>
+    <div class="col-xl-2" style="margin-right: 5%;">
+        <button type="button" class="btn btn-sm pb-2" style="background-color: #163552;"
+            onclick="javascript:mostrarGrafica()"><i class="fa fa-eye mr-1"></i>VER GRAFICO
+        </button>
+    </div>
 </div>
 <div class="row">
     <div class="col-lg-12">

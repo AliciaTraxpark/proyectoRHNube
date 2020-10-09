@@ -209,7 +209,7 @@ function onSelectFechas() {
         success: function (data) {
             if (data.length > 0) {
                 console.log(data);
-                $('#myChartD').hide();
+                $('#VacioImg').hide();
                 var nombre = [];
                 var horas = [];
                 var prom = [];
