@@ -185,7 +185,7 @@ class dashboardController extends Controller
                 ->where('invi.estado', '=', 1)
                 ->where('e.emple_estado', '=', 1)
                 ->where('invi.idinvitado', '=', $invitado->idinvitado)
-                ->groupBy('c.idEmpleado')
+                ->groupBy('c.id_tipoContrato')
                 ->get();
         } else {
 
@@ -201,7 +201,7 @@ class dashboardController extends Controller
                 ->select('tc.contrato_descripcion', DB::raw('COUNT(e.emple_id) as Total'))
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
-                ->groupBy('c.idEmpleado')
+                ->groupBy('c.id_tipoContrato')
                 ->get();
         }
 
@@ -473,15 +473,16 @@ class dashboardController extends Controller
 
     // DASHBOARD PARA CONTROL REMOTO
     public function dashboardCR()
-    {   if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
-        return redirect('/elegirorganizacion');
-    } else{
-        $areas = DB::table('area as a')
-            ->select('a.area_id', 'a.area_descripcion')
-            ->where('a.organi_id', '=', session('sesionidorg'))
-            ->get();
-        return view('dashboardCR', ['areas' => $areas]);
-    }
+    {
+        if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
+            return redirect('/elegirorganizacion');
+        } else {
+            $areas = DB::table('area as a')
+                ->select('a.area_id', 'a.area_descripcion')
+                ->where('a.organi_id', '=', session('sesionidorg'))
+                ->get();
+            return view('dashboardCR', ['areas' => $areas]);
+        }
     }
     public function globalControlRemoto(Request $request)
     {
