@@ -207,8 +207,10 @@ function onMostrarPantallas() {
                                         if (data[index].minutos[j][indexMinutos].imagen[indexC].imagen != null) {
                                             var imgR = data[index].minutos[j][indexMinutos].imagen[indexC].imagen;
                                             var rspI = imgR.replace(/\//g, "-");
+                                            var encr = CryptoJS.enc.Utf8.parse(rspI);
+                                            var base64 = CryptoJS.enc.Base64.stringify(encr);
                                             capturas += `<div class = "carousel-item">
-                                    <img src="mostrarMiniatura/${rspI}" height="120" width="200" class="img-responsive">
+                                    <img src="mostrarMiniatura/${base64}" height="120" width="200" class="img-responsive">
                                     <div class="overlay">
                                     <a class="info" onclick="zoom('${hora + "," + j
                                                 }')" style="color:#fdfdfd">
@@ -253,7 +255,8 @@ function onMostrarPantallas() {
 
                                 var imgR = data[index].minutos[j][0].imagen[0].imagen;
                                 var rspI = imgR.replace(/\//g, "-");
-
+                                var encr = CryptoJS.enc.Utf8.parse(rspI);
+                                var base64 = CryptoJS.enc.Base64.stringify(encr);
                                 card = `<div class="col-2" style="margin-left: 0px!important;">
                                     <div class="mb-0 text-center" style="padding-left: 0px;">
                                         <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
@@ -274,7 +277,7 @@ function onMostrarPantallas() {
                                                     <div  id="myCarousel${hora + j
                                     }" class = "carousel carousel-fade" data-ride = "carousel">
                                                         <div class = "carousel-inner">
-                                                            <div class = "carousel-item active"><img src="mostrarMiniatura/${rspI}" height="120" width="200" class="img-responsive">
+                                                            <div class = "carousel-item active"><img src="mostrarMiniatura/${base64}" height="120" width="200" class="img-responsive">
                                                             <div class="overlay">
                                     <a class="info" onclick="zoom('${hora + "," + j}')" style="color:#fdfdfd">
                                     <i class="fa fa-eye"></i> Colección</a>
@@ -509,7 +512,9 @@ function zoom(horayJ) {
                 if (data.length > 0) {
                     var imgR = data[0].imagen;
                     var rspI = imgR.replace(/\//g, "-");
-                    carusel = `<a href="mostrarMiniatura/${rspI}" data-fancybox="images" data-caption="Hora de captura a las ${data[0].hora_fin}" data-width="2048" data-height="1365"><img src="mostrarMiniatura/${rspI}" width="350" height="300" style="padding-right:10px;padding-bottom:10px"></a>`;
+                    var encr = CryptoJS.enc.Utf8.parse(rspI);
+                    var base64 = CryptoJS.enc.Base64.stringify(encr);
+                    carusel = `<a href="mostrarMiniatura/${base64}" data-fancybox="images" data-caption="Hora de captura a las ${data[0].hora_fin}" data-width="2048" data-height="1365"><img src="mostrarMiniatura/${base64}" width="350" height="300" style="padding-right:10px;padding-bottom:10px"></a>`;
                     document.getElementById("zoom").innerHTML += carusel;
                 }
             }).fail(function () {

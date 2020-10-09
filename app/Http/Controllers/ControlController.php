@@ -504,7 +504,11 @@ class ControlController extends Controller
 
     public function apiMostrarCapturas($url)
     {
-        $resultado = str_replace("-", "/", $url);
+        $res = base64_decode($url);
+        // $decode = base64_decode($url);
+        // $input_encoding = 'iso-2022-jp';
+        // $res = iconv($input_encoding, 'UTF-8', $decode);
+        $resultado = str_replace("-", "/", $res);
         $appPath = app_path($resultado);
         return Image::make($appPath)->response();
     }
