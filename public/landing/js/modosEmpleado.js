@@ -896,7 +896,7 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
         if (event.target.checked == true) {
             alertify
                 .confirm(
-                    "¿Activar el computador <strong>" +
+                    "<img src=\"admin/images/tick.svg\" height=\"20\" class=\"mr-1\">¿Activar el computador <strong>" +
                     pc +
                     "</strong> de&nbsp;" +
                     datos +
@@ -908,7 +908,7 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
                     }
                 )
                 .setting({
-                    title: "Activar Dispositivo",
+                    title: "Activar dispositivo - Modo Control Remoto",
                     labels: {
                         ok: "Aceptar",
                         cancel: "Cancelar",

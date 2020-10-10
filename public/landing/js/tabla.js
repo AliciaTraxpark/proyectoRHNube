@@ -191,7 +191,7 @@ function RefreshTablaEmpleadoArea() {
                                         data[i].emple_id +
                                         "," +
                                         data[i].vinculacion[j].idVinculacion +
-                                        "," + "'" +
+                                        "," + "'PC " +
                                         j + "'" +
                                         ",'" +
                                         data[i].perso_nombre +
@@ -559,7 +559,7 @@ function RefreshTablaEmpleado() {
                                         data[i].emple_id +
                                         "," +
                                         data[i].vinculacion[j].idVinculacion +
-                                        "," + "'" +
+                                        "," + "'PC " +
                                         j + "'" +
                                         ",'" +
                                         data[i].perso_nombre +
