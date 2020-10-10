@@ -545,7 +545,7 @@
                     if(data[0].vinculacion[i].pc != null){
                         $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(1)").text(data[0].vinculacion[i].pc);
                     }else{
-                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(1)").text("pc" + i);
+                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(1)").text("PC " + i);
                     }
                 }
             },
@@ -695,7 +695,7 @@ function verDEmpleado(idempleadoVer){
                      if(data[0].vinculacion[i].pc != null){
                         $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(1)").text(data[0].vinculacion[i].pc);
                     }else{
-                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(1)").text("pc" + i);
+                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(1)").text("PC " + i);
                     }
                 }
                 //VER

@@ -34,11 +34,20 @@ class correosEmpleadoController extends Controller
             ->select('e.emple_Correo')
             ->where('e.emple_id', '=', $idEmpleado)
             ->get()->first();
+        // DB::enableQueryLog();
+        $contar = DB::table('vinculacion as v')
+            ->select(DB::raw('COUNT(v.id) as cantidad'))
+            ->where('v.idEmpleado', '=', $idEmpleado)
+            ->where('v.id', '<', $idVinculacion)
+            ->get()
+            ->first();
+        // dd(DB::getQueryLog());
         $vinculacion = vinculacion::findOrFail($idVinculacion);
         if ($empleado->emple_Correo != "") {
             $licencia_empleado = licencia_empleado::findOrFail($vinculacion->idLicencia);
             $vinculacion->descarga = STR::random(25);
             $vinculacion->save();
+            $vinculacion->pc_mac = $vinculacion->pc_mac == null ? "PC " . $contar->cantidad : $vinculacion->pc_mac;
             $datos = [];
             $datos["correo"] = $empleado->emple_Correo;
             $email = array($datos["correo"]);
