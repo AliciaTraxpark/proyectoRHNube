@@ -79,7 +79,7 @@
                 <input type="hidden" id="empleadoControlR">
                 <form class="form-horizontal text-center">
                     <h5 class="modal-title" id="myModalLabel" style="font-size:
-                        15px"><img src="{{asset('admin/images/tick.svg')}}" height="25" class="mr-1 mt-1 pb-1">Activar
+                        15px"><img src="{{asset('admin/images/tick.svg')}}" height="25" class="mr-1">Activar
                         el computador de <span id="nombreECR"></span> y enviar un correo con sus credenciales</h5>
                 </form>
             </div>
