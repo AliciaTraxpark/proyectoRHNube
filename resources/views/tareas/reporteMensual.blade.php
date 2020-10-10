@@ -61,7 +61,7 @@
                 <div class="input-group-text form-control"><i class="uil uil-calender"></i></div>
             </div>
             <div class="pl-2">
-                <button type="button" class="btn btn-sm pb-1" style="background-color: #163552;"
+                <button type="button" class="btn btn-sm" style="background-color: #163552;"
                     onclick="javascript:buscarReporte()"> <img src="{{asset('landing/images/loupe (1).svg')}}"
                         height="18" class="text-center mb-1"></button>
             </div>
