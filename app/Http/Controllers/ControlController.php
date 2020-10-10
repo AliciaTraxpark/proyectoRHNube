@@ -538,13 +538,27 @@ class ControlController extends Controller
 
     // REPORTES PERSONALIZADOS
     public function vistaReporte()
-    {
+    {   $organizacion = organizacion::all('organi_id', 'organi_razonSocial');
+        $usuario_organizacion = DB::table('usuario_organizacion as uso')
+        ->where('uso.organi_id', '=', null)
+        ->where('uso.user_id', '=', Auth::user()->id)
+        ->get()->first();
+        if($usuario_organizacion){
+            if($usuario_organizacion->rol_id==4){
+                return view('tareas.reportePersonalizado', ['organizacion' => $organizacion,'idrol'=>$usuario_organizacion->rol_id]);
+             }
+        }
+      else{
         if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
             return redirect('/elegirorganizacion');
         } else {
-            $organizacion = organizacion::all('organi_id', 'organi_razonSocial');
-            return view('tareas.reportePersonalizado', ['organizacion' => $organizacion]);
+            $usuario_organizacionR = DB::table('usuario_organizacion as uso')
+            ->where('uso.organi_id', '=', session('sesionidorg'))
+            ->where('uso.user_id', '=', Auth::user()->id)
+            ->get()->first();
+            return view('tareas.reportePersonalizado', ['organizacion' => $organizacion,'idrol'=>$usuario_organizacionR->rol_id]);
         }
+    }
     }
     public function selctEmpleado($id)
     {
@@ -600,13 +614,28 @@ class ControlController extends Controller
 
     // REPORTE PEROSNALIZADO TRAZABILIDAD DE CAPTURAS
     public function vistaTrazabilidad()
-    {
+
+    {      $organizacion = organizacion::all('organi_id', 'organi_razonSocial');
+         $usuario_organizacion = DB::table('usuario_organizacion as uso')
+            ->where('uso.organi_id', '=', null)
+            ->where('uso.user_id', '=', Auth::user()->id)
+            ->get()->first();
+            if($usuario_organizacion){
+                if($usuario_organizacion->rol_id==4){
+                    return view('tareas.reporteTrazabilidadC', ['organizacion' => $organizacion,'idrol'=>$usuario_organizacion->rol_id]);
+                 }
+            }
+          else{
         if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
             return redirect('/elegirorganizacion');
         } else {
-            $organizacion = organizacion::all('organi_id', 'organi_razonSocial');
-            return view('tareas.reporteTrazabilidadC', ['organizacion' => $organizacion]);
+            $usuario_organizacionR = DB::table('usuario_organizacion as uso')
+            ->where('uso.organi_id', '=', session('sesionidorg'))
+            ->where('uso.user_id', '=', Auth::user()->id)
+            ->get()->first();
+            return view('tareas.reporteTrazabilidadC', ['organizacion' => $organizacion,'idrol'=>$usuario_organizacionR->rol_id]);
         }
+    }
     }
 
     public function capturasTrazabilidad(Request $request)
