@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Mail;
 
 class VerifyMailController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
     public function index()
     {
         $usuario = DB::table('users as u')
@@ -53,7 +57,7 @@ class VerifyMailController extends Controller
             $users = User::find(Auth::user()->id);
             $correo = array($datos['email']);
 
-            $organizacion = organizacion::where('organi_id', '=',session('sesionidorg'))->get()->first();
+            $organizacion = organizacion::where('organi_id', '=', session('sesionidorg'))->get()->first();
             Mail::to($correo)->queue(new CorreoMail($users, $persona, $organizacion));
         }
 
