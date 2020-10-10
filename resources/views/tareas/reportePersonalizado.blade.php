@@ -1,4 +1,4 @@
-@extends('layouts.vertical')
+@extends($idrol==4 ? 'layouts.verticalAd' : 'layouts.vertical')
 
 @section('css')
 <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />

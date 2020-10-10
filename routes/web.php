@@ -390,3 +390,5 @@ Route::get('/planes','PrecioPlanesController@vistaPrecios');
 //RUTAS SUPERADMIN
 Route::get('/superadmin', 'superAdmController@indexDashboard');
 Route::post('/sAdminDaOrga', 'superAdmController@datosOrgani');
+Route::post('/sAdmintipoOrg', 'superAdmController@tipoOrg');
+

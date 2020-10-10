@@ -129,7 +129,7 @@
                         <div class="col-lg-12 col-xl-12 text-center p-0">
                             <p class="py-4 m-0 text-muted " style="font-size: 16px">Sencillamente porque  te brindamos un alto Retorno de Inversión (ROI) en administración de personal desde el primer mes.</p>
                                 <div class="col-md-12"> <br>
-                                    <a {{-- href="{{route('registroPersona')}} "--}}><button onclick=" $('#modal-error').modal('show')"
+                                    <a  href="{{route('registroPersona')}} "><button {{-- onclick=" $('#modal-error').modal('show')" --}}
                                         class="btn btn-opacity-primary mr-1">COMIENZA
                                         AHORA</button></a>
                                 </div>

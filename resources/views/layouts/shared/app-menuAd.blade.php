@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
         padding: 9px 30px;
         font-size: 14.5px;
     }
-    
+
 </style>
 @php
 $usuario=DB::table('users')
@@ -42,25 +42,19 @@ $usuario_organizacion=DB::table('usuario_organizacion')
     <li>
 
         <a href="javascript: void(0);">
-            <i data-feather="clipboard"></i>
-            <span>Horarios</span>
+            <i data-feather="image"></i>
+            <span>Reporte de capturas</span>
             <span class="menu-arrow"></span>
         </a>
 
         <ul class="nav-second-level" aria-expanded="false">
             <li>
-
-
-                <a href="/horarios">
-
-                    <span>Asignar horario</span>
+                <a href="/reportePersonalizado">
+                    <span>Reporte personalizado</span>
                 </a>
-                <a href="/dias/laborales">
-
-                    <span>Asignar días no laborales</span>
+                <a href="/trazabilidadCapturas">
+                    <span>Trazabilidad capturas</span>
                 </a>
-
-
             </li>
         </ul>
     </li>
