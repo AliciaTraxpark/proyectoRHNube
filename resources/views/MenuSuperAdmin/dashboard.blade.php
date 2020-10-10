@@ -35,7 +35,7 @@
     #chartdiv {
 
 
-      height: 700px;
+      height: 500px;
     }
 
     </style>
