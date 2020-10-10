@@ -181,7 +181,9 @@ class apimovilController extends Controller
         $empleado = DB::table('empleado as e')
         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
         ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc as dni',
-         'e.emple_id as idempleado','h.horaI','h.horaF','h.horario_tolerancia as toleranciaIni','h.horario_toleranciaF as toleranciaFin','he.horarioEmp_id','hd.start as diaActual','he.fuera_horario as trabajafueraHor')
+         'e.emple_id as idempleado','h.horaI','h.horaF','h.horario_tolerancia as toleranciaIni',
+         'h.horario_toleranciaF as toleranciaFin','he.horarioEmp_id','hd.start as diaActual',
+         'he.fuera_horario as trabajafueraHor','he.horarioComp as horarioCompensable','he.horaAdic as horasAdicionales')
         ->join('horario_empleado as he','e.emple_id','=','he.empleado_emple_id')
         ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
         ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
