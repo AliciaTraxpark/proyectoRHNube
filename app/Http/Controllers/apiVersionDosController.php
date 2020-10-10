@@ -423,14 +423,12 @@ class apiVersionDosController extends Controller
                 $pausas = DB::table('pausas_horario as ph')
                     ->select('ph.pausH_Inicio as pausaI', 'ph.pausH_Fin as pausaF')
                     ->where('ph.horario_id', '=', $horario->horario_id)
-                    ->get()
-                    ->first();
+                    ->get();
                 $horario->idHorario_dias = $horario_dias->id;
                 $horario->horarioCompensable = $resp->horarioComp;
                 $horario->fueraHorario = $resp->fuera_horario;
                 $horario->horaAdicional = $resp->horaAdic;
-                $horario->pausaI = $pausas->pausaI;
-                $horario->pausaF = $pausas->pausaF;
+                $horario->pausas = $pausas;
                 $fecha = Carbon::now();
                 $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
                 if ($horario_dias->start == $fechaHoy) {
