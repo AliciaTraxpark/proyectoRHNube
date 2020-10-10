@@ -199,7 +199,7 @@ use App\persona;
             @endphp
             <h6 class="pro-user-name mt-0 mb-0" id="h6Nombres">{{$persona->perso_nombre}}
                 {{$persona->perso_apPaterno}}</h6>
-            <span class="pro-user-desc">Administrador </span>
+            <span class="pro-user-desc">SUPERADMINISTRADOR </span>
         </div>
 
     </div>
