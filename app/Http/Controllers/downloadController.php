@@ -31,7 +31,7 @@ class downloadController extends Controller
         if ($vinculacion) {
             $vinculacion->fecha_entrega = Carbon::now();
             $vinculacion->save();
-            return response()->download(app_path() . "/file/x64/RH box.exe");
+            return response()->download(app_path() . "/file/x64/RHbox64.exe");
         } else {
             return view('Verificacion.link');
         }
@@ -43,7 +43,7 @@ class downloadController extends Controller
         if ($vinculacion) {
             $vinculacion->fecha_entrega = Carbon::now();
             $vinculacion->save();
-            return response()->download(app_path() . "/file/x32/RH box.exe");
+            return response()->download(app_path() . "/file/x32/RHbox32.exe");
         } else {
             return view('Verificacion.link');
         }

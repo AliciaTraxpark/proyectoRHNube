@@ -273,7 +273,7 @@
             style="border-collapse:collapse;border-spacing:0px;padding:0;Margin:0;width:100%;height:100%;background-repeat:repeat;background-position:center top">
             <tr style="border-collapse:collapse">
                 <td valign="top" style="padding:0;Margin:0;background-color:#FAFAFA" bgcolor="#fafafa">
-                    {{-- <table cellpadding="0" cellspacing="0" class="es-header" align="center"
+                    <table cellpadding="0" cellspacing="0" class="es-header" align="center"
                         style="border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top">
                         <tr style="border-collapse:collapse">
                             <td class="es-adaptive" align="center" style="padding:0;Margin:0">
@@ -283,7 +283,7 @@
                                     <tr style="border-collapse:collapse">
                                         <td style="Margin:0;padding-top:20px;padding-bottom:20px;padding-left:20px;padding-right:20px;background-color:#163552"
                                             bgcolor="#163552" align="left">
-                                            <table class="es-left" cellspacing="0" cellpadding="0" align="left"
+                                            {{-- <table class="es-left" cellspacing="0" cellpadding="0" align="left"
                                                 style="border-collapse:collapse;border-spacing:0px;float:left">
                                                 <tr style="border-collapse:collapse">
                                                     <td class="es-m-p20b" align="left"
@@ -302,9 +302,9 @@
                                                         </table>
                                                     </td>
                                                 </tr>
-                                            </table>
+                                            </table> --}}
                                             <!--[if mso]></td><td style="width:20px"></td><td style="width:270px" valign="top"><![endif]-->
-                                            <table class="es-right" cellspacing="0" cellpadding="0" align="right">
+                                            {{-- <table class="es-right" cellspacing="0" cellpadding="0" align="right">
                                                 <tbody>
                                                     <tr>
                                                         <td class="esd-container-frame" width="270" align="left"
@@ -316,22 +316,22 @@
                                                                             class="esd-block-text es-p40t es-p40b">
                                                                             <p style="color: #ffffff;">
                                                                                 <strong>{{$organizacion->organi_razonSocial}}
-                    - {{$organizacion->organi_ruc}}<span style="color:#FFFFFF;"></span></strong>
-                    </p>
+                                            - {{$organizacion->organi_ruc}}<span style="color:#FFFFFF;"></span></strong>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table> --}}
                 </td>
             </tr>
-            </tbody>
-        </table>
-        </td>
-        </tr>
-        </tbody>
         </table>
         </td>
         </tr>
         </table>
-        </td>
-        </tr>
-        </table> --}}
         <table class="es-content" cellspacing="0" cellpadding="0" align="center"
             style="border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%">
             <tr style="border-collapse:collapse">
@@ -352,7 +352,7 @@
                                                     <td align="center"
                                                         style="padding:0;Margin:0;padding-top:5px;padding-bottom:15px;font-size:0px">
                                                         <img class="adapt-img"
-                                                            src="https://i.ibb.co/xstP0pg/ICONO-b.png" alt
+                                                            src="https://i.ibb.co/CnDQDp1/RH-CUADRADO-NUBE.png" alt
                                                             style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
                                                             width="175"></td>
                                                 </tr>
@@ -383,10 +383,12 @@
                                                         style="padding:0;Margin:0;padding-right:35px;padding-left:40px">
                                                         <p
                                                             style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666;text-align:center">
-                                                            Hola&nbsp;{{$persona->perso_nombre}} para empezar usar
+                                                            Hola&nbsp;{{$persona->perso_nombre}} para
+                                                            empezar usar
                                                             nuestra plataforma, descargue
                                                             la aplicación <strong>RH box</strong> que se
-                                                            encuentra disponible para <strong>Window 32/64bits</strong>
+                                                            encuentra disponible para <strong>Window
+                                                                32/64bits</strong>
                                                             en el siguiente enlace.
                                                         </p>
                                                     </td>
@@ -420,7 +422,8 @@
                                                         style="padding:0;Margin:0;padding-top:25px;padding-left:40px;padding-right:40px">
                                                         <strong
                                                             style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666">
-                                                            Puedes copiar y pegar en tu explorador favorito:</strong>
+                                                            Puedes copiar y pegar en tu explorador
+                                                            favorito:</strong>
                                                         <a href="{{url('descarga')}}"
                                                             style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#15c;text-align:center;font-weight: bold">
                                                             <?php echo e(url("descarga")) ?></a>
@@ -440,13 +443,24 @@
 
                                                 <tr style="border-collapse:collapse">
                                                     <td align="center"
-                                                        style="padding:0;Margin:0;padding-top:25px;padding-left:40px;padding-right:40px;padding-bottom:40px">
+                                                        style="padding:0;Margin:0;padding-top:25px;padding-left:40px;padding-right:40px;">
                                                         <strong
                                                             style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666">
                                                             Código interno</strong>
                                                         <p
                                                             style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666;text-align:center">
                                                             &nbsp;{{$vinculacion->hash}}</p>
+                                                    </td>
+                                                </tr>
+                                                <tr style="border-collapse:collapse">
+                                                    <td align="center"
+                                                        style="padding:0;Margin:0;padding-top:25px;padding-left:40px;padding-right:40px;padding-bottom:40px">
+                                                        <strong
+                                                            style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666">
+                                                            Nombre de dispositivo</strong>
+                                                        <p
+                                                            style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666;text-align:center">
+                                                            &nbsp;{{$vinculacion->pc_mac}}</p>
                                                     </td>
                                                 </tr>
                                                 <tr style="border-collapse:collapse">
@@ -506,7 +520,8 @@
                         <tr style="border-collapse:collapse">
                             <td style="Margin:0;padding-top:5px;padding-left:20px;padding-right:20px;padding-bottom:10px;background-color:#ffffff;background-position:left top"
                                 bgcolor="#ffffff" align="center">
-                                <span style="font-size: 14px; color: #333333; line-height: 120%;"><span>WhatsApp: +51
+                                <span style="font-size: 14px; color: #333333; line-height: 120%;"><span>WhatsApp:
+                                        +51
                                         914 480 786</span></span>
                             </td>
                         </tr>
@@ -520,7 +535,8 @@
                         <tr style="border-collapse:collapse">
                             <td style="Margin:0;padding-top:10px;padding-left:20px;padding-right:20px;padding-bottom:10px;background-color:#163552;background-position:left top;border-top: 2px solid #ffffff;border-bottom: 2px solid #ffffff"
                                 bgcolor="#163552" align="center">
-                                <span style="font-size: 14px; color: #ffffff; line-height: 120%;"><span>© 2020 RH nube
+                                <span style="font-size: 14px; color: #ffffff; line-height: 120%;"><span>©
+                                        2020 RH nube
                                         Corp - USA | Todos los derechos reservados.</span></span>
                                 <span
                                     style="font-size: 14px; color: #333333; line-height: 120%;"><span>www.rhnube.com.pe</span></span>

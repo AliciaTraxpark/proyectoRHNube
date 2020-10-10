@@ -605,8 +605,8 @@ class ControlController extends Controller
                 DB::raw("CASE WHEN(ci.idCaptura) IS NULL THEN 0 ELSE COUNT('ci.idCaptura') END AS cantidadI")
             )
             ->where('cp.idEmpleado', '=', $idEmpleado)
-            ->where(DB::raw('DATE(cp.hora_fin)'), '=', $fecha)
-            ->groupBy('ci.idCaptura')
+            ->where(DB::raw('DATE(cp.hora_ini)'), '=', $fecha)
+            ->groupBy('cp.idCaptura')
             ->get();
         // dd(DB::getQueryLog());
         return response()->json($captura, 200);

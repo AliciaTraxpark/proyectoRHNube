@@ -67,8 +67,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Registrar Dispositivo
-                    para Modo Control Remoto
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Activar dispositivo -
+                    Modo Control Remoto
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                     onclick="javascript:RefreshTablaEmpleado()">
@@ -78,9 +78,9 @@
             <div class="modal-body">
                 <input type="hidden" id="empleadoControlR">
                 <form class="form-horizontal text-center">
-                    <img src="{{asset('admin/images/tick.svg')}}" height="25" class="mr-1 mt-2 pb-1">
                     <h5 class="modal-title" id="myModalLabel" style="font-size:
-                        15px">Activar el computador de <span id="nombreECR"></span> y enviar un correo con sus credenciales</h5>
+                        15px"><img src="{{asset('admin/images/tick.svg')}}" height="25" class="mr-1">Activar
+                        el computador de <span id="nombreECR"></span> y enviar un correo con sus credenciales</h5>
                 </form>
             </div>
             <div class="modal-footer">
@@ -545,7 +545,7 @@
                     if(data[0].vinculacion[i].pc != null){
                         $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(1)").text(data[0].vinculacion[i].pc);
                     }else{
-                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(1)").text("pc" + i);
+                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(1)").text("PC " + i);
                     }
                 }
             },
@@ -695,7 +695,7 @@ function verDEmpleado(idempleadoVer){
                      if(data[0].vinculacion[i].pc != null){
                         $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(1)").text(data[0].vinculacion[i].pc);
                     }else{
-                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(1)").text("pc" + i);
+                        $("#trVer"+data[0].vinculacion[i].idVinculacion).find("td:eq(1)").text("PC " + i);
                     }
                 }
                 //VER
