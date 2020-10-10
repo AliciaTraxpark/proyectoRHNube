@@ -648,7 +648,7 @@ function agregarControlR(id) {
                         newest_on_top: true,
                         delay: 5000,
                         template:
-                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<div data-notify="container" class="col-xs-8 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
                             '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                             '<img data-notify="icon" class="img-circle pull-left" height="20">' +
                             '<span data-notify="title">{1}</span> ' +
@@ -896,7 +896,7 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
         if (event.target.checked == true) {
             alertify
                 .confirm(
-                    "¿Activar el computador <strong>" +
+                    "<img src=\"admin/images/tick.svg\" height=\"20\" class=\"mr-1\">¿Activar el computador <strong>" +
                     pc +
                     "</strong> de&nbsp;" +
                     datos +
@@ -908,7 +908,7 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
                     }
                 )
                 .setting({
-                    title: "Activar Dispositivo",
+                    title: "Activar dispositivo - Modo Control Remoto",
                     labels: {
                         ok: "Aceptar",
                         cancel: "Cancelar",
@@ -926,12 +926,8 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
         } else {
             alertify
                 .confirm(
-                    // "Al <strong> DESACTIVAR COMPUTADOR " +
-                    //     pc +
-                    //     "</strong> de <strong>" +
-                    //     datos +
-                    //     "</strong> no podrá usarla de desde este momento.",
-                    "El empleado no pódra usar esta licencia.<br>Tiempo estimado: 60 minutos.",
+                    "<img src=\"/landing/images/alert1.svg\" height=\"20\" class=\"mr-1 mt-0\">El empleado no pódra usar esta licencia.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
+                    Tiempo estimado: 60 minutos.",
                     function (e) {
                         if (e) {
                             inactivarEstadoCR(idEmpleado, id);
@@ -939,7 +935,7 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
                     }
                 )
                 .setting({
-                    title: "Desactivar Dispositivo",
+                    title: "Desactivar dispositivo - Modo Control Remoto",
                     labels: {
                         ok: "Aceptar",
                         cancel: "Cancelar",
