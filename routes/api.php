@@ -61,6 +61,7 @@ Route::post("captura2", "apiVersionDosController@captura")->middleware('token')-
 Route::post("capturaArray", "apiVersionDosController@capturaArray")->middleware('token')->middleware('apilogger');
 Route::post("actividad2", "apiVersionDosController@actividad")->middleware('token')->middleware('apilogger');
 Route::get("downloadUpdate", "apiVersionDosController@downloadActualizacion")->middleware('apilogger');
+Route::post("horario2", "apiVersionDosController@horario")->middleware('token')->middleware('apilogger');
 
 // TICKET DE SOPORTE Y SUGERENCIA
 Route::post("ticketSoporte", "apiVersionDosController@ticketSoporte")->middleware('token')->middleware('apilogger');
@@ -71,4 +72,3 @@ Route::post("EmpleadoMovil", "apimovilController@EmpleadoMovil")->middleware('to
 Route::post("controladoresAct", "apimovilController@controladoresAct")->middleware('token')->middleware('apilogger');
 Route::post("marcacionMovil", "apimovilController@marcacionMovil")->middleware('token')->middleware('apilogger');
 Route::post("empleadoHorario", "apimovilController@empleadoHorario")->middleware('token')->middleware('apilogger');
-

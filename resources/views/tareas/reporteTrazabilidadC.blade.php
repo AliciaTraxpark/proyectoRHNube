@@ -100,7 +100,8 @@
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Empleado</label>
                             <div class="col-lg-9">
-                                <select id="empleado" data-plugin="customselect" class="form-control">
+                                <select id="empleado" data-plugin="customselect" class="form-control"
+                                    multiple="multiple">
                                 </select>
                             </div>
 
@@ -108,8 +109,8 @@
                     </div>
                     <div class="col-xl-4 text-center">
                         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
-                            onclick="javascript:buscarCapturas()"> <img src="{{asset('landing/images/loupe (1).svg')}}"
-                                height="18"></button>
+                            onclick="javascript:buscarTrazabilidad()"> <img
+                                src="{{asset('landing/images/loupe (1).svg')}}" height="18"></button>
                     </div>
                 </div>
                 <div class="row justify-content-center">

@@ -41,7 +41,7 @@ function enviarLicencia() {
             $('#alertError').empty();
             if (error.responseJSON === "lic_no_disponible") {
                 mensaje = `<strong><img src="/landing/images/alert1.svg" height="20" class="mr-1 mt-0"></strong> 
-                    <span style="font-size: 14px;">Licencia activa.Si desea desargar denuevo el RH box, solicitar a su administrador reenvio de correo.</span>`;
+                    <span style="font-size: 14px;">La licencia esta en uso, comunicate con tu administrador para generar una nueva licencia.</span>`;
                 $('#alertError').append(mensaje);
                 $('#alertError').show();
             }
@@ -53,7 +53,7 @@ function enviarLicencia() {
             }
             if (error.responseJSON === "lic_inactiva") {
                 mensaje = `<strong><img src="/landing/images/alert1.svg" height="20" class="mr-1 mt-0"></strong> 
-                <span style="font-size: 14px;">Licencia inactiva.Si desea desargar denuevo el RH box, solicitar a su administrador reenvio de correo.</span>`;
+                <span style="font-size: 14px;">La licencia esta inactiva, comunicate con tu administrador para generar una nueva licencia..</span>`;
                 $('#alertError').append(mensaje);
                 $('#alertError').show();
             }

@@ -69,6 +69,240 @@ function getRandomColor() {
     }
     return color;
 }
+//DEPARTAMENTO
+$.ajax({
+    url: "totalDepartamento",
+    method: "GET",
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function (data) {
+        var nombre = [];
+        var total = [];
+        var color = ['#b6eb7a', '#f9d56e', '#e84a5f'];
+        var suma = 0;
+        var totalP = 0;
+        $('#fechaDepartamento').empty();
+        $('#panel1002D').empty();
+        var containerFecha = $('#fechaDepartamento');
+        var containerDetalle = $('#panel1002D');
+        if (data[0].departamento.length != 0) {
+            $('#divdepartamento').show();
+            for (var i = 0; i < data[0].departamento.length; i++) {
+                if (data[0].departamento[i].name == null) {
+                    nombre.push("NO DEFINIDO");
+                } else {
+                    nombre.push(data[0].departamento[i].name);
+                }
+                total.push(data[0].departamento[i].total);
+                suma += data[0].departamento[i].total;
+            }
+            for (var j = 3; j < data[0].departamento.length; j++) {
+                color.push(getRandomColor());
+            }
+            // CARD
+            f = new Date();
+            var options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            };
+            var fecha = f.toLocaleDateString("es-PE", options)
+            fechaF = `<img src="admin/images/calendarioHor.svg" height="20" class="mr-2"> ${fecha}`;
+            containerFecha.append(fechaF);
+            var detalle = ``;
+            for (var l = 0; l < nombre.length; l++) {
+                detalle += `<p align="justify" class="font-small text-muted mx-1">\n 
+                  <img src="landing/images/2143150.png" class="mr-2" height="20"/>
+                  <span style="color:${color[l]};font-weight:bold;">${nombre[l]}</span> tiene un total de ${total[l]} empleado(s).
+                  </p>`;
+            }
+            containerDetalle.append(detalle);
+            //GRAFICO
+            var promedio = (suma * 100) / data[0].empleado[0].totalE;
+            totalP = Math.round(promedio);
+            var chartdata = {
+                labels: nombre,
+                datasets: [{
+                    data: total,
+                    backgroundColor: color,
+                    borderWidth: 0
+                }]
+            };
+            var mostrar = $('#departamento');
+            var grafico = new Chart(mostrar, {
+                type: 'doughnut',
+                data: chartdata,
+                options: {
+                    layout: {
+                        padding: {
+                            bottom: 70,
+                            top: 70
+                        }
+                    },
+                    title: {
+                        display: false
+                    },
+                    responsive: true,
+                    cutoutPercentage: 80,
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: false
+                    },
+                    plugins: {
+                        datalabels: {
+                            display: false
+                        }
+                    },
+                    tooltips: {
+                        yAlign: 'bottom',
+                        xAlign: 'center',
+                        callbacks: {
+                            afterLabel: function (tooltipItem, data) {
+                                var dataset = data["datasets"][0];
+                                var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 / suma));
+                                grafico.options.elements.center.text = percent + "%" + data["labels"][tooltipItem["index"]];
+                            }
+                        }
+                    },
+                    elements: {
+                        center: {
+                            text: '\n' + data[0].organizacion.organi_razonSocial,
+                            color: '#424874', //Default black
+                            fontFamily: 'Arial', //Default Arial
+                            sidePadding: 20,
+                        }
+                    }
+                }
+            });
+            mostrar.mouseout(function (e) {
+                grafico.options.elements.center.text = '\n' + data[0].organizacion.organi_razonSocial;
+            });
+            document.getElementById('js-legendDep').innerHTML = grafico.generateLegend();
+        } else {
+            $('#divdepartamento').hide();
+        }
+    },
+    error: function (data) { }
+});
+//CONTRATO
+$.ajax({
+    url: "totalC",
+    method: "GET",
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function (data) {
+        var nombre = [];
+        var total = [];
+        var color = ['#b6eb7a', '#f9d56e', '#e84a5f'];
+        var suma = 0;
+        var totalP = 0;
+        $('#fechaContrato').empty();
+        $('#panel1002C').empty();
+        var containerFecha = $('#fechaContrato');
+        var containerDetalle = $('#panel1002C');
+        if (data[0].contrato.length != 0) {
+            $('#divcontrato').show();
+            for (var i = 0; i < data[0].contrato.length; i++) {
+                if (data[0].contrato[i].contrato_descripcion == null) {
+                    nombre.push("NO DEFINIDO");
+                } else {
+                    nombre.push(data[0].contrato[i].contrato_descripcion);
+                }
+                total.push(data[0].contrato[i].Total);
+                suma += data[0].contrato[i].Total;
+            }
+            for (var j = 3; j < data[0].contrato.length; j++) {
+                color.push(getRandomColor());
+            }
+            // CARD
+            f = new Date();
+            var options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            };
+            var fecha = f.toLocaleDateString("es-PE", options)
+            fechaF = `<img src="admin/images/calendarioHor.svg" height="20" class="mr-2"> ${fecha}`;
+            containerFecha.append(fechaF);
+            var detalle = ``;
+            for (var l = 0; l < nombre.length; l++) {
+                detalle += `<p align="justify" class="font-small text-muted mx-1">\n 
+                <img src="landing/images/2143150.png" class="mr-2" height="20"/>
+                <span style="color:${color[l]};font-weight:bold;">${nombre[l]}</span> tiene un total de ${total[l]} empleado(s).
+                </p>`;
+            }
+            containerDetalle.append(detalle);
+            //GRAFICO
+            var promedio = (suma * 100) / data[0].empleado[0].totalE;
+            totalP = Math.round(promedio);
+            var chartdata = {
+                labels: nombre,
+                datasets: [{
+                    data: total,
+                    backgroundColor: color,
+                    borderWidth: 0
+                }]
+            };
+            var mostrar = $('#contrato');
+            var grafico = new Chart(mostrar, {
+                type: 'doughnut',
+                data: chartdata,
+                options: {
+                    layout: {
+                        padding: {
+                            bottom: 70,
+                            top: 70
+                        }
+                    },
+                    title: {
+                        display: false,
+                    },
+                    responsive: true,
+                    cutoutPercentage: 80,
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: false,
+                    },
+                    plugins: {
+                        datalabels: {
+                            display: false
+                        }
+                    },
+                    tooltips: {
+                        yAlign: 'bottom',
+                        xAlign: 'center',
+                        callbacks: {
+                            afterLabel: function (tooltipItem, data) {
+                                var dataset = data["datasets"][0];
+                                var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 / suma));
+                                grafico.options.elements.center.text = percent + "%" + data["labels"][tooltipItem["index"]];
+                            }
+                        }
+                    },
+                    elements: {
+                        center: {
+                            text: '\n' + data[0].organizacion.organi_razonSocial,
+                            color: '#424874', //Default black
+                            fontFamily: 'Arial', //Default Arial
+                            sidePadding: 20,
+                        }
+                    }
+                }
+            });
+            mostrar.mouseout(function (e) {
+                grafico.options.elements.center.text = '\n' + data[0].organizacion.organi_razonSocial;
+            });
+            document.getElementById('js-legendContrato').innerHTML = grafico.generateLegend();
+        } else {
+            $('#divcontrato').hide();
+        }
+    },
+    error: function (data) { }
+});
 //AREA
 $.ajax({
     url: "totalA",
@@ -187,9 +421,9 @@ $.ajax({
     },
     error: function (data) { }
 });
-//NIVEL
+//RANGO DE EDAD
 $.ajax({
-    url: "totalN",
+    url: "totalRE",
     method: "GET",
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -200,22 +434,22 @@ $.ajax({
         var color = ['#b6eb7a', '#f9d56e', '#e84a5f'];
         var suma = 0;
         var totalP = 0;
-        $('#fechaNivel').empty();
-        $('#panel1002N').empty();
-        var containerFecha = $('#fechaNivel');
-        var containerDetalle = $('#panel1002N');
-        if (data[0].nivel.length != 0) {
-            $('#divnivel').show();
-            for (var i = 0; i < data[0].nivel.length; i++) {
-                if (data[0].nivel[i].nivel_descripcion == null) {
+        $('#fechaEdades').empty();
+        $('#panel1002E').empty();
+        var containerFecha = $('#fechaEdades');
+        var containerDetalle = $('#panel1002E');
+        if (data[0].edad.length != 0) {
+            $('#divedades').show();
+            for (var i = 0; i < data[0].edad.length; i++) {
+                if (data[0].edad[i].rango == null) {
                     nombre.push("NO DEFINIDO");
                 } else {
-                    nombre.push(data[0].nivel[i].nivel_descripcion);
+                    nombre.push(data[0].edad[i].rango);
                 }
-                total.push(data[0].nivel[i].Total);
-                suma += data[0].nivel[i].Total;
+                total.push(data[0].edad[i].total);
+                suma += data[0].edad[i].total;
             }
-            for (var j = 3; j < data[0].nivel.length; j++) {
+            for (var j = 3; j < data[0].edad.length; j++) {
                 color.push(getRandomColor());
             }
             // CARD
@@ -232,9 +466,9 @@ $.ajax({
             var detalle = ``;
             for (var l = 0; l < nombre.length; l++) {
                 detalle += `<p align="justify" class="font-small text-muted mx-1">\n 
-                <img src="landing/images/2143150.png" class="mr-2" height="20"/>
-                <span style="color:${color[l]};font-weight:bold;">${nombre[l]}</span> tiene un total de ${total[l]} empleado(s).
-                </p>`;
+                  <img src="landing/images/2143150.png" class="mr-2" height="20"/>
+                  <span style="color:${color[l]};font-weight:bold;">${nombre[l]}</span> tiene un total de ${total[l]} empleado(s).
+                  </p>`;
             }
             containerDetalle.append(detalle);
             //GRAFICO
@@ -248,7 +482,7 @@ $.ajax({
                     borderWidth: 0
                 }]
             };
-            var mostrar = $('#nivel');
+            var mostrar = $('#edades');
             var grafico = new Chart(mostrar, {
                 type: 'doughnut',
                 data: chartdata,
@@ -263,127 +497,10 @@ $.ajax({
                         display: false
                     },
                     responsive: true,
-                    maintainAspectRatio: false,
                     cutoutPercentage: 80,
+                    maintainAspectRatio: false,
                     legend: {
                         display: false
-                    },
-                    plugins: {
-                        datalabels: {
-                            display: false,
-                        }
-                    },
-                    tooltips: {
-                        yAlign: 'bottom',
-                        xAlign: 'center',
-                        callbacks: {
-                            afterLabel: function (tooltipItem, data) {
-                                var dataset = data["datasets"][0];
-                                var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 / suma));
-                                grafico.options.elements.center.text = percent + "%" + data["labels"][tooltipItem["index"]];
-                            },
-                        }
-                    },
-                    elements: {
-                        center: {
-                            text: '\n' + data[0].organizacion.organi_razonSocial,
-                            color: '#424874', //Default black
-                            fontFamily: 'Arial', //Default Arial
-                            sidePadding: 20,
-                        }
-                    },
-                }
-            });
-            mostrar.mouseout(function (e) {
-                grafico.options.elements.center.text = '\n' + data[0].organizacion.organi_razonSocial;
-            });
-            document.getElementById('js-legendNivel').innerHTML = grafico.generateLegend();
-        } else {
-            $('#divnivel').hide();
-        }
-    },
-    error: function (data) { }
-});
-//CONTRATO
-$.ajax({
-    url: "totalC",
-    method: "GET",
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
-    success: function (data) {
-        var nombre = [];
-        var total = [];
-        var color = ['#b6eb7a', '#f9d56e', '#e84a5f'];
-        var suma = 0;
-        var totalP = 0;
-        $('#fechaContrato').empty();
-        $('#panel1002C').empty();
-        var containerFecha = $('#fechaContrato');
-        var containerDetalle = $('#panel1002C');
-        if (data[0].contrato.length != 0) {
-            $('#divcontrato').show();
-            for (var i = 0; i < data[0].contrato.length; i++) {
-                if (data[0].contrato[i].contrato_descripcion == null) {
-                    nombre.push("NO DEFINIDO");
-                } else {
-                    nombre.push(data[0].contrato[i].contrato_descripcion);
-                }
-                total.push(data[0].contrato[i].Total);
-                suma += data[0].contrato[i].Total;
-            }
-            for (var j = 3; j < data[0].contrato.length; j++) {
-                color.push(getRandomColor());
-            }
-            // CARD
-            f = new Date();
-            var options = {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            };
-            var fecha = f.toLocaleDateString("es-PE", options)
-            fechaF = `<img src="admin/images/calendarioHor.svg" height="20" class="mr-2"> ${fecha}`;
-            containerFecha.append(fechaF);
-            var detalle = ``;
-            for (var l = 0; l < nombre.length; l++) {
-                detalle += `<p align="justify" class="font-small text-muted mx-1">\n 
-                <img src="landing/images/2143150.png" class="mr-2" height="20"/>
-                <span style="color:${color[l]};font-weight:bold;">${nombre[l]}</span> tiene un total de ${total[l]} empleado(s).
-                </p>`;
-            }
-            containerDetalle.append(detalle);
-            //GRAFICO
-            var promedio = (suma * 100) / data[0].empleado[0].totalE;
-            totalP = Math.round(promedio);
-            var chartdata = {
-                labels: nombre,
-                datasets: [{
-                    data: total,
-                    backgroundColor: color,
-                    borderWidth: 0
-                }]
-            };
-            var mostrar = $('#contrato');
-            var grafico = new Chart(mostrar, {
-                type: 'doughnut',
-                data: chartdata,
-                options: {
-                    layout: {
-                        padding: {
-                            bottom: 70,
-                            top: 70
-                        }
-                    },
-                    title: {
-                        display: false,
-                    },
-                    responsive: true,
-                    cutoutPercentage: 80,
-                    maintainAspectRatio: false,
-                    legend: {
-                        display: false,
                     },
                     plugins: {
                         datalabels: {
@@ -414,9 +531,9 @@ $.ajax({
             mostrar.mouseout(function (e) {
                 grafico.options.elements.center.text = '\n' + data[0].organizacion.organi_razonSocial;
             });
-            document.getElementById('js-legendContrato').innerHTML = grafico.generateLegend();
+            document.getElementById('js-legendEdades').innerHTML = grafico.generateLegend();
         } else {
-            $('#divcontrato').hide();
+            $('#divedades').hide();
         }
     },
     error: function (data) { }
@@ -655,9 +772,9 @@ $.ajax({
     },
     error: function (data) { }
 });
-//DEPARTAMENTO
+//NIVEL
 $.ajax({
-    url: "totalDepartamento",
+    url: "totalN",
     method: "GET",
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -668,22 +785,22 @@ $.ajax({
         var color = ['#b6eb7a', '#f9d56e', '#e84a5f'];
         var suma = 0;
         var totalP = 0;
-        $('#fechaDepartamento').empty();
-        $('#panel1002D').empty();
-        var containerFecha = $('#fechaDepartamento');
-        var containerDetalle = $('#panel1002D');
-        if (data[0].departamento.length != 0) {
-            $('#divdepartamento').show();
-            for (var i = 0; i < data[0].departamento.length; i++) {
-                if (data[0].departamento[i].name == null) {
+        $('#fechaNivel').empty();
+        $('#panel1002N').empty();
+        var containerFecha = $('#fechaNivel');
+        var containerDetalle = $('#panel1002N');
+        if (data[0].nivel.length != 0) {
+            $('#divnivel').show();
+            for (var i = 0; i < data[0].nivel.length; i++) {
+                if (data[0].nivel[i].nivel_descripcion == null) {
                     nombre.push("NO DEFINIDO");
                 } else {
-                    nombre.push(data[0].departamento[i].name);
+                    nombre.push(data[0].nivel[i].nivel_descripcion);
                 }
-                total.push(data[0].departamento[i].total);
-                suma += data[0].departamento[i].total;
+                total.push(data[0].nivel[i].Total);
+                suma += data[0].nivel[i].Total;
             }
-            for (var j = 3; j < data[0].departamento.length; j++) {
+            for (var j = 3; j < data[0].nivel.length; j++) {
                 color.push(getRandomColor());
             }
             // CARD
@@ -700,9 +817,9 @@ $.ajax({
             var detalle = ``;
             for (var l = 0; l < nombre.length; l++) {
                 detalle += `<p align="justify" class="font-small text-muted mx-1">\n 
-                  <img src="landing/images/2143150.png" class="mr-2" height="20"/>
-                  <span style="color:${color[l]};font-weight:bold;">${nombre[l]}</span> tiene un total de ${total[l]} empleado(s).
-                  </p>`;
+                <img src="landing/images/2143150.png" class="mr-2" height="20"/>
+                <span style="color:${color[l]};font-weight:bold;">${nombre[l]}</span> tiene un total de ${total[l]} empleado(s).
+                </p>`;
             }
             containerDetalle.append(detalle);
             //GRAFICO
@@ -716,7 +833,7 @@ $.ajax({
                     borderWidth: 0
                 }]
             };
-            var mostrar = $('#departamento');
+            var mostrar = $('#nivel');
             var grafico = new Chart(mostrar, {
                 type: 'doughnut',
                 data: chartdata,
@@ -731,14 +848,14 @@ $.ajax({
                         display: false
                     },
                     responsive: true,
-                    cutoutPercentage: 80,
                     maintainAspectRatio: false,
+                    cutoutPercentage: 80,
                     legend: {
                         display: false
                     },
                     plugins: {
                         datalabels: {
-                            display: false
+                            display: false,
                         }
                     },
                     tooltips: {
@@ -749,7 +866,7 @@ $.ajax({
                                 var dataset = data["datasets"][0];
                                 var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 / suma));
                                 grafico.options.elements.center.text = percent + "%" + data["labels"][tooltipItem["index"]];
-                            }
+                            },
                         }
                     },
                     elements: {
@@ -759,132 +876,15 @@ $.ajax({
                             fontFamily: 'Arial', //Default Arial
                             sidePadding: 20,
                         }
-                    }
+                    },
                 }
             });
             mostrar.mouseout(function (e) {
                 grafico.options.elements.center.text = '\n' + data[0].organizacion.organi_razonSocial;
             });
-            document.getElementById('js-legendDep').innerHTML = grafico.generateLegend();
+            document.getElementById('js-legendNivel').innerHTML = grafico.generateLegend();
         } else {
-            $('#divdepartamento').hide();
-        }
-    },
-    error: function (data) { }
-});
-//RANGO DE EDAD
-$.ajax({
-    url: "totalRE",
-    method: "GET",
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
-    success: function (data) {
-        var nombre = [];
-        var total = [];
-        var color = ['#b6eb7a', '#f9d56e', '#e84a5f'];
-        var suma = 0;
-        var totalP = 0;
-        $('#fechaEdades').empty();
-        $('#panel1002E').empty();
-        var containerFecha = $('#fechaEdades');
-        var containerDetalle = $('#panel1002E');
-        if (data[0].edad.length != 0) {
-            $('#divedades').show();
-            for (var i = 0; i < data[0].edad.length; i++) {
-                if (data[0].edad[i].rango == null) {
-                    nombre.push("NO DEFINIDO");
-                } else {
-                    nombre.push(data[0].edad[i].rango);
-                }
-                total.push(data[0].edad[i].total);
-                suma += data[0].edad[i].total;
-            }
-            for (var j = 3; j < data[0].edad.length; j++) {
-                color.push(getRandomColor());
-            }
-            // CARD
-            f = new Date();
-            var options = {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            };
-            var fecha = f.toLocaleDateString("es-PE", options)
-            fechaF = `<img src="admin/images/calendarioHor.svg" height="20" class="mr-2"> ${fecha}`;
-            containerFecha.append(fechaF);
-            var detalle = ``;
-            for (var l = 0; l < nombre.length; l++) {
-                detalle += `<p align="justify" class="font-small text-muted mx-1">\n 
-                  <img src="landing/images/2143150.png" class="mr-2" height="20"/>
-                  <span style="color:${color[l]};font-weight:bold;">${nombre[l]}</span> tiene un total de ${total[l]} empleado(s).
-                  </p>`;
-            }
-            containerDetalle.append(detalle);
-            //GRAFICO
-            var promedio = (suma * 100) / data[0].empleado[0].totalE;
-            totalP = Math.round(promedio);
-            var chartdata = {
-                labels: nombre,
-                datasets: [{
-                    data: total,
-                    backgroundColor: color,
-                    borderWidth: 0
-                }]
-            };
-            var mostrar = $('#edades');
-            var grafico = new Chart(mostrar, {
-                type: 'doughnut',
-                data: chartdata,
-                options: {
-                    layout: {
-                        padding: {
-                            bottom: 70,
-                            top: 70
-                        }
-                    },
-                    title: {
-                        display: false
-                    },
-                    responsive: true,
-                    cutoutPercentage: 80,
-                    maintainAspectRatio: false,
-                    legend: {
-                        display: false
-                    },
-                    plugins: {
-                        datalabels: {
-                            display: false
-                        }
-                    },
-                    tooltips: {
-                        yAlign: 'bottom',
-                        xAlign: 'center',
-                        callbacks: {
-                            afterLabel: function (tooltipItem, data) {
-                                var dataset = data["datasets"][0];
-                                var percent = Math.round((dataset["data"][tooltipItem["index"]] * 100 / suma));
-                                grafico.options.elements.center.text = percent + "%" + data["labels"][tooltipItem["index"]];
-                            }
-                        }
-                    },
-                    elements: {
-                        center: {
-                            text: '\n' + data[0].organizacion.organi_razonSocial,
-                            color: '#424874', //Default black
-                            fontFamily: 'Arial', //Default Arial
-                            sidePadding: 20,
-                        }
-                    }
-                }
-            });
-            mostrar.mouseout(function (e) {
-                grafico.options.elements.center.text = '\n' + data[0].organizacion.organi_razonSocial;
-            });
-            document.getElementById('js-legendEdades').innerHTML = grafico.generateLegend();
-        } else {
-            $('#divedades').hide();
+            $('#divnivel').hide();
         }
     },
     error: function (data) { }

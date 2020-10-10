@@ -231,6 +231,7 @@ class ControlController extends Controller
                     ->where('e.emple_estado', '=', 1)
                     ->where('invi.estado', '=', 1)
                     ->groupBy('e.emple_id')
+                    ->orderBy('p.perso_nombre')
                     ->where('invi.idinvitado', '=', $invitado->idinvitado)
                     ->get();
             } else {
@@ -241,6 +242,7 @@ class ControlController extends Controller
                     ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
                     ->groupBy('e.emple_id')
+                    ->orderBy('p.perso_nombre')
                     ->get();
             }
         } else {
@@ -263,6 +265,7 @@ class ControlController extends Controller
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitado->idinvitado)
                         ->groupBy('e.emple_id')
+                        ->orderBy('p.perso_nombre')
                         ->get();
                 } else {
                     $empleados = DB::table('empleado as e')
@@ -273,6 +276,7 @@ class ControlController extends Controller
                         ->where('e.emple_estado', '=', 1)
                         ->whereIn('e.emple_area', $area)
                         ->groupBy('e.emple_id')
+                        ->orderBy('p.perso_nombre')
                         ->get();
                 }
             }
@@ -295,6 +299,7 @@ class ControlController extends Controller
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitado->idinvitado)
                         ->groupBy('e.emple_id')
+                        ->orderBy('p.perso_nombre')
                         ->get();
                 } else {
                     $empleados = DB::table('empleado as e')
@@ -305,6 +310,7 @@ class ControlController extends Controller
                         ->where('e.emple_estado', '=', 1)
                         ->whereIn('e.emple_cargo', $cargo)
                         ->groupBy('e.emple_id')
+                        ->orderBy('p.perso_nombre')
                         ->get();
                 }
             }
@@ -328,6 +334,7 @@ class ControlController extends Controller
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitado->idinvitado)
                         ->groupBy('e.emple_id')
+                        ->orderBy('p.perso_nombre')
                         ->get();
                 } else {
                     $empleados = DB::table('empleado as e')
@@ -339,6 +346,7 @@ class ControlController extends Controller
                         ->whereIn('e.emple_area', $area)
                         ->whereIn('e.emple_cargo', $cargo)
                         ->groupBy('e.emple_id')
+                        ->orderBy('p.perso_nombre')
                         ->get();
                 }
             }
@@ -504,7 +512,11 @@ class ControlController extends Controller
 
     public function apiMostrarCapturas($url)
     {
-        $resultado = str_replace("-", "/", $url);
+        $res = base64_decode($url);
+        // $decode = base64_decode($url);
+        // $input_encoding = 'iso-2022-jp';
+        // $res = iconv($input_encoding, 'UTF-8', $decode);
+        $resultado = str_replace("-", "/", $res);
         $appPath = app_path($resultado);
         return Image::make($appPath)->response();
     }
@@ -539,8 +551,11 @@ class ControlController extends Controller
         // $respuesta = [];
         $empleados = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->join('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
             ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
             ->where('e.organi_id', '=', $id)
+            ->whereNotNull('v.pc_mac')
+            ->groupBy('e.emple_id')
             ->get();
 
         // foreach ($empleados as $empleado) {
@@ -599,6 +614,7 @@ class ControlController extends Controller
         $fecha_horaI = $request->get('fecha_horaI');
         $fecha_horaF = $request->get('fecha_horaF');
         $organizacion = $request->get('organizacion');
+        $empleado = $request->get('empleado');
         $respuesta = [];
 
         $horaI = Carbon::create($request->get('fecha_horaI'))->format('H:i:s');
@@ -608,14 +624,26 @@ class ControlController extends Controller
         $date2 = new DateTime($fecha_horaF);
         $diff = $date1->diff($date2);
         // DB::enableQueryLog();
-        $empleado = DB::table('empleado as e')
-            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-            ->join('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
-            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-            ->where('e.organi_id', '=', $organizacion)
-            ->whereNotNull('v.pc_mac')
-            ->groupBy('e.emple_id')
-            ->get();
+        if (is_null($empleado) === true) {
+            $empleado = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->join('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
+                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                ->where('e.organi_id', '=', $organizacion)
+                ->whereNotNull('v.pc_mac')
+                ->groupBy('e.emple_id')
+                ->get();
+        } else {
+            $empleado = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->join('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
+                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                ->where('e.organi_id', '=', $organizacion)
+                ->whereIn('e.emple_id', $empleado)
+                ->whereNotNull('v.pc_mac')
+                ->groupBy('e.emple_id')
+                ->get();
+        }
         // dd(DB::getQueryLog());
         $horas = array();
         $cantidad = array();

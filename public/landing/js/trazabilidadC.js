@@ -43,9 +43,6 @@ $('#horaI').flatpickr({
     onClose: function (selectedDates, dateStr, instance) {
         horaFinal.set("minTime", minHoraF());
         horaFinal.set("defaultDate", defaultHora());
-        if ($('#empresa :selected').text() != '') {
-            datosOrganizacion();
-        }
     }
 });
 function minHoraF() {
@@ -58,23 +55,11 @@ var horaFinal = $('#horaF').flatpickr({
     time_24hr: true,
     defaultDate: hf + ":00",
     minTime: minHoraF(),
-    onClose: function (selectedDates, dateStr, instance) {
-        console.log($('#empresa :selected').text());
-        if ($('#empresa :selected').text() != '') {
-            datosOrganizacion();
-        }
-    }
 });
-$('#empleado').select2({
-    placeholder: 'Seleccionar',
-    minimumInputLength: 1,
-    language: {
-        inputTooShort: function (e) {
-            return "Escribir coincidencias...";
-        },
-        loadingMore: function () { return "Cargando más resultados…" },
-        noResults: function () { return "No se encontraron resultados" }
-    }
+$('#empresa').select2({
+    placeholder: 'Seleccionar empresa',
+    tags: true,
+    maximumSelectionLength: 1
 });
 $('#empresa').on("change", function () {
     $('#empleado').val(null).trigger("change");
@@ -113,6 +98,16 @@ $('#empresa').on("change", function () {
             error: function () { },
         });
     });
+});
+$('#empleado').select2({
+    placeholder: 'Seleccionar',
+    language: {
+        inputTooShort: function (e) {
+            return "Escribir nombre o apellido";
+        },
+        loadingMore: function () { return "Cargando más resultados…" },
+        noResults: function () { return "No se encontraron resultados" }
+    }
 });
 function tablaRe() {
     $("#Reporte").DataTable({
@@ -155,15 +150,12 @@ function tablaRe() {
     });
 }
 tablaRe();
-$('#empresa').select2({
-    placeholder: 'Seleccionar empresa',
-    tags: true,
-    maximumSelectionLength: 1
-});
 function datosOrganizacion() {
     var fechaI = $('#fecha').val() + $('#horaI').val();
     var fechaF = $('#fecha').val() + $('#horaF').val();
     var organizacion = $('#empresa').val();
+    var empleado = $("#empleado").val();
+    console.log(empleado);
     if ($.fn.DataTable.isDataTable("#Reporte")) {
         $('#Reporte').DataTable().destroy();
     }
@@ -172,7 +164,8 @@ function datosOrganizacion() {
         data: {
             fecha_horaI: fechaI,
             fecha_horaF: fechaF,
-            organizacion: organizacion
+            organizacion: organizacion,
+            empleado: empleado
         },
         method: "GET",
         headers: {
@@ -238,20 +231,7 @@ function datosOrganizacion() {
         }
     });
 }
-$(function () {
-    $('#empresa').on("change", function (e) {
-        datosOrganizacion();
-    });
-    $('#fecha').on("change", function () {
-        if ($('#empresa :selected').text() != '') {
-            datosOrganizacion();
-        }
-    });
-    // $('#horaI').onClose(function () {
-    //     horaFinal.set("minTime", minHoraF());
-    //     datosOrganizacion();
-    // });
-    // $('#horaF').onClose(function () {
-    //     datosOrganizacion();
-    // });
-});
+
+function buscarTrazabilidad() {
+    datosOrganizacion();
+}
