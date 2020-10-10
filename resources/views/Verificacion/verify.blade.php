@@ -37,26 +37,23 @@
     </style>
     <header id="header-section">
         <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
-            <div class="container pb-3 pt-3" style="color: #ffffff;">
-                <div class="col-md-2 col-xl-2 mr-4 p-0">
+            <div class="container pb-2 pt-2" style="color: #ffffff;">
+                <div class="col-md-2 col-xl-2 mr-2 pl-5">
                     <div class="navbar-brand-wrapper d-flex w-100">
                         <img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="69">
                     </div>
                 </div>
-                <div class="col-md-4 text-left">
-                    <h5 style="color: #ffffff;font-size: 15px!important">Por
-                        favor verifica tu cuenta para poder
-                        empezar.</h5>
+                <div class="col-md-4 pt-2 text-left">
+                    <h5 style="color: #ffffff;font-size: 15px!important">Por favor verifica tu cuenta para poder empezar.</h5>
                 </div>
                 <div class="col-md-6 text-left"></div>
-            </div>
             </div>
         </nav>
     </header>
     <div class="container"> <br>
         <div class="row">
             <div class="col-md-12 text-center" style="padding-top:
-                30px;padding-bottom: 30px">
+                20px;padding-bottom: 30px">
                 <h4 class="font-weight-semibold">Organicemos tu equipo de
                     trabajo en 10 minutos: Controla, mide y
                     gestiona.
@@ -64,21 +61,15 @@
             </div>
         </div>
         <div class="row justify-content-center">
-            <div class="col-xl-5 col-lg-6 col-md-8">
-                <div class="card">
+            <div class="col-xl-4 col-lg-6 col-md-8">
+                <div class="card border"
+                    style="border-radius: 15px;border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
                     <div class="card-body p-4">
                         <div class="text-center">
                             <div class="mx-auto">
-                                <a href="index.html">
-                                    <h3 class="d-inline align-middle ml-1
-                                        text-logo">RH nube</h3>
-                                </a>
-                            </div>
-                            <br>
-                            <div class="mx-auto">
                                 <img src="{{asset('landing/images/login.svg')}}" alt="" height="80" />
                             </div>
-                            <h6 class="h5 mb-0 mt-5" style="text-transform:
+                            <h6 class="h5 mb-0 mt-3" style="text-transform:
                                 uppercase;">Confirma tu email
                                 {{$persona[0]->perso_nombre}}
                                 {{$persona[0]->perso_apPaterno}}</h6>
