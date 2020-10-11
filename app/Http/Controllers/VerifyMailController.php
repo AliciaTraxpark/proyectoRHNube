@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-
+use Illuminate\Support\Facades\Crypt;
 class VerifyMailController extends Controller
 {
     public function index()
@@ -23,12 +23,25 @@ class VerifyMailController extends Controller
             ->join('persona as p', 'u.perso_id', '=', 'p.perso_id')
             ->where('u.id', '=', Auth::user()->id)
             ->get();
-        $datoNuevo = explode("@", $usuario[0]->email);
+
+            $usuario_organizacion = DB::table('usuario_organizacion as uso')
+            ->where('uso.user_id', '=', Auth::user()->id)
+            ->get()->first();
+
+            if($usuario_organizacion!=null){
+                $datoNuevo = explode("@", $usuario[0]->email);
         if (sizeof($datoNuevo) != 2) {
             return view('Verificacion.smsVerificacion', ["usuario" => $usuario, "persona" => $persona]);
         } else {
             return view('Verificacion.verify', ["usuario" => $usuario, "persona" => $persona]);
         }
+            }
+            else{
+                $id = Auth::user()->id;
+                $user1 = Crypt::encrypt($id);
+                return redirect('/registro/organizacion/'+$user1);
+            }
+
     }
     public function verificarReenvio()
     {
