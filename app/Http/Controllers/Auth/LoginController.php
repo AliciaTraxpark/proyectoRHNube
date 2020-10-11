@@ -65,8 +65,15 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             Auth::logoutOtherDevices(request()->input('password'));
             $usuario_organizacion=usuario_organizacion::where('user_id','=', Auth::user()->id)->get()->first();
+           /*  dd( $usuario_organizacion); */
+            if($usuario_organizacion==null){
 
-            if($usuario_organizacion!=null){
+                $id = Auth::user()->id;
+                
+                $user1 = Crypt::encrypt($id);
+                return redirect('/registro/organizacion/'.$user1);
+            } else{
+
                 if($usuario_organizacion->rol_id==4){
                     return redirect('/superadmin');
                 }
@@ -98,10 +105,6 @@ class LoginController extends Controller
 
                     }
                 }
-            } else{
-                $id = Auth::user()->id;
-                $user1 = Crypt::encrypt($id);
-                return redirect('/registro/organizacion/'+$user1);
             }
 
 
