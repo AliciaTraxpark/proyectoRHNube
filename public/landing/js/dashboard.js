@@ -135,6 +135,7 @@ $.ajax({
                 type: 'doughnut',
                 data: chartdata,
                 options: {
+                    responsive: true,
                     layout: {
                         padding: {
                             bottom: 70,
@@ -144,7 +145,6 @@ $.ajax({
                     title: {
                         display: false
                     },
-                    responsive: true,
                     cutoutPercentage: 80,
                     maintainAspectRatio: false,
                     legend: {
