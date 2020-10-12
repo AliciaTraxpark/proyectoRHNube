@@ -421,7 +421,7 @@ class apiVersionDosController extends Controller
                     ->where('h.horario_id', '=', $resp->horario_horario_id)
                     ->get()->first();
                 $pausas = DB::table('pausas_horario as ph')
-                    ->select('ph.pausH_Inicio as pausaI', 'ph.pausH_Fin as pausaF')
+                    ->select('ph.pausH_descripcion as decripcion','ph.pausH_Inicio as pausaI', 'ph.pausH_Fin as pausaF')
                     ->where('ph.horario_id', '=', $horario->horario_id)
                     ->get();
                 $horario->idHorario_dias = $horario_dias->id;
