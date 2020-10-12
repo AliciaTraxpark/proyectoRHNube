@@ -168,6 +168,7 @@ var options = {
   series: dataFechas(),
   chart: {
     height: 350,
+    widht: '100%',
     type: 'line',
     dropShadow: {
       enabled: true,
@@ -231,10 +232,16 @@ var options = {
   },
   responsive: [
     {
-      breakpoint: 1000,
+      breakpoint: 767.98,
       options: {
         legend: {
-          position: "bottom"
+          position: "bottom",
+          floating: true,
+        },
+        chart: {
+          toolbar: {
+            show: false
+          }
         },
       }
     }
