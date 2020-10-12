@@ -50,7 +50,8 @@
         }
 
         #gauge-value {
-            padding-bottom: 8% !important;
+            padding-bottom: 10% !important;
+            padding-top: 10% !important;
         }
     }
 </style>
