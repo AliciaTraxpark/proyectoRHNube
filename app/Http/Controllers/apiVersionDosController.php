@@ -439,4 +439,18 @@ class apiVersionDosController extends Controller
         }
         return response()->json("Empleado no encontrado", 400);
     }
+
+    public function logoutToken(Request $request)
+    {
+        $token = $request->header('Authorization');
+        try {
+            JWTAuth::setToken($token)->invalidate(); // setToken and check
+            return response()->json(array('message' => 'token_logout'), 200);
+
+        } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+            return response()->json(array('message' => 'token_expired'), 404);
+        } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+            return response()->json(array('message' => 'token_invalid'), 404);
+        }
+    }
 }

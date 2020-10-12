@@ -18,6 +18,11 @@ use Illuminate\Support\Facades\Mail;
 
 class vinculacionDispositivoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
+    
     public function vinculacionAndroid(Request $request)
     {
         $idEmpleado = $request->get('idEmpleado');

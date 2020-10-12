@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\DB;
 
 class CargaMasivaFotoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
     public function subirfoto(Request $request)
     {
         $file = $request->file('fileMasiva');

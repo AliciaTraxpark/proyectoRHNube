@@ -44,7 +44,8 @@
                     </div>
                 </div>
                 <div class="col-md-4 pt-2 text-left">
-                    <h5 style="color: #ffffff;font-size: 15px!important">Por favor verifica tu cuenta para poder empezar.</h5>
+                    <h5 style="color: #ffffff;font-size: 15px!important">Por favor verifica tu cuenta para poder
+                        empezar.</h5>
                 </div>
                 <div class="col-md-6 text-left"></div>
             </div>
@@ -96,6 +97,38 @@
             </div> <!-- end col -->
         </div>
     </div>
+    <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel"
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <img src="{{asset('landing/images/notification.svg')}}" height="100">
+                    <h4 class="text-danger mt-4">Su sesión expiró</h4>
+                    <p class="w-75 mx-auto text-muted">Por favor inicie sesión nuevamente.</p>
+                    <div class="mt-4">
+                        <a href="{{('/')}}" class="btn btn-outline-primary btn-rounded width-md"><i
+                                class="uil uil-arrow-right mr-1"></i> Iniciar sesión</a>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    @if (Auth::user())
+    <script>
+        $(function() {
+    setInterval(function checkSession() {
+      $.get('/check-session', function(data) {
+        // if session was expired
+        if (data.guest==false) {
+            $('.modal').modal('hide');
+           $('#modal-error').modal('show');
+
+        }
+      });
+    },7202000);
+  });
+    </script>
+    @endif
     <script src="{{asset('landing/vendors/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('landing/vendors/bootstrap/bootstrap.min.js')}}"></script>
     <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
