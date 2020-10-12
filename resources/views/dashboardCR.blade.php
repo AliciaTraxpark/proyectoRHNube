@@ -42,6 +42,17 @@
     .avatarsul .liImg:nth-child(n+2) {
         margin-left: -10px;
     }
+
+    @media (max-width: 767.98px) {
+        canvas {
+            width: 100%;
+            height: auto;
+        }
+
+        #gauge-value {
+            padding-bottom: 8% !important;
+        }
+    }
 </style>
 <div id="preloader">
     <div id="status">
