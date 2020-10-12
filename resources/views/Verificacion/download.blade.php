@@ -98,7 +98,7 @@
                                         <button type="button" class="btn btn-sm btn-opacity-primary"
                                             style="font-size: 13.5px;border-radius: 5px;font-weight: 300">
                                             <img src="{{asset('landing/images/download (1).svg')}}" height="22" class="mr-2">
-                                            RHbox X32
+                                            x32 RHbox
                                         </button>
                                     </a>
                                 </div>
@@ -107,7 +107,7 @@
                                         <button type="button" class="btn btn-sm btn-opacity-primary"
                                             style="font-size: 13.5px;border-radius: 5px;font-weight: 300">
                                             <img src="{{asset('landing/images/download (1).svg')}}" height="22" class="mr-2">
-                                            RHbox X64
+                                            x64 RHbox
                                         </button>
                                     </a>
                                 </div>
