@@ -149,7 +149,7 @@ function dataFechas() {
         }
         for (let j = 2; j < data.length; j++) {
           colores.push(getRandomColor());
-      }
+        }
       }
     }
   });
@@ -160,7 +160,7 @@ function getRandomColor() {
   var letters = 'ABCDE'.split('');
   var color = '#';
   for (var i = 0; i < 3; i++) {
-      color += letters[Math.floor(Math.random() * letters.length)];
+    color += letters[Math.floor(Math.random() * letters.length)];
   }
   return color;
 }
@@ -228,7 +228,17 @@ var options = {
     floating: true,
     offsetY: -25,
     offsetX: -5
-  }
+  },
+  responsive: [
+    {
+      breakpoint: 1000,
+      options: {
+        legend: {
+          position: "bottom"
+        },
+      }
+    }
+  ]
 };
 
 var chart = new ApexCharts(document.querySelector("#chart"), options);
