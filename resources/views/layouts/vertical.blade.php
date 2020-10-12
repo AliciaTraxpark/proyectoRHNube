@@ -1,3 +1,6 @@
+@php
+    use Carbon\Carbon;
+@endphp
 
 <!DOCTYPE html>
 <html lang="es">
@@ -11,6 +14,16 @@
     <meta content="Coderthemes" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="shortcut icon" href="{{asset('landing/images/ICONO-LOGO-NUBE-RH.ico')}}">
+    @php
+    $fecha=Auth::user()->created_at->toDateTimeString();
+         $dt=Carbon::create($fecha);
+        $dt->isoFormat('YYYY-MM-DD');
+        $actual=Carbon::now();
+        $actual->modify('-1 months')->isoFormat('YYYY-MM-DD');
+    @endphp
+    @if ($dt> $actual)
+    <script src="//code.jivosite.com/widget/OqxplJ3nCh" async></script>
+    @endif
 
     @if(isset($isDark) && $isDark)
         @include('layouts.shared.head', ['isDark' => true])
@@ -78,7 +91,7 @@
                     <h6 style="font-size: 14px" class="modal-title"></h6>
                 </div>
                 <div class="modal-body text-center">
-                    
+
                     <img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="70">
 
                     <p class="w-75 mx-auto text-muted" style="color: black!important;font-weight: 600">Disponible en Perú a partir del 15 de octubre del 2020.</p>

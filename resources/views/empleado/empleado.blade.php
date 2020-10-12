@@ -1,3 +1,6 @@
+@php
+    use Carbon\Carbon;
+@endphp
 <!DOCTYPE html>
 <html lang="es">
 
@@ -7,6 +10,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="shortcut icon" href="{{asset('landing/images/ICONO-LOGO-NUBE-RH.ico')}}">
+    @php
+    $fecha=Auth::user()->created_at->toDateTimeString();
+         $dt=Carbon::create($fecha);
+        $dt->isoFormat('YYYY-MM-DD');
+        $actual=Carbon::now();
+        $actual->modify('-1 months')->isoFormat('YYYY-MM-DD');
+    @endphp
+    @if ($dt> $actual)
+    <script src="//code.jivosite.com/widget/OqxplJ3nCh" async></script>
+    @endif
     <style>
         .pace {
             -webkit-pointer-events: none;
