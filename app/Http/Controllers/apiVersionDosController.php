@@ -417,11 +417,11 @@ class apiVersionDosController extends Controller
                     ->where('hd.id', '=', $resp->horario_dias_id)
                     ->get()->first();
                 $horario = DB::table('horario as h')
-                    ->select('h.horario_id', 'h.horario_descripcion', 'h.horaI', 'h.horaF', 'h.horasObliga as horasObligadas')
+                    ->select('h.horario_id', 'h.horario_descripcion', 'h.horaI', 'h.horaF', 'h.horasObliga as horasObligadas', 'h.horario_tolerancia as tolerancia_inicio', 'h.horario_toleranciaF as tolerancia_final')
                     ->where('h.horario_id', '=', $resp->horario_horario_id)
                     ->get()->first();
                 $pausas = DB::table('pausas_horario as ph')
-                    ->select('ph.pausH_descripcion as decripcion','ph.pausH_Inicio as pausaI', 'ph.pausH_Fin as pausaF')
+                    ->select('ph.pausH_descripcion as decripcion', 'ph.pausH_Inicio as pausaI', 'ph.pausH_Fin as pausaF')
                     ->where('ph.horario_id', '=', $horario->horario_id)
                     ->get();
                 $horario->idHorario_dias = $horario_dias->id;
@@ -459,15 +459,15 @@ class apiVersionDosController extends Controller
                     ->where('hd.id', '=', $resp->horario_dias_id)
                     ->get()->first();
                 $horario = DB::table('horario as h')
-                    ->select('h.horario_id', 'h.horario_descripcion', 'h.horaI', 'h.horaF', 'h.horasObliga as horasObligadas')
+                    ->select('h.horario_id', 'h.horario_descripcion', 'h.horaI', 'h.horaF', 'h.horasObliga as horasObligadas', 'h.horario_tolerancia as tolerancia_inicio', 'h.horario_toleranciaF as tolerancia_final')
                     ->where('h.horario_id', '=', $resp->horario_horario_id)
                     ->get()->first();
                 $pausas = DB::table('pausas_horario as ph')
                     ->select('ph.pausH_Inicio as pausaI', 'ph.pausH_Fin as pausaF')
                     ->where('ph.horario_id', '=', $horario->horario_id)
                     ->get();
-                $horario->horaI = $horario_dias->start." ".$horario->horaI;
-                $horario->horaF = $horario_dias->start." ".$horario->horaF;
+                $horario->horaI = $horario_dias->start . " " . $horario->horaI;
+                $horario->horaF = $horario_dias->start . " " . $horario->horaF;
                 $horario->idHorario_dias = $horario_dias->id;
                 $horario->horarioCompensable = $resp->horarioComp;
                 $horario->fueraHorario = $resp->fuera_horario;
@@ -490,7 +490,6 @@ class apiVersionDosController extends Controller
         try {
             JWTAuth::setToken($token)->invalidate(); // setToken and check
             return response()->json(array('message' => 'token_logout'), 200);
-
         } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
             return response()->json(array('message' => 'token_expired'), 404);
         } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
