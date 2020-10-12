@@ -61,7 +61,7 @@
                         style="border-radius: 15px;border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
                         <div class="card-body p-0">
                             <div class="row">
-                                <div class="col-12 pr-5 pl-5 pt-5 pb-2">
+                                <div class="col-12 pr-5 pl-5 pt-3 pb-2">
                                     <form action="javascript:enviarInstrucciones()" class="authentication-form">
                                         @csrf
                                         <div class="form-group">
@@ -92,12 +92,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row justify-content-center pb-5">
+                            <div class="row justify-content-center pb-5" id="btnDownload" style="display: none">
                                 <div class="col-md-6 text-right">
                                     <a id="enlace32">
                                         <button type="button" class="btn btn-sm btn-opacity-primary"
-                                            style="font-size: 13.5px;border-radius: 10px;font-weight: 500">
-                                            <img src="{{asset('landing/images/folder.svg')}}" height="26" class="mr-2">
+                                            style="font-size: 13.5px;border-radius: 5px;font-weight: 300">
+                                            <img src="{{asset('landing/images/download (1).svg')}}" height="22" class="mr-2">
                                             RHbox X32
                                         </button>
                                     </a>
@@ -105,8 +105,8 @@
                                 <div class="col-md-6 text-left">
                                     <a id="enlace64">
                                         <button type="button" class="btn btn-sm btn-opacity-primary"
-                                            style="font-size: 13.5px;border-radius: 10px;font-weight: 500">
-                                            <img src="{{asset('landing/images/folder.svg')}}" height="26" class="mr-2">
+                                            style="font-size: 13.5px;border-radius: 5px;font-weight: 300">
+                                            <img src="{{asset('landing/images/download (1).svg')}}" height="22" class="mr-2">
                                             RHbox X64
                                         </button>
                                     </a>

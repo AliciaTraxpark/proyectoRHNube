@@ -24,9 +24,10 @@ function enviarLicencia() {
         beforeSend: function () {
             $("#enviarLicencia").prop("disabled", true);
             $('#alertError').hide();
+            $('#btnDownload').hide();
         },
         success: function (data) {
-            console.log(data);
+            $('#btnDownload').show();
             var code = data.descarga;
             document.getElementById('enlace64').setAttribute('href', location.origin + '/download/' + code);
             document.getElementById('enlace32').setAttribute('href', location.origin + '/downloadx32/' + code);
