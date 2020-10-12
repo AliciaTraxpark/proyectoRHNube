@@ -1,3 +1,6 @@
+@php
+    use Carbon\Carbon;
+@endphp
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,6 +13,16 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- App favicon -->
   <link rel="shortcut icon" href="{{asset('landing/images/ICONO-LOGO-NUBE-RH.ico')}}">
+  @php
+  $fecha=Auth::user()->created_at->toDateTimeString();
+       $dt=Carbon::create($fecha);
+      $dt->isoFormat('YYYY-MM-DD');
+      $actual=Carbon::now();
+      $actual->modify('-1 months')->isoFormat('YYYY-MM-DD');
+  @endphp
+  @if ($dt> $actual)
+  <script src="//code.jivosite.com/widget/OqxplJ3nCh" async></script>
+  @endif
 
   <!-- Plugin css  CALENDAR-->
   <link href="{{asset('admin/packages/core/main.css')}}" rel="stylesheet" />
@@ -639,7 +652,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
     <div class="col-md-5">
         <div class="row">
             <div class="col-md-9"><label style="font-size: 13px; font-weight:600 " for="">Programación de:  {{$fechaEnvi}}   hasta:   <label style="font-size: 13px;font-weight:600" for="" id="fechaHasta"></label></label></div>
-          
+
             <div class="col-md-3 text-right"></div>
             </div>
     </div>

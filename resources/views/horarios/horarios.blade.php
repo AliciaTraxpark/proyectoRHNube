@@ -1,3 +1,6 @@
+@php
+    use Carbon\Carbon;
+@endphp
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,6 +13,16 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{asset('landing/images/ICONO-LOGO-NUBE-RH.ico')}}">
+    @php
+    $fecha=Auth::user()->created_at->toDateTimeString();
+         $dt=Carbon::create($fecha);
+        $dt->isoFormat('YYYY-MM-DD');
+        $actual=Carbon::now();
+        $actual->modify('-1 months')->isoFormat('YYYY-MM-DD');
+    @endphp
+    @if ($dt> $actual)
+    <script src="//code.jivosite.com/widget/OqxplJ3nCh" async></script>
+    @endif
 
     <!-- App css -->
     <link href="{{asset('admin/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
