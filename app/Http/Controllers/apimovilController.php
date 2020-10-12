@@ -156,7 +156,13 @@ class apimovilController extends Controller
             $marcacion_movil->controladores_idControladores=$req['idControlador'];
             $marcacion_movil->dispositivos_idDispositivos=$req['idDisposi'];
             $marcacion_movil->organi_id=$req['organi_id'];
-            $marcacion_movil->horarioEmp_id=$req['idHoraEmp'];
+          
+            if(empty($req['idHoraEmp'])) {}
+            else{
+                $marcacion_movil->horarioEmp_id=$req['idHoraEmp'];
+            }
+
+
             $marcacion_movil->save();
         }
 
