@@ -583,8 +583,6 @@ function fechaDefecto() {
 $(function () {
     var hoy = moment().format("DD/MM/YYYY");
     $('#fecha').val(hoy);
-    // $('#fecha').trigger("change.dp");
-    $('#fecha').val(hoy);
 });
 function buscarReporte() {
     changeFecha();
