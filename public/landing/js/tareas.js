@@ -342,9 +342,8 @@ function onMostrarPantallas() {
                                 grupo += card;
                             }
                         } else {
-                            card = `<div class="col-2 columResponsiva" style="margin-left: 0px!important;justify-content:center;!important">
-                    <br><br><br>
-                            <div class="mb-0">
+                            card = `<div class="col-2 columResponsiva" style="margin-left: 0px!important;justify-content:center!important">
+                            <div class="mb-0" style="padding-top:50%">
                                 <a href="" class="text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
                                     aria-expanded="true" aria-controls="customaccorcollapseOne">
                                 </a>
@@ -353,7 +352,7 @@ function onMostrarPantallas() {
                                 <div class="row">
                                     <div class="col-md-12 col-sm-6 text-center">
                                         <img src="landing/images/3155773.png" height="100" class="imgResponsiva">
-                                            <h5 class="m-0 font-size-14" style="color:#8888">Vacio</h5>
+                                            <h5 class="m-0 font-size-14 mbResponsivo" style="color:#8888">Vacio</h5>
                                     </div>
                                 </div>
                                 </div>

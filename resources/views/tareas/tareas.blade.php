@@ -74,8 +74,8 @@
         }
 
         .columResponsiva {
-            padding-right: 1% !important;
-            padding-left: 1% !important;
+            padding-right: 2% !important;
+            padding-left: 2% !important;
             max-width: 50% !important;
             flex: 100% !important;
         }
@@ -92,6 +92,10 @@
 
         .rowResponsivo {
             justify-content: center !important;
+        }
+
+        .mbResponsivo {
+            padding-top: 15% !important;
         }
 
     }
