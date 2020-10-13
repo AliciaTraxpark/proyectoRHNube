@@ -343,7 +343,7 @@ function onMostrarPantallas() {
                             }
                         } else {
                             card = `<div class="col-2 columResponsiva" style="margin-left: 0px!important;justify-content:center!important">
-                            <div class="mb-0" style="padding-top:50%">
+                            <div class="mb-0" style="padding-top:70px">
                                 <a href="" class="text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
                                     aria-expanded="true" aria-controls="customaccorcollapseOne">
                                 </a>
