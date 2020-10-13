@@ -28,10 +28,7 @@ class delegarInvController extends Controller
         $this->middleware(['auth', 'verified']);
     }
     // */
-    public function __construct()
-    {
-        $this->middleware(['auth','verified']);
-    }
+   
     public function index(){
         if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
             return redirect('/elegirorganizacion');
