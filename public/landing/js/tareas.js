@@ -165,10 +165,10 @@ function onMostrarPantallas() {
                         " - " +
                         (parseInt(horaDelGrupo) + 1) +
                         ":00:00";
-                    var grupo = `<span style="font-weight: bold;color:#163552;cursor:default">${labelDelGrupo}</span>&nbsp;&nbsp;<img src="landing/images/punt.gif" height="70">&nbsp;&nbsp;
+                    var grupo = `<div class="row pt-2 rowResponsivo"><span style="font-weight: bold;color:#163552;cursor:default">${labelDelGrupo}</span>&nbsp;&nbsp;<img src="landing/images/punt.gif" height="20">&nbsp;&nbsp;
                 <span class="promHoras" style="font-weight: bold;color:#163552;cursor:default" id="totalHoras${$i}" data-toggle="tooltip" data-placement="right" title="Tiempo por Hora"
                 data-original-title=""></span>&nbsp;&nbsp;-&nbsp;&nbsp;<span class="promHoras" style="font-weight: bold;color:#163552;cursor:default" id="promHoras${$i}" data-toggle="tooltip" data-placement="right" title="Actividad por Hora"
-                data-original-title=""></span><br><br><div class="container-fluid containerR"><div class="row rowResp">`;
+                data-original-title=""></span></div><br><br><div class="container-fluid containerR"><div class="row rowResp">`;
                     for (var j = 0; j < 6; j++) {
                         if (data[index].minutos[j] != undefined) {
                             var capturas = "";
@@ -255,7 +255,7 @@ function onMostrarPantallas() {
                                         <div class="collapse show" aria-labelledby="customaccorheadingOne" data-parent="#customaccordion_exa">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div class=" text-center col-md-12 col-sm-6 columResponsiva" style="padding-top: 4px;
+                                                <div class=" text-center col-md-12 col-sm-6 columnTextR" style="padding-top: 4px;
                                                 padding-bottom: 4px;">
                                                     <h5 class="m-0 font-size-16 h5Responsive" style="color:#1f4068;font-weight:bold;"><img src="landing/images/2143150.png" class="mr-2" height="20"/>${data[index].minutos[
                                         j
@@ -318,7 +318,7 @@ function onMostrarPantallas() {
                                     ][0].Activi_Nombre
                                     } </h5>
                                                 </div><br>
-                                                <div class="col-md-12 col-sm-6" style="padding-left: 0px;;padding-right: 0px">
+                                                <div class="col-md-12" style="padding-left: 0px;;padding-right: 0px">
                                                 <div class=" text-center col-md-12 col-sm-12" style="padding-top: 1px;
                                                 padding-bottom: 4px;">
                                                 <img src="landing/images/3155773.png" height="100">
@@ -352,7 +352,7 @@ function onMostrarPantallas() {
                                     data-parent="#customaccordion_exa">
                                 <div class="row">
                                     <div class="col-md-12 col-sm-6 text-center">
-                                        <img src="landing/images/3155773.png" height="100">
+                                        <img src="landing/images/3155773.png" height="100" class="imgResponsiva">
                                             <h5 class="m-0 font-size-14" style="color:#8888">Vacio</h5>
                                     </div>
                                 </div>

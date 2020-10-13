@@ -64,21 +64,36 @@
         .containerR {
             overflow: auto !important;
             display: flex !important;
-            justify-content: space-around !important;
         }
 
         .rowResp {
+            overflow: auto !important;
             white-space: normal !important;
+            max-width: 100% !important;
+            display: flex !important;
         }
 
         .columResponsiva {
             padding-right: 0% !important;
             padding-left: 0% !important;
+            max-width: 50% !important;
+            flex: 100% !important;
+        }
+
+        .columnTextR {
+            padding-right: 0% !important;
+            padding-left: 0% !important;
+            max-width: 100% !important;
         }
 
         .h5Responsive {
             font-size: 14px !important;
         }
+
+        .rowResponsivo {
+            justify-content: center !important;
+        }
+
     }
 </style>
 <div id="modalZoom" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
