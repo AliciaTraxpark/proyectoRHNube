@@ -2053,7 +2053,7 @@ function agregarArea() {
 
 function datosArea(method) {
     nuevoArea = {
-        area_descripcion: $("#textArea").val().toUpperCase(),
+        area_descripcion: $("#textArea").val(),
         _method: method,
     };
     return nuevoArea;
@@ -2090,12 +2090,10 @@ function enviarArea(accion, objArea) {
                     $("<option>", {
                         //agrego los valores que obtengo de una base de datos
                         value: data.area_id,
-                        text: data.area_descripcion,
-                        selected: true,
+                        text: data.area_descripcion
                     })
                 );
                 $("#area").val(data.area_id).trigger("change"); //lo selecciona
-                $("#v_area").val(data.area_id).trigger("change");
                 $("#textArea").val("");
                 $("#editarArea").hide();
                 limpiar();
@@ -2168,7 +2166,6 @@ function enviarArea(accion, objArea) {
                     error: function () {},
                 });
                 $("#area").val(data.area_id).trigger("change"); //lo selecciona
-                $("#v_area").val(data.area_id).trigger("change");
                 $("#textArea").val("");
                 $("#editarArea").hide();
                 limpiar();
@@ -2207,7 +2204,7 @@ function agregarcargo() {
 
 function datosCargo(method) {
     nuevoCargo = {
-        cargo_descripcion: $("#textCargo").val().toUpperCase(),
+        cargo_descripcion: $("#textCargo").val(),
         _method: method,
     };
     return nuevoCargo;
@@ -2244,12 +2241,10 @@ function enviarCargo(accion, objCargo) {
                     $("<option>", {
                         //agrego los valores que obtengo de una base de datos
                         value: data.cargo_id,
-                        text: data.cargo_descripcion,
-                        selected: true,
+                        text: data.cargo_descripcion
                     })
                 );
                 $("#cargo").val(data.cargo_id).trigger("change"); //lo selecciona
-                $("#v_cargo").val(data.cargo_id).trigger("change"); //lo selecciona
                 $("#textCargo").val("");
                 $("#editarCargo").hide();
                 limpiar();
@@ -2323,7 +2318,6 @@ function enviarCargo(accion, objCargo) {
                     error: function () {},
                 });
                 $("#cargo").val(data.cargo_id).trigger("change"); //lo selecciona
-                $("#v_cargo").val(data.cargo_id).trigger("change");
                 $("#textCargo").val("");
                 $("#editarCargo").hide();
                 limpiar();
@@ -2362,7 +2356,7 @@ function agregarcentro() {
 
 function datosCentro(method) {
     nuevoCentro = {
-        centroC_descripcion: $("#textCentro").val().toUpperCase(),
+        centroC_descripcion: $("#textCentro").val(),
         _method: method,
     };
     return nuevoCentro;
@@ -2399,12 +2393,10 @@ function enviarCentro(accion, objCentroC) {
                     $("<option>", {
                         //agrego los valores que obtengo de una base de datos
                         value: data.centroC_id,
-                        text: data.centroC_descripcion,
-                        selected: true,
+                        text: data.centroC_descripcion
                     })
                 );
                 $("#centroc").val(data.centroC_id).trigger("change"); //lo selecciona
-                $("#v_centroc").val(data.centroC_id).trigger("change"); //lo selecciona
                 $("#textCentro").val("");
                 $("#editarCentro").hide();
                 limpiar();
@@ -2477,7 +2469,6 @@ function enviarCentro(accion, objCentroC) {
                     error: function () {},
                 });
                 $("#centroc").val(data.centroC_id).trigger("change"); //lo selecciona
-                $("#v_centroc").val(data.centroC_id).trigger("change"); //lo selecciona
                 $("#textCentro").val("");
                 $("#editarCentro").hide();
                 limpiar();
@@ -2516,7 +2507,7 @@ function agregarlocal() {
 
 function datosLocal(method) {
     nuevoLocal = {
-        local_descripcion: $("#textLocal").val().toUpperCase(),
+        local_descripcion: $("#textLocal").val(),
         _method: method,
     };
     return nuevoLocal;
@@ -2553,12 +2544,10 @@ function enviarLocal(accion, objLocal) {
                     $("<option>", {
                         //agrego los valores que obtengo de una base de datos
                         value: data.local_id,
-                        text: data.local_descripcion,
-                        selected: true,
+                        text: data.local_descripcion
                     })
                 );
                 $("#local").val(data.local_id).trigger("change"); //lo selecciona
-                $("#v_local").val(data.local_id).trigger("change"); //lo selecciona
                 $("#textLocal").val("");
                 $("#editarLocal").hide();
                 limpiar();
@@ -2631,7 +2620,6 @@ function enviarLocal(accion, objLocal) {
                     error: function () {},
                 });
                 $("#local").val(data.local_id).trigger("change"); //lo selecciona
-                $("#v_local").val(data.local_id).trigger("change"); //lo selecciona
                 $("#textLocal").val("");
                 $("#editarLocal").hide();
                 limpiar();
@@ -2670,7 +2658,7 @@ function agregarnivel() {
 
 function datosNivel(method) {
     nuevoNivel = {
-        nivel_descripcion: $("#textNivel").val().toUpperCase(),
+        nivel_descripcion: $("#textNivel").val(),
         _method: method,
     };
     return nuevoNivel;
@@ -2707,12 +2695,10 @@ function enviarNivel(accion, objNivel) {
                     $("<option>", {
                         //agrego los valores que obtengo de una base de datos
                         value: data.nivel_id,
-                        text: data.nivel_descripcion,
-                        selected: true,
+                        text: data.nivel_descripcion
                     })
                 );
                 $("#nivel").val(data.nivel_id).trigger("change"); //lo selecciona
-                $("#v_nivel").val(data.nivel_id).trigger("change"); //lo selecciona
                 $("#textNivel").val("");
                 $("#editarNivel").hide();
                 limpiar();
@@ -2785,7 +2771,6 @@ function enviarNivel(accion, objNivel) {
                     error: function () {},
                 });
                 $("#nivel").val(data.nivel_id).trigger("change"); //lo selecciona
-                $("#v_nivel").val(data.nivel_id).trigger("change"); //lo selecciona
                 $("#textNivel").val("");
                 $("#editarNivel").hide();
                 limpiar();
@@ -2825,7 +2810,7 @@ function agregarContrato() {
 
 function datosContrato(method) {
     nuevoContrato = {
-        contrato_descripcion: $("#textContrato").val().toUpperCase(),
+        contrato_descripcion: $("#textContrato").val(),
         _method: method,
     };
     return nuevoContrato;
@@ -2862,12 +2847,10 @@ function enviarContrato(accion, objContrato) {
                     $("<option>", {
                         //agrego los valores que obtengo de una base de datos
                         value: data.contrato_id,
-                        text: data.contrato_descripcion,
-                        selected: true,
+                        text: data.contrato_descripcion
                     })
                 );
                 $("#contrato").val(data.contrato_id).trigger("change"); //lo selecciona
-                $("#v_contrato").val(data.contrato_id).trigger("change"); //lo selecciona
                 $("#textContrato").val("");
                 $("#editarContrato").hide();
                 limpiar();
@@ -2940,7 +2923,6 @@ function enviarContrato(accion, objContrato) {
                     error: function () {},
                 });
                 $("#contrato").val(data.contrato_id).trigger("change"); //lo selecciona
-                $("#v_contrato").val(data.contrato_id).trigger("change"); //lo selecciona
                 $("#textContrato").val("");
                 $("#editarContrato").hide();
                 limpiar();
@@ -2979,7 +2961,7 @@ function agregarCondicion() {
 
 function datosCondicion(method) {
     nuevoCondicion = {
-        condicion: $("#textCondicion").val().toUpperCase(),
+        condicion: $("#textCondicion").val(),
         _method: method,
     };
     return nuevoCondicion;
@@ -3016,12 +2998,10 @@ function enviarCondicion(accion, objCondicion) {
                     $("<option>", {
                         //agrego los valores que obtengo de una base de datos
                         value: data.id,
-                        text: data.condicion,
-                        selected: true,
+                        text: data.condicion
                     })
                 );
                 $("#condicion").val(data.id).trigger("change"); //lo selecciona
-                $("#v_condicion").val(data.id).trigger("change"); //lo selecciona
                 $("#textCondicion").val("");
                 $("#editarCondicion").hide();
                 limpiar();
@@ -3094,7 +3074,6 @@ function enviarCondicion(accion, objCondicion) {
                     error: function () {},
                 });
                 $("#condicion").val(data.id).trigger("change"); //lo selecciona
-                $("#v_condicion").val(data.id).trigger("change"); //lo selecciona
                 $("#textCondicion").val("");
                 $("#editarCondicion").hide();
                 limpiar();

@@ -34,8 +34,7 @@ function enviarAreaA(accion, objArea) {
             success: function (data) {
                 $('#area').append($('<option>', { //agrego los valores que obtengo de una base de datos
                     value: data.area_id,
-                    text: data.area_descripcion,
-                    selected: true
+                    text: data.area_descripcion
                 }));
                 $('#v_area').append($('<option>', { //agrego los valores que obtengo de una base de datos
                     value: data.area_id,
@@ -171,8 +170,7 @@ function enviarCargoA(accion, objCargo) {
             success: function (data) {
                 $('#cargo').append($('<option>', { //agrego los valores que obtengo de una base de datos
                     value: data.cargo_id,
-                    text: data.cargo_descripcion,
-                    selected: true
+                    text: data.cargo_descripcion
                 }));
                 $('#v_cargo').append($('<option>', { //agrego los valores que obtengo de una base de datos
                     value: data.cargo_id,
@@ -309,8 +307,7 @@ function enviarCentroA(accion, objCentroC) {
             success: function (data) {
                 $('#centroc').append($('<option>', { //agrego los valores que obtengo de una base de datos
                     value: data.centroC_id,
-                    text: data.centroC_descripcion,
-                    selected: true
+                    text: data.centroC_descripcion
                 }));
                 $('#v_centroc').append($('<option>', { //agrego los valores que obtengo de una base de datos
                     value: data.centroC_id,
@@ -445,8 +442,7 @@ function enviarLocalA(accion, objLocal) {
             success: function (data) {
                 $('#local').append($('<option>', { //agrego los valores que obtengo de una base de datos
                     value: data.local_id,
-                    text: data.local_descripcion,
-                    selected: true
+                    text: data.local_descripcion
                 }));
                 $('#v_local').append($('<option>', { //agrego los valores que obtengo de una base de datos
                     value: data.local_id,
@@ -582,8 +578,7 @@ function enviarNivelA(accion, objNivel) {
             success: function (data) {
                 $('#nivel').append($('<option>', { //agrego los valores que obtengo de una base de datos
                     value: data.nivel_id,
-                    text: data.nivel_descripcion,
-                    selected: true
+                    text: data.nivel_descripcion
                 }));
                 $('#v_nivel').append($('<option>', { //agrego los valores que obtengo de una base de datos
                     value: data.nivel_id,
@@ -720,8 +715,7 @@ function enviarContratoA(accion, objContrato) {
             success: function (data) {
                 $('#contrato').append($('<option>', { //agrego los valores que obtengo de una base de datos
                     value: data.contrato_id,
-                    text: data.contrato_descripcion,
-                    selected: true
+                    text: data.contrato_descripcion
                 }));
                 $('#v_contrato').append($('<option>', { //agrego los valores que obtengo de una base de datos
                     value: data.contrato_id,
@@ -856,8 +850,7 @@ function enviarCondicionA(accion, objCondicion) {
             success: function (data) {
                 $('#condicion').append($('<option>', { //agrego los valores que obtengo de una base de datos
                     value: data.id,
-                    text: data.condicion,
-                    selected: true
+                    text: data.condicion
                 }));
                 $('#v_condicion').append($('<option>', { //agrego los valores que obtengo de una base de datos
                     value: data.id,
