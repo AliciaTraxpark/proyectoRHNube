@@ -255,9 +255,9 @@ function onMostrarPantallas() {
                                         <div class="collapse show" aria-labelledby="customaccorheadingOne" data-parent="#customaccordion_exa">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div class=" text-center col-md-12 col-sm-6" style="padding-top: 4px;
+                                                <div class=" text-center col-md-12 col-sm-6 columResponsiva" style="padding-top: 4px;
                                                 padding-bottom: 4px;">
-                                                    <h5 class="m-0 font-size-16" style="color:#1f4068;font-weight:bold;"><img src="landing/images/2143150.png" class="mr-2" height="20"/>${data[index].minutos[
+                                                    <h5 class="m-0 font-size-16 h5Responsive" style="color:#1f4068;font-weight:bold;"><img src="landing/images/2143150.png" class="mr-2" height="20"/>${data[index].minutos[
                                         j
                                     ][0].Activi_Nombre
                                     } </h5>
@@ -342,7 +342,7 @@ function onMostrarPantallas() {
                                 grupo += card;
                             }
                         } else {
-                            card = `<div class="col-2" style="margin-left: 0px!important;justify-content:center;!important">
+                            card = `<div class="col-2 columResponsiva" style="margin-left: 0px!important;justify-content:center;!important">
                     <br><br><br>
                             <div class="mb-0">
                                 <a href="" class="text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
@@ -351,12 +351,9 @@ function onMostrarPantallas() {
                                 <div class="collapse show" aria-labelledby="customaccorheadingOne"
                                     data-parent="#customaccordion_exa">
                                 <div class="row">
-                                    <div class="col-md-12">
-                                        <div class=" text-center col-md-12 col-sm-12" style="padding-top: 1px;
-                                        padding-bottom: 4px;">
+                                    <div class="col-md-12 col-sm-6 text-center">
                                         <img src="landing/images/3155773.png" height="100">
                                             <h5 class="m-0 font-size-14" style="color:#8888">Vacio</h5>
-                                        </div>  <br>
                                     </div>
                                 </div>
                                 </div>

@@ -75,6 +75,10 @@
             padding-right: 0% !important;
             padding-left: 0% !important;
         }
+
+        .h5Responsive {
+            font-size: 14px !important;
+        }
     }
 </style>
 <div id="modalZoom" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
