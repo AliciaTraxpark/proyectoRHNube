@@ -58,6 +58,11 @@
             padding-left: 3px !important;
             padding-right: 3px !important;
         }
+
+        .colR {
+            padding-left: 0% !important;
+            padding-right: 0% !important;
+        }
     }
 </style>
 <div id="preloader">
@@ -171,7 +176,7 @@
                     <div class="col-xl-6">
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label">Área:</label>
-                            <div class="col-lg-10">
+                            <div class="col-lg-10 colR">
                                 <select id="area" data-plugin="customselect" class="form-control" multiple="multiple">
                                     @foreach ($areas as $area)
                                     <option value="{{$area->area_id}}">

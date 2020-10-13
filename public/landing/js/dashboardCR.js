@@ -238,6 +238,9 @@ var options = {
           height: 350,
           toolbar: {
             show: false
+          },
+          zoom: {
+            enabled: false,
           }
         },
         title: {
@@ -246,7 +249,9 @@ var options = {
         },
         legend: {
           position: "top",
-          offsetY: -15
+          horizontalAlign: 'center',
+          floating: true,
+          offsetY: -15,
         }
       }
     }
