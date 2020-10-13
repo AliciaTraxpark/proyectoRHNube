@@ -74,8 +74,8 @@
         }
 
         .columResponsiva {
-            padding-right: 0% !important;
-            padding-left: 0% !important;
+            padding-right: 1% !important;
+            padding-left: 1% !important;
             max-width: 50% !important;
             flex: 100% !important;
         }

@@ -303,7 +303,7 @@ function onMostrarPantallas() {
                                 </div>`;
                                 grupo += card;
                             } else {
-                                card = `<div class="col-2" style="margin-left: 0px!important;">
+                                card = `<div class="col-2 columResponsiva" style="margin-left: 0px!important;">
                                     <div class="mb-0 text-center" style="padding-left: 0px;">
                                         <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
                                             aria-expanded="true" aria-controls="customaccorcollapseOne">
