@@ -167,7 +167,7 @@ function getRandomColor() {
 var options = {
   series: dataFechas(),
   chart: {
-    height: 350,
+    height: 400,
     widht: '100%',
     type: 'line',
     dropShadow: {
@@ -234,15 +234,20 @@ var options = {
     {
       breakpoint: 767.98,
       options: {
-        legend: {
-          position: "bottom",
-          floating: true,
-        },
         chart: {
+          height: 350,
           toolbar: {
             show: false
           }
         },
+        title: {
+          text: 'Actividad y Día',
+          align: 'center',
+        },
+        legend: {
+          position: "top",
+          offsetY: -20
+        }
       }
     }
   ]
