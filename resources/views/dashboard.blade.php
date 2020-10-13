@@ -127,6 +127,10 @@
             width: 100% !important;
             height: auto;
         }
+
+        .container-fluid {
+            padding-right: 30px !important;
+        }
     }
 </style>
 <div class="row justify-content-center ml-3">

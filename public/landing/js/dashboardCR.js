@@ -246,7 +246,7 @@ var options = {
         },
         legend: {
           position: "top",
-          offsetY: -20
+          offsetY: -15
         }
       }
     }
