@@ -67,12 +67,6 @@ $("#empleado").on("select2:opening", function () {
     });
 });
 
-// $("#empleado").on("select2:close", function () {
-//     if ($(this).val() != "") {
-//         onMostrarPantallas();
-//     }
-// });
-
 function fechaHoy() {
     f = moment().format("YYYY-MM-DD");
     fechaValue.setDate(f);
@@ -104,11 +98,7 @@ function buscarCapturas() {
         });
     }
 }
-//CAPTURAS
-// $(function () {
-//     $("#fecha").on("change", onMostrarPantallas);
-//     $("#proyecto").on("change", onMostrarPantallas);
-// });
+
 var datos;
 var promedioHoras = 0;
 
@@ -153,7 +143,7 @@ function onMostrarPantallas() {
                 var actividadDiariaTotal = 0;
                 var rangoDiarioTotal = 0;
                 var promedioDiaria = 0;
-                var actividadDiaria = `<div class="row justify-content-center p-3"><div class="col-xl-4"><span style="font-weight: bold;color:#163552;cursor:default;font-size:14px;"><img src="landing/images/velocimetro (1).svg" class="mr-2" height="20"/>Actividad Diaria | <span id="totalActivi"></span> - <span id="totalH"></span></span></div></div>`;
+                var actividadDiaria = `<div class="row justify-content-center p-3"><div class="col-xl-4 text-center"><span style="font-weight: bold;color:#163552;cursor:default;font-size:14px;"><img src="landing/images/velocimetro (1).svg" class="mr-2" height="20"/>Actividad Diaria | <span id="totalActivi"></span> - <span id="totalH"></span></span></div></div>`;
                 container.append(actividadDiaria);
                 for (let index = 0; index < data.length; index++) {
                     $("#promHoras" + $i).empty();
@@ -178,7 +168,7 @@ function onMostrarPantallas() {
                     var grupo = `<span style="font-weight: bold;color:#163552;cursor:default">${labelDelGrupo}</span>&nbsp;&nbsp;<img src="landing/images/punt.gif" height="70">&nbsp;&nbsp;
                 <span class="promHoras" style="font-weight: bold;color:#163552;cursor:default" id="totalHoras${$i}" data-toggle="tooltip" data-placement="right" title="Tiempo por Hora"
                 data-original-title=""></span>&nbsp;&nbsp;-&nbsp;&nbsp;<span class="promHoras" style="font-weight: bold;color:#163552;cursor:default" id="promHoras${$i}" data-toggle="tooltip" data-placement="right" title="Actividad por Hora"
-                data-original-title=""></span><br><br><div class="row">`;
+                data-original-title=""></span><br><br><div class="container-fluid containerR"><div class="row rowResp">`;
                     for (var j = 0; j < 6; j++) {
                         if (data[index].minutos[j] != undefined) {
                             var capturas = "";
@@ -257,7 +247,7 @@ function onMostrarPantallas() {
                                 var rspI = imgR.replace(/\//g, "-");
                                 var encr = CryptoJS.enc.Utf8.parse(rspI);
                                 var base64 = CryptoJS.enc.Base64.stringify(encr);
-                                card = `<div class="col-2" style="margin-left: 0px!important;">
+                                card = `<div class="col-2 columResponsiva" style="margin-left: 0px!important;">
                                     <div class="mb-0 text-center" style="padding-left: 0px;">
                                         <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
                                             aria-expanded="true" aria-controls="customaccorcollapseOne">
@@ -375,7 +365,7 @@ function onMostrarPantallas() {
                             grupo += card;
                         }
                     }
-                    grupo += `</div><br>`;
+                    grupo += `</div></div><br>`;
                     container.append(grupo);
                     totalActividadRango = ((sumaActividadTotal / sumaRangosTotal) * 100).toFixed(
                         2

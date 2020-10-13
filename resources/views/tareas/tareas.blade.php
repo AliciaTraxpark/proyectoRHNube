@@ -60,6 +60,21 @@
         .alertR {
             width: 60%;
         }
+
+        .containerR {
+            overflow: auto !important;
+            display: flex !important;
+            justify-content: space-around !important;
+        }
+
+        .rowResp {
+            white-space: normal !important;
+        }
+
+        .columResponsiva {
+            padding-right: 0% !important;
+            padding-left: 0% !important;
+        }
     }
 </style>
 <div id="modalZoom" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
