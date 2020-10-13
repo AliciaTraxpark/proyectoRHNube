@@ -42,6 +42,13 @@
     .carousel-control-next-icon {
         background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='403555' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
     }
+
+    @media (max-width: 767.98px) {
+        .colR {
+            padding-left: 0% !important;
+            padding-right: 2% !important;
+        }
+    }
 </style>
 <div id="modalZoom" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
     data-backdrop="static">
@@ -74,8 +81,8 @@
                 <div class="row mt-4">
                     <div class="col-xl-5">
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label pl-5">Fecha:</label>
-                            <div class="input-group col-md-7 text-center" style="padding-left: 0px;padding-right: 0px;"
+                            <label class="col-lg-3 col-form-label pl-5 colR">Fecha:</label>
+                            <div class="input-group col-md-7 text-center colR" style="padding-left: 0px;padding-right: 0px;"
                                 id="fechaSelec">
                                 <input type="text" id="fecha" class="form-control" data-input>
                                 <div class="input-group-prepend">
@@ -91,8 +98,8 @@
                     <div class="col-xl-1"></div>
                     <div class="col-xl-5">
                         <div class="form-group row">
-                            <label class="col-lg-2 col-form-label">Empleado:</label>
-                            <div class="col-lg-10">
+                            <label class="col-lg-2 col-form-label colR">Empleado:</label>
+                            <div class="col-lg-10 colR">
                                 <select id="empleado" data-plugin="customselect" class="form-control">
                                     <option value="" disabled selected>Seleccionar</option>
                                     @foreach ($empleado as $empleados)
