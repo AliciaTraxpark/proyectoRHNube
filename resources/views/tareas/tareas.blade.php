@@ -113,7 +113,7 @@
             </div>
             <div class="modal-body">
                 <div id="esperaImg" class="text-center" style="display: none">
-                    <img src="{{asset('landing/images/punt.gif')}}" height="150">
+                    <img src="{{asset('landing/images/punt.gif')}}" height="80">
                 </div>
                 <div class="row">
                     <div id="zoom" class="col-xl-12 text-center album">
