@@ -115,6 +115,23 @@
         font-weight: bold !important;
         /* add background-color to active links */
     }
+
+    @media (max-width: 767.98px) {
+        .floatP {
+            width: 100% !important;
+            height: auto;
+            margin-top: 0%;
+        }
+
+        .floatS {
+            width: 100% !important;
+            height: auto;
+        }
+
+        .container-fluid {
+            padding-right: 30px !important;
+        }
+    }
 </style>
 <div class="row justify-content-center ml-3">
     <div class="col-md-6" id="divdepartamento" style="min-height: 460px">
@@ -142,10 +159,10 @@
                 <div class="tab-content rounded-bottom">
                     <div class="tab-pane fade in show active" id="panel1001D" role="tabpanel">
                         <div class="float-right" style="width:100%">
-                            <div class="float-right" style="width:70%">
+                            <div class="float-right floatP" style="width:70%">
                                 <canvas id="departamento" height="300" width="300"></canvas>
                             </div>
-                            <div id="js-legendDep" class="chart-legend"></div>
+                            <div id="js-legendDep" class="chart-legend floatS"></div>
                         </div>
                     </div>
                     <div class="tab-pane ml-2" id="panel1002D" role="tabpanel" style="max-height: 460px">
@@ -180,10 +197,10 @@
                 <div class="tab-content rounded-bottom">
                     <div class="tab-pane fade in show active" id="panel1001C" role="tabpanel">
                         <div class="float-right" style="width:100%">
-                            <div class="float-right" style="width:70%">
+                            <div class="float-right floatP" style="width:70%">
                                 <canvas id="contrato" height="300" width="300"></canvas>
                             </div>
-                            <div id="js-legendContrato" class="chart-legend"></div>
+                            <div id="js-legendContrato" class="chart-legend floatS"></div>
                         </div>
                     </div>
                     <div class="tab-pane ml-2" id="panel1002C" role="tabpanel" style="max-height: 460px">
@@ -216,10 +233,10 @@
                 <div class="tab-content rounded-bottom">
                     <div class="tab-pane fade in show active" id="panel1001A" role="tabpanel">
                         <div class="float-right" style="width:100%">
-                            <div class="float-right" style="width:70%">
+                            <div class="float-right floatP" style="width:70%">
                                 <canvas id="area" height="300" width="300"></canvas>
                             </div>
-                            <div id="js-legendArea" class="chart-legend"></div>
+                            <div id="js-legendArea" class="chart-legend floatS"></div>
                         </div>
                     </div>
                     <div class="tab-pane ml-2" id="panel1002A" role="tabpanel" style="max-height: 460px">
@@ -254,10 +271,10 @@
                 <div class="tab-content rounded-bottom">
                     <div class="tab-pane fade in show active" id="panel1001E" role="tabpanel">
                         <div class="float-right" style="width:100%">
-                            <div class="float-right" style="width:70%">
+                            <div class="float-right floatP" style="width:70%">
                                 <canvas id="edades" height="300" width="300"></canvas>
                             </div>
-                            <div id="js-legendEdades" class="chart-legend"></div>
+                            <div id="js-legendEdades" class="chart-legend floatS"></div>
                         </div>
                     </div>
                     <div class="tab-pane ml-2" id="panel1002E" role="tabpanel" style="max-height: 460px">
@@ -292,10 +309,10 @@
                 <div class="tab-content rounded-bottom">
                     <div class="tab-pane fade in show active" id="panel1001CC" role="tabpanel">
                         <div class="float-right" style="width:100%">
-                            <div class="float-right" style="width:70%">
+                            <div class="float-right floatP" style="width:70%">
                                 <canvas id="centro" height="300" width="300"></canvas>
                             </div>
-                            <div id="js-legendCentro" class="chart-legend"></div>
+                            <div id="js-legendCentro" class="chart-legend floatS"></div>
                         </div>
                     </div>
                     <div class="tab-pane ml-2" id="panel1002CC" role="tabpanel" style="max-height: 460px">
@@ -328,10 +345,10 @@
                 <div class="tab-content rounded-bottom">
                     <div class="tab-pane fade in show active" id="panel1001L" role="tabpanel">
                         <div class="float-right" style="width:100%">
-                            <div class="float-right" style="width:70%">
+                            <div class="float-right floatP" style="width:70%">
                                 <canvas id="local" height="300" width="300"></canvas>
                             </div>
-                            <div id="js-legendLocal" class="chart-legend"></div>
+                            <div id="js-legendLocal" class="chart-legend floatS"></div>
                         </div>
                     </div>
                     <div class="tab-pane ml-2" id="panel1002L" role="tabpanel" style="max-height: 460px">
@@ -365,10 +382,10 @@
                 <div class="tab-content rounded-bottom">
                     <div class="tab-pane fade in show active" id="panel1001N" role="tabpanel">
                         <div class="float-right" style="width:100%">
-                            <div class="float-right" style="width:70%">
+                            <div class="float-right floatP" style="width:70%">
                                 <canvas id="nivel" height="300" width="300"></canvas>
                             </div>
-                            <div id="js-legendNivel" class="chart-legend"></div>
+                            <div id="js-legendNivel" class="chart-legend floatS"></div>
                         </div>
                     </div>
                     <div class="tab-pane ml-2" id="panel1002N" role="tabpanel" style="max-height: 460px">

@@ -149,7 +149,7 @@ function dataFechas() {
         }
         for (let j = 2; j < data.length; j++) {
           colores.push(getRandomColor());
-      }
+        }
       }
     }
   });
@@ -160,14 +160,15 @@ function getRandomColor() {
   var letters = 'ABCDE'.split('');
   var color = '#';
   for (var i = 0; i < 3; i++) {
-      color += letters[Math.floor(Math.random() * letters.length)];
+    color += letters[Math.floor(Math.random() * letters.length)];
   }
   return color;
 }
 var options = {
   series: dataFechas(),
   chart: {
-    height: 350,
+    height: 400,
+    widht: '100%',
     type: 'line',
     dropShadow: {
       enabled: true,
@@ -228,7 +229,33 @@ var options = {
     floating: true,
     offsetY: -25,
     offsetX: -5
-  }
+  },
+  responsive: [
+    {
+      breakpoint: 767.98,
+      options: {
+        chart: {
+          height: 350,
+          toolbar: {
+            show: false
+          },
+          zoom: {
+            enabled: false,
+          }
+        },
+        title: {
+          text: 'Actividad y Día',
+          align: 'center',
+        },
+        legend: {
+          position: "top",
+          horizontalAlign: 'center',
+          floating: true,
+          offsetY: -15,
+        }
+      }
+    }
+  ]
 };
 
 var chart = new ApexCharts(document.querySelector("#chart"), options);
