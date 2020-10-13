@@ -33,6 +33,12 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             <span> Dashboard </span>
         </a>
     </li>
+    <li>
+        <a href="/organizaciones" >
+            <i data-feather="shopping-bag"></i>
+            <span> Organizaciones </span>
+        </a>
+    </li>
     <!-- <li>
         <a href="/proyecto">
             <i data-feather="briefcase"></i>
