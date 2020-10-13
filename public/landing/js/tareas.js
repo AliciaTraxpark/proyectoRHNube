@@ -4,7 +4,7 @@ var notify = $.notifyDefaults({
     newest_on_top: true,
     delay: 4000,
     template:
-        '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+        '<div data-notify="container" class="col-xs-10 col-sm-2 text-center alert alertR" style="background-color: #fcf8e3;" role="alert">' +
         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
         '<span data-notify="title">{1}</span> ' +
@@ -143,8 +143,8 @@ function onMostrarPantallas() {
         }).then(function (data) {
             console.log(data);
             var vacio = `<img id="VacioImg" style="margin-left:28%" src="admin/images/search-file.svg"
-            class="mr-2" height="220" /> <br> <label for=""
-            style="margin-left:30%;color:#7d7d7d">Realize una búsqueda para ver Actividad</label>`;
+            class="mr-2 imgR" height="220" /> <br> <label for=""
+            style="margin-left:30%;color:#7d7d7d" class="imgR">Realize una búsqueda para ver Actividad</label>`;
             $("#espera").hide();
             datos = data;
             if (data.length != 0) {

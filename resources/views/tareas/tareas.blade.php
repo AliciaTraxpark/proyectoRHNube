@@ -48,6 +48,18 @@
             padding-left: 0% !important;
             padding-right: 2% !important;
         }
+
+        .btnR {
+            text-align: center !important;
+        }
+
+        .imgR {
+            margin-left: 15% !important;
+        }
+
+        .alertR {
+            width: 60%;
+        }
     }
 </style>
 <div id="modalZoom" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
@@ -82,8 +94,8 @@
                     <div class="col-xl-5">
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label pl-5 colR">Fecha:</label>
-                            <div class="input-group col-md-7 text-center colR" style="padding-left: 0px;padding-right: 0px;"
-                                id="fechaSelec">
+                            <div class="input-group col-md-7 text-center colR"
+                                style="padding-left: 0px;padding-right: 0px;" id="fechaSelec">
                                 <input type="text" id="fecha" class="form-control" data-input>
                                 <div class="input-group-prepend">
                                     <div class="input-group-text form-control flatpickr">
@@ -112,7 +124,7 @@
 
                         </div>
                     </div>
-                    <div class="col-xl-1 text-left" style="padding-left: 0%">
+                    <div class="col-xl-1 text-left btnR" style="padding-left: 0%">
                         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
                             onclick="javascript:buscarCapturas()"> <img src="{{asset('landing/images/loupe (1).svg')}}"
                                 height="18"></button>
@@ -124,8 +136,8 @@
                 <div class="col-xl-12" id="card">
                     <br>
                     <img id="VacioImg" style="margin-left:28%" src="{{
-                        URL::asset('admin/images/search-file.svg') }}" class="mr-2" height="220" /> <br> <label for=""
-                        style="margin-left:30%;color:#7d7d7d">Realize una
+                        URL::asset('admin/images/search-file.svg') }}" class="mr-2 imgR" height="220" /> <br> <label
+                        for="" style="margin-left:30%;color:#7d7d7d" class="imgR">Realize una
                         búsqueda para ver Actividad</label>
                 </div>
             </div> <!-- end card-body-->
