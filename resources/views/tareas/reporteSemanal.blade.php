@@ -51,6 +51,13 @@
         min-height: 50% !important;
         font-size: small !important;
     }
+
+    @media (max-width: 767.98px) {
+        .colBtnR {
+            text-align: center !important;
+            margin-top: 5% !important;
+        }
+    }
 </style>
 <div class="row justify-content-center p-5">
     <div class="col-xl-3" style="padding-left: 2%;padding-right: 0%;">
@@ -66,7 +73,7 @@
             </div>
         </div>
     </div>
-    <div class="col-xl-2" style="margin-right: 5%;">
+    <div class="col-xl-2 colBtnR" style="margin-right: 5%;">
         <button type="button" class="btn btn-sm pb-2" style="background-color: #163552;"
             onclick="javascript:mostrarGrafica()"><i class="fa fa-eye mr-1"></i>VER GRAFICO
         </button>
