@@ -32,24 +32,6 @@
 
 @section('content')
 <style>
-    .flex-wrap {
-        text-align: left !important;
-        display: block !important;
-        margin-bottom: 10px;
-    }
-
-    .drp-selected {
-        display: none !important;
-    }
-
-    .datepicker,
-    .table-condensed {
-        width: 280px !important;
-        height: 300px !important;
-        min-width: 50% !important;
-        min-height: 50% !important;
-        font-size: small !important;
-    }
 
     @media (max-width: 767.98px) {
         .colBtnR {
