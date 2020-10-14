@@ -13,6 +13,7 @@
         URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')
         }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/apexcharts/apexcharts.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/chart/Chart.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
@@ -54,6 +55,7 @@
             margin-top: 5% !important;
         }
     }
+
     @media (max-width: 566px) {
         .colR {
             padding-left: 10% !important;
@@ -106,7 +108,7 @@
                 <!-- Portlet card -->
                 <div class="card">
                     <div class="card-body">
-                        <canvas id="myChart" height="35vh" width="85vw"></canvas>
+                        <div id="myChart"></div>
                     </div> <!-- end card-body -->
                 </div> <!-- end card-->
             </div> <!-- end col-->
@@ -232,6 +234,7 @@
     URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')
     }}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/apexcharts/apexcharts.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
 <script src="{{asset('admin/assets/libs/bootstrap-datetimepicker-master/moment.js')}}"></script>
@@ -245,43 +248,4 @@
 <script src="{{ URL::asset('admin/assets/libs/datatables/vfs_fonts.js') }}"></script>
 <script src="{{asset('landing/js/reporteS.js')}}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
-<script>
-    //     $('#graficaReporte').hide();
-//     var empleadosDefecto = @json($empleado);
-//     empleadosDefecto = empleadosDefecto.map(function(empleado){
-//         return empleado.perso_nombre.charAt(0) + empleado.perso_apPaterno.charAt(0) + empleado.perso_apMaterno.charAt(0)
-//     });
-//     var tablaDefecto = $('#Reporte').html();
-
-//     var ctx = $('#myChartD');
-//     var chart = new Chart(ctx, {
-//     // The type of chart we want to create
-//     type: 'bar',
-
-//     // The data for our dataset
-//     data: {
-//         labels: empleadosDefecto ,
-//         datasets: [{
-//         }]
-//     },
-
-//     // Configuration options go here
-//     options: {
-//         legend:{
-//             display:false
-//         },
-//         scales: {
-//             xAxes: [{
-//                 stacked: true,
-//                 gridLines: {
-//                     display:false
-//                 }
-//             }],
-//             yAxes: [{
-//                 stacked: true
-//             }]
-//         }
-//     }
-// });
-</script>
 @endsection
