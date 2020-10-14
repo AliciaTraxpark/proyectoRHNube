@@ -63,8 +63,8 @@
             margin-top: 5% !important;
         }
         .colR{
-            padding-left: 20% !important;
-            padding-right: 20% !important;
+            padding-left: 18% !important;
+            padding-right: 18% !important;
         }
         .imgR {
             margin-left: 25% !important;
