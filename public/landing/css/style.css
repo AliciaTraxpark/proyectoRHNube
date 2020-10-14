@@ -10045,6 +10045,19 @@ footer a:hover {
   background-color: white;
   border: 2px solid #000637;
 }
+.btn-opacity-comienza {
+    color: #000637;
+    background-color: white;
+    border: 2px solid #000637;
+  }
+
+  .btn-opacity-comienza:hover {
+
+    color: #ffffff;
+    background-color: #163552;
+    border: 2px solid transparent;
+    transition: all 0.5s ease-in-out;
+  }
 
 .btn-opacity-secondary {
   color: #bbbbf2;

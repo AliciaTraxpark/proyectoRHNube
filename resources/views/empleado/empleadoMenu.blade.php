@@ -2357,7 +2357,7 @@ use App\proyecto_empleado;
 
                                                             <div class="col-md-12">
                                                                 <div class="form-group">
-                                                                    <label for="">Descripcion del horario:</label>
+                                                                    <label for="">Descripción del horario:</label>
                                                                     <input type="text"
                                                                         class="form-control form-control-sm"
                                                                         id="descripcionCa" maxlength="60" required>
@@ -2443,10 +2443,10 @@ use App\proyecto_empleado;
                                                                             <label for="" style="font-weight:600">Descripción</label>
                                                                         </div>
                                                                         <div class="col-md-3">
-                                                                            <label for="" style="font-weight:600">Inicio pausa</label>
+                                                                            <label for="" style="font-weight:600">Inicio pausa(24h)</label>
                                                                         </div>
                                                                         <div class="col-md-3">
-                                                                            <label for="" style="font-weight:600">Fin pausa</label>
+                                                                            <label for="" style="font-weight:600">Fin pausa(24h)</label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -3345,7 +3345,7 @@ use App\proyecto_empleado;
 
                                                             <div class="col-md-12">
                                                                 <div class="form-group">
-                                                                    <label for="">Descripcion del horario:</label>
+                                                                    <label for="">Descripción del horario:</label>
                                                                     <input type="text"
                                                                         class="form-control form-control-sm"
                                                                         id="descripcionCa_ed" maxlength="60" required>
@@ -3432,10 +3432,10 @@ use App\proyecto_empleado;
                                                                             <label for="" style="font-weight:600">Descripción</label>
                                                                         </div>
                                                                         <div class="col-md-3">
-                                                                            <label for="" style="font-weight:600">Inicio pausa</label>
+                                                                            <label for="" style="font-weight:600">Inicio pausa(24h)</label>
                                                                         </div>
                                                                         <div class="col-md-3">
-                                                                            <label for="" style="font-weight:600">Fin pausa</label>
+                                                                            <label for="" style="font-weight:600">Fin pausa(24h)</label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
