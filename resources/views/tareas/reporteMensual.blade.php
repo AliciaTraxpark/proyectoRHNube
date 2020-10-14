@@ -68,6 +68,27 @@
         .imgR {
             margin-left: 25% !important;
         }
+
+        .datepicker,
+        .table-condensed {
+            width: 200px !important;
+            height: 150px !important;
+            font-size: small !important;
+        }
+    }
+
+    @media (max-width: 1194px) {
+        .colBtnR {
+            text-align: center !important;
+            margin-top: 5% !important;
+        }
+
+        .datepicker,
+        .table-condensed {
+            width: 200px !important;
+            height: 150px !important;
+            font-size: small !important;
+        }
     }
 </style>
 <div class="row justify-content-center p-5">

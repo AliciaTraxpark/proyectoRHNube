@@ -48,10 +48,10 @@
         }
     }
 
-    @media (min-width: 769px) {
+    @media (max-width: 1194px) {
         .colBtnR {
             text-align: center !important;
-            margin-top: 15% !important;
+            margin-top: 5% !important;
         }
     }
 </style>
