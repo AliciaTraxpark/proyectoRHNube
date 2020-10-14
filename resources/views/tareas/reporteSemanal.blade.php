@@ -59,6 +59,10 @@
             padding-left: 10% !important;
             padding-right: 10% !important;
         }
+
+        .imgR {
+            margin-left: 20% !important;
+        }
     }
 </style>
 <div class="row justify-content-center p-5">
