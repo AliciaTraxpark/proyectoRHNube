@@ -82,9 +82,8 @@
                             padding-right: 0px;">
                                 <a class="col-md-12" style="padding-left: 0px;
                                 padding-right: 0px;" href="{{route('registroPersona')}} "><button {{-- onclick=" $('#modal-error').modal('show')" --}}
-                                    class="boton " style="font-size: 11.8px;padding-bottom: 6px;
-                                    padding-top: 6.2px;">COMIENZA
-                                    AHORA</button></a>
+                                    class="boton " style="font-size: 12px;padding-bottom: 6px;
+                                    padding-top: 6.2px;">Comienza ahora</button></a>
                             </div>
                             <div class="col-md-12 form-group row p-0 m-0 text-left">
                                 <div class="col-md-6 offset-md-4 p-0">
