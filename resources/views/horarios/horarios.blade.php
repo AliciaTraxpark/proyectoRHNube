@@ -797,7 +797,7 @@ background-color: #ffffff !important;
             <br>
                                          <div class="col-md-12">
                                             <div class="form-group">
-                                               <label for="">Descripcion del horario:</label>
+                                               <label for="">Descripción del horario:</label>
                                                <input type="text" class="form-control form-control-sm" id="descripcionCa" maxlength="60" required>
                                             </div>
                                          </div>
@@ -879,10 +879,10 @@ background-color: #ffffff !important;
                                                         <label for="" style="font-weight:600">Descripción</label>
                                                     </div>
                                                     <div class="col-md-3">
-                                                        <label for="" style="font-weight:600">Inicio pausa</label>
+                                                        <label for="" style="font-weight:600">Inicio pausa(24h)</label>
                                                     </div>
                                                     <div class="col-md-3">
-                                                        <label for="" style="font-weight:600">Fin pausa</label>
+                                                        <label for="" style="font-weight:600">Fin pausa(24h)</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1060,7 +1060,7 @@ background-color: #ffffff !important;
                                        <div class="row"><input type="hidden" id="idhorario_ed">
                                          <div class="col-md-12">
                                             <div class="form-group">
-                                               <label for="">Descripcion del horario:</label>
+                                               <label for="">Descripción del horario:</label>
                                                <input type="text" class="form-control form-control-sm" id="descripcionCa_ed" maxlength="40" required>
                                             </div>
                                          </div>
@@ -1129,10 +1129,10 @@ background-color: #ffffff !important;
                                                         <label for="" style="font-weight:600">Descripción</label>
                                                     </div>
                                                     <div class="col-md-3">
-                                                        <label for="" style="font-weight:600">Inicio pausa</label>
+                                                        <label for="" style="font-weight:600">Inicio pausa(24h)</label>
                                                     </div>
                                                     <div class="col-md-3">
-                                                        <label for="" style="font-weight:600">Fin pausa</label>
+                                                        <label for="" style="font-weight:600">Fin pausa(24h)</label>
                                                     </div>
                                                 </div>
                                             </div>
