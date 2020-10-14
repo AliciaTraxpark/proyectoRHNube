@@ -54,6 +54,12 @@
             margin-top: 5% !important;
         }
     }
+    @media (max-width: 566px) {
+        .colR {
+            padding-left: 10% !important;
+            padding-right: 10% !important;
+        }
+    }
 </style>
 <div class="row justify-content-center p-5">
     <div class="col-xl-3" style="padding-left: 2%;padding-right: 0%;">
