@@ -32,18 +32,26 @@
 
 @section('content')
 <style>
-
     @media (max-width: 767.98px) {
         .colBtnR {
             text-align: center !important;
             margin-top: 5% !important;
         }
-        .colR{
+
+        .colR {
             padding-left: 18% !important;
             padding-right: 18% !important;
         }
+
         .imgR {
             margin-left: 25% !important;
+        }
+    }
+
+    @media (min-width: 769px) {
+        .colBtnR {
+            text-align: center !important;
+            margin-top: 15% !important;
         }
     }
 </style>
@@ -78,8 +86,8 @@
         <div class="row" id="VacioImg" style="display: none">
             <div class="col-xl-12">
                 <img style="margin-left:35%" src="{{
-                        URL::asset('admin/images/search-file.svg') }}" class="mr-2 imgR" height="220" /> <br> <label for=""
-                    style="margin-left:35%;color:#7d7d7d" class="imgR">Realize una
+                        URL::asset('admin/images/search-file.svg') }}" class="mr-2 imgR" height="220" /> <br> <label
+                    for="" style="margin-left:35%;color:#7d7d7d" class="imgR">Realize una
                     búsqueda para ver Actividad</label>
             </div>
         </div>

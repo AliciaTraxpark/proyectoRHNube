@@ -19,6 +19,7 @@
 <link href="{{ URL::asset('admin/assets/libs/chart/Chart.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{
     URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')
     }}" rel="stylesheet" />
@@ -52,10 +53,26 @@
         min-height: 50% !important;
         font-size: small !important;
     }
+
+    @media (max-width: 767.98px) {
+        .colBtnR {
+            text-align: center !important;
+            margin-top: 5% !important;
+        }
+
+        .colR {
+            padding-left: 18% !important;
+            padding-right: 18% !important;
+        }
+
+        .imgR {
+            margin-left: 25% !important;
+        }
+    }
 </style>
 <div class="row justify-content-center p-5">
     <div class="col-xl-3" style="padding-left: 2%;padding-right: 0%;">
-        <div class="input-group col-xl-12">
+        <div class="input-group col-xl-12 colR">
             <input type="text" id="fechaMensual" class="form-control">
             <div class="input-group-prepend">
                 <div class="input-group-text form-control"><i class="uil uil-calender"></i></div>
@@ -67,7 +84,7 @@
             </div>
         </div>
     </div>
-    <div class="col-xl-2" style="margin-right: 5%;">
+    <div class="col-xl-2 colBtnR" style="margin-right: 5%;">
         <button type="button" class="btn btn-sm pb-2" style="background-color: #163552;"
             onclick="javascript:mostrarGraficaMensual()"><i class="fa fa-eye mr-1"></i>VER GRAFICO
         </button>
@@ -78,8 +95,8 @@
         <div class="row" id="VacioImg" style="display: none">
             <div class="col-xl-12">
                 <img style="margin-left:35%" src="{{
-                        URL::asset('admin/images/search-file.svg') }}" class="mr-2" height="220" /> <br> <label for=""
-                    style="margin-left:35%;color:#7d7d7d">Realize una
+                        URL::asset('admin/images/search-file.svg') }}" class="mr-2 imgR" height="220" /> <br> <label
+                    for="" style="margin-left:35%;color:#7d7d7d" class="imgR">Realize una
                     búsqueda para ver Actividad</label>
             </div>
         </div>
