@@ -75,6 +75,10 @@
             height: 150px !important;
             font-size: small !important;
         }
+
+        .wrapper{
+            max-height: 900px !important;
+        }
     }
 
     @media (max-width: 1194px) {
@@ -99,6 +103,10 @@
 
         .imgR {
             margin-left: 19% !important;
+        }
+
+        .wrapper{
+            max-height: 900px !important;
         }
     }
 </style>
@@ -136,7 +144,7 @@
             <div class="col-lg-12">
                 <!-- Portlet card -->
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body wrapper">
                         <canvas id="myChartMensual" height="35vh" width="85vw"></canvas>
                     </div> <!-- end card-body -->
                 </div> <!-- end card-->
