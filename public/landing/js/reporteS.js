@@ -1,13 +1,27 @@
 $('#graficaReporte').hide();
-$('#fecha').datetimepicker({
-    language: 'es',
-    format: 'dd/mm/yyyy',
-    minView: 2,
-    pickTime: false,
-    autoclose: true,
-    weekStart: 1,
-    todayBtn: false,
-    pickerPosition: "bottom-left"
+// $('#fecha').datetimepicker({
+//     language: 'es',
+//     format: 'dd/mm/yyyy',
+//     minView: 2,
+//     pickTime: false,
+//     autoclose: true,
+//     weekStart: 1,
+//     todayBtn: false,
+//     pickerPosition: "bottom-left"
+// });
+var fechaValue = $("#fechaSelec").flatpickr({
+    mode: "single",
+    dateFormat: "Y-m-d",
+    altInput: true,
+    altFormat: "D, j F",
+    locale: "es",
+    maxDate: "today",
+    wrap: true,
+    allowInput: true,
+});
+$(function () {
+    f = moment().format("YYYY-MM-DD");
+    fechaValue.setDate(f);
 });
 var notify = $.notifyDefaults({
     icon_type: 'image',
@@ -535,21 +549,9 @@ function onSelectFechas() {
         error: function (data) { }
     })
 }
-
-// $(function () {
-//     $('#fecha').on('change.dp', function (e) {
-//         dato = $('#fecha').val();
-//         value = moment(dato, ["DD-MM-YYYY"]).format("YYYY-MM-DD");
-//         firstDate = moment(value, 'YYYY-MM-DD').day(1).format('YYYY-MM-DD');
-//         lastDate = moment(value, 'YYYY-MM-DD').day(7).format('YYYY-MM-DD');
-//         $('#fecha').val(firstDate + "   a   " + lastDate);
-//         onSelectFechas();
-//         $('#fecha').val(dato);
-//     });
-// });
 function changeFecha() {
     dato = $('#fecha').val();
-    value = moment(dato, ["DD-MM-YYYY"]).format("YYYY-MM-DD");
+    value = moment(dato, ["YYYY-MM-DD"]).format("YYYY-MM-DD");
     firstDate = moment(value, 'YYYY-MM-DD').day(1).format('YYYY-MM-DD');
     lastDate = moment(value, 'YYYY-MM-DD').day(7).format('YYYY-MM-DD');
     $('#fecha').val(firstDate + "   a   " + lastDate);
@@ -573,17 +575,17 @@ $(function () {
 });
 function fechaDefecto() {
     dato = $('#fecha').val();
-    value = moment(dato, ["DD-MM-YYYY"]).format("YYYY-MM-DD");
+    value = moment(dato, ["YYYY-MM-DD"]).format("YYYY-MM-DD");
     firstDate = moment(value, 'YYYY-MM-DD').day(1).format('YYYY-MM-DD');
     lastDate = moment(value, 'YYYY-MM-DD').day(7).format('YYYY-MM-DD');
     $('#fecha').val(firstDate + "   a   " + lastDate);
     onSelectFechas();
     $('#fecha').val(dato);
 }
-$(function () {
-    var hoy = moment().format("DD/MM/YYYY");
-    $('#fecha').val(hoy);
-});
+// $(function () {
+//     var hoy = moment().format("DD/MM/YYYY");
+//     $('#fecha').val(hoy);
+// });
 function buscarReporte() {
     changeFecha();
     $('#busquedaP').show();
