@@ -47,7 +47,7 @@
                         @csrf
                         <div class="row">
 
-                            <div class="col-md-5 form-group mb-0">
+                            <div class="col-md-4 form-group mb-0">
                                 <label class="blanco">Correo electrónico o
                                     teléfono </label>
                                 <input id="email" class="form-control form-control-sm
@@ -59,7 +59,7 @@
                                 </span>
                                 @enderror
                             </div>
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-3 form-group mb-0">
                                 <label class="blanco">Contraseña</label>
                                 <input tid="password" type="password" class="form-control form-control-sm
                                         @error('password') is-invalid @enderror" name="password" required
@@ -70,13 +70,24 @@
                                 </span>
                                 @enderror
                             </div>
-                            <div class="col-md-3 form-group mb-0" style="display:
+
+                            <div class="col-md-2 form-group mb-0" style="display:
                                     flex; align-items: center; top: 15px;">
-                                <button type="submit" class="boton">Iniciar
+                                <button type="submit" style="font-size: 12px;    padding-bottom: 5px;
+                                padding-top: 6px;" class="boton">Iniciar
                                     sesión</button>
                             </div>
+                            <div class="col-md-2 form-group mb-0" style="display:
+                            flex; align-items: center; top: 15px;padding-left: 0px;
+                            padding-right: 0px;">
+                                <a class="col-md-12" style="padding-left: 0px;
+                                padding-right: 0px;" href="{{route('registroPersona')}} "><button {{-- onclick=" $('#modal-error').modal('show')" --}}
+                                    class="boton " style="font-size: 11.8px;padding-bottom: 6px;
+                                    padding-top: 6.2px;">COMIENZA
+                                    AHORA</button></a>
+                            </div>
                             <div class="col-md-12 form-group row p-0 m-0 text-left">
-                                <div class="col-md-6 offset-md-5 p-0">
+                                <div class="col-md-6 offset-md-4 p-0">
                                     @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}"
                                         style="font-size:11.5px;color: #ffffff;padding-bottom: 0px;padding-top: 4px;padding-left: 14px;margin-left: 0px;">
@@ -130,7 +141,7 @@
                             <p class="py-4 m-0 text-muted " style="font-size: 16px">Sencillamente porque  te brindamos un alto Retorno de Inversión (ROI) en administración de personal desde el primer mes.</p>
                                 <div class="col-md-12"> <br>
                                     <a  href="{{route('registroPersona')}} "><button {{-- onclick=" $('#modal-error').modal('show')" --}}
-                                        class="btn btn-opacity-primary mr-1">COMIENZA
+                                        class="btn btn-opacity-comienza mr-1">COMIENZA
                                         AHORA</button></a>
                                 </div>
 
