@@ -90,7 +90,7 @@ $.ajax({
             $('#divdepartamento').show();
             for (var i = 0; i < data[0].departamento.length; i++) {
                 if (data[0].departamento[i].name == null) {
-                    nombre.push("NO DEFINIDO");
+                    nombre.push("No definido");
                 } else {
                     nombre.push(data[0].departamento[i].name);
                 }
@@ -207,7 +207,7 @@ $.ajax({
             $('#divcontrato').show();
             for (var i = 0; i < data[0].contrato.length; i++) {
                 if (data[0].contrato[i].contrato_descripcion == null) {
-                    nombre.push("NO DEFINIDO");
+                    nombre.push("No definido");
                 } else {
                     nombre.push(data[0].contrato[i].contrato_descripcion);
                 }
@@ -325,7 +325,7 @@ $.ajax({
             for (var i = 0; i < data[0].area.length; i++) {
                 suma += data[0].area[i].Total;
                 if (data[0].area[i].area_descripcion == null) {
-                    nombre.push("NO DEFINIDO");
+                    nombre.push("No definido");
                 } else {
                     nombre.push(data[0].area[i].area_descripcion);
                 }
@@ -442,7 +442,7 @@ $.ajax({
             $('#divedades').show();
             for (var i = 0; i < data[0].edad.length; i++) {
                 if (data[0].edad[i].rango == null) {
-                    nombre.push("NO DEFINIDO");
+                    nombre.push("No definido");
                 } else {
                     nombre.push(data[0].edad[i].rango);
                 }
@@ -559,7 +559,7 @@ $.ajax({
             $('#divcentro').show();
             for (var i = 0; i < data[0].centro.length; i++) {
                 if (data[0].centro[i].centroC_descripcion == null) {
-                    nombre.push("NO DEFINIDO");
+                    nombre.push("No definido");
                 } else {
                     nombre.push(data[0].centro[i].centroC_descripcion);
                 }
@@ -676,7 +676,7 @@ $.ajax({
             $('#divlocal').show();
             for (var i = 0; i < data[0].local.length; i++) {
                 if (data[0].local[i].local_descripcion == null) {
-                    nombre.push("NO DEFINIDO");
+                    nombre.push("No definido");
                 } else {
                     nombre.push(data[0].local[i].local_descripcion);
                 }
@@ -793,7 +793,7 @@ $.ajax({
             $('#divnivel').show();
             for (var i = 0; i < data[0].nivel.length; i++) {
                 if (data[0].nivel[i].nivel_descripcion == null) {
-                    nombre.push("NO DEFINIDO");
+                    nombre.push("No definido");
                 } else {
                     nombre.push(data[0].nivel[i].nivel_descripcion);
                 }

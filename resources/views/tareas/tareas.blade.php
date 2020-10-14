@@ -42,6 +42,63 @@
     .carousel-control-next-icon {
         background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='403555' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
     }
+
+    @media (max-width: 767.98px) {
+        .colR {
+            padding-left: 0% !important;
+            padding-right: 2% !important;
+        }
+
+        .btnR {
+            text-align: center !important;
+        }
+
+        .imgR {
+            margin-left: 15% !important;
+        }
+
+        .alertR {
+            width: 60%;
+        }
+
+        .containerR {
+            overflow: auto !important;
+            display: flex !important;
+        }
+
+        .rowResp {
+            overflow: auto !important;
+            white-space: normal !important;
+            max-width: 100% !important;
+            display: flex !important;
+        }
+
+        .columResponsiva {
+            padding-right: 2% !important;
+            padding-left: 2% !important;
+            max-width: 50% !important;
+            flex: 100% !important;
+        }
+
+        .columnTextR {
+            padding-right: 0% !important;
+            padding-left: 0% !important;
+            max-width: 100% !important;
+        }
+
+        .h5Responsive {
+            font-size: 14px !important;
+        }
+
+        .rowResponsivo {
+            justify-content: center !important;
+        }
+
+        .mbResponsivo {
+            padding-top: 15% !important;
+        }
+
+    }
 </style>
 <div id="modalZoom" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
     data-backdrop="static">
@@ -56,7 +113,7 @@
             </div>
             <div class="modal-body">
                 <div id="esperaImg" class="text-center" style="display: none">
-                    <img src="{{asset('landing/images/punt.gif')}}" height="150">
+                    <img src="{{asset('landing/images/punt.gif')}}" height="80">
                 </div>
                 <div class="row">
                     <div id="zoom" class="col-xl-12 text-center album">
@@ -74,9 +131,9 @@
                 <div class="row mt-4">
                     <div class="col-xl-5">
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label pl-5">Fecha:</label>
-                            <div class="input-group col-md-7 text-center" style="padding-left: 0px;padding-right: 0px;"
-                                id="fechaSelec">
+                            <label class="col-lg-3 col-form-label pl-5 colR">Fecha:</label>
+                            <div class="input-group col-md-7 text-center colR"
+                                style="padding-left: 0px;padding-right: 0px;" id="fechaSelec">
                                 <input type="text" id="fecha" class="form-control" data-input>
                                 <div class="input-group-prepend">
                                     <div class="input-group-text form-control flatpickr">
@@ -91,8 +148,8 @@
                     <div class="col-xl-1"></div>
                     <div class="col-xl-5">
                         <div class="form-group row">
-                            <label class="col-lg-2 col-form-label">Empleado:</label>
-                            <div class="col-lg-10">
+                            <label class="col-lg-2 col-form-label colR">Empleado:</label>
+                            <div class="col-lg-10 colR">
                                 <select id="empleado" data-plugin="customselect" class="form-control">
                                     <option value="" disabled selected>Seleccionar</option>
                                     @foreach ($empleado as $empleados)
@@ -105,7 +162,7 @@
 
                         </div>
                     </div>
-                    <div class="col-xl-1 text-left" style="padding-left: 0%">
+                    <div class="col-xl-1 text-left btnR" style="padding-left: 0%">
                         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
                             onclick="javascript:buscarCapturas()"> <img src="{{asset('landing/images/loupe (1).svg')}}"
                                 height="18"></button>
@@ -117,8 +174,8 @@
                 <div class="col-xl-12" id="card">
                     <br>
                     <img id="VacioImg" style="margin-left:28%" src="{{
-                        URL::asset('admin/images/search-file.svg') }}" class="mr-2" height="220" /> <br> <label for=""
-                        style="margin-left:30%;color:#7d7d7d">Realize una
+                        URL::asset('admin/images/search-file.svg') }}" class="mr-2 imgR" height="220" /> <br> <label
+                        for="" style="margin-left:30%;color:#7d7d7d" class="imgR">Realize una
                         búsqueda para ver Actividad</label>
                 </div>
             </div> <!-- end card-body-->

@@ -234,7 +234,6 @@ function onSelectFechasMensual() {
                     var sumaRTotal = data[i].sumaRango.reduce(function (a, b) {
                         return sumarTotales(a, b);
                     });
-                    console.log(sumaATotal, sumaRTotal);
                     for (let j = 0; j < data[i].horas.length; j++) {
                         // TABLA DEFAULT
                         html_tr += '<td>' + data[i].horas[j] + '</td>';
@@ -436,85 +435,106 @@ function onSelectFechasMensual() {
                     }],
                     paging: true
                 });
-                var chartdata = {
-                    labels: nombre,
-                    datasets: [{
-                        label: nombre,
-                        backgroundColor: color,
-                        borderColor: color,
-                        borderWidth: 2,
-                        hoverBackgroundColor: color,
-                        hoverBorderColor: borderColor,
+                var options = {
+                    series: [{
+                        name: 'actividad',
                         data: horas
-                    }]
+                    }],
+                    chart: {
+                        height: 350,
+                        type: 'bar',
+                        zoom: {
+                            enabled: true
+                        }
+                    },
+                    plotOptions: {
+                        bar: {
+                            columnWidth: '45%',
+                            distributed: true
+                        }
+                    },
+                    colors: ['#00005c'],
+                    dataLabels: {
+                        enabled: false
+                    },
+                    legend: {
+                        show: false
+                    },
+                    xaxis: {
+                        categories: nombre,
+                        labels: {
+                            style: {
+                                color: '#000000',
+                                fontSize: '11px'
+                            }
+                        },
+                        axisBorder: {
+                            show: true,
+                            color: '#000000',
+                            height: 1,
+                            width: '100%',
+                            offsetX: 0,
+                            offsetY: 0
+                        },
+                        axisTicks: {
+                            show: false
+                        },
+                        title: {
+                            text: "Empleados",
+                            offsetX: 0,
+                            offsetY: -2,
+                            style: {
+                                color: '#000000',
+                            }
+                        },
+                        crosshairs: {
+                            fill: {
+                                type: 'gradient',
+                                gradient: {
+                                    colorFrom: '#D8E3F0',
+                                    colorTo: '#BED1E6',
+                                    stops: [0, 100],
+                                    opacityFrom: 0.4,
+                                    opacityTo: 0.5,
+                                }
+                            }
+                        },
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Actividad'
+                        }
+                    },
+                    fill: {
+                        opacity: 1
+                    },
+                    tooltip: {
+                        y: {
+                            formatter: function (val) {
+                                return val + " %"
+                            }
+                        }
+                    },
+                    responsive: [
+                        {
+                          breakpoint: 767.98,
+                          options: {
+                            chart: {
+                              height: 350,
+                              toolbar: {
+                                show: false
+                              },
+                              zoom: {
+                                enabled: true,
+                              }
+                            }
+                          }
+                        }
+                      ]
                 };
-                var mostrar = $("#myChartMensual");
-                grafico = new Chart(mostrar, {
-                    type: 'bar',
-                    data: chartdata,
-                    theme: "light2",
-                    options: {
-                        responsive: true,
-                        scales: {
-                            xAxes: [{
-                                stacked: true,
-                                gridLines: {
-                                    display: false,
-                                    color: "black"
-                                },
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: "Empleados",
-                                    fontColor: "#163552",
-                                }
-                            }],
-                            yAxes: [{
-                                stacked: true,
-                                gridLines: {
-                                    color: "black",
-                                    borderDash: [2, 5],
-                                },
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: "Actividad Mensual",
-                                    fontColor: "#163552",
-                                    fontSize: 13,
-                                }
 
-                            }]
-                        },
-                        legend: {
-                            labels: {
-                                generateLabels: function (chart) {
-                                    var labels = chart.data.labels;
-                                    var dataset = chart.data.datasets[0];
-                                    var legend = labels.map(function (label, index) {
-                                        return {
-                                            datasetIndex: 0,
-                                            fillStyle: dataset.backgroundColor && dataset.backgroundColor[index],
-                                            strokeStyle: dataset.borderColor && dataset.borderColor[index],
-                                            lineWidth: dataset.borderWidth,
-                                            text: label
-                                        }
-                                    });
-                                    return legend;
-                                }
-                            }
-                        },
-                        tooltips: {
-                            callbacks: {
-                                title: function (tooltipItem, data) {
-                                    return data.labels[tooltipItem[0].index];
-                                },
-                                label: function (tooltipItem, data) {
-                                    var amount = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-                                    // return amount + ' / ' + total + ' ( ' + parseFloat(amount * 100 / total).toFixed(2) + '% )';
-                                },
-                                //footer: function(tooltipItem, data) { return 'Total: 100 planos.'; }
-                            }
-                        },
-                    }
-                });
+                grafico = new ApexCharts(document.querySelector("#myChartMensual"), options);
+                grafico.render();
             } else {
                 $.notify({
                     message: "No se encontraron datos.",
@@ -562,7 +582,6 @@ $(function () {
         language: "es"
     });
     $('#area').on("change", function (e) {
-        console.log("ingreso");
         fechaDefecto();
     });
     $('#cargo').on("change", function (e) {
@@ -587,7 +606,6 @@ function cambiarTabla() {
     $("#customSwitchD").on("change.bootstrapSwitch", function (
         event
     ) {
-        console.log(event.target.checked);
         if (event.target.checked == true) {
             dato = $('#fechaMensual').val();
             $('#container').css('display', 'block');

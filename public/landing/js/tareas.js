@@ -4,7 +4,7 @@ var notify = $.notifyDefaults({
     newest_on_top: true,
     delay: 4000,
     template:
-        '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+        '<div data-notify="container" class="col-xs-10 col-sm-2 text-center alert alertR" style="background-color: #fcf8e3;" role="alert">' +
         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
         '<span data-notify="title">{1}</span> ' +
@@ -21,6 +21,7 @@ var fechaValue = $("#fechaSelec").flatpickr({
     maxDate: "today",
     wrap: true,
     allowInput: true,
+    disableMobile: "true"
 });
 $(function () {
     f = moment().format("YYYY-MM-DD");
@@ -67,12 +68,6 @@ $("#empleado").on("select2:opening", function () {
     });
 });
 
-// $("#empleado").on("select2:close", function () {
-//     if ($(this).val() != "") {
-//         onMostrarPantallas();
-//     }
-// });
-
 function fechaHoy() {
     f = moment().format("YYYY-MM-DD");
     fechaValue.setDate(f);
@@ -104,11 +99,7 @@ function buscarCapturas() {
         });
     }
 }
-//CAPTURAS
-// $(function () {
-//     $("#fecha").on("change", onMostrarPantallas);
-//     $("#proyecto").on("change", onMostrarPantallas);
-// });
+
 var datos;
 var promedioHoras = 0;
 
@@ -143,8 +134,8 @@ function onMostrarPantallas() {
         }).then(function (data) {
             console.log(data);
             var vacio = `<img id="VacioImg" style="margin-left:28%" src="admin/images/search-file.svg"
-            class="mr-2" height="220" /> <br> <label for=""
-            style="margin-left:30%;color:#7d7d7d">Realize una búsqueda para ver Actividad</label>`;
+            class="mr-2 imgR" height="220" /> <br> <label for=""
+            style="margin-left:30%;color:#7d7d7d" class="imgR">Realize una búsqueda para ver Actividad</label>`;
             $("#espera").hide();
             datos = data;
             if (data.length != 0) {
@@ -153,7 +144,7 @@ function onMostrarPantallas() {
                 var actividadDiariaTotal = 0;
                 var rangoDiarioTotal = 0;
                 var promedioDiaria = 0;
-                var actividadDiaria = `<div class="row justify-content-center p-3"><div class="col-xl-4"><span style="font-weight: bold;color:#163552;cursor:default;font-size:14px;"><img src="landing/images/velocimetro (1).svg" class="mr-2" height="20"/>Actividad Diaria | <span id="totalActivi"></span> - <span id="totalH"></span></span></div></div>`;
+                var actividadDiaria = `<div class="row justify-content-center p-3"><div class="col-xl-4 text-center"><span style="font-weight: bold;color:#163552;cursor:default;font-size:14px;"><img src="landing/images/velocimetro (1).svg" class="mr-2" height="20"/>Actividad Diaria | <span id="totalActivi"></span> - <span id="totalH"></span></span></div></div>`;
                 container.append(actividadDiaria);
                 for (let index = 0; index < data.length; index++) {
                     $("#promHoras" + $i).empty();
@@ -175,10 +166,10 @@ function onMostrarPantallas() {
                         " - " +
                         (parseInt(horaDelGrupo) + 1) +
                         ":00:00";
-                    var grupo = `<span style="font-weight: bold;color:#163552;cursor:default">${labelDelGrupo}</span>&nbsp;&nbsp;<img src="landing/images/punt.gif" height="70">&nbsp;&nbsp;
+                    var grupo = `<div class="row pt-2 rowResponsivo"><span style="font-weight: bold;color:#163552;cursor:default">${labelDelGrupo}</span>&nbsp;&nbsp;<img src="landing/images/punt.gif" height="20">&nbsp;&nbsp;
                 <span class="promHoras" style="font-weight: bold;color:#163552;cursor:default" id="totalHoras${$i}" data-toggle="tooltip" data-placement="right" title="Tiempo por Hora"
                 data-original-title=""></span>&nbsp;&nbsp;-&nbsp;&nbsp;<span class="promHoras" style="font-weight: bold;color:#163552;cursor:default" id="promHoras${$i}" data-toggle="tooltip" data-placement="right" title="Actividad por Hora"
-                data-original-title=""></span><br><br><div class="row">`;
+                data-original-title=""></span></div><br><br><div class="container-fluid containerR"><div class="row rowResp">`;
                     for (var j = 0; j < 6; j++) {
                         if (data[index].minutos[j] != undefined) {
                             var capturas = "";
@@ -257,7 +248,7 @@ function onMostrarPantallas() {
                                 var rspI = imgR.replace(/\//g, "-");
                                 var encr = CryptoJS.enc.Utf8.parse(rspI);
                                 var base64 = CryptoJS.enc.Base64.stringify(encr);
-                                card = `<div class="col-2" style="margin-left: 0px!important;">
+                                card = `<div class="col-2 columResponsiva" style="margin-left: 0px!important;">
                                     <div class="mb-0 text-center" style="padding-left: 0px;">
                                         <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
                                             aria-expanded="true" aria-controls="customaccorcollapseOne">
@@ -265,9 +256,9 @@ function onMostrarPantallas() {
                                         <div class="collapse show" aria-labelledby="customaccorheadingOne" data-parent="#customaccordion_exa">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div class=" text-center col-md-12 col-sm-6" style="padding-top: 4px;
+                                                <div class=" text-center col-md-12 col-sm-6 columnTextR" style="padding-top: 4px;
                                                 padding-bottom: 4px;">
-                                                    <h5 class="m-0 font-size-16" style="color:#1f4068;font-weight:bold;"><img src="landing/images/2143150.png" class="mr-2" height="20"/>${data[index].minutos[
+                                                    <h5 class="m-0 font-size-16 h5Responsive" style="color:#1f4068;font-weight:bold;"><img src="landing/images/2143150.png" class="mr-2" height="20"/>${data[index].minutos[
                                         j
                                     ][0].Activi_Nombre
                                     } </h5>
@@ -313,7 +304,7 @@ function onMostrarPantallas() {
                                 </div>`;
                                 grupo += card;
                             } else {
-                                card = `<div class="col-2" style="margin-left: 0px!important;">
+                                card = `<div class="col-2 columResponsiva" style="margin-left: 0px!important;">
                                     <div class="mb-0 text-center" style="padding-left: 0px;">
                                         <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
                                             aria-expanded="true" aria-controls="customaccorcollapseOne">
@@ -328,7 +319,7 @@ function onMostrarPantallas() {
                                     ][0].Activi_Nombre
                                     } </h5>
                                                 </div><br>
-                                                <div class="col-md-12 col-sm-6" style="padding-left: 0px;;padding-right: 0px">
+                                                <div class="col-md-12" style="padding-left: 0px;;padding-right: 0px">
                                                 <div class=" text-center col-md-12 col-sm-12" style="padding-top: 1px;
                                                 padding-bottom: 4px;">
                                                 <img src="landing/images/3155773.png" height="100">
@@ -352,21 +343,17 @@ function onMostrarPantallas() {
                                 grupo += card;
                             }
                         } else {
-                            card = `<div class="col-2" style="margin-left: 0px!important;justify-content:center;!important">
-                    <br><br><br>
-                            <div class="mb-0">
+                            card = `<div class="col-2 columResponsiva" style="margin-left: 0px!important;justify-content:center!important">
+                            <div class="mb-0" style="padding-top:70px">
                                 <a href="" class="text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
                                     aria-expanded="true" aria-controls="customaccorcollapseOne">
                                 </a>
                                 <div class="collapse show" aria-labelledby="customaccorheadingOne"
                                     data-parent="#customaccordion_exa">
                                 <div class="row">
-                                    <div class="col-md-12">
-                                        <div class=" text-center col-md-12 col-sm-12" style="padding-top: 1px;
-                                        padding-bottom: 4px;">
-                                        <img src="landing/images/3155773.png" height="100">
-                                            <h5 class="m-0 font-size-14" style="color:#8888">Vacio</h5>
-                                        </div>  <br>
+                                    <div class="col-md-12 col-sm-6 text-center">
+                                        <img src="landing/images/3155773.png" height="100" class="imgResponsiva">
+                                            <h5 class="m-0 font-size-14 mbResponsivo" style="color:#8888">Vacio</h5>
                                     </div>
                                 </div>
                                 </div>
@@ -375,7 +362,7 @@ function onMostrarPantallas() {
                             grupo += card;
                         }
                     }
-                    grupo += `</div><br>`;
+                    grupo += `</div></div><br>`;
                     container.append(grupo);
                     totalActividadRango = ((sumaActividadTotal / sumaRangosTotal) * 100).toFixed(
                         2

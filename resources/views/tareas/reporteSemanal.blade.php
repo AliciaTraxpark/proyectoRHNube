@@ -8,16 +8,15 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{
-    URL::asset('admin/assets/libs/bootstrap-datetimepicker-master/bootstrap-datetimepicker.css')
-    }}" rel="stylesheet" type="text/css" />
-<link href="{{
-    URL::asset('admin/assets/libs/bootstrap-datetimepicker-master/bootstrap-datetimepicker.min.css')
-    }}" rel="stylesheet" type="text/css" />
+        URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')
+        }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/chart/Chart.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{
     URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')
     }}" rel="stylesheet" />
@@ -33,40 +32,60 @@
 
 @section('content')
 <style>
-    .flex-wrap {
-        text-align: left !important;
-        display: block !important;
-        margin-bottom: 10px;
+    @media (max-width: 767.98px) {
+        .colBtnR {
+            text-align: center !important;
+            margin-top: 5% !important;
+        }
+
+        .colR {
+            padding-left: 18% !important;
+            padding-right: 18% !important;
+        }
+
+        .imgR {
+            margin-left: 25% !important;
+        }
     }
 
-    .drp-selected {
-        display: none !important;
+    @media (max-width: 1194px) {
+        .colBtnR {
+            text-align: center !important;
+            margin-top: 5% !important;
+        }
     }
+    @media (max-width: 566px) {
+        .colR {
+            padding-left: 10% !important;
+            padding-right: 10% !important;
+        }
 
-    .datepicker,
-    .table-condensed {
-        width: 280px !important;
-        height: 300px !important;
-        min-width: 50% !important;
-        min-height: 50% !important;
-        font-size: small !important;
+        .imgR {
+            margin-left: 19% !important;
+        }
     }
 </style>
 <div class="row justify-content-center p-5">
     <div class="col-xl-3" style="padding-left: 2%;padding-right: 0%;">
-        <div class="input-group col-xl-12">
-            <input type="text" id="fecha" class="form-control">
+        <div class="input-group col-xl-12 text-center colR" style="padding-left: 0px;padding-right: 0px;"
+            id="fechaSelec">
+            <input type="text" id="fecha" class="form-control" data-input>
             <div class="input-group-prepend">
-                <div class="input-group-text form-control"><i class="uil uil-calender"></i></div>
+                <div class="input-group-text form-control flatpickr">
+                    <a class="input-button" data-toggle>
+                        <i class="uil uil-calender"></i>
+                    </a>
+                </div>
             </div>
             <div class="pl-2">
                 <button type="button" class="btn btn-sm" style="background-color: #163552;"
-                    onclick="javascript:buscarReporte()"> <img src="{{asset('landing/images/loupe (1).svg')}}"
-                        height="18" class="text-center mb-1"></button>
+                    onclick="javascript:buscarReporte()">
+                    <img src="{{asset('landing/images/loupe (1).svg')}}" height="18" class="text-center mb-1"></button>
             </div>
         </div>
     </div>
-    <div class="col-xl-2" style="margin-right: 5%;">
+
+    <div class="col-xl-2 colBtnR" style="margin-right: 5%;">
         <button type="button" class="btn btn-sm pb-2" style="background-color: #163552;"
             onclick="javascript:mostrarGrafica()"><i class="fa fa-eye mr-1"></i>VER GRAFICO
         </button>
@@ -77,8 +96,8 @@
         <div class="row" id="VacioImg" style="display: none">
             <div class="col-xl-12">
                 <img style="margin-left:35%" src="{{
-                        URL::asset('admin/images/search-file.svg') }}" class="mr-2" height="220" /> <br> <label for=""
-                    style="margin-left:35%;color:#7d7d7d">Realize una
+                        URL::asset('admin/images/search-file.svg') }}" class="mr-2 imgR" height="220" /> <br> <label
+                    for="" style="margin-left:35%;color:#7d7d7d" class="imgR">Realize una
                     búsqueda para ver Actividad</label>
             </div>
         </div>
@@ -213,8 +232,8 @@
     URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')
     }}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
-<script src="{{asset('admin/assets/libs/bootstrap-datetimepicker-master/bootstrap-datetimepicker.min.js')}}"></script>
-<script src="{{asset('admin/assets/libs/bootstrap-datetimepicker-master/bootstrap-datetimepicker.es.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
 <script src="{{asset('admin/assets/libs/bootstrap-datetimepicker-master/moment.js')}}"></script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>

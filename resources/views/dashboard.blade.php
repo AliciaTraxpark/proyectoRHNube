@@ -85,7 +85,7 @@
 
     .chart-legend ul {
         list-style: none;
-        width: 140px;
+        width: auto;
     }
 
     .chart-legend {
