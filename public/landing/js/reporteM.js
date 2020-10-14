@@ -517,20 +517,20 @@ function onSelectFechasMensual() {
                     },
                     responsive: [
                         {
-                          breakpoint: 767.98,
-                          options: {
-                            chart: {
-                              height: 350,
-                              toolbar: {
-                                show: false
-                              },
-                              zoom: {
-                                enabled: true,
-                              }
+                            breakpoint: 767.98,
+                            options: {
+                                chart: {
+                                    height: 350,
+                                    toolbar: {
+                                        show: false
+                                    },
+                                    zoom: {
+                                        enabled: true,
+                                    }
+                                }
                             }
-                          }
                         }
-                      ]
+                    ]
                 };
 
                 grafico = new ApexCharts(document.querySelector("#myChartMensual"), options);

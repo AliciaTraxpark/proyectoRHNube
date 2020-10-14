@@ -139,7 +139,6 @@
                 <!-- Portlet card -->
                 <div class="card">
                     <div class="card-body">
-                        {{-- <canvas id="myChartMensual" height="35vh" width="85vw"></canvas> --}}
                         <div id="myChartMensual"></div>
                     </div> <!-- end card-body -->
                 </div> <!-- end card-->
