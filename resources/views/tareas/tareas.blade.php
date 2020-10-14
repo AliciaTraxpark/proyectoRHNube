@@ -99,6 +99,29 @@
         }
 
     }
+
+    @media (max-width: 988px) {
+        .colR {
+            padding-left: 0% !important;
+            padding-right: 0% !important;
+        }
+
+        .col-lg-3,
+        .col-lg-2 {
+            max-width: 10%;
+        }
+
+        .col-md-7 {
+            max-width: 40%;
+        }
+
+        .col-lg-10 {
+            max-width: 30%;
+        }
+        .form-group{
+            margin-right: 0%;
+        }
+    }
 </style>
 <div id="modalZoom" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
     data-backdrop="static">
