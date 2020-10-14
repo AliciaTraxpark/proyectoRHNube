@@ -76,18 +76,6 @@
             font-size: small !important;
         }
 
-        .wrapper {
-            max-height: 900px !important;
-        }
-
-        .chartjs-render-monitor {
-            height: 65vh !important;
-            width: 100vw !important;
-        }
-
-        .rowResp {
-            overflow: auto !important;
-        }
     }
 
     @media (max-width: 1194px) {
@@ -112,10 +100,6 @@
 
         .imgR {
             margin-left: 19% !important;
-        }
-
-        .wrapper {
-            max-height: 900px !important;
         }
     }
 </style>
@@ -149,11 +133,11 @@
                     búsqueda para ver Actividad</label>
             </div>
         </div>
-        <div class="row rowResp" id="graficaReporteMensual" style="display: none">
+        <div class="row" id="graficaReporteMensual" style="display: none">
             <div class="col-lg-12">
                 <!-- Portlet card -->
                 <div class="card">
-                    <div class="card-body wrapper">
+                    <div class="card-body">
                         <canvas id="myChartMensual" height="35vh" width="85vw"></canvas>
                     </div> <!-- end card-body -->
                 </div> <!-- end card-->
