@@ -521,7 +521,6 @@ function onSelectFechasMensual() {
                             options: {
                                 chart: {
                                     height: 350,
-                                    width: 600,
                                     toolbar: {
                                         show: false
                                     },

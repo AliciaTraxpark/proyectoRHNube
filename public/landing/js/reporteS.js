@@ -527,7 +527,6 @@ function onSelectFechas() {
                             options: {
                                 chart: {
                                     height: 350,
-                                    width: 600,
                                     toolbar: {
                                         show: false
                                     },
