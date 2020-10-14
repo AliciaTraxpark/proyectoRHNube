@@ -437,11 +437,15 @@ function onSelectFechasMensual() {
                 });
                 var options = {
                     series: [{
+                        name: 'actividad',
                         data: horas
                     }],
                     chart: {
                         height: 350,
-                        type: 'bar'
+                        type: 'bar',
+                        zoom: {
+                            enabled: true
+                        }
                     },
                     plotOptions: {
                         bar: {
@@ -466,16 +470,34 @@ function onSelectFechasMensual() {
                         },
                         axisBorder: {
                             show: true,
-                            color: '#78909C',
+                            color: '#000000',
                             height: 1,
                             width: '100%',
                             offsetX: 0,
                             offsetY: 0
                         },
+                        axisTicks: {
+                            show: false
+                        },
                         title: {
                             text: "Empleados",
                             offsetX: 0,
-                            offsetY: -2
+                            offsetY: -2,
+                            style: {
+                                color: '#000000',
+                            }
+                        },
+                        crosshairs: {
+                            fill: {
+                                type: 'gradient',
+                                gradient: {
+                                    colorFrom: '#D8E3F0',
+                                    colorTo: '#BED1E6',
+                                    stops: [0, 100],
+                                    opacityFrom: 0.4,
+                                    opacityTo: 0.5,
+                                }
+                            }
                         },
                     },
                     yaxis: {
@@ -486,6 +508,29 @@ function onSelectFechasMensual() {
                     fill: {
                         opacity: 1
                     },
+                    tooltip: {
+                        y: {
+                            formatter: function (val) {
+                                return val + " %"
+                            }
+                        }
+                    },
+                    responsive: [
+                        {
+                          breakpoint: 767.98,
+                          options: {
+                            chart: {
+                              height: 350,
+                              toolbar: {
+                                show: false
+                              },
+                              zoom: {
+                                enabled: true,
+                              }
+                            }
+                          }
+                        }
+                      ]
                 };
 
                 grafico = new ApexCharts(document.querySelector("#myChartMensual"), options);
