@@ -1,6 +1,7 @@
 @extends('layouts.verticalAd')
 
 @section('css')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css')
     }}" rel="stylesheet" type="text/css" />
@@ -13,21 +14,17 @@
 @endsection
 
 @section('breadcrumb')
-<div class="row page-title">
-    <div class="col-md-12">
-        <h4 class="mb-1 mt-0">Organizaciones</h4>
-    </div>
-</div>
+
 @endsection
 
 @section('content')
-<div class="row justify-content-center pt-5">
+<div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header"
                 style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1">
                 <div class="row">
-                    <h4 class="header-title col-12 mt-0" style="margin-bottom: 0px;">Trazabilidad de capturas</h4>
+                    <h4 class="header-title col-12 mt-0" style="margin-bottom: 0px;">Lista de organizaciones</h4>
                 </div>
             </div>
             <div class="card-body border">
@@ -45,12 +42,12 @@
                                 <thead style=" background: #edf0f1;color: #6c757d;">
                                     <tr>
                                         <th></th>
-                                        <th>Descripcion</th>
-                                        <th>Tolerancia</th>
-                                        <th>Hora inicio</th>
-                                        <th>Hora fin</th>
-                                        <th>En uso</th>
-                                        <th></th>
+                                        <th>Organizacion</th>
+                                        <th>Tipo</th>
+                                        <th>F. de creacion</th>
+                                        <th>Usuarios</th>
+                                        <th>Empleados</th>
+                                        <th>Estado</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -63,7 +60,7 @@
 </div>
 @endsection
 @section('script')
-
+<script src="{{asset('landing/js/organizacion.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js')
     }}"></script>

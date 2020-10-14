@@ -39,7 +39,7 @@ $(document).ready(function () {
 
         ajax: {
             type: "post",
-            url: "/horario/listar",
+            url: "/listaoOrganiS",
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -56,38 +56,38 @@ $(document).ready(function () {
         "order": [[1, 'asc']],
         columns: [
             { data: null },
-            { data: "horario_descripcion" },
             {
-                data: "horario_tolerancia",
+                data: "organi_razonSocial",
                 "render": function (data, type, row) {
 
-                    return row.horario_tolerancia + '&nbsp;&nbsp; minutos';
+                    return '<label class="font-weight-bold mb-1">'+row.organi_razonSocial+'</label>' + '<br><a class="badge badge-soft-primary mr-2">'+row.organi_ruc+'</a>';
 
                 }
             },
-            { data: "horaI" },
-            { data: "horaF" },
+            { data: "organi_tipo" },
+            { data: "created_at",
+            "render": function (data, type, row) {
+
+                return moment(row.created_at).format('DD/MM/YYYY');
+
+            } },
             {
-                data: "horario_horario_id",
+                data: "users",
                 "render": function (data, type, row) {
-                    if (row.horario_horario_id == null) {
-                        return '<img src="admin/images/borrarH.svg" height="11" />&nbsp;&nbsp;No';
-                    }
-                    else {
-                        return '<img src="admin/images/checkH.svg" height="13" />&nbsp;&nbsp;Si';
-                    }
+                   return row.nombres;
                 }
             },
             {
-                data: "horario_id",
+                data: "users",
                 "render": function (data, type, row) {
-
-                    return '<a onclick=" editarHorarioLista(' + row.horario_id + ')" style="cursor: pointer"><img src="/admin/images/edit.svg" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a onclick="" style="cursor: pointer">' +
-                        '<img src="/admin/images/delete.svg" onclick="eliminarHorario(' + row.horario_id + ')" height="15"></a>';
-
+                   return '<label style="font-style:oblique">Empleados de org.</label>'+row.organi_nempleados+'<br>'+
+                   '<label style="font-style:oblique">Empleados regist.</label>'+row.nemple ;
                 }
             },
-
+            { data: "users" ,
+                "render": function (data, type, row) {
+                   return 'Activo' ;
+                }},
         ]
 
 
