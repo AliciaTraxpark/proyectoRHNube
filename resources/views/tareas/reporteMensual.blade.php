@@ -76,8 +76,17 @@
             font-size: small !important;
         }
 
-        .wrapper{
+        .wrapper {
             max-height: 900px !important;
+        }
+
+        .chartjs-render-monitor {
+            height: 65vh !important;
+            width: 100vw !important;
+        }
+
+        .rowResp {
+            overflow: auto !important;
         }
     }
 
@@ -105,7 +114,7 @@
             margin-left: 19% !important;
         }
 
-        .wrapper{
+        .wrapper {
             max-height: 900px !important;
         }
     }
@@ -140,7 +149,7 @@
                     búsqueda para ver Actividad</label>
             </div>
         </div>
-        <div class="row" id="graficaReporteMensual" style="display: none">
+        <div class="row rowResp" id="graficaReporteMensual" style="display: none">
             <div class="col-lg-12">
                 <!-- Portlet card -->
                 <div class="card">
