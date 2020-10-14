@@ -61,7 +61,7 @@
         }
 
         .imgR {
-            margin-left: 20% !important;
+            margin-left: 19% !important;
         }
     }
 </style>
