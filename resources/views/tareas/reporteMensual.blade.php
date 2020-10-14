@@ -15,6 +15,7 @@
 <link href="{{
     URL::asset('admin/assets/libs/bootstrap-datetimepicker-master/bootstrap-datetimepicker.min.css')
     }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/apexcharts/apexcharts.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/chart/Chart.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
@@ -138,7 +139,8 @@
                 <!-- Portlet card -->
                 <div class="card">
                     <div class="card-body">
-                        <canvas id="myChartMensual" height="35vh" width="85vw"></canvas>
+                        {{-- <canvas id="myChartMensual" height="35vh" width="85vw"></canvas> --}}
+                        <div id="myChartMensual"></div>
                     </div> <!-- end card-body -->
                 </div> <!-- end card-->
             </div> <!-- end col-->
@@ -267,6 +269,7 @@
     URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')
     }}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/apexcharts/apexcharts.js') }}"></script>
 <script src="{{asset('admin/assets/libs/bootstrap-datetimepicker-master/bootstrap-datetimepicker.min.js')}}"></script>
 <script src="{{asset('admin/assets/libs/bootstrap-datetimepicker-master/bootstrap-datetimepicker.es.js')}}"></script>
 <script src="{{asset('admin/assets/libs/bootstrap-datetimepicker-master/moment.js')}}"></script>
