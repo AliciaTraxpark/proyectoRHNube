@@ -82,7 +82,7 @@ class ActividadesController extends Controller
 
     // MODIFCAR ACTIVIDADES DE CONTROL
 
-    public function cambiarEstadoActividad(Request $request)
+    public function cambiarEstadoActividadControl(Request $request)
     {
         $idActividad = $request->get('id');
         $control = $request->get('control');
@@ -95,6 +95,20 @@ class ActividadesController extends Controller
             if ($control == "AP") {
                 $actividad->asistenciaPuerta = $request->get('valor');
             }
+            $actividad->save();
+        }
+
+        return response()->json($actividad, 200);
+    }
+
+    //CAMBIAR ESTADO A ACTIVIDAD
+
+    public function cambiarEstadoActividad(Request $request)
+    {
+        $idActividad = $request->get('id');
+        $actividad = actividad::findOrFail($idActividad);
+        if ($actividad) {
+            $actividad->estado = 0;
             $actividad->save();
         }
 

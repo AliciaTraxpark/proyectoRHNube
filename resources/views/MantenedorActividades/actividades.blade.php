@@ -22,6 +22,16 @@
 </div>
 @endsection
 @section('content')
+<style>
+    .table {
+        width: 100% !important;
+    }
+
+    .dataTables_scrollHeadInner {
+        margin: 0 auto !important;
+        width: 100% !important;
+    }
+</style>
 <div class="row pr-4">
     <div class="col-xl-12 text-right">
         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"

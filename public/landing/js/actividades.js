@@ -38,6 +38,62 @@ function tablaActividades() {
         }
     });
 }
+function eliminarActividad(id) {
+    alertify
+        .confirm("¿Desea eliminar actividad?", function (
+            e
+        ) {
+            if (e) {
+                $.ajax({
+                    type: "GET",
+                    url: "/estadoActividad",
+                    data: {
+                        id: id
+                    },
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    },
+                    success: function (data) {
+                        actividadesOrganizacion();
+                        $.notifyClose();
+                        $.notify({
+                            message: '\nActividad eliminada',
+                            icon: 'landing/images/bell.svg',
+                        }, {
+                            icon_type: 'image',
+                            allow_dismiss: true,
+                            newest_on_top: true,
+                            delay: 6000,
+                            template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                                '</div>',
+                            spacing: 35
+                        });
+                    },
+                    error: function () { },
+                });
+            }
+        })
+        .setting({
+            title: "Eliminar Actividad",
+            labels: {
+                ok: "Aceptar",
+                cancel: "Cancelar",
+            },
+            modal: true,
+            startMaximized: false,
+            reverseButtons: true,
+            resizable: false,
+            closable: false,
+            transition: "zoom",
+            oncancel: function (closeEvent) {
+                actividadesOrganizacion();
+            },
+        });
+}
 function actividadesOrganizacion() {
     $('#actividOrga').empty();
     $.ajax({
@@ -116,7 +172,9 @@ function actividadesOrganizacion() {
                                 style=\"font-weight: bold\"></label>\
                             </div></td>";
                     }
-                    tr += "<td><a class=\"badge badge-soft-primary mr-2\">Predeterminado</a></td>";
+                    tr += "<td><a onclick=\"javascript:eliminarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
+                                    <img src=\"/admin/images/delete.svg\" height=\"15\">\
+                            </a></td>";
                 }
                 tr += "</tr>";
             }
@@ -188,7 +246,7 @@ function registrarActividadTarea() {
 function cambiarEstadoParaControles(id, valor, control) {
     $.ajax({
         type: "POST",
-        url: "/estadoActividad",
+        url: "/estadoActividadControl",
         data: {
             id: id,
             valor: valor,
@@ -220,7 +278,6 @@ function cambiarEstadoParaControles(id, valor, control) {
                     spacing: 35,
                 }
             );
-            $("#actividadTarea").modal("toggle");
         },
         error: function () { },
     });
