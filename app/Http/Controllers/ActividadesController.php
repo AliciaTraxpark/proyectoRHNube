@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class ActividadesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
     public function actividadesEmpleado(Request $request)
     {
         $respuesta = [];
