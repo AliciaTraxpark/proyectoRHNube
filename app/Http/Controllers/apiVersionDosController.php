@@ -112,7 +112,7 @@ class apiVersionDosController extends Controller
         foreach ($actividad_empleado as $act) {
             $actividad = DB::table('actividad as a')
                 ->select('a.Activi_id','a.Activi_Nombre', 'a.estado')
-                ->where('a.Activi_id', '=', $act->id)
+                ->where('a.Activi_id', '=', $act->idActividad)
                 ->get()
                 ->first();
             $actividad->empleado_emple_id = $act->idEmpleado;
