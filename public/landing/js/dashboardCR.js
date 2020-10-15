@@ -333,6 +333,7 @@ function empleadosControlRemoto() {
         else nivel = "red";
         tr += "<tr><td class=\"text-center\" style=\"vertical-align: middle;\">" + (index + 1) + "</td><td style=\"vertical-align: middle;\">" + data[index].nombre + " " + data[index].apPaterno + " " + data[index].apMaterno + "</td>\
         <td class=\"text-center\" style=\"vertical-align: middle;\">"+ enteroTime(data[index].tiempoT) + "</td>\
+        <td class=\"text-center\" style=\"vertical-align: middle;\"><a class=\"badge badge-soft-primary mr-2\"><img src=\"landing/images/wall-clock (1).svg\" height=\"12\" class=\"mr-2\">" + data[index].inicioA + "</a></td>\
         <td class=\"text-center\" style=\"vertical-align: middle;\"><a class=\"badge badge-soft-primary mr-2\"><img src=\"landing/images/wall-clock (1).svg\" height=\"12\" class=\"mr-2\">" + data[index].ultimaA + "</a></td><td>\
         <div class=\"progress\" style=\"background-color: #d9dee9;font-weight: bold\">\
           <div class=\"progress-bar\" role=\"progressbar\" style=\"width:"+ data[index].division.toFixed(2) + "%;background:" + nivel + "\" aria-valuenow=" + data[index].division.toFixed(2) + " aria-valuemin=\"0\" aria-valuemax=\"100\">" + data[index].division.toFixed(2) + "%\
