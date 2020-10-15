@@ -2611,7 +2611,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="card-body border p-2" id="regbodyModoTarea">
-                                                        <div class="row">
+                                                        {{-- <div class="row">
                                                             <div class="col-xl-12 text-right">
                                                                 <button type="button" class="btn btn-sm mt-1"
                                                                     style="background-color: #163552;"
@@ -2619,7 +2619,7 @@
                                                                     Actividad
                                                                 </button>
                                                             </div>
-                                                        </div>
+                                                        </div> --}}
                                                         <div class="row pt-3">
                                                             <div class="col-xl-12 col-sm-12">
                                                                 <div class="table-responsive-xl scroll">
@@ -2644,7 +2644,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        {{-- <div class="row">
                                             <div class="col-xl-12">
                                                 <div class="card">
                                                     <div class="card-header">
@@ -2665,7 +2665,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div id="regactividadTarea" class="modal fade" tabindex="-1" role="dialog"
                                             aria-labelledby="regactividadTarea" aria-hidden="true"
                                             data-backdrop="static">
@@ -2780,7 +2780,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        {{-- <div class="row">
                                             <div class="col-xl-12">
                                                 <div class="card">
                                                     <div class="card-header">
@@ -2801,7 +2801,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
@@ -3628,7 +3628,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="card-body border p-2" id="bodyModoTarea">
-                                                        <div class="row">
+                                                        {{-- <div class="row">
                                                             <div class="col-xl-12 text-right">
                                                                 <button type="button" class="btn btn-sm mt-1"
                                                                     style="background-color: #163552;"
@@ -3636,7 +3636,7 @@
                                                                     Actividad
                                                                 </button>
                                                             </div>
-                                                        </div>
+                                                        </div> --}}
                                                         <div class="row pt-3">
                                                             <div class="col-xl-12 col-sm-12">
                                                                 <div class="table-responsive-xl scroll">
@@ -3661,7 +3661,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        {{-- <div class="row">
                                             <div class="col-xl-12">
                                                 <div class="card">
                                                     <div class="card-header">
@@ -3682,7 +3682,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div id="actividadTarea" class="modal fade" tabindex="-1" role="dialog"
                                             aria-labelledby="actividadTarea" aria-hidden="true" data-backdrop="static">
                                             <div class="modal-dialog  modal-lg d-flex justify-content-center "
@@ -3796,7 +3796,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        {{-- <div class="row">
                                             <div class="col-xl-12">
                                                 <div class="card">
                                                     <div class="card-header">
@@ -3817,7 +3817,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
@@ -4168,7 +4168,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        {{-- <div class="row">
                                             <div class="col-xl-12">
                                                 <div class="card">
                                                     <div class="card-header">
@@ -4189,7 +4189,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div id="sw-default-step-7" style="font-size: 12px!important">
                                         <div class="row">
@@ -4238,7 +4238,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        {{-- <div class="row">
                                             <div class="col-xl-12">
                                                 <div class="card">
                                                     <div class="card-header">
@@ -4259,7 +4259,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
