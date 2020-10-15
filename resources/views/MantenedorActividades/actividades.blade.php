@@ -70,6 +70,22 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-6 text-left">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="customSwitch4">
+                                        <label class="custom-control-label" for="customSwitch4"
+                                            style="font-weight: bold">Control Remoto</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="customSwitch5">
+                                        <label class="custom-control-label" for="customSwitch5"
+                                            style="font-weight: bold">Asistencia en Puerta</label>
+                                    </div>
+                                </div>
+                            </div>
                     </div>
                 </div>
             </div>
