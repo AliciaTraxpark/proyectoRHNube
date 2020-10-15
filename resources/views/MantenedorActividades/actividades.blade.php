@@ -7,9 +7,52 @@
 <link href="{{URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')}}" rel="stylesheet" />
 <link href="{{URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')}}" rel="stylesheet"
     type="text/css" />
+<meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
-
+@section('breadcrumb')
+<div class="row page-title">
+    <div class="col-md-12">
+        <h4 class="mb-1 mt-0">Actividades</h4>
+    </div>
+</div>
+@endsection
 @section('content')
+<style>
+    .table {
+        width: 100% !important;
+    }
+
+    .dataTables_scrollHeadInner {
+        margin: 0 auto !important;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.4rem;
+        border-top: 1px solid #edf0f1;
+    }
+</style>
+<div class="row justify-content-center">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive-xl">
+                    <table id="actividades" class="table nowrap" style="font-size: 13px!important;width:100%;">
+                        <thead style="background: #fafafa;" id="dias" style="width:100%!important">
+                            <tr>
+                                <th class="text-center">#</th>
+                                <th class="text-center">Actividad</th>
+                                <th class="text-center">Control remoto</th>
+                                <th class="text-center">Asistencia en puerta</th>
+                            </tr>
+                        </thead>
+                        <tbody id="actividOrga" class="text-center" style="background:#ffffff;color: #585858;font-size: 12.5px"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel"
     aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
@@ -62,5 +105,6 @@
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
+<script src="{{asset('landing/js/actividades.js')}}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 @endsection
