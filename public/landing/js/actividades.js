@@ -84,6 +84,37 @@ function actividadesOrganizacion() {
                             </div></td>";
                     }
                     tr += "<td><a class=\"badge badge-soft-primary mr-2\">Predeterminado</a></td>";
+                } else {
+                    if (data[index].controlRemoto == 1) {
+                        tr += "<td><div class=\"custom-control custom-switch mb-2\">\
+                        <input type=\"checkbox\" class=\"custom-control-input\"\
+                            id=\"switchActvCR"+ data[index].Activi_id + "\" checked>\
+                        <label class=\"custom-control-label\" for=\"switchActvCR"+ data[index].Activi_id + "\"\
+                            style=\"font-weight: bold\"></label>\
+                        </div></td>";
+                    } else {
+                        tr += "<td><div class=\"custom-control custom-switch mb-2\">\
+                        <input type=\"checkbox\" class=\"custom-control-input\"\
+                            id=\"switchActvCR"+ data[index].Activi_id + "\">\
+                        <label class=\"custom-control-label\" for=\"switchActvCR"+ data[index].Activi_id + "\"\
+                            style=\"font-weight: bold\"></label>\
+                        </div></td>";
+                    }
+                    if (data[index].asistenciaPuerta == 1) {
+                        tr += "<td><div class=\"custom-control custom-switch mb-2\">\
+                            <input type=\"checkbox\" class=\"custom-control-input\"\
+                                id=\"switchActvAP"+ data[index].Activi_id + "\" checked>\
+                            <label class=\"custom-control-label\" for=\"switchActvAP"+ data[index].Activi_id + "\"\
+                                style=\"font-weight: bold\"></label>\
+                            </div></td>";
+                    } else {
+                        tr += "<td><div class=\"custom-control custom-switch mb-2\">\
+                            <input type=\"checkbox\" class=\"custom-control-input\"\
+                                id=\"switchActvAP"+ data[index].Activi_id + "\">\
+                            <label class=\"custom-control-label\" for=\"switchActvAP"+ data[index].Activi_id + "\"\
+                                style=\"font-weight: bold\"></label>\
+                            </div></td>";
+                    }
                 }
                 tr += "</tr>"
             }
