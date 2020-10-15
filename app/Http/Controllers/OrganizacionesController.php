@@ -36,8 +36,9 @@ class OrganizacionesController extends Controller
         ->select('or.organi_id','or.organi_ruc','or.organi_tipo','or.organi_razonSocial',
         'or.created_at','or.organi_nempleados', DB::raw('IF(e.emple_id is null, 0, COUNT(DISTINCT e.emple_id)) as nemple'))
         ->selectRaw('GROUP_CONCAT(DISTINCT uso.user_id) as users')
-        ->selectRaw('GROUP_CONCAT(DISTINCT pe.perso_nombre," ",pe.perso_apPaterno," ",pe.perso_apMaterno,"<br>") as nombres')
-
+        ->selectRaw('GROUP_CONCAT(DISTINCT pe.perso_nombre," ",pe.perso_apPaterno," ",pe.perso_apMaterno) as nombres')
+        ->selectRaw('GROUP_CONCAT( pe.perso_celular) as celular')
+        ->selectRaw('GROUP_CONCAT( u.email) as correo')
         ->where('e.emple_id',null)
         ->groupBy('or.organi_id');
         $organizaciones = DB::table('organizacion as or')
@@ -49,8 +50,9 @@ class OrganizacionesController extends Controller
         'or.created_at','or.organi_nempleados', DB::raw('IF(e.emple_id is null, 0, COUNT( DISTINCT e.emple_id)) as nemple'))
         ->union($organizaciones1)
         ->selectRaw('GROUP_CONCAT(DISTINCT uso.user_id) as users')
-        ->selectRaw('GROUP_CONCAT(DISTINCT pe.perso_nombre," ",pe.perso_apPaterno," ",pe.perso_apMaterno,"<br>") as nombres')
-
+        ->selectRaw('GROUP_CONCAT(DISTINCT pe.perso_nombre," ",pe.perso_apPaterno," ",pe.perso_apMaterno) as nombres')
+        ->selectRaw('GROUP_CONCAT(DISTINCT pe.perso_celular) as celular')
+        ->selectRaw('GROUP_CONCAT(DISTINCT u.email) as correo')
         ->where('e.emple_estado',1)
         ->groupBy('or.organi_id')
 

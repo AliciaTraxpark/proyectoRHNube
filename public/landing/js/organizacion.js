@@ -71,10 +71,47 @@ $(document).ready(function () {
                 return moment(row.created_at).format('DD/MM/YYYY');
 
             } },
-            {
+           /*  {
                 data: "users",
                 "render": function (data, type, row) {
                    return row.nombres;
+                }
+            }, */
+            {
+                data: "celular",
+                "render": function (data, type, row) {
+
+                  /*   var nombres=row.nombres;
+                   /*  idsV=nombres.split(','); */
+/* var valores=row.celular;
+                        idsCelu=valores.split(',');
+                    var variableResult=[];
+                    $.each( idsV, function( index, value ){  */
+
+                      /*   $.each( idsCelu, function( index, value2 ){
+
+
+                        }) */
+/*
+                        variableResult1=  value+'<img src="landing/images/telefono-inteligente.svg" height="14">'+ row.celular;
+                        variableResult.push(variableResult1);
+
+
+        }) */
+        var cadena=[];
+        var nombres=row.nombres;
+        idsV=nombres.split(',');
+        var celu=row.celular;
+        idsC=celu.split(',');
+        var correo=row.correo;
+        corre=correo.split(',');
+        $.each( idsV, function( index, value2 ){
+            variableResult1=value2+'<br><img src="landing/images/telefono-inteligente.svg" height="14">'+idsC[index]+' - '+corre[index]+'<br>';
+            cadena.push(variableResult1);
+        })
+        return cadena;
+
+
                 }
             },
             {
@@ -84,9 +121,9 @@ $(document).ready(function () {
                    '<label style="font-style:oblique">Empleados regist.</label>'+row.nemple ;
                 }
             },
-            { data: "users" ,
+             { data: "users" ,
                 "render": function (data, type, row) {
-                   return 'Activo' ;
+                   return '<span class="badge badge-soft-success">Activo</span>' ;
                 }},
         ]
 
