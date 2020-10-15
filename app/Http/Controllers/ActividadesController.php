@@ -55,4 +55,11 @@ class ActividadesController extends Controller
             return response()->json($actividad_empleado, 200);
         }
     }
+
+    // VISTAS DE ACTIVIDADES
+
+    public function actividades()
+    {
+        return view('MantenedorActividades.actividades');
+    }
 }
