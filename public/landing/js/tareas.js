@@ -57,6 +57,7 @@ $("#empleado").on("select2:opening", function () {
             }*/
         },
         success: function (data) {
+            console.log(data);
             var option = `<option value="" disabled selected>Seleccionar</option>`;
             for (var $i = 0; $i < data.length; $i++) {
                 option += `<option value="${data[$i].emple_id}">${data[$i].perso_nombre} ${data[$i].perso_apPaterno} ${data[$i].perso_apMaterno}</option>`;

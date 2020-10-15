@@ -111,12 +111,12 @@ class apiVersionDosController extends Controller
         $actividad_empleado = actividad_empleado::where('idEmpleado', '=', $empleado)->get();
         foreach ($actividad_empleado as $act) {
             $actividad = DB::table('actividad as a')
-                ->select('a.Activi_Nombre', 'a.estado')
-                ->where('a.Activi_id', '=', $act->id)
+                ->select('a.Activi_id', 'a.Activi_Nombre')
+                ->where('a.Activi_id', '=', $act->idActividad)
                 ->get()
                 ->first();
-            $actividad->Activi_id = $act->id;
             $actividad->empleado_emple_id = $act->idEmpleado;
+            $actividad->estado = $act->estado;
             array_push($respuesta, $actividad);
         }
         return response()->json($respuesta, 200);
@@ -133,20 +133,19 @@ class apiVersionDosController extends Controller
         }
         if ($cambio == 'm') {
             $id = $request['Activi_id'];
-            $actividad_empleado = actividad_empleado::where('id', $id)->first();
-            $actividad = actividad::where('Activi_id', '=', $actividad_empleado->idActividad)->first();
+            $actividad = actividad::where('id', $id)->first();
             if ($actividad) {
                 $actividad->Activi_Nombre = $request['Activi_Nombre'];
                 $actividad->save();
             }
         }
-        if ($cambio == 'e') {
-            $actividad = actividad_empleado::where('id', $request->get('idActividad'))->first();
-            if ($actividad) {
-                $actividad->estado = 0;
-                $actividad->save();
-            }
-        }
+        // if ($cambio == 'e') {
+        //     $actividad = actividad_empleado::where('id', $request->get('idActividad'))->first();
+        //     if ($actividad) {
+        //         $actividad->estado = 0;
+        //         $actividad->save();
+        //     }
+        // }
         return response()->json($actividad, 200);
     }
 

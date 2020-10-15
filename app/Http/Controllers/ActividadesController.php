@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use App\actividad;
 use App\actividad_empleado;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ActividadesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
     public function actividadesEmpleado(Request $request)
     {
         $respuesta = [];
@@ -54,5 +59,23 @@ class ActividadesController extends Controller
             $actividad_empleado->save();
             return response()->json($actividad_empleado, 200);
         }
+    }
+
+    // VISTAS DE ACTIVIDADES
+
+    public function actividades()
+    {
+        return view('MantenedorActividades.actividades');
+    }
+
+    public function actividadesOrganizaciones()
+    {
+        $actividades = DB::table('actividad as a')
+            ->select('a.Activi_id', 'a.Activi_Nombre', 'a.controlRemoto', 'a.asistenciaPuerta')
+            ->where('a.organi_id', '=', session('sesionidorg'))
+            ->where('a.estado', '=', 1)
+            ->get();
+
+        return response()->json($actividades, 200);
     }
 }

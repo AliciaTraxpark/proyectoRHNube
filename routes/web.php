@@ -207,7 +207,8 @@ Route::get('/actividadEmpleado', 'ActividadesController@actividadesEmpleado');
 Route::get('/registrarActvE', 'ActividadesController@registrarActividadE');
 Route::get('/editarActvE', 'ActividadesController@editarActividadE');
 Route::get('/editarEstadoA', 'ActividadesController@editarEstadoActividad');
-
+Route::get('/actividad', 'ActividadesController@actividades');
+Route::get('/actividadOrg', 'ActividadesController@actividadesOrganizaciones');
 //carga masiva de fotos
 Route::post('/subirfoto', 'CargaMasivaFotoController@subirfoto');
 
@@ -388,7 +389,7 @@ Route::post('/listaControladores', 'controladoresController@tablaControladores')
 Route::post('/disposiControladores', 'controladoresController@disposiControladores');
 
 // PRECIOS
-Route::get('/planes','PrecioPlanesController@vistaPrecios');
+Route::get('/planes', 'PrecioPlanesController@vistaPrecios');
 
 //RUTAS SUPERADMIN
 Route::get('/superadmin', 'superAdmController@indexDashboard');
@@ -396,4 +397,3 @@ Route::post('/sAdminDaOrga', 'superAdmController@datosOrgani');
 Route::post('/sAdmintipoOrg', 'superAdmController@tipoOrg');
 Route::get('/organizaciones', 'OrganizacionesController@index');
 Route::post('/listaoOrganiS', 'OrganizacionesController@listaOrganizaciones');
-

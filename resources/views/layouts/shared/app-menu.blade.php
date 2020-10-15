@@ -57,12 +57,6 @@ $usuario_organizacion=DB::table('usuario_organizacion')
         @endif
 
     </li>
-    <!-- <li>
-        <a href="/proyecto">
-            <i data-feather="briefcase"></i>
-            <span>Asignar tarea</span>
-        </a>
-    </li> -->
     <li>
 
         <a href="javascript: void(0);">
@@ -94,7 +88,12 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             </li>
         </ul>
     </li>
-
+    <li style="display: none">
+        <a href="/actividad">
+            <i data-feather="layers"></i>
+            <span>Actividades</span>
+        </a>
+    </li>
     <li>
 
         <a href="javascript: void(0);">
@@ -205,5 +204,3 @@ $usuario_organizacion=DB::table('usuario_organizacion')
     </li>
 </ul>
 @endif
-
-
