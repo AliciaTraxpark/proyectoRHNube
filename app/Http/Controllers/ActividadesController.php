@@ -79,4 +79,25 @@ class ActividadesController extends Controller
 
         return response()->json($actividades, 200);
     }
+
+    // MODIFCAR ACTIVIDADES DE CONTROL
+
+    public function cambiarEstadoActividad(Request $request)
+    {
+        $idActividad = $request->get('id');
+        $control = $request->get('control');
+        // BUSCAMOS ACTIVIDAD
+        $actividad = actividad::findOrFail($idActividad);
+        if ($actividad) {
+            if ($control == "CR") {
+                $actividad->controlRemoto = $request->get('valor');
+            }
+            if ($control == "AP") {
+                $actividad->asistenciaPuerta = $request->get('valor');
+            }
+            $actividad->save();
+        }
+
+        return response()->json($actividad, 200);
+    }
 }

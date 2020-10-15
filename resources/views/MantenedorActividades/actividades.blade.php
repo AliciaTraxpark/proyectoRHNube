@@ -8,6 +8,10 @@
 <link href="{{URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')}}" rel="stylesheet"
     type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/alertify/alertify.css') }}" rel="stylesheet" type="text/css" />
+{{-- <link href="{{ URL::asset('admin/assets/libs/alertify/bootstrap.css') }}" rel="stylesheet" type="text/css" /> --}}
+<!-- Semantic UI theme -->
+<link href="{{ URL::asset('admin/assets/libs/alertify/default.css') }}" rel="stylesheet" type="text/css" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('breadcrumb')
@@ -143,17 +147,10 @@
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <!-- optional plugins -->
-<script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js')}}"></script>
-<script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
 <script src="{{URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js')}}"></script>
-<script src="{{ URL::asset('admin/assets/libs/gauge/gauge.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/apexcharts/apexcharts.js') }}"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
-<script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
-<script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/alertify/alertify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
 <script src="{{asset('landing/js/actividades.js')}}"></script>

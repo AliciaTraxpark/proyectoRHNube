@@ -41,6 +41,7 @@ function tablaActividades() {
 function actividadesOrganizacion() {
     $('#actividOrga').empty();
     $.ajax({
+        async: false,
         url: "/actividadOrg",
         method: "GET",
         headers: {
@@ -50,7 +51,7 @@ function actividadesOrganizacion() {
             console.log(data);
             var tr = "";
             for (let index = 0; index < data.length; index++) {
-                tr += "<tr class=\"text-center\"><td>" + (index + 1) + "</td>";
+                tr += "<tr class=\"text-center\" onclick=\"return cambiarEstadoActividad(" + data[index].Activi_id + ")\"><td>" + (index + 1) + "</td>";
                 tr += "<td>" + data[index].Activi_Nombre + "</td>";
                 if (data[index].eliminacion == 0) {
                     if (data[index].controlRemoto == 1) {
@@ -130,7 +131,6 @@ function actividadesOrganizacion() {
 actividadesOrganizacion();
 
 function registrarActividadTarea() {
-    console.log($('#customCR').is(":checked"));
     var nombre = $("#nombreTarea").val();
     if ($('#customCR').is(":checked") == true) {
         var controlRemoto = 1;
@@ -143,7 +143,7 @@ function registrarActividadTarea() {
         var asistenciaPuerta = 0;
     }
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: "/registrarActvE",
         data: {
             nombre: nombre,
@@ -185,8 +185,117 @@ function registrarActividadTarea() {
     });
 }
 
+function cambiarEstadoParaControles(id, valor, control) {
+    $.ajax({
+        type: "POST",
+        url: "/estadoActividad",
+        data: {
+            id: id,
+            valor: valor,
+            control: control
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            actividadesOrganizacion();
+            $.notifyClose();
+            $.notify(
+                {
+                    message: "\nActividad Modificada.",
+                    icon: "admin/images/checked.svg",
+                },
+                {
+                    position: "fixed",
+                    icon_type: "image",
+                    newest_on_top: true,
+                    delay: 5000,
+                    template:
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        "</div>",
+                    spacing: 35,
+                }
+            );
+            $("#actividadTarea").modal("toggle");
+        },
+        error: function () { },
+    });
+}
 function limpiarModo() {
     $('#nombreTarea').val("");
     $('#customCR').prop("checked", false);
     $('#customAP').prop("checked", false);
+}
+
+function cambiarEstadoActividad(id) {
+
+    $("#switchActvCR" + id).on("change.bootstrapSwitch", function (event) {
+        var control = "CR";
+        if (event.target.checked == true) {
+            var valor = 1;
+        } else {
+            var valor = 0;
+        }
+        alertify
+            .confirm("¿Desea modificar el estado de la  actividad?", function (
+                e
+            ) {
+                if (e) {
+                    cambiarEstadoParaControles(id, valor, control);
+                }
+            })
+            .setting({
+                title: "Modificar Actividad",
+                labels: {
+                    ok: "Aceptar",
+                    cancel: "Cancelar",
+                },
+                modal: true,
+                startMaximized: false,
+                reverseButtons: true,
+                resizable: false,
+                closable: false,
+                transition: "zoom",
+                oncancel: function (closeEvent) {
+                    actividadesOrganizacion();
+                },
+            });
+    });
+
+    $("#switchActvAP" + id).on("change.bootstrapSwitch", function (event) {
+        var control = "AP";
+        if (event.target.checked == true) {
+            var valor = 1;
+        } else {
+            var valor = 0;
+        }
+        alertify
+            .confirm("¿Desea modificar el estado de la  actividad?", function (
+                e
+            ) {
+                if (e) {
+                    cambiarEstadoParaControles(id, valor, control);
+                }
+            })
+            .setting({
+                title: "Modificar Actividad",
+                labels: {
+                    ok: "Aceptar",
+                    cancel: "Cancelar",
+                },
+                modal: true,
+                startMaximized: false,
+                reverseButtons: true,
+                resizable: false,
+                closable: false,
+                transition: "zoom",
+                oncancel: function (closeEvent) {
+                    actividadesOrganizacion();
+                },
+            });
+    });
 }
