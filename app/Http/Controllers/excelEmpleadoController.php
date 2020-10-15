@@ -21,6 +21,7 @@ use Illuminate\Http\Request;
 use App\Imports\EmpleadoImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\actividad;
+use App\actividad_empleado;
 use App\calendario;
 use App\eventos_usuario;
 use App\eventos_empleado;
@@ -310,12 +311,47 @@ class excelEmpleadoController extends Controller
             ]);
 
 
-                actividad::create([
-                    'Activi_Nombre'=>"Tarea 01",
-                    'empleado_emple_id'=>$empleadoId->emple_id,
-                    'estado'    => 1,
+                 // BUSCAR ACTIVIDAD DE CONTROL REMOTO EN ORGANIZACION
+        $actividad = actividad::where('organi_id', '=', session('sesionidorg'))->where('controlRemoto', '=', 1)->get()->first();
 
-                ]);
+        if ($actividad) {
+            //VINCULAR ACTIVIDAD DE CONTROL REMOTO PARA EMPLEADO
+            $actividad_empleado =  new actividad_empleado();
+            $actividad_empleado->idActividad = $actividad->Activi_id;
+            $actividad_empleado->idEmpleado = $empleadoId->emple_id;
+            $actividad_empleado->eliminacion = 0;
+            $actividad_empleado->save();
+        } else {
+            // CREAR ACTIVIDAD DE CONTROL REMOTO PARA ORGANIZACION DEFAULT
+            $actividad = new actividad();
+            $actividad->Activi_Nombre = "Tarea 01";
+            $actividad->controlRemoto = 1;
+            $actividad->asistenciaPuerta = 0;
+            $actividad->eliminacion = 0;
+            $actividad->organi_id = session('sesionidorg');
+            $actividad->save();
+
+            $idActividad = $actividad->Activi_id;
+
+            //VINCULAR ACTIVIDAD DE CONTROL REMOTO PARA EMPLEADO
+            $actividad_empleado =  new actividad_empleado();
+            $actividad_empleado->idActividad = $idActividad;
+            $actividad_empleado->idEmpleado = $empleadoId->emple_id;
+            $actividad_empleado->eliminacion = 0;
+            $actividad_empleado->save();
+        }
+
+        $asistencia = actividad::where('organi_id', '=', session('sesionidorg'))->where('asistenciaPuerta', '=', 1)->get()->first();
+        if (!$asistencia) {
+            // CREAR ACTIVIDAD DE ASISTENCIA EN PUERTA PARA ORGANIZACION DEFAULT
+            $actividad = new actividad();
+            $actividad->Activi_Nombre = "Asistencia";
+            $actividad->controlRemoto = 0;
+            $actividad->asistenciaPuerta = 1;
+            $actividad->eliminacion = 0;
+            $actividad->organi_id = session('sesionidorg');
+            $actividad->save();
+        }
                 if($row['idtipo_contrato']!='' || $row['idtipo_contrato']!=null){
                    contrato::create([
                 'id_tipoContrato'=>$row['idtipo_contrato'],
