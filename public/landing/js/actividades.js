@@ -38,3 +38,20 @@ $(function () {
         }
     });
 });
+
+function actividadesOrganizacion() {
+    $.ajax({
+        url: "/actividadOrg",
+        method: "GET",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            console.log(data);
+        },
+        error: function () {
+
+        }
+    });
+}
+actividadesOrganizacion();

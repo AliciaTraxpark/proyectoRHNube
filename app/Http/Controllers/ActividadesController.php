@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\actividad;
 use App\actividad_empleado;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ActividadesController extends Controller
 {
@@ -65,5 +66,16 @@ class ActividadesController extends Controller
     public function actividades()
     {
         return view('MantenedorActividades.actividades');
+    }
+
+    public function actividadesOrganizaciones()
+    {
+        $actividades = DB::table('actividad as a')
+            ->select('a.Activi_id', 'a.Activi_Nombre', 'a.controlRemoto', 'a.asistenciaPuerta')
+            ->where('a.organi_id', '=', session('sesionidorg'))
+            ->where('a.estado', '=', 1)
+            ->get();
+
+        return response()->json($actividades, 200);
     }
 }

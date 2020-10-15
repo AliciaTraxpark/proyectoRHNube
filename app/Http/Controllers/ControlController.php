@@ -347,7 +347,7 @@ class ControlController extends Controller
         $respuesta = [];
 
         if (sizeof($empleados) > 0) {
-
+            // DB::enableQueryLog();
             $sql = "IF(h.id is null,if(DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_ini)) >= 0 , DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_ini)), DAY(DATE(cp.hora_ini)) ),
         if(DATEDIFF('" . $fechaF[1] . "',DATE(h.start)) >= 0,DATEDIFF('" . $fechaF[1] . "',DATE(h.start)), DAY(DATE(h.start)) )) as dia";
             $horasTrabajadas = DB::table('empleado as e')
@@ -375,7 +375,7 @@ class ControlController extends Controller
                 ->where('e.emple_estado', '=', 1)
                 ->groupBy('e.emple_id', DB::raw('DATE(cp.hora_fin)'))
                 ->get();
-
+            // dd(DB::getQueryLog());
             $date1 = new DateTime($fechaF[0]);
             $date2 = new DateTime($fechaF[1]);
             $diff = $date1->diff($date2);
@@ -525,27 +525,27 @@ class ControlController extends Controller
 
     // REPORTES PERSONALIZADOS
     public function vistaReporte()
-    {   $organizacion = organizacion::all('organi_id', 'organi_razonSocial');
+    {
+        $organizacion = organizacion::all('organi_id', 'organi_razonSocial');
         $usuario_organizacion = DB::table('usuario_organizacion as uso')
-        ->where('uso.organi_id', '=', null)
-        ->where('uso.user_id', '=', Auth::user()->id)
-        ->get()->first();
-        if($usuario_organizacion){
-            if($usuario_organizacion->rol_id==4){
-                return view('tareas.reportePersonalizado', ['organizacion' => $organizacion,'idrol'=>$usuario_organizacion->rol_id]);
-             }
-        }
-      else{
-        if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
-            return redirect('/elegirorganizacion');
-        } else {
-            $usuario_organizacionR = DB::table('usuario_organizacion as uso')
-            ->where('uso.organi_id', '=', session('sesionidorg'))
+            ->where('uso.organi_id', '=', null)
             ->where('uso.user_id', '=', Auth::user()->id)
             ->get()->first();
-            return view('tareas.reportePersonalizado', ['organizacion' => $organizacion,'idrol'=>$usuario_organizacionR->rol_id]);
+        if ($usuario_organizacion) {
+            if ($usuario_organizacion->rol_id == 4) {
+                return view('tareas.reportePersonalizado', ['organizacion' => $organizacion, 'idrol' => $usuario_organizacion->rol_id]);
+            }
+        } else {
+            if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
+                return redirect('/elegirorganizacion');
+            } else {
+                $usuario_organizacionR = DB::table('usuario_organizacion as uso')
+                    ->where('uso.organi_id', '=', session('sesionidorg'))
+                    ->where('uso.user_id', '=', Auth::user()->id)
+                    ->get()->first();
+                return view('tareas.reportePersonalizado', ['organizacion' => $organizacion, 'idrol' => $usuario_organizacionR->rol_id]);
+            }
         }
-    }
     }
     public function selctEmpleado($id)
     {
@@ -602,27 +602,27 @@ class ControlController extends Controller
     // REPORTE PEROSNALIZADO TRAZABILIDAD DE CAPTURAS
     public function vistaTrazabilidad()
 
-    {      $organizacion = organizacion::all('organi_id', 'organi_razonSocial');
-         $usuario_organizacion = DB::table('usuario_organizacion as uso')
+    {
+        $organizacion = organizacion::all('organi_id', 'organi_razonSocial');
+        $usuario_organizacion = DB::table('usuario_organizacion as uso')
             ->where('uso.organi_id', '=', null)
             ->where('uso.user_id', '=', Auth::user()->id)
             ->get()->first();
-            if($usuario_organizacion){
-                if($usuario_organizacion->rol_id==4){
-                    return view('tareas.reporteTrazabilidadC', ['organizacion' => $organizacion,'idrol'=>$usuario_organizacion->rol_id]);
-                 }
+        if ($usuario_organizacion) {
+            if ($usuario_organizacion->rol_id == 4) {
+                return view('tareas.reporteTrazabilidadC', ['organizacion' => $organizacion, 'idrol' => $usuario_organizacion->rol_id]);
             }
-          else{
-        if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
-            return redirect('/elegirorganizacion');
         } else {
-            $usuario_organizacionR = DB::table('usuario_organizacion as uso')
-            ->where('uso.organi_id', '=', session('sesionidorg'))
-            ->where('uso.user_id', '=', Auth::user()->id)
-            ->get()->first();
-            return view('tareas.reporteTrazabilidadC', ['organizacion' => $organizacion,'idrol'=>$usuario_organizacionR->rol_id]);
+            if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
+                return redirect('/elegirorganizacion');
+            } else {
+                $usuario_organizacionR = DB::table('usuario_organizacion as uso')
+                    ->where('uso.organi_id', '=', session('sesionidorg'))
+                    ->where('uso.user_id', '=', Auth::user()->id)
+                    ->get()->first();
+                return view('tareas.reporteTrazabilidadC', ['organizacion' => $organizacion, 'idrol' => $usuario_organizacionR->rol_id]);
+            }
         }
-    }
     }
 
     public function capturasTrazabilidad(Request $request)

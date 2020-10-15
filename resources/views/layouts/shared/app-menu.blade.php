@@ -88,7 +88,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             </li>
         </ul>
     </li>
-    <li>
+    <li style="display: none">
         <a href="/actividad">
             <i data-feather="layers"></i>
             <span>Actividades</span>
