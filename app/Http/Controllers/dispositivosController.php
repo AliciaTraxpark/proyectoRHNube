@@ -161,13 +161,28 @@ class dispositivosController extends Controller
  }
 
  public function reporteTabla(Request $request){
+     $fechaR=$request->fecha;
+    /*  dd($fechaR); */
+    /*  $fecha=Carbon::create($fechaR); */
      $marcaciones=DB::table('marcacion_movil as marcm')
+     ->select('emple_nDoc','perso_nombre','perso_apPaterno','perso_apMaterno',
+     'cargo_descripcion','marcaMov_fecha')
      ->leftJoin('empleado as e','marcm.marcaMov_emple_id','=','e.emple_id')
      ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
      ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-     ->where('marcaMov_tipo',1)
+     ->where(function ($query) {
+
+        $query->whereYear('marcaMov_fecha',2020)
+        ->whereMonth('marcaMov_fecha',10 );
+    })
+     ->where('marcaMov_tipo',1);
+
+     $marcaciones1=$marcaciones->addSelect(DB::raw('(select marcaMov_fecha from marcacion_movil  where marcaMov_tipo=0 and emple_id=marcaMov_emple_id ) as final' ))
      ->get();
-     return json_encode($marcaciones);
+
+
+
+     return json_encode($marcaciones1);
 
  }
 }
