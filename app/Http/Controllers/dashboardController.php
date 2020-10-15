@@ -788,6 +788,7 @@ class dashboardController extends Controller
                     ->leftJoin('promedio_captura as pc', 'pc.idCaptura', '=', 'cp.idCaptura')
                     ->select(
                         'e.emple_id',
+                        DB::raw('MIN(TIME(cp.hora_ini)) as inicioA'),
                         DB::raw('MAX(TIME(cp.hora_fin)) as ultimaA'),
                         DB::raw('SUM(cp.actividad) as totalActividad'),
                         DB::raw('SUM(pc.tiempo_rango) as totalRango'),
@@ -804,6 +805,7 @@ class dashboardController extends Controller
                     ->leftJoin('promedio_captura as pc', 'pc.idCaptura', '=', 'cp.idCaptura')
                     ->select(
                         'e.emple_id',
+                        DB::raw('MIN(TIME(cp.hora_ini)) as inicioA'),
                         DB::raw('MAX(TIME(cp.hora_fin)) as ultimaA'),
                         DB::raw('SUM(cp.actividad) as totalActividad'),
                         DB::raw('SUM(pc.tiempo_rango) as totalRango'),
@@ -822,7 +824,8 @@ class dashboardController extends Controller
                     "apMaterno" => $emple->perso_apMaterno,
                     "tiempoT" => 0,
                     "division" => 0,
-                    "ultimaA" => $actividad->ultimaA == null ? "00:00:00" : $actividad->ultimaA
+                    "ultimaA" => $actividad->ultimaA == null ? "00:00:00" : $actividad->ultimaA,
+                    "inicioA" => $actividad->inicioA == null ? "00:00:00" : $actividad->inicioA
                 ));
             } else {
                 if (is_null($actividad->division) === true) {
@@ -833,7 +836,8 @@ class dashboardController extends Controller
                         "apMaterno" => $emple->perso_apMaterno,
                         "tiempoT" => $actividad->totalRango,
                         "division" => 0,
-                        "ultimaA" => $actividad->ultimaA == null ? "00:00:00" : $actividad->ultimaA
+                        "ultimaA" => $actividad->ultimaA == null ? "00:00:00" : $actividad->ultimaA,
+                        "inicioA" => $actividad->inicioA == null ? "00:00:00" : $actividad->inicioA
                     ));
                 } else {
                     array_push($respuesta, array(
@@ -843,7 +847,8 @@ class dashboardController extends Controller
                         "apMaterno" => $emple->perso_apMaterno,
                         "tiempoT" => $actividad->totalRango,
                         "division" => $actividad->division,
-                        "ultimaA" => $actividad->ultimaA == null ? "00:00:00" : $actividad->ultimaA
+                        "ultimaA" => $actividad->ultimaA == null ? "00:00:00" : $actividad->ultimaA,
+                        "inicioA" => $actividad->inicioA == null ? "00:00:00" : $actividad->inicioA
                     ));
                 }
             }
