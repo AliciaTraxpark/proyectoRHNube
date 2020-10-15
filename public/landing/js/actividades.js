@@ -40,6 +40,7 @@ $(function () {
 });
 
 function actividadesOrganizacion() {
+    $('#actividOrga').empty();
     $.ajax({
         url: "/actividadOrg",
         method: "GET",
@@ -47,7 +48,25 @@ function actividadesOrganizacion() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-            console.log(data);
+            var tr = "";
+            for (let index = 0; index < data.length; index++) {
+                tr += "<tr class=\"text-center\"><td>" + (index + 1) + "</td>";
+                tr += "<td>" + data[index].Activi_Nombre + "</td>";
+                tr += "<td><div class=\"custom-control custom-switch mb-2\">\
+                <input type=\"checkbox\" class=\"custom-control-input\"\
+                    id=\"customSwitch4\">\
+                <label class=\"custom-control-label\" for=\"customSwitch4\"\
+                    style=\"font-weight: bold\"></label>\
+                </div></td>";
+                tr += "<td><div class=\"custom-control custom-switch mb-2\">\
+                <input type=\"checkbox\" class=\"custom-control-input\"\
+                    id=\"customSwitch5\">\
+                <label class=\"custom-control-label\" for=\"customSwitch5\"\
+                    style=\"font-weight: bold\"></label>\
+                </div></td>";
+                tr += "</tr>"
+            }
+            $('#actividOrga').html(tr);
         },
         error: function () {
 

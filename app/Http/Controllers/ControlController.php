@@ -347,7 +347,7 @@ class ControlController extends Controller
         $respuesta = [];
 
         if (sizeof($empleados) > 0) {
-            DB::enableQueryLog();
+            // DB::enableQueryLog();
             $sql = "IF(h.id is null,if(DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_ini)) >= 0 , DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_ini)), DAY(DATE(cp.hora_ini)) ),
         if(DATEDIFF('" . $fechaF[1] . "',DATE(h.start)) >= 0,DATEDIFF('" . $fechaF[1] . "',DATE(h.start)), DAY(DATE(h.start)) )) as dia";
             $horasTrabajadas = DB::table('empleado as e')
@@ -375,7 +375,7 @@ class ControlController extends Controller
                 ->where('e.emple_estado', '=', 1)
                 ->groupBy('e.emple_id', DB::raw('DATE(cp.hora_fin)'))
                 ->get();
-            dd(DB::getQueryLog());
+            // dd(DB::getQueryLog());
             $date1 = new DateTime($fechaF[0]);
             $date2 = new DateTime($fechaF[1]);
             $diff = $date1->diff($date2);

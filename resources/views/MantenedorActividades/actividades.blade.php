@@ -7,6 +7,7 @@
 <link href="{{URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')}}" rel="stylesheet" />
 <link href="{{URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')}}" rel="stylesheet"
     type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('breadcrumb')
@@ -17,42 +18,77 @@
 </div>
 @endsection
 @section('content')
-<style>
-    .table {
-        width: 100% !important;
-    }
-
-    .dataTables_scrollHeadInner {
-        margin: 0 auto !important;
-    }
-
-    .table th,
-    .table td {
-        padding: 0.4rem;
-        border-top: 1px solid #edf0f1;
-    }
-</style>
+<div class="row pr-4">
+    <div class="col-xl-12 text-right">
+        <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
+            onclick="$('#regactividadTarea').modal()">+ Nueva
+            Actividad
+        </button>
+    </div>
+</div>
 <div class="row justify-content-center">
     <div class="col-xl-12">
         <div class="card">
             <div class="card-body">
-                <div class="table-responsive-xl">
-                    <table id="actividades" class="table nowrap" style="font-size: 13px!important;width:100%;">
-                        <thead style="background: #fafafa;" id="dias" style="width:100%!important">
-                            <tr>
-                                <th class="text-center">#</th>
-                                <th class="text-center">Actividad</th>
-                                <th class="text-center">Control remoto</th>
-                                <th class="text-center">Asistencia en puerta</th>
-                            </tr>
-                        </thead>
-                        <tbody id="actividOrga" class="text-center" style="background:#ffffff;color: #585858;font-size: 12.5px"></tbody>
-                    </table>
-                </div>
+                <table id="actividades" class="table nowrap" style="font-size: 13px!important;width:100%;">
+                    <thead style="background: #fafafa;" style="width:100%!important">
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th class="text-center">Actividad</th>
+                            <th class="text-center">Control remoto</th>
+                            <th class="text-center">Asistencia en puerta</th>
+                        </tr>
+                    </thead>
+                    <tbody id="actividOrga"></tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
+<div id="regactividadTarea" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="regactividadTarea"
+    aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 550px;">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Registrar Actividad
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    onclick="javasript:limpiarModo()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-size:12px!important">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="javascript:registrarNuevaActividadTarea()">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="">Nombre:</label>
+                                        <input type="text" class="form-control form-control-sm" id="regnombreTarea"
+                                            required>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button type="button" class="btn btn-light btn-sm "
+                                onclick="javasript:limpiarModo();$('#regactividadTarea').modal('toggle')">Cancelar</button>
+                            <button type="submit" name="" style="background-color: #163552;"
+                                class="btn btn-sm ">Guardar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel"
     aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
