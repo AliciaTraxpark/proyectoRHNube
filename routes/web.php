@@ -392,5 +392,5 @@ Route::get('/superadmin', 'superAdmController@indexDashboard');
 Route::post('/sAdminDaOrga', 'superAdmController@datosOrgani');
 Route::post('/sAdmintipoOrg', 'superAdmController@tipoOrg');
 Route::get('/organizaciones', 'OrganizacionesController@index');
-
+Route::post('/listaoOrganiS', 'OrganizacionesController@listaOrganizaciones');
 

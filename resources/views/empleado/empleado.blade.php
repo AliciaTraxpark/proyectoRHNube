@@ -572,6 +572,10 @@
                             </div>
                             <div id="tabladiv">
                             </div>
+                            <div class="text-right"><br><br>
+                                <a href="{{('/horario')}}"><button
+                                        class="boton btn btn-default mr-1">CONTINUAR</button></a>
+                            </div>
 
                         </div> <!-- end card body-->
                     </div> <!-- end card -->

@@ -46,7 +46,7 @@
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="row">
-
+                            <div class="col-md-2 form-group mb-0"></div>
                             <div class="col-md-4 form-group mb-0">
                                 <label class="blanco">Correo electrónico o
                                     teléfono </label>
@@ -71,22 +71,22 @@
                                 @enderror
                             </div>
 
-                            <div class="col-md-2 form-group mb-0" style="display:
-                                    flex; align-items: center; top: 15px;">
+                            <div class="col-md-3 form-group mb-0" style="display:
+                                    flex; align-items: center; top: 15px;   padding-left: 28px;">
                                 <button type="submit" style="font-size: 12px;    padding-bottom: 5px;
-                                padding-top: 6px;" class="boton">Iniciar
+                                padding-top: 6px;" class="botonIs">Iniciar
                                     sesión</button>
                             </div>
-                            <div class="col-md-2 form-group mb-0" style="display:
+                           {{--  <div class="col-md-2 form-group mb-0" style="display:
                             flex; align-items: center; top: 15px;padding-left: 0px;
-                            padding-right: 0px;">
+                            padding-right: 0px;left: 10px;">
                                 <a class="col-md-12" style="padding-left: 0px;
-                                padding-right: 0px;" href="{{route('registroPersona')}} "><button {{-- onclick=" $('#modal-error').modal('show')" --}}
-                                    class="boton " style="font-size: 12px;padding-bottom: 6px;
-                                    padding-top: 6.2px;">Comienza ahora</button></a>
-                            </div>
+                                padding-right: 0px;" href="{{route('registroPersona')}} "><button
+                                    class=" btn-opacity-comienza " type="button" style="font-size: 12px;padding-bottom: 5px;
+                                    padding-top: 6px;">Comienza ahora</button></a>
+                            </div> --}}
                             <div class="col-md-12 form-group row p-0 m-0 text-left">
-                                <div class="col-md-6 offset-md-4 p-0">
+                                <div class="col-md-6 offset-md-6 p-0">
                                     @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}"
                                         style="font-size:11.5px;color: #ffffff;padding-bottom: 0px;padding-top: 4px;padding-left: 14px;margin-left: 0px;">
@@ -140,8 +140,7 @@
                             <p class="py-4 m-0 text-muted " style="font-size: 16px">Sencillamente porque  te brindamos un alto Retorno de Inversión (ROI) en administración de personal desde el primer mes.</p>
                                 <div class="col-md-12"> <br>
                                     <a  href="{{route('registroPersona')}} "><button {{-- onclick=" $('#modal-error').modal('show')" --}}
-                                        class="btn btn-opacity-comienza mr-1">COMIENZA
-                                        AHORA</button></a>
+                                        class="btn btn-opacity-comienza mr-1">Crear mi cuenta</button></a>
                                 </div>
 
                         </div>

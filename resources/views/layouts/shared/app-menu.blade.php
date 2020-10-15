@@ -125,6 +125,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             <li>
                 <a {{-- href="/dispositivos" --}}>Dispositivos</a>
                 <a {{-- href="/controladores" --}}>Controladores</a>
+                <a>Reporte de asistencia</a>
 
             </li>
         </ul>
