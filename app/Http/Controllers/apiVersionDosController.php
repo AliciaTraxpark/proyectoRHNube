@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\actividad;
+use App\actividad_empleado;
 use App\captura;
 use App\captura_imagen;
 use App\empleado;
@@ -107,9 +108,16 @@ class apiVersionDosController extends Controller
     {
         $empleado = $request->get('emple_id');
         $respuesta = [];
-        $actividad = actividad::where('empleado_emple_id', '=', $empleado)->get();
-        foreach ($actividad as $act) {
-            array_push($respuesta, $act);
+        $actividad_empleado = actividad_empleado::where('idEmpleado', '=', $empleado)->get();
+        foreach ($actividad_empleado as $act) {
+            $actividad = DB::table('actividad as a')
+                ->select('a.Activi_Nombre', 'a.estado')
+                ->where('a.Activi_id', '=', $act->id)
+                ->get()
+                ->first();
+            $actividad->Activi_id = $act->id;
+            $actividad->empleado_emple_id = $act->idEmpleado;
+            array_push($respuesta, $actividad);
         }
         return response()->json($respuesta, 200);
     }
@@ -120,22 +128,20 @@ class apiVersionDosController extends Controller
         if ($cambio == 'n') {
             $actividad = new actividad();
             $actividad->Activi_Nombre = $request['Activi_Nombre'];
-            if ($request['Tarea_Tarea_id'] != '') {
-                $actividad->Tarea_Tarea_id = $request['Tarea_Tarea_id'];
-            }
             $actividad->empleado_emple_id = $request['emple_id'];
             $actividad->save();
         }
         if ($cambio == 'm') {
-            $Activi_id = $request['Activi_id'];
-            $actividad = actividad::where('Activi_id', $Activi_id)->first();
+            $id = $request['Activi_id'];
+            $actividad_empleado = actividad_empleado::where('id', $id)->first();
+            $actividad = actividad::where('Activi_id', '=', $actividad_empleado->idActividad)->first();
             if ($actividad) {
                 $actividad->Activi_Nombre = $request['Activi_Nombre'];
                 $actividad->save();
             }
         }
         if ($cambio == 'e') {
-            $actividad = actividad::where('Activi_id', $request->get('idActividad'))->first();
+            $actividad = actividad_empleado::where('id', $request->get('idActividad'))->first();
             if ($actividad) {
                 $actividad->estado = 0;
                 $actividad->save();
