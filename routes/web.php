@@ -202,6 +202,7 @@ Route::post('/proyecto/eliminar', 'ProyectoController@eliminar');
 Route::post('/proyecto/tablaEmpleados', 'ProyectoController@empleadosTabla');
 Route::post('/proyecto/eliminarEmpleado', 'ProyectoController@eliminarEmpleado');
 Route::post('/proyecto/editarPro', 'ProyectoController@editarProyecto');
+// ACTIVIDADES 
 Route::get('/actividadEmpleado', 'ActividadesController@actividadesEmpleado');
 Route::get('/registrarActvE', 'ActividadesController@registrarActividadE');
 Route::get('/editarActvE', 'ActividadesController@editarActividadE');
