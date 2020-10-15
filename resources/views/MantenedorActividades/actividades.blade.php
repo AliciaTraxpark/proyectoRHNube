@@ -52,8 +52,7 @@
             <div class="modal-header" style="background-color:#163552;">
                 <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Registrar Actividad
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                    onclick="javasript:limpiarModo()">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -77,8 +76,7 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-12 text-right">
-                            <button type="button" class="btn btn-light btn-sm "
-                                onclick="javasript:limpiarModo();$('#regactividadTarea').modal('toggle')">Cancelar</button>
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancelar</button>
                             <button type="submit" name="" style="background-color: #163552;"
                                 class="btn btn-sm ">Guardar</button>
                             </form>

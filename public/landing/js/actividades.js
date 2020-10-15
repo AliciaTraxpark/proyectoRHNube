@@ -48,22 +48,43 @@ function actividadesOrganizacion() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
+            console.log(data);
             var tr = "";
             for (let index = 0; index < data.length; index++) {
                 tr += "<tr class=\"text-center\"><td>" + (index + 1) + "</td>";
                 tr += "<td>" + data[index].Activi_Nombre + "</td>";
-                tr += "<td><div class=\"custom-control custom-switch mb-2\">\
-                <input type=\"checkbox\" class=\"custom-control-input\"\
-                    id=\"customSwitch4\">\
-                <label class=\"custom-control-label\" for=\"customSwitch4\"\
-                    style=\"font-weight: bold\"></label>\
-                </div></td>";
-                tr += "<td><div class=\"custom-control custom-switch mb-2\">\
-                <input type=\"checkbox\" class=\"custom-control-input\"\
-                    id=\"customSwitch5\">\
-                <label class=\"custom-control-label\" for=\"customSwitch5\"\
-                    style=\"font-weight: bold\"></label>\
-                </div></td>";
+                if (data[index].eliminacion == 0) {
+                    if (data[index].controlRemoto == 1) {
+                        tr += "<td><div class=\"custom-control custom-switch mb-2\">\
+                        <input type=\"checkbox\" class=\"custom-control-input\"\
+                            id=\"switchActvCR"+ data[index].Activi_id + "\" checked disabled>\
+                        <label class=\"custom-control-label\" for=\"switchActvCR"+ data[index].Activi_id + "\"\
+                            style=\"font-weight: bold\"></label>\
+                        </div></td>";
+                    } else {
+                        tr += "<td><div class=\"custom-control custom-switch mb-2\">\
+                        <input type=\"checkbox\" class=\"custom-control-input\"\
+                            id=\"switchActvCR"+ data[index].Activi_id + "\" disabled>\
+                        <label class=\"custom-control-label\" for=\"switchActvCR"+ data[index].Activi_id + "\"\
+                            style=\"font-weight: bold\"></label>\
+                        </div></td>";
+                    }
+                    if (data[index].asistenciaPuerta == 1) {
+                        tr += "<td><div class=\"custom-control custom-switch mb-2\">\
+                            <input type=\"checkbox\" class=\"custom-control-input\"\
+                                id=\"switchActvAP"+ data[index].Activi_id + "\" checked disabled>\
+                            <label class=\"custom-control-label\" for=\"switchActvAP"+ data[index].Activi_id + "\"\
+                                style=\"font-weight: bold\"></label>\
+                            </div></td>";
+                    }else{
+                        tr += "<td><div class=\"custom-control custom-switch mb-2\">\
+                            <input type=\"checkbox\" class=\"custom-control-input\"\
+                                id=\"switchActvAP"+ data[index].Activi_id + "\" disabled>\
+                            <label class=\"custom-control-label\" for=\"switchActvAP"+ data[index].Activi_id + "\"\
+                                style=\"font-weight: bold\"></label>\
+                            </div></td>";
+                    }
+                }
                 tr += "</tr>"
             }
             $('#actividOrga').html(tr);

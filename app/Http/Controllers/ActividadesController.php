@@ -71,7 +71,7 @@ class ActividadesController extends Controller
     public function actividadesOrganizaciones()
     {
         $actividades = DB::table('actividad as a')
-            ->select('a.Activi_id', 'a.Activi_Nombre', 'a.controlRemoto', 'a.asistenciaPuerta')
+            ->select('a.Activi_id', 'a.Activi_Nombre', 'a.controlRemoto', 'a.asistenciaPuerta','a.eliminacion')
             ->where('a.organi_id', '=', session('sesionidorg'))
             ->where('a.estado', '=', 1)
             ->get();
