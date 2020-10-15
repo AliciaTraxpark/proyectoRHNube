@@ -6,6 +6,8 @@ use App\dispositivos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 class dispositivosController extends Controller
 {
     //
@@ -141,7 +143,7 @@ class dispositivosController extends Controller
     public function comprobarMovil(Request $request){
 
         $dispositivos=dispositivos::where('dispo_movil','=',$request->numeroM)->get()->first();
-       
+
         if($dispositivos!= null){
             return 1;
         }
@@ -149,4 +151,23 @@ class dispositivosController extends Controller
             return 0;
         }
     }
+
+    public function reporteMarcaciones(){
+        $organizacion=DB::table('organizacion')
+        ->where('organi_id','=',session('sesionidorg'))
+        ->get()->first();
+        $nombreOrga= $organizacion->organi_razonSocial;
+    return view('Dispositivos.reporteDis',['organizacion'=>$nombreOrga]);
+ }
+
+ public function reporteTabla(Request $request){
+     $marcaciones=DB::table('marcacion_movil as marcm')
+     ->leftJoin('empleado as e','marcm.marcaMov_emple_id','=','e.emple_id')
+     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+     ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+     ->where('marcaMov_tipo',1)
+     ->get();
+     return json_encode($marcaciones);
+
+ }
 }
