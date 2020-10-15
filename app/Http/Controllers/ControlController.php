@@ -32,7 +32,7 @@ class ControlController extends Controller
                     ->where('in.user_Invitado', '=', Auth::user()->id)
                     ->get()->first();
                 $empleado = DB::table('empleado as e')
-                    ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
+                    ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                     ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
@@ -45,7 +45,7 @@ class ControlController extends Controller
                     ->get();
             } else {
                 $empleado = DB::table('empleado as e')
-                    ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
+                    ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                     ->where('e.organi_id', '=', session('sesionidorg'))
@@ -75,7 +75,7 @@ class ControlController extends Controller
                     ->get()->first();
                 $empleado = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                    ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
+                    ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
                     ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                     ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                     ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
@@ -88,7 +88,7 @@ class ControlController extends Controller
             } else {
                 $empleado = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                    ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
+                    ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
                     ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                     ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
@@ -128,7 +128,7 @@ class ControlController extends Controller
                     ->get()->first();
                 $empleado = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                    ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
+                    ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
                     ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                     ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                     ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
@@ -141,7 +141,7 @@ class ControlController extends Controller
             } else {
                 $empleado = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                    ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
+                    ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
                     ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                     ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
@@ -178,7 +178,7 @@ class ControlController extends Controller
                 ->get()->first();
             $empleado = DB::table('empleado as e')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
+                ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
                 ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                 ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                 ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
@@ -191,7 +191,7 @@ class ControlController extends Controller
         } else {
             $empleado = DB::table('empleado as e')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
+                ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
                 ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
@@ -223,7 +223,7 @@ class ControlController extends Controller
                     ->get()->first();
                 $empleados = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                    ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
+                    ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
                     ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                     ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                     ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
@@ -236,7 +236,7 @@ class ControlController extends Controller
             } else {
                 $empleados = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                    ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
+                    ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
                     ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
                     ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
@@ -253,7 +253,7 @@ class ControlController extends Controller
                         ->get()->first();
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                        ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
+                        ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
                         ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                         ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                         ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
@@ -267,7 +267,7 @@ class ControlController extends Controller
                 } else {
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                        ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
+                        ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
                         ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
                         ->where('e.organi_id', '=', session('sesionidorg'))
                         ->where('e.emple_estado', '=', 1)
@@ -285,7 +285,7 @@ class ControlController extends Controller
                         ->get()->first();
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                        ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
+                        ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
                         ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                         ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                         ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
@@ -299,7 +299,7 @@ class ControlController extends Controller
                 } else {
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                        ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
+                        ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
                         ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
                         ->where('e.organi_id', '=', session('sesionidorg'))
                         ->where('e.emple_estado', '=', 1)
@@ -317,7 +317,7 @@ class ControlController extends Controller
                         ->get()->first();
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                        ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
+                        ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
                         ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                         ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                         ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
@@ -332,7 +332,7 @@ class ControlController extends Controller
                 } else {
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                        ->join('actividad as a', 'a.empleado_emple_id', '=', 'e.emple_id')
+                        ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
                         ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
                         ->where('e.organi_id', '=', session('sesionidorg'))
                         ->where('e.emple_estado', '=', 1)
@@ -347,7 +347,7 @@ class ControlController extends Controller
         $respuesta = [];
 
         if (sizeof($empleados) > 0) {
-            // DB::enableQueryLog();
+            DB::enableQueryLog();
             $sql = "IF(h.id is null,if(DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_ini)) >= 0 , DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_ini)), DAY(DATE(cp.hora_ini)) ),
         if(DATEDIFF('" . $fechaF[1] . "',DATE(h.start)) >= 0,DATEDIFF('" . $fechaF[1] . "',DATE(h.start)), DAY(DATE(h.start)) )) as dia";
             $horasTrabajadas = DB::table('empleado as e')
@@ -375,7 +375,7 @@ class ControlController extends Controller
                 ->where('e.emple_estado', '=', 1)
                 ->groupBy('e.emple_id', DB::raw('DATE(cp.hora_fin)'))
                 ->get();
-            // dd(DB::getQueryLog());
+            dd(DB::getQueryLog());
             $date1 = new DateTime($fechaF[0]);
             $date2 = new DateTime($fechaF[1]);
             $diff = $date1->diff($date2);

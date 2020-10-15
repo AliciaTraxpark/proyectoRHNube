@@ -111,11 +111,10 @@ class apiVersionDosController extends Controller
         $actividad_empleado = actividad_empleado::where('idEmpleado', '=', $empleado)->get();
         foreach ($actividad_empleado as $act) {
             $actividad = DB::table('actividad as a')
-                ->select('a.Activi_Nombre', 'a.estado')
+                ->select('a.Activi_id','a.Activi_Nombre', 'a.estado')
                 ->where('a.Activi_id', '=', $act->id)
                 ->get()
                 ->first();
-            $actividad->Activi_id = $act->id;
             $actividad->empleado_emple_id = $act->idEmpleado;
             array_push($respuesta, $actividad);
         }
@@ -133,20 +132,19 @@ class apiVersionDosController extends Controller
         }
         if ($cambio == 'm') {
             $id = $request['Activi_id'];
-            $actividad_empleado = actividad_empleado::where('id', $id)->first();
-            $actividad = actividad::where('Activi_id', '=', $actividad_empleado->idActividad)->first();
+            $actividad = actividad::where('id', $id)->first();
             if ($actividad) {
                 $actividad->Activi_Nombre = $request['Activi_Nombre'];
                 $actividad->save();
             }
         }
-        if ($cambio == 'e') {
-            $actividad = actividad_empleado::where('id', $request->get('idActividad'))->first();
-            if ($actividad) {
-                $actividad->estado = 0;
-                $actividad->save();
-            }
-        }
+        // if ($cambio == 'e') {
+        //     $actividad = actividad_empleado::where('id', $request->get('idActividad'))->first();
+        //     if ($actividad) {
+        //         $actividad->estado = 0;
+        //         $actividad->save();
+        //     }
+        // }
         return response()->json($actividad, 200);
     }
 
