@@ -380,6 +380,8 @@ Route::post('/dispoStore', 'dispositivosController@store');
 Route::post('/tablaDisposito', 'dispositivosController@tablaDisposit');
 Route::post('/reenviarmensajeDis', 'dispositivosController@reenviarmensaje');
 Route::post('/comprobarMovil', 'dispositivosController@comprobarMovil');
+Route::get('/reporteMarcaciones', 'dispositivosController@reporteMarcaciones');
+Route::post('/reporteTablaMarca', 'dispositivosController@reporteTabla');
 //CONTROLADORES
 Route::get('/controladores', 'controladoresController@index');
 Route::post('/controladStore', 'controladoresController@store');
