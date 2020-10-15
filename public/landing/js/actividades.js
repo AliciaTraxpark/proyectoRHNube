@@ -1,4 +1,4 @@
-$(function () {
+function tablaActividades() {
     $("#actividades").DataTable({
         scrollX: true,
         responsive: true,
@@ -37,8 +37,7 @@ $(function () {
             }
         }
     });
-});
-
+}
 function actividadesOrganizacion() {
     $('#actividOrga').empty();
     $.ajax({
@@ -76,7 +75,7 @@ function actividadesOrganizacion() {
                             <label class=\"custom-control-label\" for=\"switchActvAP"+ data[index].Activi_id + "\"\
                                 style=\"font-weight: bold\"></label>\
                             </div></td>";
-                    }else{
+                    } else {
                         tr += "<td><div class=\"custom-control custom-switch mb-2\">\
                             <input type=\"checkbox\" class=\"custom-control-input\"\
                                 id=\"switchActvAP"+ data[index].Activi_id + "\" disabled>\
@@ -84,10 +83,12 @@ function actividadesOrganizacion() {
                                 style=\"font-weight: bold\"></label>\
                             </div></td>";
                     }
+                    tr += "<td><a class=\"badge badge-soft-primary mr-2\">Predeterminado</a></td>";
                 }
                 tr += "</tr>"
             }
             $('#actividOrga').html(tr);
+            tablaActividades();
         },
         error: function () {
 

@@ -37,6 +37,7 @@
                             <th class="text-center">Actividad</th>
                             <th class="text-center">Control remoto</th>
                             <th class="text-center">Asistencia en puerta</th>
+                            <th class="text-center"></th>
                         </tr>
                     </thead>
                     <tbody id="actividOrga"></tbody>
