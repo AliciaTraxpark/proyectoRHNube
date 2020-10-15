@@ -115,8 +115,9 @@ function actividadesOrganizacion() {
                                 style=\"font-weight: bold\"></label>\
                             </div></td>";
                     }
+                    tr += "<td><a class=\"badge badge-soft-primary mr-2\">Predeterminado</a></td>";
                 }
-                tr += "</tr>"
+                tr += "</tr>";
             }
             $('#actividOrga').html(tr);
             tablaActividades();
@@ -127,3 +128,65 @@ function actividadesOrganizacion() {
     });
 }
 actividadesOrganizacion();
+
+function registrarActividadTarea() {
+    console.log($('#customCR').is(":checked"));
+    var nombre = $("#nombreTarea").val();
+    if ($('#customCR').is(":checked") == true) {
+        var controlRemoto = 1;
+    } else {
+        var controlRemoto = 0;
+    }
+    if ($('#customAP').is(":checked") == true) {
+        var asistenciaPuerta = 1;
+    } else {
+        var asistenciaPuerta = 0;
+    }
+    $.ajax({
+        type: "GET",
+        url: "/registrarActvE",
+        data: {
+            nombre: nombre,
+            cr: controlRemoto,
+            ap: asistenciaPuerta
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            limpiarModo();
+            actividadesOrganizacion();
+            $('#regactividadTarea').modal('toggle');
+            $.notifyClose();
+            $.notify(
+                {
+                    message: "\nActividad registrada.",
+                    icon: "admin/images/checked.svg",
+                },
+                {
+                    element: $("#form-ver"),
+                    position: "fixed",
+                    icon_type: "image",
+                    newest_on_top: true,
+                    delay: 5000,
+                    template:
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        "</div>",
+                    spacing: 35,
+                }
+            );
+            $("#actividadTarea").modal("toggle");
+        },
+        error: function () { },
+    });
+}
+
+function limpiarModo() {
+    $('#nombreTarea').val("");
+    $('#customCR').prop("checked", false);
+    $('#customAP').prop("checked", false);
+}

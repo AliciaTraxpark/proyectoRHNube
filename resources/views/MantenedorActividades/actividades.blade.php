@@ -60,12 +60,12 @@
             <div class="modal-body" style="font-size:12px!important">
                 <div class="row">
                     <div class="col-md-12">
-                        <form action="javascript:registrarNuevaActividadTarea()">
+                        <form action="javascript:registrarActividadTarea()">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="">Nombre:</label>
-                                        <input type="text" class="form-control form-control-sm" id="regnombreTarea"
+                                        <input type="text" class="form-control form-control-sm" id="nombreTarea"
                                             required>
                                     </div>
                                 </div>
@@ -73,15 +73,15 @@
                             <div class="row">
                                 <div class="col-md-6 text-left">
                                     <div class="custom-control custom-switch mb-2">
-                                        <input type="checkbox" class="custom-control-input" id="customSwitch4">
-                                        <label class="custom-control-label" for="customSwitch4"
+                                        <input type="checkbox" class="custom-control-input" id="customCR">
+                                        <label class="custom-control-label" for="customCR"
                                             style="font-weight: bold">Control Remoto</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6 text-right">
                                     <div class="custom-control custom-switch mb-2">
-                                        <input type="checkbox" class="custom-control-input" id="customSwitch5">
-                                        <label class="custom-control-label" for="customSwitch5"
+                                        <input type="checkbox" class="custom-control-input" id="customAP">
+                                        <label class="custom-control-label" for="customAP"
                                             style="font-weight: bold">Asistencia en Puerta</label>
                                     </div>
                                 </div>

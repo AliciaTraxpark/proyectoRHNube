@@ -29,10 +29,11 @@ class ActividadesController extends Controller
 
     public function registrarActividadE(Request $request)
     {
-        $idE = $request->get('idE');
         $actividad = new actividad();
         $actividad->Activi_Nombre = $request->get('nombre');
-        $actividad->empleado_emple_id = $idE;
+        $actividad->controlRemoto = $request->get('cr');
+        $actividad->asistenciaPuerta = $request->get('ap');
+        $actividad->organi_id = session('sesionidorg');
         $actividad->save();
 
         return response()->json($actividad, 200);
@@ -71,7 +72,7 @@ class ActividadesController extends Controller
     public function actividadesOrganizaciones()
     {
         $actividades = DB::table('actividad as a')
-            ->select('a.Activi_id', 'a.Activi_Nombre', 'a.controlRemoto', 'a.asistenciaPuerta','a.eliminacion')
+            ->select('a.Activi_id', 'a.Activi_Nombre', 'a.controlRemoto', 'a.asistenciaPuerta', 'a.eliminacion')
             ->where('a.organi_id', '=', session('sesionidorg'))
             ->where('a.estado', '=', 1)
             ->get();
