@@ -20,11 +20,18 @@ function actividad_empleado() {
                     <input type="hidden" id="idActReg${data[$i].Activi_id}" value="${data[$i].Activi_Nombre}">
                     <td class="editable" id="tdActReg${data[$i].Activi_id}"  style="cursor: -webkit-grab; cursor: grab" data-toggle="tooltip"
                     data-placement="right" title="Para editar actividad presionar doble click." data-original-title="">${data[$i].Activi_Nombre}</td>`;
-                    if (data[$i].estado == 1) {
-                        td += `<td><div class="custom-control custom-switch">
-                        <input type="checkbox" checked="" class="custom-control-input" id="customSwitchActReg${data[$i].Activi_id}">
-                        <label class="custom-control-label" for="customSwitchActReg${data[$i].Activi_id}"></label>
-                      </div></td><td></td></tr>`;
+                    if (data[$i].estadoActividadEmpleado == 1) {
+                        if (data[$i].eliminacionActividadEmpleado == 0) {
+                            td += `<td><div class="custom-control custom-switch">
+                                <input type="checkbox" checked="" class="custom-control-input" id="customSwitchActReg${data[$i].Activi_id}" disabled>
+                                <label class="custom-control-label" for="customSwitchActReg${data[$i].Activi_id}"></label>
+                            </div></td><td></td></tr>`;
+                        } else {
+                            td += `<td><div class="custom-control custom-switch">
+                                <input type="checkbox" checked="" class="custom-control-input" id="customSwitchActReg${data[$i].Activi_id}">
+                                <label class="custom-control-label" for="customSwitchActReg${data[$i].Activi_id}"></label>
+                            </div></td><td></td></tr>`;
+                        }
                     } else {
                         td += `<td><div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="customSwitchActReg${data[$i].Activi_id}">
@@ -60,11 +67,18 @@ function actividadEmp() {
                     <input type="hidden" id="idAct${data[$i].Activi_id}" value="${data[$i].Activi_Nombre}">
                     <td class="editable" id="tdAct${data[$i].Activi_id}" style="cursor: -webkit-grab; cursor: grab" data-toggle="tooltip"
                     data-placement="right" title="Para editar actividad presionar doble click." data-original-title="">${data[$i].Activi_Nombre}</td>`;
-                    if (data[$i].estado == 1) {
-                        td += `<td><div class="custom-control custom-switch">
-                        <input type="checkbox" checked="" class="custom-control-input" id="customSwitchAct${data[$i].Activi_id}">
-                        <label class="custom-control-label" for="customSwitchAct${data[$i].Activi_id}"></label>
-                      </div></td><td></td></tr>`;
+                    if (data[$i].estadoActividadEmpleado == 1) {
+                        if (data[$i].eliminacionActividadEmpleado == 0) {
+                            td += `<td><div class="custom-control custom-switch">
+                                <input type="checkbox" checked="" class="custom-control-input" id="customSwitchAct${data[$i].Activi_id}" disabled>
+                                <label class="custom-control-label" for="customSwitchAct${data[$i].Activi_id}"></label>
+                            </div></td><td></td></tr>`;
+                        } else {
+                            td += `<td><div class="custom-control custom-switch">
+                                <input type="checkbox" checked="" class="custom-control-input" id="customSwitchAct${data[$i].Activi_id}">
+                                <label class="custom-control-label" for="customSwitchAct${data[$i].Activi_id}"></label>
+                            </div></td><td></td></tr>`;
+                        }
                     } else {
                         td += `<td><div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="customSwitchAct${data[$i].Activi_id}">
@@ -97,7 +111,7 @@ function actividadEmpVer() {
                 var td = "";
                 for (var $i = 0; $i < data.length; $i++) {
                     td += `<tr><td>${data[$i].Activi_Nombre}</td>`;
-                    if (data[$i].estado == 1) {
+                    if (data[$i].estadoActividadEmpleado == 1) {
                         td += `<td><div class="custom-control custom-switch">
                         <input type="checkbox" checked="" class="custom-control-input" disabled id="customSwitchActV${data[$i].Activi_id}">
                         <label class="custom-control-label" for="customSwitchActV${data[$i].Activi_id}"></label>
@@ -387,13 +401,14 @@ function editarActividad(id, actividad) {
     });
 }
 // MODAL EDITAR
-function editarEstadoActividad(id, estado) {
+function editarEstadoActividad(id, estado, idE) {
     $.ajax({
         type: "GET",
         url: "/editarEstadoA",
         data: {
             idA: id,
             estado: estado,
+            idE: idE
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -517,6 +532,7 @@ function RegeditarActE(idA) {
 // MODAL EDITAR
 function editarActE(idA) {
     var OriginalContent = $("#idAct" + idA).val();
+    var idE = $("#v_id").val();
     $("#tdAct" + idA).on("click", function () {
         $(this).addClass("editable");
         $(this).html(
@@ -578,7 +594,7 @@ function editarActE(idA) {
                 e
             ) {
                 if (e) {
-                    editarEstadoActividad(idA, valor);
+                    editarEstadoActividad(idA, valor, idE);
                 }
             })
             .setting({

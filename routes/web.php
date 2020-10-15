@@ -202,10 +202,10 @@ Route::post('/proyecto/eliminar', 'ProyectoController@eliminar');
 Route::post('/proyecto/tablaEmpleados', 'ProyectoController@empleadosTabla');
 Route::post('/proyecto/eliminarEmpleado', 'ProyectoController@eliminarEmpleado');
 Route::post('/proyecto/editarPro', 'ProyectoController@editarProyecto');
-Route::get('/actividadEmpleado', 'ProyectoController@actividadesEmpleado');
-Route::get('/registrarActvE', 'ProyectoController@registrarActividadE');
-Route::get('/editarActvE', 'ProyectoController@editarActividadE');
-Route::get('/editarEstadoA', 'ProyectoController@editarEstadoActividad');
+Route::get('/actividadEmpleado', 'ActividadesController@actividadesEmpleado');
+Route::get('/registrarActvE', 'ActividadesController@registrarActividadE');
+Route::get('/editarActvE', 'ActividadesController@editarActividadE');
+Route::get('/editarEstadoA', 'ActividadesController@editarEstadoActividad');
 
 //carga masiva de fotos
 Route::post('/subirfoto', 'CargaMasivaFotoController@subirfoto');

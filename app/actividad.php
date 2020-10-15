@@ -8,6 +8,15 @@ class actividad extends Model
 {
     protected $table = 'actividad';
     protected $primaryKey = 'Activi_id';
-    protected $fillable = ['Activi_id','Activi_Nombre','Tarea_Tarea_id','empleado_emple_id','estado'];
+    protected $fillable = [
+        'Activi_id',
+        'Activi_Nombre',
+        'empleado_emple_id',
+        'controlRemoto',
+        'asistenciaPuerta',
+        'estado',
+        'eliminacion',
+        'organi_id'
+    ];
     public $timestamps = false;
 }

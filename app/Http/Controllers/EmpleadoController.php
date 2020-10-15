@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\actividad;
+use App\actividad_empleado;
 use Illuminate\Support\Facades\Hash;
 use App\empleado;
 use App\area;
@@ -72,52 +73,60 @@ class EmpleadoController extends Controller
     }
     public function index()
     {
-        if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+        if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
             return redirect('/elegirorganizacion');
-        } else{
-        $departamento = ubigeo_peru_departments::all();
-        $provincia = ubigeo_peru_provinces::all();
-        $distrito = ubigeo_peru_districts::all();
-        $tipo_doc = tipo_documento::all();
-        $tipo_cont = tipo_contrato::all();
-        $area = area::where('organi_id', '=', session('sesionidorg'))->get();
-        $cargo = cargo::where('organi_id', '=', session('sesionidorg'))->get();
-        $centro_costo = centro_costo::where('organi_id', '=', session('sesionidorg'))->get();
-        $nivel = nivel::where('organi_id', '=', session('sesionidorg'))->get();
-        $local = local::where('organi_id', '=', session('sesionidorg'))->get();
-        $empleado = empleado::where('emple_estado', '=', 1)->get();
-        $dispositivo = tipo_dispositivo::all();
-        $tabla_empleado = DB::table('empleado as e')
-            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-            ->join('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-            ->join('area as a', 'e.emple_area', '=', 'a.area_id')
-            ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
-            ->select(
-                'p.perso_nombre',
-                'p.perso_apPaterno',
-                'p.perso_apMaterno',
-                'c.cargo_descripcion',
-                'a.area_descripcion',
-                'cc.centroC_descripcion',
-                'e.emple_id'
-            )
-            ->where('e.organi_id', '=', session('sesionidorg'))
-            ->where('e.emple_estado', '=', 1)
-            ->get();
-        $calendario = DB::table('calendario as ca')
-            ->where('ca.organi_id', '=', session('sesionidorg'))
-            ->get();
-        $horario = horario::where('organi_id', '=', session('sesionidorg'))->get();
-        $condicionPago = condicion_pago::where('organi_id', '=', session('sesionidorg'))->get();
+        } else {
+            $departamento = ubigeo_peru_departments::all();
+            $provincia = ubigeo_peru_provinces::all();
+            $distrito = ubigeo_peru_districts::all();
+            $tipo_doc = tipo_documento::all();
+            $tipo_cont = tipo_contrato::all();
+            $area = area::where('organi_id', '=', session('sesionidorg'))->get();
+            $cargo = cargo::where('organi_id', '=', session('sesionidorg'))->get();
+            $centro_costo = centro_costo::where('organi_id', '=', session('sesionidorg'))->get();
+            $nivel = nivel::where('organi_id', '=', session('sesionidorg'))->get();
+            $local = local::where('organi_id', '=', session('sesionidorg'))->get();
+            $empleado = empleado::where('emple_estado', '=', 1)->get();
+            $dispositivo = tipo_dispositivo::all();
+            $tabla_empleado = DB::table('empleado as e')
+                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                ->join('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                ->join('area as a', 'e.emple_area', '=', 'a.area_id')
+                ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+                ->select(
+                    'p.perso_nombre',
+                    'p.perso_apPaterno',
+                    'p.perso_apMaterno',
+                    'c.cargo_descripcion',
+                    'a.area_descripcion',
+                    'cc.centroC_descripcion',
+                    'e.emple_id'
+                )
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.emple_estado', '=', 1)
+                ->get();
+            $calendario = DB::table('calendario as ca')
+                ->where('ca.organi_id', '=', session('sesionidorg'))
+                ->get();
+            $horario = horario::where('organi_id', '=', session('sesionidorg'))->get();
+            $condicionPago = condicion_pago::where('organi_id', '=', session('sesionidorg'))->get();
 
-        $invitadod = DB::table('invitado')
-            ->where('user_Invitado', '=', Auth::user()->id)
-            ->where('organi_id', '=', session('sesionidorg'))
-            ->get()->first();
+            $invitadod = DB::table('invitado')
+                ->where('user_Invitado', '=', Auth::user()->id)
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->get()->first();
 
-        if ($invitadod) {
-            if ($invitadod->rol_id != 1) {
-                return redirect('/dashboard');
+            if ($invitadod) {
+                if ($invitadod->rol_id != 1) {
+                    return redirect('/dashboard');
+                } else {
+                    return view('empleado.empleado', [
+                        'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
+                        'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
+                        'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
+                        'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
+                    ]);
+                }
             } else {
                 return view('empleado.empleado', [
                     'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
@@ -126,88 +135,80 @@ class EmpleadoController extends Controller
                     'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
                 ]);
             }
-        } else {
-            return view('empleado.empleado', [
-                'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
-                'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
-                'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
-                'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
-            ]);
         }
-    }
     }
     public function cargarDatos()
     {   //DATOS DE TABLA PARA CARGAR EXCEL
-        if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+        if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
             return redirect('/elegirorganizacion');
-        } else{
-        $empleado = DB::table('empleado as e')
-            ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-            ->leftJoin('tipo_documento as tipoD', 'e.emple_tipoDoc', '=', 'tipoD.tipoDoc_id')
-            ->leftJoin('ubigeo_peru_departments as depar', 'e.emple_departamento', '=', 'depar.id')
-            ->leftJoin('ubigeo_peru_provinces as provi', 'e.emple_provincia', '=', 'provi.id')
-            ->leftJoin('ubigeo_peru_districts as dist', 'e.emple_distrito', '=', 'dist.id')
-            ->where('e.emple_estado', '=', 1)
-            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-            ->leftJoin('ubigeo_peru_departments as para', 'e.emple_departamentoN', '=', 'para.id')
-            ->leftJoin('ubigeo_peru_provinces as proviN', 'e.emple_provinciaN', '=', 'proviN.id')
-            ->leftJoin('ubigeo_peru_districts as distN', 'e.emple_distritoN', '=', 'distN.id')
-            ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-            ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+        } else {
+            $empleado = DB::table('empleado as e')
+                ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                ->leftJoin('tipo_documento as tipoD', 'e.emple_tipoDoc', '=', 'tipoD.tipoDoc_id')
+                ->leftJoin('ubigeo_peru_departments as depar', 'e.emple_departamento', '=', 'depar.id')
+                ->leftJoin('ubigeo_peru_provinces as provi', 'e.emple_provincia', '=', 'provi.id')
+                ->leftJoin('ubigeo_peru_districts as dist', 'e.emple_distrito', '=', 'dist.id')
+                ->where('e.emple_estado', '=', 1)
+                ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                ->leftJoin('ubigeo_peru_departments as para', 'e.emple_departamentoN', '=', 'para.id')
+                ->leftJoin('ubigeo_peru_provinces as proviN', 'e.emple_provinciaN', '=', 'proviN.id')
+                ->leftJoin('ubigeo_peru_districts as distN', 'e.emple_distritoN', '=', 'distN.id')
+                ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+                ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
 
 
-            ->select(
-                'e.emple_id',
-                'p.perso_id',
-                'p.perso_nombre',
-                'tipoD.tipoDoc_descripcion',
-                'e.emple_nDoc',
-                'p.perso_apPaterno',
-                'p.perso_apMaterno',
-                'p.perso_fechaNacimiento',
-                'p.perso_direccion',
-                'p.perso_sexo',
-                'depar.id as depar',
-                'depar.name as deparNom',
-                'provi.id as proviId',
-                'provi.name as provi',
-                'dist.id as distId',
-                'dist.name as distNo',
-                'c.cargo_descripcion',
-                'a.area_descripcion',
-                'cc.centroC_descripcion',
-                'para.id as iddepaN',
-                'para.name as depaN',
-                'proviN.id as idproviN',
-                'proviN.name as proviN',
-                'distN.id as iddistN',
-                'distN.name as distN',
-                'e.emple_id',
-                'c.cargo_id',
-                'a.area_id',
-                'cc.centroC_id',
+                ->select(
+                    'e.emple_id',
+                    'p.perso_id',
+                    'p.perso_nombre',
+                    'tipoD.tipoDoc_descripcion',
+                    'e.emple_nDoc',
+                    'p.perso_apPaterno',
+                    'p.perso_apMaterno',
+                    'p.perso_fechaNacimiento',
+                    'p.perso_direccion',
+                    'p.perso_sexo',
+                    'depar.id as depar',
+                    'depar.name as deparNom',
+                    'provi.id as proviId',
+                    'provi.name as provi',
+                    'dist.id as distId',
+                    'dist.name as distNo',
+                    'c.cargo_descripcion',
+                    'a.area_descripcion',
+                    'cc.centroC_descripcion',
+                    'para.id as iddepaN',
+                    'para.name as depaN',
+                    'proviN.id as idproviN',
+                    'proviN.name as proviN',
+                    'distN.id as iddistN',
+                    'distN.name as distN',
+                    'e.emple_id',
+                    'c.cargo_id',
+                    'a.area_id',
+                    'cc.centroC_id',
 
-                'e.emple_local',
-                'e.emple_nivel',
-                'e.emple_departamento',
-                'e.emple_provincia',
-                'e.emple_distrito',
-                'e.emple_foto as foto',
-                'e.emple_celular',
-                'e.emple_telefono',
+                    'e.emple_local',
+                    'e.emple_nivel',
+                    'e.emple_departamento',
+                    'e.emple_provincia',
+                    'e.emple_distrito',
+                    'e.emple_foto as foto',
+                    'e.emple_celular',
+                    'e.emple_telefono',
 
 
-                'e.emple_Correo'
-            )
-            ->where('e.organi_id', '=', session('sesionidorg'))
-            ->get();
+                    'e.emple_Correo'
+                )
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->get();
 
-        $usuario = DB::table('users')
-            ->where('id', '=', Auth::user()->id)->get();
+            $usuario = DB::table('users')
+                ->where('id', '=', Auth::user()->id)->get();
 
-        return view('empleado.cargarEmpleado', ['empleado' => $empleado, 'usuario' => $usuario[0]->user_estado]);
+            return view('empleado.cargarEmpleado', ['empleado' => $empleado, 'usuario' => $usuario[0]->user_estado]);
+        }
     }
-}
 
 
     /**
@@ -293,7 +294,7 @@ class EmpleadoController extends Controller
             ->where('a.organi_id', '=', session('sesionidorg'))
             ->get();
         // dd($result);
-        return view('empleado.tablaEmpleado', ['tabla_empleado' => $result,'areas' => $area]);
+        return view('empleado.tablaEmpleado', ['tabla_empleado' => $result, 'areas' => $area]);
     }
 
     public function refresTabla()
@@ -439,11 +440,47 @@ class EmpleadoController extends Controller
         $empleado->save();
         $idempleado = $empleado->emple_id;
 
-        $actividad = new actividad();
-        $actividad->Activi_Nombre = "Tarea 01";
-        $actividad->empleado_emple_id = $idempleado;
-        $actividad->estado = 1;
-        $actividad->save();
+        // BUSCAR ACTIVIDAD DE CONTROL REMOTO EN ORGANIZACION
+        $actividad = actividad::where('organi_id', '=', session('sesionidorg'))->where('controlRemoto', '=', 1)->get()->first();
+
+        if ($actividad) {
+            //VINCULAR ACTIVIDAD DE CONTROL REMOTO PARA EMPLEADO
+            $actividad_empleado =  new actividad_empleado();
+            $actividad_empleado->idActividad = $actividad->Activi_id;
+            $actividad_empleado->idEmpleado = $idempleado;
+            $actividad_empleado->eliminacion = 0;
+            $actividad_empleado->save();
+        } else {
+            // CREAR ACTIVIDAD DE CONTROL REMOTO PARA ORGANIZACION DEFAULT
+            $actividad = new actividad();
+            $actividad->Activi_Nombre = "Tarea 01";
+            $actividad->controlRemoto = 1;
+            $actividad->asistenciaPuerta = 0;
+            $actividad->eliminacion = 0;
+            $actividad->organi_id = session('sesionidorg');
+            $actividad->save();
+
+            $idActividad = $actividad->Activi_id;
+
+            //VINCULAR ACTIVIDAD DE CONTROL REMOTO PARA EMPLEADO
+            $actividad_empleado =  new actividad_empleado();
+            $actividad_empleado->idActividad = $idActividad;
+            $actividad_empleado->idEmpleado = $idempleado;
+            $actividad_empleado->eliminacion = 0;
+            $actividad_empleado->save();
+        }
+
+        $asistencia = actividad::where('organi_id', '=', session('sesionidorg'))->where('asistenciaPuerta', '=', 1)->get()->first();
+        if (!$asistencia) {
+            // CREAR ACTIVIDAD DE ASISTENCIA EN PUERTA PARA ORGANIZACION DEFAULT
+            $actividad = new actividad();
+            $actividad->Activi_Nombre = "Asistencia";
+            $actividad->controlRemoto = 0;
+            $actividad->asistenciaPuerta = 1;
+            $actividad->eliminacion = 0;
+            $actividad->organi_id = session('sesionidorg');
+            $actividad->save();
+        }
         return response()->json($idempleado, 200);
     }
 
@@ -577,7 +614,7 @@ class EmpleadoController extends Controller
         ///CALENDARIO
 
         $eventos_empleado_tempEU = eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
-        ->where('organi_id', '=', session('sesionidorg'))
+            ->where('organi_id', '=', session('sesionidorg'))
             ->where('id_horario', '=', null)->where('color', '!=', '#9E9E9E')
             ->where('calendario_calen_id', '=', $objEmpleado['idca'])->get();
 
@@ -602,7 +639,7 @@ class EmpleadoController extends Controller
         $incidenciasborrar = incidencia_dias::where('id_empleado', '=', $idempleado)
             ->delete();
         $eventos_empleado_tempInc = eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
-        ->where('organi_id', '=', session('sesionidorg'))  ->where('id_horario', '=', null)->where('color', '=', '#9E9E9E')->where('textColor', '=', '#313131')
+            ->where('organi_id', '=', session('sesionidorg'))->where('id_horario', '=', null)->where('color', '=', '#9E9E9E')->where('textColor', '=', '#313131')
             ->where('calendario_calen_id', '=', $objEmpleado['idca'])->get();
 
         foreach ($eventos_empleado_tempInc as $eventos_empleado_tempIncs) {
@@ -625,7 +662,7 @@ class EmpleadoController extends Controller
         $horario_empleadoBor = horario_empleado::where('empleado_emple_id', '=', $idempleado)
             ->delete();
         $eventos_empleado_tempHor = eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
-        ->where('organi_id', '=', session('sesionidorg'))  ->where('id_horario', '!=', null)->where('color', '=', '#ffffff')->where('textColor', '=', '111111')
+            ->where('organi_id', '=', session('sesionidorg'))->where('id_horario', '!=', null)->where('color', '=', '#ffffff')->where('textColor', '=', '111111')
             ->where('calendario_calen_id', '=', $objEmpleado['idca'])->get();
 
 
@@ -959,53 +996,61 @@ class EmpleadoController extends Controller
     }
     public function indexMenu()
     {
-        if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+        if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
             return redirect('/elegirorganizacion');
-        } else{
-        $departamento = ubigeo_peru_departments::all();
-        $provincia = ubigeo_peru_provinces::all();
-        $distrito = ubigeo_peru_districts::all();
-        $tipo_doc = tipo_documento::all();
-        $tipo_cont = tipo_contrato::all();
-        $area = area::where('organi_id', '=', session('sesionidorg'))->get();
-        $cargo = cargo::where('organi_id', '=', session('sesionidorg'))->get();
-        $centro_costo = centro_costo::where('organi_id', '=', session('sesionidorg'))->get();
-        $nivel = nivel::where('organi_id', '=', session('sesionidorg'))->get();
-        $local = local::where('organi_id', '=', session('sesionidorg'))->get();
-        $empleado = empleado::all();
-        $dispositivo = tipo_dispositivo::all();
-        $tabla_empleado = DB::table('empleado as e')
-            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-            ->join('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-            ->join('area as a', 'e.emple_area', '=', 'a.area_id')
-            ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
-            ->select(
-                'p.perso_nombre',
-                'p.perso_apPaterno',
-                'p.perso_apMaterno',
-                'c.cargo_descripcion',
-                'a.area_descripcion',
-                'cc.centroC_descripcion',
-                'e.emple_id'
-            )
-            ->where('e.organi_id', '=', session('sesionidorg'))
-            ->where('e.emple_estado', '=', 1)
-            ->get();
-        $calendario = DB::table('calendario as ca')
-            ->where('ca.organi_id', '=', session('sesionidorg'))
-            ->get();
-        $horario = horario::where('organi_id', '=', session('sesionidorg'))->get();
-        $condicionPago = condicion_pago::where('organi_id', '=', session('sesionidorg'))->get();
-        //dd($tabla_empleado);
+        } else {
+            $departamento = ubigeo_peru_departments::all();
+            $provincia = ubigeo_peru_provinces::all();
+            $distrito = ubigeo_peru_districts::all();
+            $tipo_doc = tipo_documento::all();
+            $tipo_cont = tipo_contrato::all();
+            $area = area::where('organi_id', '=', session('sesionidorg'))->get();
+            $cargo = cargo::where('organi_id', '=', session('sesionidorg'))->get();
+            $centro_costo = centro_costo::where('organi_id', '=', session('sesionidorg'))->get();
+            $nivel = nivel::where('organi_id', '=', session('sesionidorg'))->get();
+            $local = local::where('organi_id', '=', session('sesionidorg'))->get();
+            $empleado = empleado::all();
+            $dispositivo = tipo_dispositivo::all();
+            $tabla_empleado = DB::table('empleado as e')
+                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                ->join('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                ->join('area as a', 'e.emple_area', '=', 'a.area_id')
+                ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+                ->select(
+                    'p.perso_nombre',
+                    'p.perso_apPaterno',
+                    'p.perso_apMaterno',
+                    'c.cargo_descripcion',
+                    'a.area_descripcion',
+                    'cc.centroC_descripcion',
+                    'e.emple_id'
+                )
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.emple_estado', '=', 1)
+                ->get();
+            $calendario = DB::table('calendario as ca')
+                ->where('ca.organi_id', '=', session('sesionidorg'))
+                ->get();
+            $horario = horario::where('organi_id', '=', session('sesionidorg'))->get();
+            $condicionPago = condicion_pago::where('organi_id', '=', session('sesionidorg'))->get();
+            //dd($tabla_empleado);
 
-        $invitadod = DB::table('invitado')
-            ->where('user_Invitado', '=', Auth::user()->id)
-            ->where('organi_id', '=', session('sesionidorg'))
-            ->get()->first();
+            $invitadod = DB::table('invitado')
+                ->where('user_Invitado', '=', Auth::user()->id)
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->get()->first();
 
-        if ($invitadod) {
-            if ($invitadod->rol_id != 1) {
-                return redirect('/dashboard');
+            if ($invitadod) {
+                if ($invitadod->rol_id != 1) {
+                    return redirect('/dashboard');
+                } else {
+                    return view('empleado.empleadoMenu', [
+                        'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
+                        'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
+                        'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
+                        'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
+                    ]);
+                }
             } else {
                 return view('empleado.empleadoMenu', [
                     'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
@@ -1014,16 +1059,8 @@ class EmpleadoController extends Controller
                     'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
                 ]);
             }
-        } else {
-            return view('empleado.empleadoMenu', [
-                'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
-                'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
-                'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
-                'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
-            ]);
         }
     }
-}
 
     public function comprobarNumD(Request $request)
     {
@@ -1114,7 +1151,7 @@ class EmpleadoController extends Controller
         $idcalendario = $request->idcalendario;
 
         $eventos_empleado_tempCop = eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
-        ->where('organi_id', '=', session('sesionidorg')) ->where('calendario_calen_id', '=', $idcalendario)->get();
+            ->where('organi_id', '=', session('sesionidorg'))->where('calendario_calen_id', '=', $idcalendario)->get();
         if ($eventos_empleado_tempCop->isEmpty()) {
             $eventos_usuario = eventos_usuario::where('organi_id', '=', session('sesionidorg'))
                 ->where('id_calendario', '=', $idcalendario)->get();
@@ -1129,7 +1166,7 @@ class EmpleadoController extends Controller
                     $eventos_empleado_tempSave->end = $eventos_usuarios->end;
                     $eventos_empleado_tempSave->tipo_ev = $eventos_usuarios->tipo;
                     $eventos_empleado_tempSave->calendario_calen_id = $idcalendario;
-                    $eventos_empleado_tempSave->organi_id=session('sesionidorg');
+                    $eventos_empleado_tempSave->organi_id = session('sesionidorg');
                     $eventos_empleado_tempSave->save();
                 }
             }
@@ -1157,7 +1194,7 @@ class EmpleadoController extends Controller
         $eventos_empleado_tempSave->end = $request->get('end');
         $eventos_empleado_tempSave->tipo_ev = $request->get('tipo');
         $eventos_empleado_tempSave->calendario_calen_id = $request->get('id_calendario');
-        $eventos_empleado_tempSave->organi_id=session('sesionidorg');
+        $eventos_empleado_tempSave->organi_id = session('sesionidorg');
         $eventos_empleado_tempSave->save();
 
 
@@ -1192,7 +1229,7 @@ class EmpleadoController extends Controller
         $eventos_empleado_tempSave->end = $request->get('end');
         $eventos_empleado_tempSave->tipo_ev = $incidencia->inciden_id;
         $eventos_empleado_tempSave->calendario_calen_id = $request->get('id_calendario');
-        $eventos_empleado_tempSave->organi_id=session('sesionidorg');
+        $eventos_empleado_tempSave->organi_id = session('sesionidorg');
         $eventos_empleado_tempSave->save();
 
 
@@ -1209,13 +1246,13 @@ class EmpleadoController extends Controller
     public function vaciarcalend()
     {
         DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
-        ->where('organi_id', '=', session('sesionidorg'))
+            ->where('organi_id', '=', session('sesionidorg'))
             ->delete();
     }
     public function vaciarcalendId(Request $request)
     {
         DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
-        ->where('organi_id', '=', session('sesionidorg')) ->where('calendario_calen_id', '=', $request->get('idca'))
+            ->where('organi_id', '=', session('sesionidorg'))->where('calendario_calen_id', '=', $request->get('idca'))
 
             ->delete();
     }
@@ -1276,7 +1313,7 @@ class EmpleadoController extends Controller
 
         foreach ($datafecha as $datafechas) {
             $tempre = eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
-            ->where('organi_id', '=', session('sesionidorg'))
+                ->where('organi_id', '=', session('sesionidorg'))
                 ->where('start', '=', $datafechas)
                 ->where('id_horario', '=', $idhorar)
                 ->get()->first();
@@ -1306,7 +1343,7 @@ class EmpleadoController extends Controller
             $eventos_empleado_tempSave->fuera_horario = $fueraHora;
             $eventos_empleado_tempSave->horarioComp = $horaC;
             $eventos_empleado_tempSave->horaAdic = $horaA;
-            $eventos_empleado_tempSave->organi_id=session('sesionidorg');
+            $eventos_empleado_tempSave->organi_id = session('sesionidorg');
             if ($fueraHora == 1) {
                 $eventos_empleado_tempSave->borderColor = '#5369f8';
             }
@@ -1550,7 +1587,7 @@ class EmpleadoController extends Controller
     public function vaciardlabTem(Request $request)
     {
         DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
-        ->where('organi_id', '=', session('sesionidorg'))
+            ->where('organi_id', '=', session('sesionidorg'))
             ->where('color', '=', '#dfe6f2')
             ->where('textColor', '=', '#0b1b29')
             ->whereYear('start', $request->get('aniocalen'))
@@ -1560,7 +1597,7 @@ class EmpleadoController extends Controller
     public function vaciardNlabTem(Request $request)
     {
         DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
-        ->where('organi_id', '=', session('sesionidorg'))
+            ->where('organi_id', '=', session('sesionidorg'))
             ->where('color', '=', '#a34141')
             ->where('textColor', '=', '#ffffff')
             ->whereYear('start', $request->get('aniocalen'))
@@ -1570,7 +1607,7 @@ class EmpleadoController extends Controller
     public function vaciardIncidTem(Request $request)
     {
         DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
-        ->where('organi_id', '=', session('sesionidorg'))
+            ->where('organi_id', '=', session('sesionidorg'))
             ->where('color', '=', '#9E9E9E')
             ->where('textColor', '=', '#313131')
             ->whereYear('start', $request->get('aniocalen'))
@@ -1604,7 +1641,7 @@ class EmpleadoController extends Controller
     public function vaciardescansoTem(Request $request)
     {
         DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
-        ->where('organi_id', '=', session('sesionidorg'))
+            ->where('organi_id', '=', session('sesionidorg'))
             ->where('color', '=', '#4673a0')
             ->where('textColor', '=', '#ffffff')
             ->whereYear('start', $request->get('aniocalen'))
@@ -1658,7 +1695,7 @@ class EmpleadoController extends Controller
     public function vaciarhorarioTem(Request $request)
     {
         DB::table('eventos_empleado_temp')->where('users_id', '=', Auth::user()->id)
-        ->where('organi_id', '=', session('sesionidorg'))
+            ->where('organi_id', '=', session('sesionidorg'))
             ->where('color', '=', '#ffffff')
             ->where('textColor', '=', '111111')
             ->whereYear('start', $request->get('aniocalen'))
@@ -1712,7 +1749,8 @@ class EmpleadoController extends Controller
         return response()->json($empleado, 200);
     }
 
-    public function asisPuerta(Request $request){
+    public function asisPuerta(Request $request)
+    {
         $empleado = empleado::find($request->get('idPuerta'));
         if ($empleado) {
             $empleado->asistencia_puerta = $request->get('estadoP');
@@ -1736,10 +1774,10 @@ class EmpleadoController extends Controller
             }
             return array_values($resultado);
         }
-        $idarea=$request->idarea;
+        $idarea = $request->idarea;
         $arrayem = collect();
-        if($idarea!=null){
-            foreach($idarea as $idareas){
+        if ($idarea != null) {
+            foreach ($idarea as $idareas) {
                 $tabla_empleado1 = DB::table('empleado as e')
                     ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
@@ -1765,68 +1803,67 @@ class EmpleadoController extends Controller
                     ->where('e.emple_estado', '=', 1)
                     ->where('e.emple_area', '=', $idareas)
                     ->get();
-                    $arrayem->push( $tabla_empleado1);
-                }
+                $arrayem->push($tabla_empleado1);
+            }
 
-                $vinculacionD = [];
-                foreach (array_flatten($arrayem) as $tab) {
-                    $vinculacion = DB::table('vinculacion as v')
-                        ->join('modo as m', 'm.id', '=', 'v.idModo')
-                        ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
-                        ->join('licencia_empleado as le', 'le.id', '=', 'v.idLicencia')
-                        ->select('v.id as idV', 'v.pc_mac as pc', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
-                        ->where('v.idEmpleado', '=', $tab->emple_id)
-                        ->get();
-                    foreach ($vinculacion as $vinc) {
-                        array_push($vinculacionD, array("idVinculacion" => $vinc->idV, "pc" => $vinc->pc, "idLicencia" => $vinc->idL, "licencia" => $vinc->licencia, "disponible" => $vinc->disponible, "dispositivoD" => $vinc->dispositivo_descripcion, "codigo" => $vinc->codigo, "envio" => $vinc->envio));
-                    }
-                    $tab->vinculacion = $vinculacionD;
-                    unset($vinculacionD);
-                    $vinculacionD = array();
-                    $modoCR = DB::table('vinculacion as v')
-                        ->join('modo as m', 'm.id', '=', 'v.idModo')
-                        ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
-                        ->join('licencia_empleado as le', 'le.id', '=', 'v.idLicencia')
-                        ->select('v.id as idV', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
-                        ->where('v.idEmpleado', '=', $tab->emple_id)
-                        ->where('m.idTipoModo', '=', 1)
-                        ->get();
-                    $estadoCR = false;
-                    foreach ($modoCR as $md) {
-                        if ($md->disponible == 'c' || $md->disponible == 'e' || $md->disponible == 'a') {
-                            $estadoCR = true;
-                        }
-                    }
-                    $tab->estadoCR = $estadoCR;
+            $vinculacionD = [];
+            foreach (array_flatten($arrayem) as $tab) {
+                $vinculacion = DB::table('vinculacion as v')
+                    ->join('modo as m', 'm.id', '=', 'v.idModo')
+                    ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
+                    ->join('licencia_empleado as le', 'le.id', '=', 'v.idLicencia')
+                    ->select('v.id as idV', 'v.pc_mac as pc', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
+                    ->where('v.idEmpleado', '=', $tab->emple_id)
+                    ->get();
+                foreach ($vinculacion as $vinc) {
+                    array_push($vinculacionD, array("idVinculacion" => $vinc->idV, "pc" => $vinc->pc, "idLicencia" => $vinc->idL, "licencia" => $vinc->licencia, "disponible" => $vinc->disponible, "dispositivoD" => $vinc->dispositivo_descripcion, "codigo" => $vinc->codigo, "envio" => $vinc->envio));
                 }
-                $result = agruparEmpleadosRefreshArea(array_flatten($arrayem));
-        }
-        else{
+                $tab->vinculacion = $vinculacionD;
+                unset($vinculacionD);
+                $vinculacionD = array();
+                $modoCR = DB::table('vinculacion as v')
+                    ->join('modo as m', 'm.id', '=', 'v.idModo')
+                    ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
+                    ->join('licencia_empleado as le', 'le.id', '=', 'v.idLicencia')
+                    ->select('v.id as idV', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
+                    ->where('v.idEmpleado', '=', $tab->emple_id)
+                    ->where('m.idTipoModo', '=', 1)
+                    ->get();
+                $estadoCR = false;
+                foreach ($modoCR as $md) {
+                    if ($md->disponible == 'c' || $md->disponible == 'e' || $md->disponible == 'a') {
+                        $estadoCR = true;
+                    }
+                }
+                $tab->estadoCR = $estadoCR;
+            }
+            $result = agruparEmpleadosRefreshArea(array_flatten($arrayem));
+        } else {
             $arrayem = DB::table('empleado as e')
-            ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-            ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-            ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
-            ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
-            ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
+                ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+                ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+                ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
+                ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
 
-            ->select(
-                'e.emple_nDoc',
-                'p.perso_nombre',
-                'p.perso_apPaterno',
-                'p.perso_apMaterno',
-                'c.cargo_descripcion',
-                'a.area_descripcion',
-                'cc.centroC_descripcion',
-                'e.emple_id',
-                'md.idTipoModo as dispositivo',
-                'e.emple_foto',
-                'e.asistencia_puerta'
-            )
-            ->where('e.organi_id', '=', session('sesionidorg'))
-            ->where('e.emple_estado', '=', 1)
+                ->select(
+                    'e.emple_nDoc',
+                    'p.perso_nombre',
+                    'p.perso_apPaterno',
+                    'p.perso_apMaterno',
+                    'c.cargo_descripcion',
+                    'a.area_descripcion',
+                    'cc.centroC_descripcion',
+                    'e.emple_id',
+                    'md.idTipoModo as dispositivo',
+                    'e.emple_foto',
+                    'e.asistencia_puerta'
+                )
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.emple_estado', '=', 1)
 
-            ->get();
+                ->get();
             $vinculacionD = [];
             foreach ($arrayem as $tab) {
                 $vinculacion = DB::table('vinculacion as v')
@@ -1867,6 +1904,4 @@ class EmpleadoController extends Controller
 
         return response()->json($result, 200);
     }
-
-
 }
