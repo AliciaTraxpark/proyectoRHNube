@@ -345,10 +345,6 @@ function registrarNuevaActividadTarea() {
     });
 }
 
-function limpiarModo() {
-    $("#nombreTarea").val("");
-    $("#regnombreTarea").val("");
-}
 //  *******************************
 // MODAL REGISTRAR
 function editarActividadReg(id, actividad) {

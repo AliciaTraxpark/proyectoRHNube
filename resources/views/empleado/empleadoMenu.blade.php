@@ -3631,10 +3631,9 @@ use App\proyecto_empleado;
                                     <div class="modal-content">
                                         <div class="modal-header" style="background-color:#163552;">
                                             <h5 class="modal-title" id="myModalLabel"
-                                                style="color:#ffffff;font-size:15px">Registrar Actividad
+                                                style="color:#ffffff;font-size:15px">Asignar Actividad
                                             </h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                                                onclick="javasript:limpiarModo()">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
@@ -3646,7 +3645,7 @@ use App\proyecto_empleado;
                                                             <div class="col-md-12 text-center">
                                                                 <select multiple="multiple" class="multi-select"
                                                                     id="empleadoActiv" data-plugin="multiselect"
-                                                                    data-selectable-optgroup="true" required title="Seleccionar actividad."></select>
+                                                                    data-selectable-optgroup="true" required></select>
                                                             </div>
                                                         </div>
                                                 </div>
@@ -3657,7 +3656,7 @@ use App\proyecto_empleado;
                                                 <div class="row">
                                                     <div class="col-md-12 text-right">
                                                         <button type="button" class="btn btn-light btn-sm "
-                                                            onclick="javasript:limpiarModo();$('#actividadTarea').modal('toggle')">Cancelar</button>
+                                                            onclick="$('#actividadTarea').modal('toggle')">Cancelar</button>
                                                         <button type="submit" name="" style="background-color: #163552;"
                                                             class="btn btn-sm ">Guardar</button>
                                                         </form>
