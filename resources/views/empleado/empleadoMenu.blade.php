@@ -2533,7 +2533,8 @@ use App\proyecto_empleado;
                                                 <div class="col-xl-12 text-right">
                                                     <button type="button" class="btn btn-sm mt-1"
                                                         style="background-color: #163552;"
-                                                        onclick="$('#regactividadTarea').modal();javascript:actividadOrganizacionReg()">+ Nueva
+                                                        onclick="$('#regactividadTarea').modal();javascript:actividadOrganizacionReg()">+
+                                                        Nueva
                                                         Actividad
                                                     </button>
                                                 </div>
@@ -2573,7 +2574,8 @@ use App\proyecto_empleado;
                                         <div class="modal-body" style="font-size:12px!important">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <form action="javascript:registrarNuevaActividadTarea()" id="formActvidadesReg">
+                                                    <form action="javascript:registrarNuevaActividadTarea()"
+                                                        id="formActvidadesReg">
                                                         <div class="row justify-content-center">
                                                             <div class="col-xl-12 text-center">
                                                                 <select multiple="multiple" class="multi-select"
@@ -3706,7 +3708,7 @@ use App\proyecto_empleado;
                         <li><a href="#sw-default-step-3">Foto</a></li>
                         <li><a href="#sw-default-step-4">Calendario</a></li>
                         <li><a href="#sw-default-step-5">Horario</a></li>
-                        <li><a href="#sw-default-step-6">Modos de Control</a></li>
+                        <li><a href="#sw-default-step-6">Actividades</a></li>
                         <li><a href="#sw-default-step-7">Dispositivo</a></li>
                     </ul>
                     <div class="p-3" id="form-registrar">
@@ -3980,20 +3982,7 @@ use App\proyecto_empleado;
                             <div class="row">
                                 <div class="col-xl-12">
                                     <div class="card">
-                                        <div class="card-header">
-                                            <div class="row pb-1 pl-2">
-                                                <div class="col">
-                                                    <div class="custom-control custom-switch mb-2">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="customSwitch5">
-                                                        <label class="custom-control-label" for="customSwitch5"
-                                                            style="font-weight: bold">Modo Control
-                                                            Remoto</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body border p-2" id="bodyModoTarea_ver">
+                                        <div class="card-body border p-2">
                                             <div class="row pt-3">
                                                 <div class="col-xl-12 col-sm-12">
                                                     <div class="table-responsive-xl scroll">

@@ -264,19 +264,7 @@ $('#formActvidades').submit(function (e) {
     this.submit();
 });
 // ***********************************
-$("#bodyModoTarea").show();
-$("#regbodyModoTarea").show();
-$("#customSwitch5").prop("checked", true);
-$("#bodyModoTarea_ver").show();
 
-$("#customSwitch5").on("change.bootstrapSwitch", function (event) {
-    if (event.target.checked == true) {
-        $("#bodyModoTarea_ver").show();
-        actividadEmpVer();
-    } else {
-        $("#bodyModoTarea_ver").hide();
-    }
-});
 $("#bodyModoProyecto").hide();
 $("#regbodyModoProyecto").hide();
 $("#bodyModoProyecto_ver").hide();
