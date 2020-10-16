@@ -1,5 +1,28 @@
-$(document).ready(function () {
-    var table = $("#tablaReport").DataTable({
+// FECHA
+var fechaValue = $("#fechaSelec").flatpickr({
+    mode: "single",
+    dateFormat: "Y-m-d",
+    altInput: true,
+    altFormat: "D, j F",
+    locale: "es",
+    maxDate: "today",
+    wrap: true,
+    allowInput: true,
+  });
+  $(function () {
+    f = moment().format("YYYY-MM-DD");
+    fechaValue.setDate(f);
+   /*  $('#tablaReport').DataTable().ajax.reload(); */
+    cargartabla(f);
+  });
+function cargartabla (fecha) {
+ console.log(fecha);
+    var table =
+
+
+    $("#tablaReport").DataTable({
+        
+        "destroy": true,
         "searching": true,
         /* "lengthChange": false,
          "scrollX": true, */
@@ -38,8 +61,10 @@ $(document).ready(function () {
         },
 
         ajax: {
+
             type: "post",
             url: "/reporteTablaMarca",
+            data:{fecha},
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -69,7 +94,7 @@ $(document).ready(function () {
             {
                 data: "marcaMov_fecha",
                 "render": function (data, type, row) {
-                   return row.marcaMov_fecha;
+                   return moment(row.marcaMov_fecha).format("HH:mm:ss");
                 }
             },
            /*  {
@@ -78,14 +103,35 @@ $(document).ready(function () {
                    return '<label style="font-style:oblique">Empleados de org.</label>'+row.organi_nempleados+'<br>'+
                    '<label style="font-style:oblique">Empleados regist.</label>'+row.nemple ;
                 }
-            },
-            { data: "users" ,
+            },*/
+            { data: "final" ,
                 "render": function (data, type, row) {
-                   return 'Activo' ;
-                }}, */
+                    tfinal=moment(row.final);
+                    tInicio=moment(row.marcaMov_fecha);
+                   if(tfinal>tInicio){
+
+                    return moment(row.final).format("HH:mm:ss");
+                   }
+                   else{
+                       return 'No tiene salida';
+                   }
+                }},
+            { data: "final" ,
+            "render": function (data, type, row) {
+                tfinal=moment(row.final);
+                    tInicio=moment(row.marcaMov_fecha);
+                    if(tfinal>tInicio){
+                tiempo=tfinal-tInicio;
+               /*  return moment(tiempo,"HH:mm:ss");  */
+
+               resta = moment.utc(tiempo*1).format('HH:mm:ss');
+               return resta;
+                }
+                else{
+                    return '---';
+                }
+            }},
         ]
-
-
     });
 
     table.on('order.dt search.dt', function () {
@@ -93,4 +139,16 @@ $(document).ready(function () {
             cell.innerHTML = i + 1;
         });
     }).draw();
-});
+};
+
+/* $(function () {
+    f = $("#fechaInput").val();
+    $("#fechaInput").on("change", alert(f));
+  });
+ */
+function cambiarF(){
+    f1 = $("#fechaInput").val();
+    f2=moment(f1).format("YYYY-MM-DD");
+
+    cargartabla(f2);
+}

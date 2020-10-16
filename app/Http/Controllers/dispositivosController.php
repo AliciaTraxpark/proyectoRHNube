@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 class dispositivosController extends Controller
 {
     //
@@ -163,18 +164,20 @@ class dispositivosController extends Controller
  public function reporteTabla(Request $request){
      $fechaR=$request->fecha;
     /*  dd($fechaR); */
-    /*  $fecha=Carbon::create($fechaR); */
+      $fecha=Carbon::create($fechaR);
+      $año= $fecha->year;
+      $mes= $fecha->month;
+      $dia= $fecha->day;
+
      $marcaciones=DB::table('marcacion_movil as marcm')
      ->select('emple_nDoc','perso_nombre','perso_apPaterno','perso_apMaterno',
      'cargo_descripcion','marcaMov_fecha')
      ->leftJoin('empleado as e','marcm.marcaMov_emple_id','=','e.emple_id')
      ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
      ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-     ->where(function ($query) {
-
-        $query->whereYear('marcaMov_fecha',2020)
-        ->whereMonth('marcaMov_fecha',10 );
-    })
+      ->whereYear('marcaMov_fecha',$año)
+        ->whereMonth('marcaMov_fecha',$mes)
+        ->whereDay('marcaMov_fecha',$dia)
      ->where('marcaMov_tipo',1);
 
      $marcaciones1=$marcaciones->addSelect(DB::raw('(select marcaMov_fecha from marcacion_movil  where marcaMov_tipo=0 and emple_id=marcaMov_emple_id ) as final' ))

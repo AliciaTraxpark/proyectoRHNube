@@ -117,12 +117,41 @@
             </div>
             <div class="card-body border">
                 <div class="row justify-content-center">
-
-
-
                 </div>
                 <div class="row justify-content-center">
+                    <div class="col-xl-4">
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label">Fecha:</label>
+                            <div class="input-group col-md-8 text-center" style="padding-left: 0px;padding-right: 0px;"
+                                id="fechaSelec">
+                                <input type="text" id="fechaInput" onchange="cambiarF()" class="form-control" data-input>
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text form-control flatpickr">
+                                        <a class="input-button" data-toggle>
+                                            <i class="uil uil-calender"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-8"><br></div>
+                    {{-- <div class="col-xl-6">
+                        <div class="form-group row">
+                            <label class="col-lg-2 col-form-label">Área:</label>
+                            <div class="col-lg-10 colR">
+                                <select id="area" data-plugin="customselect" class="form-control" multiple="multiple">
+                                    @foreach ($areas as $area)
+                                    <option value="{{$area->area_id}}">
+                                        {{$area->area_descripcion}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                        </div>
+                    </div> --}}
                 </div>
+
                 <div class="row justify-content-center">
                     <div class="col-md-12">
                         <div class="table-responsive-xl">
@@ -130,12 +159,12 @@
                                 <thead style=" background: #edf0f1;color: #6c757d;">
                                     <tr>
                                         <th></th>
-                                        <th>Organizacion</th>
-                                        <th>Tipo</th>
-                                        <th>F. de creacion</th>
-                                        <th>Usuarios</th>
-                                        <th>Empleados</th>
-                                        <th>Estado</th>
+                                        <th>DNI</th>
+                                        <th>Nombre</th>
+                                        <th>Cargo</th>
+                                        <th>Hora de entrada</th>
+                                        <th>Hora de salida</th>
+                                        <th>tiempo</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -154,14 +183,14 @@
     <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
-    <script src="{{ asset('landing/js/reporteDispo.js') }}"></script>
 
+    <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
 
     <script src="{{ URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js') }}"></script>
-
-
-
+    <script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
+    <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
+    <script src="{{ asset('landing/js/reporteDispo.js') }}"></script>
 @endsection
 
 @section('script-bottom')
