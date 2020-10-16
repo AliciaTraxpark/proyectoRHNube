@@ -49,6 +49,8 @@
             padding-right: 0px;
             padding-left: 0px;
         }
+        .badge-soft-secondary {
+    background-color: rgb(207 209 223 / 20%);}
         .select2-container--default .select2-selection--multiple .select2-selection__choice {
             background-color: #52565b;
         }
@@ -164,7 +166,7 @@
                                         <th>Cargo</th>
                                         <th>Hora de entrada</th>
                                         <th>Hora de salida</th>
-                                        <th>tiempo</th>
+                                        <th>Tiempo en sitio</th>
                                     </tr>
                                 </thead>
                             </table>
