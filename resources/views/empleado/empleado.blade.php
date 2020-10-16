@@ -1803,7 +1803,7 @@
                                         <li><a href="#sw-default-step-3">Foto</a></li>
                                         <li><a href="#sw-default-step-4">Calendario</a></li>
                                         <li><a href="#sw-default-step-5">Horario</a></li>
-                                        <li><a href="#sw-default-step-6">Modos de Control</a></li>
+                                        <li><a href="#sw-default-step-6">Actividades</a></li>
                                         <li><a href="#sw-default-step-7">Dispositivo</a></li>
                                     </ul>
                                     <input type="hidden" id="estadoPR" value="false">
@@ -2600,30 +2600,16 @@
                                         <div class="row">
                                             <div class="col-xl-12">
                                                 <div class="card">
-                                                    <div class="card-header">
-                                                        <div class="row pb-1 pl-2">
-                                                            <div class="col">
-                                                                <div class="custom-control custom-switch mb-2">
-                                                                    <input type="checkbox" class="custom-control-input"
-                                                                        id="customSwitch3">
-                                                                    <label class="custom-control-label"
-                                                                        for="customSwitch3"
-                                                                        style="font-weight: bold">Modo Control
-                                                                        Remoto</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                     <div class="card-body border p-2" id="regbodyModoTarea">
-                                                        {{-- <div class="row">
+                                                        <div class="row">
                                                             <div class="col-xl-12 text-right">
                                                                 <button type="button" class="btn btn-sm mt-1"
                                                                     style="background-color: #163552;"
-                                                                    onclick="$('#regactividadTarea').modal()">+ Nueva
+                                                                    onclick="$('#regactividadTarea').modal();javascript:actividadOrganizacionReg()">+ Nueva
                                                                     Actividad
                                                                 </button>
                                                             </div>
-                                                        </div> --}}
+                                                        </div>
                                                         <div class="row pt-3">
                                                             <div class="col-xl-12 col-sm-12">
                                                                 <div class="table-responsive-xl scroll">
@@ -2648,28 +2634,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        {{-- <div class="row">
-                                            <div class="col-xl-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <div class="row pb-1 pl-2">
-                                                            <div class="col">
-                                                                <div class="custom-control custom-switch mb-2">
-                                                                    <input type="checkbox" class="custom-control-input"
-                                                                        id="customSwitch4">
-                                                                    <label class="custom-control-label"
-                                                                        for="customSwitch4"
-                                                                        style="font-weight: bold">Modo Control de
-                                                                        Asistencia en Puerta</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-body border p-2" id="regbodyModoProyecto">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> --}}
                                         <div id="regactividadTarea" class="modal fade" tabindex="-1" role="dialog"
                                             aria-labelledby="regactividadTarea" aria-hidden="true"
                                             data-backdrop="static">
@@ -2678,26 +2642,18 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header" style="background-color:#163552;">
                                                         <h5 class="modal-title" id="myModalLabel"
-                                                            style="color:#ffffff;font-size:15px">Registrar Actividad
+                                                            style="color:#ffffff;font-size:15px">Asignar  Actividad
                                                         </h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close" onclick="javasript:limpiarModo()">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
                                                     </div>
                                                     <div class="modal-body" style="font-size:12px!important">
                                                         <div class="row">
                                                             <div class="col-md-12">
-                                                                <form
-                                                                    action="javascript:registrarNuevaActividadTarea()">
-                                                                    <div class="row">
-                                                                        <div class="col-md-12">
-                                                                            <div class="form-group">
-                                                                                <label for="">Nombre:</label>
-                                                                                <input type="text"
-                                                                                    class="form-control form-control-sm"
-                                                                                    id="regnombreTarea" required>
-                                                                            </div>
+                                                                <form action="javascript:registrarNuevaActividadTarea()" id="formActvidadesReg">
+                                                                    <div class="row justify-content-center">
+                                                                        <div class="col-xl-12 text-center">
+                                                                            <select multiple="multiple" class="multi-select"
+                                                                                id="regEmpleadoActiv" data-plugin="multiselect"
+                                                                                data-selectable-optgroup="true" required></select>
                                                                         </div>
                                                                     </div>
                                                             </div>
@@ -2708,7 +2664,7 @@
                                                             <div class="row">
                                                                 <div class="col-md-12 text-right">
                                                                     <button type="button" class="btn btn-light btn-sm "
-                                                                        onclick="javasript:limpiarModo();$('#regactividadTarea').modal('toggle')">Cancelar</button>
+                                                                        onclick="$('#regactividadTarea').modal('toggle')">Cancelar</button>
                                                                     <button type="submit" name=""
                                                                         style="background-color: #163552;"
                                                                         class="btn btn-sm ">Guardar</button>
@@ -2831,7 +2787,7 @@
                                     <li><a href="#swF-default-step-3">Foto</a></li>
                                     <li><a href="#sw-default-step-4">Calendario</a></li>
                                     <li><a href="#sw-default-step-5">Horario</a></li>
-                                    <li><a href="#sw-default-step-6">Modos de Control</a></li>
+                                    <li><a href="#sw-default-step-6">Actividades</a></li>
                                     <li><a href="#sw-default-step-7">Dispositivo</a></li>
                                 </ul>
                                 <input type="hidden" id="estadoP" value="false">
@@ -3617,30 +3573,16 @@
                                         <div class="row">
                                             <div class="col-xl-12">
                                                 <div class="card">
-                                                    <div class="card-header">
-                                                        <div class="row pb-1 pl-2">
-                                                            <div class="col">
-                                                                <div class="custom-control custom-switch mb-2">
-                                                                    <input type="checkbox" class="custom-control-input"
-                                                                        id="customSwitch1">
-                                                                    <label class="custom-control-label"
-                                                                        for="customSwitch1"
-                                                                        style="font-weight: bold">Modo Control
-                                                                        Remoto</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                     <div class="card-body border p-2" id="bodyModoTarea">
-                                                        {{-- <div class="row">
+                                                        <div class="row">
                                                             <div class="col-xl-12 text-right">
                                                                 <button type="button" class="btn btn-sm mt-1"
                                                                     style="background-color: #163552;"
-                                                                    onclick="$('#actividadTarea').modal()">+ Nueva
+                                                                    onclick="$('#actividadTarea').modal();javascript:actividadOrganizacion()">+ Nueva
                                                                     Actividad
                                                                 </button>
                                                             </div>
-                                                        </div> --}}
+                                                        </div>
                                                         <div class="row pt-3">
                                                             <div class="col-xl-12 col-sm-12">
                                                                 <div class="table-responsive-xl scroll">
@@ -3665,28 +3607,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        {{-- <div class="row">
-                                            <div class="col-xl-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <div class="row pb-1 pl-2">
-                                                            <div class="col">
-                                                                <div class="custom-control custom-switch mb-2">
-                                                                    <input type="checkbox" class="custom-control-input"
-                                                                        id="customSwitch2">
-                                                                    <label class="custom-control-label"
-                                                                        for="customSwitch2"
-                                                                        style="font-weight: bold">Modo Control de
-                                                                        Asistencia en Puerta</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-body border p-2" id="bodyModoProyecto">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> --}}
                                         <div id="actividadTarea" class="modal fade" tabindex="-1" role="dialog"
                                             aria-labelledby="actividadTarea" aria-hidden="true" data-backdrop="static">
                                             <div class="modal-dialog  modal-lg d-flex justify-content-center "
@@ -3694,25 +3614,18 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header" style="background-color:#163552;">
                                                         <h5 class="modal-title" id="myModalLabel"
-                                                            style="color:#ffffff;font-size:15px">Registrar Actividad
+                                                            style="color:#ffffff;font-size:15px">Asignar Actividad
                                                         </h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close" onclick="javasript:limpiarModo()">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
                                                     </div>
                                                     <div class="modal-body" style="font-size:12px!important">
                                                         <div class="row">
                                                             <div class="col-md-12">
-                                                                <form action="javascript:registrarActividadTarea()">
-                                                                    <div class="row">
-                                                                        <div class="col-md-12">
-                                                                            <div class="form-group">
-                                                                                <label for="">Nombre:</label>
-                                                                                <input type="text"
-                                                                                    class="form-control form-control-sm"
-                                                                                    id="nombreTarea" required>
-                                                                            </div>
+                                                                <form action="javascript:registrarActividadTarea()" id="formActvidades">
+                                                                    <div class="row justify-content-center">
+                                                                        <div class="col-xl-12 text-center">
+                                                                            <select multiple="multiple" class="multi-select"
+                                                                                id="empleadoActiv" data-plugin="multiselect"
+                                                                                data-selectable-optgroup="true" required></select>
                                                                         </div>
                                                                     </div>
                                                             </div>
@@ -3723,7 +3636,7 @@
                                                             <div class="row">
                                                                 <div class="col-md-12 text-right">
                                                                     <button type="button" class="btn btn-light btn-sm "
-                                                                        onclick="javasript:limpiarModo();$('#actividadTarea').modal('toggle')">Cancelar</button>
+                                                                        onclick="$('#actividadTarea').modal('toggle')">Cancelar</button>
                                                                     <button type="submit" name=""
                                                                         style="background-color: #163552;"
                                                                         class="btn btn-sm ">Guardar</button>
@@ -3856,7 +3769,7 @@
                                     <li><a href="#sw-default-step-3">Foto</a></li>
                                     <li><a href="#sw-default-step-4">Calendario</a></li>
                                     <li><a href="#sw-default-step-5">Horario</a></li>
-                                    <li><a href="#sw-default-step-6">Modos de Control</a></li>
+                                    <li><a href="#sw-default-step-6">Actividades</a></li>
                                     <li><a href="#sw-default-step-7">Dispositivo</a></li>
                                 </ul>
                                 <div class="p-3" id="form-registrar">
@@ -4133,20 +4046,6 @@
                                         <div class="row">
                                             <div class="col-xl-12">
                                                 <div class="card">
-                                                    <div class="card-header">
-                                                        <div class="row pb-1 pl-2">
-                                                            <div class="col">
-                                                                <div class="custom-control custom-switch mb-2">
-                                                                    <input type="checkbox" class="custom-control-input"
-                                                                        id="customSwitch5">
-                                                                    <label class="custom-control-label"
-                                                                        for="customSwitch5"
-                                                                        style="font-weight: bold">Modo Control
-                                                                        Remoto</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                     <div class="card-body border p-2" id="bodyModoTarea_ver">
                                                         <div class="row pt-3">
                                                             <div class="col-xl-12 col-sm-12">
