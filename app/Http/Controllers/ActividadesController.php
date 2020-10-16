@@ -72,7 +72,15 @@ class ActividadesController extends Controller
     public function actividadesOrganizaciones()
     {
         $actividades = DB::table('actividad as a')
-            ->select('a.Activi_id', 'a.Activi_Nombre', 'a.controlRemoto', 'a.asistenciaPuerta', 'a.eliminacion')
+            ->leftJoin('captura as cp', 'cp.idActividad', '=', 'a.Activi_id')
+            ->select(
+                'a.Activi_id',
+                'a.Activi_Nombre',
+                'a.controlRemoto',
+                'a.asistenciaPuerta',
+                'a.eliminacion',
+                DB::raw("CASE WHEN(cp.idCaptura) IS NULL THEN 'No' ELSE 'Si' END AS respuesta")
+            )
             ->where('a.organi_id', '=', session('sesionidorg'))
             ->where('a.estado', '=', 1)
             ->get();

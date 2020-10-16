@@ -140,6 +140,11 @@ function actividadesOrganizacion() {
                                 style=\"font-weight: bold\"></label>\
                             </div></td>";
                     }
+                    if (data[index].respuesta === 'Si') {
+                        tr += "<td style=\"font-size:12px\"><img src=\"/admin/images/checkH.svg\" height=\"13\" class=\"mr-2\">" + data[index].respuesta + "</td>";
+                    } else {
+                        tr += "<td style=\"font-size:12px\"><img src=\"/admin/images/borrarH.svg\" height=\"11\" class=\"mr-2\">" + data[index].respuesta + "</td>";
+                    }
                     tr += "<td><a class=\"badge badge-soft-primary mr-2\">Predeterminado</a></td>";
                 } else {
                     if (data[index].controlRemoto == 1) {
@@ -171,6 +176,11 @@ function actividadesOrganizacion() {
                             <label class=\"custom-control-label\" for=\"switchActvAP"+ data[index].Activi_id + "\"\
                                 style=\"font-weight: bold\"></label>\
                             </div></td>";
+                    }
+                    if (data[index].respuesta === 'Si') {
+                        tr += "<td style=\"font-size:12px\"><img src=\"/admin/images/checkH.svg\" height=\"13\" class=\"mr-2\">" + data[index].respuesta + "</td>";
+                    } else {
+                        tr += "<td style=\"font-size:12px\"><img src=\"/admin/images/borrarH.svg\" height=\"11\" class=\"mr-2\">" + data[index].respuesta + "</td>";
                     }
                     tr += "<td><a onclick=\"javascript:eliminarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
                                     <img src=\"/admin/images/delete.svg\" height=\"15\">\
