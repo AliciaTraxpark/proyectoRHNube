@@ -179,12 +179,11 @@ class dispositivosController extends Controller
         ->whereMonth('marcaMov_fecha',$mes)
         ->whereDay('marcaMov_fecha',$dia)
      ->where('marcaMov_tipo',1)
-     ->where('marcm.organi_id','=',session('sesionidorg'));
+     ->where('marcm.organi_id','=',session('sesionidorg')) ;
 
-     $marcaciones1=$marcaciones->addSelect(DB::raw('(select marcaMov_fecha from marcacion_movil  where marcaMov_tipo=0 and emple_id=marcaMov_emple_id ) as final' ))
+     $marcaciones1=$marcaciones->addSelect(DB::raw('(select marcaMov_fecha from marcacion_movil
+      where marcaMov_tipo=0 and emple_id=marcaMov_emple_id and YEAR(marcaMov_fecha)= '.$año.' and MONTH(marcaMov_fecha)='.$mes.' and DAY(marcaMov_fecha)='.$dia.' ) as final' ))
      ->get();
-
-
 
      return json_encode($marcaciones1);
 
