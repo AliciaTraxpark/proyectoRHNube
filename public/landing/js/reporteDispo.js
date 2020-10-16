@@ -124,8 +124,22 @@ function cargartabla (fecha) {
                 tiempo=tfinal-tInicio;
                /*  return moment(tiempo,"HH:mm:ss");  */
 
-               resta = moment.utc(tiempo*1).format('HH:mm:ss');
-               return resta;
+            /*    resta = moment.utc(tiempo*1).format('HH:mm:ss'); */
+            var seconds = moment.duration(tiempo).seconds();
+            var minutes = moment.duration(tiempo).minutes();
+            var hours = Math.trunc(moment.duration(tiempo).asHours());
+                        if(hours<10){
+                            hours='0'+hours;
+                        }
+                        if(minutes<10){
+                            minutes='0'+minutes;
+                        }
+
+                        if(seconds<10){
+                            seconds='0'+seconds;
+                        }
+
+               return  hours+':'+minutes+':'+seconds ;
                 }
                 else{
                     return '---';
