@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\actividad;
 use App\actividad_empleado;
+use App\captura;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -115,6 +116,10 @@ class ActividadesController extends Controller
     {
         $idActividad = $request->get('id');
         $actividad = actividad::findOrFail($idActividad);
+        $buscar_actividad = captura::where('idActividad', '=', $idActividad)->get()->first();
+        if ($buscar_actividad) {
+            return 1;
+        }
         if ($actividad) {
             $actividad->estado = 0;
             $actividad->save();

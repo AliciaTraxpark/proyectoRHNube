@@ -54,24 +54,44 @@ function eliminarActividad(id) {
                         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
                     },
                     success: function (data) {
-                        actividadesOrganizacion();
-                        $.notifyClose();
-                        $.notify({
-                            message: '\nActividad eliminada',
-                            icon: 'landing/images/bell.svg',
-                        }, {
-                            icon_type: 'image',
-                            allow_dismiss: true,
-                            newest_on_top: true,
-                            delay: 6000,
-                            template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
-                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                                '<span data-notify="title">{1}</span> ' +
-                                '<span style="color:#a94442;" data-notify="message">{2}</span>' +
-                                '</div>',
-                            spacing: 35
-                        });
+                        if (data = 1) {
+                            $.notifyClose();
+                            $.notify({
+                                message: '\nActividad en uso, no se puede eliminar.',
+                                icon: '/landing/images/alert1.svg',
+                            }, {
+                                icon_type: 'image',
+                                allow_dismiss: true,
+                                newest_on_top: true,
+                                delay: 6000,
+                                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                                    '</div>',
+                                spacing: 35
+                            });
+                        } else {
+                            actividadesOrganizacion();
+                            $.notifyClose();
+                            $.notify({
+                                message: '\nActividad eliminada',
+                                icon: 'landing/images/bell.svg',
+                            }, {
+                                icon_type: 'image',
+                                allow_dismiss: true,
+                                newest_on_top: true,
+                                delay: 6000,
+                                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                                    '</div>',
+                                spacing: 35
+                            });
+                        }
                     },
                     error: function () { },
                 });
