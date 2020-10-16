@@ -149,21 +149,32 @@ class apimovilController extends Controller
         $idEmpleado=$request->idEmpleado;
         $idHoraEmp=$request->idHoraEmp; */
         foreach($request->all() as $req){
-            $marcacion_movil=new marcacion_movil();
-            $marcacion_movil->marcaMov_tipo=$req['tipoMarcacion'];
+            if($req['tipoMarcacion']==1){
+                $marcacion_movil=new marcacion_movil();
+           /*  $marcacion_movil->marcaMov_tipo=$req['tipoMarcacion']; */
             $marcacion_movil->marcaMov_fecha= $req['fechaMarcacion'];
             $marcacion_movil->marcaMov_emple_id=$req['idEmpleado'];
             $marcacion_movil->controladores_idControladores=$req['idControlador'];
             $marcacion_movil->dispositivos_idDispositivos=$req['idDisposi'];
             $marcacion_movil->organi_id=$req['organi_id'];
-          
+
             if(empty($req['idHoraEmp'])) {}
             else{
                 $marcacion_movil->horarioEmp_id=$req['idHoraEmp'];
             }
-
-
             $marcacion_movil->save();
+            } else{
+                $marcacion_movil =DB::table('marcacion_movil as mv')
+            ->where('mv.marcaMov_emple_id', '=',$req['idEmpleado'] )
+            ->where('mv.marcaMov_salida', '=',null )
+            ->where('mv.controladores_idControladores', '=',$req['idControlador'] )
+            ->where('mv.dispositivos_idDispositivos', '=',$req['idDisposi'])
+            ->update(['mv.marcaMov_salida' => $req['fechaMarcacion']]);
+            }
+            /*  */
+
+
+
         }
 
 
