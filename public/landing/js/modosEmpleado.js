@@ -129,13 +129,81 @@ function actividadEmpVer() {
         error: function () { },
     });
 }
-// INICIALIZAR PLUGIN DE MULTI SELECT
+//INICIALIZAR PLUGIN DE MILTI SELECT EN GUARDAR
+$('#regEmpleadoActiv').multiSelect({
+    selectableHeader: "<div class='custom-header' style=\"color:#163552;font-size:14px;font-weight: bold;border-top-left-radius: 5px;border-top-right-radius: 5px;\">\
+    <img src=\"landing/images/2143150.png\" class=\"mr-2\" height=\"15\"/>Actividades</div>",
+    selectionHeader: "<div class='custom-header' style=\"color:#163552;font-size:14px;font-weight: bold;border-top-left-radius: 5px;border-top-right-radius: 5px;\">\
+    <img src=\"landing/images/tick (4).svg\" class=\"mr-2\" height=\"15\"/>Asignar</div>",
+});
+// INICIALIZAR PLUGIN DE MULTI SELECT EN EDITAR
 $('#empleadoActiv').multiSelect({
     selectableHeader: "<div class='custom-header' style=\"color:#163552;font-size:14px;font-weight: bold;border-top-left-radius: 5px;border-top-right-radius: 5px;\">\
     <img src=\"landing/images/2143150.png\" class=\"mr-2\" height=\"15\"/>Actividades</div>",
     selectionHeader: "<div class='custom-header' style=\"color:#163552;font-size:14px;font-weight: bold;border-top-left-radius: 5px;border-top-right-radius: 5px;\">\
     <img src=\"landing/images/tick (4).svg\" class=\"mr-2\" height=\"15\"/>Asignar</div>",
 });
+// MODAL REGISTRAR
+function actividadOrganizacionReg() {
+    var idE = $("#idEmpleado").val();
+    $('#empleadoActiv').empty();
+    $.ajax({
+        async: false,
+        type: "GET",
+        url: "/actividadOrga",
+        data: {
+            idEmpleado: idE
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            console.log(data);
+            var option = "";
+            $.each(data, function (i, items) {
+                console.log(items.value);
+                option += '<option value="' + items.value + '">' + items.text + '</option>';
+            });
+            console.log(option);
+            $('#regEmpleadoActiv').html(option);
+            $('#regEmpleadoActiv').multiSelect('refresh');
+        },
+        error: function () { },
+    });
+}
+$('#formActvidadesReg').attr('novalidate', true);
+
+$('#formActvidadesReg').submit(function (e) {
+    e.preventDefault();
+    if ($('#regEmpleadoActiv').val().length == 0) {
+        $.notifyClose();
+        $.notify({
+            message: '\nSeleccionar Actividad',
+            icon: 'landing/images/bell.svg',
+        }, {
+            element: $("#regactividadTarea"),
+            position: "fixed",
+            icon_type: 'image',
+            placement: {
+                from: "top",
+                align: "center",
+            },
+            allow_dismiss: true,
+            newest_on_top: true,
+            delay: 6000,
+            template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                '<span data-notify="title">{1}</span> ' +
+                '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                '</div>',
+            spacing: 35
+        });
+        return;
+    }
+    this.submit();
+});
+// MODAL EDITAR
 function actividadOrganizacion() {
     var idE = $("#v_id").val();
     $('#empleadoActiv').empty();
@@ -197,19 +265,10 @@ $('#formActvidades').submit(function (e) {
 });
 // ***********************************
 $("#bodyModoTarea").show();
-$("#customSwitch3").prop("checked", true);
 $("#regbodyModoTarea").show();
 $("#customSwitch5").prop("checked", true);
 $("#bodyModoTarea_ver").show();
 
-$("#customSwitch3").on("change.bootstrapSwitch", function (event) {
-    if (event.target.checked == true) {
-        $("#regbodyModoTarea").show();
-        actividad_empleado();
-    } else {
-        $("#regbodyModoTarea").hide();
-    }
-});
 $("#customSwitch5").on("change.bootstrapSwitch", function (event) {
     if (event.target.checked == true) {
         $("#bodyModoTarea_ver").show();
@@ -287,22 +346,21 @@ function registrarActividadTarea() {
         error: function () { },
     });
 }
-// MODAL REGISTRAR
+//ASIGNAR ACTIVIDAD - MODAL REGISTRAR
 function registrarNuevaActividadTarea() {
     var idE = $("#idEmpleado").val();
-    var nombre = $("#regnombreTarea").val();
+    var idA = $('#regEmpleadoActiv').val();
     $.ajax({
-        type: "GET",
-        url: "/registrarActvE",
+        type: "POST",
+        url: "/registrarAE",
         data: {
             idE: idE,
-            nombre: nombre,
+            idA: idA,
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            limpiarModo();
             actividad_empleado();
             $.notifyClose();
             $.notify(
