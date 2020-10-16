@@ -256,7 +256,7 @@ $("#customSwitch6").on("change.bootstrapSwitch", function (event) {
     }
 });
 // **************************************
-// MODAL EDITAR
+// ASIGNAR ACTIVIDAD - MODAL EDITAR
 function registrarActividadTarea() {
     var idE = $("#v_id").val();
     var idA = $('#empleadoActiv').val();
@@ -271,7 +271,6 @@ function registrarActividadTarea() {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            limpiarModo();
             actividadEmp();
             $.notifyClose();
             $.notify(
@@ -346,7 +345,7 @@ function registrarNuevaActividadTarea() {
 }
 
 //  *******************************
-// MODAL REGISTRAR
+// EDITAR NOMBRE MODAL REGISTRAR
 function editarActividadReg(id, actividad) {
     $.ajax({
         type: "GET",
@@ -386,7 +385,7 @@ function editarActividadReg(id, actividad) {
         error: function () { },
     });
 }
-// MODAL REGISTRAR
+// EDITAR ESTADO MODAL REGISTRAR
 function editarEstadoActividadReg(id, estado) {
     $.ajax({
         type: "GET",
@@ -426,7 +425,7 @@ function editarEstadoActividadReg(id, estado) {
         error: function () { },
     });
 }
-// MODAL EDITAR
+// EDITAR NOMBRE MODAL EDITAR
 function editarActividad(id, actividad) {
     $.ajax({
         type: "GET",
@@ -466,7 +465,7 @@ function editarActividad(id, actividad) {
         error: function () { },
     });
 }
-// MODAL EDITAR
+// EDITAR ESTADO MODAL EDITAR
 function editarEstadoActividad(id, estado, idE) {
     $.ajax({
         type: "GET",
@@ -507,7 +506,7 @@ function editarEstadoActividad(id, estado, idE) {
         error: function () { },
     });
 }
-// MODAL REGISTRAR
+// FUNCION PRINCIAPL PARA EDITAR NOMBRE Y ESTADO - MODAL REGISTRAR
 function RegeditarActE(idA) {
     var OriginalContent = $("#idActReg" + idA).val();
     $("#tdActReg" + idA).on("click", function () {
@@ -595,7 +594,7 @@ function RegeditarActE(idA) {
     });
 }
 
-// MODAL EDITAR
+// FUNCION PRINCIAPL PARA EDITAR NOMBRE Y ESTADO - MODAL EDITAR
 function editarActE(idA) {
     var OriginalContent = $("#idAct" + idA).val();
     var idE = $("#v_id").val();

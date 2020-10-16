@@ -450,6 +450,7 @@ use App\proyecto_empleado;
         background: transparent url('../admin/images/multiple-arrow.png') no-repeat 50% 50%;
         width: auto;
         max-width: 370px;
+        margin-left: 15%;
     }
 </style>
 <div class="row page-title" style="padding-right: 20px;">
@@ -3640,9 +3641,10 @@ use App\proyecto_empleado;
                                         <div class="modal-body" style="font-size:12px!important">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <form action="javascript:registrarActividadTarea()"  id="formActvidades">
-                                                        <div class="row">
-                                                            <div class="col-md-12 text-center">
+                                                    <form action="javascript:registrarActividadTarea()"
+                                                        id="formActvidades">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-xl-12 text-center">
                                                                 <select multiple="multiple" class="multi-select"
                                                                     id="empleadoActiv" data-plugin="multiselect"
                                                                     data-selectable-optgroup="true" required></select>
