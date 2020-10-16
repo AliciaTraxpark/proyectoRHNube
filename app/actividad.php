@@ -16,7 +16,8 @@ class actividad extends Model
         'asistenciaPuerta',
         'estado',
         'eliminacion',
-        'organi_id'
+        'organi_id',
+        'codigoActividad'
     ];
     public $timestamps = false;
 }

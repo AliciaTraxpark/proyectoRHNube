@@ -115,6 +115,9 @@ function eliminarActividad(id) {
         });
 }
 function actividadesOrganizacion() {
+    if ($.fn.DataTable.isDataTable("#actividades")) {
+        $('#actividades').DataTable().destroy();
+    }
     $('#actividOrga').empty();
     $.ajax({
         async: false,
@@ -220,6 +223,7 @@ actividadesOrganizacion();
 
 function registrarActividadTarea() {
     var nombre = $("#nombreTarea").val();
+    var codigo = $("#codigoTarea").val();
     if ($('#customCR').is(":checked") == true) {
         var controlRemoto = 1;
     } else {
@@ -236,7 +240,8 @@ function registrarActividadTarea() {
         data: {
             nombre: nombre,
             cr: controlRemoto,
-            ap: asistenciaPuerta
+            ap: asistenciaPuerta,
+            codigo: codigo
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),

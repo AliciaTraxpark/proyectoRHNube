@@ -77,10 +77,18 @@
                     <div class="col-md-12">
                         <form action="javascript:registrarActividadTarea()">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="">Nombre:</label>
-                                        <input type="text" class="form-control form-control-sm" id="nombreTarea" maxlength="40" required>
+                                        <input type="text" class="form-control form-control-sm" id="nombreTarea"
+                                            maxlength="40" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Código:</label>
+                                        <input type="text" class="form-control form-control-sm" id="codigoTarea"
+                                            maxlength="40">
                                     </div>
                                 </div>
                             </div>
@@ -107,7 +115,8 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-12 text-right">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" onclick="javascript:limpiarModo()">Cancelar</button>
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                onclick="javascript:limpiarModo()">Cancelar</button>
                             <button type="submit" name="" style="background-color: #163552;"
                                 class="btn btn-sm ">Guardar</button>
                             </form>

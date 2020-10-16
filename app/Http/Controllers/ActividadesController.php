@@ -28,18 +28,6 @@ class ActividadesController extends Controller
         return response()->json($respuesta, 200);
     }
 
-    public function registrarActividadE(Request $request)
-    {
-        $actividad = new actividad();
-        $actividad->Activi_Nombre = $request->get('nombre');
-        $actividad->controlRemoto = $request->get('cr');
-        $actividad->asistenciaPuerta = $request->get('ap');
-        $actividad->organi_id = session('sesionidorg');
-        $actividad->save();
-
-        return response()->json($actividad, 200);
-    }
-
     public function editarActividadE(Request $request)
     {
         $idA = $request->get('idA');
@@ -87,6 +75,20 @@ class ActividadesController extends Controller
             ->get();
 
         return response()->json($actividades, 200);
+    }
+
+    // REGISTRAR ACTIVIDAD PARA ORGANIZACION
+    public function registrarActividadE(Request $request)
+    {
+        $actividad = new actividad();
+        $actividad->Activi_Nombre = $request->get('nombre');
+        $actividad->controlRemoto = $request->get('cr');
+        $actividad->asistenciaPuerta = $request->get('ap');
+        $actividad->organi_id = session('sesionidorg');
+        $actividad->codigoActividad = $request->get('codigo');
+        $actividad->save();
+
+        return response()->json($actividad, 200);
     }
 
     // MODIFCAR ACTIVIDADES DE CONTROL
