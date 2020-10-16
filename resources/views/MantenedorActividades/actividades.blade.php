@@ -60,7 +60,7 @@
                             <th class="text-center"></th>
                         </tr>
                     </thead>
-                    <tbody id="actividOrga"></tbody>
+                    <tbody id="actividOrga" style="width:100%!important"></tbody>
                 </table>
             </div>
         </div>
@@ -146,6 +146,7 @@
             <div class="modal-body" style="font-size:12px!important">
                 <div class="row">
                     <div class="col-md-12">
+                        <input type="hidden" id="idActiv">
                         <form action="javascript:editarActividadTarea()">
                             <div class="row">
                                 <div class="col-md-6">

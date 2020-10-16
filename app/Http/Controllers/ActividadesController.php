@@ -100,6 +100,7 @@ class ActividadesController extends Controller
         $actividades = DB::table('actividad as a')
             ->leftJoin('captura as cp', 'cp.idActividad', '=', 'a.Activi_id')
             ->select(
+                'a.Activi_id',
                 'a.Activi_Nombre',
                 'a.controlRemoto',
                 'a.asistenciaPuerta',
@@ -112,6 +113,21 @@ class ActividadesController extends Controller
             ->first();
 
         return response()->json($actividades, 200);
+    }
+
+    //REGISTRAR DATOS AL EDITAR
+    public function editarCambios(Request $request)
+    {
+        $idA = $request->get('idA');
+        $actividad = actividad::findOrFail($idA);
+        if ($actividad) {
+            $actividad->codigoActividad = $request->get('codigo');
+            $actividad->controlRemoto = $request->get('cr');
+            $actividad->asistenciaPuerta = $request->get('ap');
+            $actividad->save();
+        }
+
+        return response()->json($actividad, 200);
     }
 
     // MODIFCAR ESTADOS ACTIVIDADES DE CONTROL
