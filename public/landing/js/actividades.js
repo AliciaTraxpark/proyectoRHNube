@@ -202,7 +202,7 @@ function registrarActividadTarea() {
     }
     $.ajax({
         type: "POST",
-        url: "/registrarActvE",
+        url: "/registrarActvO",
         data: {
             nombre: nombre,
             cr: controlRemoto,

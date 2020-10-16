@@ -259,13 +259,13 @@ $("#customSwitch6").on("change.bootstrapSwitch", function (event) {
 // MODAL EDITAR
 function registrarActividadTarea() {
     var idE = $("#v_id").val();
-    var nombre = $("#nombreTarea").val();
+    var idA = $('#empleadoActiv').val();
     $.ajax({
-        type: "GET",
-        url: "/registrarActvE",
+        type: "POST",
+        url: "/registrarAE",
         data: {
             idE: idE,
-            nombre: nombre,
+            idA: idA,
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),

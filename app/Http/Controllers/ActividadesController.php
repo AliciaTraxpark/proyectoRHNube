@@ -115,7 +115,7 @@ class ActividadesController extends Controller
         return response()->json($actividad, 200);
     }
 
-    // ASIGNAR TAREAS A EMPLEADOS
+    // MOSTRAR TAREAS PARA ASIGNAR AL EMPLEADO
 
     public function asignarActividadesE(Request $request)
     {
@@ -129,21 +129,48 @@ class ActividadesController extends Controller
             ->where('ae.idEmpleado', '=', $idEmpleado)
             ->where('a.estado', '=', 1)
             ->get();
-        foreach ($actividadEmpleado as $a) {
-            $actividad = DB::table('actividad as a')
-                ->select('a.Activi_id', 'a.Activi_Nombre')
-                ->where('a.organi_id', '=', session('sesionidorg'))
-                ->where('a.controlRemoto', '=', 1)
-                ->where('a.Activi_id', '!=', $a->Activi_id)
-                ->where('a.estado', '=', 1)
-                ->get();
+        $actividad = DB::table('actividad as a')
+            ->select('a.Activi_id', 'a.Activi_Nombre')
+            ->where('a.organi_id', '=', session('sesionidorg'))
+            ->where('a.controlRemoto', '=', 1)
+            ->where('a.estado', '=', 1)
+            ->get();
+
+        $respuesta = [];
+        for ($index = 0; $index < sizeof($actividad); $index++) {
+            $estado = false;
+            foreach ($actividadEmpleado as $ae) {
+                if ($actividad[$index]->Activi_id == $ae->Activi_id) {
+                    $estado = true;
+                }
+            }
+            if ($estado == false) {
+                array_push($respuesta, array("value" => $actividad[$index]->Activi_id, "text" => $actividad[$index]->Activi_Nombre));
+            }
         }
         // dd(DB::getQueryLog());
-        $respuesta = [];
-        foreach ($actividad as $a) {
-            array_push($respuesta, array("value" => $a->Activi_id, "text" => $a->Activi_Nombre));
-        }
+        // foreach ($actividad as $a) {
+        //     array_push($respuesta, array("value" => $a->Activi_id, "text" => $a->Activi_Nombre));
+        // }
 
         return response()->json($respuesta, 200);
+    }
+
+    // ASIGNAR TAREAS
+    public function registrarActividadEmpleado(Request $request)
+    {
+        $idE = $request->get('idE');
+        $idActividad = $request->get('idA');
+
+        foreach ($idActividad as $idA) {
+            $actividad_empleado = new actividad_empleado();
+            $actividad_empleado->idActividad = $idA;
+            $actividad_empleado->idEmpleado = $idE;
+            $actividad_empleado->estado = 1;
+            $actividad_empleado->eliminacion = 1;
+            $actividad_empleado->save();
+        }
+
+        return response()->json($actividad_empleado, 200);
     }
 }
