@@ -49,6 +49,7 @@
                         <tr>
                             <th class="text-center">#</th>
                             <th class="text-center">Actividad</th>
+                            <th class="text-center">Código</th>
                             <th class="text-center">Control remoto</th>
                             <th class="text-center">Asistencia en puerta</th>
                             <th class="text-center">En uso</th>

@@ -68,6 +68,7 @@ class ActividadesController extends Controller
                 'a.controlRemoto',
                 'a.asistenciaPuerta',
                 'a.eliminacion',
+                DB::raw("CASE WHEN(a.codigoActividad) IS NULL THEN 'No definido' ELSE a.codigoActividad END AS codigoA"),
                 DB::raw("CASE WHEN(cp.idCaptura) IS NULL THEN 'No' ELSE 'Si' END AS respuesta")
             )
             ->where('a.organi_id', '=', session('sesionidorg'))

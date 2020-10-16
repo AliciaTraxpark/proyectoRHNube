@@ -132,6 +132,7 @@ function actividadesOrganizacion() {
             for (let index = 0; index < data.length; index++) {
                 tr += "<tr class=\"text-center\" onclick=\"return cambiarEstadoActividad(" + data[index].Activi_id + ")\"><td>" + (index + 1) + "</td>";
                 tr += "<td>" + data[index].Activi_Nombre + "</td>";
+                tr += "<td>" + data[index].codigoA + "</td>";
                 if (data[index].eliminacion == 0) {
                     if (data[index].controlRemoto == 1) {
                         tr += "<td><div class=\"custom-control custom-switch mb-2\">\
@@ -205,9 +206,11 @@ function actividadesOrganizacion() {
                     } else {
                         tr += "<td style=\"font-size:12px\"><img src=\"/admin/images/borrarH.svg\" height=\"11\" class=\"mr-2\">" + data[index].respuesta + "</td>";
                     }
-                    tr += "<td><a onclick=\"javascript:eliminarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
+                    tr += "<td><a onclick=\"javascript:editarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
+                                 <img src=\"/admin/images/edit.svg\" height=\"15\">\
+                                </a>&nbsp;&nbsp;&nbsp;<a onclick=\"javascript:eliminarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
                                     <img src=\"/admin/images/delete.svg\" height=\"15\">\
-                            </a></td>";
+                                 </a></td>";
                 }
                 tr += "</tr>";
             }
