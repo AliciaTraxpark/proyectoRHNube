@@ -114,4 +114,36 @@ class ActividadesController extends Controller
 
         return response()->json($actividad, 200);
     }
+
+    // ASIGNAR TAREAS A EMPLEADOS
+
+    public function asignarActividadesE(Request $request)
+    {
+        $idEmpleado = $request->get('idEmpleado');
+        // DB::enableQueryLog();
+        $actividadEmpleado = DB::table('actividad as a')
+            ->join('actividad_empleado as ae', 'ae.idActividad', '=', 'a.Activi_id')
+            ->select('a.Activi_id')
+            ->where('a.organi_id', '=', session('sesionidorg'))
+            ->where('a.controlRemoto', '=', 1)
+            ->where('ae.idEmpleado', '=', $idEmpleado)
+            ->where('a.estado', '=', 1)
+            ->get();
+        foreach ($actividadEmpleado as $a) {
+            $actividad = DB::table('actividad as a')
+                ->select('a.Activi_id', 'a.Activi_Nombre')
+                ->where('a.organi_id', '=', session('sesionidorg'))
+                ->where('a.controlRemoto', '=', 1)
+                ->where('a.Activi_id', '!=', $a->Activi_id)
+                ->where('a.estado', '=', 1)
+                ->get();
+        }
+        // dd(DB::getQueryLog());
+        $respuesta = [];
+        foreach ($actividad as $a) {
+            array_push($respuesta, array("value" => $a->Activi_id, "text" => $a->Activi_Nombre));
+        }
+
+        return response()->json($respuesta, 200);
+    }
 }

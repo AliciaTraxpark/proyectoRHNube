@@ -325,7 +325,7 @@ use App\proyecto_empleado;
     }
 
     .flatpickr-calendar {
-        width: 125px!important;
+        width: 125px !important;
     }
 
     .btn-outline-secondary {
@@ -393,9 +393,11 @@ use App\proyecto_empleado;
         cursor: url("../landing/images/cruz1.svg"), auto !important;
 
     }
-    .fc-event-container> a{
-    border: 1px solid #fff;
-}
+
+    .fc-event-container>a {
+        border: 1px solid #fff;
+    }
+
     a:not([href]):not([tabindex]) {
         color: #000;
         cursor: pointer;
@@ -420,25 +422,35 @@ use App\proyecto_empleado;
         max-height: 100px;
         overflow-y: auto;
     }
-    .select2-container--default .select2-selection--multiple .select2-selection__choice{
+
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
         background-color: #52565b;
     }
-    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
+
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
         color: #fdfdfd;
     }
-    .col-lg-10 .select2-container .select2-selection {
-    height: 20px;
-    font-size: 12.2px;
-    overflow-y: scroll;
-}
-.custom-select:disabled {
-            color: #3f3a3a;
-            background-color: #fcfcfc;
-        }
-        .select2-container--default .select2-results__option[aria-selected=true] {
-            background: #ced0d3;
-        }
 
+    .col-lg-10 .select2-container .select2-selection {
+        height: 20px;
+        font-size: 12.2px;
+        overflow-y: scroll;
+    }
+
+    .custom-select:disabled {
+        color: #3f3a3a;
+        background-color: #fcfcfc;
+    }
+
+    .select2-container--default .select2-results__option[aria-selected=true] {
+        background: #ced0d3;
+    }
+
+    .ms-container {
+        background: transparent url('../admin/images/multiple-arrow.png') no-repeat 50% 50%;
+        width: auto;
+        max-width: 370px;
+    }
 </style>
 <div class="row page-title" style="padding-right: 20px;">
     <div class="col-md-7">
@@ -477,41 +489,42 @@ use App\proyecto_empleado;
                             style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
                             class="btn btn-sm btn-primary delete_all" data-url="">Eliminar
                         </button>
-                       {{--  <button class="btn btn-sm btn-primary" id="formNuevoEd"
+                        {{--  <button class="btn btn-sm btn-primary" id="formNuevoEd"
                             style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"> Editar</button> --}}
                         <button class="btn btn-sm btn-primary" id="formNuevoE"
                             style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"> Nuevo</button>
                     </div>
 
-                        <div class="col-md-4" id="filter_global">
-                            <td align="center"><input type="text" class="global_filter form-control
-                                    " id="global_filter"  style="height: 35px; " placeholder="Buscar por...">
-                            </td>
-                        </div>
-                        <div class="col-md-2">
-                            <td align="center">
-                                <select class="form-control" name="select" id="select" style="height: 35.5px;">
-                                    <option value="-1">PERSONALIZADO</option>
-                                    <option value="3">Número Documento</option>
-                                    <option value="4">Nombre</option>
-                                    <option value="5">Apellidos</option>
-                                    <option value="8">Cargo</option>
-                                    <option value="9">Área</option>
-                                </select>
-                            </td>
-                        </div>
+                    <div class="col-md-4" id="filter_global">
+                        <td align="center"><input type="text" class="global_filter form-control
+                                    " id="global_filter" style="height: 35px; " placeholder="Buscar por...">
+                        </td>
+                    </div>
+                    <div class="col-md-2">
+                        <td align="center">
+                            <select class="form-control" name="select" id="select" style="height: 35.5px;">
+                                <option value="-1">PERSONALIZADO</option>
+                                <option value="3">Número Documento</option>
+                                <option value="4">Nombre</option>
+                                <option value="5">Apellidos</option>
+                                <option value="8">Cargo</option>
+                                <option value="9">Área</option>
+                            </select>
+                        </td>
+                    </div>
 
 
                     <div class="col-xl-6">
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label">Área:</label>
                             <div class="col-lg-10">
-                                <select id="selectarea" data-plugin="customselect" class="form-control form-control-sm" multiple="multiple" data-placeholder="Seleccionar áreas">
+                                <select id="selectarea" data-plugin="customselect" class="form-control form-control-sm"
+                                    multiple="multiple" data-placeholder="Seleccionar áreas">
 
                                     @foreach ($area as $areas)
-                                                <option class="" value="{{ $areas->area_id }}">
-                                                    {{ $areas->area_descripcion }}</option>
-                                                @endforeach
+                                    <option class="" value="{{ $areas->area_id }}">
+                                        {{ $areas->area_descripcion }}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
@@ -632,7 +645,8 @@ use App\proyecto_empleado;
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
-                        <h5 class="modal-title" id="myModalLabel" style="font-size: 15px">¿ Desea dar de baja al empleado?</h5>
+                        <h5 class="modal-title" id="myModalLabel" style="font-size: 15px">¿ Desea dar de baja al
+                            empleado?</h5>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -2110,7 +2124,8 @@ use App\proyecto_empleado;
                                             for="simpleinput">Calendario
                                             de empleado:</label>
                                         <div class="col-lg-5">
-                                            <span id="vallidCalend" style="color: red;display:none">Eliga calendario</span>
+                                            <span id="vallidCalend" style="color: red;display:none">Eliga
+                                                calendario</span>
                                             <select name="" id="selectCalendario"
                                                 class="form-control col-lg-6 form-control-sm" style="margin-top: 4px;">
                                                 <option hidden selected>Asignar calendario</option>
@@ -2289,13 +2304,18 @@ use App\proyecto_empleado;
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <div class="col-md-8">
-                                                        <span id="errorSel_re" style="color: #8b3a1e;display:none">Seleccione un horario</span>
-                                                        <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
+                                                        <span id="errorSel_re"
+                                                            style="color: #8b3a1e;display:none">Seleccione un
+                                                            horario</span>
+                                                        <select data-plugin="customselect"
+                                                            class="form-control custom-select custom-select-sm"
                                                             name="selectHorario" id="selectHorario">
                                                             <option hidden selected disabled>Seleccionar horario
                                                             </option>
                                                             @foreach ($horario as $horarios)
-                                                            <option class="" value="{{$horarios->horario_id}}">{{$horarios->horario_descripcion}} <span style="font-size: 11px;font-style: oblique">({{$horarios->horaI}}-{{$horarios->horaF}})</span>
+                                                            <option class="" value="{{$horarios->horario_id}}">
+                                                                {{$horarios->horario_descripcion}} <span
+                                                                    style="font-size: 11px;font-style: oblique">({{$horarios->horaI}}-{{$horarios->horaF}})</span>
                                                             </option>
                                                             @endforeach
                                                         </select>
@@ -2307,18 +2327,25 @@ use App\proyecto_empleado;
                                                     </div>
                                                     <div class="col-md-12"><br>
                                                         <div class="custom-control custom-switch mb-2">
-                                                            <input type="checkbox" class="custom-control-input" id="fueraHSwitch_re">
-                                                            <label class="custom-control-label" for="fueraHSwitch_re">Trabajar fuera de horario</label>
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="fueraHSwitch_re">
+                                                            <label class="custom-control-label"
+                                                                for="fueraHSwitch_re">Trabajar fuera de horario</label>
                                                         </div>
                                                         <div class="custom-control custom-switch mb-2">
-                                                            <input type="checkbox" class="custom-control-input" id="horCompSwitch_re">
-                                                            <label class="custom-control-label" for="horCompSwitch_re">Horario compensable.</label>
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="horCompSwitch_re">
+                                                            <label class="custom-control-label"
+                                                                for="horCompSwitch_re">Horario compensable.</label>
                                                         </div>
                                                         <div class="custom-control custom-switch mb-2">
-                                                            <input type="checkbox" class="custom-control-input" id="horAdicSwitch_re">
-                                                            <label class="custom-control-label" for="horAdicSwitch_re">Permite marcar horas adicionales.</label>
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="horAdicSwitch_re">
+                                                            <label class="custom-control-label"
+                                                                for="horAdicSwitch_re">Permite marcar horas
+                                                                adicionales.</label>
                                                         </div>
-                                                     </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -2329,7 +2356,9 @@ use App\proyecto_empleado;
                                                 <button type="button" class="btn btn-light  btn-sm " style="background: #f3f3f3;
                                                 border-color: #f3f3f3;"
                                                     onclick="$('#horarioAsignar').modal('hide')">Cancelar</button>
-                                                    <button type="button" class="btn btn-primary btn-sm" style="background-color: #183b5d;border-color:#62778c;" onclick="agregarHorarioSe_regis()">Registrar</button>
+                                                <button type="button" class="btn btn-primary btn-sm"
+                                                    style="background-color: #183b5d;border-color:#62778c;"
+                                                    onclick="agregarHorarioSe_regis()">Registrar</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -2345,7 +2374,8 @@ use App\proyecto_empleado;
                                         <div class="modal-header" style="background-color:#163552;">
                                             <h5 class="modal-title" id="myModalLabel"
                                                 style="color:#ffffff;font-size:15px">Asignar horario</h5>
-                                            <button type="button" class="close"  onclick="$('#horarioAgregar').modal('hide')" aria-label="Close">
+                                            <button type="button" class="close"
+                                                onclick="$('#horarioAgregar').modal('hide')" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
@@ -2380,81 +2410,98 @@ use App\proyecto_empleado;
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                   <label for="">Horas obligadas:</label>
-                                                                   <div class="input-group form-control-sm" style="bottom: 4px;
+                                                                    <label for="">Horas obligadas:</label>
+                                                                    <div class="input-group form-control-sm" style="bottom: 4px;
                                                                    padding-left: 0px; padding-right: 0px;">
 
-                                                                <input type="number"  class="form-control form-control-sm" min="1" id="horaOblig" value="8" required>
-                                                                       <div class="input-group-prepend ">
-                                                                        <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px" >Horas</div>
+                                                                        <input type="number"
+                                                                            class="form-control form-control-sm" min="1"
+                                                                            id="horaOblig" value="8" required>
+                                                                        <div class="input-group-prepend ">
+                                                                            <div class="input-group-text form-control-sm"
+                                                                                style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
+                                                                                Horas</div>
                                                                         </div>
-                                                                   </div>
+                                                                    </div>
 
                                                                 </div>
-                                                             </div>
+                                                            </div>
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
                                                                     <label for="">Tolerancia al ingreso(Min):</label>
                                                                     <div class="input-group form-control-sm " style="bottom: 4px;
                                                                     padding-left: 0px; padding-right: 0px;">
-                                                                       <input type="number" value="0"
-                                                                       class="form-control form-control-sm" min="0"
-                                                                       id="toleranciaH" required>
+                                                                        <input type="number" value="0"
+                                                                            class="form-control form-control-sm" min="0"
+                                                                            id="toleranciaH" required>
                                                                         <div class="input-group-prepend  ">
-                                                                         <div class="input-group-text form-control-sm " style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px" >Minutos</div>
-                                                                         </div>
+                                                                            <div class="input-group-text form-control-sm "
+                                                                                style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
+                                                                                Minutos</div>
+                                                                        </div>
                                                                     </div>
 
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                   <label for="">Tolerancia a la salida(Min):</label>
-                                                                   <div class="input-group form-control-sm " style="bottom: 4px;
+                                                                    <label for="">Tolerancia a la salida(Min):</label>
+                                                                    <div class="input-group form-control-sm " style="bottom: 4px;
                                                                    padding-left: 0px; padding-right: 0px;">
-                                                                       <input type="number" value="0" class="form-control form-control-sm" min="0" id="toleranciaSalida" required>
-                                                                       <div class="input-group-prepend  ">
-                                                                        <div class="input-group-text form-control-sm " style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px" >Minutos</div>
+                                                                        <input type="number" value="0"
+                                                                            class="form-control form-control-sm" min="0"
+                                                                            id="toleranciaSalida" required>
+                                                                        <div class="input-group-prepend  ">
+                                                                            <div class="input-group-text form-control-sm "
+                                                                                style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
+                                                                                Minutos</div>
                                                                         </div>
-                                                                   </div>
+                                                                    </div>
                                                                 </div>
-                                                             </div>
+                                                            </div>
 
                                                             <div class="col-md-4" id="divOtrodia" style="display: none">
                                                                 <div class="form-check">
-                                                                   <input type="checkbox"  class="form-check-input" id="otroDCh" checked disabled>
-                                                                   <label class="form-check-label" for="otroDCh" style="margin-top: 2px;">Hora hasta el dia siguiente.</label>
+                                                                    <input type="checkbox" class="form-check-input"
+                                                                        id="otroDCh" checked disabled>
+                                                                    <label class="form-check-label" for="otroDCh"
+                                                                        style="margin-top: 2px;">Hora hasta el dia
+                                                                        siguiente.</label>
                                                                 </div>
-                                                               </div>
-                                                               <div class="col-md-12">
+                                                            </div>
+                                                            <div class="col-md-12">
                                                                 <div class="custom-control custom-switch mb-2">
                                                                     <input type="checkbox" class="custom-control-input"
                                                                         id="SwitchPausa">
                                                                     <label class="custom-control-label"
                                                                         for="SwitchPausa"
-                                                                        style="font-weight: bold;padding-top: 1px">Pausas en el horario</label> &nbsp;
+                                                                        style="font-weight: bold;padding-top: 1px">Pausas
+                                                                        en el horario</label> &nbsp;
 
                                                                 </div>
-                                                               </div>
-                                                               <div id="divPausa" class="col-md-12" style="display: none">
+                                                            </div>
+                                                            <div id="divPausa" class="col-md-12" style="display: none">
                                                                 <div class="col-md-12">
                                                                     <div class="row">
                                                                         <div class="col-md-5">
-                                                                            <label for="" style="font-weight:600">Descripción</label>
+                                                                            <label for=""
+                                                                                style="font-weight:600">Descripción</label>
                                                                         </div>
                                                                         <div class="col-md-3">
-                                                                            <label for="" style="font-weight:600">Inicio pausa(24h)</label>
+                                                                            <label for="" style="font-weight:600">Inicio
+                                                                                pausa(24h)</label>
                                                                         </div>
                                                                         <div class="col-md-3">
-                                                                            <label for="" style="font-weight:600">Fin pausa(24h)</label>
+                                                                            <label for="" style="font-weight:600">Fin
+                                                                                pausa(24h)</label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div id="inputPausa">
 
-                                                            </div>
+                                                                </div>
 
-                                                             </div>
+                                                            </div>
                                                         </div>
                                                 </div>
                                             </div>
@@ -3262,8 +3309,8 @@ use App\proyecto_empleado;
                                 <div class="col-md-1"><br></div>
                             </div>
 
-                            <div id="horarioAsignar_ed" class="modal fade"  role="dialog"
-                                aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                            <div id="horarioAsignar_ed" class="modal fade" role="dialog" aria-labelledby="myModalLabel"
+                                aria-hidden="true" data-backdrop="static">
                                 <div class="modal-dialog  modal-lg d-flex justify-content-center "
                                     style="width:400px;  margin-top: 150px; left: 30px;">
 
@@ -3273,13 +3320,18 @@ use App\proyecto_empleado;
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <div class="col-md-8">
-                                                        <span id=errorSel style="color: #8b3a1e;display:none">Seleccione un horario</span>
-                                                        <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
+                                                        <span id=errorSel style="color: #8b3a1e;display:none">Seleccione
+                                                            un horario</span>
+                                                        <select data-plugin="customselect"
+                                                            class="form-control custom-select custom-select-sm"
                                                             name="selectHorario_ed" id="selectHorario_ed">
                                                             <option hidden selected disabled>Seleccionar horario
                                                             </option>
                                                             @foreach ($horario as $horarios)
-                                                            <option class="" value="{{$horarios->horario_id}}">{{$horarios->horario_descripcion}} <span style="font-size: 11px;font-style: oblique">({{$horarios->horaI}}-{{$horarios->horaF}})</span> </option>
+                                                            <option class="" value="{{$horarios->horario_id}}">
+                                                                {{$horarios->horario_descripcion}} <span
+                                                                    style="font-size: 11px;font-style: oblique">({{$horarios->horaI}}-{{$horarios->horaF}})</span>
+                                                            </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -3290,18 +3342,25 @@ use App\proyecto_empleado;
                                                     </div>
                                                     <div class="col-md-12"><br>
                                                         <div class="custom-control custom-switch mb-2">
-                                                            <input type="checkbox" class="custom-control-input" id="fueraHSwitch">
-                                                            <label class="custom-control-label" for="fueraHSwitch">Trabajar fuera de horario</label>
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="fueraHSwitch">
+                                                            <label class="custom-control-label"
+                                                                for="fueraHSwitch">Trabajar fuera de horario</label>
                                                         </div>
                                                         <div class="custom-control custom-switch mb-2">
-                                                            <input type="checkbox" class="custom-control-input" id="horCompSwitch">
-                                                            <label class="custom-control-label" for="horCompSwitch">Horario compensable.</label>
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="horCompSwitch">
+                                                            <label class="custom-control-label"
+                                                                for="horCompSwitch">Horario compensable.</label>
                                                         </div>
                                                         <div class="custom-control custom-switch mb-2">
-                                                            <input type="checkbox" class="custom-control-input" id="horAdicSwitch">
-                                                            <label class="custom-control-label" for="horAdicSwitch">Permite marcar horas adicionales.</label>
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="horAdicSwitch">
+                                                            <label class="custom-control-label"
+                                                                for="horAdicSwitch">Permite marcar horas
+                                                                adicionales.</label>
                                                         </div>
-                                                     </div>
+                                                    </div>
 
                                                 </div>
 
@@ -3314,15 +3373,17 @@ use App\proyecto_empleado;
                                                 <button type="button" class="btn btn-light  btn-sm " style="background: #f3f3f3;
                                                 border-color: #f3f3f3;"
                                                     onclick="$('#horarioAsignar_ed').modal('hide')">Cancelar</button>
-                                                    <button type="button" class="btn btn-primary btn-sm" style="background-color: #183b5d;border-color:#62778c;" onclick="agregarHorarioSe()">Registrar</button>
+                                                <button type="button" class="btn btn-primary btn-sm"
+                                                    style="background-color: #183b5d;border-color:#62778c;"
+                                                    onclick="agregarHorarioSe()">Registrar</button>
                                                 </form>
                                             </div>
                                         </div>
                                     </div><!-- /.modal-content -->
                                 </div><!-- /.modal-dialog -->
                             </div><!-- /.modal -->
-                            <div id="horarioAgregar_ed" class="modal fade"  role="dialog"
-                                aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                            <div id="horarioAgregar_ed" class="modal fade" role="dialog" aria-labelledby="myModalLabel"
+                                aria-hidden="true" data-backdrop="static">
                                 <div class="modal-dialog  modal-lg d-flex justify-content-center "
                                     style="width: 600px;">
 
@@ -3330,8 +3391,9 @@ use App\proyecto_empleado;
                                         <div class="modal-header" style="background-color:#163552;">
                                             <h5 class="modal-title" id="myModalLabel"
                                                 style="color:#ffffff;font-size:15px">Asignar horario</h5>
-                                            <button type="button" class="close" onclick="$('#horarioAgregar_ed').modal('hide')" aria-label="Close">
-                                                <span  aria-hidden="true">&times;</span>
+                                            <button type="button" class="close"
+                                                onclick="$('#horarioAgregar_ed').modal('hide')" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body" style="font-size:12px!important">
@@ -3369,51 +3431,65 @@ use App\proyecto_empleado;
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                   <label for="">Horas obligadas:</label>
-                                                                   <div class="input-group form-control-sm" style="bottom: 4px;
+                                                                    <label for="">Horas obligadas:</label>
+                                                                    <div class="input-group form-control-sm" style="bottom: 4px;
                                                                    padding-left: 0px; padding-right: 0px;">
 
-                                                                <input type="number"  class="form-control form-control-sm" min="1" id="horaOblig_ed" value="8" required>
-                                                                       <div class="input-group-prepend ">
-                                                                        <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px" >Horas</div>
+                                                                        <input type="number"
+                                                                            class="form-control form-control-sm" min="1"
+                                                                            id="horaOblig_ed" value="8" required>
+                                                                        <div class="input-group-prepend ">
+                                                                            <div class="input-group-text form-control-sm"
+                                                                                style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
+                                                                                Horas</div>
                                                                         </div>
-                                                                   </div>
-
-                                                                </div>
-                                                             </div>
-                                                            <div class="col-md-4">
-                                                                <div class="form-group">
-                                                                    <label for="">Tolerancia al ingreso(Min):</label>
-                                                                    <div class="input-group form-control-sm " style="bottom: 4px;
-                                                                    padding-left: 0px; padding-right: 0px;">
-                                                                       <input type="number" value="0"
-                                                                       class="form-control form-control-sm" min="0"
-                                                                       id="toleranciaH_ed" required>
-                                                                        <div class="input-group-prepend  ">
-                                                                         <div class="input-group-text form-control-sm " style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px" >Minutos</div>
-                                                                         </div>
                                                                     </div>
 
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                   <label for="">Tolerancia a la salida(Min):</label>
-                                                                   <div class="input-group form-control-sm " style="bottom: 4px;
-                                                                   padding-left: 0px; padding-right: 0px;">
-                                                                       <input type="number" value="0" class="form-control form-control-sm" min="0" id="toleranciaSalida_ed" required>
-                                                                       <div class="input-group-prepend  ">
-                                                                        <div class="input-group-text form-control-sm " style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px" >Minutos</div>
+                                                                    <label for="">Tolerancia al ingreso(Min):</label>
+                                                                    <div class="input-group form-control-sm " style="bottom: 4px;
+                                                                    padding-left: 0px; padding-right: 0px;">
+                                                                        <input type="number" value="0"
+                                                                            class="form-control form-control-sm" min="0"
+                                                                            id="toleranciaH_ed" required>
+                                                                        <div class="input-group-prepend  ">
+                                                                            <div class="input-group-text form-control-sm "
+                                                                                style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
+                                                                                Minutos</div>
                                                                         </div>
-                                                                   </div>
-                                                                </div>
-                                                             </div>
+                                                                    </div>
 
-                                                            <div class="col-md-4" id="divOtrodia_ed" style="display: none">
-                                                             <div class="form-check">
-                                                                <input type="checkbox"  class="form-check-input" id="otroDC_ed" checked disabled>
-                                                                <label class="form-check-label" for="otroDC_ed" style="margin-top: 2px;">Hora hasta el dia siguiente.</label>
-                                                             </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="">Tolerancia a la salida(Min):</label>
+                                                                    <div class="input-group form-control-sm " style="bottom: 4px;
+                                                                   padding-left: 0px; padding-right: 0px;">
+                                                                        <input type="number" value="0"
+                                                                            class="form-control form-control-sm" min="0"
+                                                                            id="toleranciaSalida_ed" required>
+                                                                        <div class="input-group-prepend  ">
+                                                                            <div class="input-group-text form-control-sm "
+                                                                                style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
+                                                                                Minutos</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-4" id="divOtrodia_ed"
+                                                                style="display: none">
+                                                                <div class="form-check">
+                                                                    <input type="checkbox" class="form-check-input"
+                                                                        id="otroDC_ed" checked disabled>
+                                                                    <label class="form-check-label" for="otroDC_ed"
+                                                                        style="margin-top: 2px;">Hora hasta el dia
+                                                                        siguiente.</label>
+                                                                </div>
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <div class="custom-control custom-switch mb-2">
@@ -3421,29 +3497,34 @@ use App\proyecto_empleado;
                                                                         id="SwitchPausa_ed">
                                                                     <label class="custom-control-label"
                                                                         for="SwitchPausa_ed"
-                                                                        style="font-weight: bold;padding-top: 1px">Pausas en el horario</label> &nbsp;
+                                                                        style="font-weight: bold;padding-top: 1px">Pausas
+                                                                        en el horario</label> &nbsp;
 
                                                                 </div>
-                                                               </div>
-                                                               <div id="divPausa_ed" class="col-md-12" style="display: none">
+                                                            </div>
+                                                            <div id="divPausa_ed" class="col-md-12"
+                                                                style="display: none">
                                                                 <div class="col-md-12">
                                                                     <div class="row">
                                                                         <div class="col-md-5">
-                                                                            <label for="" style="font-weight:600">Descripción</label>
+                                                                            <label for=""
+                                                                                style="font-weight:600">Descripción</label>
                                                                         </div>
                                                                         <div class="col-md-3">
-                                                                            <label for="" style="font-weight:600">Inicio pausa(24h)</label>
+                                                                            <label for="" style="font-weight:600">Inicio
+                                                                                pausa(24h)</label>
                                                                         </div>
                                                                         <div class="col-md-3">
-                                                                            <label for="" style="font-weight:600">Fin pausa(24h)</label>
+                                                                            <label for="" style="font-weight:600">Fin
+                                                                                pausa(24h)</label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div id="inputPausa_ed">
 
-                                                            </div>
+                                                                </div>
 
-                                                             </div>
+                                                            </div>
 
 
                                                         </div>
@@ -3491,15 +3572,15 @@ use App\proyecto_empleado;
                                             </div>
                                         </div>
                                         <div class="card-body border p-2" id="bodyModoTarea">
-                                            {{-- <div class="row">
+                                            <div class="row">
                                                 <div class="col-xl-12 text-right">
                                                     <button type="button" class="btn btn-sm mt-1"
                                                         style="background-color: #163552;"
-                                                        onclick="$('#actividadTarea').modal()">+ Nueva
-                                                        Actividad
+                                                        onclick="$('#actividadTarea').modal();javascript:actividadOrganizacion()">+
+                                                        Nueva Actividad
                                                     </button>
                                                 </div>
-                                            </div> --}}
+                                            </div>
                                             <div class="row pt-3">
                                                 <div class="col-xl-12 col-sm-12">
                                                     <div class="table-responsive-xl scroll">
@@ -3560,15 +3641,12 @@ use App\proyecto_empleado;
                                         <div class="modal-body" style="font-size:12px!important">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <form action="javascript:registrarActividadTarea()">
+                                                    <form action="javascript:registrarActividadTarea()"  id="formActvidades">
                                                         <div class="row">
-                                                            <div class="col-md-12">
-                                                                <div class="form-group">
-                                                                    <label for="">Nombre:</label>
-                                                                    <input type="text"
-                                                                        class="form-control form-control-sm"
-                                                                        id="nombreTarea" required>
-                                                                </div>
+                                                            <div class="col-md-12 text-center">
+                                                                <select multiple="multiple" class="multi-select"
+                                                                    id="empleadoActiv" data-plugin="multiselect"
+                                                                    data-selectable-optgroup="true" required title="Seleccionar actividad."></select>
                                                             </div>
                                                         </div>
                                                 </div>

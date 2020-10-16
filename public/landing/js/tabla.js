@@ -284,7 +284,6 @@ function RefreshTablaEmpleadoArea() {
                         "</div></td></tr>";
                 }
             }
-            console.log(tbody);
             $("#tbodyr").html(tbody);
             $("#tablaEmpleado").DataTable({
                 scrollX: true,
@@ -652,7 +651,6 @@ function RefreshTablaEmpleado() {
                         "</div></td></tr>";
                 }
             }
-            console.log(tbody);
             $("#tbodyr").html(tbody);
             $("#tablaEmpleado").DataTable({
                 scrollX: true,

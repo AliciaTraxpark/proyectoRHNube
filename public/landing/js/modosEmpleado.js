@@ -129,6 +129,76 @@ function actividadEmpVer() {
         error: function () { },
     });
 }
+// INICIALIZAR PLUGIN DE MULTI SELECT
+$('#empleadoActiv').multiSelect();
+function actividadOrganizacion() {
+    var idE = $("#v_id").val();
+    $('#empleadoActiv').empty();
+    $.ajax({
+        async: false,
+        type: "GET",
+        url: "/actividadOrga",
+        data: {
+            idEmpleado: idE
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            console.log(data);
+            var option = "";
+            $.each(data, function (i, items) {
+                console.log(items.value);
+                option += '<option value="' + items.value + '">' + items.text + '</option>';
+            });
+            console.log(option);
+            $('#empleadoActiv').html(option);
+            $('#empleadoActiv').multiSelect('refresh');
+        },
+        error: function () { },
+    });
+}
+$('#empleadoActiv').on("change", function () {
+    console.log($(this).val().length);
+});
+// VALIDAR SELCT DE ACTIVIDADES
+// function validarActividades(){
+//     if($('#empleadoActiv').val().length == 0){
+//         return false;
+//     }
+// }
+$('#formActvidades').attr('novalidate', true);
+
+$('#formActvidades').submit(function (e) {
+    e.preventDefault();
+    if ($('#empleadoActiv').val().length == 0) {
+        $.notifyClose();
+        $.notify({
+            message: '\nSeleccionar Actividad',
+            icon: 'landing/images/bell.svg',
+        }, {
+            element: $("#actividadTarea"),
+            position: "fixed",
+            icon_type: 'image',
+            placement: {
+                from: "top",
+                align: "center",
+            },
+            allow_dismiss: true,
+            newest_on_top: true,
+            delay: 6000,
+            template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                '<span data-notify="title">{1}</span> ' +
+                '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                '</div>',
+            spacing: 35
+        });
+        return;
+    }
+    this.submit();
+});
 // ***********************************
 $("#customSwitch1").prop("checked", true);
 $("#bodyModoTarea").show();
