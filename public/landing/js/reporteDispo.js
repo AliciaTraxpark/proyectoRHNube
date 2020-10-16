@@ -12,8 +12,8 @@ var fechaValue = $("#fechaSelec").flatpickr({
   $(function () {
     f = moment().format("YYYY-MM-DD");
     fechaValue.setDate(f);
-   /*  $('#tablaReport').DataTable().ajax.reload(); */
-    cargartabla(f);
+    $( "#fechaInput" ).change();
+
   });
 function cargartabla (fecha) {
  console.log(fecha);
@@ -21,7 +21,7 @@ function cargartabla (fecha) {
 
 
     $("#tablaReport").DataTable({
-        
+
         "destroy": true,
         "searching": true,
         /* "lengthChange": false,
@@ -141,14 +141,10 @@ function cargartabla (fecha) {
     }).draw();
 };
 
-/* $(function () {
-    f = $("#fechaInput").val();
-    $("#fechaInput").on("change", alert(f));
-  });
- */
+
 function cambiarF(){
     f1 = $("#fechaInput").val();
     f2=moment(f1).format("YYYY-MM-DD");
-
+    console.log(f2);
     cargartabla(f2);
 }

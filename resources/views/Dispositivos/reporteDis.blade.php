@@ -3,12 +3,14 @@
 @section('css')
     <!-- Plugin css  CALENDAR-->
 
-
+    <link href="{{URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')}}" rel="stylesheet" />
     <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
-
+    <link href="{{URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')}}" rel="stylesheet"
+    type="text/css" />
+    <link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
@@ -50,9 +52,7 @@
         .select2-container--default .select2-selection--multiple .select2-selection__choice {
             background-color: #52565b;
         }
-        .flatpickr-calendar{
-        width: 240px!important;
-         }
+
         .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
             color: #fdfdfd;
         }
