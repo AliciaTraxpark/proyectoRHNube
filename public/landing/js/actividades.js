@@ -38,6 +38,35 @@ function tablaActividades() {
         }
     });
 }
+function editarActividad(id) {
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/editarA",
+        data: {
+            idA: id
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            $('#e_nombreTarea').val(data.Activi_Nombre);
+            $('#e_codigoTarea').val(data.codigoActividad);
+            if (data.controlRemoto === 1) {
+                $('#e_customCR').prop("checked", true);
+            } else {
+                $('#e_customCR').prop("checked", false);
+            }
+            if (data.asistenciaPuerta === 1) {
+                $('#e_customAP').prop("checked", true);
+            } else {
+                $('#e_customAP').prop("checked", false);
+            }
+        },
+        error: function () { },
+    });
+    $('#editactividadTarea').modal();
+}
 function eliminarActividad(id) {
     alertify
         .confirm("¿Desea eliminar actividad?", function (
@@ -322,8 +351,13 @@ function cambiarEstadoParaControles(id, valor, control) {
 }
 function limpiarModo() {
     $('#nombreTarea').val("");
+    $('#codigoTarea').val("");
     $('#customCR').prop("checked", false);
     $('#customAP').prop("checked", false);
+    $('#e_nombreTarea').val("");
+    $('#e_codigoTarea').val("");
+    $('#e_customCR').prop("checked", false);
+    $('#e_customAP').prop("checked", false);
 }
 
 function cambiarEstadoActividad(id) {

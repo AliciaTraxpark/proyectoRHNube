@@ -31,6 +31,10 @@
         margin: 0 auto !important;
         width: 100% !important;
     }
+
+    .form-control:disabled {
+        background-color: #fcfcfc;
+    }
 </style>
 <div class="row pr-4">
     <div class="col-xl-12 text-right">
@@ -101,10 +105,76 @@
                                             style="font-weight: bold">Control Remoto</label>
                                     </div>
                                 </div>
-                                <div class="col-md-6 text-right">
+                                <div class="col-md-6 text-left">
                                     <div class="custom-control custom-switch mb-2">
                                         <input type="checkbox" class="custom-control-input" id="customAP">
                                         <label class="custom-control-label" for="customAP"
+                                            style="font-weight: bold">Asistencia en Puerta</label>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                onclick="javascript:limpiarModo()">Cancelar</button>
+                            <button type="submit" name="" style="background-color: #163552;"
+                                class="btn btn-sm ">Guardar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div id="editactividadTarea" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editactividadTarea"
+    aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 550px;">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Editar Actividad
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-size:12px!important">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="javascript:editarActividadTarea()">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Nombre:</label>
+                                        <input type="text" class="form-control form-control-sm" id="e_nombreTarea"
+                                            maxlength="40" required disabled>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Código:</label>
+                                        <input type="text" class="form-control form-control-sm" id="e_codigoTarea"
+                                            maxlength="40">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 text-left">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="e_customCR">
+                                        <label class="custom-control-label" for="e_customCR"
+                                            style="font-weight: bold">Control Remoto</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 text-left">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="e_customAP">
+                                        <label class="custom-control-label" for="e_customAP"
                                             style="font-weight: bold">Asistencia en Puerta</label>
                                     </div>
                                 </div>

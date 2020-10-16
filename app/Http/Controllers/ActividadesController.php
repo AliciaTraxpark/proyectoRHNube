@@ -92,7 +92,29 @@ class ActividadesController extends Controller
         return response()->json($actividad, 200);
     }
 
-    // MODIFCAR ACTIVIDADES DE CONTROL
+    // EDITAR ACTIVIDAD
+
+    public function editarActividad(Request $request)
+    {
+        $idA = $request->get('idA');
+        $actividades = DB::table('actividad as a')
+            ->leftJoin('captura as cp', 'cp.idActividad', '=', 'a.Activi_id')
+            ->select(
+                'a.Activi_Nombre',
+                'a.controlRemoto',
+                'a.asistenciaPuerta',
+                'a.codigoActividad'
+            )
+            ->where('a.organi_id', '=', session('sesionidorg'))
+            ->where('a.Activi_id', '=', $idA)
+            ->where('a.estado', '=', 1)
+            ->get()
+            ->first();
+
+        return response()->json($actividades, 200);
+    }
+
+    // MODIFCAR ESTADOS ACTIVIDADES DE CONTROL
 
     public function cambiarEstadoActividadControl(Request $request)
     {

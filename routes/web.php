@@ -213,6 +213,7 @@ Route::post('/estadoActividadControl', 'ActividadesController@cambiarEstadoActiv
 Route::get('/estadoActividad', 'ActividadesController@cambiarEstadoActividad');
 Route::get('/actividadOrga', 'ActividadesController@asignarActividadesE');
 Route::post('/registrarAE', 'ActividadesController@registrarActividadEmpleado');
+Route::post('/editarA', 'ActividadesController@editarActividad');
 //carga masiva de fotos
 Route::post('/subirfoto', 'CargaMasivaFotoController@subirfoto');
 
