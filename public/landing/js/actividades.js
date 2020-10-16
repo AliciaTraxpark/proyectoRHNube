@@ -3,7 +3,7 @@ function tablaActividades() {
         scrollX: true,
         responsive: true,
         retrieve: true,
-        "searching": false,
+        "searching": true,
         "lengthChange": false,
         scrollCollapse: false,
         "pageLength": 30,
@@ -312,7 +312,46 @@ function actividadesOrganizacion() {
     });
 }
 actividadesOrganizacion();
+function recuperarActividad(id) {
+    $.ajax({
+        type: "GET",
+        url: "/recuperarA",
+        data: {
+            id: id
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            $.notifyClose();
+            $.notify(
+                {
+                    message: "\nActividad recuperada.",
+                    icon: "admin/images/checked.svg",
+                },
+                {
+                    position: "fixed",
+                    icon_type: "image",
+                    newest_on_top: true,
+                    delay: 5000,
+                    template:
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        "</div>",
+                    spacing: 35,
+                }
+            );
+            limpiarModo();
+            actividadesOrganizacion();
+            $('#regactividadTarea').modal('toggle');
+        },
+        error: function () { },
+    });
 
+}
 function registrarActividadTarea() {
     var nombre = $("#nombreTarea").val();
     var codigo = $("#codigoTarea").val();
@@ -347,7 +386,7 @@ function registrarActividadTarea() {
                             e
                         ) {
                             if (e) {
-                                editarEstadoActividadReg(idA, valor);
+                                recuperarActividad(data.actividad.Activi_id);
                             }
                         })
                         .setting({
@@ -363,7 +402,6 @@ function registrarActividadTarea() {
                             closable: false,
                             transition: "zoom",
                             oncancel: function (closeEvent) {
-                                actividad_empleado();
                             },
                         });
                 } else {

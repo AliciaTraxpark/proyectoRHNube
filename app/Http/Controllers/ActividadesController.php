@@ -173,6 +173,19 @@ class ActividadesController extends Controller
         return response()->json($actividad, 200);
     }
 
+    //RECUPERAR ACTIVIDAD
+    public function recuperarActividad(Request $request)
+    {
+        $idActividad = $request->get('id');
+        $actividad = actividad::findOrFail($idActividad);
+        if ($actividad) {
+            $actividad->estado = 1;
+            $actividad->save();
+        }
+
+        return response()->json($actividad, 200);
+    }
+
     // MOSTRAR TAREAS PARA ASIGNAR AL EMPLEADO
 
     public function asignarActividadesE(Request $request)
