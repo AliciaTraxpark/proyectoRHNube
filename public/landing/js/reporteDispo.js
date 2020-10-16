@@ -94,7 +94,11 @@ function cargartabla (fecha) {
             {
                 data: "marcaMov_fecha",
                 "render": function (data, type, row) {
-                   return moment(row.marcaMov_fecha).format("HH:mm:ss");
+                    if(row.marcaMov_fecha!=null || row.marcaMov_fecha!=null ){
+                   return moment(row.marcaMov_fecha).format("HH:mm:ss");}
+                   else{
+                       return 'No tiene entrada';
+                   }
                 }
             },
            /*  {
@@ -108,19 +112,24 @@ function cargartabla (fecha) {
                 "render": function (data, type, row) {
                     tfinal=moment(row.final);
                     tInicio=moment(row.marcaMov_fecha);
-                   if(tfinal>tInicio){
+                    if(row.marcaMov_fecha!=null || row.marcaMov_fecha!=null ){
+                        if(tfinal>=tInicio){
 
-                    return moment(row.final).format("HH:mm:ss");
-                   }
-                   else{
-                       return 'No tiene salida';
-                   }
+                            return moment(row.final).format("HH:mm:ss");
+                           }
+                           else{
+                               return 'No tiene salida';
+                           }
+                    } else{
+                        return moment(row.final).format("HH:mm:ss");
+                    }
+
                 }},
             { data: "final" ,
             "render": function (data, type, row) {
                 tfinal=moment(row.final);
                     tInicio=moment(row.marcaMov_fecha);
-                    if(tfinal>tInicio){
+                    if(tfinal>=tInicio){
                 tiempo=tfinal-tInicio;
                /*  return moment(tiempo,"HH:mm:ss");  */
 

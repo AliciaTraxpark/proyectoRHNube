@@ -179,8 +179,11 @@ class dispositivosController extends Controller
         ->whereMonth('marcaMov_fecha',$mes)
         ->whereDay('marcaMov_fecha',$dia) */
         ->whereDate('marcaMov_fecha',$fecha)
-    
-     ->groupBy('marcaMov_id')
+        ->orwhere(function($query) use ($fecha) {
+            $query->where('marcaMov_fecha', null)
+            ->whereDate('marcaMov_salida',$fecha);
+        })
+
      ->where('marcm.organi_id','=',session('sesionidorg'))->get() ;
 
      /* $marcaciones1=$marcaciones->addSelect(DB::raw('(select marc2.marcaMov_fecha from marcacion_movil as marc2
