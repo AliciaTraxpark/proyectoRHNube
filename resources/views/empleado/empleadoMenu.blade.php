@@ -3634,9 +3634,6 @@ use App\proyecto_empleado;
                                             <h5 class="modal-title" id="myModalLabel"
                                                 style="color:#ffffff;font-size:15px">Asignar Actividad
                                             </h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
                                         </div>
                                         <div class="modal-body" style="font-size:12px!important">
                                             <div class="row">

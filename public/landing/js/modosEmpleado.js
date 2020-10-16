@@ -130,7 +130,12 @@ function actividadEmpVer() {
     });
 }
 // INICIALIZAR PLUGIN DE MULTI SELECT
-$('#empleadoActiv').multiSelect();
+$('#empleadoActiv').multiSelect({
+    selectableHeader: "<div class='custom-header' style=\"color:#163552;font-size:14px;font-weight: bold;border-top-left-radius: 5px;border-top-right-radius: 5px;\">\
+    <img src=\"landing/images/2143150.png\" class=\"mr-2\" height=\"15\"/>Actividades</div>",
+    selectionHeader: "<div class='custom-header' style=\"color:#163552;font-size:14px;font-weight: bold;border-top-left-radius: 5px;border-top-right-radius: 5px;\">\
+    <img src=\"landing/images/tick (4).svg\" class=\"mr-2\" height=\"15\"/>Asignar</div>",
+});
 function actividadOrganizacion() {
     var idE = $("#v_id").val();
     $('#empleadoActiv').empty();
@@ -158,15 +163,6 @@ function actividadOrganizacion() {
         error: function () { },
     });
 }
-$('#empleadoActiv').on("change", function () {
-    console.log($(this).val().length);
-});
-// VALIDAR SELCT DE ACTIVIDADES
-// function validarActividades(){
-//     if($('#empleadoActiv').val().length == 0){
-//         return false;
-//     }
-// }
 $('#formActvidades').attr('novalidate', true);
 
 $('#formActvidades').submit(function (e) {
