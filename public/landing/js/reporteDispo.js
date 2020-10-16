@@ -95,7 +95,7 @@ function cargartabla (fecha) {
                 data: "marcaMov_fecha",
                 "render": function (data, type, row) {
                     if(row.marcaMov_fecha!=null || row.marcaMov_fecha!=null ){
-                        return  '<span class="badge badge-soft-secondary"><img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>'+ moment(row.marcaMov_fecha).format("HH:mm:ss")+'</span>';
+                        return  '<img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>'+ moment(row.marcaMov_fecha).format("HH:mm:ss")+'';
                    }
                    else{
                        return '<span class="badge badge-soft-warning"><img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>No tiene entrada</span> ';
@@ -116,13 +116,13 @@ function cargartabla (fecha) {
                     if(row.marcaMov_fecha!=null || row.marcaMov_fecha!=null ){
                         if(tfinal>=tInicio){
 
-                            return  '<span class="badge badge-soft-secondary"><img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>'+ moment(row.final).format("HH:mm:ss")+'</span>';
+                            return  '<img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>'+ moment(row.final).format("HH:mm:ss")+'';
                            }
                            else{
                                return  '<span class="badge badge-soft-secondary"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>No tiene salida</span>';
                            }
                     } else{
-                        return  '<span class="badge badge-soft-secondary"><img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>'+ moment(row.final).format("HH:mm:ss")+'</span>';
+                        return  '<img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>'+ moment(row.final).format("HH:mm:ss")+'';
                     }
 
                 }},
