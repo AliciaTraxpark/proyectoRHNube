@@ -196,20 +196,12 @@ $('#formActvidades').submit(function (e) {
     this.submit();
 });
 // ***********************************
-$("#customSwitch1").prop("checked", true);
 $("#bodyModoTarea").show();
 $("#customSwitch3").prop("checked", true);
 $("#regbodyModoTarea").show();
 $("#customSwitch5").prop("checked", true);
 $("#bodyModoTarea_ver").show();
-$("#customSwitch1").on("change.bootstrapSwitch", function (event) {
-    if (event.target.checked == true) {
-        $("#bodyModoTarea").show();
-        actividadEmp();
-    } else {
-        $("#bodyModoTarea").hide();
-    }
-});
+
 $("#customSwitch3").on("change.bootstrapSwitch", function (event) {
     if (event.target.checked == true) {
         $("#regbodyModoTarea").show();

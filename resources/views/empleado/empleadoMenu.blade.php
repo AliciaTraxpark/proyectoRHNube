@@ -2747,7 +2747,7 @@ use App\proyecto_empleado;
                         <li><a href="#swF-default-step-3">Foto</a></li>
                         <li><a href="#sw-default-step-4">Calendario</a></li>
                         <li><a href="#sw-default-step-5">Horario</a></li>
-                        <li><a href="#sw-default-step-6">Modos de Control</a></li>
+                        <li><a href="#sw-default-step-6">Actividades</a></li>
                         <li><a href="#sw-default-step-7">Dispositivo</a></li>
                     </ul>
                     <input type="hidden" id="estadoP" value="false">
@@ -3559,20 +3559,7 @@ use App\proyecto_empleado;
                             <div class="row">
                                 <div class="col-xl-12">
                                     <div class="card">
-                                        <div class="card-header">
-                                            <div class="row pb-1 pl-2">
-                                                <div class="col">
-                                                    <div class="custom-control custom-switch mb-2">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="customSwitch1">
-                                                        <label class="custom-control-label" for="customSwitch1"
-                                                            style="font-weight: bold">Modo Control
-                                                            Remoto</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body border p-2" id="bodyModoTarea">
+                                        <div class="card-body p-2">
                                             <div class="row">
                                                 <div class="col-xl-12 text-right">
                                                     <button type="button" class="btn btn-sm mt-1"
