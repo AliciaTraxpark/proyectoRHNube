@@ -81,6 +81,10 @@ class ActividadesController extends Controller
     // REGISTRAR ACTIVIDAD PARA ORGANIZACION
     public function registrarActividadE(Request $request)
     {
+        $actividadBuscar = actividad::where('Activi_Nombre', '=', $request->get('nombre'))->where('organi_id', '=', session('sesionidorg'))->get()->first();
+        if ($actividadBuscar) {
+            return response()->json(array("estado" => 1, "actividad" => $actividadBuscar), 200);
+        }
         $actividad = new actividad();
         $actividad->Activi_Nombre = $request->get('nombre');
         $actividad->controlRemoto = $request->get('cr');
