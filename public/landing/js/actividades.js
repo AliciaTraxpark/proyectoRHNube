@@ -3,7 +3,7 @@ function tablaActividades() {
         scrollX: true,
         responsive: true,
         retrieve: true,
-        "searching": true,
+        "searching": false,
         "lengthChange": false,
         scrollCollapse: false,
         "pageLength": 30,
