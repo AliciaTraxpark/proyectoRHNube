@@ -85,6 +85,10 @@ class ActividadesController extends Controller
         if ($actividadBuscar) {
             return response()->json(array("estado" => 1, "actividad" => $actividadBuscar), 200);
         }
+        $actividadB = actividad::where('codigoActividad', '=', $request->get('codigo'))->where('organi_id', '=', session('sesionidorg'))->get()->first();
+        if ($actividadB) {
+            return response()->json(array("estado" => 0, "actividad" => $actividadB), 200);
+        }
         $actividad = new actividad();
         $actividad->Activi_Nombre = $request->get('nombre');
         $actividad->controlRemoto = $request->get('cr');

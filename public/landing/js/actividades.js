@@ -379,7 +379,6 @@ function registrarActividadTarea() {
         },
         success: function (data) {
             if (data.estado === 1) {
-                console.log(data.actividad.Activi_Nombre);
                 if (data.actividad.estado == 0) {
                     alertify
                         .confirm("Ya existe una actividad inactiva con este nombre. ¿Desea recuperarla si o no?", function (
@@ -435,30 +434,87 @@ function registrarActividadTarea() {
                     );
                 }
             } else {
-                limpiarModo();
-                actividadesOrganizacion();
-                $('#regactividadTarea').modal('toggle');
-                $.notifyClose();
-                $.notify(
-                    {
-                        message: "\nActividad registrada.",
-                        icon: "admin/images/checked.svg",
-                    },
-                    {
-                        position: "fixed",
-                        icon_type: "image",
-                        newest_on_top: true,
-                        delay: 5000,
-                        template:
-                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                            '<span data-notify="title">{1}</span> ' +
-                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                            "</div>",
-                        spacing: 35,
+                if (data.estado === 0) {
+                    if (data.actividad.estado == 0) {
+                        alertify
+                            .confirm("Ya existe una actividad inactiva con este código. ¿Desea recuperarla si o no?", function (
+                                e
+                            ) {
+                                if (e) {
+                                    recuperarActividad(data.actividad.Activi_id);
+                                }
+                            })
+                            .setting({
+                                title: "Modificar Actividad",
+                                labels: {
+                                    ok: "Si",
+                                    cancel: "No",
+                                },
+                                modal: true,
+                                startMaximized: false,
+                                reverseButtons: true,
+                                resizable: false,
+                                closable: false,
+                                transition: "zoom",
+                                oncancel: function (closeEvent) {
+                                },
+                            });
+                    } else {
+                        $.notifyClose();
+                        $.notify(
+                            {
+                                message:
+                                    "\nYa existe una actividad con este código.",
+                                icon: "admin/images/warning.svg",
+                            },
+                            {
+                                element: $('#regactividadTarea'),
+                                position: "fixed",
+                                mouse_over: "pause",
+                                placement: {
+                                    from: "top",
+                                    align: "center",
+                                },
+                                icon_type: "image",
+                                newest_on_top: true,
+                                delay: 2000,
+                                template:
+                                    '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                    "</div>",
+                                spacing: 35,
+                            }
+                        );
                     }
-                );
+                } else {
+                    limpiarModo();
+                    actividadesOrganizacion();
+                    $('#regactividadTarea').modal('toggle');
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message: "\nActividad registrada.",
+                            icon: "admin/images/checked.svg",
+                        },
+                        {
+                            position: "fixed",
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 5000,
+                            template:
+                                '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
+                }
             }
         },
         error: function () { },
