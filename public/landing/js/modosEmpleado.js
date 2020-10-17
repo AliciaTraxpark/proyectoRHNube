@@ -545,55 +545,55 @@ function editarEstadoActividad(id, estado, idE) {
 // FUNCION PRINCIAPL PARA EDITAR NOMBRE Y ESTADO - MODAL REGISTRAR
 function RegeditarActE(idA) {
     var OriginalContent = $("#idActReg" + idA).val();
-    $("#tdActReg" + idA).on("click", function () {
-        $(this).addClass("editable");
-        $(this).html(
-            '<input type="text" style="border-radius: 5px;border: 2px solid #8d93ab;" maxlength="15" />'
-        );
-        $(this).children().first().focus();
-        $(this)
-            .children()
-            .first()
-            .keypress(function (e) {
-                if (e.which == 13) {
-                    var newContent = $(this).val();
-                    $(this).parent().text(newContent);
-                    $(this).parent().removeClass("editable");
-                    alertify
-                        .confirm(
-                            "¿Desea modificar nombre de la actividad?",
-                            function (e) {
-                                if (e) {
-                                    editarActividadReg(idA, newContent);
-                                }
-                            }
-                        )
-                        .setting({
-                            title: "Modificar Actividad",
-                            labels: {
-                                ok: "Aceptar",
-                                cancel: "Cancelar",
-                            },
-                            modal: true,
-                            startMaximized: false,
-                            reverseButtons: true,
-                            resizable: false,
-                            closable: false,
-                            transition: "zoom",
-                            oncancel: function (closeEvent) {
-                                actividad_empleado();
-                            },
-                        });
-                }
-            });
+    // $("#tdActReg" + idA).on("click", function () {
+    //     $(this).addClass("editable");
+    //     $(this).html(
+    //         '<input type="text" style="border-radius: 5px;border: 2px solid #8d93ab;" maxlength="15" />'
+    //     );
+    //     $(this).children().first().focus();
+    //     $(this)
+    //         .children()
+    //         .first()
+    //         .keypress(function (e) {
+    //             if (e.which == 13) {
+    //                 var newContent = $(this).val();
+    //                 $(this).parent().text(newContent);
+    //                 $(this).parent().removeClass("editable");
+    //                 alertify
+    //                     .confirm(
+    //                         "¿Desea modificar nombre de la actividad?",
+    //                         function (e) {
+    //                             if (e) {
+    //                                 editarActividadReg(idA, newContent);
+    //                             }
+    //                         }
+    //                     )
+    //                     .setting({
+    //                         title: "Modificar Actividad",
+    //                         labels: {
+    //                             ok: "Aceptar",
+    //                             cancel: "Cancelar",
+    //                         },
+    //                         modal: true,
+    //                         startMaximized: false,
+    //                         reverseButtons: true,
+    //                         resizable: false,
+    //                         closable: false,
+    //                         transition: "zoom",
+    //                         oncancel: function (closeEvent) {
+    //                             actividad_empleado();
+    //                         },
+    //                     });
+    //             }
+    //         });
 
-        $(this)
-            .children()
-            .first()
-            .blur(function () {
-                actividad_empleado();
-            });
-    });
+    //     $(this)
+    //         .children()
+    //         .first()
+    //         .blur(function () {
+    //             actividad_empleado();
+    //         });
+    // });
 
     $("#customSwitchActReg" + idA).on("change.bootstrapSwitch", function (
         event
@@ -634,55 +634,55 @@ function RegeditarActE(idA) {
 function editarActE(idA) {
     var OriginalContent = $("#idAct" + idA).val();
     var idE = $("#v_id").val();
-    $("#tdAct" + idA).on("click", function () {
-        $(this).addClass("editable");
-        $(this).html(
-            '<input type="text" style="border-radius: 5px;border: 2px solid #8d93ab;" maxlength="15" />'
-        );
-        $(this).children().first().focus();
-        $(this)
-            .children()
-            .first()
-            .keypress(function (e) {
-                if (e.which == 13) {
-                    var newContent = $(this).val();
-                    $(this).parent().text(newContent);
-                    $(this).parent().removeClass("editable");
-                    alertify
-                        .confirm(
-                            "¿Desea modificar nombre de la actividad?",
-                            function (e) {
-                                if (e) {
-                                    editarActividad(idA, newContent);
-                                }
-                            }
-                        )
-                        .setting({
-                            title: "Modificar Actividad",
-                            labels: {
-                                ok: "Aceptar",
-                                cancel: "Cancelar",
-                            },
-                            modal: true,
-                            startMaximized: false,
-                            reverseButtons: true,
-                            resizable: false,
-                            closable: false,
-                            transition: "zoom",
-                            oncancel: function (closeEvent) {
-                                actividadEmp();
-                            },
-                        });
-                }
-            });
+    // $("#tdAct" + idA).on("click", function () {
+    //     $(this).addClass("editable");
+    //     $(this).html(
+    //         '<input type="text" style="border-radius: 5px;border: 2px solid #8d93ab;" maxlength="15" />'
+    //     );
+    //     $(this).children().first().focus();
+    //     $(this)
+    //         .children()
+    //         .first()
+    //         .keypress(function (e) {
+    //             if (e.which == 13) {
+    //                 var newContent = $(this).val();
+    //                 $(this).parent().text(newContent);
+    //                 $(this).parent().removeClass("editable");
+    //                 alertify
+    //                     .confirm(
+    //                         "¿Desea modificar nombre de la actividad?",
+    //                         function (e) {
+    //                             if (e) {
+    //                                 editarActividad(idA, newContent);
+    //                             }
+    //                         }
+    //                     )
+    //                     .setting({
+    //                         title: "Modificar Actividad",
+    //                         labels: {
+    //                             ok: "Aceptar",
+    //                             cancel: "Cancelar",
+    //                         },
+    //                         modal: true,
+    //                         startMaximized: false,
+    //                         reverseButtons: true,
+    //                         resizable: false,
+    //                         closable: false,
+    //                         transition: "zoom",
+    //                         oncancel: function (closeEvent) {
+    //                             actividadEmp();
+    //                         },
+    //                     });
+    //             }
+    //         });
 
-        $(this)
-            .children()
-            .first()
-            .blur(function () {
-                actividadEmp();
-            });
-    });
+    //     $(this)
+    //         .children()
+    //         .first()
+    //         .blur(function () {
+    //             actividadEmp();
+    //         });
+    // });
 
     $("#customSwitchAct" + idA).on("change.bootstrapSwitch", function (event) {
         if (event.target.checked == true) {
