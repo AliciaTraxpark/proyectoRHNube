@@ -405,6 +405,7 @@ function registrarActividadTarea() {
                             },
                         });
                 } else {
+                    $("#nombreTarea").addClass("borderColor");
                     $.notifyClose();
                     $.notify(
                         {
@@ -461,6 +462,7 @@ function registrarActividadTarea() {
                                 },
                             });
                     } else {
+                        $("#codigoTarea").addClass("borderColor");
                         $.notifyClose();
                         $.notify(
                             {
@@ -640,3 +642,11 @@ function cambiarEstadoActividad(id) {
             });
     });
 }
+
+//REMVER CLASES
+$("#nombreTarea").keyup(function () {
+    $(this).removeClass("borderColor");
+});
+$("#codigoTarea").keyup(function () {
+    $(this).removeClass("borderColor");
+});

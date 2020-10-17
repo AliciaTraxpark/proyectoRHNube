@@ -35,6 +35,10 @@
     .form-control:disabled {
         background-color: #fcfcfc;
     }
+
+    .borderColor {
+        border-color: red;
+    }
 </style>
 <div class="row pr-5">
     <div class="col-md-12 text-right pr-5">
