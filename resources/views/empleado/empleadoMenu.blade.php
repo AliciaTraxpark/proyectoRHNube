@@ -2534,8 +2534,7 @@ use App\proyecto_empleado;
                                                     <button type="button" class="btn btn-sm mt-1"
                                                         style="background-color: #163552;"
                                                         onclick="$('#regactividadTarea').modal();javascript:actividadOrganizacionReg()">+
-                                                        Nueva
-                                                        Actividad
+                                                        Asignar Actividad
                                                     </button>
                                                 </div>
                                             </div>
@@ -2578,9 +2577,9 @@ use App\proyecto_empleado;
                                                         id="formActvidadesReg">
                                                         <div class="row justify-content-center">
                                                             <div class="col-xl-12 text-center">
-                                                                <select multiple="multiple" class="multi-select"
-                                                                    id="regEmpleadoActiv" data-plugin="multiselect"
-                                                                    data-selectable-optgroup="true" required></select>
+                                                                <select multiple="multiple" data-plugin="customselect"
+                                                                    class="form-control" multiple="multiple"
+                                                                    id="regEmpleadoActiv"></select>
                                                             </div>
                                                         </div>
                                                 </div>

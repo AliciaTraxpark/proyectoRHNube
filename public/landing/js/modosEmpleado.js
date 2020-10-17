@@ -130,24 +130,15 @@ function actividadEmpVer() {
     });
 }
 //INICIALIZAR PLUGIN DE MILTI SELECT EN GUARDAR
-$('#regEmpleadoActiv').multiSelect({
-    selectableHeader: "<div class='custom-header' style=\"color:#163552;font-size:14px;font-weight: bold;border-top-left-radius: 5px;border-top-right-radius: 5px;\">\
-    <img src=\"landing/images/2143150.png\" class=\"mr-2\" height=\"15\"/>Actividades</div>",
-    selectionHeader: "<div class='custom-header' style=\"color:#163552;font-size:14px;font-weight: bold;border-top-left-radius: 5px;border-top-right-radius: 5px;\">\
-    <img src=\"landing/images/tick (4).svg\" class=\"mr-2\" height=\"15\"/>Asignar</div>",
-});
-// INICIALIZAR PLUGIN DE MULTI SELECT EN EDITAR
-$('#empleadoActiv').select2({
+$('#regEmpleadoActiv').select2({
     tags: "true",
     placeholder: "Seleccionar",
     selectOnClose: false
 });
-// SELECT EN MODAL EDITAR
-$('#empleadoActiv').on("select2:opening", function () {
-    console.log("ingreso");
-    var idE = $("#v_id").val();
-    var value = $('#empleadoActiv').val();
-    $('#empleadoActiv').empty();
+$('#regEmpleadoActiv').on("select2:opening", function () {
+    var idE = $("#idEmpleado").val();
+    var value = $('#regEmpleadoActiv').val();
+    $('#regEmpleadoActiv').empty();
     $.ajax({
         async: false,
         type: "GET",
@@ -163,8 +154,8 @@ $('#empleadoActiv').on("select2:opening", function () {
             $.each(data, function (i, items) {
                 option += `<option value="${items.value}"> ${items.text}</option>`;
             });
-            $('#empleadoActiv').append(option);
-            $('#empleadoActiv').val(value);
+            $('#regEmpleadoActiv').append(option);
+            $('#regEmpleadoActiv').val(value);
         },
         error: function () { },
     });
@@ -201,9 +192,17 @@ $('#formActvidadesReg').submit(function (e) {
     }
     this.submit();
 });
-// MODAL EDITAR
-function actividadOrganizacion() {
+// INICIALIZAR PLUGIN DE MULTI SELECT EN EDITAR
+$('#empleadoActiv').select2({
+    tags: "true",
+    placeholder: "Seleccionar",
+    selectOnClose: false
+});
+// SELECT EN MODAL EDITAR
+$('#empleadoActiv').on("select2:opening", function () {
+    console.log("ingreso");
     var idE = $("#v_id").val();
+    var value = $('#empleadoActiv').val();
     $('#empleadoActiv').empty();
     $.ajax({
         async: false,
@@ -216,19 +215,16 @@ function actividadOrganizacion() {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            console.log(data);
             var option = "";
             $.each(data, function (i, items) {
-                console.log(items.value);
-                option += '<option value="' + items.value + '">' + items.text + '</option>';
+                option += `<option value="${items.value}"> ${items.text}</option>`;
             });
-            console.log(option);
-            $('#empleadoActiv').html(option);
-            $('#empleadoActiv').multiSelect('refresh');
+            $('#empleadoActiv').append(option);
+            $('#empleadoActiv').val(value);
         },
         error: function () { },
     });
-}
+});
 $('#formActvidades').attr('novalidate', true);
 
 $('#formActvidades').submit(function (e) {
@@ -348,6 +344,7 @@ function registrarNuevaActividadTarea() {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
+            $.fn.select2.defaults.reset();
             actividad_empleado();
             $.notifyClose();
             $.notify(
