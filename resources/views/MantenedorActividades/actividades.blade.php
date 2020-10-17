@@ -36,8 +36,8 @@
         background-color: #fcfcfc;
     }
 </style>
-<div class="row pr-4">
-    <div class="col-xl-12 text-right">
+<div class="row pr-5">
+    <div class="col-md-12 text-right pr-5">
         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
             onclick="$('#regactividadTarea').modal()">+ Nueva
             Actividad
@@ -45,7 +45,7 @@
     </div>
 </div>
 <div class="row justify-content-center">
-    <div class="col-xl-12">
+    <div class="col-md-11">
         <div class="card">
             <div class="card-body">
                 <table id="actividades" class="table nowrap" style="font-size: 13px!important;width:100%;">
