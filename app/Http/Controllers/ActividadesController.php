@@ -60,6 +60,7 @@ class ActividadesController extends Controller
 
     public function actividadesOrganizaciones()
     {
+        // DB::enableQueryLog();
         $actividades = DB::table('actividad as a')
             ->leftJoin('captura as cp', 'cp.idActividad', '=', 'a.Activi_id')
             ->select(
@@ -73,8 +74,9 @@ class ActividadesController extends Controller
             )
             ->where('a.organi_id', '=', session('sesionidorg'))
             ->where('a.estado', '=', 1)
+            ->groupBy('a.Activi_id')
             ->get();
-
+            // dd(DB::getQueryLog());
         return response()->json($actividades, 200);
     }
 
