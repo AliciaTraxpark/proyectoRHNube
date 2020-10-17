@@ -6,6 +6,9 @@ use App\dispositivos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 class dispositivosController extends Controller
 {
     //
@@ -141,7 +144,7 @@ class dispositivosController extends Controller
     public function comprobarMovil(Request $request){
 
         $dispositivos=dispositivos::where('dispo_movil','=',$request->numeroM)->get()->first();
-       
+
         if($dispositivos!= null){
             return 1;
         }
@@ -149,4 +152,48 @@ class dispositivosController extends Controller
             return 0;
         }
     }
+
+    public function reporteMarcaciones(){
+        $organizacion=DB::table('organizacion')
+        ->where('organi_id','=',session('sesionidorg'))
+        ->get()->first();
+        $nombreOrga= $organizacion->organi_razonSocial;
+    return view('Dispositivos.reporteDis',['organizacion'=>$nombreOrga]);
+ }
+
+ public function reporteTabla(Request $request){
+     $fechaR=$request->fecha;
+    /*  dd($fechaR); */
+      $fecha=Carbon::create($fechaR);
+      $año= $fecha->year;
+      $mes= $fecha->month;
+      $dia= $fecha->day;
+      $ndia= $dia+1;
+     $marcaciones=DB::table('marcacion_movil as marcm')
+     ->select('marcm.marcaMov_id','emple_nDoc','perso_nombre','perso_apPaterno','perso_apMaterno',
+     'cargo_descripcion','marcaMov_fecha' ,'marcaMov_salida as final')
+     ->leftJoin('empleado as e','marcm.marcaMov_emple_id','=','e.emple_id')
+     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+     ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+    /*   ->whereYear('marcaMov_fecha',$año)
+        ->whereMonth('marcaMov_fecha',$mes)
+        ->whereDay('marcaMov_fecha',$dia) */
+        ->whereDate('marcaMov_fecha',$fecha)
+        ->orwhere(function($query) use ($fecha) {
+            $query->where('marcaMov_fecha', null)
+            ->whereDate('marcaMov_salida',$fecha);
+        })
+
+     ->where('marcm.organi_id','=',session('sesionidorg'))->get() ;
+
+     /* $marcaciones1=$marcaciones->addSelect(DB::raw('(select marc2.marcaMov_fecha from marcacion_movil as marc2
+      where marc2.marcaMov_tipo=0 and marcm.marcaMov_emple_id=marc2.marcaMov_emple_id and
+      YEAR(marc2.marcaMov_fecha)= '.$año.' and MONTH(marc2.marcaMov_fecha)='.$mes.'
+      and( DAY(marc2.marcaMov_fecha)='.$dia.' or DAY(marc2.marcaMov_fecha)='.$ndia.' )) as final' ))
+     ->get(); */
+
+
+     return json_encode($marcaciones);
+
+ }
 }

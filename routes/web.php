@@ -202,7 +202,7 @@ Route::post('/proyecto/eliminar', 'ProyectoController@eliminar');
 Route::post('/proyecto/tablaEmpleados', 'ProyectoController@empleadosTabla');
 Route::post('/proyecto/eliminarEmpleado', 'ProyectoController@eliminarEmpleado');
 Route::post('/proyecto/editarPro', 'ProyectoController@editarProyecto');
-// ACTIVIDADES 
+// ACTIVIDADES
 Route::get('/actividadEmpleado', 'ActividadesController@actividadesEmpleado');
 Route::post('/registrarActvO', 'ActividadesController@registrarActividadE');
 Route::get('/editarActvE', 'ActividadesController@editarActividadE');
@@ -387,7 +387,7 @@ Route::post('/dispoStore', 'dispositivosController@store');
 Route::post('/tablaDisposito', 'dispositivosController@tablaDisposit');
 Route::post('/reenviarmensajeDis', 'dispositivosController@reenviarmensaje');
 Route::post('/comprobarMovil', 'dispositivosController@comprobarMovil');
-Route::get('/reporteMarcaciones', 'dispositivosController@reporteMarcaciones');
+Route::get('/reporteAsistencia', 'dispositivosController@reporteMarcaciones');
 Route::post('/reporteTablaMarca', 'dispositivosController@reporteTabla');
 //CONTROLADORES
 Route::get('/controladores', 'controladoresController@index');
