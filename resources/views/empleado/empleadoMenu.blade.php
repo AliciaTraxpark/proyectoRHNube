@@ -2590,7 +2590,7 @@ use App\proyecto_empleado;
                                                 <div class="row">
                                                     <div class="col-md-12 text-right">
                                                         <button type="button" class="btn btn-light btn-sm "
-                                                            onclick="$('#regactividadTarea').modal('toggle')">Cancelar</button>
+                                                            onclick="$('#regactividadTarea').modal('toggle');javascript:limpiarSelect()">Cancelar</button>
                                                         <button type="submit" name="" style="background-color: #163552;"
                                                             class="btn btn-sm ">Guardar</button>
                                                         </form>
@@ -3581,7 +3581,7 @@ use App\proyecto_empleado;
                                                 <div class="row">
                                                     <div class="col-md-12 text-right">
                                                         <button type="button" class="btn btn-light btn-sm "
-                                                            onclick="$('#actividadTarea').modal('toggle')">Cancelar</button>
+                                                            onclick="$('#actividadTarea').modal('toggle');javascript:limpiarSelect()">Cancelar</button>
                                                         <button type="submit" name="" style="background-color: #163552;"
                                                             class="btn btn-sm ">Guardar</button>
                                                         </form>

@@ -2605,7 +2605,7 @@
                                                             <div class="col-xl-12 text-right">
                                                                 <button type="button" class="btn btn-sm mt-1"
                                                                     style="background-color: #163552;"
-                                                                    onclick="$('#regactividadTarea').modal();javascript:actividadOrganizacionReg()">+ Nueva
+                                                                    onclick="$('#regactividadTarea').modal();">+ Asignar
                                                                     Actividad
                                                                 </button>
                                                             </div>
@@ -2651,9 +2651,9 @@
                                                                 <form action="javascript:registrarNuevaActividadTarea()" id="formActvidadesReg">
                                                                     <div class="row justify-content-center">
                                                                         <div class="col-xl-12 text-center">
-                                                                            <select multiple="multiple" class="multi-select"
-                                                                                id="regEmpleadoActiv" data-plugin="multiselect"
-                                                                                data-selectable-optgroup="true" required></select>
+                                                                            <select multiple="multiple" data-plugin="customselect"
+                                                                            class="form-control" multiple="multiple"
+                                                                             id="regEmpleadoActiv"></select>
                                                                         </div>
                                                                     </div>
                                                             </div>
@@ -2664,7 +2664,7 @@
                                                             <div class="row">
                                                                 <div class="col-md-12 text-right">
                                                                     <button type="button" class="btn btn-light btn-sm "
-                                                                        onclick="$('#regactividadTarea').modal('toggle')">Cancelar</button>
+                                                                        onclick="$('#regactividadTarea').modal('toggle');javascript:limpiarSelect()">Cancelar</button>
                                                                     <button type="submit" name=""
                                                                         style="background-color: #163552;"
                                                                         class="btn btn-sm ">Guardar</button>
@@ -3578,7 +3578,7 @@
                                                             <div class="col-xl-12 text-right">
                                                                 <button type="button" class="btn btn-sm mt-1"
                                                                     style="background-color: #163552;"
-                                                                    onclick="$('#actividadTarea').modal();javascript:actividadOrganizacion()">+ Nueva
+                                                                    onclick="$('#actividadTarea').modal()">+ Asignar
                                                                     Actividad
                                                                 </button>
                                                             </div>
@@ -3623,9 +3623,9 @@
                                                                 <form action="javascript:registrarActividadTarea()" id="formActvidades">
                                                                     <div class="row justify-content-center">
                                                                         <div class="col-xl-12 text-center">
-                                                                            <select multiple="multiple" class="multi-select"
-                                                                                id="empleadoActiv" data-plugin="multiselect"
-                                                                                data-selectable-optgroup="true" required></select>
+                                                                            <select multiple="multiple" data-plugin="customselect"
+                                                                            class="form-control" multiple="multiple"
+                                                                            id="empleadoActiv"></select>
                                                                         </div>
                                                                     </div>
                                                             </div>
@@ -3636,7 +3636,7 @@
                                                             <div class="row">
                                                                 <div class="col-md-12 text-right">
                                                                     <button type="button" class="btn btn-light btn-sm "
-                                                                        onclick="$('#actividadTarea').modal('toggle')">Cancelar</button>
+                                                                        onclick="$('#actividadTarea').modal('toggle');javascript:limpiarSelect()">Cancelar</button>
                                                                     <button type="submit" name=""
                                                                         style="background-color: #163552;"
                                                                         class="btn btn-sm ">Guardar</button>

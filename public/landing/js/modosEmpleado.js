@@ -133,7 +133,8 @@ function actividadEmpVer() {
 $('#regEmpleadoActiv').select2({
     tags: "true",
     placeholder: "Seleccionar",
-    selectOnClose: false
+    closeOnSelect: false,
+    allowClear: true
 });
 $('#regEmpleadoActiv').on("select2:opening", function () {
     var idE = $("#idEmpleado").val();
@@ -196,7 +197,8 @@ $('#formActvidadesReg').submit(function (e) {
 $('#empleadoActiv').select2({
     tags: "true",
     placeholder: "Seleccionar",
-    selectOnClose: false
+    closeOnSelect: false,
+    allowClear: true
 });
 // SELECT EN MODAL EDITAR
 $('#empleadoActiv').on("select2:opening", function () {
@@ -300,7 +302,7 @@ function registrarActividadTarea() {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            $.fn.select2.defaults.reset();
+            limpiarSelect();
             actividadEmp();
             $.notifyClose();
             $.notify(
@@ -344,7 +346,7 @@ function registrarNuevaActividadTarea() {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            $.fn.select2.defaults.reset();
+            limpiarSelect();
             actividad_empleado();
             $.notifyClose();
             $.notify(
@@ -373,7 +375,11 @@ function registrarNuevaActividadTarea() {
         error: function () { },
     });
 }
-
+// LIMPIAR SELECT
+function limpiarSelect(){
+    $('#empleadoActiv').val(null).trigger('change');
+    $('#regEmpleadoActiv').val(null).trigger('change');
+}
 //  *******************************
 // EDITAR NOMBRE MODAL REGISTRAR
 function editarActividadReg(id, actividad) {
