@@ -3525,8 +3525,7 @@ use App\proyecto_empleado;
                                                 <div class="col-xl-12 text-right">
                                                     <button type="button" class="btn btn-sm mt-1"
                                                         style="background-color: #163552;"
-                                                        onclick="$('#actividadTarea').modal();javascript:actividadOrganizacion()">+
-                                                        Nueva Actividad
+                                                        onclick="$('#actividadTarea').modal()">+Asignar actividad
                                                     </button>
                                                 </div>
                                             </div>
@@ -3568,10 +3567,11 @@ use App\proyecto_empleado;
                                                     <form action="javascript:registrarActividadTarea()"
                                                         id="formActvidades">
                                                         <div class="row justify-content-center">
-                                                            <div class="col-xl-12 text-center">
-                                                                <select multiple="multiple" class="multi-select"
-                                                                    id="empleadoActiv" data-plugin="multiselect"
-                                                                    data-selectable-optgroup="true" required></select>
+                                                            <div class="col-xl-12">
+                                                                <label>Actividades:</label>
+                                                                <select multiple="multiple" data-plugin="customselect"
+                                                                    class="form-control" multiple="multiple"
+                                                                    id="empleadoActiv"></select>
                                                             </div>
                                                         </div>
                                                 </div>

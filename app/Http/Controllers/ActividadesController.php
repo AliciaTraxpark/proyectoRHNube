@@ -201,12 +201,11 @@ class ActividadesController extends Controller
             ->where('a.estado', '=', 1)
             ->get();
         $actividad = DB::table('actividad as a')
-            ->select('a.Activi_id', 'a.Activi_Nombre')
+            ->select('a.Activi_id', 'a.Activi_Nombre', 'a.codigoActividad')
             ->where('a.organi_id', '=', session('sesionidorg'))
             ->where('a.controlRemoto', '=', 1)
             ->where('a.estado', '=', 1)
             ->get();
-
         $respuesta = [];
         for ($index = 0; $index < sizeof($actividad); $index++) {
             $estado = false;
@@ -216,7 +215,8 @@ class ActividadesController extends Controller
                 }
             }
             if ($estado == false) {
-                array_push($respuesta, array("value" => $actividad[$index]->Activi_id, "text" => $actividad[$index]->Activi_Nombre));
+                $valor = $actividad[$index]->codigoActividad == null ? "No definido" : $actividad[$index]->codigoActividad;
+                array_push($respuesta, array("value" => $actividad[$index]->Activi_id, "text" => $actividad[$index]->Activi_Nombre . " | " . $valor));
             }
         }
         // dd(DB::getQueryLog());
