@@ -8,6 +8,10 @@
 <link href="{{URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')}}" rel="stylesheet"
     type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/alertify/alertify.css') }}" rel="stylesheet" type="text/css" />
+{{-- <link href="{{ URL::asset('admin/assets/libs/alertify/bootstrap.css') }}" rel="stylesheet" type="text/css" /> --}}
+<!-- Semantic UI theme -->
+<link href="{{ URL::asset('admin/assets/libs/alertify/default.css') }}" rel="stylesheet" type="text/css" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('breadcrumb')
@@ -18,8 +22,26 @@
 </div>
 @endsection
 @section('content')
-<div class="row pr-4">
-    <div class="col-xl-12 text-right">
+<style>
+    .table {
+        width: 100% !important;
+    }
+
+    .dataTables_scrollHeadInner {
+        margin: 0 auto !important;
+        width: 100% !important;
+    }
+
+    .form-control:disabled {
+        background-color: #fcfcfc;
+    }
+
+    .borderColor {
+        border-color: red;
+    }
+</style>
+<div class="row pr-5">
+    <div class="col-md-12 text-right pr-5">
         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
             onclick="$('#regactividadTarea').modal()">+ Nueva
             Actividad
@@ -27,7 +49,7 @@
     </div>
 </div>
 <div class="row justify-content-center">
-    <div class="col-xl-12">
+    <div class="col-md-11">
         <div class="card">
             <div class="card-body">
                 <table id="actividades" class="table nowrap" style="font-size: 13px!important;width:100%;">
@@ -35,11 +57,14 @@
                         <tr>
                             <th class="text-center">#</th>
                             <th class="text-center">Actividad</th>
+                            <th class="text-center">Código</th>
                             <th class="text-center">Control remoto</th>
                             <th class="text-center">Asistencia en puerta</th>
+                            <th class="text-center">En uso</th>
+                            <th class="text-center"></th>
                         </tr>
                     </thead>
-                    <tbody id="actividOrga"></tbody>
+                    <tbody id="actividOrga" style="width:100%!important"></tbody>
                 </table>
             </div>
         </div>
@@ -52,21 +77,43 @@
             <div class="modal-header" style="background-color:#163552;">
                 <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Registrar Actividad
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                    onclick="javasript:limpiarModo()">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body" style="font-size:12px!important">
                 <div class="row">
                     <div class="col-md-12">
-                        <form action="javascript:registrarNuevaActividadTarea()">
+                        <form action="javascript:registrarActividadTarea()">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="">Nombre:</label>
-                                        <input type="text" class="form-control form-control-sm" id="regnombreTarea"
-                                            required>
+                                        <input type="text" class="form-control form-control-sm" id="nombreTarea"
+                                            maxlength="40" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Código:</label>
+                                        <input type="text" class="form-control form-control-sm" id="codigoTarea"
+                                            maxlength="40">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 text-left">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="customCR">
+                                        <label class="custom-control-label" for="customCR"
+                                            style="font-weight: bold">Control Remoto</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 text-left">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="customAP">
+                                        <label class="custom-control-label" for="customAP"
+                                            style="font-weight: bold">Asistencia en Puerta</label>
                                     </div>
                                 </div>
                             </div>
@@ -77,8 +124,75 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-12 text-right">
-                            <button type="button" class="btn btn-light btn-sm "
-                                onclick="javasript:limpiarModo();$('#regactividadTarea').modal('toggle')">Cancelar</button>
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                onclick="javascript:limpiarModo()">Cancelar</button>
+                            <button type="submit" name="" style="background-color: #163552;"
+                                class="btn btn-sm ">Guardar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div id="editactividadTarea" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editactividadTarea"
+    aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 550px;">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Editar Actividad
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-size:12px!important">
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="hidden" id="idActiv">
+                        <form action="javascript:editarActividadTarea()">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Nombre:</label>
+                                        <input type="text" class="form-control form-control-sm" id="e_nombreTarea"
+                                            maxlength="40" required disabled>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Código:</label>
+                                        <input type="text" class="form-control form-control-sm" id="e_codigoTarea"
+                                            maxlength="40">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 text-left">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="e_customCR">
+                                        <label class="custom-control-label" for="e_customCR"
+                                            style="font-weight: bold">Control Remoto</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 text-left">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="e_customAP">
+                                        <label class="custom-control-label" for="e_customAP"
+                                            style="font-weight: bold">Asistencia en Puerta</label>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                onclick="javascript:limpiarModo()">Cancelar</button>
                             <button type="submit" name="" style="background-color: #163552;"
                                 class="btn btn-sm ">Guardar</button>
                             </form>
@@ -128,17 +242,10 @@
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <!-- optional plugins -->
-<script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js')}}"></script>
-<script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
 <script src="{{URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js')}}"></script>
-<script src="{{ URL::asset('admin/assets/libs/gauge/gauge.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/apexcharts/apexcharts.js') }}"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
-<script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
-<script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/alertify/alertify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
 <script src="{{asset('landing/js/actividades.js')}}"></script>

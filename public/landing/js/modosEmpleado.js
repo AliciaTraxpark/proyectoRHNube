@@ -18,8 +18,7 @@ function actividad_empleado() {
                 for (var $i = 0; $i < data.length; $i++) {
                     td += `<tr onclick="return RegeditarActE(${data[$i].Activi_id})">
                     <input type="hidden" id="idActReg${data[$i].Activi_id}" value="${data[$i].Activi_Nombre}">
-                    <td class="editable" id="tdActReg${data[$i].Activi_id}"  style="cursor: -webkit-grab; cursor: grab" data-toggle="tooltip"
-                    data-placement="right" title="Para editar actividad presionar doble click." data-original-title="">${data[$i].Activi_Nombre}</td>`;
+                    <td class="editable" id="tdActReg${data[$i].Activi_id}">${data[$i].Activi_Nombre}</td>`;
                     if (data[$i].estadoActividadEmpleado == 1) {
                         if (data[$i].eliminacionActividadEmpleado == 0) {
                             td += `<td><div class="custom-control custom-switch">
@@ -65,8 +64,7 @@ function actividadEmp() {
                 for (var $i = 0; $i < data.length; $i++) {
                     td += `<tr onclick="return editarActE(${data[$i].Activi_id})">
                     <input type="hidden" id="idAct${data[$i].Activi_id}" value="${data[$i].Activi_Nombre}">
-                    <td class="editable" id="tdAct${data[$i].Activi_id}" style="cursor: -webkit-grab; cursor: grab" data-toggle="tooltip"
-                    data-placement="right" title="Para editar actividad presionar doble click." data-original-title="">${data[$i].Activi_Nombre}</td>`;
+                    <td class="editable" id="tdAct${data[$i].Activi_id}">${data[$i].Activi_Nombre}</td>`;
                     if (data[$i].estadoActividadEmpleado == 1) {
                         if (data[$i].eliminacionActividadEmpleado == 0) {
                             td += `<td><div class="custom-control custom-switch">
@@ -129,37 +127,138 @@ function actividadEmpVer() {
         error: function () { },
     });
 }
+//INICIALIZAR PLUGIN DE MILTI SELECT EN GUARDAR
+$('#regEmpleadoActiv').select2({
+    tags: "true",
+    placeholder: "Seleccionar",
+    closeOnSelect: false,
+    allowClear: true
+});
+$('#regEmpleadoActiv').on("select2:opening", function () {
+    var idE = $("#idEmpleado").val();
+    var value = $('#regEmpleadoActiv').val();
+    $('#regEmpleadoActiv').empty();
+    $.ajax({
+        async: false,
+        type: "GET",
+        url: "/actividadOrga",
+        data: {
+            idEmpleado: idE
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            var option = "";
+            $.each(data, function (i, items) {
+                option += `<option value="${items.value}"> ${items.text}</option>`;
+            });
+            $('#regEmpleadoActiv').append(option);
+            $('#regEmpleadoActiv').val(value);
+        },
+        error: function () { },
+    });
+});
+$('#formActvidadesReg').attr('novalidate', true);
+
+$('#formActvidadesReg').submit(function (e) {
+    e.preventDefault();
+    if ($('#regEmpleadoActiv').val().length == 0) {
+        $.notifyClose();
+        $.notify({
+            message: '\nSeleccionar Actividad',
+            icon: 'landing/images/bell.svg',
+        }, {
+            element: $("#regactividadTarea"),
+            position: "fixed",
+            icon_type: 'image',
+            placement: {
+                from: "top",
+                align: "center",
+            },
+            allow_dismiss: true,
+            newest_on_top: true,
+            delay: 6000,
+            template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                '<span data-notify="title">{1}</span> ' +
+                '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                '</div>',
+            spacing: 35
+        });
+        return;
+    }
+    this.submit();
+});
+// INICIALIZAR PLUGIN DE MULTI SELECT EN EDITAR
+$('#empleadoActiv').select2({
+    tags: "true",
+    placeholder: "Seleccionar",
+    closeOnSelect: false,
+    allowClear: true
+});
+// SELECT EN MODAL EDITAR
+$('#empleadoActiv').on("select2:opening", function () {
+    console.log("ingreso");
+    var idE = $("#v_id").val();
+    var value = $('#empleadoActiv').val();
+    $('#empleadoActiv').empty();
+    $.ajax({
+        async: false,
+        type: "GET",
+        url: "/actividadOrga",
+        data: {
+            idEmpleado: idE
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            var option = "";
+            $.each(data, function (i, items) {
+                option += `<option value="${items.value}"> ${items.text}</option>`;
+            });
+            $('#empleadoActiv').append(option);
+            $('#empleadoActiv').val(value);
+        },
+        error: function () { },
+    });
+});
+$('#formActvidades').attr('novalidate', true);
+
+$('#formActvidades').submit(function (e) {
+    e.preventDefault();
+    if ($('#empleadoActiv').val().length == 0) {
+        $.notifyClose();
+        $.notify({
+            message: '\nSeleccionar Actividad',
+            icon: 'landing/images/bell.svg',
+        }, {
+            element: $("#actividadTarea"),
+            position: "fixed",
+            icon_type: 'image',
+            placement: {
+                from: "top",
+                align: "center",
+            },
+            allow_dismiss: true,
+            newest_on_top: true,
+            delay: 6000,
+            template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                '<span data-notify="title">{1}</span> ' +
+                '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                '</div>',
+            spacing: 35
+        });
+        return;
+    }
+    this.submit();
+});
 // ***********************************
-$("#customSwitch1").prop("checked", true);
-$("#bodyModoTarea").show();
-$("#customSwitch3").prop("checked", true);
-$("#regbodyModoTarea").show();
-$("#customSwitch5").prop("checked", true);
-$("#bodyModoTarea_ver").show();
-$("#customSwitch1").on("change.bootstrapSwitch", function (event) {
-    if (event.target.checked == true) {
-        $("#bodyModoTarea").show();
-        actividadEmp();
-    } else {
-        $("#bodyModoTarea").hide();
-    }
-});
-$("#customSwitch3").on("change.bootstrapSwitch", function (event) {
-    if (event.target.checked == true) {
-        $("#regbodyModoTarea").show();
-        actividad_empleado();
-    } else {
-        $("#regbodyModoTarea").hide();
-    }
-});
-$("#customSwitch5").on("change.bootstrapSwitch", function (event) {
-    if (event.target.checked == true) {
-        $("#bodyModoTarea_ver").show();
-        actividadEmpVer();
-    } else {
-        $("#bodyModoTarea_ver").hide();
-    }
-});
+
 $("#bodyModoProyecto").hide();
 $("#regbodyModoProyecto").hide();
 $("#bodyModoProyecto_ver").hide();
@@ -186,22 +285,22 @@ $("#customSwitch6").on("change.bootstrapSwitch", function (event) {
     }
 });
 // **************************************
-// MODAL EDITAR
+// ASIGNAR ACTIVIDAD - MODAL EDITAR
 function registrarActividadTarea() {
     var idE = $("#v_id").val();
-    var nombre = $("#nombreTarea").val();
+    var idA = $('#empleadoActiv').val();
     $.ajax({
-        type: "GET",
-        url: "/registrarActvE",
+        type: "POST",
+        url: "/registrarAE",
         data: {
             idE: idE,
-            nombre: nombre,
+            idA: idA,
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            limpiarModo();
+            limpiarSelect();
             actividadEmp();
             $.notifyClose();
             $.notify(
@@ -230,22 +329,22 @@ function registrarActividadTarea() {
         error: function () { },
     });
 }
-// MODAL REGISTRAR
+//ASIGNAR ACTIVIDAD - MODAL REGISTRAR
 function registrarNuevaActividadTarea() {
     var idE = $("#idEmpleado").val();
-    var nombre = $("#regnombreTarea").val();
+    var idA = $('#regEmpleadoActiv').val();
     $.ajax({
-        type: "GET",
-        url: "/registrarActvE",
+        type: "POST",
+        url: "/registrarAE",
         data: {
             idE: idE,
-            nombre: nombre,
+            idA: idA,
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            limpiarModo();
+            limpiarSelect();
             actividad_empleado();
             $.notifyClose();
             $.notify(
@@ -274,13 +373,13 @@ function registrarNuevaActividadTarea() {
         error: function () { },
     });
 }
-
-function limpiarModo() {
-    $("#nombreTarea").val("");
-    $("#regnombreTarea").val("");
+// LIMPIAR SELECT
+function limpiarSelect(){
+    $('#empleadoActiv').val(null).trigger('change');
+    $('#regEmpleadoActiv').val(null).trigger('change');
 }
 //  *******************************
-// MODAL REGISTRAR
+// EDITAR NOMBRE MODAL REGISTRAR
 function editarActividadReg(id, actividad) {
     $.ajax({
         type: "GET",
@@ -320,7 +419,7 @@ function editarActividadReg(id, actividad) {
         error: function () { },
     });
 }
-// MODAL REGISTRAR
+// EDITAR ESTADO MODAL REGISTRAR
 function editarEstadoActividadReg(id, estado) {
     $.ajax({
         type: "GET",
@@ -360,7 +459,7 @@ function editarEstadoActividadReg(id, estado) {
         error: function () { },
     });
 }
-// MODAL EDITAR
+// EDITAR NOMBRE MODAL EDITAR
 function editarActividad(id, actividad) {
     $.ajax({
         type: "GET",
@@ -400,7 +499,7 @@ function editarActividad(id, actividad) {
         error: function () { },
     });
 }
-// MODAL EDITAR
+// EDITAR ESTADO MODAL EDITAR
 function editarEstadoActividad(id, estado, idE) {
     $.ajax({
         type: "GET",
@@ -441,58 +540,58 @@ function editarEstadoActividad(id, estado, idE) {
         error: function () { },
     });
 }
-// MODAL REGISTRAR
+// FUNCION PRINCIAPL PARA EDITAR NOMBRE Y ESTADO - MODAL REGISTRAR
 function RegeditarActE(idA) {
     var OriginalContent = $("#idActReg" + idA).val();
-    $("#tdActReg" + idA).on("click", function () {
-        $(this).addClass("editable");
-        $(this).html(
-            '<input type="text" style="border-radius: 5px;border: 2px solid #8d93ab;" maxlength="15" />'
-        );
-        $(this).children().first().focus();
-        $(this)
-            .children()
-            .first()
-            .keypress(function (e) {
-                if (e.which == 13) {
-                    var newContent = $(this).val();
-                    $(this).parent().text(newContent);
-                    $(this).parent().removeClass("editable");
-                    alertify
-                        .confirm(
-                            "¿Desea modificar nombre de la actividad?",
-                            function (e) {
-                                if (e) {
-                                    editarActividadReg(idA, newContent);
-                                }
-                            }
-                        )
-                        .setting({
-                            title: "Modificar Actividad",
-                            labels: {
-                                ok: "Aceptar",
-                                cancel: "Cancelar",
-                            },
-                            modal: true,
-                            startMaximized: false,
-                            reverseButtons: true,
-                            resizable: false,
-                            closable: false,
-                            transition: "zoom",
-                            oncancel: function (closeEvent) {
-                                actividad_empleado();
-                            },
-                        });
-                }
-            });
+    // $("#tdActReg" + idA).on("click", function () {
+    //     $(this).addClass("editable");
+    //     $(this).html(
+    //         '<input type="text" style="border-radius: 5px;border: 2px solid #8d93ab;" maxlength="15" />'
+    //     );
+    //     $(this).children().first().focus();
+    //     $(this)
+    //         .children()
+    //         .first()
+    //         .keypress(function (e) {
+    //             if (e.which == 13) {
+    //                 var newContent = $(this).val();
+    //                 $(this).parent().text(newContent);
+    //                 $(this).parent().removeClass("editable");
+    //                 alertify
+    //                     .confirm(
+    //                         "¿Desea modificar nombre de la actividad?",
+    //                         function (e) {
+    //                             if (e) {
+    //                                 editarActividadReg(idA, newContent);
+    //                             }
+    //                         }
+    //                     )
+    //                     .setting({
+    //                         title: "Modificar Actividad",
+    //                         labels: {
+    //                             ok: "Aceptar",
+    //                             cancel: "Cancelar",
+    //                         },
+    //                         modal: true,
+    //                         startMaximized: false,
+    //                         reverseButtons: true,
+    //                         resizable: false,
+    //                         closable: false,
+    //                         transition: "zoom",
+    //                         oncancel: function (closeEvent) {
+    //                             actividad_empleado();
+    //                         },
+    //                     });
+    //             }
+    //         });
 
-        $(this)
-            .children()
-            .first()
-            .blur(function () {
-                actividad_empleado();
-            });
-    });
+    //     $(this)
+    //         .children()
+    //         .first()
+    //         .blur(function () {
+    //             actividad_empleado();
+    //         });
+    // });
 
     $("#customSwitchActReg" + idA).on("change.bootstrapSwitch", function (
         event
@@ -529,59 +628,59 @@ function RegeditarActE(idA) {
     });
 }
 
-// MODAL EDITAR
+// FUNCION PRINCIAPL PARA EDITAR NOMBRE Y ESTADO - MODAL EDITAR
 function editarActE(idA) {
     var OriginalContent = $("#idAct" + idA).val();
     var idE = $("#v_id").val();
-    $("#tdAct" + idA).on("click", function () {
-        $(this).addClass("editable");
-        $(this).html(
-            '<input type="text" style="border-radius: 5px;border: 2px solid #8d93ab;" maxlength="15" />'
-        );
-        $(this).children().first().focus();
-        $(this)
-            .children()
-            .first()
-            .keypress(function (e) {
-                if (e.which == 13) {
-                    var newContent = $(this).val();
-                    $(this).parent().text(newContent);
-                    $(this).parent().removeClass("editable");
-                    alertify
-                        .confirm(
-                            "¿Desea modificar nombre de la actividad?",
-                            function (e) {
-                                if (e) {
-                                    editarActividad(idA, newContent);
-                                }
-                            }
-                        )
-                        .setting({
-                            title: "Modificar Actividad",
-                            labels: {
-                                ok: "Aceptar",
-                                cancel: "Cancelar",
-                            },
-                            modal: true,
-                            startMaximized: false,
-                            reverseButtons: true,
-                            resizable: false,
-                            closable: false,
-                            transition: "zoom",
-                            oncancel: function (closeEvent) {
-                                actividadEmp();
-                            },
-                        });
-                }
-            });
+    // $("#tdAct" + idA).on("click", function () {
+    //     $(this).addClass("editable");
+    //     $(this).html(
+    //         '<input type="text" style="border-radius: 5px;border: 2px solid #8d93ab;" maxlength="15" />'
+    //     );
+    //     $(this).children().first().focus();
+    //     $(this)
+    //         .children()
+    //         .first()
+    //         .keypress(function (e) {
+    //             if (e.which == 13) {
+    //                 var newContent = $(this).val();
+    //                 $(this).parent().text(newContent);
+    //                 $(this).parent().removeClass("editable");
+    //                 alertify
+    //                     .confirm(
+    //                         "¿Desea modificar nombre de la actividad?",
+    //                         function (e) {
+    //                             if (e) {
+    //                                 editarActividad(idA, newContent);
+    //                             }
+    //                         }
+    //                     )
+    //                     .setting({
+    //                         title: "Modificar Actividad",
+    //                         labels: {
+    //                             ok: "Aceptar",
+    //                             cancel: "Cancelar",
+    //                         },
+    //                         modal: true,
+    //                         startMaximized: false,
+    //                         reverseButtons: true,
+    //                         resizable: false,
+    //                         closable: false,
+    //                         transition: "zoom",
+    //                         oncancel: function (closeEvent) {
+    //                             actividadEmp();
+    //                         },
+    //                     });
+    //             }
+    //         });
 
-        $(this)
-            .children()
-            .first()
-            .blur(function () {
-                actividadEmp();
-            });
-    });
+    //     $(this)
+    //         .children()
+    //         .first()
+    //         .blur(function () {
+    //             actividadEmp();
+    //         });
+    // });
 
     $("#customSwitchAct" + idA).on("change.bootstrapSwitch", function (event) {
         if (event.target.checked == true) {

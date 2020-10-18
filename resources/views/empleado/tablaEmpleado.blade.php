@@ -474,7 +474,6 @@
                 var container = $('#v_tbodyDispositivo');
 
                 for (var i = 0; i < data[0].vinculacion.length; i++) {
-                    console.log(data[0].vinculacion[i].pc);
                     if(data[0].vinculacion[i].dispositivoD == 'WINDOWS'){
                             var tr = `<tr id="tr${data[0].vinculacion[i].idVinculacion}">
                             <td>${data[0].vinculacion[i].dispositivoD}</td>
