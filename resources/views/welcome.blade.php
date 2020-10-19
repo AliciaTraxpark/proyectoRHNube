@@ -45,9 +45,12 @@
                 padding: 0% !important;
             }
 
-            .container{
+            .container {
                 padding-bottom: 3% !important;
+                padding-left: 10px !important;
+                padding-right: 10px !important;
             }
+
             .colResp {
                 justify-content: center !important;
                 padding: 0% !important;
@@ -60,12 +63,25 @@
             .colResetResp {
                 padding-top: 4% !important;
                 justify-content: center !important;
+                text-align: center !important;
             }
 
             .btnLinkResp {
                 padding-left: 0 !important;
                 padding-right: 0 !important;
             }
+
+            .marginRow {
+                margin-top: 1% !important;
+            }
+
+            .grid-margin {
+                margin-bottom: 40px !important;
+            }
+            .customer-feedback{
+                margin: 5% !important;
+            }
+            
         }
     </style>
     <header id="header-section">
@@ -164,7 +180,7 @@
         <div class="container">
 
             <section class="digital-marketing-service" id="digital-marketing-section">
-                <div class="row align-items-center" style="margin-top: 55px;">
+                <div class="row align-items-center marginRow" style="margin-top: 55px;">
                     <div class="col-12 col-lg-1 p-0 img-digital grid-margin">
 
                     </div>
@@ -198,11 +214,7 @@
                         {{-- <img src="{{asset('landing/images/Group1.png')}}" alt="" class="img-fluid"> --}}
                     </div>
                 </div>
-
             </section>
-
-
-
             <section class="customer-feedback" id="feedback-section" style="    margin-left: 50px;
             margin-right: 71px;">
                 <div class="row" style="padding-top: 30px">
