@@ -14,6 +14,7 @@ use App\organizacion;
 use App\persona;
 use App\promedio_captura;
 use App\software_vinculacion;
+use App\versionrhbox;
 use App\vinculacion;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
@@ -542,12 +543,17 @@ class apiVersionDosController extends Controller
                             ->get()
                             ->first();
                         // *****************
+                        // VERSION GLOBAL
+                        $versionGlobal = DB::table('versionrhbox as vr')
+                            ->select('vr.descripcion')
+                            ->get()
+                            ->first();
+                        // **************
                         if ($vinculacion->serieDisco ==  null) {
                             if ($vinculacion->idSoftware == null) {
                                 // AGREGAR TABLA DE SOFTWARE VINCULACIÓN
                                 $software_vinculacion = new software_vinculacion();
                                 $software_vinculacion->version = $request->get('version');
-                                $software_vinculacion->comentario = $request->get('comentario');
                                 $software_vinculacion->fechaActualizacion = Carbon::now();
                                 $software_vinculacion->save();
 
@@ -560,7 +566,6 @@ class apiVersionDosController extends Controller
                                 if ($software_vinculacion) {
                                     if ($software_vinculacion->version != $request->get('version')) {
                                         $software_vinculacion->version = $request->get('version');
-                                        $software_vinculacion->comentario = $request->get('comentario');
                                         $software_vinculacion->fechaActualizacion = Carbon::now();
                                         $software_vinculacion->save();
                                     }
@@ -579,8 +584,14 @@ class apiVersionDosController extends Controller
                             $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
 
                             return response()->json(array(
-                                "corte" => $organizacion->corteCaptura, "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
-                                'idUser' => $idOrganizacion, 'tiempo' => $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio, 'version' => $software_vinculacion->version, 'token' => $token->get()
+                                "corte" => $organizacion->corteCaptura,
+                                "idEmpleado" => $empleado->emple_id,
+                                "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                                'idUser' => $idOrganizacion,
+                                'tiempo' => $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio,
+                                'version' => $software_vinculacion->version,
+                                'versionGlobal' => $versionGlobal->descripcion,
+                                'token' => $token->get()
                             ), 200);
                         } else {
                             if ($vinculacion->serieDisco == $request->get('serieD')) {
@@ -588,7 +599,6 @@ class apiVersionDosController extends Controller
                                     // AGREGAR TABLA DE SOFTWARE VINCULACIÓN
                                     $software_vinculacion = new software_vinculacion();
                                     $software_vinculacion->version = $request->get('version');
-                                    $software_vinculacion->comentario = $request->get('comentario');
                                     $software_vinculacion->fechaActualizacion = Carbon::now();
                                     $software_vinculacion->save();
 
@@ -601,7 +611,6 @@ class apiVersionDosController extends Controller
                                     if ($software_vinculacion) {
                                         if ($software_vinculacion->version != $request->get('version')) {
                                             $software_vinculacion->version = $request->get('version');
-                                            $software_vinculacion->comentario = $request->get('comentario');
                                             $software_vinculacion->fechaActualizacion = Carbon::now();
                                             $software_vinculacion->save();
                                         }
@@ -618,8 +627,13 @@ class apiVersionDosController extends Controller
                                 $token = JWTAuth::encode($payload);
                                 $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
                                 return response()->json(array(
-                                    "corte" => $organizacion->corteCaptura, "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
-                                    'idUser' => $idOrganizacion, 'tiempo' => $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio, 'version' => $software_vinculacion->version, 'token' => $token->get()
+                                    "corte" => $organizacion->corteCaptura,
+                                    "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                                    'idUser' => $idOrganizacion,
+                                    'tiempo' => $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio,
+                                    'version' => $software_vinculacion->version,
+                                    'versionGlobal' => $versionGlobal->descripcion,
+                                    'token' => $token->get()
                                 ), 200);
                             } else {
                                 return response()->json("disco_erroneo", 400);
@@ -633,5 +647,41 @@ class apiVersionDosController extends Controller
             return response()->json("sin_dispositivo", 400);
         }
         return response()->json("empleado_no_exite", 400);
+    }
+    public function downloadActualizacionx64(Request $request)
+    {
+        $codigo = $request->get('codigo');
+        $decode = base_convert(intval($codigo), 10, 36);
+        $explode = explode("s", $decode);
+        $vinculacion = vinculacion::where('id', '=', $explode[1])->get()->first();
+        if ($vinculacion) {
+            if ($vinculacion->idSoftware == null) {
+                // AGREGAR TABLA DE SOFTWARE VINCULACIÓN
+                $software_vinculacion = new software_vinculacion();
+                $software_vinculacion->version = $request->get('version');
+                $software_vinculacion->fechaActualizacion = Carbon::now();
+                $software_vinculacion->save();
+
+                $idSoftware = $software_vinculacion->id;
+
+                // UNIR SOFTWARE A VINCULACIÓN
+                $vinculacion->idSoftware = $idSoftware;
+                $vinculacion->save();
+                return response()->download(app_path() . "/file/RH box/RHbox.zip");
+            } else {
+                $software_vinculacion = software_vinculacion::findOrFail($vinculacion->idSoftware);
+                if ($software_vinculacion) {
+                    if ($software_vinculacion->version != $request->get('version')) {
+                        $software_vinculacion->version = $request->get('version');
+                        $software_vinculacion->fechaActualizacion = Carbon::now();
+                        $software_vinculacion->save();
+                        return response()->download(app_path() . "/file/RH box/RHbox.zip");
+                    }
+                } else {
+                    return response()->json("software_erroneo", 400);
+                }
+            }
+        }
+        return response()->json("sin_dispositivo", 400);
     }
 }

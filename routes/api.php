@@ -64,6 +64,7 @@ Route::get("downloadUpdate", "apiVersionDosController@downloadActualizacion")->m
 Route::post("horario2", "apiVersionDosController@horario")->middleware('token')->middleware('apilogger');
 Route::post("horario3", "apiVersionDosController@horarioV2")->middleware('token')->middleware('apilogger');
 Route::get("logout", "apiVersionDosController@logoutToken")->middleware('token')->middleware('apilogger');
+Route::get("updatex64", "apiVersionDosController@downloadActualizacionx64")->middleware('token')->middleware('apilogger');
 
 // MEJORAS DE LOGIN
 Route::post("logueoV3", "apiVersionDosController@verificacionLogin")->middleware('apilogger');

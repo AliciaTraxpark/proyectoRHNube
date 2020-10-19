@@ -10,9 +10,25 @@ use App\persona;
     .navbar-custom .topnav-menu .nav-link:active svg {
         color: #fff;
     }
+
+    @media (max-width: 767.98px) {
+        .pro-user-name {
+            display: contents !important;
+        }
+
+        .notifiResponsive{
+
+        }
+        .notifiResponsive{
+            width: 250px !important;
+        }
+        .badgeResponsive{
+            margin-left: 10% !important;
+        }
+    }
 </style>
 <div class="navbar navbar-expand flex-column flex-md-row navbar-custom" style="padding-left: 0px;">
-    <div class="container-fluid pb-3 pt-3">
+    <div class="container-fluid pb-3 pt-3 contResponsive">
         <ul class="navbar-nav bd-navbar-nav flex-row list-unstyled menu-left
             mb-0">
             <li class="" style="width: 80px;">
@@ -77,7 +93,7 @@ use App\persona;
                     <i data-feather="bell"></i>
                     <span class="noti-icon-badge"></span>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right dropdown-xl" style="width: 400px">
+                <div class="dropdown-menu dropdown-menu-right dropdown-xl notifiResponsive" style="width: 400px">
                     <!-- item-->
                     <div class="dropdown-item noti-title border-bottom" style="background-color: #163552;">
                         <div class="col-lg-12 col-sm-12 col-12 m-0">
@@ -94,7 +110,7 @@ use App\persona;
                     </div>
                 </div>
             </li>
-            <li class="dropdown d-none d-lg-block" data-toggle="tooltip" data-placement="left" title="">
+            <li class="dropdown d-lg-block" data-toggle="tooltip" data-placement="left" title="">
                 <a class="nav-link dropdown-toggle mr-0" data-toggle="dropdown" href="#" role="button"
                     aria-haspopup="false" aria-expanded="false">
                     <span class="pro-user-name ml-1">
