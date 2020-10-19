@@ -560,6 +560,7 @@ class apiVersionDosController extends Controller
                                 if ($software_vinculacion) {
                                     if ($software_vinculacion->version != $request->get('version')) {
                                         $software_vinculacion->version = $request->get('version');
+                                        $software_vinculacion->comentario = $request->get('comentario');
                                         $software_vinculacion->fechaActualizacion = Carbon::now();
                                         $software_vinculacion->save();
                                     }
@@ -600,6 +601,7 @@ class apiVersionDosController extends Controller
                                     if ($software_vinculacion) {
                                         if ($software_vinculacion->version != $request->get('version')) {
                                             $software_vinculacion->version = $request->get('version');
+                                            $software_vinculacion->comentario = $request->get('comentario');
                                             $software_vinculacion->fechaActualizacion = Carbon::now();
                                             $software_vinculacion->save();
                                         }
