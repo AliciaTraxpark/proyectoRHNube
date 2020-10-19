@@ -159,7 +159,7 @@ class apiVersionDosController extends Controller
                 ->select('o.organi_id', 'o.organi_ruc')
                 ->where('e.emple_id', '=', $idEmpleado)
                 ->get()->first();
-            $codigoHashO = $orgCarpeta->organi_id . "s" . $orgCarpeta->organi_ruc;
+            $codigoHashO = $orgCarpeta->organi_id . $orgCarpeta->organi_ruc;
             $encodeO = intval($codigoHashO, 36);
             $empCarpeta = DB::table('empleado as e')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
