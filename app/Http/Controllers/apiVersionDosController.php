@@ -630,4 +630,40 @@ class apiVersionDosController extends Controller
         }
         return response()->json("empleado_no_exite", 400);
     }
+    public function downloadActualizacionx64(Request $request)
+    {
+        $codigo = $request->get('codigo');
+        $decode = base_convert(intval($codigo), 10, 36);
+        $explode = explode("s", $decode);
+        $vinculacion = vinculacion::where('id', '=', $explode[1])->get()->first();
+        if ($vinculacion) {
+            if ($vinculacion->idSoftware == null) {
+                // AGREGAR TABLA DE SOFTWARE VINCULACIÓN
+                $software_vinculacion = new software_vinculacion();
+                $software_vinculacion->version = $request->get('version');
+                $software_vinculacion->fechaActualizacion = Carbon::now();
+                $software_vinculacion->save();
+
+                $idSoftware = $software_vinculacion->id;
+
+                // UNIR SOFTWARE A VINCULACIÓN
+                $vinculacion->idSoftware = $idSoftware;
+                $vinculacion->save();
+                return response()->download(app_path() . "/file/RH box/RHbox.zip");
+            } else {
+                $software_vinculacion = software_vinculacion::findOrFail($vinculacion->idSoftware);
+                if ($software_vinculacion) {
+                    if ($software_vinculacion->version != $request->get('version')) {
+                        $software_vinculacion->version = $request->get('version');
+                        $software_vinculacion->fechaActualizacion = Carbon::now();
+                        $software_vinculacion->save();
+                        return response()->download(app_path() . "/file/RH box/RHbox.zip");
+                    }
+                } else {
+                    return response()->json("software_erroneo", 400);
+                }
+            }
+        }
+        return response()->json("sin_dispositivo", 400);
+    }
 }
