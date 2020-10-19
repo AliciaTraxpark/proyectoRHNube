@@ -41,17 +41,25 @@
         }
 
         @media (max-width: 767px) {
+            .navbar {
+                padding: 0% !important;
+            }
+
+            .container{
+                padding-bottom: 3% !important;
+            }
             .colResp {
-                padding-left: 44% !important;
+                justify-content: center !important;
+                padding: 0% !important;
             }
 
             .colBtn {
-                padding-left: 45% !important;
+                justify-content: center !important;
             }
 
             .colResetResp {
-                padding-left: 41.3% !important;
-                padding-top: 2% !important;
+                padding-top: 4% !important;
+                justify-content: center !important;
             }
 
             .btnLinkResp {
@@ -59,22 +67,12 @@
                 padding-right: 0 !important;
             }
         }
-
-        @media(max-width:566px) {
-            .colBtn {
-                padding-left: 40% !important;
-            }
-            .colResetResp {
-                padding-left: 35% !important;
-                padding-top: 2.5% !important;
-            }
-        }
     </style>
     <header id="header-section">
         <nav class="navbar  pl-3 pl-sm-0" id="navbar">
             <div class="container pb-0 pt-2">
                 <div class="col-md-5 colResp" style="margin-bottom: 10px;padding-left: 60px">
-                    <div class="navbar-brand-wrapper d-flex">
+                    <div class="navbar-brand-wrapper d-flex colResp">
                         <img src="{{asset('landing/images/NUBE_SOLA.png')}}" width="30%" height="30%">
                     </div>
                 </div>
