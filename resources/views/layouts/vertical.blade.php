@@ -94,7 +94,7 @@
 
                     <img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="70">
 
-                    <p class="w-75 mx-auto text-muted" style="color: black!important;font-weight: 600">Disponible en Perú a partir del 15 de octubre del 2020.</p>
+                    <p class="w-75 mx-auto text-muted" style="color: black!important;font-weight: 600">Disponible en Perú a partir del 25 de octubre del 2020.</p>
                     <div class="mt-4">
                         <button class="btn  mr-1" data-dismiss="modal" style="background-color:
                         #163552;color:#ffffff"> OK</button>
