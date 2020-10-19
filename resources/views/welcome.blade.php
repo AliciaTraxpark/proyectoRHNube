@@ -44,16 +44,29 @@
             .colResp {
                 padding-left: 44% !important;
             }
-            .colBtn{
+
+            .colBtn {
                 padding-left: 45% !important;
             }
+
             .colResetResp {
                 padding-left: 41.3% !important;
                 padding-top: 2% !important;
             }
-            .btnLinkResp{
+
+            .btnLinkResp {
                 padding-left: 0 !important;
                 padding-right: 0 !important;
+            }
+        }
+
+        @media(max-width:566px) {
+            .colBtn {
+                padding-left: 40% !important;
+            }
+            .colResetResp {
+                padding-left: 35% !important;
+                padding-top: 2.5% !important;
             }
         }
     </style>
