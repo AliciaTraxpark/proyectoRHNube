@@ -137,7 +137,7 @@
                             grid-margin-lg-0" data-aos="fade-right" >
                         <h3 class=" m-0">¿Por qué usar RH Nube?</h3>
                         <div class="col-lg-12 col-xl-12 text-center p-0">
-                            <p class="py-4 m-0 text-muted " style="font-size: 16px">Sencillamente porque  te brindamos un alto Retorno de Inversión (ROI) en administración de personal desde el primer mes.</p>
+                            <p class="py-4 m-0 text-muted " style="font-size: 16px">Porque ahora "Administrar personal" será más sencillo y eficaz. El registro es fácil, gratuito y el costo de administración tiene un retorno de inversión (ROI) de sólo 2 días.</p>
                                 <div class="col-md-12"> <br>
                                     <a  href="{{route('registroPersona')}} "><button {{-- onclick=" $('#modal-error').modal('show')" --}}
                                         class="btn btn-opacity-comienza mr-1">Crear mi cuenta</button></a>
@@ -174,15 +174,10 @@
                                             alt="">
                                     </div>
                                     <div class="col-md-10">
-                                        <h6 class="card-title pt-3" style="font-size: 13.8px!important;color:#ffffff">¿Qué
-                                            ventajas adicionales
-                                            tienes ahora?</h6>
+                                        <h6 class="card-title pt-3" style="font-size: 13.8px!important;color:#ffffff">Controla la manada o el grupo, Modo asistencia en puerta</h6>
                                         <p class="m-0 py-3 text-muted"
-                                            style="font-size: 11.5px!important;color:#ffffff!important;padding-top: 16px!important;">RH nube te
-                                            permite contratar personal
-                                            fuera de tu ciudad o país.
-                                            Ya puedes comparar la productividad entre puestos similares
-                                            y tomar decisiones.
+                                            style="font-size: 11.5px!important;color:#ffffff!important;padding-top: 16px!important;">
+                                            La herramienta de esta modalidad puede supervisar y controlar la asistencia y actividad de un grupo de trabajadores en un punto determinado, ya sea en oficina o en el campo.
                                         </p>
                                     </div>
                                 </div>
@@ -198,9 +193,10 @@
                                     </div>
                                     <div class="col-md-10">
                                         <h6 class="card-title pt-3" style="font-size: 14px!important;color:#ffffff">
-                                            Asegura tu inversión</h6>
+                                            Controla el personal de campo, Modo en ruta</h6>
                                         <p class="m-0 py-3 text-muted"
-                                            style="font-size: 11.4px!important;color:#ffffff!important">RH nube permite llevar un control detallado de la actividad laboral en oficina y en casa, así como KPIs de administración de personal para asegurar la inversión en personal interno o externo a la organización.
+                                            style="font-size: 12.4px!important;color:#ffffff!important;padding-bottom: 30px!important" >
+                                            Herramienta móvil que permite el control de las rutas de personal, así como el detalle de las actividades que se realizan durante el día laboral.
                                         </p>
                                     </div>
                                 </div>
@@ -215,11 +211,9 @@
                                     </div>
                                     <div class="col-md-10">
                                         <h6 class="card-title pt-2" style="font-size: 13.4px!important;color:#ffffff">
-                                            ¿Puedo usarlo con un software de planillas o de pagos?</h6>
+                                            Control del tiempo efectivo de trabajo, Modo Remoto</h6>
                                         <p class="m-0 py-3 text-muted"
-                                            style="font-size: 11.7px!important;color:#ffffff!important">Claro que
-                                            puedes, disponemos de la API de integración para el sistema de planillas de
-                                            tu preferencia. Nos debe contactar tu desarrollador de software.
+                                            style="font-size: 11.7px!important;color:#ffffff!important">Es una herramienta fácil y práctica de manejar, controla el trabajo en oficina o en casa. Reporta tiempo efectivo de trabajo y no sólo una marcación o fichaje de asistencia.
                                         </p>
                                     </div>
                                 </div>
