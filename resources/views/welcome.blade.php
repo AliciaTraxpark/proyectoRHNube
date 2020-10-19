@@ -32,13 +32,37 @@
         body {
             background-color: #ffffff !important;
         }
+
+        @media (max-width: 1563px) and (min-width: 1528px) {
+            .pResp {
+                padding-top: 16px !important;
+                padding-bottom: 30px !important;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .colResp {
+                padding-left: 44% !important;
+            }
+            .colBtn{
+                padding-left: 45% !important;
+            }
+            .colResetResp {
+                padding-left: 41.3% !important;
+                padding-top: 2% !important;
+            }
+            .btnLinkResp{
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+        }
     </style>
     <header id="header-section">
         <nav class="navbar  pl-3 pl-sm-0" id="navbar">
             <div class="container pb-0 pt-2">
-                <div class="col-md-5" style="margin-bottom: 10px;padding-left: 60px">
+                <div class="col-md-5 colResp" style="margin-bottom: 10px;padding-left: 60px">
                     <div class="navbar-brand-wrapper d-flex">
-                        <img src="{{asset('landing/images/NUBE_SOLA.png')}}" width="30%"  height="30%" >
+                        <img src="{{asset('landing/images/NUBE_SOLA.png')}}" width="30%" height="30%">
                     </div>
                 </div>
 
@@ -71,33 +95,33 @@
                                 @enderror
                             </div>
 
-                            <div class="col-md-3 form-group mb-0" style="display:
+                            <div class="col-md-3 form-group mb-0 colBtn" style="display:
                                     flex; align-items: center; top: 15px;   padding-left: 28px;">
                                 <button type="submit" style="font-size: 12px;    padding-bottom: 5px;
                                 padding-top: 6px;" class="botonIs">Iniciar
                                     sesión</button>
                             </div>
-                           {{--  <div class="col-md-2 form-group mb-0" style="display:
+                            {{--  <div class="col-md-2 form-group mb-0" style="display:
                             flex; align-items: center; top: 15px;padding-left: 0px;
                             padding-right: 0px;left: 10px;">
                                 <a class="col-md-12" style="padding-left: 0px;
                                 padding-right: 0px;" href="{{route('registroPersona')}} "><button
-                                    class=" btn-opacity-comienza " type="button" style="font-size: 12px;padding-bottom: 5px;
+                                class=" btn-opacity-comienza " type="button" style="font-size: 12px;padding-bottom: 5px;
                                     padding-top: 6px;">Comienza ahora</button></a>
-                            </div> --}}
-                            <div class="col-md-12 form-group row p-0 m-0 text-left">
-                                <div class="col-md-6 offset-md-6 p-0">
-                                    @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}"
-                                        style="font-size:11.5px;color: #ffffff;padding-bottom: 0px;padding-top: 4px;padding-left: 14px;margin-left: 0px;">
-                                        ¿Olvidaste tu contraseña?
-                                    </a>
-                                    @endif
-                                </div>
+                        </div> --}}
+                        <div class="col-md-12 form-group row p-0 m-0 text-left">
+                            <div class="col-md-6 offset-md-6 p-0 colResetResp">
+                                @if (Route::has('password.request'))
+                                <a class="btn btn-link btnLinkResp" href="{{ route('password.request') }}"
+                                    style="font-size:11.5px;color: #ffffff;padding-bottom: 0px;padding-top: 4px;padding-left: 14px;margin-left: 0px;">
+                                    ¿Olvidaste tu contraseña?
+                                </a>
+                                @endif
                             </div>
                         </div>
-                    </form>
                 </div>
+                </form>
+            </div>
             </div>
         </nav>
     </header>
@@ -129,28 +153,35 @@
         <div class="container">
 
             <section class="digital-marketing-service" id="digital-marketing-section">
-                <div class="row align-items-center"style="margin-top: 55px;">
+                <div class="row align-items-center" style="margin-top: 55px;">
                     <div class="col-12 col-lg-1 p-0 img-digital grid-margin">
 
                     </div>
                     <div class="col-12 col-lg-5 text-center grid-margin
-                            grid-margin-lg-0" data-aos="fade-right" >
+                            grid-margin-lg-0" data-aos="fade-right">
                         <h3 class=" m-0">¿Por qué usar RH Nube?</h3>
                         <div class="col-lg-12 col-xl-12 text-center p-0">
-                            <p class="py-4 m-0 text-muted " style="font-size: 16px">Porque ahora "Administrar personal" será más sencillo y eficaz. El registro es fácil, gratuito y el costo de administración tiene un retorno de inversión (ROI) de sólo 2 días.</p>
-                                <div class="col-md-12"> <br>
-                                    <a  href="{{route('registroPersona')}} "><button {{-- onclick=" $('#modal-error').modal('show')" --}}
+                            <p class="py-4 m-0 text-muted " style="font-size: 16px">Porque ahora "Administrar personal"
+                                será más sencillo y eficaz. El registro es fácil, gratuito y el costo de administración
+                                tiene un retorno de inversión (ROI) de sólo 2 días.</p>
+                            <div class="col-md-12"> <br>
+                                <a href="{{route('registroPersona')}} "><button
+                                        {{-- onclick=" $('#modal-error').modal('show')" --}}
                                         class="btn btn-opacity-comienza mr-1">Crear mi cuenta</button></a>
-                                </div>
+                            </div>
 
                         </div>
                     </div>
 
                     <div class="col-12 col-lg-6 p-0 img-digital grid-margin
                             grid-margin-lg-0" data-aos="fade-left">
-                            <div style="padding:50.46% 0 0 0;"><iframe width="590" height="360" src="https://player.vimeo.com/video/460820175?color=ffffff&title=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
+                        <div style="padding:50.46% 0 0 0;"><iframe width="590" height="360"
+                                src="https://player.vimeo.com/video/460820175?color=ffffff&title=0&portrait=0"
+                                style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0"
+                                allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+                        <script src="https://player.vimeo.com/api/player.js"></script>
 
-                       {{--  <iframe width="590" height="360" src="https://www.youtube.com/embed/GfRqwR8d2wU" frameborder="0"
+                        {{--  <iframe width="590" height="360" src="https://www.youtube.com/embed/GfRqwR8d2wU" frameborder="0"
                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen></iframe> --}}
                         {{-- <img src="{{asset('landing/images/Group1.png')}}" alt="" class="img-fluid"> --}}
@@ -174,10 +205,13 @@
                                             alt="">
                                     </div>
                                     <div class="col-md-10">
-                                        <h6 class="card-title pt-3" style="font-size: 13.8px!important;color:#ffffff">Controla la manada o el grupo, Modo asistencia en puerta</h6>
+                                        <h6 class="card-title pt-3" style="font-size: 13.8px!important;color:#ffffff">
+                                            Controla la manada o el grupo, Modo asistencia en puerta</h6>
                                         <p class="m-0 py-3 text-muted"
                                             style="font-size: 11.5px!important;color:#ffffff!important;padding-top: 16px!important;">
-                                            La herramienta de esta modalidad puede supervisar y controlar la asistencia y actividad de un grupo de trabajadores en un punto determinado, ya sea en oficina o en el campo.
+                                            La herramienta de esta modalidad puede supervisar y controlar la asistencia
+                                            y actividad de un grupo de trabajadores en un punto determinado, ya sea en
+                                            oficina o en el campo.
                                         </p>
                                     </div>
                                 </div>
@@ -194,9 +228,10 @@
                                     <div class="col-md-10">
                                         <h6 class="card-title pt-3" style="font-size: 14px!important;color:#ffffff">
                                             Controla el personal de campo, Modo en ruta</h6>
-                                        <p class="m-0 py-3 text-muted"
-                                            style="font-size: 12.4px!important;color:#ffffff!important;padding-bottom: 30px!important" >
-                                            Herramienta móvil que permite el control de las rutas de personal, así como el detalle de las actividades que se realizan durante el día laboral.
+                                        <p class="m-0 py-3 text-muted pResp"
+                                            style="font-size: 12.4px!important;color:#ffffff!important;padding-bottom: 30px">
+                                            Herramienta móvil que permite el control de las rutas de personal, así como
+                                            el detalle de las actividades que se realizan durante el día laboral.
                                         </p>
                                     </div>
                                 </div>
@@ -213,7 +248,10 @@
                                         <h6 class="card-title pt-2" style="font-size: 13.4px!important;color:#ffffff">
                                             Control del tiempo efectivo de trabajo, Modo Remoto</h6>
                                         <p class="m-0 py-3 text-muted"
-                                            style="font-size: 11.7px!important;color:#ffffff!important">Es una herramienta fácil y práctica de manejar, controla el trabajo en oficina o en casa. Reporta tiempo efectivo de trabajo y no sólo una marcación o fichaje de asistencia.
+                                            style="font-size: 11.7px!important;color:#ffffff!important">Es una
+                                            herramienta fácil y práctica de manejar, controla el trabajo en oficina o en
+                                            casa. Reporta tiempo efectivo de trabajo y no sólo una marcación o fichaje
+                                            de asistencia.
                                         </p>
                                     </div>
                                 </div>
@@ -224,7 +262,7 @@
             </section>
 
 
-           {{--  <section class="features-overview" id="features-section" style="padding-top: 20px;">
+            {{--  <section class="features-overview" id="features-section" style="padding-top: 20px;">
                 <div class="content-header" style="padding-top: 30px;padding-bottom: 20px;">
                     <h3>¿Cómo trabaja RH nube?</h3>
                 </div>
@@ -263,83 +301,83 @@
                         </div>
                         <div class="col-md-5 text-center">
                             <img src="{{asset('landing/images/img11.jpg')}}" width="300" height="170" alt="">
-                        </div>
-                        <div class="col-md-1"></div>
-                    </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    </div>
+    <div class="col-md-12" id="divPerso" style="display: none">
+        <div class="row ">
+            <div class="col-md-2"></div>
+            <div class="col-md-4" style="padding-left: 30px;  margin-top: 15px;">
+                <h5 class=" m-0">Agregar personal de manera sencilla</h5>
+
+                <p style="font-size: 14px">Puedes agregar personal de forma individual o desde un archivo de
+                    carga en Excel y luego enviarles una invitación.</p>
+
+
+            </div>
+            <div class="col-md-5 text-center">
+                <img src="{{asset('landing/images/personal11.png')}}" width="300" height="170" alt="">
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    </div>
+    <div class="col-md-12" id="divMoni" style="display: none">
+        <div class="row ">
+            <div class="col-md-2"></div>
+            <div class="col-md-4" style="padding-left: 30px;  margin-top: 15px;">
+                <br>
+                <h5 class=" m-0">Monitorea y controla</h5>
+
+                <p style="font-size: 14px">Obtén información de valor como el control de asistencia,
+                    porcentaje
+                    de actividad y tareas que realiza tu personal.</p>
+
+
+            </div>
+            <div class="col-md-5 text-center">
+                <img src="{{asset('landing/images/moni11.jpg')}}" width="300" height="170" alt="">
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    </div><br><br>
+    </section> --}}
+
+
+    <!-- Modal for Contact - us Button -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Contact Us</h4>
                 </div>
-                <div class="col-md-12" id="divPerso" style="display: none">
-                    <div class="row ">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-4" style="padding-left: 30px;  margin-top: 15px;">
-                            <h5 class=" m-0">Agregar personal de manera sencilla</h5>
-
-                            <p style="font-size: 14px">Puedes agregar personal de forma individual o desde un archivo de
-                                carga en Excel y luego enviarles una invitación.</p>
-
-
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="Name">Name</label>
+                            <input type="text" class="form-control" id="Name" placeholder="Name">
                         </div>
-                        <div class="col-md-5 text-center">
-                            <img src="{{asset('landing/images/personal11.png')}}" width="300" height="170" alt="">
+                        <div class="form-group">
+                            <label for="Email">Email</label>
+                            <input type="email" class="form-control" id="Email-1" placeholder="Email">
                         </div>
-                        <div class="col-md-1"></div>
-                    </div>
-                </div>
-                <div class="col-md-12" id="divMoni" style="display: none">
-                    <div class="row ">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-4" style="padding-left: 30px;  margin-top: 15px;">
-                            <br>
-                            <h5 class=" m-0">Monitorea y controla</h5>
-
-                            <p style="font-size: 14px">Obtén información de valor como el control de asistencia,
-                                porcentaje
-                                de actividad y tareas que realiza tu personal.</p>
-
-
-                        </div>
-                        <div class="col-md-5 text-center">
-                            <img src="{{asset('landing/images/moni11.jpg')}}" width="300" height="170" alt="">
-                        </div>
-                        <div class="col-md-1"></div>
-                    </div>
-                </div><br><br>
-            </section> --}}
-
-
-            <!-- Modal for Contact - us Button -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="exampleModalLabel">Contact Us</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="form-group">
-                                    <label for="Name">Name</label>
-                                    <input type="text" class="form-control" id="Name" placeholder="Name">
-                                </div>
-                                <div class="form-group">
-                                    <label for="Email">Email</label>
-                                    <input type="email" class="form-control" id="Email-1" placeholder="Email">
-                                </div>
-                                <div class="form-group">
-                                    <label for="Message">Message</label>
-                                    <textarea class="form-control" id="Message" placeholder="Enter your
+                        <div class="form-group">
+                            <label for="Message">Message</label>
+                            <textarea class="form-control" id="Message" placeholder="Enter your
                                                 Message"></textarea>
-                                </div>
-                            </form>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn
                                         btn-success">Submit</button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
+    </div>
+    </div>
     </div>
     @if (session('error'))
     <div class="modal" id="modal1" role="dialog" style="display:
@@ -370,9 +408,10 @@
             <img src="{{asset('landing/images/NUBE_SOLA.png')}}" width="10%" height="10%">
         </div>
         <div class="col-md-12 text-center" style="margin-top: 10px;margin-bottom: 20px">
-            <img src="{{asset('landing/images/peru.svg')}}"  height="17"> <span  style="color:#faf3f3;font-size: 12px!important"> 017482415| &nbsp;&nbsp;<span
-                    class="mdi mdi-whatsapp" style="color: #ffffff;">+51 914 480 786 |&nbsp;&nbsp;</span> <span
-                    class="mdi mdi-email-outline" style="color: #ffffff;"></span>info@rhnube.com.pe</span>
+            <img src="{{asset('landing/images/peru.svg')}}" height="17"> <span
+                style="color:#faf3f3;font-size: 12px!important"> 017482415| &nbsp;&nbsp;<span class="mdi mdi-whatsapp"
+                    style="color: #ffffff;">+51 914 480 786 |&nbsp;&nbsp;</span> <span class="mdi mdi-email-outline"
+                    style="color: #ffffff;"></span>info@rhnube.com.pe</span>
         </div>
         <div class="col-md-12 text-center" style="margin-top: 10px;border-top: 1.5px solid #ded9d9;
         padding-top: 10px;bottom: 10px;">

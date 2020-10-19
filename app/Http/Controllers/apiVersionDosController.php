@@ -14,6 +14,7 @@ use App\organizacion;
 use App\persona;
 use App\promedio_captura;
 use App\software_vinculacion;
+use App\versionrhbox;
 use App\vinculacion;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
@@ -542,6 +543,12 @@ class apiVersionDosController extends Controller
                             ->get()
                             ->first();
                         // *****************
+                        // VERSION GLOBAL
+                        $versionGlobal = DB::table('versionrhbox as vr')
+                            ->select('vr.descripcion')
+                            ->get()
+                            ->first();
+                        // **************
                         if ($vinculacion->serieDisco ==  null) {
                             if ($vinculacion->idSoftware == null) {
                                 // AGREGAR TABLA DE SOFTWARE VINCULACIÓN
@@ -577,8 +584,14 @@ class apiVersionDosController extends Controller
                             $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
 
                             return response()->json(array(
-                                "corte" => $organizacion->corteCaptura, "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
-                                'idUser' => $idOrganizacion, 'tiempo' => $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio, 'version' => $software_vinculacion->version, 'token' => $token->get()
+                                "corte" => $organizacion->corteCaptura,
+                                "idEmpleado" => $empleado->emple_id,
+                                "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                                'idUser' => $idOrganizacion,
+                                'tiempo' => $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio,
+                                'version' => $software_vinculacion->version,
+                                'versionGlobal' => $versionGlobal->descripcion,
+                                'token' => $token->get()
                             ), 200);
                         } else {
                             if ($vinculacion->serieDisco == $request->get('serieD')) {
@@ -614,8 +627,13 @@ class apiVersionDosController extends Controller
                                 $token = JWTAuth::encode($payload);
                                 $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
                                 return response()->json(array(
-                                    "corte" => $organizacion->corteCaptura, "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
-                                    'idUser' => $idOrganizacion, 'tiempo' => $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio, 'version' => $software_vinculacion->version, 'token' => $token->get()
+                                    "corte" => $organizacion->corteCaptura,
+                                    "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                                    'idUser' => $idOrganizacion,
+                                    'tiempo' => $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio,
+                                    'version' => $software_vinculacion->version,
+                                    'versionGlobal' => $versionGlobal->descripcion,
+                                    'token' => $token->get()
                                 ), 200);
                             } else {
                                 return response()->json("disco_erroneo", 400);
