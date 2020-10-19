@@ -111,7 +111,7 @@ function cargartabla (fecha) {
         tbody='<tr>'+
         '<td>' + (i + 1) +'</td>'+
         '<td>'+dataA[i].emple_nDoc+'</td>'+
-        '<td>'+dataA[i].perso_nombre+dataA[i].perso_apPaterno+dataA[i].perso_apMaterno+'</td>';
+        '<td>'+dataA[i].perso_nombre+' '+dataA[i].perso_apPaterno+' '+dataA[i].perso_apMaterno+'</td>';
 
         if(dataA[i].cargo_descripcion!=null){
         tbody+=
