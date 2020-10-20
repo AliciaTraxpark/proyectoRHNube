@@ -71,6 +71,15 @@
             margin: 0 auto !important;
             width: 100% !important;
         }
+
+        table.dataTable>tbody>tr.child ul.dtr-details {
+            display: flex !important;
+            flex-flow: column !important;
+        }
+
+        .width-400 {
+            width: 100% !important;
+        }
     }
 
     @media (max-width: 406px) {
@@ -78,6 +87,7 @@
         table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td:first-child,
         table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th:first-child {
             padding-left: 50px !important;
+            width: 100% !important;
         }
     }
 </style>
@@ -826,6 +836,10 @@ function verDEmpleado(idempleadoVer){
                     "colvis": "Visibilidad"
                 }
             },
+            columnDefs: [
+                { responsivePriority: 1, targets: 0 },
+                { responsivePriority: 2, targets: 3 }
+            ],
             initComplete: function(){
                 this.api().columns().every(function(){
                     var that = this;
