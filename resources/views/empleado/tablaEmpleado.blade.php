@@ -72,6 +72,14 @@
             width: 100% !important;
         }
     }
+
+    @media (max-width: 406px) {
+
+        table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td:first-child,
+        table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th:first-child {
+            padding-left: 50px !important;
+        }
+    }
 </style>
 <div id="modalControlR" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalControlR"
     aria-hidden="true" data-backdrop="static">
@@ -114,7 +122,7 @@
 <!---->
 <input type="hidden" id="csrf_token" name="_token" value="{{ csrf_token() }}">
 
-<table id="tablaEmpleado" class="table table-drop dt-responsive nowrap" style="width:100%!important">
+<table id="tablaEmpleado" class="table nowrap" style="width:100%!important">
     <thead style="background: #edf0f1;color: #6c757d;" style="width:100%!important">
         {{-- <tr style="background: #ffffff">
             <th style="border-top: 1px solid #fdfdfd;"></th>
