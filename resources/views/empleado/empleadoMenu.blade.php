@@ -540,6 +540,10 @@ use App\proyecto_empleado;
         .custom-control{
             padding-left: 1rem !important;
         }
+        .labelNivel{
+            display: flex !important;
+            font-size: smaller !important;
+        }
     }
 </style>
 <div class="row page-title titleResponsive" style="padding-right: 20px;">
@@ -3102,7 +3106,7 @@ use App\proyecto_empleado;
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="sw-default">Nivel del Colaborador<a
+                                        <label for="sw-default" class="labelNivel">Nivel del Colaborador<a
                                                 onclick="$('#form-ver').modal('hide');$('#nivelmodalE').modal('show');"
                                                 data-toggle="modal"><i class="uil uil-plus"
                                                     style="color: darkblue;cursor: pointer;"></i></a></label>
