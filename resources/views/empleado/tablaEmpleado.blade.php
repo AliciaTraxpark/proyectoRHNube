@@ -1,4 +1,3 @@
-<link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 <style>
     div.dataTables_wrapper div.dataTables_filter {
         display: none;
@@ -69,7 +68,7 @@
         .dataTable,
         .dataTables_scrollHeadInner,
         .dataTables_scrollBody {
-            margin: 0 !important;
+            margin: 0 auto !important;
             width: 100% !important;
         }
     }
@@ -127,7 +126,7 @@
             <th style="border-top: 1px solid #fdfdfd;"></th>
         </tr> --}}
         <tr style="width:100%!important">
-            <th class="text-center">&nbsp;<input type="checkbox" class="ml-4" name="" id="selectT"></th>
+            <th class="text-center">&nbsp;<input type="checkbox" style="margin-left: 15px" id="selectT"></th>
             <th class="text-center"></th>
             <th class="text-center"></th>
             <th class="text-center">Número Documento</th>
@@ -791,8 +790,6 @@ function verDEmpleado(idempleadoVer){
             "lengthChange": false,
             scrollCollapse : false,
             "pageLength": 30,
-            "bAutoWidth": true,
-            autoWidth:true,
             language: {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
