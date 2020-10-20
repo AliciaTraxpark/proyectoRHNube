@@ -452,13 +452,54 @@ use App\proyecto_empleado;
         max-width: 370px;
         margin-left: 15%;
     }
+
+    @media (max-width: 767.98px) {
+
+        .btnResponsive {
+            text-align: right !important;
+            padding-right: 0% !important;
+        }
+
+        .btnPResponsive {
+            text-align: center !important;
+            display: flex !important;
+            justify-content: space-between !important;
+        }
+
+        .titleResponsive {
+            padding-right: 10px !important;
+        }
+
+        .inputResponsive {
+            padding-right: 0% !important;
+            padding-bottom: 5px !important;
+        }
+
+        .divTableResponsive {
+            padding-right: 0% !important;
+        }
+
+        .table {
+            width: 100% !important;
+        }
+
+        .dataTables_scrollHeadInner {
+            width: 100% !important;
+        }
+
+        .dataTable,
+        .dataTables_scrollHeadInner,
+        .dataTables_scrollBody {
+            width: 100% !important;
+        }
+    }
 </style>
-<div class="row page-title" style="padding-right: 20px;">
+<div class="row page-title titleResponsive" style="padding-right: 20px;">
     <div class="col-md-7">
 
         <h4 class="header-title mt-0 "></i>Empleados</h4>
     </div>
-    <div class=" col-md-5 col-xl-5 text-right">
+    <div class=" col-md-5 col-xl-5 text-right btnPResponsive">
         <a href="{{ '/empleado/cargar' }}"> <button class="btn btn-outline-secondary btn-sm"><img
                     src="{{ asset('admin/images/subir.ico') }}" height="20" class="mr-1">Carga
                 masiva emp.</button></a>&nbsp;&nbsp;
@@ -474,34 +515,28 @@ use App\proyecto_empleado;
 @section('content')
 <div class="row ">
     <div class="col-md-12 col-xl-12">
-
         <div class="card">
-            <div class="card-body" style="padding-top: 0px; background: #ffffff; font-size: 12.8px;
-                color: #222222;   padding-left: 0px;  ">
+            <div class="card-body"
+                style="padding-top: 0px; background: #ffffff; font-size: 12.8px;color: #222222; padding-left:0px;">
                 <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                 <div class="row">
-
-                    <div class="col-md-6">
-                        <h5 style="font-size: 16px!important">Búsqueda personalizada</h5>
-                    </div>
-                    <div class=" col-md-6 col-xl-6 text-right">
-
-                        <button onclick="eliminarEmpleado()" id=""
+                    <div class=" col-md-12 text-right btnResponsive">
+                        <button onclick="eliminarEmpleado()"
                             style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
                             class="btn btn-sm btn-primary delete_all" data-url="">Eliminar
                         </button>
-                        {{--  <button class="btn btn-sm btn-primary" id="formNuevoEd"
-                            style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"> Editar</button> --}}
                         <button class="btn btn-sm btn-primary" id="formNuevoE"
                             style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"> Nuevo</button>
                     </div>
-
-                    <div class="col-md-4" id="filter_global">
-                        <td align="center"><input type="text" class="global_filter form-control
-                                    " id="global_filter" style="height: 35px; " placeholder="Buscar por...">
+                    <div class="col-md-12">
+                        <h5 style="font-size: 16px!important">Búsqueda personalizada</h5>
+                    </div>
+                    <div class="col-md-4 inputResponsive" id="filter_global">
+                        <td align="center"><input type="text" class="global_filter form-control" id="global_filter"
+                                style="height: 35px; " placeholder="Buscar por...">
                         </td>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2 inputResponsive">
                         <td align="center">
                             <select class="form-control" name="select" id="select" style="height: 35.5px;">
                                 <option value="-1">PERSONALIZADO</option>
@@ -513,15 +548,12 @@ use App\proyecto_empleado;
                             </select>
                         </td>
                     </div>
-
-
-                    <div class="col-xl-6">
+                    <div class="col-xl-6 inputResponsive">
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label">Área:</label>
                             <div class="col-lg-10">
                                 <select id="selectarea" data-plugin="customselect" class="form-control form-control-sm"
                                     multiple="multiple" data-placeholder="Seleccionar áreas">
-
                                     @foreach ($area as $areas)
                                     <option class="" value="{{ $areas->area_id }}">
                                         {{ $areas->area_descripcion }}</option>
@@ -533,12 +565,9 @@ use App\proyecto_empleado;
                     </div>
                 </div>
                 <div id="espera" class="text-center" style="display: none">
-
                     <img src="{{ asset('landing/images/loading.gif') }}" height="100">
                 </div>
-                <div id="tabladiv">
-                </div>
-
+                <div id="tabladiv" class="divTableResponsive"></div>
             </div> <!-- end card body-->
         </div> <!-- end card -->
 
