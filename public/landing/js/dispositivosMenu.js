@@ -142,6 +142,19 @@ $(function() {
 
 	});
 });
+
+$(function() {
+	$(document).on('keyup', '#tiempoSin', function(event) {
+    	let minS= parseInt(this.min);
+        let valorS = parseInt(this.value);
+    	if(valorS<minS){
+    		$('#errorSincro').show();
+    		this.value = min;
+    	}
+
+	});
+});
+
 function NuevoDispo(){
     $("#errorMovil").hide();
     $("#frmHorNuevo")[0].reset();

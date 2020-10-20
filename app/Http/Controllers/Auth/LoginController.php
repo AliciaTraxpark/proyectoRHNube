@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\usuario_organizacion;
 use App\User;
 use App\invitado;
+use App\organizacion;
 use Illuminate\Support\Facades\Crypt;
 class LoginController extends Controller
 {
@@ -69,7 +70,7 @@ class LoginController extends Controller
             if($usuario_organizacion==null){
 
                 $id = Auth::user()->id;
-                
+
                 $user1 = Crypt::encrypt($id);
                 return redirect('/registro/organizacion/'.$user1);
             } else{
@@ -85,8 +86,10 @@ class LoginController extends Controller
                         return redirect(route('elegirorganizacion'));
                            /* ->with('elegirEmpresa',' Elige tu empresa')  */;
                     }else{
-
-                        $vars=$usuario_organizacion->organi_id;
+                        $organiEstado=organizacion::where('organi_id',$usuario_organizacion->organi_id)->get()->first();
+                        $estadoOrg=$organiEstado->organi_estado;
+                        if($estadoOrg==1){
+                            $vars=$usuario_organizacion->organi_id;
                         session(['sesionidorg' => $vars]);
                         ///
                         $invitado=invitado::where('user_Invitado','=', Auth::user()->id)
@@ -96,12 +99,23 @@ class LoginController extends Controller
                         if($invitado){
                             Auth::logout();
                             session()->forget('sesionidorg');
+                            session()->flush();
                             /* return view ('welcome'); */
                             return redirect()->route('login')
                             ->with('error', 'Usuario no activado.');
                         }else{
                             return redirect(route('dashboard'));
                         }
+                        }
+                        else{
+                            Auth::logout();
+                            session()->forget('sesionidorg');
+                            session()->flush();
+                            /* return view ('welcome'); */
+                            return redirect()->route('login')
+                            ->with('error', 'organizacion desactiva.');
+                        }
+
 
                     }
                 }

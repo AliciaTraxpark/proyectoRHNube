@@ -10,6 +10,7 @@
     <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')}}" rel="stylesheet"
     type="text/css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
@@ -157,7 +158,7 @@
                 <div class="row justify-content-center">
 
                     <div id="tableZoom" class="col-md-12">
-                       
+
                             {{-- <table id="tablaReport" class="table  nowrap" style="font-size: 12.8px;">
                                 <thead id="datosHtm" style=" background: #edf0f1;color: #6c757d;"> --}}
                                     {{-- <tr>
@@ -184,10 +185,10 @@
 @section('script')
     <script src="{{ asset('landing/js/actualizarPDatos.js') }}"></script>
     <!-- Plugins Js -->
-    <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
-    <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
+
+
     <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+
 
     <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
@@ -195,6 +196,12 @@
     <script src="{{ URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js') }}"></script>
     <script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
     <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
+    <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/libs/datatables/buttons.html5.min.js')
+    }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/datatables/pdfmake.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/datatables/vfs_fonts.js') }}"></script>
     <script src="{{ asset('landing/js/reporteDispo.js') }}"></script>
 @endsection
 

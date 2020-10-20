@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\organizacion;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -34,7 +36,7 @@ class OrganizacionesController extends Controller
         ->join('users as u','uso.user_id','=','u.id')
         ->join('persona as pe','u.perso_id','=','pe.perso_id')
         ->select('or.organi_id','or.organi_ruc','or.organi_tipo','or.organi_razonSocial',
-        'or.created_at','or.organi_nempleados', DB::raw('IF(e.emple_id is null, 0, COUNT(DISTINCT e.emple_id)) as nemple'))
+        'or.created_at','or.organi_nempleados', DB::raw('IF(e.emple_id is null, 0, COUNT(DISTINCT e.emple_id)) as nemple'),'organi_estado')
         ->selectRaw('GROUP_CONCAT(DISTINCT uso.user_id) as users')
         ->selectRaw('GROUP_CONCAT(DISTINCT pe.perso_nombre," ",pe.perso_apPaterno," ",pe.perso_apMaterno) as nombres')
         ->selectRaw('GROUP_CONCAT( pe.perso_celular) as celular')
@@ -47,7 +49,7 @@ class OrganizacionesController extends Controller
         ->join('users as u','uso.user_id','=','u.id')
         ->join('persona as pe','u.perso_id','=','pe.perso_id')
         ->select('or.organi_id','or.organi_ruc','or.organi_tipo','or.organi_razonSocial',
-        'or.created_at','or.organi_nempleados', DB::raw('IF(e.emple_id is null, 0, COUNT( DISTINCT e.emple_id)) as nemple'))
+        'or.created_at','or.organi_nempleados', DB::raw('IF(e.emple_id is null, 0, COUNT( DISTINCT e.emple_id)) as nemple') ,'organi_estado')
         ->union($organizaciones1)
         ->selectRaw('GROUP_CONCAT(DISTINCT uso.user_id) as users')
         ->selectRaw('GROUP_CONCAT(DISTINCT pe.perso_nombre," ",pe.perso_apPaterno," ",pe.perso_apMaterno) as nombres')
@@ -60,5 +62,19 @@ class OrganizacionesController extends Controller
 
 
         return json_encode($organizaciones);
+    }
+
+    public function activacionOrg(Request $request){
+        $idOrgani=$request->id;
+        $estado=$request->b;
+        $organizacion = organizacion::findOrFail($idOrgani);
+
+        if($estado==1){
+            $organizacion->organi_estado =1;
+            $organizacion->save();
+        } else{
+            $organizacion->organi_estado =0;
+            $organizacion->save();
+        }
     }
 }

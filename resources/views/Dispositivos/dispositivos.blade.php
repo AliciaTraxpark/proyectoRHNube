@@ -32,6 +32,17 @@
 
 
 @section('content')
+<style>
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
     <style>
         body {
             background-color: #ffffff;
@@ -160,7 +171,7 @@
             {{-- Modal nuevoDispositivo --}}
             <div id="nuevoDispositivo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                 aria-hidden="true" data-backdrop="static">
-                <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 540px;">
+                <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 640px;">
 
                     <div class="modal-content">
                         <div class="modal-header" style="background-color:#163552;">
@@ -199,8 +210,8 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="">Tiempo de sincronización(Min):</label>
-                                                    <input type="number" id="tiempoSin" required class="form-control form-control-sm"
+                                                    <label for="">Tiempo de sincronización(Min):</label> <span id="errorSincro" style="color: #690f0f;display: none">El valor min es 15.</span>
+                                                    <input type="number" id="tiempoSin" min="15" value="15"  required class="form-control form-control-sm"
                                                         required>
                                                 </div>
                                             </div>

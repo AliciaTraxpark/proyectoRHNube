@@ -91,7 +91,7 @@
                                     ->where('organi_id','=', $organizaciones->organi_id)
                                     ->where('estado_condic','=', 0)->get()->first();
                              @endphp
-                             @if ($invitado)
+                             @if ($invitado || $organizaciones->organi_estado==0)
                              <button class="btn btn-soft-primary btn-block btn-sm" style="color: #16588d;
                             background-color: #c1cee0;" disabled><i class="uil uil-arrow-right mr-1"></i>Acceso desactivado</button>
                              @else
