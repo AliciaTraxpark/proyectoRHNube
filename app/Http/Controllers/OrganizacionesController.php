@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\organizacion;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -60,5 +62,19 @@ class OrganizacionesController extends Controller
 
 
         return json_encode($organizaciones);
+    }
+
+    public function activacionOrg(Request $request){
+        $idOrgani=$request->id;
+        $estado=$request->b;
+        $organizacion = organizacion::findOrFail($idOrgani);
+
+        if($estado==1){
+            $organizacion->organi_estado =1;
+            $organizacion->save();
+        } else{
+            $organizacion->organi_estado =0;
+            $organizacion->save();
+        }
     }
 }

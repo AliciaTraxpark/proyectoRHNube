@@ -123,7 +123,13 @@ $(document).ready(function () {
             },
              { data: "users" ,
                 "render": function (data, type, row) {
-                   return '<span class="badge badge-soft-success">Activo</span>' ;
+                    if(row.organi_estado==1){
+                        return '<button class=" btn badge badge-soft-success" onclick="desactivarO('+row.organi_id+')">Activo</button>' ;
+                    }
+                    else{
+                        return '<button class=" btn badge badge-soft-danger" onclick="activarO('+row.organi_id+')">Desactivado</button>' ;
+                    }
+
                 }},
         ]
 
@@ -136,3 +142,89 @@ $(document).ready(function () {
         });
     }).draw();
 });
+function activarO(id){
+    bootbox.confirm({
+        message: "¿Desea activar esta organización?",
+        buttons: {
+            confirm: {
+                label: 'Si',
+                className: 'btn-primary'
+            },
+            cancel: {
+                label: 'No',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            if (result == true) {
+             b=1;
+                $.ajax({
+                    type: "POST",
+                    url: "/activacionOrg",
+                    data: {id,b},
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    statusCode: {
+                        /*401: function () {
+                            location.reload();
+                        },*/
+                        419: function () {
+                            location.reload();
+                        }
+                    },
+                    success: function (data) {
+                        $('#tablaOrgan').DataTable().ajax.reload();
+
+
+                    },
+                    error: function () {}
+                });
+
+            }
+        }
+    });
+}
+function desactivarO(id){
+    bootbox.confirm({
+        message: "¿Desea desactivar esta organización?",
+        buttons: {
+            confirm: {
+                label: 'Si',
+                className: 'btn-primary'
+            },
+            cancel: {
+                label: 'No',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            if (result == true) {
+             b=0;
+                $.ajax({
+                    type: "POST",
+                    url: "/activacionOrg",
+                    data: {id,b},
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    statusCode: {
+                        /*401: function () {
+                            location.reload();
+                        },*/
+                        419: function () {
+                            location.reload();
+                        }
+                    },
+                    success: function (data) {
+                        $('#tablaOrgan').DataTable().ajax.reload();
+
+
+                    },
+                    error: function () {}
+                });
+
+            }
+        }
+    });
+}

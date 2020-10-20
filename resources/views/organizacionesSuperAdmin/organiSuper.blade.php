@@ -18,6 +18,20 @@
 @endsection
 
 @section('content')
+<style>
+
+    #body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-footer > button.btn.btn-light.bootbox-cancel{
+        background: #e2e1e1;
+        color: #000000;
+        border-color:#e2e1e1;
+        zoom: 85%;
+    }
+    .btn-primary{
+        background-color: #163552!important;
+        border-color: #163552!important;
+
+    }
+</style>
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
     <div class="col-md-12">
         <div class="card">
@@ -66,7 +80,7 @@
     }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/multiselect/es.js')}}"></script>
 <!-- datatable js -->
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
 <script src="{{
