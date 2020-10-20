@@ -555,6 +555,11 @@ use App\proyecto_empleado;
             display: flex !important;
             font-size: smaller !important;
         }
+
+        li.paginate_button.previous,
+        li.paginate_button.next {
+            font-size: 0.9rem !important;
+        }
     }
 </style>
 <div class="row page-title titleResponsive" style="padding-right: 20px;">
