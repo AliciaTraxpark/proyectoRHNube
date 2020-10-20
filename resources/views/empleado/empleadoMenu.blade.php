@@ -515,19 +515,30 @@ use App\proyecto_empleado;
             flex-wrap: unset !important;
         }
 
-        .pFechas {
-            padding-right: 0%;
+        .col-4{
+            padding-right: 5px !important;
+            padding-left: 5px !important;
         }
 
         .pAnio {
             padding-right: 1%;
         }
 
-        .pleft {
+        .prigth {
+            padding-right: 3px !important;
+        }
+        .pleft{
             padding-left: 3px !important;
         }
         .selectResp{
             padding: 0 !important;
+        }
+        .pselect{
+            padding-left: 10px !important;
+            padding-right: 0 !important;
+        }
+        .custom-control{
+            padding-left: 1rem !important;
         }
     }
 </style>
@@ -1840,7 +1851,7 @@ use App\proyecto_empleado;
                                             <span id="validCel" style="color: red;">*Número
                                                 incorrecto.</span>
                                             <div class="row">
-                                                <div class="col-4">
+                                                <div class="col-4 pselect">
                                                     <select class="form-control" id="codigoCelular">
                                                         <option value="+51" selected>+51</option>
                                                     </select>
@@ -1912,7 +1923,7 @@ use App\proyecto_empleado;
                                         <div class="form-group">
                                             <label for="sw-default">Teléfono</label>
                                             <div class="row">
-                                                <div class="col-4">
+                                                <div class="col-4 pselect">
                                                     <select class="form-control" id="codigoTelefono">
                                                         <option value="01" selected>01</option>
                                                         <option value="41">41</option>
@@ -2823,7 +2834,7 @@ use App\proyecto_empleado;
                                         <span id="v_validCel" style="color: red;">*Número
                                             incorrecto.</span>
                                         <div class="row">
-                                            <div class="col-4 pFechas">
+                                            <div class="col-4 pselect">
                                                 <select class="form-control selectResp" id="v_codigoCelular">
                                                     <option value="+51" selected>+51</option>
                                                 </select>
@@ -2843,7 +2854,7 @@ use App\proyecto_empleado;
                                             *Fecha incorrecta.
                                         </span>
                                         <div class="row fechasResponsive">
-                                            <div class="col-md-4 pFechas">
+                                            <div class="col-md-4 prigth">
                                                 <select class="form-control" name="v_dia_fecha" id="v_dia_fecha"
                                                     required="">
                                                     <option value="0">Dia</option>
@@ -2852,7 +2863,7 @@ use App\proyecto_empleado;
                                                         @endfor
                                                 </select>
                                             </div>
-                                            <div class="col-md-4 pFechas pleft">
+                                            <div class="col-md-4 prigth pleft">
                                                 <select class="form-control" name="v_mes_fecha" id="v_mes_fecha"
                                                     required="">
                                                     <option value="0">Mes</option>
@@ -2896,7 +2907,7 @@ use App\proyecto_empleado;
                                     <div class="form-group">
                                         <label for="sw-default">Teléfono</label>
                                         <div class="row">
-                                            <div class="col-4 pFechas">
+                                            <div class="col-4 pselect">
                                                 <select class="form-control selectResp" id="v_codigoTelefono">
                                                     <option value="01" selected>01</option>
                                                     <option value="41">41</option>
