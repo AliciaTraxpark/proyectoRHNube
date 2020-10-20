@@ -70,6 +70,7 @@ class registroEmpresaController extends Controller
             $organizacion->organi_nempleados = $request->get('nempleados');
             $organizacion->organi_pagWeb = $request->get('pagWeb');
             $organizacion->organi_tipo = $organi;
+            $organizacion->organi_estado = 1;
             $organizacion->save();
             $idorgani = $organizacion->organi_id;
 
