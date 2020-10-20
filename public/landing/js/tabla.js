@@ -325,6 +325,10 @@ function RefreshTablaEmpleadoArea() {
                         colvis: "Visibilidad",
                     },
                 },
+                columnDefs: [
+                    { responsivePriority: 1, targets: 0 },
+                    { responsivePriority: 2, targets: 3 }
+                ],
                 initComplete: function () {
                     this.api()
                         .columns()
@@ -692,6 +696,10 @@ function RefreshTablaEmpleado() {
                         colvis: "Visibilidad",
                     },
                 },
+                columnDefs: [
+                    { responsivePriority: 1, targets: 0 },
+                    { responsivePriority: 2, targets: 3 }
+                ],
                 initComplete: function () {
                     this.api()
                         .columns()
