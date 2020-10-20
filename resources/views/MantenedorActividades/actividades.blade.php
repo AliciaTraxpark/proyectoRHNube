@@ -39,6 +39,30 @@
     .borderColor {
         border-color: red;
     }
+
+    @media (max-width: 767.98px) {
+
+        li.paginate_button.previous,
+        li.paginate_button.next {
+            font-size: 0.9rem !important;
+        }
+
+        .pr-5 {
+            padding-right: 1rem !important;
+        }
+
+        .dataTable,
+        .dataTables_scrollHeadInner,
+        .dataTables_scrollBody {
+            margin: 0 auto !important;
+            width: 100% !important;
+        }
+
+        table.dataTable>tbody>tr.child ul.dtr-details {
+            display: flex !important;
+            flex-flow: column !important;
+        }
+    }
 </style>
 <div class="row pr-5">
     <div class="col-md-12 text-right pr-5">
@@ -72,7 +96,7 @@
 </div>
 <div id="regactividadTarea" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="regactividadTarea"
     aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 550px;">
+    <div class="modal-dialog  modal-xs d-flex justify-content-center">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
                 <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Registrar Actividad

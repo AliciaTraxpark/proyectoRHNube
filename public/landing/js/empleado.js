@@ -3237,6 +3237,7 @@ function enviarEmpleado(accion, objEmpleado) {
         },
         success: function (data) {
             $("#idEmpleado").val(data);
+            console.log(data);
             $.notify(
                 {
                     message: "\nDatos Guardados.",
