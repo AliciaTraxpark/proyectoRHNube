@@ -97,9 +97,9 @@
             width: 100% !important;
         }
 
-        .dataTables_scrollHeadInner {
+        /* .dataTables_scrollHeadInner {
             width: 100% !important;
-        }
+        } */
 
         .table th,
         .table td {
@@ -155,22 +155,25 @@
                 </div>
 
                 <div class="row justify-content-center">
-                    <div class="col-md-12">
-                        <div class="table-responsive-xl">
-                            <table id="tablaReport" class="table dt-responsive nowrap" style="font-size: 12.8px;">
-                                <thead style=" background: #edf0f1;color: #6c757d;">
-                                    <tr>
+
+                    <div id="tableZoom" class="col-md-12">
+                       
+                            {{-- <table id="tablaReport" class="table  nowrap" style="font-size: 12.8px;">
+                                <thead id="datosHtm" style=" background: #edf0f1;color: #6c757d;"> --}}
+                                    {{-- <tr>
                                         <th></th>
                                         <th>DNI</th>
                                         <th>Nombre</th>
                                         <th>Cargo</th>
-                                        <th>Hora de entrada</th>
-                                        <th>Hora de salida</th>
-                                        <th>Tiempo en sitio</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
+                                        <th id="hEntrada">Hora de entrada</th>
+                                        <th id="hSalida">Hora de salida</th>
+                                        <th id="tSitio">Tiempo en sitio</th>
+                                    </tr> --}}
+                                {{-- </thead>
+                                <tbody id="tbodyD" style="background:#f7f7f7;color: #2c2c2c;">
+                                </tbody>
+                            </table> --}}
+
                     </div>
                 </div>
             </div>
