@@ -9,6 +9,7 @@
 
     .dataTables_scrollHeadInner {
         margin: 0 auto !important;
+        width: 100% !important;
     }
 
     .table th,
@@ -61,6 +62,39 @@
         min-height: 35px;
         padding: 4px 8px 4px 8px;
     }
+
+    @media (max-width: 767.98px) {
+
+        .dataTable,
+        .dataTables_scrollHeadInner,
+        .dataTables_scrollBody {
+            margin: 0 auto !important;
+            width: 100% !important;
+        }
+
+        table.dataTable>tbody>tr.child ul.dtr-details {
+            display: flex !important;
+            flex-flow: column !important;
+        }
+
+        .width-400 {
+            width: 100% !important;
+        }
+        table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td:first-child,
+        table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th:first-child {
+            padding-left: 8% !important;
+            width: 100% !important;
+        }
+    }
+
+    @media (max-width: 406px) {
+
+        table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td:first-child,
+        table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th:first-child {
+            padding-left: 8% !important;
+            width: 100% !important;
+        }
+    }
 </style>
 <div id="modalControlR" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalControlR"
     aria-hidden="true" data-backdrop="static">
@@ -103,9 +137,9 @@
 <!---->
 <input type="hidden" id="csrf_token" name="_token" value="{{ csrf_token() }}">
 
-<table id="tablaEmpleado" class="table table-drop dt-responsive nowrap" style="width:100%!important">
-    <thead style="background: #edf0f1;color: #6c757d;">
-        <tr style="background: #ffffff">
+<table id="tablaEmpleado" class="table nowrap" style="width:100%!important">
+    <thead style="background: #edf0f1;color: #6c757d;" style="width:100%!important">
+        {{-- <tr style="background: #ffffff">
             <th style="border-top: 1px solid #fdfdfd;"></th>
             <th style="border-top: 1px solid #fdfdfd;"></th>
             <th style="border-top: 1px solid #fdfdfd;"></th>
@@ -113,9 +147,9 @@
             <th style="border-top: 1px solid #fdfdfd;"></th>
             <th style="border-top: 1px solid #fdfdfd;"></th>
             <th style="border-top: 1px solid #fdfdfd;"></th>
-        </tr>
-        <tr>
-            <th class="text-center">&nbsp;<input type="checkbox" class="ml-4" name="" id="selectT"></th>
+        </tr> --}}
+        <tr style="width:100%!important">
+            <th class="text-center">&nbsp;<input type="checkbox" style="margin-left: 15px" id="selectT"></th>
             <th class="text-center"></th>
             <th class="text-center"></th>
             <th class="text-center">Número Documento</th>
@@ -779,7 +813,6 @@ function verDEmpleado(idempleadoVer){
             "lengthChange": false,
             scrollCollapse : false,
             "pageLength": 30,
-            "bAutoWidth": true,
             language: {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
@@ -808,6 +841,10 @@ function verDEmpleado(idempleadoVer){
                     "colvis": "Visibilidad"
                 }
             },
+            columnDefs: [
+                { responsivePriority: 1, targets: 0 },
+                { responsivePriority: 2, targets: 3 }
+            ],
             initComplete: function(){
                 this.api().columns().every(function(){
                     var that = this;

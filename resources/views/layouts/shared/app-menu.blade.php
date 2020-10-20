@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\DB;
         padding: 9px 30px;
         font-size: 14px;
     }
+
+    @media (max-width: 767.98px) {
+        .liNone {
+            display: none;
+        }
+    }
 </style>
 @php
 $usuario=DB::table('users')
@@ -33,7 +39,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
         </a>
     </li>
 
-    <li>
+    <li class="liNone">
         @if ($usuario[0]->user_estado==0)
         <a href="/calendario"> @else <a href="/calendarios"> @endif
                 <i data-feather="calendar"></i>
@@ -57,7 +63,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
         @endif
 
     </li>
-    <li>
+    <li class="liNone">
 
         <a href="javascript: void(0);">
             <i data-feather="clipboard"></i>

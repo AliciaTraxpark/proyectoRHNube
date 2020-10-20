@@ -68,8 +68,8 @@ use App\proyecto_empleado;
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
-                    empleado
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                    Enviar correo a empleado
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                     onclick="$('#form-registrar').show();">
@@ -79,22 +79,25 @@ use App\proyecto_empleado;
             <div class="modal-body">
                 <input style="display: none;" id="windows">
                 <form class="form-horizontal">
-                    <h5 class="modal-title" id="myModalLabel" style="font-size:
-                        15px">¿Desea enviar correo al empleado?</h5>
+                    <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
+                        ¿Desea enviar correo al empleado?
+                    </h5>
                 </form>
             </div>
             <div class="modal-footer">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-10 text-right" style="padding-right:
-                        0px;">
+                        <div class="col-md-10 text-right" style="padding-right:0px;">
                             <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                                onclick="$('#form-registrar').show();">Cancelar</button>
+                                onclick="$('#form-registrar').show();">
+                                Cancelar
+                            </button>
                         </div>
                         <div class="col-md-2 text-right">
                             <button type="button" id="enviarCorreoWindowsEmpleado" name="enviarCorreoWindowsEmpleado"
-                                style="background-color: #163552;" class="btn
-                                btn-sm">Enviar</button>
+                                style="background-color: #163552;" class="btn btn-sm">
+                                Enviar
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -107,8 +110,8 @@ use App\proyecto_empleado;
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Enviar correo a
-                    empleado
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                    Enviar correo a empleado
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                     onclick="$('#form-ver').show();">
@@ -118,22 +121,26 @@ use App\proyecto_empleado;
             <div class="modal-body">
                 <input style="display: none;" id="windows">
                 <form class="form-horizontal">
-                    <h5 class="modal-title" id="myModalLabel" style="font-size:
-                        15px">¿Desea enviar correo al empleado?</h5>
+                    <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
+                        ¿Desea enviar correo al empleado?
+                    </h5>
                 </form>
             </div>
             <div class="modal-footer">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-10 text-right" style="padding-right:
-                        0px;">
+                        <div class="col-md-10 text-right" style="padding-right:0px;">
                             <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                                onclick="$('#form-ver').show();">Cancelar</button>
+                                onclick="$('#form-ver').show();">
+                                Cancelar
+                            </button>
                         </div>
                         <div class="col-md-2 text-right">
                             <button type="button" id="v_enviarCorreoWindowsEmpleado"
-                                name="v_enviarCorreoWindowsEmpleado" style="background-color: #163552;" class="btn
-                                btn-sm">Enviar</button>
+                                name="v_enviarCorreoWindowsEmpleado" style="background-color: #163552;"
+                                class="btn btn-sm">
+                                Enviar
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -446,19 +453,101 @@ use App\proyecto_empleado;
         background: #ced0d3;
     }
 
-    .ms-container {
-        background: transparent url('../admin/images/multiple-arrow.png') no-repeat 50% 50%;
-        width: auto;
-        max-width: 370px;
-        margin-left: 15%;
+    @media (max-width: 767.98px) {
+
+        .btnResponsive {
+            text-align: right !important;
+            padding-right: 0% !important;
+        }
+
+        .btnPResponsive {
+            text-align: center !important;
+            display: flex !important;
+            justify-content: space-between !important;
+        }
+
+        .titleResponsive {
+            padding-right: 10px !important;
+        }
+
+        .inputResponsive {
+            padding-right: 0% !important;
+            padding-bottom: 5px !important;
+        }
+
+        .divTableResponsive {
+            padding-right: 0% !important;
+        }
+
+        .table {
+            width: 100% !important;
+        }
+
+        .dataTables_scrollHeadInner {
+            width: 100% !important;
+        }
+
+        .dataTable,
+        .dataTables_scrollHeadInner,
+        .dataTables_scrollBody {
+            width: 100% !important;
+        }
+
+        #v_dia_fecha {
+            max-width: 100%;
+            margin: 0% !important;
+            padding: 0% !important;
+        }
+
+        #v_mes_fecha {
+            max-width: 100%;
+            margin: 0% !important;
+            padding: 0% !important;
+        }
+
+        #v_ano_fecha {
+            max-width: 100%;
+            margin: 0% !important;
+            padding: 0% !important;
+        }
+
+        .fechasResponsive {
+            flex-wrap: unset !important;
+        }
+
+        .col-4{
+            padding-right: 5px !important;
+            padding-left: 5px !important;
+        }
+
+        .pAnio {
+            padding-right: 1%;
+        }
+
+        .prigth {
+            padding-right: 3px !important;
+        }
+        .pleft{
+            padding-left: 3px !important;
+        }
+        .selectResp{
+            padding: 0 !important;
+        }
+        .pselect{
+            padding-left: 10px !important;
+            padding-right: 0 !important;
+        }
+        .custom-control{
+            padding-left: 1rem !important;
+        }
     }
 </style>
-<div class="row page-title" style="padding-right: 20px;">
+<div class="row page-title titleResponsive" style="padding-right: 20px;">
     <div class="col-md-7">
 
         <h4 class="header-title mt-0 "></i>Empleados</h4>
     </div>
-    <div class=" col-md-5 col-xl-5 text-right">
+    <div class=" col-md-5 col-xl-5 text-right btnPResponsive">
         <a href="{{ '/empleado/cargar' }}"> <button class="btn btn-outline-secondary btn-sm"><img
                     src="{{ asset('admin/images/subir.ico') }}" height="20" class="mr-1">Carga
                 masiva emp.</button></a>&nbsp;&nbsp;
@@ -474,34 +563,27 @@ use App\proyecto_empleado;
 @section('content')
 <div class="row ">
     <div class="col-md-12 col-xl-12">
-
         <div class="card">
-            <div class="card-body" style="padding-top: 0px; background: #ffffff; font-size: 12.8px;
-                color: #222222;   padding-left: 0px;  ">
-                <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
+            <div class="card-body"
+                style="padding-top: 0px; background: #ffffff; font-size: 12.8px;color: #222222; padding-left:0px;">
                 <div class="row">
-
-                    <div class="col-md-6">
-                        <h5 style="font-size: 16px!important">Búsqueda personalizada</h5>
-                    </div>
-                    <div class=" col-md-6 col-xl-6 text-right">
-
-                        <button onclick="eliminarEmpleado()" id=""
+                    <div class=" col-md-12 text-right btnResponsive">
+                        <button onclick="eliminarEmpleado()"
                             style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
                             class="btn btn-sm btn-primary delete_all" data-url="">Eliminar
                         </button>
-                        {{--  <button class="btn btn-sm btn-primary" id="formNuevoEd"
-                            style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"> Editar</button> --}}
                         <button class="btn btn-sm btn-primary" id="formNuevoE"
                             style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"> Nuevo</button>
                     </div>
-
-                    <div class="col-md-4" id="filter_global">
-                        <td align="center"><input type="text" class="global_filter form-control
-                                    " id="global_filter" style="height: 35px; " placeholder="Buscar por...">
+                    <div class="col-md-12">
+                        <h5 style="font-size: 16px!important">Búsqueda personalizada</h5>
+                    </div>
+                    <div class="col-md-4 inputResponsive" id="filter_global">
+                        <td align="center"><input type="text" class="global_filter form-control" id="global_filter"
+                                style="height: 35px; " placeholder="Buscar por...">
                         </td>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2 inputResponsive">
                         <td align="center">
                             <select class="form-control" name="select" id="select" style="height: 35.5px;">
                                 <option value="-1">PERSONALIZADO</option>
@@ -513,35 +595,27 @@ use App\proyecto_empleado;
                             </select>
                         </td>
                     </div>
-
-
-                    <div class="col-xl-6">
+                    <div class="col-xl-6 inputResponsive">
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label">Área:</label>
                             <div class="col-lg-10">
                                 <select id="selectarea" data-plugin="customselect" class="form-control form-control-sm"
                                     multiple="multiple" data-placeholder="Seleccionar áreas">
-
                                     @foreach ($area as $areas)
                                     <option class="" value="{{ $areas->area_id }}">
                                         {{ $areas->area_descripcion }}</option>
                                     @endforeach
                                 </select>
                             </div>
-
                         </div>
                     </div>
                 </div>
                 <div id="espera" class="text-center" style="display: none">
-
                     <img src="{{ asset('landing/images/loading.gif') }}" height="100">
                 </div>
-                <div id="tabladiv">
-                </div>
-
+                <div id="tabladiv" class="divTableResponsive"></div>
             </div> <!-- end card body-->
         </div> <!-- end card -->
-
     </div>
     <div id="modalInformacionF" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalInformacionF"
         aria-hidden="true" data-backdrop="static">
@@ -1777,7 +1851,7 @@ use App\proyecto_empleado;
                                             <span id="validCel" style="color: red;">*Número
                                                 incorrecto.</span>
                                             <div class="row">
-                                                <div class="col-4">
+                                                <div class="col-4 pselect">
                                                     <select class="form-control" id="codigoCelular">
                                                         <option value="+51" selected>+51</option>
                                                     </select>
@@ -1849,7 +1923,7 @@ use App\proyecto_empleado;
                                         <div class="form-group">
                                             <label for="sw-default">Teléfono</label>
                                             <div class="row">
-                                                <div class="col-4">
+                                                <div class="col-4 pselect">
                                                     <select class="form-control" id="codigoTelefono">
                                                         <option value="01" selected>01</option>
                                                         <option value="41">41</option>
@@ -2760,8 +2834,8 @@ use App\proyecto_empleado;
                                         <span id="v_validCel" style="color: red;">*Número
                                             incorrecto.</span>
                                         <div class="row">
-                                            <div class="col-4">
-                                                <select class="form-control" id="v_codigoCelular">
+                                            <div class="col-4 pselect">
+                                                <select class="form-control selectResp" id="v_codigoCelular">
                                                     <option value="+51" selected>+51</option>
                                                 </select>
                                             </div>
@@ -2776,10 +2850,11 @@ use App\proyecto_empleado;
                                 <div class="col-4">
                                     <div class="form-group">
                                         <label for="sw-default">Fecha Nacimiento</label>
-                                        <span id="v_validFechaC" style="color: red;display: none;">*Fecha
-                                            incorrecta.</span>
-                                        <div class="row">
-                                            <div class="col-md-4">
+                                        <span id="v_validFechaC" style="color: red;display: none;">
+                                            *Fecha incorrecta.
+                                        </span>
+                                        <div class="row fechasResponsive">
+                                            <div class="col-md-4 prigth">
                                                 <select class="form-control" name="v_dia_fecha" id="v_dia_fecha"
                                                     required="">
                                                     <option value="0">Dia</option>
@@ -2788,7 +2863,7 @@ use App\proyecto_empleado;
                                                         @endfor
                                                 </select>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-4 prigth pleft">
                                                 <select class="form-control" name="v_mes_fecha" id="v_mes_fecha"
                                                     required="">
                                                     <option value="0">Mes</option>
@@ -2806,7 +2881,7 @@ use App\proyecto_empleado;
                                                     <option class="" value="12">Dic.</option>
                                                 </select>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-4 pAnio pleft">
                                                 <select class="form-control" style="padding-left: 5px;
                                                 padding-right: 5px;" name="v_mes_fecha" id="v_ano_fecha" required="">
                                                     <option value="0">Año</option>
@@ -2832,8 +2907,8 @@ use App\proyecto_empleado;
                                     <div class="form-group">
                                         <label for="sw-default">Teléfono</label>
                                         <div class="row">
-                                            <div class="col-4">
-                                                <select class="form-control" id="v_codigoTelefono">
+                                            <div class="col-4 pselect">
+                                                <select class="form-control selectResp" id="v_codigoTelefono">
                                                     <option value="01" selected>01</option>
                                                     <option value="41">41</option>
                                                     <option value="43">43</option>
