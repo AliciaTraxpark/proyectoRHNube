@@ -80,13 +80,18 @@
         .width-400 {
             width: 100% !important;
         }
+        table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td:first-child,
+        table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th:first-child {
+            padding-left: 8% !important;
+            width: 100% !important;
+        }
     }
 
     @media (max-width: 406px) {
 
         table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td:first-child,
         table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th:first-child {
-            padding-left: 50px !important;
+            padding-left: 8% !important;
             width: 100% !important;
         }
     }
