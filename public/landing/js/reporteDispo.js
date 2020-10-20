@@ -312,6 +312,45 @@ function cargartabla (fecha) {
                 colvis: "Visibilidad",
             },
         },
+        
+        dom: 'Bfrtip',
+                    buttons: [{
+                        extend: 'excel',
+                        className: 'btn btn-sm mt-1',
+                        text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
+                        customize: function (xlsx) {
+                            var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                        },
+                        sheetName: 'Exported data',
+                        autoFilter: false
+                    }, {
+                        extend: "pdfHtml5",
+                        className: 'btn btn-sm mt-1',
+                        text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
+                        orientation: 'landscape',
+                        pageSize: 'LEGAL',
+                        title: 'REPORTE ASISTENCIA',
+                        customize: function (doc) {
+                            doc['styles'] = {
+                                userTable: {
+                                    margin: [0, 15, 0, 15]
+                                },
+                                title: {
+                                    color: '#163552',
+                                    fontSize: '20',
+                                    alignment: 'center'
+                                },
+                                tableHeader: {
+                                    bold: !0,
+                                    fontSize: 11,
+                                    color: '#FFFFFF',
+                                    fillColor: '#163552',
+                                    alignment: 'center'
+                                }
+                            };
+                        }
+                    }],
+                    paging: true
 
       /*   ajax: {
 
