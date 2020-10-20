@@ -494,21 +494,24 @@ use App\proyecto_empleado;
         }
 
         #v_dia_fecha,
-        #v_dia_fechaV {
+        #v_dia_fechaV,
+        #dia_fecha {
             max-width: 100%;
             margin: 0% !important;
             padding: 0% !important;
         }
 
         #v_mes_fecha,
-        #v_mes_fechaV {
+        #v_mes_fechaV,
+        #mes_fecha {
             max-width: 100%;
             margin: 0% !important;
             padding: 0% !important;
         }
 
         #v_ano_fecha,
-        #v_ano_fechaV {
+        #v_ano_fechaV,
+        #ano_fecha {
             max-width: 100%;
             margin: 0% !important;
             padding: 0% !important;
@@ -1882,8 +1885,8 @@ use App\proyecto_empleado;
                                             <label for="sw-default">Fecha Nacimiento</label>
                                             <span id="validFechaC" style="color: red;display: none;">*Fecha
                                                 incorrecta.</span>
-                                            <div class="row">
-                                                <div class="col-md-4">
+                                            <div class="row fechasResponsive">
+                                                <div class="col-md-4 prigth">
                                                     <select class="form-control" name="dia_fecha" id="dia_fecha"
                                                         required="">
                                                         <option value="0">Dia</option>
@@ -1892,7 +1895,7 @@ use App\proyecto_empleado;
                                                             @endfor
                                                     </select>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-4 prigth pleft">
                                                     <select class="form-control" name="mes_fecha" id="mes_fecha"
                                                         required="">
                                                         <option value="0">Mes</option>
@@ -1910,7 +1913,7 @@ use App\proyecto_empleado;
                                                         <option class="" value="12">Dic.</option>
                                                     </select>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-4 pAnio pleft">
                                                     <select class="form-control" style="padding-left: 5px;
                                                     padding-right: 5px;" name="ano_fecha" id="ano_fecha" required="">
                                                         <option value="0">Año</option>
@@ -2138,7 +2141,7 @@ use App\proyecto_empleado;
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="sw-default">Nivel <a
+                                            <label for="sw-default" class="labelNivel">Nivel del Colaborador<a
                                                     onclick="$('#form-registrar').modal('hide');" href="#nivelmodal"
                                                     data-toggle="modal" data-target="#nivelmodal"><i
                                                         class="uil uil-plus"></i></a></label>
