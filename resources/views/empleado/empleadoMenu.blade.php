@@ -493,19 +493,22 @@ use App\proyecto_empleado;
             width: 100% !important;
         }
 
-        #v_dia_fecha {
+        #v_dia_fecha,
+        #v_dia_fechaV {
             max-width: 100%;
             margin: 0% !important;
             padding: 0% !important;
         }
 
-        #v_mes_fecha {
+        #v_mes_fecha,
+        #v_mes_fechaV {
             max-width: 100%;
             margin: 0% !important;
             padding: 0% !important;
         }
 
-        #v_ano_fecha {
+        #v_ano_fecha,
+        #v_ano_fechaV {
             max-width: 100%;
             margin: 0% !important;
             padding: 0% !important;
@@ -515,7 +518,7 @@ use App\proyecto_empleado;
             flex-wrap: unset !important;
         }
 
-        .col-4{
+        .col-4 {
             padding-right: 5px !important;
             padding-left: 5px !important;
         }
@@ -527,20 +530,25 @@ use App\proyecto_empleado;
         .prigth {
             padding-right: 3px !important;
         }
-        .pleft{
+
+        .pleft {
             padding-left: 3px !important;
         }
-        .selectResp{
+
+        .selectResp {
             padding: 0 !important;
         }
-        .pselect{
+
+        .pselect {
             padding-left: 10px !important;
             padding-right: 0 !important;
         }
-        .custom-control{
+
+        .custom-control {
             padding-left: 1rem !important;
         }
-        .labelNivel{
+
+        .labelNivel {
             display: flex !important;
             font-size: smaller !important;
         }
@@ -3830,8 +3838,8 @@ use App\proyecto_empleado;
                                     <div class="form-group">
                                         <label for="sw-default">Fecha Nacimiento</label>
 
-                                        <div class="row">
-                                            <div class="col-md-4">
+                                        <div class="row fechasResponsive">
+                                            <div class="col-md-4 prigth">
                                                 <select class="form-control" name="v_dia_fechaV" id="v_dia_fechaV"
                                                     required="">
                                                     <option value="0">Dia</option>
@@ -3840,7 +3848,7 @@ use App\proyecto_empleado;
                                                         @endfor
                                                 </select>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-4 prigth">
                                                 <select class="form-control" name="v_mes_fechaV" id="v_mes_fechaV"
                                                     required="">
                                                     <option value="0">Mes</option>
@@ -3858,7 +3866,7 @@ use App\proyecto_empleado;
                                                     <option class="" value="12">Dic.</option>
                                                 </select>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-4 pAnio pleft">
                                                 <select class="form-control" style="padding-left: 5px;
                                                 padding-right: 5px;" name="v_mes_fechaV" id="v_ano_fechaV" required="">
                                                     <option value="0">Año</option>
