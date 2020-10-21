@@ -63,6 +63,33 @@
         border-color: #163552;
         zoom: 85%;
     }
+
+    @media (max-width: 767px) {
+        .cabezerasResp {
+            padding: 5px !important;
+        }
+
+        .colResp {
+            width: 70% !important;
+        }
+
+        .colBtnResp {
+            width: 30% !important;
+        }
+
+        .bodyResp {
+            padding-right: 0% !important;
+            padding-left: 0% !important;
+        }
+
+        .pl-5 {
+            padding-left: 1rem !important;
+        }
+
+        .pr-5 {
+            padding-right: 1rem !important;
+        }
+    }
 </style>
 
 <!--MODAL GENERO-->
@@ -136,7 +163,7 @@
 {{-- modal cambiar contraseña --}}
 <div id="cambiarContras" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 550px;">
+    <div class="modal-dialog  modal-xs d-flex justify-content-center">
 
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
@@ -188,22 +215,22 @@
 <div class="row pt-5">
     <div class="col-xl-12">
         <div class="card">
-            <div class="card-header" style="border-top-right-radius: 5px; border-top-left-radius: 5px;">
+            <div class="card-header cabezerasResp" style="border-top-right-radius: 5px; border-top-left-radius: 5px;">
                 <div class="row">
-                    <div class="col-xl-6">
+                    <div class="col-xl-6 colResp">
                         <h6 class="header-title mt-0 mb-0" style="color: #4B4B5A;font-size: 14px">
                             <img src="{{asset('landing/images/usuario.svg')}}" height="24" class="mr-2">
                             DATOS PERSONALES
                         </h6>
                     </div>
-                    <div class="col-xl-6 text-right">
+                    <div class="col-xl-6 text-right colBtnResp">
                         <button type="button" id="editarDatosP" class="btn btn-sm" style="background-color: #163552">
                             <span>Editar</span>
                         </button>
                     </div>
                 </div>
             </div>
-            <div class="card-body border">
+            <div class="card-body border bodyResp">
                 <div class="row">
                     <div class="col-xl-4">
                         <div class="text-center">
@@ -285,11 +312,10 @@
                         <br>
                         <div class="row">
                             <div class="col-xl-12">
-                                <div class="form-group mb-0
-                            justify-content-end row">
+                                <div class="form-group mb-0 justify-content-end row">
                                     <div class="col-12 text-right">
-                                        <button type="button" class="btn btn-light
-                                    btn-sm" onclick="javascript:limpiarDatosPersonales();">Cancelar
+                                        <button type="button" class="btn btn-light btn-sm"
+                                            onclick="javascript:limpiarDatosPersonales();">Cancelar
                                         </button>
                                         &nbsp;&nbsp;
                                         <button type="button" id="actualizarDatosPersonales" class="btn
@@ -310,15 +336,15 @@
 <div class="row pt-5">
     <div class="col-xl-12">
         <div class="card">
-            <div class="card-header" style="border-top-right-radius: 5px; border-top-left-radius: 5px;">
+            <div class="card-header cabezerasResp" style="border-top-right-radius: 5px; border-top-left-radius: 5px;">
                 <div class="row">
-                    <div class="col-xl-6">
+                    <div class="col-xl-6 colResp">
                         <h6 class="header-title mt-0 mb-0" style="color: #4B4B5A;font-size: 14px">
                             <img src="{{asset('landing/images/rompecabezas.svg')}}" height="24" class="mr-2">
                             DATOS DE LA EMPRESA
                         </h6>
                     </div>
-                    <div class="col-xl-6 text-right">
+                    <div class="col-xl-6 text-right colBtnResp">
                         <button type="button" id="editarDatosE" class="btn btn-sm" style="background-color: #163552">
                             <span>Editar</span>
                         </button>
@@ -374,8 +400,7 @@
                                 Tipo de Organización
                                 &nbsp;&nbsp;&nbsp;
                                 <a data-toggle="modal" id="organizacionPersonalizado">
-                                    <img style="cursor: pointer" src="{{asset('landing/images/plus.svg')}}"
-                                        height="15">
+                                    <img style="cursor: pointer" src="{{asset('landing/images/plus.svg')}}" height="15">
                                 </a>
                             </label>
                             <select class="form-control" name="organizacion" id="organizacion" required>
