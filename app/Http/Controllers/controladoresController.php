@@ -35,20 +35,22 @@ class controladoresController extends Controller
         $controladores->save();
 
         $idDispositi=$request->dispoCon;
-        foreach($idDispositi as $idDispositis){
-          $dispositivo_controlador=new dispositivo_controlador();
-          $dispositivo_controlador->idDispositivos=$idDispositis;
-          $dispositivo_controlador->idControladores=$controladores->idControladores;
-          $dispositivo_controlador->organi_id=session('sesionidorg');
-          $dispositivo_controlador->save();
-        }
+        if($idDispositi){
+            foreach($idDispositi as $idDispositis){
+                $dispositivo_controlador=new dispositivo_controlador();
+                $dispositivo_controlador->idDispositivos=$idDispositis;
+                $dispositivo_controlador->idControladores=$controladores->idControladores;
+                $dispositivo_controlador->organi_id=session('sesionidorg');
+                $dispositivo_controlador->save();
+              }
 
+        }
     }
 
     public function tablaControladores(){
         $controladores=controladores::where('controladores.organi_id','=',session('sesionidorg'))
-         ->join('dispositivo_controlador as dc','controladores.idControladores','=','dc.idControladores')
-        ->join('dispositivos as dis','dc.idDispositivos','=','dis.idDispositivos')
+         ->leftJoin('dispositivo_controlador as dc','controladores.idControladores','=','dc.idControladores')
+        ->leftJoin('dispositivos as dis','dc.idDispositivos','=','dis.idDispositivos')
         ->select('controladores.idControladores','controladores.cont_codigo','controladores.cont_nombres',
         'controladores.cont_ApPaterno','controladores.cont_ApMaterno','controladores.cont_correo',
         'controladores.cont_estado')
@@ -68,6 +70,53 @@ class controladoresController extends Controller
 
         ->get();
         return json_encode($dispositivo_controlador);
+    }
+
+    public function datosControEditar(Request $request){
+        $controladores=controladores::where('controladores.organi_id','=',session('sesionidorg'))
+        ->where('controladores.idControladores',$request->id)
+        ->leftJoin('dispositivo_controlador as dc','controladores.idControladores','=','dc.idControladores')
+       ->leftJoin('dispositivos as dis','dc.idDispositivos','=','dis.idDispositivos')
+       ->select('controladores.idControladores','controladores.cont_codigo','controladores.cont_nombres',
+       'controladores.cont_ApPaterno','controladores.cont_ApMaterno','controladores.cont_correo',
+       'controladores.cont_estado')
+       ->selectRaw('GROUP_CONCAT(dis.idDispositivos) as ids')
+       ->groupBy('controladores.idControladores')
+       ->get()->first();
+
+       return $controladores;
+    }
+
+    public function controladUpdate(Request $request){
+        $controladores = controladores::findOrFail($request->idcontr_ed);
+        $controladores->cont_codigo=$request->codigoCon_ed;
+        $controladores->cont_nombres=$request->nombresCon_ed;
+        $controladores->cont_ApPaterno=$request->paternoCon_ed;
+        $controladores->cont_ApMaterno=$request->maternoCon_ed;
+        $controladores->cont_correo=$request->correoCon_ed;
+        $controladores->save();
+
+        $idDispositi=$request->dispoCon_ed;
+        if($idDispositi){
+            foreach($idDispositi as $idDispositis){
+
+                $dispositivo_controlador=dispositivo_controlador::where('idDispositivos',$idDispositis)
+                ->where('idControladores',$request->idcontr_ed)->where('organi_id',session('sesionidorg'))
+                ->get()->first();
+                if($dispositivo_controlador==null){
+                    $dispositivo_controlador=new dispositivo_controlador();
+                    $dispositivo_controlador->idDispositivos=$idDispositis;
+                    $dispositivo_controlador->idControladores=$request->idcontr_ed;
+                    $dispositivo_controlador->organi_id=session('sesionidorg');
+                    $dispositivo_controlador->save();
+                }
+                /* $dispositivo_controlador->idDispositivos=$idDispositis;
+                $dispositivo_controlador->idControladores=$controladores->idControladores;
+                $dispositivo_controlador->organi_id=session('sesionidorg');
+                $dispositivo_controlador->save(); */
+              }
+
+        }
     }
 
 }

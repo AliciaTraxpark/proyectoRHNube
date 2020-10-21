@@ -399,7 +399,8 @@ Route::get('/controladores', 'controladoresController@index');
 Route::post('/controladStore', 'controladoresController@store');
 Route::post('/listaControladores', 'controladoresController@tablaControladores');
 Route::post('/disposiControladores', 'controladoresController@disposiControladores');
-
+Route::post('/datosControEditar', 'controladoresController@datosControEditar');
+Route::post('/controladUpdate', 'controladoresController@controladUpdate');
 // PRECIOS
 Route::get('/planes', 'PrecioPlanesController@vistaPrecios');
 

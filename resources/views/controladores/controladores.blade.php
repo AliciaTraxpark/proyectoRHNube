@@ -203,7 +203,98 @@
                                                 <div class="form-group">
                                                     <label for="">Seleccione dispositivo:</label>
                                                     <select data-plugin="customselect" multiple="multiple" id="selectDispo"
-                                                    class="form-control"  required>
+                                                    class="form-control"  >
+                                                    @foreach ($dispositivo as $dispositivos)
+                                                    <option class="" value="{{$dispositivos->idDispositivos}}">{{$dispositivos->dispo_descripUbicacion}}
+                                                    @if ($dispositivos->dispo_estado!=2)
+                                                        (No confirmado)
+                                                        @endif
+                                                           </option>
+                                                    @endforeach
+
+                                                </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <button type="button" class="btn btn-light btn-sm "
+                                            data-dismiss="modal">Cancelar</button>
+                                        <button type="submit" name="" style="background-color: #163552;"
+                                            class="btn btn-sm ">Guardar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
+            {{-- Editar Controlador --}}
+            <div id="editarControlador" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 620px;">
+
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color:#163552;">
+                            <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Editar Controlador
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" style="font-size:12px!important">
+                            <div class="row">
+                                <input type="hidden" id="idControladorEdit">
+                                <div class="col-md-12">
+                                    <form  action="javascript:EditarContro()">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label >Código de controlador:</label>
+                                                    <input type="text" class="form-control form-control-sm" id="codContro_ed" required >
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="">Correo:</label>
+                                                    <input type="text"  class="form-control form-control-sm" id="codCorreo_ed"
+                                                        >
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="">Nombres:</label>
+                                                    <input type="text"  class="form-control form-control-sm" id="codNombres_ed"
+                                                         required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="">Ap. Paterno:</label>
+                                                    <input type="text"  class="form-control form-control-sm" id="codPaterno_ed"
+                                                        required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="">Ap. Materno:</label>
+                                                    <input type="text"  class="form-control form-control-sm" id="codMaterno_ed"
+                                                        required>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="">Seleccione dispositivo:</label>
+                                                    <select data-plugin="customselect" multiple="multiple" id="selectDispo_ed"
+                                                    class="form-control"  >
                                                     @foreach ($dispositivo as $dispositivos)
                                                     <option class="" value="{{$dispositivos->idDispositivos}}">{{$dispositivos->dispo_descripUbicacion}}
                                                     @if ($dispositivos->dispo_estado!=2)
