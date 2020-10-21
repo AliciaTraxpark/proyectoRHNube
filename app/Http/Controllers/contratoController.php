@@ -15,6 +15,7 @@ class contratoController extends Controller
     {
         $tipoC = new tipo_contrato();
         $tipoC->contrato_descripcion = $request->get('contrato_descripcion');
+        $tipoC->organi_id = session('sesionidorg');
         $tipoC->save();
         return  $tipoC;
     }

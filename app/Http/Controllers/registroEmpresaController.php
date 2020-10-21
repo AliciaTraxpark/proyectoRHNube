@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use App\organizacion;
 use App\persona;
+use App\tipo_contrato;
 use App\ubigeo_peru_departments;
 use App\ubigeo_peru_provinces;
 use App\ubigeo_peru_districts;
@@ -75,17 +76,40 @@ class registroEmpresaController extends Controller
             $idorgani = $organizacion->organi_id;
 
             //
-            $condicion_pago=new condicion_pago();
-            $condicion_pago->condicion='Mensual';
-            $condicion_pago->organi_id=$idorgani;
+            $condicion_pago = new condicion_pago();
+            $condicion_pago->condicion = 'Mensual';
+            $condicion_pago->organi_id = $idorgani;
             $condicion_pago->save();
 
             //
-            $condicion_pago1=new condicion_pago();
-            $condicion_pago1->condicion='Quincenal';
-            $condicion_pago1->organi_id=$idorgani;
+            $condicion_pago1 = new condicion_pago();
+            $condicion_pago1->condicion = 'Quincenal';
+            $condicion_pago1->organi_id = $idorgani;
             $condicion_pago1->save();
 
+            // TIPOS DE CONTRATO
+            $arrayContrato = [
+                'Freelance',
+                'Part time',
+                'Planilla',
+                'Planilla - Contrato de emergencia',
+                'Planilla - Contrato de suplencia',
+                'Planilla - Contrato de temporada',
+                'Planilla - Contrato intermitente',
+                'Planilla - Contrato ocasional',
+                'Planilla - Contrato por inicio o incremento de actividad',
+                'Planilla - Contrato por necesidad de mercado',
+                'Planilla - Contrato por obra determinada o servicio específico',
+                'Planilla - Contrato por reconversión empresarial',
+                'Por servicio'
+            ];
+            foreach ($arrayContrato as $c) {
+                $contrato = new tipo_contrato();
+                $contrato->contrato_descripcion = $c;
+                $contrato->organi_id =  $idorgani;
+                $contrato->save();
+            }
+            // 
             $usuario_organizacion = new usuario_organizacion();
             $usuario_organizacion->rol_id = 1;
             $usuario_organizacion->user_id = $request->get('iduser');
@@ -113,14 +137,13 @@ class registroEmpresaController extends Controller
             $correo = array($datos['email']);
             $datoNuevo = explode("@", $data[0]->email);
             /////////////////////////////////
-            $comusuario_organizacion=usuario_organizacion::where('user_id','=', $users->id)->count();
-            if($comusuario_organizacion>1){
+            $comusuario_organizacion = usuario_organizacion::where('user_id', '=', $users->id)->count();
+            if ($comusuario_organizacion > 1) {
                 return Redirect::to('/')->with('mensaje', "Nueva organizacion creada exitosamente!");
-
-            }else{
+            } else {
                 if (sizeof($datoNuevo) != 2) {
                     $codigo = $request->get('iduser') . "c" . $idPersona[0]->perso_id;
-                     $codigoI = intval($codigo, 36);
+                    $codigoI = intval($codigo, 36);
                     $mensaje = "RH nube - Codigo de validacion " . $codigoI;
                     $curl = curl_init();
                     curl_setopt_array($curl, array(
@@ -155,7 +178,6 @@ class registroEmpresaController extends Controller
                     Mail::to($correo)->queue(new CorreoMail($users, $persona, $organi));
                     return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado! Te hemos enviado un correo de verificación.");
                 }
-
             }
             ////////////////////////////
 
