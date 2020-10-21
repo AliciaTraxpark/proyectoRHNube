@@ -72,12 +72,6 @@
             }
         }
 
-        @media(max-width:1240px) {
-            .celesteResp {
-                padding-top: 2% !important;
-                padding-bottom: 3% !important;
-            }
-        }
 
         @media (max-width: 767px) {
             .navbar {
