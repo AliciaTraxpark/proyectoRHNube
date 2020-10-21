@@ -18,7 +18,7 @@ class apimovilController extends Controller
         $nombreDisp=$request->nombreDisp;
 
         $dispositivo=dispositivos::where('dispo_movil','=',$nroMovil)
-        ->where('dispo_codigo','=',$codigo)->get()->first();
+        ->where('dispo_codigo','=',$codigo)->where('dispo_estadoActivo','=',1)->get()->first();
 
         if($dispositivo!=null){
             if($dispositivo->dispo_estado==2){
