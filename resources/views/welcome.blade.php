@@ -33,6 +33,13 @@
             background-color: #ffffff !important;
         }
 
+        @media (min-width: 1564px) {
+            .pResp {
+                padding-top: 3% !important;
+                padding-bottom: 12% !important;
+            }
+        }
+
         @media (max-width: 1563px) and (min-width: 1541px) {
             .pResp {
                 padding-top: 16px !important;
@@ -61,12 +68,13 @@
             }
         }
 
-        @media(max-width:1240 px){
-            .celesteResp{
-                padding-top: 8% !important;
+        @media(max-width:1240px) {
+            .celesteResp {
+                padding-top: 2% !important;
                 padding-bottom: 3% !important;
             }
         }
+
         @media (max-width: 767px) {
             .navbar {
                 padding: 0% !important;
@@ -252,7 +260,7 @@
                                         <h6 class="card-title pt-3" style="font-size: 13.8px!important;color:#ffffff">
                                             Controla la manada o el grupo, Modo asistencia en puerta</h6>
                                         <p class="m-0 py-3 text-muted celesteResp"
-                                            style="font-size: 11.5px!important;color:#ffffff!important;padding-top: 16px!important;">
+                                            style="font-size: 11.5px!important;color:#ffffff!important;padding-top: 16px">
                                             La herramienta de esta modalidad puede supervisar y controlar la asistencia
                                             y actividad de un grupo de trabajadores en un punto determinado, ya sea en
                                             oficina o en el campo.
