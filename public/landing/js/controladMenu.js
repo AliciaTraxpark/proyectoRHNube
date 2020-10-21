@@ -66,28 +66,35 @@ $(document).ready(function () {
 
      { data:"ids" ,
         "render": function (data, type, row) {
-        var valores=row.ids;
-        idsV=valores.split(',');
-        var variableResult=[];
-        $.each( idsV, function( index, value ){
-            variableResult1=  '<img src="landing/images/telefono-inteligente.svg" height="14">'+value;
+            if(row.ids!=null){
+                var valores=row.ids;
+                idsV=valores.split(',');
+                var variableResult=[];
+                $.each( idsV, function( index, value ){
+                    variableResult1=  '<img src="landing/images/telefono-inteligente.svg" height="14">'+value;
 
-            variableResult.push(variableResult1);
+                    variableResult.push(variableResult1);
 
-        })
-       return variableResult;
+                })
+               return variableResult;
+            }
+            else
+            {
+                return 'No tiene dispositivos';
+            }
+
 
      } },
      { data: "cont_correo" },
      { data: "cont_estado",
      "render": function (data, type, row) {
         if (row.cont_estado ==0) {
-             return '<span class="badge badge-soft-danger">Inactivo</span>';
+             return '<a onclick="editarContra('+row.idControladores+')" style="cursor: pointer"><img src="/admin/images/edit.svg" height="15"></a>&nbsp;&nbsp;<span class="badge badge-soft-danger">Inactivo</span>';
         }
         if (row.cont_estado ==1) {
-            return '<span class="badge badge-soft-info">Activo</span>';
+            return '<a onclick="editarContra('+row.idControladores+')" style="cursor: pointer"><img src="/admin/images/edit.svg" height="15"></a>&nbsp;&nbsp;<span class="badge badge-soft-info">Activo</span>';
        }
-     
+
 
      } },
 
@@ -146,4 +153,68 @@ function RegistraContro(){
             alert("Ocurrio un error");
         },
     });
+}
+function editarContra(id){
+    $('#selectDispo_ed').val('').trigger("change");
+    $.ajax({
+        type: "post",
+        url: "/datosControEditar",
+        data: {
+            id
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            $('#idControladorEdit').val(data.idControladores)
+            $('#codContro_ed').val(data.cont_codigo)
+            $('#codCorreo_ed').val(data.cont_correo);
+            $('#codNombres_ed').val(data.cont_nombres);
+            $('#codPaterno_ed').val(data.cont_ApPaterno);
+            $('#codMaterno_ed').val(data.cont_ApMaterno);
+            if(data.ids!=null){
+                var valores_ed=data.ids;
+               idsV_ed=valores_ed.split(',');
+
+             $.each( idsV_ed, function( index, value ){
+             $("#selectDispo_ed > option[value='"+value+"']").prop("selected","selected");
+            $("#selectDispo_ed").trigger("change");
+            });
+            }
+
+            $('#editarControlador').modal('show');
+        },
+    });
+}
+function EditarContro(){
+    var idcontr_ed=$('#idControladorEdit').val();
+    var codigoCon_ed=$('#codContro_ed').val();
+    var correoCon_ed=$('#codCorreo_ed').val();
+    var nombresCon_ed=$('#codNombres_ed').val();
+    var paternoCon_ed=$('#codPaterno_ed').val();
+    var maternoCon_ed=$('#codMaterno_ed').val();
+    var dispoCon_ed=$('#selectDispo_ed').val();
+    $.ajax({
+        type: "post",
+        url: "/controladUpdate",
+        data: {
+            codigoCon_ed,correoCon_ed,nombresCon_ed,paternoCon_ed,maternoCon_ed,dispoCon_ed,idcontr_ed
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+             $('#tablaContr').DataTable().ajax.reload();
+            $('#editarControlador').modal('hide');
+        },
+        error: function (data) {
+            alert("Ocurrio un error");
+        },
+    });
+
 }
