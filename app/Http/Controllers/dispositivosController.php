@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use LengthException;
+
 class dispositivosController extends Controller
 {
     //
@@ -21,6 +23,8 @@ class dispositivosController extends Controller
         return view('Dispositivos.dispositivos');
     }
     public function store(Request $request){
+
+      /*   dd($request->tData,$request->lectura); */
         $codigo=STR::random(4);
 
         $dispositivos=new dispositivos();
@@ -30,6 +34,36 @@ class dispositivosController extends Controller
         $dispositivos->dispo_tMarca=$request->tMarcac;
         $dispositivos->dispo_estado=0;
         $dispositivos->organi_id=session('sesionidorg');
+        $dispositivos->dispo_Data=$request->tData;
+        foreach($request->lectura as $lectura){
+            if($lectura==1){
+                $dispositivos->dispo_Manu=1;
+            }
+           /*  else{
+                $dispositivos->dispo_Manu=0;
+
+            } */
+
+            if($lectura==2){
+                $dispositivos->dispo_Scan=1;
+            }
+           /*  else{
+                $dispositivos->dispo_Scan=0;
+            } */
+
+            if($lectura==3){
+                $dispositivos->dispo_Cam=1;
+            }
+           /*  else{
+                $dispositivos->dispo_Cam=0;
+            } */
+
+        }
+
+        /* if($request->lectura[0] || $request->lectura[1] ||$request->lectura[2]){
+             dd($request->lectura.Length);
+        } */
+
         $dispositivos->save();
 
         if($request->smsCh==1){

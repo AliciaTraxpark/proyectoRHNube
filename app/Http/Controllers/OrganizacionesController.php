@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\organizacion;
+
+use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -68,13 +70,28 @@ class OrganizacionesController extends Controller
         $idOrgani=$request->id;
         $estado=$request->b;
         $organizacion = organizacion::findOrFail($idOrgani);
-
+       /*  $usuac=Auth::user()->id; */
         if($estado==1){
             $organizacion->organi_estado =1;
             $organizacion->save();
         } else{
             $organizacion->organi_estado =0;
             $organizacion->save();
+
+           /*  $usuario_organizacion = DB::table('usuario_organizacion as uso')
+            ->where('uso.organi_id', '=',$idOrgani)
+            ->get()->pluck('user_id'); */
+
+           /*  foreach( $usuario_organizacion as  $userIds){
+            $userToLogout = User::find($userIds);
+            Auth::setUser($userToLogout);
+            Auth::logout();
+            session()->forget('sesionidorg');
+            session()->flush();
+           }
+
+           Auth::loginUsingId(2);
+           return $usuario_organizacion; */
         }
     }
 }
