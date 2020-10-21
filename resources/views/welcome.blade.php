@@ -33,7 +33,11 @@
             background-color: #ffffff !important;
         }
 
-        @media (min-width: 1564px) {
+        .pResp {
+            padding-top: 30px !important;
+        }
+
+        @media (min-width: 1564px) and (max-width: 1579px) {
             .pResp {
                 padding-top: 3% !important;
                 padding-bottom: 12% !important;
