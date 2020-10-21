@@ -157,6 +157,29 @@
         width: 100%;
         height: 40px
     }
+
+    @media (max-width: 767.98px) {
+        .containerResp {
+            padding-left: 0% !important;
+        }
+
+        .rowPrincipalResp {
+            padding: 0% !important;
+            padding-top: 2% !important;
+        }
+
+        .preciosResponsive {
+            width: 100% !important;
+            display: flex !important;
+            overflow: auto !important;
+            flex-wrap: initial !important;
+        }
+
+        .col-4 {
+            flex: 100% !important;
+            width: 100% !important;
+        }
+    }
 </style>
 <div id="preloader">
     <div id="status">
@@ -167,7 +190,7 @@
         </div>
     </div>
 </div>
-<div class="row justify-content-center pt-5 pl-5 pb-5">
+<div class="row justify-content-center pt-5 pl-5 pb-5 rowPrincipalResp">
     <div class="col-xl-12">
         <div class="row pr-5">
             <div class="col-md-3 pt-2">
@@ -176,8 +199,8 @@
             <div class="col-md-9" style="border-bottom: 3px solid #12cad6"></div>
         </div>
         <div class="row justify-content-end pb-5 pt-5">
-            <div class="container-fluid" style="padding-left: 22%">
-                <div class="row m-auto text-center" style="width: 56vw;">
+            <div class="container-fluid containerResp" style="padding-left: 22%">
+                <div class="row m-auto text-center preciosResponsive" style="width: 56vw;">
                     <div class="col-4 princing-item">
                         <div class="pricing-divider">
                             <h6 class="font-weight-normal botonF1 pt-3 pb-1"
