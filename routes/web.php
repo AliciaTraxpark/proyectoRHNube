@@ -389,6 +389,11 @@ Route::post('/reenviarmensajeDis', 'dispositivosController@reenviarmensaje');
 Route::post('/comprobarMovil', 'dispositivosController@comprobarMovil');
 Route::get('/reporteAsistencia', 'dispositivosController@reporteMarcaciones');
 Route::post('/reporteTablaMarca', 'dispositivosController@reporteTabla');
+Route::post('/datosDispoEditar', 'dispositivosController@datosDispoEditar');
+Route::post('/actualizarDispos', 'dispositivosController@actualizarDispos');
+Route::post('/desactivarDisposi', 'dispositivosController@desactivarDisposi');
+Route::post('/activarDisposi', 'dispositivosController@activarDisposi');
+
 //CONTROLADORES
 Route::get('/controladores', 'controladoresController@index');
 Route::post('/controladStore', 'controladoresController@store');

@@ -39,30 +39,14 @@ class dispositivosController extends Controller
             if($lectura==1){
                 $dispositivos->dispo_Manu=1;
             }
-           /*  else{
-                $dispositivos->dispo_Manu=0;
-
-            } */
-
             if($lectura==2){
                 $dispositivos->dispo_Scan=1;
             }
-           /*  else{
-                $dispositivos->dispo_Scan=0;
-            } */
 
             if($lectura==3){
                 $dispositivos->dispo_Cam=1;
             }
-           /*  else{
-                $dispositivos->dispo_Cam=0;
-            } */
-
         }
-
-        /* if($request->lectura[0] || $request->lectura[1] ||$request->lectura[2]){
-             dd($request->lectura.Length);
-        } */
 
         $dispositivos->save();
 
@@ -232,5 +216,50 @@ class dispositivosController extends Controller
 
      return json_encode($marcaciones);
 
+ }
+
+ public function datosDispoEditar(Request $request){
+     $idDispo=$request->id;
+     $dispositivo=dispositivos::where('organi_id','=',session('sesionidorg'))
+     ->where('idDispositivos',$idDispo)->get()->first();
+        return $dispositivo;
+ }
+
+ public function actualizarDispos(Request $request){
+    $dispositivos = dispositivos::findOrFail($request->idDisposEd_ed);
+    $dispositivos->dispo_descripUbicacion=$request->descripccionUb_ed;
+    $dispositivos->dispo_movil=$request->numeroM_ed;
+    $dispositivos->dispo_tSincro=$request->tSincron_ed;
+    $dispositivos->dispo_tMarca=$request->tMarca_ed;
+    $dispositivos->dispo_Data=$request->tData_ed;
+    foreach($request->lectura_ed as $lectura){
+        if($lectura==1){
+            $dispositivos->dispo_Manu=1;
+        }
+        if($lectura==2){
+            $dispositivos->dispo_Scan=1;
+        }
+
+        if($lectura==3){
+            $dispositivos->dispo_Cam=1;
+        }
+    }
+
+    $dispositivos->save();
+
+ }
+
+ public function desactivarDisposi(Request $request){
+
+    $dispositivos = dispositivos::findOrFail($request->idDisDesac);
+    $dispositivos->dispo_estadoActivo=0;
+    $dispositivos->save();
+ }
+
+ public function activarDisposi(Request $request){
+
+    $dispositivos = dispositivos::findOrFail($request->idDisAct);
+    $dispositivos->dispo_estadoActivo=1;
+    $dispositivos->save();
  }
 }

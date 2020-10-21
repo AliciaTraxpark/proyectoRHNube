@@ -104,6 +104,18 @@ $(document).ready(function () {
         return row.dispo_tSincro+'&nbsp; minutos';
 
       }},
+      { data: "dispo_tSincro",
+     "render": function (data, type, row) {
+        if(row.dispo_estadoActivo==1){
+            return '<a onclick="editarDispo('+row.idDispositivos+')" style="cursor: pointer"><img src="/admin/images/edit.svg" height="15"></a>&nbsp;&nbsp;<a title="Activado" onclick="" style="cursor: pointer">' +
+                        '<img src="/landing/images/permitir.svg" onclick="desactivarDispo('+row.idDispositivos+')"  height="22" width="35"> </a>';
+        } else{
+            return '<a onclick="editarDispo('+row.idDispositivos+')" style="cursor: pointer"><img src="/admin/images/edit.svg" height="15"></a>&nbsp;&nbsp;<a title="Desactivado" onclick="" style="cursor: pointer">' +
+                        '<img src="/landing/images/desactivar.svg" onclick="activarDispo('+row.idDispositivos+')" height="22" width="35"> </a>';
+        }
+
+
+      }},
   ]
 
 
@@ -354,4 +366,160 @@ function comprobarMovil() {
             }
         },
     });
+}
+function editarDispo(id){
+    $('#selectLectura_ed').val('').trigger("change");
+    $.ajax({
+        type: "post",
+        url: "/datosDispoEditar",
+        data: {
+            id
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            $('#idDisposi').val(data.idDispositivos)
+            $('#descripcionDis_ed').val(data.dispo_descripUbicacion);
+            $('#numeroMovil_ed').val(data.dispo_movil.substr(2));
+            $('#tiempoSin_ed').val(data.dispo_tSincro);
+            $('#smarcacion_ed').val(data.dispo_tMarca);
+            $('#tiempoData_ed').val(data.dispo_Data);
+            var seleccionadosLe=[];
+            if(data.dispo_Manu==1){
+                seleccionadosLe.push('1');
+            }
+            if(data.dispo_Scan==1){
+                seleccionadosLe.push('2');
+            }
+            if(data.dispo_Cam==1){
+                seleccionadosLe.push('3');
+            }
+            $.each( seleccionadosLe, function( index, value ){
+             $("#selectLectura_ed > option[value='"+value+"']").prop("selected","selected");
+            $("#selectLectura_ed").trigger("change");
+            });
+            $('#editarDispositivo').modal('show');
+        },
+    });
+
+}
+function reditarDispo(){
+    var descripccionUb_ed=$('#descripcionDis_ed').val();
+    var numeroM_ed='51'+$('#numeroMovil_ed').val();
+    var tSincron_ed=$('#tiempoSin_ed').val();
+    var tMarca_ed=$('#smarcacion_ed').val();
+    var tData_ed=$('#tiempoData_ed').val();
+    var lectura_ed=$('#selectLectura_ed').val();
+    var idDisposEd_ed= $('#idDisposi').val();
+    $.ajax({
+        type: "post",
+        url: "/actualizarDispos",
+        data: {
+            descripccionUb_ed,numeroM_ed,tSincron_ed,tMarca_ed,tData_ed,lectura_ed,
+            idDisposEd_ed
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            $('#tablaDips').DataTable().ajax.reload();
+            $('#editarDispositivo').modal('hide');
+        },
+        error: function (data) {
+            alert("Ocurrio un error");
+        },
+    });
+
+}
+function desactivarDispo(idDisDesac){
+    bootbox.confirm({
+        message: "¿Desea desactivar dispositivo?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            $.ajax({
+                type: "post",
+                url: "/desactivarDisposi",
+                data: {
+                    idDisDesac
+                },
+                statusCode: {
+                    419: function () {
+                        location.reload();
+                    },
+                },
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+                success: function (data) {
+                    $('#tablaDips').DataTable().ajax.reload();
+
+                },
+                error: function (data) {
+                    alert("Ocurrio un error");
+                },
+            });
+
+        }
+    });
+
+
+
+}
+function activarDispo(idDisAct){
+    bootbox.confirm({
+        message: "¿Desea volver activar dispositivo?",
+        buttons: {
+            confirm: {
+                label: 'Aceptar',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Cancelar',
+                className: 'btn-light'
+            }
+        },
+        callback: function (result) {
+            if (result == true) {
+                $.ajax({
+                    type: "post",
+                    url: "/activarDisposi",
+                    data: {
+                        idDisAct
+                    },
+                    statusCode: {
+                        419: function () {
+                            location.reload();
+                        },
+                    },
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    },
+                    success: function (data) {
+                        $('#tablaDips').DataTable().ajax.reload();
+
+                    },
+                    error: function (data) {
+                        alert("Ocurrio un error");
+                    },
+                });
+            }
+        }
+    });
+
+
 }
