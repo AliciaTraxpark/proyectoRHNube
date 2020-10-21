@@ -95,9 +95,9 @@
         }
 
         .col-md-6 .select2-container .select2-selection {
-            height: 50px;
+            height: 20px!important;
             font-size: 12.2px;
-            overflow-y: scroll;
+
         }
 
     </style>
@@ -194,7 +194,7 @@
                                                         id="descripcionDis" maxlength="80" required>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
 
                                                     <label for="">Móvil vinculado:</label> <span id="errorMovil" style="color: #690f0f;display: none;">Movil ya registrado.</span>
@@ -208,18 +208,25 @@
                                                         </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="">Tiempo de sincronización(Min):</label> <span id="errorSincro" style="color: #690f0f;display: none">El valor min es 15.</span>
                                                     <input type="number" id="tiempoSin" min="15" value="15"  required class="form-control form-control-sm"
                                                         required>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
 
                                                 <div class="form-group">
                                                     <label for="">Siguiente marcación(Min):</label> <span id="errorMarca" style="color: #690f0f;display: none">El valor min es 5.</span>
                                                     <input type="number" id="smarcacion" min="5" value="5" required class="form-control form-control-sm"
+                                                        required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="">Mantener data por(Hr):</label> <span id="errorData" style="color: #690f0f;display: none">El valor min es 24.</span>
+                                                    <input type="number" id="tiempoData" min="24" value="48"  required class="form-control form-control-sm"
                                                         required>
                                                 </div>
                                             </div>
@@ -228,6 +235,17 @@
                                                 <div class="form-check">
                                                     <input type="checkbox"  class="form-check-input" id="smsCheck" checked>
                                                     <label class="form-check-label" for="smsCheck" style="margin-top: 2px;">Enviar SMS ahora.</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="">Seleccione tipo de lectura:</label>
+                                                    <select data-plugin="customselect" multiple="multiple" id="selectLectura"
+                                                    class="form-control"  required>
+                                                    <option class="" value="1">Manual</option>
+                                                    <option class="" value="2">Scanner</option>
+                                                    <option class="" value="3">Cámara</option>
+                                                </select>
                                                 </div>
                                             </div>
                                         </div>

@@ -2077,7 +2077,7 @@
                                                     <div class="form-group">
                                                         <label for="sw-default">Codigo Empleado</label>
                                                         <input type="text" class="form-control" name="codigoEmpleado"
-                                                            id="codigoEmpleado" tabindex="1"
+                                                            id="codigoEmpleado" tabindex="1" maxlength="200"
                                                             onfocus="javascript:valorCodigoEmpleado()"
                                                             data-toggle="tooltip" data-placement="right"
                                                             title="Número de documento por defecto o Ingrese un código interno"
@@ -3043,7 +3043,7 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Codigo Empleado</label>
-                                                    <input type="text" class="form-control" name="v_codigoEmpleado"
+                                                    <input type="text" class="form-control" name="v_codigoEmpleado" maxlength="200"
                                                         id="v_codigoEmpleado" tabindex="1" required>
                                                 </div>
                                             </div>
@@ -3941,7 +3941,7 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Codigo Empleado</label>
-                                                    <input type="text" class="form-control" name="v_codigoEmpleadoV"
+                                                    <input type="text" class="form-control" name="v_codigoEmpleadoV" maxlength="200"
                                                         id="v_codigoEmpleadoV" disabled>
                                                 </div>
                                             </div>

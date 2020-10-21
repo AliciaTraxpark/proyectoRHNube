@@ -138,7 +138,10 @@ $(function() {
     	if(valor<min){
     		$('#errorMarca').show();
     		this.value = min;
-    	}
+        }
+        else{
+            $('#errorMarca').hide();
+        }
 
 	});
 });
@@ -150,14 +153,35 @@ $(function() {
     	if(valorS<minS){
     		$('#errorSincro').show();
     		this.value = min;
-    	}
+        }
+        else{
+            $('#errorSincro').hide();
+        }
+
+	});
+});
+
+$(function() {
+	$(document).on('keyup', '#tiempoData', function(event) {
+    	let minD= parseInt(this.min);
+        let valorD = parseInt(this.value);
+    	if(valorD<minD){
+    		$('#errorData').show();
+    		this.value = min;
+        }
+        else{
+            $('#errorData').hide();
+        }
 
 	});
 });
 
 function NuevoDispo(){
     $("#errorMovil").hide();
+    $("#errorMarca").hide();
+    $("#errorMovil").hide();
     $("#frmHorNuevo")[0].reset();
+    $('#selectLectura').val('').trigger("change");
 $('#nuevoDispositivo').modal('show');
 }
 function RegistraDispo(){
@@ -166,6 +190,9 @@ function RegistraDispo(){
     var numeroM='51'+$('#numeroMovil').val();
     var tSincron=$('#tiempoSin').val();
     var tMarcac=$('#smarcacion').val();
+    var tData=$('#tiempoData').val();
+    var lectura=$('#selectLectura').val();
+
     var smsCh
    if($('#smsCheck').is(':checked') ){
     smsCh=1;
@@ -193,7 +220,7 @@ function RegistraDispo(){
                 type: "post",
                 url: "/dispoStore",
                 data: {
-                    descripccionUb,numeroM,tSincron,tMarcac,smsCh
+                    descripccionUb,numeroM,tSincron,tMarcac,smsCh,tData,lectura
                 },
                 statusCode: {
                     419: function () {

@@ -2079,7 +2079,7 @@ use App\proyecto_empleado;
                                             <input type="text" class="form-control" name="codigoEmpleado"
                                                 id="codigoEmpleado" tabindex="1"
                                                 onfocus="javascript:valorCodigoEmpleado()" data-toggle="tooltip"
-                                                data-placement="right"
+                                                data-placement="right" maxlength="200"
                                                 title="Número de documento por defecto o Ingrese un código interno"
                                                 data-original-title="Número de documento por defecto o Ingrese un código interno">
                                         </div>
@@ -3057,7 +3057,7 @@ use App\proyecto_empleado;
                                 <div class="col-4">
                                     <div class="form-group">
                                         <label for="sw-default">Codigo Empleado</label>
-                                        <input type="text" class="form-control" name="v_codigoEmpleado"
+                                        <input type="text" class="form-control" name="v_codigoEmpleado" maxlength="200"
                                             id="v_codigoEmpleado" tabindex="1" required>
                                     </div>
                                 </div>
@@ -3974,7 +3974,7 @@ use App\proyecto_empleado;
                                 <div class="col-4">
                                     <div class="form-group">
                                         <label for="sw-default">Codigo Empleado</label>
-                                        <input type="text" class="form-control" name="v_codigoEmpleadoV"
+                                        <input type="text" class="form-control" name="v_codigoEmpleadoV" maxlength="200"
                                             id="v_codigoEmpleadoV" disabled>
                                     </div>
                                 </div>
