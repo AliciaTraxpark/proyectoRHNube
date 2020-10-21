@@ -80,7 +80,7 @@ class EmpleadoController extends Controller
             $provincia = ubigeo_peru_provinces::all();
             $distrito = ubigeo_peru_districts::all();
             $tipo_doc = tipo_documento::all();
-            $tipo_cont = tipo_contrato::all();
+            $tipo_cont = tipo_contrato::where('organi_id', '=', session('sesionidorg'))->get();
             $area = area::where('organi_id', '=', session('sesionidorg'))->get();
             $cargo = cargo::where('organi_id', '=', session('sesionidorg'))->get();
             $centro_costo = centro_costo::where('organi_id', '=', session('sesionidorg'))->get();
@@ -1003,7 +1003,7 @@ class EmpleadoController extends Controller
             $provincia = ubigeo_peru_provinces::all();
             $distrito = ubigeo_peru_districts::all();
             $tipo_doc = tipo_documento::all();
-            $tipo_cont = tipo_contrato::all();
+            $tipo_cont = tipo_contrato::where('organi_id', '=', session('sesionidorg'))->get();
             $area = area::where('organi_id', '=', session('sesionidorg'))->get();
             $cargo = cargo::where('organi_id', '=', session('sesionidorg'))->get();
             $centro_costo = centro_costo::where('organi_id', '=', session('sesionidorg'))->get();

@@ -82,7 +82,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $distrito = DB::table('ubigeo_peru_districts')->groupBy('name')
                 ->orderBy('name','ASC')->get();
                 $tipoDocumento = tipo_documento::all();
-                $tipoContrato = tipo_contrato::all();
+                $tipoContrato = tipo_contrato::where('organi_id','=',session('sesionidorg'))->get();
                 $cargo = cargo::where('organi_id','=',session('sesionidorg'))->get();
                 $area = area::where('organi_id','=',session('sesionidorg'))->get();
                 $centroC = centro_costo::where('organi_id', '=', session('sesionidorg'))->get();

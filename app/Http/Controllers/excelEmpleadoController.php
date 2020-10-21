@@ -200,13 +200,14 @@ class excelEmpleadoController extends Controller
                 } else{$row['iddistrito_nacimiento'] = null; }
 
                 //tipo_contrato
-                $tipo_contrato = tipo_contrato::where("contrato_descripcion", "like", "%".$emp[16]."%")->first();
+                $tipo_contrato = tipo_contrato::where("contrato_descripcion", "like", "%".$emp[16]."%")->where('organi_id', '=', session('sesionidorg'))->first();
                 if($emp[16]!=null){
                     if($tipo_contrato!=null){
                         $row['idtipo_contrato'] = $tipo_contrato->contrato_id;
                     } else{
                         $tipoCrow = new tipo_contrato();
                         $tipoCrow->contrato_descripcion=$emp[16];
+                        $tipoCrow->organi_id = session('sesionidorg');
                         $tipoCrow->save();
                         $row['idtipo_contrato']= $tipoCrow->contrato_id;
                     }

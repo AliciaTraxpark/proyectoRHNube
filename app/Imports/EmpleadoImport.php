@@ -288,7 +288,7 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                 } else{$row['distNArray'] = null; $row['provNArray'] = null; $row['name_depNArray']=null; }
 
                 //tipo_contrato
-                $tipo_contrato = tipo_contrato::where("contrato_descripcion", "like", "%".$row['tipo_contrato']."%")->first();
+                $tipo_contrato = tipo_contrato::where("contrato_descripcion", "like", "%".$row['tipo_contrato']."%")->where('organi_id','=',session('sesionidorg'))->first();
                 if($row['tipo_contrato']!=null){
                     if($tipo_contrato!=null){
                         $row['idtipo_contrato'] = $tipo_contrato->contrato_id;  $row['tipo_contratoArray'] = $tipo_contrato->contrato_descripcion;
