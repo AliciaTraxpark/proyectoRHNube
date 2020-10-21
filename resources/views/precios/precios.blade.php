@@ -168,17 +168,18 @@
             padding-top: 2% !important;
         }
 
-        .preciosResponsive {
+        .preciosResponsive,
+        .content-page {
             width: 100% !important;
             display: flex !important;
             overflow: auto !important;
             flex-wrap: initial !important;
         }
 
-        .col-4{
+        .col-4 {
             flex: 100% !important;
             max-width: 100% !important;
-            padding-top: 10% !important;
+            padding-top: 8% !important;
         }
 
         .pt-5 {
@@ -187,8 +188,17 @@
 
         .pricing-divider,
         .pricing-dividerD,
-        .pricing-dividerT {
+        .pricing-dividerT,
+        .bodyPrecio {
             width: 250px !important;
+        }
+
+        .row {
+            flex-wrap: nowrap !important;
+        }
+
+        .tituloResponsive{
+            max-width: 30% !important;
         }
     }
 </style>
@@ -204,10 +214,10 @@
 <div class="row justify-content-center pt-5 pl-5 pb-5 rowPrincipalResp">
     <div class="col-xl-12">
         <div class="row pr-5">
-            <div class="col-md-3 pt-2">
+            <div class="col-md-3 pt-2 tituloResponsive">
                 <strong style="color: #000839">PLANES Y PRECIOS - PERÚ</strong>
             </div>
-            <div class="col-md-9" style="border-bottom: 3px solid #12cad6"></div>
+            <div class="col-md-9 tituloResponsive" style="border-bottom: 3px solid #12cad6"></div>
         </div>
         <div class="row justify-content-end pb-5 pt-5">
             <div class="container-fluid containerResp" style="padding-left: 22%">
@@ -224,7 +234,7 @@
                                 <path d="M0 0 L50 90 L100 0 V100 H0" fill="#ffffff" />
                             </svg>
                         </div>
-                        <div class="card-body bg-white mt-0 shadow"
+                        <div class="card-body bg-white mt-0 shadow bodyPrecio"
                             style="border-bottom-left-radius: 25px;border-bottom-right-radius: 25px">
                             <ul class="list-unstyled mb-3 position-relative ulC" style="font-family: 'Roboto';">
                                 <li class="ilC text-left" style="color: #44b1cc"><img
@@ -261,7 +271,7 @@
                                 <path d="M0 0 L50 90 L100 0 V100 H0" fill="#ffffff" />
                             </svg>
                         </div>
-                        <div class="card-body bg-white mt-0 shadow"
+                        <div class="card-body bg-white mt-0 shadow bodyPrecio"
                             style="border-bottom-left-radius: 25px;border-bottom-right-radius: 25px">
                             <ul class="list-unstyled mb-3 pb-4 position-relative ulC">
                                 <li class="ilC text-left" style="color: #3161a3"><img
@@ -294,7 +304,7 @@
                                 <path d="M0 0 L50 90 L100 0 V100 H0" fill="#ffffff" />
                             </svg>
                         </div>
-                        <div class="card-body bg-white mt-0 shadow"
+                        <div class="card-body bg-white mt-0 shadow bodyPrecio"
                             style="border-bottom-left-radius: 25px;border-bottom-right-radius: 25px">
                             <ul class="list-unstyled mb-3 pb-4 position-relative ulC">
                                 <li class="ilC text-left" style="color: #264e70"><img
