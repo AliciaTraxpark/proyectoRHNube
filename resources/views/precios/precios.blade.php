@@ -175,9 +175,20 @@
             flex-wrap: initial !important;
         }
 
-        .col-4 {
+        .col-4{
             flex: 100% !important;
-            width: 100% !important;
+            max-width: 100% !important;
+            padding-top: 10% !important;
+        }
+
+        .pt-5 {
+            padding-top: 2rem !important;
+        }
+
+        .pricing-divider,
+        .pricing-dividerD,
+        .pricing-dividerT {
+            width: 250px !important;
         }
     }
 </style>
@@ -305,130 +316,6 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="row">
-            <div class="col-md-3">
-                <strong style="color: #163552">Modalidad de Control</strong>
-            </div>
-            <div class="col-md-3">
-                <div class="row justify-content-center">
-                    <div class="card rounded" style="background-color: #a7d129;">
-                        <div class="card-header"
-                            style="background-color: #a7d129;border-bottom: 3px solid #ffffff;border-top-right-radius: 5px; border-top-left-radius: 5px;height: 40px;">
-                            <h6 class="card-title font-weight-bold mb-2" style="color: #ffffff">Al mes - Hasta 200
-                                emp.</h6>
-                        </div>
-                        <div class="card-body text-center mt-0" style="height: 50px;">
-                            <strong style="color: #ffffff">PYME</strong>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <strong style="color: #a7d129;font-size: 18px">$3</strong>
-                </div>
-                <div class="row justify-content-center">
-                    <p style="color: #a7d129;font-size: 14px"><strong style="font-size: 16px">$2,50</strong> Un pago
-                        semestral</p>
-                </div>
-                <div class="row justify-content-center">
-                    <p style="color: #a7d129;font-size: 14px"><strong style="font-size: 16px">$2</strong> Un pago anual
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="row justify-content-center">
-                    <div class="card rounded" style="background-color: #5fdde5;">
-                        <div class="card-header"
-                            style="background-color: #5fdde5;border-bottom: 3px solid #ffffff;border-top-right-radius: 5px; border-top-left-radius: 5px;height: 40px;">
-                            <h6 class="card-title font-weight-bold mb-2" style="color: #ffffff">Al mes - de 200 a 5000
-                                emp.</h6>
-                        </div>
-                        <div class="card-body text-center mt-0" style="height: 50px;">
-                            <strong style="color: #ffffff">PROFESIONAL</strong>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <strong style="color: #5fdde5;font-size: 18px">$2,50</strong>
-                </div>
-                <div class="row justify-content-center">
-                    <p style="color: #5fdde5;font-size: 14px"><strong style="font-size: 16px">$2</strong> Un pago
-                        semestral</p>
-                </div>
-                <div class="row justify-content-center">
-                    <p style="color: #5fdde5;font-size: 14px"><strong style="font-size: 16px">$1,80</strong> Un pago
-                        anual</p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="row justify-content-center">
-                    <div class="card rounded" style="background-color: #2c7873;">
-                        <div class="card-header"
-                            style="background-color: #2c7873;border-bottom: 3px solid #ffffff;border-top-right-radius: 5px; border-top-left-radius: 5px;height: 40px;">
-                            <h6 class="card-title font-weight-bold mb-2" style="color: #ffffff">Al mes - Mayor a 5000
-                                emp.</h6>
-                        </div>
-                        <div class="card-body text-center mt-0" style="height: 50px;">
-                            <strong style="color: #ffffff">ENTERPRISE</strong>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <strong style="color: #2c7873;font-size: 18px">$2</strong>
-                </div>
-                <div class="row justify-content-center">
-                    <p style="color: #2c7873;font-size: 14px"><strong style="font-size: 16px">$1,80</strong> Un pago
-                        semestral</p>
-                </div>
-                <div class="row justify-content-center">
-                    <p style="color: #2c7873;font-size: 14px"><strong style="font-size: 16px">$1,50</strong> Un pago
-                        anual</p>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <strong style="color: #797a7e">Administradores de personal</strong>
-            </div>
-            <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3 mb-3" style="background-color: #e1ffc2;height: 30px;">
-                    <p class="mt-1" style="color:#797a7e">Ilimitado</p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3 mb-3" style="background-color: #def4f0;height: 30px;">
-                    <p class="mt-1" style="color:#797a7e">Ilimitado</p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3 mb-3" style="background-color: #dae1e7;height: 30px;">
-                    <p class="mt-1" style="color:#797a7e">Ilimitado</p>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3 pt-2">
-                <strong style="color: #797a7e">Multiempresa</strong>
-            </div>
-            <div class="col-md-3">
-                <div class="row justify-content-center pr-4 pl-4">
-                    <p class="text-center" style="color: #797a7e;font-size: 13px">5$ Por cada empresa nueva administrada
-                        por la misma cuenta
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="row justify-content-center pr-4 pl-4 pt-2">
-                    <p class="text-center" style="color: #797a7e;font-size: 13px">Ilimitado
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="row justify-content-center pr-4 pl-4 pt-2">
-                    <p class="text-center" style="color: #797a7e;font-size: 13px">Ilimitado
-                    </p>
-                </div>
-            </div>
-        </div> --}}
         <div class="row pr-5">
             <div class="col-md-3">
                 <strong style="color: #000839">Modo: Control Remoto / Home and office</strong>
