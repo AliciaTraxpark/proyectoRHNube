@@ -1272,7 +1272,7 @@ $('#buscarContratoA').on("click", function () {
         },
         error: function () {}
     });
-    $('#editarContratoC').show();
+    $('#editarContratoA').show();
 });
 //******CONDICION***/
 $('#buscarCondicionA').on("click", function () {
