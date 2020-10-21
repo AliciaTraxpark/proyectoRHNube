@@ -141,7 +141,7 @@ class editarAtributosController extends Controller
 
     public function contrato()
     {
-        $contrato = tipo_contrato::all();
+        $contrato = tipo_contrato::where('organi_id','=',session('sesionidorg'))->get();
         return response()->json($contrato, 200);
     }
 
