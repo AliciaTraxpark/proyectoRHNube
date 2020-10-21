@@ -33,12 +33,45 @@
             background-color: #ffffff !important;
         }
 
-        @media (max-width: 1563px) and (min-width: 1528px) {
+        .pResp {
+            padding-top: 30px !important;
+        }
+
+        @media (min-width: 1564px) and (max-width: 1579px) {
+            .pResp {
+                padding-top: 3% !important;
+                padding-bottom: 12% !important;
+            }
+        }
+
+        @media (max-width: 1563px) and (min-width: 1541px) {
             .pResp {
                 padding-top: 16px !important;
                 padding-bottom: 30px !important;
             }
         }
+
+        @media (max-width: 1540px) and (min-width: 1449px) {
+            .pResp {
+                padding-top: 16px !important;
+                padding-bottom: 5% !important;
+            }
+        }
+
+        @media(max-width: 1300px) and (min-width: 1270px) {
+            .pResp {
+                padding-top: 16px !important;
+                padding-bottom: 12% !important;
+            }
+        }
+
+        @media(max-width:1260px) {
+            .pResp {
+                padding-top: 8% !important;
+                padding-bottom: 3% !important;
+            }
+        }
+
 
         @media (max-width: 767px) {
             .navbar {
@@ -78,10 +111,11 @@
             .grid-margin {
                 margin-bottom: 40px !important;
             }
-            .customer-feedback{
+
+            .customer-feedback {
                 margin: 5% !important;
             }
-            
+
         }
     </style>
     <header id="header-section">
@@ -92,18 +126,16 @@
                         <img src="{{asset('landing/images/NUBE_SOLA.png')}}" width="30%" height="30%">
                     </div>
                 </div>
-
                 <div class="col-md-7">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="row">
                             <div class="col-md-2 form-group mb-0"></div>
                             <div class="col-md-4 form-group mb-0">
-                                <label class="blanco">Correo electrónico o
-                                    teléfono </label>
-                                <input id="email" class="form-control form-control-sm
-                                        @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"
-                                    required autocomplete="email" autofocus>
+                                <label class="blanco">Correo electrónico o teléfono </label>
+                                <input id="email"
+                                    class="form-control form-control-sm @error('email') is-invalid @enderror"
+                                    name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -112,21 +144,19 @@
                             </div>
                             <div class="col-md-3 form-group mb-0">
                                 <label class="blanco">Contraseña</label>
-                                <input tid="password" type="password" class="form-control form-control-sm
-                                        @error('password') is-invalid @enderror" name="password" required
-                                    autocomplete="current-password">
+                                <input tid="password" type="password"
+                                    class="form-control form-control-sm @error('password') is-invalid @enderror"
+                                    name="password" required autocomplete="current-password">
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                             </div>
-
-                            <div class="col-md-3 form-group mb-0 colBtn" style="display:
-                                    flex; align-items: center; top: 15px;   padding-left: 28px;">
-                                <button type="submit" style="font-size: 12px;    padding-bottom: 5px;
-                                padding-top: 6px;" class="botonIs">Iniciar
-                                    sesión</button>
+                            <div class="col-md-3 form-group mb-0 colBtn"
+                                style="display:flex; align-items: center; top: 15px;   padding-left: 28px;">
+                                <button type="submit" style="font-size: 12px;padding-bottom: 5px;padding-top: 6px;"
+                                    class="botonIs">Iniciar sesión</button>
                             </div>
                             {{--  <div class="col-md-2 form-group mb-0" style="display:
                             flex; align-items: center; top: 15px;padding-left: 0px;
@@ -157,9 +187,8 @@
         aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog ">
             <div class="modal-content">
-                <div class="modal-header text-center" style="padding-top: 8px;
-                            padding-bottom: 20px;background-color:
-                            #163552;color:#ffffff">
+                <div class="modal-header text-center"
+                    style="padding-top: 8px;padding-bottom: 20px;background-color:#163552;color:#ffffff">
                     <h6 style="font-size: 14px" class="modal-title"></h6>
                 </div>
                 <div class="modal-body text-center">
@@ -178,34 +207,33 @@
     </div><!-- /.modal -->
     <div class="content-wrapper" style="padding-bottom: 0px;padding-top: 0px;background-color: #ffffff">
         <div class="container">
-
             <section class="digital-marketing-service" id="digital-marketing-section">
                 <div class="row align-items-center marginRow" style="margin-top: 55px;">
-                    <div class="col-12 col-lg-1 p-0 img-digital grid-margin">
-
-                    </div>
-                    <div class="col-12 col-lg-5 text-center grid-margin
-                            grid-margin-lg-0" data-aos="fade-right">
+                    <div class="col-12 col-lg-1 p-0 img-digital grid-margin"></div>
+                    <div class="col-12 col-lg-5 text-center grid-margin grid-margin-lg-0" data-aos="fade-right">
                         <h3 class=" m-0">¿Por qué usar RH Nube?</h3>
                         <div class="col-lg-12 col-xl-12 text-center p-0">
-                            <p class="py-4 m-0 text-muted " style="font-size: 16px">Porque ahora "Administrar personal"
-                                será más sencillo y eficaz. El registro es fácil, gratuito y el costo de administración
-                                tiene un retorno de inversión (ROI) de sólo 2 días.</p>
+                            <p class="py-4 m-0 text-muted " style="font-size: 16px">
+                                Porque ahora "Administrar personal" será más sencillo y eficaz. El registro es fácil,
+                                gratuito y el costo de administración
+                                tiene un retorno de inversión (ROI) de sólo 2 días.
+                            </p>
                             <div class="col-md-12"> <br>
-                                <a href="{{route('registroPersona')}} "><button
-                                        {{-- onclick=" $('#modal-error').modal('show')" --}}
-                                        class="btn btn-opacity-comienza mr-1">Crear mi cuenta</button></a>
+                                <a href="{{route('registroPersona')}} ">
+                                    <button {{-- onclick=" $('#modal-error').modal('show')" --}}
+                                        class="btn btn-opacity-comienza mr-1">Crear mi cuenta
+                                    </button>
+                                </a>
                             </div>
-
                         </div>
                     </div>
-
-                    <div class="col-12 col-lg-6 p-0 img-digital grid-margin
-                            grid-margin-lg-0" data-aos="fade-left">
-                        <div style="padding:50.46% 0 0 0;"><iframe width="590" height="360"
+                    <div class="col-12 col-lg-6 p-0 img-digital grid-margin grid-margin-lg-0" data-aos="fade-left">
+                        <div style="padding:50.46% 0 0 0;">
+                            <iframe width="590" height="360"
                                 src="https://player.vimeo.com/video/460820175?color=ffffff&title=0&portrait=0"
                                 style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0"
-                                allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+                                allow="autoplay; fullscreen" allowfullscreen></iframe>
+                        </div>
                         <script src="https://player.vimeo.com/api/player.js"></script>
 
                         {{--  <iframe width="590" height="360" src="https://www.youtube.com/embed/GfRqwR8d2wU" frameborder="0"
@@ -215,8 +243,7 @@
                     </div>
                 </div>
             </section>
-            <section class="customer-feedback" id="feedback-section" style="    margin-left: 50px;
-            margin-right: 71px;">
+            <section class="customer-feedback" id="feedback-section" style="margin-left: 50px;margin-right: 71px;">
                 <div class="row" style="padding-top: 30px">
                     <div class="owl-carousel owl-theme grid-margin" style="margin-bottom: 10px;">
                         <div class="card customer-cards" style="background: #38afff">
@@ -230,8 +257,8 @@
                                     <div class="col-md-10">
                                         <h6 class="card-title pt-3" style="font-size: 13.8px!important;color:#ffffff">
                                             Controla la manada o el grupo, Modo asistencia en puerta</h6>
-                                        <p class="m-0 py-3 text-muted"
-                                            style="font-size: 11.5px!important;color:#ffffff!important;padding-top: 16px!important;">
+                                        <p class="m-0 py-3 text-muted celesteResp"
+                                            style="font-size: 11.5px!important;color:#ffffff!important;padding-top: 16px">
                                             La herramienta de esta modalidad puede supervisar y controlar la asistencia
                                             y actividad de un grupo de trabajadores en un punto determinado, ya sea en
                                             oficina o en el campo.

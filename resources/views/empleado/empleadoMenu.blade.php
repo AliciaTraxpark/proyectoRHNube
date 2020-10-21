@@ -1149,7 +1149,7 @@ use App\proyecto_empleado;
                                 </div>
                                 <br>
                                 <div class="form-group">
-                                    <label for="">Fecha Indifinida</label>
+                                    <label for="">Fecha Indefinida</label>
                                     <input type="checkbox" id="checkboxFechaI" name="FechaI">
                                 </div>
                                 <div id="ocultarFecha">
@@ -1588,7 +1588,7 @@ use App\proyecto_empleado;
                                 </div>
                                 <br>
                                 <div class="form-group">
-                                    <label for="">Fecha Indifinida</label>
+                                    <label for="">Fecha Indefinida</label>
                                     <input type="checkbox" id="checkboxFechaIE" name="checkboxFechaIE">
                                 </div>
                                 <div id="ocultarFechaE">
@@ -1730,7 +1730,7 @@ use App\proyecto_empleado;
                                 </div>
                                 <br>
                                 <div class="form-group">
-                                    <label for="">Fecha Indifinida</label>
+                                    <label for="">Fecha Indefinida</label>
                                     <input type="checkbox" id="checkboxFechaIEV" name="checkboxFechaIEV">
                                 </div>
                                 <div id="ocultarFechaEV">
