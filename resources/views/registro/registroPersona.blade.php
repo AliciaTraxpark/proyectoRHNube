@@ -37,16 +37,47 @@
             padding-right: 8px;
             text-align: center;
         }
+
+        @media (max-width: 767px) {
+            .navbar {
+                padding: 0% !important;
+            }
+
+            .container {
+                padding-bottom: 3% !important;
+                padding-left: 10px !important;
+                padding-right: 10px !important;
+            }
+
+            .colResp {
+                justify-content: center !important;
+                padding: 0% !important;
+            }
+
+            .textResp {
+                text-align: center !important;
+            }
+
+            .content-page {
+                margin-right: 10px !important;
+                margin-left: 10px !important;
+                margin-top: 10px !important;
+            }
+
+            .align-items-center {
+                text-align: center !important;
+            }
+        }
     </style>
     <header id="header-section">
         <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
             <div class="container">
-                <div class="col-md-3 pl-5">
-                    <div class="navbar-brand-wrapper d-flex w-100">
-                        <img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="69" >
+                <div class="col-md-3 pl-5 colResp">
+                    <div class="navbar-brand-wrapper d-flex w-100 colResp">
+                        <img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="69">
                     </div>
                 </div>
-                <div class="col-md-9 text-left pt-2">
+                <div class="col-md-9 text-left pt-2 textResp">
                     <h5 style="color: #ffffff">Crear una cuenta</h5>
                     <label for="" class="blanco font-italic">Tienes 2
                         minutos</label>
@@ -183,8 +214,9 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-sm" style="background-color: #f8f9fa!important;color: #343a40!important;" data-dismiss="modal"
-                                    onclick="javascript:limpiartextSexo()">Cerrar</button>
+                                <button type="button" class="btn btn-sm"
+                                    style="background-color: #f8f9fa!important;color: #343a40!important;"
+                                    data-dismiss="modal" onclick="javascript:limpiartextSexo()">Cerrar</button>
                                 <button type="button" class="btn btn-sm" style="background:
                                 #163552;color: #ecebeb" class="btn
                                         btn-sm" onclick="javascript:personalizadoGenero()"
