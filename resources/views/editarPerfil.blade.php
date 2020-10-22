@@ -214,7 +214,8 @@
 
 <div class="row pt-5">
     <div class="col-xl-12">
-        <div class="card">
+        <div class="card border"
+            style="border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
             <div class="card-header cabezerasResp" style="border-top-right-radius: 5px; border-top-left-radius: 5px;">
                 <div class="row">
                     <div class="col-xl-6 colResp">
@@ -335,7 +336,8 @@
 </div>
 <div class="row pt-5">
     <div class="col-xl-12">
-        <div class="card">
+        <div class="card border"
+            style="border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
             <div class="card-header cabezerasResp" style="border-top-right-radius: 5px; border-top-left-radius: 5px;">
                 <div class="row">
                     <div class="col-xl-6 colResp">
