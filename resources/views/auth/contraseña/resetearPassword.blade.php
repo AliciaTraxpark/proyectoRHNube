@@ -38,16 +38,47 @@
         body {
             background-color: #ffffff !important;
         }
+
+        @media (max-width: 767px) {
+            .navbar {
+                padding: 0% !important;
+            }
+
+            .container {
+                padding-bottom: 3% !important;
+                padding-left: 10px !important;
+                padding-right: 10px !important;
+            }
+
+            .colResp {
+                justify-content: center !important;
+                padding: 0% !important;
+            }
+
+            .textResp {
+                text-align: center !important;
+            }
+
+            .content-page {
+                margin-right: 10px !important;
+                margin-left: 10px !important;
+                margin-top: 10px !important;
+            }
+
+            .align-items-center {
+                text-align: center !important;
+            }
+        }
     </style>
     <header id="header-section">
         <nav class="navbar navbar-expand-lg pl-sm-0" id="navbar">
             <div class="container pb-2 pt-2" style="color: #ffffff;">
                 <div class="col-md-2 col-xl-2 mr-4 pl-5">
-                    <div class="navbar-brand-wrapper d-flex w-100">
+                    <div class="navbar-brand-wrapper d-flex w-100 colResp">
                         <img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="69">
                     </div>
                 </div>
-                <div class="col-md-6 pt-2 pl-0 text-left">
+                <div class="col-md-6 pt-2 pl-0 text-left textResp">
                     <h5 style="color: #ffffff;font-size: 15px!important">Recuperar Contraseña.</h5>
                 </div>
                 <div class="col-md-4 text-left"></div>

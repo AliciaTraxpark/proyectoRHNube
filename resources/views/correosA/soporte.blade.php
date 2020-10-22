@@ -63,12 +63,14 @@
 <!-- compose -->
 <div class="row justify-content-center">
     <div class="col-md-8 pt-5">
-        <div class="card">
+        <div class="card border"
+            tyle="border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
             <div class="card-header"
                 style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1">
                 <div class="row pl-2">
                     <span style="color: #163552;font-weight: bold;font-size: 14px"><img
-                            src="{{asset('landing/images/email (1).svg')}}" height="20" class="mr-1">Ticket de Soporte</span>
+                            src="{{asset('landing/images/email (1).svg')}}" height="20" class="mr-1">Ticket de
+                        Soporte</span>
                 </div>
             </div>
 
