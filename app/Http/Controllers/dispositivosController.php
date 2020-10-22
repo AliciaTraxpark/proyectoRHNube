@@ -190,7 +190,7 @@ class dispositivosController extends Controller
       $ndia= $dia+1;
      $marcaciones=DB::table('marcacion_movil as marcm')
      ->select('marcm.marcaMov_id','emple_nDoc','perso_nombre','perso_apPaterno','perso_apMaterno',
-     'cargo_descripcion' )
+     'cargo_descripcion' ,'marcm.organi_id')
      ->leftJoin('empleado as e','marcm.marcaMov_emple_id','=','e.emple_id')
      ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
      ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
