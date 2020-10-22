@@ -110,13 +110,30 @@ class controladoresController extends Controller
                     $dispositivo_controlador->organi_id=session('sesionidorg');
                     $dispositivo_controlador->save();
                 }
-                /* $dispositivo_controlador->idDispositivos=$idDispositis;
-                $dispositivo_controlador->idControladores=$controladores->idControladores;
-                $dispositivo_controlador->organi_id=session('sesionidorg');
-                $dispositivo_controlador->save(); */
               }
 
+              $dispositivo_controladorF=dispositivo_controlador::where('idControladores',$request->idcontr_ed)
+              ->where('organi_id',session('sesionidorg'))
+              ->pluck('idDispositivos');
+              foreach($dispositivo_controladorF as $idsDisRegi){
+                  if (in_array($idsDisRegi, $idDispositi)) {
+                  /* dd('esta'); */}
+                  else
+                  {
+                    $dispositivo_controlador=dispositivo_controlador::where('idDispositivos',$idsDisRegi)
+                    ->where('idControladores',$request->idcontr_ed)->where('organi_id',session('sesionidorg'))
+                    ->delete();
+                      /* dd('no esta esta'); */
+                  }
+              }
         }
+        else{
+            $dispositivo_controlador=dispositivo_controlador::where('idControladores',$request->idcontr_ed)
+            ->where('organi_id',session('sesionidorg'))
+            ->delete();
+        }
+
+
     }
 
 }
