@@ -190,10 +190,11 @@ class dispositivosController extends Controller
       $ndia= $dia+1;
      $marcaciones=DB::table('marcacion_movil as marcm')
      ->select('marcm.marcaMov_id','emple_nDoc','perso_nombre','perso_apPaterno','perso_apMaterno',
-     'cargo_descripcion' )
+     'cargo_descripcion' ,'marcm.organi_id')
      ->leftJoin('empleado as e','marcm.marcaMov_emple_id','=','e.emple_id')
      ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
      ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+     ->where('marcm.organi_id','=',session('sesionidorg'))
      ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha)) as entrada')
      ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida)) as final')
      ->groupBy('marcm.marcaMov_emple_id')
@@ -203,10 +204,11 @@ class dispositivosController extends Controller
         ->whereDate('marcaMov_fecha',$fecha)
         ->orwhere(function($query) use ($fecha) {
             $query->where('marcaMov_fecha', null)
-            ->whereDate('marcaMov_salida',$fecha);
+            ->whereDate('marcaMov_salida',$fecha)
+            ->where('marcm.organi_id','=',session('sesionidorg'));
         })
 
-     ->where('marcm.organi_id','=',session('sesionidorg'))->get() ;
+    ->get() ;
 
      /* $marcaciones1=$marcaciones->addSelect(DB::raw('(select marc2.marcaMov_fecha from marcacion_movil as marc2
       where marc2.marcaMov_tipo=0 and marcm.marcaMov_emple_id=marc2.marcaMov_emple_id and
