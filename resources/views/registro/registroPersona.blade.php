@@ -359,7 +359,7 @@
                                             Personalizado
                                         </label>
                                         &nbsp;
-                                        <a data-toggle="modal" id="generoPersonalizado">
+                                        <a data-toggle="modal" id="generoPersonalizado" style="display: none">
                                             <img src="{{asset('landing/images/plus.svg')}}" style="cursor: pointer"
                                                 height="15">
                                         </a>
