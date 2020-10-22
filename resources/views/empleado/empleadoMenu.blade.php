@@ -37,32 +37,28 @@ use App\proyecto_empleado;
 <link href="{{ asset('admin/packages/core/main.css') }}" rel="stylesheet" />
 <link href="{{ asset('admin/packages/daygrid/main.css') }}" rel="stylesheet" />
 <link href="{{ asset('admin/packages/timegrid/main.css') }}" rel="stylesheet" />
+{{-- Plugin SELECT2 --}}
 <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
+{{-- plugin DATATABLE --}}
 <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+{{-- plugin SMARTWIZARD --}}
 <link href="{{ asset('admin/assets/libs/smartwizard/smart_wizard.min.css') }}" type="text/css" />
-<link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('admin/assets/libs/smartwizard/smart_wizard_theme_arrows.min.css') }}" type="text/css" />
 <link href="{{ asset('admin/assets/libs/smartwizard/smart_wizard_theme_circles.min.css') }}" type="text/css" />
 <link href="{{ asset('admin/assets/libs/smartwizard/smart_wizard_theme_dots.min.css') }}" type="text/css" />
+{{-- plugin MULTISELECT --}}
+<link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css')}}" rel="stylesheet" type="text/css" />
+{{-- plugin de ALERTIFY --}}
 <link href="{{ URL::asset('admin/assets/libs/alertify/alertify.css') }}" rel="stylesheet" type="text/css" />
 {{-- <link href="{{ URL::asset('admin/assets/libs/alertify/bootstrap.css') }}" rel="stylesheet" type="text/css" /> --}}
 <!-- Semantic UI theme -->
 <link href="{{ URL::asset('admin/assets/libs/alertify/default.css') }}" rel="stylesheet" type="text/css" />
-
+{{--  --}}
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
 @section('breadcrumb')
-{{-- <div id="preloader">
-    <div id="status">
-        <div class="spinner">
-            <div class="circle1"></div>
-            <div class="circle2"></div>
-            <div class="circle3"></div>
-        </div>
-    </div>
-</div> --}}
-
+{{-- MODAL DE CORREO DE WINDOWS --}}
 <div id="windowsEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="windowsEmpleado"
     aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
@@ -105,6 +101,8 @@ use App\proyecto_empleado;
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+{{-- FIN MODAL --}}
+{{-- MODAL DE CORREO DE WINDOWS EN EDITAR --}}
 <div id="v_windowsEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="v_windowsEmpleado"
     aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
@@ -119,7 +117,7 @@ use App\proyecto_empleado;
                 </button>
             </div>
             <div class="modal-body">
-                <input style="display: none;" id="windows">
+                <input type="hidden" id="windows">
                 <form class="form-horizontal">
                     <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
                         ¿Desea enviar correo al empleado?
@@ -148,15 +146,16 @@ use App\proyecto_empleado;
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<!------------CAMBIAR ESTADO LICENCIA-->
+{{-- FINALIZACION DEL MODAL --}}
+{{-- CAMBIAR ESTADO DE LICENCIA --}}
 <div id="estadoLicenciaW" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="estadoLicenciaW"
     aria-hidden="true" data-backdrop="static">
     <br><br><br><br>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Cambiar Estado de
-                    Activacion de Dispositivo
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                    Cambiar estado de activación de dispositivo
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                     onclick="$('#form-registrar').show();">
@@ -164,7 +163,7 @@ use App\proyecto_empleado;
                 </button>
             </div>
             <div class="modal-body">
-                <input style="display: none;" id="estadoLicenciaW">
+                <input type="hidden" id="estadoLicenciaW">
                 <form class="form-horizontal">
                     <div class="row">
                         <div class="col-md-2 text-center">
@@ -172,8 +171,7 @@ use App\proyecto_empleado;
                         </div>
                         <div class="col-md-8 text-center">
                             <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
-                                Al cambiar el estado de la licencia se inhabilitará información del empleado en su
-                                PC.
+                                Al cambiar el estado de la licencia se inhabilitará información del empleado en su PC.
                             </h5>
                         </div>
                     </div>
@@ -182,15 +180,15 @@ use App\proyecto_empleado;
             <div class="modal-footer">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-2 text-right" style="padding-right:
-                        50px;">
+                        <div class="col-md-2 text-right" style="padding-right:50px;">
                             <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                                 onclick="$('#form-registrar').show();">Cancelar</button>
                         </div>
                         <div class="col-md-10 text-right">
                             <button type="button" id="CambiarEstadoLW" name="CambiarEstadoLW"
-                                style="background-color: #163552;" class="btn
-                             btn-sm">Aceptar</button>
+                                style="background-color: #163552;" class="btn btn-sm">
+                                Aceptar
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -198,15 +196,16 @@ use App\proyecto_empleado;
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<!------------CAMBIAR ESTADO LICENCIA-->
+{{-- FINALIZACION MODAL --}}
+{{-- CAMBIAR ESTADO DE LICENCIA EN EDITAR --}}
 <div id="v_estadoLicenciaW" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="v_estadoLicenciaW"
     aria-hidden="true" data-backdrop="static">
     <br><br><br><br>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Cambiar Estado de
-                    Activacion de Dispositivo
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                    Cambiar estado de activación de dispositivo
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                     onclick="$('#form-ver').show();">
@@ -222,8 +221,7 @@ use App\proyecto_empleado;
                         </div>
                         <div class="col-md-8 text-center">
                             <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
-                                Al cambiar el estado de la licencia se inhabilitará información del empleado en su
-                                PC.
+                                Al cambiar el estado de la licencia se inhabilitará información del empleado en su PC.
                             </h5>
                         </div>
                     </div>
@@ -248,15 +246,15 @@ use App\proyecto_empleado;
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-{{-- MODAL --}}
+{{-- FINALIZACION MODAL --}}
+{{-- MODAL DE REGISTRAR CORREO --}}
 <div id="modalCorreoElectronico" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCorreoElectronico"
     aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Registrar Correo
-                    Electrónico
-                    Empleado
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                    Registrar correo electrónico empleado
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                     onclick="javascript:RefreshTablaEmpleado();javascript:limpiarCorreoE()">
@@ -271,8 +269,9 @@ use App\proyecto_empleado;
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label class="form-control-label" style="font-weight: 500;">Correo
-                                        electrónico</label>
+                                    <label class="form-control-label" style="font-weight: 500;">
+                                        Correo electrónico
+                                    </label>
                                     <div class="input-group input-group-merge">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" style="background-color: #ffffff;">
@@ -297,6 +296,7 @@ use App\proyecto_empleado;
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+{{-- FINALIZACION MODAL --}}
 <style>
     #calendarInv>div.fc-view-container>div>table>tbody {
         background: #f4f4f4;
@@ -339,8 +339,7 @@ use App\proyecto_empleado;
         border-color: #e3eaef;
         background: #ffffff;
     }
-</style>
-<style>
+
     .container {
         margin-left: 40px;
         margin-right: 28px;
@@ -453,6 +452,17 @@ use App\proyecto_empleado;
         background: #ced0d3;
     }
 
+    .btn-file {
+        background-color: #1e2139 !important;
+        border-color: #1e2139 !important;
+    }
+
+    .file-caption {
+        height: calc(2.5em + 0.6rem + 2px) !important;
+    }
+
+    /* RESPONSIVE */
+
     @media (max-width: 767.98px) {
 
         .btnResponsive {
@@ -561,25 +571,30 @@ use App\proyecto_empleado;
             font-size: 0.9rem !important;
         }
     }
+
+    /* FINALIZACION DE RESPONSIVE */
 </style>
+{{-- BOTONES DE CARGAS MASIVAS --}}
 <div class="row page-title titleResponsive" style="padding-right: 20px;">
     <div class="col-md-7">
-
         <h4 class="header-title mt-0 "></i>Empleados</h4>
     </div>
     <div class=" col-md-5 col-xl-5 text-right btnPResponsive">
-        <a href="{{ '/empleado/cargar' }}"> <button class="btn btn-outline-secondary btn-sm"><img
-                    src="{{ asset('admin/images/subir.ico') }}" height="20" class="mr-1">Carga
-                masiva emp.</button></a>&nbsp;&nbsp;
-
-        <button class="btn btn-outline-secondary btn-sm" id="cargaMasivaF"><img
-                src="{{ asset('admin/images/image.ico') }}" height="20" class="mr-1">Carga
-            masiva fotos</button>
+        <a href="{{ '/empleado/cargar' }}">
+            <button class="btn btn-outline-secondary btn-sm">
+                <img src="{{ asset('admin/images/subir.ico') }}" height="20" class="mr-1">
+                Carga masiva emp.
+            </button>
+        </a>
+        &nbsp;&nbsp;
+        <button class="btn btn-outline-secondary btn-sm" id="cargaMasivaF">
+            <img src="{{ asset('admin/images/image.ico') }}" height="20" class="mr-1">
+            Carga masiva fotos
+        </button>
     </div>
-
 </div>
+{{-- FINAIZACION --}}
 @endsection
-
 @section('content')
 <div class="row ">
     <div class="col-md-12 col-xl-12">
@@ -587,20 +602,27 @@ use App\proyecto_empleado;
             <div class="card-body"
                 style="padding-top: 0px; background: #ffffff; font-size: 12.8px;color: #222222; padding-left:0px;">
                 <div class="row">
+                    {{-- BOTONES --}}
                     <div class=" col-md-12 text-right btnResponsive">
                         <button onclick="eliminarEmpleado()"
                             style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
-                            class="btn btn-sm btn-primary delete_all" data-url="">Eliminar
+                            class="btn btn-sm btn-primary delete_all">
+                            Eliminar
                         </button>
                         <button class="btn btn-sm btn-primary" id="formNuevoE"
-                            style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"> Nuevo</button>
+                            style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d">
+                            Nuevo
+                        </button>
                     </div>
+                    {{-- FINALIZACION --}}
+                    {{-- BUSQUEDA PARA TABLA --}}
                     <div class="col-md-12">
                         <h5 style="font-size: 16px!important">Búsqueda personalizada</h5>
                     </div>
                     <div class="col-md-4 inputResponsive" id="filter_global">
-                        <td align="center"><input type="text" class="global_filter form-control" id="global_filter"
-                                style="height: 35px; " placeholder="Buscar por...">
+                        <td align="center">
+                            <input type="text" class="global_filter form-control" id="global_filter"
+                                style="height: 35px;" placeholder="Buscar por...">
                         </td>
                     </div>
                     <div class="col-md-2 inputResponsive">
@@ -622,21 +644,27 @@ use App\proyecto_empleado;
                                 <select id="selectarea" data-plugin="customselect" class="form-control form-control-sm"
                                     multiple="multiple" data-placeholder="Seleccionar áreas">
                                     @foreach ($area as $areas)
-                                    <option class="" value="{{ $areas->area_id }}">
+                                    <option value="{{ $areas->area_id }}">
                                         {{ $areas->area_descripcion }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                     </div>
+                    {{-- FINALZACION DE BUSQUEDA --}}
                 </div>
+                {{-- GIF DE BUSQUEDA --}}
                 <div id="espera" class="text-center" style="display: none">
                     <img src="{{ asset('landing/images/loading.gif') }}" height="100">
                 </div>
+                {{-- FINALIZACION DE GIF --}}
+                {{-- TABLA --}}
                 <div id="tabladiv" class="divTableResponsive"></div>
+                {{-- FINALIZACION DE TABLA --}}
             </div> <!-- end card body-->
         </div> <!-- end card -->
     </div>
+    {{-- MODAL DE INFORMACION DE CARGA MASIVA DE FOTOS --}}
     <div id="modalInformacionF" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalInformacionF"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
@@ -648,63 +676,68 @@ use App\proyecto_empleado;
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <span class="mr-2 text-center">Despues de haber registrado o cargado tus empleados,
-                            puedes cargar sus fotos de una manera más simple.</span>
+                        <span class="mr-2 text-center">
+                            Después de haber registrado o cargado tus empleados, puedes cargar sus fotos de una manera
+                            más simple.
+                        </span>
                     </div>
                     <br>
                     <div class="row">
                         <div class="col-xl-5 text-center">
-                            <img src="{{ asset('landing/images/photo (3).svg') }}" height="100">
-                            <br>
-                            <span class="mr-2 text-center" style="color: #024079;font-weight: bold;">DNI
-                                Empleado</span>
+                            <div class="row justify-content-center">
+                                <img src="{{ asset('landing/images/photo (3).svg') }}" height="100">
+                            </div>
+                            <div class="row justify-content-center">
+                                <span class="mr-2 text-center" style="color: #024079;font-weight: bold;">
+                                    DNI empleado
+                                </span>
+                            </div>
                         </div>
                         <div class="col-xl-2 text-left">
                             <img src="{{ asset('landing/images/right-arrow.svg') }}" height="80">
                         </div>
                         <div class="col-xl-5 text-center">
-                            <img src="{{ asset('landing/images/photo (3).svg') }}" height="100">
-                            <br>
-                            <span class="mr-2 text-center" style="color: #024079;font-weight: bold;">12345678</span>
+                            <div class="row justify-content-center">
+                                <img src="{{ asset('landing/images/photo (3).svg') }}" height="100">
+                            </div>
+                            <div class="row justify-content-center">
+                                <span class="mr-2 text-center" style="color: #024079;font-weight: bold;">12345678</span>
+                            </div>
                         </div>
                     </div>
                     <br>
                     <div class="row">
                         <div class="col-xl-12 text-center">
-                            <img src="{{ asset('landing/images/alert.svg') }}" height="25" class="mr-1"><span>Puedes
-                                guardar tus fotos en una carpeta
-                                especifica.</span>
+                            <img src="{{ asset('landing/images/alert.svg') }}" height="25" class="mr-1">
+                            <span>Puedes guardar tus fotos en una carpeta especifica.</span>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-12 text-center">
-                                <button style="background-color: #024079;color: white;" type="button" id="cerrarIF"
-                                    class="btn btn-light" data-dismiss="modal">Entendido</button>
-                            </div>
-                        </div>
+                    <div class="col-md-12 text-center">
+                        <button style="background-color: #024079;color: white;" type="button" id="cerrarIF"
+                            class="btn btn-light" data-dismiss="modal">Entendido</button>
                     </div>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    {{-- FINALIZACION DE MODAL --}}
+    {{-- MODAL DE CARGA MASIVA DE FOTOS --}}
     <div id="modalMasivaFoto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalMasivaFoto"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog modal-dialog-scrollable modal-lg">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
-                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Carga
-                        Masiva de Fotos a
-                        Empleados</h5>
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                        Carga Masiva de Fotos a Empleados
+                    </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <br>
-                    <div class="row">
+                    <div class="row pt-2">
                         <div class="col-xl-12 text-center">
                             <div class="file-loading">
                                 {{ csrf_field() }}
@@ -727,21 +760,24 @@ use App\proyecto_empleado;
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    {{-- FINALIZACION DE MODAL --}}
+    {{-- MODAL DE ELIMINAR --}}
     <div id="modalEliminar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalEliminar"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
-                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Eliminar
-                        empleado</h5>
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                        Eliminar empleado</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
-                        <h5 class="modal-title" id="myModalLabel" style="font-size: 15px">¿ Desea dar de baja al
-                            empleado?</h5>
+                        <h5 class="modal-title" id="myModalLabel" style="font-size: 15px">
+                            ¿Desea dar de baja al empleado?
+                        </h5>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -761,13 +797,16 @@ use App\proyecto_empleado;
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    {{-- FINALIZACION DE MODAL --}}
+    {{-- CRUD DE AREA EN REGISTRAR --}}
     <div id="areamodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal" aria-hidden="true"
         data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
-                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
-                        área</h5>
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                        Agregar área
+                    </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                         onclick="$('#form-registrar').modal('show');javascript:limpiar()">
                         <span aria-hidden="true">&times;</span>
@@ -783,15 +822,14 @@ use App\proyecto_empleado;
                                 </div>
                                 <div id="editarArea" class="col-md-6"></div>
                                 <div class="col-md-4">
-                                    <a id="buscarArea" data-toggle="tooltip" data-placement="right" title="Editar Área."
-                                        data-original-title="Editar Área." style="cursor: pointer;"><img
-                                            src="{{ asset('landing/images/search.svg') }}" height="18">
+                                    <a id="buscarArea" data-toggle="tooltip" data-placement="right" title="editar área."
+                                        data-original-title="editar área." style="cursor: pointer;">
+                                        <img src="{{ asset('landing/images/search.svg') }}" height="22">
                                     </a>
                                 </div>
                             </div>
                         </div>
-                        <br>
-                        <div class="col-md-12">
+                        <div class="col-md-12 pt-2">
                             <input type="text" class="form-control" name="textArea" id="textArea" required>
                         </div>
                 </div>
@@ -805,13 +843,15 @@ use App\proyecto_empleado;
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    {{-- FINALIZACION DE MODAL --}}
+    {{-- CRUD DE CARGO EN REGISTRAR --}}
     <div id="cargomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cargomodal" aria-hidden="true"
         data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
-                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
-                        Cargo</h5>
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                        Agregar cargo</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                         onclick="$('#form-registrar').modal('show');javascript:limpiar()">
                         <span aria-hidden="true">&times;</span>
@@ -828,15 +868,14 @@ use App\proyecto_empleado;
                                 <div id="editarCargo" class="col-md-6"></div>
                                 <div class="col-md-4">
                                     <a id="buscarCargo" data-toggle="tooltip" data-placement="right"
-                                        title="Editar Cargo." data-original-title="Editar Cargo."
-                                        style="cursor: pointer;"><img src="{{ asset('landing/images/search.svg') }}"
-                                            height="18">
+                                        title="editar cargo" data-original-title="editar cargo"
+                                        style="cursor: pointer;">
+                                        <img src="{{ asset('landing/images/search.svg') }}" height="18">
                                     </a>
                                 </div>
                             </div>
                         </div>
-                        <br>
-                        <div class="col-md-12">
+                        <div class="col-md-12 pt-2">
                             <input type="text" class="form-control" id="textCargo" required>
                         </div>
                 </div>
@@ -850,13 +889,16 @@ use App\proyecto_empleado;
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    {{-- FINALIZACION DE MODAL --}}
+    {{-- CRUD DE CENTRO COSTO EN REGISTRAR --}}
     <div id="centrocmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="centrocmodal"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
-                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
-                        Centro Costo</h5>
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                        Agregar centro costo
+                    </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                         onclick="$('#form-registrar').modal('show');javascript:limpiar()">
                         <span aria-hidden="true">&times;</span>
@@ -868,20 +910,19 @@ use App\proyecto_empleado;
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <label for="">Centro Costo</label>
+                                    <label for="">Centro costo</label>
                                 </div>
                                 <div id="editarCentro" class="col-md-6"></div>
                                 <div class="col-md-3">
                                     <a id="buscarCentro" data-toggle="tooltip" data-placement="right"
-                                        title="Editar Centro Costo." data-original-title="Editar Centro Costo."
-                                        style="cursor: pointer;"><img src="{{ asset('landing/images/search.svg') }}"
-                                            height="18">
+                                        title="editar centro costo" data-original-title="editar centro costo."
+                                        style="cursor: pointer;">
+                                        <img src="{{ asset('landing/images/search.svg') }}" height="18">
                                     </a>
                                 </div>
                             </div>
                         </div>
-                        <br>
-                        <div class="col-md-12">
+                        <div class="col-md-12 pt-2">
                             <input type="text" class="form-control" id="textCentro" required>
                         </div>
                 </div>
@@ -895,13 +936,16 @@ use App\proyecto_empleado;
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    {{-- FINALIZACION DE MODAL --}}
+    {{-- CRUD DE LOCAL EN REGISTRAR --}}
     <div id="localmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="localmodal" aria-hidden="true"
         data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
-                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
-                        Local</h5>
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                        Agregar local
+                    </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                         onclick="$('#form-registrar').modal('show');javascript:limpiar()">
                         <span aria-hidden="true">&times;</span>
@@ -916,14 +960,13 @@ use App\proyecto_empleado;
                             </div>
                             <div id="editarLocal" class="col-md-6"></div>
                             <div class="col-md-4">
-                                <a id="buscarLocal" data-toggle="tooltip" data-placement="right" title="Editar Local."
-                                    data-original-title="Editar Local." style="cursor: pointer;"><img
-                                        src="{{ asset('landing/images/search.svg') }}" height="18">
+                                <a id="buscarLocal" data-toggle="tooltip" data-placement="right" title="editar local"
+                                    data-original-title="editar local" style="cursor: pointer;">
+                                    <img src="{{ asset('landing/images/search.svg') }}" height="18">
                                 </a>
                             </div>
                         </div>
-                        <br>
-                        <div class="col-md-12">
+                        <div class="col-md-12 pt-2">
                             <input type="text" class="form-control" name="textLocal" id="textLocal" required>
                         </div>
                 </div>
@@ -937,13 +980,16 @@ use App\proyecto_empleado;
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    {{-- FINALIZACION DE MODAL --}}
+    {{-- CRUD DE NIVEL EN REGISTRAR --}}
     <div id="nivelmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="nivelmodal" aria-hidden="true"
         data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
-                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
-                        Nivel</h5>
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                        Agregar nivel
+                    </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                         onclick="$('#form-registrar').modal('show');javascript:limpiar()">
                         <span aria-hidden="true">&times;</span>
@@ -954,18 +1000,17 @@ use App\proyecto_empleado;
                         {{ csrf_field() }}
                         <div class="row">
                             <div class="col-md-2">
-                                <label for="">Nivel del Colaborador</label>
+                                <label for="">Nivel del colaborador</label>
                             </div>
                             <div id="editarNivel" class="col-md-6"></div>
                             <div class="col-md-4">
-                                <a id="buscarNivel" data-toggle="tooltip" data-placement="right" title="Editar Nivel."
-                                    data-original-title="Editar Nivel." style="cursor: pointer;"><img
-                                        src="{{ asset('landing/images/search.svg') }}" height="18">
+                                <a id="buscarNivel" data-toggle="tooltip" data-placement="right" title="editar nivel"
+                                    data-original-title="editar nivel" style="cursor: pointer;">
+                                    <img src="{{ asset('landing/images/search.svg') }}" height="18">
                                 </a>
                             </div>
                         </div>
-                        <br>
-                        <div class="col-md-12">
+                        <div class="col-md-12 pt-2">
                             <input type="text" class="form-control" name="textNivel" id="textNivel" required>
                         </div>
                 </div>
@@ -979,13 +1024,16 @@ use App\proyecto_empleado;
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div>
+    {{-- FINALIZACION DE MODAL --}}
+    {{-- CRUD DE CONTRATO EN REGISTRAR --}}
     <div id="contratomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="contratomodal"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
-                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
-                        Contrato</h5>
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                        Agregar contrato
+                    </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                         onclick="$('#form-registrar').modal('show');javascript:limpiar()">
                         <span aria-hidden="true">&times;</span>
@@ -1001,14 +1049,13 @@ use App\proyecto_empleado;
                             <div id="editarContrato" class="col-md-6"></div>
                             <div class="col-md-4">
                                 <a id="buscarContrato" data-toggle="tooltip" data-placement="right"
-                                    title="Editar Contrato." data-original-title="Editar Contrato."
-                                    style="cursor: pointer;"><img src="{{ asset('landing/images/search.svg') }}"
-                                        height="18">
+                                    title="editar contrato" data-original-title="editar contrato"
+                                    style="cursor: pointer;">
+                                    <img src="{{ asset('landing/images/search.svg') }}" height="18">
                                 </a>
                             </div>
                         </div>
-                        <br>
-                        <div class="col-md-12">
+                        <div class="col-md-12 pt-2">
                             <input type="text" class="form-control" name="textContrato" id="textContrato" required>
                         </div>
                 </div>
@@ -1022,13 +1069,16 @@ use App\proyecto_empleado;
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div>
+    {{-- FINALIZACION DE MODAL --}}
+    {{-- CRUD DE CONDICION DE PAGO EN REGISTRAR --}}
     <div id="condicionmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="condicionmodal"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
-                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
-                        Condición de Pago</h5>
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                        Agregar condición de pago
+                    </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                         onclick="$('#fechasmodal').modal('show');javascript:limpiar()">
                         <span aria-hidden="true">&times;</span>
@@ -1044,14 +1094,13 @@ use App\proyecto_empleado;
                             <div id="editarCondicion" class="col-md-6"></div>
                             <div class="col-md-4">
                                 <a id="buscarCondicion" data-toggle="tooltip" data-placement="right"
-                                    title="Editar Condición de Pago." data-original-title="Editar Condición de Pago."
-                                    style="cursor: pointer;"><img src="{{asset('landing/images/search.svg')}}"
-                                        height="18">
+                                    title="editar condición de pago" data-original-title="editar condición de pago"
+                                    style="cursor: pointer;">
+                                    <img src="{{asset('landing/images/search.svg')}}" height="18">
                                 </a>
                             </div>
                         </div>
-                        <br>
-                        <div class="col-md-12">
+                        <div class="col-md-12 pt-2">
                             <input type="text" class="form-control" name="textCondicion" id="textCondicion" required>
                         </div>
                 </div>
@@ -1065,6 +1114,8 @@ use App\proyecto_empleado;
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div>
+    {{-- FINALIZACION DE MODAL --}}
+    {{-- CRUD DE FECHAS DE CONTRATO EN REGISTRAR --}}
     <div id="fechasmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fechasmodal"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
@@ -1210,6 +1261,7 @@ use App\proyecto_empleado;
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
     <!-- /.modal -->
+    {{-- FINALIZACION DE MODAL --}}
     <!-----Modales Editar-->
     <div id="areamodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodalE" aria-hidden="true"
         data-backdrop="static">
