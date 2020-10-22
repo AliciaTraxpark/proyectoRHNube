@@ -167,7 +167,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label >Código de controlador:</label>
-                                                    <input type="text" class="form-control form-control-sm" id="codContro" required >
+                                                    <input type="text" class="form-control form-control-sm" id="codContro" required maxlength="45" >
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -258,7 +258,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label >Código de controlador:</label>
-                                                    <input type="text" class="form-control form-control-sm" id="codContro_ed" required >
+                                                    <input type="text" class="form-control form-control-sm" id="codContro_ed" required maxlength="45" >
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
