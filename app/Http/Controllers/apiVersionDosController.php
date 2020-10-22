@@ -385,7 +385,7 @@ class apiVersionDosController extends Controller
         $empleado = empleado::findOrFail($idEmpleado);
         if ($empleado) {
             $persona = persona::findOrFail($empleado->emple_persona);
-            $email = $email = env('MAIL_FROM_ADDRESS');
+            $email = env('MAIL_FROM_ADDRESS');
 
             if ($tipo == "soporte") {
 
