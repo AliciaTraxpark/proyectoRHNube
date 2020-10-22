@@ -32,6 +32,7 @@ class dispositivosController extends Controller
         $dispositivos->dispo_movil=$request->numeroM;
         $dispositivos->dispo_tSincro=$request->tSincron;
         $dispositivos->dispo_tMarca=$request->tMarcac;
+        $dispositivos->dispo_estadoActivo=1;
         $dispositivos->dispo_estado=0;
         $dispositivos->organi_id=session('sesionidorg');
         $dispositivos->dispo_Data=$request->tData;
