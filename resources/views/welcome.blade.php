@@ -68,7 +68,7 @@
         @media(max-width:1260px) {
             .pResp {
                 padding-top: 3vh !important;
-                padding-bottom: 3vw !important;
+                padding-bottom: 2.5vw !important;
             }
         }
 
