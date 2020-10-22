@@ -843,7 +843,7 @@ function verDEmpleado(idempleadoVer){
             },
             columnDefs: [
                 { responsivePriority: 1, targets: 0 },
-                { responsivePriority: 2, targets: 3 }
+                { responsivePriority: 2, targets: 4 }
             ],
             initComplete: function(){
                 this.api().columns().every(function(){
