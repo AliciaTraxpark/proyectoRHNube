@@ -227,8 +227,7 @@
                             <h6 class="font-weight-normal botonF1 pt-3 pb-1"
                                 style="font-size: 43px;color:#407088;font-family: 'Calibri'">$3</h6>
                             <h5 class="text-light pt-5" style="font-family: 'Poppins'">PYME</h5>
-                            <span class="h6 mb-1" style="color: #ffffff;font-family: 'Poppins'">AL MES-HASTA 200
-                                EMP</span>
+                            <span class="h6 mb-1" style="color: #ffffff;font-family: 'Poppins'">Hasta 200 empleados al mes</span>
                             <svg class="svgTriangulo" width="100%" height="100" viewBox="0 0 100 102"
                                 preserveAspectRatio="none">
                                 <path d="M0 0 L50 90 L100 0 V100 H0" fill="#ffffff" />
@@ -264,8 +263,7 @@
                                 style="font-size: 43px;color:#407088;font-family: 'Calibri'">$2.5
                             </h6>
                             <h5 class="text-light pt-5" style="font-family: 'Poppins'">PROFESIONAL</h5>
-                            <span class="h6" style="color: #ffffff;font-family: 'Poppins'">AL MES - DE 200 A 5000
-                                EMP</span>
+                            <span class="h6" style="color: #ffffff;font-family: 'Poppins'">De 200 a 5000 empleados al mes</span>
                             <svg class="svgTriangulo" width="100%" height="100" viewBox="0 0 100 102"
                                 preserveAspectRatio="none">
                                 <path d="M0 0 L50 90 L100 0 V100 H0" fill="#ffffff" />
@@ -297,8 +295,7 @@
                                 style="font-size: 43px;color:#407088;font-family: 'Calibri'">$2
                             </h6>
                             <h5 class="text-light pt-5" style="font-family: 'Poppins'">ENTERPRISE</h5>
-                            <span class="h6" style="color: #ffffff;font-family: 'Poppins'">AL MES-MAYOR A 5000
-                                EMP</span>
+                            <span class="h6" style="color: #ffffff;font-family: 'Poppins'">Desde 5001 empleados al mes</span>
                             <svg class="svgTriangulo" width="100%" height="100" viewBox="0 0 100 102"
                                 preserveAspectRatio="none">
                                 <path d="M0 0 L50 90 L100 0 V100 H0" fill="#ffffff" />

@@ -427,8 +427,15 @@ function onSelectFechas() {
                         orientation: 'landscape',
                         pageSize: 'LEGAL',
                         title: 'REPORTE SEMANAL',
+                        exportOptions: {
+                            columns: ":visible",
+                            orthogonal: 'export'
+                        },
                         customize: function (doc) {
                             doc['styles'] = {
+                                table: {
+                                    width: '100%'
+                                },
                                 userTable: {
                                     margin: [0, 15, 0, 15]
                                 },
