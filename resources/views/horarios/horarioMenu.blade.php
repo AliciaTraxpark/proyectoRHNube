@@ -993,11 +993,7 @@ a:not([href]):not([tabindex]){
                                     <label class="custom-control-label"
                                         for="SwitchPausa"
                                         style="font-weight: bold;padding-top: 1px">Pausas en el horario</label> &nbsp;
-                                       {{--  <button type="button" style="background-color: #34628d; color:#ffffff;padding-top: 0px;
-                                        padding-bottom: 0px;
-                                        font-size: 12px;
-                                        padding-right: 5px;
-                                        padding-left: 5px;" class="btn btn-sm" id="btnClonarP">+</button> --}}
+
                                 </div>
                              </div>
 
@@ -1173,7 +1169,7 @@ a:not([href]):not([tabindex]){
         </div><!-- /.modal -->
 
 
-        <div id="horarioEditar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+        <div id="horarioEditar" class="modal fade"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 650px;" >
 
             <div class="modal-content">
@@ -1252,11 +1248,21 @@ a:not([href]):not([tabindex]){
                                     <label class="form-check-label" for="smsCheck_ed" style="margin-top: 2px;">Hora hasta el dia siguiente.</label>
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                <div class="custom-control custom-switch mb-2">
+                                    <input type="checkbox" class="custom-control-input"
+                                        id="SwitchPausa_ed">
+                                    <label class="custom-control-label"
+                                        for="SwitchPausa_ed"
+                                        style="font-weight: bold;padding-top: 1px">Pausas en el horario</label> &nbsp;
+
+                                </div>
+                             </div>
                             <div id="pausas_edit" style="display: none" class="col-md-12">
                                 <label for="">Pausas de horario:</label>
                                 <div class="col-md-12">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-5">
                                             <label for="" style="font-weight:600">Descripción</label>
                                         </div>
                                         <div class="col-md-3">
