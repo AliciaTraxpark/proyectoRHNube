@@ -118,6 +118,25 @@
                 margin: 5% !important;
             }
 
+            .modal {
+                text-align: center;
+                padding: 0 !important;
+            }
+
+            .modal:before {
+                content: '';
+                display: inline-block;
+                height: 100%;
+                vertical-align: middle;
+                margin-right: -4px;
+                /* Adjusts for spacing */
+            }
+
+            .modal-dialog {
+                display: inline-block;
+                text-align: left;
+                vertical-align: middle;
+            }
         }
     </style>
     <header id="header-section">
@@ -457,4 +476,5 @@
         });
     </script>
 </body>
+
 </html>
