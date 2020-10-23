@@ -104,6 +104,22 @@
                 text-align: left;
                 vertical-align: middle;
             }
+
+            #diaN {
+                width: 15% !important;
+            }
+
+            #mesN {
+                width: 36% !important;
+            }
+
+            #anoN {
+                width: 25% !important;
+            }
+
+            .col-form-label {
+                text-align: center !important;
+            }
         }
     </style>
     <header id="header-section">
