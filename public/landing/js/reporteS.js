@@ -344,16 +344,21 @@ function onSelectFechas() {
                         className: 'btn btn-sm mt-1',
                         text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
                         orientation: 'landscape',
-                        pageSize: 'LEGAL',
+                        pageSize: 'A4',
+                        alignment: 'center',
                         title: 'REPORTE SEMANAL',
                         customize: function (doc) {
                             doc['styles'] = {
                                 userTable: {
-                                    margin: [0, 15, 0, 15]
+                                    margin: [0, 15, 0, 15],
+                                    alignment: 'center'
                                 },
                                 title: {
                                     color: '#163552',
                                     fontSize: '20',
+                                    alignment: 'center'
+                                },
+                                athleteTable: {
                                     alignment: 'center'
                                 },
                                 tableHeader: {
@@ -362,7 +367,10 @@ function onSelectFechas() {
                                     color: '#FFFFFF',
                                     fillColor: '#163552',
                                     alignment: 'center'
-                                }
+                                },
+                                tableMargins: {
+                                    margin: [0, 5, 0, 15]
+                                },
                             };
                         }
                     }],
