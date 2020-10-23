@@ -67,6 +67,59 @@
             .align-items-center {
                 text-align: center !important;
             }
+
+            .inputResp {
+                padding-bottom: 1rem !important;
+            }
+
+            .rowFecha {
+                flex-wrap: nowrap !important;
+            }
+
+            .imgResp {
+                display: none !important;
+            }
+
+            .content-wrapper {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+
+            .modal {
+                text-align: center;
+                padding: 0 !important;
+            }
+
+            .modal:before {
+                content: '';
+                display: inline-block;
+                height: 100%;
+                vertical-align: middle;
+                margin-right: -4px;
+                /* Adjusts for spacing */
+            }
+
+            .modal-dialog {
+                display: inline-block;
+                text-align: left;
+                vertical-align: middle;
+            }
+
+            #diaN {
+                width: 15% !important;
+            }
+
+            #mesN {
+                width: 36% !important;
+            }
+
+            #anoN {
+                width: 25% !important;
+            }
+
+            .col-form-label {
+                text-align: center !important;
+            }
         }
     </style>
     <header id="header-section">
@@ -74,7 +127,9 @@
             <div class="container">
                 <div class="col-md-3 pl-5 colResp">
                     <div class="navbar-brand-wrapper d-flex w-100 colResp">
-                        <img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="69">
+                        <a href="/logout">
+                            <img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="69">
+                        </a>
                     </div>
                 </div>
                 <div class="col-md-9 text-left pt-2 textResp">
@@ -86,7 +141,6 @@
             </div>
         </nav>
     </header>
-
     <div class="content-wrapper">
         <div class="container" style="padding-left: 5%;padding-right: 4%">
             <section class="features-overview" id="features-section">
@@ -95,11 +149,9 @@
                     aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header" style="padding-bottom:
-                                    3px; padding-top:
-                                    10px;background: #ecebeb">
-                                <h5 class="" id="myModalLabel" style="font-size:14px">Confirma tu
-                                    fecha de nacimiento
+                            <div class="modal-header" style="padding-bottom:3px; padding-top:10px;background: #ecebeb">
+                                <h5 class="" id="myModalLabel" style="font-size:14px">
+                                    Confirma tu fecha de nacimiento
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -109,12 +161,11 @@
                                 <form method="POST" action="javascript:registerP()">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <label class="col-lg-12
-                                                    col-form-label" for="simpleinput">Naciste el<input type="text"
-                                                    id="diaN" class="inp
-                                                        col-md-1" disabled>de<input type="text" class="inp
-                                                        col-md-3" id="mesN" disabled>de<input type="text" id="anoN"
-                                                    class="inp col-md-2" disabled>?</label>
+                                            <label class="col-lg-12 col-form-label" for="simpleinput">Naciste el
+                                                <input type="text" id="diaN" class="inp col-md-1" disabled>de
+                                                <input type="text" class="inp col-md-3" id="mesN" disabled>de
+                                                <input type="text" id="anoN" class="inp col-md-2" disabled>?
+                                            </label>
                                         </div>
                                     </div>
                             </div>
@@ -142,19 +193,15 @@
                             <div class="modal-header" style="padding-bottom:
                                     3px; padding-top:
                                     10px;background-color:#163552;">
-                                <h5 class="" id="myModalLabel" style="font-size: 14px">Email ya registrado
+                                <h5 class="" id="myModalLabel" style="font-size: 14px">
+                                    Email ya registrado
                                 </h5>
-                                {{--  <button type="button" class="close"
-                                        data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button> --}}
                             </div>
                             <div class="modal-body">
                                 <form method="POST" action="javascript:confirmarEmail()">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <label class="col-lg-12
-                                                    col-form-label" for="simpleinput">El email: </label>
+                                            <label class="col-lg-12 col-form-label" for="simpleinput">El email: </label>
 
                                         </div>
                                         <div class="col-md-12">
@@ -162,8 +209,8 @@
                                                 id="email2">
                                         </div>
                                         <div class="col-md-12">
-                                            <label class="col-lg-12
-                                                col-form-label" for="simpleinput" for="">pertenece a un usuario
+                                            <label class="col-lg-12 col-form-label" for="simpleinput" for="">pertenece a
+                                                un usuario
                                                 registrado,si desea registrar otra organizacion confirma su
                                                 contraseña:</label>
                                         </div>
@@ -230,35 +277,35 @@
                     <div class="row">
                         <div class="col-md-9">
                             <div class="row">
-                                <div class="col-md-9" id="validCorreo" style="display: none">
-                                    <br>
-                                    <span style="color:red;">*Correo
-                                        electrónico incorrecto.</span><br></div><br><br>
-                                <div class="col-md-9">
+                                <div class="col-md-9 pb-2" id="validCorreo" style="display: none">
+                                    <span class="pt-2 pb-2" style="color:red;">*Correo electrónico incorrecto.</span>
+                                </div>
+                                <div class="col-md-9 pb-3">
                                     <input class="form-control" onblur="comprobarEmail()"
                                         placeholder="Correo electrónico" name="email" id="email"
                                         value="{{old('email')}}" required>
                                     {{$errors->first('email')}}
-                                </div><br><br>
-                                <div class="col-md-9">
+                                </div>
+                                <div class="col-md-9 pb-3">
                                     <input class="form-control" type="password" placeholder="Contraseña nueva"
                                         name="password" id="password" value="{{old ('password')}}" required>
                                     {{$errors->first('password')}}
-                                </div><br><br>
+                                </div>
                                 <div class="col-md-9" id="validCel" style="display: none">
-                                    <span style="color:red;">*Número de celular incorrecto.</span><br></div>
-                                <div class="col-md-9">
+                                    <span class="pb-1" style="color:red;">*Número de celular incorrecto.</span>
+                                </div>
+                                <div class="col-md-9 pb-3">
                                     <input class="form-control" type="tel" placeholder="Celular" name="celular"
                                         id="celular" value="{{old ('celular')}}" maxlength="9" required>
                                     {{$errors->first('celular')}}
                                 </div>
-                                <div class="col-md-3"></div><br><br>
-                                <div class="col-md-3">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-3 inputResp">
                                     <input class="form-control" placeholder="Nombres" name="nombres" id="nombres"
                                         value="{{old ('nombres')}}" required>
                                     {{$errors->first('nombres')}}
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 inputResp">
                                     <input class="form-control" placeholder="Apellido Paterno" name="apPaterno"
                                         id="apPaterno" value="{{old
                                             ('apellidos')}}" required>
@@ -269,128 +316,109 @@
                                         id="apMaterno" value="{{old
                                             ('apellidos')}}" required>
                                     {{$errors->first('apellidos')}}
-                                </div> <br><br>
-
-                                <div class="col-md-9">
+                                </div>
+                                <div class="col-md-9 pt-3">
                                     <input class="form-control" placeholder="Direccion" name="direccion" id="direccion"
                                         value="{{old ('direccion')}}" required>
                                     {{$errors->first('direccion')}}
                                 </div>
 
                             </div>
-                            <div class="row">
-                                <div class="col-md-12" style="color:
-                                        #d03310; font-size: 14px;" id="Mensaje"></div>
+                            <div class="row pb-5">
+                                <div class="col-md-12" style="color:#d03310; font-size: 14px;" id="Mensaje"></div>
                                 <div class="col-md-12 mt-2">
-                                    <label class="normal" for="">Fecha de
-                                        nacimiento:</label>
+                                    <label class="normal" for="">Fecha de nacimiento:</label>
                                 </div>
-                                <div class="col-md-9">
-                                    {{-- <div class="datepicker date
-                                            input-group p-0 shadow-sm">
-                                            <input type="text"
-                                                placeholder="elegir fecha"
-                                                class="form-control" id="fecha"
-                                                name="fecha" value="{{old('fecha')}}"
-                                    required>
-                                    {{$errors->first('fecha')}}
-                                    <div class="input-group-append"><span class="input-group-text"><i
-                                                class="fa fa-calendar"></i></span></div>
-                                </div> --}}
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <select class="form-control" name="dia_fecha" id="dia_fecha" required="">
-                                            <option value="">Dia</option>
-                                            @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">{{$i}}</option>
-                                                @endfor
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <select class="form-control" name="mes_fecha" id="mes_fecha" required="">
-                                            <option value="">Mes</option>
-                                            <option class="" value="1">Enero</option>
-                                            <option class="" value="2">Febrero</option>
-                                            <option class="" value="3">Marzo</option>
-                                            <option class="" value="4">Abril</option>
-                                            <option class="" value="5">Mayo</option>
-                                            <option class="" value="6">Junio</option>
-                                            <option class="" value="7">Julio</option>
-                                            <option class="" value="8">Agosto</option>
-                                            <option class="" value="9">Setiembre</option>
-                                            <option class="" value="10">Octubre</option>
-                                            <option class="" value="11">Noviembre</option>
-                                            <option class="" value="12">Diciembre</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <select class="form-control" name="ano_fecha" id="ano_fecha" required="">
-                                            <option value="">Año</option>
-                                            @for ($i = 1960; $i <2011; $i++) <option class="" value="{{$i}}">{{$i}}
-                                                </option>
-                                                @endfor
-                                        </select>
+                                <div class="col-md-9 pb-3">
+                                    <div class="row rowFecha">
+                                        <div class="col-md-3">
+                                            <select class="form-control" name="dia_fecha" id="dia_fecha" required="">
+                                                <option value="">Dia</option>
+                                                @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">{{$i}}
+                                                    </option>
+                                                    @endfor
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select class="form-control" name="mes_fecha" id="mes_fecha" required="">
+                                                <option value="">Mes</option>
+                                                <option class="" value="1">Enero</option>
+                                                <option class="" value="2">Febrero</option>
+                                                <option class="" value="3">Marzo</option>
+                                                <option class="" value="4">Abril</option>
+                                                <option class="" value="5">Mayo</option>
+                                                <option class="" value="6">Junio</option>
+                                                <option class="" value="7">Julio</option>
+                                                <option class="" value="8">Agosto</option>
+                                                <option class="" value="9">Setiembre</option>
+                                                <option class="" value="10">Octubre</option>
+                                                <option class="" value="11">Noviembre</option>
+                                                <option class="" value="12">Diciembre</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select class="form-control" name="ano_fecha" id="ano_fecha" required="">
+                                                <option value="">Año</option>
+                                                @for ($i = 1960; $i <2011; $i++) <option class="" value="{{$i}}">{{$i}}
+                                                    </option>
+                                                    @endfor
+                                            </select>
+                                        </div>
+
                                     </div>
 
                                 </div>
-
-                            </div>
-                            <br><br>
-                            <div class="col-md-12">
-                                <label class="normal" for="">Género:</label>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="control">
-                                    <label class="radio normal">
-                                        <input type="radio" name="sexo" id="sexo" value="Mujer" required>
-                                        Mujer
-                                    </label>
+                                <div class="col-md-12">
+                                    <label class="normal" for="">Género:</label>
                                 </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="control">
-                                    <label class="radio normal">
-                                        <input type="radio" name="sexo" id="sexo" value="Hombre" required>
-                                        Hombre
-                                    </label>
+                                <div class="col-md-2">
+                                    <div class="control">
+                                        <label class="radio normal">
+                                            <input type="radio" name="sexo" id="sexo" value="Mujer" required>
+                                            Mujer
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="control">
-                                    <label class="radio normal" data-toggle="tooltip" data-placement="bottom" title=""
-                                        data-original-title="Puedes
+                                <div class="col-md-2">
+                                    <div class="control">
+                                        <label class="radio normal">
+                                            <input type="radio" name="sexo" id="sexo" value="Hombre" required>
+                                            Hombre
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="control">
+                                        <label class="radio normal" data-toggle="tooltip" data-placement="bottom"
+                                            title="" data-original-title="Puedes
                                                 elegir personalizado si no
                                                 deseas especificar tu sexo.">
-                                        <input type="radio" name="sexo" id="sexo" value="Personalizado" required>
-                                        Personalizado
-                                    </label>
-                                    &nbsp;
-                                    <a data-toggle="modal" id="generoPersonalizado">
-                                        <img src="{{asset('landing/images/plus.svg')}}" style="cursor: pointer"
-                                            height="15">
-                                    </a>
+                                            <input type="radio" name="sexo" id="sexo" value="Personalizado" required>
+                                            Personalizado
+                                        </label>
+                                        &nbsp;
+                                        <a data-toggle="modal" id="generoPersonalizado" style="display: none">
+                                            <img src="{{asset('landing/images/plus.svg')}}" style="cursor: pointer"
+                                                height="15">
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <br><br>
-
+                        <div class="container col-md-3">
+                            <img src="{{asset('landing/images/career.gif')}}" alt="" class="img-fluid pb-5 imgResp">
+                            <div class="col-md-12 text-center pb-3">
+                                <button type="submit" class="btn btn-opacity-primary mr-1">Registrarme</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="container col-md-3">
-                        <img src="{{asset('landing/images/career.gif')}}" alt="" class="img-fluid"><br><br><br><br>
-                        <div class="col-md-12 text-center">
-
-                            <button type="submit" class="btn
-                                        btn-opacity-primary mr-1">Registrarme</button>
-                        </div> <br><br>
-                    </div>
-        </div>
-        </form>
-        </section>
-        <footer class="border-top">
-            <p class="text-center text-muted pt-4">© <?php echo date("
+                </form>
+            </section>
+            <footer class="border-top">
+                <p class="text-center text-muted pt-4">© <?php echo date("
                             Y" ); ?> - RH nube Corp - USA | Todos los derechos reservados.</p>
-        </footer>
-
-    </div>
+            </footer>
+        </div>
     </div>
 
     <script src="{{asset('landing/vendors/jquery/jquery.min.js')}}"></script>
