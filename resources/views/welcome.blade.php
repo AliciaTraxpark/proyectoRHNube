@@ -137,6 +137,14 @@
                 text-align: left;
                 vertical-align: middle;
             }
+
+            .btnResp {
+                text-align: center !important;
+            }
+
+            .btnVideoR {
+                padding-top: 1rem !important;
+            }
         }
     </style>
     <header id="header-section">
@@ -225,6 +233,37 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
     {{-- FINAL DE MODAL --}}
+    {{-- MODAL DE VIDEO --}}
+    <div class="modal fade" id="modal-video" tabindex="-1" role="dialog" aria-labelledby="modal-video"
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog  modal-lg d-flex justify-content-center">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#163552;padding:0.5rem">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="javascript:stopVideo()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{-- VIDEO --}}
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-lg-12  p-0 img-digital grid-margin grid-margin-lg-0"
+                            data-aos="fade-left">
+                            <div style="padding:50.46% 0 0 0;">
+                                <iframe src="https://player.vimeo.com/video/471441178"
+                                    width="640" height="564"
+                                    style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0"
+                                    allow="autoplay; fullscreen" allowfullscreen></iframe>
+                            </div>
+                            <script src="https://player.vimeo.com/api/player.js"></script>
+                        </div>
+                    </div>
+                    {{-- FINALIZAR VIDEO --}}
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    {{-- FINAL DE MODAL --}}
     <div class="content-wrapper" style="padding-bottom: 0px;padding-top: 0px;background-color: #ffffff">
         <div class="container">
             <section class="digital-marketing-service" id="digital-marketing-section">
@@ -238,12 +277,19 @@
                                 gratuito y el costo de administración
                                 tiene un retorno de inversión (ROI) de sólo 2 días.
                             </p>
-                            <div class="col-md-12"> <br>
-                                <a href="{{route('registroPersona')}} ">
-                                    <button {{-- onclick=" $('#modal-error').modal('show')" --}}
-                                        class="btn btn-opacity-comienza mr-1">Crear mi cuenta
-                                    </button>
-                                </a>
+                            <div class="row justify-content-center">
+                                <div class="col-md-8 text-right btnResp">
+                                    <a href="{{route('registroPersona')}} ">
+                                        <button {{-- onclick=" $('#modal-error').modal('show')" --}}
+                                            class="btn btn-opacity-comienza mr-1">Crear mi cuenta
+                                        </button>
+                                    </a>
+                                </div>
+                                <div class="col-md-4 text-left btnResp btnVideoR">
+                                    <a onclick="$('#modal-video').modal()" style="cursor: pointer">
+                                        <img src="{{asset('landing/images/play.svg')}}" height="45">
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -440,8 +486,14 @@
             </div>
         </div>
     </div>
+    <script src="https://player.vimeo.com/api/player.js"></script>
     {{-- FINAL DE MODAL --}}
     <script>
+        function stopVideo(){
+            var iframe = document.querySelector('iframe');
+            var player = new Vimeo.Player(iframe);
+            player.unload();
+        }
         function cerrarModal() {
             document.getElementById("modalInv").style.display = "none";
             document.getElementById("modal").style.display = "none";
