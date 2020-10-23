@@ -142,22 +142,12 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             <span> Planes y Precios </span>
         </a>
     </li>
-
-    {{--
-        <li>
-            <a href="javascript: void(0);">
-                <img src="{{asset('admin/images/growth (2).svg')}}" height="25"
-    class="mr-1">
-    <span>Horas trabajadas</span>
-    <span class="menu-arrow"></span>
-    </a>
-    <ul class="nav-second-level" aria-expanded="false">
-        <li>
-            <a href="/reporteSemanal">Reporte Semanal</a>
-            <a href="/reporteMensual">Reporte Mensual</a>
-        </li>
-    </ul>
-    </li> --}}
+    <li style="display: none">
+        <a href="/planes">
+            <i data-feather="play-circle"></i>
+            <span>Biblioteca</span>
+        </a>
+    </li>
 </ul>
 
 @endif
