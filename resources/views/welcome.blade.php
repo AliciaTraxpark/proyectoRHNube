@@ -250,10 +250,11 @@
                         <div class="col-12 col-lg-12  p-0 img-digital grid-margin grid-margin-lg-0"
                             data-aos="fade-left">
                             <div style="padding:50.46% 0 0 0;">
-                                <iframe src="https://player.vimeo.com/video/471441178"
+                                <iframe src="https://player.vimeo.com/video/471441178?title=0&byline=0&portrait=0"
                                     width="640" height="564"
                                     style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0"
                                     allow="autoplay; fullscreen" allowfullscreen></iframe>
+                                    
                             </div>
                             <script src="https://player.vimeo.com/api/player.js"></script>
                         </div>
