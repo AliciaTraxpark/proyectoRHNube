@@ -897,6 +897,35 @@ class horarioController extends Controller
 
         $horarion = horario::where('organi_id', '=', session('sesionidorg'))->get();
 
+        $descPausa = $request->get('descPausa_ed');
+        $IniPausa = $request->get('pausaInicio_ed');
+        $FinPausa = $request->get('finPausa_ed');
+
+        //comprobar si existe pausas
+
+        $pausas_horarioComprobar=DB::table('pausas_horario')
+        ->where('horario_id',$idhorario)->get();
+                
+        if($pausas_horarioComprobar->isEmpty()){
+            if ($descPausa) {
+
+                if ($descPausa != null || $descPausa != '') {
+                    for ($i = 0; $i < sizeof($descPausa); $i++) {
+                        if ($descPausa[$i] != null) {
+                            $pausas_horario = new pausas_horario();
+                            $pausas_horario->pausH_descripcion = $descPausa[$i];
+                            $pausas_horario->pausH_Inicio = $IniPausa[$i];
+                            $pausas_horario->pausH_Fin = $FinPausa[$i];
+                            $pausas_horario->horario_id = $idhorario;
+                            $pausas_horario->save();
+                        }
+                    }
+                }
+            }
+        }
+
+
+
         return ($horarion);
     }
 

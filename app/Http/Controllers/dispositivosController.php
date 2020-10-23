@@ -195,9 +195,11 @@ class dispositivosController extends Controller
      ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
      ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
      ->where('marcm.organi_id','=',session('sesionidorg'))
-     ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha)) as entrada')
-     ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida)) as final')
+     /*      */
+     ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_id DESC) as entrada ')
+     ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_id DESC)  as final  ')
      ->groupBy('marcm.marcaMov_emple_id')
+
     /*   ->whereYear('marcaMov_fecha',$año)
         ->whereMonth('marcaMov_fecha',$mes)
         ->whereDay('marcaMov_fecha',$dia) */
