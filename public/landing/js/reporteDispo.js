@@ -52,10 +52,10 @@ function cargartabla (fecha) {
         success: function (data) {
 
             thead='<tr>'+
-            '<th>CC</th>'+
-            '<th>DNI</th>'+
-            '<th>Nombre</th>'+
-            '<th>Cargo</th>'+
+            '<th>CC &nbsp;</th>'+
+            '<th>DNI  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>'+
+            '<th>Nombre &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>'+
+            '<th>Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>'+
             '<th id="hEntrada">Hora de entrada</th>'+
             '<th id="hSalida">Hora de salida</th>'+
             '<th id="tSitio">Tiempo en sitio</th>'+
@@ -110,17 +110,17 @@ function cargartabla (fecha) {
             for (var i = 0; i < dataA.length; i++) {
         tbody='<tr>'+
         '<td>' + (i + 1) +'</td>'+
-        '<td>'+dataA[i].emple_nDoc+'</td>'+
-        '<td>'+dataA[i].perso_nombre+' '+dataA[i].perso_apPaterno+' '+dataA[i].perso_apMaterno+'</td>';
+        '<td>'+dataA[i].emple_nDoc+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>'+
+        '<td>'+dataA[i].perso_nombre+' '+dataA[i].perso_apPaterno+' '+dataA[i].perso_apMaterno+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>';
 
         if(dataA[i].cargo_descripcion!=null){
         tbody+=
             '<td>'+ dataA[i].cargo_descripcion+
-        '</td>';
+        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>';
         }
         else{
             tbody+=
-            '<td> ---</td>';
+            '<td> ---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>';
         }
 
         var nfi=$('#nfila').val();
@@ -312,7 +312,7 @@ function cargartabla (fecha) {
                 colvis: "Visibilidad",
             },
         },
-        
+
         dom: 'Bfrtip',
                     buttons: [{
                         extend: 'excel',
