@@ -197,7 +197,7 @@
             flex-wrap: nowrap !important;
         }
 
-        .tituloResponsive{
+        .tituloResponsive {
             max-width: 30% !important;
         }
     }
@@ -227,7 +227,8 @@
                             <h6 class="font-weight-normal botonF1 pt-3 pb-1"
                                 style="font-size: 43px;color:#407088;font-family: 'Calibri'">$3</h6>
                             <h5 class="text-light pt-5" style="font-family: 'Poppins'">PYME</h5>
-                            <span class="h6 mb-1" style="color: #ffffff;font-family: 'Poppins'">Hasta 200 empleados al mes</span>
+                            <span class="h6 mb-1" style="color: #ffffff;font-family: 'Poppins'">Hasta 200 empleados al
+                                mes</span>
                             <svg class="svgTriangulo" width="100%" height="100" viewBox="0 0 100 102"
                                 preserveAspectRatio="none">
                                 <path d="M0 0 L50 90 L100 0 V100 H0" fill="#ffffff" />
@@ -237,10 +238,10 @@
                             style="border-bottom-left-radius: 25px;border-bottom-right-radius: 25px">
                             <ul class="list-unstyled mb-3 position-relative ulC" style="font-family: 'Roboto';">
                                 <li class="ilC text-left" style="color: #44b1cc"><img
-                                        src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">$2.5 un
+                                        src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">$2.50 un
                                     pago semestral</li>
                                 <li class="ilC text-left" style="color: #44b1cc"><img
-                                        src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">$2 un
+                                        src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">$2.00 un
                                     pago
                                     anual</li>
                                 <li class="ilC text-left" style="color: #44b1cc"><img
@@ -250,7 +251,7 @@
                                         src="{{asset('landing/images/tick (4).svg')}}" height="15"
                                         class="mr-2">Multiempresa
                                 </li>
-                                <li class="ilC" style="color: #44b1cc;font-size: 9px">(5$Por cada empresa nueva
+                                <li class="ilC" style="color: #44b1cc;font-size: 9px">(5$ Por cada empresa nueva
                                     administrada por la misma cuenta)
                                 </li>
                             </ul> <button type="button" class="btn btn-lg btn-block btn-custom"
@@ -263,7 +264,8 @@
                                 style="font-size: 43px;color:#407088;font-family: 'Calibri'">$2.5
                             </h6>
                             <h5 class="text-light pt-5" style="font-family: 'Poppins'">PROFESIONAL</h5>
-                            <span class="h6" style="color: #ffffff;font-family: 'Poppins'">De 200 a 5000 empleados al mes</span>
+                            <span class="h6" style="color: #ffffff;font-family: 'Poppins'">De 200 a 5000 empleados al
+                                mes</span>
                             <svg class="svgTriangulo" width="100%" height="100" viewBox="0 0 100 102"
                                 preserveAspectRatio="none">
                                 <path d="M0 0 L50 90 L100 0 V100 H0" fill="#ffffff" />
@@ -272,19 +274,22 @@
                         <div class="card-body bg-white mt-0 shadow bodyPrecio"
                             style="border-bottom-left-radius: 25px;border-bottom-right-radius: 25px">
                             <ul class="list-unstyled mb-3 pb-4 position-relative ulC">
-                                <li class="ilC text-left" style="color: #3161a3"><img
-                                        src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">$2 un
-                                    pago
-                                    semestral</b></li>
-                                <li class="ilC text-left" style="color: #3161a3"><img
-                                        src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">$1.8 un
-                                    pago anual</li>
-                                <li class="ilC text-left" style="color: #3161a3"><img
-                                        src="{{asset('landing/images/tick (4).svg')}}" height="15"
-                                        class="mr-2">Administrador de personal Ilimitado</li>
-                                <li class="ilC text-left" style="color: #3161a3"><img
-                                        src="{{asset('landing/images/tick (4).svg')}}" height="15"
-                                        class="mr-2">Multiempresa Ilimitado</li>
+                                <li class="ilC text-left" style="color: #3161a3">
+                                    <img src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">
+                                    $2.00 un pago semestral
+                                </li>
+                                <li class="ilC text-left" style="color: #3161a3">
+                                    <img src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">
+                                    $1.80 un pago anual
+                                </li>
+                                <li class="ilC text-left" style="color: #3161a3">
+                                    <img src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">
+                                    Administrador de personal Ilimitado
+                                </li>
+                                <li class="ilC text-left" style="color: #3161a3">
+                                    <img src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">
+                                    Multiempresa Ilimitado
+                                </li>
                             </ul> <button type="button" class="btn btn-lg btn-block btn-customD"
                                 style="font-size: 16px;font-weight: bold">SUSCRIBIRSE</button>
                         </div>
@@ -295,7 +300,8 @@
                                 style="font-size: 43px;color:#407088;font-family: 'Calibri'">$2
                             </h6>
                             <h5 class="text-light pt-5" style="font-family: 'Poppins'">ENTERPRISE</h5>
-                            <span class="h6" style="color: #ffffff;font-family: 'Poppins'">Desde 5001 empleados al mes</span>
+                            <span class="h6" style="color: #ffffff;font-family: 'Poppins'">Desde 5001 empleados al
+                                mes</span>
                             <svg class="svgTriangulo" width="100%" height="100" viewBox="0 0 100 102"
                                 preserveAspectRatio="none">
                                 <path d="M0 0 L50 90 L100 0 V100 H0" fill="#ffffff" />
@@ -304,18 +310,21 @@
                         <div class="card-body bg-white mt-0 shadow bodyPrecio"
                             style="border-bottom-left-radius: 25px;border-bottom-right-radius: 25px">
                             <ul class="list-unstyled mb-3 pb-4 position-relative ulC">
-                                <li class="ilC text-left" style="color: #264e70"><img
-                                        src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">$1.8 un
-                                    pago semestral</li>
-                                <li class="ilC text-left" style="color: #264e70"><img
-                                        src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">$1.5 un
-                                    pago anual</li>
-                                <li class="ilC text-left" style="color: #264e70"><img
-                                        src="{{asset('landing/images/tick (4).svg')}}" height="15"
-                                        class="mr-2">Administrador de personal Ilimitado</li>
-                                <li class="ilC text-left" style="color: #264e70"><img
-                                        src="{{asset('landing/images/tick (4).svg')}}" height="15"
-                                        class="mr-2">Multiempresa Ilimitado</li>
+                                <li class="ilC text-left" style="color: #264e70">
+                                    <img src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">
+                                    $1.80 un pago semestral
+                                </li>
+                                <li class="ilC text-left" style="color: #264e70">
+                                    <img src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">
+                                    $1.50 un pago anual</li>
+                                <li class="ilC text-left" style="color: #264e70">
+                                    <img src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">
+                                    Administrador de personal Ilimitado
+                                </li>
+                                <li class="ilC text-left" style="color: #264e70">
+                                    <img src="{{asset('landing/images/tick (4).svg')}}" height="15" class="mr-2">
+                                    Multiempresa Ilimitado
+                                </li>
                             </ul> <button type="button" class="btn btn-lg btn-block btn-customT"
                                 style="font-size: 16px;font-weight: bold">SUSCRIBIRSE</button>
                         </div>
@@ -400,12 +409,12 @@
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <p class="mt-1" style="color:#797a7e">Estándar</p>
+                    <p class="mt-1" style="color:#797a7e">50$ x empresa</p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <p class="mt-1" style="color:#797a7e">Estándar</p>
+                    <p class="mt-1" style="color:#797a7e">50$ x empresa</p>
                 </div>
             </div>
         </div>
