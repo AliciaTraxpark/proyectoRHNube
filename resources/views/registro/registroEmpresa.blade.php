@@ -26,16 +26,104 @@
         input[type=number] {
             -moz-appearance: textfield;
         }
+
+        @media (max-width: 767px) {
+            .navbar {
+                padding: 0% !important;
+            }
+
+            .container {
+                padding-bottom: 3% !important;
+                padding-left: 10px !important;
+                padding-right: 10px !important;
+            }
+
+            .colResp {
+                justify-content: center !important;
+                padding: 0% !important;
+            }
+
+            .textResp {
+                text-align: center !important;
+            }
+
+            .content-page {
+                margin-right: 10px !important;
+                margin-left: 10px !important;
+                margin-top: 10px !important;
+            }
+
+            .align-items-center {
+                text-align: center !important;
+            }
+
+            .inputResp {
+                padding-bottom: 1rem !important;
+            }
+
+            .rowFecha {
+                flex-wrap: nowrap !important;
+            }
+
+            .imgResp {
+                display: none !important;
+            }
+
+            .content-wrapper {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+
+            .modal {
+                text-align: center;
+                padding: 0 !important;
+            }
+
+            .modal:before {
+                content: '';
+                display: inline-block;
+                height: 100%;
+                vertical-align: middle;
+                margin-right: -4px;
+                /* Adjusts for spacing */
+            }
+
+            .modal-dialog {
+                display: inline-block;
+                text-align: left;
+                vertical-align: middle;
+            }
+
+            #diaN {
+                width: 15% !important;
+            }
+
+            #mesN {
+                width: 36% !important;
+            }
+
+            #anoN {
+                width: 25% !important;
+            }
+
+            .col-form-label {
+                text-align: center !important;
+            }
+
+            .textC {
+                text-align: center !important;
+            }
+        }
     </style>
     <header id="header-section">
         <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
             <div class="container">
-                <div class="col-md-3 pl-5">
-                    <div class="navbar-brand-wrapper d-flex w-100">
+                <div class="col-md-3 pl-5 colResp">
+                    <div class="navbar-brand-wrapper d-flex w-100 colResp">
                         <img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="69">
                     </div>
                 </div>
-                <div class="col-md-9 text-left pt-2">
+                <div class="col-md-9 text-left pt-2 textResp">
                     <h5 style="color: #ffffff">Ahora registra tu organización: Empresarial, Gobierno, Ong…</h5>
                     <label for="" class="blanco font-italic">Tienes 2 minutos</label>
 
@@ -61,10 +149,10 @@
                     aria-labelledby="organizacionModal" aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header" style="padding-bottom:3px;
-                            padding-top:10px;background: #ecebeb">
+                            <div class="modal-header" style="padding-bottom:3px;padding-top:10px;background: #ecebeb">
                                 <h5 class="modal-title" id="myModalLabel" style="font-size:14px">
-                                    Personalizar organización</h5>
+                                    Personalizar organización
+                                </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="javascript:limpiartextOrganizacion()">
                                     <span aria-hidden="true">&times;</span>
@@ -80,12 +168,12 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-sm" style="background-color: #f8f9fa!important;color: #343a40!important;font-size:
-                                14px;padding: 4px 8px 4px 8px" data-dismiss="modal"
-                                    onclick="javascript:limpiartextOrganizacion()">Cerrar</button>
-                                <button type="button" style="background:
-                            #163552;color: #ecebeb;font-size:
-                                14px;padding: 4px 8px 4px 8px" class="btn btn-sm" onclick="javascript:personalizadoOrganizacion()"
+                                <button type="button" class="btn btn-sm"
+                                    style="background-color: #f8f9fa!important;color: #343a40!important;font-size:14px;padding: 4px 8px 4px 8px"
+                                    data-dismiss="modal" onclick="javascript:limpiartextOrganizacion()">Cerrar</button>
+                                <button type="button"
+                                    style="background:#163552;color: #ecebeb;font-size:14px;padding: 4px 8px 4px 8px"
+                                    class="btn btn-sm" onclick="javascript:personalizadoOrganizacion()"
                                     id="guardarPersonalizarOrganizacion">Guardar</button>
                             </div>
                         </div><!-- /.modal-content -->
@@ -119,23 +207,22 @@
                                 id="errorRUC">Ruc o ID ya registrado!</label>
                             <div class="row">
                                 <input type="hidden" name="iduser" id="iduser" value="{{$userid}}">
-                                <div class="col-md-4">
+                                <div class="col-md-4 inputResp">
                                     <input type="number" maxlength="11" min="1" max="" class="form-control " required
                                         placeholder="RUC o ID" name="ruc" id="ruc" value="{{ old('ruc') }}"
                                         onkeypress="return isNumeric(event)" oninput="maxLengthCheck(this)">
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-5 pb-3">
                                     <input class="form-control" placeholder="Razón social "
                                         value="{{ old('razonSocial') }}" name="razonSocial" id="razonSocial" required>
-                                </div> <br><br>
-                                <div class="col-md-9">
+                                </div>
+                                <div class="col-md-9 pb-3">
                                     <input class="form-control " placeholder="Direccion legal " name="direccion"
                                         value="{{ old('direccion') }}" id="direccion" required>
-                                </div><br><br>
+                                </div>
                             </div>
-                            <div class="row">
-
-                                <div class="col-md-3">
+                            <div class="row pb-3">
+                                <div class="col-md-3 inputResp">
                                     <select class="form-control" placeholder="Departamento " name="departamento"
                                         id="departamento" required>
                                         <option value="">DEPARTAMENTO</option>
@@ -145,33 +232,33 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 inputResp">
                                     <select class="form-control " placeholder="Provincia " name="provincia"
                                         id="provincia" required>
                                         <option value="">PROVINCIA</option>
 
                                     </select>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 inputResp">
                                     <select class="form-control " placeholder="Distrito " name="distrito" id="distrito"
                                         required>
                                         <option value="">DISTRITO</option>
                                     </select>
                                 </div>
-                            </div><br>
-                            <div class="row">
+                            </div>
+                            <div class="row pb-3">
                                 <div class="col-md-4">
                                     <input class="form-control" type="number" placeholder="Num de empleados"
                                         name="nempleados" id="nempleados" value="{{ old('nempleados') }}" required>
                                 </div>
-                            </div><br>
-                            <div class="row">
+                            </div>
+                            <div class="row pb-3">
                                 <div class="col-md-9">
                                     <input class="form-control " placeholder="Página web o dominio(opcional)"
                                         name="pagWeb" id="pagWeb" value="{{ old('pagWeb') }}">
                                 </div>
-                            </div><br>
-                            <div class="row">
+                            </div>
+                            <div class="row pb-3">
                                 <div class="col-md-12">
                                     <label class="normal" for="">Tipo de organización</label>
                                 </div>
@@ -208,7 +295,7 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-2 pb-3">
                                     <div class="control">
                                         <label class="radio normal">
                                             <input type="radio" name="tipo" id="tipo" value="Otros" required>
@@ -221,25 +308,21 @@
                                         </a>
                                     </div>
                                 </div>
-
-                                <br><br>
-
                             </div>
-                            <br><br>
-
                         </div>
                         <div class="container col-md-3">
                             <img src="{{asset('landing/images/webdevelopment10.gif')}}" alt=""
-                                class="img-fluid"><br><br><br><br>
-                            <div class="col-md-12 text-right">
+                                class="img-fluid pb-5 imgResp">
+                            <div class="col-md-12 text-right pb-3 textC">
                                 <button class="btn btn-opacity-primary mr-1" type="submit">Registrar empresa </button>
-                            </div> <br><br>
+                            </div>
                         </div>
                     </div>
                 </form>
             </section>
             <footer class="border-top">
-                <p class="text-center text-muted pt-4">© <?php echo date("Y"); ?>- RH nube Corp - USA | Todos los derechos reservados.</p>
+                <p class="text-center text-muted pt-4">© <?php echo date("Y"); ?>- RH nube Corp - USA | Todos los
+                    derechos reservados.</p>
             </footer>
 
         </div>
