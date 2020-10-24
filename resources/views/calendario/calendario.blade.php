@@ -144,6 +144,17 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
         background: #163552;
         color: #ffffff;
     }
+    body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-footer > button.btn.btn-primary.bootbox-accept{
+        background-color: #163552;
+        border-color: #163552;
+    }
+    body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-header{
+        background-color: #163552;
+    }
+    body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-header > h5{
+        color: #fff;
+        font-size: 15px!important;
+    }
 </style>
 
   <header id="header-section">
@@ -352,7 +363,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
 
 
                                 <form class="form-horizontal">
-                                  <h5 style="font-size: 14px" class="modal-title" id="myModalLabel">¿Desea eliminar días no Laborales?</h5>
+                                  <h5 style="font-size: 14px" class="modal-title" id="myModalLabel">¿Desea eliminar días no laborales?</h5>
                                   <input type="hidden" id="idnolabEliminar">
                                 </form>
 
