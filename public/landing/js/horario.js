@@ -365,24 +365,8 @@ $('#horaFen').flatpickr({
     dateFormat: "H:i",
     time_24hr: true
 });
-$('#horaInciden').flatpickr({
-    enableTime: true,
-    noCalendar: true,
-    dateFormat: "H:i",
-    time_24hr: true
-});
-$('#horaIncidenHo').flatpickr({
-    enableTime: true,
-    noCalendar: true,
-    dateFormat: "H:i",
-    time_24hr: true
-});
-$('#horaIncidenHoEm').flatpickr({
-    enableTime: true,
-    noCalendar: true,
-    dateFormat: "H:i",
-    time_24hr: true
-});
+
+
 $('#horaI_ed').flatpickr({
     enableTime: true,
     noCalendar: true,
@@ -882,13 +866,13 @@ function registrarIncidencia() {
     if ($('#customSwitch1').prop('checked')) {
         horaIn = null;
     } else {
-        horaIn = $('#horaInciden').val();
+
         fechaF = null;
     }
     $.ajax({
         type: "post",
         url: "/registrarInci",
-        data: { idempleadoI, descripcionI, descuentoI, fechaI, fechaF, horaIn },
+        data: { idempleadoI, descripcionI, descuentoI, fechaI, fechaF  },
         statusCode: {
             /*401: function () {
                 location.reload();
@@ -1577,7 +1561,7 @@ function registrarIncidenciaHoEm() {
     } else { descuentoI = 0 }
     var fechaI = $('#horario1em').val();
     var fechaFin = $('#horario2em').val();
-    var horaIn = $('#horaIncidenHoEm').val();
+
     /*  idpais = $('#pais').val();
      iddepartamento = $('#departamento').val(); */
     $.ajax({
@@ -1589,7 +1573,7 @@ function registrarIncidenciaHoEm() {
             /* pais: idpais,
             departamento: iddepartamento, */
             end: fechaFin,
-            horaIn,
+
             idempl
 
 
@@ -1622,7 +1606,7 @@ function registrarIncidenciaHo() {
     } else { descuentoI = 0 }
     fechaI = $('#horario1').val();
     fechaFin = $('#horario2').val();
-    horaIn = $('#horaIncidenHo').val();
+
     idpais = $('#pais').val();
     iddepartamento = $('#departamento').val();
     $.ajax({
@@ -1634,7 +1618,7 @@ function registrarIncidenciaHo() {
             pais: idpais, descuentoI: descuentoI,
             departamento: iddepartamento,
             end: fechaFin,
-            horaIn
+
 
         },
         headers: {
@@ -2139,7 +2123,8 @@ function eliminarHorario(idhorario) {
         success: function (data) {
             if (data == 1) {
                 bootbox.alert({
-                    message: "No se puede eliminar horario, tiene empleados designados.",
+                    title:"Eliminar horario",
+                    message: "No se puede eliminar un horario en uso.",
 
                 });
 

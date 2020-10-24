@@ -272,12 +272,7 @@
                                         <label class="form-check-label" for="descuentoCheckCa_ed">Aplicar descuento</label>
                                     </div>
                                 </div>
-                                <div class="col-md-6" id="divhoraCa_ed">
-                                    <div class="form-group">
-                                        <label for="">Hora de salida(24h):</label>
-                                        <input type="text" id="horaIncidenCa_ed" class="form-control form-control-sm">
-                                    </div>
-                                </div>
+                               
 
 
                             </div>

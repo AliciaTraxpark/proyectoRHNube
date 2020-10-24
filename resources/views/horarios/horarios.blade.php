@@ -174,6 +174,13 @@ background-color: #ffffff !important;
         padding: 0.4rem;
         border-top: 1px solid #edf0f1;
     }
+    body > div.bootbox.modal.fade.bootbox-alert.show > div > div > div.modal-header{
+        background-color: #163552;
+    }
+    body > div.bootbox.modal.fade.bootbox-alert.show > div > div > div.modal-header > h5{
+        color: #fff;
+        font-size: 15px!important;
+    }
 </style>
 <div id="preloader">
     <div id="status">
@@ -627,12 +634,6 @@ background-color: #ffffff !important;
                                                <input type="date" id="fechaF" class="form-control form-control-sm" >
                                             </div>
                                          </div>
-                                         <div class="col-md-4" id="divhora">
-                                            <div class="form-group">
-                                               <label for="">Hora de salida(24h):</label>
-                                               <input type="text" id="horaInciden" class="form-control form-control-sm" >
-                                            </div>
-                                         </div>
 
 
                                        </div>
@@ -685,12 +686,6 @@ background-color: #ffffff !important;
                                             <div class="form-check">
                                               <input type="checkbox" class="form-check-input" id="descuentoCheckHo">
                                               <label class="form-check-label" for="descuentoCheckHo">Aplicar descuento</label>
-                                            </div>
-                                         </div>
-                                         <div class="col-md-6" id="divhoraHo">
-                                            <div class="form-group">
-                                               <label for="">Hora de salida(24h):</label>
-                                               <input type="text" id="horaIncidenHo" class="form-control form-control-sm" >
                                             </div>
                                          </div>
 
@@ -748,12 +743,7 @@ background-color: #ffffff !important;
                                               <label class="form-check-label" for="descuentoCheckHoEm">Aplicar descuento</label>
                                             </div>
                                          </div>
-                                         <div class="col-md-6" id="divhoraHo">
-                                            <div class="form-group">
-                                               <label for="">Hora de salida(24h):</label>
-                                               <input type="text" id="horaIncidenHoEm" class="form-control form-control-sm" >
-                                            </div>
-                                         </div>
+
 
 
                                        </div>
