@@ -46,7 +46,7 @@
                     style="border-radius: 15px;border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-4" style="border-right: 2px dashed #5369F8;">
                                 <a data-fancybox data-ratio="2"
                                     href="https://player.vimeo.com/video/471447985?title=0&byline=0&portrait=0">
                                     <img class="card-img-top img-fluid"
@@ -54,11 +54,63 @@
                                 </a>
                             </div>
 
-                            <div class="col-md-8">
-                                <p class="card-text pt-3">Registra tus datos</p>
+                            <div class="col-md-8 pl-4">
+                                <p class="card-text pt-3" style="font-weight: bold">Registra tus datos</p>
                                 <a class="badge badge-soft-primary" onclick="javascript:registroDatos()">
                                     <img src="{{asset('landing/images/play (2).svg')}}" height="18" class="mr-2">
                                     01:31
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pr-5 pl-5 pb-3">
+            <div class="col-md-12">
+                <div class="card border"
+                    style="border-radius: 15px;border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4" style="border-right: 2px dashed #5369F8;">
+                                <a data-fancybox data-ratio="2"
+                                    href="https://player.vimeo.com/video/471448607?title=0&byline=0&portrait=0">
+                                    <img class="card-img-top img-fluid"
+                                        src="https://i.vimeocdn.com/video/980849111.webp?mw=960&mh=540" />
+                                </a>
+                            </div>
+
+                            <div class="col-md-8 pl-4">
+                                <p class="card-text pt-3" style="font-weight: bold">Registra tu organización</p>
+                                <a class="badge badge-soft-primary" onclick="javascript:registroOrgani()">
+                                    <img src="{{asset('landing/images/play (2).svg')}}" height="18" class="mr-2">
+                                    01:13
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pr-5 pl-5 pb-3">
+            <div class="col-md-12">
+                <div class="card border"
+                    style="border-radius: 15px;border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4" style="border-right: 2px dashed #5369F8;">
+                                <a data-fancybox data-ratio="2"
+                                    href="https://player.vimeo.com/video/471449241?title=0&byline=0&portrait=0">
+                                    <img class="card-img-top img-fluid"
+                                        src="https://i.vimeocdn.com/video/980846947.webp?mw=960&mh=540" />
+                                </a>
+                            </div>
+
+                            <div class="col-md-8 pl-4">
+                                <p class="card-text pt-3" style="font-weight: bold">Valida tu cuenta</p>
+                                <a class="badge badge-soft-primary" onclick="javascript:registroValidaC()">
+                                    <img src="{{asset('landing/images/play (2).svg')}}" height="18" class="mr-2">
+                                    01:13
                                 </a>
                             </div>
                         </div>
