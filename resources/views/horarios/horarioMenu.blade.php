@@ -756,12 +756,7 @@ a:not([href]):not([tabindex]){
                                    <input type="date" id="fechaF" class="form-control form-control-sm" >
                                 </div>
                              </div>
-                             <div class="col-md-4" id="divhora">
-                                <div class="form-group">
-                                   <label for="">Hora de salida(24h):</label>
-                                   <input type="text" id="horaInciden" class="form-control form-control-sm" >
-                                </div>
-                             </div>
+
 
 
                            </div>
@@ -816,12 +811,7 @@ a:not([href]):not([tabindex]){
                                   <label class="form-check-label" for="descuentoCheckHo">Aplicar descuento</label>
                                 </div>
                              </div>
-                             <div class="col-md-6" id="divhoraHo">
-                                <div class="form-group">
-                                   <label for="">Hora de salida(24h):</label>
-                                   <input type="text" id="horaIncidenHo" class="form-control form-control-sm" >
-                                </div>
-                             </div>
+
 
 
                            </div>
@@ -877,12 +867,7 @@ a:not([href]):not([tabindex]){
                                   <label class="form-check-label" for="descuentoCheckHoEm">Aplicar descuento</label>
                                 </div>
                              </div>
-                             <div class="col-md-6" id="divhoraHo">
-                                <div class="form-group">
-                                   <label for="">Hora de salida(24h):</label>
-                                   <input type="text" id="horaIncidenHoEm" class="form-control form-control-sm" >
-                                </div>
-                             </div>
+                          
 
 
                            </div>

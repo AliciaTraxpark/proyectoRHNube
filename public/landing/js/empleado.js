@@ -1,9 +1,4 @@
-$("#horaIncidenCa").flatpickr({
-    enableTime: true,
-    noCalendar: true,
-    dateFormat: "H:i",
-    time_24hr: true,
-});
+
 $("#horaI").flatpickr({
     enableTime: true,
     noCalendar: true,
@@ -16,12 +11,7 @@ $("#horaF").flatpickr({
     dateFormat: "H:i",
     time_24hr: true,
 });
-$("#horaIncidenCa_ed").flatpickr({
-    enableTime: true,
-    noCalendar: true,
-    dateFormat: "H:i",
-    time_24hr: true,
-});
+
 $("#horaI_ed").flatpickr({
     enableTime: true,
     noCalendar: true,
@@ -594,7 +584,7 @@ function modalIncidencia_ed() {
     }
     fechaI = $("#pruebaStar_ed").val();
     fechaFin = $("#pruebaEnd_ed").val();
-    horaIn = $("#horaIncidenCa_ed").val();
+
 
     $.ajax({
         type: "post",
@@ -604,7 +594,7 @@ function modalIncidencia_ed() {
             title: descripcionI,
             descuentoI: descuentoI,
             end: fechaFin,
-            horaIn,
+
             idempleado,
         },
         headers: {
@@ -981,7 +971,7 @@ function modalIncidencia() {
     }
     fechaI = $("#pruebaStar").val();
     fechaFin = $("#pruebaEnd").val();
-    horaIn = $("#horaIncidenCa").val();
+
 
     $.ajax({
         type: "post",
@@ -991,7 +981,7 @@ function modalIncidencia() {
             title: descripcionI,
             descuentoI: descuentoI,
             end: fechaFin,
-            horaIn,
+           
             id_calendario,
         },
         headers: {

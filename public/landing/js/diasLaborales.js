@@ -287,12 +287,7 @@ function nolaborable_ed() {
     });
 };
 ///////////////////////////////
-$('#horaIncidenCa_ed').flatpickr({
-    enableTime: true,
-    noCalendar: true,
-    dateFormat: "H:i",
-    time_24hr: true
-});
+
 //////////////////7
 function IncidenciaEmpleados(){
     $('#btnLabo').modal('hide');
@@ -310,7 +305,7 @@ function modalIncidencia_ed() {
     }
     fechaI = $('#pruebaStar_ed').val();
     fechaFin = $('#pruebaEnd_ed').val();
-    horaIn = $('#horaIncidenCa_ed').val();
+    
 
     $.ajax({
         type: "post",
@@ -320,7 +315,7 @@ function modalIncidencia_ed() {
             title: descripcionI,
             descuentoI: descuentoI,
             end: fechaFin,
-            horaIn,
+
             idempleado
 
         },
