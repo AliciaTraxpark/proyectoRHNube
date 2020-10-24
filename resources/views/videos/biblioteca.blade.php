@@ -47,7 +47,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4" style="border-right: 2px dashed #5369F8;">
-                                <a data-fancybox data-ratio="2"
+                                <a data-fancybox data-ratio="2" data-caption="Registra tus datos"
                                     href="https://player.vimeo.com/video/471447985?title=0&byline=0&portrait=0">
                                     <img class="card-img-top img-fluid"
                                         src="https://i.vimeocdn.com/video/980849960.webp?mw=1200&mh=675" />
@@ -55,11 +55,18 @@
                             </div>
 
                             <div class="col-md-8 pl-4">
-                                <p class="card-text pt-3" style="font-weight: bold">Registra tus datos</p>
-                                <a class="badge badge-soft-primary" onclick="javascript:registroDatos()">
-                                    <img src="{{asset('landing/images/play (2).svg')}}" height="18" class="mr-2">
-                                    01:31
-                                </a>
+                                <p class="card-text pt-3" style="font-weight: bold">
+                                    <img src="{{asset('landing/images/star.svg')}}" height="18" class="mr-2">
+                                    Registra tus datos
+                                </p>
+                                <span>Crea una cuenta en menos de 2 minutos</span>
+                                <div class="row pl-3 pt-3">
+                                    <a class="badge badge-soft-primary" onclick="javascript:registroDatos()"
+                                        style="cursor: pointer">
+                                        <img src="{{asset('landing/images/play (2).svg')}}" height="18" class="mr-2">
+                                        01:31
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -73,7 +80,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4" style="border-right: 2px dashed #5369F8;">
-                                <a data-fancybox data-ratio="2"
+                                <a data-fancybox data-ratio="2" data-caption="Registra tu organización"
                                     href="https://player.vimeo.com/video/471448607?title=0&byline=0&portrait=0">
                                     <img class="card-img-top img-fluid"
                                         src="https://i.vimeocdn.com/video/980849111.webp?mw=960&mh=540" />
@@ -81,11 +88,17 @@
                             </div>
 
                             <div class="col-md-8 pl-4">
-                                <p class="card-text pt-3" style="font-weight: bold">Registra tu organización</p>
-                                <a class="badge badge-soft-primary" onclick="javascript:registroOrgani()">
-                                    <img src="{{asset('landing/images/play (2).svg')}}" height="18" class="mr-2">
-                                    01:13
-                                </a>
+                                <p class="card-text pt-3" style="font-weight: bold">
+                                    <img src="{{asset('landing/images/star.svg')}}" height="18" class="mr-2">
+                                    Registra tu organización
+                                </p>
+                                <span>Ahora registra tu organización: Empresarial, Gobierno, Ong…</span>
+                                <div class="row pl-3 pt-3">
+                                    <a class="badge badge-soft-primary" onclick="javascript:registroOrgani()">
+                                        <img src="{{asset('landing/images/play (2).svg')}}" height="18" class="mr-2">
+                                        01:13
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -99,7 +112,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4" style="border-right: 2px dashed #5369F8;">
-                                <a data-fancybox data-ratio="2"
+                                <a data-fancybox data-ratio="2" data-caption="Valida tu cuenta"
                                     href="https://player.vimeo.com/video/471449241?title=0&byline=0&portrait=0">
                                     <img class="card-img-top img-fluid"
                                         src="https://i.vimeocdn.com/video/980846947.webp?mw=960&mh=540" />
@@ -107,11 +120,17 @@
                             </div>
 
                             <div class="col-md-8 pl-4">
-                                <p class="card-text pt-3" style="font-weight: bold">Valida tu cuenta</p>
-                                <a class="badge badge-soft-primary" onclick="javascript:registroValidaC()">
-                                    <img src="{{asset('landing/images/play (2).svg')}}" height="18" class="mr-2">
-                                    01:13
-                                </a>
+                                <p class="card-text pt-3" style="font-weight: bold">
+                                    <img src="{{asset('landing/images/star.svg')}}" height="18" class="mr-2">
+                                    Valida tu cuenta
+                                </p>
+                                <span>Valida tu cuenta en menos de 2 minutos</span>
+                                <div class="row pl-3 pt-3">
+                                    <a class="badge badge-soft-primary" onclick="javascript:registroValidaC()">
+                                        <img src="{{asset('landing/images/play (2).svg')}}" height="18" class="mr-2">
+                                        01:13
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
