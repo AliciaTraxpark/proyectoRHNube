@@ -37,6 +37,10 @@
             padding-top: 16px !important;
             padding-bottom: 30px !important;
         }
+
+        .tooltip-arrow,
+        .red-tooltip+.tooltip>.tooltip-inner {
+            background-color: rgb(0, 0, 0);
         }
 
         @media (min-width: 1564px) and (max-width: 1579px) {
@@ -237,7 +241,7 @@
     <div class="modal fade" id="modal-video" tabindex="-1" role="dialog" aria-labelledby="modal-video"
         aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog  modal-lg d-flex justify-content-center">
-            <div class="modal-content">
+            <div class="modal-content" style="width: 800px">
                 <div class="modal-header" style="background-color:#163552;padding:0.5rem">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                         onclick="javascript:stopVideo()">
@@ -247,14 +251,14 @@
                 <div class="modal-body">
                     {{-- VIDEO --}}
                     <div class="row justify-content-center">
-                        <div class="col-12 col-lg-12  p-0 img-digital grid-margin grid-margin-lg-0"
+                        <div class="col-lg-12 col-lg-12  p-0 img-digital grid-margin grid-margin-lg-0"
                             data-aos="fade-left">
                             <div style="padding:50.46% 0 0 0;">
                                 <iframe src="https://player.vimeo.com/video/471441178?title=0&byline=0&portrait=0"
                                     width="640" height="564"
                                     style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0"
                                     allow="autoplay; fullscreen" allowfullscreen></iframe>
-                                    
+
                             </div>
                             <script src="https://player.vimeo.com/api/player.js"></script>
                         </div>
@@ -287,7 +291,9 @@
                                     </a>
                                 </div>
                                 <div class="col-md-4 text-left btnResp btnVideoR">
-                                    <a onclick="$('#modal-video').modal()" style="cursor: pointer">
+                                    <a data-toggle="tooltip" data-placement="bottom" title='ver video "crear mi cuenta"'
+                                        data-original-title='ver video "crear mi cuenta"'
+                                        onclick="$('#modal-video').modal()" style="cursor: pointer">
                                         <img src="{{asset('landing/images/play.svg')}}" height="45">
                                     </a>
                                 </div>

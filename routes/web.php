@@ -410,3 +410,5 @@ Route::get('/organizaciones', 'OrganizacionesController@index');
 Route::post('/listaoOrganiS', 'OrganizacionesController@listaOrganizaciones');
 Route::post('/activacionOrg', 'OrganizacionesController@activacionOrg');
 
+// BIBLIOTECA
+Route::get('/biblioteca', 'bibliotecaController@vista');
