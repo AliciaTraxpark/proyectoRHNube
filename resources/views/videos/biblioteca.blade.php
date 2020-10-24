@@ -40,16 +40,27 @@
                 </h5>
             </div>
         </div>
-        <div class="row">
+        <div class="row pt-3 pr-5 pl-5 pb-3">
             <div class="col-md-12">
-                <div class="card">
+                <div class="card border"
+                    style="border-radius: 15px;border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
                     <div class="card-body">
-                        <a data-fancybox data-ratio="2" href="https://vimeo.com/191947042">
-                            <img class="card-img-top img-fluid" src="https://i.vimeocdn.com/video/604514162_640.jpg" />
-                        </a>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <a data-fancybox data-ratio="2"
+                                    href="https://player.vimeo.com/video/471447985?title=0&byline=0&portrait=0">
+                                    <img class="card-img-top img-fluid"
+                                        src="https://i.vimeocdn.com/video/980849960.webp?mw=1200&mh=675" />
+                                </a>
+                            </div>
 
-                        <div class="card-body">
-                            <p class="card-text">Custom aspect ratio</p>
+                            <div class="col-md-8">
+                                <p class="card-text pt-3">Registra tus datos</p>
+                                <a class="badge badge-soft-primary" onclick="javascript:registroDatos()">
+                                    <img src="{{asset('landing/images/play (2).svg')}}" height="18" class="mr-2">
+                                    01:31
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -104,6 +115,7 @@
 <script src="{{URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.js')}}"></script>
 <script src="{{URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.min.js') }}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
+<script src="{{asset('landing/js/biblioteca.js')}}"></script>
 @endsection
 @section('script-bottom')
 <!-- init js -->
