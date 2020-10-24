@@ -11,7 +11,7 @@ function registroDatos() {
 // REGISTRAR ORGANIZACION
 function registroOrgani() {
     $.fancybox.open({
-        src: 'https://player.vimeo.com/video/471448607?title=0&byline=0&portrait=0'
+        src: 'https://player.vimeo.com/video/471448607?title=0&byline=0&portrait=0',
     });
 }
 
@@ -19,5 +19,12 @@ function registroOrgani() {
 function registroValidaC() {
     $.fancybox.open({
         src: 'https://player.vimeo.com/video/471449241?title=0&byline=0&portrait=0'
+    });
+}
+
+// PRIMERA CONFIGURACION 
+function primeraConfig() {
+    $.fancybox.open({
+        src: 'https://player.vimeo.com/video/471518323?title=0&byline=0&portrait=0'
     });
 }
