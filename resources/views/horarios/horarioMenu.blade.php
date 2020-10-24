@@ -169,6 +169,13 @@ a:not([href]):not([tabindex]){
         border-top: 1px solid #edf0f1;
     }
 
+    body > div.bootbox.modal.fade.bootbox-alert.show > div > div > div.modal-header{
+        background-color: #163552;
+    }
+    body > div.bootbox.modal.fade.bootbox-alert.show > div > div > div.modal-header > h5{
+        color: #fff;
+        font-size: 15px!important;
+    }
 </style>
 <div class="row row-divided">
     <div class="col-md-12 col-xl-12">
@@ -867,7 +874,7 @@ a:not([href]):not([tabindex]){
                                   <label class="form-check-label" for="descuentoCheckHoEm">Aplicar descuento</label>
                                 </div>
                              </div>
-                          
+
 
 
                            </div>

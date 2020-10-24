@@ -1618,7 +1618,7 @@ function registrarIncidenciaHo() {
             pais: idpais, descuentoI: descuentoI,
             departamento: iddepartamento,
             end: fechaFin,
-           
+
 
         },
         headers: {
@@ -2123,7 +2123,8 @@ function eliminarHorario(idhorario) {
         success: function (data) {
             if (data == 1) {
                 bootbox.alert({
-                    message: "No se puede eliminar horario, tiene empleados designados.",
+                    title:"Eliminar horario",
+                    message: "No se puede eliminar un horario en uso.",
 
                 });
 
