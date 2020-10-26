@@ -142,7 +142,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             <span> Planes y Precios </span>
         </a>
     </li>
-    <li style="display: none">
+    <li>
         <a href="/biblioteca">
             <i data-feather="play-circle"></i>
             <span>Biblioteca</span>
