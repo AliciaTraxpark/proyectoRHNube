@@ -162,6 +162,14 @@ class apimovilController extends Controller
             else{
                 $marcacion_movil->horarioEmp_id=$req['idHoraEmp'];
             }
+            if(empty($req['latitud'])) {}
+            else{
+                $marcacion_movil->marca_latitud=$req['latitud'];
+            }
+            if(empty($req['longitud'])) {}
+            else{
+                $marcacion_movil->marca_longitud=$req['longitud'];
+            }
             $marcacion_movil->save();
             } else{
                 $marcacion_movil1 =DB::table('marcacion_movil as mv')
@@ -183,6 +191,14 @@ class apimovilController extends Controller
             if(empty($req['idHoraEmp'])) {}
             else{
                 $marcacion_movil->horarioEmp_id=$req['idHoraEmp'];
+            }
+            if(empty($req['latitud'])) {}
+            else{
+                $marcacion_movil->marca_latitud=$req['latitud'];
+            }
+            if(empty($req['longitud'])) {}
+            else{
+                $marcacion_movil->marca_longitud=$req['longitud'];
             }
             $marcacion_movil->save();
             } else{
