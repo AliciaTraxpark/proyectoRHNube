@@ -27,6 +27,20 @@ use App\proyecto_empleado;
         width: 100%;
         height: 6 px;
     }
+    body > div.bootbox.modal.fade.bootbox-alert.show > div > div > div.modal-header{
+        background-color: #163552;
+    }
+    body > div.bootbox.modal.fade.bootbox-alert.show > div > div > div.modal-header > h5{
+        color: #fff;
+        font-size: 15px!important;
+    }
+    body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-header{
+        background-color: #163552;
+    }
+    body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-header > h5{
+        color: #fff;
+        font-size: 15px!important;
+    }
 </style>
 
 

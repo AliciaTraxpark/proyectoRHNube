@@ -500,6 +500,7 @@ function calendario() {
             var event = calendar.getEventById(id);
             if (info.event.textColor == '111111') {
                 bootbox.confirm({
+                    title:"Eliminar horario",
                     message: "¿Desea eliminar: " + info.event.title + " del horario?",
                     buttons: {
                         confirm: {
@@ -782,6 +783,7 @@ $('#guardarTodoHorario').click(function () {
     if (idemps == '') {
 
         bootbox.alert({
+            title:"Seleccionar empleado",
             message: "Seleccione empleado",
 
         });
@@ -950,6 +952,7 @@ function abrirHorarioen() {
         $('#horarioAgregaren').modal('show');
     } else {
         bootbox.alert({
+            title:"Seleccionar dias",
             message: "Primero debe asignar dia(s) de calendario.",
 
         })
@@ -1256,6 +1259,7 @@ function asignarlabo() {
     var H2 = $('#horario2').val();
     if ($("*").hasClass("fc-highlight")) {
         bootbox.confirm({
+            title:"Agregar dias",
             message: "¿Desea agregar dias laborables?",
             buttons: {
                 confirm: {
@@ -1313,6 +1317,7 @@ function asignarlabo() {
         });
     } else {
         bootbox.alert({
+            title:"Asignar dias",
             message: "Primero debe asignar dia(s) de calendario.",
 
         })
@@ -1380,6 +1385,7 @@ function asignarlaboen() {
         });
     } else {
         bootbox.alert({
+            title:"Asignar dias",
             message: "Primero debe asignar dia(s) de calendario.",
 
         })
@@ -1392,6 +1398,7 @@ function asignarNolabo() {
     H2 = $('#horario2').val();
     if ($("*").hasClass("fc-highlight")) {
         bootbox.confirm({
+            title:"Agregar dias",
             message: "¿Desea agregar dias no laborables?",
             buttons: {
                 confirm: {
@@ -1449,6 +1456,7 @@ function asignarNolabo() {
     }
     else {
         bootbox.alert({
+            title:"Asignar dias",
             message: "Primero debe asignar dia(s) de calendario.",
 
         })
@@ -1461,6 +1469,7 @@ function asignarNolaboen() {
     var idempl = $('#idobtenidoE').val();
     if ($("*").hasClass("fc-highlight")) {
         bootbox.confirm({
+            title:"Asignar dias",
             message: "¿Desea agregar dias no laborables?",
             buttons: {
                 confirm: {
@@ -1515,6 +1524,7 @@ function asignarNolaboen() {
         });
     } else {
         bootbox.alert({
+            title:"Asignar dias",
             message: "Primero debe asignar dia(s) de calendario.",
 
         })
@@ -1532,6 +1542,7 @@ function asignarInci() {
     }
     else {
         bootbox.alert({
+            title:"Asginar dias",
             message: "Primero debe asignar dia(s) de calendario.",
 
         })
@@ -1548,6 +1559,7 @@ function asignarInciEmp() {
     }
     else {
         bootbox.alert({
+            title:"Asignar dias",
             message: "Primero debe asignar dia(s) de calendario.",
 
         })
@@ -1644,6 +1656,7 @@ function registrarIncidenciaHo() {
 }
 function vaciarcalendario() {
     bootbox.confirm({
+        title:"Vacear calendario",
         message: "¿Esta seguro que desea vaciar calendario?",
         buttons: {
             confirm: {
@@ -1671,6 +1684,7 @@ function vaciarcalendario() {
 }
 function vaciarhor() {
     bootbox.confirm({
+        title:"Elminar horario",
         message: "¿Esta seguro que desea eliminar horario(s) del calendario?",
         buttons: {
             confirm: {
@@ -1698,6 +1712,7 @@ function vaciarhor() {
 }
 function vaciardl() {
     bootbox.confirm({
+        title:"Eliminar dias",
         message: "¿Esta seguro que desea eliminar dias laborables del calendario?",
         buttons: {
             confirm: {
@@ -1725,6 +1740,7 @@ function vaciardl() {
 }
 function vaciarndl() {
     bootbox.confirm({
+        title:"Eliminar dias no laborales",
         message: "¿Esta seguro que desea eliminar dias no laborables del calendario?",
         buttons: {
             confirm: {
@@ -1952,6 +1968,7 @@ $('#selectHorarioen').change(function (e) {
         $("#selectHorarioen").val("Asignar horario");
         $("#selectHorarioen").trigger("change");
         bootbox.alert({
+            title:"Asignar dias",
             message: "Primero debe asignar dia(s) de calendario.",
 
         })
@@ -2134,6 +2151,7 @@ function eliminarHorario(idhorario) {
             }
             else {
                 bootbox.confirm({
+                    title:"Eliminar horario",
                     message: "¿Desea eliminar el horario?",
                     buttons: {
                         confirm: {

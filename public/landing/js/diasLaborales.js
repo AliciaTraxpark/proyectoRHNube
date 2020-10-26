@@ -46,6 +46,7 @@ function calendario_edit() {
 
             } else {
                bootbox.confirm({
+                title:"Eliminar evento del calendario",
                 message: "¿Desea eliminar: " + info.event.title + " del horario?",
                 buttons: {
                     confirm: {

@@ -99,6 +99,7 @@ function calendario() {
             var event = calendar.getEventById(id);
 
             bootbox.confirm({
+                title:"Eliminar evento del calendario",
                 message:
                     "¿Desea eliminar: " + info.event.title + " del calendario?",
                 buttons: {
@@ -236,6 +237,7 @@ function calendario_edit() {
             ) {
                 if (info.event.textColor == "111111") {
                     bootbox.alert({
+                        title:"Info",
                         message: "Puede eliminar horarios en la pestaña Horarios",
 
                     })
@@ -285,6 +287,7 @@ function calendario_edit() {
                     }); */
                 } else {
                     bootbox.confirm({
+                        title:"Eliminar incidencia",
                         message:
                             "¿Desea eliminar: " +
                             info.event.title +
@@ -341,6 +344,7 @@ function calendario_edit() {
                 }
             } else {
                 bootbox.confirm({
+                    title:"Eliminar evento del calendario",
                     message:
                         "¿Desea eliminar: " +
                         info.event.title +
@@ -981,7 +985,7 @@ function modalIncidencia() {
             title: descripcionI,
             descuentoI: descuentoI,
             end: fechaFin,
-           
+
             id_calendario,
         },
         headers: {
@@ -1114,6 +1118,7 @@ function eliminarhorariosTem() {
     mescale = fmes.getMonth() + 1;
     aniocalen = fmes.getFullYear();
     bootbox.confirm({
+        title:"Eliminar horario",
         message: "¿Esta seguro que desea eliminar horarios del calendario?",
         buttons: {
             confirm: {
@@ -1193,6 +1198,7 @@ function calendario2() {
             var event = calendar2.getEventById(id);
 
             bootbox.confirm({
+                title:"Eliminar evento del calendario",
                 message:
                     "¿Desea eliminar: " + info.event.title + " del calendario?",
                 buttons: {
@@ -1758,6 +1764,7 @@ function calendario2_ed() {
             ) {
                 if (info.event.textColor == "111111") {
                     bootbox.confirm({
+                        title:"Eliminar horario",
                         message:
                             "¿Desea eliminar: " +
                             info.event.title +
@@ -1803,6 +1810,7 @@ function calendario2_ed() {
                     });
                 } else {
                     bootbox.confirm({
+                        title:"Eliminar incidencia",
                         message:
                             "¿Desea eliminar: " +
                             info.event.title +
@@ -1859,6 +1867,7 @@ function calendario2_ed() {
                 }
             } else {
                 bootbox.confirm({
+                    title:"Eliminar evento del calendario",
                     message:
                         "¿Desea eliminar: " +
                         info.event.title +
@@ -4591,6 +4600,7 @@ function vaciardFeria() {
     mescale = fmes.getMonth() + 1;
     aniocalen = fmes.getFullYear();
     bootbox.confirm({
+        title:"Eliminar feriados",
         message:
             "¿Esta seguro que desea eliminar dias feriados del calendario?",
         buttons: {
@@ -4640,6 +4650,7 @@ function vaciarddescanso() {
     mescale = fmes.getMonth() + 1;
     aniocalen = fmes.getFullYear();
     bootbox.confirm({
+        title:"Eliminar descansos",
         message:
             "¿Esta seguro que desea eliminar dias de descanso del calendario?",
         buttons: {
@@ -4686,6 +4697,7 @@ function vaciarddescanso() {
 //////////////
 function vaciardlabTem() {
     bootbox.confirm({
+        title:"Eliminar dias laborales",
         message:
             "¿Esta seguro que desea eliminar dias laborales del calendario?",
         buttons: {
@@ -4714,6 +4726,7 @@ function vaciardNlabTem() {
     mescale = fmes.getMonth() + 1;
     aniocalen = fmes.getFullYear();
     bootbox.confirm({
+        title:"Eliminar dias no laborales",
         message:
             "¿Esta seguro que desea eliminar dias no laborales del calendario?",
         buttons: {
@@ -4763,6 +4776,7 @@ function vaciardIncidTem() {
     mescale = fmes.getMonth() + 1;
     aniocalen = fmes.getFullYear();
     bootbox.confirm({
+        title:"Eliminar incidencias",
         message:
             "¿Esta seguro que desea eliminar todas las incidencias del calendario?",
         buttons: {
@@ -4857,6 +4871,7 @@ function vaciardFeriaBD() {
     mescale = fmes.getMonth() + 1;
     aniocalen = fmes.getFullYear();
     bootbox.confirm({
+        title:"Eliminar dias feriados",
         message:
             "¿Esta seguro que desea eliminar dias feriados del calendario?",
         buttons: {
@@ -4908,6 +4923,7 @@ function vaciarddescansoBD() {
     mescale = fmes.getMonth() + 1;
     aniocalen = fmes.getFullYear();
     bootbox.confirm({
+        title:"Eliminar dias de descanso",
         message:
             "¿Esta seguro que desea eliminar dias de descanso  del calendario?",
         buttons: {
@@ -4969,6 +4985,7 @@ function vaciarNlabBD() {
     mescale = fmes.getMonth() + 1;
     aniocalen = fmes.getFullYear();
     bootbox.confirm({
+        title:"Eliminar dias no laborales",
         message:
             "¿Esta seguro que desea eliminar dias no laborales del calendario?",
         buttons: {
@@ -5020,6 +5037,7 @@ function vaciardIncidBD() {
     mescale = fmes.getMonth() + 1;
     aniocalen = fmes.getFullYear();
     bootbox.confirm({
+        title:"Eliminar incidencias",
         message: "¿Esta seguro que desea eliminar incidencias del calendario?",
         buttons: {
             confirm: {
@@ -5070,6 +5088,7 @@ function eliminarhorariosBD() {
     mescale = fmes.getMonth() + 1;
     aniocalen = fmes.getFullYear();
     bootbox.confirm({
+        title:"Eliminar horarios",
         message: "¿Esta seguro que desea eliminar horarios del calendario?",
         buttons: {
             confirm: {
@@ -5117,6 +5136,7 @@ function eliminarhorariosBD() {
 $("#selectCalendario_edit3").change(function () {
     var antSe = $("#idselect3").val();
     bootbox.confirm({
+        title:"Alerta",
         message:
             "Al cambiar de calendario se borrará horarios actuales, ¿Confirmar?",
         buttons: {

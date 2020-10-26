@@ -181,6 +181,13 @@ background-color: #ffffff !important;
         color: #fff;
         font-size: 15px!important;
     }
+    body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-header{
+        background-color: #163552;
+    }
+    body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-header > h5{
+        color: #fff;
+        font-size: 15px!important;
+    }
 </style>
 <div id="preloader">
     <div id="status">
