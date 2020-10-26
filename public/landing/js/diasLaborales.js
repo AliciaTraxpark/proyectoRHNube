@@ -305,7 +305,7 @@ function modalIncidencia_ed() {
     }
     fechaI = $('#pruebaStar_ed').val();
     fechaFin = $('#pruebaEnd_ed').val();
-    
+
 
     $.ajax({
         type: "post",
@@ -407,3 +407,66 @@ $("#selectArea").change(function (e) {
         });
     }
 });
+//////////////////////
+function diaferiadoRe_ed() {
+    $("#calendarioAsignar_ed").modal("hide");
+    (title = $("#nombreFeriado_ed").val()),
+        (color = "#e6bdbd"),
+        (textColor = "#775555"),
+        (start = $("#pruebaStar_ed").val());
+    end = $("#pruebaEnd_ed").val();
+    tipo = 2;
+    var idempleado = $("#idempleado").val();
+
+    //$('#myModal').modal('show');
+    $.ajax({
+        type: "POST",
+        url: "/dias/storeCalendario",
+        data: {
+            title,
+            color,
+            textColor,
+            start,
+            end,
+            tipo,
+            idempleado,
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            },
+        },
+        success: function (data) {
+            num=$('#idempleado').val().length;
+            console.log(num);
+            if(num==1){
+
+            calendarioedit.refetchEvents();}
+            else{
+
+             calendarioedit.addEvent({
+                 id:
+                 data,
+                title: title,
+                start: $('#pruebaStar_ed').val(),
+                end: $('#pruebaEnd_ed').val(),
+                color : '#e6bdbd',
+                textColor:'#775555'
+
+              });
+
+            }
+            $("#myModalFeriado_ed").modal("hide");
+
+
+
+        },
+        error: function () {},
+    });
+}

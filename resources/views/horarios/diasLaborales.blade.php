@@ -272,7 +272,7 @@
                                         <label class="form-check-label" for="descuentoCheckCa_ed">Aplicar descuento</label>
                                     </div>
                                 </div>
-                               
+
 
 
                             </div>
@@ -311,7 +311,7 @@
            <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
             <div class="col-md-12 " id="btnLabo" >
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                     <button type="button"
                     style=" max-width: 18em!important;"
                     class="btn btn-secondary btn-sm"
@@ -319,7 +319,7 @@
                         src="{{asset('admin/images/dormir.svg')}}"
                         height="20"> Descanso</button>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <button type="button"
                         style=" max-width: 18em!important;"
                         class="btn btn-secondary btn-sm"
@@ -327,7 +327,14 @@
                             src="{{asset('admin/images/evento.svg')}}"
                             height="20"> Dia no laborable</button>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3 text-center">
+                        <button type="button" style=" max-width: 18em!important;"
+                            class="btn btn-secondary btn-sm"
+                            onclick="$('#nombreFeriado_ed').val('');$('#btnLabo').modal('hide'); $('#myModalFeriado_ed').modal('show')"><img
+                                src="{{ asset('admin/images/calendario.svg') }}"
+                                height="20"> Dia feriado</button>
+                    </div>
+                    <div class="col-md-3">
                         <button type="button"
                         style=" max-width: 18em!important;"
                         class="btn btn-secondary btn-sm"
@@ -344,6 +351,53 @@
     </div><!-- /.modal -->
     </div>
 </div>
+<div id="myModalFeriado_ed" class="modal fade" tabindex="-1" role="dialog"
+                                    aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header" style="background-color: #163552;">
+                                                <h5 class="modal-title" id="myModalLabel"
+                                                    style="color:#ffffff;font-size:15px">Agregar nuevo
+                                                    feriado</h5>
+                                                <button type="button" class="close" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="form-group col-md-12">
+                                                        <div class="col-md-6">
+                                                            <label for="">Nombre de dia feriado:</label>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <form action="javascript:diaferiadoRe_ed()">
+                                                                <input class="form-control" type="text"
+                                                                    id="nombreFeriado_ed" required>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <div class="col-md-12 text-right">
+                                                    <div class="">
+
+                                                            <button type="button" class="btn btn-light"
+                                                                data-dismiss="modal">Cancelar</button>
+
+
+                                                            <button type="submit"
+                                                                class="btn btn-secondary">Aceptar</button>
+
+
+
+                                                    </div>
+                                                </div>
+                                            </div>  </form>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
 @endsection
 @section('script')
 

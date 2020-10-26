@@ -2402,7 +2402,7 @@ use App\proyecto_empleado;
                                                         <div class="col-md-6">
                                                             <label for="">Nombre de dia feriado:</label>
                                                         </div>
-                                                        <div class="col-md-10">
+                                                        <div class="col-md-12">
                                                             <form action="javascript:diaferiadoTem()">
                                                                 <input class="form-control" type="text"
                                                                     id="nombreFeriado" required>
@@ -3373,7 +3373,7 @@ use App\proyecto_empleado;
                                                         <div class="col-md-6">
                                                             <label for="">Nombre de dia feriado:</label>
                                                         </div>
-                                                        <div class="col-md-10">
+                                                        <div class="col-md-12">
                                                             <form action="javascript:diaferiadoRe_ed()">
                                                                 <input class="form-control" type="text"
                                                                     id="nombreFeriado_ed" required>

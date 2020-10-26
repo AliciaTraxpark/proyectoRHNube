@@ -320,7 +320,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
                                     <div class="col-md-6">
                                         <label for="">Nombre de dia feriado:</label>
                                     </div>
-                                     <div class="col-md-10">
+                                     <div class="col-md-12">
                                          <form action="javascript:registrarDferiado()">
                                         <input class="form-control" type="text" id="nombreFeriado" required>
                                      </div>
