@@ -2563,7 +2563,7 @@ use App\proyecto_empleado;
 
                                                                         <input type="number"
                                                                             class="form-control form-control-sm" min="1"
-                                                                            id="horaOblig" value="8" required>
+                                                                            id="horaOblig" required>
                                                                         <div class="input-group-prepend ">
                                                                             <div class="input-group-text form-control-sm"
                                                                                 style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
@@ -4337,7 +4337,7 @@ use App\proyecto_empleado;
                                             descuento</label>
                                     </div>
                                 </div>
-                               
+
 
 
                             </div>

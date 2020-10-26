@@ -904,8 +904,10 @@ $('#cerrarHorario').click(function () {
     $('#verhorarioEmpleado').modal('toggle');
 });
 function abrirHorario() {
+    $('#errorenPausas').hide();
     $('#divOtrodia').hide();
     $('#divPausa').hide();
+    $('#horaOblig').prop("disabled","disabled");
     $('#inputPausa').empty();
     $('#inputPausa').append('<div id="div_100" class="row col-md-12" style=" margin-bottom: 8px;">' +
         '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa[]" id="descPausa" >' +
@@ -2356,13 +2358,34 @@ $(function () {
 
         if (horaF < horaI) {
             $('#divOtrodia').show();
+            $('#horaOblig').prop("disabled",false);
+            $('#horaOblig').val('');
             event.stopPropagation();
         } else {
+            var dateDesde = newDate(horaI.split(":"));
+            var dateHasta = newDate(horaF.split(":"));
+
+            var minutos = (dateHasta - dateDesde)/1000/60;
+            var horas = Math.floor(minutos/60);
+            minutos = minutos % 60;
+            console.log(prefijo(horas) + ':' + prefijo(minutos));
+            $('#horaOblig').prop("disabled",false);
+            $('#horaOblig').val(prefijo(horas));
             $('#divOtrodia').hide();
         }
 
     });
 });
+function newDate(partes) {
+    var date = new Date(0);
+    date.setHours(partes[0]);
+    date.setMinutes(partes[1]);
+    return date;
+}
+
+function prefijo(num) {
+    return num < 10 ? ("0" + num) : num;
+}
 $(function () {
     $(document).on('change', '#horaI', function (event) {
         let horaF = $('#horaF').val();
@@ -2370,8 +2393,19 @@ $(function () {
 
         if (horaF < horaI) {
             $('#divOtrodia').show();
+            $('#horaOblig').prop("disabled",false);
+            $('#horaOblig').val('');
             event.stopPropagation();
         } else {
+            var dateDesde = newDate(horaI.split(":"));
+            var dateHasta = newDate(horaF.split(":"));
+
+            var minutos = (dateHasta - dateDesde)/1000/60;
+            var horas = Math.floor(minutos/60);
+            minutos = minutos % 60;
+            console.log(prefijo(horas) + ':' + prefijo(minutos));
+            $('#horaOblig').prop("disabled",false);
+            $('#horaOblig').val(prefijo(horas));
             $('#divOtrodia').hide();
         }
 
@@ -2455,6 +2489,36 @@ function addField() {
         dateFormat: "H:i",
         time_24hr: true
     });;
+    $(function () {
+        $(document).on('change', '#FinPausa'+ newID, function (event) {
+            let horaF = $('#FinPausa'+ newID).val();
+            let horaI = $('#InicioPausa'+ newID).val();
+
+            if (horaF < horaI) {
+                $('#FinPausa'+ newID).val('');
+                $('#errorenPausas').show();
+                event.stopPropagation();
+            } else {
+                $('#errorenPausas').hide();
+            }
+
+        });
+    });
+    $(function () {
+        $(document).on('change', '#InicioPausa'+ newID, function (event) {
+            let horaF = $('#FinPausa'+ newID).val();
+            let horaI = $('#InicioPausa'+ newID).val();
+
+            if (horaF < horaI) {
+                $('#InicioPausa'+ newID).val('');
+                $('#errorenPausas').show();
+                event.stopPropagation();
+            } else {
+                $('#errorenPausas').hide();
+            }
+
+        });
+    });
 
     /*  $newClone.children("input").eq(3).attr("id",'PROVECONT_email'+newID).val(''); */
     //Asigno nuevo id al boton
@@ -2596,3 +2660,33 @@ function delRow_ed() {
     // Funcion que destruye el elemento actual una vez echo el click
     $(this).parent('div').remove();
 }
+$(function () {
+    $(document).on('change', '#FinPausa', function (event) {
+        let horaF = $('#FinPausa').val();
+        let horaI = $('#InicioPausa').val();
+
+        if (horaF < horaI) {
+            $('#FinPausa').val('');
+            $('#errorenPausas').show();
+            event.stopPropagation();
+        } else {
+            $('#errorenPausas').hide();
+        }
+
+    });
+});
+$(function () {
+    $(document).on('change', '#InicioPausa', function (event) {
+        let horaF = $('#FinPausa').val();
+        let horaI = $('#InicioPausa').val();
+
+        if (horaF < horaI) {
+            $('#InicioPausa').val('');
+            $('#errorenPausas').show();
+            event.stopPropagation();
+        } else {
+            $('#errorenPausas').hide();
+        }
+
+    });
+});

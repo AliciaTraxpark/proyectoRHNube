@@ -2504,7 +2504,7 @@
                                                                    <div class="input-group form-control-sm" style="bottom: 4px;
                                                                    padding-left: 0px; padding-right: 0px;">
 
-                                                                <input type="number"  class="form-control form-control-sm" min="1" id="horaOblig" value="8" required>
+                                                                <input type="number"  class="form-control form-control-sm" min="1" id="horaOblig" required>
                                                                        <div class="input-group-prepend ">
                                                                         <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px" >Horas</div>
                                                                         </div>
@@ -4263,7 +4263,7 @@
                                                         descuento</label>
                                                 </div>
                                             </div>
-                                           
+
 
 
                                         </div>
