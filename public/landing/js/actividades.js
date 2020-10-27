@@ -78,6 +78,7 @@ function editarActividad(id) {
 function editarActividadTarea() {
     var codigo = $("#e_codigoTarea").val();
     var idA = $('#idActiv').val();
+    var empleados = $('#empleados').val();
     if ($('#e_customCR').is(":checked") == true) {
         var controlRemoto = 1;
     } else {
@@ -95,7 +96,8 @@ function editarActividadTarea() {
             idA: idA,
             cr: controlRemoto,
             ap: asistenciaPuerta,
-            codigo: codigo
+            codigo: codigo,
+            empleados:empleados
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),

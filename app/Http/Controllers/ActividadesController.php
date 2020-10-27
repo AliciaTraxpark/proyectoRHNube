@@ -130,11 +130,71 @@ class ActividadesController extends Controller
     {
         $idA = $request->get('idA');
         $actividad = actividad::findOrFail($idA);
+        $empleados = $request->get('empleados');
+        // dd($empleados);
         if ($actividad) {
+            // ACTUALIZAR ATRIBUTOS DE ACTIVIDAD
             $actividad->codigoActividad = $request->get('codigo');
             $actividad->controlRemoto = $request->get('cr');
             $actividad->asistenciaPuerta = $request->get('ap');
             $actividad->save();
+
+            // ACTUALIZACION ACTIVIDADES DE EMPLEADOS
+            $actividad_empleado = actividad_empleado::where('idActividad', '=', $actividad->Activi_id)->get();
+            // ARRAY DE EMPLEADOS SI ESTA VACIO
+            if (is_null($empleados) === true) {
+                foreach ($actividad_empleado as $ae) {
+                    $ae->estado = 0;
+                    $ae->save();
+                }
+            } else {
+                if (sizeof($actividad_empleado) == 0) {
+                    foreach ($empleados as $emple) {
+                        // ASIGNAR EMPLEADOS ACTIVIDAD
+                        $nuevaActividadE = new actividad_empleado();
+                        $nuevaActividadE->idActividad = $actividad->Activi_id;
+                        $nuevaActividadE->idEmpleado = $emple;
+                        $nuevaActividadE->estado = 1;
+                        $nuevaActividadE->eliminacion = 1;
+                        $nuevaActividadE->save();
+                    }
+                } else {
+                    // BUSCAR EMPLEADOS EN LA TABLA ACTIVIDAD
+                    foreach ($empleados as $emple) {
+                        $estado = false;
+                        for ($index = 0; $index < sizeof($actividad_empleado); $index++) {
+                            if ($actividad_empleado[$index]->idEmpleado == $emple) {
+                                $estado = true;
+                            }
+                        }
+                        if ($estado == false) {
+                            $nuevaActividadE = new actividad_empleado();
+                            $nuevaActividadE->idActividad = $actividad->Activi_id;
+                            $nuevaActividadE->idEmpleado = $emple;
+                            $nuevaActividadE->estado = 1;
+                            $nuevaActividadE->eliminacion = 1;
+                            $nuevaActividadE->save();
+                        } else {
+                            $ae = actividad_empleado::where('idActividad', '=', $actividad->Activi_id)->where('idEmpleado', '=', $emple)->get()->first();
+                            $ae->estado = 1;
+                            $ae->save();
+                        }
+                    }
+                    // COMPARAR LAS ACTIVIDADES CON LA LISTA DE EMPLEADOS
+                    foreach ($actividad_empleado as $actvE) {
+                        $estadoB = false;
+                        foreach ($empleados as $emple) {
+                            if ($actvE->idEmpleado == $emple) {
+                                $estadoB = true;
+                            }
+                        }
+                        if ($estadoB == false) {
+                            $actvE->estado = 0;
+                            $actvE->save();
+                        }
+                    }
+                }
+            }
         }
 
         return response()->json($actividad, 200);
