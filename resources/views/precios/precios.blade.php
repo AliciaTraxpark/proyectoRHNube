@@ -500,6 +500,46 @@
         </div>
         <div class="row pr-5">
             <div class="col-md-3">
+                <p style="color: #000839;">Control de justificaciones por horas</p>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #3c6f9c60;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #40708860;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+        </div>
+        <div class="row pr-5">
+            <div class="col-md-3">
+                <p style="color: #000839;">Control de justificaciones por días</p>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+        </div>
+        <div class="row pr-5">
+            <div class="col-md-3">
                 <p style="color: #000839;">Capturas en video basic (*v)Aleatorio</p>
             </div>
             <div class="col-md-3">
