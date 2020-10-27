@@ -252,15 +252,47 @@ class ActividadesController extends Controller
     }
 
     // SELECT DE MOSTRAR EMPLEADOS
-    function empleadoSelect()
+    function empleadoSelect(Request $request)
     {
+        $respuesta = [];
+        $empleadoSA = [];
+        $idActividad = $request->get('idA');
+        // EMPLEADOS ASIGNADOS A DICHA ACTIVIDAD
+        $empleadosA = DB::table('empleado as e')
+            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+            ->select('ae.id', 'ae.idEmpleado', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+            ->where('e.emple_estado', '=', 1)
+            ->where('ae.estado', '=', 1)
+            ->where('ae.idActividad', '=', $idActividad)
+            ->groupBy('ae.idEmpleado')
+            ->get();
+        // *************************************
+        // TODOS LOS EMPLEADOS
         $empleados = DB::table('empleado as e')
             ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
             ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
             ->where('e.emple_estado', '=', 1)
             ->where('e.organi_id', '=', session('sesionidorg'))
             ->get();
+        // ******************
+        // SEPARAR EMPLEADOS 
+        for ($index = 0; $index < sizeof($empleados); $index++) {
+            $estado = false;
+            foreach ($empleadosA as $ae) {
+                if ($empleados[$index]->emple_id == $ae->idEmpleado) {
+                    $estado = true;
+                }
+            }
+            if ($estado == false) {
+                array_push($empleadoSA, $empleados[$index]);
+            }
+        }
+        // ****************
+        // DATOS PARA RESULTADO
+        array_push($respuesta, array("select" => $empleadosA, "noSelect" => $empleadoSA));
+        // dd($respuesta);
 
-        return response()->json($empleados, 200);
+        return response()->json($respuesta, 200);
     }
 }

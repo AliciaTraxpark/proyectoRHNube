@@ -73,6 +73,7 @@ function editarActividad(id) {
         error: function () { },
     });
     $('#editactividadTarea').modal();
+    empleadoLista(id);
 }
 function editarActividadTarea() {
     var codigo = $("#e_codigoTarea").val();
@@ -217,7 +218,6 @@ function actividadesOrganizacion() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-            console.log(data);
             var tr = "";
             for (let index = 0; index < data.length; index++) {
                 tr += "<tr class=\"text-center\" onclick=\"return cambiarEstadoActividad(" + data[index].Activi_id + ")\"><td>" + (index + 1) + "</td>";
@@ -324,27 +324,6 @@ function recuperarActividad(id) {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            // $.notifyClose();
-            // $.notify(
-            //     {
-            //         message: "\nActividad recuperada.",
-            //         icon: "admin/images/checked.svg",
-            //     },
-            //     {
-            //         position: "fixed",
-            //         icon_type: "image",
-            //         newest_on_top: true,
-            //         delay: 5000,
-            //         template:
-            //             '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-            //             '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-            //             '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-            //             '<span data-notify="title">{1}</span> ' +
-            //             '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-            //             "</div>",
-            //         spacing: 35,
-            //     }
-            // );
             limpiarModo();
             actividadesOrganizacion();
             $('#regactividadTarea').modal('toggle');
@@ -653,18 +632,18 @@ $("#codigoTarea").keyup(function () {
 });
 
 // SELECT DE EMPLEADOS
-$("#empleados").select2({
-    placeholder: 'Seleccionar Empleados',
-    tags: "true"
-});
-$("#empleados").on("select2:opening", function () {
+function empleadoLista(id) {
     var value = $("#empleados").val();
+    var idA = id;
     $("#empleados").empty();
     var container = $("#empleados");
     $.ajax({
         async: false,
         url: "/empleadoActiv",
         method: "GET",
+        data: {
+            idA: idA
+        },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
@@ -678,13 +657,21 @@ $("#empleados").on("select2:opening", function () {
         },
         success: function (data) {
             console.log(data);
-            var option = `<option value="" disabled selected>Seleccionar</option>`;
-            for (var $i = 0; $i < data.length; $i++) {
-                option += `<option value="${data[$i].emple_id}">${data[$i].nombre} ${data[$i].apPaterno} ${data[$i].apMaterno}</option>`;
-            }
+            var option = `<option value="" disabled>Seleccionar</option>`;
+            data[0].select.forEach(element => {
+                option += `<option value="${element.idEmpleado}" selected="selected">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
+            });
+            data[0].noSelect.forEach(element => {
+                option += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
+            });
+            console.log(option);
             container.append(option);
-            $("#empleados").val(value);
+            // $("#empleados").val(value);
         },
         error: function () { },
     });
+}
+$("#empleados").select2({
+    placeholder: 'Seleccionar Empleados',
+    tags: "true"
 });

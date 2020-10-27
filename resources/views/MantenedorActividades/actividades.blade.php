@@ -10,6 +10,7 @@
 <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/alertify/alertify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
 {{-- <link href="{{ URL::asset('admin/assets/libs/alertify/bootstrap.css') }}" rel="stylesheet" type="text/css" /> --}}
 <!-- Semantic UI theme -->
 <link href="{{ URL::asset('admin/assets/libs/alertify/default.css') }}" rel="stylesheet" type="text/css" />
@@ -212,7 +213,8 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <label>Asignar empleado</label>
-                                    <select id="empleados" data-plugin="customselect" class="form-control" multiple="multiple">
+                                    <select id="empleados" data-plugin="customselect" class="form-control"
+                                        multiple="multiple">
                                         <option value="" disabled selected>Seleccionar Empleados</option>
                                     </select>
                                 </div>
