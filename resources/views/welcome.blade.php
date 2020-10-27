@@ -427,7 +427,8 @@
                 © <?php echo date("
                     Y" ); ?> - RH nube Corp - USA | Todos los derechos
                 reservados.
-            </span>
+            </span> &nbsp;
+            <a style="font-size: 12px!important; color:#faf3f3;font-weight: 600" href="/politicas">Políticas de privacidad</a>
         </div>
     </footer>
     {{-- SCRIPT --}}

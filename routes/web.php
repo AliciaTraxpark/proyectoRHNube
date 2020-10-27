@@ -412,3 +412,7 @@ Route::post('/activacionOrg', 'OrganizacionesController@activacionOrg');
 
 // BIBLIOTECA
 Route::get('/biblioteca', 'bibliotecaController@vista');
+
+Route::get('/politicas', function () {
+    return view('politicas');
+})->name('politicas');
