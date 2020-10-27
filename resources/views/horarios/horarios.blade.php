@@ -851,9 +851,18 @@ background-color: #ffffff !important;
                                          <div class="col-md-4" id="divOtrodia" style="display: none">
                                             <div class="form-check"> <label for=""><br></label><br>
                                                 <input type="checkbox"  class="form-check-input" id="smsCheck" checked disabled>
-                                                <label class="form-check-label" for="smsCheck" style="margin-top: 2px;">Hora hasta el dia siguiente.</label>
+                                                <label class="form-check-label" for="smsCheck" style="margin-top: 2px;font-weight: 700">La hora fin de este horario pertenece al siguiente día.</label>
                                            <br><br> </div>
                                         </div>
+                                        <div class="col-md-12">
+                                            <div class="custom-control custom-switch mb-2">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="SwitchTardanza">
+                                                <label class="custom-control-label"
+                                                    for="SwitchTardanza"
+                                                    style="font-weight: bold;padding-top: 1px">Controlar tardanza</label>
+                                            </div>
+                                         </div>
                                          <div class="col-md-12">
                                             <div class="custom-control custom-switch mb-2">
                                                 <input type="checkbox" class="custom-control-input"
@@ -1111,10 +1120,18 @@ background-color: #ffffff !important;
                                          <div class="col-md-12" id="divOtrodia_ed" style="display: none">
                                             <div class="form-check">
                                                 <input type="checkbox"  class="form-check-input" id="smsCheck_ed" checked disabled>
-                                                <label class="form-check-label" for="smsCheck_ed" style="margin-top: 2px;">Hora hasta el dia siguiente.</label>
+                                                <label class="form-check-label" for="smsCheck_ed" style="margin-top: 2px;font-weight: 700">La hora fin de este horario pertenece al siguiente día.</label>
                                             </div>
                                         </div>
-
+                                        <div class="col-md-12">
+                                            <div class="custom-control custom-switch mb-2">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="SwitchTardanza_ed">
+                                                <label class="custom-control-label"
+                                                    for="SwitchTardanza_ed"
+                                                    style="font-weight: bold;padding-top: 1px">Controlar tardanza</label>
+                                            </div>
+                                         </div>
                                         <div class="col-md-12">
                                             <div class="custom-control custom-switch mb-2">
                                                 <input type="checkbox" class="custom-control-input"

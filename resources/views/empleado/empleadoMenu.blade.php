@@ -2626,10 +2626,18 @@ use App\proyecto_empleado;
                                                                     <input type="checkbox" class="form-check-input"
                                                                         id="otroDCh" checked disabled>
                                                                     <label class="form-check-label" for="otroDCh"
-                                                                        style="margin-top: 2px;">Hora hasta el dia
-                                                                        siguiente.</label>
+                                                                        style="margin-top: 2px;font-weight: 700">La hora fin de este horario pertenece al siguiente día.</label>
                                                                 </div>
                                                             </div>
+                                                            <div class="col-md-12">
+                                                                <div class="custom-control custom-switch mb-2">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                        id="SwitchTardanza">
+                                                                    <label class="custom-control-label"
+                                                                        for="SwitchTardanza"
+                                                                        style="font-weight: bold;padding-top: 1px">Controlar tardanza</label>
+                                                                </div>
+                                                             </div>
                                                             <div class="col-md-12">
                                                                 <div class="custom-control custom-switch mb-2">
                                                                     <input type="checkbox" class="custom-control-input"
@@ -3609,10 +3617,18 @@ use App\proyecto_empleado;
                                                                     <input type="checkbox" class="form-check-input"
                                                                         id="otroDC_ed" checked disabled>
                                                                     <label class="form-check-label" for="otroDC_ed"
-                                                                        style="margin-top: 2px;">Hora hasta el dia
-                                                                        siguiente.</label>
+                                                                        style="margin-top: 2px;font-weight: 700">La hora fin de este horario pertenece al siguiente día.</label>
                                                                 </div>
                                                             </div>
+                                                            <div class="col-md-12">
+                                                                <div class="custom-control custom-switch mb-2">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                        id="SwitchTardanza_ed">
+                                                                    <label class="custom-control-label"
+                                                                        for="SwitchTardanza_ed"
+                                                                        style="font-weight: bold;padding-top: 1px">Controlar tardanza</label>
+                                                                </div>
+                                                             </div>
                                                             <div class="col-md-12">
                                                                 <div class="custom-control custom-switch mb-2">
                                                                     <input type="checkbox" class="custom-control-input"

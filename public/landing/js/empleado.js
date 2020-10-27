@@ -760,6 +760,12 @@ function registrarHorario_ed() {
     var fin = $("#horaF_ed").val();
     toleranciaF = $('#toleranciaSalida_ed').val();
     horaOblig = $('#horaOblig_ed').val();
+    var tardanza;
+    if ($('#SwitchTardanza_ed').is(":checked")) {
+        tardanza=1;
+    } else{
+        tardanza=0;
+    }
     if ($('#SwitchPausa_ed').is(":checked")) {
         var descPausa = [];
         var pausaInicio = [];
@@ -782,7 +788,7 @@ function registrarHorario_ed() {
             descripcion,
             toleranciaH,
             inicio,
-            fin,descPausa, pausaInicio, finPausa, toleranciaF, horaOblig
+            fin,descPausa, pausaInicio, finPausa, toleranciaF, horaOblig,tardanza
         },
         statusCode: {
             419: function () {
@@ -1342,6 +1348,12 @@ function registrarHorario() {
     var fin = $("#horaF").val();
     toleranciaF = $('#toleranciaSalida').val();
     horaOblig = $('#horaOblig').val();
+    var tardanza;
+    if ($('#SwitchTardanza').is(":checked")) {
+        tardanza=1;
+    } else{
+        tardanza=0;
+    }
     if ($('#SwitchPausa').is(":checked")) {
         var descPausa = [];
         var pausaInicio = [];
@@ -1364,7 +1376,7 @@ function registrarHorario() {
             descripcion,
             toleranciaH,
             inicio,
-            fin,descPausa, pausaInicio, finPausa, toleranciaF, horaOblig
+            fin,descPausa, pausaInicio, finPausa, toleranciaF, horaOblig,tardanza
         },
         statusCode: {
             419: function () {
