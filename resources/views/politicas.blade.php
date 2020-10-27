@@ -91,7 +91,7 @@ use App\invitado;
     <div class="content-page" style="margin-top: 40px; margin-left: 120px; margin-right: 55px;padding-left: 0px;">
         <div class="content">
             <div class="row">
-                <div class="col-3">
+                <div class=" col-12 col-md-3" id="navPo">
                   <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                     <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#introduccion" role="tab" aria-controls="introduccion" aria-selected="true">INTRODUCCIÓN</a>
                     <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#tipo-informacion" role="tab" aria-controls="tipo-informacion" aria-selected="false">¿QUÉ TIPO DE INFORMACIÓN RECOPILAMOS?</a>
@@ -101,7 +101,7 @@ use App\invitado;
                     <a class="nav-link" id="v-pills-settings-tab1" data-toggle="pill" href="#cambios-politica" role="tab" aria-controls="cambios-politica" aria-selected="false">CAMBIOS EN LA POLITICA DE PRIVACIDAD</a>
                   </div>
                 </div>
-                <div class="col-9">
+                <div class="col-12 col-md-9" id="cuerpoPo">
                   <div class="tab-content" id="v-pills-tabContent">
                     <div class="tab-pane fade show active" id="introduccion" role="tabpanel" aria-labelledby="v-pills-home-tab">
                         <label for="" style="text-align: justify">
