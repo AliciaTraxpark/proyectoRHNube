@@ -564,7 +564,7 @@
             </div>
             <div class="col-md-9 mb-3" style="border-bottom: 3px solid #12cad6"></div>
         </div>
-        <div class="row pr-5">
+        <div class="row pr-5 pt-2">
             <div class="col-md-3">
                 <p style="color: #000839;">Registro de ingresos y salidas</p>
             </div>
@@ -606,7 +606,10 @@
         </div>
         <div class="row pr-5">
             <div class="col-md-3">
-                <p style="color: #000839;">Función manual</p>
+                <p style="color: #000839;">
+                    <img src="{{asset('landing/images/right-arrow (1).svg')}}" height="15" class="mr-1 ml-2">
+                    Función manual
+                </p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
@@ -624,7 +627,324 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-3 pr-5">
+        <div class="row pr-5">
+            <div class="col-md-3">
+                <p style="color: #000839;">
+                    <img src="{{asset('landing/images/right-arrow (1).svg')}}" height="15" class="mr-1 ml-2">
+                    Función por cámara
+                </p>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color:#3c6f9c60;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #40708860;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+        </div>
+        <div class="row pr-5">
+            <div class="col-md-3">
+                <p style="color: #000839;">Función para escaner de barras bluetooth (*L)</p>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-3">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <p class="mt-3" style="color:#797a7e">Inc. 1 escáner BT (*L)</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <p class="mt-3" style="color:#797a7e">Inc. 3 escáner BT (*L)</p>
+                </div>
+            </div>
+        </div>
+        <div class="row pr-5">
+            <div class="col-md-3">
+                <p style="color: #000839;">Función biométrica (reconocimiento facial)</p>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3 mt-1" style="background-color: #44b1cc60;height: 30px;">
+                    <p class="mt-1" style="color:#797a7e">Próximamente</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3 mt-1" style="background-color: #3c6f9c60;height: 30px;">
+                    <p class="mt-1" style="color:#797a7e">Próximamente</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3 mt-1" style="background-color: #40708860;height: 30px;">
+                    <p class="mt-1" style="color:#797a7e">Próximamente</p>
+                </div>
+            </div>
+        </div>
+        <div class="row pr-5">
+            <div class="col-md-3">
+                <p style="color: #000839;">Ubicación GPS del control</p>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22">
+                </div>
+            </div>
+        </div>
+        <div class="row pr-5">
+            <div class="col-md-3">
+                <p style="color: #000839;">Fijación de la ubicación de control, con GEOMALLAS tipo radial</p>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3 mt-2"
+                    style="background-color: #44b1cc60;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3 mt-2" style="background-color:#3c6f9c60;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3 mt-2"
+                    style="background-color: #40708860;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+        </div>
+        <div class="row pr-5">
+            <div class="col-md-3">
+                <strong style="color: #000839">Modo: Asistencia y actividad en ruta</strong>
+            </div>
+            <div class="col-md-9 mb-3" style="border-bottom: 3px solid #12cad6"></div>
+        </div>
+        <div class="row pr-5 pt-2">
+            <div class="col-md-3">
+                <p style="color: #000839;">Captura de actividad diaria</p>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+        </div>
+        <div class="row pr-5">
+            <div class="col-md-3">
+                <p style="color: #000839;">Control normal (cada 15min)</p>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color:#3c6f9c60;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #40708860;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+        </div>
+        <div class="row pr-5">
+            <div class="col-md-3">
+                <p style="color: #000839;">Captura ubicación GPS</p>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+        </div>
+        <div class="row pr-5">
+            <div class="col-md-3">
+                <p style="color: #000839;">Permitir actividad fuera de horario</p>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color:#3c6f9c60;height: 30px;">
+                    <p class="mt-1" style="color:#797a7e">Inc. 1 escáner BT (*L)</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #40708860;height: 30px;">
+                    <p class="mt-1" style="color:#797a7e">Inc. 3 escáner BT (*L)</p>
+                </div>
+            </div>
+        </div>
+        <div class="row pr-5">
+            <div class="col-md-3">
+                <p style="color: #000839;">Comprobación de identidad x DNI x fotocheck</p>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3 mt-2" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3 mt-2" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3 mt-2" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+        </div>
+        <div class="row pr-5">
+            <div class="col-md-3">
+                <p style="color: #000839;">
+                    <img src="{{asset('landing/images/right-arrow (1).svg')}}" height="15" class="mr-1 ml-2">
+                    Función manual
+                </p>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color:#3c6f9c60;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #40708860;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+        </div>
+        <div class="row pr-5">
+            <div class="col-md-3">
+                <p style="color: #000839;">
+                    <img src="{{asset('landing/images/right-arrow (1).svg')}}" height="15" class="mr-1 ml-2">
+                    Función por cámara
+                </p>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+        </div>
+        <div class="row pr-5">
+            <div class="col-md-3">
+                <p style="color: #000839;">Ubicación GPS del control</p>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color:#3c6f9c60;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #40708860;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+        </div>
+        <div class="row pr-5">
+            <div class="col-md-3">
+                <p style="color: #000839;">Fijación de la ubicación de control, con GEOMALLAS tipo radial</p>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3 mt-2" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3 mt-2" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3 mt-2" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+        </div>
+        <div class="row pr-5">
+            <div class="col-md-3">
+                <p style="color: #000839;">Muestreo biométrico (reconocimiento facial)</p>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3 mt-1" style="background-color: #44b1cc60;height: 30px;">
+                    <p class="mt-1" style="color:#797a7e">Próximamente</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3 mt-1" style="background-color: #3c6f9c60;height: 30px;">
+                    <p class="mt-1" style="color:#797a7e">Próximamente</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3 mt-1" style="background-color: #40708860;height: 30px;">
+                    <p class="mt-1" style="color:#797a7e">Próximamente</p>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-3 pr-5 pb-4">
             <div class="col-md-3 pt-4">
                 <strong style="color: #000839;">Modo:Control en móvil en ruta
                     (Disponible en Android)</strong>
@@ -632,8 +952,14 @@
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
                     <div class="pricing-divider">
-                        <h6 class="text-light text-center m-0" style="font-weight: bold">DISPONIBLE
-                            A PARTIR DE DICIEMBRE
+                        <h6 class="text-light text-center m-0" style="font-weight: bold">
+                            Proximamente en Perú
+                        </h6>
+                        <h6 class="text-light text-center m-0" style="font-weight: bold">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 mb-1">
+                        </h6>
+                        <h6 class="text-light text-center m-0" style="font-weight: bold">
+                            Disponible a partir de diciembre
                         </h6>
                         <svg class="svgTriangulo" width="100%" height="100" viewBox="0 0 100 102"
                             preserveAspectRatio="none">
@@ -645,8 +971,14 @@
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
                     <div class="pricing-dividerD">
-                        <h6 class="text-light text-center m-0" style="font-weight: bold">DISPONIBLE
-                            A PARTIR DE DICIEMBRE
+                        <h6 class="text-light text-center m-0" style="font-weight: bold">
+                            Proximamente en Perú
+                        </h6>
+                        <h6 class="text-light text-center m-0" style="font-weight: bold">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 mb-1">
+                        </h6>
+                        <h6 class="text-light text-center m-0" style="font-weight: bold">
+                            Disponible a partir de diciembre
                         </h6>
                         <svg class="svgTriangulo" width="100%" height="100" viewBox="0 0 100 102"
                             preserveAspectRatio="none">
@@ -658,8 +990,14 @@
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
                     <div class="pricing-dividerT">
-                        <h6 class="text-light text-center m-0" style="font-weight: bold">DISPONIBLE
-                            A PARTIR DE DICIEMBRE
+                        <h6 class="text-light text-center m-0" style="font-weight: bold">
+                            Proximamente en Perú
+                        </h6>
+                        <h6 class="text-light text-center m-0" style="font-weight: bold">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 mb-1">
+                        </h6>
+                        <h6 class="text-light text-center m-0" style="font-weight: bold">
+                            Disponible a partir de diciembre
                         </h6>
                         <svg class="svgTriangulo" width="100%" height="100" viewBox="0 0 100 102"
                             preserveAspectRatio="none">
@@ -751,17 +1089,17 @@
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color:#44b1cc60;height: 30px;">
-                    <p class="mt-1" style="color:#797a7e">$1.5</p>
+                    <p class="mt-1" style="color:#797a7e">$1.50</p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #3c6f9c60;height: 30px;">
-                    <p class="mt-1" style="color:#797a7e">$1.5</p>
+                    <p class="mt-1" style="color:#797a7e">$1.50</p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #40708860;height: 30px;">
-                    <p class="mt-1" style="color:#797a7e">$1.5</p>
+                    <p class="mt-1" style="color:#797a7e">$1.50</p>
                 </div>
             </div>
         </div>
@@ -771,17 +1109,17 @@
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <p class="mt-1" style="color:#797a7e">$3</p>
+                    <p class="mt-1" style="color:#797a7e">$3.00</p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <p class="mt-1" style="color:#797a7e">$3</p>
+                    <p class="mt-1" style="color:#797a7e">$3.00</p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <p class="mt-1" style="color:#797a7e">$3</p>
+                    <p class="mt-1" style="color:#797a7e">$3.00</p>
                 </div>
             </div>
         </div>
@@ -790,17 +1128,17 @@
                 <p style="color: #000839;">Capturas en video basic (*) Aleatorio</p>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3 mt-1" style="background-color: #44b1cc60;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">$20</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color:#3c6f9c60;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3 mt-1" style="background-color:#3c6f9c60;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">$20</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #40708860;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3 mt-1" style="background-color: #40708860;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">$20</p>
                 </div>
             </div>
@@ -811,17 +1149,37 @@
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <p class="mt-1" style="color:#797a7e">$1</p>
+                    <p class="mt-1" style="color:#797a7e">$1.99</p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <p class="mt-1" style="color:#797a7e">$1</p>
+                    <p class="mt-1" style="color:#797a7e">$1.99</p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <p class="mt-1" style="color:#797a7e">$1</p>
+                    <p class="mt-1" style="color:#797a7e">$1.99</p>
+                </div>
+            </div>
+        </div>
+        <div class="row pr-5">
+            <div class="col-md-3">
+                <p style="color: #000839;">Reconocimiento facial</p>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
+                    <p class="mt-1" style="color:#797a7e">$3.00</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color:#3c6f9c60;height: 30px;">
+                    <p class="mt-1" style="color:#797a7e">$2.50</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #40708860;height: 30px;">
+                    <p class="mt-1" style="color:#797a7e">$2.00</p>
                 </div>
             </div>
         </div>
@@ -857,7 +1215,7 @@
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
-                    <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mt-2">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
                 </div>
             </div>
             <div class="col-md-3">
@@ -871,27 +1229,27 @@
                 </div>
             </div>
         </div>
-        <div class="row pr-5">
+        {{-- <div class="row pr-5">
             <div class="col-md-3">
                 <p style="color: #000839;">Soporte local</p>
             </div>
             <div class="col-md-3">
                 <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
                     <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mt-2">
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color:#3c6f9c60;height: 30px;">
-                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #40708860;height: 30px;">
-                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
-                </div>
-            </div>
-        </div>
     </div>
+</div>
+<div class="col-md-3">
+    <div class="row justify-content-center mr-3 ml-3" style="background-color:#3c6f9c60;height: 30px;">
+        <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+    </div>
+</div>
+<div class="col-md-3">
+    <div class="row justify-content-center mr-3 ml-3" style="background-color: #40708860;height: 30px;">
+        <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+    </div>
+</div>
+</div> --}}
+</div>
 </div>
 
 <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel"
