@@ -752,9 +752,9 @@ $('#guardarHorarioEventos').click(function () {
             idemps, descripcion, toleranciaH: nuevaTolerancia
         },
         statusCode: {
-            /*401: function () {
+            401: function () {
                 location.reload();
-            },*/
+            },
             419: function () {
                 location.reload();
             }
@@ -798,9 +798,9 @@ $('#guardarTodoHorario').click(function () {
 
         },
         statusCode: {
-            /*401: function () {
+            401: function () {
                 location.reload();
-            },*/
+            },
             419: function () {
                 location.reload();
             }
@@ -968,6 +968,12 @@ function registrarHorario() {
     horaOblig = $('#horaOblig').val();
     inicio = $('#horaI').val();
     fin = $('#horaF').val();
+    var tardanza;
+    if ($('#SwitchTardanza').is(":checked")) {
+        tardanza=1;
+    } else{
+        tardanza=0;
+    }
 
     if ($('#SwitchPausa').is(":checked")) {
         var descPausa = [];
@@ -992,9 +998,12 @@ function registrarHorario() {
         data: {
 
             descripcion,
-            toleranciaH, inicio, fin, descPausa, pausaInicio, finPausa, toleranciaF, horaOblig
+            toleranciaH, inicio, fin, descPausa, pausaInicio, finPausa, toleranciaF, horaOblig, tardanza
         },
         statusCode: {
+            401: function () {
+                location.reload();
+            },
             419: function () {
                 location.reload();
             }
@@ -1127,6 +1136,9 @@ function registrarHorarioen() {
             toleranciaH, inicio, fin
         },
         statusCode: {
+            401: function () {
+                location.reload();
+            },
             419: function () {
                 location.reload();
             }
@@ -2016,6 +2028,11 @@ function editarHorarioLista(idsedit) {
             $('#horaOblig_ed').val(data[0].horasObliga);
             $('#horaI_ed').val(data[0].horaI);
             $('#horaF_ed').val(data[0].horaF);
+            if(data[0].hora_contTardanza==1){
+                $('#SwitchTardanza_ed').prop('checked', true);
+            } else{
+                $('#SwitchTardanza_ed').prop('checked', false);
+            }
             $('#horarioEditar').modal('show');
             if (data[0].horaI > data[0].horaF) {
                 $('#divOtrodia_ed').show();
@@ -2056,6 +2073,12 @@ function editarHorario() {
     var horaFed = $('#horaF_ed').val();
     var toleranciaFed = $('#toleranciaSalida_ed').val();
     var horaObed = $('#horaOblig_ed').val();
+    var tardanza_ed;
+    if ($('#SwitchTardanza_ed').is(":checked")) {
+        tardanza_ed=1;
+    } else{
+        tardanza_ed=0;
+    }
     if ($('#SwitchPausa_ed').is(":checked")) {
         var descPausa_ed = [];
         var pausaInicio_ed = [];
@@ -2073,7 +2096,7 @@ function editarHorario() {
     $.ajax({
         type: "post",
         url: "/horario/actualizarhorario",
-        data: { idhorario, descried, toleed, horaIed, horaFed, toleranciaFed, horaObed,descPausa_ed,pausaInicio_ed, finPausa_ed},
+        data: { idhorario, descried, toleed, horaIed, horaFed,tardanza_ed, toleranciaFed, horaObed,descPausa_ed,pausaInicio_ed, finPausa_ed},
         statusCode: {
             /*401: function () {
                 location.reload();

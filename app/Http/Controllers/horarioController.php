@@ -167,7 +167,7 @@ class horarioController extends Controller
     public function guardarHorarioBD(Request $request)
     {
 
-
+        $tardanza=$request->tardanza;
         $descripcion = $request->descripcion;
         $toleranciaH = $request->toleranciaH;
         $inicio = $request->inicio;
@@ -185,6 +185,7 @@ class horarioController extends Controller
         $horario->organi_id = session('sesionidorg');
         $horario->horario_toleranciaF = $toleranciaF;
         $horario->horasObliga = $horaOblig;
+        $horario->hora_contTardanza = $tardanza;
         $horario->save();
 
         $descPausa = $request->get('descPausa');
@@ -879,7 +880,7 @@ class horarioController extends Controller
     }
 
     public function actualizarhorarioed(Request $request)
-    {
+    {   $tardanza_ed=$request->tardanza_ed;
         $idhorario = $request->idhorario;
         $descried = $request->descried;
         $toleed = $request->toleed;
@@ -890,7 +891,7 @@ class horarioController extends Controller
 
         $horario = horario::where('horario_id', '=', $idhorario)
             ->update([
-                'horario_descripcion' => $descried, 'horario_tolerancia' => $toleed, 'horaI' => $horaIed,
+                'horario_descripcion' => $descried,'hora_contTardanza' => $tardanza_ed, 'horario_tolerancia' => $toleed, 'horaI' => $horaIed,
                 'horaF' => $horaFed, 'horario_toleranciaF' => $toleranciaFed, 'horasObliga' => $horaObed
             ]);
 
@@ -905,7 +906,7 @@ class horarioController extends Controller
 
         $pausas_horarioComprobar=DB::table('pausas_horario')
         ->where('horario_id',$idhorario)->get();
-                
+
         if($pausas_horarioComprobar->isEmpty()){
             if ($descPausa) {
 
