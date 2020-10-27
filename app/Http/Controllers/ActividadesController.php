@@ -76,7 +76,7 @@ class ActividadesController extends Controller
             ->where('a.estado', '=', 1)
             ->groupBy('a.Activi_id')
             ->get();
-            // dd(DB::getQueryLog());
+        // dd(DB::getQueryLog());
         return response()->json($actividades, 200);
     }
 
@@ -249,5 +249,18 @@ class ActividadesController extends Controller
         }
 
         return response()->json($actividad_empleado, 200);
+    }
+
+    // SELECT DE MOSTRAR EMPLEADOS
+    function empleadoSelect()
+    {
+        $empleados = DB::table('empleado as e')
+            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+            ->where('e.emple_estado', '=', 1)
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->get();
+
+        return response()->json($empleados, 200);
     }
 }

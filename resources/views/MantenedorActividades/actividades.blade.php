@@ -9,6 +9,7 @@
     type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/alertify/alertify.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
 {{-- <link href="{{ URL::asset('admin/assets/libs/alertify/bootstrap.css') }}" rel="stylesheet" type="text/css" /> --}}
 <!-- Semantic UI theme -->
 <link href="{{ URL::asset('admin/assets/libs/alertify/default.css') }}" rel="stylesheet" type="text/css" />
@@ -208,6 +209,14 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Asignar empleado</label>
+                                    <select id="empleados" data-plugin="customselect" class="form-control" multiple="multiple">
+                                        <option value="" disabled selected>Seleccionar Empleados</option>
+                                    </select>
+                                </div>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -268,6 +277,8 @@
 <!-- optional plugins -->
 <script src="{{URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js')}}"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/multiselect/es.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/alertify/alertify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>

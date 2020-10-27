@@ -1,3 +1,4 @@
+$.fn.select2.defaults.set('language', 'es');
 function tablaActividades() {
     $("#actividades").DataTable({
         scrollX: true,
@@ -649,4 +650,41 @@ $("#nombreTarea").keyup(function () {
 });
 $("#codigoTarea").keyup(function () {
     $(this).removeClass("borderColor");
+});
+
+// SELECT DE EMPLEADOS
+$("#empleados").select2({
+    placeholder: 'Seleccionar Empleados',
+    tags: "true"
+});
+$("#empleados").on("select2:opening", function () {
+    var value = $("#empleados").val();
+    $("#empleados").empty();
+    var container = $("#empleados");
+    $.ajax({
+        async: false,
+        url: "/empleadoActiv",
+        method: "GET",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            console.log(data);
+            var option = `<option value="" disabled selected>Seleccionar</option>`;
+            for (var $i = 0; $i < data.length; $i++) {
+                option += `<option value="${data[$i].emple_id}">${data[$i].nombre} ${data[$i].apPaterno} ${data[$i].apMaterno}</option>`;
+            }
+            container.append(option);
+            $("#empleados").val(value);
+        },
+        error: function () { },
+    });
 });
