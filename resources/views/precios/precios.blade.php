@@ -558,6 +558,72 @@
                 </div>
             </div>
         </div>
+        <div class="row pr-5">
+            <div class="col-md-3">
+                <strong style="color: #000839">Modo: Asistencia en puerta</strong>
+            </div>
+            <div class="col-md-9 mb-3" style="border-bottom: 3px solid #12cad6"></div>
+        </div>
+        <div class="row pr-5">
+            <div class="col-md-3">
+                <p style="color: #000839;">Registro de ingresos y salidas</p>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+        </div>
+        <div class="row pr-5">
+            <div class="col-md-3">
+                <p style="color: #000839;">Escaneo del DNI o fotocheck</p>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color:#3c6f9c60;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="background-color: #40708860;height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+        </div>
+        <div class="row pr-5">
+            <div class="col-md-3">
+                <p style="color: #000839;">Función manual</p>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row justify-content-center mr-3 ml-3" style="height: 30px;">
+                    <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                </div>
+            </div>
+        </div>
         <div class="row pt-3 pr-5">
             <div class="col-md-3 pt-4">
                 <strong style="color: #000839;">Modo:Control en móvil en ruta
