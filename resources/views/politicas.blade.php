@@ -93,17 +93,17 @@ use App\invitado;
             <div class="row">
                 <div class="col-3">
                   <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">INTRODUCCIÓN</a>
-                    <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">¿QUÉ TIPO DE INFORMACIÓN RECOPILAMOS?</a>
-                    <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">LEGITIMACIÓN DEL TRATAMIENTO DE DATOS</a>
-                    <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">TRANSFERENCIAS Y CESIONES DE DATOS</a>
-                    <a class="nav-link" id="v-pills-messages-tab1" data-toggle="pill" href="#v-pills-messages1" role="tab" aria-controls="v-pills-messages1" aria-selected="false">LEGITIMACIÓN DEL TRATAMIENTO DE DATOS</a>
-                    <a class="nav-link" id="v-pills-settings-tab1" data-toggle="pill" href="#v-pills-settings1" role="tab" aria-controls="v-pills-settings1" aria-selected="false">TRANSFERENCIAS Y CESIONES DE DATOS</a>
+                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#introduccion" role="tab" aria-controls="introduccion" aria-selected="true">INTRODUCCIÓN</a>
+                    <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#tipo-informacion" role="tab" aria-controls="tipo-informacion" aria-selected="false">¿QUÉ TIPO DE INFORMACIÓN RECOPILAMOS?</a>
+                    <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#tratamiento-datos" role="tab" aria-controls="tratamiento-datos" aria-selected="false">LEGITIMACIÓN DEL TRATAMIENTO DE DATOS</a>
+                    <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#transferencia-datos" role="tab" aria-controls="transferencia-datos" aria-selected="false">TRANSFERENCIAS Y CESIONES DE DATOS</a>
+                    <a class="nav-link" id="v-pills-messages-tab1" data-toggle="pill" href="#informacion-personal" role="tab" aria-controls="informacion-personal" aria-selected="false">CONTROL DE SU INFORMACIÓN PERSONAL</a>
+                    <a class="nav-link" id="v-pills-settings-tab1" data-toggle="pill" href="#cambios-politica" role="tab" aria-controls="cambios-politica" aria-selected="false">CAMBIOS EN LA POLITICA DE PRIVACIDAD</a>
                   </div>
                 </div>
                 <div class="col-9">
                   <div class="tab-content" id="v-pills-tabContent">
-                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                    <div class="tab-pane fade show active" id="introduccion" role="tabpanel" aria-labelledby="v-pills-home-tab">
                         <label for="" style="text-align: justify">
                             La presente Política de Privacidad establece los términos en que RH NUBE usa y protege la información que proporcionan los usuarios al momento de manipular nuestra plataforma. Al utilizar nuestro sitio web nos confías tus datos y entendemos nuestra responsabilidad, siendo conscientes de la rigurosa privacidad de nuestros usuarios y la información personal que nos confían, por eso nos esforzamos al máximo para proteger y controlar la información brindada.
 El objetivo de esta Política de Privacidad es informarte sobre qué datos recogemos, por qué los recogemos y cómo puedes actualizarlos, gestionarlos, exportarlos y eliminarlos.
@@ -111,7 +111,7 @@ El objetivo de esta Política de Privacidad es informarte sobre qué datos recog
 
 
                     </div>
-                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                    <div class="tab-pane fade" id="tipo-informacion" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                         <label for="" style="text-align: justify">
                             En nuestros sitios web, existen unos apartados específicos donde anotas tus datos en el proceso de registro y a la hora de realizar pagos y/o pedidos. Nosotros te aseguramos que la información que nos facilites será gestionada de forma totalmente confidencial.
 En nuestra plataforma recogemos información para proporcionar las funcionalidades necesarias. Nuestro sitio web podrá recoger información personal, por ejemplo: nombre, apellidos, información de contacto como su dirección de correo electrónica o número de teléfono e información demográfica. Así mismo cuando sea necesario podrá ser requerida información específica para procesar algún pedido o realizar una entrega o facturación.
@@ -120,24 +120,24 @@ La web puede utilizar cookies, consulta nuestra política de cookies.
 
                         </label>
                     </div>
-                    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                    <div class="tab-pane fade" id="tratamiento-datos" role="tabpanel" aria-labelledby="v-pills-messages-tab">
                         <label for="" style="text-align: justify">
                             El uso de tus datos se realiza porque nos das tu consentimiento para usar los que nos proporcionas en los formularios para un uso específico que se indica en cada uno de ellos. Tus datos solo son necesarios para los usos concretos por los que se te solicitan.
                         </label>
                     </div>
-                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                    <div class="tab-pane fade" id="transferencia-datos" role="tabpanel" aria-labelledby="v-pills-settings-tab">
                         <label for="" style="text-align: justify">
                             Existe un compromiso firme por nuestra parte de que los datos que proporcione a RH NUBE CORP, no serán vendidos ni cedidos a terceras personas sin el previo consentimiento del interesado bajo ningún concepto o circunstancia, salvo consentimiento expreso u obligación legal.
 En caso la plataforma web La plataforma web contenga enlaces hacia sitios web de terceros RH NUBE CORP no se hace responsable por las políticas y prácticas de privacidad de estos otros sitios. Dichos sitios están sujetos a sus propias políticas de privacidad por lo cual es recomendable que los consulte para confirmar que usted está de acuerdo con estas.
 
                         </label>
                     </div>
-                    <div class="tab-pane fade" id="v-pills-messages1" role="tabpanel" aria-labelledby="v-pills-messages-tab1">
+                    <div class="tab-pane fade" id="informacion-personal" role="tabpanel" aria-labelledby="v-pills-messages-tab1">
                         <label for="" style="text-align: justify">
                             Tienes el derecho de acceder a TU información almacenada en nuestras bases de datos, rectificarla si existiera alguna errata, suprimirla, limitarla, oponerte a su tratamiento y retirar tu consentimiento si ese es tu deseo. Para ello simplemente debes escribir un e-mail a la dirección de correo electrónico info@rhnube.com.pe  donde te atenderemos gustosamente cualquier consulta, comentario o aclaración requerida al respecto.
                         </label>
                     </div>
-                    <div class="tab-pane fade" id="v-pills-settings1" role="tabpanel" aria-labelledby="v-pills-settings-tab1">
+                    <div class="tab-pane fade" id="cambios-politica" role="tabpanel" aria-labelledby="v-pills-settings-tab1">
                         <label for="" style="text-align: justify">
                             RH NUBE CORP se reserva el derecho de cambiar los términos de la presente Política de Privacidad en el momento que se amerite. Modificamos esta Política de Privacidad de forma periódica. No limitaremos los derechos que se te hayan concedido de acuerdo con esta Política de Privacidad sin tu consentimiento explícito. Si los cambios son significativos, te lo comunicaremos de forma destacada enviando una notificación de los cambios en la Política de Privacidad por correo electrónico.
 
