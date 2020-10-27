@@ -77,13 +77,16 @@ use App\invitado;
     <header id="header-section">
         <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
             <div class="container">
-                <div class="col-md-2">
+                <div class="col-md-2" style="padding-left: 50px;">
                     <div class="navbar-brand-wrapper d-flex w-100 colResp">
                         <img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="69">
                     </div>
                 </div>
-                <div class="col-md-6 text-left textResp">
-                    <h5 style="color: #ffffff">POLÍTICAS DE PRIVACIDAD</h5>
+                <div class="col-md-6 text-right textResp">
+                    <strong id="" style="color:
+                    rgb(255, 255, 255)">POLÍTICAS DE PRIVACIDAD
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
+
                 </div>
         </nav>
     </header>
@@ -101,7 +104,8 @@ use App\invitado;
                     <a class="nav-link" id="v-pills-settings-tab1" data-toggle="pill" href="#cambios-politica" role="tab" aria-controls="cambios-politica" aria-selected="false">CAMBIOS EN LA POLITICA DE PRIVACIDAD</a>
                   </div>
                 </div>
-                <div class="col-12 col-md-9" id="cuerpoPo">
+
+                <div class="col-12 col-md-8" id="cuerpoPo" style=" padding-left: 50px;">
                   <div class="tab-content" id="v-pills-tabContent">
                     <div class="tab-pane fade show active" id="introduccion" role="tabpanel" aria-labelledby="v-pills-home-tab">
                         <label for="" style="text-align: justify">
