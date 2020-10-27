@@ -18,11 +18,11 @@ class apimovilController extends Controller
         $nombreDisp=$request->nombreDisp;
 
         $dispositivo=dispositivos::where('dispo_movil','=',$nroMovil)
-        ->where('dispo_codigo','=',$codigo)->where('dispo_estadoActivo','=',1)->get()->first();
+        ->where('dispo_codigo','=',$codigo)->where('dispo_estadoActivo','=',[1,2])->get()->first();
 
         if($dispositivo!=null){
             if($dispositivo->dispo_estado==2){
-                if($dispositivo->dispo_codigoNombre==$nombreDisp){
+                if($dispositivo->dispo_codigo==$codigo){
                     $factory = JWTFactory::customClaims([
                         'sub' => env('API_id'),
                     ]);
@@ -43,8 +43,8 @@ class apimovilController extends Controller
                     return response()->json(array('status'=>200,"dispositivo" =>$dispositivo,
                     "token" =>$token->get()));
                 } else{
-                     return response()->json(array('status'=>400,'title' => 'Ya esta activado en otro dispositivo',
-                'detail' => 'El Dispositivo ya fue verificado.'),400);
+                    return response()->json(array('status'=>400,'title' => 'Clave incorrecta',
+                    'detail' => 'Asegúrate de escribir la clave correcta'),400);
                 }
 
             } else{

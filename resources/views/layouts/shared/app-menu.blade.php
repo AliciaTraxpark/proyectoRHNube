@@ -120,17 +120,17 @@ $usuario_organizacion=DB::table('usuario_organizacion')
 
     <li>
 
-        <a href="/">
+        <a href="javascript: void(0);">
             <i data-feather="check-circle"></i>
-            <span onclick=" $('#modal-errorAler').modal('show');">Modo: Asistencia en puerta</span>
+            <span >Modo: Asistencia en puerta</span>
             <span class="menu-arrow"></span>
         </a>
 
         <ul class="nav-second-level" aria-expanded="false">
             <li>
-                <a {{-- href="/dispositivos" --}}>Dispositivos</a>
-                <a {{-- href="/controladores" --}}>Controladores</a>
-                <a>Reporte de asistencia</a>
+                <a  href="/dispositivos" >Dispositivos</a>
+                <a href="/controladores" >Controladores</a>
+                <a href="/reporteAsistencia">Reporte de asistencia</a>
 
             </li>
         </ul>
