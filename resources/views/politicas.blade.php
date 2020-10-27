@@ -128,7 +128,7 @@ La web puede utilizar cookies, consulta nuestra política de cookies.
                     <div class="tab-pane fade" id="transferencia-datos" role="tabpanel" aria-labelledby="v-pills-settings-tab">
                         <label for="" style="text-align: justify">
                             Existe un compromiso firme por nuestra parte de que los datos que proporcione a RH NUBE CORP, no serán vendidos ni cedidos a terceras personas sin el previo consentimiento del interesado bajo ningún concepto o circunstancia, salvo consentimiento expreso u obligación legal.
-En caso la plataforma web La plataforma web contenga enlaces hacia sitios web de terceros RH NUBE CORP no se hace responsable por las políticas y prácticas de privacidad de estos otros sitios. Dichos sitios están sujetos a sus propias políticas de privacidad por lo cual es recomendable que los consulte para confirmar que usted está de acuerdo con estas.
+En caso la plataforma web contenga enlaces hacia sitios web de terceros RH NUBE CORP no se hace responsable por las políticas y prácticas de privacidad de estos otros sitios. Dichos sitios están sujetos a sus propias políticas de privacidad por lo cual es recomendable que los consulte para confirmar que usted está de acuerdo con estas.
 
                         </label>
                     </div>
