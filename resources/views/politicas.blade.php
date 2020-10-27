@@ -105,7 +105,7 @@ use App\invitado;
                   </div>
                 </div>
 
-                <div class="col-12 col-md-8" id="cuerpoPo" style=" padding-left: 50px;">
+                <div class="col-12 col-md-8" id="cuerpoPo" style="">
                   <div class="tab-content" id="v-pills-tabContent">
                     <div class="tab-pane fade show active" id="introduccion" role="tabpanel" aria-labelledby="v-pills-home-tab">
                         <label for="" style="text-align: justify">
