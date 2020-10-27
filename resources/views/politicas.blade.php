@@ -128,13 +128,13 @@ La web puede utilizar cookies, consulta nuestra política de cookies.
                     <div class="tab-pane fade" id="transferencia-datos" role="tabpanel" aria-labelledby="v-pills-settings-tab">
                         <label for="" style="text-align: justify">
                             Existe un compromiso firme por nuestra parte de que los datos que proporcione a RH NUBE CORP, no serán vendidos ni cedidos a terceras personas sin el previo consentimiento del interesado bajo ningún concepto o circunstancia, salvo consentimiento expreso u obligación legal.
-En caso la plataforma web contenga enlaces hacia sitios web de terceros RH NUBE CORP no se hace responsable por las políticas y prácticas de privacidad de estos otros sitios. Dichos sitios están sujetos a sus propias políticas de privacidad por lo cual es recomendable que los consulte para confirmar que usted está de acuerdo con estas.
+En caso la plataforma web contenga enlaces hacia sitios web de terceros, RH NUBE CORP no se hace responsable por las políticas y prácticas de privacidad de estos otros sitios. Dichos sitios están sujetos a sus propias políticas de privacidad por lo cual es recomendable que los consulte para confirmar que usted está de acuerdo con estas.
 
                         </label>
                     </div>
                     <div class="tab-pane fade" id="informacion-personal" role="tabpanel" aria-labelledby="v-pills-messages-tab1">
                         <label for="" style="text-align: justify">
-                            Tienes el derecho de acceder a TU información almacenada en nuestras bases de datos, rectificarla si existiera alguna errata, suprimirla, limitarla, oponerte a su tratamiento y retirar tu consentimiento si ese es tu deseo. Para ello simplemente debes escribir un e-mail a la dirección de correo electrónico info@rhnube.com.pe  donde te atenderemos gustosamente cualquier consulta, comentario o aclaración requerida al respecto.
+                            Tienes el derecho de acceder a tu información almacenada en nuestras bases de datos, rectificarla si existiera alguna errata, suprimirla, limitarla, oponerte a su tratamiento y retirar tu consentimiento si ese es tu deseo. Para ello simplemente debes escribir un e-mail a la dirección de correo electrónico info@rhnube.com.pe  donde te atenderemos gustosamente cualquier consulta, comentario o aclaración requerida al respecto.
                         </label>
                     </div>
                     <div class="tab-pane fade" id="cambios-politica" role="tabpanel" aria-labelledby="v-pills-settings-tab1">
