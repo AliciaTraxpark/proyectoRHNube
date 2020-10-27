@@ -675,17 +675,20 @@
                 <p style="color: #000839;">Función biométrica (reconocimiento facial)</p>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3 mt-1" style="background-color: #44b1cc60;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3 mt-1"
+                    style="background-color: #44b1cc60;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">Próximamente</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3 mt-1" style="background-color: #3c6f9c60;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3 mt-1"
+                    style="background-color: #3c6f9c60;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">Próximamente</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3 mt-1" style="background-color: #40708860;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3 mt-1"
+                    style="background-color: #40708860;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">Próximamente</p>
                 </div>
             </div>
@@ -929,17 +932,20 @@
                 <p style="color: #000839;">Muestreo biométrico (reconocimiento facial)</p>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3 mt-1" style="background-color: #44b1cc60;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3 mt-1"
+                    style="background-color: #44b1cc60;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">Próximamente</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3 mt-1" style="background-color: #3c6f9c60;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3 mt-1"
+                    style="background-color: #3c6f9c60;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">Próximamente</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3 mt-1" style="background-color: #40708860;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3 mt-1"
+                    style="background-color: #40708860;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">Próximamente</p>
                 </div>
             </div>
@@ -1128,7 +1134,8 @@
                 <p style="color: #000839;">Capturas en video basic (*) Aleatorio</p>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3 mt-1" style="background-color: #44b1cc60;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3 mt-1"
+                    style="background-color: #44b1cc60;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">$20</p>
                 </div>
             </div>
@@ -1138,7 +1145,8 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3 mt-1" style="background-color: #40708860;height: 30px;">
+                <div class="row justify-content-center mr-3 ml-3 mt-1"
+                    style="background-color: #40708860;height: 30px;">
                     <p class="mt-1" style="color:#797a7e">$20</p>
                 </div>
             </div>
@@ -1229,29 +1237,52 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="row pr-5">
-            <div class="col-md-3">
-                <p style="color: #000839;">Soporte local</p>
-            </div>
-            <div class="col-md-3">
-                <div class="row justify-content-center mr-3 ml-3" style="background-color: #44b1cc60;height: 30px;">
-                    <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mt-2">
     </div>
 </div>
-<div class="col-md-3">
-    <div class="row justify-content-center mr-3 ml-3" style="background-color:#3c6f9c60;height: 30px;">
-        <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+<div class="row">
+    <div class="col-md-12 pl-5 pr-5">
+        <p style="color:#797a7e;text-align: justify">
+            <strong style="color: #000839;">(*e)</strong>&nbsp;La eliminación de capturas se permite con un registro
+            auditado
+            indicando el motivo de la eliminación,
+            medida
+            indicada para prevención de los derechos de la intimidad de las personas captada por el sistema de control
+            de manera fortuita. Caso en el que el empleado o personal controlada realice actividades personales en el
+            horario laboral, dando derecho a la eliminación de esta información no contando como parte de su labor.
+        </p>
+        <p style="color:#797a7e;text-align: justify">
+            <strong style="color: #000839;font-style: oblique">Nota importante: </strong>&nbsp;El empleador debe
+            notificiar a su personal
+            de no usar la herramienta al momento de realizar
+            actividades de índole personal.
+        </p>
+    </div>
+    <div class="col-md-12 pl-5 pr-5">
+        <p style="color:#797a7e;text-align: justify">
+            <strong style="color: #000839;">(*v)</strong>&nbsp;Las tomas en video tienen una duración de 1min y se puede
+            controlar hasta un paquete de minutos diarios y son de forma aleatoria.
+        </p>
+    </div>
+    <div class="col-md-12 pl-5 pr-5">
+        <p style="color:#797a7e;text-align: justify">
+            <strong style="color: #000839;">(*Basic)</strong>&nbsp;Resumen de 1 minuto de capturas en muestreo por hora.
+        </p>
+    </div>
+    <div class="col-md-12 pl-5 pr-5">
+        <p style="color:#797a7e;text-align: justify">
+            <strong style="color: #000839;">(*f)</strong>&nbsp; La facturación local está disponible gracias a un
+            partnert local. Los conceptos agregados localmente son: Gastos administrativos (10%) y el IGV (18%).
+        </p>
+    </div>
+    <div class="col-md-12 pl-5 pr-5">
+        <p style="color:#797a7e;text-align: justify">
+            <strong style="color: #000839;">(*L)</strong>&nbsp; Las lectoras bluetooth de códigos de barras son un
+            accesorio para controlar altos volúmenes de personal, se pueden comprar localmente y anexarlas al celular.
+            En los paquetes Profesional por una suscripción de 6 meses se incluye 1unidad sin costo y Enterprise están
+            incluidas 3 unidades.
+        </p>
     </div>
 </div>
-<div class="col-md-3">
-    <div class="row justify-content-center mr-3 ml-3" style="background-color: #40708860;height: 30px;">
-        <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
-    </div>
-</div>
-</div> --}}
-</div>
-</div>
-
 <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel"
     aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
