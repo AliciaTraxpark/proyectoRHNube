@@ -83,7 +83,7 @@ use App\invitado;
                     </div>
                 </div>
                 <div class="col-md-6 text-left textResp">
-                    <h5 style="color: #ffffff">POLÍTICA DE PRIVACIDAD DE RH NUBE</h5>
+                    <h5 style="color: #ffffff">POLÍTICAS DE PRIVACIDAD</h5>
                 </div>
         </nav>
     </header>
