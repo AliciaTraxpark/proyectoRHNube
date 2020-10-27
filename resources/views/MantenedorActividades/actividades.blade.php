@@ -69,7 +69,7 @@
 <div class="row pr-5">
     <div class="col-md-12 text-right pr-5">
         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
-            onclick="$('#regactividadTarea').modal()">+ Nueva
+            onclick="$('#regactividadTarea').modal();javascript:empleadoListaReg()">+ Nueva
             Actividad
         </button>
     </div>
@@ -141,6 +141,15 @@
                                         <label class="custom-control-label" for="customAP"
                                             style="font-weight: bold">Asistencia en Puerta</label>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Asignar empleado</label>
+                                    <select id="reg_empleados" data-plugin="customselect" class="form-control"
+                                        multiple="multiple">
+                                        <option value="" disabled selected>Seleccionar Empleados</option>
+                                    </select>
                                 </div>
                             </div>
                     </div>

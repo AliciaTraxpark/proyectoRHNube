@@ -97,7 +97,7 @@ function editarActividadTarea() {
             cr: controlRemoto,
             ap: asistenciaPuerta,
             codigo: codigo,
-            empleados:empleados
+            empleados: empleados
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -338,6 +338,7 @@ function recuperarActividad(id) {
 function registrarActividadTarea() {
     var nombre = $("#nombreTarea").val();
     var codigo = $("#codigoTarea").val();
+    var empleados = $("#reg_empleados").val();
     if ($('#customCR').is(":checked") == true) {
         var controlRemoto = 1;
     } else {
@@ -355,7 +356,8 @@ function registrarActividadTarea() {
             nombre: nombre,
             cr: controlRemoto,
             ap: asistenciaPuerta,
-            codigo: codigo
+            codigo: codigo,
+            empleados: empleados
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -625,7 +627,7 @@ function cambiarEstadoActividad(id) {
     });
 }
 
-//REMVER CLASES
+//REMOVER CLASES
 $("#nombreTarea").keyup(function () {
     $(this).removeClass("borderColor");
 });
@@ -633,9 +635,8 @@ $("#codigoTarea").keyup(function () {
     $(this).removeClass("borderColor");
 });
 
-// SELECT DE EMPLEADOS
+// SELECT DE EMPLEADOS EN FORMULARIO EDITAR
 function empleadoLista(id) {
-    var value = $("#empleados").val();
     var idA = id;
     $("#empleados").empty();
     var container = $("#empleados");
@@ -666,14 +667,47 @@ function empleadoLista(id) {
             data[0].noSelect.forEach(element => {
                 option += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
             });
-            console.log(option);
             container.append(option);
-            // $("#empleados").val(value);
         },
         error: function () { },
     });
 }
 $("#empleados").select2({
+    placeholder: 'Seleccionar Empleados',
+    tags: "true"
+});
+// *****************************************
+// SELECT DE EMPLEADOS EN FORMULARIO AGREGAR
+function empleadoListaReg() {
+    $("#reg_empleados").empty();
+    var container = $("#reg_empleados");
+    $.ajax({
+        async: false,
+        url: "/empleadoActivReg",
+        method: "GET",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            console.log(data);
+            var option = `<option value="" disabled>Seleccionar</option>`;
+            data.forEach(element => {
+                option += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
+            });
+            container.append(option);
+        },
+        error: function () { },
+    });
+}
+$("#reg_empleados").select2({
     placeholder: 'Seleccionar Empleados',
     tags: "true"
 });

@@ -215,6 +215,7 @@ Route::post('/editarA', 'ActividadesController@editarActividad');
 Route::get('/registrarEditar', 'ActividadesController@editarCambios');
 Route::get('/recuperarA', 'ActividadesController@recuperarActividad');
 Route::get('/empleadoActiv','ActividadesController@empleadoSelect');
+Route::get('/empleadoActivReg','ActividadesController@listaEmpleadoReg');
 //carga masiva de fotos
 Route::post('/subirfoto', 'CargaMasivaFotoController@subirfoto');
 

@@ -99,6 +99,20 @@ class ActividadesController extends Controller
         $actividad->codigoActividad = $request->get('codigo');
         $actividad->save();
 
+        $idActividad = $actividad->Activi_id;
+        $listaE = $request->get('empleados');
+        // ASIGNAR EMPLEADOS A NUEVA ACTIVIDAD
+        if (is_null($listaE) === false) {
+            foreach ($listaE as $le) {
+                $actividad_empleado = new actividad_empleado();
+                $actividad_empleado->idActividad = $idActividad;
+                $actividad_empleado->idEmpleado = $le;
+                $actividad_empleado->estado = 1;
+                $actividad_empleado->eliminacion = 1;
+                $actividad_empleado->save();
+            }
+        }
+
         return response()->json($actividad, 200);
     }
 
@@ -311,7 +325,7 @@ class ActividadesController extends Controller
         return response()->json($actividad_empleado, 200);
     }
 
-    // SELECT DE MOSTRAR EMPLEADOS
+    // SELECT DE MOSTRAR EMPLEADOS EN REGISTRAR
     function empleadoSelect(Request $request)
     {
         $respuesta = [];
@@ -354,5 +368,19 @@ class ActividadesController extends Controller
         // dd($respuesta);
 
         return response()->json($respuesta, 200);
+    }
+
+    // SELECT DE EMPLEADOS EN REGISTRAR
+    function listaEmpleadoReg()
+    {
+        // TODOS LOS EMPLEADOS
+        $empleados = DB::table('empleado as e')
+            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+            ->where('e.emple_estado', '=', 1)
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->get();
+
+        return response()->json($empleados, 200);
     }
 }
