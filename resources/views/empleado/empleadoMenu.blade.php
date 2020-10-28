@@ -3833,7 +3833,10 @@ use App\proyecto_empleado;
                                                             <div class="col-xl-12">
                                                                 <label>Actividades
                                                                 </label>
-                                                                <a class="mr-3"
+                                                                <a class="mr-3" data-toggle="tooltip"
+                                                                    data-placement="right"
+                                                                    title="registrar nueva actividad"
+                                                                    data-original-title="registrar nueva actividad"
                                                                     onclick="$('#form-ver').modal('hide');$('#RegActividadTareaGE').modal();">
                                                                     <i class="uil uil-plus"
                                                                         style="color: darkblue;cursor: pointer;"></i>
