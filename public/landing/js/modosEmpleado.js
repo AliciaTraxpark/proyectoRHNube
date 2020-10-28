@@ -1109,7 +1109,7 @@ function registrarActividad() {
                             e
                         ) {
                             if (e) {
-                                datosDerecuperarActividad(data.actividad.Activi_id);
+                                recuperarActividad(data.actividad.Activi_id);
                             }
                         })
                         .setting({
@@ -1246,19 +1246,46 @@ function registrarActividad() {
         error: function () { },
     });
 }
-// RECUPERAR DATOS DE ACTIVIDAD
-function datosDerecuperarActividad(id, nombre, codigo, cr, ap) {
-    $('#idActividadRegE').val(id);
-    $('#nombreTarea').val(nombre);
-    $('#codigoTarea').val(codigo);
-    if (cr === 1) {
-        $('#customCRGE').prop("checked", true);
-    }else{
-        $('#customCRGE').prop("checked", false);
-    }
-    if(ap === 1){
-        $('#customAPGE').prop("checked", true);
-    }else{
-        $('#customAPGE').prop("checked", false);
-    }
+// RECUPERAR ACTIVIDAD
+function recuperarActividad(id) {
+    $.ajax({
+        type: "GET",
+        url: "/recuperarA",
+        data: {
+            id: id
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            // limpiarModo();
+            $('#RegActividadTareaGE').modal('toggle');
+            $('#form-ver').modal('show');
+            actividadEmp();
+            $.notifyClose();
+            $.notify(
+                {
+                    message: "\nActividad Recuperada.",
+                    icon: "admin/images/checked.svg",
+                },
+                {
+                    element: $('#form-ver'),
+                    position: "fixed",
+                    icon_type: "image",
+                    newest_on_top: true,
+                    delay: 5000,
+                    template:
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        "</div>",
+                    spacing: 35,
+                }
+            );
+        },
+        error: function () { },
+    });
+
 }

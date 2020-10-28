@@ -332,7 +332,6 @@ use App\proyecto_empleado;
             <div class="modal-body" style="font-size:12px!important">
                 <div class="row">
                     <div class="col-md-12">
-                        <input type="hidden" id="idActividadRegE" value="null">
                         <form action="javascript:registrarActividad()">
                             <div class="row">
                                 <div class="col-md-6">
