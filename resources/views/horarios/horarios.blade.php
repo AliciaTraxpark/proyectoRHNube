@@ -156,6 +156,9 @@ background-color: #ffffff !important;
     font-size: 12.2px;
     overflow-y: scroll;
 }
+.form-control:disabled{
+    background-color: #f1f0f0;
+}
 </style>
 <style>
 
