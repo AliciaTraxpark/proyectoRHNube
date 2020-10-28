@@ -47,7 +47,9 @@ use App\invitado;
             .navbar {
                 padding: 0% !important;
             }
-
+            #cuerpoPo{
+                padding-left: 12px!important;
+            }
             .container {
                 padding-bottom: 3% !important;
                 padding-left: 10px !important;
@@ -105,7 +107,7 @@ use App\invitado;
                   </div>
                 </div>
 
-                <div class="col-12 col-md-8" id="cuerpoPo" style="">
+                <div class="col-12 col-md-8" id="cuerpoPo" style=" padding-left: 50px;   ">
                   <div class="tab-content" id="v-pills-tabContent">
                     <div class="tab-pane fade show active" id="introduccion" role="tabpanel" aria-labelledby="v-pills-home-tab">
                         <label for="" style="text-align: justify">

@@ -99,7 +99,16 @@
             font-size: 12.2px;
 
         }
+        @media (max-width: 767px) {
 
+            #btnNDis {
+                text-align: center !important;
+            }
+
+            #nuevoDispositivo{
+                width: 443px;
+            }
+        }
     </style>
     <style>
         .table {
@@ -124,7 +133,7 @@
                 color: #222222;   padding-left:0px; padding-right: 20px; ">
                     <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                     <div class="row">
-                        <div class=" col-md-6 col-xl-6 text-left">
+                        <div id="btnNDis" class=" col-md-6 col-12 text-left">
                             <button class="btn btn-sm btn-primary" onclick="NuevoDispo()"
                                 style="background-color: #183b5d;border-color:#62778c">+ Nuevo Dispositivo</button>
 
@@ -170,7 +179,7 @@
 
 
             {{-- Modal nuevoDispositivo --}}
-            <div id="nuevoDispositivo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            <div id="nuevoDispositivo" class="modal fade" role="dialog" aria-labelledby="myModalLabel"
                 aria-hidden="true" data-backdrop="static">
                 <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 640px;">
 
@@ -185,17 +194,17 @@
                         <div class="modal-body" style="font-size:12px!important">
                             <div class="row">
 
-                                <div class="col-md-12">
+                                <div class="col-md-12 col-12">
                                     <form id="frmHorNuevo" action="javascript:RegistraDispo()">
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-12 col-12">
                                                 <div class="form-group">
                                                     <label for="">Descripción de ubicación:</label>
                                                     <input type="text" class="form-control form-control-sm"
                                                         id="descripcionDis" maxlength="80" required>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-4 col-12">
                                                 <div class="form-group">
 
                                                     <label for="">Móvil vinculado:</label> <span id="errorMovil" style="color: #690f0f;display: none;">Movil ya registrado.</span>
@@ -209,14 +218,14 @@
                                                         </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-4 col-12">
                                                 <div class="form-group">
                                                     <label for="">Tiempo de sincronización(Min):</label> <span id="errorSincro" style="color: #690f0f;display: none">El valor min es 15.</span>
                                                     <input type="number" id="tiempoSin" min="15" value="15"  required class="form-control form-control-sm"
                                                         required>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-4 col-12">
 
                                                 <div class="form-group">
                                                     <label for="">Siguiente marcación(Min):</label> <span id="errorMarca" style="color: #690f0f;display: none">El valor min es 5.</span>
@@ -224,21 +233,21 @@
                                                         required>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-4 col-12">
                                                 <div class="form-group">
                                                     <label for="">Mantener data por(Hr):</label> <span id="errorData" style="color: #690f0f;display: none">El valor min es 24.</span>
                                                     <input type="number" id="tiempoData" min="24" value="48"  required class="form-control form-control-sm"
                                                         required>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 col-12">
                                                 <label for=""><br></label>
                                                 <div class="form-check">
                                                     <input type="checkbox"  class="form-check-input" id="smsCheck" checked>
                                                     <label class="form-check-label" for="smsCheck" style="margin-top: 2px;">Enviar SMS ahora.</label>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 col-12">
                                                 <div class="form-group">
                                                     <label for="">Seleccione tipo de lectura:</label>
                                                     <select data-plugin="customselect" multiple="multiple" id="selectLectura"
@@ -254,7 +263,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <div class="col-md-12">
+                            <div class="col-md-12 col-12">
                                 <div class="row">
                                     <div class="col-md-12 text-right">
                                         <button type="button" class="btn btn-light btn-sm "
