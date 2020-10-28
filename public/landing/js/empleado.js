@@ -5540,3 +5540,68 @@ function stopVideoF() {
         $('#form-ver').modal('show');
     }
 }
+
+// * HORARIO
+function mostrarContenidoH() {
+    // *OCULTAR FORMULARIO
+    console.log($('#form-registrar').is(':visible'));
+    if ($('#form-ver').is(':visible') === true) {
+        modalOculto = 2;
+        $('#form-ver').modal('hide');
+    }
+    if ($('#form-registrar').is(':visible') === true) {
+        modalOculto = 1;
+        $('#form-registrar').modal('hide');
+    }
+    //*ABRIR MODAL
+    $('#modal-videoH').modal();
+    // * PLAY DE VIDEO AL ABRIR MODAL
+    var iframe = document.querySelector('#contenidoIframeH');
+    var player = new Vimeo.Player(iframe);
+    player.play();
+}
+// ? PAUSAR VIDEO MANUALMENTE
+function stopVideoH() {
+    var iframe = document.querySelector('#contenidoIframeH');
+    var player = new Vimeo.Player(iframe);
+    player.unload();
+    // ! MOSTRAR MODAL OCULTO
+    if (modalOculto === 1) {
+        $('#form-registrar').modal('show');
+    }
+    if (modalOculto === 2) {
+        $('#form-ver').modal('show');
+    }
+}
+// * ACTIVIDADES
+function mostrarContenidoA() {
+    // *OCULTAR FORMULARIO
+    console.log($('#form-registrar').is(':visible'));
+    if ($('#form-ver').is(':visible') === true) {
+        modalOculto = 2;
+        $('#form-ver').modal('hide');
+    }
+    if ($('#form-registrar').is(':visible') === true) {
+        modalOculto = 1;
+        $('#form-registrar').modal('hide');
+    }
+    //*ABRIR MODAL
+    $('#modal-videoA').modal();
+    // * PLAY DE VIDEO AL ABRIR MODAL
+    var iframe = document.querySelector('#contenidoIframeA');
+    var player = new Vimeo.Player(iframe);
+    player.play();
+}
+// ? PAUSAR VIDEO MANUALMENTE
+function stopVideoA() {
+    var iframe = document.querySelector('#contenidoIframeA');
+    var player = new Vimeo.Player(iframe);
+    player.unload();
+    // ! MOSTRAR MODAL OCULTO
+    if (modalOculto === 1) {
+        $('#form-registrar').modal('show');
+    }
+    if (modalOculto === 2) {
+        $('#form-ver').modal('show');
+    }
+}
