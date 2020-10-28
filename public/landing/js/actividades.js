@@ -1,3 +1,4 @@
+$.fn.select2.defaults.set('language', 'es');
 function tablaActividades() {
     $("#actividades").DataTable({
         scrollX: true,
@@ -72,10 +73,12 @@ function editarActividad(id) {
         error: function () { },
     });
     $('#editactividadTarea').modal();
+    empleadoLista(id);
 }
 function editarActividadTarea() {
     var codigo = $("#e_codigoTarea").val();
     var idA = $('#idActiv').val();
+    var empleados = $('#empleados').val();
     if ($('#e_customCR').is(":checked") == true) {
         var controlRemoto = 1;
     } else {
@@ -93,7 +96,8 @@ function editarActividadTarea() {
             idA: idA,
             cr: controlRemoto,
             ap: asistenciaPuerta,
-            codigo: codigo
+            codigo: codigo,
+            empleados: empleados
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -216,7 +220,6 @@ function actividadesOrganizacion() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-            console.log(data);
             var tr = "";
             for (let index = 0; index < data.length; index++) {
                 tr += "<tr class=\"text-center\" onclick=\"return cambiarEstadoActividad(" + data[index].Activi_id + ")\"><td>" + (index + 1) + "</td>";
@@ -323,27 +326,6 @@ function recuperarActividad(id) {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            // $.notifyClose();
-            // $.notify(
-            //     {
-            //         message: "\nActividad recuperada.",
-            //         icon: "admin/images/checked.svg",
-            //     },
-            //     {
-            //         position: "fixed",
-            //         icon_type: "image",
-            //         newest_on_top: true,
-            //         delay: 5000,
-            //         template:
-            //             '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-            //             '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-            //             '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-            //             '<span data-notify="title">{1}</span> ' +
-            //             '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-            //             "</div>",
-            //         spacing: 35,
-            //     }
-            // );
             limpiarModo();
             actividadesOrganizacion();
             $('#regactividadTarea').modal('toggle');
@@ -356,6 +338,7 @@ function recuperarActividad(id) {
 function registrarActividadTarea() {
     var nombre = $("#nombreTarea").val();
     var codigo = $("#codigoTarea").val();
+    var empleados = $("#reg_empleados").val();
     if ($('#customCR').is(":checked") == true) {
         var controlRemoto = 1;
     } else {
@@ -373,7 +356,8 @@ function registrarActividadTarea() {
             nombre: nombre,
             cr: controlRemoto,
             ap: asistenciaPuerta,
-            codigo: codigo
+            codigo: codigo,
+            empleados: empleados
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -643,10 +627,87 @@ function cambiarEstadoActividad(id) {
     });
 }
 
-//REMVER CLASES
+//REMOVER CLASES
 $("#nombreTarea").keyup(function () {
     $(this).removeClass("borderColor");
 });
 $("#codigoTarea").keyup(function () {
     $(this).removeClass("borderColor");
+});
+
+// SELECT DE EMPLEADOS EN FORMULARIO EDITAR
+function empleadoLista(id) {
+    var idA = id;
+    $("#empleados").empty();
+    var container = $("#empleados");
+    $.ajax({
+        async: false,
+        url: "/empleadoActiv",
+        method: "GET",
+        data: {
+            idA: idA
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            console.log(data);
+            var option = `<option value="" disabled>Seleccionar</option>`;
+            data[0].select.forEach(element => {
+                option += `<option value="${element.idEmpleado}" selected="selected">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
+            });
+            data[0].noSelect.forEach(element => {
+                option += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
+            });
+            container.append(option);
+        },
+        error: function () { },
+    });
+}
+$("#empleados").select2({
+    placeholder: 'Seleccionar Empleados',
+    tags: "true"
+});
+// *****************************************
+// SELECT DE EMPLEADOS EN FORMULARIO AGREGAR
+function empleadoListaReg() {
+    $("#reg_empleados").empty();
+    var container = $("#reg_empleados");
+    $.ajax({
+        async: false,
+        url: "/empleadoActivReg",
+        method: "GET",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            console.log(data);
+            var option = `<option value="" disabled>Seleccionar</option>`;
+            data.forEach(element => {
+                option += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
+            });
+            container.append(option);
+        },
+        error: function () { },
+    });
+}
+$("#reg_empleados").select2({
+    placeholder: 'Seleccionar Empleados',
+    tags: "true"
 });

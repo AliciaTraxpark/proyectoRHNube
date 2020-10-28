@@ -27,19 +27,23 @@ use App\proyecto_empleado;
         width: 100%;
         height: 6 px;
     }
-    body > div.bootbox.modal.fade.bootbox-alert.show > div > div > div.modal-header{
+
+    body>div.bootbox.modal.fade.bootbox-alert.show>div>div>div.modal-header {
         background-color: #163552;
     }
-    body > div.bootbox.modal.fade.bootbox-alert.show > div > div > div.modal-header > h5{
+
+    body>div.bootbox.modal.fade.bootbox-alert.show>div>div>div.modal-header>h5 {
         color: #fff;
-        font-size: 15px!important;
+        font-size: 15px !important;
     }
-    body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-header{
+
+    body>div.bootbox.modal.fade.bootbox-confirm.show>div>div>div.modal-header {
         background-color: #163552;
     }
-    body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-header > h5{
+
+    body>div.bootbox.modal.fade.bootbox-confirm.show>div>div>div.modal-header>h5 {
         color: #fff;
-        font-size: 15px!important;
+        font-size: 15px !important;
     }
 </style>
 
@@ -311,6 +315,150 @@ use App\proyecto_empleado;
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 {{-- FINALIZACION MODAL --}}
+{{-- MODAL DE AGREGAR ACTIVIDADES EN FORMULARIO EDITAR--}}
+<div id="RegActividadTareaGE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="RegActividadTareaGE"
+    aria-hidden="true" data-backdrop="static">
+    <div div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                    Registrar Actividad
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    onclick="$('#form-ver').modal('show');javascript:limpiarModo()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-size:12px!important">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="javascript:registrarActividad()">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Nombre:</label>
+                                        <input type="text" class="form-control form-control-sm" id="nombreTarea"
+                                            maxlength="40" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Código:</label>
+                                        <input type="text" class="form-control form-control-sm" id="codigoTarea"
+                                            maxlength="40">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 text-left">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="customCRGE" checked
+                                            disabled>
+                                        <label class="custom-control-label" for="customCRGE"
+                                            style="font-weight: bold">Control Remoto</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 text-left">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="customAPGE">
+                                        <label class="custom-control-label" for="customAPGE"
+                                            style="font-weight: bold">Asistencia en
+                                            Puerta</label>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                onclick="$('#form-ver').modal('show');javascript:limpiarModo()">Cancelar</button>
+                            <button type="submit" name="" style="background-color: #163552;"
+                                class="btn btn-sm ">Guardar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{-- FINALIZACIÓN DE MODAL --}}
+{{-- MODAL DE AGREGAR ACTIVIDADES EN FORMULARIO AGREGAR--}}
+<div id="ActividadTareaGE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ActividadTareaGE"
+    aria-hidden="true" data-backdrop="static">
+    <div div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                    Registrar Actividad
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    onclick="$('#form-registrar').modal('show');javascript:limpiarModo()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-size:12px!important">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="javascript:registrarActividadFR()">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Nombre:</label>
+                                        <input type="text" class="form-control form-control-sm" id="reg_nombreTarea"
+                                            maxlength="40" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Código:</label>
+                                        <input type="text" class="form-control form-control-sm" id="reg_codigoTarea"
+                                            maxlength="40">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 text-left">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="customCRFR" checked
+                                            disabled>
+                                        <label class="custom-control-label" for="customCRFR"
+                                            style="font-weight: bold">Control Remoto</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 text-left">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="customAPFR">
+                                        <label class="custom-control-label" for="customAPFR"
+                                            style="font-weight: bold">Asistencia en
+                                            Puerta</label>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                onclick="$('#form-registrar').modal('show');javascript:limpiarModo()">Cancelar</button>
+                            <button type="submit" name="" style="background-color: #163552;"
+                                class="btn btn-sm ">Guardar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{-- FINALIZACIÓN DE MODAL --}}
 <style>
     #calendarInv>div.fc-view-container>div>table>tbody {
         background: #f4f4f4;
@@ -473,6 +621,10 @@ use App\proyecto_empleado;
 
     .file-caption {
         height: calc(2.5em + 0.6rem + 2px) !important;
+    }
+
+    .borderColor {
+        border-color: red;
     }
 
     /* RESPONSIVE */
@@ -2190,12 +2342,6 @@ use App\proyecto_empleado;
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <!--<div class="form-group">
-                                <label for="sw-default" style="color: darkblue;">Fecha Inicio
-                                    <label for="sw-default" id="c_fechaI"></label></label>
-                                <label for="sw-default" style="color: red;">Fecha Final <label
-                                        for="sw-default" id="c_fechaF"></label></label>
-                            </div>-->
                                     </div> <!-- end col -->
                                     <div class="col-4">
                                         <div class="form-group">
@@ -2626,7 +2772,9 @@ use App\proyecto_empleado;
                                                                     <input type="checkbox" class="form-check-input"
                                                                         id="otroDCh" checked disabled>
                                                                     <label class="form-check-label" for="otroDCh"
-                                                                        style="margin-top: 2px;font-weight: 700">La hora fin de este horario pertenece al siguiente día.</label>
+                                                                        style="margin-top: 2px;font-weight: 700">La hora
+                                                                        fin de este horario pertenece al siguiente
+                                                                        día.</label>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-12">
@@ -2635,9 +2783,10 @@ use App\proyecto_empleado;
                                                                         id="SwitchTardanza">
                                                                     <label class="custom-control-label"
                                                                         for="SwitchTardanza"
-                                                                        style="font-weight: bold;padding-top: 1px">Controlar tardanza</label>
+                                                                        style="font-weight: bold;padding-top: 1px">Controlar
+                                                                        tardanza</label>
                                                                 </div>
-                                                             </div>
+                                                            </div>
                                                             <div class="col-md-12">
                                                                 <div class="custom-control custom-switch mb-2">
                                                                     <input type="checkbox" class="custom-control-input"
@@ -2701,7 +2850,7 @@ use App\proyecto_empleado;
                                                 <div class="col-xl-12 text-right">
                                                     <button type="button" class="btn btn-sm mt-1"
                                                         style="background-color: #163552;"
-                                                        onclick="$('#regactividadTarea').modal();javascript:actividadOrganizacionReg()">+
+                                                        onclick="$('#regactividadTarea').modal();">+
                                                         Asignar Actividad
                                                     </button>
                                                 </div>
@@ -2744,7 +2893,18 @@ use App\proyecto_empleado;
                                                     <form action="javascript:registrarNuevaActividadTarea()"
                                                         id="formActvidadesReg">
                                                         <div class="row justify-content-center">
-                                                            <div class="col-xl-12 text-center">
+                                                            <div class="col-xl-12">
+                                                                <label>
+                                                                    Actividades
+                                                                </label>
+                                                                <a class="mr-3" data-toggle="tooltip"
+                                                                    data-placement="right"
+                                                                    title="registrar nueva actividad"
+                                                                    data-original-title="registrar nueva actividad"
+                                                                    onclick="$('#form-registrar').modal('hide');$('#ActividadTareaGE').modal();">
+                                                                    <i class="uil uil-plus"
+                                                                        style="color: darkblue;cursor: pointer;"></i>
+                                                                </a>
                                                                 <select multiple="multiple" data-plugin="customselect"
                                                                     class="form-control" multiple="multiple"
                                                                     id="regEmpleadoActiv"></select>
@@ -3174,12 +3334,6 @@ use App\proyecto_empleado;
                                             @endforeach
                                         </select>
                                     </div>
-                                    <!--<div class="form-group" style="display: none;">
-                                            <label for="sw-default" style="color: darkblue;">Fecha Inicio
-                                                <label for="sw-default" id="v_fechaIC"></label></label>
-                                            <label for="sw-default" style="color: red;">Fecha Final <label
-                                                    for="sw-default" id="v_fechaFC"></label></label>
-                                        </div>-->
                                 </div> <!-- end col -->
                                 <div class="col-4">
                                     <div class="form-group">
@@ -3617,7 +3771,9 @@ use App\proyecto_empleado;
                                                                     <input type="checkbox" class="form-check-input"
                                                                         id="otroDC_ed" checked disabled>
                                                                     <label class="form-check-label" for="otroDC_ed"
-                                                                        style="margin-top: 2px;font-weight: 700">La hora fin de este horario pertenece al siguiente día.</label>
+                                                                        style="margin-top: 2px;font-weight: 700">La hora
+                                                                        fin de este horario pertenece al siguiente
+                                                                        día.</label>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-12">
@@ -3626,9 +3782,10 @@ use App\proyecto_empleado;
                                                                         id="SwitchTardanza_ed">
                                                                     <label class="custom-control-label"
                                                                         for="SwitchTardanza_ed"
-                                                                        style="font-weight: bold;padding-top: 1px">Controlar tardanza</label>
+                                                                        style="font-weight: bold;padding-top: 1px">Controlar
+                                                                        tardanza</label>
                                                                 </div>
-                                                             </div>
+                                                            </div>
                                                             <div class="col-md-12">
                                                                 <div class="custom-control custom-switch mb-2">
                                                                     <input type="checkbox" class="custom-control-input"
@@ -3727,6 +3884,7 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
+                            {{-- MODAL DE ASIGNAR ACTIVIDADES --}}
                             <div id="actividadTarea" class="modal fade" tabindex="-1" role="dialog"
                                 aria-labelledby="actividadTarea" aria-hidden="true" data-backdrop="static">
                                 <div class="modal-dialog  modal-lg d-flex justify-content-center "
@@ -3744,7 +3902,17 @@ use App\proyecto_empleado;
                                                         id="formActvidades">
                                                         <div class="row justify-content-center">
                                                             <div class="col-xl-12">
-                                                                <label>Actividades:</label>
+                                                                <label>
+                                                                    Actividades
+                                                                </label>
+                                                                <a class="mr-3" data-toggle="tooltip"
+                                                                    data-placement="right"
+                                                                    title="registrar nueva actividad"
+                                                                    data-original-title="registrar nueva actividad"
+                                                                    onclick="$('#form-ver').modal('hide');$('#RegActividadTareaGE').modal();">
+                                                                    <i class="uil uil-plus"
+                                                                        style="color: darkblue;cursor: pointer;"></i>
+                                                                </a>
                                                                 <select multiple="multiple" data-plugin="customselect"
                                                                     class="form-control" multiple="multiple"
                                                                     id="empleadoActiv"></select>
@@ -3769,6 +3937,7 @@ use App\proyecto_empleado;
                                     </div><!-- /.modal-content -->
                                 </div><!-- /.modal-dialog -->
                             </div><!-- /.modal -->
+                            {{-- FINALIZACIÓN DE MODAL --}}
                         </div>
                         <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
                             <div class="row">

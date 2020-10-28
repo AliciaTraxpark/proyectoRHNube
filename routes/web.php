@@ -214,6 +214,8 @@ Route::post('/registrarAE', 'ActividadesController@registrarActividadEmpleado');
 Route::post('/editarA', 'ActividadesController@editarActividad');
 Route::get('/registrarEditar', 'ActividadesController@editarCambios');
 Route::get('/recuperarA', 'ActividadesController@recuperarActividad');
+Route::get('/empleadoActiv','ActividadesController@empleadoSelect');
+Route::get('/empleadoActivReg','ActividadesController@listaEmpleadoReg');
 //carga masiva de fotos
 Route::post('/subirfoto', 'CargaMasivaFotoController@subirfoto');
 
@@ -346,7 +348,7 @@ Route::get('/notificacionesUser', 'NotificacionController@notificacionesUsuario'
 Route::get('/leerNotificaciones', 'NotificacionController@cambiarestadoNotificacion');
 Route::get('/showNotificaciones', 'NotificacionController@showNotificaciones');
 
-//////delegar
+//delegar
 Route::get('/delegarcontrol', 'delegarInvController@index');
 Route::post('/empleAreaIn', 'delegarInvController@empleAreaIn');
 Route::post('/registrarInvitado', 'delegarInvController@registrarInvitado');
