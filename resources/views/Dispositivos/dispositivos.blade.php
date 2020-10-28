@@ -108,7 +108,7 @@
             #nuevoDispositivo{
                 max-width: 400px!important;
             }
-            #classMo{
+            #classMo, #modalEditarClass{
                 max-width: 400px!important;
             }
             .fullscreen-modal .modal-dialog .modal-lg {
@@ -289,7 +289,7 @@
             {{-- Modal editarDispositivo --}}
             <div id="editarDispositivo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                 aria-hidden="true" data-backdrop="static">
-                <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 640px;">
+                <div id="modalEditarClass" class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 640px;">
 
                     <div class="modal-content">
                         <div class="modal-header" style="background-color:#163552;">
