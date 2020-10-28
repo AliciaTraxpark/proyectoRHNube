@@ -907,6 +907,7 @@ $('#cerrarHorario').click(function () {
 });
 function abrirHorario() {
     $('#errorenPausas').hide();
+      $('#fueraRango').hide();
     $('#divOtrodia').hide();
     $('#divPausa').hide();
     $('#horaOblig').prop("disabled","disabled");
@@ -2535,13 +2536,23 @@ function addField() {
             let horaF = $('#FinPausa'+ newID).val();
             let horaI = $('#InicioPausa'+ newID).val();
 
-            if (horaF < horaI) {
-                $('#FinPausa'+ newID).val('');
-                $('#errorenPausas').show();
+            if(horaF<$('#horaI').val() ||horaF>$('#horaF').val() ){
+                $('#FinPausa' + newID).val('');
+                $('#fueraRango').show();
                 event.stopPropagation();
-            } else {
-                $('#errorenPausas').hide();
-            }
+             } else{
+                $('#fueraRango').hide();
+             }
+
+                if (horaF < horaI) {
+                    $('#FinPausa'+ newID).val('');
+                    $('#errorenPausas').show();
+                    event.stopPropagation();
+                } else {
+                    $('#errorenPausas').hide();
+                }
+
+
 
         });
     });
@@ -2550,6 +2561,18 @@ function addField() {
             let horaF = $('#FinPausa'+ newID).val();
             let horaI = $('#InicioPausa'+ newID).val();
 
+            if(horaI<$('#horaI').val() ||horaI>$('#horaF').val() ){
+
+                $('#InicioPausa'+ newID).val('');
+                $('#fueraRango').show();
+                event.stopPropagation();
+             } else{
+                $('#fueraRango').hide();
+             }
+
+            if(horaF==null || horaF==''){
+
+            } else{
             if (horaF < horaI) {
                 $('#InicioPausa'+ newID).val('');
                 $('#errorenPausas').show();
@@ -2557,6 +2580,7 @@ function addField() {
             } else {
                 $('#errorenPausas').hide();
             }
+        }
 
         });
     });
@@ -2705,7 +2729,13 @@ $(function () {
     $(document).on('change', '#FinPausa', function (event) {
         let horaF = $('#FinPausa').val();
         let horaI = $('#InicioPausa').val();
-
+        if(horaF<$('#horaI').val() ||horaF>$('#horaF').val() ){
+            $('#FinPausa').val('');
+            $('#fueraRango').show();
+            event.stopPropagation();
+         } else{
+            $('#fueraRango').hide();
+         }
         if (horaF < horaI) {
             $('#FinPausa').val('');
             $('#errorenPausas').show();
@@ -2714,20 +2744,36 @@ $(function () {
             $('#errorenPausas').hide();
         }
 
+
     });
 });
 $(function () {
     $(document).on('change', '#InicioPausa', function (event) {
         let horaF = $('#FinPausa').val();
         let horaI = $('#InicioPausa').val();
+         if(horaI<$('#horaI').val() ||horaI>$('#horaF').val() ){
 
-        if (horaF < horaI) {
             $('#InicioPausa').val('');
-            $('#errorenPausas').show();
+            $('#fueraRango').show();
             event.stopPropagation();
-        } else {
-            $('#errorenPausas').hide();
-        }
+         } else{
+            $('#fueraRango').hide();
+         }
+         console.log(horaF);
+         if(horaF==null || horaF==''){
+
+         }
+         else{
+            console.log('secumple');
+            if (horaF < horaI) {
+                $('#InicioPausa').val('');
+                $('#errorenPausas').show();
+                event.stopPropagation();
+            } else {
+                $('#errorenPausas').hide();
+            }
+         }
+
 
     });
 });
