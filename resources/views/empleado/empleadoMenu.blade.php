@@ -519,6 +519,36 @@ use App\proyecto_empleado;
     </div><!-- /.modal -->
 </div>
 {{-- FINAL DE MODAL --}}
+{{-- MODAL DE VIDEO FOTO--}}
+<div class="modal fade" id="modal-videoF" tabindex="-1" role="dialog" aria-labelledby="modal-videoF" aria-hidden="true"
+    data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog  modal-lg d-flex justify-content-center">
+        <div class="modal-content" style="width: 800px">
+            <div class="modal-header" style="background-color:#163552;padding:0.5rem">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    onclick="javascript:stopVideoF()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{-- VIDEO --}}
+                <div class="row justify-content-center">
+                    <div class="col-lg-12 col-lg-12  p-0 img-digital grid-margin grid-margin-lg-0" data-aos="fade-left">
+                        <div style="padding:53.91% 0 0 0;position:relative;" id="contenidoIframeF">
+                            <iframe id="contenidoIframe"
+                                src="https://player.vimeo.com/video/472833622?title=0&byline=0&portrait=0"
+                                style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0"
+                                allow="autoplay; fullscreen" allowfullscreen></iframe>
+                        </div>
+                        <script src="https://player.vimeo.com/api/player.js"></script>
+                    </div>
+                </div>
+                {{-- FINALIZAR VIDEO --}}
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+{{-- FINAL DE MODAL --}}
 <style>
     #calendarInv>div.fc-view-container>div>table>tbody {
         background: #f4f4f4;
@@ -3472,6 +3502,13 @@ use App\proyecto_empleado;
                         </div>
                         <div id="swF-default-step-3" style="font-size: 12px!important">
                             <div class="row">
+                                <div class="col-12 pb-2">
+                                    <div class="float-md-right">
+                                        <a onclick="javascript:mostrarContenidoF()">
+                                            <img src="{{asset('landing/images/play.svg')}}" height="23">
+                                        </a>
+                                    </div>
+                                </div>
                                 <div class="col-12">
                                     <div class="form-group text-center">
                                         {{ csrf_field() }}

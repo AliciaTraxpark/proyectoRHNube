@@ -5507,3 +5507,36 @@ function stopVideoE() {
         $('#form-ver').modal('show');
     }
 }
+
+// * FOTO
+function mostrarContenidoF() {
+    // *OCULTAR FORMULARIO
+    console.log($('#form-registrar').is(':visible'));
+    if ($('#form-ver').is(':visible') === true) {
+        modalOculto = 2;
+        $('#form-ver').modal('hide');
+    }
+    if ($('#form-registrar').is(':visible') === true) {
+        modalOculto = 1;
+        $('#form-registrar').modal('hide');
+    }
+    //*ABRIR MODAL
+    $('#modal-videoF').modal();
+    // * PLAY DE VIDEO AL ABRIR MODAL
+    var iframe = document.querySelector('#contenidoIframeF');
+    var player = new Vimeo.Player(iframe);
+    player.play();
+}
+// ? PAUSAR VIDEO MANUALMENTE
+function stopVideoF() {
+    var iframe = document.querySelector('#contenidoIframeF');
+    var player = new Vimeo.Player(iframe);
+    player.unload();
+    // ! MOSTRAR MODAL OCULTO
+    if (modalOculto === 1) {
+        $('#form-registrar').modal('show');
+    }
+    if (modalOculto === 2) {
+        $('#form-ver').modal('show');
+    }
+}
