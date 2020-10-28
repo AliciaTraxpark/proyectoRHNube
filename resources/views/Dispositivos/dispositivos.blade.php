@@ -106,13 +106,13 @@
             }
 
             #nuevoDispositivo{
-                max-width: 433px!important;
+                max-width: 400px!important;
             }
             #classMo{
-                max-width: 433px!important;
+                max-width: 400px!important;
             }
             .fullscreen-modal .modal-dialog .modal-lg {
-    width: 443px!important;
+    width: 400px!important;
 
   }
      }
