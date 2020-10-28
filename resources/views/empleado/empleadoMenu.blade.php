@@ -459,6 +459,66 @@ use App\proyecto_empleado;
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 {{-- FINALIZACIÓN DE MODAL --}}
+{{-- MODAL DE VIDEO DATOS PERSONALES --}}
+<div class="modal fade" id="modal-video" tabindex="-1" role="dialog" aria-labelledby="modal-video" aria-hidden="true"
+    data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog  modal-lg d-flex justify-content-center">
+        <div class="modal-content" style="width: 800px">
+            <div class="modal-header" style="background-color:#163552;padding:0.5rem">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    onclick="javascript:stopVideo()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{-- VIDEO --}}
+                <div class="row justify-content-center">
+                    <div class="col-lg-12 col-lg-12  p-0 img-digital grid-margin grid-margin-lg-0" data-aos="fade-left">
+                        <div style="padding:53.91% 0 0 0;position:relative;" id="contenidoIframe">
+                            <iframe id="contenidoIframe"
+                                src="https://player.vimeo.com/video/472833228?title=0&byline=0&portrait=0"
+                                style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0"
+                                allow="autoplay; fullscreen" allowfullscreen></iframe>
+                        </div>
+                        <script src="https://player.vimeo.com/api/player.js"></script>
+                    </div>
+                </div>
+                {{-- FINALIZAR VIDEO --}}
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+{{-- FINAL DE MODAL --}}
+{{-- MODAL DE VIDEO DATOS EMPRESARIAL --}}
+<div class="modal fade" id="modal-videoE" tabindex="-1" role="dialog" aria-labelledby="modal-videoE" aria-hidden="true"
+    data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog  modal-lg d-flex justify-content-center">
+        <div class="modal-content" style="width: 800px">
+            <div class="modal-header" style="background-color:#163552;padding:0.5rem">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    onclick="javascript:stopVideoE()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{-- VIDEO --}}
+                <div class="row justify-content-center">
+                    <div class="col-lg-12 col-lg-12  p-0 img-digital grid-margin grid-margin-lg-0" data-aos="fade-left">
+                        <div style="padding:53.91% 0 0 0;position:relative;" id="contenidoIframeE">
+                            <iframe id="contenidoIframe"
+                                src="https://player.vimeo.com/video/472833228?title=0&byline=0&portrait=0"
+                                style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0"
+                                allow="autoplay; fullscreen" allowfullscreen></iframe>
+                        </div>
+                        <script src="https://player.vimeo.com/api/player.js"></script>
+                    </div>
+                </div>
+                {{-- FINALIZAR VIDEO --}}
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+{{-- FINAL DE MODAL --}}
 <style>
     #calendarInv>div.fc-view-container>div>table>tbody {
         background: #f4f4f4;
@@ -2104,6 +2164,11 @@ use App\proyecto_empleado;
                                         </div>
                                     </div>
                                     <div class="col-4">
+                                        <div class="float-md-right">
+                                            <a onclick="javascript:mostrarContenido()">
+                                                <img src="{{asset('landing/images/play.svg')}}" height="23">
+                                            </a>
+                                        </div>
                                         <div class="form-group">
                                             <label for="sw-default">Fecha Nacimiento</label>
                                             <span id="validFechaC" style="color: red;display: none;">*Fecha
@@ -3102,6 +3167,11 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                                 <div class="col-4">
+                                    <div class="float-md-right">
+                                        <a onclick="javascript:mostrarContenido()">
+                                            <img src="{{asset('landing/images/play.svg')}}" height="23">
+                                        </a>
+                                    </div>
                                     <div class="form-group">
                                         <label for="sw-default">Fecha Nacimiento</label>
                                         <span id="v_validFechaC" style="color: red;display: none;">
@@ -3287,7 +3357,6 @@ use App\proyecto_empleado;
                         </div>
                         <div id="swE-default-step-2" style="font-size: 12px!important">
                             <div class="row">
-
                                 <div class="col-4">
                                     <div class="form-group">
                                         <label for="sw-default">Codigo Empleado</label>
@@ -3296,6 +3365,13 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                                 <div class="col-4"><br></div>
+                                <div class="col-4">
+                                    <div class="float-md-right">
+                                        <a onclick="javascript:mostrarContenidoE()">
+                                            <img src="{{asset('landing/images/play.svg')}}" height="23">
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-4">

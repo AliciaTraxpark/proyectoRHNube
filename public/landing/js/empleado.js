@@ -99,7 +99,7 @@ function calendario() {
             var event = calendar.getEventById(id);
 
             bootbox.confirm({
-                title:"Eliminar evento del calendario",
+                title: "Eliminar evento del calendario",
                 message:
                     "¿Desea eliminar: " + info.event.title + " del calendario?",
                 buttons: {
@@ -151,17 +151,17 @@ function calendario() {
         },
         eventRender: function (info) {
             $('.tooltip').remove();
-            if(info.event.extendedProps.horaI===null){
-                $(info.el).tooltip({  title: info.event.title});
-           } else{
-            if(info.event.borderColor=='#5369f8'){
-                $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+            if (info.event.extendedProps.horaI === null) {
+                $(info.el).tooltip({ title: info.event.title });
+            } else {
+                if (info.event.borderColor == '#5369f8') {
+                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
 
+                }
+                else {
+                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF });
+                }
             }
-                else{
-                    $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
-               }
-           }
 
         },
         events: function (info, successCallback, failureCallback) {
@@ -186,7 +186,7 @@ function calendario() {
                 success: function (data) {
                     successCallback(data);
                 },
-                error: function () {},
+                error: function () { },
             });
         },
 
@@ -197,7 +197,7 @@ function calendario() {
 
     calendar.render();
 }
- document.addEventListener("DOMContentLoaded", calendario);
+document.addEventListener("DOMContentLoaded", calendario);
 ///calendario e n edit
 function calendario_edit() {
     var calendarEl = document.getElementById("calendar_ed");
@@ -237,57 +237,57 @@ function calendario_edit() {
             ) {
                 if (info.event.textColor == "111111") {
                     bootbox.alert({
-                        title:"Info",
+                        title: "Info",
                         message: "Puede eliminar horarios en la pestaña Horarios",
 
                     })
-                   /*  bootbox.confirm({
-                        message:
-                            "¿Desea eliminar: " +
-                            info.event.title +
-                            " del calendario?",
-                        buttons: {
-                            confirm: {
-                                label: "Aceptar",
-                                className: "btn-success",
-                            },
-                            cancel: {
-                                label: "Cancelar",
-                                className: "btn-light",
-                            },
-                        },
-                        callback: function (result) {
-                            if (result == true) {
-                                $.ajax({
-                                    type: "post",
-                                    url: "/empleado/eliminarHorariosEdit",
-                                    data: {
-                                        ideve: info.event.id,
-                                    },
-                                    statusCode: {
-                                        419: function () {
-                                            location.reload();
-                                        },
-                                    },
-                                    headers: {
-                                        "X-CSRF-TOKEN": $(
-                                            'meta[name="csrf-token"]'
-                                        ).attr("content"),
-                                    },
-                                    success: function (data) {
-                                        info.event.remove();
-                                        calendar2_ed.refetchEvents();
-                                    },
-                                    error: function (data) {
-                                        alert("Ocurrio un error");
-                                    },
-                                });
-                            }
-                        },
-                    }); */
+                    /*  bootbox.confirm({
+                         message:
+                             "¿Desea eliminar: " +
+                             info.event.title +
+                             " del calendario?",
+                         buttons: {
+                             confirm: {
+                                 label: "Aceptar",
+                                 className: "btn-success",
+                             },
+                             cancel: {
+                                 label: "Cancelar",
+                                 className: "btn-light",
+                             },
+                         },
+                         callback: function (result) {
+                             if (result == true) {
+                                 $.ajax({
+                                     type: "post",
+                                     url: "/empleado/eliminarHorariosEdit",
+                                     data: {
+                                         ideve: info.event.id,
+                                     },
+                                     statusCode: {
+                                         419: function () {
+                                             location.reload();
+                                         },
+                                     },
+                                     headers: {
+                                         "X-CSRF-TOKEN": $(
+                                             'meta[name="csrf-token"]'
+                                         ).attr("content"),
+                                     },
+                                     success: function (data) {
+                                         info.event.remove();
+                                         calendar2_ed.refetchEvents();
+                                     },
+                                     error: function (data) {
+                                         alert("Ocurrio un error");
+                                     },
+                                 });
+                             }
+                         },
+                     }); */
                 } else {
                     bootbox.confirm({
-                        title:"Eliminar incidencia",
+                        title: "Eliminar incidencia",
                         message:
                             "¿Desea eliminar: " +
                             info.event.title +
@@ -323,15 +323,15 @@ function calendario_edit() {
                                     success: function (data) {
                                         info.event.remove();
                                         var a = moment(data.inciden_dias_fechaF);
-                                        c=a._i;
+                                        c = a._i;
                                         var b = moment(data.inciden_dias_fechaI);
-                                        d=b._i;
+                                        d = b._i;
 
-                                        if(a.diff(b, 'days')>1){
-                                            $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(a).subtract(1, 'day').format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffffff");
+                                        if (a.diff(b, 'days') > 1) {
+                                            $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='" + moment(a).subtract(1, 'day').format('YYYY-MM-DD') + "']").css("backgroundColor", "#ffffff");
                                         }
 
-                                        $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(data.inciden_dias_fechaI).format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffffff");
+                                        $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='" + moment(data.inciden_dias_fechaI).format('YYYY-MM-DD') + "']").css("backgroundColor", "#ffffff");
                                         calendar2_ed.refetchEvents();
                                     },
                                     error: function (data) {
@@ -344,7 +344,7 @@ function calendario_edit() {
                 }
             } else {
                 bootbox.confirm({
-                    title:"Eliminar evento del calendario",
+                    title: "Eliminar evento del calendario",
                     message:
                         "¿Desea eliminar: " +
                         info.event.title +
@@ -380,15 +380,15 @@ function calendario_edit() {
                                 success: function (data) {
                                     info.event.remove();
                                     var a = moment(data.end);
-                                    c=a._i;
+                                    c = a._i;
                                     var b = moment(data.start);
-                                    d=b._i;
+                                    d = b._i;
 
-                                    if(a.diff(b, 'days')>1){
-                                        $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(a).subtract(1, 'day').format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffffff");
+                                    if (a.diff(b, 'days') > 1) {
+                                        $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='" + moment(a).subtract(1, 'day').format('YYYY-MM-DD') + "']").css("backgroundColor", "#ffffff");
                                     }
 
-                                     $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(data.start).format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffffff");
+                                    $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='" + moment(data.start).format('YYYY-MM-DD') + "']").css("backgroundColor", "#ffffff");
 
                                     calendar2_ed.refetchEvents();
                                 },
@@ -410,17 +410,17 @@ function calendario_edit() {
         },
         eventRender: function (info) {
             $('.tooltip').remove();
-            if(info.event.extendedProps.horaI===null){
-                $(info.el).tooltip({  title: info.event.title});
-           } else{
-            if(info.event.borderColor=='#5369f8'){
-                $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+            if (info.event.extendedProps.horaI === null) {
+                $(info.el).tooltip({ title: info.event.title });
+            } else {
+                if (info.event.borderColor == '#5369f8') {
+                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
 
+                }
+                else {
+                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF });
+                }
             }
-                else{
-                    $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
-               }
-           }
         },
         events: function (info, successCallback, failureCallback) {
             var idcalendario = $("#selectCalendario_ed").val();
@@ -444,27 +444,27 @@ function calendario_edit() {
                 },
                 success: function (data) {
                     successCallback(data);
-                    $.each( data, function( index, value ){
+                    $.each(data, function (index, value) {
 
-                        if(value.laborable==0){
-                                var element = $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date]");
+                        if (value.laborable == 0) {
+                            var element = $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date]");
 
-                                var a = moment(value.end);
-                                c=a._i;
-                                var b = moment(value.start);
-                                d=b._i;
+                            var a = moment(value.end);
+                            c = a._i;
+                            var b = moment(value.start);
+                            d = b._i;
 
-                                if(a.diff(b, 'days')>1){
-                                    $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(a).subtract(1, 'day').format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffefef");
-                                }
+                            if (a.diff(b, 'days') > 1) {
+                                $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='" + moment(a).subtract(1, 'day').format('YYYY-MM-DD') + "']").css("backgroundColor", "#ffefef");
+                            }
 
-                                $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(value.start).format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffefef");
+                            $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='" + moment(value.start).format('YYYY-MM-DD') + "']").css("backgroundColor", "#ffefef");
                         }
 
 
                     });
                 },
-                error: function () {},
+                error: function () { },
             });
         },
 
@@ -521,7 +521,7 @@ function laborable_ed() {
 
 
         },
-        error: function () {},
+        error: function () { },
     });
 }
 /////////////
@@ -567,7 +567,7 @@ function nolaborable_ed() {
 
 
         },
-        error: function () {},
+        error: function () { },
     });
 }
 //////////////////
@@ -615,27 +615,27 @@ function modalIncidencia_ed() {
     });
 }
 //////////////////////////
-function agregarHorarioSe(){
+function agregarHorarioSe() {
     var H1 = $("#pruebaStar_ed").val();
     var H2 = $("#pruebaEnd_ed").val();
-    textSelec1=$('select[name="selectHorario_ed"] option:selected').text();
+    textSelec1 = $('select[name="selectHorario_ed"] option:selected').text();
     separador = "(";
     textSelec2 = textSelec1.split(separador);
-    textSelec=textSelec2[0];
+    textSelec = textSelec2[0];
     var idhorar = $("#selectHorario_ed").val();
     console.log(idhorar);
-    if(idhorar==null){
+    if (idhorar == null) {
         $('#errorSel').show();
         return false;
-    } else{
+    } else {
         $('#errorSel').hide();
     }
     var fueraHora;
-    if( $('#fueraHSwitch').prop('checked') ){
-        fueraHora=1;
+    if ($('#fueraHSwitch').prop('checked')) {
+        fueraHora = 1;
         console.log(fueraHora);
-    } else{
-        fueraHora=0;
+    } else {
+        fueraHora = 0;
         console.log(fueraHora);
     }
     // HORARIO COMPENSABLE
@@ -692,7 +692,7 @@ function agregarHorarioSe(){
             fechasArray: fechastart,
             hora: textSelec,
             idhorar: idhorar,
-            idempleado,fueraHora,horarioC,horarioA
+            idempleado, fueraHora, horarioC, horarioA
         },
         statusCode: {
             419: function () {
@@ -719,21 +719,21 @@ function abrirHorario_ed() {
     $('#divOtrodia_ed').hide();
     $('#divPausa_ed').hide();
     $('#inputPausa_ed').empty();
-    $('#inputPausa_ed').append('<div id="divEd_100" class="row col-md-12" style=" margin-bottom: 8px;">'+
-    '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa_ed[]" id="descPausa_ed" >'+
-    '<input type="text"  class="form-control form-control-sm col-sm-3" name="InicioPausa_ed[]"  id="InicioPausa_ed" >'+
-    '<input type="text"  class="form-control form-control-sm col-sm-3" name="FinPausa_ed[]"  id="FinPausa_ed" >'+
-        '&nbsp; <button class="btn btn-sm bt_ed" id="100" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;'+
-        ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>'+
-     '</div>');
-     $('.flatpickr-input[readonly]').on('focus', function () {
+    $('#inputPausa_ed').append('<div id="divEd_100" class="row col-md-12" style=" margin-bottom: 8px;">' +
+        '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa_ed[]" id="descPausa_ed" >' +
+        '<input type="text"  class="form-control form-control-sm col-sm-3" name="InicioPausa_ed[]"  id="InicioPausa_ed" >' +
+        '<input type="text"  class="form-control form-control-sm col-sm-3" name="FinPausa_ed[]"  id="FinPausa_ed" >' +
+        '&nbsp; <button class="btn btn-sm bt_ed" id="100" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
+        ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>' +
+        '</div>');
+    $('.flatpickr-input[readonly]').on('focus', function () {
         $(this).blur()
     })
     $('.flatpickr-input[readonly]').prop('readonly', false)
-     $(".bt_ed").each(function (el){
-        $(this).bind("click",addField);
-      });
-      $('#InicioPausa_ed').flatpickr({
+    $(".bt_ed").each(function (el) {
+        $(this).bind("click", addField);
+    });
+    $('#InicioPausa_ed').flatpickr({
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
@@ -745,9 +745,9 @@ function abrirHorario_ed() {
         dateFormat: "H:i",
         time_24hr: true
     });
-    $('input[name="descPausa_ed[]"]').prop('required',false);
-        $('input[name="InicioPausa_ed[]"]').prop('required',false);
-        $('input[name="FinPausa_ed[]"]').prop('required',false);
+    $('input[name="descPausa_ed[]"]').prop('required', false);
+    $('input[name="InicioPausa_ed[]"]').prop('required', false);
+    $('input[name="FinPausa_ed[]"]').prop('required', false);
     $("#frmHor_ed")[0].reset();
     $("#horarioAgregar_ed").modal("show");
 }
@@ -762,9 +762,9 @@ function registrarHorario_ed() {
     horaOblig = $('#horaOblig_ed').val();
     var tardanza;
     if ($('#SwitchTardanza_ed').is(":checked")) {
-        tardanza=1;
-    } else{
-        tardanza=0;
+        tardanza = 1;
+    } else {
+        tardanza = 0;
     }
     if ($('#SwitchPausa_ed').is(":checked")) {
         var descPausa = [];
@@ -788,7 +788,7 @@ function registrarHorario_ed() {
             descripcion,
             toleranciaH,
             inicio,
-            fin,descPausa, pausaInicio, finPausa, toleranciaF, horaOblig,tardanza
+            fin, descPausa, pausaInicio, finPausa, toleranciaF, horaOblig, tardanza
         },
         statusCode: {
             419: function () {
@@ -806,7 +806,7 @@ function registrarHorario_ed() {
                 $("<option>", {
                     //agrego los valores que obtengo de una base de datos
                     value: data.horario_id,
-                    text: data.horario_descripcion+' ('+data.horaI+'-'+data.horaF+')',
+                    text: data.horario_descripcion + ' (' + data.horaI + '-' + data.horaF + ')',
                     selected: true,
                 })
             );
@@ -869,7 +869,7 @@ function laborableTem() {
 
 
         },
-        error: function () {},
+        error: function () { },
     });
 }
 /////////////////////////////////
@@ -913,7 +913,7 @@ function diaferiadoTem() {
 
 
         },
-        error: function () {},
+        error: function () { },
     });
 }
 /////////////////////////////////
@@ -960,7 +960,7 @@ function nolaborableTem() {
 
 
         },
-        error: function () {},
+        error: function () { },
     });
 }
 
@@ -1021,7 +1021,7 @@ $("#selectCalendario").change(function () {
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
-        success: function (data) {},
+        success: function (data) { },
         error: function (data) {
             alert("Ocurrio un error");
         },
@@ -1049,12 +1049,12 @@ $("#selectCalendario").change(function () {
 
             $("#detallehorario").append(
                 "<div class='form-group row'><div class='col-md-1'></div><label class='col-lg-3 col-form-label' style='color:#163552;margin-top: 5px;'>Se muestra calendario de: </label>" +
-                    "<div class='col-md-5'><select disabled style='margin-top: 9px;' class='form-control col-lg-6 form-control-sm'><option>" +
-                    $('select[id="selectCalendario"] option:selected').text() +
-                    "</option></select></div>" +
-                    "<div class='col-md-2' ><div class='btn-group mt-2 mr-1'> <button type='button' onclick='eliminarhorariosTem()' class='btn btn-primary btn-sm dropdown-toggle' style='color: #fff; background-color: #4a5669;" +
-                    "border-color: #485263;' > <img src='admin/images/borrador.svg' height='15'>" +
-                    " Borrar</button> </div></div></div>"
+                "<div class='col-md-5'><select disabled style='margin-top: 9px;' class='form-control col-lg-6 form-control-sm'><option>" +
+                $('select[id="selectCalendario"] option:selected').text() +
+                "</option></select></div>" +
+                "<div class='col-md-2' ><div class='btn-group mt-2 mr-1'> <button type='button' onclick='eliminarhorariosTem()' class='btn btn-primary btn-sm dropdown-toggle' style='color: #fff; background-color: #4a5669;" +
+                "border-color: #485263;' > <img src='admin/images/borrador.svg' height='15'>" +
+                " Borrar</button> </div></div></div>"
             );
         },
         error: function (data) {
@@ -1096,11 +1096,11 @@ $("#selectCalendario_ed").change(function () {
             calendario2_ed();
             $("#detallehorario_ed").append(
                 "<div class='form-group row'><div class='col-md-5 text-right'><label style='color:#163552;margin-top: 5px;'>Se muestra calendario de: </label> </div>" +
-                    "<div class='col-md-5'><select disabled class='form-control form-control-sm'><option>" +
-                    $(
-                        'select[id="selectCalendario_ed"] option:selected'
-                    ).text() +
-                    "</option></select></div></div>"
+                "<div class='col-md-5'><select disabled class='form-control form-control-sm'><option>" +
+                $(
+                    'select[id="selectCalendario_ed"] option:selected'
+                ).text() +
+                "</option></select></div></div>"
             );
         },
         error: function (data) {
@@ -1124,7 +1124,7 @@ function eliminarhorariosTem() {
     mescale = fmes.getMonth() + 1;
     aniocalen = fmes.getFullYear();
     bootbox.confirm({
-        title:"Eliminar horario",
+        title: "Eliminar horario",
         message: "¿Esta seguro que desea eliminar horarios del calendario?",
         buttons: {
             confirm: {
@@ -1193,7 +1193,7 @@ function calendario2() {
             $("#selectHorario").val("Seleccionar horario");
             $('#errorSel_re').hide();
             $("#selectHorario").trigger("change");
-            $('#fueraHSwitch_re').prop('checked',true)
+            $('#fueraHSwitch_re').prop('checked', true)
             $('#horAdicSwitch_re').prop('checked', false)
             $('#horCompSwitch_re').prop('checked', true)
             $("#horarioAsignar").modal("show");
@@ -1204,7 +1204,7 @@ function calendario2() {
             var event = calendar2.getEventById(id);
 
             bootbox.confirm({
-                title:"Eliminar evento del calendario",
+                title: "Eliminar evento del calendario",
                 message:
                     "¿Desea eliminar: " + info.event.title + " del calendario?",
                 buttons: {
@@ -1256,17 +1256,17 @@ function calendario2() {
         },
         eventRender: function (info) {
             $('.tooltip').remove();
-            if(info.event.extendedProps.horaI===null){
-                $(info.el).tooltip({  title: info.event.title});
-           } else{
-            if(info.event.borderColor=='#5369f8'){
-                $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+            if (info.event.extendedProps.horaI === null) {
+                $(info.el).tooltip({ title: info.event.title });
+            } else {
+                if (info.event.borderColor == '#5369f8') {
+                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
 
+                }
+                else {
+                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF });
+                }
             }
-                else{
-                    $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
-               }
-           }
         },
         events: function (info, successCallback, failureCallback) {
             var idcalendario = $("#selectCalendario").val();
@@ -1290,7 +1290,7 @@ function calendario2() {
                 success: function (data) {
                     successCallback(data);
                 },
-                error: function () {},
+                error: function () { },
             });
         },
 
@@ -1307,21 +1307,21 @@ function abrirHorario() {
     $('#divOtrodia').hide();
     $('#divPausa').hide();
     $('#inputPausa').empty();
-    $('#inputPausa').append('<div id="div_100" class="row col-md-12" style=" margin-bottom: 8px;">'+
-    '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa[]" id="descPausa" >'+
-    '<input type="text"  class="form-control form-control-sm col-sm-3" name="InicioPausa[]"  id="InicioPausa" >'+
-    '<input type="text"  class="form-control form-control-sm col-sm-3" name="FinPausa[]"  id="FinPausa" >'+
-        '&nbsp; <button class="btn btn-sm bt_re" id="400" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;'+
-        ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>'+
-     '</div>');
-     $('.flatpickr-input[readonly]').on('focus', function () {
+    $('#inputPausa').append('<div id="div_100" class="row col-md-12" style=" margin-bottom: 8px;">' +
+        '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa[]" id="descPausa" >' +
+        '<input type="text"  class="form-control form-control-sm col-sm-3" name="InicioPausa[]"  id="InicioPausa" >' +
+        '<input type="text"  class="form-control form-control-sm col-sm-3" name="FinPausa[]"  id="FinPausa" >' +
+        '&nbsp; <button class="btn btn-sm bt_re" id="400" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
+        ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>' +
+        '</div>');
+    $('.flatpickr-input[readonly]').on('focus', function () {
         $(this).blur()
     })
     $('.flatpickr-input[readonly]').prop('readonly', false)
-     $(".bt_re").each(function (el){
-        $(this).bind("click",addFieldRe);
-      });
-      $('#InicioPausa').flatpickr({
+    $(".bt_re").each(function (el) {
+        $(this).bind("click", addFieldRe);
+    });
+    $('#InicioPausa').flatpickr({
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
@@ -1333,9 +1333,9 @@ function abrirHorario() {
         dateFormat: "H:i",
         time_24hr: true
     });
-    $('input[name="descPausa[]"]').prop('required',false);
-        $('input[name="InicioPausa[]"]').prop('required',false);
-        $('input[name="FinPausa[]"]').prop('required',false);
+    $('input[name="descPausa[]"]').prop('required', false);
+    $('input[name="InicioPausa[]"]').prop('required', false);
+    $('input[name="FinPausa[]"]').prop('required', false);
     $("#frmHor")[0].reset();
     $("#horarioAgregar").modal("show");
 }
@@ -1350,9 +1350,9 @@ function registrarHorario() {
     horaOblig = $('#horaOblig').val();
     var tardanza;
     if ($('#SwitchTardanza').is(":checked")) {
-        tardanza=1;
-    } else{
-        tardanza=0;
+        tardanza = 1;
+    } else {
+        tardanza = 0;
     }
     if ($('#SwitchPausa').is(":checked")) {
         var descPausa = [];
@@ -1376,7 +1376,7 @@ function registrarHorario() {
             descripcion,
             toleranciaH,
             inicio,
-            fin,descPausa, pausaInicio, finPausa, toleranciaF, horaOblig,tardanza
+            fin, descPausa, pausaInicio, finPausa, toleranciaF, horaOblig, tardanza
         },
         statusCode: {
             419: function () {
@@ -1396,7 +1396,7 @@ function registrarHorario() {
                 $("<option>", {
                     //agrego los valores que obtengo de una base de datos
                     value: data.horario_id,
-                    text: data.horario_descripcion+' ('+data.horaI+'-'+data.horaF+')',
+                    text: data.horario_descripcion + ' (' + data.horaI + '-' + data.horaF + ')',
                     selected: true,
                 })
             );
@@ -1417,39 +1417,39 @@ function registrarHorario() {
 function agregarHorarioSe_regis() {
     var H1 = $("#pruebaStar").val();
     var H2 = $("#pruebaEnd").val();
-    textSelec1=$('select[name="selectHorario"] option:selected').text();
+    textSelec1 = $('select[name="selectHorario"] option:selected').text();
     separador = "(";
     textSelec2 = textSelec1.split(separador);
-    textSelec=textSelec2[0];
+    textSelec = textSelec2[0];
 
     var fueraHora;
-    if( $('#fueraHSwitch_re').prop('checked') ){
-        fueraHora=1;
+    if ($('#fueraHSwitch_re').prop('checked')) {
+        fueraHora = 1;
         console.log(fueraHora);
-    } else{
-        fueraHora=0;
+    } else {
+        fueraHora = 0;
         console.log(fueraHora);
     }
-     // HORARIO COMPENSABLE
-     var horarioC;
-     if ($('#horCompSwitch_re').prop('checked')) {
-         horarioC = 1;
-     } else {
-         horarioC = 0;
-     }
+    // HORARIO COMPENSABLE
+    var horarioC;
+    if ($('#horCompSwitch_re').prop('checked')) {
+        horarioC = 1;
+    } else {
+        horarioC = 0;
+    }
 
-     // HORA ADICIONAL
-     var horarioA;
-     if ($('#horAdicSwitch_re').prop('checked')) {
-         horarioA = 1;
-     } else {
-         horarioA = 0;
-     }
+    // HORA ADICIONAL
+    var horarioA;
+    if ($('#horAdicSwitch_re').prop('checked')) {
+        horarioA = 1;
+    } else {
+        horarioA = 0;
+    }
     var idhorar = $("#selectHorario").val();
-    if(idhorar==null){
+    if (idhorar == null) {
         $('#errorSel_re').show();
         return false;
-    } else{
+    } else {
         $('#errorSel_re').hide();
     }
     var idca = $("#selectCalendario").val();
@@ -1492,7 +1492,7 @@ function agregarHorarioSe_regis() {
             hora: textSelec,
 
             idhorar: idhorar,
-            idca,fueraHora,horarioC,horarioA
+            idca, fueraHora, horarioC, horarioA
         },
         statusCode: {
             419: function () {
@@ -1539,7 +1539,7 @@ function calendario3() {
 
             $('#horarioAsignar').modal('show');
         }, */
-        eventClick: function (info) {},
+        eventClick: function (info) { },
         editable: false,
         eventLimit: true,
         header: {
@@ -1549,18 +1549,18 @@ function calendario3() {
         },
         eventRender: function (info) {
             $('.tooltip').remove();
-           /*  $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF}); */
-           if(info.event.extendedProps.horaI===null){
-            $(info.el).tooltip({  title: info.event.title});
-       } else{
-        if(info.event.borderColor=='#5369f8'){
-            $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+            /*  $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF}); */
+            if (info.event.extendedProps.horaI === null) {
+                $(info.el).tooltip({ title: info.event.title });
+            } else {
+                if (info.event.borderColor == '#5369f8') {
+                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
 
-        }
-            else{
-                $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
-           }
-       }
+                }
+                else {
+                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF });
+                }
+            }
         },
         events: function (info, successCallback, failureCallback) {
             var idempleado = $("#idempleado").val();
@@ -1584,7 +1584,7 @@ function calendario3() {
                 success: function (data) {
                     successCallback(data);
                 },
-                error: function () {},
+                error: function () { },
             });
         },
 
@@ -1620,7 +1620,7 @@ function calendario4() {
 
             $('#horarioAsignar').modal('show');
         }, */
-        eventClick: function (info) {},
+        eventClick: function (info) { },
         editable: false,
         eventLimit: true,
         header: {
@@ -1630,18 +1630,18 @@ function calendario4() {
         },
         eventRender: function (info) {
             $('.tooltip').remove();
-           /*  $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF}); */
-           if(info.event.extendedProps.horaI===null){
-            $(info.el).tooltip({  title: info.event.title});
-       } else{
-        if(info.event.borderColor=='#5369f8'){
-            $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+            /*  $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF}); */
+            if (info.event.extendedProps.horaI === null) {
+                $(info.el).tooltip({ title: info.event.title });
+            } else {
+                if (info.event.borderColor == '#5369f8') {
+                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
 
-        }
-            else{
-                $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
-           }
-       }
+                }
+                else {
+                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF });
+                }
+            }
         },
         events: function (info, successCallback, failureCallback) {
             var idempleado = $("#idempleado").val();
@@ -1665,7 +1665,7 @@ function calendario4() {
                 success: function (data) {
                     successCallback(data);
                 },
-                error: function () {},
+                error: function () { },
             });
         },
 
@@ -1776,7 +1776,7 @@ function calendario2_ed() {
             ) {
                 if (info.event.textColor == "111111") {
                     bootbox.confirm({
-                        title:"Eliminar horario",
+                        title: "Eliminar horario",
                         message:
                             "¿Desea eliminar: " +
                             info.event.title +
@@ -1822,7 +1822,7 @@ function calendario2_ed() {
                     });
                 } else {
                     bootbox.confirm({
-                        title:"Eliminar incidencia",
+                        title: "Eliminar incidencia",
                         message:
                             "¿Desea eliminar: " +
                             info.event.title +
@@ -1858,15 +1858,15 @@ function calendario2_ed() {
                                     success: function (data) {
                                         info.event.remove();
                                         var a = moment(data.inciden_dias_fechaF);
-                                        c=a._i;
+                                        c = a._i;
                                         var b = moment(data.inciden_dias_fechaI);
-                                        d=b._i;
+                                        d = b._i;
 
-                                        if(a.diff(b, 'days')>1){
-                                            $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(a).subtract(1, 'day').format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffffff");
+                                        if (a.diff(b, 'days') > 1) {
+                                            $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='" + moment(a).subtract(1, 'day').format('YYYY-MM-DD') + "']").css("backgroundColor", "#ffffff");
                                         }
 
-                                        $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(data.inciden_dias_fechaI).format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffffff");
+                                        $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='" + moment(data.inciden_dias_fechaI).format('YYYY-MM-DD') + "']").css("backgroundColor", "#ffffff");
                                         calendar2_ed.refetchEvents();
                                     },
                                     error: function (data) {
@@ -1879,7 +1879,7 @@ function calendario2_ed() {
                 }
             } else {
                 bootbox.confirm({
-                    title:"Eliminar evento del calendario",
+                    title: "Eliminar evento del calendario",
                     message:
                         "¿Desea eliminar: " +
                         info.event.title +
@@ -1915,15 +1915,15 @@ function calendario2_ed() {
                                 success: function (data) {
                                     info.event.remove();
                                     var a = moment(data.end);
-                                    c=a._i;
+                                    c = a._i;
                                     var b = moment(data.start);
-                                    d=b._i;
+                                    d = b._i;
 
-                                    if(a.diff(b, 'days')>1){
-                                        $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(a).subtract(1, 'day').format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffffff");
+                                    if (a.diff(b, 'days') > 1) {
+                                        $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='" + moment(a).subtract(1, 'day').format('YYYY-MM-DD') + "']").css("backgroundColor", "#ffffff");
                                     }
 
-                                     $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(data.start).format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffffff");
+                                    $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='" + moment(data.start).format('YYYY-MM-DD') + "']").css("backgroundColor", "#ffffff");
 
                                     calendar2_ed.refetchEvents();
                                 },
@@ -1945,22 +1945,22 @@ function calendario2_ed() {
         },
         eventRender: function (info) {
             $('.tooltip').remove();
-            if(info.event.extendedProps.horaI===null){
-                $(info.el).tooltip({  title: info.event.title});
-           } else{
-            if(info.event.borderColor=='#5369f8'){
-                $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+            if (info.event.extendedProps.horaI === null) {
+                $(info.el).tooltip({ title: info.event.title });
+            } else {
+                if (info.event.borderColor == '#5369f8') {
+                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
 
+                }
+                else {
+                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF });
+                }
             }
-                else{
-                    $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF});
-               }
-           }
         },
         customButtons: {
             borrarHorarios: {
                 text: "Borrar H.",
-               /*  icon:"right-double-arrow", */
+                /*  icon:"right-double-arrow", */
 
                 click: function () {
                     eliminarhorariosBD();
@@ -1989,27 +1989,27 @@ function calendario2_ed() {
                     },
                 },
                 success: function (data) {
-                    $.each( data, function( index, value ){
+                    $.each(data, function (index, value) {
                         successCallback(data);
-                        if(value.laborable==0){
-                                var element = $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date]");
+                        if (value.laborable == 0) {
+                            var element = $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date]");
 
-                                var a = moment(value.end);
-                                c=a._i;
-                                var b = moment(value.start);
-                                d=b._i;
+                            var a = moment(value.end);
+                            c = a._i;
+                            var b = moment(value.start);
+                            d = b._i;
 
-                                if(a.diff(b, 'days')>1){
-                                    $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(a).subtract(1, 'day').format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffefef");
-                                }
+                            if (a.diff(b, 'days') > 1) {
+                                $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='" + moment(a).subtract(1, 'day').format('YYYY-MM-DD') + "']").css("backgroundColor", "#ffefef");
+                            }
 
-                                $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(value.start).format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffefef");
+                            $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='" + moment(value.start).format('YYYY-MM-DD') + "']").css("backgroundColor", "#ffefef");
                         }
 
                     });
 
                 },
-                error: function () {},
+                error: function () { },
             });
         },
 
@@ -2132,7 +2132,7 @@ function enviarArea(accion, objArea) {
                     }
                 );
             },
-            error: function () {},
+            error: function () { },
         });
     } else {
         $.ajax({
@@ -2174,7 +2174,7 @@ function enviarArea(accion, objArea) {
                         $("#area").append(select);
                         $("#v_area").append(select);
                     },
-                    error: function () {},
+                    error: function () { },
                 });
                 $("#area").val(data.area_id).trigger("change"); //lo selecciona
                 $("#textArea").val("");
@@ -2283,7 +2283,7 @@ function enviarCargo(accion, objCargo) {
                     }
                 );
             },
-            error: function () {},
+            error: function () { },
         });
     } else {
         $.ajax({
@@ -2326,7 +2326,7 @@ function enviarCargo(accion, objCargo) {
                         $("#cargo").append(select);
                         $("#v_cargo").append(select);
                     },
-                    error: function () {},
+                    error: function () { },
                 });
                 $("#cargo").val(data.cargo_id).trigger("change"); //lo selecciona
                 $("#textCargo").val("");
@@ -2435,7 +2435,7 @@ function enviarCentro(accion, objCentroC) {
                     }
                 );
             },
-            error: function () {},
+            error: function () { },
         });
     } else {
         $.ajax({
@@ -2477,7 +2477,7 @@ function enviarCentro(accion, objCentroC) {
                         $("#centroc").append(select);
                         $("#v_centroc").append(select);
                     },
-                    error: function () {},
+                    error: function () { },
                 });
                 $("#centroc").val(data.centroC_id).trigger("change"); //lo selecciona
                 $("#textCentro").val("");
@@ -2586,7 +2586,7 @@ function enviarLocal(accion, objLocal) {
                     }
                 );
             },
-            error: function () {},
+            error: function () { },
         });
     } else {
         $.ajax({
@@ -2628,7 +2628,7 @@ function enviarLocal(accion, objLocal) {
                         $("#local").append(select);
                         $("#v_local").append(select);
                     },
-                    error: function () {},
+                    error: function () { },
                 });
                 $("#local").val(data.local_id).trigger("change"); //lo selecciona
                 $("#textLocal").val("");
@@ -2737,7 +2737,7 @@ function enviarNivel(accion, objNivel) {
                     }
                 );
             },
-            error: function () {},
+            error: function () { },
         });
     } else {
         $.ajax({
@@ -2779,7 +2779,7 @@ function enviarNivel(accion, objNivel) {
                         $("#nivel").append(select);
                         $("#v_nivel").append(select);
                     },
-                    error: function () {},
+                    error: function () { },
                 });
                 $("#nivel").val(data.nivel_id).trigger("change"); //lo selecciona
                 $("#textNivel").val("");
@@ -2889,7 +2889,7 @@ function enviarContrato(accion, objContrato) {
                     }
                 );
             },
-            error: function () {},
+            error: function () { },
         });
     } else {
         $.ajax({
@@ -2931,7 +2931,7 @@ function enviarContrato(accion, objContrato) {
                         $("#contrato").append(select);
                         $("#v_contrato").append(select);
                     },
-                    error: function () {},
+                    error: function () { },
                 });
                 $("#contrato").val(data.contrato_id).trigger("change"); //lo selecciona
                 $("#textContrato").val("");
@@ -3040,7 +3040,7 @@ function enviarCondicion(accion, objCondicion) {
                     }
                 );
             },
-            error: function () {},
+            error: function () { },
         });
     } else {
         $.ajax({
@@ -3082,7 +3082,7 @@ function enviarCondicion(accion, objCondicion) {
                         $("#condicion").append(select);
                         $("#v_condicion").append(select);
                     },
-                    error: function () {},
+                    error: function () { },
                 });
                 $("#condicion").val(data.id).trigger("change"); //lo selecciona
                 $("#textCondicion").val("");
@@ -3271,7 +3271,7 @@ function enviarEmpleado(accion, objEmpleado) {
                 }
             );
         },
-        error: function (data, errorThrown) {},
+        error: function (data, errorThrown) { },
     });
 }
 //GUARDAR CALENDARIO EN GUARDAR EMPLEADO
@@ -3320,7 +3320,7 @@ function enviarEmpleadoStore(accion, objEmpleado) {
                 }
             );
         },
-        error: function (data, errorThrown) {},
+        error: function (data, errorThrown) { },
     });
 }
 //GUARDAR DATOS EMPRESARIAL EN GUARDAR EMPLEADO
@@ -3410,7 +3410,7 @@ function enviarEmpresarialEmpleado(accion, objEmpleado) {
                 }
             );
         },
-        error: function (data, errorThrown) {},
+        error: function (data, errorThrown) { },
     });
 }
 
@@ -3461,7 +3461,7 @@ function enviarFotoEmpleado(accion) {
                 }
             );
         },
-        error: function (data, errorThrown) {},
+        error: function (data, errorThrown) { },
     });
 }
 //GUARDAR CALENDARIO EN GUARDAR EMPLEADO
@@ -3518,7 +3518,7 @@ function enviarCalendarioEmpleado(accion, objEmpleado) {
                 }
             );
         },
-        error: function (data, errorThrown) {},
+        error: function (data, errorThrown) { },
     });
 }
 //GUARDAR HORARIO EN GUARDAR EMPLEADO
@@ -3575,7 +3575,7 @@ function enviarHorarioEmpleado(accion, objEmpleado) {
                 }
             );
         },
-        error: function (data, errorThrown) {},
+        error: function (data, errorThrown) { },
     });
 }
 //EMPLEADO STOREEMPLEADO
@@ -3617,7 +3617,7 @@ function enviarEmpleadoStore(accion, objEmpleado) {
                 }
             );
         },
-        error: function (data, errorThrown) {},
+        error: function (data, errorThrown) { },
     });
 }
 //EMPLEADO ACTUALIZAR
@@ -3878,8 +3878,8 @@ function cargarFile2() {
         ...(hayFoto && {
             initialPreview: [
                 "<img  id=v_foto src='{{asset('/fotosEmpleado')}}/'" +
-                    urlFoto +
-                    " style='max-width:200px; max-height:200px; height:auto; width:auto'>",
+                urlFoto +
+                " style='max-width:200px; max-height:200px; height:auto; width:auto'>",
             ],
             initialPreviewConfig: [
                 {
@@ -4308,7 +4308,7 @@ $("#buscarArea").on("click", function () {
                 });
             });
         },
-        error: function () {},
+        error: function () { },
     });
     $("#editarArea").show();
 });
@@ -4353,7 +4353,7 @@ $("#buscarCargo").on("click", function () {
                 });
             });
         },
-        error: function () {},
+        error: function () { },
     });
     $("#editarCargo").show();
 });
@@ -4398,7 +4398,7 @@ $("#buscarCentro").on("click", function () {
                 });
             });
         },
-        error: function () {},
+        error: function () { },
     });
     $("#editarCentro").show();
 });
@@ -4443,7 +4443,7 @@ $("#buscarLocal").on("click", function () {
                 });
             });
         },
-        error: function () {},
+        error: function () { },
     });
     $("#editarLocal").show();
 });
@@ -4488,7 +4488,7 @@ $("#buscarNivel").on("click", function () {
                 });
             });
         },
-        error: function () {},
+        error: function () { },
     });
     $("#editarNivel").show();
 });
@@ -4533,7 +4533,7 @@ $("#buscarContrato").on("click", function () {
                 });
             });
         },
-        error: function () {},
+        error: function () { },
     });
     $("#editarContrato").show();
 });
@@ -4578,7 +4578,7 @@ $("#buscarCondicion").on("click", function () {
                 });
             });
         },
-        error: function () {},
+        error: function () { },
     });
     $("#editarCondicion").show();
 });
@@ -4612,7 +4612,7 @@ function vaciardFeria() {
     mescale = fmes.getMonth() + 1;
     aniocalen = fmes.getFullYear();
     bootbox.confirm({
-        title:"Eliminar feriados",
+        title: "Eliminar feriados",
         message:
             "¿Esta seguro que desea eliminar dias feriados del calendario?",
         buttons: {
@@ -4662,7 +4662,7 @@ function vaciarddescanso() {
     mescale = fmes.getMonth() + 1;
     aniocalen = fmes.getFullYear();
     bootbox.confirm({
-        title:"Eliminar descansos",
+        title: "Eliminar descansos",
         message:
             "¿Esta seguro que desea eliminar dias de descanso del calendario?",
         buttons: {
@@ -4709,7 +4709,7 @@ function vaciarddescanso() {
 //////////////
 function vaciardlabTem() {
     bootbox.confirm({
-        title:"Eliminar dias laborales",
+        title: "Eliminar dias laborales",
         message:
             "¿Esta seguro que desea eliminar dias laborales del calendario?",
         buttons: {
@@ -4738,7 +4738,7 @@ function vaciardNlabTem() {
     mescale = fmes.getMonth() + 1;
     aniocalen = fmes.getFullYear();
     bootbox.confirm({
-        title:"Eliminar dias no laborales",
+        title: "Eliminar dias no laborales",
         message:
             "¿Esta seguro que desea eliminar dias no laborales del calendario?",
         buttons: {
@@ -4788,7 +4788,7 @@ function vaciardIncidTem() {
     mescale = fmes.getMonth() + 1;
     aniocalen = fmes.getFullYear();
     bootbox.confirm({
-        title:"Eliminar incidencias",
+        title: "Eliminar incidencias",
         message:
             "¿Esta seguro que desea eliminar todas las incidencias del calendario?",
         buttons: {
@@ -4873,7 +4873,7 @@ function diaferiadoRe_ed() {
 
 
         },
-        error: function () {},
+        error: function () { },
     });
 }
 //////////////////////////////////////////////////////////
@@ -4883,7 +4883,7 @@ function vaciardFeriaBD() {
     mescale = fmes.getMonth() + 1;
     aniocalen = fmes.getFullYear();
     bootbox.confirm({
-        title:"Eliminar dias feriados",
+        title: "Eliminar dias feriados",
         message:
             "¿Esta seguro que desea eliminar dias feriados del calendario?",
         buttons: {
@@ -4935,7 +4935,7 @@ function vaciarddescansoBD() {
     mescale = fmes.getMonth() + 1;
     aniocalen = fmes.getFullYear();
     bootbox.confirm({
-        title:"Eliminar dias de descanso",
+        title: "Eliminar dias de descanso",
         message:
             "¿Esta seguro que desea eliminar dias de descanso  del calendario?",
         buttons: {
@@ -4971,15 +4971,15 @@ function vaciarddescansoBD() {
                     success: function (data) {
                         calendarioedit.refetchEvents();
                         calendar2_ed.refetchEvents();
-                        $.each( data, function( index, value ){
-                                    var a = moment(value.end);
-                                    c=a._i;
-                                    var b = moment(value.start);
-                                    d=b._i;
-                                    if(a.diff(b, 'days')>1){
-                                        $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(a).subtract(1, 'day').format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffffff");
-                                    }
-                                    $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='"+moment(value.start).format('YYYY-MM-DD')+"']").css("backgroundColor", "#ffffff");
+                        $.each(data, function (index, value) {
+                            var a = moment(value.end);
+                            c = a._i;
+                            var b = moment(value.start);
+                            d = b._i;
+                            if (a.diff(b, 'days') > 1) {
+                                $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='" + moment(a).subtract(1, 'day').format('YYYY-MM-DD') + "']").css("backgroundColor", "#ffffff");
+                            }
+                            $("div.fc-bg > table > tbody > tr > td.fc-day.fc-widget-content[data-date='" + moment(value.start).format('YYYY-MM-DD') + "']").css("backgroundColor", "#ffffff");
                         });
                     },
                     error: function (data) {
@@ -4997,7 +4997,7 @@ function vaciarNlabBD() {
     mescale = fmes.getMonth() + 1;
     aniocalen = fmes.getFullYear();
     bootbox.confirm({
-        title:"Eliminar dias no laborales",
+        title: "Eliminar dias no laborales",
         message:
             "¿Esta seguro que desea eliminar dias no laborales del calendario?",
         buttons: {
@@ -5049,7 +5049,7 @@ function vaciardIncidBD() {
     mescale = fmes.getMonth() + 1;
     aniocalen = fmes.getFullYear();
     bootbox.confirm({
-        title:"Eliminar incidencias",
+        title: "Eliminar incidencias",
         message: "¿Esta seguro que desea eliminar incidencias del calendario?",
         buttons: {
             confirm: {
@@ -5100,7 +5100,7 @@ function eliminarhorariosBD() {
     mescale = fmes.getMonth() + 1;
     aniocalen = fmes.getFullYear();
     bootbox.confirm({
-        title:"Eliminar horarios",
+        title: "Eliminar horarios",
         message: "¿Esta seguro que desea eliminar horarios del calendario?",
         buttons: {
             confirm: {
@@ -5148,7 +5148,7 @@ function eliminarhorariosBD() {
 $("#selectCalendario_edit3").change(function () {
     var antSe = $("#idselect3").val();
     bootbox.confirm({
-        title:"Alerta",
+        title: "Alerta",
         message:
             "Al cambiar de calendario se borrará horarios actuales, ¿Confirmar?",
         buttons: {
@@ -5215,7 +5215,7 @@ $("#selectCalendario_edit3").change(function () {
                                 calendar2_ed.refetchEvents();
                                 $("#calendar_ed").show();
                             },
-                            error: function () {},
+                            error: function () { },
                         });
                     },
                     error: function (data) {
@@ -5228,68 +5228,68 @@ $("#selectCalendario_edit3").change(function () {
         },
     });
 });
-$(function() {
-	$(document).on('change', '#horaF_ed', function(event) {
-        let horaF=$('#horaF_ed').val();
-        let horaI=$('#horaI_ed').val();
+$(function () {
+    $(document).on('change', '#horaF_ed', function (event) {
+        let horaF = $('#horaF_ed').val();
+        let horaI = $('#horaI_ed').val();
 
-    	if(horaF<horaI){
-           $('#divOtrodia_ed').show();
-           event.stopPropagation();
-    	} else{
+        if (horaF < horaI) {
+            $('#divOtrodia_ed').show();
+            event.stopPropagation();
+        } else {
             $('#divOtrodia_ed').hide();
         }
 
-	});
+    });
 });
-$(function() {
-	$(document).on('change', '#horaI_ed', function(event) {
-        let horaF=$('#horaF_ed').val();
-        let horaI=$('#horaI_ed').val();
+$(function () {
+    $(document).on('change', '#horaI_ed', function (event) {
+        let horaF = $('#horaF_ed').val();
+        let horaI = $('#horaI_ed').val();
 
-    	if(horaF<horaI){
-           $('#divOtrodia_ed').show();
-           event.stopPropagation();
-    	} else{
+        if (horaF < horaI) {
+            $('#divOtrodia_ed').show();
+            event.stopPropagation();
+        } else {
             $('#divOtrodia_ed').hide();
         }
 
-	});
+    });
 });
-$(function() {
-	$(document).on('change', '#horaF', function(event) {
-        let horaF=$('#horaF').val();
-        let horaI=$('#horaI').val();
+$(function () {
+    $(document).on('change', '#horaF', function (event) {
+        let horaF = $('#horaF').val();
+        let horaI = $('#horaI').val();
 
-    	if(horaF<horaI){
+        if (horaF < horaI) {
             $("#otroDCh").attr("disabled", true);
-           $('#divOtrodia').show();
-           event.stopPropagation();
-    	} else{
+            $('#divOtrodia').show();
+            event.stopPropagation();
+        } else {
             $('#divOtrodia').hide();
         }
 
-	});
+    });
 });
-$(function() {
-	$(document).on('change', '#horaI', function(event) {
-        let horaF=$('#horaF').val();
-        let horaI=$('#horaI').val();
+$(function () {
+    $(document).on('change', '#horaI', function (event) {
+        let horaF = $('#horaF').val();
+        let horaI = $('#horaI').val();
 
-    	if(horaF<horaI){
+        if (horaF < horaI) {
             $("#otroDCh").attr("disabled", true);
-           $('#divOtrodia').show();
-           event.stopPropagation();
-    	} else{
+            $('#divOtrodia').show();
+            event.stopPropagation();
+        } else {
             $('#divOtrodia').hide();
         }
 
-	});
+    });
 });
 $('#selectarea').on("change", function (e) {
     console.log($('#selectarea').val());
     RefreshTablaEmpleadoArea();
-  });
+});
 
 ///PAUSAS HORARIO EDITAR
 $('#SwitchPausa_ed').change(function (event) {
@@ -5311,24 +5311,24 @@ $('#SwitchPausa_ed').change(function (event) {
     }
     event.preventDefault();
 });
-function addField(){
+function addField() {
 
-    var clickID = parseInt($(this).parent('div').attr('id').replace('divEd_',''));
+    var clickID = parseInt($(this).parent('div').attr('id').replace('divEd_', ''));
     // Genero el nuevo numero id
-    var newID = (clickID+1);
+    var newID = (clickID + 1);
     // Creo un clon del elemento div que contiene los campos de texto
-    $newClone = $('#divEd_'+clickID).clone(true);
+    $newClone = $('#divEd_' + clickID).clone(true);
     //Le asigno el nuevo numero id
-    $newClone.attr("id",'divEd_'+newID);
-    $newClone.children("input").eq(0).attr("id",'descPausa_ed'+newID).val('');
+    $newClone.attr("id", 'divEd_' + newID);
+    $newClone.children("input").eq(0).attr("id", 'descPausa_ed' + newID).val('');
     //Borro el valor del segundo campo input(este caso es el campo de cantidad)
-    $newClone.children("input").eq(1).attr("id",'InicioPausa_ed'+newID).val('').prop('required',true).flatpickr({
+    $newClone.children("input").eq(1).attr("id", 'InicioPausa_ed' + newID).val('').prop('required', true).flatpickr({
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
         time_24hr: true
     });
-    $newClone.children("input").eq(2).attr("id",'FinPausa_ed'+newID).val('').prop('required',true).flatpickr({
+    $newClone.children("input").eq(2).attr("id", 'FinPausa_ed' + newID).val('').prop('required', true).flatpickr({
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
@@ -5336,35 +5336,35 @@ function addField(){
     });;
 
 
-    $newClone.children("button").attr("id",newID)
+    $newClone.children("button").attr("id", newID)
     //Inserto el div clonado y modificado despues del div original
-    $newClone.insertAfter($('#divEd_'+clickID));
+    $newClone.insertAfter($('#divEd_' + clickID));
     //Cambio el signo "+" por el signo "-" y le quito el evento addfield
     //$("#"+clickID-1).remove();
-    $("#"+clickID).css("backgroundColor","#f6cfcf");
-    $("#"+clickID).css("border-Color","#f6cfcf");
-    $("#"+clickID).css("color","#d11010");
-    $("#"+clickID).css("height","22px");
-    $("#"+clickID).css("font-weight","600");
-    $("#"+clickID).css("margin-top","5px");
-    $("#"+clickID).css("font-size","12px");
-    $("#"+clickID).css("width","19px");
-    $("#"+clickID).css("margin-left","20-px");
-    $('input[name="descPausa_ed[]"]').prop('required',true);
-    $('input[name="InicioPausa_ed[]"]').prop('required',true);
-    $('input[name="FinPausa_ed[]"]').prop('required',true);
-    $("#"+clickID).html('-').unbind("click",addField);
+    $("#" + clickID).css("backgroundColor", "#f6cfcf");
+    $("#" + clickID).css("border-Color", "#f6cfcf");
+    $("#" + clickID).css("color", "#d11010");
+    $("#" + clickID).css("height", "22px");
+    $("#" + clickID).css("font-weight", "600");
+    $("#" + clickID).css("margin-top", "5px");
+    $("#" + clickID).css("font-size", "12px");
+    $("#" + clickID).css("width", "19px");
+    $("#" + clickID).css("margin-left", "20-px");
+    $('input[name="descPausa_ed[]"]').prop('required', true);
+    $('input[name="InicioPausa_ed[]"]').prop('required', true);
+    $('input[name="FinPausa_ed[]"]').prop('required', true);
+    $("#" + clickID).html('-').unbind("click", addField);
     $('.flatpickr-input[readonly]').on('focus', function () {
         $(this).blur()
     })
     $('.flatpickr-input[readonly]').prop('readonly', false)
     //Ahora le asigno el evento delRow para que borre la fial en caso de hacer click
-    $("#"+clickID).bind("click",delRow);
-    }
-    function delRow() {
+    $("#" + clickID).bind("click", delRow);
+}
+function delRow() {
     // Funcion que destruye el elemento actual una vez echo el click
     $(this).parent('div').remove();
-    }
+}
 ///PAUSAS HORARIO AGREGAR
 $('#SwitchPausa').change(function (event) {
     if ($('#SwitchPausa').prop('checked')) {
@@ -5385,24 +5385,24 @@ $('#SwitchPausa').change(function (event) {
     }
     event.preventDefault();
 });
-function addFieldRe(){
+function addFieldRe() {
 
-    var clickID = parseInt($(this).parent('div').attr('id').replace('div_',''));
+    var clickID = parseInt($(this).parent('div').attr('id').replace('div_', ''));
     // Genero el nuevo numero id
-    var newID = (clickID+1);
+    var newID = (clickID + 1);
     // Creo un clon del elemento div que contiene los campos de texto
-    $newClone = $('#div_'+clickID).clone(true);
+    $newClone = $('#div_' + clickID).clone(true);
     //Le asigno el nuevo numero id
-    $newClone.attr("id",'div_'+newID);
-    $newClone.children("input").eq(0).attr("id",'descPausa'+newID).val('');
+    $newClone.attr("id", 'div_' + newID);
+    $newClone.children("input").eq(0).attr("id", 'descPausa' + newID).val('');
     //Borro el valor del segundo campo input(este caso es el campo de cantidad)
-    $newClone.children("input").eq(1).attr("id",'InicioPausa'+newID).val('').prop('required',true).flatpickr({
+    $newClone.children("input").eq(1).attr("id", 'InicioPausa' + newID).val('').prop('required', true).flatpickr({
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
         time_24hr: true
     });
-    $newClone.children("input").eq(2).attr("id",'FinPausa'+newID).val('').prop('required',true).flatpickr({
+    $newClone.children("input").eq(2).attr("id", 'FinPausa' + newID).val('').prop('required', true).flatpickr({
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
@@ -5410,32 +5410,100 @@ function addFieldRe(){
     });;
 
 
-    $newClone.children("button").attr("id",newID)
+    $newClone.children("button").attr("id", newID)
     //Inserto el div clonado y modificado despues del div original
-    $newClone.insertAfter($('#div_'+clickID));
+    $newClone.insertAfter($('#div_' + clickID));
     //Cambio el signo "+" por el signo "-" y le quito el evento addfield
     //$("#"+clickID-1).remove();
-    $("#"+clickID).css("backgroundColor","#f6cfcf");
-    $("#"+clickID).css("border-Color","#f6cfcf");
-    $("#"+clickID).css("color","#d11010");
-    $("#"+clickID).css("height","22px");
-    $("#"+clickID).css("font-weight","600");
-    $("#"+clickID).css("margin-top","5px");
-    $("#"+clickID).css("font-size","12px");
-    $("#"+clickID).css("width","19px");
-    $("#"+clickID).css("margin-left","20-px");
-    $('input[name="descPausa[]"]').prop('required',true);
-    $('input[name="InicioPausa[]"]').prop('required',true);
-    $('input[name="FinPausa[]"]').prop('required',true);
-    $("#"+clickID).html('-').unbind("click",addField);
+    $("#" + clickID).css("backgroundColor", "#f6cfcf");
+    $("#" + clickID).css("border-Color", "#f6cfcf");
+    $("#" + clickID).css("color", "#d11010");
+    $("#" + clickID).css("height", "22px");
+    $("#" + clickID).css("font-weight", "600");
+    $("#" + clickID).css("margin-top", "5px");
+    $("#" + clickID).css("font-size", "12px");
+    $("#" + clickID).css("width", "19px");
+    $("#" + clickID).css("margin-left", "20-px");
+    $('input[name="descPausa[]"]').prop('required', true);
+    $('input[name="InicioPausa[]"]').prop('required', true);
+    $('input[name="FinPausa[]"]').prop('required', true);
+    $("#" + clickID).html('-').unbind("click", addField);
     $('.flatpickr-input[readonly]').on('focus', function () {
         $(this).blur()
     })
     $('.flatpickr-input[readonly]').prop('readonly', false)
     //Ahora le asigno el evento delRow para que borre la fial en caso de hacer click
-    $("#"+clickID).bind("click",delRow);
-    }
-    function delRow() {
+    $("#" + clickID).bind("click", delRow);
+}
+function delRow() {
     // Funcion que destruye el elemento actual una vez echo el click
     $(this).parent('div').remove();
+}
+//? CONTENIDO DE VIDEOS EN MODAL DE EDITAR
+var modalOculto;
+// * DATOS PERSONALES
+function mostrarContenido() {
+    // *OCULTAR FORMULARIO
+    console.log($('#form-registrar').is(':visible'));
+    if ($('#form-ver').is(':visible') === true) {
+        modalOculto = 2;
+        $('#form-ver').modal('hide');
     }
+    if ($('#form-registrar').is(':visible') === true) {
+        modalOculto = 1;
+        $('#form-registrar').modal('hide');
+    }
+    //*ABRIR MODAL
+    $('#modal-video').modal();
+    // * PLAY DE VIDEO AL ABRIR MODAL
+    var iframe = document.querySelector('#contenidoIframe');
+    var player = new Vimeo.Player(iframe);
+    player.play();
+}
+
+// ? PAUSAR VIDEO MANUALMENTE
+function stopVideo() {
+    var iframe = document.querySelector('#contenidoIframe');
+    var player = new Vimeo.Player(iframe);
+    player.unload();
+    // ! MOSTRAR MODAL OCULTO
+    if (modalOculto === 1) {
+        $('#form-registrar').modal('show');
+    }
+    if (modalOculto === 2) {
+        $('#form-ver').modal('show');
+    }
+}
+
+// * DATOS EPRESARIAL
+function mostrarContenidoE() {
+    // *OCULTAR FORMULARIO
+    console.log($('#form-registrar').is(':visible'));
+    if ($('#form-ver').is(':visible') === true) {
+        modalOculto = 2;
+        $('#form-ver').modal('hide');
+    }
+    if ($('#form-registrar').is(':visible') === true) {
+        modalOculto = 1;
+        $('#form-registrar').modal('hide');
+    }
+    //*ABRIR MODAL
+    $('#modal-videoE').modal();
+    // * PLAY DE VIDEO AL ABRIR MODAL
+    var iframe = document.querySelector('#contenidoIframeE');
+    var player = new Vimeo.Player(iframe);
+    player.play();
+}
+// ? PAUSAR VIDEO MANUALMENTE
+function stopVideoE() {
+    var iframe = document.querySelector('#contenidoIframeE');
+    var player = new Vimeo.Player(iframe);
+    player.unload();
+    // ! MOSTRAR MODAL OCULTO
+    if (modalOculto === 1) {
+        $('#form-registrar').modal('show');
+    }
+    if (modalOculto === 2) {
+        $('#form-ver').modal('show');
+    }
+}
