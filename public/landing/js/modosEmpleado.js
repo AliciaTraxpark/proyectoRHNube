@@ -1102,6 +1102,7 @@ function registrarActividad() {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
+            // BUSQUEDA POR NOMBRE
             if (data.estado === 1) {
                 // RECUPERAR ACTIVIDAD INACTIVA
                 if (data.actividad.estado == 0) {
@@ -1161,6 +1162,7 @@ function registrarActividad() {
                     );
                 }
             } else {
+                // BUSQUEDA POR CODIGO DE ACTIVIDAD
                 if (data.estado === 0) {
                     if (data.actividad.estado == 0) {
                         alertify
