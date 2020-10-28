@@ -1103,6 +1103,7 @@ function registrarActividad() {
         },
         success: function (data) {
             if (data.estado === 1) {
+                // RECUPERAR ACTIVIDAD INACTIVA
                 if (data.actividad.estado == 0) {
                     alertify
                         .confirm("Ya existe una actividad inactiva con este nombre. ¿Desea recuperarla si o no?", function (
@@ -1128,6 +1129,7 @@ function registrarActividad() {
                             },
                         });
                 } else {
+                    // ALERTA DE ACTIVIDAD ACTIVA EXISTENTE
                     $("#nombreTarea").addClass("borderColor");
                     $.notifyClose();
                     $.notify(
@@ -1137,7 +1139,7 @@ function registrarActividad() {
                             icon: "admin/images/warning.svg",
                         },
                         {
-                            element: $('#regactividadTarea'),
+                            element: $('#RegActividadTareaGE'),
                             position: "fixed",
                             mouse_over: "pause",
                             placement: {
@@ -1194,7 +1196,7 @@ function registrarActividad() {
                                 icon: "admin/images/warning.svg",
                             },
                             {
-                                element: $('#regactividadTarea'),
+                                element: $('#RegActividadTareaGE'),
                                 position: "fixed",
                                 mouse_over: "pause",
                                 placement: {

@@ -551,6 +551,10 @@ use App\proyecto_empleado;
         height: calc(2.5em + 0.6rem + 2px) !important;
     }
 
+    .borderColor {
+        border-color: red;
+    }
+
     /* RESPONSIVE */
 
     @media (max-width: 767.98px) {
