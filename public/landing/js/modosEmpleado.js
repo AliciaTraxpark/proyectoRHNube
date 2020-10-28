@@ -374,7 +374,7 @@ function registrarNuevaActividadTarea() {
     });
 }
 // LIMPIAR SELECT
-function limpiarSelect(){
+function limpiarSelect() {
     $('#empleadoActiv').val(null).trigger('change');
     $('#regEmpleadoActiv').val(null).trigger('change');
 }
@@ -1071,4 +1071,194 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
 
 function limpiarCorreoE() {
     $("#textCorreo").val("");
+}
+
+// REGISTRAR ACTIVIADES EN FORMULARIO EDITAR
+function registrarActividad() {
+    var nombre = $("#nombreTarea").val();
+    var codigo = $("#codigoTarea").val();
+    var empleados = null;
+    if ($('#customCRGE').is(":checked") == true) {
+        var controlRemoto = 1;
+    } else {
+        var controlRemoto = 0;
+    }
+    if ($('#customAPGE').is(":checked") == true) {
+        var asistenciaPuerta = 1;
+    } else {
+        var asistenciaPuerta = 0;
+    }
+    $.ajax({
+        type: "POST",
+        url: "/registrarActvO",
+        data: {
+            nombre: nombre,
+            cr: controlRemoto,
+            ap: asistenciaPuerta,
+            codigo: codigo,
+            empleados: empleados
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            if (data.estado === 1) {
+                if (data.actividad.estado == 0) {
+                    alertify
+                        .confirm("Ya existe una actividad inactiva con este nombre. ¿Desea recuperarla si o no?", function (
+                            e
+                        ) {
+                            if (e) {
+                                datosDerecuperarActividad(data.actividad.Activi_id);
+                            }
+                        })
+                        .setting({
+                            title: "Modificar Actividad",
+                            labels: {
+                                ok: "Si",
+                                cancel: "No",
+                            },
+                            modal: true,
+                            startMaximized: false,
+                            reverseButtons: true,
+                            resizable: false,
+                            closable: false,
+                            transition: "zoom",
+                            oncancel: function (closeEvent) {
+                            },
+                        });
+                } else {
+                    $("#nombreTarea").addClass("borderColor");
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message:
+                                "\nYa existe una actividad con este nombre.",
+                            icon: "admin/images/warning.svg",
+                        },
+                        {
+                            element: $('#regactividadTarea'),
+                            position: "fixed",
+                            mouse_over: "pause",
+                            placement: {
+                                from: "top",
+                                align: "center",
+                            },
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 2000,
+                            template:
+                                '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
+                }
+            } else {
+                if (data.estado === 0) {
+                    if (data.actividad.estado == 0) {
+                        alertify
+                            .confirm("Ya existe una actividad inactiva con este código. ¿Desea recuperarla si o no?", function (
+                                e
+                            ) {
+                                if (e) {
+                                    recuperarActividad(data.actividad.Activi_id);
+                                }
+                            })
+                            .setting({
+                                title: "Modificar Actividad",
+                                labels: {
+                                    ok: "Si",
+                                    cancel: "No",
+                                },
+                                modal: true,
+                                startMaximized: false,
+                                reverseButtons: true,
+                                resizable: false,
+                                closable: false,
+                                transition: "zoom",
+                                oncancel: function (closeEvent) {
+                                },
+                            });
+                    } else {
+                        $("#codigoTarea").addClass("borderColor");
+                        $.notifyClose();
+                        $.notify(
+                            {
+                                message:
+                                    "\nYa existe una actividad con este código.",
+                                icon: "admin/images/warning.svg",
+                            },
+                            {
+                                element: $('#regactividadTarea'),
+                                position: "fixed",
+                                mouse_over: "pause",
+                                placement: {
+                                    from: "top",
+                                    align: "center",
+                                },
+                                icon_type: "image",
+                                newest_on_top: true,
+                                delay: 2000,
+                                template:
+                                    '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                    "</div>",
+                                spacing: 35,
+                            }
+                        );
+                    }
+                } else {
+                    $('#RegActividadTareaGE').modal('toggle');
+                    $('#form-ver').modal('show');
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message: "\nActividad registrada.",
+                            icon: "admin/images/checked.svg",
+                        },
+                        {
+                            element: $('#form-ver'),
+                            position: "fixed",
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 5000,
+                            template:
+                                '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
+                }
+            }
+        },
+        error: function () { },
+    });
+}
+// RECUPERAR DATOS DE ACTIVIDAD
+function datosDerecuperarActividad(id, nombre, codigo, cr, ap) {
+    $('#idActividadRegE').val(id);
+    $('#nombreTarea').val(nombre);
+    $('#codigoTarea').val(codigo);
+    if (cr === 1) {
+        $('#customCRGE').prop("checked", true);
+    }else{
+        $('#customCRGE').prop("checked", false);
+    }
+    if(ap === 1){
+        $('#customAPGE').prop("checked", true);
+    }else{
+        $('#customAPGE').prop("checked", false);
+    }
 }
