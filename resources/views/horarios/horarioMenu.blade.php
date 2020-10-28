@@ -150,6 +150,9 @@ a:not([href]):not([tabindex]){
     font-size: 12.2px;
     overflow-y: scroll;
 }
+.form-control:disabled{
+    background-color: #f1f0f0;
+}
 </style>
 <style>
 
@@ -1000,7 +1003,7 @@ a:not([href]):not([tabindex]){
                                         id="SwitchPausa">
                                     <label class="custom-control-label"
                                         for="SwitchPausa"
-                                        style="font-weight: bold;padding-top: 1px">Pausas en el horario</label> &nbsp; <span id="errorenPausas" style="color: #80211e;display: none">Fin de pausa debe ser mayor a inicio pausa</span>
+                                        style="font-weight: bold;padding-top: 1px">Pausas en el horario</label> &nbsp; <span id="fueraRango" style="color: #80211e;display: none">Hora no esta dentro de rango de horario</span> <span id="errorenPausas" style="color: #80211e;display: none">- Fin de pausa debe ser mayor a inicio pausa</span>
                                 </div>
                              </div>
 

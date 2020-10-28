@@ -907,6 +907,7 @@ $('#cerrarHorario').click(function () {
 });
 function abrirHorario() {
     $('#errorenPausas').hide();
+      $('#fueraRango').hide();
     $('#divOtrodia').hide();
     $('#divPausa').hide();
     $('#horaOblig').prop("disabled","disabled");
@@ -914,7 +915,7 @@ function abrirHorario() {
     $('#inputPausa').append('<div id="div_100" class="row col-md-12" style=" margin-bottom: 8px;">' +
         '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa[]" id="descPausa" >' +
         '<input type="text"  class="form-control form-control-sm col-sm-3" name="InicioPausa[]"  id="InicioPausa" >' +
-        '<input type="text"  class="form-control form-control-sm col-sm-3" name="FinPausa[]"  id="FinPausa" >' +
+        '<input type="text"  class="form-control form-control-sm col-sm-3" name="FinPausa[]"  id="FinPausa" disabled >' +
         '&nbsp; <button class="btn btn-sm bt_plus" id="100" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
         ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>' +
         '</div>');
@@ -2524,7 +2525,7 @@ function addField() {
         dateFormat: "H:i",
         time_24hr: true
     });
-    $newClone.children("input").eq(2).attr("id", 'FinPausa' + newID).val('').prop('required', true).flatpickr({
+    $newClone.children("input").eq(2).attr("id", 'FinPausa' + newID).val('').prop('required', true).prop( "disabled",true ).flatpickr({
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
@@ -2535,13 +2536,23 @@ function addField() {
             let horaF = $('#FinPausa'+ newID).val();
             let horaI = $('#InicioPausa'+ newID).val();
 
-            if (horaF < horaI) {
-                $('#FinPausa'+ newID).val('');
-                $('#errorenPausas').show();
+            if(horaF<$('#horaI').val() ||horaF>$('#horaF').val() ){
+                $('#FinPausa' + newID).val('');
+                $('#fueraRango').show();
                 event.stopPropagation();
-            } else {
-                $('#errorenPausas').hide();
-            }
+             } else{
+                $('#fueraRango').hide();
+             }
+
+                if (horaF < horaI) {
+                    $('#FinPausa'+ newID).val('');
+                    $('#errorenPausas').show();
+                    event.stopPropagation();
+                } else {
+                    $('#errorenPausas').hide();
+                }
+
+
 
         });
     });
@@ -2549,7 +2560,19 @@ function addField() {
         $(document).on('change', '#InicioPausa'+ newID, function (event) {
             let horaF = $('#FinPausa'+ newID).val();
             let horaI = $('#InicioPausa'+ newID).val();
+            $('#FinPausa'+ newID).prop( "disabled",false);
+            if(horaI<$('#horaI').val() ||horaI>$('#horaF').val() ){
 
+                $('#InicioPausa'+ newID).val('');
+                $('#fueraRango').show();
+                event.stopPropagation();
+             } else{
+                $('#fueraRango').hide();
+             }
+
+            if(horaF==null || horaF==''){
+
+            } else{
             if (horaF < horaI) {
                 $('#InicioPausa'+ newID).val('');
                 $('#errorenPausas').show();
@@ -2557,6 +2580,7 @@ function addField() {
             } else {
                 $('#errorenPausas').hide();
             }
+        }
 
         });
     });
@@ -2705,7 +2729,13 @@ $(function () {
     $(document).on('change', '#FinPausa', function (event) {
         let horaF = $('#FinPausa').val();
         let horaI = $('#InicioPausa').val();
-
+        if(horaF<$('#horaI').val() ||horaF>$('#horaF').val() ){
+            $('#FinPausa').val('');
+            $('#fueraRango').show();
+            event.stopPropagation();
+         } else{
+            $('#fueraRango').hide();
+         }
         if (horaF < horaI) {
             $('#FinPausa').val('');
             $('#errorenPausas').show();
@@ -2714,20 +2744,37 @@ $(function () {
             $('#errorenPausas').hide();
         }
 
+
     });
 });
 $(function () {
     $(document).on('change', '#InicioPausa', function (event) {
         let horaF = $('#FinPausa').val();
         let horaI = $('#InicioPausa').val();
+        $('#FinPausa').prop( "disabled",false);
+         if(horaI<$('#horaI').val() ||horaI>$('#horaF').val() ){
 
-        if (horaF < horaI) {
             $('#InicioPausa').val('');
-            $('#errorenPausas').show();
+            $('#fueraRango').show();
             event.stopPropagation();
-        } else {
-            $('#errorenPausas').hide();
-        }
+         } else{
+            $('#fueraRango').hide();
+         }
+         console.log(horaF);
+         if(horaF==null || horaF==''){
+
+         }
+         else{
+            console.log('secumple');
+            if (horaF < horaI) {
+                $('#InicioPausa').val('');
+                $('#errorenPausas').show();
+                event.stopPropagation();
+            } else {
+                $('#errorenPausas').hide();
+            }
+         }
+
 
     });
 });
