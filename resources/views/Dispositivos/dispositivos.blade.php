@@ -106,9 +106,16 @@
             }
 
             #nuevoDispositivo{
-                width: 443px;
+                max-width: 443px!important;
             }
-        }
+            #classMo{
+                max-width: 443px!important;
+            }
+            .fullscreen-modal .modal-dialog .modal-lg {
+    width: 443px!important;
+
+  }
+     }
     </style>
     <style>
         .table {
@@ -181,7 +188,7 @@
             {{-- Modal nuevoDispositivo --}}
             <div id="nuevoDispositivo" class="modal fade" role="dialog" aria-labelledby="myModalLabel"
                 aria-hidden="true" data-backdrop="static">
-                <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 640px;">
+                <div id="classMo" class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 640px;">
 
                     <div class="modal-content">
                         <div class="modal-header" style="background-color:#163552;">
